@@ -95,6 +95,7 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.OrgLabor"),
 			true);
 	public static long ORGANIZATIONID_COLUMN_BITMASK = 1L;
+	public static long TYPEID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

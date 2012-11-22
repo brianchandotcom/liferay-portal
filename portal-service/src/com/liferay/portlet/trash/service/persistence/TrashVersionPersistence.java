@@ -38,70 +38,6 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	 */
 
 	/**
-	* Caches the trash version in the entity cache if it is enabled.
-	*
-	* @param trashVersion the trash version
-	*/
-	public void cacheResult(
-		com.liferay.portlet.trash.model.TrashVersion trashVersion);
-
-	/**
-	* Caches the trash versions in the entity cache if it is enabled.
-	*
-	* @param trashVersions the trash versions
-	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portlet.trash.model.TrashVersion> trashVersions);
-
-	/**
-	* Creates a new trash version with the primary key. Does not add the trash version to the database.
-	*
-	* @param versionId the primary key for the new trash version
-	* @return the new trash version
-	*/
-	public com.liferay.portlet.trash.model.TrashVersion create(long versionId);
-
-	/**
-	* Removes the trash version with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param versionId the primary key of the trash version
-	* @return the trash version that was removed
-	* @throws com.liferay.portlet.trash.NoSuchVersionException if a trash version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.trash.model.TrashVersion remove(long versionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.trash.NoSuchVersionException;
-
-	public com.liferay.portlet.trash.model.TrashVersion updateImpl(
-		com.liferay.portlet.trash.model.TrashVersion trashVersion)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the trash version with the primary key or throws a {@link com.liferay.portlet.trash.NoSuchVersionException} if it could not be found.
-	*
-	* @param versionId the primary key of the trash version
-	* @return the trash version
-	* @throws com.liferay.portlet.trash.NoSuchVersionException if a trash version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.trash.model.TrashVersion findByPrimaryKey(
-		long versionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.trash.NoSuchVersionException;
-
-	/**
-	* Returns the trash version with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param versionId the primary key of the trash version
-	* @return the trash version, or <code>null</code> if a trash version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.trash.model.TrashVersion fetchByPrimaryKey(
-		long versionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the trash versions where entryId = &#63;.
 	*
 	* @param entryId the entry ID
@@ -116,7 +52,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	* Returns a range of all the trash versions where entryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from TrashVersionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param entryId the entry ID
@@ -133,7 +69,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	* Returns an ordered range of all the trash versions where entryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from TrashVersionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param entryId the entry ID
@@ -221,6 +157,25 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 			com.liferay.portlet.trash.NoSuchVersionException;
 
 	/**
+	* Removes all the trash versions where entryId = &#63; from the database.
+	*
+	* @param entryId the entry ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByEntryId(long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of trash versions where entryId = &#63;.
+	*
+	* @param entryId the entry ID
+	* @return the number of matching trash versions
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByEntryId(long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the trash versions where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
@@ -236,7 +191,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	* Returns a range of all the trash versions where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from TrashVersionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -254,7 +209,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	* Returns an ordered range of all the trash versions where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from TrashVersionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -348,6 +303,91 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 			com.liferay.portlet.trash.NoSuchVersionException;
 
 	/**
+	* Removes all the trash versions where classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_C(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of trash versions where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching trash versions
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_C(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Caches the trash version in the entity cache if it is enabled.
+	*
+	* @param trashVersion the trash version
+	*/
+	public void cacheResult(
+		com.liferay.portlet.trash.model.TrashVersion trashVersion);
+
+	/**
+	* Caches the trash versions in the entity cache if it is enabled.
+	*
+	* @param trashVersions the trash versions
+	*/
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.trash.model.TrashVersion> trashVersions);
+
+	/**
+	* Creates a new trash version with the primary key. Does not add the trash version to the database.
+	*
+	* @param versionId the primary key for the new trash version
+	* @return the new trash version
+	*/
+	public com.liferay.portlet.trash.model.TrashVersion create(long versionId);
+
+	/**
+	* Removes the trash version with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param versionId the primary key of the trash version
+	* @return the trash version that was removed
+	* @throws com.liferay.portlet.trash.NoSuchVersionException if a trash version with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.trash.model.TrashVersion remove(long versionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.trash.NoSuchVersionException;
+
+	public com.liferay.portlet.trash.model.TrashVersion updateImpl(
+		com.liferay.portlet.trash.model.TrashVersion trashVersion)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the trash version with the primary key or throws a {@link com.liferay.portlet.trash.NoSuchVersionException} if it could not be found.
+	*
+	* @param versionId the primary key of the trash version
+	* @return the trash version
+	* @throws com.liferay.portlet.trash.NoSuchVersionException if a trash version with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.trash.model.TrashVersion findByPrimaryKey(
+		long versionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.trash.NoSuchVersionException;
+
+	/**
+	* Returns the trash version with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param versionId the primary key of the trash version
+	* @return the trash version, or <code>null</code> if a trash version with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.trash.model.TrashVersion fetchByPrimaryKey(
+		long versionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the trash versions.
 	*
 	* @return the trash versions
@@ -360,7 +400,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	* Returns a range of all the trash versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from TrashVersionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of trash versions
@@ -376,7 +416,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 	* Returns an ordered range of all the trash versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from TrashVersionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of trash versions
@@ -391,51 +431,11 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the trash versions where entryId = &#63; from the database.
-	*
-	* @param entryId the entry ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByEntryId(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the trash versions where classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the trash versions from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of trash versions where entryId = &#63;.
-	*
-	* @param entryId the entry ID
-	* @return the number of matching trash versions
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByEntryId(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of trash versions where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching trash versions
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

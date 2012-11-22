@@ -38,72 +38,6 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	 */
 
 	/**
-	* Caches the announcements delivery in the entity cache if it is enabled.
-	*
-	* @param announcementsDelivery the announcements delivery
-	*/
-	public void cacheResult(
-		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery);
-
-	/**
-	* Caches the announcements deliveries in the entity cache if it is enabled.
-	*
-	* @param announcementsDeliveries the announcements deliveries
-	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> announcementsDeliveries);
-
-	/**
-	* Creates a new announcements delivery with the primary key. Does not add the announcements delivery to the database.
-	*
-	* @param deliveryId the primary key for the new announcements delivery
-	* @return the new announcements delivery
-	*/
-	public com.liferay.portlet.announcements.model.AnnouncementsDelivery create(
-		long deliveryId);
-
-	/**
-	* Removes the announcements delivery with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param deliveryId the primary key of the announcements delivery
-	* @return the announcements delivery that was removed
-	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.announcements.model.AnnouncementsDelivery remove(
-		long deliveryId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchDeliveryException;
-
-	public com.liferay.portlet.announcements.model.AnnouncementsDelivery updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the announcements delivery with the primary key or throws a {@link com.liferay.portlet.announcements.NoSuchDeliveryException} if it could not be found.
-	*
-	* @param deliveryId the primary key of the announcements delivery
-	* @return the announcements delivery
-	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.announcements.model.AnnouncementsDelivery findByPrimaryKey(
-		long deliveryId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchDeliveryException;
-
-	/**
-	* Returns the announcements delivery with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param deliveryId the primary key of the announcements delivery
-	* @return the announcements delivery, or <code>null</code> if a announcements delivery with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByPrimaryKey(
-		long deliveryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the announcements deliveries where userId = &#63;.
 	*
 	* @param userId the user ID
@@ -117,7 +51,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* Returns a range of all the announcements deliveries where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AnnouncementsDeliveryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -134,7 +68,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* Returns an ordered range of all the announcements deliveries where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AnnouncementsDeliveryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -222,6 +156,25 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 			com.liferay.portlet.announcements.NoSuchDeliveryException;
 
 	/**
+	* Removes all the announcements deliveries where userId = &#63; from the database.
+	*
+	* @param userId the user ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of announcements deliveries where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the number of matching announcements deliveries
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the announcements delivery where userId = &#63; and type = &#63; or throws a {@link com.liferay.portlet.announcements.NoSuchDeliveryException} if it could not be found.
 	*
 	* @param userId the user ID
@@ -261,6 +214,96 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the announcements delivery where userId = &#63; and type = &#63; from the database.
+	*
+	* @param userId the user ID
+	* @param type the type
+	* @return the announcements delivery that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.announcements.model.AnnouncementsDelivery removeByU_T(
+		long userId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.announcements.NoSuchDeliveryException;
+
+	/**
+	* Returns the number of announcements deliveries where userId = &#63; and type = &#63;.
+	*
+	* @param userId the user ID
+	* @param type the type
+	* @return the number of matching announcements deliveries
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByU_T(long userId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Caches the announcements delivery in the entity cache if it is enabled.
+	*
+	* @param announcementsDelivery the announcements delivery
+	*/
+	public void cacheResult(
+		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery);
+
+	/**
+	* Caches the announcements deliveries in the entity cache if it is enabled.
+	*
+	* @param announcementsDeliveries the announcements deliveries
+	*/
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> announcementsDeliveries);
+
+	/**
+	* Creates a new announcements delivery with the primary key. Does not add the announcements delivery to the database.
+	*
+	* @param deliveryId the primary key for the new announcements delivery
+	* @return the new announcements delivery
+	*/
+	public com.liferay.portlet.announcements.model.AnnouncementsDelivery create(
+		long deliveryId);
+
+	/**
+	* Removes the announcements delivery with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param deliveryId the primary key of the announcements delivery
+	* @return the announcements delivery that was removed
+	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.announcements.model.AnnouncementsDelivery remove(
+		long deliveryId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.announcements.NoSuchDeliveryException;
+
+	public com.liferay.portlet.announcements.model.AnnouncementsDelivery updateImpl(
+		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the announcements delivery with the primary key or throws a {@link com.liferay.portlet.announcements.NoSuchDeliveryException} if it could not be found.
+	*
+	* @param deliveryId the primary key of the announcements delivery
+	* @return the announcements delivery
+	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.announcements.model.AnnouncementsDelivery findByPrimaryKey(
+		long deliveryId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.announcements.NoSuchDeliveryException;
+
+	/**
+	* Returns the announcements delivery with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param deliveryId the primary key of the announcements delivery
+	* @return the announcements delivery, or <code>null</code> if a announcements delivery with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByPrimaryKey(
+		long deliveryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the announcements deliveries.
 	*
 	* @return the announcements deliveries
@@ -273,7 +316,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* Returns a range of all the announcements deliveries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AnnouncementsDeliveryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of announcements deliveries
@@ -289,7 +332,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* Returns an ordered range of all the announcements deliveries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AnnouncementsDeliveryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of announcements deliveries
@@ -304,54 +347,11 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the announcements deliveries where userId = &#63; from the database.
-	*
-	* @param userId the user ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the announcements delivery where userId = &#63; and type = &#63; from the database.
-	*
-	* @param userId the user ID
-	* @param type the type
-	* @return the announcements delivery that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.announcements.model.AnnouncementsDelivery removeByU_T(
-		long userId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchDeliveryException;
-
-	/**
 	* Removes all the announcements deliveries from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of announcements deliveries where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the number of matching announcements deliveries
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of announcements deliveries where userId = &#63; and type = &#63;.
-	*
-	* @param userId the user ID
-	* @param type the type
-	* @return the number of matching announcements deliveries
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByU_T(long userId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

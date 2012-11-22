@@ -36,6 +36,14 @@ public class EntityFinder {
 		_where = where;
 		_dbIndex = dbIndex;
 		_columns = columns;
+
+		if (isCollection() && isUnique() && !hasArrayableOperator()) {
+			throw new IllegalArgumentException(
+				"\"Unique + Collection\" combination is a legal setting only " +
+					"for finders with arrayable column, see ExpandoColumn as " +
+						"an example. Finder " + name + " does not have any " +
+							"arrayable column.");
+		}
 	}
 
 	public EntityColumn getColumn(String name) {

@@ -111,86 +111,6 @@ public class SCProductVersionUtil {
 	}
 
 	/**
-	* Caches the s c product version in the entity cache if it is enabled.
-	*
-	* @param scProductVersion the s c product version
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion) {
-		getPersistence().cacheResult(scProductVersion);
-	}
-
-	/**
-	* Caches the s c product versions in the entity cache if it is enabled.
-	*
-	* @param scProductVersions the s c product versions
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> scProductVersions) {
-		getPersistence().cacheResult(scProductVersions);
-	}
-
-	/**
-	* Creates a new s c product version with the primary key. Does not add the s c product version to the database.
-	*
-	* @param productVersionId the primary key for the new s c product version
-	* @return the new s c product version
-	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion create(
-		long productVersionId) {
-		return getPersistence().create(productVersionId);
-	}
-
-	/**
-	* Removes the s c product version with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param productVersionId the primary key of the s c product version
-	* @return the s c product version that was removed
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException if a s c product version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion remove(
-		long productVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.softwarecatalog.NoSuchProductVersionException {
-		return getPersistence().remove(productVersionId);
-	}
-
-	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(scProductVersion);
-	}
-
-	/**
-	* Returns the s c product version with the primary key or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductVersionException} if it could not be found.
-	*
-	* @param productVersionId the primary key of the s c product version
-	* @return the s c product version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException if a s c product version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion findByPrimaryKey(
-		long productVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.softwarecatalog.NoSuchProductVersionException {
-		return getPersistence().findByPrimaryKey(productVersionId);
-	}
-
-	/**
-	* Returns the s c product version with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param productVersionId the primary key of the s c product version
-	* @return the s c product version, or <code>null</code> if a s c product version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion fetchByPrimaryKey(
-		long productVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(productVersionId);
-	}
-
-	/**
 	* Returns all the s c product versions where productEntryId = &#63;.
 	*
 	* @param productEntryId the product entry ID
@@ -207,7 +127,7 @@ public class SCProductVersionUtil {
 	* Returns a range of all the s c product versions where productEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductVersionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param productEntryId the product entry ID
@@ -226,7 +146,7 @@ public class SCProductVersionUtil {
 	* Returns an ordered range of all the s c product versions where productEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductVersionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param productEntryId the product entry ID
@@ -335,6 +255,29 @@ public class SCProductVersionUtil {
 	}
 
 	/**
+	* Removes all the s c product versions where productEntryId = &#63; from the database.
+	*
+	* @param productEntryId the product entry ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByProductEntryId(long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByProductEntryId(productEntryId);
+	}
+
+	/**
+	* Returns the number of s c product versions where productEntryId = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @return the number of matching s c product versions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByProductEntryId(long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByProductEntryId(productEntryId);
+	}
+
+	/**
 	* Returns the s c product version where directDownloadURL = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductVersionException} if it could not be found.
 	*
 	* @param directDownloadURL the direct download u r l
@@ -379,6 +322,113 @@ public class SCProductVersionUtil {
 	}
 
 	/**
+	* Removes the s c product version where directDownloadURL = &#63; from the database.
+	*
+	* @param directDownloadURL the direct download u r l
+	* @return the s c product version that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion removeByDirectDownloadURL(
+		java.lang.String directDownloadURL)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductVersionException {
+		return getPersistence().removeByDirectDownloadURL(directDownloadURL);
+	}
+
+	/**
+	* Returns the number of s c product versions where directDownloadURL = &#63;.
+	*
+	* @param directDownloadURL the direct download u r l
+	* @return the number of matching s c product versions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByDirectDownloadURL(
+		java.lang.String directDownloadURL)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByDirectDownloadURL(directDownloadURL);
+	}
+
+	/**
+	* Caches the s c product version in the entity cache if it is enabled.
+	*
+	* @param scProductVersion the s c product version
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion) {
+		getPersistence().cacheResult(scProductVersion);
+	}
+
+	/**
+	* Caches the s c product versions in the entity cache if it is enabled.
+	*
+	* @param scProductVersions the s c product versions
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> scProductVersions) {
+		getPersistence().cacheResult(scProductVersions);
+	}
+
+	/**
+	* Creates a new s c product version with the primary key. Does not add the s c product version to the database.
+	*
+	* @param productVersionId the primary key for the new s c product version
+	* @return the new s c product version
+	*/
+	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion create(
+		long productVersionId) {
+		return getPersistence().create(productVersionId);
+	}
+
+	/**
+	* Removes the s c product version with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param productVersionId the primary key of the s c product version
+	* @return the s c product version that was removed
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException if a s c product version with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion remove(
+		long productVersionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductVersionException {
+		return getPersistence().remove(productVersionId);
+	}
+
+	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion updateImpl(
+		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(scProductVersion);
+	}
+
+	/**
+	* Returns the s c product version with the primary key or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductVersionException} if it could not be found.
+	*
+	* @param productVersionId the primary key of the s c product version
+	* @return the s c product version
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException if a s c product version with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion findByPrimaryKey(
+		long productVersionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductVersionException {
+		return getPersistence().findByPrimaryKey(productVersionId);
+	}
+
+	/**
+	* Returns the s c product version with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param productVersionId the primary key of the s c product version
+	* @return the s c product version, or <code>null</code> if a s c product version with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion fetchByPrimaryKey(
+		long productVersionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(productVersionId);
+	}
+
+	/**
 	* Returns all the s c product versions.
 	*
 	* @return the s c product versions
@@ -393,7 +443,7 @@ public class SCProductVersionUtil {
 	* Returns a range of all the s c product versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductVersionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s c product versions
@@ -411,7 +461,7 @@ public class SCProductVersionUtil {
 	* Returns an ordered range of all the s c product versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductVersionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s c product versions
@@ -428,31 +478,6 @@ public class SCProductVersionUtil {
 	}
 
 	/**
-	* Removes all the s c product versions where productEntryId = &#63; from the database.
-	*
-	* @param productEntryId the product entry ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByProductEntryId(long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByProductEntryId(productEntryId);
-	}
-
-	/**
-	* Removes the s c product version where directDownloadURL = &#63; from the database.
-	*
-	* @param directDownloadURL the direct download u r l
-	* @return the s c product version that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion removeByDirectDownloadURL(
-		java.lang.String directDownloadURL)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.softwarecatalog.NoSuchProductVersionException {
-		return getPersistence().removeByDirectDownloadURL(directDownloadURL);
-	}
-
-	/**
 	* Removes all the s c product versions from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -460,31 +485,6 @@ public class SCProductVersionUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of s c product versions where productEntryId = &#63;.
-	*
-	* @param productEntryId the product entry ID
-	* @return the number of matching s c product versions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByProductEntryId(long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByProductEntryId(productEntryId);
-	}
-
-	/**
-	* Returns the number of s c product versions where directDownloadURL = &#63;.
-	*
-	* @param directDownloadURL the direct download u r l
-	* @return the number of matching s c product versions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByDirectDownloadURL(
-		java.lang.String directDownloadURL)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByDirectDownloadURL(directDownloadURL);
 	}
 
 	/**
@@ -514,7 +514,7 @@ public class SCProductVersionUtil {
 	* Returns a range of all the s c framework versions associated with the s c product version.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductVersionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the s c product version
@@ -533,7 +533,7 @@ public class SCProductVersionUtil {
 	* Returns an ordered range of all the s c framework versions associated with the s c product version.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductVersionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the s c product version

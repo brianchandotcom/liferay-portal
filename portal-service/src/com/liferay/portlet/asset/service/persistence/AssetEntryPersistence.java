@@ -38,70 +38,6 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	 */
 
 	/**
-	* Caches the asset entry in the entity cache if it is enabled.
-	*
-	* @param assetEntry the asset entry
-	*/
-	public void cacheResult(
-		com.liferay.portlet.asset.model.AssetEntry assetEntry);
-
-	/**
-	* Caches the asset entries in the entity cache if it is enabled.
-	*
-	* @param assetEntries the asset entries
-	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portlet.asset.model.AssetEntry> assetEntries);
-
-	/**
-	* Creates a new asset entry with the primary key. Does not add the asset entry to the database.
-	*
-	* @param entryId the primary key for the new asset entry
-	* @return the new asset entry
-	*/
-	public com.liferay.portlet.asset.model.AssetEntry create(long entryId);
-
-	/**
-	* Removes the asset entry with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param entryId the primary key of the asset entry
-	* @return the asset entry that was removed
-	* @throws com.liferay.portlet.asset.NoSuchEntryException if a asset entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.asset.model.AssetEntry remove(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchEntryException;
-
-	public com.liferay.portlet.asset.model.AssetEntry updateImpl(
-		com.liferay.portlet.asset.model.AssetEntry assetEntry)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the asset entry with the primary key or throws a {@link com.liferay.portlet.asset.NoSuchEntryException} if it could not be found.
-	*
-	* @param entryId the primary key of the asset entry
-	* @return the asset entry
-	* @throws com.liferay.portlet.asset.NoSuchEntryException if a asset entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.asset.model.AssetEntry findByPrimaryKey(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchEntryException;
-
-	/**
-	* Returns the asset entry with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param entryId the primary key of the asset entry
-	* @return the asset entry, or <code>null</code> if a asset entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.asset.model.AssetEntry fetchByPrimaryKey(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the asset entries where companyId = &#63;.
 	*
 	* @param companyId the company ID
@@ -116,7 +52,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns a range of all the asset entries where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -133,7 +69,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns an ordered range of all the asset entries where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -221,6 +157,25 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 			com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
+	* Removes all the asset entries where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of asset entries where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching asset entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the asset entries where visible = &#63;.
 	*
 	* @param visible the visible
@@ -235,7 +190,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns a range of all the asset entries where visible = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param visible the visible
@@ -252,7 +207,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns an ordered range of all the asset entries where visible = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param visible the visible
@@ -340,6 +295,25 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 			com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
+	* Removes all the asset entries where visible = &#63; from the database.
+	*
+	* @param visible the visible
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByVisible(boolean visible)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of asset entries where visible = &#63;.
+	*
+	* @param visible the visible
+	* @return the number of matching asset entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByVisible(boolean visible)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the asset entries where publishDate = &#63;.
 	*
 	* @param publishDate the publish date
@@ -354,7 +328,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns a range of all the asset entries where publishDate = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param publishDate the publish date
@@ -371,7 +345,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns an ordered range of all the asset entries where publishDate = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param publishDate the publish date
@@ -459,6 +433,25 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 			com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
+	* Removes all the asset entries where publishDate = &#63; from the database.
+	*
+	* @param publishDate the publish date
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByPublishDate(java.util.Date publishDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of asset entries where publishDate = &#63;.
+	*
+	* @param publishDate the publish date
+	* @return the number of matching asset entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByPublishDate(java.util.Date publishDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the asset entries where expirationDate = &#63;.
 	*
 	* @param expirationDate the expiration date
@@ -473,7 +466,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns a range of all the asset entries where expirationDate = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param expirationDate the expiration date
@@ -490,7 +483,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns an ordered range of all the asset entries where expirationDate = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param expirationDate the expiration date
@@ -578,6 +571,25 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 			com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
+	* Removes all the asset entries where expirationDate = &#63; from the database.
+	*
+	* @param expirationDate the expiration date
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByExpirationDate(java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of asset entries where expirationDate = &#63;.
+	*
+	* @param expirationDate the expiration date
+	* @return the number of matching asset entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByExpirationDate(java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the asset entries where layoutUuid = &#63;.
 	*
 	* @param layoutUuid the layout uuid
@@ -592,7 +604,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns a range of all the asset entries where layoutUuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param layoutUuid the layout uuid
@@ -609,7 +621,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns an ordered range of all the asset entries where layoutUuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param layoutUuid the layout uuid
@@ -697,6 +709,25 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 			com.liferay.portlet.asset.NoSuchEntryException;
 
 	/**
+	* Removes all the asset entries where layoutUuid = &#63; from the database.
+	*
+	* @param layoutUuid the layout uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByLayoutUuid(java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of asset entries where layoutUuid = &#63;.
+	*
+	* @param layoutUuid the layout uuid
+	* @return the number of matching asset entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByLayoutUuid(java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the asset entry where groupId = &#63; and classUuid = &#63; or throws a {@link com.liferay.portlet.asset.NoSuchEntryException} if it could not be found.
 	*
 	* @param groupId the group ID
@@ -733,6 +764,30 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public com.liferay.portlet.asset.model.AssetEntry fetchByG_CU(
 		long groupId, java.lang.String classUuid, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the asset entry where groupId = &#63; and classUuid = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classUuid the class uuid
+	* @return the asset entry that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.asset.model.AssetEntry removeByG_CU(
+		long groupId, java.lang.String classUuid)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.asset.NoSuchEntryException;
+
+	/**
+	* Returns the number of asset entries where groupId = &#63; and classUuid = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classUuid the class uuid
+	* @return the number of matching asset entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByG_CU(long groupId, java.lang.String classUuid)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -775,6 +830,94 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the asset entry where classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the asset entry that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.asset.model.AssetEntry removeByC_C(
+		long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.asset.NoSuchEntryException;
+
+	/**
+	* Returns the number of asset entries where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching asset entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_C(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Caches the asset entry in the entity cache if it is enabled.
+	*
+	* @param assetEntry the asset entry
+	*/
+	public void cacheResult(
+		com.liferay.portlet.asset.model.AssetEntry assetEntry);
+
+	/**
+	* Caches the asset entries in the entity cache if it is enabled.
+	*
+	* @param assetEntries the asset entries
+	*/
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.asset.model.AssetEntry> assetEntries);
+
+	/**
+	* Creates a new asset entry with the primary key. Does not add the asset entry to the database.
+	*
+	* @param entryId the primary key for the new asset entry
+	* @return the new asset entry
+	*/
+	public com.liferay.portlet.asset.model.AssetEntry create(long entryId);
+
+	/**
+	* Removes the asset entry with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param entryId the primary key of the asset entry
+	* @return the asset entry that was removed
+	* @throws com.liferay.portlet.asset.NoSuchEntryException if a asset entry with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.asset.model.AssetEntry remove(long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.asset.NoSuchEntryException;
+
+	public com.liferay.portlet.asset.model.AssetEntry updateImpl(
+		com.liferay.portlet.asset.model.AssetEntry assetEntry)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the asset entry with the primary key or throws a {@link com.liferay.portlet.asset.NoSuchEntryException} if it could not be found.
+	*
+	* @param entryId the primary key of the asset entry
+	* @return the asset entry
+	* @throws com.liferay.portlet.asset.NoSuchEntryException if a asset entry with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.asset.model.AssetEntry findByPrimaryKey(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.asset.NoSuchEntryException;
+
+	/**
+	* Returns the asset entry with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param entryId the primary key of the asset entry
+	* @return the asset entry, or <code>null</code> if a asset entry with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.asset.model.AssetEntry fetchByPrimaryKey(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the asset entries.
 	*
 	* @return the asset entries
@@ -787,7 +930,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns a range of all the asset entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of asset entries
@@ -803,7 +946,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns an ordered range of all the asset entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of asset entries
@@ -818,154 +961,11 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the asset entries where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the asset entries where visible = &#63; from the database.
-	*
-	* @param visible the visible
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByVisible(boolean visible)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the asset entries where publishDate = &#63; from the database.
-	*
-	* @param publishDate the publish date
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByPublishDate(java.util.Date publishDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the asset entries where expirationDate = &#63; from the database.
-	*
-	* @param expirationDate the expiration date
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByExpirationDate(java.util.Date expirationDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the asset entries where layoutUuid = &#63; from the database.
-	*
-	* @param layoutUuid the layout uuid
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByLayoutUuid(java.lang.String layoutUuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the asset entry where groupId = &#63; and classUuid = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param classUuid the class uuid
-	* @return the asset entry that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.asset.model.AssetEntry removeByG_CU(
-		long groupId, java.lang.String classUuid)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchEntryException;
-
-	/**
-	* Removes the asset entry where classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the asset entry that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.asset.model.AssetEntry removeByC_C(
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchEntryException;
-
-	/**
 	* Removes all the asset entries from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of asset entries where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching asset entries
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of asset entries where visible = &#63;.
-	*
-	* @param visible the visible
-	* @return the number of matching asset entries
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByVisible(boolean visible)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of asset entries where publishDate = &#63;.
-	*
-	* @param publishDate the publish date
-	* @return the number of matching asset entries
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByPublishDate(java.util.Date publishDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of asset entries where expirationDate = &#63;.
-	*
-	* @param expirationDate the expiration date
-	* @return the number of matching asset entries
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByExpirationDate(java.util.Date expirationDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of asset entries where layoutUuid = &#63;.
-	*
-	* @param layoutUuid the layout uuid
-	* @return the number of matching asset entries
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByLayoutUuid(java.lang.String layoutUuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of asset entries where groupId = &#63; and classUuid = &#63;.
-	*
-	* @param groupId the group ID
-	* @param classUuid the class uuid
-	* @return the number of matching asset entries
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByG_CU(long groupId, java.lang.String classUuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of asset entries where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching asset entries
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -991,7 +991,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns a range of all the asset categories associated with the asset entry.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the asset entry
@@ -1008,7 +1008,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns an ordered range of all the asset categories associated with the asset entry.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the asset entry
@@ -1182,7 +1182,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns a range of all the asset tags associated with the asset entry.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the asset entry
@@ -1199,7 +1199,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* Returns an ordered range of all the asset tags associated with the asset entry.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetEntryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the asset entry

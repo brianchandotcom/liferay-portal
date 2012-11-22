@@ -112,86 +112,6 @@ public class ShoppingItemFieldUtil {
 	}
 
 	/**
-	* Caches the shopping item field in the entity cache if it is enabled.
-	*
-	* @param shoppingItemField the shopping item field
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.shopping.model.ShoppingItemField shoppingItemField) {
-		getPersistence().cacheResult(shoppingItemField);
-	}
-
-	/**
-	* Caches the shopping item fields in the entity cache if it is enabled.
-	*
-	* @param shoppingItemFields the shopping item fields
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> shoppingItemFields) {
-		getPersistence().cacheResult(shoppingItemFields);
-	}
-
-	/**
-	* Creates a new shopping item field with the primary key. Does not add the shopping item field to the database.
-	*
-	* @param itemFieldId the primary key for the new shopping item field
-	* @return the new shopping item field
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItemField create(
-		long itemFieldId) {
-		return getPersistence().create(itemFieldId);
-	}
-
-	/**
-	* Removes the shopping item field with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param itemFieldId the primary key of the shopping item field
-	* @return the shopping item field that was removed
-	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItemField remove(
-		long itemFieldId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemFieldException {
-		return getPersistence().remove(itemFieldId);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingItemField updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingItemField shoppingItemField)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(shoppingItemField);
-	}
-
-	/**
-	* Returns the shopping item field with the primary key or throws a {@link com.liferay.portlet.shopping.NoSuchItemFieldException} if it could not be found.
-	*
-	* @param itemFieldId the primary key of the shopping item field
-	* @return the shopping item field
-	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItemField findByPrimaryKey(
-		long itemFieldId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemFieldException {
-		return getPersistence().findByPrimaryKey(itemFieldId);
-	}
-
-	/**
-	* Returns the shopping item field with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param itemFieldId the primary key of the shopping item field
-	* @return the shopping item field, or <code>null</code> if a shopping item field with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItemField fetchByPrimaryKey(
-		long itemFieldId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(itemFieldId);
-	}
-
-	/**
 	* Returns all the shopping item fields where itemId = &#63;.
 	*
 	* @param itemId the item ID
@@ -207,7 +127,7 @@ public class ShoppingItemFieldUtil {
 	* Returns a range of all the shopping item fields where itemId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemFieldModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param itemId the item ID
@@ -226,7 +146,7 @@ public class ShoppingItemFieldUtil {
 	* Returns an ordered range of all the shopping item fields where itemId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemFieldModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param itemId the item ID
@@ -329,6 +249,109 @@ public class ShoppingItemFieldUtil {
 	}
 
 	/**
+	* Removes all the shopping item fields where itemId = &#63; from the database.
+	*
+	* @param itemId the item ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByItemId(long itemId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByItemId(itemId);
+	}
+
+	/**
+	* Returns the number of shopping item fields where itemId = &#63;.
+	*
+	* @param itemId the item ID
+	* @return the number of matching shopping item fields
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByItemId(long itemId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByItemId(itemId);
+	}
+
+	/**
+	* Caches the shopping item field in the entity cache if it is enabled.
+	*
+	* @param shoppingItemField the shopping item field
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.shopping.model.ShoppingItemField shoppingItemField) {
+		getPersistence().cacheResult(shoppingItemField);
+	}
+
+	/**
+	* Caches the shopping item fields in the entity cache if it is enabled.
+	*
+	* @param shoppingItemFields the shopping item fields
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> shoppingItemFields) {
+		getPersistence().cacheResult(shoppingItemFields);
+	}
+
+	/**
+	* Creates a new shopping item field with the primary key. Does not add the shopping item field to the database.
+	*
+	* @param itemFieldId the primary key for the new shopping item field
+	* @return the new shopping item field
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingItemField create(
+		long itemFieldId) {
+		return getPersistence().create(itemFieldId);
+	}
+
+	/**
+	* Removes the shopping item field with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param itemFieldId the primary key of the shopping item field
+	* @return the shopping item field that was removed
+	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingItemField remove(
+		long itemFieldId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchItemFieldException {
+		return getPersistence().remove(itemFieldId);
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingItemField updateImpl(
+		com.liferay.portlet.shopping.model.ShoppingItemField shoppingItemField)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(shoppingItemField);
+	}
+
+	/**
+	* Returns the shopping item field with the primary key or throws a {@link com.liferay.portlet.shopping.NoSuchItemFieldException} if it could not be found.
+	*
+	* @param itemFieldId the primary key of the shopping item field
+	* @return the shopping item field
+	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingItemField findByPrimaryKey(
+		long itemFieldId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchItemFieldException {
+		return getPersistence().findByPrimaryKey(itemFieldId);
+	}
+
+	/**
+	* Returns the shopping item field with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param itemFieldId the primary key of the shopping item field
+	* @return the shopping item field, or <code>null</code> if a shopping item field with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingItemField fetchByPrimaryKey(
+		long itemFieldId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(itemFieldId);
+	}
+
+	/**
 	* Returns all the shopping item fields.
 	*
 	* @return the shopping item fields
@@ -343,7 +366,7 @@ public class ShoppingItemFieldUtil {
 	* Returns a range of all the shopping item fields.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemFieldModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping item fields
@@ -361,7 +384,7 @@ public class ShoppingItemFieldUtil {
 	* Returns an ordered range of all the shopping item fields.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemFieldModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping item fields
@@ -378,17 +401,6 @@ public class ShoppingItemFieldUtil {
 	}
 
 	/**
-	* Removes all the shopping item fields where itemId = &#63; from the database.
-	*
-	* @param itemId the item ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByItemId(long itemId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByItemId(itemId);
-	}
-
-	/**
 	* Removes all the shopping item fields from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -396,18 +408,6 @@ public class ShoppingItemFieldUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of shopping item fields where itemId = &#63;.
-	*
-	* @param itemId the item ID
-	* @return the number of matching shopping item fields
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByItemId(long itemId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByItemId(itemId);
 	}
 
 	/**

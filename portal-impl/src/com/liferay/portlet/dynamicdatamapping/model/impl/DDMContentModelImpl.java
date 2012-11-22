@@ -80,6 +80,8 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		};
 	public static final String TABLE_SQL_CREATE = "create table DDMContent (uuid_ VARCHAR(75) null,contentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,xml TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMContent";
+	public static final String ORDER_BY_JPQL = " ORDER BY ddmContent.contentId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY DDMContent.contentId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -95,6 +97,7 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long GROUPID_COLUMN_BITMASK = 2L;
 	public static long UUID_COLUMN_BITMASK = 4L;
+	public static long CONTENTID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.dynamicdatamapping.model.DDMContent"));
 

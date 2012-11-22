@@ -12,7 +12,7 @@
 				${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.class.getName(),
 			</#list>
 
-			"java.lang.Integer", "java.lang.Integer", "com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(), OrderByComparator.class.getName()
 		});
 
 	<#if !finder.hasCustomComparator()>
@@ -42,11 +42,24 @@
 						|
 					</#if>
 				</#list>
+
+				<#if entity.getOrder()??>
+					<#assign orderList = entity.getOrder().getColumns()>
+					<#assign pkList = entity.getPKList()>
+
+					<#list orderList as order>
+						<#if !finderColsList?seq_contains(order) && !pkList?seq_contains(order)>
+							| ${entity.name}ModelImpl.${order.name?upper_case}_COLUMN_BITMASK
+						</#if>
+					</#list>
+				</#if>
 			</#if>
 
 			);
 	</#if>
-<#else>
+</#if>
+
+<#if finder.isUnique() || !finder.isCollection()>
 	public static final FinderPath FINDER_PATH_FETCH_BY_${finder.name?upper_case} = new FinderPath(
 		${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 		${entity.name}ModelImpl.FINDER_CACHE_ENABLED,

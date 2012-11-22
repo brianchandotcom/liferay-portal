@@ -66,9 +66,6 @@ if (orderByComparator != null) {
 		}
 	}
 }
-
-<#if entity.getOrder()??>
-	else {
-		query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
-	}
-</#if>
+else {
+	query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+}

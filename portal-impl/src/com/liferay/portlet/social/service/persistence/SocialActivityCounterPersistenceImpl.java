@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
@@ -77,6 +78,17 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
+			SocialActivityCounterModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivityCounterImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
+			SocialActivityCounterModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivityCounterImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
+			SocialActivityCounterModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C = new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityCounterModelImpl.FINDER_CACHE_ENABLED,
 			SocialActivityCounterImpl.class,
@@ -84,8 +96,8 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C = new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityCounterModelImpl.FINDER_CACHE_ENABLED,
@@ -98,6 +110,503 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			SocialActivityCounterModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns all the social activity counters where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @return the matching social activity counters
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SocialActivityCounter> findByC_C(long classNameId, long classPK)
+		throws SystemException {
+		return findByC_C(classNameId, classPK, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the social activity counters where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SocialActivityCounterModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of social activity counters
+	 * @param end the upper bound of the range of social activity counters (not inclusive)
+	 * @return the range of matching social activity counters
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SocialActivityCounter> findByC_C(long classNameId,
+		long classPK, int start, int end) throws SystemException {
+		return findByC_C(classNameId, classPK, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the social activity counters where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SocialActivityCounterModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of social activity counters
+	 * @param end the upper bound of the range of social activity counters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching social activity counters
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SocialActivityCounter> findByC_C(long classNameId,
+		long classPK, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C;
+			finderArgs = new Object[] { classNameId, classPK };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C;
+			finderArgs = new Object[] {
+					classNameId, classPK,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<SocialActivityCounter> list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialActivityCounter socialActivityCounter : list) {
+				if ((classNameId != socialActivityCounter.getClassNameId()) ||
+						(classPK != socialActivityCounter.getClassPK())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(SocialActivityCounterModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (!pagination) {
+					list = (List<SocialActivityCounter>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<SocialActivityCounter>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity counter
+	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter findByC_C_First(long classNameId,
+		long classPK, OrderByComparator orderByComparator)
+		throws NoSuchActivityCounterException, SystemException {
+		SocialActivityCounter socialActivityCounter = fetchByC_C_First(classNameId,
+				classPK, orderByComparator);
+
+		if (socialActivityCounter != null) {
+			return socialActivityCounter;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityCounterException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter fetchByC_C_First(long classNameId,
+		long classPK, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<SocialActivityCounter> list = findByC_C(classNameId, classPK, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity counter
+	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter findByC_C_Last(long classNameId, long classPK,
+		OrderByComparator orderByComparator)
+		throws NoSuchActivityCounterException, SystemException {
+		SocialActivityCounter socialActivityCounter = fetchByC_C_Last(classNameId,
+				classPK, orderByComparator);
+
+		if (socialActivityCounter != null) {
+			return socialActivityCounter;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityCounterException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter fetchByC_C_Last(long classNameId,
+		long classPK, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByC_C(classNameId, classPK);
+
+		List<SocialActivityCounter> list = findByC_C(classNameId, classPK,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the social activity counters before and after the current social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param activityCounterId the primary key of the current social activity counter
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next social activity counter
+	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a social activity counter with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter[] findByC_C_PrevAndNext(
+		long activityCounterId, long classNameId, long classPK,
+		OrderByComparator orderByComparator)
+		throws NoSuchActivityCounterException, SystemException {
+		SocialActivityCounter socialActivityCounter = findByPrimaryKey(activityCounterId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SocialActivityCounter[] array = new SocialActivityCounterImpl[3];
+
+			array[0] = getByC_C_PrevAndNext(session, socialActivityCounter,
+					classNameId, classPK, orderByComparator, true);
+
+			array[1] = socialActivityCounter;
+
+			array[2] = getByC_C_PrevAndNext(session, socialActivityCounter,
+					classNameId, classPK, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SocialActivityCounter getByC_C_PrevAndNext(Session session,
+		SocialActivityCounter socialActivityCounter, long classNameId,
+		long classPK, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
+
+		query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(SocialActivityCounterModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(classNameId);
+
+		qPos.add(classPK);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(socialActivityCounter);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<SocialActivityCounter> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the social activity counters where classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByC_C(long classNameId, long classPK)
+		throws SystemException {
+		for (SocialActivityCounter socialActivityCounter : findByC_C(
+				classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(socialActivityCounter);
+		}
+	}
+
+	/**
+	 * Returns the number of social activity counters where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @return the number of matching social activity counters
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByC_C(long classNameId, long classPK)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C;
+
+		Object[] finderArgs = new Object[] { classNameId, classPK };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "socialActivityCounter.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "socialActivityCounter.classPK = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_O = new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityCounterModelImpl.FINDER_CACHE_ENABLED,
 			SocialActivityCounterImpl.class,
@@ -106,8 +615,8 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_O =
 		new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
@@ -129,6 +638,574 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			});
+
+	/**
+	 * Returns all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param ownerType the owner type
+	 * @return the matching social activity counters
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SocialActivityCounter> findByG_C_C_O(long groupId,
+		long classNameId, long classPK, int ownerType)
+		throws SystemException {
+		return findByG_C_C_O(groupId, classNameId, classPK, ownerType,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SocialActivityCounterModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param ownerType the owner type
+	 * @param start the lower bound of the range of social activity counters
+	 * @param end the upper bound of the range of social activity counters (not inclusive)
+	 * @return the range of matching social activity counters
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SocialActivityCounter> findByG_C_C_O(long groupId,
+		long classNameId, long classPK, int ownerType, int start, int end)
+		throws SystemException {
+		return findByG_C_C_O(groupId, classNameId, classPK, ownerType, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SocialActivityCounterModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param ownerType the owner type
+	 * @param start the lower bound of the range of social activity counters
+	 * @param end the upper bound of the range of social activity counters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching social activity counters
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SocialActivityCounter> findByG_C_C_O(long groupId,
+		long classNameId, long classPK, int ownerType, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_O;
+			finderArgs = new Object[] { groupId, classNameId, classPK, ownerType };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_O;
+			finderArgs = new Object[] {
+					groupId, classNameId, classPK, ownerType,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<SocialActivityCounter> list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialActivityCounter socialActivityCounter : list) {
+				if ((groupId != socialActivityCounter.getGroupId()) ||
+						(classNameId != socialActivityCounter.getClassNameId()) ||
+						(classPK != socialActivityCounter.getClassPK()) ||
+						(ownerType != socialActivityCounter.getOwnerType())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(6 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(6);
+			}
+
+			query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_O_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_O_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_O_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_O_OWNERTYPE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(SocialActivityCounterModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				qPos.add(ownerType);
+
+				if (!pagination) {
+					list = (List<SocialActivityCounter>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<SocialActivityCounter>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param ownerType the owner type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity counter
+	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter findByG_C_C_O_First(long groupId,
+		long classNameId, long classPK, int ownerType,
+		OrderByComparator orderByComparator)
+		throws NoSuchActivityCounterException, SystemException {
+		SocialActivityCounter socialActivityCounter = fetchByG_C_C_O_First(groupId,
+				classNameId, classPK, ownerType, orderByComparator);
+
+		if (socialActivityCounter != null) {
+			return socialActivityCounter;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append(", ownerType=");
+		msg.append(ownerType);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityCounterException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param ownerType the owner type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter fetchByG_C_C_O_First(long groupId,
+		long classNameId, long classPK, int ownerType,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<SocialActivityCounter> list = findByG_C_C_O(groupId, classNameId,
+				classPK, ownerType, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param ownerType the owner type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity counter
+	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter findByG_C_C_O_Last(long groupId,
+		long classNameId, long classPK, int ownerType,
+		OrderByComparator orderByComparator)
+		throws NoSuchActivityCounterException, SystemException {
+		SocialActivityCounter socialActivityCounter = fetchByG_C_C_O_Last(groupId,
+				classNameId, classPK, ownerType, orderByComparator);
+
+		if (socialActivityCounter != null) {
+			return socialActivityCounter;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append(", ownerType=");
+		msg.append(ownerType);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivityCounterException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param ownerType the owner type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter fetchByG_C_C_O_Last(long groupId,
+		long classNameId, long classPK, int ownerType,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByG_C_C_O(groupId, classNameId, classPK, ownerType);
+
+		List<SocialActivityCounter> list = findByG_C_C_O(groupId, classNameId,
+				classPK, ownerType, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the social activity counters before and after the current social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
+	 *
+	 * @param activityCounterId the primary key of the current social activity counter
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param ownerType the owner type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next social activity counter
+	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a social activity counter with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter[] findByG_C_C_O_PrevAndNext(
+		long activityCounterId, long groupId, long classNameId, long classPK,
+		int ownerType, OrderByComparator orderByComparator)
+		throws NoSuchActivityCounterException, SystemException {
+		SocialActivityCounter socialActivityCounter = findByPrimaryKey(activityCounterId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SocialActivityCounter[] array = new SocialActivityCounterImpl[3];
+
+			array[0] = getByG_C_C_O_PrevAndNext(session, socialActivityCounter,
+					groupId, classNameId, classPK, ownerType,
+					orderByComparator, true);
+
+			array[1] = socialActivityCounter;
+
+			array[2] = getByG_C_C_O_PrevAndNext(session, socialActivityCounter,
+					groupId, classNameId, classPK, ownerType,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SocialActivityCounter getByG_C_C_O_PrevAndNext(Session session,
+		SocialActivityCounter socialActivityCounter, long groupId,
+		long classNameId, long classPK, int ownerType,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
+
+		query.append(_FINDER_COLUMN_G_C_C_O_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_O_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_O_CLASSPK_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_O_OWNERTYPE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(SocialActivityCounterModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classPK);
+
+		qPos.add(ownerType);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(socialActivityCounter);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<SocialActivityCounter> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param ownerType the owner type
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByG_C_C_O(long groupId, long classNameId, long classPK,
+		int ownerType) throws SystemException {
+		for (SocialActivityCounter socialActivityCounter : findByG_C_C_O(
+				groupId, classNameId, classPK, ownerType, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(socialActivityCounter);
+		}
+	}
+
+	/**
+	 * Returns the number of social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param ownerType the owner type
+	 * @return the number of matching social activity counters
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByG_C_C_O(long groupId, long classNameId, long classPK,
+		int ownerType) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_O;
+
+		Object[] finderArgs = new Object[] {
+				groupId, classNameId, classPK, ownerType
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_O_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_O_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_O_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_O_OWNERTYPE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				qPos.add(ownerType);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_C_O_GROUPID_2 = "socialActivityCounter.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_O_CLASSNAMEID_2 = "socialActivityCounter.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_O_CLASSPK_2 = "socialActivityCounter.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_O_OWNERTYPE_2 = "socialActivityCounter.ownerType = ? AND socialActivityCounter.endPeriod = -1";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_N_O_S = new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityCounterModelImpl.FINDER_CACHE_ENABLED,
 			SocialActivityCounterImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -152,6 +1229,337 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName()
 			});
+
+	/**
+	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or throws a {@link com.liferay.portlet.social.NoSuchActivityCounterException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param name the name
+	 * @param ownerType the owner type
+	 * @param startPeriod the start period
+	 * @return the matching social activity counter
+	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter findByG_C_C_N_O_S(long groupId,
+		long classNameId, long classPK, String name, int ownerType,
+		int startPeriod) throws NoSuchActivityCounterException, SystemException {
+		SocialActivityCounter socialActivityCounter = fetchByG_C_C_N_O_S(groupId,
+				classNameId, classPK, name, ownerType, startPeriod);
+
+		if (socialActivityCounter == null) {
+			StringBundler msg = new StringBundler(14);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(", name=");
+			msg.append(name);
+
+			msg.append(", ownerType=");
+			msg.append(ownerType);
+
+			msg.append(", startPeriod=");
+			msg.append(startPeriod);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchActivityCounterException(msg.toString());
+		}
+
+		return socialActivityCounter;
+	}
+
+	/**
+	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param name the name
+	 * @param ownerType the owner type
+	 * @param startPeriod the start period
+	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter fetchByG_C_C_N_O_S(long groupId,
+		long classNameId, long classPK, String name, int ownerType,
+		int startPeriod) throws SystemException {
+		return fetchByG_C_C_N_O_S(groupId, classNameId, classPK, name,
+			ownerType, startPeriod, true);
+	}
+
+	/**
+	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param name the name
+	 * @param ownerType the owner type
+	 * @param startPeriod the start period
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter fetchByG_C_C_N_O_S(long groupId,
+		long classNameId, long classPK, String name, int ownerType,
+		int startPeriod, boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				groupId, classNameId, classPK, name, ownerType, startPeriod
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_S,
+					finderArgs, this);
+		}
+
+		if (result instanceof SocialActivityCounter) {
+			SocialActivityCounter socialActivityCounter = (SocialActivityCounter)result;
+
+			if ((groupId != socialActivityCounter.getGroupId()) ||
+					(classNameId != socialActivityCounter.getClassNameId()) ||
+					(classPK != socialActivityCounter.getClassPK()) ||
+					!Validator.equals(name, socialActivityCounter.getName()) ||
+					(ownerType != socialActivityCounter.getOwnerType()) ||
+					(startPeriod != socialActivityCounter.getStartPeriod())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(8);
+
+			query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_S_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_S_CLASSPK_2);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_S_OWNERTYPE_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_S_STARTPERIOD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				qPos.add(ownerType);
+
+				qPos.add(startPeriod);
+
+				List<SocialActivityCounter> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_S,
+						finderArgs, list);
+				}
+				else {
+					SocialActivityCounter socialActivityCounter = list.get(0);
+
+					result = socialActivityCounter;
+
+					cacheResult(socialActivityCounter);
+
+					if ((socialActivityCounter.getGroupId() != groupId) ||
+							(socialActivityCounter.getClassNameId() != classNameId) ||
+							(socialActivityCounter.getClassPK() != classPK) ||
+							(socialActivityCounter.getName() == null) ||
+							!socialActivityCounter.getName().equals(name) ||
+							(socialActivityCounter.getOwnerType() != ownerType) ||
+							(socialActivityCounter.getStartPeriod() != startPeriod)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_S,
+							finderArgs, socialActivityCounter);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_S,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (SocialActivityCounter)result;
+		}
+	}
+
+	/**
+	 * Removes the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param name the name
+	 * @param ownerType the owner type
+	 * @param startPeriod the start period
+	 * @return the social activity counter that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter removeByG_C_C_N_O_S(long groupId,
+		long classNameId, long classPK, String name, int ownerType,
+		int startPeriod) throws NoSuchActivityCounterException, SystemException {
+		SocialActivityCounter socialActivityCounter = findByG_C_C_N_O_S(groupId,
+				classNameId, classPK, name, ownerType, startPeriod);
+
+		return remove(socialActivityCounter);
+	}
+
+	/**
+	 * Returns the number of social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param name the name
+	 * @param ownerType the owner type
+	 * @param startPeriod the start period
+	 * @return the number of matching social activity counters
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByG_C_C_N_O_S(long groupId, long classNameId, long classPK,
+		String name, int ownerType, int startPeriod) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_N_O_S;
+
+		Object[] finderArgs = new Object[] {
+				groupId, classNameId, classPK, name, ownerType, startPeriod
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(7);
+
+			query.append(_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_S_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_S_CLASSPK_2);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_S_OWNERTYPE_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_S_STARTPERIOD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				qPos.add(ownerType);
+
+				qPos.add(startPeriod);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_C_N_O_S_GROUPID_2 = "socialActivityCounter.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_S_CLASSNAMEID_2 = "socialActivityCounter.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_S_CLASSPK_2 = "socialActivityCounter.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_S_NAME_1 = "socialActivityCounter.name IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_S_NAME_2 = "socialActivityCounter.name = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_S_NAME_3 = "(socialActivityCounter.name IS NULL OR socialActivityCounter.name = ?) AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_S_OWNERTYPE_2 = "socialActivityCounter.ownerType = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_S_STARTPERIOD_2 = "socialActivityCounter.startPeriod = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_N_O_E = new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityCounterModelImpl.FINDER_CACHE_ENABLED,
 			SocialActivityCounterImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -175,17 +1583,337 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityCounterModelImpl.FINDER_CACHE_ENABLED,
-			SocialActivityCounterImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityCounterModelImpl.FINDER_CACHE_ENABLED,
-			SocialActivityCounterImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityCounterModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+
+	/**
+	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or throws a {@link com.liferay.portlet.social.NoSuchActivityCounterException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param name the name
+	 * @param ownerType the owner type
+	 * @param endPeriod the end period
+	 * @return the matching social activity counter
+	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter findByG_C_C_N_O_E(long groupId,
+		long classNameId, long classPK, String name, int ownerType,
+		int endPeriod) throws NoSuchActivityCounterException, SystemException {
+		SocialActivityCounter socialActivityCounter = fetchByG_C_C_N_O_E(groupId,
+				classNameId, classPK, name, ownerType, endPeriod);
+
+		if (socialActivityCounter == null) {
+			StringBundler msg = new StringBundler(14);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(", name=");
+			msg.append(name);
+
+			msg.append(", ownerType=");
+			msg.append(ownerType);
+
+			msg.append(", endPeriod=");
+			msg.append(endPeriod);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchActivityCounterException(msg.toString());
+		}
+
+		return socialActivityCounter;
+	}
+
+	/**
+	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param name the name
+	 * @param ownerType the owner type
+	 * @param endPeriod the end period
+	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter fetchByG_C_C_N_O_E(long groupId,
+		long classNameId, long classPK, String name, int ownerType,
+		int endPeriod) throws SystemException {
+		return fetchByG_C_C_N_O_E(groupId, classNameId, classPK, name,
+			ownerType, endPeriod, true);
+	}
+
+	/**
+	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param name the name
+	 * @param ownerType the owner type
+	 * @param endPeriod the end period
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter fetchByG_C_C_N_O_E(long groupId,
+		long classNameId, long classPK, String name, int ownerType,
+		int endPeriod, boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				groupId, classNameId, classPK, name, ownerType, endPeriod
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_E,
+					finderArgs, this);
+		}
+
+		if (result instanceof SocialActivityCounter) {
+			SocialActivityCounter socialActivityCounter = (SocialActivityCounter)result;
+
+			if ((groupId != socialActivityCounter.getGroupId()) ||
+					(classNameId != socialActivityCounter.getClassNameId()) ||
+					(classPK != socialActivityCounter.getClassPK()) ||
+					!Validator.equals(name, socialActivityCounter.getName()) ||
+					(ownerType != socialActivityCounter.getOwnerType()) ||
+					(endPeriod != socialActivityCounter.getEndPeriod())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(8);
+
+			query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_E_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_E_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_E_CLASSPK_2);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_E_OWNERTYPE_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_E_ENDPERIOD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				qPos.add(ownerType);
+
+				qPos.add(endPeriod);
+
+				List<SocialActivityCounter> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_E,
+						finderArgs, list);
+				}
+				else {
+					SocialActivityCounter socialActivityCounter = list.get(0);
+
+					result = socialActivityCounter;
+
+					cacheResult(socialActivityCounter);
+
+					if ((socialActivityCounter.getGroupId() != groupId) ||
+							(socialActivityCounter.getClassNameId() != classNameId) ||
+							(socialActivityCounter.getClassPK() != classPK) ||
+							(socialActivityCounter.getName() == null) ||
+							!socialActivityCounter.getName().equals(name) ||
+							(socialActivityCounter.getOwnerType() != ownerType) ||
+							(socialActivityCounter.getEndPeriod() != endPeriod)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_E,
+							finderArgs, socialActivityCounter);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_E,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (SocialActivityCounter)result;
+		}
+	}
+
+	/**
+	 * Removes the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param name the name
+	 * @param ownerType the owner type
+	 * @param endPeriod the end period
+	 * @return the social activity counter that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter removeByG_C_C_N_O_E(long groupId,
+		long classNameId, long classPK, String name, int ownerType,
+		int endPeriod) throws NoSuchActivityCounterException, SystemException {
+		SocialActivityCounter socialActivityCounter = findByG_C_C_N_O_E(groupId,
+				classNameId, classPK, name, ownerType, endPeriod);
+
+		return remove(socialActivityCounter);
+	}
+
+	/**
+	 * Returns the number of social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param name the name
+	 * @param ownerType the owner type
+	 * @param endPeriod the end period
+	 * @return the number of matching social activity counters
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByG_C_C_N_O_E(long groupId, long classNameId, long classPK,
+		String name, int ownerType, int endPeriod) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_N_O_E;
+
+		Object[] finderArgs = new Object[] {
+				groupId, classNameId, classPK, name, ownerType, endPeriod
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(7);
+
+			query.append(_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_E_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_E_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_E_CLASSPK_2);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_E_OWNERTYPE_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_N_O_E_ENDPERIOD_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				qPos.add(ownerType);
+
+				qPos.add(endPeriod);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_C_N_O_E_GROUPID_2 = "socialActivityCounter.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_E_CLASSNAMEID_2 = "socialActivityCounter.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_E_CLASSPK_2 = "socialActivityCounter.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_E_NAME_1 = "socialActivityCounter.name IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_E_NAME_2 = "socialActivityCounter.name = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_E_NAME_3 = "(socialActivityCounter.name IS NULL OR socialActivityCounter.name = ?) AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_E_OWNERTYPE_2 = "socialActivityCounter.ownerType = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_E_ENDPERIOD_2 = "socialActivityCounter.endPeriod = ?";
 
 	/**
 	 * Caches the social activity counter in the entity cache if it is enabled.
@@ -696,1332 +2424,33 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		if (socialActivityCounter == null) {
 			Session session = null;
 
-			boolean hasException = false;
-
 			try {
 				session = openSession();
 
 				socialActivityCounter = (SocialActivityCounter)session.get(SocialActivityCounterImpl.class,
 						Long.valueOf(activityCounterId));
-			}
-			catch (Exception e) {
-				hasException = true;
 
-				throw processException(e);
-			}
-			finally {
 				if (socialActivityCounter != null) {
 					cacheResult(socialActivityCounter);
 				}
-				else if (!hasException) {
+				else {
 					EntityCacheUtil.putResult(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
 						SocialActivityCounterImpl.class, activityCounterId,
 						_nullSocialActivityCounter);
 				}
+			}
+			catch (Exception e) {
+				EntityCacheUtil.removeResult(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
+					SocialActivityCounterImpl.class, activityCounterId);
 
+				throw processException(e);
+			}
+			finally {
 				closeSession(session);
 			}
 		}
 
 		return socialActivityCounter;
-	}
-
-	/**
-	 * Returns all the social activity counters where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @return the matching social activity counters
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SocialActivityCounter> findByC_C(long classNameId, long classPK)
-		throws SystemException {
-		return findByC_C(classNameId, classPK, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the social activity counters where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param start the lower bound of the range of social activity counters
-	 * @param end the upper bound of the range of social activity counters (not inclusive)
-	 * @return the range of matching social activity counters
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SocialActivityCounter> findByC_C(long classNameId,
-		long classPK, int start, int end) throws SystemException {
-		return findByC_C(classNameId, classPK, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the social activity counters where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param start the lower bound of the range of social activity counters
-	 * @param end the upper bound of the range of social activity counters (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching social activity counters
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SocialActivityCounter> findByC_C(long classNameId,
-		long classPK, int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C;
-			finderArgs = new Object[] { classNameId, classPK };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C;
-			finderArgs = new Object[] {
-					classNameId, classPK,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<SocialActivityCounter> list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialActivityCounter socialActivityCounter : list) {
-				if ((classNameId != socialActivityCounter.getClassNameId()) ||
-						(classPK != socialActivityCounter.getClassPK())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
-
-			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				list = (List<SocialActivityCounter>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching social activity counter
-	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter findByC_C_First(long classNameId,
-		long classPK, OrderByComparator orderByComparator)
-		throws NoSuchActivityCounterException, SystemException {
-		SocialActivityCounter socialActivityCounter = fetchByC_C_First(classNameId,
-				classPK, orderByComparator);
-
-		if (socialActivityCounter != null) {
-			return socialActivityCounter;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("classNameId=");
-		msg.append(classNameId);
-
-		msg.append(", classPK=");
-		msg.append(classPK);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchActivityCounterException(msg.toString());
-	}
-
-	/**
-	 * Returns the first social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter fetchByC_C_First(long classNameId,
-		long classPK, OrderByComparator orderByComparator)
-		throws SystemException {
-		List<SocialActivityCounter> list = findByC_C(classNameId, classPK, 0,
-				1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter
-	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter findByC_C_Last(long classNameId, long classPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchActivityCounterException, SystemException {
-		SocialActivityCounter socialActivityCounter = fetchByC_C_Last(classNameId,
-				classPK, orderByComparator);
-
-		if (socialActivityCounter != null) {
-			return socialActivityCounter;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("classNameId=");
-		msg.append(classNameId);
-
-		msg.append(", classPK=");
-		msg.append(classPK);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchActivityCounterException(msg.toString());
-	}
-
-	/**
-	 * Returns the last social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter fetchByC_C_Last(long classNameId,
-		long classPK, OrderByComparator orderByComparator)
-		throws SystemException {
-		int count = countByC_C(classNameId, classPK);
-
-		List<SocialActivityCounter> list = findByC_C(classNameId, classPK,
-				count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the social activity counters before and after the current social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param activityCounterId the primary key of the current social activity counter
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity counter
-	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a social activity counter with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter[] findByC_C_PrevAndNext(
-		long activityCounterId, long classNameId, long classPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchActivityCounterException, SystemException {
-		SocialActivityCounter socialActivityCounter = findByPrimaryKey(activityCounterId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SocialActivityCounter[] array = new SocialActivityCounterImpl[3];
-
-			array[0] = getByC_C_PrevAndNext(session, socialActivityCounter,
-					classNameId, classPK, orderByComparator, true);
-
-			array[1] = socialActivityCounter;
-
-			array[2] = getByC_C_PrevAndNext(session, socialActivityCounter,
-					classNameId, classPK, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SocialActivityCounter getByC_C_PrevAndNext(Session session,
-		SocialActivityCounter socialActivityCounter, long classNameId,
-		long classPK, OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
-
-		query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(classNameId);
-
-		qPos.add(classPK);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(socialActivityCounter);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<SocialActivityCounter> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param ownerType the owner type
-	 * @return the matching social activity counters
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SocialActivityCounter> findByG_C_C_O(long groupId,
-		long classNameId, long classPK, int ownerType)
-		throws SystemException {
-		return findByG_C_C_O(groupId, classNameId, classPK, ownerType,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param ownerType the owner type
-	 * @param start the lower bound of the range of social activity counters
-	 * @param end the upper bound of the range of social activity counters (not inclusive)
-	 * @return the range of matching social activity counters
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SocialActivityCounter> findByG_C_C_O(long groupId,
-		long classNameId, long classPK, int ownerType, int start, int end)
-		throws SystemException {
-		return findByG_C_C_O(groupId, classNameId, classPK, ownerType, start,
-			end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param ownerType the owner type
-	 * @param start the lower bound of the range of social activity counters
-	 * @param end the upper bound of the range of social activity counters (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching social activity counters
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SocialActivityCounter> findByG_C_C_O(long groupId,
-		long classNameId, long classPK, int ownerType, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_O;
-			finderArgs = new Object[] { groupId, classNameId, classPK, ownerType };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_O;
-			finderArgs = new Object[] {
-					groupId, classNameId, classPK, ownerType,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<SocialActivityCounter> list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialActivityCounter socialActivityCounter : list) {
-				if ((groupId != socialActivityCounter.getGroupId()) ||
-						(classNameId != socialActivityCounter.getClassNameId()) ||
-						(classPK != socialActivityCounter.getClassPK()) ||
-						(ownerType != socialActivityCounter.getOwnerType())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(6 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(5);
-			}
-
-			query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
-
-			query.append(_FINDER_COLUMN_G_C_C_O_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_O_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_O_CLASSPK_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_O_OWNERTYPE_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				qPos.add(ownerType);
-
-				list = (List<SocialActivityCounter>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param ownerType the owner type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching social activity counter
-	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter findByG_C_C_O_First(long groupId,
-		long classNameId, long classPK, int ownerType,
-		OrderByComparator orderByComparator)
-		throws NoSuchActivityCounterException, SystemException {
-		SocialActivityCounter socialActivityCounter = fetchByG_C_C_O_First(groupId,
-				classNameId, classPK, ownerType, orderByComparator);
-
-		if (socialActivityCounter != null) {
-			return socialActivityCounter;
-		}
-
-		StringBundler msg = new StringBundler(10);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", classNameId=");
-		msg.append(classNameId);
-
-		msg.append(", classPK=");
-		msg.append(classPK);
-
-		msg.append(", ownerType=");
-		msg.append(ownerType);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchActivityCounterException(msg.toString());
-	}
-
-	/**
-	 * Returns the first social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param ownerType the owner type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter fetchByG_C_C_O_First(long groupId,
-		long classNameId, long classPK, int ownerType,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<SocialActivityCounter> list = findByG_C_C_O(groupId, classNameId,
-				classPK, ownerType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param ownerType the owner type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter
-	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter findByG_C_C_O_Last(long groupId,
-		long classNameId, long classPK, int ownerType,
-		OrderByComparator orderByComparator)
-		throws NoSuchActivityCounterException, SystemException {
-		SocialActivityCounter socialActivityCounter = fetchByG_C_C_O_Last(groupId,
-				classNameId, classPK, ownerType, orderByComparator);
-
-		if (socialActivityCounter != null) {
-			return socialActivityCounter;
-		}
-
-		StringBundler msg = new StringBundler(10);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", classNameId=");
-		msg.append(classNameId);
-
-		msg.append(", classPK=");
-		msg.append(classPK);
-
-		msg.append(", ownerType=");
-		msg.append(ownerType);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchActivityCounterException(msg.toString());
-	}
-
-	/**
-	 * Returns the last social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param ownerType the owner type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter fetchByG_C_C_O_Last(long groupId,
-		long classNameId, long classPK, int ownerType,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByG_C_C_O(groupId, classNameId, classPK, ownerType);
-
-		List<SocialActivityCounter> list = findByG_C_C_O(groupId, classNameId,
-				classPK, ownerType, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the social activity counters before and after the current social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param activityCounterId the primary key of the current social activity counter
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param ownerType the owner type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity counter
-	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a social activity counter with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter[] findByG_C_C_O_PrevAndNext(
-		long activityCounterId, long groupId, long classNameId, long classPK,
-		int ownerType, OrderByComparator orderByComparator)
-		throws NoSuchActivityCounterException, SystemException {
-		SocialActivityCounter socialActivityCounter = findByPrimaryKey(activityCounterId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SocialActivityCounter[] array = new SocialActivityCounterImpl[3];
-
-			array[0] = getByG_C_C_O_PrevAndNext(session, socialActivityCounter,
-					groupId, classNameId, classPK, ownerType,
-					orderByComparator, true);
-
-			array[1] = socialActivityCounter;
-
-			array[2] = getByG_C_C_O_PrevAndNext(session, socialActivityCounter,
-					groupId, classNameId, classPK, ownerType,
-					orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SocialActivityCounter getByG_C_C_O_PrevAndNext(Session session,
-		SocialActivityCounter socialActivityCounter, long groupId,
-		long classNameId, long classPK, int ownerType,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
-
-		query.append(_FINDER_COLUMN_G_C_C_O_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_O_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_O_CLASSPK_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_O_OWNERTYPE_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		qPos.add(classNameId);
-
-		qPos.add(classPK);
-
-		qPos.add(ownerType);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(socialActivityCounter);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<SocialActivityCounter> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or throws a {@link com.liferay.portlet.social.NoSuchActivityCounterException} if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param name the name
-	 * @param ownerType the owner type
-	 * @param startPeriod the start period
-	 * @return the matching social activity counter
-	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter findByG_C_C_N_O_S(long groupId,
-		long classNameId, long classPK, String name, int ownerType,
-		int startPeriod) throws NoSuchActivityCounterException, SystemException {
-		SocialActivityCounter socialActivityCounter = fetchByG_C_C_N_O_S(groupId,
-				classNameId, classPK, name, ownerType, startPeriod);
-
-		if (socialActivityCounter == null) {
-			StringBundler msg = new StringBundler(14);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", classNameId=");
-			msg.append(classNameId);
-
-			msg.append(", classPK=");
-			msg.append(classPK);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", ownerType=");
-			msg.append(ownerType);
-
-			msg.append(", startPeriod=");
-			msg.append(startPeriod);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchActivityCounterException(msg.toString());
-		}
-
-		return socialActivityCounter;
-	}
-
-	/**
-	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param name the name
-	 * @param ownerType the owner type
-	 * @param startPeriod the start period
-	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter fetchByG_C_C_N_O_S(long groupId,
-		long classNameId, long classPK, String name, int ownerType,
-		int startPeriod) throws SystemException {
-		return fetchByG_C_C_N_O_S(groupId, classNameId, classPK, name,
-			ownerType, startPeriod, true);
-	}
-
-	/**
-	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param name the name
-	 * @param ownerType the owner type
-	 * @param startPeriod the start period
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter fetchByG_C_C_N_O_S(long groupId,
-		long classNameId, long classPK, String name, int ownerType,
-		int startPeriod, boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, classNameId, classPK, name, ownerType, startPeriod
-			};
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_S,
-					finderArgs, this);
-		}
-
-		if (result instanceof SocialActivityCounter) {
-			SocialActivityCounter socialActivityCounter = (SocialActivityCounter)result;
-
-			if ((groupId != socialActivityCounter.getGroupId()) ||
-					(classNameId != socialActivityCounter.getClassNameId()) ||
-					(classPK != socialActivityCounter.getClassPK()) ||
-					!Validator.equals(name, socialActivityCounter.getName()) ||
-					(ownerType != socialActivityCounter.getOwnerType()) ||
-					(startPeriod != socialActivityCounter.getStartPeriod())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(7);
-
-			query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_S_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_S_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_S_CLASSPK_2);
-
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_1);
-			}
-			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_2);
-				}
-			}
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_S_OWNERTYPE_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_S_STARTPERIOD_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				if (name != null) {
-					qPos.add(name);
-				}
-
-				qPos.add(ownerType);
-
-				qPos.add(startPeriod);
-
-				List<SocialActivityCounter> list = q.list();
-
-				result = list;
-
-				SocialActivityCounter socialActivityCounter = null;
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_S,
-						finderArgs, list);
-				}
-				else {
-					socialActivityCounter = list.get(0);
-
-					cacheResult(socialActivityCounter);
-
-					if ((socialActivityCounter.getGroupId() != groupId) ||
-							(socialActivityCounter.getClassNameId() != classNameId) ||
-							(socialActivityCounter.getClassPK() != classPK) ||
-							(socialActivityCounter.getName() == null) ||
-							!socialActivityCounter.getName().equals(name) ||
-							(socialActivityCounter.getOwnerType() != ownerType) ||
-							(socialActivityCounter.getStartPeriod() != startPeriod)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_S,
-							finderArgs, socialActivityCounter);
-					}
-				}
-
-				return socialActivityCounter;
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (result == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_S,
-						finderArgs);
-				}
-
-				closeSession(session);
-			}
-		}
-		else {
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (SocialActivityCounter)result;
-			}
-		}
-	}
-
-	/**
-	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or throws a {@link com.liferay.portlet.social.NoSuchActivityCounterException} if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param name the name
-	 * @param ownerType the owner type
-	 * @param endPeriod the end period
-	 * @return the matching social activity counter
-	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter findByG_C_C_N_O_E(long groupId,
-		long classNameId, long classPK, String name, int ownerType,
-		int endPeriod) throws NoSuchActivityCounterException, SystemException {
-		SocialActivityCounter socialActivityCounter = fetchByG_C_C_N_O_E(groupId,
-				classNameId, classPK, name, ownerType, endPeriod);
-
-		if (socialActivityCounter == null) {
-			StringBundler msg = new StringBundler(14);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", classNameId=");
-			msg.append(classNameId);
-
-			msg.append(", classPK=");
-			msg.append(classPK);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(", ownerType=");
-			msg.append(ownerType);
-
-			msg.append(", endPeriod=");
-			msg.append(endPeriod);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchActivityCounterException(msg.toString());
-		}
-
-		return socialActivityCounter;
-	}
-
-	/**
-	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param name the name
-	 * @param ownerType the owner type
-	 * @param endPeriod the end period
-	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter fetchByG_C_C_N_O_E(long groupId,
-		long classNameId, long classPK, String name, int ownerType,
-		int endPeriod) throws SystemException {
-		return fetchByG_C_C_N_O_E(groupId, classNameId, classPK, name,
-			ownerType, endPeriod, true);
-	}
-
-	/**
-	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param name the name
-	 * @param ownerType the owner type
-	 * @param endPeriod the end period
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter fetchByG_C_C_N_O_E(long groupId,
-		long classNameId, long classPK, String name, int ownerType,
-		int endPeriod, boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, classNameId, classPK, name, ownerType, endPeriod
-			};
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_E,
-					finderArgs, this);
-		}
-
-		if (result instanceof SocialActivityCounter) {
-			SocialActivityCounter socialActivityCounter = (SocialActivityCounter)result;
-
-			if ((groupId != socialActivityCounter.getGroupId()) ||
-					(classNameId != socialActivityCounter.getClassNameId()) ||
-					(classPK != socialActivityCounter.getClassPK()) ||
-					!Validator.equals(name, socialActivityCounter.getName()) ||
-					(ownerType != socialActivityCounter.getOwnerType()) ||
-					(endPeriod != socialActivityCounter.getEndPeriod())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(7);
-
-			query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_E_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_E_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_E_CLASSPK_2);
-
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_1);
-			}
-			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_2);
-				}
-			}
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_E_OWNERTYPE_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_E_ENDPERIOD_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				if (name != null) {
-					qPos.add(name);
-				}
-
-				qPos.add(ownerType);
-
-				qPos.add(endPeriod);
-
-				List<SocialActivityCounter> list = q.list();
-
-				result = list;
-
-				SocialActivityCounter socialActivityCounter = null;
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_E,
-						finderArgs, list);
-				}
-				else {
-					socialActivityCounter = list.get(0);
-
-					cacheResult(socialActivityCounter);
-
-					if ((socialActivityCounter.getGroupId() != groupId) ||
-							(socialActivityCounter.getClassNameId() != classNameId) ||
-							(socialActivityCounter.getClassPK() != classPK) ||
-							(socialActivityCounter.getName() == null) ||
-							!socialActivityCounter.getName().equals(name) ||
-							(socialActivityCounter.getOwnerType() != ownerType) ||
-							(socialActivityCounter.getEndPeriod() != endPeriod)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_E,
-							finderArgs, socialActivityCounter);
-					}
-				}
-
-				return socialActivityCounter;
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (result == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_E,
-						finderArgs);
-				}
-
-				closeSession(session);
-			}
-		}
-		else {
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (SocialActivityCounter)result;
-			}
-		}
 	}
 
 	/**
@@ -2038,7 +2467,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	 * Returns a range of all the social activity counters.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SocialActivityCounterModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of social activity counters
@@ -2055,7 +2484,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	 * Returns an ordered range of all the social activity counters.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SocialActivityCounterModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of social activity counters
@@ -2066,11 +2495,13 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	 */
 	public List<SocialActivityCounter> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
 		FinderPath finderPath = null;
-		Object[] finderArgs = new Object[] { start, end, orderByComparator };
+		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
+			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
@@ -2099,6 +2530,10 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			}
 			else {
 				sql = _SQL_SELECT_SOCIALACTIVITYCOUNTER;
+
+				if (pagination) {
+					sql = sql.concat(SocialActivityCounterModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -2108,109 +2543,34 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 				Query q = session.createQuery(sql);
 
-				if (orderByComparator == null) {
+				if (!pagination) {
 					list = (List<SocialActivityCounter>)QueryUtil.list(q,
 							getDialect(), start, end, false);
 
 					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
 				}
 				else {
 					list = (List<SocialActivityCounter>)QueryUtil.list(q,
 							getDialect(), start, end);
 				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
 				throw processException(e);
 			}
 			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
 				closeSession(session);
 			}
 		}
 
 		return list;
-	}
-
-	/**
-	 * Removes all the social activity counters where classNameId = &#63; and classPK = &#63; from the database.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByC_C(long classNameId, long classPK)
-		throws SystemException {
-		for (SocialActivityCounter socialActivityCounter : findByC_C(
-				classNameId, classPK)) {
-			remove(socialActivityCounter);
-		}
-	}
-
-	/**
-	 * Removes all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param ownerType the owner type
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByG_C_C_O(long groupId, long classNameId, long classPK,
-		int ownerType) throws SystemException {
-		for (SocialActivityCounter socialActivityCounter : findByG_C_C_O(
-				groupId, classNameId, classPK, ownerType)) {
-			remove(socialActivityCounter);
-		}
-	}
-
-	/**
-	 * Removes the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param name the name
-	 * @param ownerType the owner type
-	 * @param startPeriod the start period
-	 * @return the social activity counter that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter removeByG_C_C_N_O_S(long groupId,
-		long classNameId, long classPK, String name, int ownerType,
-		int startPeriod) throws NoSuchActivityCounterException, SystemException {
-		SocialActivityCounter socialActivityCounter = findByG_C_C_N_O_S(groupId,
-				classNameId, classPK, name, ownerType, startPeriod);
-
-		return remove(socialActivityCounter);
-	}
-
-	/**
-	 * Removes the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param name the name
-	 * @param ownerType the owner type
-	 * @param endPeriod the end period
-	 * @return the social activity counter that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter removeByG_C_C_N_O_E(long groupId,
-		long classNameId, long classPK, String name, int ownerType,
-		int endPeriod) throws NoSuchActivityCounterException, SystemException {
-		SocialActivityCounter socialActivityCounter = findByG_C_C_N_O_E(groupId,
-				classNameId, classPK, name, ownerType, endPeriod);
-
-		return remove(socialActivityCounter);
 	}
 
 	/**
@@ -2222,322 +2582,6 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		for (SocialActivityCounter socialActivityCounter : findAll()) {
 			remove(socialActivityCounter);
 		}
-	}
-
-	/**
-	 * Returns the number of social activity counters where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @return the number of matching social activity counters
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByC_C(long classNameId, long classPK)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { classNameId, classPK };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_C,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE);
-
-			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, finderArgs,
-					count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param ownerType the owner type
-	 * @return the number of matching social activity counters
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByG_C_C_O(long groupId, long classNameId, long classPK,
-		int ownerType) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, classNameId, classPK, ownerType
-			};
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_G_C_C_O,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(5);
-
-			query.append(_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE);
-
-			query.append(_FINDER_COLUMN_G_C_C_O_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_O_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_O_CLASSPK_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_O_OWNERTYPE_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				qPos.add(ownerType);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_C_O,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param name the name
-	 * @param ownerType the owner type
-	 * @param startPeriod the start period
-	 * @return the number of matching social activity counters
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByG_C_C_N_O_S(long groupId, long classNameId, long classPK,
-		String name, int ownerType, int startPeriod) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, classNameId, classPK, name, ownerType, startPeriod
-			};
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_G_C_C_N_O_S,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(7);
-
-			query.append(_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_S_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_S_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_S_CLASSPK_2);
-
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_1);
-			}
-			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_2);
-				}
-			}
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_S_OWNERTYPE_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_S_STARTPERIOD_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				if (name != null) {
-					qPos.add(name);
-				}
-
-				qPos.add(ownerType);
-
-				qPos.add(startPeriod);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_C_N_O_S,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class p k
-	 * @param name the name
-	 * @param ownerType the owner type
-	 * @param endPeriod the end period
-	 * @return the number of matching social activity counters
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByG_C_C_N_O_E(long groupId, long classNameId, long classPK,
-		String name, int ownerType, int endPeriod) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, classNameId, classPK, name, ownerType, endPeriod
-			};
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_G_C_C_N_O_E,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(7);
-
-			query.append(_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_E_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_E_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_E_CLASSPK_2);
-
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_1);
-			}
-			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_2);
-				}
-			}
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_E_OWNERTYPE_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_N_O_E_ENDPERIOD_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				if (name != null) {
-					qPos.add(name);
-				}
-
-				qPos.add(ownerType);
-
-				qPos.add(endPeriod);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_C_N_O_E,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
 	}
 
 	/**
@@ -2559,18 +2603,17 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 				Query q = session.createQuery(_SQL_COUNT_SOCIALACTIVITYCOUNTER);
 
 				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY);
 
+				throw processException(e);
+			}
+			finally {
 				closeSession(session);
 			}
 		}
@@ -2606,6 +2649,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	public void destroy() {
 		EntityCacheUtil.removeCache(SocialActivityCounterImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
@@ -2635,28 +2679,6 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	private static final String _SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE = "SELECT socialActivityCounter FROM SocialActivityCounter socialActivityCounter WHERE ";
 	private static final String _SQL_COUNT_SOCIALACTIVITYCOUNTER = "SELECT COUNT(socialActivityCounter) FROM SocialActivityCounter socialActivityCounter";
 	private static final String _SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE = "SELECT COUNT(socialActivityCounter) FROM SocialActivityCounter socialActivityCounter WHERE ";
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "socialActivityCounter.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "socialActivityCounter.classPK = ?";
-	private static final String _FINDER_COLUMN_G_C_C_O_GROUPID_2 = "socialActivityCounter.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_O_CLASSNAMEID_2 = "socialActivityCounter.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_O_CLASSPK_2 = "socialActivityCounter.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_O_OWNERTYPE_2 = "socialActivityCounter.ownerType = ? AND socialActivityCounter.endPeriod = -1";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_GROUPID_2 = "socialActivityCounter.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_CLASSNAMEID_2 = "socialActivityCounter.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_CLASSPK_2 = "socialActivityCounter.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_NAME_1 = "socialActivityCounter.name IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_NAME_2 = "socialActivityCounter.name = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_NAME_3 = "(socialActivityCounter.name IS NULL OR socialActivityCounter.name = ?) AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_OWNERTYPE_2 = "socialActivityCounter.ownerType = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_STARTPERIOD_2 = "socialActivityCounter.startPeriod = ?";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_GROUPID_2 = "socialActivityCounter.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_CLASSNAMEID_2 = "socialActivityCounter.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_CLASSPK_2 = "socialActivityCounter.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_NAME_1 = "socialActivityCounter.name IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_NAME_2 = "socialActivityCounter.name = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_NAME_3 = "(socialActivityCounter.name IS NULL OR socialActivityCounter.name = ?) AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_OWNERTYPE_2 = "socialActivityCounter.ownerType = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_ENDPERIOD_2 = "socialActivityCounter.endPeriod = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialActivityCounter.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SocialActivityCounter exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialActivityCounter exists with the key {";

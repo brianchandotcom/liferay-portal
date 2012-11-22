@@ -65,6 +65,8 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 		};
 	public static final String TABLE_SQL_CREATE = "create table UserGroupRole (userId LONG not null,groupId LONG not null,roleId LONG not null,primary key (userId, groupId, roleId))";
 	public static final String TABLE_SQL_DROP = "drop table UserGroupRole";
+	public static final String ORDER_BY_JPQL = " ORDER BY userGroupRole.id.userId ASC, userGroupRole.id.groupId ASC, userGroupRole.id.roleId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY UserGroupRole.userId ASC, UserGroupRole.groupId ASC, UserGroupRole.roleId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";

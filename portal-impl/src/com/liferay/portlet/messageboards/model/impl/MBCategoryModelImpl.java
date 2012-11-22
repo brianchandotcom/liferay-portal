@@ -101,6 +101,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	public static long GROUPID_COLUMN_BITMASK = 2L;
 	public static long PARENTCATEGORYID_COLUMN_BITMASK = 4L;
 	public static long UUID_COLUMN_BITMASK = 8L;
+	public static long NAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

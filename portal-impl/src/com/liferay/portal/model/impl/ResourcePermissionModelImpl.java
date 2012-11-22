@@ -72,6 +72,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		};
 	public static final String TABLE_SQL_CREATE = "create table ResourcePermission (resourcePermissionId LONG not null primary key,companyId LONG,name VARCHAR(255) null,scope INTEGER,primKey VARCHAR(255) null,roleId LONG,ownerId LONG,actionIds LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ResourcePermission";
+	public static final String ORDER_BY_JPQL = " ORDER BY resourcePermission.resourcePermissionId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY ResourcePermission.resourcePermissionId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -91,6 +93,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	public static long PRIMKEY_COLUMN_BITMASK = 16L;
 	public static long ROLEID_COLUMN_BITMASK = 32L;
 	public static long SCOPE_COLUMN_BITMASK = 64L;
+	public static long RESOURCEPERMISSIONID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

@@ -112,86 +112,6 @@ public class SocialActivityCounterUtil {
 	}
 
 	/**
-	* Caches the social activity counter in the entity cache if it is enabled.
-	*
-	* @param socialActivityCounter the social activity counter
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter) {
-		getPersistence().cacheResult(socialActivityCounter);
-	}
-
-	/**
-	* Caches the social activity counters in the entity cache if it is enabled.
-	*
-	* @param socialActivityCounters the social activity counters
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> socialActivityCounters) {
-		getPersistence().cacheResult(socialActivityCounters);
-	}
-
-	/**
-	* Creates a new social activity counter with the primary key. Does not add the social activity counter to the database.
-	*
-	* @param activityCounterId the primary key for the new social activity counter
-	* @return the new social activity counter
-	*/
-	public static com.liferay.portlet.social.model.SocialActivityCounter create(
-		long activityCounterId) {
-		return getPersistence().create(activityCounterId);
-	}
-
-	/**
-	* Removes the social activity counter with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param activityCounterId the primary key of the social activity counter
-	* @return the social activity counter that was removed
-	* @throws com.liferay.portlet.social.NoSuchActivityCounterException if a social activity counter with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.social.model.SocialActivityCounter remove(
-		long activityCounterId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivityCounterException {
-		return getPersistence().remove(activityCounterId);
-	}
-
-	public static com.liferay.portlet.social.model.SocialActivityCounter updateImpl(
-		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(socialActivityCounter);
-	}
-
-	/**
-	* Returns the social activity counter with the primary key or throws a {@link com.liferay.portlet.social.NoSuchActivityCounterException} if it could not be found.
-	*
-	* @param activityCounterId the primary key of the social activity counter
-	* @return the social activity counter
-	* @throws com.liferay.portlet.social.NoSuchActivityCounterException if a social activity counter with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.social.model.SocialActivityCounter findByPrimaryKey(
-		long activityCounterId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivityCounterException {
-		return getPersistence().findByPrimaryKey(activityCounterId);
-	}
-
-	/**
-	* Returns the social activity counter with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param activityCounterId the primary key of the social activity counter
-	* @return the social activity counter, or <code>null</code> if a social activity counter with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.social.model.SocialActivityCounter fetchByPrimaryKey(
-		long activityCounterId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(activityCounterId);
-	}
-
-	/**
 	* Returns all the social activity counters where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
@@ -209,7 +129,7 @@ public class SocialActivityCounterUtil {
 	* Returns a range of all the social activity counters where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SocialActivityCounterModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -229,7 +149,7 @@ public class SocialActivityCounterUtil {
 	* Returns an ordered range of all the social activity counters where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SocialActivityCounterModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -343,6 +263,31 @@ public class SocialActivityCounterUtil {
 	}
 
 	/**
+	* Removes all the social activity counters where classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_C(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_C(classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of social activity counters where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching social activity counters
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_C(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_C(classNameId, classPK);
+	}
+
+	/**
 	* Returns all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
 	*
 	* @param groupId the group ID
@@ -363,7 +308,7 @@ public class SocialActivityCounterUtil {
 	* Returns a range of all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SocialActivityCounterModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -387,7 +332,7 @@ public class SocialActivityCounterUtil {
 	* Returns an ordered range of all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SocialActivityCounterModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -519,6 +464,39 @@ public class SocialActivityCounterUtil {
 	}
 
 	/**
+	* Removes all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param ownerType the owner type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_C_C_O(long groupId, long classNameId,
+		long classPK, int ownerType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence()
+			.removeByG_C_C_O(groupId, classNameId, classPK, ownerType);
+	}
+
+	/**
+	* Returns the number of social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param ownerType the owner type
+	* @return the number of matching social activity counters
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_C_C_O(long groupId, long classNameId,
+		long classPK, int ownerType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByG_C_C_O(groupId, classNameId, classPK, ownerType);
+	}
+
+	/**
 	* Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or throws a {@link com.liferay.portlet.social.NoSuchActivityCounterException} if it could not be found.
 	*
 	* @param groupId the group ID
@@ -582,6 +560,48 @@ public class SocialActivityCounterUtil {
 		return getPersistence()
 				   .fetchByG_C_C_N_O_S(groupId, classNameId, classPK, name,
 			ownerType, startPeriod, retrieveFromCache);
+	}
+
+	/**
+	* Removes the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param name the name
+	* @param ownerType the owner type
+	* @param startPeriod the start period
+	* @return the social activity counter that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.social.model.SocialActivityCounter removeByG_C_C_N_O_S(
+		long groupId, long classNameId, long classPK, java.lang.String name,
+		int ownerType, int startPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.social.NoSuchActivityCounterException {
+		return getPersistence()
+				   .removeByG_C_C_N_O_S(groupId, classNameId, classPK, name,
+			ownerType, startPeriod);
+	}
+
+	/**
+	* Returns the number of social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param name the name
+	* @param ownerType the owner type
+	* @param startPeriod the start period
+	* @return the number of matching social activity counters
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_C_C_N_O_S(long groupId, long classNameId,
+		long classPK, java.lang.String name, int ownerType, int startPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByG_C_C_N_O_S(groupId, classNameId, classPK, name,
+			ownerType, startPeriod);
 	}
 
 	/**
@@ -651,105 +671,6 @@ public class SocialActivityCounterUtil {
 	}
 
 	/**
-	* Returns all the social activity counters.
-	*
-	* @return the social activity counters
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findAll();
-	}
-
-	/**
-	* Returns a range of all the social activity counters.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param start the lower bound of the range of social activity counters
-	* @param end the upper bound of the range of social activity counters (not inclusive)
-	* @return the range of social activity counters
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the social activity counters.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param start the lower bound of the range of social activity counters
-	* @param end the upper bound of the range of social activity counters (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of social activity counters
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	* Removes all the social activity counters where classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_C(classNameId, classPK);
-	}
-
-	/**
-	* Removes all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param ownerType the owner type
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByG_C_C_O(long groupId, long classNameId,
-		long classPK, int ownerType)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence()
-			.removeByG_C_C_O(groupId, classNameId, classPK, ownerType);
-	}
-
-	/**
-	* Removes the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param name the name
-	* @param ownerType the owner type
-	* @param startPeriod the start period
-	* @return the social activity counter that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.social.model.SocialActivityCounter removeByG_C_C_N_O_S(
-		long groupId, long classNameId, long classPK, java.lang.String name,
-		int ownerType, int startPeriod)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivityCounterException {
-		return getPersistence()
-				   .removeByG_C_C_N_O_S(groupId, classNameId, classPK, name,
-			ownerType, startPeriod);
-	}
-
-	/**
 	* Removes the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -772,66 +693,6 @@ public class SocialActivityCounterUtil {
 	}
 
 	/**
-	* Removes all the social activity counters from the database.
-	*
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of social activity counters where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching social activity counters
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_C(classNameId, classPK);
-	}
-
-	/**
-	* Returns the number of social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	*
-	* @param groupId the group ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param ownerType the owner type
-	* @return the number of matching social activity counters
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByG_C_C_O(long groupId, long classNameId,
-		long classPK, int ownerType)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .countByG_C_C_O(groupId, classNameId, classPK, ownerType);
-	}
-
-	/**
-	* Returns the number of social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63;.
-	*
-	* @param groupId the group ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param name the name
-	* @param ownerType the owner type
-	* @param startPeriod the start period
-	* @return the number of matching social activity counters
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByG_C_C_N_O_S(long groupId, long classNameId,
-		long classPK, java.lang.String name, int ownerType, int startPeriod)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .countByG_C_C_N_O_S(groupId, classNameId, classPK, name,
-			ownerType, startPeriod);
-	}
-
-	/**
 	* Returns the number of social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63;.
 	*
 	* @param groupId the group ID
@@ -849,6 +710,145 @@ public class SocialActivityCounterUtil {
 		return getPersistence()
 				   .countByG_C_C_N_O_E(groupId, classNameId, classPK, name,
 			ownerType, endPeriod);
+	}
+
+	/**
+	* Caches the social activity counter in the entity cache if it is enabled.
+	*
+	* @param socialActivityCounter the social activity counter
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter) {
+		getPersistence().cacheResult(socialActivityCounter);
+	}
+
+	/**
+	* Caches the social activity counters in the entity cache if it is enabled.
+	*
+	* @param socialActivityCounters the social activity counters
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> socialActivityCounters) {
+		getPersistence().cacheResult(socialActivityCounters);
+	}
+
+	/**
+	* Creates a new social activity counter with the primary key. Does not add the social activity counter to the database.
+	*
+	* @param activityCounterId the primary key for the new social activity counter
+	* @return the new social activity counter
+	*/
+	public static com.liferay.portlet.social.model.SocialActivityCounter create(
+		long activityCounterId) {
+		return getPersistence().create(activityCounterId);
+	}
+
+	/**
+	* Removes the social activity counter with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param activityCounterId the primary key of the social activity counter
+	* @return the social activity counter that was removed
+	* @throws com.liferay.portlet.social.NoSuchActivityCounterException if a social activity counter with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.social.model.SocialActivityCounter remove(
+		long activityCounterId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.social.NoSuchActivityCounterException {
+		return getPersistence().remove(activityCounterId);
+	}
+
+	public static com.liferay.portlet.social.model.SocialActivityCounter updateImpl(
+		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(socialActivityCounter);
+	}
+
+	/**
+	* Returns the social activity counter with the primary key or throws a {@link com.liferay.portlet.social.NoSuchActivityCounterException} if it could not be found.
+	*
+	* @param activityCounterId the primary key of the social activity counter
+	* @return the social activity counter
+	* @throws com.liferay.portlet.social.NoSuchActivityCounterException if a social activity counter with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.social.model.SocialActivityCounter findByPrimaryKey(
+		long activityCounterId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.social.NoSuchActivityCounterException {
+		return getPersistence().findByPrimaryKey(activityCounterId);
+	}
+
+	/**
+	* Returns the social activity counter with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param activityCounterId the primary key of the social activity counter
+	* @return the social activity counter, or <code>null</code> if a social activity counter with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.social.model.SocialActivityCounter fetchByPrimaryKey(
+		long activityCounterId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(activityCounterId);
+	}
+
+	/**
+	* Returns all the social activity counters.
+	*
+	* @return the social activity counters
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll();
+	}
+
+	/**
+	* Returns a range of all the social activity counters.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SocialActivityCounterModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of social activity counters
+	* @param end the upper bound of the range of social activity counters (not inclusive)
+	* @return the range of social activity counters
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAll(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll(start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the social activity counters.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SocialActivityCounterModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of social activity counters
+	* @param end the upper bound of the range of social activity counters (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of social activity counters
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Removes all the social activity counters from the database.
+	*
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeAll();
 	}
 
 	/**

@@ -110,86 +110,6 @@ public class OrgGroupRoleUtil {
 	}
 
 	/**
-	* Caches the org group role in the entity cache if it is enabled.
-	*
-	* @param orgGroupRole the org group role
-	*/
-	public static void cacheResult(
-		com.liferay.portal.model.OrgGroupRole orgGroupRole) {
-		getPersistence().cacheResult(orgGroupRole);
-	}
-
-	/**
-	* Caches the org group roles in the entity cache if it is enabled.
-	*
-	* @param orgGroupRoles the org group roles
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.OrgGroupRole> orgGroupRoles) {
-		getPersistence().cacheResult(orgGroupRoles);
-	}
-
-	/**
-	* Creates a new org group role with the primary key. Does not add the org group role to the database.
-	*
-	* @param orgGroupRolePK the primary key for the new org group role
-	* @return the new org group role
-	*/
-	public static com.liferay.portal.model.OrgGroupRole create(
-		com.liferay.portal.service.persistence.OrgGroupRolePK orgGroupRolePK) {
-		return getPersistence().create(orgGroupRolePK);
-	}
-
-	/**
-	* Removes the org group role with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param orgGroupRolePK the primary key of the org group role
-	* @return the org group role that was removed
-	* @throws com.liferay.portal.NoSuchOrgGroupRoleException if a org group role with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.OrgGroupRole remove(
-		com.liferay.portal.service.persistence.OrgGroupRolePK orgGroupRolePK)
-		throws com.liferay.portal.NoSuchOrgGroupRoleException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().remove(orgGroupRolePK);
-	}
-
-	public static com.liferay.portal.model.OrgGroupRole updateImpl(
-		com.liferay.portal.model.OrgGroupRole orgGroupRole)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(orgGroupRole);
-	}
-
-	/**
-	* Returns the org group role with the primary key or throws a {@link com.liferay.portal.NoSuchOrgGroupRoleException} if it could not be found.
-	*
-	* @param orgGroupRolePK the primary key of the org group role
-	* @return the org group role
-	* @throws com.liferay.portal.NoSuchOrgGroupRoleException if a org group role with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.OrgGroupRole findByPrimaryKey(
-		com.liferay.portal.service.persistence.OrgGroupRolePK orgGroupRolePK)
-		throws com.liferay.portal.NoSuchOrgGroupRoleException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByPrimaryKey(orgGroupRolePK);
-	}
-
-	/**
-	* Returns the org group role with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param orgGroupRolePK the primary key of the org group role
-	* @return the org group role, or <code>null</code> if a org group role with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.OrgGroupRole fetchByPrimaryKey(
-		com.liferay.portal.service.persistence.OrgGroupRolePK orgGroupRolePK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(orgGroupRolePK);
-	}
-
-	/**
 	* Returns all the org group roles where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -206,7 +126,7 @@ public class OrgGroupRoleUtil {
 	* Returns a range of all the org group roles where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from OrgGroupRoleModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -225,7 +145,7 @@ public class OrgGroupRoleUtil {
 	* Returns an ordered range of all the org group roles where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from OrgGroupRoleModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -329,6 +249,29 @@ public class OrgGroupRoleUtil {
 	}
 
 	/**
+	* Removes all the org group roles where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of org group roles where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching org group roles
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
 	* Returns all the org group roles where roleId = &#63;.
 	*
 	* @param roleId the role ID
@@ -344,7 +287,7 @@ public class OrgGroupRoleUtil {
 	* Returns a range of all the org group roles where roleId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from OrgGroupRoleModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param roleId the role ID
@@ -363,7 +306,7 @@ public class OrgGroupRoleUtil {
 	* Returns an ordered range of all the org group roles where roleId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from OrgGroupRoleModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param roleId the role ID
@@ -467,6 +410,109 @@ public class OrgGroupRoleUtil {
 	}
 
 	/**
+	* Removes all the org group roles where roleId = &#63; from the database.
+	*
+	* @param roleId the role ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByRoleId(long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByRoleId(roleId);
+	}
+
+	/**
+	* Returns the number of org group roles where roleId = &#63;.
+	*
+	* @param roleId the role ID
+	* @return the number of matching org group roles
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByRoleId(long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByRoleId(roleId);
+	}
+
+	/**
+	* Caches the org group role in the entity cache if it is enabled.
+	*
+	* @param orgGroupRole the org group role
+	*/
+	public static void cacheResult(
+		com.liferay.portal.model.OrgGroupRole orgGroupRole) {
+		getPersistence().cacheResult(orgGroupRole);
+	}
+
+	/**
+	* Caches the org group roles in the entity cache if it is enabled.
+	*
+	* @param orgGroupRoles the org group roles
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portal.model.OrgGroupRole> orgGroupRoles) {
+		getPersistence().cacheResult(orgGroupRoles);
+	}
+
+	/**
+	* Creates a new org group role with the primary key. Does not add the org group role to the database.
+	*
+	* @param orgGroupRolePK the primary key for the new org group role
+	* @return the new org group role
+	*/
+	public static com.liferay.portal.model.OrgGroupRole create(
+		com.liferay.portal.service.persistence.OrgGroupRolePK orgGroupRolePK) {
+		return getPersistence().create(orgGroupRolePK);
+	}
+
+	/**
+	* Removes the org group role with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param orgGroupRolePK the primary key of the org group role
+	* @return the org group role that was removed
+	* @throws com.liferay.portal.NoSuchOrgGroupRoleException if a org group role with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.OrgGroupRole remove(
+		com.liferay.portal.service.persistence.OrgGroupRolePK orgGroupRolePK)
+		throws com.liferay.portal.NoSuchOrgGroupRoleException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().remove(orgGroupRolePK);
+	}
+
+	public static com.liferay.portal.model.OrgGroupRole updateImpl(
+		com.liferay.portal.model.OrgGroupRole orgGroupRole)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(orgGroupRole);
+	}
+
+	/**
+	* Returns the org group role with the primary key or throws a {@link com.liferay.portal.NoSuchOrgGroupRoleException} if it could not be found.
+	*
+	* @param orgGroupRolePK the primary key of the org group role
+	* @return the org group role
+	* @throws com.liferay.portal.NoSuchOrgGroupRoleException if a org group role with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.OrgGroupRole findByPrimaryKey(
+		com.liferay.portal.service.persistence.OrgGroupRolePK orgGroupRolePK)
+		throws com.liferay.portal.NoSuchOrgGroupRoleException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByPrimaryKey(orgGroupRolePK);
+	}
+
+	/**
+	* Returns the org group role with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param orgGroupRolePK the primary key of the org group role
+	* @return the org group role, or <code>null</code> if a org group role with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.OrgGroupRole fetchByPrimaryKey(
+		com.liferay.portal.service.persistence.OrgGroupRolePK orgGroupRolePK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(orgGroupRolePK);
+	}
+
+	/**
 	* Returns all the org group roles.
 	*
 	* @return the org group roles
@@ -481,7 +527,7 @@ public class OrgGroupRoleUtil {
 	* Returns a range of all the org group roles.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from OrgGroupRoleModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of org group roles
@@ -499,7 +545,7 @@ public class OrgGroupRoleUtil {
 	* Returns an ordered range of all the org group roles.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from OrgGroupRoleModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of org group roles
@@ -516,28 +562,6 @@ public class OrgGroupRoleUtil {
 	}
 
 	/**
-	* Removes all the org group roles where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByGroupId(groupId);
-	}
-
-	/**
-	* Removes all the org group roles where roleId = &#63; from the database.
-	*
-	* @param roleId the role ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByRoleId(long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByRoleId(roleId);
-	}
-
-	/**
 	* Removes all the org group roles from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -545,30 +569,6 @@ public class OrgGroupRoleUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of org group roles where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching org group roles
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of org group roles where roleId = &#63;.
-	*
-	* @param roleId the role ID
-	* @return the number of matching org group roles
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByRoleId(long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByRoleId(roleId);
 	}
 
 	/**

@@ -36,72 +36,6 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	 */
 
 	/**
-	* Caches the password policy rel in the entity cache if it is enabled.
-	*
-	* @param passwordPolicyRel the password policy rel
-	*/
-	public void cacheResult(
-		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel);
-
-	/**
-	* Caches the password policy rels in the entity cache if it is enabled.
-	*
-	* @param passwordPolicyRels the password policy rels
-	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portal.model.PasswordPolicyRel> passwordPolicyRels);
-
-	/**
-	* Creates a new password policy rel with the primary key. Does not add the password policy rel to the database.
-	*
-	* @param passwordPolicyRelId the primary key for the new password policy rel
-	* @return the new password policy rel
-	*/
-	public com.liferay.portal.model.PasswordPolicyRel create(
-		long passwordPolicyRelId);
-
-	/**
-	* Removes the password policy rel with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicyRelId the primary key of the password policy rel
-	* @return the password policy rel that was removed
-	* @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.PasswordPolicyRel remove(
-		long passwordPolicyRelId)
-		throws com.liferay.portal.NoSuchPasswordPolicyRelException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.portal.model.PasswordPolicyRel updateImpl(
-		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the password policy rel with the primary key or throws a {@link com.liferay.portal.NoSuchPasswordPolicyRelException} if it could not be found.
-	*
-	* @param passwordPolicyRelId the primary key of the password policy rel
-	* @return the password policy rel
-	* @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.PasswordPolicyRel findByPrimaryKey(
-		long passwordPolicyRelId)
-		throws com.liferay.portal.NoSuchPasswordPolicyRelException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the password policy rel with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param passwordPolicyRelId the primary key of the password policy rel
-	* @return the password policy rel, or <code>null</code> if a password policy rel with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.PasswordPolicyRel fetchByPrimaryKey(
-		long passwordPolicyRelId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the password policy rels where passwordPolicyId = &#63;.
 	*
 	* @param passwordPolicyId the password policy ID
@@ -116,7 +50,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* Returns a range of all the password policy rels where passwordPolicyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PasswordPolicyRelModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param passwordPolicyId the password policy ID
@@ -133,7 +67,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* Returns an ordered range of all the password policy rels where passwordPolicyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PasswordPolicyRelModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param passwordPolicyId the password policy ID
@@ -221,6 +155,25 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the password policy rels where passwordPolicyId = &#63; from the database.
+	*
+	* @param passwordPolicyId the password policy ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByPasswordPolicyId(long passwordPolicyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of password policy rels where passwordPolicyId = &#63;.
+	*
+	* @param passwordPolicyId the password policy ID
+	* @return the number of matching password policy rels
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByPasswordPolicyId(long passwordPolicyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the password policy rel where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portal.NoSuchPasswordPolicyRelException} if it could not be found.
 	*
 	* @param classNameId the class name ID
@@ -257,6 +210,30 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	*/
 	public com.liferay.portal.model.PasswordPolicyRel fetchByC_C(
 		long classNameId, long classPK, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the password policy rel where classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the password policy rel that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PasswordPolicyRel removeByC_C(
+		long classNameId, long classPK)
+		throws com.liferay.portal.NoSuchPasswordPolicyRelException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of password policy rels where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching password policy rels
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -303,6 +280,99 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the password policy rel where passwordPolicyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param passwordPolicyId the password policy ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the password policy rel that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PasswordPolicyRel removeByP_C_C(
+		long passwordPolicyId, long classNameId, long classPK)
+		throws com.liferay.portal.NoSuchPasswordPolicyRelException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of password policy rels where passwordPolicyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param passwordPolicyId the password policy ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching password policy rels
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByP_C_C(long passwordPolicyId, long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Caches the password policy rel in the entity cache if it is enabled.
+	*
+	* @param passwordPolicyRel the password policy rel
+	*/
+	public void cacheResult(
+		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel);
+
+	/**
+	* Caches the password policy rels in the entity cache if it is enabled.
+	*
+	* @param passwordPolicyRels the password policy rels
+	*/
+	public void cacheResult(
+		java.util.List<com.liferay.portal.model.PasswordPolicyRel> passwordPolicyRels);
+
+	/**
+	* Creates a new password policy rel with the primary key. Does not add the password policy rel to the database.
+	*
+	* @param passwordPolicyRelId the primary key for the new password policy rel
+	* @return the new password policy rel
+	*/
+	public com.liferay.portal.model.PasswordPolicyRel create(
+		long passwordPolicyRelId);
+
+	/**
+	* Removes the password policy rel with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param passwordPolicyRelId the primary key of the password policy rel
+	* @return the password policy rel that was removed
+	* @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PasswordPolicyRel remove(
+		long passwordPolicyRelId)
+		throws com.liferay.portal.NoSuchPasswordPolicyRelException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.PasswordPolicyRel updateImpl(
+		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the password policy rel with the primary key or throws a {@link com.liferay.portal.NoSuchPasswordPolicyRelException} if it could not be found.
+	*
+	* @param passwordPolicyRelId the primary key of the password policy rel
+	* @return the password policy rel
+	* @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PasswordPolicyRel findByPrimaryKey(
+		long passwordPolicyRelId)
+		throws com.liferay.portal.NoSuchPasswordPolicyRelException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the password policy rel with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param passwordPolicyRelId the primary key of the password policy rel
+	* @return the password policy rel, or <code>null</code> if a password policy rel with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PasswordPolicyRel fetchByPrimaryKey(
+		long passwordPolicyRelId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the password policy rels.
 	*
 	* @return the password policy rels
@@ -315,7 +385,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* Returns a range of all the password policy rels.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PasswordPolicyRelModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of password policy rels
@@ -331,7 +401,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* Returns an ordered range of all the password policy rels.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PasswordPolicyRelModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of password policy rels
@@ -346,81 +416,11 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the password policy rels where passwordPolicyId = &#63; from the database.
-	*
-	* @param passwordPolicyId the password policy ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByPasswordPolicyId(long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the password policy rel where classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the password policy rel that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.PasswordPolicyRel removeByC_C(
-		long classNameId, long classPK)
-		throws com.liferay.portal.NoSuchPasswordPolicyRelException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the password policy rel where passwordPolicyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param passwordPolicyId the password policy ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the password policy rel that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.PasswordPolicyRel removeByP_C_C(
-		long passwordPolicyId, long classNameId, long classPK)
-		throws com.liferay.portal.NoSuchPasswordPolicyRelException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the password policy rels from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of password policy rels where passwordPolicyId = &#63;.
-	*
-	* @param passwordPolicyId the password policy ID
-	* @return the number of matching password policy rels
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByPasswordPolicyId(long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of password policy rels where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching password policy rels
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of password policy rels where passwordPolicyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param passwordPolicyId the password policy ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching password policy rels
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByP_C_C(long passwordPolicyId, long classNameId,
-		long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

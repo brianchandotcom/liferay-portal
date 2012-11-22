@@ -38,72 +38,6 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	 */
 
 	/**
-	* Caches the document library content in the entity cache if it is enabled.
-	*
-	* @param dlContent the document library content
-	*/
-	public void cacheResult(
-		com.liferay.portlet.documentlibrary.model.DLContent dlContent);
-
-	/**
-	* Caches the document library contents in the entity cache if it is enabled.
-	*
-	* @param dlContents the document library contents
-	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> dlContents);
-
-	/**
-	* Creates a new document library content with the primary key. Does not add the document library content to the database.
-	*
-	* @param contentId the primary key for the new document library content
-	* @return the new document library content
-	*/
-	public com.liferay.portlet.documentlibrary.model.DLContent create(
-		long contentId);
-
-	/**
-	* Removes the document library content with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param contentId the primary key of the document library content
-	* @return the document library content that was removed
-	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a document library content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.documentlibrary.model.DLContent remove(
-		long contentId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchContentException;
-
-	public com.liferay.portlet.documentlibrary.model.DLContent updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the document library content with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchContentException} if it could not be found.
-	*
-	* @param contentId the primary key of the document library content
-	* @return the document library content
-	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a document library content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.documentlibrary.model.DLContent findByPrimaryKey(
-		long contentId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchContentException;
-
-	/**
-	* Returns the document library content with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param contentId the primary key of the document library content
-	* @return the document library content, or <code>null</code> if a document library content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.documentlibrary.model.DLContent fetchByPrimaryKey(
-		long contentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the document library contents where companyId = &#63; and repositoryId = &#63;.
 	*
 	* @param companyId the company ID
@@ -119,7 +53,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* Returns a range of all the document library contents where companyId = &#63; and repositoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from DLContentModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -137,7 +71,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* Returns an ordered range of all the document library contents where companyId = &#63; and repositoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from DLContentModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -231,6 +165,27 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
+	* Removes all the document library contents where companyId = &#63; and repositoryId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_R(long companyId, long repositoryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of document library contents where companyId = &#63; and repositoryId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @return the number of matching document library contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_R(long companyId, long repositoryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
 	*
 	* @param companyId the company ID
@@ -247,7 +202,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* Returns a range of all the document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from DLContentModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -266,7 +221,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* Returns an ordered range of all the document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from DLContentModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -368,6 +323,31 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
+	* Removes all the document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_R_P(long companyId, long repositoryId,
+		java.lang.String path)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @return the number of matching document library contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_R_P(long companyId, long repositoryId,
+		java.lang.String path)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
 	*
 	* @param companyId the company ID
@@ -384,7 +364,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* Returns a range of all the document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from DLContentModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -403,7 +383,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* Returns an ordered range of all the document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from DLContentModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -505,6 +485,31 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
+	* Removes all the document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_R_LikeP(long companyId, long repositoryId,
+		java.lang.String path)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param repositoryId the repository ID
+	* @param path the path
+	* @return the number of matching document library contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_R_LikeP(long companyId, long repositoryId,
+		java.lang.String path)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchContentException} if it could not be found.
 	*
 	* @param companyId the company ID
@@ -553,83 +558,6 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the document library contents.
-	*
-	* @return the document library contents
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the document library contents.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param start the lower bound of the range of document library contents
-	* @param end the upper bound of the range of document library contents (not inclusive)
-	* @return the range of document library contents
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the document library contents.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param start the lower bound of the range of document library contents
-	* @param end the upper bound of the range of document library contents (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of document library contents
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the document library contents where companyId = &#63; and repositoryId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param repositoryId the repository ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByC_R(long companyId, long repositoryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param repositoryId the repository ID
-	* @param path the path
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByC_R_P(long companyId, long repositoryId,
-		java.lang.String path)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param repositoryId the repository ID
-	* @param path the path
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByC_R_LikeP(long companyId, long repositoryId,
-		java.lang.String path)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; from the database.
 	*
 	* @param companyId the company ID
@@ -646,51 +574,6 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
-	* Removes all the document library contents from the database.
-	*
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of document library contents where companyId = &#63; and repositoryId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param repositoryId the repository ID
-	* @return the number of matching document library contents
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_R(long companyId, long repositoryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
-	*
-	* @param companyId the company ID
-	* @param repositoryId the repository ID
-	* @param path the path
-	* @return the number of matching document library contents
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_R_P(long companyId, long repositoryId,
-		java.lang.String path)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
-	*
-	* @param companyId the company ID
-	* @param repositoryId the repository ID
-	* @param path the path
-	* @return the number of matching document library contents
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_R_LikeP(long companyId, long repositoryId,
-		java.lang.String path)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the number of document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63;.
 	*
 	* @param companyId the company ID
@@ -702,6 +585,123 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public int countByC_R_P_V(long companyId, long repositoryId,
 		java.lang.String path, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Caches the document library content in the entity cache if it is enabled.
+	*
+	* @param dlContent the document library content
+	*/
+	public void cacheResult(
+		com.liferay.portlet.documentlibrary.model.DLContent dlContent);
+
+	/**
+	* Caches the document library contents in the entity cache if it is enabled.
+	*
+	* @param dlContents the document library contents
+	*/
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> dlContents);
+
+	/**
+	* Creates a new document library content with the primary key. Does not add the document library content to the database.
+	*
+	* @param contentId the primary key for the new document library content
+	* @return the new document library content
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent create(
+		long contentId);
+
+	/**
+	* Removes the document library content with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param contentId the primary key of the document library content
+	* @return the document library content that was removed
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a document library content with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent remove(
+		long contentId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchContentException;
+
+	public com.liferay.portlet.documentlibrary.model.DLContent updateImpl(
+		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the document library content with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchContentException} if it could not be found.
+	*
+	* @param contentId the primary key of the document library content
+	* @return the document library content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a document library content with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent findByPrimaryKey(
+		long contentId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchContentException;
+
+	/**
+	* Returns the document library content with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param contentId the primary key of the document library content
+	* @return the document library content, or <code>null</code> if a document library content with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent fetchByPrimaryKey(
+		long contentId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the document library contents.
+	*
+	* @return the document library contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the document library contents.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from DLContentModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of document library contents
+	* @param end the upper bound of the range of document library contents (not inclusive)
+	* @return the range of document library contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findAll(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the document library contents.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from DLContentModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of document library contents
+	* @param end the upper bound of the range of document library contents (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of document library contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the document library contents from the database.
+	*
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

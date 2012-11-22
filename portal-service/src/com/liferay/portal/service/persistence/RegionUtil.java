@@ -108,83 +108,6 @@ public class RegionUtil {
 	}
 
 	/**
-	* Caches the region in the entity cache if it is enabled.
-	*
-	* @param region the region
-	*/
-	public static void cacheResult(com.liferay.portal.model.Region region) {
-		getPersistence().cacheResult(region);
-	}
-
-	/**
-	* Caches the regions in the entity cache if it is enabled.
-	*
-	* @param regions the regions
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.Region> regions) {
-		getPersistence().cacheResult(regions);
-	}
-
-	/**
-	* Creates a new region with the primary key. Does not add the region to the database.
-	*
-	* @param regionId the primary key for the new region
-	* @return the new region
-	*/
-	public static com.liferay.portal.model.Region create(long regionId) {
-		return getPersistence().create(regionId);
-	}
-
-	/**
-	* Removes the region with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param regionId the primary key of the region
-	* @return the region that was removed
-	* @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Region remove(long regionId)
-		throws com.liferay.portal.NoSuchRegionException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().remove(regionId);
-	}
-
-	public static com.liferay.portal.model.Region updateImpl(
-		com.liferay.portal.model.Region region)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(region);
-	}
-
-	/**
-	* Returns the region with the primary key or throws a {@link com.liferay.portal.NoSuchRegionException} if it could not be found.
-	*
-	* @param regionId the primary key of the region
-	* @return the region
-	* @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Region findByPrimaryKey(
-		long regionId)
-		throws com.liferay.portal.NoSuchRegionException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByPrimaryKey(regionId);
-	}
-
-	/**
-	* Returns the region with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param regionId the primary key of the region
-	* @return the region, or <code>null</code> if a region with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Region fetchByPrimaryKey(
-		long regionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(regionId);
-	}
-
-	/**
 	* Returns all the regions where countryId = &#63;.
 	*
 	* @param countryId the country ID
@@ -201,7 +124,7 @@ public class RegionUtil {
 	* Returns a range of all the regions where countryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RegionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param countryId the country ID
@@ -220,7 +143,7 @@ public class RegionUtil {
 	* Returns an ordered range of all the regions where countryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RegionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param countryId the country ID
@@ -327,6 +250,29 @@ public class RegionUtil {
 	}
 
 	/**
+	* Removes all the regions where countryId = &#63; from the database.
+	*
+	* @param countryId the country ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByCountryId(long countryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByCountryId(countryId);
+	}
+
+	/**
+	* Returns the number of regions where countryId = &#63;.
+	*
+	* @param countryId the country ID
+	* @return the number of matching regions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByCountryId(long countryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByCountryId(countryId);
+	}
+
+	/**
 	* Returns all the regions where active = &#63;.
 	*
 	* @param active the active
@@ -343,7 +289,7 @@ public class RegionUtil {
 	* Returns a range of all the regions where active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RegionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param active the active
@@ -362,7 +308,7 @@ public class RegionUtil {
 	* Returns an ordered range of all the regions where active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RegionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param active the active
@@ -464,6 +410,29 @@ public class RegionUtil {
 	}
 
 	/**
+	* Removes all the regions where active = &#63; from the database.
+	*
+	* @param active the active
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByActive(boolean active)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByActive(active);
+	}
+
+	/**
+	* Returns the number of regions where active = &#63;.
+	*
+	* @param active the active
+	* @return the number of matching regions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByActive(boolean active)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByActive(active);
+	}
+
+	/**
 	* Returns the region where countryId = &#63; and regionCode = &#63; or throws a {@link com.liferay.portal.NoSuchRegionException} if it could not be found.
 	*
 	* @param countryId the country ID
@@ -510,6 +479,34 @@ public class RegionUtil {
 	}
 
 	/**
+	* Removes the region where countryId = &#63; and regionCode = &#63; from the database.
+	*
+	* @param countryId the country ID
+	* @param regionCode the region code
+	* @return the region that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Region removeByC_R(long countryId,
+		java.lang.String regionCode)
+		throws com.liferay.portal.NoSuchRegionException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().removeByC_R(countryId, regionCode);
+	}
+
+	/**
+	* Returns the number of regions where countryId = &#63; and regionCode = &#63;.
+	*
+	* @param countryId the country ID
+	* @param regionCode the region code
+	* @return the number of matching regions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_R(long countryId, java.lang.String regionCode)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_R(countryId, regionCode);
+	}
+
+	/**
 	* Returns all the regions where countryId = &#63; and active = &#63;.
 	*
 	* @param countryId the country ID
@@ -527,7 +524,7 @@ public class RegionUtil {
 	* Returns a range of all the regions where countryId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RegionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param countryId the country ID
@@ -547,7 +544,7 @@ public class RegionUtil {
 	* Returns an ordered range of all the regions where countryId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RegionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param countryId the country ID
@@ -660,6 +657,108 @@ public class RegionUtil {
 	}
 
 	/**
+	* Removes all the regions where countryId = &#63; and active = &#63; from the database.
+	*
+	* @param countryId the country ID
+	* @param active the active
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_A(long countryId, boolean active)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_A(countryId, active);
+	}
+
+	/**
+	* Returns the number of regions where countryId = &#63; and active = &#63;.
+	*
+	* @param countryId the country ID
+	* @param active the active
+	* @return the number of matching regions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_A(long countryId, boolean active)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_A(countryId, active);
+	}
+
+	/**
+	* Caches the region in the entity cache if it is enabled.
+	*
+	* @param region the region
+	*/
+	public static void cacheResult(com.liferay.portal.model.Region region) {
+		getPersistence().cacheResult(region);
+	}
+
+	/**
+	* Caches the regions in the entity cache if it is enabled.
+	*
+	* @param regions the regions
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portal.model.Region> regions) {
+		getPersistence().cacheResult(regions);
+	}
+
+	/**
+	* Creates a new region with the primary key. Does not add the region to the database.
+	*
+	* @param regionId the primary key for the new region
+	* @return the new region
+	*/
+	public static com.liferay.portal.model.Region create(long regionId) {
+		return getPersistence().create(regionId);
+	}
+
+	/**
+	* Removes the region with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param regionId the primary key of the region
+	* @return the region that was removed
+	* @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Region remove(long regionId)
+		throws com.liferay.portal.NoSuchRegionException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().remove(regionId);
+	}
+
+	public static com.liferay.portal.model.Region updateImpl(
+		com.liferay.portal.model.Region region)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(region);
+	}
+
+	/**
+	* Returns the region with the primary key or throws a {@link com.liferay.portal.NoSuchRegionException} if it could not be found.
+	*
+	* @param regionId the primary key of the region
+	* @return the region
+	* @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Region findByPrimaryKey(
+		long regionId)
+		throws com.liferay.portal.NoSuchRegionException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByPrimaryKey(regionId);
+	}
+
+	/**
+	* Returns the region with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param regionId the primary key of the region
+	* @return the region, or <code>null</code> if a region with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Region fetchByPrimaryKey(
+		long regionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(regionId);
+	}
+
+	/**
 	* Returns all the regions.
 	*
 	* @return the regions
@@ -674,7 +773,7 @@ public class RegionUtil {
 	* Returns a range of all the regions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RegionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of regions
@@ -692,7 +791,7 @@ public class RegionUtil {
 	* Returns an ordered range of all the regions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RegionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of regions
@@ -709,55 +808,6 @@ public class RegionUtil {
 	}
 
 	/**
-	* Removes all the regions where countryId = &#63; from the database.
-	*
-	* @param countryId the country ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByCountryId(long countryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByCountryId(countryId);
-	}
-
-	/**
-	* Removes all the regions where active = &#63; from the database.
-	*
-	* @param active the active
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByActive(boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByActive(active);
-	}
-
-	/**
-	* Removes the region where countryId = &#63; and regionCode = &#63; from the database.
-	*
-	* @param countryId the country ID
-	* @param regionCode the region code
-	* @return the region that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Region removeByC_R(long countryId,
-		java.lang.String regionCode)
-		throws com.liferay.portal.NoSuchRegionException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_R(countryId, regionCode);
-	}
-
-	/**
-	* Removes all the regions where countryId = &#63; and active = &#63; from the database.
-	*
-	* @param countryId the country ID
-	* @param active the active
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByC_A(long countryId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_A(countryId, active);
-	}
-
-	/**
 	* Removes all the regions from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -765,56 +815,6 @@ public class RegionUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of regions where countryId = &#63;.
-	*
-	* @param countryId the country ID
-	* @return the number of matching regions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByCountryId(long countryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByCountryId(countryId);
-	}
-
-	/**
-	* Returns the number of regions where active = &#63;.
-	*
-	* @param active the active
-	* @return the number of matching regions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByActive(boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByActive(active);
-	}
-
-	/**
-	* Returns the number of regions where countryId = &#63; and regionCode = &#63;.
-	*
-	* @param countryId the country ID
-	* @param regionCode the region code
-	* @return the number of matching regions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_R(long countryId, java.lang.String regionCode)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_R(countryId, regionCode);
-	}
-
-	/**
-	* Returns the number of regions where countryId = &#63; and active = &#63;.
-	*
-	* @param countryId the country ID
-	* @param active the active
-	* @return the number of matching regions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_A(long countryId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_A(countryId, active);
 	}
 
 	/**

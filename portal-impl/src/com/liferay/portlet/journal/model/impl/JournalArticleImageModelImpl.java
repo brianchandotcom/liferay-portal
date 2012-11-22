@@ -68,6 +68,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		};
 	public static final String TABLE_SQL_CREATE = "create table JournalArticleImage (articleImageId LONG not null primary key,groupId LONG,articleId VARCHAR(75) null,version DOUBLE,elInstanceId VARCHAR(75) null,elName VARCHAR(75) null,languageId VARCHAR(75) null,tempImage BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticleImage";
+	public static final String ORDER_BY_JPQL = " ORDER BY journalArticleImage.articleImageId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY JournalArticleImage.articleImageId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -87,6 +89,7 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	public static long LANGUAGEID_COLUMN_BITMASK = 16L;
 	public static long TEMPIMAGE_COLUMN_BITMASK = 32L;
 	public static long VERSION_COLUMN_BITMASK = 64L;
+	public static long ARTICLEIMAGEID_COLUMN_BITMASK = 128L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.journal.model.JournalArticleImage"));
 

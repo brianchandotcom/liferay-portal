@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
@@ -75,6 +76,17 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImageImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED,
+			JournalArticleImageImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImageImpl.class,
@@ -82,8 +94,8 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			new String[] {
 				Long.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID =
 		new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
@@ -96,6 +108,462 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the journal article images where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<JournalArticleImage> findByGroupId(long groupId)
+		throws SystemException {
+		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the journal article images where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of journal article images
+	 * @param end the upper bound of the range of journal article images (not inclusive)
+	 * @return the range of matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<JournalArticleImage> findByGroupId(long groupId, int start,
+		int end) throws SystemException {
+		return findByGroupId(groupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal article images where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of journal article images
+	 * @param end the upper bound of the range of journal article images (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<JournalArticleImage> findByGroupId(long groupId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID;
+			finderArgs = new Object[] { groupId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID;
+			finderArgs = new Object[] { groupId, start, end, orderByComparator };
+		}
+
+		List<JournalArticleImage> list = (List<JournalArticleImage>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticleImage journalArticleImage : list) {
+				if ((groupId != journalArticleImage.getGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(JournalArticleImageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (!pagination) {
+					list = (List<JournalArticleImage>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<JournalArticleImage>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first journal article image in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article image
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage findByGroupId_First(long groupId,
+		OrderByComparator orderByComparator)
+		throws NoSuchArticleImageException, SystemException {
+		JournalArticleImage journalArticleImage = fetchByGroupId_First(groupId,
+				orderByComparator);
+
+		if (journalArticleImage != null) {
+			return journalArticleImage;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchArticleImageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first journal article image in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article image, or <code>null</code> if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage fetchByGroupId_First(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<JournalArticleImage> list = findByGroupId(groupId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last journal article image in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article image
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage findByGroupId_Last(long groupId,
+		OrderByComparator orderByComparator)
+		throws NoSuchArticleImageException, SystemException {
+		JournalArticleImage journalArticleImage = fetchByGroupId_Last(groupId,
+				orderByComparator);
+
+		if (journalArticleImage != null) {
+			return journalArticleImage;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchArticleImageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last journal article image in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article image, or <code>null</code> if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage fetchByGroupId_Last(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByGroupId(groupId);
+
+		List<JournalArticleImage> list = findByGroupId(groupId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the journal article images before and after the current journal article image in the ordered set where groupId = &#63;.
+	 *
+	 * @param articleImageId the primary key of the current journal article image
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal article image
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage[] findByGroupId_PrevAndNext(
+		long articleImageId, long groupId, OrderByComparator orderByComparator)
+		throws NoSuchArticleImageException, SystemException {
+		JournalArticleImage journalArticleImage = findByPrimaryKey(articleImageId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			JournalArticleImage[] array = new JournalArticleImageImpl[3];
+
+			array[0] = getByGroupId_PrevAndNext(session, journalArticleImage,
+					groupId, orderByComparator, true);
+
+			array[1] = journalArticleImage;
+
+			array[2] = getByGroupId_PrevAndNext(session, journalArticleImage,
+					groupId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected JournalArticleImage getByGroupId_PrevAndNext(Session session,
+		JournalArticleImage journalArticleImage, long groupId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
+
+		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(JournalArticleImageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(journalArticleImage);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<JournalArticleImage> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the journal article images where groupId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByGroupId(long groupId) throws SystemException {
+		for (JournalArticleImage journalArticleImage : findByGroupId(groupId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(journalArticleImage);
+		}
+	}
+
+	/**
+	 * Returns the number of journal article images where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByGroupId(long groupId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
+
+		Object[] finderArgs = new Object[] { groupId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_JOURNALARTICLEIMAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "journalArticleImage.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_TEMPIMAGE =
 		new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED,
@@ -104,8 +572,8 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			new String[] {
 				Boolean.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPIMAGE =
 		new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
@@ -118,6 +586,465 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTempImage",
 			new String[] { Boolean.class.getName() });
+
+	/**
+	 * Returns all the journal article images where tempImage = &#63;.
+	 *
+	 * @param tempImage the temp image
+	 * @return the matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<JournalArticleImage> findByTempImage(boolean tempImage)
+		throws SystemException {
+		return findByTempImage(tempImage, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the journal article images where tempImage = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param tempImage the temp image
+	 * @param start the lower bound of the range of journal article images
+	 * @param end the upper bound of the range of journal article images (not inclusive)
+	 * @return the range of matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<JournalArticleImage> findByTempImage(boolean tempImage,
+		int start, int end) throws SystemException {
+		return findByTempImage(tempImage, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal article images where tempImage = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param tempImage the temp image
+	 * @param start the lower bound of the range of journal article images
+	 * @param end the upper bound of the range of journal article images (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<JournalArticleImage> findByTempImage(boolean tempImage,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPIMAGE;
+			finderArgs = new Object[] { tempImage };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_TEMPIMAGE;
+			finderArgs = new Object[] { tempImage, start, end, orderByComparator };
+		}
+
+		List<JournalArticleImage> list = (List<JournalArticleImage>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticleImage journalArticleImage : list) {
+				if ((tempImage != journalArticleImage.getTempImage())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_TEMPIMAGE_TEMPIMAGE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(JournalArticleImageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(tempImage);
+
+				if (!pagination) {
+					list = (List<JournalArticleImage>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<JournalArticleImage>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first journal article image in the ordered set where tempImage = &#63;.
+	 *
+	 * @param tempImage the temp image
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article image
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage findByTempImage_First(boolean tempImage,
+		OrderByComparator orderByComparator)
+		throws NoSuchArticleImageException, SystemException {
+		JournalArticleImage journalArticleImage = fetchByTempImage_First(tempImage,
+				orderByComparator);
+
+		if (journalArticleImage != null) {
+			return journalArticleImage;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("tempImage=");
+		msg.append(tempImage);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchArticleImageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first journal article image in the ordered set where tempImage = &#63;.
+	 *
+	 * @param tempImage the temp image
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article image, or <code>null</code> if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage fetchByTempImage_First(boolean tempImage,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<JournalArticleImage> list = findByTempImage(tempImage, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last journal article image in the ordered set where tempImage = &#63;.
+	 *
+	 * @param tempImage the temp image
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article image
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage findByTempImage_Last(boolean tempImage,
+		OrderByComparator orderByComparator)
+		throws NoSuchArticleImageException, SystemException {
+		JournalArticleImage journalArticleImage = fetchByTempImage_Last(tempImage,
+				orderByComparator);
+
+		if (journalArticleImage != null) {
+			return journalArticleImage;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("tempImage=");
+		msg.append(tempImage);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchArticleImageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last journal article image in the ordered set where tempImage = &#63;.
+	 *
+	 * @param tempImage the temp image
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article image, or <code>null</code> if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage fetchByTempImage_Last(boolean tempImage,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByTempImage(tempImage);
+
+		List<JournalArticleImage> list = findByTempImage(tempImage, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the journal article images before and after the current journal article image in the ordered set where tempImage = &#63;.
+	 *
+	 * @param articleImageId the primary key of the current journal article image
+	 * @param tempImage the temp image
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal article image
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage[] findByTempImage_PrevAndNext(
+		long articleImageId, boolean tempImage,
+		OrderByComparator orderByComparator)
+		throws NoSuchArticleImageException, SystemException {
+		JournalArticleImage journalArticleImage = findByPrimaryKey(articleImageId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			JournalArticleImage[] array = new JournalArticleImageImpl[3];
+
+			array[0] = getByTempImage_PrevAndNext(session, journalArticleImage,
+					tempImage, orderByComparator, true);
+
+			array[1] = journalArticleImage;
+
+			array[2] = getByTempImage_PrevAndNext(session, journalArticleImage,
+					tempImage, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected JournalArticleImage getByTempImage_PrevAndNext(Session session,
+		JournalArticleImage journalArticleImage, boolean tempImage,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
+
+		query.append(_FINDER_COLUMN_TEMPIMAGE_TEMPIMAGE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(JournalArticleImageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(tempImage);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(journalArticleImage);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<JournalArticleImage> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the journal article images where tempImage = &#63; from the database.
+	 *
+	 * @param tempImage the temp image
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByTempImage(boolean tempImage) throws SystemException {
+		for (JournalArticleImage journalArticleImage : findByTempImage(
+				tempImage, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(journalArticleImage);
+		}
+	}
+
+	/**
+	 * Returns the number of journal article images where tempImage = &#63;.
+	 *
+	 * @param tempImage the temp image
+	 * @return the number of matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByTempImage(boolean tempImage) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_TEMPIMAGE;
+
+		Object[] finderArgs = new Object[] { tempImage };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_JOURNALARTICLEIMAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_TEMPIMAGE_TEMPIMAGE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(tempImage);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_TEMPIMAGE_TEMPIMAGE_2 = "journalArticleImage.tempImage = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_V = new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImageImpl.class,
@@ -126,8 +1053,8 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 				Long.class.getName(), String.class.getName(),
 				Double.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_V = new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED,
@@ -147,6 +1074,574 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 				Long.class.getName(), String.class.getName(),
 				Double.class.getName()
 			});
+
+	/**
+	 * Returns all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @return the matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<JournalArticleImage> findByG_A_V(long groupId,
+		String articleId, double version) throws SystemException {
+		return findByG_A_V(groupId, articleId, version, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @param start the lower bound of the range of journal article images
+	 * @param end the upper bound of the range of journal article images (not inclusive)
+	 * @return the range of matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<JournalArticleImage> findByG_A_V(long groupId,
+		String articleId, double version, int start, int end)
+		throws SystemException {
+		return findByG_A_V(groupId, articleId, version, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @param start the lower bound of the range of journal article images
+	 * @param end the upper bound of the range of journal article images (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<JournalArticleImage> findByG_A_V(long groupId,
+		String articleId, double version, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_V;
+			finderArgs = new Object[] { groupId, articleId, version };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_V;
+			finderArgs = new Object[] {
+					groupId, articleId, version,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<JournalArticleImage> list = (List<JournalArticleImage>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalArticleImage journalArticleImage : list) {
+				if ((groupId != journalArticleImage.getGroupId()) ||
+						!Validator.equals(articleId,
+							journalArticleImage.getArticleId()) ||
+						(version != journalArticleImage.getVersion())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_A_V_GROUPID_2);
+
+			if (articleId == null) {
+				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_1);
+			}
+			else {
+				if (articleId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_G_A_V_VERSION_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(JournalArticleImageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (articleId != null) {
+					qPos.add(articleId);
+				}
+
+				qPos.add(version);
+
+				if (!pagination) {
+					list = (List<JournalArticleImage>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<JournalArticleImage>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first journal article image in the ordered set where groupId = &#63; and articleId = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article image
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage findByG_A_V_First(long groupId,
+		String articleId, double version, OrderByComparator orderByComparator)
+		throws NoSuchArticleImageException, SystemException {
+		JournalArticleImage journalArticleImage = fetchByG_A_V_First(groupId,
+				articleId, version, orderByComparator);
+
+		if (journalArticleImage != null) {
+			return journalArticleImage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", articleId=");
+		msg.append(articleId);
+
+		msg.append(", version=");
+		msg.append(version);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchArticleImageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first journal article image in the ordered set where groupId = &#63; and articleId = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article image, or <code>null</code> if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage fetchByG_A_V_First(long groupId,
+		String articleId, double version, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<JournalArticleImage> list = findByG_A_V(groupId, articleId,
+				version, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last journal article image in the ordered set where groupId = &#63; and articleId = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article image
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage findByG_A_V_Last(long groupId, String articleId,
+		double version, OrderByComparator orderByComparator)
+		throws NoSuchArticleImageException, SystemException {
+		JournalArticleImage journalArticleImage = fetchByG_A_V_Last(groupId,
+				articleId, version, orderByComparator);
+
+		if (journalArticleImage != null) {
+			return journalArticleImage;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", articleId=");
+		msg.append(articleId);
+
+		msg.append(", version=");
+		msg.append(version);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchArticleImageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last journal article image in the ordered set where groupId = &#63; and articleId = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article image, or <code>null</code> if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage fetchByG_A_V_Last(long groupId,
+		String articleId, double version, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByG_A_V(groupId, articleId, version);
+
+		List<JournalArticleImage> list = findByG_A_V(groupId, articleId,
+				version, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the journal article images before and after the current journal article image in the ordered set where groupId = &#63; and articleId = &#63; and version = &#63;.
+	 *
+	 * @param articleImageId the primary key of the current journal article image
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal article image
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage[] findByG_A_V_PrevAndNext(long articleImageId,
+		long groupId, String articleId, double version,
+		OrderByComparator orderByComparator)
+		throws NoSuchArticleImageException, SystemException {
+		JournalArticleImage journalArticleImage = findByPrimaryKey(articleImageId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			JournalArticleImage[] array = new JournalArticleImageImpl[3];
+
+			array[0] = getByG_A_V_PrevAndNext(session, journalArticleImage,
+					groupId, articleId, version, orderByComparator, true);
+
+			array[1] = journalArticleImage;
+
+			array[2] = getByG_A_V_PrevAndNext(session, journalArticleImage,
+					groupId, articleId, version, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected JournalArticleImage getByG_A_V_PrevAndNext(Session session,
+		JournalArticleImage journalArticleImage, long groupId,
+		String articleId, double version, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_A_V_GROUPID_2);
+
+		if (articleId == null) {
+			query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_1);
+		}
+		else {
+			if (articleId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
+			}
+		}
+
+		query.append(_FINDER_COLUMN_G_A_V_VERSION_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(JournalArticleImageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (articleId != null) {
+			qPos.add(articleId);
+		}
+
+		qPos.add(version);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(journalArticleImage);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<JournalArticleImage> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByG_A_V(long groupId, String articleId, double version)
+		throws SystemException {
+		for (JournalArticleImage journalArticleImage : findByG_A_V(groupId,
+				articleId, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(journalArticleImage);
+		}
+	}
+
+	/**
+	 * Returns the number of journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @return the number of matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByG_A_V(long groupId, String articleId, double version)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_A_V;
+
+		Object[] finderArgs = new Object[] { groupId, articleId, version };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_JOURNALARTICLEIMAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_A_V_GROUPID_2);
+
+			if (articleId == null) {
+				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_1);
+			}
+			else {
+				if (articleId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_G_A_V_VERSION_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (articleId != null) {
+					qPos.add(articleId);
+				}
+
+				qPos.add(version);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_A_V_GROUPID_2 = "journalArticleImage.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_V_ARTICLEID_1 = "journalArticleImage.articleId IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_A_V_ARTICLEID_2 = "journalArticleImage.articleId = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_V_ARTICLEID_3 = "(journalArticleImage.articleId IS NULL OR journalArticleImage.articleId = ?) AND ";
+	private static final String _FINDER_COLUMN_G_A_V_VERSION_2 = "journalArticleImage.version = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_A_V_E_E_L = new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImageImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -170,17 +1665,424 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 				Double.class.getName(), String.class.getName(),
 				String.class.getName(), String.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED,
-			JournalArticleImageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED,
-			JournalArticleImageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+
+	/**
+	 * Returns the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchArticleImageException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @param elInstanceId the el instance ID
+	 * @param elName the el name
+	 * @param languageId the language ID
+	 * @return the matching journal article image
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage findByG_A_V_E_E_L(long groupId,
+		String articleId, double version, String elInstanceId, String elName,
+		String languageId) throws NoSuchArticleImageException, SystemException {
+		JournalArticleImage journalArticleImage = fetchByG_A_V_E_E_L(groupId,
+				articleId, version, elInstanceId, elName, languageId);
+
+		if (journalArticleImage == null) {
+			StringBundler msg = new StringBundler(14);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", articleId=");
+			msg.append(articleId);
+
+			msg.append(", version=");
+			msg.append(version);
+
+			msg.append(", elInstanceId=");
+			msg.append(elInstanceId);
+
+			msg.append(", elName=");
+			msg.append(elName);
+
+			msg.append(", languageId=");
+			msg.append(languageId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchArticleImageException(msg.toString());
+		}
+
+		return journalArticleImage;
+	}
+
+	/**
+	 * Returns the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @param elInstanceId the el instance ID
+	 * @param elName the el name
+	 * @param languageId the language ID
+	 * @return the matching journal article image, or <code>null</code> if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage fetchByG_A_V_E_E_L(long groupId,
+		String articleId, double version, String elInstanceId, String elName,
+		String languageId) throws SystemException {
+		return fetchByG_A_V_E_E_L(groupId, articleId, version, elInstanceId,
+			elName, languageId, true);
+	}
+
+	/**
+	 * Returns the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @param elInstanceId the el instance ID
+	 * @param elName the el name
+	 * @param languageId the language ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching journal article image, or <code>null</code> if a matching journal article image could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage fetchByG_A_V_E_E_L(long groupId,
+		String articleId, double version, String elInstanceId, String elName,
+		String languageId, boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				groupId, articleId, version, elInstanceId, elName, languageId
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
+					finderArgs, this);
+		}
+
+		if (result instanceof JournalArticleImage) {
+			JournalArticleImage journalArticleImage = (JournalArticleImage)result;
+
+			if ((groupId != journalArticleImage.getGroupId()) ||
+					!Validator.equals(articleId,
+						journalArticleImage.getArticleId()) ||
+					(version != journalArticleImage.getVersion()) ||
+					!Validator.equals(elInstanceId,
+						journalArticleImage.getElInstanceId()) ||
+					!Validator.equals(elName, journalArticleImage.getElName()) ||
+					!Validator.equals(languageId,
+						journalArticleImage.getLanguageId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(8);
+
+			query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_A_V_E_E_L_GROUPID_2);
+
+			if (articleId == null) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_1);
+			}
+			else {
+				if (articleId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_G_A_V_E_E_L_VERSION_2);
+
+			if (elInstanceId == null) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_1);
+			}
+			else {
+				if (elInstanceId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_2);
+				}
+			}
+
+			if (elName == null) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_1);
+			}
+			else {
+				if (elName.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_2);
+				}
+			}
+
+			if (languageId == null) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_1);
+			}
+			else {
+				if (languageId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (articleId != null) {
+					qPos.add(articleId);
+				}
+
+				qPos.add(version);
+
+				if (elInstanceId != null) {
+					qPos.add(elInstanceId);
+				}
+
+				if (elName != null) {
+					qPos.add(elName);
+				}
+
+				if (languageId != null) {
+					qPos.add(languageId);
+				}
+
+				List<JournalArticleImage> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
+						finderArgs, list);
+				}
+				else {
+					JournalArticleImage journalArticleImage = list.get(0);
+
+					result = journalArticleImage;
+
+					cacheResult(journalArticleImage);
+
+					if ((journalArticleImage.getGroupId() != groupId) ||
+							(journalArticleImage.getArticleId() == null) ||
+							!journalArticleImage.getArticleId().equals(articleId) ||
+							(journalArticleImage.getVersion() != version) ||
+							(journalArticleImage.getElInstanceId() == null) ||
+							!journalArticleImage.getElInstanceId()
+													.equals(elInstanceId) ||
+							(journalArticleImage.getElName() == null) ||
+							!journalArticleImage.getElName().equals(elName) ||
+							(journalArticleImage.getLanguageId() == null) ||
+							!journalArticleImage.getLanguageId()
+													.equals(languageId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
+							finderArgs, journalArticleImage);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (JournalArticleImage)result;
+		}
+	}
+
+	/**
+	 * Removes the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @param elInstanceId the el instance ID
+	 * @param elName the el name
+	 * @param languageId the language ID
+	 * @return the journal article image that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage removeByG_A_V_E_E_L(long groupId,
+		String articleId, double version, String elInstanceId, String elName,
+		String languageId) throws NoSuchArticleImageException, SystemException {
+		JournalArticleImage journalArticleImage = findByG_A_V_E_E_L(groupId,
+				articleId, version, elInstanceId, elName, languageId);
+
+		return remove(journalArticleImage);
+	}
+
+	/**
+	 * Returns the number of journal article images where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param articleId the article ID
+	 * @param version the version
+	 * @param elInstanceId the el instance ID
+	 * @param elName the el name
+	 * @param languageId the language ID
+	 * @return the number of matching journal article images
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByG_A_V_E_E_L(long groupId, String articleId,
+		double version, String elInstanceId, String elName, String languageId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_A_V_E_E_L;
+
+		Object[] finderArgs = new Object[] {
+				groupId, articleId, version, elInstanceId, elName, languageId
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(7);
+
+			query.append(_SQL_COUNT_JOURNALARTICLEIMAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_A_V_E_E_L_GROUPID_2);
+
+			if (articleId == null) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_1);
+			}
+			else {
+				if (articleId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_G_A_V_E_E_L_VERSION_2);
+
+			if (elInstanceId == null) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_1);
+			}
+			else {
+				if (elInstanceId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_2);
+				}
+			}
+
+			if (elName == null) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_1);
+			}
+			else {
+				if (elName.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_2);
+				}
+			}
+
+			if (languageId == null) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_1);
+			}
+			else {
+				if (languageId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (articleId != null) {
+					qPos.add(articleId);
+				}
+
+				qPos.add(version);
+
+				if (elInstanceId != null) {
+					qPos.add(elInstanceId);
+				}
+
+				if (elName != null) {
+					qPos.add(elName);
+				}
+
+				if (languageId != null) {
+					qPos.add(languageId);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_GROUPID_2 = "journalArticleImage.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_1 = "journalArticleImage.articleId IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_2 = "journalArticleImage.articleId = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3 = "(journalArticleImage.articleId IS NULL OR journalArticleImage.articleId = ?) AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_VERSION_2 = "journalArticleImage.version = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_1 = "journalArticleImage.elInstanceId IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_2 = "journalArticleImage.elInstanceId = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3 = "(journalArticleImage.elInstanceId IS NULL OR journalArticleImage.elInstanceId = ?) AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELNAME_1 = "journalArticleImage.elName IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELNAME_2 = "journalArticleImage.elName = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3 = "(journalArticleImage.elName IS NULL OR journalArticleImage.elName = ?) AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_1 = "journalArticleImage.languageId IS NULL";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_2 = "journalArticleImage.languageId = ?";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3 = "(journalArticleImage.languageId IS NULL OR journalArticleImage.languageId = ?)";
 
 	/**
 	 * Caches the journal article image in the entity cache if it is enabled.
@@ -656,1501 +2558,33 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		if (journalArticleImage == null) {
 			Session session = null;
 
-			boolean hasException = false;
-
 			try {
 				session = openSession();
 
 				journalArticleImage = (JournalArticleImage)session.get(JournalArticleImageImpl.class,
 						Long.valueOf(articleImageId));
-			}
-			catch (Exception e) {
-				hasException = true;
 
-				throw processException(e);
-			}
-			finally {
 				if (journalArticleImage != null) {
 					cacheResult(journalArticleImage);
 				}
-				else if (!hasException) {
+				else {
 					EntityCacheUtil.putResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 						JournalArticleImageImpl.class, articleImageId,
 						_nullJournalArticleImage);
 				}
+			}
+			catch (Exception e) {
+				EntityCacheUtil.removeResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
+					JournalArticleImageImpl.class, articleImageId);
 
+				throw processException(e);
+			}
+			finally {
 				closeSession(session);
 			}
 		}
 
 		return journalArticleImage;
-	}
-
-	/**
-	 * Returns all the journal article images where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<JournalArticleImage> findByGroupId(long groupId)
-		throws SystemException {
-		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the journal article images where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of journal article images
-	 * @param end the upper bound of the range of journal article images (not inclusive)
-	 * @return the range of matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<JournalArticleImage> findByGroupId(long groupId, int start,
-		int end) throws SystemException {
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the journal article images where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of journal article images
-	 * @param end the upper bound of the range of journal article images (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<JournalArticleImage> findByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID;
-			finderArgs = new Object[] { groupId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID;
-			finderArgs = new Object[] { groupId, start, end, orderByComparator };
-		}
-
-		List<JournalArticleImage> list = (List<JournalArticleImage>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (JournalArticleImage journalArticleImage : list) {
-				if ((groupId != journalArticleImage.getGroupId())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(2);
-			}
-
-			query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
-
-			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				list = (List<JournalArticleImage>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first journal article image in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching journal article image
-	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchArticleImageException, SystemException {
-		JournalArticleImage journalArticleImage = fetchByGroupId_First(groupId,
-				orderByComparator);
-
-		if (journalArticleImage != null) {
-			return journalArticleImage;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchArticleImageException(msg.toString());
-	}
-
-	/**
-	 * Returns the first journal article image in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<JournalArticleImage> list = findByGroupId(groupId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal article image in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article image
-	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchArticleImageException, SystemException {
-		JournalArticleImage journalArticleImage = fetchByGroupId_Last(groupId,
-				orderByComparator);
-
-		if (journalArticleImage != null) {
-			return journalArticleImage;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchArticleImageException(msg.toString());
-	}
-
-	/**
-	 * Returns the last journal article image in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByGroupId(groupId);
-
-		List<JournalArticleImage> list = findByGroupId(groupId, count - 1,
-				count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the journal article images before and after the current journal article image in the ordered set where groupId = &#63;.
-	 *
-	 * @param articleImageId the primary key of the current journal article image
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article image
-	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage[] findByGroupId_PrevAndNext(
-		long articleImageId, long groupId, OrderByComparator orderByComparator)
-		throws NoSuchArticleImageException, SystemException {
-		JournalArticleImage journalArticleImage = findByPrimaryKey(articleImageId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			JournalArticleImage[] array = new JournalArticleImageImpl[3];
-
-			array[0] = getByGroupId_PrevAndNext(session, journalArticleImage,
-					groupId, orderByComparator, true);
-
-			array[1] = journalArticleImage;
-
-			array[2] = getByGroupId_PrevAndNext(session, journalArticleImage,
-					groupId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected JournalArticleImage getByGroupId_PrevAndNext(Session session,
-		JournalArticleImage journalArticleImage, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
-
-		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(journalArticleImage);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<JournalArticleImage> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the journal article images where tempImage = &#63;.
-	 *
-	 * @param tempImage the temp image
-	 * @return the matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<JournalArticleImage> findByTempImage(boolean tempImage)
-		throws SystemException {
-		return findByTempImage(tempImage, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the journal article images where tempImage = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param tempImage the temp image
-	 * @param start the lower bound of the range of journal article images
-	 * @param end the upper bound of the range of journal article images (not inclusive)
-	 * @return the range of matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<JournalArticleImage> findByTempImage(boolean tempImage,
-		int start, int end) throws SystemException {
-		return findByTempImage(tempImage, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the journal article images where tempImage = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param tempImage the temp image
-	 * @param start the lower bound of the range of journal article images
-	 * @param end the upper bound of the range of journal article images (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<JournalArticleImage> findByTempImage(boolean tempImage,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPIMAGE;
-			finderArgs = new Object[] { tempImage };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_TEMPIMAGE;
-			finderArgs = new Object[] { tempImage, start, end, orderByComparator };
-		}
-
-		List<JournalArticleImage> list = (List<JournalArticleImage>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (JournalArticleImage journalArticleImage : list) {
-				if ((tempImage != journalArticleImage.getTempImage())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(2);
-			}
-
-			query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
-
-			query.append(_FINDER_COLUMN_TEMPIMAGE_TEMPIMAGE_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(tempImage);
-
-				list = (List<JournalArticleImage>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first journal article image in the ordered set where tempImage = &#63;.
-	 *
-	 * @param tempImage the temp image
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching journal article image
-	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage findByTempImage_First(boolean tempImage,
-		OrderByComparator orderByComparator)
-		throws NoSuchArticleImageException, SystemException {
-		JournalArticleImage journalArticleImage = fetchByTempImage_First(tempImage,
-				orderByComparator);
-
-		if (journalArticleImage != null) {
-			return journalArticleImage;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("tempImage=");
-		msg.append(tempImage);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchArticleImageException(msg.toString());
-	}
-
-	/**
-	 * Returns the first journal article image in the ordered set where tempImage = &#63;.
-	 *
-	 * @param tempImage the temp image
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage fetchByTempImage_First(boolean tempImage,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<JournalArticleImage> list = findByTempImage(tempImage, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal article image in the ordered set where tempImage = &#63;.
-	 *
-	 * @param tempImage the temp image
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article image
-	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage findByTempImage_Last(boolean tempImage,
-		OrderByComparator orderByComparator)
-		throws NoSuchArticleImageException, SystemException {
-		JournalArticleImage journalArticleImage = fetchByTempImage_Last(tempImage,
-				orderByComparator);
-
-		if (journalArticleImage != null) {
-			return journalArticleImage;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("tempImage=");
-		msg.append(tempImage);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchArticleImageException(msg.toString());
-	}
-
-	/**
-	 * Returns the last journal article image in the ordered set where tempImage = &#63;.
-	 *
-	 * @param tempImage the temp image
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage fetchByTempImage_Last(boolean tempImage,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByTempImage(tempImage);
-
-		List<JournalArticleImage> list = findByTempImage(tempImage, count - 1,
-				count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the journal article images before and after the current journal article image in the ordered set where tempImage = &#63;.
-	 *
-	 * @param articleImageId the primary key of the current journal article image
-	 * @param tempImage the temp image
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article image
-	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage[] findByTempImage_PrevAndNext(
-		long articleImageId, boolean tempImage,
-		OrderByComparator orderByComparator)
-		throws NoSuchArticleImageException, SystemException {
-		JournalArticleImage journalArticleImage = findByPrimaryKey(articleImageId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			JournalArticleImage[] array = new JournalArticleImageImpl[3];
-
-			array[0] = getByTempImage_PrevAndNext(session, journalArticleImage,
-					tempImage, orderByComparator, true);
-
-			array[1] = journalArticleImage;
-
-			array[2] = getByTempImage_PrevAndNext(session, journalArticleImage,
-					tempImage, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected JournalArticleImage getByTempImage_PrevAndNext(Session session,
-		JournalArticleImage journalArticleImage, boolean tempImage,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
-
-		query.append(_FINDER_COLUMN_TEMPIMAGE_TEMPIMAGE_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(tempImage);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(journalArticleImage);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<JournalArticleImage> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @return the matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<JournalArticleImage> findByG_A_V(long groupId,
-		String articleId, double version) throws SystemException {
-		return findByG_A_V(groupId, articleId, version, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @param start the lower bound of the range of journal article images
-	 * @param end the upper bound of the range of journal article images (not inclusive)
-	 * @return the range of matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<JournalArticleImage> findByG_A_V(long groupId,
-		String articleId, double version, int start, int end)
-		throws SystemException {
-		return findByG_A_V(groupId, articleId, version, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @param start the lower bound of the range of journal article images
-	 * @param end the upper bound of the range of journal article images (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<JournalArticleImage> findByG_A_V(long groupId,
-		String articleId, double version, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_V;
-			finderArgs = new Object[] { groupId, articleId, version };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_V;
-			finderArgs = new Object[] {
-					groupId, articleId, version,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<JournalArticleImage> list = (List<JournalArticleImage>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (JournalArticleImage journalArticleImage : list) {
-				if ((groupId != journalArticleImage.getGroupId()) ||
-						!Validator.equals(articleId,
-							journalArticleImage.getArticleId()) ||
-						(version != journalArticleImage.getVersion())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(4);
-			}
-
-			query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_A_V_GROUPID_2);
-
-			if (articleId == null) {
-				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_1);
-			}
-			else {
-				if (articleId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
-				}
-			}
-
-			query.append(_FINDER_COLUMN_G_A_V_VERSION_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (articleId != null) {
-					qPos.add(articleId);
-				}
-
-				qPos.add(version);
-
-				list = (List<JournalArticleImage>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first journal article image in the ordered set where groupId = &#63; and articleId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching journal article image
-	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage findByG_A_V_First(long groupId,
-		String articleId, double version, OrderByComparator orderByComparator)
-		throws NoSuchArticleImageException, SystemException {
-		JournalArticleImage journalArticleImage = fetchByG_A_V_First(groupId,
-				articleId, version, orderByComparator);
-
-		if (journalArticleImage != null) {
-			return journalArticleImage;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", articleId=");
-		msg.append(articleId);
-
-		msg.append(", version=");
-		msg.append(version);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchArticleImageException(msg.toString());
-	}
-
-	/**
-	 * Returns the first journal article image in the ordered set where groupId = &#63; and articleId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage fetchByG_A_V_First(long groupId,
-		String articleId, double version, OrderByComparator orderByComparator)
-		throws SystemException {
-		List<JournalArticleImage> list = findByG_A_V(groupId, articleId,
-				version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last journal article image in the ordered set where groupId = &#63; and articleId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article image
-	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage findByG_A_V_Last(long groupId, String articleId,
-		double version, OrderByComparator orderByComparator)
-		throws NoSuchArticleImageException, SystemException {
-		JournalArticleImage journalArticleImage = fetchByG_A_V_Last(groupId,
-				articleId, version, orderByComparator);
-
-		if (journalArticleImage != null) {
-			return journalArticleImage;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", articleId=");
-		msg.append(articleId);
-
-		msg.append(", version=");
-		msg.append(version);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchArticleImageException(msg.toString());
-	}
-
-	/**
-	 * Returns the last journal article image in the ordered set where groupId = &#63; and articleId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage fetchByG_A_V_Last(long groupId,
-		String articleId, double version, OrderByComparator orderByComparator)
-		throws SystemException {
-		int count = countByG_A_V(groupId, articleId, version);
-
-		List<JournalArticleImage> list = findByG_A_V(groupId, articleId,
-				version, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the journal article images before and after the current journal article image in the ordered set where groupId = &#63; and articleId = &#63; and version = &#63;.
-	 *
-	 * @param articleImageId the primary key of the current journal article image
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article image
-	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage[] findByG_A_V_PrevAndNext(long articleImageId,
-		long groupId, String articleId, double version,
-		OrderByComparator orderByComparator)
-		throws NoSuchArticleImageException, SystemException {
-		JournalArticleImage journalArticleImage = findByPrimaryKey(articleImageId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			JournalArticleImage[] array = new JournalArticleImageImpl[3];
-
-			array[0] = getByG_A_V_PrevAndNext(session, journalArticleImage,
-					groupId, articleId, version, orderByComparator, true);
-
-			array[1] = journalArticleImage;
-
-			array[2] = getByG_A_V_PrevAndNext(session, journalArticleImage,
-					groupId, articleId, version, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected JournalArticleImage getByG_A_V_PrevAndNext(Session session,
-		JournalArticleImage journalArticleImage, long groupId,
-		String articleId, double version, OrderByComparator orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
-
-		query.append(_FINDER_COLUMN_G_A_V_GROUPID_2);
-
-		if (articleId == null) {
-			query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_1);
-		}
-		else {
-			if (articleId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
-			}
-		}
-
-		query.append(_FINDER_COLUMN_G_A_V_VERSION_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		if (articleId != null) {
-			qPos.add(articleId);
-		}
-
-		qPos.add(version);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(journalArticleImage);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<JournalArticleImage> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchArticleImageException} if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @param elInstanceId the el instance ID
-	 * @param elName the el name
-	 * @param languageId the language ID
-	 * @return the matching journal article image
-	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage findByG_A_V_E_E_L(long groupId,
-		String articleId, double version, String elInstanceId, String elName,
-		String languageId) throws NoSuchArticleImageException, SystemException {
-		JournalArticleImage journalArticleImage = fetchByG_A_V_E_E_L(groupId,
-				articleId, version, elInstanceId, elName, languageId);
-
-		if (journalArticleImage == null) {
-			StringBundler msg = new StringBundler(14);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", articleId=");
-			msg.append(articleId);
-
-			msg.append(", version=");
-			msg.append(version);
-
-			msg.append(", elInstanceId=");
-			msg.append(elInstanceId);
-
-			msg.append(", elName=");
-			msg.append(elName);
-
-			msg.append(", languageId=");
-			msg.append(languageId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchArticleImageException(msg.toString());
-		}
-
-		return journalArticleImage;
-	}
-
-	/**
-	 * Returns the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @param elInstanceId the el instance ID
-	 * @param elName the el name
-	 * @param languageId the language ID
-	 * @return the matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage fetchByG_A_V_E_E_L(long groupId,
-		String articleId, double version, String elInstanceId, String elName,
-		String languageId) throws SystemException {
-		return fetchByG_A_V_E_E_L(groupId, articleId, version, elInstanceId,
-			elName, languageId, true);
-	}
-
-	/**
-	 * Returns the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @param elInstanceId the el instance ID
-	 * @param elName the el name
-	 * @param languageId the language ID
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage fetchByG_A_V_E_E_L(long groupId,
-		String articleId, double version, String elInstanceId, String elName,
-		String languageId, boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, articleId, version, elInstanceId, elName, languageId
-			};
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
-					finderArgs, this);
-		}
-
-		if (result instanceof JournalArticleImage) {
-			JournalArticleImage journalArticleImage = (JournalArticleImage)result;
-
-			if ((groupId != journalArticleImage.getGroupId()) ||
-					!Validator.equals(articleId,
-						journalArticleImage.getArticleId()) ||
-					(version != journalArticleImage.getVersion()) ||
-					!Validator.equals(elInstanceId,
-						journalArticleImage.getElInstanceId()) ||
-					!Validator.equals(elName, journalArticleImage.getElName()) ||
-					!Validator.equals(languageId,
-						journalArticleImage.getLanguageId())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(7);
-
-			query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_A_V_E_E_L_GROUPID_2);
-
-			if (articleId == null) {
-				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_1);
-			}
-			else {
-				if (articleId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_2);
-				}
-			}
-
-			query.append(_FINDER_COLUMN_G_A_V_E_E_L_VERSION_2);
-
-			if (elInstanceId == null) {
-				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_1);
-			}
-			else {
-				if (elInstanceId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_2);
-				}
-			}
-
-			if (elName == null) {
-				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_1);
-			}
-			else {
-				if (elName.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_2);
-				}
-			}
-
-			if (languageId == null) {
-				query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_1);
-			}
-			else {
-				if (languageId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_2);
-				}
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (articleId != null) {
-					qPos.add(articleId);
-				}
-
-				qPos.add(version);
-
-				if (elInstanceId != null) {
-					qPos.add(elInstanceId);
-				}
-
-				if (elName != null) {
-					qPos.add(elName);
-				}
-
-				if (languageId != null) {
-					qPos.add(languageId);
-				}
-
-				List<JournalArticleImage> list = q.list();
-
-				result = list;
-
-				JournalArticleImage journalArticleImage = null;
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
-						finderArgs, list);
-				}
-				else {
-					journalArticleImage = list.get(0);
-
-					cacheResult(journalArticleImage);
-
-					if ((journalArticleImage.getGroupId() != groupId) ||
-							(journalArticleImage.getArticleId() == null) ||
-							!journalArticleImage.getArticleId().equals(articleId) ||
-							(journalArticleImage.getVersion() != version) ||
-							(journalArticleImage.getElInstanceId() == null) ||
-							!journalArticleImage.getElInstanceId()
-													.equals(elInstanceId) ||
-							(journalArticleImage.getElName() == null) ||
-							!journalArticleImage.getElName().equals(elName) ||
-							(journalArticleImage.getLanguageId() == null) ||
-							!journalArticleImage.getLanguageId()
-													.equals(languageId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
-							finderArgs, journalArticleImage);
-					}
-				}
-
-				return journalArticleImage;
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (result == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
-						finderArgs);
-				}
-
-				closeSession(session);
-			}
-		}
-		else {
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (JournalArticleImage)result;
-			}
-		}
 	}
 
 	/**
@@ -2167,7 +2601,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	 * Returns a range of all the journal article images.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of journal article images
@@ -2184,7 +2618,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	 * Returns an ordered range of all the journal article images.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of journal article images
@@ -2195,11 +2629,13 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	 */
 	public List<JournalArticleImage> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
 		FinderPath finderPath = null;
-		Object[] finderArgs = new Object[] { start, end, orderByComparator };
+		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
+			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
@@ -2228,6 +2664,10 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			}
 			else {
 				sql = _SQL_SELECT_JOURNALARTICLEIMAGE;
+
+				if (pagination) {
+					sql = sql.concat(JournalArticleImageModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -2237,97 +2677,34 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 				Query q = session.createQuery(sql);
 
-				if (orderByComparator == null) {
+				if (!pagination) {
 					list = (List<JournalArticleImage>)QueryUtil.list(q,
 							getDialect(), start, end, false);
 
 					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
 				}
 				else {
 					list = (List<JournalArticleImage>)QueryUtil.list(q,
 							getDialect(), start, end);
 				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
 				throw processException(e);
 			}
 			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
 				closeSession(session);
 			}
 		}
 
 		return list;
-	}
-
-	/**
-	 * Removes all the journal article images where groupId = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByGroupId(long groupId) throws SystemException {
-		for (JournalArticleImage journalArticleImage : findByGroupId(groupId)) {
-			remove(journalArticleImage);
-		}
-	}
-
-	/**
-	 * Removes all the journal article images where tempImage = &#63; from the database.
-	 *
-	 * @param tempImage the temp image
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByTempImage(boolean tempImage) throws SystemException {
-		for (JournalArticleImage journalArticleImage : findByTempImage(
-				tempImage)) {
-			remove(journalArticleImage);
-		}
-	}
-
-	/**
-	 * Removes all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByG_A_V(long groupId, String articleId, double version)
-		throws SystemException {
-		for (JournalArticleImage journalArticleImage : findByG_A_V(groupId,
-				articleId, version)) {
-			remove(journalArticleImage);
-		}
-	}
-
-	/**
-	 * Removes the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @param elInstanceId the el instance ID
-	 * @param elName the el name
-	 * @param languageId the language ID
-	 * @return the journal article image that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage removeByG_A_V_E_E_L(long groupId,
-		String articleId, double version, String elInstanceId, String elName,
-		String languageId) throws NoSuchArticleImageException, SystemException {
-		JournalArticleImage journalArticleImage = findByG_A_V_E_E_L(groupId,
-				articleId, version, elInstanceId, elName, languageId);
-
-		return remove(journalArticleImage);
 	}
 
 	/**
@@ -2339,318 +2716,6 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		for (JournalArticleImage journalArticleImage : findAll()) {
 			remove(journalArticleImage);
 		}
-	}
-
-	/**
-	 * Returns the number of journal article images where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the number of matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByGroupId(long groupId) throws SystemException {
-		Object[] finderArgs = new Object[] { groupId };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_GROUPID,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_JOURNALARTICLEIMAGE_WHERE);
-
-			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_GROUPID,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of journal article images where tempImage = &#63;.
-	 *
-	 * @param tempImage the temp image
-	 * @return the number of matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByTempImage(boolean tempImage) throws SystemException {
-		Object[] finderArgs = new Object[] { tempImage };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_TEMPIMAGE,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_JOURNALARTICLEIMAGE_WHERE);
-
-			query.append(_FINDER_COLUMN_TEMPIMAGE_TEMPIMAGE_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(tempImage);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_TEMPIMAGE,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @return the number of matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByG_A_V(long groupId, String articleId, double version)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { groupId, articleId, version };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_G_A_V,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_COUNT_JOURNALARTICLEIMAGE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_A_V_GROUPID_2);
-
-			if (articleId == null) {
-				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_1);
-			}
-			else {
-				if (articleId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
-				}
-			}
-
-			query.append(_FINDER_COLUMN_G_A_V_VERSION_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (articleId != null) {
-					qPos.add(articleId);
-				}
-
-				qPos.add(version);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_A_V,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of journal article images where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param version the version
-	 * @param elInstanceId the el instance ID
-	 * @param elName the el name
-	 * @param languageId the language ID
-	 * @return the number of matching journal article images
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByG_A_V_E_E_L(long groupId, String articleId,
-		double version, String elInstanceId, String elName, String languageId)
-		throws SystemException {
-		Object[] finderArgs = new Object[] {
-				groupId, articleId, version, elInstanceId, elName, languageId
-			};
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_G_A_V_E_E_L,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(7);
-
-			query.append(_SQL_COUNT_JOURNALARTICLEIMAGE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_A_V_E_E_L_GROUPID_2);
-
-			if (articleId == null) {
-				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_1);
-			}
-			else {
-				if (articleId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_2);
-				}
-			}
-
-			query.append(_FINDER_COLUMN_G_A_V_E_E_L_VERSION_2);
-
-			if (elInstanceId == null) {
-				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_1);
-			}
-			else {
-				if (elInstanceId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_2);
-				}
-			}
-
-			if (elName == null) {
-				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_1);
-			}
-			else {
-				if (elName.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_2);
-				}
-			}
-
-			if (languageId == null) {
-				query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_1);
-			}
-			else {
-				if (languageId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_2);
-				}
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (articleId != null) {
-					qPos.add(articleId);
-				}
-
-				qPos.add(version);
-
-				if (elInstanceId != null) {
-					qPos.add(elInstanceId);
-				}
-
-				if (elName != null) {
-					qPos.add(elName);
-				}
-
-				if (languageId != null) {
-					qPos.add(languageId);
-				}
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_A_V_E_E_L,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
 	}
 
 	/**
@@ -2672,18 +2737,17 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 				Query q = session.createQuery(_SQL_COUNT_JOURNALARTICLEIMAGE);
 
 				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY);
 
+				throw processException(e);
+			}
+			finally {
 				closeSession(session);
 			}
 		}
@@ -2719,6 +2783,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	public void destroy() {
 		EntityCacheUtil.removeCache(JournalArticleImageImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
@@ -2746,27 +2811,6 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	private static final String _SQL_SELECT_JOURNALARTICLEIMAGE_WHERE = "SELECT journalArticleImage FROM JournalArticleImage journalArticleImage WHERE ";
 	private static final String _SQL_COUNT_JOURNALARTICLEIMAGE = "SELECT COUNT(journalArticleImage) FROM JournalArticleImage journalArticleImage";
 	private static final String _SQL_COUNT_JOURNALARTICLEIMAGE_WHERE = "SELECT COUNT(journalArticleImage) FROM JournalArticleImage journalArticleImage WHERE ";
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "journalArticleImage.groupId = ?";
-	private static final String _FINDER_COLUMN_TEMPIMAGE_TEMPIMAGE_2 = "journalArticleImage.tempImage = ?";
-	private static final String _FINDER_COLUMN_G_A_V_GROUPID_2 = "journalArticleImage.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_V_ARTICLEID_1 = "journalArticleImage.articleId IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_A_V_ARTICLEID_2 = "journalArticleImage.articleId = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_V_ARTICLEID_3 = "(journalArticleImage.articleId IS NULL OR journalArticleImage.articleId = ?) AND ";
-	private static final String _FINDER_COLUMN_G_A_V_VERSION_2 = "journalArticleImage.version = ?";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_GROUPID_2 = "journalArticleImage.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_1 = "journalArticleImage.articleId IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_2 = "journalArticleImage.articleId = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3 = "(journalArticleImage.articleId IS NULL OR journalArticleImage.articleId = ?) AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_VERSION_2 = "journalArticleImage.version = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_1 = "journalArticleImage.elInstanceId IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_2 = "journalArticleImage.elInstanceId = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3 = "(journalArticleImage.elInstanceId IS NULL OR journalArticleImage.elInstanceId = ?) AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELNAME_1 = "journalArticleImage.elName IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELNAME_2 = "journalArticleImage.elName = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3 = "(journalArticleImage.elName IS NULL OR journalArticleImage.elName = ?) AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_1 = "journalArticleImage.languageId IS NULL";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_2 = "journalArticleImage.languageId = ?";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3 = "(journalArticleImage.languageId IS NULL OR journalArticleImage.languageId = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "journalArticleImage.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No JournalArticleImage exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalArticleImage exists with the key {";

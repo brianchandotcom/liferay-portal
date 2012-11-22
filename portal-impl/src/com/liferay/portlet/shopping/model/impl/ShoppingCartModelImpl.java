@@ -74,6 +74,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		};
 	public static final String TABLE_SQL_CREATE = "create table ShoppingCart (cartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,itemIds STRING null,couponCodes VARCHAR(75) null,altShipping INTEGER,insure BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table ShoppingCart";
+	public static final String ORDER_BY_JPQL = " ORDER BY shoppingCart.cartId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY ShoppingCart.cartId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -88,6 +90,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 			true);
 	public static long GROUPID_COLUMN_BITMASK = 1L;
 	public static long USERID_COLUMN_BITMASK = 2L;
+	public static long CARTID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.shopping.model.ShoppingCart"));
 

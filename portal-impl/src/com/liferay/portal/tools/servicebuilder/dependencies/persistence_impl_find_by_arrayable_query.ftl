@@ -7,9 +7,10 @@ query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE);
 if (orderByComparator != null) {
 	appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 }
-
-<#if entity.getOrder()??>
-	else {
-		query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
-	}
+else
+<#if checkPagination>
+if (pagination)
 </#if>
+{
+	query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+}

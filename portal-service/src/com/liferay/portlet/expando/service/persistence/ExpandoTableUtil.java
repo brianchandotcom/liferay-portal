@@ -111,86 +111,6 @@ public class ExpandoTableUtil {
 	}
 
 	/**
-	* Caches the expando table in the entity cache if it is enabled.
-	*
-	* @param expandoTable the expando table
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable) {
-		getPersistence().cacheResult(expandoTable);
-	}
-
-	/**
-	* Caches the expando tables in the entity cache if it is enabled.
-	*
-	* @param expandoTables the expando tables
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.expando.model.ExpandoTable> expandoTables) {
-		getPersistence().cacheResult(expandoTables);
-	}
-
-	/**
-	* Creates a new expando table with the primary key. Does not add the expando table to the database.
-	*
-	* @param tableId the primary key for the new expando table
-	* @return the new expando table
-	*/
-	public static com.liferay.portlet.expando.model.ExpandoTable create(
-		long tableId) {
-		return getPersistence().create(tableId);
-	}
-
-	/**
-	* Removes the expando table with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param tableId the primary key of the expando table
-	* @return the expando table that was removed
-	* @throws com.liferay.portlet.expando.NoSuchTableException if a expando table with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.expando.model.ExpandoTable remove(
-		long tableId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchTableException {
-		return getPersistence().remove(tableId);
-	}
-
-	public static com.liferay.portlet.expando.model.ExpandoTable updateImpl(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(expandoTable);
-	}
-
-	/**
-	* Returns the expando table with the primary key or throws a {@link com.liferay.portlet.expando.NoSuchTableException} if it could not be found.
-	*
-	* @param tableId the primary key of the expando table
-	* @return the expando table
-	* @throws com.liferay.portlet.expando.NoSuchTableException if a expando table with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.expando.model.ExpandoTable findByPrimaryKey(
-		long tableId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchTableException {
-		return getPersistence().findByPrimaryKey(tableId);
-	}
-
-	/**
-	* Returns the expando table with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param tableId the primary key of the expando table
-	* @return the expando table, or <code>null</code> if a expando table with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.expando.model.ExpandoTable fetchByPrimaryKey(
-		long tableId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(tableId);
-	}
-
-	/**
 	* Returns all the expando tables where companyId = &#63; and classNameId = &#63;.
 	*
 	* @param companyId the company ID
@@ -208,7 +128,7 @@ public class ExpandoTableUtil {
 	* Returns a range of all the expando tables where companyId = &#63; and classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ExpandoTableModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -228,7 +148,7 @@ public class ExpandoTableUtil {
 	* Returns an ordered range of all the expando tables where companyId = &#63; and classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ExpandoTableModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -342,6 +262,31 @@ public class ExpandoTableUtil {
 	}
 
 	/**
+	* Removes all the expando tables where companyId = &#63; and classNameId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_C(long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_C(companyId, classNameId);
+	}
+
+	/**
+	* Returns the number of expando tables where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @return the number of matching expando tables
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_C(long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_C(companyId, classNameId);
+	}
+
+	/**
 	* Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.expando.NoSuchTableException} if it could not be found.
 	*
 	* @param companyId the company ID
@@ -392,6 +337,117 @@ public class ExpandoTableUtil {
 	}
 
 	/**
+	* Removes the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @return the expando table that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.expando.model.ExpandoTable removeByC_C_N(
+		long companyId, long classNameId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.expando.NoSuchTableException {
+		return getPersistence().removeByC_C_N(companyId, classNameId, name);
+	}
+
+	/**
+	* Returns the number of expando tables where companyId = &#63; and classNameId = &#63; and name = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param name the name
+	* @return the number of matching expando tables
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_C_N(long companyId, long classNameId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_C_N(companyId, classNameId, name);
+	}
+
+	/**
+	* Caches the expando table in the entity cache if it is enabled.
+	*
+	* @param expandoTable the expando table
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable) {
+		getPersistence().cacheResult(expandoTable);
+	}
+
+	/**
+	* Caches the expando tables in the entity cache if it is enabled.
+	*
+	* @param expandoTables the expando tables
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.expando.model.ExpandoTable> expandoTables) {
+		getPersistence().cacheResult(expandoTables);
+	}
+
+	/**
+	* Creates a new expando table with the primary key. Does not add the expando table to the database.
+	*
+	* @param tableId the primary key for the new expando table
+	* @return the new expando table
+	*/
+	public static com.liferay.portlet.expando.model.ExpandoTable create(
+		long tableId) {
+		return getPersistence().create(tableId);
+	}
+
+	/**
+	* Removes the expando table with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param tableId the primary key of the expando table
+	* @return the expando table that was removed
+	* @throws com.liferay.portlet.expando.NoSuchTableException if a expando table with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.expando.model.ExpandoTable remove(
+		long tableId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.expando.NoSuchTableException {
+		return getPersistence().remove(tableId);
+	}
+
+	public static com.liferay.portlet.expando.model.ExpandoTable updateImpl(
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(expandoTable);
+	}
+
+	/**
+	* Returns the expando table with the primary key or throws a {@link com.liferay.portlet.expando.NoSuchTableException} if it could not be found.
+	*
+	* @param tableId the primary key of the expando table
+	* @return the expando table
+	* @throws com.liferay.portlet.expando.NoSuchTableException if a expando table with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.expando.model.ExpandoTable findByPrimaryKey(
+		long tableId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.expando.NoSuchTableException {
+		return getPersistence().findByPrimaryKey(tableId);
+	}
+
+	/**
+	* Returns the expando table with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param tableId the primary key of the expando table
+	* @return the expando table, or <code>null</code> if a expando table with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.expando.model.ExpandoTable fetchByPrimaryKey(
+		long tableId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(tableId);
+	}
+
+	/**
 	* Returns all the expando tables.
 	*
 	* @return the expando tables
@@ -406,7 +462,7 @@ public class ExpandoTableUtil {
 	* Returns a range of all the expando tables.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ExpandoTableModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of expando tables
@@ -424,7 +480,7 @@ public class ExpandoTableUtil {
 	* Returns an ordered range of all the expando tables.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ExpandoTableModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of expando tables
@@ -441,34 +497,6 @@ public class ExpandoTableUtil {
 	}
 
 	/**
-	* Removes all the expando tables where companyId = &#63; and classNameId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByC_C(long companyId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_C(companyId, classNameId);
-	}
-
-	/**
-	* Removes the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param name the name
-	* @return the expando table that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.expando.model.ExpandoTable removeByC_C_N(
-		long companyId, long classNameId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchTableException {
-		return getPersistence().removeByC_C_N(companyId, classNameId, name);
-	}
-
-	/**
 	* Removes all the expando tables from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -476,34 +504,6 @@ public class ExpandoTableUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of expando tables where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @return the number of matching expando tables
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_C(long companyId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_C(companyId, classNameId);
-	}
-
-	/**
-	* Returns the number of expando tables where companyId = &#63; and classNameId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param name the name
-	* @return the number of matching expando tables
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_C_N(long companyId, long classNameId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_C_N(companyId, classNameId, name);
 	}
 
 	/**

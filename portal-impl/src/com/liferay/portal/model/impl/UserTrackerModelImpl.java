@@ -70,6 +70,8 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		};
 	public static final String TABLE_SQL_CREATE = "create table UserTracker (userTrackerId LONG not null primary key,companyId LONG,userId LONG,modifiedDate DATE null,sessionId VARCHAR(200) null,remoteAddr VARCHAR(75) null,remoteHost VARCHAR(75) null,userAgent VARCHAR(200) null)";
 	public static final String TABLE_SQL_DROP = "drop table UserTracker";
+	public static final String ORDER_BY_JPQL = " ORDER BY userTracker.userTrackerId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY UserTracker.userTrackerId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -85,6 +87,7 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long SESSIONID_COLUMN_BITMASK = 2L;
 	public static long USERID_COLUMN_BITMASK = 4L;
+	public static long USERTRACKERID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.UserTracker"));
 

@@ -125,6 +125,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	public static long PARENTLAYOUTREVISIONID_COLUMN_BITMASK = 8L;
 	public static long PLID_COLUMN_BITMASK = 16L;
 	public static long STATUS_COLUMN_BITMASK = 32L;
+	public static long MODIFIEDDATE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

@@ -36,6 +36,69 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	 */
 
 	/**
+	* Returns the web d a v props where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portal.NoSuchWebDAVPropsException} if it could not be found.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the matching web d a v props
+	* @throws com.liferay.portal.NoSuchWebDAVPropsException if a matching web d a v props could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.WebDAVProps findByC_C(long classNameId,
+		long classPK)
+		throws com.liferay.portal.NoSuchWebDAVPropsException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the web d a v props where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the matching web d a v props, or <code>null</code> if a matching web d a v props could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.WebDAVProps fetchByC_C(long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the web d a v props where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching web d a v props, or <code>null</code> if a matching web d a v props could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.WebDAVProps fetchByC_C(long classNameId,
+		long classPK, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the web d a v props where classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the web d a v props that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.WebDAVProps removeByC_C(long classNameId,
+		long classPK)
+		throws com.liferay.portal.NoSuchWebDAVPropsException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of web d a v propses where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching web d a v propses
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_C(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the web d a v props in the entity cache if it is enabled.
 	*
 	* @param webDAVProps the web d a v props
@@ -99,45 +162,6 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the web d a v props where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portal.NoSuchWebDAVPropsException} if it could not be found.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the matching web d a v props
-	* @throws com.liferay.portal.NoSuchWebDAVPropsException if a matching web d a v props could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.WebDAVProps findByC_C(long classNameId,
-		long classPK)
-		throws com.liferay.portal.NoSuchWebDAVPropsException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the web d a v props where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the matching web d a v props, or <code>null</code> if a matching web d a v props could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.WebDAVProps fetchByC_C(long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the web d a v props where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching web d a v props, or <code>null</code> if a matching web d a v props could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.WebDAVProps fetchByC_C(long classNameId,
-		long classPK, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the web d a v propses.
 	*
 	* @return the web d a v propses
@@ -150,7 +174,7 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	* Returns a range of all the web d a v propses.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from WebDAVPropsModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of web d a v propses
@@ -166,7 +190,7 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	* Returns an ordered range of all the web d a v propses.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from WebDAVPropsModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of web d a v propses
@@ -181,35 +205,11 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the web d a v props where classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the web d a v props that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.WebDAVProps removeByC_C(long classNameId,
-		long classPK)
-		throws com.liferay.portal.NoSuchWebDAVPropsException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the web d a v propses from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of web d a v propses where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching web d a v propses
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

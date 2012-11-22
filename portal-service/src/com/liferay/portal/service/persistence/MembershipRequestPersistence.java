@@ -36,72 +36,6 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	 */
 
 	/**
-	* Caches the membership request in the entity cache if it is enabled.
-	*
-	* @param membershipRequest the membership request
-	*/
-	public void cacheResult(
-		com.liferay.portal.model.MembershipRequest membershipRequest);
-
-	/**
-	* Caches the membership requests in the entity cache if it is enabled.
-	*
-	* @param membershipRequests the membership requests
-	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portal.model.MembershipRequest> membershipRequests);
-
-	/**
-	* Creates a new membership request with the primary key. Does not add the membership request to the database.
-	*
-	* @param membershipRequestId the primary key for the new membership request
-	* @return the new membership request
-	*/
-	public com.liferay.portal.model.MembershipRequest create(
-		long membershipRequestId);
-
-	/**
-	* Removes the membership request with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param membershipRequestId the primary key of the membership request
-	* @return the membership request that was removed
-	* @throws com.liferay.portal.NoSuchMembershipRequestException if a membership request with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.MembershipRequest remove(
-		long membershipRequestId)
-		throws com.liferay.portal.NoSuchMembershipRequestException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.portal.model.MembershipRequest updateImpl(
-		com.liferay.portal.model.MembershipRequest membershipRequest)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the membership request with the primary key or throws a {@link com.liferay.portal.NoSuchMembershipRequestException} if it could not be found.
-	*
-	* @param membershipRequestId the primary key of the membership request
-	* @return the membership request
-	* @throws com.liferay.portal.NoSuchMembershipRequestException if a membership request with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.MembershipRequest findByPrimaryKey(
-		long membershipRequestId)
-		throws com.liferay.portal.NoSuchMembershipRequestException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the membership request with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param membershipRequestId the primary key of the membership request
-	* @return the membership request, or <code>null</code> if a membership request with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.MembershipRequest fetchByPrimaryKey(
-		long membershipRequestId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the membership requests where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -116,7 +50,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	* Returns a range of all the membership requests where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MembershipRequestModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -133,7 +67,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	* Returns an ordered range of all the membership requests where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MembershipRequestModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -221,6 +155,25 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the membership requests where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of membership requests where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching membership requests
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the membership requests where userId = &#63;.
 	*
 	* @param userId the user ID
@@ -234,7 +187,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	* Returns a range of all the membership requests where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MembershipRequestModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -251,7 +204,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	* Returns an ordered range of all the membership requests where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MembershipRequestModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -339,6 +292,25 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the membership requests where userId = &#63; from the database.
+	*
+	* @param userId the user ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of membership requests where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the number of matching membership requests
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the membership requests where groupId = &#63; and statusId = &#63;.
 	*
 	* @param groupId the group ID
@@ -354,7 +326,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	* Returns a range of all the membership requests where groupId = &#63; and statusId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MembershipRequestModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -372,7 +344,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	* Returns an ordered range of all the membership requests where groupId = &#63; and statusId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MembershipRequestModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -466,6 +438,27 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the membership requests where groupId = &#63; and statusId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param statusId the status ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByG_S(long groupId, int statusId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of membership requests where groupId = &#63; and statusId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param statusId the status ID
+	* @return the number of matching membership requests
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByG_S(long groupId, int statusId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the membership requests where groupId = &#63; and userId = &#63; and statusId = &#63;.
 	*
 	* @param groupId the group ID
@@ -482,7 +475,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	* Returns a range of all the membership requests where groupId = &#63; and userId = &#63; and statusId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MembershipRequestModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -501,7 +494,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	* Returns an ordered range of all the membership requests where groupId = &#63; and userId = &#63; and statusId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MembershipRequestModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -601,6 +594,95 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the membership requests where groupId = &#63; and userId = &#63; and statusId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param statusId the status ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByG_U_S(long groupId, long userId, int statusId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of membership requests where groupId = &#63; and userId = &#63; and statusId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param statusId the status ID
+	* @return the number of matching membership requests
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByG_U_S(long groupId, long userId, int statusId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Caches the membership request in the entity cache if it is enabled.
+	*
+	* @param membershipRequest the membership request
+	*/
+	public void cacheResult(
+		com.liferay.portal.model.MembershipRequest membershipRequest);
+
+	/**
+	* Caches the membership requests in the entity cache if it is enabled.
+	*
+	* @param membershipRequests the membership requests
+	*/
+	public void cacheResult(
+		java.util.List<com.liferay.portal.model.MembershipRequest> membershipRequests);
+
+	/**
+	* Creates a new membership request with the primary key. Does not add the membership request to the database.
+	*
+	* @param membershipRequestId the primary key for the new membership request
+	* @return the new membership request
+	*/
+	public com.liferay.portal.model.MembershipRequest create(
+		long membershipRequestId);
+
+	/**
+	* Removes the membership request with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param membershipRequestId the primary key of the membership request
+	* @return the membership request that was removed
+	* @throws com.liferay.portal.NoSuchMembershipRequestException if a membership request with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.MembershipRequest remove(
+		long membershipRequestId)
+		throws com.liferay.portal.NoSuchMembershipRequestException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.MembershipRequest updateImpl(
+		com.liferay.portal.model.MembershipRequest membershipRequest)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the membership request with the primary key or throws a {@link com.liferay.portal.NoSuchMembershipRequestException} if it could not be found.
+	*
+	* @param membershipRequestId the primary key of the membership request
+	* @return the membership request
+	* @throws com.liferay.portal.NoSuchMembershipRequestException if a membership request with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.MembershipRequest findByPrimaryKey(
+		long membershipRequestId)
+		throws com.liferay.portal.NoSuchMembershipRequestException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the membership request with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param membershipRequestId the primary key of the membership request
+	* @return the membership request, or <code>null</code> if a membership request with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.MembershipRequest fetchByPrimaryKey(
+		long membershipRequestId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the membership requests.
 	*
 	* @return the membership requests
@@ -613,7 +695,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	* Returns a range of all the membership requests.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MembershipRequestModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of membership requests
@@ -629,7 +711,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	* Returns an ordered range of all the membership requests.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MembershipRequestModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of membership requests
@@ -644,93 +726,11 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the membership requests where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the membership requests where userId = &#63; from the database.
-	*
-	* @param userId the user ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the membership requests where groupId = &#63; and statusId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param statusId the status ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByG_S(long groupId, int statusId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the membership requests where groupId = &#63; and userId = &#63; and statusId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param userId the user ID
-	* @param statusId the status ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByG_U_S(long groupId, long userId, int statusId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the membership requests from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of membership requests where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching membership requests
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of membership requests where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the number of matching membership requests
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of membership requests where groupId = &#63; and statusId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param statusId the status ID
-	* @return the number of matching membership requests
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByG_S(long groupId, int statusId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of membership requests where groupId = &#63; and userId = &#63; and statusId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param userId the user ID
-	* @param statusId the status ID
-	* @return the number of matching membership requests
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByG_U_S(long groupId, long userId, int statusId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -112,86 +112,6 @@ public class JournalArticleImageUtil {
 	}
 
 	/**
-	* Caches the journal article image in the entity cache if it is enabled.
-	*
-	* @param journalArticleImage the journal article image
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage) {
-		getPersistence().cacheResult(journalArticleImage);
-	}
-
-	/**
-	* Caches the journal article images in the entity cache if it is enabled.
-	*
-	* @param journalArticleImages the journal article images
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> journalArticleImages) {
-		getPersistence().cacheResult(journalArticleImages);
-	}
-
-	/**
-	* Creates a new journal article image with the primary key. Does not add the journal article image to the database.
-	*
-	* @param articleImageId the primary key for the new journal article image
-	* @return the new journal article image
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleImage create(
-		long articleImageId) {
-		return getPersistence().create(articleImageId);
-	}
-
-	/**
-	* Removes the journal article image with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param articleImageId the primary key of the journal article image
-	* @return the journal article image that was removed
-	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleImage remove(
-		long articleImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
-		return getPersistence().remove(articleImageId);
-	}
-
-	public static com.liferay.portlet.journal.model.JournalArticleImage updateImpl(
-		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(journalArticleImage);
-	}
-
-	/**
-	* Returns the journal article image with the primary key or throws a {@link com.liferay.portlet.journal.NoSuchArticleImageException} if it could not be found.
-	*
-	* @param articleImageId the primary key of the journal article image
-	* @return the journal article image
-	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleImage findByPrimaryKey(
-		long articleImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
-		return getPersistence().findByPrimaryKey(articleImageId);
-	}
-
-	/**
-	* Returns the journal article image with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param articleImageId the primary key of the journal article image
-	* @return the journal article image, or <code>null</code> if a journal article image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByPrimaryKey(
-		long articleImageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(articleImageId);
-	}
-
-	/**
 	* Returns all the journal article images where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -208,7 +128,7 @@ public class JournalArticleImageUtil {
 	* Returns a range of all the journal article images where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -227,7 +147,7 @@ public class JournalArticleImageUtil {
 	* Returns an ordered range of all the journal article images where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -330,6 +250,29 @@ public class JournalArticleImageUtil {
 	}
 
 	/**
+	* Removes all the journal article images where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of journal article images where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching journal article images
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
 	* Returns all the journal article images where tempImage = &#63;.
 	*
 	* @param tempImage the temp image
@@ -346,7 +289,7 @@ public class JournalArticleImageUtil {
 	* Returns a range of all the journal article images where tempImage = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param tempImage the temp image
@@ -365,7 +308,7 @@ public class JournalArticleImageUtil {
 	* Returns an ordered range of all the journal article images where tempImage = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param tempImage the temp image
@@ -472,6 +415,29 @@ public class JournalArticleImageUtil {
 	}
 
 	/**
+	* Removes all the journal article images where tempImage = &#63; from the database.
+	*
+	* @param tempImage the temp image
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByTempImage(boolean tempImage)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByTempImage(tempImage);
+	}
+
+	/**
+	* Returns the number of journal article images where tempImage = &#63;.
+	*
+	* @param tempImage the temp image
+	* @return the number of matching journal article images
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByTempImage(boolean tempImage)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByTempImage(tempImage);
+	}
+
+	/**
 	* Returns all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
 	*
 	* @param groupId the group ID
@@ -490,7 +456,7 @@ public class JournalArticleImageUtil {
 	* Returns a range of all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -512,7 +478,7 @@ public class JournalArticleImageUtil {
 	* Returns an ordered range of all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -638,6 +604,35 @@ public class JournalArticleImageUtil {
 	}
 
 	/**
+	* Removes all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param version the version
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_A_V(long groupId, java.lang.String articleId,
+		double version)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByG_A_V(groupId, articleId, version);
+	}
+
+	/**
+	* Returns the number of journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param version the version
+	* @return the number of matching journal article images
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_A_V(long groupId, java.lang.String articleId,
+		double version)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_A_V(groupId, articleId, version);
+	}
+
+	/**
 	* Returns the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchArticleImageException} if it could not be found.
 	*
 	* @param groupId the group ID
@@ -707,91 +702,6 @@ public class JournalArticleImageUtil {
 	}
 
 	/**
-	* Returns all the journal article images.
-	*
-	* @return the journal article images
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findAll();
-	}
-
-	/**
-	* Returns a range of all the journal article images.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param start the lower bound of the range of journal article images
-	* @param end the upper bound of the range of journal article images (not inclusive)
-	* @return the range of journal article images
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the journal article images.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param start the lower bound of the range of journal article images
-	* @param end the upper bound of the range of journal article images (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of journal article images
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	* Removes all the journal article images where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByGroupId(groupId);
-	}
-
-	/**
-	* Removes all the journal article images where tempImage = &#63; from the database.
-	*
-	* @param tempImage the temp image
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByTempImage(boolean tempImage)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByTempImage(tempImage);
-	}
-
-	/**
-	* Removes all the journal article images where groupId = &#63; and articleId = &#63; and version = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param articleId the article ID
-	* @param version the version
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByG_A_V(long groupId, java.lang.String articleId,
-		double version)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByG_A_V(groupId, articleId, version);
-	}
-
-	/**
 	* Removes the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -815,55 +725,6 @@ public class JournalArticleImageUtil {
 	}
 
 	/**
-	* Removes all the journal article images from the database.
-	*
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of journal article images where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching journal article images
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of journal article images where tempImage = &#63;.
-	*
-	* @param tempImage the temp image
-	* @return the number of matching journal article images
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByTempImage(boolean tempImage)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByTempImage(tempImage);
-	}
-
-	/**
-	* Returns the number of journal article images where groupId = &#63; and articleId = &#63; and version = &#63;.
-	*
-	* @param groupId the group ID
-	* @param articleId the article ID
-	* @param version the version
-	* @return the number of matching journal article images
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByG_A_V(long groupId, java.lang.String articleId,
-		double version)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_A_V(groupId, articleId, version);
-	}
-
-	/**
 	* Returns the number of journal article images where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63;.
 	*
 	* @param groupId the group ID
@@ -883,6 +744,145 @@ public class JournalArticleImageUtil {
 		return getPersistence()
 				   .countByG_A_V_E_E_L(groupId, articleId, version,
 			elInstanceId, elName, languageId);
+	}
+
+	/**
+	* Caches the journal article image in the entity cache if it is enabled.
+	*
+	* @param journalArticleImage the journal article image
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage) {
+		getPersistence().cacheResult(journalArticleImage);
+	}
+
+	/**
+	* Caches the journal article images in the entity cache if it is enabled.
+	*
+	* @param journalArticleImages the journal article images
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> journalArticleImages) {
+		getPersistence().cacheResult(journalArticleImages);
+	}
+
+	/**
+	* Creates a new journal article image with the primary key. Does not add the journal article image to the database.
+	*
+	* @param articleImageId the primary key for the new journal article image
+	* @return the new journal article image
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleImage create(
+		long articleImageId) {
+		return getPersistence().create(articleImageId);
+	}
+
+	/**
+	* Removes the journal article image with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param articleImageId the primary key of the journal article image
+	* @return the journal article image that was removed
+	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleImage remove(
+		long articleImageId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchArticleImageException {
+		return getPersistence().remove(articleImageId);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticleImage updateImpl(
+		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(journalArticleImage);
+	}
+
+	/**
+	* Returns the journal article image with the primary key or throws a {@link com.liferay.portlet.journal.NoSuchArticleImageException} if it could not be found.
+	*
+	* @param articleImageId the primary key of the journal article image
+	* @return the journal article image
+	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleImage findByPrimaryKey(
+		long articleImageId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchArticleImageException {
+		return getPersistence().findByPrimaryKey(articleImageId);
+	}
+
+	/**
+	* Returns the journal article image with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param articleImageId the primary key of the journal article image
+	* @return the journal article image, or <code>null</code> if a journal article image with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByPrimaryKey(
+		long articleImageId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(articleImageId);
+	}
+
+	/**
+	* Returns all the journal article images.
+	*
+	* @return the journal article images
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll();
+	}
+
+	/**
+	* Returns a range of all the journal article images.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of journal article images
+	* @param end the upper bound of the range of journal article images (not inclusive)
+	* @return the range of journal article images
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findAll(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll(start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal article images.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of journal article images
+	* @param end the upper bound of the range of journal article images (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of journal article images
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Removes all the journal article images from the database.
+	*
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeAll();
 	}
 
 	/**

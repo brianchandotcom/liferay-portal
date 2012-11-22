@@ -86,6 +86,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Image"),
 			true);
 	public static long SIZE_COLUMN_BITMASK = 1L;
+	public static long IMAGEID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

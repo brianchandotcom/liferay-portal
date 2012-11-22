@@ -72,6 +72,8 @@
 	<classpathentry kind="lib" path="lib/development/mysql.jar"/>
 	<classpathentry kind="lib" path="lib/development/objenesis.jar"/>
 	<classpathentry kind="lib" path="lib/development/orangevolt-ant-tasks.jar"/>
+	<classpathentry kind="lib" path="lib/development/osgi.cmpn.jar"/>
+	<classpathentry kind="lib" path="lib/development/osgi.core.jar"/>
 	<classpathentry kind="lib" path="lib/development/p6spy.jar"/>
 	<classpathentry kind="lib" path="lib/development/persistence.jar"/>
 	<classpathentry kind="lib" path="lib/development/postgresql.jar"/>
@@ -159,7 +161,6 @@
 	<classpathentry kind="lib" path="lib/portal/ecs.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ehcache-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ehcache-jgroupsreplication.jar"/>
-	<classpathentry kind="lib" path="lib/portal/equinox.jar"/>
 	<classpathentry kind="lib" path="lib/portal/fastutil.jar"/>
 	<classpathentry kind="lib" path="lib/portal/flexjson.jar"/>
 	<classpathentry kind="lib" path="lib/portal/fontbox.jar"/>

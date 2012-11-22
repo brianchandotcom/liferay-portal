@@ -21,8 +21,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 FileEntry attachmentsFileEntry = (FileEntry)row.getObject();
 
-DLFileEntry dlFileEntry = (DLFileEntry)attachmentsFileEntry.getModel();
-
 MBMessage message = MBAttachmentUtil.getMBMessageByFileEntryId(attachmentsFileEntry.getFileEntryId());
 %>
 
@@ -30,7 +28,7 @@ MBMessage message = MBAttachmentUtil.getMBMessageByFileEntryId(attachmentsFileEn
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.ADD_FILE) %>">
 
 		<%
-		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntry.class.getName(), attachmentsFileEntry.getFileEntryId());
 		%>
 
 		<portlet:actionURL var="restoreEntryURL">
@@ -50,6 +48,10 @@ MBMessage message = MBAttachmentUtil.getMBMessageByFileEntryId(attachmentsFileEn
 			onClick="<%= taglibOnClick %>"
 			url="javascript:;"
 		/>
+
+		<%
+		DLFileEntry dlFileEntry = (DLFileEntry)attachmentsFileEntry.getModel();
+		%>
 
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/message_boards/edit_message_attachments" />

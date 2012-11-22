@@ -23,20 +23,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowInstanceLink;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.messageboards.SplitThreadException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -48,10 +43,6 @@ import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -140,15 +131,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Attachments
 
-		long companyId = rootMessage.getCompanyId();
-		long repositoryId = CompanyConstants.SYSTEM;
-		String dirName = thread.getAttachmentsDir();
-
-		try {
-			DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
-		}
-		catch (NoSuchDirectoryException nsde) {
-		}
+		PortletFileRepositoryUtil.deleteFolder(thread.getAttachmentsFolderId());
 
 		// Subscriptions
 
@@ -812,7 +795,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		MBThread oldThread = message.getThread();
 		MBMessage rootMessage = mbMessagePersistence.findByPrimaryKey(
 			oldThread.getRootMessageId());
-		String oldAttachmentsDir = message.getAttachmentsDir();
 
 		// Message flags
 
@@ -862,13 +844,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		message.setThreadId(thread.getThreadId());
 		message.setRootMessageId(thread.getRootMessageId());
 		message.setParentMessageId(0);
-		message.setAttachmentsDir(null);
 
 		mbMessagePersistence.update(message);
-
-		// Attachments
-
-		moveAttachmentsFromOldThread(message, oldAttachmentsDir);
 
 		// Indexer
 
@@ -949,81 +926,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
-	protected void moveAttachmentFromOldThread(
-			long companyId, String fileName, String newAttachmentsDir)
-		throws PortalException, SystemException {
-
-		long repositoryId = CompanyConstants.SYSTEM;
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(newAttachmentsDir);
-		sb.append(StringPool.SLASH);
-		sb.append(StringUtil.extractLast(fileName, CharPool.SLASH));
-
-		String newFileName = sb.toString();
-
-		try {
-			File file = DLStoreUtil.getFile(companyId, repositoryId, fileName);
-
-			DLStoreUtil.addFile(
-				companyId, repositoryId, newFileName, false, file);
-		}
-		catch (UnsupportedOperationException uoe) {
-			InputStream is = DLStoreUtil.getFileAsStream(
-				companyId, repositoryId, fileName);
-
-			try {
-				DLStoreUtil.addFile(
-					companyId, repositoryId, newFileName, false, is);
-			}
-			finally {
-				try {
-					is.close();
-				}
-				catch (IOException ioe) {
-					_log.error(ioe);
-				}
-			}
-		}
-
-		DLStoreUtil.deleteFile(companyId, repositoryId, fileName);
-	}
-
-	protected void moveAttachmentsFromOldThread(
-			MBMessage message, String oldAttachmentsDir)
-		throws PortalException, SystemException {
-
-		if (!message.getAttachments()) {
-			return;
-		}
-
-		long companyId = message.getCompanyId();
-		long repositoryId = CompanyConstants.SYSTEM;
-		String newAttachmentsDir = message.getAttachmentsDir();
-
-		try {
-			DLStoreUtil.addDirectory(
-				companyId, repositoryId, newAttachmentsDir);
-		}
-		catch (DuplicateDirectoryException dde) {
-		}
-
-		String[] fileNames = DLStoreUtil.getFileNames(
-			companyId, repositoryId, oldAttachmentsDir);
-
-		for (String fileName : fileNames) {
-			moveAttachmentFromOldThread(companyId, fileName, newAttachmentsDir);
-		}
-
-		try {
-			DLStoreUtil.deleteDirectory(
-				companyId, repositoryId, oldAttachmentsDir);
-		}
-		catch (NoSuchDirectoryException nsde) {
-		}
-	}
-
 	protected int moveChildrenMessages(
 			MBMessage parentMessage, MBCategory category, long oldThreadId)
 		throws PortalException, SystemException {
@@ -1034,16 +936,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			oldThreadId, parentMessage.getMessageId());
 
 		for (MBMessage message : messages) {
-			String oldAttachmentsDir = message.getAttachmentsDir();
-
 			message.setCategoryId(parentMessage.getCategoryId());
 			message.setThreadId(parentMessage.getThreadId());
 			message.setRootMessageId(parentMessage.getRootMessageId());
-			message.setAttachmentsDir(null);
 
 			mbMessagePersistence.update(message);
-
-			moveAttachmentsFromOldThread(message, oldAttachmentsDir);
 
 			if (!message.isDiscussion()) {
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(

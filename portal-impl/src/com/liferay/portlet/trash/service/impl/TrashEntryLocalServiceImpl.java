@@ -143,26 +143,6 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		actionableDynamicQuery.performActions();
 	}
 
-	public void checkEntriesAttachments()
-		throws PortalException, SystemException {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			new GroupActionableDynamicQuery() {
-
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
-				Group group = (Group)object;
-
-				checkEntriesAttachments(group);
-			}
-
-		};
-
-		actionableDynamicQuery.performActions();
-	}
-
 	/**
 	 * Deletes the trash entry with the primary key.
 	 *
@@ -384,18 +364,6 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
-		}
-	}
-
-	protected void checkEntriesAttachments(Group group)
-		throws PortalException, SystemException {
-
-		Date date = getMaxAge(group);
-
-		for (TrashHandler trashHandler :
-				TrashHandlerRegistryUtil.getTrashHandlers()) {
-
-			trashHandler.deleteTrashAttachments(group, date);
 		}
 	}
 

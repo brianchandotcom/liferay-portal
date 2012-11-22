@@ -72,6 +72,11 @@ _sass_cache_*.css
 /portal-impl/test/portal-test-ext.properties
 /portal-impl/test/test-portal-impl-ext.properties
 
+/portal-modules/*/*.jar
+/portal-modules/*/classes
+/portal-modules/*/docroot/WEB-INF/classes
+/portal-modules/*/lib/*.jar
+
 /portal-service/*.iml
 /portal-service/*.ipr
 /portal-service/*.iws

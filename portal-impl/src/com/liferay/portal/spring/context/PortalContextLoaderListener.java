@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
-import com.liferay.portal.module.framework.ModuleFrameworkUtil;
+import com.liferay.portal.module.framework.adapter.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
@@ -118,21 +118,25 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			_log.error(e, e);
 		}
 
-		try {
-			ModuleFrameworkUtil.stopRuntime();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+		if (PropsValues.MODULE_FRAMEWORK_ENABLED) {
+			try {
+				ModuleFrameworkUtilAdapter.stopRuntime();
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
 
 		try {
 			super.contextDestroyed(servletContextEvent);
 
-			try {
-				ModuleFrameworkUtil.stopFramework();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
+			if (PropsValues.MODULE_FRAMEWORK_ENABLED) {
+				try {
+					ModuleFrameworkUtilAdapter.stopFramework();
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
 			}
 		}
 		finally {
@@ -167,7 +171,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		if (PropsValues.MODULE_FRAMEWORK_ENABLED) {
 			try {
-				ModuleFrameworkUtil.startFramework();
+				ModuleFrameworkUtilAdapter.startFramework();
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -236,10 +240,9 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		if (PropsValues.MODULE_FRAMEWORK_ENABLED) {
 			try {
-				ModuleFrameworkUtil.registerContext(applicationContext);
-				ModuleFrameworkUtil.registerContext(servletContext);
-
-				ModuleFrameworkUtil.startRuntime();
+				ModuleFrameworkUtilAdapter.registerContext(applicationContext);
+				ModuleFrameworkUtilAdapter.registerContext(servletContext);
+				ModuleFrameworkUtilAdapter.startRuntime();
 			}
 			catch (Exception e) {
 				_log.error(e, e);

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ServiceLoaderCondition;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
-import com.liferay.portal.module.framework.LogBridge;
 import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.module.framework.ModuleFrameworkConstants;
 import com.liferay.portal.module.framework.ModuleFrameworkException;
@@ -269,14 +268,6 @@ public class ModuleFrameworkImpl
 		bundleStartLevel.setStartLevel(startLevel);
 	}
 
-	private void _setupLogBridge() throws Exception {
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		_logBridge = new LogBridge();
-
-		_logBridge.start(bundleContext);
-	 }
-
 	public void startBundle(long bundleId) throws PortalException {
 		startBundle(bundleId, 0);
 	}
@@ -332,8 +323,6 @@ public class ModuleFrameworkImpl
 		_framework = frameworkFactory.newFramework(properties);
 
 		_framework.init();
-
-		_setupLogBridge();
 
 		_framework.getBundleContext().addFrameworkListener(
 			new FrameworkListener() {
@@ -751,6 +740,5 @@ public class ModuleFrameworkImpl
 	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkImpl.class);
 
 	private Framework _framework;
-	private LogBridge _logBridge;
 
 }

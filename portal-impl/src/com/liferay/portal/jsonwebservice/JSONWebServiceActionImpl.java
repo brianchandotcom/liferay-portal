@@ -84,7 +84,6 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 	}
 
 	private Object _convertListToArray(List<?> list, Class<?> componentType) {
-
 		Object array = Array.newInstance(componentType, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
@@ -266,8 +265,8 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					String stringValue = value.toString().trim();
 
 					if (!stringValue.startsWith(StringPool.OPEN_BRACKET)) {
-						stringValue = StringPool.OPEN_BRACKET + stringValue +
-							StringPool.CLOSE_BRACKET;
+						stringValue = StringPool.OPEN_BRACKET.concat(
+							stringValue).concat(StringPool.CLOSE_BRACKET);
 					}
 
 					List<?> list = JSONFactoryUtil.looseDeserializeSafe(
@@ -295,8 +294,8 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					String stringValue = value.toString().trim();
 
 					if (!stringValue.startsWith(StringPool.OPEN_BRACKET)) {
-						stringValue = StringPool.OPEN_BRACKET + stringValue +
-							StringPool.CLOSE_BRACKET;
+						stringValue = StringPool.OPEN_BRACKET.concat(
+							stringValue).concat(StringPool.CLOSE_BRACKET);
 					}
 
 					List<?> list = JSONFactoryUtil.looseDeserializeSafe(
@@ -315,7 +314,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						String stringValue = value.toString().trim();
 
 						if (stringValue.startsWith(
-							StringPool.OPEN_CURLY_BRACE)) {
+								StringPool.OPEN_CURLY_BRACE)) {
 
 							parameterValue =
 								JSONFactoryUtil.looseDeserializeSafe

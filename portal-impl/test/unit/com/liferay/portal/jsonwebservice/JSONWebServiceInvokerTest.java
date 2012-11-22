@@ -361,7 +361,6 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 	@Test
 	public void testTypeConversion() throws Exception {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
-
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 
 		map.put("/foo/hey", params);
@@ -388,7 +387,6 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 	@Test
 	public void testTypeConversion2() throws Exception {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
-
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 
 		map.put("/foo/hey", params);

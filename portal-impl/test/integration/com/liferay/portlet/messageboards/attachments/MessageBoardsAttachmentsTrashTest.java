@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards.attachments;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
@@ -85,13 +84,11 @@ public class MessageBoardsAttachmentsTrashTest {
 	}
 
 	@Test
-	@Transactional
 	public void testTrashAndDelete() throws Exception {
 		trashMessageBoardsAttachments(false);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashAndRestore() throws Exception {
 		trashMessageBoardsAttachments(true);
 	}

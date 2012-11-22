@@ -38,6 +38,14 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 		_node = node;
 	}
 
+	public String getClassName() {
+		return WikiNode.class.getName();
+	}
+
+	public long getClassPK() {
+		return _node.getPrimaryKey();
+	}
+
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/all_pages.png";

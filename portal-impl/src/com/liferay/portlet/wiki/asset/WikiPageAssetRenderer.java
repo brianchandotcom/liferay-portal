@@ -68,6 +68,10 @@ public class WikiPageAssetRenderer
 		return WikiPageAssetRendererFactory.CLASS_NAME;
 	}
 
+	public String getClassName() {
+		return WikiPage.class.getName();
+	}
+
 	public long getClassPK() {
 		return getClassPK(_page);
 	}

@@ -161,6 +161,34 @@ public class GroupImpl extends GroupBaseImpl {
 		}
 	}
 
+	public UnicodeProperties getLiveParentTypeSettingsProperties() {
+		try {
+			if (isLayout()) {
+				Group parentGroup = GroupLocalServiceUtil.getGroup(
+					getParentGroupId());
+
+				return parentGroup.getLiveParentTypeSettingsProperties();
+			}
+
+			if (isStagingGroup()) {
+				Group liveGroup = getLiveGroup();
+
+				return liveGroup.getTypeSettingsProperties();
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return getTypeSettingsProperties();
+	}
+
+	public String getLiveParentTypeSettingsProperty(String key) {
+		UnicodeProperties typeSettingsProperties =
+			getLiveParentTypeSettingsProperties();
+
+		return typeSettingsProperties.getProperty(key);
+	}
+
 	public long getOrganizationId() {
 		if (isOrganization()) {
 			if (isStagingGroup()) {
@@ -497,24 +525,17 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	public boolean isStaged() {
-		return GetterUtil.getBoolean(getTypeSettingsProperty("staged"));
+		return GetterUtil.getBoolean(
+			getLiveParentTypeSettingsProperty("staged"));
 	}
 
 	public boolean isStagedPortlet(String portletId) {
-		try {
-			if (isLayout()) {
-				Group parentGroup = GroupLocalServiceUtil.getGroup(
-					getParentGroupId());
-
-				return parentGroup.isStagedPortlet(portletId);
-			}
-		}
-		catch (Exception e) {
-		}
+		UnicodeProperties typeSettingsProperties =
+			getLiveParentTypeSettingsProperties();
 
 		portletId = PortletConstants.getRootPortletId(portletId);
 
-		String typeSettingsProperty = getTypeSettingsProperty(
+		String typeSettingsProperty = typeSettingsProperties.getProperty(
 			StagingConstants.STAGED_PORTLET.concat(portletId));
 
 		if (Validator.isNotNull(typeSettingsProperty)) {
@@ -530,9 +551,6 @@ public class GroupImpl extends GroupBaseImpl {
 			if (Validator.isNull(portletDataHandlerClass)) {
 				return true;
 			}
-
-			UnicodeProperties typeSettingsProperties =
-				getTypeSettingsProperties();
 
 			for (Map.Entry<String, String> entry :
 					typeSettingsProperties.entrySet()) {
@@ -563,7 +581,8 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	public boolean isStagedRemotely() {
-		return GetterUtil.getBoolean(getTypeSettingsProperty("stagedRemotely"));
+		return GetterUtil.getBoolean(
+			getLiveParentTypeSettingsProperty("stagedRemotely"));
 	}
 
 	public boolean isStagingGroup() {

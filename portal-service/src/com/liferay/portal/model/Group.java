@@ -58,6 +58,11 @@ public interface Group extends GroupModel, PersistedModel {
 
 	public com.liferay.portal.model.Group getLiveGroup();
 
+	public com.liferay.portal.kernel.util.UnicodeProperties getLiveParentTypeSettingsProperties();
+
+	public java.lang.String getLiveParentTypeSettingsProperty(
+		java.lang.String key);
+
 	public long getOrganizationId();
 
 	public com.liferay.portal.model.Group getParentGroup()

@@ -17,7 +17,7 @@ The portlet element contains the declarative data of a portlet.
 parent-struts-path?, configuration-path?, configuration-action-class?,
 indexer-class*, open-search-class?, scheduler-entry*, portlet-url-class?,
 friendly-url-mapper-class?, friendly-url-mapping?, friendly-url-routes?,
-url-encoder-class?, portlet-data-handler-class?,
+url-encoder-class?, portlet-data-handler-class?, model-data-handler-class*,
 portlet-display-template-handler?, portlet-layout-listener-class?,
 poller-processor-class?, pop-message-listener-class?,
 social-activity-interpreter-class?, social-request-interpreter-class?,
@@ -242,6 +242,13 @@ http://docs.liferay.com/portal/6.2/javadocs/portal-impl/com/liferay/portlet/jour
 http://docs.liferay.com/portal/6.2/javadocs/portal-service/com/liferay/portal/kernel/lar/PortletDataHandler.html
 -->
 <!ELEMENT portlet-data-handler-class (#PCDATA)>
+
+<!--
+The model-data-handler-class value must be a class that implements
+com.liferay.portal.kernel.lar.StagedModelDatahandler and is called to handle
+export and import functionalities for a staged modelled entity.
+-->
+<!ELEMENT model-data-handler-class (#PCDATA)>
 
 <!--
 The portlet-layout-listener-class value must be a class that implements

@@ -1317,10 +1317,22 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getString(
 				portletElement.elementText("url-encoder-class"),
 				portletModel.getURLEncoderClass()));
+
 		portletModel.setPortletDataHandlerClass(
 			GetterUtil.getString(
 				portletElement.elementText("portlet-data-handler-class"),
 				portletModel.getPortletDataHandlerClass()));
+
+		List<String> modelDataHandlerClasses = new ArrayList<String>();
+
+		for (Element modelDataHandlerClassElement :
+				portletElement.elements("model-data-handler-class")) {
+
+			modelDataHandlerClasses.add(modelDataHandlerClassElement.getText());
+		}
+
+		portletModel.setModelDataHandlerClasses(modelDataHandlerClasses);
+
 		portletModel.setPortletDisplayTemplateHandlerClass(
 			GetterUtil.getString(
 				portletElement.elementText("portlet-display-template-handler"),

@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -61,6 +62,7 @@ public class PortletBagImpl implements PortletBag {
 		FriendlyURLMapper friendlyURLMapperInstance,
 		URLEncoder urlEncoderInstance,
 		PortletDataHandler portletDataHandlerInstance,
+		List<StagedModelDataHandler> modelDataHandlerInstances,
 		PortletDisplayTemplateHandler portletDisplayTemplateHandlerInstance,
 		PortletLayoutListener portletLayoutListenerInstance,
 		PollerProcessor pollerProcessorInstance,
@@ -87,6 +89,7 @@ public class PortletBagImpl implements PortletBag {
 		_friendlyURLMapperInstance = friendlyURLMapperInstance;
 		_urlEncoderInstance = urlEncoderInstance;
 		_portletDataHandlerInstance = portletDataHandlerInstance;
+		_modelDataHandlerInstances = modelDataHandlerInstances;
 		_portletDisplayTemplateHandlerInstance =
 			portletDisplayTemplateHandlerInstance;
 		_portletLayoutListenerInstance = portletLayoutListenerInstance;
@@ -114,6 +117,7 @@ public class PortletBagImpl implements PortletBag {
 			getConfigurationActionInstance(), getIndexerInstances(),
 			getOpenSearchInstance(), getFriendlyURLMapperInstance(),
 			getURLEncoderInstance(), getPortletDataHandlerInstance(),
+			getModelDataHandlerInstances(),
 			getPortletDisplayTemplateHandlerInstance(),
 			getPortletLayoutListenerInstance(), getPollerProcessorInstance(),
 			getPopMessageListenerInstance(),
@@ -154,6 +158,10 @@ public class PortletBagImpl implements PortletBag {
 
 	public List<Indexer> getIndexerInstances() {
 		return _indexerInstances;
+	}
+
+	public List<StagedModelDataHandler> getModelDataHandlerInstances() {
+		return _modelDataHandlerInstances;
 	}
 
 	public OpenSearch getOpenSearchInstance() {
@@ -265,6 +273,7 @@ public class PortletBagImpl implements PortletBag {
 	private List<CustomAttributesDisplay> _customAttributesDisplayInstances;
 	private FriendlyURLMapper _friendlyURLMapperInstance;
 	private List<Indexer> _indexerInstances;
+	private List<StagedModelDataHandler> _modelDataHandlerInstances;
 	private OpenSearch _openSearchInstance;
 	private PermissionPropagator _permissionPropagatorInstance;
 	private PollerProcessor _pollerProcessorInstance;

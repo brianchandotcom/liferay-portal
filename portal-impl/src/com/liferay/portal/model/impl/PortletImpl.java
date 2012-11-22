@@ -1000,6 +1000,10 @@ public class PortletImpl extends PortletBaseImpl {
 		return _maximizeHelp;
 	}
 
+	public List<String> getModelDataHandlerClasses() {
+		return _modelDataHandlerClasses;
+	}
+
 	/**
 	 * Returns the name of the open search class of the portlet.
 	 *
@@ -2735,6 +2739,12 @@ public class PortletImpl extends PortletBaseImpl {
 		_maximizeHelp = maximizeHelp;
 	}
 
+	public void setModelDataHandlerClasses(
+		List<String> modelDataHandlerClasses) {
+
+		_modelDataHandlerClasses = modelDataHandlerClasses;
+	}
+
 	/**
 	 * Sets the name of the open search class of the portlet.
 	 *
@@ -3574,6 +3584,8 @@ public class PortletImpl extends PortletBaseImpl {
 	 * user goes into the help mode.
 	 */
 	private boolean _maximizeHelp;
+
+	private List<String> _modelDataHandlerClasses;
 
 	/**
 	 * The name of the open search class of the portlet.

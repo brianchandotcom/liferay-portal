@@ -50,4 +50,4 @@ another Journal template, e.g. <#include "${journalTemplatesPath}/LAYOUT-PARENT"
 The variable ${viewMode} specifies which mode the article is being viewed in.
 For example, if ${viewMode} evaluates to "print", that means the user clicked
 the print icon to view this article.
---#>
+-->

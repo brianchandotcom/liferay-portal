@@ -16,7 +16,7 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
-import java.util.Stack;
+import java.util.LinkedList;
 
 /**
  * @author Michael C. Han
@@ -24,7 +24,7 @@ import java.util.Stack;
 public class ServiceContextThreadLocal {
 
 	public static ServiceContext getServiceContext() {
-		Stack<ServiceContext> serviceContextStack =
+		LinkedList<ServiceContext> serviceContextStack =
 			_serviceContextThreadLocal.get();
 
 		if (serviceContextStack.isEmpty()) {
@@ -35,7 +35,7 @@ public class ServiceContextThreadLocal {
 	}
 
 	public static ServiceContext popServiceContext() {
-		Stack<ServiceContext> serviceContextStack =
+		LinkedList<ServiceContext> serviceContextStack =
 			_serviceContextThreadLocal.get();
 
 		if (serviceContextStack.isEmpty()) {
@@ -46,24 +46,24 @@ public class ServiceContextThreadLocal {
 	}
 
 	public static void pushServiceContext(ServiceContext serviceContext) {
-		Stack<ServiceContext> serviceContextStack =
+		LinkedList<ServiceContext> serviceContextStack =
 			_serviceContextThreadLocal.get();
 
 		serviceContextStack.push(serviceContext);
 	}
 
-	private static ThreadLocal<Stack<ServiceContext>>
+	private static ThreadLocal<LinkedList<ServiceContext>>
 		_serviceContextThreadLocal =
-			new AutoResetThreadLocal<Stack<ServiceContext>>(
+			new AutoResetThreadLocal<LinkedList<ServiceContext>>(
 				ServiceContextThreadLocal.class + "._serviceContextThreadLocal",
-				new Stack<ServiceContext>()) {
+				new LinkedList<ServiceContext>()) {
 
 					@Override
-					protected Stack<ServiceContext> copy(
-						Stack<ServiceContext> serviceContexts) {
+					protected LinkedList<ServiceContext> copy(
+						LinkedList<ServiceContext> serviceContexts) {
 
-						Stack<ServiceContext> cloneServiceContexts =
-							new Stack<ServiceContext>();
+						LinkedList<ServiceContext> cloneServiceContexts =
+							new LinkedList<ServiceContext>();
 
 						for (ServiceContext serviceContext : serviceContexts) {
 							ServiceContext cloneServiceContext =

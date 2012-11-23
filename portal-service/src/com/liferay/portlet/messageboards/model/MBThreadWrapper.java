@@ -704,8 +704,10 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		_mbThread.persist();
 	}
 
-	public java.lang.String getAttachmentsDir() {
-		return _mbThread.getAttachmentsDir();
+	public long getAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThread.getAttachmentsFolderId();
 	}
 
 	public com.liferay.portal.model.Lock getLock() {

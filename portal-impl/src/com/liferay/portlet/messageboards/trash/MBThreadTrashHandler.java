@@ -18,21 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
-
-import java.util.Date;
 
 import javax.portlet.PortletRequest;
 
@@ -44,50 +35,6 @@ import javax.portlet.PortletRequest;
 public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	public static final String CLASS_NAME = MBThread.class.getName();
-
-	@Override
-	public void deleteTrashAttachments(Group group, Date date)
-		throws PortalException, SystemException {
-
-		long repositoryId = CompanyConstants.SYSTEM;
-
-		String[] threadFileNames = null;
-
-		try {
-			threadFileNames = DLStoreUtil.getFileNames(
-				group.getCompanyId(), repositoryId, "messageboards");
-		}
-		catch (NoSuchDirectoryException nsde) {
-			return;
-		}
-
-		for (String threadFileName : threadFileNames) {
-			String[] messageFileNames = null;
-
-			try {
-				messageFileNames = DLStoreUtil.getFileNames(
-					group.getCompanyId(), repositoryId, threadFileName);
-			}
-			catch (NoSuchDirectoryException nsde) {
-				continue;
-			}
-
-			for (String messageFileName : messageFileNames) {
-				String fileTitle = StringUtil.extractLast(
-					messageFileName, StringPool.FORWARD_SLASH);
-
-				if (fileTitle.startsWith(TrashUtil.TRASH_ATTACHMENTS_DIR)) {
-					String[] attachmentFileNames = DLStoreUtil.getFileNames(
-						group.getCompanyId(), repositoryId,
-						threadFileName + StringPool.FORWARD_SLASH + fileTitle);
-
-					TrashUtil.deleteEntriesAttachments(
-						group.getCompanyId(), repositoryId, date,
-						attachmentFileNames);
-				}
-			}
-		}
-	}
 
 	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
 		throws PortalException, SystemException {

@@ -397,3 +397,20 @@
 		}
 	}
 }
+
+.trash-restore-popup {
+	.aui-form {
+		fieldset {
+			margin-bottom: 0;
+			padding: 0 15px;
+		}
+
+		.new-file-name .aui-field-input {
+			width: 100%;
+		}
+	}
+
+	.portlet-msg-alert {
+		margin: 10px 0;
+	}
+}

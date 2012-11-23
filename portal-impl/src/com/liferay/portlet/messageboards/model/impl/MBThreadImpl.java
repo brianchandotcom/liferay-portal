@@ -14,10 +14,18 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
-import com.liferay.portlet.messageboards.model.MBMessageConstants;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -28,8 +36,26 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 	public MBThreadImpl() {
 	}
 
-	public String getAttachmentsDir() {
-		return MBMessageConstants.BASE_ATTACHMENTS_DIR + getThreadId();
+	public long getAttachmentsFolderId()
+		throws PortalException, SystemException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		long repositoryId = PortletFileRepositoryUtil.getPortletRepository(
+			getGroupId(), PortletKeys.MESSAGE_BOARDS, serviceContext);
+
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(
+			getRootMessageId());
+
+		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+			message.getUserId(), repositoryId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(getThreadId()), serviceContext);
+
+		return folder.getFolderId();
 	}
 
 	public Lock getLock() {

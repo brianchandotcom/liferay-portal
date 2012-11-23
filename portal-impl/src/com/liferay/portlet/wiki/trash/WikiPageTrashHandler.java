@@ -19,32 +19,23 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.model.WikiPageConstants;
 import com.liferay.portlet.wiki.model.WikiPageResource;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
-
-import java.util.Date;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -93,38 +84,6 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 			dee.setTrashEntryId(trashEntry.getEntryId());
 
 			throw dee;
-		}
-	}
-
-	@Override
-	public void deleteTrashAttachments(Group group, Date date)
-		throws PortalException, SystemException {
-
-		long repositoryId = CompanyConstants.SYSTEM;
-
-		String[] fileNames = null;
-
-		try {
-			fileNames = DLStoreUtil.getFileNames(
-				group.getCompanyId(), repositoryId, "wiki");
-		}
-		catch (NoSuchDirectoryException nsde) {
-			return;
-		}
-
-		for (String fileName : fileNames) {
-			String fileTitle = StringUtil.extractLast(
-				fileName, StringPool.FORWARD_SLASH);
-
-			if (fileTitle.startsWith(TrashUtil.TRASH_ATTACHMENTS_DIR)) {
-				String[] attachmentFileNames = DLStoreUtil.getFileNames(
-					group.getCompanyId(), repositoryId,
-					WikiPageConstants.BASE_ATTACHMENTS_DIR + fileTitle);
-
-				TrashUtil.deleteEntriesAttachments(
-					group.getCompanyId(), repositoryId, date,
-					attachmentFileNames);
-			}
 		}
 	}
 

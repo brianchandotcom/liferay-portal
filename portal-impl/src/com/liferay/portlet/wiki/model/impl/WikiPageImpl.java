@@ -55,7 +55,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 			WorkflowConstants.STATUS_APPROVED, start, end, null);
 	}
 
-	public int getAttachmentsFilesCount()
+	public int getAttachmentsFileEntriesCount()
 		throws PortalException, SystemException {
 
 		return PortletFileRepositoryUtil.getPortletFileEntriesCount(

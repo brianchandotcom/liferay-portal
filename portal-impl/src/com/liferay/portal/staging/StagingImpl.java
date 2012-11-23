@@ -223,7 +223,7 @@ public class StagingImpl implements Staging {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		User user = UserLocalServiceUtil.getUser(permissionChecker.getUserId());
+		User user = permissionChecker.getUser();
 
 		StringBundler sb = new StringBundler(4);
 
@@ -2213,7 +2213,7 @@ public class StagingImpl implements Staging {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		User user = UserLocalServiceUtil.getUser(permissionChecker.getUserId());
+		User user = permissionChecker.getUser();
 
 		String url = buildRemoteURL(
 			remoteAddress, remotePort, remotePathContext, secureConnection,

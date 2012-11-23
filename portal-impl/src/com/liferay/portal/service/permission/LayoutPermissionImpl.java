@@ -185,8 +185,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			return false;
 		}
 
-		User user = UserLocalServiceUtil.getUserById(
-			permissionChecker.getUserId());
+		User user = permissionChecker.getUser();
 
 		if (!user.isDefaultUser() && !group.isUser()) {
 

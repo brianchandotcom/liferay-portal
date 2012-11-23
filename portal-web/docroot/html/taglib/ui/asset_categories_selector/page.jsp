@@ -155,7 +155,11 @@ private long[] _filterCategoryIds(long vocabularyId, long[] categoryIds) throws 
 	List<Long> filteredCategoryIds = new ArrayList<Long>();
 
 	for (long categoryId : categoryIds) {
-		AssetCategory category = AssetCategoryLocalServiceUtil.getCategory(categoryId);
+		AssetCategory category = AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
+
+		if (category == null) {
+			continue;
+		}
 
 		if (category.getVocabularyId() == vocabularyId) {
 			filteredCategoryIds.add(category.getCategoryId());
@@ -181,7 +185,11 @@ private String[] _getCategoryIdsTitles(String categoryIds, String categoryNames,
 			StringBundler sb = new StringBundler(categoryIdsArray.length * 2);
 
 			for (long categoryId : categoryIdsArray) {
-				AssetCategory category = AssetCategoryLocalServiceUtil.getCategory(categoryId);
+				AssetCategory category = AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
+
+				if (category == null) {
+					continue;
+				}
 
 				category = category.toEscapedModel();
 

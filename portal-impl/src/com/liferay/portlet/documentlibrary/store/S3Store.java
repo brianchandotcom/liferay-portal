@@ -261,13 +261,9 @@ public class S3Store extends BaseStore {
 
 				String key = s3Object.getKey();
 
-				int x = key.indexOf(CharPool.SLASH);
+				key = getFileName(key);
 
-				x = key.indexOf(CharPool.SLASH, x + 1);
-
-				int y = key.lastIndexOf(CharPool.SLASH);
-
-				list.add(key.substring(x, y));
+				list.add(key);
 			}
 
 			return list.toArray(new String[list.size()]);
@@ -582,7 +578,6 @@ public class S3Store extends BaseStore {
 		sb.append(companyId);
 		sb.append(StringPool.SLASH);
 		sb.append(repositoryId);
-		sb.append(StringPool.SLASH);
 
 		return sb.toString();
 	}
@@ -597,7 +592,6 @@ public class S3Store extends BaseStore {
 		sb.append(repositoryId);
 		sb.append(StringPool.SLASH);
 		sb.append(fileName);
-		sb.append(StringPool.SLASH);
 
 		return sb.toString();
 	}

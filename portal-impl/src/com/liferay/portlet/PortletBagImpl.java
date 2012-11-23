@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -61,6 +62,7 @@ public class PortletBagImpl implements PortletBag {
 		FriendlyURLMapper friendlyURLMapperInstance,
 		URLEncoder urlEncoderInstance,
 		PortletDataHandler portletDataHandlerInstance,
+		List<StagedModelDataHandler> stagedModelDataHandlerInstances,
 		PortletDisplayTemplateHandler portletDisplayTemplateHandlerInstance,
 		PortletLayoutListener portletLayoutListenerInstance,
 		PollerProcessor pollerProcessorInstance,
@@ -87,6 +89,7 @@ public class PortletBagImpl implements PortletBag {
 		_friendlyURLMapperInstance = friendlyURLMapperInstance;
 		_urlEncoderInstance = urlEncoderInstance;
 		_portletDataHandlerInstance = portletDataHandlerInstance;
+		_stagedModelDataHandlerInstances = stagedModelDataHandlerInstances;
 		_portletDisplayTemplateHandlerInstance =
 			portletDisplayTemplateHandlerInstance;
 		_portletLayoutListenerInstance = portletLayoutListenerInstance;
@@ -114,6 +117,7 @@ public class PortletBagImpl implements PortletBag {
 			getConfigurationActionInstance(), getIndexerInstances(),
 			getOpenSearchInstance(), getFriendlyURLMapperInstance(),
 			getURLEncoderInstance(), getPortletDataHandlerInstance(),
+			getStagedModelDataHandlerInstances(),
 			getPortletDisplayTemplateHandlerInstance(),
 			getPortletLayoutListenerInstance(), getPollerProcessorInstance(),
 			getPopMessageListenerInstance(),
@@ -230,6 +234,10 @@ public class PortletBagImpl implements PortletBag {
 		return _socialRequestInterpreterInstance;
 	}
 
+	public List<StagedModelDataHandler> getStagedModelDataHandlerInstances() {
+		return _stagedModelDataHandlerInstances;
+	}
+
 	public List<TrashHandler> getTrashHandlerInstances() {
 		return _trashHandlerInstances;
 	}
@@ -280,6 +288,7 @@ public class PortletBagImpl implements PortletBag {
 	private ServletContext _servletContext;
 	private SocialActivityInterpreter _socialActivityInterpreterInstance;
 	private SocialRequestInterpreter _socialRequestInterpreterInstance;
+	private List<StagedModelDataHandler> _stagedModelDataHandlerInstances;
 	private List<TrashHandler> _trashHandlerInstances;
 	private URLEncoder _urlEncoderInstance;
 	private WebDAVStorage _webDAVStorageInstance;

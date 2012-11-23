@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.Converter;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -59,7 +60,11 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			new ProxyFactory.ClassLoaderProvider() {
 
 				public ClassLoader get(ProxyFactory proxyFactory) {
-					return PACLClassLoaderUtil.getContextClassLoader();
+					return AggregateClassLoader.getAggregateClassLoader(
+						new ClassLoader[] {
+							PACLClassLoaderUtil.getContextClassLoader(),
+							PACLClassLoaderUtil.getPortalClassLoader()
+						});
 				}
 
 			};

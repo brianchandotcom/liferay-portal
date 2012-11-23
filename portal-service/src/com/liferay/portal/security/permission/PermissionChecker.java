@@ -63,6 +63,8 @@ public interface PermissionChecker extends Cloneable {
 	 */
 	public long[] getRoleIds(long userId, long groupId);
 
+	public User getUser();
+
 	/**
 	 * Returns the primary key of the user.
 	 *

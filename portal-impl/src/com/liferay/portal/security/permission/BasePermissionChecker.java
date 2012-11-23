@@ -68,6 +68,10 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 		return PermissionChecker.DEFAULT_ROLE_IDS;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
 	public long getUserId() {
 		return user.getUserId();
 	}
@@ -134,7 +138,7 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 
 	public boolean isOmniadmin() {
 		if (omniadmin == null) {
-			omniadmin = Boolean.valueOf(OmniadminUtil.isOmniadmin(getUserId()));
+			omniadmin = Boolean.valueOf(OmniadminUtil.isOmniadmin(getUser()));
 		}
 
 		return omniadmin.booleanValue();

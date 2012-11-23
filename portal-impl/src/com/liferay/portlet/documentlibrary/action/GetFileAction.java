@@ -286,15 +286,7 @@ public class GetFileAction extends PortletAction {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		long userId = permissionChecker.getUserId();
-
-		User user = null;
-
-		try {
-			user = UserLocalServiceUtil.getUser(userId);
-		}
-		catch (Exception e) {
-		}
+		User user = permissionChecker.getUser();
 
 		if ((user != null) && !user.isDefaultUser()) {
 			PortalUtil.sendError(

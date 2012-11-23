@@ -141,7 +141,7 @@ public class UpdateLicenseAction extends Action {
 		catch (Exception e) {
 		}
 
-		if ((user != null) && OmniadminUtil.isOmniadmin(user.getUserId())) {
+		if ((user != null) && OmniadminUtil.isOmniadmin(user)) {
 			return true;
 		}
 		else {

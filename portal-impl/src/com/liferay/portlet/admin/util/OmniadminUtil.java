@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.admin.util;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.RoleConstants;
@@ -41,11 +42,29 @@ import com.liferay.portal.util.PropsValues;
 public class OmniadminUtil {
 
 	public static boolean isOmniadmin(long userId) {
+		try {
+			User user = UserLocalServiceUtil.fetchUser(userId);
+
+			if (user == null) {
+				return false;
+			}
+			else {
+				return isOmniadmin(user);
+			}
+		}
+		catch (SystemException se) {
+			return false;
+		}
+	}
+
+	public static boolean isOmniadmin(User user) {
 		if (CompanyThreadLocal.getCompanyId() !=
 				PortalInstances.getDefaultCompanyId()) {
 
 			return false;
 		}
+
+		long userId = user.getUserId();
 
 		if (userId <= 0) {
 			return false;
@@ -55,8 +74,6 @@ public class OmniadminUtil {
 			if (PropsValues.OMNIADMIN_USERS.length > 0) {
 				for (int i = 0; i < PropsValues.OMNIADMIN_USERS.length; i++) {
 					if (PropsValues.OMNIADMIN_USERS[i] == userId) {
-						User user = UserLocalServiceUtil.getUserById(userId);
-
 						if (user.getCompanyId() !=
 								PortalInstances.getDefaultCompanyId()) {
 
@@ -70,8 +87,6 @@ public class OmniadminUtil {
 				return false;
 			}
 			else {
-				User user = UserLocalServiceUtil.getUserById(userId);
-
 				if (user.getCompanyId() !=
 						PortalInstances.getDefaultCompanyId()) {
 

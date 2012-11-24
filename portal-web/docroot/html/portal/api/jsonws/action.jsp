@@ -363,35 +363,26 @@ String signature = ParamUtil.getString(request, "signature");
 			var stringType = tplDataTypes.string;
 			var arrayType = tplDataTypes.array;
 
-			curlTpl.formatDataType = function(key, value) {
-				value = decodeURIComponent(value.replace(/\+/g, ' '));
-
-				if (stringType[key]) {
-					value = '\'' + value + '\'';
-				}
-				else if (value && arrayType[key]) {
-					value = '[' + value + ']';
-				}
-
-				return value;
-			};
-
-			scriptTpl.formatDataType = function(key, value) {
+			var formatDataType = function(key, value, includeNull) {
 				value = decodeURIComponent(value.replace(/\+/g, ' '));
 
 				if (stringType[key]) {
 					value = '\'' + value + '\'';
 				}
 				else if (arrayType[key]) {
-					if (!value) {
+					if (!value && includeNull) {
 						value = 'null';
-					} else {
+					}
+					else if (value) {
 						value = '[' + value + ']';
 					}
 				}
 
 				return value;
 			};
+
+			curlTpl.formatDataType = formatDataType;
+			scriptTpl.formatDataType = A.rbind(formatDataType, scriptTpl, true);
 
 			urlTpl.toURIParam = function(value) {
 				return A.Lang.String.uncamelize(value, '-').toLowerCase();
@@ -448,6 +439,7 @@ String signature = ParamUtil.getString(request, "signature");
 									}
 								);
 							}
+
 							if (!ignoreFields[key]) {
 								scriptData.push(
 									{
@@ -462,6 +454,7 @@ String signature = ParamUtil.getString(request, "signature");
 					var tplCurlData = {
 						data: curlData
 					};
+
 					var tplScriptData = {
 						data: scriptData
 					};
@@ -485,6 +478,7 @@ String signature = ParamUtil.getString(request, "signature");
 								if (!value) {
 									key = '-' + key;
 								}
+
 								if (extraFields[key]) {
 									urlTplData.extraData.push(
 										{

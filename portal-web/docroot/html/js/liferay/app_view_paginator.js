@@ -146,7 +146,7 @@ AUI.add(
 						}
 
 						var TPL = {
-							pageReportLabel: '({page} ' + Liferay.Language.get('of') + ' {totalPages})',
+							pageReportLabel: Lang.sub(Liferay.Language.get('x-of-x'), ['{page}', '{totalPages}']),
 							totalLabel: '(' + Liferay.Language.get('total') + ' {total})'
 						};
 

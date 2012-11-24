@@ -26,6 +26,7 @@ String treeLoading = PortalUtil.generateRandomKey(request, "treeLoading");
 String treeId = ParamUtil.getString(request, "treeId");
 boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage", false);
 boolean defaultStateChecked = ParamUtil.getBoolean(request, "defaultStateChecked", false);
+boolean draggableTree = ParamUtil.getBoolean(request, "draggableTree", true);
 boolean expandFirstNode = ParamUtil.getBoolean(request, "expandFirstNode", true);
 boolean saveState = ParamUtil.getBoolean(request, "saveState", true);
 boolean selectableTree = ParamUtil.getBoolean(request, "selectableTree");
@@ -467,7 +468,10 @@ if (!selectableTree) {
 
 	<c:if test="<%= !selectableTree %>">
 		RootNodeType = A.TreeNodeIO;
-		TreeViewType = A.TreeViewDD;
+
+		<c:if test="<%= draggableTree %>">
+			TreeViewType = A.TreeViewDD;
+		</c:if>
 
 		<c:if test="<%= !checkContentDisplayPage %>">
 		rootLabel = TreeUtil.createLink(

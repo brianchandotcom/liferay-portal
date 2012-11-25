@@ -16,8 +16,6 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.calendar.model.CalEvent" %>
-
 <aui:fieldset>
 
 	<%

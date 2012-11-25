@@ -19,7 +19,6 @@
 <%@ page import="com.liferay.portlet.expando.model.ExpandoBridge" %>
 <%@ page import="com.liferay.portlet.expando.model.ExpandoColumnConstants" %>
 <%@ page import="com.liferay.portlet.expando.model.ExpandoTableConstants" %>
-<%@ page import="com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" %>
 <%@ page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %>
 

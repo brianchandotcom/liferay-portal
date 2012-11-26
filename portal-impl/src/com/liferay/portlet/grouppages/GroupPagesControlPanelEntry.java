@@ -32,6 +32,7 @@ public class GroupPagesControlPanelEntry extends DefaultControlPanelEntry {
 	public boolean hasPermissionDenied(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
+
 		String controlPanelCategory = themeDisplay.getControlPanelCategory();
 
 		if (controlPanelCategory.equals(PortletCategoryKeys.CONTENT)) {

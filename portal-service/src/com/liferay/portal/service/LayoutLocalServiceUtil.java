@@ -884,11 +884,27 @@ public class LayoutLocalServiceUtil {
 		return getService().getLayoutsCount(group, privateLayout);
 	}
 
+	public static int getLayoutsCount(com.liferay.portal.model.Group group,
+		boolean privateLayout, boolean includeUserGroups)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getLayoutsCount(group, privateLayout, includeUserGroups);
+	}
+
 	public static int getLayoutsCount(com.liferay.portal.model.User user,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getLayoutsCount(user, privateLayout);
+	}
+
+	public static int getLayoutsCount(com.liferay.portal.model.User user,
+		boolean privateLayout, boolean includeUserGroups)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getLayoutsCount(user, privateLayout, includeUserGroups);
 	}
 
 	/**
@@ -936,6 +952,13 @@ public class LayoutLocalServiceUtil {
 		return getService().hasLayouts(group, privateLayout);
 	}
 
+	public static boolean hasLayouts(com.liferay.portal.model.Group group,
+		boolean privateLayout, boolean includeUserGroups)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasLayouts(group, privateLayout, includeUserGroups);
+	}
+
 	/**
 	* Returns <code>true</code> if the group has any layouts;
 	* <code>false</code> otherwise.
@@ -958,6 +981,13 @@ public class LayoutLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().hasLayouts(user, privateLayout);
+	}
+
+	public static boolean hasLayouts(com.liferay.portal.model.User user,
+		boolean privateLayout, boolean includeUserGroups)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasLayouts(user, privateLayout, includeUserGroups);
 	}
 
 	public static boolean hasLayoutSetPrototypeLayout(

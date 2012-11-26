@@ -335,12 +335,6 @@ public class SourceFormatter {
 					parameterType, "...", StringPool.BLANK);
 			}
 
-			int pos = parameterType.lastIndexOf(StringPool.PERIOD);
-
-			if (pos != -1) {
-				parameterType = parameterType.substring(pos + 1);
-			}
-
 			parameterTypes.add(parameterType);
 
 			int y = line.indexOf(StringPool.COMMA);

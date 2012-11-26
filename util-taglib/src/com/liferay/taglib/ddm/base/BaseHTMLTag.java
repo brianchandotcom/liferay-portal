@@ -30,8 +30,8 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return super.doStartTag();
 	}
 
-	public java.lang.String getClassName() {
-		return _className;
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
 	public long getClassPK() {
@@ -58,10 +58,10 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _repeatable;
 	}
 
-	public void setClassName(java.lang.String className) {
-		_className = className;
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
 
-		setScopedAttribute("className", className);
+		setScopedAttribute("classNameId", classNameId);
 	}
 
 	public void setClassPK(long classPK) {
@@ -102,7 +102,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_className = null;
+		_classNameId = 0;
 		_classPK = 0;
 		_fields = null;
 		_fieldsNamespace = null;
@@ -123,7 +123,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "className", _className);
+		setNamespacedAttribute(request, "classNameId", _classNameId);
 		setNamespacedAttribute(request, "classPK", _classPK);
 		setNamespacedAttribute(request, "fields", _fields);
 		setNamespacedAttribute(request, "fieldsNamespace", _fieldsNamespace);
@@ -140,7 +140,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	private static final String _START_PAGE =
 		"/html/taglib/ddm/html/start.jsp";
 
-	private java.lang.String _className = null;
+	private long _classNameId = 0;
 	private long _classPK = 0;
 	private com.liferay.portlet.dynamicdatamapping.storage.Fields _fields = null;
 	private java.lang.String _fieldsNamespace = null;

@@ -32,7 +32,7 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 	_options.putAll(dynamicAttributes);
 }
 
-java.lang.String className = GetterUtil.getString((java.lang.String)request.getAttribute("ddm:html:className"));
+long classNameId = GetterUtil.getLong(String.valueOf(request.getAttribute("ddm:html:classNameId")));
 long classPK = GetterUtil.getLong(String.valueOf(request.getAttribute("ddm:html:classPK")));
 com.liferay.portlet.dynamicdatamapping.storage.Fields fields = (com.liferay.portlet.dynamicdatamapping.storage.Fields)request.getAttribute("ddm:html:fields");
 java.lang.String fieldsNamespace = GetterUtil.getString((java.lang.String)request.getAttribute("ddm:html:fieldsNamespace"));
@@ -40,7 +40,7 @@ java.lang.String mode = GetterUtil.getString((java.lang.String)request.getAttrib
 boolean readOnly = GetterUtil.getBoolean(String.valueOf(request.getAttribute("ddm:html:readOnly")));
 boolean repeatable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("ddm:html:repeatable")), true);
 
-_updateOptions(_options, "className", className);
+_updateOptions(_options, "classNameId", classNameId);
 _updateOptions(_options, "classPK", classPK);
 _updateOptions(_options, "fields", fields);
 _updateOptions(_options, "fieldsNamespace", fieldsNamespace);

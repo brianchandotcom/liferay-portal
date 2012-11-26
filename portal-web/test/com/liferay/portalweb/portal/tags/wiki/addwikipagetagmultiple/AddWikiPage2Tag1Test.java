@@ -22,29 +22,70 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddWikiPage2Tag1Test extends BaseTestCase {
 	public void testAddWikiPage2Tag1() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Test Page");
-		selenium.clickAt("link=Wiki Test Page",
-			RuntimeVariables.replace("Wiki Test Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Wiki Page2 Test",
-			RuntimeVariables.replace("Wiki Page2 Test"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Edit", RuntimeVariables.replace("Edit"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
-			RuntimeVariables.replace("wiki tag multiple"));
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace("Publish"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("wiki tag multiple"),
-			selenium.getText("//a[@class='tag']"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Wiki Test Page",
+					RuntimeVariables.replace("Wiki Test Page"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("All Pages"),
+					selenium.getText(
+						"//ul[@class='top-links-navigation']/li/span/a/span[contains(.,'All Pages')]"));
+				selenium.clickAt("//ul[@class='top-links-navigation']/li/span/a/span[contains(.,'All Pages')]",
+					RuntimeVariables.replace("All Pages"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Wiki Page2 Title"),
+					selenium.getText(
+						"//tr[contains(.,'Wiki Page2 Title')]/td[1]/a"));
+				selenium.clickAt("//tr[contains(.,'Wiki Page2 Title')]/td[1]/a",
+					RuntimeVariables.replace("Wiki Page2 Title"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Edit"),
+					selenium.getText(
+						"//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]"));
+				selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]",
+					RuntimeVariables.replace("Edit"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean tagsVisible = selenium.isVisible(
+						"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+
+				if (tagsVisible) {
+					label = 2;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Categorization"),
+					selenium.getText(
+						"//div[@id='wikiPageCategorizationPanel']/div/div/span"));
+				selenium.clickAt("//div[@id='wikiPageCategorizationPanel']/div/div/span",
+					RuntimeVariables.replace("Categorization"));
+				selenium.waitForVisible(
+					"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+				assertTrue(selenium.isVisible(
+						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
+
+			case 2:
+				selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+					RuntimeVariables.replace("wiki tag multiple"));
+				selenium.clickAt("//input[@value='Publish']",
+					RuntimeVariables.replace("Publish"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertEquals(RuntimeVariables.replace("wiki tag multiple"),
+					selenium.getText("//a[contains(.,'wiki tag multiple')]"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

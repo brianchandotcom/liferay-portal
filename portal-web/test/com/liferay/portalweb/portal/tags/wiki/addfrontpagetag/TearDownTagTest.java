@@ -70,8 +70,8 @@ public class TearDownTagTest extends BaseTestCase {
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
 					RuntimeVariables.replace("Delete"));
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected tags[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete the selected tags?");
 				selenium.waitForText("//div[@id='tagsMessages']",
 					"There are no tags.");
 

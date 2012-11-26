@@ -25,17 +25,59 @@ public class ViewWikiPageTagTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
+		assertEquals(RuntimeVariables.replace("All Pages"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span/a/span[contains(.,'All Pages')]"));
+		selenium.clickAt("//ul[@class='top-links-navigation']/li/span/a/span[contains(.,'All Pages')]",
+			RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Wiki Page Test",
-			RuntimeVariables.replace("Wiki Page Test"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+			selenium.getText("//tr[contains(.,'Wiki Page Title')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki Page Title')]/td[1]/a",
+			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=wiki tag1", RuntimeVariables.replace("wiki tag1"));
+		assertEquals(RuntimeVariables.replace("wiki tag1"),
+			selenium.getText("//div[@class='page-tags']/span/a"));
+		selenium.clickAt("//div[@class='page-tags']/span/a",
+			RuntimeVariables.replace("wiki tag1"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Wiki Page Test"));
+		assertEquals(RuntimeVariables.replace("FrontPage"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'FrontPage')]"));
+		assertEquals(RuntimeVariables.replace("Recent Changes"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'Recent Changes')]"));
+		assertEquals(RuntimeVariables.replace("All Pages"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'All Pages')]"));
+		assertEquals(RuntimeVariables.replace("Orphan Pages"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'Orphan Pages')]"));
+		assertEquals(RuntimeVariables.replace("Draft Pages"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'Draft Pages')]"));
+		assertTrue(selenium.isVisible("//input[@title='Search Pages']"));
+		assertTrue(selenium.isVisible("//input[@value='Search']"));
+		assertEquals(RuntimeVariables.replace("Pages with tag wiki tag1 ."),
+			selenium.getText("//h1[contains(.,'Pages with tag')]"));
+		assertEquals(RuntimeVariables.replace("wiki tag1"),
+			selenium.getText("//span[@class='asset-entry']"));
+		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
+			selenium.getText("//tr[contains(.,'Wiki Page Title')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Approved"),
+			selenium.getText("//tr[contains(.,'Wiki Page Title')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("1.1"),
+			selenium.getText("//tr[contains(.,'Wiki Page Title')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//tr[contains(.,'Wiki Page Title')]/td[4]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Wiki Page Title')]/td[5]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+		assertEquals(RuntimeVariables.replace("Showing 1 result."),
+			selenium.getText("//div[@class='search-results']"));
 	}
 }

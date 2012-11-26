@@ -39,11 +39,11 @@ public class AddWikiPageTagTest extends BaseTestCase {
 				selenium.clickAt("//ul[@class='top-links-navigation']/li/span/a/span[contains(.,'All Pages')]",
 					RuntimeVariables.replace("All Pages"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Wiki Page Test"),
+				assertEquals(RuntimeVariables.replace("Wiki Page Title"),
 					selenium.getText(
-						"//tr[contains(.,'Wiki Page Test')]/td[1]/a"));
-				selenium.clickAt("//tr[contains(.,'Wiki Page Test')]/td[1]/a",
-					RuntimeVariables.replace("Wiki Page Test"));
+						"//tr[contains(.,'Wiki Page Title')]/td[1]/a"));
+				selenium.clickAt("//tr[contains(.,'Wiki Page Title')]/td[1]/a",
+					RuntimeVariables.replace("Wiki Page Title"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Edit"),
 					selenium.getText(

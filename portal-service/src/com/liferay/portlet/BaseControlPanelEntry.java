@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
@@ -28,9 +30,28 @@ import com.liferay.portal.util.PortletCategoryKeys;
  */
 public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 
-	public boolean isVisible(
+	public boolean hasPermission(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
+
+		if (hasPermissionDenied(portlet, category, themeDisplay)) {
+			return false;
+		}
+
+		if (hasPermissionExplicit(portlet, category, themeDisplay)) {
+			return true;
+		}
+
+		return hasPermissionImplicit(portlet, category, themeDisplay);
+	}
+
+	protected abstract boolean hasPermissionDenied(
+			Portlet portlet, String category, ThemeDisplay themeDisplay)
+		throws Exception;
+
+	protected boolean hasPermissionExplicit(
+			Portlet portlet, String category, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
@@ -40,16 +61,6 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 		}
 
 		Group group = themeDisplay.getScopeGroup();
-
-		long plid = LayoutConstants.DEFAULT_PLID;
-
-		if (category.equals(PortletCategoryKeys.CONTENT)) {
-			plid = group.getDefaultPublicPlid();
-
-			if (plid == LayoutConstants.DEFAULT_PLID) {
-				plid = group.getDefaultPrivatePlid();
-			}
-		}
 
 		if (category.equals(PortletCategoryKeys.CONTENT) &&
 			permissionChecker.isGroupAdmin(group.getGroupId()) &&
@@ -67,13 +78,32 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 		}
 
 		if (PortletPermissionUtil.contains(
-				permissionChecker, groupId, plid, portlet.getPortletId(),
-				ActionKeys.ACCESS_IN_CONTROL_PANEL, true)) {
+				permissionChecker, groupId, _getDefaultPlid(group, category),
+				portlet.getPortletId(), ActionKeys.ACCESS_IN_CONTROL_PANEL,
+				true)) {
 
 			return true;
 		}
 
-		return isVisible(themeDisplay.getPermissionChecker(), portlet);
+		return false;
+	}
+
+	protected abstract boolean hasPermissionImplicit(
+		Portlet portlet, String category, ThemeDisplay themeDisplay)
+		throws Exception;
+
+	private long _getDefaultPlid(Group group, String category) {
+		long plid = LayoutConstants.DEFAULT_PLID;
+
+		if (category.equals(PortletCategoryKeys.CONTENT)) {
+			plid = group.getDefaultPublicPlid();
+
+			if (plid == LayoutConstants.DEFAULT_PLID) {
+				plid = group.getDefaultPrivatePlid();
+			}
+		}
+
+		return plid;
 	}
 
 }

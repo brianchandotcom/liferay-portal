@@ -21,24 +21,17 @@ import com.liferay.portal.theme.ThemeDisplay;
 /**
  * @author Jorge Ferrer
  */
-public class OmniadminControlPanelEntry extends BaseControlPanelEntry {
-
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return permissionChecker.isOmniadmin();
-	}
+public class OmniadminControlPanelEntry extends DefaultControlPanelEntry {
 
 	@Override
-	public boolean isVisible(
+	public boolean hasPermission(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		return isVisible(permissionChecker, portlet);
+		return permissionChecker.isOmniadmin();
 	}
 
 }

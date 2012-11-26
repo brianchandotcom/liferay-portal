@@ -18,9 +18,8 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.DefaultControlPanelEntry;
 
 import java.util.LinkedHashMap;
 
@@ -29,11 +28,15 @@ import java.util.LinkedHashMap;
  * @author Sergio González
  * @author Miguel Pastor
  */
-public class SitesControlPanelEntry extends BaseControlPanelEntry {
+public class SitesControlPanelEntry extends DefaultControlPanelEntry {
 
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
+	@Override
+	public boolean hasPermissionImplicit(
+			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
 
 		if (PropsValues.SITES_CONTROL_PANEL_MEMBERS_VISIBLE) {
 			LinkedHashMap<String, Object> groupParams =
@@ -51,20 +54,6 @@ public class SitesControlPanelEntry extends BaseControlPanelEntry {
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean isVisible(
-			Portlet portlet, String category, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		String controlPanelCategory = themeDisplay.getControlPanelCategory();
-
-		if (controlPanelCategory.equals(PortletCategoryKeys.CONTENT)) {
-			return false;
-		}
-
-		return super.isVisible(portlet, category, themeDisplay);
 	}
 
 }

@@ -15,15 +15,25 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Jorge Ferrer
  */
 public class DefaultControlPanelEntry extends BaseControlPanelEntry {
 
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
+	@Override
+	protected boolean hasPermissionDenied(
+			Portlet portlet, String category, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return false;
+	}
+
+	@Override
+	protected boolean hasPermissionImplicit(
+			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		return false;

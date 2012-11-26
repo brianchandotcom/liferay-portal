@@ -15,7 +15,6 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 
 /**
@@ -23,11 +22,7 @@ import com.liferay.portal.theme.ThemeDisplay;
  */
 public interface ControlPanelEntry {
 
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception;
-
-	public boolean isVisible(
+	public boolean hasPermission(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception;
 

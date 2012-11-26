@@ -21,24 +21,16 @@ import com.liferay.portal.theme.ThemeDisplay;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AdministratorControlPanelEntry extends BaseControlPanelEntry {
+public class AdministratorControlPanelEntry implements ControlPanelEntry {
 
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return permissionChecker.isCompanyAdmin();
-	}
-
-	@Override
-	public boolean isVisible(
+	public boolean hasPermission(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		return isVisible(permissionChecker, portlet);
+		return permissionChecker.isCompanyAdmin();
 	}
 
 }

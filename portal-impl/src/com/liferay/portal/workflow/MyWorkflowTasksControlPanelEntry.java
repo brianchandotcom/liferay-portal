@@ -16,7 +16,7 @@ package com.liferay.portal.workflow;
 
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author Miguel Pastor
@@ -25,19 +25,19 @@ public class MyWorkflowTasksControlPanelEntry
 	extends WorkflowControlPanelEntry {
 
 	@Override
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
+	protected boolean hasPermissionImplicit(
+			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		if (WorkflowTaskManagerUtil.getWorkflowTaskCountByUser(
-				permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				null) > 0) {
 
 			return true;
 		}
 
 		if (WorkflowTaskManagerUtil.getWorkflowTaskCountByUserRoles(
-				permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				null) > 0) {
 
 			return true;

@@ -5866,7 +5866,7 @@ public class PortalImpl implements Portal {
 						DefaultControlPanelEntryFactory.getInstance();
 				}
 
-				if (!controlPanelEntry.isVisible(
+				if (!controlPanelEntry.hasPermission(
 						portlet, category, themeDisplay)) {
 
 					itr.remove();

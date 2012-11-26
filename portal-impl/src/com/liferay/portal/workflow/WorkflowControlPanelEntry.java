@@ -16,33 +16,24 @@ package com.liferay.portal.workflow;
 
 import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.DefaultControlPanelEntry;
 
 /**
  * @author Jorge Ferrer
  */
-public class WorkflowControlPanelEntry extends BaseControlPanelEntry {
-
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return false;
-	}
+public class WorkflowControlPanelEntry extends DefaultControlPanelEntry {
 
 	@Override
-	public boolean isVisible(
+	protected boolean hasPermissionDenied(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		if (WorkflowEngineManagerUtil.isDeployed()) {
-			return super.isVisible(portlet, category, themeDisplay);
+			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 }

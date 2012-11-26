@@ -79,6 +79,7 @@ public class DDMStructureLocalServiceImpl
 		// Structure
 
 		User user = userPersistence.findByPrimaryKey(userId);
+		structureKey = structureKey.trim().toUpperCase();
 
 		if (Validator.isNull(structureKey)) {
 			structureKey = String.valueOf(counterLocalService.increment());
@@ -215,6 +216,8 @@ public class DDMStructureLocalServiceImpl
 	public void deleteStructure(long groupId, String structureKey)
 		throws PortalException, SystemException {
 
+		structureKey = structureKey.trim().toUpperCase();
+
 		DDMStructure structure = ddmStructurePersistence.findByG_S(
 			groupId, structureKey);
 
@@ -240,6 +243,8 @@ public class DDMStructureLocalServiceImpl
 
 	public DDMStructure fetchStructure(long groupId, String structureKey)
 		throws SystemException {
+
+		structureKey = structureKey.trim().toUpperCase();
 
 		return ddmStructurePersistence.fetchByG_S(groupId, structureKey);
 	}
@@ -317,12 +322,16 @@ public class DDMStructureLocalServiceImpl
 	public DDMStructure getStructure(long groupId, String structureKey)
 		throws PortalException, SystemException {
 
+		structureKey = structureKey.trim().toUpperCase();
+
 		return ddmStructurePersistence.findByG_S(groupId, structureKey);
 	}
 
 	public DDMStructure getStructure(
 			long groupId, String structureKey, boolean includeGlobalStructures)
 		throws PortalException, SystemException {
+
+		structureKey = structureKey.trim().toUpperCase();
 
 		DDMStructure structure = ddmStructurePersistence.fetchByG_S(
 			groupId, structureKey);
@@ -496,6 +505,8 @@ public class DDMStructureLocalServiceImpl
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String xsd, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		structureKey = structureKey.trim().toUpperCase();
 
 		DDMStructure structure = ddmStructurePersistence.findByG_S(
 			groupId, structureKey);
@@ -731,6 +742,8 @@ public class DDMStructureLocalServiceImpl
 			long groupId, String structureKey, Map<Locale, String> nameMap,
 			String xsd)
 		throws PortalException, SystemException {
+
+		structureKey = structureKey.trim().toUpperCase();
 
 		DDMStructure structure = ddmStructurePersistence.fetchByG_S(
 			groupId, structureKey);

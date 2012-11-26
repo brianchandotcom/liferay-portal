@@ -14,11 +14,15 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v6_2_0.util.DDMTemplateTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -45,6 +49,36 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		long classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
 
 		runSQL("update DDMTemplate set classNameId = " + classNameId);
+
+		updateDDMStructureStructureKeys();
+	}
+
+	private void updateDDMStructureStructureKeys() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement("select * from DDMStructure");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long structureId = rs.getLong("structureId");
+				String structureKey = rs.getString("structureKey");
+
+				structureKey = structureKey.trim().toUpperCase();
+
+				runSQL(
+					"update DDMStructure set structureKey = '" + structureKey +
+						"' where structureId = " + structureId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 }

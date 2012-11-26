@@ -15,6 +15,8 @@
 package com.liferay.portlet.dynamicdatamapping.action;
 
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -47,8 +49,11 @@ public class GetStructureJSONAction extends Action {
 
 			String xsd = ParamUtil.getString(request, "xsd");
 
-			DDMStructure structure = DDMStructureServiceUtil.getStructure(
-				structureId);
+			DDMStructure structure = null;
+
+			if (structureId > 0) {
+				structure = DDMStructureServiceUtil.getStructure(structureId);
+			}
 
 			JSONArray jsonArray = DDMXSDUtil.getJSONArray(structure, xsd);
 
@@ -57,7 +62,11 @@ public class GetStructureJSONAction extends Action {
 			ServletResponseUtil.write(response, jsonArray.toString());
 		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.putException(e);
+
+			ServletResponseUtil.write(response, jsonObject.toString());
 		}
 
 		return null;

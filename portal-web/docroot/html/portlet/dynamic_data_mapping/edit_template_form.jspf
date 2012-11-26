@@ -41,7 +41,7 @@ if (Validator.isNotNull(portletResourceNamespace)) {
 		window,
 		'<portlet:namespace />saveTemplate',
 		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />script.value = window.<portlet:namespace />formBuilder.getXSD();
+			document.<portlet:namespace />fm.<portlet:namespace />script.value = window.<portlet:namespace />formBuilder.getContentXSD();
 
 			submitForm(document.<portlet:namespace />fm);
 		},

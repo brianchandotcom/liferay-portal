@@ -926,6 +926,171 @@ public class DDMTemplateUtil {
 	}
 
 	/**
+	* Returns all the d d m templates where templateKey = &#63;.
+	*
+	* @param templateKey the template key
+	* @return the matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByTemplateKey(
+		java.lang.String templateKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByTemplateKey(templateKey);
+	}
+
+	/**
+	* Returns a range of all the d d m templates where templateKey = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param templateKey the template key
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @return the range of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByTemplateKey(
+		java.lang.String templateKey, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByTemplateKey(templateKey, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m templates where templateKey = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param templateKey the template key
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByTemplateKey(
+		java.lang.String templateKey, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByTemplateKey(templateKey, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m template in the ordered set where templateKey = &#63;.
+	*
+	* @param templateKey the template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByTemplateKey_First(
+		java.lang.String templateKey,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence()
+				   .findByTemplateKey_First(templateKey, orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m template in the ordered set where templateKey = &#63;.
+	*
+	* @param templateKey the template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByTemplateKey_First(
+		java.lang.String templateKey,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByTemplateKey_First(templateKey, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m template in the ordered set where templateKey = &#63;.
+	*
+	* @param templateKey the template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByTemplateKey_Last(
+		java.lang.String templateKey,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence()
+				   .findByTemplateKey_Last(templateKey, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m template in the ordered set where templateKey = &#63;.
+	*
+	* @param templateKey the template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByTemplateKey_Last(
+		java.lang.String templateKey,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByTemplateKey_Last(templateKey, orderByComparator);
+	}
+
+	/**
+	* Returns the d d m templates before and after the current d d m template in the ordered set where templateKey = &#63;.
+	*
+	* @param templateId the primary key of the current d d m template
+	* @param templateKey the template key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByTemplateKey_PrevAndNext(
+		long templateId, java.lang.String templateKey,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence()
+				   .findByTemplateKey_PrevAndNext(templateId, templateKey,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the d d m templates where templateKey = &#63; from the database.
+	*
+	* @param templateKey the template key
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByTemplateKey(java.lang.String templateKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByTemplateKey(templateKey);
+	}
+
+	/**
+	* Returns the number of d d m templates where templateKey = &#63;.
+	*
+	* @param templateKey the template key
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByTemplateKey(java.lang.String templateKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByTemplateKey(templateKey);
+	}
+
+	/**
 	* Returns all the d d m templates where type = &#63;.
 	*
 	* @param type the type

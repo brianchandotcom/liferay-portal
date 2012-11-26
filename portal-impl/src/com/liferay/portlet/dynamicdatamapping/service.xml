@@ -186,6 +186,9 @@
 		<finder name="ClassPK" return-type="Collection">
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="TemplateKey" return-type="Collection">
+			<finder-column name="templateKey" />
+		</finder>
 		<finder name="Type" return-type="Collection">
 			<finder-column name="type" />
 		</finder>
@@ -219,6 +222,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Image" />
 	</entity>
 	<exceptions>

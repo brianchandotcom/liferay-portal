@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -2710,6 +2711,523 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	private static final String _FINDER_COLUMN_CLASSPK_CLASSPK_2 = "ddmTemplate.classPK = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_TEMPLATEKEY =
+		new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTemplateKey",
+			new String[] {
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPLATEKEY =
+		new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTemplateKey",
+			new String[] { String.class.getName() },
+			DDMTemplateModelImpl.TEMPLATEKEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_TEMPLATEKEY = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTemplateKey",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the d d m templates where templateKey = &#63;.
+	 *
+	 * @param templateKey the template key
+	 * @return the matching d d m templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DDMTemplate> findByTemplateKey(String templateKey)
+		throws SystemException {
+		return findByTemplateKey(templateKey, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the d d m templates where templateKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param templateKey the template key
+	 * @param start the lower bound of the range of d d m templates
+	 * @param end the upper bound of the range of d d m templates (not inclusive)
+	 * @return the range of matching d d m templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DDMTemplate> findByTemplateKey(String templateKey, int start,
+		int end) throws SystemException {
+		return findByTemplateKey(templateKey, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d m templates where templateKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param templateKey the template key
+	 * @param start the lower bound of the range of d d m templates
+	 * @param end the upper bound of the range of d d m templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching d d m templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DDMTemplate> findByTemplateKey(String templateKey, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPLATEKEY;
+			finderArgs = new Object[] { templateKey };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_TEMPLATEKEY;
+			finderArgs = new Object[] { templateKey, start, end, orderByComparator };
+		}
+
+		List<DDMTemplate> list = (List<DDMTemplate>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DDMTemplate ddmTemplate : list) {
+				if (!Validator.equals(templateKey, ddmTemplate.getTemplateKey())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
+
+			if (templateKey == null) {
+				query.append(_FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_1);
+			}
+			else {
+				if (templateKey.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_2);
+				}
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (templateKey != null) {
+					qPos.add(templateKey);
+				}
+
+				if (!pagination) {
+					list = (List<DDMTemplate>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<DDMTemplate>(list);
+				}
+				else {
+					list = (List<DDMTemplate>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first d d m template in the ordered set where templateKey = &#63;.
+	 *
+	 * @param templateKey the template key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching d d m template
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMTemplate findByTemplateKey_First(String templateKey,
+		OrderByComparator orderByComparator)
+		throws NoSuchTemplateException, SystemException {
+		DDMTemplate ddmTemplate = fetchByTemplateKey_First(templateKey,
+				orderByComparator);
+
+		if (ddmTemplate != null) {
+			return ddmTemplate;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("templateKey=");
+		msg.append(templateKey);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTemplateException(msg.toString());
+	}
+
+	/**
+	 * Returns the first d d m template in the ordered set where templateKey = &#63;.
+	 *
+	 * @param templateKey the template key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMTemplate fetchByTemplateKey_First(String templateKey,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<DDMTemplate> list = findByTemplateKey(templateKey, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last d d m template in the ordered set where templateKey = &#63;.
+	 *
+	 * @param templateKey the template key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching d d m template
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMTemplate findByTemplateKey_Last(String templateKey,
+		OrderByComparator orderByComparator)
+		throws NoSuchTemplateException, SystemException {
+		DDMTemplate ddmTemplate = fetchByTemplateKey_Last(templateKey,
+				orderByComparator);
+
+		if (ddmTemplate != null) {
+			return ddmTemplate;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("templateKey=");
+		msg.append(templateKey);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTemplateException(msg.toString());
+	}
+
+	/**
+	 * Returns the last d d m template in the ordered set where templateKey = &#63;.
+	 *
+	 * @param templateKey the template key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMTemplate fetchByTemplateKey_Last(String templateKey,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByTemplateKey(templateKey);
+
+		List<DDMTemplate> list = findByTemplateKey(templateKey, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the d d m templates before and after the current d d m template in the ordered set where templateKey = &#63;.
+	 *
+	 * @param templateId the primary key of the current d d m template
+	 * @param templateKey the template key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next d d m template
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMTemplate[] findByTemplateKey_PrevAndNext(long templateId,
+		String templateKey, OrderByComparator orderByComparator)
+		throws NoSuchTemplateException, SystemException {
+		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DDMTemplate[] array = new DDMTemplateImpl[3];
+
+			array[0] = getByTemplateKey_PrevAndNext(session, ddmTemplate,
+					templateKey, orderByComparator, true);
+
+			array[1] = ddmTemplate;
+
+			array[2] = getByTemplateKey_PrevAndNext(session, ddmTemplate,
+					templateKey, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DDMTemplate getByTemplateKey_PrevAndNext(Session session,
+		DDMTemplate ddmTemplate, String templateKey,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
+
+		if (templateKey == null) {
+			query.append(_FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_1);
+		}
+		else {
+			if (templateKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_2);
+			}
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (templateKey != null) {
+			qPos.add(templateKey);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(ddmTemplate);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DDMTemplate> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the d d m templates where templateKey = &#63; from the database.
+	 *
+	 * @param templateKey the template key
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByTemplateKey(String templateKey)
+		throws SystemException {
+		for (DDMTemplate ddmTemplate : findByTemplateKey(templateKey,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(ddmTemplate);
+		}
+	}
+
+	/**
+	 * Returns the number of d d m templates where templateKey = &#63;.
+	 *
+	 * @param templateKey the template key
+	 * @return the number of matching d d m templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByTemplateKey(String templateKey) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_TEMPLATEKEY;
+
+		Object[] finderArgs = new Object[] { templateKey };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_DDMTEMPLATE_WHERE);
+
+			if (templateKey == null) {
+				query.append(_FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_1);
+			}
+			else {
+				if (templateKey.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (templateKey != null) {
+					qPos.add(templateKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_1 = "ddmTemplate.templateKey IS NULL";
+	private static final String _FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_2 = "ddmTemplate.templateKey = ?";
+	private static final String _FINDER_COLUMN_TEMPLATEKEY_TEMPLATEKEY_3 = "(ddmTemplate.templateKey IS NULL OR ddmTemplate.templateKey = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_TYPE = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
@@ -7417,6 +7935,25 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			}
 
 			if ((ddmTemplateModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPLATEKEY.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						ddmTemplateModelImpl.getOriginalTemplateKey()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TEMPLATEKEY,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPLATEKEY,
+					args);
+
+				args = new Object[] { ddmTemplateModelImpl.getTemplateKey() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TEMPLATEKEY,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPLATEKEY,
+					args);
+			}
+
+			if ((ddmTemplateModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						ddmTemplateModelImpl.getOriginalType()
@@ -7952,6 +8489,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	protected DDMStructureLinkPersistence ddmStructureLinkPersistence;
 	@BeanReference(type = DDMTemplatePersistence.class)
 	protected DDMTemplatePersistence ddmTemplatePersistence;
+	@BeanReference(type = GroupPersistence.class)
+	protected GroupPersistence groupPersistence;
 	@BeanReference(type = ImagePersistence.class)
 	protected ImagePersistence imagePersistence;
 	@BeanReference(type = UserPersistence.class)

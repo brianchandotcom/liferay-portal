@@ -279,12 +279,50 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
+		HttpPrincipal httpPrincipal, long groupId,
+		java.lang.String templateKey, boolean includeGlobalTemplates)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
+					"getTemplate", _getTemplateParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					templateKey, includeGlobalTemplates);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"getTemplates", _getTemplatesParameterTypes6);
+					"getTemplates", _getTemplatesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId);
@@ -317,7 +355,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"getTemplates", _getTemplatesParameterTypes7);
+					"getTemplates", _getTemplatesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classPK);
@@ -350,7 +388,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"getTemplates", _getTemplatesParameterTypes8);
+					"getTemplates", _getTemplatesParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					classNameId, classPK, type, mode);
@@ -385,7 +423,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"search", _searchParameterTypes9);
+					"search", _searchParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupId, classNameId, classPK, keywords, type,
@@ -423,7 +461,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"search", _searchParameterTypes10);
+					"search", _searchParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupId, classNameId, classPK, name,
@@ -460,7 +498,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"search", _searchParameterTypes11);
+					"search", _searchParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, classNameIds, classPK, keywords, type,
@@ -498,7 +536,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"search", _searchParameterTypes12);
+					"search", _searchParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, classNameIds, classPK, name,
@@ -533,7 +571,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"searchCount", _searchCountParameterTypes13);
+					"searchCount", _searchCountParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupId, classNameId, classPK, keywords, type,
@@ -568,7 +606,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"searchCount", _searchCountParameterTypes14);
+					"searchCount", _searchCountParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupId, classNameId, classPK, name,
@@ -602,7 +640,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"searchCount", _searchCountParameterTypes15);
+					"searchCount", _searchCountParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, classNameIds, classPK, keywords, type,
@@ -638,7 +676,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"searchCount", _searchCountParameterTypes16);
+					"searchCount", _searchCountParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, classNameIds, classPK, name,
@@ -679,7 +717,7 @@ public class DDMTemplateServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"updateTemplate", _updateTemplateParameterTypes17);
+					"updateTemplate", _updateTemplateParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					templateId, nameMap, descriptionMap, type, mode, language,
@@ -737,65 +775,68 @@ public class DDMTemplateServiceHttp {
 	private static final Class<?>[] _getTemplateParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _getTemplatesParameterTypes6 = new Class[] {
-			long.class, long.class
+	private static final Class<?>[] _getTemplateParameterTypes6 = new Class[] {
+			long.class, java.lang.String.class, boolean.class
 		};
 	private static final Class<?>[] _getTemplatesParameterTypes7 = new Class[] {
-			long.class, long.class, long.class
+			long.class, long.class
 		};
 	private static final Class<?>[] _getTemplatesParameterTypes8 = new Class[] {
+			long.class, long.class, long.class
+		};
+	private static final Class<?>[] _getTemplatesParameterTypes9 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class
-		};
-	private static final Class<?>[] _searchParameterTypes9 = new Class[] {
-			long.class, long.class, long.class, long.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchParameterTypes10 = new Class[] {
 			long.class, long.class, long.class, long.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, boolean.class, int.class, int.class,
+			java.lang.String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchParameterTypes11 = new Class[] {
-			long.class, long[].class, long[].class, long.class,
+			long.class, long.class, long.class, long.class,
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, int.class, int.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, boolean.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchParameterTypes12 = new Class[] {
 			long.class, long[].class, long[].class, long.class,
 			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _searchParameterTypes13 = new Class[] {
+			long.class, long[].class, long[].class, long.class,
+			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _searchCountParameterTypes13 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes14 = new Class[] {
 			long.class, long.class, long.class, long.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class
 		};
-	private static final Class<?>[] _searchCountParameterTypes14 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes15 = new Class[] {
 			long.class, long.class, long.class, long.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class
-		};
-	private static final Class<?>[] _searchCountParameterTypes15 = new Class[] {
-			long.class, long[].class, long[].class, long.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes16 = new Class[] {
 			long.class, long[].class, long[].class, long.class,
 			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class
+		};
+	private static final Class<?>[] _searchCountParameterTypes17 = new Class[] {
+			long.class, long[].class, long[].class, long.class,
+			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class
 		};
-	private static final Class<?>[] _updateTemplateParameterTypes17 = new Class[] {
+	private static final Class<?>[] _updateTemplateParameterTypes18 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, boolean.class,

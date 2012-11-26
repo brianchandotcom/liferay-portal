@@ -117,6 +117,14 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		return ddmTemplateLocalService.getTemplate(groupId, templateKey);
 	}
 
+	public DDMTemplate getTemplate(
+			long groupId, String templateKey, boolean includeGlobalTemplates)
+		throws PortalException, SystemException {
+
+		return ddmTemplateLocalService.getTemplate(
+			groupId, templateKey, includeGlobalTemplates);
+	}
+
 	public List<DDMTemplate> getTemplates(long groupId, long classNameId)
 		throws SystemException {
 

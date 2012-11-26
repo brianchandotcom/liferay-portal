@@ -210,6 +210,14 @@ public abstract class BaseWebDriverImpl
 		return StringUtil.valueOf(GetterUtil.getInteger(firstNumber) + 1);
 	}
 
+	public String getNumberDecrement(String expression) {
+		return StringUtil.valueOf(GetterUtil.getInteger(expression) - 1);
+	}
+
+	public String getNumberIncrement(String expression) {
+		return StringUtil.valueOf(GetterUtil.getInteger(expression) + 1);
+	}
+
 	public void goBackAndWait() {
 		super.goBack();
 		super.waitForPageToLoad("30000");

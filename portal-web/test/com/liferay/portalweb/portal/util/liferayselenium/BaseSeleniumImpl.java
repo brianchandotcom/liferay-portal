@@ -174,6 +174,16 @@ public abstract class BaseSeleniumImpl
 			"getFirstNumberIncrement", new String[] {locator,});
 	}
 
+	public String getNumberDecrement(String expression) {
+		return _commandProcessor.getString(
+			"getNumberDecrement", new String[] {expression,});
+	}
+
+	public String getNumberIncrement(String expression) {
+		return _commandProcessor.getString(
+			"getNumberIncrement", new String[] {expression,});
+	}
+
 	public void goBackAndWait() {
 		super.goBack();
 		super.waitForPageToLoad("30000");

@@ -24,13 +24,10 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.test.AssertUtils;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
@@ -78,14 +75,6 @@ public class BookmarksFolderServiceTest {
 
 	@Test
 	public void testSearch() throws Exception {
-		FileUtil.deltree(
-			PropsValues.LUCENE_DIR + TestPropsValues.getCompanyId());
-
-		FileUtil.mkdirs(
-			PropsValues.LUCENE_DIR + TestPropsValues.getCompanyId());
-
-		LuceneHelperUtil.startup(TestPropsValues.getCompanyId());
-
 		BookmarksEntry entry = BookmarksTestUtil.addEntry();
 
 		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);

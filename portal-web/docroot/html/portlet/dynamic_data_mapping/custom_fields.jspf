@@ -62,7 +62,7 @@
 		repeatable: {
 			setter: A.DataType.Boolean.parse,
 			value: false
-		},
+		}
 	};
 
 	A.Base.mix(A.FormBuilderField, [LiferayFormBuilderField]);

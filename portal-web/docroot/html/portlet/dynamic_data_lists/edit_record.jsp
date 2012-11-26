@@ -80,7 +80,7 @@ if (record != null) {
 		}
 		%>
 
-		<ddm:html className="<%= DDMStructure.class.getName() %>" classPK="<%= ddmStructure.getStructureId() %>" fields="<%= fields %>" />
+		<ddm:html classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>" classPK="<%= ddmStructure.getStructureId() %>" fields="<%= fields %>" />
 
 		<%
 		boolean pending = false;

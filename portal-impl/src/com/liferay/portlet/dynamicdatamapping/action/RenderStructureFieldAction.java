@@ -54,7 +54,7 @@ public class RenderStructureFieldAction extends Action {
 				servlet, request, response, null, true,
 				JspWriter.DEFAULT_BUFFER, true);
 
-			String className = ParamUtil.getString(request, "className");
+			long classNameId = ParamUtil.getLong(request, "classNameId");
 			long classPK = ParamUtil.getLong(request, "classPK");
 			String fieldName = ParamUtil.getString(request, "fieldName");
 			boolean readOnly = ParamUtil.getBoolean(request, "readOnly");
@@ -64,7 +64,7 @@ public class RenderStructureFieldAction extends Action {
 			Locale locale = PortalUtil.getLocale(request);
 
 			String fieldHTML = DDMXSDUtil.getFieldHTMLByName(
-				pageContext, className, classPK, fieldName, repeatableIndex,
+				pageContext, classNameId, classPK, fieldName, repeatableIndex,
 				null, null, null, readOnly, locale);
 
 			response.setContentType(ContentTypes.TEXT_HTML);

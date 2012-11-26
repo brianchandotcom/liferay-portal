@@ -184,20 +184,20 @@ public class DDMXSDImpl implements DDMXSD {
 	}
 
 	public String getFieldHTMLByName(
-			PageContext pageContext, String className, long classPK,
+			PageContext pageContext, long classNameId, long classPK,
 			String fieldName, int repeatableIndex, Fields fields,
 			String namespace, String mode, boolean readOnly, Locale locale)
 		throws Exception {
+
+		String xsd = DDMXSDUtil.getXSD(classNameId, classPK);
+
+		Document document = SAXReaderUtil.read(xsd);
 
 		String xPathExpression =
 			"dynamic-element[@name=".concat(
 				HtmlUtil.escapeXPathAttribute(fieldName)).concat("]");
 
 		XPath xPathSelector = SAXReaderUtil.createXPath(xPathExpression);
-
-		String xsd = DDMXSDUtil.getXSD(className, classPK);
-
-		Document document = SAXReaderUtil.read(xsd);
 
 		Node node = xPathSelector.selectSingleNode(document.getRootElement());
 
@@ -415,21 +415,27 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 	}
 
-	public String getXSD(String className, long classPK) throws Exception {
+	public String getXSD(long classNameId, long classPK) throws Exception {
 		String xsd = null;
 
-		if (Validator.isNotNull(className) && (classPK > 0)) {
-			if (className.equals(DDMTemplate.class.getName())) {
-				DDMTemplate template = DDMTemplateServiceUtil.getTemplate(
-					classPK);
+		if ((classNameId > 0) && (classPK > 0)) {
+			long ddmStructureClassNameId = PortalUtil.getClassNameId(
+				DDMStructure.class);
 
-				xsd = template.getScript();
-			}
-			else if (className.equals(DDMStructure.class.getName())) {
+			long ddmTemplateClassNameId = PortalUtil.getClassNameId(
+				DDMTemplate.class);
+
+			if (classNameId == ddmStructureClassNameId) {
 				DDMStructure structure = DDMStructureServiceUtil.getStructure(
 					classPK);
 
 				xsd = structure.getCompleteXsd();
+			}
+			else if (classNameId == ddmTemplateClassNameId) {
+				DDMTemplate template = DDMTemplateServiceUtil.getTemplate(
+					classPK);
+
+				xsd = template.getScript();
 			}
 		}
 

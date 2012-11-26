@@ -51,14 +51,14 @@ public class DDMXSDUtil {
 	}
 
 	public static String getFieldHTMLByName(
-			PageContext pageContext, String className, long classPK,
+			PageContext pageContext, long classNameId, long classPK,
 			String fieldName, int repeatableIndex, Fields fields,
 			String namespace, String mode, boolean readOnly, Locale locale)
 		throws Exception {
 
 		return getDDMXSD().getFieldHTMLByName(
-			pageContext, className, classPK, fieldName, repeatableIndex, fields,
-			namespace, mode, readOnly, locale);
+			pageContext, classNameId, classPK, fieldName, repeatableIndex,
+			fields, namespace, mode, readOnly, locale);
 	}
 
 	public static String getHTML(
@@ -128,10 +128,10 @@ public class DDMXSDUtil {
 		return getDDMXSD().getJSONArray(xml);
 	}
 
-	public static String getXSD(String className, long classPK)
+	public static String getXSD(long classNameId, long classPK)
 		throws Exception {
 
-		return getDDMXSD().getXSD(className, classPK);
+		return getDDMXSD().getXSD(classNameId, classPK);
 	}
 
 	public void setDDMXSD(DDMXSD ddmXSD) {

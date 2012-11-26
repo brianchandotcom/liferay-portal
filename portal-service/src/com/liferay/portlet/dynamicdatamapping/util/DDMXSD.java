@@ -39,7 +39,7 @@ public interface DDMXSD {
 		throws Exception;
 
 	public String getFieldHTMLByName(
-			PageContext pageContext, String className, long classPK,
+			PageContext pageContext, long classNameId, long classPK,
 			String fieldName, int repeatableIndex, Fields fields,
 			String namespace, String mode, boolean readOnly, Locale locale)
 		throws Exception;
@@ -78,7 +78,7 @@ public interface DDMXSD {
 	public JSONArray getJSONArray(String xml)
 		throws PortalException, SystemException;
 
-	public String getXSD(String className, long classPK)
+	public String getXSD(long classNameId, long classPK)
 		throws Exception;
 
 }

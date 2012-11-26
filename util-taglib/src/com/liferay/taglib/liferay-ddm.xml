@@ -7,9 +7,9 @@
 	<component name="HTML" bodyContent="true" writeJSP="true">
 		<attributes>
 			<attribute>
-				<name>className</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
+				<name>classNameId</name>
+				<inputType>long</inputType>
+				<outputType>long</outputType>
 				<required>true</required>
 			</attribute>
 			<attribute>

@@ -24,8 +24,7 @@
 		<c:if test="<%= repeatable %>">
 			<aui:input id='<%= containerId + "repeatabaleFieldsMap" %>' name="__repeatabaleFieldsMap" type="hidden" />
 
-			<liferay-util:html-top outputKey="ddm_html_repetable_util">
-
+			<liferay-util:html-top outputKey="js_ddm_html_repetable_util">
 				<aui:script>
 					AUI.add(
 						'liferay-ddm-repeatable',
@@ -54,7 +53,6 @@
 									NAME: 'liferay-ddm-repeatable-util',
 
 									prototype: {
-
 										fieldsCountMap: null,
 
 										fieldsMap: null,
@@ -62,8 +60,8 @@
 										initializer: function() {
 											var instance = this;
 
-											instance.fieldsCountMap = {};
 											instance.fieldsMap = {};
+											instance.fieldsCountMap = {};
 
 											instance.getFieldsList().each(
 												function(item, index, collection) {
@@ -101,6 +99,7 @@
 											var instance = this;
 
 											var fieldsList = instance.getFieldsList(fieldName);
+
 											var fieldWrapper = fieldsList.item(repeatableIndex);
 
 											instance.getField(
@@ -128,21 +127,6 @@
 											instance.syncFieldsMap(fieldName);
 										},
 
-										getFieldsList: function(fieldName) {
-											var instance = this;
-
-											var container = instance.get('container');
-											var query = '.aui-field-wrapper';
-
-											if (fieldName) {
-												query += '[data-fieldName="' + fieldName + '"]';
-											}
-
-											query += '[data-repeatable="true"]';
-
-											return container.all(query);
-										},
-
 										getField: function(fieldName, repeatableIndex, callback) {
 											var instance = this;
 
@@ -150,10 +134,10 @@
 												'<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/render_structure_field" %>',
 												{
 													data: {
-														className: '<%= className %>',
+														classNameId: '<%= classNameId %>',
 														classPK: <%= classPK %>,
-														readOnly: <%= readOnly %>,
 														fieldName: fieldName,
+														readOnly: <%= readOnly %>,
 														repeatableIndex: repeatableIndex
 													},
 													on: {
@@ -167,10 +151,27 @@
 											);
 										},
 
+										getFieldsList: function(fieldName) {
+											var instance = this;
+
+											var container = instance.get('container');
+
+											var query = '.aui-field-wrapper';
+
+											if (fieldName) {
+												query += '[data-fieldName="' + fieldName + '"]';
+											}
+
+											query += '[data-repeatable="true"]';
+
+											return container.all(query);
+										},
+
 										makeFieldRepeatable: function(fieldWrapper) {
 											var instance = this;
 
 											var fieldName = fieldWrapper.attr('data-fieldName');
+
 											var fieldsList = instance.getFieldsList(fieldName);
 
 											fieldWrapper.append(TPL_ADD_REPEATABLE);
@@ -186,6 +187,7 @@
 											var instance = this;
 
 											var fieldsMapInput = instance.get('fieldsMapInput');
+
 											var fieldsList = instance.getFieldsList(fieldName);
 
 											instance.fieldsMap[fieldName] = [];
@@ -207,8 +209,10 @@
 											var instance = this;
 
 											var currentTarget = event.currentTarget;
+
 											var fieldWrapper = currentTarget.ancestor('.aui-field-wrapper');
 											var fieldName = fieldWrapper.attr('data-fieldName');
+
 											var repeatableIndex = instance.getFieldsList(fieldName).indexOf(fieldWrapper);
 
 											if (currentTarget.test('.lfr-ddm-repeatable-add-button')) {
@@ -241,7 +245,6 @@
 						}
 					);
 				</aui:script>
-
 			</liferay-util:html-top>
 
 			<aui:script use="liferay-ddm-repeatable">

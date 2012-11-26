@@ -64,7 +64,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 	protected String exportToRSS(
 			PortletRequest portletRequest, PortletResponse portletResponse,
-			String name, String description, String type, double version,
+			String name, String description, String format, double version,
 			String displayStyle, String linkBehavior,
 			List<AssetEntry> assetEntries)
 		throws Exception {
@@ -116,7 +116,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 			syndEntries.add(syndEntry);
 		}
 
-		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
+		syndFeed.setFeedType(RSSUtil.getFeedType(format, version));
 
 		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
 
@@ -336,18 +336,21 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 			return new byte[0];
 		}
 
-		String rssName = preferences.getValue("rssName", null);
-		String rssFormat = preferences.getValue("rssFormat", "atom10");
-		String rssDisplayStyle = preferences.getValue(
-			"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
 		String assetLinkBehavior = preferences.getValue(
 			"assetLinkBehavior", "showFullContent");
+		String rssDisplayStyle = preferences.getValue(
+			"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
+		String rssFeedType = preferences.getValue(
+			"rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+		String rssName = preferences.getValue("rssName", null);
+
+		String format = RSSUtil.getFeedTypeFormat(rssFeedType);
+		double version = RSSUtil.getFeedTypeVersion(rssFeedType);
 
 		String rss = exportToRSS(
-			portletRequest, portletResponse, rssName, null,
-			RSSUtil.getFormatType(rssFormat),
-			RSSUtil.getFormatVersion(rssFormat), rssDisplayStyle,
-			assetLinkBehavior, getAssetEntries(portletRequest, preferences));
+			portletRequest, portletResponse, rssName, null, format, version,
+			rssDisplayStyle, assetLinkBehavior,
+			getAssetEntries(portletRequest, preferences));
 
 		return rss.getBytes(StringPool.UTF8);
 	}

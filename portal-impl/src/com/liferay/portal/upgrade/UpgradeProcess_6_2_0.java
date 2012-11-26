@@ -16,7 +16,9 @@ package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.upgrade.v6_2_0.UpgradeAssetPublisher;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeBlogs;
+import com.liferay.portal.upgrade.v6_2_0.UpgradeBlogsAggregator;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeCustomizablePortlets;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeDynamicDataListDisplay;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeDynamicDataMapping;
@@ -38,7 +40,9 @@ public class UpgradeProcess_6_2_0 extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgrade(UpgradeSchema.class);
+		upgrade(UpgradeAssetPublisher.class);
 		upgrade(UpgradeBlogs.class);
+		upgrade(UpgradeBlogsAggregator.class);
 		upgrade(UpgradeCustomizablePortlets.class);
 		upgrade(UpgradeDynamicDataMapping.class);
 		upgrade(UpgradeDynamicDataListDisplay.class);

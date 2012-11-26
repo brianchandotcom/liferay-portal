@@ -227,7 +227,7 @@ String[] metadataFields = StringUtil.split(preferences.getValue("metadataFields"
 boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(preferences.getValue("enableRss", null));
 int rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", "20"));
 String rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
-String rssFormat = preferences.getValue("rssFormat", "atom10");
+String rssFeedType = preferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 String rssName = preferences.getValue("rssName", portletDisplay.getTitle());
 
 String[] assetEntryXmls = preferences.getValues("assetEntryXml", new String[0]);

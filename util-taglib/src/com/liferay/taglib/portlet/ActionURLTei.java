@@ -14,9 +14,8 @@
 
 package com.liferay.taglib.portlet;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.Validator;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.jsp.tagext.TagData;
 import javax.servlet.jsp.tagext.TagExtraInfo;
@@ -41,7 +40,7 @@ public class ActionURLTei extends TagExtraInfo {
 		else if (Validator.isNotNull(varImpl)) {
 			return new VariableInfo[] {
 				new VariableInfo(
-					varImpl, PortletURL.class.getName(), true,
+					varImpl, LiferayPortletURL.class.getName(), true,
 					VariableInfo.AT_END),
 			};
 		}

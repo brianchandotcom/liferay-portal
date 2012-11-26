@@ -42,7 +42,7 @@
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= enableRssSubscription %>">
+<c:if test="<%= enableRSS %>">
 
 	<%
 	StringBundler rssURLParams = new StringBundler();
@@ -63,11 +63,10 @@
 	}
 	%>
 
-	<liferay-ui:icon
-		image="rss"
-		label="<%= true %>"
-		method="get"
-		target="_blank"
+	<liferay-ui:rss
+		delta="<%= rssDelta %>"
+		displayStyle="<%= rssDisplayStyle %>"
+		feedType="<%= rssFeedType %>"
 		url='<%= themeDisplay.getPathMain() + "/blogs_aggregator/rss?p_l_id=" + plid + rssURLParams %>'
 	/>
 </c:if>

@@ -89,7 +89,12 @@ if (organizationId > 0) {
 		</aui:select>
 
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-			<aui:input name="preferences--enableRssSubscription--" type="checkbox" value="<%= enableRssSubscription %>" />
+			<liferay-ui:rss-preferences
+				delta="<%= rssDelta %>"
+				displayStyle="<%= rssDisplayStyle %>"
+				enabled="<%= enableRSS %>"
+				feedType="<%= rssFeedType %>"
+			/>
 		</c:if>
 
 		<aui:input name="preferences--showTags--" type="checkbox" value="<%= showTags %>" />

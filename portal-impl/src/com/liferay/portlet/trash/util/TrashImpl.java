@@ -80,18 +80,18 @@ public class TrashImpl implements Trash {
 		String rootContainerModelName = LanguageUtil.get(
 			themeDisplay.getLocale(), trashHandler.getRootContainerModelName());
 
-		List<ContainerModel> containerModels =
-			trashHandler.getParentContainerModels(
-				containerModel.getContainerModelId());
-
-		Collections.reverse(containerModels);
-
-		if (containerModels.isEmpty()) {
+		if (containerModel == null) {
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, rootContainerModelName, null);
 
 			return;
 		}
+
+		List<ContainerModel> containerModels =
+			trashHandler.getParentContainerModels(
+				containerModel.getContainerModelId());
+
+		Collections.reverse(containerModels);
 
 		containerModelURL.setParameter("containerModelId", "0");
 

@@ -330,6 +330,10 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return false;
 	}
 
+	public boolean isMovable() {
+		return false;
+	}
+
 	/**
 	 * Returns <code>true</code> if the trash entry can be restored to its
 	 * original location.
@@ -353,7 +357,12 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return true;
 	}
 
-	public TrashEntry moveTrashEntry(
+	public void moveEntry(
+			long classPK, long containerModelId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+	}
+
+	public void moveTrashEntry(
 			long classPK, long containerModelId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 

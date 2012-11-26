@@ -49,6 +49,35 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public List<ContainerModel> getContainerModels(
+			long classPK, long parentContainerModelId, int start, int end)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(classPK);
+
+		List<Folder> folders = repository.getFolders(
+			parentContainerModelId, false, start, end, null);
+
+		List<ContainerModel> containerModels = new ArrayList<ContainerModel>();
+
+		for (Folder folder : folders) {
+			containerModels.add((ContainerModel)folder.getModel());
+		}
+
+		return containerModels;
+	}
+
+	@Override
+	public int getContainerModelsCount(
+			long classPK, long parentContainerModelId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(classPK);
+
+		return repository.getFoldersCount(parentContainerModelId, false);
+	}
+
+	@Override
 	public List<ContainerModel> getParentContainerModels(long containerModelId)
 		throws PortalException, SystemException {
 
@@ -173,6 +202,10 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 		}
 
 		return trashRenderers;
+	}
+
+	public boolean isMovable() {
+		return true;
 	}
 
 	protected DLFolder getDLFolder(long classPK)

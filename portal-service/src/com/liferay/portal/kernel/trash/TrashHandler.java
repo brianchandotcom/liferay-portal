@@ -386,6 +386,8 @@ public interface TrashHandler {
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException;
 
+	public boolean isMovable();
+
 	/**
 	 * Returns <code>true</code> if the model entity can be restored to its
 	 * original location.
@@ -406,6 +408,10 @@ public interface TrashHandler {
 	public boolean isRestorable(long classPK)
 		throws PortalException, SystemException;
 
+	public void moveEntry(
+			long classPK, long containerModelId, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	/**
 	 * Moves the model entity with the primary key out of the Recycle Bin to a
 	 * new destination identified by the container model ID.
@@ -420,7 +426,7 @@ public interface TrashHandler {
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public TrashEntry moveTrashEntry(
+	public void moveTrashEntry(
 			long classPK, long containerModelId, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 

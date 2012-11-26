@@ -160,7 +160,7 @@ for (int i = 0; i < locales.length; i++) {
 }
 %>
 
-<aui:script use="liferay-portlet-dynamic-data-mapping">
+<aui:script position="inline" use="liferay-portlet-dynamic-data-mapping">
 	window.<portlet:namespace />formBuilder = new Liferay.FormBuilder(
 		{
 			<c:if test="<%= Validator.isNotNull(scopeAvailableFields) %>">

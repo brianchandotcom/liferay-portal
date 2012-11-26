@@ -49,7 +49,7 @@ if (Validator.isNotNull(portletResourceNamespace)) {
 	);
 </aui:script>
 
-<aui:script use="liferay-portlet-dynamic-data-mapping">
+<aui:script position="inline" use="liferay-portlet-dynamic-data-mapping">
 	var availableFields = A.Array(<%= scriptJSONArray.toString() %>);
 
 	A.Array.each(

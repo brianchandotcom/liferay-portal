@@ -1153,32 +1153,34 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	public int getLayoutsCount(
-			Group group, boolean privateLayout, boolean checkUserGroup)
+			Group group, boolean privateLayout, boolean includeUserGroups)
 		throws PortalException, SystemException {
 
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
-				group.getGroupId(), privateLayout);
+			group.getGroupId(), privateLayout);
 
 		int count = layoutSet.getPageCount();
 
-		if (group.isUser() && checkUserGroup) {
-			List<UserGroup> userGroups = userPersistence.getUserGroups(
-					group.getClassPK());
+		if (!group.isUser() || !includeUserGroups) {
+			return count;
+		}
 
-			if (!userGroups.isEmpty()) {
-				long userGroupClassNameId =
-						classNameLocalService.getClassNameId(UserGroup.class);
+		List<UserGroup> userGroups = userPersistence.getUserGroups(
+			group.getClassPK());
 
-				for (UserGroup userGroup : userGroups) {
-					Group userGroupGroup = groupPersistence.findByC_C_C(
-							group.getCompanyId(), userGroupClassNameId,
-							userGroup.getUserGroupId());
+		if (!userGroups.isEmpty()) {
+			long userGroupClassNameId = classNameLocalService.getClassNameId(
+				UserGroup.class);
 
-					layoutSet = layoutSetPersistence.findByG_P(
-							userGroupGroup.getGroupId(), privateLayout);
+			for (UserGroup userGroup : userGroups) {
+				Group userGroupGroup = groupPersistence.findByC_C_C(
+					group.getCompanyId(), userGroupClassNameId,
+					userGroup.getUserGroupId());
 
-					count += layoutSet.getPageCount();
-				}
+				layoutSet = layoutSetPersistence.findByG_P(
+					userGroupGroup.getGroupId(), privateLayout);
+
+				count += layoutSet.getPageCount();
 			}
 		}
 
@@ -1192,15 +1194,15 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	public int getLayoutsCount(
-			User user, boolean privateLayout, boolean checkUserGroup)
+			User user, boolean privateLayout, boolean includeUserGroups)
 		throws PortalException, SystemException {
 
 		long classNameId = classNameLocalService.getClassNameId(User.class);
 
 		Group group = groupPersistence.findByC_C_C(
-				user.getCompanyId(), classNameId, user.getUserId());
+			user.getCompanyId(), classNameId, user.getUserId());
 
-		return getLayoutsCount(group, privateLayout, checkUserGroup);
+		return getLayoutsCount(group, privateLayout, includeUserGroups);
 	}
 
 	/**
@@ -1266,7 +1268,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	public boolean hasLayouts(
-			Group group, boolean privateLayout, boolean checkUserGroup)
+			Group group, boolean privateLayout, boolean includeUserGroups)
 		throws PortalException, SystemException {
 
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
@@ -1276,25 +1278,27 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return true;
 		}
 
-		if (group.isUser() && checkUserGroup) {
-			List<UserGroup> userGroups = userPersistence.getUserGroups(
-				group.getClassPK());
+		if (!group.isUser() || !includeUserGroups) {
+			return false;
+		}
 
-			if (!userGroups.isEmpty()) {
-				long userGroupClassNameId =
-					classNameLocalService.getClassNameId(UserGroup.class);
+		List<UserGroup> userGroups = userPersistence.getUserGroups(
+			group.getClassPK());
 
-				for (UserGroup userGroup : userGroups) {
-					Group userGroupGroup = groupPersistence.findByC_C_C(
-						group.getCompanyId(), userGroupClassNameId,
-						userGroup.getUserGroupId());
+		if (!userGroups.isEmpty()) {
+			long userGroupClassNameId = classNameLocalService.getClassNameId(
+				UserGroup.class);
 
-					layoutSet = layoutSetPersistence.findByG_P(
-						userGroupGroup.getGroupId(), privateLayout);
+			for (UserGroup userGroup : userGroups) {
+				Group userGroupGroup = groupPersistence.findByC_C_C(
+					group.getCompanyId(), userGroupClassNameId,
+					userGroup.getUserGroupId());
 
-					if (layoutSet.getPageCount() > 0) {
-						return true;
-					}
+				layoutSet = layoutSetPersistence.findByG_P(
+					userGroupGroup.getGroupId(), privateLayout);
+
+				if (layoutSet.getPageCount() > 0) {
+					return true;
 				}
 			}
 		}
@@ -1328,15 +1332,15 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	public boolean hasLayouts(
-			User user, boolean privateLayout, boolean checkUserGroup)
+			User user, boolean privateLayout, boolean includeUserGroups)
 		throws PortalException, SystemException {
 
 		long classNameId = classNameLocalService.getClassNameId(User.class);
 
 		Group group = groupPersistence.findByC_C_C(
-				user.getCompanyId(), classNameId, user.getUserId());
+			user.getCompanyId(), classNameId, user.getUserId());
 
-		return hasLayouts(group, privateLayout, checkUserGroup);
+		return hasLayouts(group, privateLayout, includeUserGroups);
 	}
 
 	public boolean hasLayoutSetPrototypeLayout(

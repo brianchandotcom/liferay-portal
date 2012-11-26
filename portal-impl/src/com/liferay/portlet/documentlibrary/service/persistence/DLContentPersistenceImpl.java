@@ -2332,7 +2332,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 				dlContent.setNew(false);
 			}
 			else {
-				session.merge(dlContent);
+				session.evict(dlContent);
+				session.saveOrUpdate(dlContent);
 			}
 
 			session.flush();

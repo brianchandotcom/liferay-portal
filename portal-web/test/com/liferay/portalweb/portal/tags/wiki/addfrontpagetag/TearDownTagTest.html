@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -29,9 +49,34 @@
 	<td>Tags</td>
 </tr>
 <tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_99_checkAllTagsCheckbox']</td>
+	<td>checkAllTagsChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${checkAllTagsChecked}</td>
+	<td>CheckAllTagsChecked</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//input[@id='_99_checkAllTagsCheckbox']</td>
 	<td>Check All Tags</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>CheckAllTagsChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_99_checkAllTagsCheckbox']</td>
+	<td>Check All Tags</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -40,16 +85,21 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@id='_99_deleteSelectedTags']</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_99_deleteSelectedTags']</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to delete the selected tags?</td>
 	<td></td>
 </tr>
@@ -58,7 +108,6 @@
 	<td>//div[@id='tagsMessages']</td>
 	<td>There are no tags.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -14,36 +14,120 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
 	<td>Wiki Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=All Pages</td>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span/a/span[contains(.,'All Pages')]</td>
 	<td>All Pages</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki Page Test</td>
-	<td>Wiki Page Test</td>
+	<td>//ul[@class='top-links-navigation']/li/span/a/span[contains(.,'All Pages')]</td>
+	<td>All Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=wiki tag1</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
+	<td>Wiki Page Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='page-tags']/span/a</td>
 	<td>wiki tag1</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Wiki Page Test</td>
-	<td>Wiki Page Test</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='page-tags']/span/a</td>
+	<td>wiki tag1</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'FrontPage')]</td>
+	<td>FrontPage</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'Recent Changes')]</td>
+	<td>Recent Changes</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'All Pages')]</td>
+	<td>All Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'Orphan Pages')]</td>
+	<td>Orphan Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'Draft Pages')]</td>
+	<td>Draft Pages</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@title='Search Pages']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Search']</td>
+	<td>Search Button</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[contains(.,'Pages with tag')]</td>
+	<td>Pages with tag wiki tag1 .</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='asset-entry']</td>
+	<td>wiki tag1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
+	<td>Wiki Page Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[2]/a</td>
+	<td>Approved</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[3]/a</td>
+	<td>1.1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[4]/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[5]/a</td>
+	<td>Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 result.</td>
+</tr>
 </tbody></table>
 </body>
 </html>

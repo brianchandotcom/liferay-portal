@@ -14,29 +14,74 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
 	<td>Wiki Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=All Pages</td>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span/a/span[contains(.,'All Pages')]</td>
 	<td>All Pages</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Wiki Page Test</td>
-	<td>Wiki Page Test</td>
+	<td>//ul[@class='top-links-navigation']/li/span/a/span[contains(.,'All Pages')]</td>
+	<td>All Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
+	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Edit</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
+	<td>Wiki Page Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
+	<td>tagsVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${tagsVisible}</td>
+	<td>TagsVisible</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='wikiPageCategorizationPanel']/div/div/span</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='wikiPageCategorizationPanel']/div/div/span</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>TagsVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -55,10 +100,9 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@class='tag']</td>
+	<td>//div[@class='page-tags']/span/a</td>
 	<td>wiki tag1</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

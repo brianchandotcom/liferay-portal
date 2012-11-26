@@ -66,12 +66,12 @@ public class AddWikiPage3Test extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Wiki Page1 Title"),
-			selenium.getText("//tr[4]/td[1]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Page1 Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Wiki Page2 Title"),
-			selenium.getText("//tr[5]/td[1]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Page2 Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Wiki Page3 Title"),
-			selenium.getText("//tr[6]/td[1]/a"));
-		selenium.clickAt("//tr[6]/td[1]/a",
+			selenium.getText("//tr[contains(.,'Wiki Page3 Title')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki Page3 Title')]/td[1]/a",
 			RuntimeVariables.replace("Wiki Page3 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Page3 Title"),

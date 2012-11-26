@@ -85,7 +85,7 @@ String templateHeaderTitle = ParamUtil.getString(request, "templateHeaderTitle")
 
 String templateTypeValue = StringPool.BLANK;
 
-if (scopeStorageType.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
+if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
 	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY;
 }
 else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {

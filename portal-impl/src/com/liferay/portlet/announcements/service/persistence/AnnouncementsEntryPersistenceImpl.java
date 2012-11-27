@@ -205,14 +205,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query.append(_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_UUID__2);
 				}
 			}
 
@@ -429,14 +429,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		query.append(_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_UUID__2);
 			}
 		}
 
@@ -598,14 +598,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		}
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_UUID__2);
 			}
 		}
 
@@ -732,14 +732,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		}
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_UUID__2);
 			}
 		}
 
@@ -897,14 +897,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query.append(_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_UUID__2);
 				}
 			}
 
@@ -957,14 +957,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		query.append(_FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_UUID__2);
 			}
 		}
 
@@ -1000,9 +1000,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "announcementsEntry.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "announcementsEntry.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(announcementsEntry.uuid IS NULL OR announcementsEntry.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID__1 = "announcementsEntry.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID__2 = "announcementsEntry.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID__3 = "(announcementsEntry.uuid_ IS NULL OR announcementsEntry.uuid_ = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsEntryModelImpl.FINDER_CACHE_ENABLED,
 			AnnouncementsEntryImpl.class,
@@ -1126,14 +1126,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query.append(_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_C_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_C_UUID__2);
 				}
 			}
 
@@ -1366,14 +1366,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		query.append(_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__2);
 			}
 		}
 
@@ -1544,14 +1544,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		}
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__2);
 			}
 		}
 
@@ -1685,14 +1685,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		}
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__2);
 			}
 		}
 
@@ -1858,14 +1858,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query.append(_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_C_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_C_UUID__2);
 				}
 			}
 
@@ -1924,14 +1924,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		query.append(_FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__2);
 			}
 		}
 
@@ -1971,9 +1971,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "announcementsEntry.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "announcementsEntry.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(announcementsEntry.uuid IS NULL OR announcementsEntry.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID__1 = "announcementsEntry.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID__2 = "announcementsEntry.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID__3 = "(announcementsEntry.uuid_ IS NULL OR announcementsEntry.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "announcementsEntry.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID = new FinderPath(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsEntryModelImpl.FINDER_CACHE_ENABLED,

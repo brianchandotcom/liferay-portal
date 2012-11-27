@@ -2831,7 +2831,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 			query.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
 
-			query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
+			query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY__2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -3092,7 +3092,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 		query.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
 
-		query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
+		query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY__2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -3237,7 +3237,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 			query.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
 
-			query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
+			query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY__2);
 
 			String sql = query.toString();
 
@@ -3278,7 +3278,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	private static final String _FINDER_COLUMN_C_C_C_P_COMPANYID_2 = "address.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2 = "address.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSPK_2 = "address.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 = "address.primary = ?";
+	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY__2 = "address.primary_ = ?";
 
 	/**
 	 * Caches the address in the entity cache if it is enabled.

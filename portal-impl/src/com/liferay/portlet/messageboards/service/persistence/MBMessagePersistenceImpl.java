@@ -214,14 +214,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_UUID__2);
 				}
 			}
 
@@ -436,14 +436,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		query.append(_SQL_SELECT_MBMESSAGE_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_UUID__2);
 			}
 		}
 
@@ -571,14 +571,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_UUID__2);
 				}
 			}
 
@@ -614,9 +614,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "mbMessage.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "mbMessage.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(mbMessage.uuid IS NULL OR mbMessage.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID__1 = "mbMessage.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID__2 = "mbMessage.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID__3 = "(mbMessage.uuid_ IS NULL OR mbMessage.uuid_ = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -712,14 +712,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_G_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_G_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_G_UUID__2);
 				}
 			}
 
@@ -820,14 +820,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_G_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_G_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_G_UUID__2);
 				}
 			}
 
@@ -867,9 +867,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "mbMessage.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "mbMessage.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(mbMessage.uuid IS NULL OR mbMessage.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID__1 = "mbMessage.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID__2 = "mbMessage.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID__3 = "(mbMessage.uuid_ IS NULL OR mbMessage.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "mbMessage.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
@@ -990,14 +990,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_C_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_C_UUID__2);
 				}
 			}
 
@@ -1230,14 +1230,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		query.append(_SQL_SELECT_MBMESSAGE_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__2);
 			}
 		}
 
@@ -1373,14 +1373,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_C_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_C_UUID__2);
 				}
 			}
 
@@ -1420,9 +1420,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "mbMessage.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "mbMessage.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(mbMessage.uuid IS NULL OR mbMessage.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID__1 = "mbMessage.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID__2 = "mbMessage.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID__3 = "(mbMessage.uuid_ IS NULL OR mbMessage.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "mbMessage.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,

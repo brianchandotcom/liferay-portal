@@ -195,14 +195,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_UUID__2);
 				}
 			}
 
@@ -417,14 +417,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_UUID__2);
 			}
 		}
 
@@ -552,14 +552,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_SQL_COUNT_DDMTEMPLATE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_UUID__2);
 				}
 			}
 
@@ -595,9 +595,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ddmTemplate.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddmTemplate.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddmTemplate.uuid IS NULL OR ddmTemplate.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID__1 = "ddmTemplate.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID__2 = "ddmTemplate.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID__3 = "(ddmTemplate.uuid_ IS NULL OR ddmTemplate.uuid_ = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -693,14 +693,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_G_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_G_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_G_UUID__2);
 				}
 			}
 
@@ -801,14 +801,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_SQL_COUNT_DDMTEMPLATE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_G_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_G_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_G_UUID__2);
 				}
 			}
 
@@ -848,9 +848,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "ddmTemplate.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "ddmTemplate.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(ddmTemplate.uuid IS NULL OR ddmTemplate.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID__1 = "ddmTemplate.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID__2 = "ddmTemplate.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID__3 = "(ddmTemplate.uuid_ IS NULL OR ddmTemplate.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "ddmTemplate.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
@@ -971,14 +971,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_C_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_C_UUID__2);
 				}
 			}
 
@@ -1211,14 +1211,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__2);
 			}
 		}
 
@@ -1354,14 +1354,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_SQL_COUNT_DDMTEMPLATE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_C_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_C_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_C_UUID__2);
 				}
 			}
 
@@ -1401,9 +1401,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "ddmTemplate.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "ddmTemplate.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(ddmTemplate.uuid IS NULL OR ddmTemplate.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID__1 = "ddmTemplate.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID__2 = "ddmTemplate.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID__3 = "(ddmTemplate.uuid_ IS NULL OR ddmTemplate.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "ddmTemplate.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
@@ -3334,14 +3334,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_TYPE_TYPE_1);
+				query.append(_FINDER_COLUMN_TYPE_TYPE__1);
 			}
 			else {
 				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_TYPE_TYPE_3);
+					query.append(_FINDER_COLUMN_TYPE_TYPE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_TYPE_TYPE_2);
+					query.append(_FINDER_COLUMN_TYPE_TYPE__2);
 				}
 			}
 
@@ -3556,14 +3556,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_TYPE_TYPE_1);
+			query.append(_FINDER_COLUMN_TYPE_TYPE__1);
 		}
 		else {
 			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_TYPE_TYPE_3);
+				query.append(_FINDER_COLUMN_TYPE_TYPE__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_TYPE_TYPE_2);
+				query.append(_FINDER_COLUMN_TYPE_TYPE__2);
 			}
 		}
 
@@ -3691,14 +3691,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_SQL_COUNT_DDMTEMPLATE_WHERE);
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_TYPE_TYPE_1);
+				query.append(_FINDER_COLUMN_TYPE_TYPE__1);
 			}
 			else {
 				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_TYPE_TYPE_3);
+					query.append(_FINDER_COLUMN_TYPE_TYPE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_TYPE_TYPE_2);
+					query.append(_FINDER_COLUMN_TYPE_TYPE__2);
 				}
 			}
 
@@ -3734,9 +3734,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "ddmTemplate.type IS NULL";
-	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "ddmTemplate.type = ?";
-	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = ?)";
+	private static final String _FINDER_COLUMN_TYPE_TYPE__1 = "ddmTemplate.type_ IS NULL";
+	private static final String _FINDER_COLUMN_TYPE_TYPE__2 = "ddmTemplate.type_ = ?";
+	private static final String _FINDER_COLUMN_TYPE_TYPE__3 = "(ddmTemplate.type_ IS NULL OR ddmTemplate.type_ = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LANGUAGE = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLanguage",
@@ -6478,14 +6478,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_FINDER_COLUMN_C_C_T_CLASSPK_2);
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_C_C_T_TYPE_1);
+				query.append(_FINDER_COLUMN_C_C_T_TYPE__1);
 			}
 			else {
 				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_C_T_TYPE_3);
+					query.append(_FINDER_COLUMN_C_C_T_TYPE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_C_C_T_TYPE_2);
+					query.append(_FINDER_COLUMN_C_C_T_TYPE__2);
 				}
 			}
 
@@ -6736,14 +6736,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		query.append(_FINDER_COLUMN_C_C_T_CLASSPK_2);
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_C_C_T_TYPE_1);
+			query.append(_FINDER_COLUMN_C_C_T_TYPE__1);
 		}
 		else {
 			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_T_TYPE_3);
+				query.append(_FINDER_COLUMN_C_C_T_TYPE__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_C_C_T_TYPE_2);
+				query.append(_FINDER_COLUMN_C_C_T_TYPE__2);
 			}
 		}
 
@@ -6885,14 +6885,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_FINDER_COLUMN_C_C_T_CLASSPK_2);
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_C_C_T_TYPE_1);
+				query.append(_FINDER_COLUMN_C_C_T_TYPE__1);
 			}
 			else {
 				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_C_T_TYPE_3);
+					query.append(_FINDER_COLUMN_C_C_T_TYPE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_C_C_T_TYPE_2);
+					query.append(_FINDER_COLUMN_C_C_T_TYPE__2);
 				}
 			}
 
@@ -6934,9 +6934,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 	private static final String _FINDER_COLUMN_C_C_T_CLASSNAMEID_2 = "ddmTemplate.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_T_CLASSPK_2 = "ddmTemplate.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_T_TYPE_1 = "ddmTemplate.type IS NULL";
-	private static final String _FINDER_COLUMN_C_C_T_TYPE_2 = "ddmTemplate.type = ?";
-	private static final String _FINDER_COLUMN_C_C_T_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = ?)";
+	private static final String _FINDER_COLUMN_C_C_T_TYPE__1 = "ddmTemplate.type_ IS NULL";
+	private static final String _FINDER_COLUMN_C_C_T_TYPE__2 = "ddmTemplate.type_ = ?";
+	private static final String _FINDER_COLUMN_C_C_T_TYPE__3 = "(ddmTemplate.type_ IS NULL OR ddmTemplate.type_ = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_T_M = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T_M",
@@ -7077,26 +7077,26 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_FINDER_COLUMN_C_C_T_M_CLASSPK_2);
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_C_C_T_M_TYPE_1);
+				query.append(_FINDER_COLUMN_C_C_T_M_TYPE__1);
 			}
 			else {
 				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_C_T_M_TYPE_3);
+					query.append(_FINDER_COLUMN_C_C_T_M_TYPE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_C_C_T_M_TYPE_2);
+					query.append(_FINDER_COLUMN_C_C_T_M_TYPE__2);
 				}
 			}
 
 			if (mode == null) {
-				query.append(_FINDER_COLUMN_C_C_T_M_MODE_1);
+				query.append(_FINDER_COLUMN_C_C_T_M_MODE__1);
 			}
 			else {
 				if (mode.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_C_T_M_MODE_3);
+					query.append(_FINDER_COLUMN_C_C_T_M_MODE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_C_C_T_M_MODE_2);
+					query.append(_FINDER_COLUMN_C_C_T_M_MODE__2);
 				}
 			}
 
@@ -7362,26 +7362,26 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		query.append(_FINDER_COLUMN_C_C_T_M_CLASSPK_2);
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_C_C_T_M_TYPE_1);
+			query.append(_FINDER_COLUMN_C_C_T_M_TYPE__1);
 		}
 		else {
 			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_T_M_TYPE_3);
+				query.append(_FINDER_COLUMN_C_C_T_M_TYPE__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_C_C_T_M_TYPE_2);
+				query.append(_FINDER_COLUMN_C_C_T_M_TYPE__2);
 			}
 		}
 
 		if (mode == null) {
-			query.append(_FINDER_COLUMN_C_C_T_M_MODE_1);
+			query.append(_FINDER_COLUMN_C_C_T_M_MODE__1);
 		}
 		else {
 			if (mode.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_T_M_MODE_3);
+				query.append(_FINDER_COLUMN_C_C_T_M_MODE__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_C_C_T_M_MODE_2);
+				query.append(_FINDER_COLUMN_C_C_T_M_MODE__2);
 			}
 		}
 
@@ -7529,26 +7529,26 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_FINDER_COLUMN_C_C_T_M_CLASSPK_2);
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_C_C_T_M_TYPE_1);
+				query.append(_FINDER_COLUMN_C_C_T_M_TYPE__1);
 			}
 			else {
 				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_C_T_M_TYPE_3);
+					query.append(_FINDER_COLUMN_C_C_T_M_TYPE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_C_C_T_M_TYPE_2);
+					query.append(_FINDER_COLUMN_C_C_T_M_TYPE__2);
 				}
 			}
 
 			if (mode == null) {
-				query.append(_FINDER_COLUMN_C_C_T_M_MODE_1);
+				query.append(_FINDER_COLUMN_C_C_T_M_MODE__1);
 			}
 			else {
 				if (mode.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_C_T_M_MODE_3);
+					query.append(_FINDER_COLUMN_C_C_T_M_MODE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_C_C_T_M_MODE_2);
+					query.append(_FINDER_COLUMN_C_C_T_M_MODE__2);
 				}
 			}
 
@@ -7594,12 +7594,12 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 	private static final String _FINDER_COLUMN_C_C_T_M_CLASSNAMEID_2 = "ddmTemplate.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_T_M_CLASSPK_2 = "ddmTemplate.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_T_M_TYPE_1 = "ddmTemplate.type IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_C_T_M_TYPE_2 = "ddmTemplate.type = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_T_M_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = ?) AND ";
-	private static final String _FINDER_COLUMN_C_C_T_M_MODE_1 = "ddmTemplate.mode IS NULL";
-	private static final String _FINDER_COLUMN_C_C_T_M_MODE_2 = "ddmTemplate.mode = ?";
-	private static final String _FINDER_COLUMN_C_C_T_M_MODE_3 = "(ddmTemplate.mode IS NULL OR ddmTemplate.mode = ?)";
+	private static final String _FINDER_COLUMN_C_C_T_M_TYPE__1 = "ddmTemplate.type_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_C_T_M_TYPE__2 = "ddmTemplate.type_ = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_T_M_TYPE__3 = "(ddmTemplate.type_ IS NULL OR ddmTemplate.type_ = ?) AND ";
+	private static final String _FINDER_COLUMN_C_C_T_M_MODE__1 = "ddmTemplate.mode_ IS NULL";
+	private static final String _FINDER_COLUMN_C_C_T_M_MODE__2 = "ddmTemplate.mode_ = ?";
+	private static final String _FINDER_COLUMN_C_C_T_M_MODE__3 = "(ddmTemplate.mode_ IS NULL OR ddmTemplate.mode_ = ?)";
 
 	/**
 	 * Caches the d d m template in the entity cache if it is enabled.

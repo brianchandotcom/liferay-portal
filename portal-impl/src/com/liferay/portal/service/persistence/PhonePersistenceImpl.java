@@ -2236,7 +2236,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 			query.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
 
-			query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
+			query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY__2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -2497,7 +2497,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 		query.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
 
-		query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
+		query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY__2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -2642,7 +2642,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 			query.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
 
-			query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
+			query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY__2);
 
 			String sql = query.toString();
 
@@ -2683,7 +2683,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	private static final String _FINDER_COLUMN_C_C_C_P_COMPANYID_2 = "phone.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2 = "phone.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSPK_2 = "phone.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 = "phone.primary = ?";
+	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY__2 = "phone.primary_ = ?";
 
 	/**
 	 * Caches the phone in the entity cache if it is enabled.

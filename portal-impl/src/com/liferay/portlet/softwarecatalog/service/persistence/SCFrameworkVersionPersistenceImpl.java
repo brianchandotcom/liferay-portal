@@ -1539,7 +1539,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 			query.append(_FINDER_COLUMN_G_A_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_A_ACTIVE_2);
+			query.append(_FINDER_COLUMN_G_A_ACTIVE__2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1767,7 +1767,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 		query.append(_FINDER_COLUMN_G_A_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_G_A_ACTIVE__2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1933,7 +1933,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 		query.append(_FINDER_COLUMN_G_A_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_G_A_ACTIVE__2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_SCFRAMEWORKVERSION_NO_INLINE_DISTINCT_WHERE_2);
@@ -2062,7 +2062,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 		query.append(_FINDER_COLUMN_G_A_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_G_A_ACTIVE__2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_SCFRAMEWORKVERSION_NO_INLINE_DISTINCT_WHERE_2);
@@ -2223,7 +2223,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 			query.append(_FINDER_COLUMN_G_A_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_A_ACTIVE_2);
+			query.append(_FINDER_COLUMN_G_A_ACTIVE__2);
 
 			String sql = query.toString();
 
@@ -2277,7 +2277,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 		query.append(_FINDER_COLUMN_G_A_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_G_A_ACTIVE__2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				SCFrameworkVersion.class.getName(),
@@ -2312,7 +2312,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	}
 
 	private static final String _FINDER_COLUMN_G_A_GROUPID_2 = "scFrameworkVersion.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_ACTIVE_2 = "scFrameworkVersion.active = ?";
+	private static final String _FINDER_COLUMN_G_A_ACTIVE__2 = "scFrameworkVersion.active_ = ?";
 
 	/**
 	 * Caches the s c framework version in the entity cache if it is enabled.

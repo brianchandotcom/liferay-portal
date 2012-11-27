@@ -651,14 +651,14 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			query.append(_SQL_SELECT_SHOPPINGCOUPON_WHERE);
 
 			if (code == null) {
-				query.append(_FINDER_COLUMN_CODE_CODE_1);
+				query.append(_FINDER_COLUMN_CODE_CODE__1);
 			}
 			else {
 				if (code.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_CODE_CODE_3);
+					query.append(_FINDER_COLUMN_CODE_CODE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_CODE_CODE_2);
+					query.append(_FINDER_COLUMN_CODE_CODE__2);
 				}
 			}
 
@@ -751,14 +751,14 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			query.append(_SQL_COUNT_SHOPPINGCOUPON_WHERE);
 
 			if (code == null) {
-				query.append(_FINDER_COLUMN_CODE_CODE_1);
+				query.append(_FINDER_COLUMN_CODE_CODE__1);
 			}
 			else {
 				if (code.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_CODE_CODE_3);
+					query.append(_FINDER_COLUMN_CODE_CODE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_CODE_CODE_2);
+					query.append(_FINDER_COLUMN_CODE_CODE__2);
 				}
 			}
 
@@ -794,9 +794,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CODE_CODE_1 = "shoppingCoupon.code IS NULL";
-	private static final String _FINDER_COLUMN_CODE_CODE_2 = "shoppingCoupon.code = ?";
-	private static final String _FINDER_COLUMN_CODE_CODE_3 = "(shoppingCoupon.code IS NULL OR shoppingCoupon.code = ?)";
+	private static final String _FINDER_COLUMN_CODE_CODE__1 = "shoppingCoupon.code_ IS NULL";
+	private static final String _FINDER_COLUMN_CODE_CODE__2 = "shoppingCoupon.code_ = ?";
+	private static final String _FINDER_COLUMN_CODE_CODE__3 = "(shoppingCoupon.code_ IS NULL OR shoppingCoupon.code_ = ?)";
 
 	/**
 	 * Caches the shopping coupon in the entity cache if it is enabled.

@@ -196,14 +196,14 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			query.append(_SQL_SELECT_WIKIPAGERESOURCE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_UUID__2);
 				}
 			}
 
@@ -420,14 +420,14 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		query.append(_SQL_SELECT_WIKIPAGERESOURCE_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_UUID__2);
 			}
 		}
 
@@ -555,14 +555,14 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			query.append(_SQL_COUNT_WIKIPAGERESOURCE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_UUID__2);
 				}
 			}
 
@@ -598,9 +598,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "wikiPageResource.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "wikiPageResource.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(wikiPageResource.uuid IS NULL OR wikiPageResource.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID__1 = "wikiPageResource.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID__2 = "wikiPageResource.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID__3 = "(wikiPageResource.uuid_ IS NULL OR wikiPageResource.uuid_ = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_N_T = new FinderPath(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageResourceModelImpl.FINDER_CACHE_ENABLED,
 			WikiPageResourceImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByN_T",

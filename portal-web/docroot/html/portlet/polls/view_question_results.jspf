@@ -133,6 +133,7 @@ for (int i = 0; i < choices.size(); i++) {
 		portletURL.setParameter("struts_action", "/polls/view_question");
 		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter("questionId", String.valueOf(question.getQuestionId()));
+		portletURL.setParameter("viewResults", "1");
 
 		List<String> headerNames = new ArrayList<String>();
 

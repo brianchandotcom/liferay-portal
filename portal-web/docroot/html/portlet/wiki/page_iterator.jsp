@@ -339,11 +339,11 @@ for (int i = 0; i < results.size(); i++) {
 
 	<%
 	WikiPage latestWikiPage = (WikiPage)results.get(1);
-	%>
 
-	<portlet:renderURL var="compareVersionsURL">
-		<portlet:param name="struts_action" value="/wiki/compare_versions" />
-	</portlet:renderURL>
+	PortletURL compareVersionsURL = renderResponse.createRenderURL();
+
+	compareVersionsURL.setParameter("struts_action", "/wiki/compare_versions");
+	%>
 
 	<aui:form action="<%= compareVersionsURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
 		<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />

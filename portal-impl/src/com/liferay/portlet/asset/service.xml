@@ -68,11 +68,6 @@
 			<finder-column name="name" />
 			<finder-column name="vocabularyId" />
 		</finder>
-		<finder name="G_P_N" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="parentCategoryId" />
-			<finder-column name="name" />
-		</finder>
 		<finder name="G_P_N_V" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="parentCategoryId" />

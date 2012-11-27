@@ -27,6 +27,7 @@ import com.liferay.portal.security.auth.AutoLogin;
 import com.liferay.portal.security.pwd.PwdEncryptor;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -202,13 +203,18 @@ public class AutoLoginFilter extends BasePortalFilter {
 							return;
 						}
 
-						redirect = (String)request.getAttribute(
-							AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE);
+						if (!PropsValues.AUTH_FORWARD_BY_LAST_PATH) {
+							redirect = Portal.PATH_MAIN;
+						}
+						else {
+							redirect = (String)request.getAttribute(
+								AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE);
+						}
 
 						if (Validator.isNotNull(redirect)) {
 							response.sendRedirect(redirect);
 
-							break;
+							return;
 						}
 					}
 				}

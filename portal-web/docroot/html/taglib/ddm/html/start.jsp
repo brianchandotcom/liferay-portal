@@ -137,6 +137,7 @@
 														classNameId: '<%= classNameId %>',
 														classPK: <%= classPK %>,
 														fieldName: fieldName,
+														p_p_isolated: true,
 														readOnly: <%= readOnly %>,
 														repeatableIndex: repeatableIndex
 													},

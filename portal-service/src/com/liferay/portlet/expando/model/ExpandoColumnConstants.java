@@ -136,12 +136,23 @@ public class ExpandoColumnConstants {
 	public static final String STRING_ARRAY_LABEL =
 		"custom.field.java.lang.String.array";
 
+	public static final int STRING_ARRAY_LOCALIZED = 19;
+
+	public static final String STRING_ARRAY_LOCALIZED_LABEL =
+		"custom.field.java.lang.String.array.localized";
+
 	public static final String STRING_LABEL = "custom.field.java.lang.String";
+
+	public static final int STRING_LOCALIZED = 20;
+
+	public static final String STRING_LOCALIZED_LABEL =
+		"custom.field.java.lang.String.localized";
 
 	public static final int[] TYPES = new int[] {
 		BOOLEAN, BOOLEAN_ARRAY, DATE, DATE_ARRAY, DOUBLE, DOUBLE_ARRAY, FLOAT,
 		FLOAT_ARRAY, INTEGER, INTEGER_ARRAY, LONG, LONG_ARRAY, NUMBER,
-		NUMBER_ARRAY, SHORT, SHORT_ARRAY, STRING, STRING_ARRAY
+		NUMBER_ARRAY, SHORT, SHORT_ARRAY, STRING, STRING_ARRAY,
+		STRING_ARRAY_LOCALIZED, STRING_ARRAY_LOCALIZED
 	};
 
 	public static final String UNKNOWN_LABEL = "Unknown";
@@ -268,6 +279,12 @@ public class ExpandoColumnConstants {
 		}
 		else if (type == STRING_ARRAY) {
 			return STRING_ARRAY_LABEL;
+		}
+		else if (type == STRING_ARRAY_LOCALIZED) {
+			return STRING_ARRAY_LOCALIZED_LABEL;
+		}
+		else if (type == STRING_LOCALIZED) {
+			return STRING_LOCALIZED_LABEL;
 		}
 
 		return UNKNOWN_LABEL;

@@ -99,6 +99,7 @@
 
 <#function getFileEntry fileJSONObject>
 	<#assign fileEntryUUID = fileJSONObject.getString("uuid")>
+
 	<#if (fileJSONObject.getLong("groupId") > 0)>
 		<#assign fileEntryGroupId = fileJSONObject.getLong("groupId")>
 	<#else>

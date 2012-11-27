@@ -4234,6 +4234,8 @@
 			<transient name="shortArray" />
 			<transient name="string" />
 			<transient name="stringArray" />
+			<transient name="stringArrayMap" />
+			<transient name="stringMap" />
 		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.journal.model.impl.JournalArticleImpl" name="JournalArticle">

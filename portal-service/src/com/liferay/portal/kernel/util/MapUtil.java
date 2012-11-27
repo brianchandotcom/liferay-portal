@@ -234,7 +234,7 @@ public class MapUtil {
 			if (excludePasswordFields &&
 				keyString.toLowerCase().contains("password")) {
 
-				value = "REMOVED";
+				value = "HIDDEN";
 			}
 
 			sb.append(keyString);

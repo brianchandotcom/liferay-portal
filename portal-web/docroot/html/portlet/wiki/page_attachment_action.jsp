@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-	boolean viewTrashAttachments = ParamUtil.getBoolean(request, "viewTrashAttachments");
+boolean viewTrashAttachments = ParamUtil.getBoolean(request, "viewTrashAttachments");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 

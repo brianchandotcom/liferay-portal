@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-	String redirect = ParamUtil.getString(request, "redirect");
+String redirect = ParamUtil.getString(request, "redirect");
 
 WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 
@@ -76,7 +76,7 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 	>
 
 		<%
-			WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(dlFileEntry.getFileEntryId());
+		WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(dlFileEntry.getFileEntryId());
 		%>
 
 		<liferay-portlet:actionURL varImpl="rowURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">

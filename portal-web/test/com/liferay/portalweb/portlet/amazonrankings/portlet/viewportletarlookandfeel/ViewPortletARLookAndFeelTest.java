@@ -25,21 +25,22 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Amazon Rankings Test Page");
 		selenium.clickAt("link=Amazon Rankings Test Page",
 			RuntimeVariables.replace("Amazon Rankings Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
-		selenium.waitForVisible("//strong/a");
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Look and Feel')]");
 		assertEquals(RuntimeVariables.replace("Look and Feel"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Look and Feel')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Look and Feel')]",
+			RuntimeVariables.replace("Look and Feel"));
+		selenium.waitForElementPresent("//style[@class='lfr-custom-css-block']");
 		selenium.waitForVisible("//input[@id='_113_custom-title']");
-		Thread.sleep(5000);
 		assertEquals("Amazon Rankings",
 			selenium.getValue("//input[@id='_113_custom-title']"));
 		assertEquals("English (United States)",
@@ -49,8 +50,8 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 				"//input[@id='_113_use-custom-titleCheckbox']"));
 		assertEquals("Current Page",
 			selenium.getSelectedLabel("//select[@id='_113_lfr-point-links']"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_113_show-bordersCheckbox']"));
+		assertEquals("",
+			selenium.getSelectedLabel("//select[@id='_113_show-borders']"));
 		selenium.clickAt("link=Text Styles",
 			RuntimeVariables.replace("Text Styles"));
 		selenium.waitForVisible("//select[@id='_113_lfr-font-family']");
@@ -133,7 +134,7 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 		selenium.waitForVisible("//p[@id='lfr-portlet-info']");
 		selenium.waitForVisible("//input[@id='_113_lfr-custom-css-class-name']");
 		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",
-				"Your current portlet information is as follows::\nPortlet ID: #portlet_67\nPortlet Classes: .portlet"));
+				"Your current portlet information is as follows:\nPortlet ID: #portlet_67\nPortlet Classes: .portlet"));
 		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",
 				"Portlet ID: #portlet_67"));
 		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",

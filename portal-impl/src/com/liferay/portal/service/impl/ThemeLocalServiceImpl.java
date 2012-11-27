@@ -657,8 +657,9 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 					String key = settingElement.attributeValue("key");
 					String[] options = StringUtil.split(
 						settingElement.attributeValue("options"));
-					String type = settingElement.attributeValue("type");
-					String value = settingElement.attributeValue("value");
+					String type = settingElement.attributeValue("type", "text");
+					String value = settingElement.attributeValue(
+						"value", StringPool.BLANK);
 					String script = settingElement.getTextTrim();
 
 					theme.addSetting(

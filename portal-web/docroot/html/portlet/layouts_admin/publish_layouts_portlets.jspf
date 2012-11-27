@@ -76,8 +76,8 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 		<li class="tree-item" id="<portlet:namespace />deleteDataOption" <%= (!selGroup.isStagingGroup() || !localPublishing) ? "style=\"display: none;\"" : "" %>>
 			<aui:input helpMessage="delete-portlet-data-help" label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
 		</li>
-		<li>                    
-        	<div class="portlet-msg-alert aui-helper-hidden" id="<portlet:namespace />deleteWarning">
+		<li class="aui-helper-hidden" id="<portlet:namespace />deletePortletDataWarning">
+        	<div class="portlet-msg-alert">
             	<liferay-ui:message key="delete-portlet-data-warning" />
             </div>
         </li>
@@ -342,11 +342,9 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 	Liferay.Util.toggleRadio('<portlet:namespace />portletMetaDataFilter','<portlet:namespace />portletMetaDataList');
 	Liferay.Util.toggleRadio('<portlet:namespace />portletMetaDataAll', '', ['<portlet:namespace />portletMetaDataList']);
 
+	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA%>Checkbox', '<portlet:namespace />deletePortletDataWarning');
+
 	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>Checkbox', '<portlet:namespace />portletDataControls');
 
 	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>Checkbox', '<portlet:namespace />permissionsUl');
-	
-	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA%>Checkbox', '<portlet:namespace />deleteWarning');
-	
-	
 </aui:script>

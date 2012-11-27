@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Amazon Rankings Test Page</td>
-	<td>Amazon Rankings Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Amazon Rankings Test Page</td>
 	<td>Amazon Rankings Test Page</td>
@@ -30,38 +25,38 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Look and Feel')]</td>
 	<td>Look and Feel</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Look and Feel')]</td>
 	<td>Look and Feel</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Look and Feel')]</td>
 	<td>Look and Feel</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//style[@class='lfr-custom-css-block']</td>
+	<td>Custom CSS Block</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_113_custom-title']</td>
 	<td>Portlet Title</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertValue</td>
@@ -76,7 +71,7 @@
 <tr>
 	<td>assertNotChecked</td>
 	<td>//input[@id='_113_use-custom-titleCheckbox']</td>
-	<td></td>
+	<td>Use Custom Title</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
@@ -84,8 +79,8 @@
 	<td>Current Page</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@id='_113_show-bordersCheckbox']</td>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_113_show-borders']</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,7 +91,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//select[@id='_113_lfr-font-family']</td>
-	<td></td>
+	<td>Font</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -106,12 +101,12 @@
 <tr>
 	<td>assertNotChecked</td>
 	<td>//input[@id='_113_lfr-font-boldCheckbox']</td>
-	<td></td>
+	<td>Bold</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
 	<td>//input[@id='_113_lfr-font-italicCheckbox']</td>
-	<td></td>
+	<td>Italic</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -191,17 +186,17 @@
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@id='_113_lfr-use-for-all-widthCheckbox']</td>
-	<td></td>
+	<td>Same for All</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@id='_113_lfr-use-for-all-styleCheckbox']</td>
-	<td></td>
+	<td>Same for All</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@id='_113_lfr-use-for-all-colorCheckbox']</td>
-	<td></td>
+	<td>Same for All</td>
 </tr>
 <tr>
 	<td>assertValue</td>
@@ -246,12 +241,12 @@
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@id='_113_lfr-use-for-all-paddingCheckbox']</td>
-	<td></td>
+	<td>Same for All</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@id='_113_lfr-use-for-all-marginCheckbox']</td>
-	<td></td>
+	<td>Same for All</td>
 </tr>
 <tr>
 	<td>assertValue</td>
@@ -281,17 +276,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//p[@id='lfr-portlet-info']</td>
-	<td></td>
+	<td>Portlet Info</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_113_lfr-custom-css-class-name']</td>
-	<td></td>
+	<td>Enter your custom CSS class names.</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
 	<td>//p[@id='lfr-portlet-info']</td>
-	<td>Your current portlet information is as follows::<br />Portlet ID: #portlet_67<br />Portlet Classes: .portlet</td>
+	<td>Your current portlet information is as follows:<br />Portlet ID: #portlet_67<br />Portlet Classes: .portlet</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
@@ -326,7 +321,7 @@
 <tr>
 	<td>assertNotChecked</td>
 	<td>//input[@id='lfr-update-on-type']</td>
-	<td></td>
+	<td>Update my styles as I type.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -336,7 +331,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_113_lfr-wap-title']</td>
-	<td></td>
+	<td>Title</td>
 </tr>
 <tr>
 	<td>assertValue</td>
@@ -348,7 +343,6 @@
 	<td>//select[@id='_113_lfr-wap-initial-window-state']</td>
 	<td>Minimized Normal</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

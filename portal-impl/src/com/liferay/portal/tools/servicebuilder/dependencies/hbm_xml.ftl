@@ -14,11 +14,7 @@
 					<#assign pkList = entity.getPKList()>
 
 					<#list pkList as column>
-						<key-property name="${column.name}"
-
-						<#if column.name != column.DBName>
-							column="${column.DBName}"
-						</#if>
+						<key-property name="${column.DBName}"
 
 						<#if column.isPrimitiveType() || column.type == "String">
 							type="com.liferay.portal.dao.orm.hibernate.${serviceBuilder.getPrimitiveObj("${column.type}")}Type"
@@ -28,8 +24,12 @@
 							type="org.hibernate.type.TimestampType"
 						</#if>
 
-						<#if serviceBuilder.isHBMCamelCasePropertyAccessor(column.name)>
-							access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
+						<#if column.isEscaped()>
+							access="com.liferay.portal.dao.orm.hibernate.EscapedPropertyAccessor"
+						<#else>
+							<#if serviceBuilder.isHBMCamelCasePropertyAccessor(column.name)>
+								access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
+							</#if>
 						</#if>
 
 						/>
@@ -38,16 +38,16 @@
 			<#else>
 				<#assign column = entity.getPKList()?first>
 
-				<id name="${column.name}"
-					<#if column.name != column.DBName>
-						column="${column.DBName}"
+				<id name="${column.DBName}"
+					<#if column.isEscaped()>
+						access="com.liferay.portal.dao.orm.hibernate.EscapedPropertyAccessor"
+					<#else>
+						<#if serviceBuilder.isHBMCamelCasePropertyAccessor(column.name)>
+							access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
+						</#if>
 					</#if>
 
 					type="<#if !entity.hasPrimitivePK()>java.lang.</#if>${column.type}"
-
-					<#if serviceBuilder.isHBMCamelCasePropertyAccessor(column.name)>
-						access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
-					</#if>
 
 					>
 
@@ -80,10 +80,14 @@
 				</#if>
 
 				<#if !column.isPrimary() && !column.isCollection() && !ejbName && ((column.type != "Blob") || ((column.type == "Blob") && !column.lazy))>
-					<property name="${column.name}"
+					<property name="${column.DBName}"
 
-					<#if serviceBuilder.isHBMCamelCasePropertyAccessor(column.name)>
-						access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
+					<#if column.isEscaped()>
+						access="com.liferay.portal.dao.orm.hibernate.EscapedPropertyAccessor"
+					<#else>
+						<#if serviceBuilder.isHBMCamelCasePropertyAccessor(column.name)>
+							access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
+						</#if>
 					</#if>
 
 					<#if column.isPrimitiveType() || column.type == "String">
@@ -94,10 +98,6 @@
 						<#else>
 							type="org.hibernate.type.${column.type}Type"
 						</#if>
-					</#if>
-
-					<#if column.name != column.DBName>
-						column="${column.DBName}"
 					</#if>
 					/>
 				</#if>
@@ -113,7 +113,15 @@
 				<class name="${packagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}" lazy="true">
 					<#assign column = entity.getPKList()?first>
 
-					<id name="${column.name}" column="${column.name}">
+					<id name="${column.DBName}">
+						<#if column.isEscaped()>
+							access="com.liferay.portal.dao.orm.hibernate.EscapedPropertyAccessor"
+						<#else>
+							<#if serviceBuilder.isHBMCamelCasePropertyAccessor(column.name)>
+								access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
+							</#if>
+						</#if>
+
 						<generator class="foreign">
 							<param name="property">${packagePath}.model.impl.${entity.name}Impl</param>
 						</generator>

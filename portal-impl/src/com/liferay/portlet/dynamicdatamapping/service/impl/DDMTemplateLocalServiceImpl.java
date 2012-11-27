@@ -203,12 +203,9 @@ public class DDMTemplateLocalServiceImpl
 				}
 			}
 
-			String newTemplateKey = String.valueOf(
-				counterLocalService.increment());
-
 			DDMTemplate newTemplate = addTemplate(
 				userId, oldTemplate.getGroupId(), oldTemplate.getClassNameId(),
-				newClassPK, newTemplateKey, oldTemplate.getNameMap(),
+				newClassPK, null, oldTemplate.getNameMap(),
 				oldTemplate.getDescriptionMap(), oldTemplate.getType(),
 				oldTemplate.getMode(), oldTemplate.getLanguage(),
 				oldTemplate.getScript(), oldTemplate.isCacheable(),

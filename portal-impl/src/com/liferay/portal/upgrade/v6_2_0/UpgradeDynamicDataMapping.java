@@ -51,6 +51,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		runSQL("update DDMTemplate set classNameId = " + classNameId);
 
 		updateDDMStructureStructureKeys();
+		updateDDMTemplateTemplateKeys();
 	}
 
 	private void updateDDMStructureStructureKeys() throws Exception {
@@ -74,6 +75,34 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				runSQL(
 					"update DDMStructure set structureKey = '" + structureKey +
 						"' where structureId = " + structureId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	private void updateDDMTemplateTemplateKeys() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement("select * from DDMTemplate");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long templateId = rs.getLong("templateId");
+				String templateKey = rs.getString("templateKey");
+
+				templateKey = templateKey.trim().toUpperCase();
+
+				runSQL(
+					"update DDMTemplate set templateKey = '" + templateKey +
+						"' where templateId = " + templateId);
 			}
 		}
 		finally {

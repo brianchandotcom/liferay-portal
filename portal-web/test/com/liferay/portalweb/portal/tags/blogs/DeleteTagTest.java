@@ -48,8 +48,8 @@ public class DeleteTagTest extends BaseTestCase {
 			selenium.getText("//div/h1/span"));
 		selenium.clickAt("//input[@value='Delete']",
 			RuntimeVariables.replace("Delete"));
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this tag?");
 		selenium.waitForTextNotPresent("selenium2 liferay2");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
 	}

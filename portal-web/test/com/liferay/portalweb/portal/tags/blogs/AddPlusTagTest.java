@@ -40,8 +40,10 @@ public class AddPlusTagTest extends BaseTestCase {
 					RuntimeVariables.replace("Tags Blog Entry1 Title"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Edit"),
-					selenium.getText("link=Edit"));
-				selenium.click(RuntimeVariables.replace("link=Edit"));
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForElementPresent(
 					"//textarea[@id='_33_editor' and @style='display: none;']");

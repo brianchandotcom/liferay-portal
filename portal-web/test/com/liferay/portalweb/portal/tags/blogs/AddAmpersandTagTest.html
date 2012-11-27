@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Edit</td>
+	<td>//a[@class=' taglib-icon']/span[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Edit</td>
+	<td>//a[@class=' taglib-icon']/span[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -86,7 +86,7 @@
 <tr>
 	<td>sendKeys</td>
 	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
-	<td>&amp;test</td>
+	<td>&test</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -105,12 +105,12 @@
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//span[@class='entry-tags']/span/a[contains(.,'&amp;test')]</td>
-	<td>&amp;test</td>
+	<td>//span[@class='entry-tags']/span/a[contains(.,'&test')]</td>
+	<td>&test</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>&amp;test</td>
+	<td>&test</td>
 	<td></td>
 </tr>
 </tbody></table>

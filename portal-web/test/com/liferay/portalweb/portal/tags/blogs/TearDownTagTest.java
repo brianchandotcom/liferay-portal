@@ -53,22 +53,24 @@ public class TearDownTagTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click("//input[2]");
-				assertTrue(selenium.isVisible("//input[2]"));
+				selenium.clickAt("//input[@id='_99_checkAllTagsCheckbox']",
+					RuntimeVariables.replace("Select All"));
+				assertTrue(selenium.isVisible(
+						"//input[@id='_99_checkAllTagsCheckbox']"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Delete')]",
 					RuntimeVariables.replace("Delete"));
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected tags[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete the selected tags?");
 				selenium.waitForText("//div[@class='lfr-message-response portlet-msg-success']",
 					"Your request processed successfully.");
 				assertEquals(RuntimeVariables.replace(
@@ -77,9 +79,9 @@ public class TearDownTagTest extends BaseTestCase {
 						"//div[@class='lfr-message-response portlet-msg-success']"));
 
 			case 2:
-				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("There are no tags."),
-					selenium.getText("//div[@id='tagsMessages']"));
+					selenium.getText(
+						"//div[@class='lfr-message-response portlet-msg-info']"));
 
 			case 100:
 				label = -1;

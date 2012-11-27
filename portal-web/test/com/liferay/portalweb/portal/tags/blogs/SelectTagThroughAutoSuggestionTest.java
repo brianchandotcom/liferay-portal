@@ -40,8 +40,10 @@ public class SelectTagThroughAutoSuggestionTest extends BaseTestCase {
 					RuntimeVariables.replace("Tags Blog Entry3 Title"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Edit"),
-					selenium.getText("link=Edit"));
-				selenium.click(RuntimeVariables.replace("link=Edit"));
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForElementPresent(
 					"//textarea[@id='_33_editor' and @style='display: none;']");
@@ -68,9 +70,9 @@ public class SelectTagThroughAutoSuggestionTest extends BaseTestCase {
 						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
 
 			case 2:
-				selenium.type("//input[@title='Add Tags']",
+				selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
 					RuntimeVariables.replace(""));
-				selenium.sendKeys("//input[@title='Add Tags']",
+				selenium.sendKeys("//input[@class='lfr-tag-selector-input aui-field-input-text']",
 					RuntimeVariables.replace("selenium3*"));
 				selenium.waitForText("//li[contains(@class,'aui-autocomplete-list-item')]",
 					"selenium3 liferay3");

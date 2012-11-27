@@ -40,8 +40,10 @@ public class AddAmpersandTagTest extends BaseTestCase {
 					RuntimeVariables.replace("Tags Blog Entry1 Title"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Edit"),
-					selenium.getText("link=Edit"));
-				selenium.click(RuntimeVariables.replace("link=Edit"));
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForElementPresent(
 					"//textarea[@id='_33_editor' and @style='display: none;']");
@@ -69,7 +71,7 @@ public class AddAmpersandTagTest extends BaseTestCase {
 
 			case 2:
 				selenium.sendKeys("//input[@class='lfr-tag-selector-input aui-field-input-text']",
-					RuntimeVariables.replace("&amp;test"));
+					RuntimeVariables.replace("&test"));
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");
@@ -80,8 +82,8 @@ public class AddAmpersandTagTest extends BaseTestCase {
 					selenium.getText(
 						"//span[@class='taglib-asset-tags-summary']/a[2]"));
 				assertTrue(selenium.isElementNotPresent(
-						"//span[@class='entry-tags']/span/a[contains(.,'&amp;test')]"));
-				assertFalse(selenium.isTextPresent("&amp;test"));
+						"//span[@class='entry-tags']/span/a[contains(.,'&test')]"));
+				assertFalse(selenium.isTextPresent("&test"));
 
 			case 100:
 				label = -1;

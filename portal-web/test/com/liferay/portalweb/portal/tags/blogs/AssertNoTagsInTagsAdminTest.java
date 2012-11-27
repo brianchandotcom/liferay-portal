@@ -38,8 +38,6 @@ public class AssertNoTagsInTagsAdminTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible(
-			"//div[@class='lfr-message-response portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace("There are no tags."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-info']"));

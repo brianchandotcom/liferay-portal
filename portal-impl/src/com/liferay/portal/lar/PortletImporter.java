@@ -509,8 +509,7 @@ public class PortletImporter {
 		name = StringUtil.appendParentheticalSuffix(name, count);
 
 		return getAssetCategoryName(
-			uuid, groupId, parentCategoryId, name,
-			assetCategory.getVocabularyId(), ++count);
+			uuid, groupId, parentCategoryId, name, vocabularyId, ++count);
 	}
 
 	protected String getAssetCategoryPath(

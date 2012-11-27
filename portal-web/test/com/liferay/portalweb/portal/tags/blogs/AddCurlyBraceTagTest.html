@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Tags Test Page</td>
-	<td>Blogs Tags Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Tags Test Page</td>
 	<td>Blogs Tags Test Page</td>
@@ -35,13 +30,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span/a/span</td>
+	<td>//a[@class=' taglib-icon']/span[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//span/a/span</td>
+	<td>//a[@class=' taglib-icon']/span[contains(.,'Edit')]</td>
 	<td>Edit</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -84,7 +84,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>sendKeys</td>
 	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
 	<td>{test}</td>
 </tr>
@@ -95,13 +95,23 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
-	<td>Your request failed to complete.</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
-	<td>One or more tags contains invalid characters.</td>
+	<td>//span[@class='taglib-asset-tags-summary']/a[2]</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//span[@class='entry-tags']/span/a[contains(.,'{test}')]</td>
+	<td>{test}</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>{test}</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

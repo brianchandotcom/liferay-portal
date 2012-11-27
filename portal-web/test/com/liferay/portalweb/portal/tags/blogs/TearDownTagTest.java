@@ -30,7 +30,14 @@ public class TearDownTagTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Control Panel");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -46,22 +53,24 @@ public class TearDownTagTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click("//input[2]");
-				assertTrue(selenium.isVisible("//input[2]"));
+				selenium.clickAt("//input[@id='_99_checkAllTagsCheckbox']",
+					RuntimeVariables.replace("Select All"));
+				assertTrue(selenium.isVisible(
+						"//input[@id='_99_checkAllTagsCheckbox']"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Delete')]",
 					RuntimeVariables.replace("Delete"));
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected tags[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete the selected tags?");
 				selenium.waitForText("//div[@class='lfr-message-response portlet-msg-success']",
 					"Your request processed successfully.");
 				assertEquals(RuntimeVariables.replace(

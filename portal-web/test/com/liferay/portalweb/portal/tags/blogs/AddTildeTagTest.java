@@ -30,7 +30,6 @@ public class AddTildeTagTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Blogs Tags Test Page");
 				selenium.clickAt("link=Blogs Tags Test Page",
 					RuntimeVariables.replace("Blogs Tags Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -41,9 +40,13 @@ public class AddTildeTagTest extends BaseTestCase {
 					RuntimeVariables.replace("Tags Blog Entry1 Title"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Edit"),
-					selenium.getText("//span/a/span"));
-				selenium.click(RuntimeVariables.replace("//span/a/span"));
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForElementPresent(
+					"//textarea[@id='_33_editor' and @style='display: none;']");
 				selenium.waitForVisible(
 					"//td[@id='cke_contents__33_editor']/iframe");
 
@@ -67,19 +70,20 @@ public class AddTildeTagTest extends BaseTestCase {
 						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
 
 			case 2:
-				selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+				selenium.sendKeys("//input[@class='lfr-tag-selector-input aui-field-input-text']",
 					RuntimeVariables.replace("~test"));
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
-						"Your request failed to complete."),
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertEquals(RuntimeVariables.replace("test"),
 					selenium.getText(
-						"xPath=(//div[@class='portlet-msg-error'])[1]"));
-				assertEquals(RuntimeVariables.replace(
-						"One or more tags contains invalid characters."),
-					selenium.getText(
-						"xPath=(//div[@class='portlet-msg-error'])[2]"));
+						"//span[@class='taglib-asset-tags-summary']/a[2]"));
+				assertTrue(selenium.isElementNotPresent(
+						"//span[@class='entry-tags']/span/a[contains(.,'~test')]"));
+				assertFalse(selenium.isTextPresent("~test"));
 
 			case 100:
 				label = -1;

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Tags Test Page</td>
-	<td>Blogs Tags Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Tags Test Page</td>
 	<td>Blogs Tags Test Page</td>
@@ -35,13 +30,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span/a/span</td>
+	<td>//a[@class=' taglib-icon']/span[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//span/a/span</td>
+	<td>//a[@class=' taglib-icon']/span[contains(.,'Edit')]</td>
 	<td>Edit</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -84,9 +84,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>sendKeys</td>
 	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
-	<td>sélénium1 liféray1</td>
+	<td>硒1 liferay1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -99,9 +99,14 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//span[@class='taglib-asset-tags-summary']/a</td>
+	<td>硒1 liferay1</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@class='taglib-asset-tags-summary']/a</td>
-	<td>sélénium1 liféray1</td>
+	<td>硒1 liferay1</td>
 </tr>
 </tbody></table>
 </body>

@@ -30,7 +30,6 @@ public class AddUTFTagTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Blogs Tags Test Page");
 				selenium.clickAt("link=Blogs Tags Test Page",
 					RuntimeVariables.replace("Blogs Tags Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -41,9 +40,13 @@ public class AddUTFTagTest extends BaseTestCase {
 					RuntimeVariables.replace("Tags Blog Entry3 Title"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Edit"),
-					selenium.getText("//span/a/span"));
-				selenium.click(RuntimeVariables.replace("//span/a/span"));
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForElementPresent(
+					"//textarea[@id='_33_editor' and @style='display: none;']");
 				selenium.waitForVisible(
 					"//td[@id='cke_contents__33_editor']/iframe");
 
@@ -67,17 +70,17 @@ public class AddUTFTagTest extends BaseTestCase {
 						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
 
 			case 2:
-				selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
-					RuntimeVariables.replace(
-						"s\u00e9l\u00e9nium1 lif\u00e9ray1"));
+				selenium.sendKeys("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+					RuntimeVariables.replace("\u78521 liferay1"));
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				assertEquals(RuntimeVariables.replace(
-						"s\u00e9l\u00e9nium1 lif\u00e9ray1"),
+				selenium.waitForVisible(
+					"//span[@class='taglib-asset-tags-summary']/a");
+				assertEquals(RuntimeVariables.replace("\u78521 liferay1"),
 					selenium.getText(
 						"//span[@class='taglib-asset-tags-summary']/a"));
 

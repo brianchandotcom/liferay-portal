@@ -30,7 +30,6 @@ public class SelectTagThroughAutoSuggestionTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Blogs Tags Test Page");
 				selenium.clickAt("link=Blogs Tags Test Page",
 					RuntimeVariables.replace("Blogs Tags Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -41,9 +40,13 @@ public class SelectTagThroughAutoSuggestionTest extends BaseTestCase {
 					RuntimeVariables.replace("Tags Blog Entry3 Title"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Edit"),
-					selenium.getText("//span/a/span"));
-				selenium.click(RuntimeVariables.replace("//span/a/span"));
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForElementPresent(
+					"//textarea[@id='_33_editor' and @style='display: none;']");
 				selenium.waitForVisible(
 					"//td[@id='cke_contents__33_editor']/iframe");
 
@@ -69,7 +72,7 @@ public class SelectTagThroughAutoSuggestionTest extends BaseTestCase {
 			case 2:
 				selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
 					RuntimeVariables.replace(""));
-				selenium.typeKeys("//input[@class='lfr-tag-selector-input aui-field-input-text focus']",
+				selenium.sendKeys("//input[@class='lfr-tag-selector-input aui-field-input-text']",
 					RuntimeVariables.replace("selenium3*"));
 				selenium.waitForText("//li[contains(@class,'aui-autocomplete-list-item')]",
 					"selenium3 liferay3");

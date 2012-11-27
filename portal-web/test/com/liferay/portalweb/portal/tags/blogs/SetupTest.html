@@ -15,18 +15,38 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//nav[@id='navigation']</td>
-	<td>Navigation</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_addContent']/a/span	</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_addContent']/a/span	</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//a[@id='addPage']</td>
-	<td>Add Page</td>
+	<td>Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='addPage']</td>
+	<td>Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//a[@id='addPage']</td>
-	<td>Add Page</td>
+	<td>Page</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -54,6 +74,26 @@
 	<td>Blogs Tags Test Page</td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
 	<td>assertPartialText</td>
 	<td>//a[@id='_145_addApplication']</td>
 	<td>More</td>
@@ -65,12 +105,27 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@title='Blogs']/p/a</td>
+	<td>//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]	</td>
+	<td>AUI Live Search Min</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>Search applications (searches as you type).</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>b</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//li[@title='Blogs']/p/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@title='Blogs']/p/a</td>
+	<td>//li[@title='Blogs']/p/a</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -94,6 +149,51 @@
 	<td>Tags Blog Entry1 Title</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_33_editor' and @style='display: none;']	</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__33_editor']/textarea</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//td[@id='cke_contents__33_editor']/textarea</td>
+	<td>Tags Blog Entry1 Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//td[@id='cke_contents__33_editor']/iframe</td>
 	<td>CK Editor</td>
@@ -104,7 +204,7 @@
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>waitForText</td>
 	<td>//body</td>
 	<td>Tags Blog Entry1 Content</td>
 </tr>
@@ -124,6 +224,16 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Tags Blog Entry1 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-body']/p</td>
+	<td>Tags Blog Entry1 Content</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Blog Entry']</td>
 	<td>Add Blog Entry</td>
@@ -132,6 +242,51 @@
 	<td>type</td>
 	<td>//input[@id='_33_title']</td>
 	<td>Tags Blog Entry2 Title</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_33_editor' and @style='display: none;']	</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__33_editor']/textarea</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//td[@id='cke_contents__33_editor']/textarea</td>
+	<td>Tags Blog Entry2 Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -144,7 +299,7 @@
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>waitForText</td>
 	<td>//body</td>
 	<td>Tags Blog Entry2 Content</td>
 </tr>
@@ -164,6 +319,16 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Tags Blog Entry2 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-body']/p</td>
+	<td>Tags Blog Entry2 Content</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Blog Entry']</td>
 	<td>Add Blog Entry</td>
@@ -172,6 +337,51 @@
 	<td>type</td>
 	<td>//input[@id='_33_title']</td>
 	<td>Tags Blog Entry3 Title</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_33_editor' and @style='display: none;']	</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__33_editor']/textarea</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//td[@id='cke_contents__33_editor']/textarea</td>
+	<td>Tags Blog Entry3 Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -184,7 +394,7 @@
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>waitForText</td>
 	<td>//body</td>
 	<td>Tags Blog Entry3 Content</td>
 </tr>
@@ -202,6 +412,16 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Tags Blog Entry3 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-body']/p</td>
+	<td>Tags Blog Entry3 Content</td>
 </tr>
 </tbody></table>
 </body>

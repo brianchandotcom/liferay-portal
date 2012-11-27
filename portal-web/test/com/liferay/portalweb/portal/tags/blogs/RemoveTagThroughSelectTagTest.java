@@ -30,7 +30,6 @@ public class RemoveTagThroughSelectTagTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Blogs Tags Test Page");
 				selenium.clickAt("link=Blogs Tags Test Page",
 					RuntimeVariables.replace("Blogs Tags Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -41,9 +40,13 @@ public class RemoveTagThroughSelectTagTest extends BaseTestCase {
 					RuntimeVariables.replace("Tags Blog Entry3 Title"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Edit"),
-					selenium.getText("//span/a/span"));
-				selenium.click(RuntimeVariables.replace("//span/a/span"));
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForElementPresent(
+					"//textarea[@id='_33_editor' and @style='display: none;']");
 				selenium.waitForVisible(
 					"//td[@id='cke_contents__33_editor']/iframe");
 
@@ -73,10 +76,11 @@ public class RemoveTagThroughSelectTagTest extends BaseTestCase {
 				selenium.clickAt("//button[@id='select']",
 					RuntimeVariables.replace("Select"));
 				Thread.sleep(5000);
-				selenium.waitForVisible("//label[1]/input");
-				selenium.clickAt("//label[1]",
+				selenium.waitForVisible(
+					"//label[@title='selenium1 liferay1']/input");
+				selenium.clickAt("//label[@title='selenium1 liferay1']",
 					RuntimeVariables.replace("selenium1 liferay1"));
-				selenium.clickAt("//button[@id='closethick']",
+				selenium.clickAt("//button[@title='Close dialog']",
 					RuntimeVariables.replace("Close"));
 				selenium.waitForNotText("xPath=(//span[@class='aui-textboxlistentry-text'])[1]",
 					"selenium1 liferay1");

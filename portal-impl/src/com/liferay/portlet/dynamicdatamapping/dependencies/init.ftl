@@ -99,8 +99,13 @@
 
 <#function getFileEntry fileJSONObject>
 	<#assign fileEntryUUID = fileJSONObject.getString("uuid")>
+	<#if (fileJSONObject.getLong("groupId") > 0)>
+		<#assign fileEntryGroupId = fileJSONObject.getLong("groupId")>
+	<#else>
+		<#assign fileEntryGroupId = scopeGroupId>
+	</#if>
 
-	<#return dlAppServiceUtil.getFileEntryByUuidAndGroupId(fileEntryUUID, scopeGroupId)!"">
+	<#return dlAppServiceUtil.getFileEntryByUuidAndGroupId(fileEntryUUID, fileEntryGroupId)!"">
 </#function>
 
 <#function getFileEntryURL fileEntry>

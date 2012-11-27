@@ -79,10 +79,12 @@ public class DDMStructureLocalServiceImpl
 		// Structure
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		structureKey = structureKey.trim().toUpperCase();
 
 		if (Validator.isNull(structureKey)) {
 			structureKey = String.valueOf(counterLocalService.increment());
+		}
+		else {
+			structureKey = structureKey.trim().toUpperCase();
 		}
 
 		try {

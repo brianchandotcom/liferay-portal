@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.messaging;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.TransientValue;
 
@@ -225,7 +226,7 @@ public class Message implements Cloneable, Serializable {
 		sb.append(", payload=");
 		sb.append(_payload);
 		sb.append(", values=");
-		sb.append(_values);
+		sb.append(MapUtil.toString(_values, true));
 		sb.append("}");
 
 		return sb.toString();

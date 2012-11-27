@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -248,6 +249,43 @@ public class PortletAction extends Action {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
+	protected boolean isDisplaySuccessMessage(ActionRequest actionRequest)
+		throws SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		Layout layout = layoutTypePortlet.getLayout();
+
+		if (layout.isTypeControlPanel()) {
+			return true;
+		}
+
+		String portletId = (String)actionRequest.getAttribute(
+			WebKeys.PORTLET_ID);
+
+		boolean hasPortletId = false;
+
+		try {
+			hasPortletId = layoutTypePortlet.hasPortletId(portletId);
+		}
+		catch (Exception e) {
+		}
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), portletId);
+
+		if (hasPortletId || portlet.isAddDefaultResource()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected boolean redirectToLogin(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException {
@@ -282,30 +320,10 @@ public class PortletAction extends Action {
 			String redirect)
 		throws IOException, SystemException {
 
-		if (SessionErrors.isEmpty(actionRequest)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		if (SessionErrors.isEmpty(actionRequest) &&
+			isDisplaySuccessMessage(actionRequest)) {
 
-			LayoutTypePortlet layoutTypePortlet =
-				themeDisplay.getLayoutTypePortlet();
-
-			boolean hasPortletId = false;
-
-			String portletId = (String)actionRequest.getAttribute(
-				WebKeys.PORTLET_ID);
-
-			try {
-				hasPortletId = layoutTypePortlet.hasPortletId(portletId);
-			}
-			catch (Exception e) {
-			}
-
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				themeDisplay.getCompanyId(), portletId);
-
-			if (hasPortletId || portlet.isAddDefaultResource()) {
-				addSuccessMessage(actionRequest, actionResponse);
-			}
+			addSuccessMessage(actionRequest, actionResponse);
 		}
 
 		if (Validator.isNull(redirect)) {

@@ -30,11 +30,11 @@ public class FriendlyURLNormalizerUtil {
 	}
 
 	public static String normalize(String friendlyURL) {
-		return getFriendlyURLNormalizer().normalize(friendlyURL);
+		return _friendlyURLNormalizer.normalize(friendlyURL);
 	}
 
 	public static String normalize(String friendlyURL, char[] replaceChars) {
-		return getFriendlyURLNormalizer().normalize(friendlyURL, replaceChars);
+		return _friendlyURLNormalizer.normalize(friendlyURL, replaceChars);
 	}
 
 	public void setFriendlyURLNormalizer(

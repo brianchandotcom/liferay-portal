@@ -1165,6 +1165,8 @@ public class PropsValues {
 
 	public static final boolean OPEN_ID_AUTH_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.OPEN_ID_AUTH_ENABLED));
 
+	public static final String[] OPEN_ID_HOST_TYPES = PropsUtil.getArray(PropsKeys.OPEN_ID_HOST_TYPES);
+
 	public static final boolean OPEN_SSO_AUTH_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.OPEN_SSO_AUTH_ENABLED));
 
 	public static final String OPEN_SSO_EMAIL_ADDRESS_ATTR = PropsUtil.get(PropsKeys.OPEN_SSO_EMAIL_ADDRESS_ATTR);

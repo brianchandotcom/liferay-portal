@@ -38,6 +38,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.OpenIdUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.util.PwdGenerator;
@@ -170,15 +171,32 @@ public class OpenIdAction extends PortletAction {
 		return values.get(0);
 	}
 
+	protected String getOpenIdHostType(URL endpoint) {
+		String hostName = endpoint.getHost();
+
+		String[] openIdHostTypes = PropsValues.OPEN_ID_HOST_TYPES;
+
+		for (String openIdHostType : openIdHostTypes) {
+			String openIdHost = PropsUtil.get(
+				PropsKeys.OPEN_ID_HOST, new Filter(openIdHostType));
+
+			if (hostName.equals(openIdHost)) {
+				return openIdHostType;
+			}
+		}
+
+		return "default";
+	}
+
 	@Override
 	protected boolean isCheckMethodOnProcessAction() {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
 	protected boolean isYahooOpenId(URL endpoint) {
-		String hostName = endpoint.getHost();
+		String openIdHostType = getOpenIdHostType(endpoint);
 
-		if (hostName.equals(_YAHOO_OPEN_ID_HOST)) {
+		if (openIdHostType.equals("yahoo")) {
 			return true;
 		}
 		else {
@@ -233,7 +251,7 @@ public class OpenIdAction extends PortletAction {
 				SRegResponse sregResp = (SRegResponse)ext;
 
 				String fullName = GetterUtil.getString(
-					sregResp.getAttributeValue(_REQ_RESP_ATTR_FULLNAME));
+					sregResp.getAttributeValue(_OPEN_ID_ATTR_FULLNAME));
 
 				String[] names = splitName(fullName);
 
@@ -242,7 +260,7 @@ public class OpenIdAction extends PortletAction {
 					lastName = names[1];
 				}
 
-				emailAddress = sregResp.getAttributeValue(_REQ_RESP_ATTR_EMAIL);
+				emailAddress = sregResp.getAttributeValue(_OPEN_ID_ATTR_EMAIL);
 			}
 		}
 
@@ -253,11 +271,16 @@ public class OpenIdAction extends PortletAction {
 			if (ext instanceof FetchResponse) {
 				FetchResponse fetchResp = (FetchResponse)ext;
 
+				if (Validator.isNull(emailAddress)) {
+					emailAddress = getFirstValue(
+						fetchResp.getAttributeValues(_OPEN_ID_ATTR_EMAIL));
+				}
+
 				URL endpoint = discovered.getOPEndpoint();
 
 				if (isYahooOpenId(endpoint)) {
 					String fullName = fetchResp.getAttributeValue(
-						_REQ_RESP_ATTR_FULLNAME);
+						_OPEN_ID_ATTR_FULLNAME);
 
 					String[] names = splitName(fullName);
 
@@ -270,28 +293,18 @@ public class OpenIdAction extends PortletAction {
 							lastName = names[1];
 						}
 					}
-
-					if (Validator.isNull(emailAddress)) {
-						emailAddress = getFirstValue(
-							fetchResp.getAttributeValues(_REQ_RESP_ATTR_EMAIL));
-					}
 				}
 				else {
 					if (Validator.isNull(firstName)) {
 						firstName = getFirstValue(
 							fetchResp.getAttributeValues(
-								_REQ_RESP_ATTR_FIRSTNAME));
+								_OPEN_ID_ATTR_FIRSTNAME));
 					}
 
 					if (Validator.isNull(lastName)) {
 						lastName = getFirstValue(
 							fetchResp.getAttributeValues(
-								_REQ_RESP_ATTR_LASTNAME));
-					}
-
-					if (Validator.isNull(emailAddress)) {
-						emailAddress = getFirstValue(
-							fetchResp.getAttributeValues(_REQ_RESP_ATTR_EMAIL));
+								_OPEN_ID_ATTR_LASTNAME));
 					}
 				}
 			}
@@ -425,32 +438,32 @@ public class OpenIdAction extends PortletAction {
 					openIdProvider = "yahoo";
 
 					fetch.addAttribute(
-						_REQ_RESP_ATTR_EMAIL,
+						_OPEN_ID_ATTR_EMAIL,
 						PropsUtil.get(
 							PropsKeys.OPEN_ID_AX_TYPE_EMAIL,
 							new Filter(openIdProvider)), true);
 
 					fetch.addAttribute(
-						_REQ_RESP_ATTR_FULLNAME,
+						_OPEN_ID_ATTR_FULLNAME,
 						PropsUtil.get(
 							PropsKeys.OPEN_ID_AX_TYPE_FULL_NAME,
 								new Filter(openIdProvider)), true);
 				}
 				else {
 					fetch.addAttribute(
-						_REQ_RESP_ATTR_EMAIL,
+						_OPEN_ID_ATTR_EMAIL,
 						PropsUtil.get(
 							PropsKeys.OPEN_ID_AX_TYPE_EMAIL,
 							new Filter(openIdProvider)), true);
 
 					fetch.addAttribute(
-						_REQ_RESP_ATTR_FIRSTNAME,
+						_OPEN_ID_ATTR_FIRSTNAME,
 						PropsUtil.get(
 							PropsKeys.OPEN_ID_AX_TYPE_FIRST_NAME,
 							new Filter(openIdProvider)), true);
 
 					fetch.addAttribute(
-						_REQ_RESP_ATTR_LASTNAME,
+						_OPEN_ID_ATTR_LASTNAME,
 						PropsUtil.get(
 							PropsKeys.OPEN_ID_AX_TYPE_LAST_NAME,
 							new Filter(openIdProvider)), true);
@@ -460,8 +473,8 @@ public class OpenIdAction extends PortletAction {
 
 				SRegRequest sregRequest = SRegRequest.createFetchRequest();
 
-				sregRequest.addAttribute(_REQ_RESP_ATTR_FULLNAME, true);
-				sregRequest.addAttribute(_REQ_RESP_ATTR_EMAIL, true);
+				sregRequest.addAttribute(_OPEN_ID_ATTR_FULLNAME, true);
+				sregRequest.addAttribute(_OPEN_ID_ATTR_EMAIL, true);
 
 				authRequest.addExtension(sregRequest);
 			}
@@ -491,13 +504,10 @@ public class OpenIdAction extends PortletAction {
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
-	private static final String _REQ_RESP_ATTR_EMAIL = "email";
-	private static final String _REQ_RESP_ATTR_FIRSTNAME = "firstName";
-	private static final String _REQ_RESP_ATTR_FULLNAME = "fullname";
-	private static final String _REQ_RESP_ATTR_LASTNAME = "lastName";
-
-	private static final String _YAHOO_OPEN_ID_HOST =
-		"open.login.yahooapis.com";
+	private static final String _OPEN_ID_ATTR_EMAIL = "email";
+	private static final String _OPEN_ID_ATTR_FIRSTNAME = "firstName";
+	private static final String _OPEN_ID_ATTR_FULLNAME = "fullname";
+	private static final String _OPEN_ID_ATTR_LASTNAME = "lastName";
 
 	private static Log _log = LogFactoryUtil.getLog(OpenIdAction.class);
 

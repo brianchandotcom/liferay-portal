@@ -1623,6 +1623,10 @@ public interface PropsKeys {
 
 	public static final String OPEN_ID_AX_TYPE_LAST_NAME = "open.id.ax.type.last.name";
 
+	public static final String OPEN_ID_HOST = "open.id.host";
+
+	public static final String OPEN_ID_HOST_TYPES = "open.id.host.types";
+
 	public static final String OPEN_SSO_AUTH_ENABLED = "open.sso.auth.enabled";
 
 	public static final String OPEN_SSO_EMAIL_ADDRESS_ATTR = "open.sso.email.address.attr";

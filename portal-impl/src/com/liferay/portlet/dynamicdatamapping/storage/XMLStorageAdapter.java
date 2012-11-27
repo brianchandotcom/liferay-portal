@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.service.ServiceContext;
@@ -38,12 +37,12 @@ import com.liferay.portlet.dynamicdatamapping.storage.query.FieldCondition;
 import com.liferay.portlet.dynamicdatamapping.storage.query.FieldConditionImpl;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Junction;
 import com.liferay.portlet.dynamicdatamapping.storage.query.LogicalOperator;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -64,35 +63,9 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 		long classNameId = PortalUtil.getClassNameId(
 			DDMContent.class.getName());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		Iterator<Field> itr = fields.iterator();
-
-		while (itr.hasNext()) {
-			Field field = itr.next();
-
-			Object value = field.getValue();
-
-			if (value instanceof Date) {
-				Date valueDate = (Date)value;
-
-				value = valueDate.getTime();
-			}
-
-			String valueString = String.valueOf(value);
-
-			if (valueString != null) {
-				valueString = valueString.trim();
-			}
-
-			_appendField(rootElement, field.getName(), valueString);
-		}
-
 		DDMContent ddmContent = DDMContentLocalServiceUtil.addContent(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			DDMStorageLink.class.getName(), null, document.formattedString(),
+			DDMStorageLink.class.getName(), null, DDMXMLUtil.getXML(fields),
 			serviceContext);
 
 		DDMStorageLinkLocalServiceUtil.addStorageLink(
@@ -202,67 +175,12 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 
 		DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(classPK);
 
-		Document document = null;
-
-		Element rootElement = null;
-
-		if (mergeFields) {
-			document = SAXReaderUtil.read(ddmContent.getXml());
-
-			rootElement = document.getRootElement();
-		}
-		else {
-			document = SAXReaderUtil.createDocument();
-
-			rootElement = document.addElement("root");
-		}
-
-		Iterator<Field> itr = fields.iterator();
-
-		while (itr.hasNext()) {
-			Field field = itr.next();
-
-			Object value = field.getValue();
-
-			if (value instanceof Date) {
-				Date valueDate = (Date)value;
-
-				value = valueDate.getTime();
-			}
-
-			String fieldName = field.getName();
-			String fieldValue = String.valueOf(value);
-
-			Element dynamicElementElement = _getElementByName(
-				document, fieldName);
-
-			if (dynamicElementElement == null) {
-				_appendField(rootElement, fieldName, fieldValue);
-			}
-			else {
-				_updateField(dynamicElementElement, fieldName, fieldValue);
-			}
-		}
-
 		ddmContent.setModifiedDate(serviceContext.getModifiedDate(null));
-		ddmContent.setXml(document.formattedString());
+		ddmContent.setXml(DDMXMLUtil.getXML(classPK, fields, mergeFields));
 
 		DDMContentLocalServiceUtil.updateContent(
 			ddmContent.getPrimaryKey(), ddmContent.getName(),
 			ddmContent.getDescription(), ddmContent.getXml(), serviceContext);
-	}
-
-	private Element _appendField(
-		Element rootElement, String fieldName, String fieldValue) {
-
-		Element dynamicElementElement = rootElement.addElement(
-			"dynamic-element");
-
-		dynamicElementElement.addElement("dynamic-content");
-
-		_updateField(dynamicElementElement, fieldName, fieldValue);
-
-		return dynamicElementElement;
 	}
 
 	private List<Fields> _doQuery(
@@ -358,22 +276,6 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 		}
 
 		return fieldsList;
-	}
-
-	private Element _getElementByName(Document document, String name) {
-		name = HtmlUtil.escapeXPathAttribute(name);
-
-		XPath xPathSelector = SAXReaderUtil.createXPath(
-			"//dynamic-element[@name=".concat(name).concat("]"));
-
-		List<Node> nodes = xPathSelector.selectNodes(document);
-
-		if (nodes.size() == 1) {
-			return (Element)nodes.get(0);
-		}
-		else {
-			return null;
-		}
 	}
 
 	private long[] _getStructureClassPKs(long ddmStructureId) throws Exception {
@@ -472,19 +374,6 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 		}
 
 		return sb.toString();
-	}
-
-	private void _updateField(
-		Element dynamicElementElement, String fieldName, String value) {
-
-		Element dynamicContentElement = dynamicElementElement.element(
-			"dynamic-content");
-
-		dynamicElementElement.addAttribute("name", fieldName);
-
-		dynamicContentElement.clearContent();
-
-		dynamicContentElement.addCDATA(value);
 	}
 
 }

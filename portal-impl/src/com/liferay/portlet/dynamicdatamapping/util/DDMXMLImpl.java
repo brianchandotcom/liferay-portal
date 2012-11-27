@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -22,11 +23,20 @@ import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
+import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.util.xml.XMLFormatter;
 
 import java.io.IOException;
 
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -57,6 +67,62 @@ public class DDMXMLImpl implements DDMXML {
 		xml = StringUtil.replace(xml, "[$SPECIAL_CHARACTER$]", "&#");
 
 		return xml;
+	}
+
+	public String getXML(Fields fields) throws Exception {
+		return getXML(0, fields, false);
+	}
+
+	public String getXML(long ddmContentId, Fields fields, boolean mergeFields)
+		throws Exception {
+
+		Document document = null;
+		Element rootElement = null;
+
+		if (mergeFields && (ddmContentId > 0)) {
+			DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(
+				ddmContentId);
+
+			document = SAXReaderUtil.read(ddmContent.getXml());
+			rootElement = document.getRootElement();
+		}
+		else {
+			document = SAXReaderUtil.createDocument();
+			rootElement = document.addElement("root");
+		}
+
+		Iterator<Field> itr = fields.iterator();
+
+		while (itr.hasNext()) {
+			Field field = itr.next();
+
+			Object value = field.getValue();
+
+			if (value instanceof Date) {
+				Date valueDate = (Date)value;
+
+				value = valueDate.getTime();
+			}
+
+			String valueString = String.valueOf(value);
+
+			if (valueString != null) {
+				valueString = valueString.trim();
+			}
+
+			Element dynamicElementElement = getElementByName(
+				document, field.getName());
+
+			if (dynamicElementElement == null) {
+				appendField(rootElement, field.getName(), valueString);
+			}
+			else {
+				updateField(
+					dynamicElementElement, field.getName(), valueString);
+			}
+		}
+
+		return document.formattedString();
 	}
 
 	public String updateXMLDefaultLocale(
@@ -104,6 +170,19 @@ public class DDMXMLImpl implements DDMXML {
 		return document.formattedString();
 	}
 
+	protected Element appendField(
+		Element rootElement, String fieldName, String fieldValue) {
+
+		Element dynamicElementElement = rootElement.addElement(
+			"dynamic-element");
+
+		dynamicElementElement.addElement("dynamic-content");
+
+		updateField(dynamicElementElement, fieldName, fieldValue);
+
+		return dynamicElementElement;
+	}
+
 	protected void fixElementsDefaultLocale(
 		Element element, Locale contentDefaultLocale,
 		Locale contentNewDefaultLocale) {
@@ -139,6 +218,35 @@ public class DDMXMLImpl implements DDMXML {
 				dynamicElementElement, contentDefaultLocale,
 				contentNewDefaultLocale);
 		}
+	}
+
+	protected Element getElementByName(Document document, String name) {
+		name = HtmlUtil.escapeXPathAttribute(name);
+
+		XPath xPathSelector = SAXReaderUtil.createXPath(
+			"//dynamic-element[@name=".concat(name).concat("]"));
+
+		List<Node> nodes = xPathSelector.selectNodes(document);
+
+		if (nodes.size() == 1) {
+			return (Element)nodes.get(0);
+		}
+		else {
+			return null;
+		}
+	}
+
+	protected void updateField(
+		Element dynamicElementElement, String fieldName, String value) {
+
+		Element dynamicContentElement = dynamicElementElement.element(
+			"dynamic-content");
+
+		dynamicElementElement.addAttribute("name", fieldName);
+
+		dynamicContentElement.clearContent();
+
+		dynamicContentElement.addCDATA(value);
 	}
 
 	private static final String _AVAILABLE_LOCALES = "available-locales";

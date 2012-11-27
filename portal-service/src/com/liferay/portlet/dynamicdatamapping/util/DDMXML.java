@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.IOException;
 
@@ -30,6 +31,12 @@ public interface DDMXML {
 	public String formatXML(Document document) throws IOException;
 
 	public String formatXML(String xml) throws DocumentException, IOException;
+
+	public String getXML(Fields fields)
+		throws Exception;
+
+	public String getXML(long ddmContentId, Fields fields, boolean mergeFields)
+		throws Exception;
 
 	public String updateXMLDefaultLocale(
 			String xml, Locale contentDefaultLocale,

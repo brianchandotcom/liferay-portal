@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.util;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.IOException;
 
@@ -42,6 +43,17 @@ public class DDMXMLUtil {
 		PortalRuntimePermission.checkGetBeanProperty(DDMXMLUtil.class);
 
 		return _ddmXML;
+	}
+
+	public static String getXML(Fields fields) throws Exception {
+		return getDDMXML().getXML(fields);
+	}
+
+	public static String getXML(
+			long ddmContentId, Fields fields, boolean mergeFields)
+		throws Exception {
+
+		return getDDMXML().getXML(ddmContentId, fields, mergeFields);
 	}
 
 	public static String updateXMLDefaultLocale(

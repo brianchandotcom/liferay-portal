@@ -322,7 +322,7 @@ public class EditMessageAction extends PortletAction {
 					InputStream inputStream =
 						uploadPortletRequest.getFileAsStream("msgFile" + i);
 
-					if (inputStream == null) {
+					if ((inputStream == null) || Validator.isNull(fileName)) {
 						continue;
 					}
 

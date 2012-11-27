@@ -80,6 +80,7 @@ page import="com.liferay.portlet.messageboards.service.MBThreadServiceUtil" %><%
 page import="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" %><%@
 page import="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" %><%@
 page import="com.liferay.portlet.messageboards.service.permission.MBPermission" %><%@
+page import="com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil" %><%@
 page import="com.liferay.portlet.messageboards.util.MBUtil" %><%@
 page import="com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator" %><%@
 page import="com.liferay.portlet.ratings.model.RatingsStats" %><%@
@@ -87,7 +88,7 @@ page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %
 page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
 page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
-page import="com.liferay.util.RSSUtil" %><%@ page import="com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil" %>
+page import="com.liferay.util.RSSUtil" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();

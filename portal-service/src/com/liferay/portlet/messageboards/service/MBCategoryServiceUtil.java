@@ -141,6 +141,15 @@ public class MBCategoryServiceUtil {
 		return getService().getSubscribedCategoriesCount(groupId, userId);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBCategory moveCategory(
+		long categoryId, long parentCategoryId, boolean mergeWithParentCategory)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .moveCategory(categoryId, parentCategoryId,
+			mergeWithParentCategory);
+	}
+
 	public static void subscribeCategory(long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

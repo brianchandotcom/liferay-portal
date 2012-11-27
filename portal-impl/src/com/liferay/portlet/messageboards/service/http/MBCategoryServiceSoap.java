@@ -263,6 +263,22 @@ public class MBCategoryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBCategorySoap moveCategory(
+		long categoryId, long parentCategoryId, boolean mergeWithParentCategory)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.messageboards.model.MBCategory returnValue = MBCategoryServiceUtil.moveCategory(categoryId,
+					parentCategoryId, mergeWithParentCategory);
+
+			return com.liferay.portlet.messageboards.model.MBCategorySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void subscribeCategory(long groupId, long categoryId)
 		throws RemoteException {
 		try {

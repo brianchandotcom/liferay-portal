@@ -36,6 +36,18 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 			image="edit"
 			url="<%= editURL %>"
 		/>
+
+		<portlet:renderURL var="moveURL">
+			<portlet:param name="struts_action" value="/message_boards/move_category" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			image="submit"
+			message="move"
+			url="<%= moveURL %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, category, ActionKeys.PERMISSIONS) %>">

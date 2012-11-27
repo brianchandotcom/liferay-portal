@@ -348,6 +348,32 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		return mbCategoryFinder.countByS_G_U_P(groupId, userId, null);
 	}
 
+	public MBCategory moveCategory(
+			long categoryId, long parentCategoryId,
+			boolean mergeWithParentCategory)
+		throws PortalException, SystemException {
+
+		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
+			categoryId);
+
+		parentCategoryId = getParentCategoryId(category, parentCategoryId);
+
+		if (mergeWithParentCategory &&
+			(categoryId != parentCategoryId) &&
+			(parentCategoryId !=
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
+			(parentCategoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
+
+			mergeCategories(category, parentCategoryId);
+
+			return category;
+		}
+
+		category.setParentCategoryId(parentCategoryId);
+
+		return mbCategoryPersistence.update(category);
+	}
+
 	public void subscribeCategory(long userId, long groupId, long categoryId)
 		throws PortalException, SystemException {
 

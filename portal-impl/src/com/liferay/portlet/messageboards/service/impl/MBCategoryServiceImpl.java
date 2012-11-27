@@ -171,6 +171,20 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		}
 	}
 
+	public MBCategory moveCategory(
+			long categoryId, long parentCategoryId,
+			boolean mergeWithParentCategory)
+		throws PortalException, SystemException {
+
+		MBCategory category = mbCategoryLocalService.getCategory(categoryId);
+
+		MBCategoryPermission.check(
+			getPermissionChecker(), category, ActionKeys.UPDATE);
+
+		return mbCategoryLocalService.moveCategory(
+			categoryId, parentCategoryId, mergeWithParentCategory);
+	}
+
 	public void subscribeCategory(long groupId, long categoryId)
 		throws PortalException, SystemException {
 

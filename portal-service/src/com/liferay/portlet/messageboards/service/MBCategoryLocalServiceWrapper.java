@@ -416,6 +416,14 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 			userId);
 	}
 
+	public com.liferay.portlet.messageboards.model.MBCategory moveCategory(
+		long categoryId, long parentCategoryId, boolean mergeWithParentCategory)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryLocalService.moveCategory(categoryId,
+			parentCategoryId, mergeWithParentCategory);
+	}
+
 	public void subscribeCategory(long userId, long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

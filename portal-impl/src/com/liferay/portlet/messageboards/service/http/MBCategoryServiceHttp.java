@@ -469,13 +469,51 @@ public class MBCategoryServiceHttp {
 		}
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBCategory moveCategory(
+		HttpPrincipal httpPrincipal, long categoryId, long parentCategoryId,
+		boolean mergeWithParentCategory)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
+					"moveCategory", _moveCategoryParameterTypes12);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					categoryId, parentCategoryId, mergeWithParentCategory);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.messageboards.model.MBCategory)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void subscribeCategory(HttpPrincipal httpPrincipal,
 		long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"subscribeCategory", _subscribeCategoryParameterTypes12);
+					"subscribeCategory", _subscribeCategoryParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId);
@@ -508,7 +546,7 @@ public class MBCategoryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"unsubscribeCategory", _unsubscribeCategoryParameterTypes13);
+					"unsubscribeCategory", _unsubscribeCategoryParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId);
@@ -552,7 +590,7 @@ public class MBCategoryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,
-					"updateCategory", _updateCategoryParameterTypes14);
+					"updateCategory", _updateCategoryParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					categoryId, parentCategoryId, name, description,
@@ -632,13 +670,16 @@ public class MBCategoryServiceHttp {
 		};
 	private static final Class<?>[] _getSubscribedCategoriesCountParameterTypes11 =
 		new Class[] { long.class, long.class };
-	private static final Class<?>[] _subscribeCategoryParameterTypes12 = new Class[] {
+	private static final Class<?>[] _moveCategoryParameterTypes12 = new Class[] {
+			long.class, long.class, boolean.class
+		};
+	private static final Class<?>[] _subscribeCategoryParameterTypes13 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _unsubscribeCategoryParameterTypes13 = new Class[] {
+	private static final Class<?>[] _unsubscribeCategoryParameterTypes14 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _updateCategoryParameterTypes14 = new Class[] {
+	private static final Class<?>[] _updateCategoryParameterTypes15 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,

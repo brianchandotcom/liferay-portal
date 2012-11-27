@@ -153,8 +153,8 @@ MBThread thread = message.getThread();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="forward"
-			message="move-thread"
+			image="submit"
+			message="move"
 			url="<%= moveThreadURL %>"
 		/>
 	</c:if>

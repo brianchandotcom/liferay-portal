@@ -139,6 +139,14 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 		return _mbCategoryService.getSubscribedCategoriesCount(groupId, userId);
 	}
 
+	public com.liferay.portlet.messageboards.model.MBCategory moveCategory(
+		long categoryId, long parentCategoryId, boolean mergeWithParentCategory)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryService.moveCategory(categoryId, parentCategoryId,
+			mergeWithParentCategory);
+	}
+
 	public void subscribeCategory(long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

@@ -352,6 +352,11 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	public int getSubscribedCategoriesCount(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portlet.messageboards.model.MBCategory moveCategory(
+		long categoryId, long parentCategoryId, boolean mergeWithParentCategory)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void subscribeCategory(long userId, long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

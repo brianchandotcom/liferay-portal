@@ -50,6 +50,20 @@ public class PortalClassLoaderUtil {
 		return _classLoader;
 	}
 
+	public static String getCodeSourceLocation(Class<?> clazz) {
+		String className = clazz.getName();
+
+		String resourceName =
+			StringPool.SLASH + className.replace('.', '/') + ".class";
+
+		URL location = clazz.getResource(resourceName);
+
+		String codeSource = location.toString();
+
+		return codeSource.substring(
+			0, codeSource.length() - resourceName.length());
+	}
+
 	public static void setClassLoader(ClassLoader classLoader) {
 		PortalRuntimePermission.checkSetBeanProperty(
 			PortalClassLoaderUtil.class);
@@ -62,21 +76,14 @@ public class PortalClassLoaderUtil {
 		}
 
 		_codeSourceKernel = getCodeSourceLocation(PortalClassLoaderUtil.class);
-		_codeSourceImpl = getCodeSourceLocation(Reflection.getCallerClass(2));
-	}
 
-	private static String getCodeSourceLocation(Class<?> clazz) {
-		String className = clazz.getName();
+		Class<?> callerClass = Reflection.getCallerClass(2);
 
-		String resourceName =
-			StringPool.SLASH + className.replace('.', '/') + ".class";
+		String callerClassName = callerClass.getName();
 
-		URL location = clazz.getResource(resourceName);
-
-		String codeSource = location.toString();
-
-		return codeSource.substring(
-			0, codeSource.length() - resourceName.length());
+		if (callerClassName.equals("com.liferay.portal.util.ClassLoaderUtil")) {
+			_codeSourceImpl = getCodeSourceLocation(callerClass);
+		}
 	}
 
 	private static ClassLoader _classLoader;

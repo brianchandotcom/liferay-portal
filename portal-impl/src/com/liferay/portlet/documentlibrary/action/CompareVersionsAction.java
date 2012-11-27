@@ -94,8 +94,8 @@ public class CompareVersionsAction extends PortletAction {
 
 		String sourceExtension = sourceFileVersion.getExtension();
 
-		if (sourceExtension.equals("css") || sourceExtension.equals("js") ||
-			sourceExtension.equals("htm") || sourceExtension.equals("html") ||
+		if (sourceExtension.equals("css") || sourceExtension.equals("htm") ||
+			sourceExtension.equals("html") || sourceExtension.equals("js") ||
 			sourceExtension.equals("txt") || sourceExtension.equals("xml")) {
 
 			String sourceContent = HtmlUtil.escape(StringUtil.read(sourceIs));
@@ -110,8 +110,8 @@ public class CompareVersionsAction extends PortletAction {
 
 		String targetExtension = targetFileVersion.getExtension();
 
-		if (targetExtension.equals("css") || targetExtension.equals("js") ||
-			targetExtension.equals("htm") || targetExtension.equals("html") ||
+		if (targetExtension.equals("css") || targetExtension.equals("htm") ||
+			targetExtension.equals("html") || targetExtension.equals("js") ||
 			targetExtension.equals("txt") || targetExtension.equals("xml")) {
 
 			String targetContent = HtmlUtil.escape(StringUtil.read(targetIs));

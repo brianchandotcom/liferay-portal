@@ -75,6 +75,9 @@ public class DDMTemplateLocalServiceImpl
 		if (Validator.isNull(templateKey)) {
 			templateKey = String.valueOf(counterLocalService.increment());
 		}
+		else {
+			templateKey = templateKey.trim().toUpperCase();
+		}
 
 		byte[] smallImageBytes = null;
 
@@ -252,6 +255,8 @@ public class DDMTemplateLocalServiceImpl
 	public DDMTemplate fetchTemplate(long groupId, String templateKey)
 		throws SystemException {
 
+		templateKey = templateKey.trim().toUpperCase();
+
 		return ddmTemplatePersistence.fetchByG_T(groupId, templateKey);
 	}
 
@@ -264,12 +269,16 @@ public class DDMTemplateLocalServiceImpl
 	public DDMTemplate getTemplate(long groupId, String templateKey)
 		throws PortalException, SystemException {
 
+		templateKey = templateKey.trim().toUpperCase();
+
 		return ddmTemplatePersistence.findByG_T(groupId, templateKey);
 	}
 
 	public DDMTemplate getTemplate(
 			long groupId, String templateKey, boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
+
+		templateKey = templateKey.trim().toUpperCase();
 
 		DDMTemplate template = ddmTemplatePersistence.fetchByG_T(
 			groupId, templateKey);
@@ -476,6 +485,8 @@ public class DDMTemplateLocalServiceImpl
 			String script, boolean smallImage, String smallImageURL,
 			File smallImageFile, byte[] smallImageBytes)
 		throws PortalException, SystemException {
+
+		templateKey = templateKey.trim().toUpperCase();
 
 		DDMTemplate template = ddmTemplatePersistence.fetchByG_T(
 			groupId, templateKey);

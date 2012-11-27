@@ -5869,7 +5869,7 @@ public class PortalImpl implements Portal {
 				}
 
 				if (!controlPanelEntry.hasAccessPermission(
-					themeDisplay.getPermissionChecker(), group, portlet)) {
+						themeDisplay.getPermissionChecker(), group, portlet)) {
 
 					itr.remove();
 				}

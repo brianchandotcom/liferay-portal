@@ -593,9 +593,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "pollsChoice.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "pollsChoice.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(pollsChoice.uuid IS NULL OR pollsChoice.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1 = "pollsChoice.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 = "pollsChoice.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(pollsChoice.uuid_ IS NULL OR pollsChoice.uuid_ = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_QUESTIONID =
 		new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
 			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoiceImpl.class,

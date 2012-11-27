@@ -589,9 +589,9 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "listType.type IS NULL";
-	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "listType.type = ?";
-	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(listType.type IS NULL OR listType.type = ?)";
+	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "listType.type_ IS NULL";
+	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "listType.type_ = ?";
+	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(listType.type_ IS NULL OR listType.type_ = ?)";
 
 	/**
 	 * Caches the list type in the entity cache if it is enabled.

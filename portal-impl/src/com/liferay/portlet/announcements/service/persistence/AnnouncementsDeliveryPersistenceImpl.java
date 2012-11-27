@@ -815,9 +815,9 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	}
 
 	private static final String _FINDER_COLUMN_U_T_USERID_2 = "announcementsDelivery.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_T_TYPE_1 = "announcementsDelivery.type IS NULL";
-	private static final String _FINDER_COLUMN_U_T_TYPE_2 = "announcementsDelivery.type = ?";
-	private static final String _FINDER_COLUMN_U_T_TYPE_3 = "(announcementsDelivery.type IS NULL OR announcementsDelivery.type = ?)";
+	private static final String _FINDER_COLUMN_U_T_TYPE_1 = "announcementsDelivery.type_ IS NULL";
+	private static final String _FINDER_COLUMN_U_T_TYPE_2 = "announcementsDelivery.type_ = ?";
+	private static final String _FINDER_COLUMN_U_T_TYPE_3 = "(announcementsDelivery.type_ IS NULL OR announcementsDelivery.type_ = ?)";
 
 	/**
 	 * Caches the announcements delivery in the entity cache if it is enabled.

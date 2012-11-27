@@ -254,6 +254,13 @@ public class MBMessageServiceUtil {
 			displayStyle, feedURL, entryURL, themeDisplay);
 	}
 
+	public static void restoreMessageAttachmentFromTrash(long messageId,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreMessageAttachmentFromTrash(messageId, fileName);
+	}
+
 	public static void subscribeMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

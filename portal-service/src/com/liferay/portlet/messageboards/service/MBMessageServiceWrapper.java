@@ -241,6 +241,13 @@ public class MBMessageServiceWrapper implements MBMessageService,
 			type, version, displayStyle, feedURL, entryURL, themeDisplay);
 	}
 
+	public void restoreMessageAttachmentFromTrash(long messageId,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbMessageService.restoreMessageAttachmentFromTrash(messageId, fileName);
+	}
+
 	public void subscribeMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

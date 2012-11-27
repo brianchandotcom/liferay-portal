@@ -579,6 +579,17 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			messages, themeDisplay);
 	}
 
+	public void restoreMessageAttachmentFromTrash(
+			long messageId, String fileName)
+		throws PortalException, SystemException {
+
+		MBMessagePermission.check(
+			getPermissionChecker(), messageId, ActionKeys.ADD_FILE);
+
+		mbMessageLocalService.restoreMessageAttachmentFromTrash(
+			getUserId(), messageId, fileName);
+	}
+
 	public void subscribeMessage(long messageId)
 		throws PortalException, SystemException {
 

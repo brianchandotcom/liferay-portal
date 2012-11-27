@@ -625,20 +625,20 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 			className, classPK, status);
 	}
 
-	public void moveMessageAttachmentFromTrash(long messageId,
-		java.lang.String deletedFileName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_mbMessageLocalService.moveMessageAttachmentFromTrash(messageId,
-			deletedFileName);
-	}
-
-	public java.lang.String moveMessageAttachmentToTrash(long messageId,
+	public long moveMessageAttachmentToTrash(long userId, long messageId,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageLocalService.moveMessageAttachmentToTrash(messageId,
-			fileName);
+		return _mbMessageLocalService.moveMessageAttachmentToTrash(userId,
+			messageId, fileName);
+	}
+
+	public void restoreMessageAttachmentFromTrash(long userId, long messageId,
+		java.lang.String deletedFileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbMessageLocalService.restoreMessageAttachmentFromTrash(userId,
+			messageId, deletedFileName);
 	}
 
 	public void subscribeMessage(long userId, long messageId)

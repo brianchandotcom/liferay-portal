@@ -29,7 +29,7 @@ import java.sql.Timestamp;
 /**
  * @author Eudaldo Alonso
  */
-public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
+public class UpgradeMBAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected long getClassNameId() {
@@ -37,9 +37,9 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 	}
 
 	@Override
-	protected long getContainerModelFolderId(
+	protected long getContainerFolderId(
 			long groupId, long companyId, long resourcePrimKey,
-			long containerModelId, long userId, String userName,
+			long containerId, long userId, String userName,
 			Timestamp createDate)
 		throws Exception {
 
@@ -51,25 +51,25 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 			groupId, companyId, userId, userName, createDate, repositoryId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getPortletId(), false);
 
-		long nodeFolderId = getFolderId(
+		long threadFolderId = getFolderId(
 			groupId, companyId, userId, userName, createDate, repositoryId,
-			repositoryFolderId, String.valueOf(containerModelId), false);
+			repositoryFolderId, String.valueOf(containerId), false);
 
-		long pageFolderId = getFolderId(
+		long messageFolderId = getFolderId(
 			groupId, companyId, userId, userName, createDate, repositoryId,
-			nodeFolderId, String.valueOf(resourcePrimKey), false);
+			threadFolderId, String.valueOf(resourcePrimKey), false);
 
-		return pageFolderId;
+		return messageFolderId;
 	}
 
 	@Override
 	protected String getDirName(long containerId, long resourcePrimKey) {
-		return "wiki/" + resourcePrimKey;
+		return "messageboards/" + containerId + "/" + resourcePrimKey;
 	}
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.WIKI;
+		return PortletKeys.MESSAGE_BOARDS;
 	}
 
 	@Override
@@ -82,22 +82,22 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select resourcePrimKey, groupId, companyId, userId, " +
-					"userName, nodeId from WikiPage group by resourcePrimKey");
+				"select messageId, groupId, companyId, userId, userName, " +
+					"threadId from MBMessage where classNameId = 0 and " +
+						"classPK = 0");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long resourcePrimKey = rs.getLong("resourcePrimKey");
+				long messageId = rs.getLong("messageId");
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
 				long userId = rs.getLong("userId");
 				String userName = rs.getString("userName");
-				long nodeId = rs.getLong("nodeId");
+				long threadId = rs.getLong("threadId");
 
 				updateEntryAttachments(
-					companyId, groupId, resourcePrimKey, nodeId, userId,
-					userName);
+					companyId, groupId, messageId, threadId, userId, userName);
 			}
 		}
 		finally {

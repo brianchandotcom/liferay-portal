@@ -639,18 +639,21 @@ public class MBMessageLocalServiceUtil {
 			status);
 	}
 
-	public static void moveMessageAttachmentFromTrash(long messageId,
-		java.lang.String deletedFileName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().moveMessageAttachmentFromTrash(messageId, deletedFileName);
-	}
-
-	public static java.lang.String moveMessageAttachmentToTrash(
+	public static long moveMessageAttachmentToTrash(long userId,
 		long messageId, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().moveMessageAttachmentToTrash(messageId, fileName);
+		return getService()
+				   .moveMessageAttachmentToTrash(userId, messageId, fileName);
+	}
+
+	public static void restoreMessageAttachmentFromTrash(long userId,
+		long messageId, java.lang.String deletedFileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.restoreMessageAttachmentFromTrash(userId, messageId,
+			deletedFileName);
 	}
 
 	public static void subscribeMessage(long userId, long messageId)

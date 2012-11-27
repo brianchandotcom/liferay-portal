@@ -68,26 +68,6 @@ public interface Trash {
 	public boolean isTrashEnabled(long groupId)
 		throws PortalException, SystemException;
 
-	public void moveAttachmentFromTrash(
-			long companyId, long repositoryId, String deletedFileName,
-			String attachmentsDir)
-		throws PortalException, SystemException;
-
-	public void moveAttachmentFromTrash(
-			long companyId, long repositoryId, String deletedFileName,
-			String attachmentsDir, String separator)
-		throws PortalException, SystemException;
-
-	public String moveAttachmentToTrash(
-			long companyId, long repositoryId, String fileName,
-			String deletedAttachmentsDir)
-		throws PortalException, SystemException;
-
-	public String moveAttachmentToTrash(
-			long companyId, long repositoryId, String fileName,
-			String deletedAttachmentsDir, String separator)
-		throws PortalException, SystemException;
-
 	public String stripTrashNamespace(String title);
 
 	public String stripTrashNamespace(String title, String separator);

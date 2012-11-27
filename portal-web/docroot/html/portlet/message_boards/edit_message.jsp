@@ -59,10 +59,10 @@ boolean preview = ParamUtil.getBoolean(request, "preview");
 boolean quote = ParamUtil.getBoolean(request, "quote");
 boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 
-String[] existingAttachments = new String[0];
+List<FileEntry> existingAttachments = new ArrayList<FileEntry>();
 
 if ((message != null) && message.isAttachments()) {
-	existingAttachments = DLStoreUtil.getFileNames(message.getCompanyId(), CompanyConstants.SYSTEM, message.getAttachmentsDir());
+	existingAttachments = message.getAttachmentsFileEntries();
 }
 
 boolean allowPingbacks = PropsValues.MESSAGE_BOARDS_PINGBACK_ENABLED && BeanParamUtil.getBoolean(message, request, "allowPingbacks", true);
@@ -231,14 +231,12 @@ if (Validator.isNull(redirect)) {
 
 		<c:if test="<%= attachments %>">
 			<aui:fieldset cssClass="message-attachments" label="attachments">
-				<c:if test="<%= existingAttachments.length > 0 %>">
+				<c:if test="<%= existingAttachments.size() > 0 %>">
 					<ul>
 
 						<%
-						for (int i = 0; i < existingAttachments.length; i++) {
-							String existingPath = existingAttachments[i];
-
-							String existingName = StringUtil.extractLast(existingPath, CharPool.SLASH);
+						for (int i = 0; i < existingAttachments.size(); i++) {
+							FileEntry fileEntry = existingAttachments.get(i);
 
 							String taglibJavascript = "javascript:;";
 
@@ -249,12 +247,12 @@ if (Validator.isNull(redirect)) {
 
 							<li class="message-attachment">
 								<span id="<portlet:namespace />existingFile<%= i + 1 %>">
-									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= existingPath %>" />
+									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getTitle() %>" />
 
 									<liferay-ui:icon
-										image='<%= "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(existingName)) %>'
+										image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
 										label="<%= true %>"
-										message="<%= existingName %>"
+										message="<%= fileEntry.getTitle() %>"
 									/>
 								</span>
 
@@ -284,7 +282,7 @@ if (Validator.isNull(redirect)) {
 									%>
 
 									<span class="aui-helper-hidden" id="<portlet:namespace />undoFile<%= i + 1 %>">
-										<aui:input id='<%= "undoPath" + (i + 1) %>' name='<%= "undoPath" + (i + 1) %>' type="hidden" value="<%= existingPath %>" />
+										<aui:input id='<%= "undoPath" + (i + 1) %>' name='<%= "undoPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getFileEntryId() %>" />
 
 										<span class="undo">(<liferay-ui:message key="marked-as-removed" />)</span> <a class="trash-undo-link" href="<%= sb.toString() %>" id="<portlet:namespace />undo"><liferay-ui:message key="undo" /></a>
 									</span>
@@ -299,7 +297,7 @@ if (Validator.isNull(redirect)) {
 				</c:if>
 
 				<%
-				for (int i = existingAttachments.length + 1; i <= 5; i++) {
+				for (int i = existingAttachments.size() + 1; i <= 5; i++) {
 				%>
 
 					<div>
@@ -611,7 +609,7 @@ if (Validator.isNull(redirect)) {
 	<aui:script use="aui-base">
 
 		<%
-		for (int i = 1; i <= existingAttachments.length; i++) {
+		for (int i = 1; i <= existingAttachments.size(); i++) {
 		%>
 
 			var removeExisting = A.one('#<portlet:namespace />removeExisting' + <%= i %>);

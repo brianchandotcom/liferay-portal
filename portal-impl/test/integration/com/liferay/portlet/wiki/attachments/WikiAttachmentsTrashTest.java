@@ -96,7 +96,7 @@ public class WikiAttachmentsTrashTest {
 	}
 
 	private void trashWikiAttachments(boolean restore) throws Exception {
-		int initialNotInTrashCount = _wikiPage.getAttachmentsFilesCount();
+		int initialNotInTrashCount = _wikiPage.getAttachmentsFileEntriesCount();
 
 		int initialTrashEntriesCount =
 			_wikiPage.getDeletedAttachmentsFileEntriesCount();
@@ -119,7 +119,8 @@ public class WikiAttachmentsTrashTest {
 			_wikiPage.getTitle(), fileName, file);
 
 		Assert.assertEquals(
-			initialNotInTrashCount + 1, _wikiPage.getAttachmentsFilesCount());
+			initialNotInTrashCount + 1,
+			_wikiPage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(
 			initialTrashEntriesCount,
 			_wikiPage.getDeletedAttachmentsFileEntriesCount());
@@ -134,7 +135,7 @@ public class WikiAttachmentsTrashTest {
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 		Assert.assertEquals(
-			initialNotInTrashCount, _wikiPage.getAttachmentsFilesCount());
+			initialNotInTrashCount, _wikiPage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(
 			initialTrashEntriesCount + 1,
 			_wikiPage.getDeletedAttachmentsFileEntriesCount());
@@ -146,7 +147,7 @@ public class WikiAttachmentsTrashTest {
 
 			Assert.assertEquals(
 				initialNotInTrashCount + 1,
-				_wikiPage.getAttachmentsFilesCount());
+				_wikiPage.getAttachmentsFileEntriesCount());
 			Assert.assertEquals(
 				initialTrashEntriesCount,
 				_wikiPage.getDeletedAttachmentsFileEntriesCount());
@@ -160,7 +161,8 @@ public class WikiAttachmentsTrashTest {
 				dlFileEntry.getTitle());
 
 			Assert.assertEquals(
-				initialNotInTrashCount, _wikiPage.getAttachmentsFilesCount());
+				initialNotInTrashCount,
+				_wikiPage.getAttachmentsFileEntriesCount());
 			Assert.assertEquals(
 				initialTrashEntriesCount,
 				_wikiPage.getDeletedAttachmentsFileEntriesCount());

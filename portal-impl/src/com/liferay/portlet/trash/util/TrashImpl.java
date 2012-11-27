@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -36,14 +35,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
@@ -309,97 +306,6 @@ public class TrashImpl implements Trash {
 		}
 
 		return false;
-	}
-
-	public void moveAttachmentFromTrash(
-			long companyId, long repositoryId, String deletedFileName,
-			String attachmentsDir)
-		throws PortalException, SystemException {
-
-		moveAttachmentFromTrash(
-			companyId, repositoryId, deletedFileName, attachmentsDir,
-			StringPool.UNDERLINE);
-	}
-
-	public void moveAttachmentFromTrash(
-			long companyId, long repositoryId, String deletedFileName,
-			String attachmentsDir, String separator)
-		throws PortalException, SystemException {
-
-		if (Validator.isNull(deletedFileName)) {
-			return;
-		}
-
-		if (!DLStoreUtil.hasDirectory(
-				companyId, repositoryId, attachmentsDir)) {
-
-			DLStoreUtil.addDirectory(companyId, repositoryId, attachmentsDir);
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(attachmentsDir);
-		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(
-			stripTrashNamespace(
-				FileUtil.getShortFileName(deletedFileName), separator));
-
-		String fileName = sb.toString();
-
-		try {
-			DLStoreUtil.updateFile(
-				companyId, repositoryId, deletedFileName, fileName);
-		}
-		catch (NoSuchFileException nsfe) {
-		}
-	}
-
-	public String moveAttachmentToTrash(
-			long companyId, long repositoryId, String fileName,
-			String deletedAttachmentsDir)
-			throws PortalException, SystemException {
-
-		return moveAttachmentToTrash(
-			companyId, repositoryId, fileName, deletedAttachmentsDir,
-			StringPool.UNDERLINE);
-	}
-
-	public String moveAttachmentToTrash(
-			long companyId, long repositoryId, String fileName,
-			String deletedAttachmentsDir, String separator)
-		throws PortalException, SystemException {
-
-		if (Validator.isNull(fileName)) {
-			return StringPool.BLANK;
-		}
-
-		if (!DLStoreUtil.hasDirectory(
-				companyId, repositoryId, deletedAttachmentsDir)) {
-
-			DLStoreUtil.addDirectory(
-				companyId, repositoryId, deletedAttachmentsDir);
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(deletedAttachmentsDir);
-		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(
-			appendTrashNamespace(
-				FileUtil.getShortFileName(fileName), separator));
-
-		String deletedFileName = sb.toString();
-
-		try {
-			DLStoreUtil.updateFile(
-				companyId, repositoryId, fileName, deletedFileName);
-		}
-		catch (NoSuchFileException nsfe) {
-			DLStoreUtil.deleteDirectory(
-				companyId, repositoryId, deletedAttachmentsDir);
-		}
-
-		return deletedFileName;
 	}
 
 	public String stripTrashNamespace(String title) {

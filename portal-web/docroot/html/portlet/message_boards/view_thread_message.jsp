@@ -291,26 +291,24 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 				</liferay-ui:custom-attributes-available>
 
 				<%
-				String[] deletedAttachments = message.getDeletedAttachmentsFiles();
+				List<FileEntry> deletedAttachments = message.getDeletedAttachmentsFileEntries();
 				%>
 
-				<c:if test="<%= message.isAttachments() || ((deletedAttachments.length > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE)) %>">
+				<c:if test="<%= (message.isAttachments() || ((deletedAttachments.size() > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE))) %>">
 					<div class="message-attachments">
 						<h3><liferay-ui:message key="attachments" />:</h3>
 
 						<c:if test="<%= message.isAttachments() %>">
 
 							<%
-							String[] attachmentsFiles = message.getAttachmentsFiles();
+							List<FileEntry> attachmentsFiles = message.getAttachmentsFileEntries();
 
-							for (int j = 0; j < attachmentsFiles.length; j++) {
-								String fileName = FileUtil.getShortFileName(attachmentsFiles[j]);
-
-								if (StringUtil.endsWith(fileName, ".gif") || StringUtil.endsWith(fileName, ".jpg") || StringUtil.endsWith(fileName, ".png")) {
+							for (FileEntry fileEntry : attachmentsFiles) {
+								if (MimeTypesUtil.isWebImage(fileEntry.getMimeType())) {
 							%>
 
 									<div>
-										<img alt="<liferay-ui:message key="attachment" />" src="<%= themeDisplay.getPathMain() %>/message_boards/get_message_attachment?messageId=<%= message.getMessageId() %>&attachment=<%= HttpUtil.encodeURL(fileName) %>" />
+										<img alt="<liferay-ui:message key="attachment" />" src="<%= themeDisplay.getPathMain() %>/message_boards/get_message_attachment?messageId=<%= message.getMessageId() %>&attachment=<%= HttpUtil.encodeURL(fileEntry.getTitle()) %>" />
 									</div>
 
 									<br />
@@ -323,15 +321,13 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<ul>
 
 								<%
-								for (int j = 0; j < attachmentsFiles.length; j++) {
-									String fileName = FileUtil.getShortFileName(attachmentsFiles[j]);
-									long fileSize = DLStoreUtil.getFileSize(company.getCompanyId(), CompanyConstants.SYSTEM, attachmentsFiles[j]);
+								for (FileEntry fileEntry : attachmentsFiles) {
 								%>
 
 									<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 										<portlet:param name="struts_action" value="/message_boards/get_message_attachment" />
 										<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-										<portlet:param name="attachment" value="<%= fileName %>" />
+										<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
 									</portlet:actionURL>
 
 									<li class="message-attachment">
@@ -339,14 +335,14 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 										<%
 										StringBundler sb = new StringBundler(4);
 
-										sb.append(fileName);
+										sb.append(fileEntry.getTitle());
 										sb.append(StringPool.OPEN_PARENTHESIS);
-										sb.append(TextFormatter.formatStorageSize(fileSize, locale));
+										sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
 										sb.append(StringPool.CLOSE_PARENTHESIS);
 										%>
 
 										<liferay-ui:icon
-											image='<%= "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(fileName)) %>'
+											image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
 											label="<%= true %>"
 											message="<%= sb.toString() %>"
 											url="<%= attachmentURL %>"
@@ -360,7 +356,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							</ul>
 						</c:if>
 
-						<c:if test="<%= (deletedAttachments.length > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
+						<c:if test="<%= (deletedAttachments.size() > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
 							<div class="message-attachments">
 								<portlet:renderURL var="viewTrashAttachmentsURL">
 									<portlet:param name="struts_action" value="/message_boards/view_deleted_message_attachments" />
@@ -371,7 +367,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								<liferay-ui:icon
 									image="delete_attachment"
 									label="<%= true %>"
-									message='<%= LanguageUtil.format(pageContext, (deletedAttachments.length == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachments.length) %>'
+									message='<%= LanguageUtil.format(pageContext, (deletedAttachments.size() == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachments.size()) %>'
 									url="<%= viewTrashAttachmentsURL %>"
 								/>
 							</div>

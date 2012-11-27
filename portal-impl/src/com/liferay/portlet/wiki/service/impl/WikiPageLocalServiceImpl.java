@@ -1117,12 +1117,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			page.getGroupId(), page.getAttachmentsFolderId(), fileName);
 
-		long fileEntryId = fileEntry.getFileEntryId();
-
 		PortletFileRepositoryUtil.movePortletFileEntryToTrash(
-			userId, fileEntryId);
+			userId, fileEntry.getFileEntryId());
 
-		return fileEntryId;
+		return fileEntry.getFileEntryId();
 	}
 
 	public WikiPage movePageToTrash(long userId, long nodeId, String title)

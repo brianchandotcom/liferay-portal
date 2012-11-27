@@ -279,10 +279,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 		updateAttachments();
 	}
 
-	protected String[] getAttachments(long companyId, long resourcePrimKey)
+	protected String[] getAttachments(
+			long companyId, long containerId, long resourcePrimKey)
 		throws Exception {
 
-		String dirName = getDirName(resourcePrimKey);
+		String dirName = getDirName(containerId, resourcePrimKey);
 
 		String[] attachments = null;
 
@@ -307,7 +308,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 
-	protected abstract String getDirName(long resourcePrimKey);
+	protected abstract String getDirName(
+		long containerId, long resourcePrimKey);
 
 	protected long getFolderId(
 			long groupId, long companyId, long userId, String userName,
@@ -393,7 +395,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			long containerModelId, long userId, String userName)
 		throws Exception {
 
-		String[] attachments = getAttachments(companyId, resourcePrimKey);
+		String[] attachments = getAttachments(
+			companyId, containerId, resourcePrimKey);
 
 		if ((attachments == null) || (attachments.length == 0)) {
 			return;
@@ -445,20 +448,6 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 					_log.warn(
 						"Unable to delete the attachment " + attachment, e);
 				}
-			}
-		}
-
-		try {
-			DLStoreUtil.deleteDirectory(
-				companyId, CompanyConstants.SYSTEM,
-				getDirName(resourcePrimKey));
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to delete the directory " +
-						getDirName(resourcePrimKey),
-					e);
 			}
 		}
 	}

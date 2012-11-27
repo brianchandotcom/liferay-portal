@@ -19,38 +19,30 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletCategoryKeys;
-import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.DefaultControlPanelEntry;
 
 /**
  * @author Eric Min
+ * @author Jorge Ferrer
  */
-public class SiteSettingsControlPanelEntry extends BaseControlPanelEntry {
-
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return false;
-	}
+public class SiteSettingsControlPanelEntry extends DefaultControlPanelEntry {
 
 	@Override
-	public boolean isVisible(
-			Portlet portlet, String category, ThemeDisplay themeDisplay)
+	public boolean hasAccessPermissionDenied(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		Group scopeGroup = themeDisplay.getScopeGroup();
-
-		if (scopeGroup.isCompany() || scopeGroup.isUser() ||
-			!GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), scopeGroup.getGroupId(),
-				ActionKeys.UPDATE)) {
-
-			return false;
+		if (group.isCompany() || group.isUser()) {
+			return true;
 		}
 
-		return super.isVisible(portlet, category, themeDisplay);
+		if (!GroupPermissionUtil.contains(
+				permissionChecker, group.getGroupId(), ActionKeys.UPDATE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

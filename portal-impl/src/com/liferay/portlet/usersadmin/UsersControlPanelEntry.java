@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.usersadmin;
 
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
@@ -24,7 +25,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.permission.OrganizationPermissionUtil;
-import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.DefaultControlPanelEntry;
 
 import java.util.List;
 
@@ -32,10 +33,11 @@ import java.util.List;
  * @author Jorge Ferrer
  * @author Zsolt Berentey
  */
-public class UsersControlPanelEntry extends BaseControlPanelEntry {
+public class UsersControlPanelEntry extends DefaultControlPanelEntry {
 
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
+	@Override
+	public boolean hasPermissionImplicit(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
 		List<UserGroupRole> userGroupRoles =

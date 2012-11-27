@@ -14,31 +14,21 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author Jorge Ferrer
  */
-public class OmniadminControlPanelEntry extends BaseControlPanelEntry {
+public class OmniadminControlPanelEntry extends DefaultControlPanelEntry {
 
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
+	@Override
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
 		return permissionChecker.isOmniadmin();
-	}
-
-	@Override
-	public boolean isVisible(
-			Portlet portlet, String category, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		return isVisible(permissionChecker, portlet);
 	}
 
 }

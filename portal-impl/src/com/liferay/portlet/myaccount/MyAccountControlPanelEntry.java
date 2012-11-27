@@ -14,17 +14,19 @@
 
 package com.liferay.portlet.myaccount;
 
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.DefaultControlPanelEntry;
 
 /**
  * @author Jorge Ferrer
  */
-public class MyAccountControlPanelEntry extends BaseControlPanelEntry {
+public class MyAccountControlPanelEntry extends DefaultControlPanelEntry {
 
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
+	@Override
+	protected boolean hasPermissionImplicit(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
 		return false;

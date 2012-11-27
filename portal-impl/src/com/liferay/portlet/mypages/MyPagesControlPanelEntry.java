@@ -14,53 +14,43 @@
 
 package com.liferay.portlet.mypages;
 
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.DefaultControlPanelEntry;
 
 /**
  * @author Jorge Ferrer
  * @author Amos Fong
  */
-public class MyPagesControlPanelEntry extends BaseControlPanelEntry {
-
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return false;
-	}
+public class MyPagesControlPanelEntry extends DefaultControlPanelEntry {
 
 	@Override
-	public boolean isVisible(
-			Portlet portlet, String category, ThemeDisplay themeDisplay)
+	protected boolean hasAccessPermissionDenied(
+		PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
 		if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED &&
 			!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
 
-			return false;
+			return true;
 		}
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
 
 		boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(
 			permissionChecker.getUserId(), permissionChecker.getCompanyId(),
 			RoleConstants.POWER_USER, true);
 
 		if ((PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED ||
-			 PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED) &&
+			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED) &&
 			!hasPowerUserRole) {
 
-			return false;
+			return true;
 		}
 
-		return super.isVisible(portlet, category, themeDisplay);
+		return false;
 	}
 
 }

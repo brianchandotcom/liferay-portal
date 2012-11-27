@@ -14,30 +14,23 @@
 
 package com.liferay.portlet.socialactivity;
 
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.DefaultControlPanelEntry;
 
 /**
  * @author Zsolt Szabó
  */
 public class SocialActivityAdminControlPanelEntry
-	extends BaseControlPanelEntry {
+	extends DefaultControlPanelEntry {
 
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
+	@Override
+	protected boolean hasPermissionImplicit(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
 		return false;
-	}
-
-	@Override
-	public boolean isVisible(
-			Portlet portlet, String category, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		return super.isVisible(portlet, category, themeDisplay);
 	}
 
 }

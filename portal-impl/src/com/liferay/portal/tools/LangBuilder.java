@@ -142,6 +142,7 @@ public class LangBuilder {
 		_createProperties(content, "ja"); // Japanese
 		_createProperties(content, "ko"); // Korean
 		_createProperties(content, "lo"); // Lao
+		_createProperties(content, "lt"); // Lithuanian
 		_createProperties(content, "nb"); // Norwegian Bokmål
 		_createProperties(content, "fa"); // Persian
 		_createProperties(content, "pl"); // Polish
@@ -581,6 +582,7 @@ public class LangBuilder {
 			toLanguageId.equals("hu") ||
 			toLanguageId.equals("in") ||
 			toLanguageId.equals("lo") ||
+			toLanguageId.equals("lt") ||
 			toLanguageId.equals("nb") ||
 			toLanguageId.equals("fa") ||
 			toLanguageId.equals("pl") ||

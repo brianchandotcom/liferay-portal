@@ -53,18 +53,4 @@ public class SitesControlPanelEntry extends BaseControlPanelEntry {
 		return false;
 	}
 
-	@Override
-	public boolean isVisible(
-			Portlet portlet, String category, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		String controlPanelCategory = themeDisplay.getControlPanelCategory();
-
-		if (controlPanelCategory.equals(PortletCategoryKeys.CONTENT)) {
-			return false;
-		}
-
-		return super.isVisible(portlet, category, themeDisplay);
-	}
-
 }

@@ -19,12 +19,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -139,7 +139,7 @@ public class AuthVerifierPipeline {
 
 				AuthVerifier authVerifier =
 					(AuthVerifier)InstanceFactory.newInstance(
-						PortalClassLoaderUtil.getClassLoader(),
+						ClassLoaderUtil.getPortalClassLoader(),
 						authVerifierClassName);
 
 				authVerifierConfiguration.setAuthVerifier(authVerifier);

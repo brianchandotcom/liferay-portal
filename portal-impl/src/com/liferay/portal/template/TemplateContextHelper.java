@@ -67,6 +67,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.PortletConfigImpl;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalService;
 import com.liferay.portlet.expando.service.ExpandoRowLocalService;
 import com.liferay.portlet.expando.service.ExpandoTableLocalService;
@@ -149,6 +150,10 @@ public class TemplateContextHelper {
 		// Date util
 
 		variables.put("dateUtil", DateUtil_IW.getInstance());
+
+		// DL util
+
+		variables.put("dlUtil", DLUtil.getDL());
 
 		// Expando column service
 

@@ -746,6 +746,10 @@
 			<bean class="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.util.DL" class="com.liferay.portlet.documentlibrary.util.DLImpl" />
+	<bean id="com.liferay.portlet.documentlibrary.util.DLUtil" class="com.liferay.portlet.documentlibrary.util.DLUtil">
+		<property name="DL" ref="com.liferay.portlet.documentlibrary.util.DL" />
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory" class="com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory">
 		<property name="DDLExporters">
 			<map>

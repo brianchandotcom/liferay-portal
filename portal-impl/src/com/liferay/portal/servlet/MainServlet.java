@@ -53,8 +53,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletFilter;
@@ -1209,15 +1209,17 @@ public class MainServlet extends ActionServlet {
 			try {
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-				if (layout.getGroup().isStagingGroup()) {
-					Group group = GroupLocalServiceUtil.getGroup(
-						layout.getCompanyId(), GroupConstants.GUEST);
+				Group group = layout.getGroup();
 
-					plid = group.getDefaultPublicPlid();
-				}
-				else if (layout.isPrivateLayout()) {
-					plid = LayoutLocalServiceUtil.getDefaultPlid(
-						layout.getGroupId(), false);
+				plid = group.getDefaultPublicPlid();
+
+				if ((plid == LayoutConstants.DEFAULT_PLID) ||
+					 group.isStagingGroup()) {
+
+					Group guestGroup = GroupLocalServiceUtil.getGuestGroup(
+						layout.getCompanyId());
+
+					plid = guestGroup.getDefaultPublicPlid();
 				}
 
 				redirect = HttpUtil.addParameter(redirect, "p_l_id", plid);

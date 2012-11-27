@@ -41,12 +41,6 @@ public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		String controlPanelCategory = themeDisplay.getControlPanelCategory();
-
-		if (controlPanelCategory.equals(PortletCategoryKeys.CONTENT)) {
-			return false;
-		}
-
 		boolean visible = super.isVisible(portlet, category, themeDisplay);
 
 		if (!visible) {

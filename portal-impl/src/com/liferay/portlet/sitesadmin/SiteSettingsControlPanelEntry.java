@@ -40,12 +40,6 @@ public class SiteSettingsControlPanelEntry extends BaseControlPanelEntry {
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		String controlPanelCategory = themeDisplay.getControlPanelCategory();
-
-		if (controlPanelCategory.equals(PortletCategoryKeys.CONTENT)) {
-			return false;
-		}
-
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isCompany() || scopeGroup.isUser() ||

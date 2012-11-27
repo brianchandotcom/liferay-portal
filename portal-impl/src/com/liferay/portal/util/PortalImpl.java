@@ -3150,8 +3150,7 @@ public class PortalImpl implements Portal {
 				}
 			}
 		}
-
-		if (https) {
+		else {
 			if (PropsValues.WEB_SERVER_HTTPS_PORT == -1) {
 				if ((serverPort != Http.HTTP_PORT) &&
 					(serverPort != Http.HTTPS_PORT)) {

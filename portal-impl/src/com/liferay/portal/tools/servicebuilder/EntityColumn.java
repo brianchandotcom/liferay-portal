@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.servicebuilder;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -66,6 +67,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_jsonEnabled = jsonEnabled;
 		_containerModel = containerModel;
 		_parentContainerModel = parentContainerModel;
+
+		if (_name.concat(StringPool.UNDERLINE).equals(_dbName)) {
+			_escaped = true;
+		}
 	}
 
 	public EntityColumn(
@@ -254,6 +259,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		return _convertNull;
 	}
 
+	public boolean isEscaped() {
+		return _escaped;
+	}
+
 	public boolean isFilterPrimary() {
 		return _filterPrimary;
 	}
@@ -437,6 +446,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	private boolean _convertNull;
 	private String _dbName;
 	private String _ejbName;
+	private boolean _escaped;
 	private boolean _filterPrimary;
 	private boolean _finderPath;
 	private String _humanName;

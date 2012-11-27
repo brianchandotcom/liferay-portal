@@ -68,7 +68,7 @@ AUI.add(
 						);
 					},
 
-					_selectFileEntry: function(url, uuid, title, version) {
+					_selectFileEntry: function(groupId, url, uuid, title, version) {
 						var instance = this;
 
 						instance.selectedTitle = title;
@@ -78,7 +78,7 @@ AUI.add(
 							'value',
 							JSON.stringify(
 								{
-									groupId: themeDisplay.getScopeGroupId(),
+									groupId: groupId,
 									uuid: uuid,
 									title: title,
 									version: version

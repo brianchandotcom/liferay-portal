@@ -5,6 +5,10 @@ Liferay = window.Liferay || {};
 
 	var owns = A.Object.owns;
 
+	var isNode = function(node) {
+		return node._node || node.nodeType;
+	};
+
 	var REGEX_METHOD_GET = /^get$/i;
 
 	Liferay.namespace = A.namespace;
@@ -82,6 +86,14 @@ Liferay = window.Liferay || {};
 
 				if (Lang.isString(payload)) {
 					payload = instance.parseStringPayload(args);
+
+					instance.parseIOFormConfig(ioConfig, args);
+
+					var lastArg = args[args.length - 1];
+
+					if (Lang.isObject(lastArg) && lastArg.method) {
+						ioConfig.method = lastArg.method;
+					}
 				}
 
 				return [payload, ioConfig];
@@ -137,20 +149,18 @@ Liferay = window.Liferay || {};
 					ioConfig.method = 'GET';
 				}
 
-				instance.parseIOFormConfig(ioConfig, args);
-
 				return ioConfig;
 			},
 
 			parseIOFormConfig: function(ioConfig, args) {
 				var instance = this;
 
-				var lastArg = args[args.length - 1];
+				var form = args[1];
 
-				if (lastArg._node || lastArg.nodeType) {
+				if (isNode(form)) {
 					A.namespace.call(ioConfig, 'form');
 
-					ioConfig.form.id = A.one(lastArg);
+					ioConfig.form.id = A.one(form);
 				}
 			},
 
@@ -160,7 +170,7 @@ Liferay = window.Liferay || {};
 				var params = {};
 				var payload = {};
 
-				if (!Lang.isFunction(args[1])) {
+				if (!Lang.isFunction(args[1]) && !isNode(args[1])) {
 					params = args[1];
 				}
 

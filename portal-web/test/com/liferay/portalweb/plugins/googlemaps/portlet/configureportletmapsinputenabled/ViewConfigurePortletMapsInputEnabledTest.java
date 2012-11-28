@@ -32,7 +32,6 @@ public class ViewConfigurePortletMapsInputEnabledTest extends BaseTestCase {
 		Thread.sleep(5000);
 		assertEquals("1220 Brea Canyon Road, Diamond Bar, CA, 91789",
 			selenium.getValue("//input[contains(@name,'_mapAddress')]"));
-		assertTrue(selenium.isVisible("//input[@value='Get Map']"));
 		assertEquals(RuntimeVariables.replace(
 				"1220 Brea Canyon Road, Diamond Bar, CA, 91789"),
 			selenium.getText("//div[@style='overflow: auto;']"));

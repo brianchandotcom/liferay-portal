@@ -54,6 +54,7 @@ public class ConfigurePortletDirectionsInputEnabledTest extends BaseTestCase {
 				"//input[@id='_86_directionsInputEnabledCheckbox']"));
 		selenium.clickAt("//input[@id='_86_directionsInputEnabledCheckbox']",
 			RuntimeVariables.replace("Directions Input Enabled"));
+		Thread.sleep(5000);
 		assertTrue(selenium.isChecked(
 				"//input[@id='_86_directionsInputEnabledCheckbox']"));
 		selenium.clickAt("//input[@value='Save']",

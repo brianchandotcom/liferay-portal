@@ -31,7 +31,7 @@ public class ViewConfigurePortletDirectionsAddressTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace(
-				"1220 Brea Canyon Road, Diamond Bar, CA, 91789"),
-			selenium.getText("//div[@style='overflow: auto;']"));
+				"From 1220 Brea Canyon Road, Diamond Bar, CA, 91789"),
+			selenium.getText("//div[@class='aui-field-wrapper-content']"));
 	}
 }

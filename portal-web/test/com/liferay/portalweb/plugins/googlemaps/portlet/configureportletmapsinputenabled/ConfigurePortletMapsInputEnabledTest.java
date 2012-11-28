@@ -53,6 +53,7 @@ public class ConfigurePortletMapsInputEnabledTest extends BaseTestCase {
 				"//input[@id='_86_mapInputEnabledCheckbox']"));
 		selenium.clickAt("//input[@id='_86_mapInputEnabledCheckbox']",
 			RuntimeVariables.replace("Map Input Enabled"));
+		Thread.sleep(5000);
 		assertTrue(selenium.isChecked(
 				"//input[@id='_86_mapInputEnabledCheckbox']"));
 		selenium.clickAt("//input[@value='Save']",

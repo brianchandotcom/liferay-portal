@@ -44,16 +44,16 @@ public class AddPortletYoutube2Test extends BaseTestCase {
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("you"));
+			RuntimeVariables.replace("y"));
 		selenium.waitForVisible("//li[@title='YouTube']/p/a");
 		selenium.clickAt("//li[@title='YouTube']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//div[1]/section/header");
-		assertTrue(selenium.isVisible("//div[1]/section/header"));
+		selenium.waitForVisible("//div[1]/section");
+		assertTrue(selenium.isVisible("//div[1]/section"));
 		assertEquals(RuntimeVariables.replace("YouTube"),
 			selenium.getText("xpath=(//span[@class='portlet-title-text'])[1]"));
-		selenium.waitForVisible("//div[2]/section/header");
-		assertTrue(selenium.isVisible("//div[2]/section/header"));
+		selenium.waitForVisible("//div[2]/section");
+		assertTrue(selenium.isVisible("//div[2]/section"));
 		assertEquals(RuntimeVariables.replace("YouTube"),
 			selenium.getText("xpath=(//span[@class='portlet-title-text'])[2]"));
 	}

@@ -44,7 +44,7 @@ public class AddPortletYoutubeTest extends BaseTestCase {
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("you"));
+			RuntimeVariables.replace("y"));
 		selenium.waitForVisible("//li[@title='YouTube']/p/a");
 		selenium.clickAt("//li[@title='YouTube']/p/a",
 			RuntimeVariables.replace("Add"));

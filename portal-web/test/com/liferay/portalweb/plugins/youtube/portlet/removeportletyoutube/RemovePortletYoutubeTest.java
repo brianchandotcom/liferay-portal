@@ -25,13 +25,12 @@ public class RemovePortletYoutubeTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Youtube Test Page");
 		selenium.clickAt("link=Youtube Test Page",
 			RuntimeVariables.replace("Youtube Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//img[@alt='Remove']");
 		selenium.waitForConfirmation(
 			"Are you sure you want to remove this component?");
-		assertTrue(selenium.isElementNotPresent("//section/header"));
+		assertTrue(selenium.isElementNotPresent("//div[1]/section"));
 	}
 }

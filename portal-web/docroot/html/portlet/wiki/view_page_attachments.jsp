@@ -183,22 +183,13 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 			href="<%= rowURL %>"
 			name="file-name"
 		>
-
-			<%
-			String fileName = dlFileEntry.getTitle();
-
-			if (viewTrashAttachments) {
-				fileName = TrashUtil.stripTrashNamespace(fileName);
-			}
-			%>
-
-			<img align="left" alt="" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(dlFileEntry.getExtension()) %>.png"> <%= fileName %>
+			<img align="left" alt="" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(fileEntry.getExtension()) %>.png"> <%= fileEntry.getTitle() %>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="size"
-			value="<%= TextFormatter.formatStorageSize(dlFileEntry.getSize(), locale) %>"
+			value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
 		/>
 
 		<liferay-ui:search-container-column-jsp

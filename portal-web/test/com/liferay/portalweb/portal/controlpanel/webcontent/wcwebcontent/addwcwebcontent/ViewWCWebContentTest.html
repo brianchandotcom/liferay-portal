@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,89 +49,14 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>storeText</td>
-	<td>//td[2]/a</td>
-	<td>webcontentID</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>${webcontentID}</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//a[@class='entry-link']/span</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Approved</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//td[5]/a</td>
-	<td>Modified Date</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//td[6]/a</td>
-	<td>Display Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[7]/a</td>
-	<td>Joe Bloggs</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[8]/span/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//td[8]/span/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_edit')]</td>
-	<td>Edit</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_edit')]</td>
-	<td>Edit</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_permissions')]</td>
-	<td>Permissions</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_view')]</td>
-	<td>View (Opens New Window)</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_copy')]</td>
-	<td>Copy</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_expire')]</td>
-	<td>Expire</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_delete')]</td>
-	<td>Delete</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>//td[2]/a</td>
-	<td>WC WebContent ID</td>
+	<td>//a[@class='entry-link']/span</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -130,8 +65,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a/span</td>
+	<td>Options</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
 	<td>//div[@id='cpContextPanelTemplate']</td>
-	<td>Web Content can be any content you would like to add to a site, such as articles, a FAQ, or a news item. Administrators can manage content, as well as assign user roles and permissions. Users may add, edit, approve, or view content depending on their role. Or disable for all portlets.</td>
+	<td>Web Content can be any content you would like to add to a site, such as articles, a FAQ, or a news item. Administrators can manage content, as well as assign user roles and permissions. Users may add, edit, approve, or view content depending on their role.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -139,9 +79,14 @@
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
 	<td>//span[@class='workflow-id']</td>
-	<td>${webcontentID}</td>
+	<td>Workflow ID</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -152,6 +97,11 @@
 	<td>assertText</td>
 	<td>//span[@class='workflow-status']</td>
 	<td>Status: Approved</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//span[@class='taglib-icon-help']</td>
+	<td>Help</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -179,6 +129,11 @@
 	<td>English (United States)</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//a[@id='_15_changeLanguageId']</td>
+	<td>Change</td>
+</tr>
+<tr>
 	<td>assertValue</td>
 	<td>//input[@id='_15_title_en_US']</td>
 	<td>WC WebContent Title</td>
@@ -200,12 +155,12 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//body</td>
+	<td>//p</td>
 	<td>WC WebContent Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//body</td>
+	<td>//p</td>
 	<td>WC WebContent Content</td>
 </tr>
 <tr>
@@ -224,39 +179,39 @@
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//a[@id='_15_contentLink']</td>
-	<td>Content (Modified)</td>
+	<td>Content</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//a[@id='_15_abstractLink']</td>
-	<td>Abstract (Modified)</td>
+	<td>Abstract</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//a[@id='_15_categorizationLink']</td>
-	<td>Categorization (Modified)</td>
+	<td>Categorization</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//a[@id='_15_scheduleLink']</td>
-	<td>Schedule (Modified)</td>
+	<td>Schedule</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//a[@id='_15_displayPageLink']</td>
-	<td>Display Page (Modified)</td>
+	<td>Display Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//a[@id='_15_relatedAssetsLink']</td>
-	<td>Related Assets (Modified)</td>
+	<td>Related Assets</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//a[@id='_15_customFieldsLink']</td>
-	<td>Custom Fields (Modified)</td>
+	<td>Custom Fields</td>
 </tr>
 <tr>
 	<td>assertText</td>

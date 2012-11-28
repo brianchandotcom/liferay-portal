@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -40,141 +50,134 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//a[@class='entry-link']/span</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td>Select All</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_15_rowIds']</td>
+	<td>//input[@id='_15_allRowIdsCheckbox']</td>
 	<td>Row Entry Check Box</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']</td>
-	<td>Disabled Expire Button</td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>WC WebContent Title CheckBox</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Expire' and @disabled='']</td>
-	<td>Disabled Expire Button</td>
+	<td>assertNotVisible</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]</td>
+	<td>Expire</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td>Select All</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>WC WebContent Title CheckBox</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td>Select All</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>WC WebContent Title CheckBox</td>
 </tr>
 <tr>
-	<td>waitForElementNotPresent</td>
-	<td>//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']</td>
-	<td>Disabled Expire Button</td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']</td>
-	<td>Disabled Expire Button</td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>//input[@value='Expire' and @disabled='']</td>
-	<td>Disabled Expire Button</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Expire']</td>
-	<td>Enabled Expire Button</td>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td>Select All</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td>Select All</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']</td>
-	<td>Disabled Expire Button</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]</td>
+	<td>Expire</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']</td>
-	<td>Disabled Expire Button</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Expire' and @disabled='']</td>
-	<td>Disabled Expire Button</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_15_rowIds']</td>
-	<td>Row Entry Check Box</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]</td>
+	<td>Expire</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@name='_15_rowIds']</td>
-	<td>Row Entry Check Box</td>
-</tr>
-<tr>
-	<td>waitForElementNotPresent</td>
-	<td>//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']</td>
-	<td>Disabled Expire Button</td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']</td>
-	<td>Disabled Expire Button</td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>//input[@value='Expire' and @disabled='']</td>
-	<td>Disabled Expire Button</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Expire']</td>
-	<td>Enabled Expire Button</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>WC WebContent Title CheckBox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_rowIds']</td>
-	<td>Row Entry Check Box</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>WC WebContent Title CheckBox</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//input[@name='_15_rowIds']</td>
-	<td>Row Entry Check Box</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>WC WebContent Title CheckBox</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>WC WebContent Title CheckBox</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>WC WebContent Title CheckBox</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>WC WebContent Title CheckBox</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']</td>
-	<td>Disabled Expire Button</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]</td>
+	<td>Expire</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']</td>
-	<td>Disabled Expire Button</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]</td>
+	<td>Expire</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Expire' and @disabled='']</td>
-	<td>Disabled Expire Button</td>
+	<td>assertChecked</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>WC WebContent Title CheckBox</td>
 </tr>
-
-
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>WC WebContent Title CheckBox</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>WC WebContent Title CheckBox</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
 </tbody></table>
 </body>
 </html>

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 
 import java.lang.reflect.Array;
@@ -257,12 +258,12 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 					calendar.setLenient(false);
 					calendar.setTimeInMillis(
-						GetterUtil.getLong(value.toString()));
+						GetterUtil.getLong(_valueToString(value)));
 
 					parameterValue = calendar;
 				}
 				else if (parameterType.equals(List.class)) {
-					String stringValue = value.toString();
+					String stringValue = _valueToString(value);
 
 					stringValue = stringValue.trim();
 
@@ -281,11 +282,11 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				}
 				else if (parameterType.equals(Locale.class)) {
 					parameterValue = LocaleUtil.fromLanguageId(
-						value.toString());
+						_valueToString(value));
 				}
 				else if (parameterType.equals(Map.class)) {
 					Map<?, ?> map = JSONFactoryUtil.looseDeserializeSafe(
-						value.toString(), HashMap.class);
+						_valueToString(value), HashMap.class);
 
 					map = _generifyMap(
 						map, methodParameters[i].getGenericTypes());
@@ -293,7 +294,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					parameterValue = map;
 				}
 				else if (parameterType.isArray()) {
-					String stringValue = value.toString();
+					String stringValue = _valueToString(value);
 
 					stringValue = stringValue.trim();
 
@@ -315,7 +316,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 							value, parameterType);
 					}
 					catch (ClassCastException cce) {
-						String stringValue = value.toString();
+						String stringValue = _valueToString(value);
 
 						stringValue = stringValue.trim();
 
@@ -337,6 +338,17 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		}
 
 		return parameters;
+	}
+
+	private String _valueToString(Object value) {
+		Class<?> valueType = value.getClass();
+
+		if (valueType.isArray()) {
+			return StringUtil.merge((Object[])value);
+		}
+		else {
+			return value.toString();
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

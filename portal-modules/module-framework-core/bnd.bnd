@@ -1,0 +1,11 @@
+#Bundle-Activator: com.liferay.web.extender.internal.Activator
+Bundle-Name: Module Framework Core
+Bundle-SymbolicName: module-framework-core
+Export-Package: \
+	com.liferay.portal.module.framework
+Import-Package: \
+	com.liferay.portal.module.framework,\
+	*
+Include-Resource: classes
+Private-Package: \
+	com.liferay.portal.module.framework.internal.*

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<project name="portal-modules" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
+	<property name="project.dir" value=".." />
+
+	<import file="../build-common-java.xml" />
+
+	<target name="clean">
+		<antcall target="loop-modules">
+			<param name="loop.modules.cmd" value="clean-module" />
+		</antcall>
+	</target>
+
+	<target name="compile">
+		<antcall target="loop-modules">
+			<param name="loop.modules.cmd" value="compile-module" />
+		</antcall>
+	</target>
+
+	<target name="deploy">
+		<antcall target="loop-modules">
+			<param name="loop.modules.cmd" value="deploy-module" />
+		</antcall>
+	</target>
+
+	<target name="jar">
+		<antcall target="loop-modules">
+			<param name="loop.modules.cmd" value="jar-module" />
+		</antcall>
+	</target>
+</project>

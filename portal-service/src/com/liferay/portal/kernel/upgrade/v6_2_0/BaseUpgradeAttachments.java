@@ -167,7 +167,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 	protected long addDLFolder(
 			long folderId, long groupId, long companyId, long userId,
 			String userName, Timestamp createDate, long repositoryId,
-			long parentFolderId, String name, boolean hidden)
+			boolean mountPoint, long parentFolderId, String name,
+			boolean hidden)
 		throws Exception {
 
 		Connection con = null;
@@ -200,7 +201,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			ps.setTimestamp(7, createDate);
 			ps.setTimestamp(8, createDate);
 			ps.setLong(9, repositoryId);
-			ps.setBoolean(10, false);
+			ps.setBoolean(10, mountPoint);
 			ps.setLong(11, parentFolderId);
 			ps.setString(12, name);
 			ps.setString(13, StringPool.BLANK);
@@ -231,8 +232,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 		long folderId = addDLFolder(
 			increment(), groupId, companyId, userId, userName, createDate,
-			repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, portletId,
-			true);
+			repositoryId, true, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			portletId, true);
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -346,7 +347,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 		return addDLFolder(
 			increment(), groupId, companyId, userId, userName, createDate,
-			repositoryId, parentFolderId, name, hidden);
+			repositoryId, false, parentFolderId, name, hidden);
 	}
 
 	protected abstract String getPortletId();

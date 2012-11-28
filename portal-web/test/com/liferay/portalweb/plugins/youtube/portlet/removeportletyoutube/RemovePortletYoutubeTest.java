@@ -30,8 +30,8 @@ public class RemovePortletYoutubeTest extends BaseTestCase {
 			RuntimeVariables.replace("Youtube Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//img[@alt='Remove']");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
-		assertTrue(selenium.isElementNotPresent("//div/section"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to remove this component?");
+		assertTrue(selenium.isElementNotPresent("//section/header"));
 	}
 }

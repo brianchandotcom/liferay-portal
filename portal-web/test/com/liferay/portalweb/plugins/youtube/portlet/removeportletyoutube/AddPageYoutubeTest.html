@@ -12,35 +12,63 @@
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr><tr>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//nav[@id='navigation']</td>
-	<td>Navigation</td>
-</tr><tr>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//a[@id='addPage']</td>
-	<td>Add Page</td>
-</tr><tr>
+	<td>Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='addPage']</td>
+	<td>Page</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//a[@id='addPage']</td>
-	<td>Add Page</td>
-</tr><tr>
+	<td>Page</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//input[@type='text']</td>
 	<td>Page Name</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>type</td>
 	<td>//input[@type='text']</td>
 	<td>Youtube Test Page</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//button[contains(@id,'Save')]</td>
 	<td>Save</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>link=Youtube Test Page</td>
 	<td>Youtube Test Page</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Youtube Test Page</td>
 	<td>Youtube Test Page</td>

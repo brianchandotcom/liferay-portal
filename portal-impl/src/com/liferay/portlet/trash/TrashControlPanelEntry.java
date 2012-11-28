@@ -14,34 +14,23 @@
 
 package com.liferay.portlet.trash;
 
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.DefaultControlPanelEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-public class TrashControlPanelEntry extends BaseControlPanelEntry {
-
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return false;
-	}
+public class TrashControlPanelEntry extends DefaultControlPanelEntry {
 
 	@Override
-	public boolean isVisible(
-			Portlet portlet, String category, ThemeDisplay themeDisplay)
+	public boolean hasAccessPermissionDenied(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (!TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId())) {
-			return false;
-		}
-
-		return super.isVisible(portlet, category, themeDisplay);
+		return !TrashUtil.isTrashEnabled(group.getGroupId());
 	}
 
 }

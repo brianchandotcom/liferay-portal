@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow;
 
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -25,8 +26,8 @@ public class MyWorkflowInstancesControlPanelEntry
 	extends WorkflowControlPanelEntry {
 
 	@Override
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
+	protected boolean hasPermissionImplicit(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
 		if (WorkflowInstanceManagerUtil.getWorkflowInstanceCount(

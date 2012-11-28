@@ -14,31 +14,20 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class AdministratorControlPanelEntry extends BaseControlPanelEntry {
+public class AdministratorControlPanelEntry implements ControlPanelEntry {
 
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
 		return permissionChecker.isCompanyAdmin();
-	}
-
-	@Override
-	public boolean isVisible(
-			Portlet portlet, String category, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		return isVisible(permissionChecker, portlet);
 	}
 
 }

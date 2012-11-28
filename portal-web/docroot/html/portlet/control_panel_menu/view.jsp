@@ -242,7 +242,19 @@
 			}
 
 			List<Portlet> portlets = PortalUtil.getControlPanelPortlets(curCategory, themeDisplay);
-		%>
+
+			Iterator<Portlet> itr = portlets.iterator();
+
+			while (itr.hasNext()) {
+				Portlet portlet = itr.next();
+
+				String portletId = portlet.getPortletId();
+
+				if (Validator.isNotNull(controlPanelCategory) && controlPanelCategory.equals(PortletCategoryKeys.CONTENT) && (portletId.equals(PortletKeys.GROUP_PAGES) || portletId.equals(PortletKeys.SITE_MEMBERSHIPS_ADMIN) || portletId.equals(PortletKeys.SITE_SETTINGS))) {
+					itr.remove();
+				}
+			}
+			%>
 
 			<liferay-util:buffer var="categoryPortletsContent">
 				<c:if test="<%= !scopeLayouts.isEmpty() && curCategory.equals(PortletCategoryKeys.CONTENT) %>">

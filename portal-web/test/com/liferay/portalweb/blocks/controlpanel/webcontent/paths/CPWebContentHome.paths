@@ -1,0 +1,490 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPWebContentHome</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPWebContentHome</td></tr></thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Web Content Home Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMBS-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td>Breadcrumb 1</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[2]/span/a</td>
+	<td>Breadcrumb 2</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td>Breadcrumb 3</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>HEADER_PORTLET_TITLE</td>
+	<td>//h1[@id='cpPortletTitle']/span</td>
+	<td>Portlet Title</td>
+</tr>
+<tr>
+	<td>HEADER_PORTLET_DESCRIPTION</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Portlet Description</td>
+</tr>
+<tr>
+	<td>HEADER_PORTLET_SUCCESS</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Portlet Succes Message</td>
+</tr>
+<tr>
+	<td>HEADER_DELETE_WEB_CONTENT_CONFIRM</td>
+	<td></td>
+	<td>Confirmation Message</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS-->
+<tr>
+	<td>OPTIONS</td>
+	<td>xpath=(//ul[contains(@class,'lfr-component lfr-actions')]/li/strong/a)[2]</td>
+	<td>Options</td>
+</tr>
+<tr>
+	<td>OPTIONS_CONFIGURATION</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>OPTIONS_EXPORT_IMPORT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
+	<td>Export / Import</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BUTTONS-->
+<tr>
+	<td>BUTTONS_ALL_CHECKBOX</td>
+	<td>//input[@id='_15_allRowIdsCheckbox']</td>
+	<td>All Checkbox</td>
+</tr>
+<tr>
+	<td>BUTTONS_ACTIONS</td>
+	<td>//a[@id='_15_actionsButtonContainerButton']/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>BUTTONS_ADD</td>
+	<td>//a[@id='_15_tiym_menuButton']</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>BUTTONS_MANAGE</td>
+	<td>//a[@id='_15_hjzj_menuButton']</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>BUTTONS_ICON_VIEW</td>
+	<td>//span[@class='aui-toolbar-content']/button</td>
+	<td>Icon View</td>
+</tr>
+<tr>
+	<td>BUTTONS_DESCRIPTIVIE_VIEW</td>
+	<td>//span[@class='aui-toolbar-content']/button[2]</td>
+	<td>Description View</td>
+</tr>
+<tr>
+	<td>BUTTONS_LIST_VIEW</td>
+	<td>//span[@class='aui-toolbar-content']/button[3]</td>
+	<td>Manage View</td>
+</tr>
+<tr>
+	<td>BUTTONS_SEARCH_FIELD</td>
+	<td>//input[@id='_15_keywords']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>BUTTONS_SEARCH</td>
+	<td>//input[@id='_15_search']</td>
+	<td>Search Button</td>
+</tr>
+<tr>
+	<td>BUTTONS_SHOW_ADVANCED_SEARCH</td>
+	<td>//input[@id='_15_showAdvancedSearch']</td>
+	<td>Show Advanced Search</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS-->
+<tr>
+	<td>ACTIONS_DELETE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>ACTIONS_EXPIRE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]</td>
+	<td>Expire</td>
+</tr>
+<tr>
+	<td>ACTIONS_MOVE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD-->
+<tr>
+	<td>ADD_FOLDER</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Folder')]</td>
+	<td>Add Folder</td>
+</tr>
+<tr>
+	<td>ADD_BASIC_WEB_CONTENT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Add Basic Web Content</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MANAGE-->
+<tr>
+	<td>MANAGE_STRUCTURES</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Manage Structures</td>
+</tr>
+<tr>
+	<td>MANAGE_TEMPLATES</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>MANAGE_FEEDS</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Feeds')]</td>
+	<td>Manage Feeds</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADVANCED_SEARCH-->
+<tr>
+	<td>ADVANCED_SEARCH_MATCH</td>
+	<td>//select[@id='_15_andOperator']</td>
+	<td>Match Search</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_ID</td>
+	<td>//input[@id='_15_searchArticleId']</td>
+	<td>Search Id</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_TITLE</td>
+	<td>//input[@id='_15_title']</td>
+	<td>Search Title</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_DESCRIPTION</td>
+	<td>//input[@id='_15_description']</td>
+	<td>Search Description</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_CONTENT</td>
+	<td>//input[@id='_15_content']</td>
+	<td>Search Content</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_TYPE</td>
+	<td>//select[@id='_15_type']</td>
+	<td>Search Type</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_BUTTON</td>
+	<td>//form[@id='_15_fmAdvancedSearch']/span[2]/span/input</td>
+	<td>Advanced Search Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LEFT_HOME_MENU-->
+<tr>
+	<td>LEFT_HOME_MENU_HOME</td>
+	<td>//div[@id='_15_folderContainer']/ul/li/a[2]/span[2]</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>LEFT_HOME_MENU_HOME_DROP_DOWN</td>
+	<td>//span[contains(@class,'entry-action')]/span/ul/li/strong/a</td>
+	<td>Home Drop Down</td>
+</tr>
+<tr>
+	<td>LEFT_HOME_MENU_EXPAND_FOLDER</td>
+	<td>//span[@class='expand-folder-arrow']</td>
+	<td>Expand Folder</td>
+</tr>
+<tr>
+	<td>LEFT_HOME_MENU_RECENT</td>
+	<td>//div[@id='_15_folderContainer']/ul/li[2]/a/span[2]</td>
+	<td>Recent</td>
+</tr>
+<tr>
+	<td>LEFT_HOME_MENU_MINE</td>
+	<td>//div[@id='_15_folderContainer']/ul/li[3]/a/span[2]</td>
+	<td>Mine</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HOME-->
+<tr>
+	<td>HOME_ADD_FOLDER</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Folder')]</td>
+	<td>Add Folder</td>
+</tr>
+<tr>
+	<td>HOME_SUBSCRIBE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]</td>
+	<td>Subscribe</td>
+</tr>
+<tr>
+	<td>HOME_PERMISSIONS</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRIES-->
+<tr>
+	<td>ENTRIES_FOLDER_1</td>
+	<td>xpath=(//a[contains(@data-folder,'true')])[1]</td>
+	<td>Folder 1</td>
+</tr>
+<tr>
+	<td>ENTRIES_FOLDER_1_CHECKBOX</td>
+	<td>//input[@id='_15_rowIdsJournalFolderCheckbox'][1]</td>
+	<td>Folder 1 Checkbox</td>
+</tr>
+<tr>
+	<td>ENTRIES_FOLDER_1_ACTIONS_MENU</td>
+	<td>xpath=(//a[contains(@data-folder,'true')])[1]/preceding-sibling::span[contains(@class,'entry-action')]</td>
+	<td>Folder 1 Folder Menu</td>
+</tr>
+<tr>
+	<td>ENTRIES_FOLDER_2</td>
+	<td>xpath=(//a[contains(@data-folder,'true')])[2]</td>
+	<td>Folder 2</td>
+</tr>
+<tr>
+	<td>ENTRIES_FOLDER_2_CHECKBOX</td>
+	<td>//input[@id='_15_rowIdsJournalFolderCheckbox'][2]</td>
+	<td>Folder 2 Checkbox</td>
+</tr>
+<tr>
+	<td>ENTRIES_FOLDER_2_ACTIONS_MENU</td>
+	<td>xpath=(//a[contains(@data-folder,'true')])[2]/preceding-sibling::span[contains(@class,'entry-action')]</td>
+	<td>Folder 2 Folder Menu</td>
+</tr>
+<tr>
+	<td>ENTRIES_FOLDER_3</td>
+	<td>xpath=(//a[contains(@data-folder,'true')])[3]</td>
+	<td>Folder 3</td>
+</tr>
+<tr>
+	<td>ENTRIES_FOLDER_3_CHECKBOX</td>
+	<td>//input[@id='_15_rowIdsJournalFolderCheckbox'][3]</td>
+	<td>Folder 3 Checkbox</td>
+</tr>
+<tr>
+	<td>ENTRIES_FOLDER_3_ACTIONS_MENU</td>
+	<td>xpath=(//a[contains(@data-folder,'true')])[3]/preceding-sibling::span[contains(@class,'entry-action')]</td>
+	<td>Folder 3 Folder Menu</td>
+</tr>
+<tr>
+	<td>ENTRIES_ARTICLE_1</td>
+	<td>xpath=(//a[contains(@data-folder,'false')])[1]</td>
+	<td>Article 1</td>
+</tr>
+<tr>
+	<td>ENTRIES_ARTICLE_1_CHECKBOX</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox'][1]</td>
+	<td>Article 1 Checkbox</td>
+</tr>
+<tr>
+	<td>ENTRIES_ARTICLE_1_ACTIONS_MENU</td>
+	<td>xpath=(//a[contains(@data-folder,'false')])[1]/preceding-sibling::span[contains(@class,'entry-action')]</td>
+	<td>Article 1 Actions Menu</td>
+</tr>
+<tr>
+	<td>ENTRIES_ARTICLE_2</td>
+	<td>xpath=(//a[contains(@data-folder,'false')])[2]</td>
+	<td>Article 2</td>
+</tr>
+<tr>
+	<td>ENTRIES_ARTICLE_2_CHECKBOX</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox'][2]</td>
+	<td>Article 2 Checkbox</td>
+</tr>
+<tr>
+	<td>ENTRIES_ARTICLE_2_ACTIONS_MENU</td>
+	<td>xpath=(//a[contains(@data-folder,'false')])[2]/preceding-sibling::span[contains(@class,'entry-action')]</td>
+	<td>Article 2 Actions Menu</td>
+</tr>
+<tr>
+	<td>ENTRIES_ARTICLE_3</td>
+	<td>xpath=(//a[contains(@data-folder,'false')])[3]</td>
+	<td>Article 3</td>
+</tr>
+<tr>
+	<td>ENTRIES_ARTICLE_3_CHECKBOX</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox'][3]</td>
+	<td>Article 3 Checkbox</td>
+</tr>
+<tr>
+	<td>ENTRIES_ARTICLE_3_ACTIONS_MENU</td>
+	<td>xpath=(//a[contains(@data-folder,'false')])[3]/preceding-sibling::span[contains(@class,'entry-action')]</td>
+	<td>Article 3 Actions Menu</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WEB_CONTENT_FOLDER-->
+<tr>
+	<td>WEB_CONTENT_FOLDER_EDIT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit Folder</td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_FOLDER_MOVE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]</td>
+	<td>Move Folder</td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_FOLDER_DELETE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete Folder</td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_FOLDER_ADD_SUBFOLDER</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Subfolder')]</td>
+	<td>Add Subfolder</td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_FOLDER_EDIT_PERMISSIONS</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
+	<td>Folder Permissions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WEB_CONTENT_ARTICLE-->
+<tr>
+	<td>WEB_CONTENT_ARTICLE_EDIT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit Article</td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_ARTICLE_MOVE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]</td>
+	<td>Move Article</td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_ARTICLE_PERMISSIONS</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
+	<td>Article Permissions</td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_ARTICLE_VIEW</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]</td>
+	<td>View Article</td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_ARTICLE_COPY</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Copy')]</td>
+	<td>Copy Article</td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_ARTICLE_EXPIRE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]</td>
+	<td>Expire Article</td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_ARTICLE_DELETE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete Article</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGINATION-->
+<tr>
+	<td>PAGINATION_FIRST</td>
+	<td>xpath=(//a[contains(@class,'aui-paginator-first-link')])[2]</td>
+	<td>First</td>
+</tr>
+<tr>
+	<td>PAGINATION_PREVIOUS</td>
+	<td>xpath=(//a[contains(@class,'aui-paginator-prev-link')])[2]</td>
+	<td>Previous</td>
+</tr>
+<tr>
+	<td>PAGINATION_NEXT</td>
+	<td>xpath=(//a[contains(@class,'aui-paginator-next-link')])[2]</td>
+	<td>Next</td>
+</tr>
+<tr>
+	<td>PAGINATION_LAST</td>
+	<td>xpath=(//a[contains(@class,'aui-paginator-last-link')])[2]</td>
+	<td>Last</td>
+</tr>
+<tr>
+	<td>PAGINATION_OPTION</td>
+	<td>xpath=(//select[contains(@class,'aui-paginator-rows-per-page')])[2]</td>
+	<td>Pagination Option</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

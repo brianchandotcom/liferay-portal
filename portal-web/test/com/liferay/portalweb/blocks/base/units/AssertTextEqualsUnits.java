@@ -37,4 +37,24 @@ public class AssertTextEqualsUnits extends BaseActionsUnits {
 		selenium.waitForText(param1, param2);
 		selenium.assertText(param1, param2);
 	}
+
+	public void assertTextCKEditorWebContent(String param1, String param2)
+		throws Exception {
+		selenium.waitForElementPresent(
+			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
+		selenium.waitForVisible(
+			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
+		selenium.selectFrame(
+			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
+		selenium.waitForText("//body", param2);
+		selenium.assertText("//body", param2);
+		selenium.selectFrame("relative=top");
+	}
+
+	public void assertValue(String param1, String param2)
+		throws Exception {
+		selenium.waitForVisible(param1);
+		selenium.waitForValue(param1, param2);
+		selenium.assertValue(param1, param2);
+	}
 }

@@ -312,6 +312,22 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		}
 		catch (IllegalArgumentException iae) {
 		}
+
+		// hack 2
+
+		map.clear();
+		map.put("$secret = /foo/two", params);
+
+		json = toJSON(map);
+
+		jsonWebServiceAction = prepareInvokerAction(json);
+
+		result = jsonWebServiceAction.invoke();
+
+		invokerResult = (JSONWebServiceInvokerAction.InvokerResult)result;
+
+		Assert.assertEquals(
+			"{\"array\":[1,2,3],\"value\":\"value\"}", toJSON(invokerResult));
 	}
 
 

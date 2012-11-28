@@ -49,9 +49,29 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Add']</td>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -215,13 +235,53 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[3]/a</td>
+	<td>//a[@class='entry-link']/span[contains(.,'WC WebContent2 Title')]</td>
+	<td>WC WebContent2 Title</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@class='entry-link']/span[contains(.,'WC WebContent2 Title')]</td>
 	<td>WC WebContent2 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[4]/a</td>
-	<td>Approved</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>WC WebContent2 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='workflow-status']</td>
+	<td>Status: Approved</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_15_title_en_US']</td>
+	<td>WC WebContent2 Title</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//p</td>
+	<td>WC WebContent2 Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//p</td>
+	<td>WC WebContent2 Content</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody>
 </table>

@@ -76,9 +76,9 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 	>
 
 		<%
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+		WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(fileEntry.getFileEntryId());
 
-		WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(dlFileEntry.getFileEntryId());
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 		%>
 
 		<liferay-portlet:actionURL varImpl="rowURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">

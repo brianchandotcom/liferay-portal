@@ -31,22 +31,38 @@
 	</bean>
 	<bean id="com.liferay.portal.kernel.dao.orm.OrderFactoryUtil" class="com.liferay.portal.kernel.dao.orm.OrderFactoryUtil">
 		<property name="orderFactory">
-			<bean class="com.liferay.portal.dao.orm.jpa.OrderFactoryImpl" />
+			<bean class="com.liferay.portal.kernel.dao.orm.escape.EscapedOrderFactory">
+				<constructor-arg>
+					<bean class="com.liferay.portal.dao.orm.jpa.OrderFactoryImpl" />
+				</constructor-arg>
+			</bean>
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil" class="com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil">
 		<property name="projectionFactory">
-			<bean class="com.liferay.portal.dao.orm.jpa.ProjectionFactoryImpl" />
+			<bean class="com.liferay.portal.kernel.dao.orm.escape.EscapedProjectionFactory">
+				<constructor-arg>
+					<bean class="com.liferay.portal.dao.orm.jpa.ProjectionFactoryImpl" />
+				</constructor-arg>
+			</bean>
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil" class="com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil">
 		<property name="propertyFactory">
-			<bean class="com.liferay.portal.dao.orm.jpa.PropertyFactoryImpl" />
+			<bean class="com.liferay.portal.kernel.dao.orm.escape.EscapedPropertyFactory">
+				<constructor-arg>
+					<bean class="com.liferay.portal.dao.orm.jpa.PropertyFactoryImpl" />
+				</constructor-arg>
+			</bean>
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil" class="com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil">
 		<property name="restrictionsFactory">
-			<bean class="com.liferay.portal.dao.orm.jpa.RestrictionsFactoryImpl" />
+			<bean class="com.liferay.portal.kernel.dao.orm.escape.EscapedRestrictionsFactory">
+				<constructor-arg>
+					<bean class="com.liferay.portal.dao.orm.jpa.RestrictionsFactoryImpl" />
+				</constructor-arg>
+			</bean>
 		</property>
 	</bean>
 </beans>

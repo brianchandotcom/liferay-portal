@@ -16,7 +16,9 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
+<%@ page import="com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler" %><%@
+page import="com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistryUtil" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileVersion" %><%@
 page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
 page import="com.liferay.portal.kernel.search.Document" %><%@
@@ -44,6 +46,7 @@ page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
 page import="com.liferay.portlet.imagegallerydisplay.util.IGUtil" %><%@
+page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %>
 
 <%
@@ -86,6 +89,8 @@ boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
 
 boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null), true);
 boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null), true);
+
+String displayTemplate = preferences.getValue("displayTemplate", StringPool.BLANK);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

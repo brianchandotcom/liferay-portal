@@ -577,6 +577,10 @@ public interface PropsKeys {
 
 	public static final String DL_DEFAULT_DISPLAY_VIEW = "dl.default.display.view";
 
+	public static final String DL_DISPLAY_TEMPLATES_CONFIG = "dl.display.templates.config";
+
+	public static final String DL_DISPLAY_TEMPLATES_HELP = "dl.display.templates.help";
+
 	public static final String DL_DISPLAY_VIEWS = "dl.display.views";
 
 	public static final String DL_FILE_ENTRY_COMMENTS_ENABLED = "dl.file.entry.comments.enabled";

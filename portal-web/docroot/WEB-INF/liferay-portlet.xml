@@ -371,6 +371,7 @@
 		<friendly-url-mapping>image_gallery_display</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/imagegallerydisplay/image-gallery-display-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLDisplayPortletDataHandlerImpl</portlet-data-handler-class>
+		<portlet-display-template-handler>com.liferay.portlet.documentlibrary.template.DocumentLibraryPortletDisplayTemplateHandler</portlet-display-template-handler>
 		<webdav-storage-token>document_library</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>

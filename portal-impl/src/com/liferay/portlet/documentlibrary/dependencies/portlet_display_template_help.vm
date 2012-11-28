@@ -1,0 +1,30 @@
+##
+## You can use Velocity to define display templates for the Document and Media
+## portlet.
+##
+## A set of variables have been made available for the template developers:
+##
+##  $ddmTemplateId: the current template id
+##
+##  $entries: the list of file entries that are being shown in the portlet
+##
+##  $entry: the file entry when there's only one file entry
+##
+##  $locale: the locale of the site
+##
+##  $renderRequest: the render request
+##
+##  $renderResponse: the render response
+##
+##  $themeDisplay: the theme display
+##
+## It is possible to use these variables to create advanced templates to display
+## a set of file entries in your document and media portlet. Here's a simple
+## template example:
+##
+##  #foreach ($entry in $entries)
+##      <h1 class="file-title">
+##          $entry.getTitle()
+##      </h1>
+##  #end
+##

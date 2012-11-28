@@ -1000,9 +1000,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "announcementsEntry.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "announcementsEntry.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(announcementsEntry.uuid IS NULL OR announcementsEntry.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1 = "announcementsEntry.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 = "announcementsEntry.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(announcementsEntry.uuid_ IS NULL OR announcementsEntry.uuid_ = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsEntryModelImpl.FINDER_CACHE_ENABLED,
 			AnnouncementsEntryImpl.class,
@@ -1971,9 +1971,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "announcementsEntry.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "announcementsEntry.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(announcementsEntry.uuid IS NULL OR announcementsEntry.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "announcementsEntry.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "announcementsEntry.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(announcementsEntry.uuid_ IS NULL OR announcementsEntry.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "announcementsEntry.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID = new FinderPath(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsEntryModelImpl.FINDER_CACHE_ENABLED,

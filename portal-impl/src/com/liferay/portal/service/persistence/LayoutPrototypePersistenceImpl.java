@@ -992,9 +992,9 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "layoutPrototype.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layoutPrototype.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layoutPrototype.uuid IS NULL OR layoutPrototype.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1 = "layoutPrototype.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layoutPrototype.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layoutPrototype.uuid_ IS NULL OR layoutPrototype.uuid_ = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPrototypeModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPrototypeImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -1961,9 +1961,9 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "layoutPrototype.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "layoutPrototype.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layoutPrototype.uuid IS NULL OR layoutPrototype.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "layoutPrototype.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "layoutPrototype.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layoutPrototype.uuid_ IS NULL OR layoutPrototype.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "layoutPrototype.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
 		new FinderPath(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
@@ -3701,7 +3701,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	}
 
 	private static final String _FINDER_COLUMN_C_A_COMPANYID_2 = "layoutPrototype.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 = "layoutPrototype.active = ?";
+	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 = "layoutPrototype.active_ = ?";
 
 	/**
 	 * Caches the layout prototype in the entity cache if it is enabled.

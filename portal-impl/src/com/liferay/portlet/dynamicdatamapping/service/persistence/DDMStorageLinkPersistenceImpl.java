@@ -597,9 +597,9 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ddmStorageLink.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddmStorageLink.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddmStorageLink.uuid IS NULL OR ddmStorageLink.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ddmStorageLink.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddmStorageLink.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddmStorageLink.uuid_ IS NULL OR ddmStorageLink.uuid_ = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_CLASSPK = new FinderPath(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStorageLinkModelImpl.FINDER_CACHE_ENABLED,
 			DDMStorageLinkImpl.class, FINDER_CLASS_NAME_ENTITY,

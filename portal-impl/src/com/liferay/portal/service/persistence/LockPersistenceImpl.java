@@ -588,9 +588,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "lock.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "lock.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(lock.uuid IS NULL OR lock.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1 = "lock.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 = "lock.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(lock.uuid_ IS NULL OR lock.uuid_ = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockModelImpl.FINDER_CACHE_ENABLED, LockImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -1136,9 +1136,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "lock.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "lock.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(lock.uuid IS NULL OR lock.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "lock.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "lock.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(lock.uuid_ IS NULL OR lock.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "lock.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LTEXPIRATIONDATE =
 		new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
@@ -1916,9 +1916,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	private static final String _FINDER_COLUMN_C_K_CLASSNAME_1 = "lock.className IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_K_CLASSNAME_2 = "lock.className = ? AND ";
 	private static final String _FINDER_COLUMN_C_K_CLASSNAME_3 = "(lock.className IS NULL OR lock.className = ?) AND ";
-	private static final String _FINDER_COLUMN_C_K_KEY_1 = "lock.key IS NULL";
-	private static final String _FINDER_COLUMN_C_K_KEY_2 = "lock.key = ?";
-	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(lock.key IS NULL OR lock.key = ?)";
+	private static final String _FINDER_COLUMN_C_K_KEY_1 = "lock.key_ IS NULL";
+	private static final String _FINDER_COLUMN_C_K_KEY_2 = "lock.key_ = ?";
+	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(lock.key_ IS NULL OR lock.key_ = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_K_O = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockModelImpl.FINDER_CACHE_ENABLED, LockImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K_O",
@@ -2247,9 +2247,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	private static final String _FINDER_COLUMN_C_K_O_CLASSNAME_1 = "lock.className IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_K_O_CLASSNAME_2 = "lock.className = ? AND ";
 	private static final String _FINDER_COLUMN_C_K_O_CLASSNAME_3 = "(lock.className IS NULL OR lock.className = ?) AND ";
-	private static final String _FINDER_COLUMN_C_K_O_KEY_1 = "lock.key IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_K_O_KEY_2 = "lock.key = ? AND ";
-	private static final String _FINDER_COLUMN_C_K_O_KEY_3 = "(lock.key IS NULL OR lock.key = ?) AND ";
+	private static final String _FINDER_COLUMN_C_K_O_KEY_1 = "lock.key_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_K_O_KEY_2 = "lock.key_ = ? AND ";
+	private static final String _FINDER_COLUMN_C_K_O_KEY_3 = "(lock.key_ IS NULL OR lock.key_ = ?) AND ";
 	private static final String _FINDER_COLUMN_C_K_O_OWNER_1 = "lock.owner IS NULL";
 	private static final String _FINDER_COLUMN_C_K_O_OWNER_2 = "lock.owner = ?";
 	private static final String _FINDER_COLUMN_C_K_O_OWNER_3 = "(lock.owner IS NULL OR lock.owner = ?)";

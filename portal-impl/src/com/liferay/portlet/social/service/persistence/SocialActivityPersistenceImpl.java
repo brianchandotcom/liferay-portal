@@ -4462,7 +4462,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	private static final String _FINDER_COLUMN_G_U_C_C_T_R_USERID_2 = "socialActivity.userId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_C_C_T_R_CLASSNAMEID_2 = "socialActivity.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_C_C_T_R_CLASSPK_2 = "socialActivity.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_G_U_C_C_T_R_TYPE_2 = "socialActivity.type = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_C_C_T_R_TYPE_2 = "socialActivity.type_ = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_C_C_T_R_RECEIVERUSERID_2 = "socialActivity.receiverUserId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_U_CD_C_C_T_R = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
@@ -4813,7 +4813,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	private static final String _FINDER_COLUMN_G_U_CD_C_C_T_R_CREATEDATE_2 = "socialActivity.createDate = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_CD_C_C_T_R_CLASSNAMEID_2 = "socialActivity.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_CD_C_C_T_R_CLASSPK_2 = "socialActivity.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_G_U_CD_C_C_T_R_TYPE_2 = "socialActivity.type = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_CD_C_C_T_R_TYPE_2 = "socialActivity.type_ = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_CD_C_C_T_R_RECEIVERUSERID_2 = "socialActivity.receiverUserId = ?";
 
 	/**

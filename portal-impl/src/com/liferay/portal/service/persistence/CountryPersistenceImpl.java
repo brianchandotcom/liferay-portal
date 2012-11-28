@@ -1247,7 +1247,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "country.active = ?";
+	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "country.active_ = ?";
 
 	/**
 	 * Caches the country in the entity cache if it is enabled.

@@ -2312,7 +2312,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	}
 
 	private static final String _FINDER_COLUMN_G_A_GROUPID_2 = "scFrameworkVersion.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_ACTIVE_2 = "scFrameworkVersion.active = ?";
+	private static final String _FINDER_COLUMN_G_A_ACTIVE_2 = "scFrameworkVersion.active_ = ?";
 
 	/**
 	 * Caches the s c framework version in the entity cache if it is enabled.

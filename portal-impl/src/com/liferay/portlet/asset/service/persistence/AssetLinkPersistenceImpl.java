@@ -2051,7 +2051,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	}
 
 	private static final String _FINDER_COLUMN_E1_T_ENTRYID1_2 = "assetLink.entryId1 = ? AND ";
-	private static final String _FINDER_COLUMN_E1_T_TYPE_2 = "assetLink.type = ?";
+	private static final String _FINDER_COLUMN_E1_T_TYPE_2 = "assetLink.type_ = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_E2_T = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE2_T",
@@ -2562,7 +2562,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	}
 
 	private static final String _FINDER_COLUMN_E2_T_ENTRYID2_2 = "assetLink.entryId2 = ? AND ";
-	private static final String _FINDER_COLUMN_E2_T_TYPE_2 = "assetLink.type = ?";
+	private static final String _FINDER_COLUMN_E2_T_TYPE_2 = "assetLink.type_ = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_E_E_T = new FinderPath(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkModelImpl.FINDER_CACHE_ENABLED, AssetLinkImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByE_E_T",
@@ -2815,7 +2815,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 	private static final String _FINDER_COLUMN_E_E_T_ENTRYID1_2 = "assetLink.entryId1 = ? AND ";
 	private static final String _FINDER_COLUMN_E_E_T_ENTRYID2_2 = "assetLink.entryId2 = ? AND ";
-	private static final String _FINDER_COLUMN_E_E_T_TYPE_2 = "assetLink.type = ?";
+	private static final String _FINDER_COLUMN_E_E_T_TYPE_2 = "assetLink.type_ = ?";
 
 	/**
 	 * Caches the asset link in the entity cache if it is enabled.

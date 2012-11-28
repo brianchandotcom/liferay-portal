@@ -609,9 +609,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "dlFolder.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "dlFolder.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(dlFolder.uuid IS NULL OR dlFolder.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1 = "dlFolder.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 = "dlFolder.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(dlFolder.uuid_ IS NULL OR dlFolder.uuid_ = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
 			DLFolderModelImpl.FINDER_CACHE_ENABLED, DLFolderImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -862,9 +862,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "dlFolder.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "dlFolder.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(dlFolder.uuid IS NULL OR dlFolder.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "dlFolder.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "dlFolder.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(dlFolder.uuid_ IS NULL OR dlFolder.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "dlFolder.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
 			DLFolderModelImpl.FINDER_CACHE_ENABLED, DLFolderImpl.class,
@@ -1416,9 +1416,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "dlFolder.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "dlFolder.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(dlFolder.uuid IS NULL OR dlFolder.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "dlFolder.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "dlFolder.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(dlFolder.uuid_ IS NULL OR dlFolder.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "dlFolder.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
 			DLFolderModelImpl.FINDER_CACHE_ENABLED, DLFolderImpl.class,
@@ -7587,7 +7587,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	private static final String _FINDER_COLUMN_G_M_P_H_GROUPID_2 = "dlFolder.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_M_P_H_MOUNTPOINT_2 = "dlFolder.mountPoint = ? AND ";
 	private static final String _FINDER_COLUMN_G_M_P_H_PARENTFOLDERID_2 = "dlFolder.parentFolderId = ? AND ";
-	private static final String _FINDER_COLUMN_G_M_P_H_HIDDEN_2 = "dlFolder.hidden = ?";
+	private static final String _FINDER_COLUMN_G_M_P_H_HIDDEN_2 = "dlFolder.hidden_ = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_M_P_S = new FinderPath(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
 			DLFolderModelImpl.FINDER_CACHE_ENABLED, DLFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M_P_S",

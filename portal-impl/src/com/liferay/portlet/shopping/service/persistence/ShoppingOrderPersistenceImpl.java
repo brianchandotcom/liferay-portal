@@ -1156,9 +1156,9 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_NUMBER_NUMBER_1 = "shoppingOrder.number IS NULL";
-	private static final String _FINDER_COLUMN_NUMBER_NUMBER_2 = "shoppingOrder.number = ?";
-	private static final String _FINDER_COLUMN_NUMBER_NUMBER_3 = "(shoppingOrder.number IS NULL OR shoppingOrder.number = ?)";
+	private static final String _FINDER_COLUMN_NUMBER_NUMBER_1 = "shoppingOrder.number_ IS NULL";
+	private static final String _FINDER_COLUMN_NUMBER_NUMBER_2 = "shoppingOrder.number_ = ?";
+	private static final String _FINDER_COLUMN_NUMBER_NUMBER_3 = "(shoppingOrder.number_ IS NULL OR shoppingOrder.number_ = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_PPTXNID = new FinderPath(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingOrderModelImpl.FINDER_CACHE_ENABLED,
 			ShoppingOrderImpl.class, FINDER_CLASS_NAME_ENTITY,

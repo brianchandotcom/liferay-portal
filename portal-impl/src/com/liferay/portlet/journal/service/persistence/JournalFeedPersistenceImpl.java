@@ -595,9 +595,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "journalFeed.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "journalFeed.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(journalFeed.uuid IS NULL OR journalFeed.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1 = "journalFeed.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 = "journalFeed.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(journalFeed.uuid_ IS NULL OR journalFeed.uuid_ = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 			JournalFeedModelImpl.FINDER_CACHE_ENABLED, JournalFeedImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -848,9 +848,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "journalFeed.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "journalFeed.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(journalFeed.uuid IS NULL OR journalFeed.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "journalFeed.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "journalFeed.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(journalFeed.uuid_ IS NULL OR journalFeed.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "journalFeed.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 			JournalFeedModelImpl.FINDER_CACHE_ENABLED, JournalFeedImpl.class,
@@ -1402,9 +1402,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "journalFeed.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "journalFeed.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(journalFeed.uuid IS NULL OR journalFeed.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "journalFeed.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "journalFeed.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(journalFeed.uuid_ IS NULL OR journalFeed.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "journalFeed.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 			JournalFeedModelImpl.FINDER_CACHE_ENABLED, JournalFeedImpl.class,

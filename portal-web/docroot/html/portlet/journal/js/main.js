@@ -3165,7 +3165,7 @@ AUI.add(
 									content = imageInputValue;
 								}
 								else {
-									var imageContent = componentContainer.one('.journal-image-preview input');
+									var imageContent = componentContainer.one('.journal-image-preview input.journal-image-preview-content');
 
 									if (imageContent) {
 										content = imageContent.val();

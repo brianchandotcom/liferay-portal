@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.service.ServiceContext;
@@ -38,8 +37,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.query.FieldConditionImpl;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Junction;
 import com.liferay.portlet.dynamicdatamapping.storage.query.LogicalOperator;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
-
-import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -231,42 +228,8 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 			DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(
 				classPK);
 
-			Document document = SAXReaderUtil.read(ddmContent.getXml());
-
-			if ((conditionXPath != null) &&
-				!conditionXPath.booleanValueOf(document)) {
-
-				continue;
-			}
-
-			Fields fields = new Fields();
-
-			Element rootElement = document.getRootElement();
-
-			List<Element> dynamicElementElements = rootElement.elements(
-				"dynamic-element");
-
-			for (Element dynamicElementElement : dynamicElementElements) {
-				String fieldName = dynamicElementElement.attributeValue("name");
-				String fieldValue = dynamicElementElement.elementText(
-					"dynamic-content");
-
-				if (!ddmStructure.hasField(fieldName) ||
-					((fieldNames != null) && !fieldNames.contains(fieldName))) {
-
-					continue;
-				}
-
-				String fieldDataType = ddmStructure.getFieldDataType(fieldName);
-
-				Serializable fieldValueSerializable =
-					FieldConstants.getSerializable(fieldDataType, fieldValue);
-
-				Field field = new Field(
-					ddmStructureId, fieldName, fieldValueSerializable);
-
-				fields.put(field);
-			}
+			Fields fields = DDMXMLUtil.getFields(
+				ddmStructure, conditionXPath, ddmContent.getXml(), fieldNames);
 
 			fieldsList.add(fields);
 		}

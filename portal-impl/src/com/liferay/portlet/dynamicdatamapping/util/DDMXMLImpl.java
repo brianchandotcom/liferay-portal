@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.util.xml.XMLFormatter;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -75,6 +78,65 @@ public class DDMXMLImpl implements DDMXML {
 		catch (org.dom4j.DocumentException de) {
 			throw new SystemException(de);
 		}
+	}
+
+	public Fields getFields(DDMStructure ddmStructure, String xml)
+		throws PortalException, SystemException {
+
+		return getFields(ddmStructure, null, xml, null);
+	}
+
+	public Fields getFields(
+		DDMStructure ddmStructure, XPath conditionXPath, String xml,
+			List<String> fieldNames)
+		throws PortalException, SystemException {
+
+		Document document = null;
+
+		try {
+			document = SAXReaderUtil.read(xml);
+		}
+		catch (DocumentException e) {
+			return null;
+		}
+
+		if ((conditionXPath != null) &&
+				!conditionXPath.booleanValueOf(document)) {
+
+			return null;
+		}
+
+		Fields fields = new Fields();
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> dynamicElementElements = rootElement.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			String fieldName = dynamicElementElement.attributeValue("name");
+			String fieldValue = dynamicElementElement.elementText(
+				"dynamic-content");
+
+			if (!ddmStructure.hasField(fieldName) ||
+				((fieldNames != null) && !fieldNames.contains(fieldName))) {
+
+				continue;
+			}
+
+			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
+
+			Serializable fieldValueSerializable =
+				FieldConstants.getSerializable(fieldDataType, fieldValue);
+
+			Field field = new Field(
+				ddmStructure.getStructureId(), fieldName,
+				fieldValueSerializable);
+
+			fields.put(field);
+		}
+
+		return fields;
 	}
 
 	public String getXML(Fields fields)

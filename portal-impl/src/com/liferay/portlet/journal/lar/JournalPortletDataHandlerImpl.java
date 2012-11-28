@@ -1438,17 +1438,20 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		boolean legacyURL = true;
 
+		String contextPath = PortalUtil.getPathContext();
+
 		while (true) {
 			currentLocation = content.lastIndexOf(
-				"/c/document_library/get_file?", beginPos);
+				contextPath.concat("/c/document_library/get_file?"), beginPos);
 
 			if (currentLocation == -1) {
 				currentLocation = content.lastIndexOf(
-					"/image/image_gallery?", beginPos);
+					contextPath.concat("/image/image_gallery?"), beginPos);
 			}
 
 			if (currentLocation == -1) {
-				currentLocation = content.lastIndexOf("/documents/", beginPos);
+				currentLocation = content.lastIndexOf(
+					contextPath.concat("/documents/"), beginPos);
 
 				legacyURL = false;
 			}
@@ -1457,7 +1460,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				return sb.toString();
 			}
 
-			beginPos = currentLocation;
+			beginPos = currentLocation + contextPath.length();
 
 			int endPos1 = content.indexOf(CharPool.APOSTROPHE, beginPos);
 			int endPos2 = content.indexOf(CharPool.CLOSE_BRACKET, beginPos);
@@ -1658,6 +1661,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				dlReferenceElement.addAttribute("path", path);
 
 				String dlReference = "[$dl-reference=" + path + "$]";
+
+				beginPos = currentLocation;
 
 				sb.replace(beginPos, endPos, dlReference);
 			}

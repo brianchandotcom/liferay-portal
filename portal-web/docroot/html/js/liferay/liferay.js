@@ -40,15 +40,11 @@ Liferay = window.Liferay || {};
 		Service.invoke.apply(Service, args);
 	};
 
-	var URL_BASE = themeDisplay.getPathContext() + '/api/jsonws/';
-
-	Service.URL_BASE = URL_BASE;
-
-	Service.URL_INVOKE = URL_BASE + 'invoke';
-
 	A.mix(
 		Service,
 		{
+			URL_INVOKE: themeDisplay.getPathContext() + '/api/jsonws/invoke',
+
 			bind: function() {
 				var instance = this;
 
@@ -63,7 +59,7 @@ Liferay = window.Liferay || {};
 				var instance = this;
 
 				return A.io.request(
-					Service.URL_INVOKE,
+					instance.URL_INVOKE,
 					A.merge(
 						{
 							data: {
@@ -79,8 +75,6 @@ Liferay = window.Liferay || {};
 
 			parseInvokeArgs: function(args) {
 				var instance = this;
-
-				args = A.Array(args, 0, true);
 
 				var payload = args[0];
 
@@ -102,66 +96,62 @@ Liferay = window.Liferay || {};
 
 				delete payload.io;
 
-				var ioData = args[1];
-
-				if (ioData && !Lang.isFunction(ioData) && (ioData.nodeType || ioData._node)) {
-					args.splice(1, 1);
-
-					var formConfig = A.namespace.call(ioConfig, 'form');
-
-					formConfig.id = ioData._node || ioData;
-				}
-
-				var callbackConfig = A.namespace.call(ioConfig, 'on');
-
-				if (!callbackConfig.success) {
+				if (!(ioConfig.on && ioConfig.on.success)) {
 					var callbacks = A.Array.filter(
 						args,
 						function(item, index, collection) {
-							return index > 0 && Lang.isFunction(item);
+							return Lang.isFunction(item);
 						}
 					);
 
-					var successCallback = callbacks[0];
-					var	exceptionCallback = callbacks[1];
+					var callbackSuccess = callbacks[0];
+					var callbackException = callbacks[1];
 
-					callbackConfig.success = function(event) {
+					if (!callbackException) {
+						callbackException = callbackSuccess;
+					}
+
+					A.namespace.call(ioConfig, 'on');
+
+					ioConfig.on.success = function(event) {
 						var responseData = this.get('responseData');
 
-						if ((!responseData || responseData.exception) && exceptionCallback) {
+						if (responseData && !owns(responseData, 'exception')) {
+							if (callbackSuccess) {
+								callbackSuccess.call(this, responseData);
+							}
+						}
+						else if (callbackException) {
 							var exception = responseData ? responseData.exception : 'The server returned an empty response';
 
-							exceptionCallback.call(this, exception, responseData);
-						}
-						else {
-							successCallback.call(this, responseData);
+							callbackException.call(this, exception, responseData);
 						}
 					};
 				}
 
-				var method = ioConfig.method;
-
-				var argLength = args.length;
-
-				var lastArg = args[argLength - 1];
-
-				if (argLength >= 1 && Lang.isObject(lastArg, true)) {
-					method = lastArg.method || null;
-				}
-
-				if (!owns(ioConfig, 'cache') && REGEX_METHOD_GET.test(method)) {
+				if (!owns(ioConfig, 'cache') && REGEX_METHOD_GET.test(ioConfig.method)) {
 					ioConfig.cache = false;
 				}
 
 				if (Liferay.PropsValues.NTLM_AUTH_ENABLED && Liferay.Browser.isIe()) {
-					method = 'GET';
+					ioConfig.method = 'GET';
 				}
 
-				if (method) {
-					ioConfig.method = method;
-				}
+				instance.parseIOFormConfig(ioConfig, args);
 
 				return ioConfig;
+			},
+
+			parseIOFormConfig: function(ioConfig, args) {
+				var instance = this;
+
+				var lastArg = args[args.length - 1];
+
+				if (lastArg._node || lastArg.nodeType) {
+					A.namespace.call(ioConfig, 'form');
+
+					ioConfig.form.id = A.one(lastArg);
+				}
 			},
 
 			parseStringPayload: function(args) {

@@ -480,7 +480,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		WikiPage latestPage = null;
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(6);
 
 		for (WikiPage page : pages) {
 			SyndEntry syndEntry = new SyndEntryImpl();
@@ -496,8 +496,10 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			sb.setIndex(0);
 
 			sb.append(entryURL);
-			sb.append(StringPool.AMPERSAND);
-			sb.append(HttpUtil.encodeURL(page.getTitle()));
+
+			if (entryURL.endsWith(StringPool.SLASH)) {
+				sb.append(HttpUtil.encodeURL(page.getTitle()));
+			}
 
 			if (diff) {
 				if (latestPage != null) {

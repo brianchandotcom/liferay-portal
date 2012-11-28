@@ -64,7 +64,7 @@ public class RuntimeChecker extends BaseReflectChecker {
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_ACCESS_DECLARED_MEMBERS)) {
-			if (!hasReflect(permission.getName(), permission.getActions())) {
+			if (!hasReflect(permission)) {
 				throwSecurityException(
 					_log, "Attempted to access declared members");
 			}

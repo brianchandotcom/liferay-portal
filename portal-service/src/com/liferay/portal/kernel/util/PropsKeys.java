@@ -101,7 +101,7 @@ public interface PropsKeys {
 
 	public static final String ASSET_CATEGORIES_SEARCH_HIERARCHICAL = "asset.categories.search.hierarchical";
 
-	public static final String ASSET_CATEGORIES_SELECTOR_PAGE_SIZE = "asset.categories.selector.page.size";
+	public static final String ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES = "asset.categories.selector.max.entries";
 
 	public static final String ASSET_ENTRY_INCREMENT_VIEW_COUNTER_ENABLED = "asset.entry.increment.view.counter.enabled";
 

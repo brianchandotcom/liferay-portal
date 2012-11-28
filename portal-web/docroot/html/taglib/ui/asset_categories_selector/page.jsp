@@ -24,7 +24,7 @@ long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset
 String hiddenInput = (String)request.getAttribute("liferay-ui:asset-categories-selector:hiddenInput");
 String curCategoryIds = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-categories-selector:curCategoryIds"), "");
 String curCategoryNames = StringPool.BLANK;
-int pageSize = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_PAGE_SIZE));
+int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
 
 List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
 
@@ -106,7 +106,7 @@ if (Validator.isNotNull(className)) {
 					hiddenInput: '#<%= namespace + hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>',
 					instanceVar: '<%= namespace + randomNamespace %>',
 					labelNode: '#<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>',
-					pageSize: <%= pageSize %>,
+					maxEntries: <%= maxEntries %>,
 					portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 					singleSelect: <%= !vocabulary.isMultiValued() %>,
 					vocabularyGroupIds: '<%= vocabulary.getGroupId() %>',
@@ -141,7 +141,7 @@ else {
 				curEntryIds: '<%= categoryIdsTitles[0] %>',
 				hiddenInput: '#<%= namespace + hiddenInput %>',
 				instanceVar: '<%= namespace + randomNamespace %>',
-				pageSize: <%= pageSize %>,
+				maxEntries: <%= maxEntries %>,
 				portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 				vocabularyGroupIds: '<%= scopeGroupId %>',
 				vocabularyIds: '<%= ListUtil.toString(vocabularies, "vocabularyId") %>'

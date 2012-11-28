@@ -50,7 +50,7 @@ AUI.add(
 		 * vocabularyGroupIds (string): The groupIds of the vocabularies.
 		 *
 		 * Optional
-		 * pageSize {object}: the page size in case of pagination. -1 indicates no pagination.
+		 * maxEntries {Number}: The maximum number of entries which should be loaded. The default value is -1 will load all categories.
 		 * portalModelResource {boolean}: Whether the asset model is on the portal level.
 		 */
 
@@ -87,8 +87,9 @@ AUI.add(
 						},
 						value: null
 					},
-					pageSize: {
-						value: false
+					maxEntries: {
+						validator: Lang.isNumber,
+						value: -1
 					},
 					singleSelect: {
 						validator: Lang.isBoolean,
@@ -263,9 +264,15 @@ AUI.add(
 
 						if (vocabularyIds.length > 0) {
 							Liferay.Service(
-								'/assetvocabulary/get-vocabularies',
 								{
-									vocabularyIds: vocabularyIds
+									"$vocabularies = /assetvocabulary/get-vocabularies": {
+										"vocabularyIds": vocabularyIds,
+
+										"$categoriesCount = /assetcategory/get-vocabulary-categories-count": {
+											"groupId": themeDisplay.getScopeGroupId(),
+											"@vocabularyId": "$vocabularies.vocabularyId"
+										}
+									}
 								},
 								callback
 							);
@@ -278,10 +285,16 @@ AUI.add(
 							groupIds.push(themeDisplay.getCompanyGroupId());
 
 							Liferay.Service(
-								'/assetvocabulary/get-groups-vocabularies',
 								{
-									groupIds: groupIds,
-									className: className
+									"$vocabularies = /assetvocabulary/get-groups-vocabularies": {
+										"groupIds": groupIds,
+										"className": className,
+
+										"$categoriesCount = /assetcategory/get-vocabulary-categories-count": {
+											"groupId": "$vocabularies.groupId",
+											"@vocabularyId": "$vocabularies.vocabularyId"
+										}
+									}
 								},
 								callback
 							);
@@ -564,20 +577,20 @@ AUI.add(
 							type: 'io'
 						};
 
-						var paginatorParams = {};
-						var pageSize = instance.get('pageSize');
+						var paginatorConfig = {
+							end: -1,
+							offsetParam: 'start',
+							start: -1
+						};
 
-						if (!pageSize || pageSize === -1 ) {
-							paginatorParams = {
-								end: -1,
+						var maxEntries = instance.get('maxEntries');
+
+						if (maxEntries > 0) {
+							paginatorConfig = {
+								limit: maxEntries,
 								offsetParam: 'start',
-								start: -1
-							}
-						} else {
-							paginatorParams = {
-								offsetParam: 'start',
-								limit: pageSize
-							}
+								total: item.categoriesCount
+							};
 						}
 
 						instance.TREEVIEWS[vocabularyId] = new A.TreeView(
@@ -605,7 +618,7 @@ AUI.add(
 									formatter: A.bind(instance._formatJSONResult, instance),
 									url: themeDisplay.getPathMain() + '/asset/get_categories'
 								},
-								paginator: paginatorParams
+								paginator: paginatorConfig
 							}
 						).render(popup.entriesNode);
 					}

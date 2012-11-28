@@ -10,7 +10,7 @@
 	</#if>
 
 	<#if !finderCol.isPrimitiveType()>
-		private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.DBName?upper_case}_1 =
+		private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_1 =
 
 		<#if finderCol.comparator == "=">
 			"${entity.alias}<#if entity.hasCompoundPK() && finderCol.isPrimary()>.id</#if>.${finderCol.DBName} IS NULL${finderColConjunction}"
@@ -37,21 +37,21 @@
 		</#if>
 	</#if>
 
-	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.DBName?upper_case}_2 = "${finderColExpression}${finderColConjunction}";
+	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_2 = "${finderColExpression}${finderColConjunction}";
 
 	<#if finderCol.type == "String">
-		private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.DBName?upper_case}_3 = "(${entity.alias}<#if entity.hasCompoundPK() && finderCol.isPrimary()>.id</#if>.${finderCol.DBName} IS NULL OR ${finderColExpression})${finderColConjunction}";
+		private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_3 = "(${entity.alias}<#if entity.hasCompoundPK() && finderCol.isPrimary()>.id</#if>.${finderCol.DBName} IS NULL OR ${finderColExpression})${finderColConjunction}";
 	</#if>
 
 	<#if finder.hasArrayableOperator()>
 		<#if !finderCol.isPrimitiveType()>
-			private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.DBName?upper_case}_4 = "(" + _removeConjunction(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.DBName?upper_case}_1) + ")";
+			private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_4 = "(" + _removeConjunction(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_1) + ")";
 		</#if>
 
-		private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.DBName?upper_case}_5 = "(" + _removeConjunction(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.DBName?upper_case}_2) + ")";
+		private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_5 = "(" + _removeConjunction(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_2) + ")";
 
 		<#if finderCol.type == "String">
-			private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.DBName?upper_case}_6 = "(" + _removeConjunction(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.DBName?upper_case}_3) + ")";
+			private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_6 = "(" + _removeConjunction(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_3) + ")";
 		</#if>
 	</#if>
 </#list>

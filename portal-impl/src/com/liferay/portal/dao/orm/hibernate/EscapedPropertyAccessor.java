@@ -15,6 +15,7 @@
 package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.util.CharPool;
+
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.property.BasicPropertyAccessor;
 import org.hibernate.property.Getter;
@@ -26,20 +27,8 @@ import org.hibernate.property.Setter;
 public class EscapedPropertyAccessor extends BasicPropertyAccessor {
 
 	@Override
-	public Setter getSetter(Class clazz, String propertyName)
-		throws PropertyNotFoundException {
-
-		if (propertyName.charAt(propertyName.length() - 1) ==
-				CharPool.UNDERLINE) {
-
-			propertyName = propertyName.substring(0, propertyName.length() - 1);
-		}
-
-		return super.getSetter(clazz, propertyName);
-	}
-
-	@Override
-	public Getter getGetter(Class clazz, String propertyName)
+	public Getter getGetter(
+			@SuppressWarnings("rawtypes") Class clazz, String propertyName)
 		throws PropertyNotFoundException {
 
 		if (propertyName.charAt(propertyName.length() - 1) ==
@@ -49,6 +38,20 @@ public class EscapedPropertyAccessor extends BasicPropertyAccessor {
 		}
 
 		return super.getGetter(clazz, propertyName);
+	}
+
+	@Override
+	public Setter getSetter(
+			@SuppressWarnings("rawtypes") Class clazz, String propertyName)
+		throws PropertyNotFoundException {
+
+		if (propertyName.charAt(propertyName.length() - 1) ==
+				CharPool.UNDERLINE) {
+
+			propertyName = propertyName.substring(0, propertyName.length() - 1);
+		}
+
+		return super.getSetter(clazz, propertyName);
 	}
 
 }

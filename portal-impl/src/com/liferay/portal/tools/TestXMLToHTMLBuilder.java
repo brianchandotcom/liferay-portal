@@ -60,13 +60,25 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		}
 	}
 
-	protected void generateCSS(String testFilePath) throws Exception {
-		String sourcePath = basedir +
-			"/com/liferay/portalweb/blocks/styles/style.css";
+	protected void getDependencies(String testFilePath) throws Exception {
+		String sourcePath = basedir + "/com/liferay/portalweb/blocks/styles/";
 
-		String destinationPath = basedir + "/" + testFilePath + "/style.css";
+		String destinationPath = basedir + "/" + testFilePath + "/";
 
-		FileUtil.copyFile(sourcePath, destinationPath);
+		if (!FileUtil.exists(destinationPath + "style.css")) {
+			FileUtil.copyFile(sourcePath + "style.css",
+				destinationPath + "style.css");
+		}
+
+		if (!FileUtil.exists(destinationPath + "jquery.js")) {
+			FileUtil.copyFile(sourcePath + "jquery.js",
+				destinationPath + "jquery.js");
+		}
+
+		if (!FileUtil.exists(destinationPath + "scripts.js")) {
+			FileUtil.copyFile(sourcePath + "scripts.js",
+				destinationPath + "scripts.js");
+		}
 	}
 
 	protected void generateTest(String fileName) throws Exception {
@@ -82,7 +94,7 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 
 		String testFileName = testFilePath + "/" + testName + ".html";
 
-		generateCSS(testFilePath);
+		getDependencies(testFilePath);
 
 		StringBundler sb = new StringBundler();
 
@@ -95,6 +107,8 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 
 		sb.append(rootElement.attributeValue("name"));
 		sb.append("</title>\n");
+		sb.append("<script type='text/javascript' src='jquery.js'></script>");
+		sb.append("<script type='text/javascript' src='scripts.js'></script>");
 		sb.append("<link rel='stylesheet' href='style.css'>");
 		sb.append("</head>\n");
 
@@ -249,6 +263,14 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 				String macroCommand = command.attributeValue("command");
 				String macroFileName = command.attributeValue("name");
 
+				String steps = "";
+
+				try {
+					steps = getMacroSteps(macroFileName, macroCommand);
+				} catch (Exception e ) {
+					steps = "MACRO FILE NOT FOUND";
+				}
+
 				String macroKey = macroFileName + "__" + macroCommand;
 
 				if (macrosMap.containsKey(macroKey)) {
@@ -267,6 +289,15 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 					}
 
 					sb.append(finalString);
+
+					sb.append("<div class='expand-macro-steps'>\n");
+					sb.append("<a href='#'>Expand Macro Steps</a>\n");
+					sb.append("<div class='macro-steps'>\n");
+					sb.append("<ol>\n");
+					sb.append(steps);
+					sb.append("\n</ol>\n");
+					sb.append("</div>\n");
+					sb.append("</div>\n");
 				}
 			}
 
@@ -275,33 +306,6 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 
 		return sb.toString();
 	}
-
-/*
-	private Map<String, String[]> getBaseActionsMap() throws Exception {
-		Map<String, String[]> hashMap = new HashMap<String, String[]>();
-
-		String baseActionsXML =
-			"com/liferay/portalweb/blocks/base/actions/Base.actions";
-
-		Element rootElement = getRootElement(baseActionsXML);
-
-		List<Element> actionDefs = rootElement.elements("actiondef");
-
-		for (Element actionDef : actionDefs) {
-			String actionName = actionDef.attributeValue("name");
-			String actionDescription = actionDef.attributeValue("description");
-
-			String[] actionValue = {
-				actionName, actionDescription
-			};
-
-			hashMap.put(actionName, actionValue);
-		}
-
-		return hashMap;
-	}
-
-*/
 
 	private Map<String, String> getBaseActionsMap() throws Exception {
 		Map<String, String> hashMap = new HashMap<String, String>();
@@ -329,7 +333,7 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		directoryScanner.setBasedir(basedir);
 		directoryScanner.setIncludes(
 			new String[] {
-				"**\\portalweb\\**\\*.macros"
+				"**\\portalweb\\blocks\\**\\*.macros"
 			});
 
 		directoryScanner.scan();
@@ -348,15 +352,15 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 	private Map<String, String[]> getMacrosMap() throws Exception {
 		Map<String, String[]> macrosMap = new HashMap<String, String[]>();
 
-		Set<String> macroFileNames = getMacroFileNames();
+		Set<String> macroFilePaths = getMacroFileNames();
 
-		for (String macroFileName : macroFileNames) {
-			int x = macroFileName.lastIndexOf(StringPool.SLASH);
-			int y = macroFileName.indexOf(CharPool.PERIOD);
+		for (String macroFilePath : macroFilePaths) {
+			int x = macroFilePath.lastIndexOf(StringPool.SLASH);
+			int y = macroFilePath.indexOf(CharPool.PERIOD);
 
-			String macroName = macroFileName.substring(x + 1, y);
+			String macroFileName = macroFilePath.substring(x + 1, y);
 
-			Element rootElement = getRootElement(macroFileName);
+			Element rootElement = getRootElement(macroFilePath);
 
 			List<Element> macroDefs = rootElement.elements("macrodef");
 
@@ -364,15 +368,50 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 				String name = macroDef.attributeValue("name");
 				String description = macroDef.attributeValue("description");
 
-				String macroKey = macroName + "__" + name;
+				String macroKey = macroFileName + "__" + name;
 
-				String[] macroValue = { name, description };
+				String[] macroValue =
+					{ name, description, macroFileName, macroFilePath };
 
 				macrosMap.put(macroKey, macroValue);
 			}
 		}
 
 		return macrosMap;
+	}
+
+	protected String getMacrosFilePath(String macroFileName) throws Exception {
+		String macroFilePath = "";
+
+		for (String key : macrosMap.keySet()) {
+			String[] value = macrosMap.get(key);
+
+			if (value[2].equals(macroFileName)) {
+				macroFilePath = value[3];
+			}
+
+		}
+
+		return macroFilePath;
+	}
+
+	protected String getMacroSteps(String macroFileName, String macroCommand)
+		throws Exception {
+
+		String macrosFilePath = getMacrosFilePath(macroFileName);
+
+		Element rootElement = getRootElement(macrosFilePath);
+
+		List<Element> macros = rootElement.elements();
+		String steps = "";
+
+		for (Element macro : macros) {
+			if (macro.attributeValue("name").equals(macroCommand)) {
+				steps = getCommands(macro);
+			}
+		}
+
+		return steps;
 	}
 
 	private Set<String> getPathFileNames() throws Exception {

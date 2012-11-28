@@ -37,17 +37,17 @@
 <tr>
 	<td>BLOGS_COMMENT_LINK_SUBSCRIBE_ME</td>
 	<td>_161_subscribeCheckbox</td>
-	<td>Comment &quot;Subscribe Me&quot; Checkbox</td>
+	<td>Comment Subscribe Me Checkbox</td>
 </tr>
 <tr>
 	<td>BLOGS_COMMENT_TEXT_SUBSCRIBE_ME</td>
 	<td>//label[@for='_161_subscribeCheckbox']</td>
-	<td>Comment &quot;Subscribe Me&quot; Label</td>
+	<td>Comment Subscribe Me Label</td>
 </tr>
 <tr>
 	<td>BLOGS_COMMENT_TEXT_SUCCESS</td>
 	<td>_161_discussion-status-messages</td>
-	<td>Comment &quot;Your request processed successfully.&quot; Success Message</td>
+	<td>Comment Your request processed successfully. Success Message</td>
 </tr>
 </tbody></table>
 </body>

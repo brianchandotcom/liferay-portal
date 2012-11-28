@@ -27,7 +27,7 @@
 <tr>
 	<td>ABSTRACT_FIELD_SMALL_IMAGE_CHECKBOX</td>
 	<td>_161_smallImageCheckbox</td>
-	<td>Abstract &quot;Use Small Image&quot; checkbox</td>
+	<td>Abstract Use Small Image checkbox</td>
 </tr>
 <tr>
 	<td>ABSTRACT_FIELD_SMALL_IMAGE_URL</td>
@@ -215,12 +215,12 @@
 <tr>
 	<td>CONTENT_FIELD_TRACKBACKS</td>
 	<td>_161_trackbacks</td>
-	<td>Entry Content &quot;Trackbacks to Send&quot; Field</td>
+	<td>Entry Content Trackbacks to Send Field</td>
 </tr>
 <tr>
 	<td>CONTENT_FIELD_VIEWABLE_BY</td>
 	<td>_161__inputPermissionsViewRole</td>
-	<td>Entry Content &quot;Viewable by&quot; Permissions Select (Dropdown)</td>
+	<td>Entry Content Viewable by Permissions Select (Dropdown)</td>
 </tr>
 <tr>
 	<td>CONTENT_LINK_BACK</td>
@@ -255,12 +255,12 @@
 <tr>
 	<td>CONTENT_TEXT_ERROR_MESSAGE_1</td>
 	<td>xpath=(//div[@class='portlet-msg-error'])[1]</td>
-	<td>Entry Content &quot;Your request failed to complete.&quot; Error Message</td>
+	<td>Entry Content Your request failed to complete. Error Message</td>
 </tr>
 <tr>
 	<td>CONTENT_TEXT_ERROR_MESSAGE_2</td>
 	<td>xpath=(//div[@class='portlet-msg-error'])[2]</td>
-	<td>Entry Content &quot;Please enter valid content.&quot; Error Message</td>
+	<td>Entry Content Please enter valid content. Error Message</td>
 </tr>
 <tr>
 	<td>CONTENT_TEXT_PREVIEW</td>
@@ -275,12 +275,12 @@
 <tr>
 	<td>CONTENT_TEXT_TRACKBACKS_LABEL</td>
 	<td>//label[@for='_161_trackbacks']</td>
-	<td>Entry Content &quot;Trackbacks to Send&quot; Label</td>
+	<td>Entry Content Trackbacks to Send Label</td>
 </tr>
 <tr>
 	<td>CONTENT_TEXT_VIEWABLE_BY_LABEL</td>
 	<td>//label[@for='_161__inputPermissionsViewRole']</td>
-	<td>Entry Content &quot;Viewable By&quot; Label</td>
+	<td>Entry Content Viewable By Label</td>
 </tr>
 <tr>
 	<td></td>
@@ -347,7 +347,7 @@
 <tr>
 	<td>PORTLET_TEXT_SUCCESS</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Portlet &quot;Your request completed successfully.&quot; Success Message</td>
+	<td>Portlet Your request completed successfully. Success Message</td>
 </tr>
 <tr>
 	<td></td>

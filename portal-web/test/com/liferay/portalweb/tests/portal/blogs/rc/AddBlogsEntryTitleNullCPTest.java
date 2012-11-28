@@ -42,11 +42,11 @@ public class AddBlogsEntryTitleNullCPTest extends BaseTestCase {
 		NavigationMacros navigationMacros = new NavigationMacros(selenium);
 
 		navigationMacros.navigateControlPanelPage("Blogs");
-		cPBlogsPortletActions.click("PORTLET_LINK_ADD", null);
+		cPBlogsPortletActions.click("PORTLET_LINK_ADD", "Add");
 		cPBlogsEntryAddActions.type("CONTENT_FIELD_TITLE", "");
 		cPBlogsEntryAddActions.type("CONTENT_FIELD_CONTENT",
 			"Blogs Entry Content");
-		cPBlogsEntryAddActions.click("CONTENT_LINK_SAVE", null);
+		cPBlogsEntryAddActions.click("CONTENT_LINK_SAVE", "Publish");
 		cPBlogsEntryAddActions.assertTextEquals("CONTENT_TEXT_ERROR_MESSAGE_1",
 			"Your request failed to complete.");
 		cPBlogsEntryAddActions.assertTextEquals("CONTENT_TEXT_ERROR_MESSAGE_2",

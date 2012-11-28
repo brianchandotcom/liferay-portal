@@ -53,7 +53,7 @@ public class RateBlogsEntryCPTest extends BaseTestCase {
 			"Blogs Entry Content");
 		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_RATING_AVERAGE",
 			"0 Votes");
-		cPBlogsEntryViewActions.click("BLOGS_ENTRY_LINK_RATE_STAR_5", null);
+		cPBlogsEntryViewActions.click("BLOGS_ENTRY_LINK_RATE_STAR_5", "");
 		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_RATING_AVERAGE",
 			"1 Vote");
 	}

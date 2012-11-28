@@ -44,13 +44,14 @@ public class AddBlogsEntryTitle151CharactersTest extends BaseTestCase {
 		NavigationMacros navigationMacros = new NavigationMacros(selenium);
 
 		navigationMacros.navigateControlPanelPage("Blogs");
-		cPBlogsPortletActions.click("PORTLET_LINK_ADD", null);
+		cPBlogsPortletActions.click("PORTLET_LINK_ADD", "Add");
 		cPBlogsEntryAddActions.type("CONTENT_FIELD_TITLE",
 			"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15X");
 		cPBlogsEntryAddActions.type("CONTENT_FIELD_CONTENT",
 			"Blogs Entry Content");
-		cPBlogsEntryAddActions.click("CONTENT_LINK_SAVE", null);
-		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_SUCCESS", null);
+		cPBlogsEntryAddActions.click("CONTENT_LINK_SAVE", "Publish");
+		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_SUCCESS",
+			"Your request completed successfully.");
 		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_TITLE_1",
 			"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15");
 		cPBlogsEntryViewActions.click("BLOGS_ENTRY_TEXT_TITLE",

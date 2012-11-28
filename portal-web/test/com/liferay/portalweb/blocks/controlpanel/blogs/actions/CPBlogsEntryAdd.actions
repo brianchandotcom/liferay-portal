@@ -15,7 +15,7 @@
 
 	<actiondef name="type">
 		<conditional elements="CONTENT_FIELD_CONTENT">
-			<units command="typeCKEditor" />
+			<units command="typeCKEditorBlogs" />
 		</conditional>
 	</actiondef>
 </actions>

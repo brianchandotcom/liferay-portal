@@ -58,17 +58,17 @@ if (Validator.isNotNull(historyKey)) {
 
 		<%
 		for (String section : allSections) {
-			String sectionId = _getSectionId(section);
+			String sectionId = namespace + _getSectionId(section);
 			String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
 		%>
 
-			<!-- Begin fragment <%= namespace + sectionId %> -->
+			<!-- Begin fragment <%= sectionId %> -->
 
-			<div class="form-section <%= (curSection.equals(section) || curSection.equals(sectionId)) ? "selected" : "aui-helper-hidden-accessible" %>" id="<%= namespace + sectionId %>">
+			<div class="form-section <%= (curSection.equals(section) || curSection.equals(sectionId)) ? "selected" : "aui-helper-hidden-accessible" %>" id="<%= sectionId %>">
 				<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
 			</div>
 
-			<!-- End fragment <%= namespace + sectionId %> -->
+			<!-- End fragment <%= sectionId %> -->
 
 		<%
 		}
@@ -102,7 +102,7 @@ if (Validator.isNotNull(historyKey)) {
 							}
 
 							for (String section : sections) {
-								String sectionId = _getSectionId(section);
+								String sectionId = namespace + _getSectionId(section);
 
 								Boolean show = (Boolean)request.getAttribute(WebKeys.FORM_NAVIGATOR_SECTION_SHOW + sectionId);
 
@@ -134,7 +134,7 @@ if (Validator.isNotNull(historyKey)) {
 							%>
 
 								<li class="<%= cssClass %>">
-									<a href="#<%= namespace + sectionId %>" id="<%= namespace + sectionId %>Link">
+									<a href="#<%= sectionId %>" id="<%= sectionId %>Link">
 
 									<liferay-ui:message key="<%= section %>" />
 

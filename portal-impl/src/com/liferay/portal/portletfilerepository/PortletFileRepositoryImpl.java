@@ -113,12 +113,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			return null;
 		}
 
-		long size = 0;
+		byte[] bytes = null;
 
 		try {
-			byte[] bytes = FileUtil.getBytes(inputStream, -1, false);
-
-			size = bytes.length;
+			bytes = FileUtil.getBytes(inputStream, -1, false);
 		}
 		catch (IOException ioe) {
 			return null;
@@ -142,8 +140,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			return DLAppLocalServiceUtil.addFileEntry(
 				userId, repositoryId, folderId, fileName, contentType, fileName,
-				StringPool.BLANK, StringPool.BLANK, inputStream, size,
-				serviceContext);
+				StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);

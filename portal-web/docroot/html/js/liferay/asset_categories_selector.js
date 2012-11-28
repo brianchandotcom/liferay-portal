@@ -588,6 +588,7 @@ AUI.add(
 						if (maxEntries > 0) {
 							paginatorConfig = {
 								limit: maxEntries,
+								moreResultsLabel: Liferay.Language.get('load-more-results'),
 								offsetParam: 'start',
 								total: item.categoriesCount
 							};

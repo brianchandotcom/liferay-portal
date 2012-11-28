@@ -2159,7 +2159,6 @@
 					<arg line="/c jps -l > java-processes" />
 				</exec>
 			</then>
-
 			<else>
 				<exec executable="${shell.executable}" output="java-processes">
 					<arg line="-c jps -l" />
@@ -3639,7 +3638,6 @@ file.
 					<arg line="/c jps -q > java-processes" />
 				</exec>
 			</then>
-
 			<else>
 				<exec executable="${shell.executable}" output="java-processes">
 					<arg line="-c jps -q" />

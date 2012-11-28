@@ -88,8 +88,9 @@ public class WorkflowHandlerRegistryUtil {
 			Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 
-		if (serviceContext.getWorkflowAction() !=
-				WorkflowConstants.ACTION_PUBLISH) {
+		if (WorkflowThreadLocal.isEnabled() &&
+			(serviceContext.getWorkflowAction() !=
+				WorkflowConstants.ACTION_PUBLISH)) {
 
 			return;
 		}

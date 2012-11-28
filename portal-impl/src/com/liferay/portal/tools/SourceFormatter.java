@@ -1289,11 +1289,9 @@ public class SourceFormatter {
 		if (_portalSource) {
 			fileNames = _getPortalJavaFiles();
 
-			_javaTermAlphabetizeExclusionsProperties =
-				_getPortalExclusionsProperties(
-					"source_formatter_javaterm_alphabetize_exclusions." +
-						"properties");
-			_lineLengthExclusionsProperties = _getPortalExclusionsProperties(
+			_javaTermSortExclusions = _getPortalExclusionsProperties(
+				"source_formatter_javaterm_sort_exclusions.properties");
+			_lineLengthExclusions = _getPortalExclusionsProperties(
 				"source_formatter_line_length_exclusions.properties");
 		}
 		else {
@@ -1301,11 +1299,9 @@ public class SourceFormatter {
 
 			fileNames = _getPluginJavaFiles();
 
-			_javaTermAlphabetizeExclusionsProperties =
-				_getPluginExclusionsProperties(
-					"source_formatter_javaterm_alphabetize_exclusions." +
-						"properties");
-			_lineLengthExclusionsProperties = _getPluginExclusionsProperties(
+			_javaTermSortExclusions = _getPluginExclusionsProperties(
+				"source_formatter_javaterm_alphabetize_exclusions.properties");
+			_lineLengthExclusions = _getPluginExclusionsProperties(
 				"source_formatter_line_length_exclusions.properties");
 		}
 
@@ -1607,17 +1603,8 @@ public class SourceFormatter {
 
 			String excluded = null;
 
-			if (_javaTermAlphabetizeExclusionsProperties != null) {
-				excluded = _javaTermAlphabetizeExclusionsProperties.getProperty(
-					StringUtil.replace(
-						fileName, "\\", "/") + StringPool.AT + lineCount);
-
-				if (excluded == null) {
-					excluded =
-						_javaTermAlphabetizeExclusionsProperties.getProperty(
-							StringUtil.replace(fileName, "\\", "/"));
-				}
-			}
+			String fileNameWithForwardSlashes = StringUtil.replace(
+				fileName, "\\", "/");
 
 			if (line.startsWith(StringPool.TAB + "private ") ||
 				line.startsWith(StringPool.TAB + "protected ") ||
@@ -1640,6 +1627,17 @@ public class SourceFormatter {
 
 						if (isConstructorOrMethod) {
 							readParameterTypes = true;
+						}
+
+						if (_javaTermSortExclusions != null) {
+							excluded = _javaTermSortExclusions.getProperty(
+								fileNameWithForwardSlashes + StringPool.AT +
+									lineCount);
+
+							if (excluded == null) {
+								excluded = _javaTermSortExclusions.getProperty(
+									fileNameWithForwardSlashes);
+							}
 						}
 
 						if (excluded == null) {
@@ -1842,14 +1840,13 @@ public class SourceFormatter {
 
 			excluded = null;
 
-			if (_lineLengthExclusionsProperties != null) {
-				excluded = _lineLengthExclusionsProperties.getProperty(
-					StringUtil.replace(
-						fileName, "\\", "/") + StringPool.AT + lineCount);
+			if (_lineLengthExclusions != null) {
+				excluded = _lineLengthExclusions.getProperty(
+					fileNameWithForwardSlashes + StringPool.AT + lineCount);
 
 				if (excluded == null) {
-					excluded = _lineLengthExclusionsProperties.getProperty(
-						StringUtil.replace(fileName, "\\", "/"));
+					excluded = _lineLengthExclusions.getProperty(
+						fileNameWithForwardSlashes);
 				}
 			}
 
@@ -4673,7 +4670,7 @@ public class SourceFormatter {
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 	private static Pattern _javaImportPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
-	private static Properties _javaTermAlphabetizeExclusionsProperties;
+	private static Properties _javaTermSortExclusions;
 	private static Pattern _jspAttributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");
 	private static Map<String, String> _jspContents =
@@ -4684,7 +4681,7 @@ public class SourceFormatter {
 		"/.*[.]jsp[f]?");
 	private static Pattern _languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
-	private static Properties _lineLengthExclusionsProperties;
+	private static Properties _lineLengthExclusions;
 	private static Properties _portalLanguageKeysProperties;
 	private static boolean _portalSource;
 	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();

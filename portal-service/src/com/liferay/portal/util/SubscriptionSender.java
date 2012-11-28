@@ -359,14 +359,6 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	protected String getPortalURL(Company company) throws Exception {
-		if (serviceContext != null) {
-			String portalURL = serviceContext.getPortalURL();
-
-			if (Validator.isNotNull(portalURL)) {
-				return portalURL;
-			}
-		}
-
 		return company.getPortalURL(groupId);
 	}
 

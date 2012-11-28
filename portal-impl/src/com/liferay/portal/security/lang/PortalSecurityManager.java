@@ -18,6 +18,7 @@ import com.liferay.portal.jndi.pacl.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
+import com.liferay.portal.kernel.security.pacl.permission.CheckMemberAccessPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
@@ -122,8 +123,9 @@ public class PortalSecurityManager extends SecurityManager {
 			return;
 		}
 
-		Permission permission = new RuntimePermission(
-			PACLConstants.RUNTIME_PERMISSION_ACCESS_DECLARED_MEMBERS);
+		Permission permission = new CheckMemberAccessPermission(
+			PACLConstants.RUNTIME_PERMISSION_ACCESS_DECLARED_MEMBERS,
+			callerClass, callerClassLoader, clazz, classClassLoader);
 
 		checkPermission(permission);
 	}

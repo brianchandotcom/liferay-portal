@@ -96,7 +96,7 @@
 	#set ($add_content_url = $theme_display.getURLAddContent())
 
 	#set ($layout_text = $languageUtil.get($locale, "layout-template"))
-	#set ($layout_url = $theme_display.getURLLayoutTemplates())
+	#set ($layout_url = $htmlUtil.escape($theme_display.getURLPageSettings().toString()) + "#layout")
 #end
 
 #set ($show_control_panel = $theme_display.isShowControlPanelIcon())

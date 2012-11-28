@@ -96,7 +96,7 @@
 	<#assign add_content_url = theme_display.getURLAddContent() />
 
 	<#assign layout_text = languageUtil.get(locale, "layout-template") />
-	<#assign layout_url = theme_display.getURLLayoutTemplates() />
+	<#assign layout_url = htmlUtil.escape(theme_display.getURLPageSettings().toString()) + "#layout" />
 </#if>
 
 <#assign show_control_panel = theme_display.isShowControlPanelIcon() />

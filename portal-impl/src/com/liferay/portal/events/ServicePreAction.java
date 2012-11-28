@@ -979,9 +979,6 @@ public class ServicePreAction extends Action {
 					themeDisplay.setURLAddContent(
 						"Liferay.LayoutConfiguration.toggle('".concat(
 							PortletKeys.LAYOUT_CONFIGURATION).concat("');"));
-
-					themeDisplay.setURLLayoutTemplates(
-						"Liferay.LayoutConfiguration.showTemplates();");
 				}
 
 				if (hasCustomizeLayoutPermission && customizedView) {
@@ -1026,6 +1023,8 @@ public class ServicePreAction extends Action {
 				pageSettingsURL.setWindowState(LiferayWindowState.POP_UP);
 
 				themeDisplay.setURLPageSettings(pageSettingsURL);
+
+				themeDisplay.setURLLayoutTemplates(pageSettingsURL + "#layout");
 
 				boolean site = group.isSite();
 

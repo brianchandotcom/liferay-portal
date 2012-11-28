@@ -35,7 +35,7 @@ public class TypeUnits extends BaseActionsUnits {
 		selenium.type(param1, param2);
 	}
 
-	public void typeCKEditor(String param1, String param2)
+	public void typeCKEditorBlogs(String param1, String param2)
 		throws Exception {
 		selenium.waitForElementPresent(
 			"//textarea[@id='_161_editor' and @style='display: none;']");
@@ -52,6 +52,32 @@ public class TypeUnits extends BaseActionsUnits {
 			"//textarea[@id='_161_editor' and @style='display: none;']");
 		selenium.waitForVisible("//td[@id='cke_contents__161_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__161_editor']/iframe");
+		selenium.waitForText("//body", param2);
+		selenium.assertText("//body", param2);
+		selenium.selectFrame("relative=top");
+	}
+
+	public void typeCKEditorWebContent(String param1, String param2)
+		throws Exception {
+		selenium.waitForElementPresent(
+			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
+		selenium.waitForVisible("//span[.='Source']");
+		selenium.assertText("//span[.='Source']", "Source");
+		selenium.clickAt("//span[.='Source']", param2);
+		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
+		selenium.waitForVisible(
+			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea");
+		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
+			param2);
+		selenium.waitForVisible("//span[.='Source']");
+		selenium.assertText("//span[.='Source']", "Source");
+		selenium.clickAt("//span[.='Source']", param2);
+		selenium.waitForElementPresent(
+			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
+		selenium.waitForVisible(
+			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
+		selenium.selectFrame(
+			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.waitForText("//body", param2);
 		selenium.assertText("//body", param2);
 		selenium.selectFrame("relative=top");

@@ -1,0 +1,182 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPWebContentEditWebContent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPWebContentEditWebContent</td></tr></thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Web Content Edit Web Content Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_ID</td>
+	<td>//span[@class='workflow-id']</td>
+	<td>Web Content ID</td>
+</tr>
+<tr>
+	<td>TOOLBAR_VERSION</td>
+	<td>//span[@class='workflow-version']</td>
+	<td>Version Number</td>
+</tr>
+<tr>
+	<td>TOOLBAR_STATUS</td>
+	<td>//span[@class='workflow-status']</td>
+	<td>Web Content Status</td>
+</tr>
+<tr>
+	<td>TOOLBAR_PERMISSIONS</td>
+	<td>//span[@class='aui-toolbar-content']/button[1]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>TOOLBAR_VIEW_HISTORY</td>
+	<td>//span[@class='aui-toolbar-content']/button[2]</td>
+	<td>View History</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>HEADER_STRUCTURE</td>
+	<td>//span[@id='_15_structureNameLabel']</td>
+	<td>Structure</td>
+</tr>
+<tr>
+	<td>HEADER_EDIT_STRUCTURE</td>
+	<td>//a[@id='_15_editStructureLink']</td>
+	<td>Edit Structure</td>
+</tr>
+<tr>
+	<td>HEADER_CHANGE_STRUCTURE</td>
+	<td>//a[@id='_15_changeStructureButton']</td>
+	<td>Change Structure</td>
+</tr>
+<tr>
+	<td>HEADER_TEMPLATE</td>
+	<td>//span[@class='template-name-label']</td>
+	<td>Template</td>
+</tr>
+<tr>
+	<td>HEADER_CHOOSE_TEMPLATE</td>
+	<td>//a[@id='_15_selectTemplateLink']</td>
+	<td>Choose Template</td>
+</tr>
+<tr>
+	<td>HEADER_CHANGE_LANGUAGE</td>
+	<td>//a[@id='_15_changeLanguageId']</td>
+	<td>Change Default Language</td>
+</tr>
+<tr>
+	<td>HEADER_ADD_TRANSLATION</td>
+	<td>//span[@class='lfr-translation-manager-add-menu']</td>
+	<td>Add Translation</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TRANSLATION-->
+<tr>
+	<td>TRANSLATION_CHINESE_CHINA</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Chinese (China)</td>
+</tr>
+<tr>
+	<td>TRANSLATION_FRENCH_FRANCE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[17]/a</td>
+	<td>French (France)</td>
+</tr>
+<tr>
+	<td>TRANSLATION_JAPANESE_JAPAN</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[27]/a</td>
+	<td>Japanese (Japan)</td>
+</tr>
+<tr>
+	<td>TRANSLATION_SPANISH_SPAIN</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[41]/a</td>
+	<td>Spanish (Spain)</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ARTICLE-->
+<tr>
+	<td>ARTICLE_TITLE</td>
+	<td>//input[@id='_15_title_en_US']</td>
+	<td>Title Field</td>
+</tr>
+<tr>
+	<td>ARTICLE_CONTENT</td>
+	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']</td>
+	<td>Content Field</td>
+</tr>
+<!---->
+<!--SIDEBAR-->
+<tr>
+	<td>SIDEBAR_CONTENT</td>
+	<td>//a[@id='_15_contentLink']</td>
+	<td>Content</td>
+</tr>
+<tr>
+	<td>SIDEBAR_ABSTRACT</td>
+	<td>//a[@id='_15_abstractLink']</td>
+	<td>Abstract</td>
+</tr>
+<tr>
+	<td>SIDEBAR_CATEGORIZATION</td>
+	<td>//a[@id='_15_categorizationLink']</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>SIDEBAR_SCHEDULE</td>
+	<td>//a[@id='_15_scheduleLink']</td>
+	<td>Schedule</td>
+</tr>
+<tr>
+	<td>SIDEBAR_DISPLAY_PAGE</td>
+	<td>//a[@id='_15_displayPageLink']</td>
+	<td>Display Page</td>
+</tr>
+<tr>
+	<td>SIDEBAR_RELATED_ASSETS</td>
+	<td>//a[@id='_15_relatedAssetsLink']</td>
+	<td>Related Assets</td>
+</tr>
+<tr>
+	<td>SIDEBAR_CUSTOM_FIELDS</td>
+	<td>//a[@id='_15_customFieldsLink']</td>
+	<td>Custom Fields</td>
+</tr>
+<tr>
+	<td>SIDEBAR_SAVE_AS_DRAFT</td>
+	<td>//input[@value='Save as Draft']</td>
+	<td>Save as Draft</td>
+</tr>
+<tr>
+	<td>SIDEBAR_PUBLISH</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>SIDEBAR_CANCEL</td>
+	<td>xpath=(//input[@value='Cancel'])[2]</td>
+	<td>Cancel</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

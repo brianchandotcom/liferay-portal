@@ -1,0 +1,28 @@
+<macros>
+	<macrodef name="addCPWebContent" params="title, content" description="In the Control Panel Web Content portlet, add a Web Content with Title: &lt;strong&gt;${title}&lt;/strong&gt; and Content: &lt;strong&gt;${content}&lt;/strong&gt;.">
+		<macro name="Navigation" command="navigateControlPanelPage">
+			<param name="page" value="Web Content" />
+		</macro>
+
+		<action name="CPWebContentHome" command="click" path="BUTTONS_ADD" />
+		<action name="CPWebContentHome" command="click" path="ADD_BASIC_WEB_CONTENT" />
+
+		<action name="CPWebContentAddWebContent" command="type" path="ARTICLE_TITLE" value="${title}" />
+		<action name="CPWebContentAddWebContent" command="type" path="ARTICLE_CONTENT" value="${content}" />
+		<action name="CPWebContentAddWebContent" command="click" path="SIDEBAR_PUBLISH" />
+
+		<action name="CPWebContentHome" command="assertTextEquals" path="HEADER_PORTLET_SUCCESS" value="Your request completed successfully." />
+	</macrodef>
+
+	<macrodef name="tearDownCPWebContent" description="In the Control Panel Web Content portlet, delete all Web Content articles">
+		<macro name="Navigation" command="navigateControlPanelPage">
+			<param name="page" value="Web Content" />
+		</macro>
+
+		<while name="CPWebContentHome" command="isElementPresent" path="ENTRIES_ARTICLE_1">
+			<action name="CPWebContentHome" command="check" path="ENTRIES_ARTICLE_1_CHECKBOX" />
+			<action name="CPWebContentHome" command="click" path="BUTTONS_ACTIONS" />
+			<action name="CPWebContentHome" command="click" path="ACTIONS_DELETE" />
+		</while>
+	</macrodef>
+</macros>

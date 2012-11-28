@@ -1,0 +1,130 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPWebContentAddFolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPWebContentAddFolder</td></tr></thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Web Content Add Folder Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER-->
+<tr>
+	<td>FOLDER_NAME</td>
+	<td>//input[@id='_15_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_DESCRIPTION</td>
+	<td>//textarea[@id='_15_description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PERMISSIONS-->
+<tr>
+	<td>PERMISSIONS_VIEWABLE_BY</td>
+	<td>//select[@id='_15_inputPermissionsViewRole']</td>
+	<td>Viewable By</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_MORE_OPTIONS</td>
+	<td>//span[@id='_15_inputPermissionsShowOptionsLink']/a</td>
+	<td>More Options</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_GUES_ACCESS</td>
+	<td>//input[@id='_15_guestPermissions_ACCESS']</td>
+	<td>Guest Access</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_GUEST_ADD_ARTICLE</td>
+	<td>//input[@id='_15_guestPermissions_ADD_ARTICLE']</td>
+	<td>Guest Add Article</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_GUEST_ADD_SUBFOLDER</td>
+	<td>//input[@id='_15_guestPermissions_ADD_SUBFOLDER']</td>
+	<td>Guest Add Sub Folder</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_GUEST_DELETE</td>
+	<td>//input[@id='_15_guestPermissions_DELETE']</td>
+	<td>Guest Delete</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_GUEST_PERMISSIONS</td>
+	<td>//input[@id='_15_guestPermissions_PERMISSIONS']</td>
+	<td>Guest Permissions</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_GUEST_UPDATE</td>
+	<td>//input[@id='_15_guestPermissions_UPDATE']</td>
+	<td>Guest Update</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_ACCESS</td>
+	<td>//input[@id='_15_groupPermissions_ACCESS']</td>
+	<td>Site Member Access</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_ADD_ARTICLE</td>
+	<td>//input[@id='_15_groupPermissions_ADD_ARTICLE']</td>
+	<td>Site Member Add Article</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_ADD_SUBFOLDER</td>
+	<td>//input[@id='_15_groupPermissions_ADD_SUBFOLDER']</td>
+	<td>Site Member Add Subfolder</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_DELETE</td>
+	<td>//input[@id='_15_groupPermissions_DELETE']</td>
+	<td>Site Member Delete</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_PERMISSIONS</td>
+	<td>//input[@id='_15_groupPermissions_PERMISSIONS']</td>
+	<td>Site Member Permissions</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_UPDATE</td>
+	<td>//input[@id='_15_groupPermissions_UPDATE']</td>
+	<td>Site Member Update</td>
+</tr>
+<tr>
+	<td>PERMISSONS_HIDE_OPTIONS</td>
+	<td>//a[@id='_15_inputPermissionsHideOptionsLink']</td>
+	<td>Hide Options</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BUTTONS-->
+<tr>
+	<td>BUTTONS_SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>BUTTONS_CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

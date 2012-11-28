@@ -1,0 +1,13 @@
+<actions>
+	<actiondef name="click">
+		<conditional elements="SIDEBAR_PUBLISH">
+			<units command="clickAtAndWait" />
+		</conditional>
+	</actiondef>
+
+	<actiondef name="type">
+		<conditional elements="ARTICLE_CONTENT">
+			<units command="typeCKEditorWebContent" />
+		</conditional>
+	</actiondef>
+</actions>

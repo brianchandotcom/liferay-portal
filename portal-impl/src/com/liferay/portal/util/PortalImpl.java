@@ -15,7 +15,6 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.NoSuchCompanyException;
-import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchUserException;
@@ -5755,14 +5754,10 @@ public class PortalImpl implements Portal {
 			primaryKey = portletPrimaryKey;
 		}
 		else {
-			try {
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-				if (group.isStagingGroup()) {
-					groupId = group.getLiveGroupId();
-				}
-			}
-			catch (NoSuchGroupException nsge) {
+			if ((group != null) && group.isStagingGroup()) {
+				groupId = group.getLiveGroupId();
 			}
 
 			name = ResourceActionsUtil.getPortletBaseResource(rootPortletId);

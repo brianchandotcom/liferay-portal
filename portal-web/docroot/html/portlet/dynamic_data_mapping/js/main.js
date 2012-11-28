@@ -812,6 +812,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'aui-form-validator', 'aui-text', 'json', 'liferay-translation-manager']
+		requires: ['aui-form-builder', 'aui-form-validator', 'aui-text', 'json', 'liferay-menu', 'liferay-translation-manager']
 	}
 );

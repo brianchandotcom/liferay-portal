@@ -907,7 +907,7 @@
 				<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
 					<fileset
 						dir="docroot/html/themes/_unstyled"
-						excludes="templates/init.vm,templates/init.ftl"
+						excludes="templates/init.ftl,templates/init.vm"
 					/>
 				</copy>
 

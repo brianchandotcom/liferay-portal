@@ -56,8 +56,9 @@ public class AddBlogsEntryTrackbackCPTest extends BaseTestCase {
 		cPBlogsEntryAddActions.type("CONTENT_FIELD_CONTENT",
 			"Blogs Entry2 Content");
 		cPBlogsEntryAddActions.paste("CONTENT_FIELD_TRACKBACKS", null);
-		cPBlogsEntryAddActions.click("CONTENT_LINK_SAVE", null);
-		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_SUCCESS", null);
+		cPBlogsEntryAddActions.click("CONTENT_LINK_SAVE", "Publish");
+		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_SUCCESS",
+			"Your request completed successfully.");
 		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_TITLE_1",
 			"Blogs Entry2 Title");
 		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_TITLE",
@@ -73,7 +74,8 @@ public class AddBlogsEntryTrackbackCPTest extends BaseTestCase {
 			"Blogs Entry1 Content");
 		cPBlogsEntryViewActions.assertTextEquals("BLOGS_COMMENT_TEXT_BODY_1",
 			"[...] Blogs Entry2 Content [...] Read More");
-		cPBlogsEntryViewActions.click("BLOGS_COMMENT_LINK_READ_MORE", null);
+		cPBlogsEntryViewActions.click("BLOGS_COMMENT_LINK_READ_MORE",
+			"Read More");
 		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_TITLE",
 			"Blogs Entry2 Title");
 		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_CONTENT",

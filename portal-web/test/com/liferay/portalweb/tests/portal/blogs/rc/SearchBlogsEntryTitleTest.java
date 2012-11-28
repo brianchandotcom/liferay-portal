@@ -46,15 +46,17 @@ public class SearchBlogsEntryTitleTest extends BaseTestCase {
 
 		navigationMacros.navigateControlPanelPage("Blogs");
 		cPBlogsPortletActions.type("PORTLET_FIELD_SEARCH", "Title");
-		cPBlogsPortletActions.click("PORTLET_LINK_SEARCH", null);
-		cPBlogsPortletSearchActions.assertTextEquals("TABLE_NUMBER", null);
+		cPBlogsPortletActions.click("PORTLET_LINK_SEARCH", "Search");
+		cPBlogsPortletSearchActions.assertTextEquals("TABLE_NUMBER", "1.");
 		cPBlogsPortletSearchActions.assertTextEquals("TABLE_ENTRY",
 			"Blogs Entry Title");
-		cPBlogsPortletSearchActions.assertTextEquals("SEARCH_RESULTS", null);
+		cPBlogsPortletSearchActions.assertTextEquals("SEARCH_RESULTS",
+			"Showing 1 result.");
 		cPBlogsPortletSearchActions.type("SEARCH_FIELD", "Title1");
-		cPBlogsPortletSearchActions.click("SEARCH_BUTTON", null);
-		cPBlogsPortletSearchActions.assertElementNotPresent("TABLE_NUMBER", null);
-		cPBlogsPortletSearchActions.assertElementNotPresent("TABLE_ENTRY", null);
+		cPBlogsPortletSearchActions.click("SEARCH_BUTTON", "Search");
+		cPBlogsPortletSearchActions.assertElementNotPresent("TABLE_NUMBER", "1.");
+		cPBlogsPortletSearchActions.assertElementNotPresent("TABLE_ENTRY",
+			"Blogs Entry Title");
 		cPBlogsPortletSearchActions.assertTextNotPresent("", "Blogs Entry Title");
 		cPBlogsPortletSearchActions.assertTextEquals("PORTLET_INFO",
 			"No entries were found that matched the keywords: Title1.");

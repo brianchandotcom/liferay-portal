@@ -25,52 +25,75 @@ public class CPBlogsPortletSearchPaths {
 		return _paths;
 	}
 
+	private static String[] _PAGE_NAME = {
+			"", "Control Panel Blogs Portlet Search"
+		};
 	private static String[] _PORTLET_TITLE = {
-			"//span[@class='portlet-title-text']", "Blogs"
+			"//span[@class='portlet-title-text']", "Portlet Title"
 		};
 	private static String[] _PORTLET_DESCRIPTION = {
-			"//div[@id='cpContextPanelTemplate']",
-			"Blogs are short journals, articles, or diary entries that provide a standard blog experience. Administrators can add, view, update and delete blog entries."
+			"//div[@id='cpContextPanelTemplate']", "Portlet Description"
 		};
-	private static String[] _PAGE_TITLE = {
-			"//h1[@class='header-title']/span", "Search"
-		};
-	private static String[] _BACK_LINK = { "//a[@id='_161_TabsBack']", "Back" };
-	private static String[] _SEARCH_FIELD = { "//input[@id='_161_keywords']", "" };
-	private static String[] _SEARCH_BUTTON = {
-			"//input[@value='Search']", "Search"
+	private static String[] _PORTLET_PAGE_TITLE = {
+			"//h1[@class='header-title']/span", "Portlet Search Title"
 		};
 	private static String[] _PORTLET_INFO = {
-			"//div[@class='portlet-msg-info']",
-			"No entries were found that matched the keywords:"
+			"//div[@class='portlet-msg-info']", "Portlet Info"
 		};
-	private static String[] _TABLE_NUMBER_HEADER = { "//tr[1]/th[1]", "#" };
-	private static String[] _TABLE_ENTRY_HEADER = { "//tr[1]/th[2]", "Entry" };
-	private static String[] _TABLE_NUMBER = {
-			"//tr[contains(.,'Blogs Entry Title')]/td[1]", "1."
+	private static String[] _PORTLET_BACK_LINK = {
+			"//a[@id='_161_TabsBack']", "Back Link"
 		};
-	private static String[] _TABLE_NUMBER_1 = { "//tr[3]/td[1]", "1." };
-	private static String[] _TABLE_NUMBER_2 = { "//tr[3]/td[1]", "2." };
-	private static String[] _TABLE_NUMBER_3 = { "//tr[3]/td[1]", "3." };
-	private static String[] _TABLE_ENTRY = {
-			"//tr[contains(.,'Blogs Entry Title')]/td[2]/a", "Blogs Entry Title"
+	private static String[] _SEARCH_FIELD = {
+			"//input[@id='_161_keywords']", "Search Input Field"
 		};
-	private static String[] _TABLE_ENTRY_1 = { "//tr[3]/td[2]/a", "" };
-	private static String[] _TABLE_ENTRY_2 = { "//tr[3]/td[2]/a", "" };
-	private static String[] _TABLE_ENTRY_3 = { "//tr[3]/td[2]/a", "" };
+	private static String[] _SEARCH_BUTTON = {
+			"//input[@value='Search']", "Search Submit Button"
+		};
 	private static String[] _SEARCH_RESULTS = {
-			"//div[@class='search-results']", "Showing 1 result."
+			"//div[@class='search-results']", "Search Results Message"
+		};
+	private static String[] _TABLE_NUMBER_HEADER = {
+			"//tr[1]/th[1]", "Table Number Header"
+		};
+	private static String[] _TABLE_ENTRY_HEADER = {
+			"//tr[1]/th[2]", "Table Entry Header"
+		};
+	private static String[] _TABLE_NUMBER = {
+			"//tr[contains(.,'Blogs Entry Title')]/td[1]", "Table Number"
+		};
+	private static String[] _TABLE_NUMBER_1 = {
+			"//tr[3]/td[1]", "Table Entry 1 Number"
+		};
+	private static String[] _TABLE_NUMBER_2 = {
+			"//tr[3]/td[1]", "Table Entry 2 Number"
+		};
+	private static String[] _TABLE_NUMBER_3 = {
+			"//tr[3]/td[1]", "Table Entry 3 Number"
+		};
+	private static String[] _TABLE_ENTRY = {
+			"//tr[contains(.,'Blogs Entry Title')]/td[2]/a", "Table Entry Title"
+		};
+	private static String[] _TABLE_ENTRY_1 = {
+			"//tr[3]/td[2]/a", "Table Entry 1 Title"
+		};
+	private static String[] _TABLE_ENTRY_2 = {
+			"//tr[3]/td[2]/a", "Table Entry 2 Title"
+		};
+	private static String[] _TABLE_ENTRY_3 = {
+			"//tr[3]/td[2]/a", "Table Entry 3 Title"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 
 	static {
+		_paths.put("PAGE_NAME", _PAGE_NAME);
 		_paths.put("PORTLET_TITLE", _PORTLET_TITLE);
 		_paths.put("PORTLET_DESCRIPTION", _PORTLET_DESCRIPTION);
-		_paths.put("PAGE_TITLE", _PAGE_TITLE);
-		_paths.put("BACK_LINK", _BACK_LINK);
+		_paths.put("PORTLET_PAGE_TITLE", _PORTLET_PAGE_TITLE);
+		_paths.put("PORTLET_INFO", _PORTLET_INFO);
+		_paths.put("PORTLET_BACK_LINK", _PORTLET_BACK_LINK);
 		_paths.put("SEARCH_FIELD", _SEARCH_FIELD);
 		_paths.put("SEARCH_BUTTON", _SEARCH_BUTTON);
-		_paths.put("PORTLET_INFO", _PORTLET_INFO);
+		_paths.put("SEARCH_RESULTS", _SEARCH_RESULTS);
 		_paths.put("TABLE_NUMBER_HEADER", _TABLE_NUMBER_HEADER);
 		_paths.put("TABLE_ENTRY_HEADER", _TABLE_ENTRY_HEADER);
 		_paths.put("TABLE_NUMBER", _TABLE_NUMBER);
@@ -81,6 +104,5 @@ public class CPBlogsPortletSearchPaths {
 		_paths.put("TABLE_ENTRY_1", _TABLE_ENTRY_1);
 		_paths.put("TABLE_ENTRY_2", _TABLE_ENTRY_2);
 		_paths.put("TABLE_ENTRY_3", _TABLE_ENTRY_3);
-		_paths.put("SEARCH_RESULTS", _SEARCH_RESULTS);
 	}
 }

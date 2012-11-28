@@ -49,10 +49,13 @@ public class DeleteBlogsEntryActionsCPTest extends BaseTestCase {
 			"Joe Bloggs");
 		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_STATUS",
 			"Approved");
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS", null);
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS_DELETE", null);
-		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_SUCCESS_UNDO", null);
-		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_INFO", null);
+		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS", "Actions");
+		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS_DELETE",
+			"Move to the Recycle Bin");
+		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_SUCCESS_UNDO",
+			"The selected item was moved to the Recycle Bin. Undo");
+		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_INFO",
+			"No entries were found.");
 		cPBlogsPortletActions.assertTextNotPresent("", "Blogs Entry Title");
 		cPBlogsPortletActions.assertTextNotPresent("", "Blogs Entry Content");
 	}

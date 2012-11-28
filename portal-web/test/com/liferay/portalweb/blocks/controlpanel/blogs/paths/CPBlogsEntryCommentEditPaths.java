@@ -25,22 +25,27 @@ public class CPBlogsEntryCommentEditPaths {
 		return _paths;
 	}
 
+	private static String[] _PAGE_NAME = {
+			"", "Control Panel Blogs Entry Comment Edit"
+		};
 	private static String[] _BLOGS_COMMENT_FIELD_BODY = {
-			"//textarea[contains(@id,'_editReplyBody1')]", ""
+			"//textarea[contains(@id,'_editReplyBody1')]",
+			"Comment Content Body Editor Field"
 		};
 	private static String[] _BLOGS_COMMENT_LINK_CANCEL = {
-			"//input[@value='Cancel']", "Cancel"
+			"//input[@value='Cancel']", "Cancel Button"
 		};
 	private static String[] _BLOGS_COMMENT_LINK_SAVE = {
-			"//input[@value='Publish']", "Publish"
+			"//input[@value='Publish']", "Publish Button"
 		};
 	private static String[] _BLOGS_COMMENT_TEXT_SUCCESS = {
 			"_161_discussion-status-messages",
-			"Your request processed successfully."
+			"Your request processed successfully. Success Message"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 
 	static {
+		_paths.put("PAGE_NAME", _PAGE_NAME);
 		_paths.put("BLOGS_COMMENT_FIELD_BODY", _BLOGS_COMMENT_FIELD_BODY);
 		_paths.put("BLOGS_COMMENT_LINK_CANCEL", _BLOGS_COMMENT_LINK_CANCEL);
 		_paths.put("BLOGS_COMMENT_LINK_SAVE", _BLOGS_COMMENT_LINK_SAVE);

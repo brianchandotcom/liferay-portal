@@ -233,7 +233,7 @@
 <tr>
 	<td>BLOGS_ENTRY_LINK_CONFIRM_DELETE_VIEW</td>
 	<td></td>
-	<td>&quot;Are you sure you want to delete this?&quot; Delete Confirmation Message</td>
+	<td>Are you sure you want to delete this? Delete Confirmation Message</td>
 </tr>
 <tr>
 	<td>BLOGS_ENTRY_LINK_NEXT</td>
@@ -273,7 +273,7 @@
 <tr>
 	<td>BLOGS_ENTRY_LINK_ADD_COMMENT_1</td>
 	<td>//fieldset[contains(@class,'add-comment')]/div/a[.='Be the first.']</td>
-	<td>Add Comment &quot;Be the first&quot; Link</td>
+	<td>Add Comment Be the first Link</td>
 </tr>
 <tr>
 	<td>BLOGS_ENTRY_LINK_ADD_COMMENT_2</td>
@@ -375,12 +375,12 @@
 <tr>
 	<td>PORTLET_TEXT_COMMENT_MESSAGE</td>
 	<td>//fieldset[contains(@class,'add-comment')]/div</td>
-	<td>&quot;No comments yet.&quot; Comment Message</td>
+	<td>No comments yet. Comment Message</td>
 </tr>
 <tr>
 	<td>PORTLET_TEXT_SUCCESS</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>&quot;Your request completed successfully.&quot; Success Message</td>
+	<td>Your request completed successfully. Success Message</td>
 </tr>
 <tr>
 	<td>PORTLET_LINK_BACK</td>

@@ -69,7 +69,7 @@ public class CPBlogsEntryAddActions extends BaseActionsImpl
 		TypeUnits typeUnits = new TypeUnits(selenium);
 
 		if ((param1.equals("CONTENT_FIELD_CONTENT"))) {
-			typeUnits.typeCKEditor(params[0], params[1]);
+			typeUnits.typeCKEditorBlogs(params[0], params[1]);
 		}
 		else {
 			super.type(params[0], params[1]);

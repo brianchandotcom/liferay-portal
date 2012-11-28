@@ -56,12 +56,13 @@ public class EditBlogsEntryTitleActionsCPTest extends BaseTestCase {
 		navigationMacros.navigateControlPanelPage("Blogs");
 		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE",
 			"Blogs Entry Title");
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS", null);
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS_EDIT", null);
+		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS", "Actions");
+		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS_EDIT", "Edit");
 		cPBlogsEntryEditActions.type("CONTENT_FIELD_TITLE",
 			"Blogs Entry Title Edit");
-		cPBlogsEntryEditActions.click("CONTENT_LINK_SAVE", null);
-		cPBlogsEntryEditActions.assertTextEquals("PORTLET_TEXT_SUCCESS", null);
+		cPBlogsEntryEditActions.click("CONTENT_LINK_SAVE", "Publish");
+		cPBlogsEntryEditActions.assertTextEquals("PORTLET_TEXT_SUCCESS",
+			"Your request completed successfully.");
 		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE",
 			"Blogs Entry Title Edit");
 		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_TITLE",

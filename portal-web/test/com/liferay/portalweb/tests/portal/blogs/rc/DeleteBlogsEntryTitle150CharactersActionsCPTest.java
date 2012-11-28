@@ -46,13 +46,17 @@ public class DeleteBlogsEntryTitle150CharactersActionsCPTest
 		navigationMacros.navigateControlPanelPage("Blogs");
 		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE_1",
 			"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15");
-		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_AUTHOR_1", null);
+		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_AUTHOR_1",
+			"Joe Bloggs");
 		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_STATUS_1",
 			"Approved");
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS_1", null);
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS_DELETE", null);
-		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_SUCCESS_UNDO", null);
-		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_INFO", null);
+		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS_1", "Actions");
+		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS_DELETE",
+			"Move to the Recycle Bin");
+		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_SUCCESS_UNDO",
+			"The selected item was moved to the Recycle Bin. Undo");
+		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_INFO",
+			"No entries were found.");
 		cPBlogsPortletActions.assertTextNotPresent("",
 			"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15");
 		cPBlogsPortletActions.assertTextNotPresent("", "Blogs Entry Content");

@@ -44,7 +44,7 @@ public class AddBlogsEntryAutoDraftCPTest extends BaseTestCase {
 		NavigationMacros navigationMacros = new NavigationMacros(selenium);
 
 		navigationMacros.navigateControlPanelPage("Blogs");
-		cPBlogsPortletActions.click("PORTLET_LINK_ADD", null);
+		cPBlogsPortletActions.click("PORTLET_LINK_ADD", "Add");
 		cPBlogsEntryAddActions.type("CONTENT_FIELD_TITLE", "Blogs Entry Title");
 		cPBlogsEntryAddActions.type("CONTENT_FIELD_CONTENT",
 			"Blogs Entry Content");
@@ -57,7 +57,8 @@ public class AddBlogsEntryAutoDraftCPTest extends BaseTestCase {
 			"Draft");
 		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_TITLE",
 			"Blogs Entry Title");
-		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_DRAFT", null);
+		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_DRAFT",
+			"Draft");
 		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_TITLE",
 			"Blogs Entry Title");
 		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_CONTENT",

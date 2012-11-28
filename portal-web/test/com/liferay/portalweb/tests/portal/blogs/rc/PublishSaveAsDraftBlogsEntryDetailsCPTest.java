@@ -49,10 +49,11 @@ public class PublishSaveAsDraftBlogsEntryDetailsCPTest extends BaseTestCase {
 			"Blogs Entry Title");
 		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_STATUS",
 			"Draft");
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS", null);
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS_EDIT", null);
-		cPBlogsEntryEditActions.click("CONTENT_LINK_SAVE", null);
-		cPBlogsEntryEditActions.assertTextEquals("PORTLET_TEXT_SUCCESS", null);
+		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS", "Actions");
+		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS_EDIT", "Edit");
+		cPBlogsEntryEditActions.click("CONTENT_LINK_SAVE", "Publish");
+		cPBlogsEntryEditActions.assertTextEquals("PORTLET_TEXT_SUCCESS",
+			"Your request completed successfully.");
 		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE",
 			"Blogs Entry Title");
 		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_STATUS",

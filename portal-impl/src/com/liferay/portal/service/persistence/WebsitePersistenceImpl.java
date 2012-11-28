@@ -2239,7 +2239,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 
 			query.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
 
-			query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
+			query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY__2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -2500,7 +2500,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 
 		query.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
 
-		query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
+		query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY__2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -2645,7 +2645,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 
 			query.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
 
-			query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
+			query.append(_FINDER_COLUMN_C_C_C_P_PRIMARY__2);
 
 			String sql = query.toString();
 
@@ -2686,7 +2686,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	private static final String _FINDER_COLUMN_C_C_C_P_COMPANYID_2 = "website.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2 = "website.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSPK_2 = "website.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 = "website.primary = ?";
+	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY__2 = "website.primary_ = ?";
 
 	/**
 	 * Caches the website in the entity cache if it is enabled.

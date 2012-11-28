@@ -189,14 +189,14 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			query.append(_SQL_SELECT_LISTTYPE_WHERE);
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_TYPE_TYPE_1);
+				query.append(_FINDER_COLUMN_TYPE_TYPE__1);
 			}
 			else {
 				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_TYPE_TYPE_3);
+					query.append(_FINDER_COLUMN_TYPE_TYPE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_TYPE_TYPE_2);
+					query.append(_FINDER_COLUMN_TYPE_TYPE__2);
 				}
 			}
 
@@ -411,14 +411,14 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		query.append(_SQL_SELECT_LISTTYPE_WHERE);
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_TYPE_TYPE_1);
+			query.append(_FINDER_COLUMN_TYPE_TYPE__1);
 		}
 		else {
 			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_TYPE_TYPE_3);
+				query.append(_FINDER_COLUMN_TYPE_TYPE__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_TYPE_TYPE_2);
+				query.append(_FINDER_COLUMN_TYPE_TYPE__2);
 			}
 		}
 
@@ -546,14 +546,14 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			query.append(_SQL_COUNT_LISTTYPE_WHERE);
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_TYPE_TYPE_1);
+				query.append(_FINDER_COLUMN_TYPE_TYPE__1);
 			}
 			else {
 				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_TYPE_TYPE_3);
+					query.append(_FINDER_COLUMN_TYPE_TYPE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_TYPE_TYPE_2);
+					query.append(_FINDER_COLUMN_TYPE_TYPE__2);
 				}
 			}
 
@@ -589,9 +589,9 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "listType.type IS NULL";
-	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "listType.type = ?";
-	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(listType.type IS NULL OR listType.type = ?)";
+	private static final String _FINDER_COLUMN_TYPE_TYPE__1 = "listType.type_ IS NULL";
+	private static final String _FINDER_COLUMN_TYPE_TYPE__2 = "listType.type_ = ?";
+	private static final String _FINDER_COLUMN_TYPE_TYPE__3 = "(listType.type_ IS NULL OR listType.type_ = ?)";
 
 	/**
 	 * Caches the list type in the entity cache if it is enabled.

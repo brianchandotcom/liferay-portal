@@ -883,7 +883,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 
 			query.append(_SQL_SELECT_COUNTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+			query.append(_FINDER_COLUMN_ACTIVE_ACTIVE__2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1092,7 +1092,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 
 		query.append(_SQL_SELECT_COUNTRY_WHERE);
 
-		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE__2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1215,7 +1215,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 
 			query.append(_SQL_COUNT_COUNTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+			query.append(_FINDER_COLUMN_ACTIVE_ACTIVE__2);
 
 			String sql = query.toString();
 
@@ -1247,7 +1247,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "country.active = ?";
+	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE__2 = "country.active_ = ?";
 
 	/**
 	 * Caches the country in the entity cache if it is enabled.

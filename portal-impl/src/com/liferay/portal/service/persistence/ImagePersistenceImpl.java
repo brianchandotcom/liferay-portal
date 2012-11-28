@@ -175,7 +175,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 			query.append(_SQL_SELECT_IMAGE_WHERE);
 
-			query.append(_FINDER_COLUMN_LTSIZE_SIZE_2);
+			query.append(_FINDER_COLUMN_LTSIZE_SIZE__2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -383,7 +383,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 		query.append(_SQL_SELECT_IMAGE_WHERE);
 
-		query.append(_FINDER_COLUMN_LTSIZE_SIZE_2);
+		query.append(_FINDER_COLUMN_LTSIZE_SIZE__2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -506,7 +506,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 			query.append(_SQL_COUNT_IMAGE_WHERE);
 
-			query.append(_FINDER_COLUMN_LTSIZE_SIZE_2);
+			query.append(_FINDER_COLUMN_LTSIZE_SIZE__2);
 
 			String sql = query.toString();
 
@@ -538,7 +538,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_LTSIZE_SIZE_2 = "image.size < ?";
+	private static final String _FINDER_COLUMN_LTSIZE_SIZE__2 = "image.size_ < ?";
 
 	/**
 	 * Caches the image in the entity cache if it is enabled.

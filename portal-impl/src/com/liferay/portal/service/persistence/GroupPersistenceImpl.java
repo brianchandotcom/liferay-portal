@@ -2450,9 +2450,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 			query.append(_SQL_SELECT_GROUP__WHERE);
 
-			query.append(_FINDER_COLUMN_T_A_TYPE_2);
+			query.append(_FINDER_COLUMN_T_A_TYPE__2);
 
-			query.append(_FINDER_COLUMN_T_A_ACTIVE_2);
+			query.append(_FINDER_COLUMN_T_A_ACTIVE__2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -2675,9 +2675,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 		query.append(_SQL_SELECT_GROUP__WHERE);
 
-		query.append(_FINDER_COLUMN_T_A_TYPE_2);
+		query.append(_FINDER_COLUMN_T_A_TYPE__2);
 
-		query.append(_FINDER_COLUMN_T_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_T_A_ACTIVE__2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -2804,9 +2804,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 			query.append(_SQL_COUNT_GROUP__WHERE);
 
-			query.append(_FINDER_COLUMN_T_A_TYPE_2);
+			query.append(_FINDER_COLUMN_T_A_TYPE__2);
 
-			query.append(_FINDER_COLUMN_T_A_ACTIVE_2);
+			query.append(_FINDER_COLUMN_T_A_ACTIVE__2);
 
 			String sql = query.toString();
 
@@ -2840,8 +2840,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_T_A_TYPE_2 = "group_.type = ? AND ";
-	private static final String _FINDER_COLUMN_T_A_ACTIVE_2 = "group_.active = ?";
+	private static final String _FINDER_COLUMN_T_A_TYPE__2 = "group_.type_ = ? AND ";
+	private static final String _FINDER_COLUMN_T_A_ACTIVE__2 = "group_.active_ = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C_C = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",

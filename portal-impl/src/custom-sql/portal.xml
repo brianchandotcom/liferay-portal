@@ -484,7 +484,7 @@
 				Lock lock
 			WHERE
 				(lock.className = ?) AND
-				(lock.key = ?)
+				(lock.key_ = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.OrganizationFinder.countByGroupId">

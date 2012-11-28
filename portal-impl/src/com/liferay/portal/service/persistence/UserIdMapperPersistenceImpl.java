@@ -653,14 +653,14 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			query.append(_FINDER_COLUMN_U_T_USERID_2);
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_U_T_TYPE_1);
+				query.append(_FINDER_COLUMN_U_T_TYPE__1);
 			}
 			else {
 				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_U_T_TYPE_3);
+					query.append(_FINDER_COLUMN_U_T_TYPE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_U_T_TYPE_2);
+					query.append(_FINDER_COLUMN_U_T_TYPE__2);
 				}
 			}
 
@@ -760,14 +760,14 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			query.append(_FINDER_COLUMN_U_T_USERID_2);
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_U_T_TYPE_1);
+				query.append(_FINDER_COLUMN_U_T_TYPE__1);
 			}
 			else {
 				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_U_T_TYPE_3);
+					query.append(_FINDER_COLUMN_U_T_TYPE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_U_T_TYPE_2);
+					query.append(_FINDER_COLUMN_U_T_TYPE__2);
 				}
 			}
 
@@ -806,9 +806,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	}
 
 	private static final String _FINDER_COLUMN_U_T_USERID_2 = "userIdMapper.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_T_TYPE_1 = "userIdMapper.type IS NULL";
-	private static final String _FINDER_COLUMN_U_T_TYPE_2 = "userIdMapper.type = ?";
-	private static final String _FINDER_COLUMN_U_T_TYPE_3 = "(userIdMapper.type IS NULL OR userIdMapper.type = ?)";
+	private static final String _FINDER_COLUMN_U_T_TYPE__1 = "userIdMapper.type_ IS NULL";
+	private static final String _FINDER_COLUMN_U_T_TYPE__2 = "userIdMapper.type_ = ?";
+	private static final String _FINDER_COLUMN_U_T_TYPE__3 = "(userIdMapper.type_ IS NULL OR userIdMapper.type_ = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_T_E = new FinderPath(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
 			UserIdMapperModelImpl.FINDER_CACHE_ENABLED, UserIdMapperImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_E",
@@ -905,14 +905,14 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			query.append(_SQL_SELECT_USERIDMAPPER_WHERE);
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_T_E_TYPE_1);
+				query.append(_FINDER_COLUMN_T_E_TYPE__1);
 			}
 			else {
 				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_T_E_TYPE_3);
+					query.append(_FINDER_COLUMN_T_E_TYPE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_T_E_TYPE_2);
+					query.append(_FINDER_COLUMN_T_E_TYPE__2);
 				}
 			}
 
@@ -1027,14 +1027,14 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			query.append(_SQL_COUNT_USERIDMAPPER_WHERE);
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_T_E_TYPE_1);
+				query.append(_FINDER_COLUMN_T_E_TYPE__1);
 			}
 			else {
 				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_T_E_TYPE_3);
+					query.append(_FINDER_COLUMN_T_E_TYPE__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_T_E_TYPE_2);
+					query.append(_FINDER_COLUMN_T_E_TYPE__2);
 				}
 			}
 
@@ -1086,9 +1086,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_T_E_TYPE_1 = "userIdMapper.type IS NULL AND ";
-	private static final String _FINDER_COLUMN_T_E_TYPE_2 = "userIdMapper.type = ? AND ";
-	private static final String _FINDER_COLUMN_T_E_TYPE_3 = "(userIdMapper.type IS NULL OR userIdMapper.type = ?) AND ";
+	private static final String _FINDER_COLUMN_T_E_TYPE__1 = "userIdMapper.type_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_T_E_TYPE__2 = "userIdMapper.type_ = ? AND ";
+	private static final String _FINDER_COLUMN_T_E_TYPE__3 = "(userIdMapper.type_ IS NULL OR userIdMapper.type_ = ?) AND ";
 	private static final String _FINDER_COLUMN_T_E_EXTERNALUSERID_1 = "userIdMapper.externalUserId IS NULL";
 	private static final String _FINDER_COLUMN_T_E_EXTERNALUSERID_2 = "userIdMapper.externalUserId = ?";
 	private static final String _FINDER_COLUMN_T_E_EXTERNALUSERID_3 = "(userIdMapper.externalUserId IS NULL OR userIdMapper.externalUserId = ?)";

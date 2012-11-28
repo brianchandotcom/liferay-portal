@@ -193,14 +193,14 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			query.append(_SQL_SELECT_POLLSCHOICE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_UUID__2);
 				}
 			}
 
@@ -415,14 +415,14 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		query.append(_SQL_SELECT_POLLSCHOICE_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID__1);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_UUID__3);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_UUID__2);
 			}
 		}
 
@@ -550,14 +550,14 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			query.append(_SQL_COUNT_POLLSCHOICE_WHERE);
 
 			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
+				query.append(_FINDER_COLUMN_UUID_UUID__1);
 			}
 			else {
 				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
+					query.append(_FINDER_COLUMN_UUID_UUID__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
+					query.append(_FINDER_COLUMN_UUID_UUID__2);
 				}
 			}
 
@@ -593,9 +593,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "pollsChoice.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "pollsChoice.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(pollsChoice.uuid IS NULL OR pollsChoice.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID__1 = "pollsChoice.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID__2 = "pollsChoice.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID__3 = "(pollsChoice.uuid_ IS NULL OR pollsChoice.uuid_ = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_QUESTIONID =
 		new FinderPath(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
 			PollsChoiceModelImpl.FINDER_CACHE_ENABLED, PollsChoiceImpl.class,

@@ -168,14 +168,14 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 			query.append(_SQL_SELECT_TICKET_WHERE);
 
 			if (key == null) {
-				query.append(_FINDER_COLUMN_KEY_KEY_1);
+				query.append(_FINDER_COLUMN_KEY_KEY__1);
 			}
 			else {
 				if (key.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_KEY_KEY_3);
+					query.append(_FINDER_COLUMN_KEY_KEY__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_KEY_KEY_2);
+					query.append(_FINDER_COLUMN_KEY_KEY__2);
 				}
 			}
 
@@ -275,14 +275,14 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 			query.append(_SQL_COUNT_TICKET_WHERE);
 
 			if (key == null) {
-				query.append(_FINDER_COLUMN_KEY_KEY_1);
+				query.append(_FINDER_COLUMN_KEY_KEY__1);
 			}
 			else {
 				if (key.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_KEY_KEY_3);
+					query.append(_FINDER_COLUMN_KEY_KEY__3);
 				}
 				else {
-					query.append(_FINDER_COLUMN_KEY_KEY_2);
+					query.append(_FINDER_COLUMN_KEY_KEY__2);
 				}
 			}
 
@@ -318,9 +318,9 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_KEY_KEY_1 = "ticket.key IS NULL";
-	private static final String _FINDER_COLUMN_KEY_KEY_2 = "ticket.key = ?";
-	private static final String _FINDER_COLUMN_KEY_KEY_3 = "(ticket.key IS NULL OR ticket.key = ?)";
+	private static final String _FINDER_COLUMN_KEY_KEY__1 = "ticket.key_ IS NULL";
+	private static final String _FINDER_COLUMN_KEY_KEY__2 = "ticket.key_ = ?";
+	private static final String _FINDER_COLUMN_KEY_KEY__3 = "(ticket.key_ IS NULL OR ticket.key_ = ?)";
 
 	/**
 	 * Caches the ticket in the entity cache if it is enabled.

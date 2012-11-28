@@ -1683,7 +1683,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 			query.append(_FINDER_COLUMN_G_U_A_USERID_2);
 
-			query.append(_FINDER_COLUMN_G_U_A_ACTIVE_2);
+			query.append(_FINDER_COLUMN_G_U_A_ACTIVE__2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1928,7 +1928,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 		query.append(_FINDER_COLUMN_G_U_A_USERID_2);
 
-		query.append(_FINDER_COLUMN_G_U_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_G_U_A_ACTIVE__2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -2065,7 +2065,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 			query.append(_FINDER_COLUMN_G_U_A_USERID_2);
 
-			query.append(_FINDER_COLUMN_G_U_A_ACTIVE_2);
+			query.append(_FINDER_COLUMN_G_U_A_ACTIVE__2);
 
 			String sql = query.toString();
 
@@ -2103,7 +2103,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 	private static final String _FINDER_COLUMN_G_U_A_GROUPID_2 = "dlFileRank.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_A_USERID_2 = "dlFileRank.userId = ? AND ";
-	private static final String _FINDER_COLUMN_G_U_A_ACTIVE_2 = "dlFileRank.active = ?";
+	private static final String _FINDER_COLUMN_G_U_A_ACTIVE__2 = "dlFileRank.active_ = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_U_F = new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileRankModelImpl.FINDER_CACHE_ENABLED, DLFileRankImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_U_F",

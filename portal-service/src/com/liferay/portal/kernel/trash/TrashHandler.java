@@ -174,6 +174,8 @@ public interface TrashHandler {
 	public ContainerModel getContainerModel(long containerModelId)
 		throws PortalException, SystemException;
 
+	public String getContainerModelClassName();
+
 	/**
 	 * Returns the name of the container model (e.g. folder name).
 	 *

@@ -97,6 +97,10 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return null;
 	}
 
+	public String getContainerModelClassName() {
+		return StringPool.BLANK;
+	}
+
 	public String getContainerModelName() {
 		return StringPool.BLANK;
 	}

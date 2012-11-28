@@ -430,6 +430,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String TRANSLATOR_TRANSLATION = "TRANSLATOR_TRANSLATION";
 
+	public static final String TRASH_CONTAINER_MODEL = "TRASH_CONTAINER_MODEL";
+
 	public static final String TRASH_ENTRY = "TRASH_ENTRY";
 
 	public static final String TREE_GROUP_ID = "TREE_GROUP_ID";

@@ -37,39 +37,7 @@ portletURL.setParameter("struts_action", "/trash/view");
 portletURL.setParameter("tabs1", tabs1);
 %>
 
-<c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA) %>">
-	<div class="portlet-msg-success">
-
-		<%
-		Map<String, List<String>> data = (HashMap<String, List<String>>)SessionMessages.get(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
-
-		List<String> restoreLinks = data.get("restoreLinks");
-		List<String> restoreMessages = data.get("restoreMessages");
-		%>
-
-		<c:choose>
-			<c:when test="<%= (data != null) && (restoreLinks != null) && (restoreMessages != null) && (restoreLinks.size() > 0) && (restoreMessages.size() > 0) %>">
-
-				<%
-				StringBundler sb = new StringBundler(5 * restoreMessages.size());
-
-				for (int i = 0; i < restoreLinks.size(); i++) {
-					sb.append("<a href=\"");
-					sb.append(restoreLinks.get(i));
-					sb.append("\">");
-					sb.append(restoreMessages.get(i));
-					sb.append("</a> ");
-				}
-				%>
-
-				<liferay-ui:message arguments="<%= sb.toString() %>" key="the-item-has-been-restored-to-x" />
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:message key="the-item-has-been-restored" />
-			</c:otherwise>
-		</c:choose>
-	</div>
-</c:if>
+<liferay-util:include page="/html/portlet/trash/restore_path.jsp" />
 
 <c:if test="<%= group.isStagingGroup() %>">
 	<liferay-ui:tabs
@@ -270,16 +238,6 @@ portletURL.setParameter("tabs1", tabs1);
 
 	<liferay-ui:search-iterator type='<%= approximate ? "more" : "regular" %>' />
 </liferay-ui:search-container>
-
-<aui:script use="liferay-restore-entry">
-	new Liferay.RestoreEntry(
-		{
-			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" /><portlet:param name="struts_action" value="/trash/edit_entry" /></portlet:actionURL>',
-			namespace: '<portlet:namespace />',
-			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/trash/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
-		}
-	);
-</aui:script>
 
 <%
 if (Validator.isNotNull(keywords)) {

@@ -66,21 +66,6 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 		return PortletKeys.DOCUMENT_LIBRARY;
 	}
 
-	@Override
-	public String getRestorePath(RenderRequest renderRequest) {
-		if (_fileShortcut.isInTrashFolder()) {
-			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, _fileEntry);
-			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT, _fileShortcut);
-
-			return
-				"/html/portlet/document_library/trash/file_entry_restore.jsp";
-		}
-
-		return null;
-	}
-
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_fileEntry.getDescription());
 	}

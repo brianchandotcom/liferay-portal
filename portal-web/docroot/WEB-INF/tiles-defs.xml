@@ -1589,6 +1589,10 @@
 		<put name="portlet_content" value="/portlet/trash/restore_entry.jsp" />
 	</definition>
 
+	<definition name="portlet.trash.view_container_model" extends="portlet.trash">
+		<put name="portlet_content" value="/portlet/trash/view_container_model.jsp" />
+	</definition>
+
 	<definition name="portlet.trash.view" extends="portlet.trash">
 		<put name="portlet_content" value="/portlet/trash/view.jsp" />
 	</definition>

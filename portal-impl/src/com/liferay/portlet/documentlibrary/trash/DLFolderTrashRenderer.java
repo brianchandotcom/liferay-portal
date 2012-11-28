@@ -83,20 +83,6 @@ public class DLFolderTrashRenderer extends BaseTrashRenderer {
 		return assetRendererFactory.getPortletId();
 	}
 
-	@Override
-	public String getRestorePath(RenderRequest renderRequest) {
-		DLFolder dlFolder = (DLFolder)_folder.getModel();
-
-		if ((dlFolder != null) && dlFolder.isInTrashFolder()) {
-			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FOLDER, _folder);
-
-			return "/html/portlet/document_library/trash/folder_restore.jsp";
-		}
-
-		return null;
-	}
-
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_folder.getDescription());
 	}

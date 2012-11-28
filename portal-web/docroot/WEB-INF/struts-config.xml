@@ -1967,6 +1967,11 @@
 
 		<action path="/trash/restore_entry" forward="portlet.trash.restore_entry" />
 
+		<action path="/trash/view_container_model" type="com.liferay.portlet.trash.action.ContainerModelAction">
+			<forward name="portlet.trash.error" path="portlet.trash.error" />
+			<forward name="portlet.trash.view_container_model" path="portlet.trash.view_container_model" />
+		</action>
+
 		<action path="/trash/view" forward="portlet.trash.view" />
 
 		<action path="/trash/view_content" forward="portlet.trash.view_content" />

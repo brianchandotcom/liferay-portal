@@ -49,6 +49,11 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public String getContainerModelClassName() {
+		return DLFolder.class.getName();
+	}
+
+	@Override
 	public List<ContainerModel> getContainerModels(
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException, SystemException {
@@ -116,7 +121,8 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 
 		Repository repository = getRepository(classPK);
 
-		return repository.getFileEntriesCount(classPK);
+		return repository.getFileEntriesAndFileShortcutsCount(
+			classPK, WorkflowConstants.STATUS_ANY);
 	}
 
 	@Override
@@ -213,16 +219,6 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	protected DLFolder getDLFolder(long classPK)
 		throws PortalException, SystemException {
 
-		Repository repository = getRepository(classPK);
-
-		Folder folder = repository.getFolder(classPK);
-
-		return (DLFolder)folder.getModel();
-	}
-
-	protected Repository getRepository(long classPK)
-		throws PortalException, SystemException {
-
 		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
 			classPK, 0, 0);
 
@@ -232,7 +228,12 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 					" does not support trash operations");
 		}
 
-		return repository;
+		Folder folder = repository.getFolder(classPK);
+
+		return (DLFolder)folder.getModel();
 	}
+
+	protected abstract Repository getRepository(long classPK)
+		throws PortalException, SystemException;
 
 }

@@ -62,7 +62,6 @@ for (int i = 0; i < results.size(); i++) {
 	sb.append("Liferay.Util.getOpener().");
 	sb.append(renderResponse.getNamespace());
 	sb.append("selectDocumentLibrary('");
-	sb.append(themeDisplay.getPathContext());
 	sb.append(DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, false));
 	sb.append("', '");
 	sb.append(fileEntry.getUuid());

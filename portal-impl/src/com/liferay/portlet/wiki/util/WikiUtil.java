@@ -58,9 +58,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -107,6 +109,41 @@ public class WikiUtil {
 		return DiffHtmlUtil.diff(
 			new UnsyncStringReader(sourceContent),
 			new UnsyncStringReader(targetContent));
+	}
+
+	public static List<WikiPage> filterOrphans(List<WikiPage> pages)
+		throws PortalException, SystemException {
+
+		List<Map<String, Boolean>> pageTitles =
+			new ArrayList<Map<String, Boolean>>();
+
+		for (WikiPage page : pages) {
+			pageTitles.add(WikiCacheUtil.getOutgoingLinks(page));
+		}
+
+		Set<WikiPage> notOrphans = new HashSet<WikiPage>();
+
+		for (WikiPage page : pages) {
+			for (Map<String, Boolean> pageTitle : pageTitles) {
+				if (pageTitle.get(page.getTitle().toLowerCase()) != null) {
+					notOrphans.add(page);
+
+					break;
+				}
+			}
+		}
+
+		List<WikiPage> orphans = new ArrayList<WikiPage>();
+
+		for (WikiPage page : pages) {
+			if (!notOrphans.contains(page)) {
+				orphans.add(page);
+			}
+		}
+
+		orphans = ListUtil.sort(orphans);
+
+		return orphans;
 	}
 
 	public static String getEditPage(String format) {

@@ -297,6 +297,18 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			entryURL, pages, diff, locale);
 	}
 
+	public List<WikiPage> getOrphans(long groupId, long nodeId)
+		throws PortalException, SystemException {
+
+		WikiNodePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.VIEW);
+
+		List<WikiPage> pages = wikiPagePersistence.filterFindByG_N_H_S(
+			groupId, nodeId, true, WorkflowConstants.STATUS_APPROVED);
+
+		return WikiUtil.filterOrphans(pages);
+	}
+
 	public WikiPage getPage(long nodeId, String title)
 		throws PortalException, SystemException {
 

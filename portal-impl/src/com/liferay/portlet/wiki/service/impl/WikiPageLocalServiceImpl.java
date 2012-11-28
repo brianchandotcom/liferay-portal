@@ -77,14 +77,11 @@ import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
 import java.io.File;
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -626,39 +623,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public List<WikiPage> getOrphans(long nodeId)
 		throws PortalException, SystemException {
 
-		List<Map<String, Boolean>> pageTitles =
-			new ArrayList<Map<String, Boolean>>();
-
 		List<WikiPage> pages = wikiPagePersistence.findByN_H_S(
 			nodeId, true, WorkflowConstants.STATUS_APPROVED);
 
-		for (WikiPage page : pages) {
-			pageTitles.add(WikiCacheUtil.getOutgoingLinks(page));
-		}
-
-		Set<WikiPage> notOrphans = new HashSet<WikiPage>();
-
-		for (WikiPage page : pages) {
-			for (Map<String, Boolean> pageTitle : pageTitles) {
-				if (pageTitle.get(page.getTitle().toLowerCase()) != null) {
-					notOrphans.add(page);
-
-					break;
-				}
-			}
-		}
-
-		List<WikiPage> orphans = new ArrayList<WikiPage>();
-
-		for (WikiPage page : pages) {
-			if (!notOrphans.contains(page)) {
-				orphans.add(page);
-			}
-		}
-
-		orphans = ListUtil.sort(orphans);
-
-		return orphans;
+		return WikiUtil.filterOrphans(pages);
 	}
 
 	public List<WikiPage> getOutgoingLinks(long nodeId, String title)

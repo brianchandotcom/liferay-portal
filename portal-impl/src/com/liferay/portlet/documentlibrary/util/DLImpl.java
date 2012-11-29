@@ -471,7 +471,7 @@ public class DLImpl implements DL {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		if (themeDisplay != null) {
 			if (absoluteURL) {

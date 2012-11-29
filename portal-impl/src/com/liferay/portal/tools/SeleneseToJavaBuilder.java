@@ -584,16 +584,28 @@ public class SeleneseToJavaBuilder {
 			String param2 = fixParam(params[1]);
 			String param3 = fixParam(params[2]);
 
-			if (param1.equals("addSelection") || param1.equals("clickAt") ||
-				param1.equals("doubleClickAt") || param1.equals("keyDown") ||
-				param1.equals("keyPress") || param1.equals("keyUp") ||
-				param1.equals("mouseMoveAt") || param1.equals("openWindow") ||
-				param1.equals("select") || param1.equals("sendKeys") ||
-				param1.equals("type") || param1.equals("typeKeys") ||
-				param1.equals("uploadCommonFile") ||
-				param1.equals("uploadFile") ||
-				param1.equals("uploadTempFile") ||
-				param1.equals("waitForPopUp")) {
+			if (param1.equals("addPortletKeyboard") || param1.equals("close") ||
+				param1.equals("goBack") || param1.equals("refresh") ||
+				param1.equals("setBrowserOption") ||
+				param1.equals("windowFocus") ||
+				param1.equals("windowMaximize")) {
+
+				sb.append("selenium.");
+				sb.append(param1);
+				sb.append("();");
+			}
+			else if (param1.equals("addSelection") ||
+					 param1.equals("clickAt") ||
+					 param1.equals("doubleClickAt") ||
+					 param1.equals("keyDown") || param1.equals("keyPress") ||
+					 param1.equals("keyUp") || param1.equals("mouseMoveAt") ||
+					 param1.equals("openWindow") || param1.equals("select") ||
+					 param1.equals("sendKeys") || param1.equals("type") ||
+					 param1.equals("typeKeys") ||
+					 param1.equals("uploadCommonFile") ||
+					 param1.equals("uploadFile") ||
+					 param1.equals("uploadTempFile") ||
+					 param1.equals("waitForPopUp")) {
 
 				sb.append("selenium.");
 				sb.append(param1);
@@ -630,11 +642,6 @@ public class SeleneseToJavaBuilder {
 				}
 
 				sb.append("));");
-			}
-			else if (param1.equals("addPortletKeyboard")) {
-					sb.append("selenium.");
-					sb.append(param1);
-					sb.append("();");
 			}
 			else if (param1.equals("assertAlert") ||
 					 param1.equals("assertNotAlert")) {
@@ -931,16 +938,6 @@ public class SeleneseToJavaBuilder {
 				sb.append(param3);
 				sb.append("\"));");
 				sb.append("selenium.waitForPageToLoad(\"30000\");");
-			}
-			else if (param1.equals("close") || param1.equals("goBack") ||
-					 param1.equals("refresh") ||
-					 param1.equals("setBrowserOption") ||
-					 param1.equals("windowFocus") ||
-					 param1.equals("windowMaximize")) {
-
-				sb.append("selenium.");
-				sb.append(param1);
-				sb.append("();");
 			}
 			else if (param1.equals("dragAndDropToObject")) {
 				sb.append("selenium.");

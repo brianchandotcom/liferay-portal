@@ -35,9 +35,11 @@ public class LiferaySeleniumHelper {
 		try {
 			Runtime runtime = Runtime.getRuntime();
 
-			String commands = TestPropsValues.SELENIUM_BROWSER_COMMANDS_DIR + TestPropsValues.ADD_PORTLET_KEYBOARD;
+			String command = RuntimeVariables.replace(
+				TestPropsValues.SELENIUM_BROWSER_COMMANDS_DIR +
+					TestPropsValues.SELENIUM_ADD_PORTLET_KEYBOARD);
 
-			runtime.exec(commands);
+			runtime.exec(command);
 
 			Thread.sleep(10000);
 		}
@@ -240,7 +242,7 @@ public class LiferaySeleniumHelper {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-	}		
+	}
 
 	public static void waitForElementNotPresent(
 			LiferaySelenium liferaySelenium, String locator)

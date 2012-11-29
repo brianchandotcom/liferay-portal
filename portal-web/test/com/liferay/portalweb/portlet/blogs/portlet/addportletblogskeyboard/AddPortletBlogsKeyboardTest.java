@@ -25,8 +25,8 @@ public class AddPortletBlogsKeyboardTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Blogs Test Page1",
-			RuntimeVariables.replace("Blogs Test Page1"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.addPortletKeyboard();
 		selenium.waitForVisible("//section");

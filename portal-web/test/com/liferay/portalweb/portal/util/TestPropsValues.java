@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 
-	public static final String ADD_PORTLET_KEYBOARD = TestPropsUtil.get("selenium.add.portlet.keyboard");
-
 	public static final String BROWSER_TYPE = TestPropsUtil.get("browser.type");
 
 	public static final String CLUSTER_NODE_1 = TestPropsUtil.get(
@@ -41,6 +39,9 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 
 	public static final boolean SAVE_SOURCE = GetterUtil.getBoolean(
 		TestPropsUtil.get("save.source"));
+
+	public static final String SELENIUM_ADD_PORTLET_KEYBOARD =
+		TestPropsUtil.get("selenium.add.portlet.keyboard.executable");
 
 	public static final String SELENIUM_BROWSER_COMMANDS_DIR =
 		TestPropsUtil.get("selenium.browser.commands.dir");

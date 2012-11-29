@@ -18,12 +18,30 @@ package com.liferay.portlet.wiki.service.persistence;
  * @author Brian Wing Shun Chan
  */
 public interface WikiPageFinder {
-	public int countByCreateDate(long nodeId, java.util.Date createDate,
-		boolean before)
+	public int countByCreateDate(long groupId, long nodeId,
+		java.util.Date createDate, boolean before)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int countByCreateDate(long nodeId, java.sql.Timestamp createDate,
-		boolean before)
+	public int countByCreateDate(long groupId, long nodeId,
+		java.sql.Timestamp createDate, boolean before)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int filterCountByCreateDate(long groupId, long nodeId,
+		java.util.Date createDate, boolean before)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int filterCountByCreateDate(long groupId, long nodeId,
+		java.sql.Timestamp createDate, boolean before)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByCreateDate(
+		long groupId, long nodeId, java.util.Date createDate, boolean before,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByCreateDate(
+		long groupId, long nodeId, java.sql.Timestamp createDate,
+		boolean before, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.wiki.model.WikiPage findByResourcePrimKey(
@@ -32,12 +50,14 @@ public interface WikiPageFinder {
 			com.liferay.portlet.wiki.NoSuchPageException;
 
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByCreateDate(
-		long nodeId, java.util.Date createDate, boolean before, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, java.util.Date createDate, boolean before,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByCreateDate(
-		long nodeId, java.sql.Timestamp createDate, boolean before, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, java.sql.Timestamp createDate,
+		boolean before, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByNoAssets()
 		throws com.liferay.portal.kernel.exception.SystemException;

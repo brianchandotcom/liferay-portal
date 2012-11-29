@@ -143,6 +143,16 @@
 			<finder-column name="nodeId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_N_H" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="nodeId" />
+			<finder-column name="head" />
+		</finder>
+		<finder name="G_N_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="nodeId" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="R_N_V" return-type="WikiPage" unique="true">
 			<finder-column name="resourcePrimKey" />
 			<finder-column name="nodeId" />
@@ -184,6 +194,18 @@
 			<finder-column name="parentTitle" case-sensitive="false" />
 		</finder>
 		<finder name="N_H_S" return-type="Collection">
+			<finder-column name="nodeId" />
+			<finder-column name="head" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_U_N_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="nodeId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_N_H_S" return-type="Collection">
+			<finder-column name="groupId" />
 			<finder-column name="nodeId" />
 			<finder-column name="head" />
 			<finder-column name="status" />

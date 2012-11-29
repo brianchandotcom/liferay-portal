@@ -202,6 +202,21 @@ public class WikiPageServiceUtil {
 		return getService().getPage(nodeId, title, version);
 	}
 
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
+		long groupId, long nodeId, boolean head, int status, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getPages(groupId, nodeId, head, status, start, end, obc);
+	}
+
+	public static int getPagesCount(long groupId, long nodeId, boolean head)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPagesCount(groupId, nodeId, head);
+	}
+
 	public static java.lang.String getPagesRSS(long companyId, long nodeId,
 		java.lang.String title, int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,

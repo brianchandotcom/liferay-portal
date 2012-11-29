@@ -2152,9 +2152,19 @@
 			project.setProperty("java.processes.old.list", javaProcessesOldList);
 		</script>
 
-		<exec executable="cmd.exe">
-			<arg line="/c jps -l > java-processes" />
-		</exec>
+		<if>
+			<os family="windows" />
+			<then>
+				<exec executable="${shell.executable}">
+					<arg line="/c jps -l > java-processes" />
+				</exec>
+			</then>
+			<else>
+				<exec executable="${shell.executable}" output="java-processes">
+					<arg line="-c jps -l" />
+				</exec>
+			</else>
+		</if>
 
 		<loadfile property="java.processes.new.content" srcfile="java-processes" />
 
@@ -3621,9 +3631,19 @@ file.
 	</target>
 
 	<target name="record-java-processes">
-		<exec executable="cmd.exe">
-			<arg line="/c jps -q > java-processes" />
-		</exec>
+		<if>
+			<os family="windows" />
+			<then>
+				<exec executable="${shell.executable}">
+					<arg line="/c jps -q > java-processes" />
+				</exec>
+			</then>
+			<else>
+				<exec executable="${shell.executable}" output="java-processes">
+					<arg line="-c jps -q" />
+				</exec>
+			</else>
+		</if>
 	</target>
 
 	<target name="replace-remote-file">

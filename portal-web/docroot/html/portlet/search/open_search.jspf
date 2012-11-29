@@ -122,6 +122,12 @@ for (int i = 0; i < portlets.size(); i++) {
 
 	String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
+	boolean isFilterSearch = false;
+
+	if(openSearch instanceof HitsOpenSearchImpl){
+		isFilterSearch = ((HitsOpenSearchImpl) openSearch).getIndexer().isFilterSearch();
+	}
+
 	List resultRows = new ArrayList();
 
 	try {
@@ -300,10 +306,20 @@ for (int i = 0; i < portlets.size(); i++) {
 
 		<%
 		totalResults = totalResults + openSearchSearchContainer.getTotal();
+
+		StringBundler sectionTitleSb = new StringBundler(4);
+
+		sectionTitleSb.append(portletTitle);
+
+		if(!isFilterSearch){
+			sectionTitleSb.append(" (");
+			sectionTitleSb.append(openSearchSearchContainer.getTotal());
+			sectionTitleSb.append(')');
+		}
 		%>
 
 		<div class="section-title">
-			<%= portletTitle %> (<%= openSearchSearchContainer.getTotal() %>)
+			<%= sectionTitleSb.toString() %>
 		</div>
 
 		<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= openSearchSearchContainer %>" />

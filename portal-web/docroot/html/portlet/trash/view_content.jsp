@@ -55,203 +55,199 @@
 		title="<%= trashRenderer.getTitle(locale) %>"
 	/>
 
-	<aui:layout>
-		<aui:column columnWidth="100" cssClass="context-pane" last="<%= true %>">
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
-					<liferay-util:include page="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>" />
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:app-view-toolbar>
-						<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "entryToolbar" %>' />
-					</liferay-ui:app-view-toolbar>
-				</c:otherwise>
-			</c:choose>
+	<c:choose>
+		<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
+			<liferay-util:include page="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>" />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:app-view-toolbar>
+				<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "entryToolbar" %>' />
+			</liferay-ui:app-view-toolbar>
+		</c:otherwise>
+	</c:choose>
 
-			<c:choose>
-				<c:when test="<%= trashHandler.isContainerModel() %>">
+	<c:choose>
+		<c:when test="<%= trashHandler.isContainerModel() %>">
 
-					<%
-					PortletURL iteratorURL = renderResponse.createRenderURL();
+			<%
+			PortletURL iteratorURL = renderResponse.createRenderURL();
 
-					iteratorURL.setParameter("struts_action", "/trash/view_content");
-					iteratorURL.setParameter("redirect", redirect);
-					iteratorURL.setParameter("className", className);
-					iteratorURL.setParameter("classPK", String.valueOf(classPK));
+			iteratorURL.setParameter("struts_action", "/trash/view_content");
+			iteratorURL.setParameter("redirect", redirect);
+			iteratorURL.setParameter("className", className);
+			iteratorURL.setParameter("classPK", String.valueOf(classPK));
 
-					int containerModelsCount = trashHandler.getTrashContainerModelsCount(classPK);
-					int baseModelsCount = trashHandler.getTrashContainedModelsCount(classPK);
-					%>
+			int containerModelsCount = trashHandler.getTrashContainerModelsCount(classPK);
+			int baseModelsCount = trashHandler.getTrashContainedModelsCount(classPK);
+			%>
 
-					<liferay-ui:panel-container extended="<%= false %>" id="containerDisplayInfoPanelContainer" persistState="<%= true %>">
-						<c:if test="<%= containerModelsCount > 0 %>">
-							<liferay-ui:panel collapsible="<%= true %>" cssClass="view-folders" extended="<%= true %>" id="containerModelsListingPanel" persistState="<%= true %>" title="<%= trashHandler.getTrashContainerModelName() %>">
-								<liferay-ui:search-container
-									curParam="cur1"
-									deltaConfigurable="<%= false %>"
-									iteratorURL="<%= iteratorURL %>"
-								>
-									<liferay-ui:search-container-results
-										results="<%= trashHandler.getTrashContainerModelTrashRenderers(classPK, searchContainer.getStart(), searchContainer.getEnd()) %>"
-										total="<%= containerModelsCount %>"
-									/>
-
-									<liferay-ui:search-container-row
-										className="com.liferay.portal.kernel.trash.TrashRenderer"
-										modelVar="curTrashRenderer"
-									>
-
-										<%
-										PortletURL rowURL = renderResponse.createRenderURL();
-
-										rowURL.setParameter("struts_action", "/trash/view_content");
-										rowURL.setParameter("redirect", currentURL);
-										rowURL.setParameter("className", (curTrashRenderer.getClassName()));
-										rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
-										%>
-
-										<liferay-ui:search-container-column-text
-											name="name"
-										>
-											<liferay-ui:icon
-												label="<%= true %>"
-												message="<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>"
-												src="<%= curTrashRenderer.getIconPath(renderRequest) %>"
-												url="<%= rowURL.toString() %>"
-											/>
-										</liferay-ui:search-container-column-text>
-
-										<liferay-ui:search-container-column-text
-											name='<%= LanguageUtil.format(pageContext, "num-of-x", trashHandler.getTrashContainedModelName(), true) %>'
-											value="<%= String.valueOf(baseModelsCount) %>"
-										/>
-
-										<liferay-ui:search-container-column-text
-											name='<%= LanguageUtil.format(pageContext, "num-of-x", trashHandler.getTrashContainerModelName(), true) %>'
-											value="<%= String.valueOf(containerModelsCount) %>"
-										/>
-
-										<liferay-ui:search-container-column-jsp
-											align="right"
-											path="/html/portlet/trash/view_content_action.jsp"
-										/>
-									</liferay-ui:search-container-row>
-
-									<liferay-ui:search-iterator />
-								</liferay-ui:search-container>
-							</liferay-ui:panel>
-						</c:if>
-
-						<c:if test="<%= baseModelsCount > 0 %>">
-							<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="baseModelsListingPanel" persistState="<%= true %>" title="<%= trashHandler.getTrashContainedModelName() %>">
-								<liferay-ui:search-container
-									curParam="cur2"
-									deltaConfigurable="<%= false %>"
-									iteratorURL="<%= iteratorURL %>"
-								>
-									<liferay-ui:search-container-results
-										results="<%= trashHandler.getTrashContainedModelTrashRenderers(classPK, searchContainer.getStart(), searchContainer.getEnd()) %>"
-										total="<%= baseModelsCount %>"
-									/>
-
-									<liferay-ui:search-container-row
-										className="com.liferay.portal.kernel.trash.TrashRenderer"
-										modelVar="curTrashRenderer"
-									>
-
-										<%
-										PortletURL rowURL = renderResponse.createRenderURL();
-
-										rowURL.setParameter("struts_action", "/trash/view_content");
-										rowURL.setParameter("redirect", currentURL);
-										rowURL.setParameter("className", curTrashRenderer.getClassName());
-										rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
-										%>
-
-										<liferay-ui:search-container-column-text
-												name="name"
-										>
-											<liferay-ui:icon
-												label="<%= true %>"
-												message="<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>"
-												src="<%= curTrashRenderer.getIconPath(renderRequest) %>"
-												url="<%= rowURL.toString() %>"
-											/>
-										</liferay-ui:search-container-column-text>
-
-										<liferay-ui:search-container-column-jsp
-											align="right"
-											path="/html/portlet/trash/view_content_action.jsp"
-										/>
-									</liferay-ui:search-container-row>
-
-									<liferay-ui:search-iterator />
-								</liferay-ui:search-container>
-							</liferay-ui:panel>
-						</c:if>
-
-						<c:if test="<%= (containerModelsCount + baseModelsCount) <= 0 %>">
-							<div class="portlet-msg-info">
-								<liferay-ui:message arguments="<%= new String[] {ResourceActionsUtil.getModelResource(locale, className)} %>" key="this-x-does-not-contain-any-entry" />
-							</div>
-						</c:if>
-					</liferay-ui:panel-container>
-				</c:when>
-				<c:when test="<%= Validator.isNotNull(path) %>">
-					<liferay-util:include page="<%= path %>" portletId="<%= trashRenderer.getPortletId() %>">
-						<liferay-util:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
-					</liferay-util:include>
-				</c:when>
-				<c:otherwise>
-					<%= trashRenderer.getSummary(locale) %>
-				</c:otherwise>
-			</c:choose>
-
-			<c:if test="<%= trashRenderer instanceof AssetRenderer %>">
-
-				<%
-				AssetRenderer assetRenderer = (AssetRenderer)trashRenderer;
-				%>
-
-				<c:if test="<%= !assetRenderer.getAssetRendererFactoryClassName().equals(DLFileEntryAssetRendererFactory.CLASS_NAME) %>">
-					<div class="asset-ratings">
-						<liferay-ui:ratings
-							className="<%= className %>"
-							classPK="<%= classPK %>"
-						/>
-					</div>
-
-					<%
-					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
-					%>
-
-					<div class="asset-related-assets">
-						<liferay-ui:asset-links
-							assetEntryId="<%= assetEntry.getEntryId() %>"
-						/>
-					</div>
-
-					<c:if test="<%= Validator.isNotNull(assetRenderer.getDiscussionPath()) %>">
-						<portlet:actionURL var="discussionURL">
-							<portlet:param name="struts_action" value="/trash/edit_discussion" />
-						</portlet:actionURL>
-
-						<div class="asset-discussion">
-							<liferay-ui:discussion
-								className="<%= className %>"
-								classPK="<%= classPK %>"
-								formAction="<%= discussionURL %>"
-								formName='<%= "fm" + classPK %>'
-								redirect="<%= currentURL %>"
-								subject="<%= trashRenderer.getTitle(locale) %>"
-								userId="<%= assetEntry.getUserId() %>"
+			<liferay-ui:panel-container extended="<%= false %>" id="containerDisplayInfoPanelContainer" persistState="<%= true %>">
+				<c:if test="<%= containerModelsCount > 0 %>">
+					<liferay-ui:panel collapsible="<%= true %>" cssClass="view-folders" extended="<%= true %>" id="containerModelsListingPanel" persistState="<%= true %>" title="<%= trashHandler.getTrashContainerModelName() %>">
+						<liferay-ui:search-container
+							curParam="cur1"
+							deltaConfigurable="<%= false %>"
+							iteratorURL="<%= iteratorURL %>"
+						>
+							<liferay-ui:search-container-results
+								results="<%= trashHandler.getTrashContainerModelTrashRenderers(classPK, searchContainer.getStart(), searchContainer.getEnd()) %>"
+								total="<%= containerModelsCount %>"
 							/>
-						</div>
-					</c:if>
+
+							<liferay-ui:search-container-row
+								className="com.liferay.portal.kernel.trash.TrashRenderer"
+								modelVar="curTrashRenderer"
+							>
+
+								<%
+								PortletURL rowURL = renderResponse.createRenderURL();
+
+								rowURL.setParameter("struts_action", "/trash/view_content");
+								rowURL.setParameter("redirect", currentURL);
+								rowURL.setParameter("className", (curTrashRenderer.getClassName()));
+								rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
+								%>
+
+								<liferay-ui:search-container-column-text
+									name="name"
+								>
+									<liferay-ui:icon
+										label="<%= true %>"
+										message="<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>"
+										src="<%= curTrashRenderer.getIconPath(renderRequest) %>"
+										url="<%= rowURL.toString() %>"
+									/>
+								</liferay-ui:search-container-column-text>
+
+								<liferay-ui:search-container-column-text
+									name='<%= LanguageUtil.format(pageContext, "num-of-x", trashHandler.getTrashContainedModelName(), true) %>'
+									value="<%= String.valueOf(baseModelsCount) %>"
+								/>
+
+								<liferay-ui:search-container-column-text
+									name='<%= LanguageUtil.format(pageContext, "num-of-x", trashHandler.getTrashContainerModelName(), true) %>'
+									value="<%= String.valueOf(containerModelsCount) %>"
+								/>
+
+								<liferay-ui:search-container-column-jsp
+									align="right"
+									path="/html/portlet/trash/view_content_action.jsp"
+								/>
+							</liferay-ui:search-container-row>
+
+							<liferay-ui:search-iterator />
+						</liferay-ui:search-container>
+					</liferay-ui:panel>
 				</c:if>
+
+				<c:if test="<%= baseModelsCount > 0 %>">
+					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="baseModelsListingPanel" persistState="<%= true %>" title="<%= trashHandler.getTrashContainedModelName() %>">
+						<liferay-ui:search-container
+							curParam="cur2"
+							deltaConfigurable="<%= false %>"
+							iteratorURL="<%= iteratorURL %>"
+						>
+							<liferay-ui:search-container-results
+								results="<%= trashHandler.getTrashContainedModelTrashRenderers(classPK, searchContainer.getStart(), searchContainer.getEnd()) %>"
+								total="<%= baseModelsCount %>"
+							/>
+
+							<liferay-ui:search-container-row
+								className="com.liferay.portal.kernel.trash.TrashRenderer"
+								modelVar="curTrashRenderer"
+							>
+
+								<%
+								PortletURL rowURL = renderResponse.createRenderURL();
+
+								rowURL.setParameter("struts_action", "/trash/view_content");
+								rowURL.setParameter("redirect", currentURL);
+								rowURL.setParameter("className", curTrashRenderer.getClassName());
+								rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
+								%>
+
+								<liferay-ui:search-container-column-text
+										name="name"
+								>
+									<liferay-ui:icon
+										label="<%= true %>"
+										message="<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>"
+										src="<%= curTrashRenderer.getIconPath(renderRequest) %>"
+										url="<%= rowURL.toString() %>"
+									/>
+								</liferay-ui:search-container-column-text>
+
+								<liferay-ui:search-container-column-jsp
+									align="right"
+									path="/html/portlet/trash/view_content_action.jsp"
+								/>
+							</liferay-ui:search-container-row>
+
+							<liferay-ui:search-iterator />
+						</liferay-ui:search-container>
+					</liferay-ui:panel>
+				</c:if>
+
+				<c:if test="<%= (containerModelsCount + baseModelsCount) == 0 %>">
+					<div class="portlet-msg-info">
+						<liferay-ui:message arguments="<%= new String[] {ResourceActionsUtil.getModelResource(locale, className)} %>" key="this-x-does-not-contain-any-entry" />
+					</div>
+				</c:if>
+			</liferay-ui:panel-container>
+		</c:when>
+		<c:when test="<%= Validator.isNotNull(path) %>">
+			<liferay-util:include page="<%= path %>" portletId="<%= trashRenderer.getPortletId() %>">
+				<liferay-util:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
+			</liferay-util:include>
+		</c:when>
+		<c:otherwise>
+			<%= trashRenderer.getSummary(locale) %>
+		</c:otherwise>
+	</c:choose>
+
+	<c:if test="<%= trashRenderer instanceof AssetRenderer %>">
+
+		<%
+		AssetRenderer assetRenderer = (AssetRenderer)trashRenderer;
+		%>
+
+		<c:if test="<%= !assetRenderer.getAssetRendererFactoryClassName().equals(DLFileEntryAssetRendererFactory.CLASS_NAME) %>">
+			<div class="asset-ratings">
+				<liferay-ui:ratings
+					className="<%= className %>"
+					classPK="<%= classPK %>"
+				/>
+			</div>
+
+			<%
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
+			%>
+
+			<div class="asset-related-assets">
+				<liferay-ui:asset-links
+					assetEntryId="<%= assetEntry.getEntryId() %>"
+				/>
+			</div>
+
+			<c:if test="<%= Validator.isNotNull(assetRenderer.getDiscussionPath()) %>">
+				<portlet:actionURL var="discussionURL">
+					<portlet:param name="struts_action" value="/trash/edit_discussion" />
+				</portlet:actionURL>
+
+				<div class="asset-discussion">
+					<liferay-ui:discussion
+						className="<%= className %>"
+						classPK="<%= classPK %>"
+						formAction="<%= discussionURL %>"
+						formName='<%= "fm" + classPK %>'
+						redirect="<%= currentURL %>"
+						subject="<%= trashRenderer.getTitle(locale) %>"
+						userId="<%= assetEntry.getUserId() %>"
+					/>
+				</div>
 			</c:if>
-		</aui:column>
-	</aui:layout>
+		</c:if>
+	</c:if>
 </div>
 
 <c:if test="<%= Validator.isNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">

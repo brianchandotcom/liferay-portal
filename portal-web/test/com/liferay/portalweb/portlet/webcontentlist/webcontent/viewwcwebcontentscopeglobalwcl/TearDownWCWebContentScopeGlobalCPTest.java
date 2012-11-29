@@ -59,100 +59,43 @@ public class TearDownWCWebContentScopeGlobalCPTest extends BaseTestCase {
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean webContent1Present = selenium.isElementPresent(
-						"_15_rowIds");
+				boolean webContentPresent = selenium.isElementPresent(
+						"//div[@class='entry-thumbnail']");
 
-				if (!webContent1Present) {
+				if (!webContentPresent) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_15_allRowIdsCheckbox']"));
+				selenium.clickAt("//input[@id='_15_allRowIdsCheckbox']",
+					RuntimeVariables.replace("Select All"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_15_allRowIdsCheckbox']"));
+				selenium.waitForVisible(
+					"//span[@title='Actions']/ul/li/strong/a/span");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
 
 			case 2:
+				assertEquals(RuntimeVariables.replace(
+						"No Web Content was found."),
+					selenium.getText(
+						"//div[@class='entries-empty portlet-msg-info']"));
 
-				boolean webContent2Present = selenium.isElementPresent(
-						"_15_rowIds");
-
-				if (!webContent2Present) {
-					label = 3;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-
-			case 3:
-
-				boolean webContent3Present = selenium.isElementPresent(
-						"_15_rowIds");
-
-				if (!webContent3Present) {
-					label = 4;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-
-			case 4:
-
-				boolean webContent4Present = selenium.isElementPresent(
-						"_15_rowIds");
-
-				if (!webContent4Present) {
-					label = 5;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-
-			case 5:
-
-				boolean webContent5Present = selenium.isElementPresent(
-						"_15_rowIds");
-
-				if (!webContent5Present) {
-					label = 6;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-
-			case 6:
 			case 100:
 				label = -1;
 			}

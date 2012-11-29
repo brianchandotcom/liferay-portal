@@ -95,11 +95,11 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 		}
 
 		displayStyleToolbar = new A.Toolbar(
-		{
-			activeState: true,
-			boundingBox: buttonRow,
-			children: displayStyleToolbarChildren
-		}
+			{
+				activeState: true,
+				boundingBox: buttonRow,
+				children: displayStyleToolbarChildren
+			}
 		).render();
 
 		var index = 0;

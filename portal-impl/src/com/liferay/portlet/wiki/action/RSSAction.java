@@ -16,20 +16,18 @@ package com.liferay.portlet.wiki.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.util.RSSUtil;
 
 import java.util.Locale;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,8 +41,6 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
 		long companyId = ParamUtil.getLong(request, "companyId");
 		long nodeId = ParamUtil.getLong(request, "nodeId");
 		String title = ParamUtil.getString(request, "title");
@@ -57,18 +53,19 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		String displayStyle = ParamUtil.getString(
 			request, "displayStyle", RSSUtil.DISPLAY_STYLE_FULL_CONTENT);
 
-		PortletURL feedURL = new PortletURLImpl(
-			request, PortletKeys.WIKI, layout.getPlid(),
-			PortletRequest.RENDER_PHASE);
+		String layoutFullURL = PortalUtil.getLayoutFullURL(
+			themeDisplay.getScopeGroupId(), PortletKeys.WIKI);
 
-		feedURL.setParameter("nodeId", String.valueOf(nodeId));
+		StringBundler sb = new StringBundler(4);
 
-		PortletURL entryURL = new PortletURLImpl(
-			request, PortletKeys.WIKI, layout.getPlid(),
-			PortletRequest.RENDER_PHASE);
+		sb.append(layoutFullURL);
+		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
+		sb.append("wiki/");
+		sb.append(String.valueOf(nodeId));
 
-		entryURL.setParameter("nodeId", String.valueOf(nodeId));
-		entryURL.setParameter("title", title);
+		String feedURL = sb.toString();
+
+		String entryURL = feedURL + StringPool.SLASH + title;
 
 		Locale locale = themeDisplay.getLocale();
 
@@ -77,12 +74,11 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		if ((nodeId > 0) && Validator.isNotNull(title)) {
 			rss = WikiPageServiceUtil.getPagesRSS(
 				companyId, nodeId, title, max, type, version, displayStyle,
-				feedURL.toString(), entryURL.toString(), locale);
+				feedURL, entryURL, locale);
 		}
 		else if (nodeId > 0) {
 			rss = WikiPageServiceUtil.getNodePagesRSS(
-				nodeId, max, type, version, displayStyle, feedURL.toString(),
-				entryURL.toString());
+				nodeId, max, type, version, displayStyle, feedURL, entryURL);
 		}
 
 		return rss.getBytes(StringPool.UTF8);

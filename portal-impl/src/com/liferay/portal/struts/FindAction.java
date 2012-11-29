@@ -17,6 +17,7 @@ package com.liferay.portal.struts;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -79,7 +80,23 @@ public abstract class FindAction extends Action {
 			portletURL.setParameter(
 				"struts_action", getStrutsAction(request, portletId));
 
-			String redirect = ParamUtil.getString(request, "redirect");
+			boolean inheritRedirect = ParamUtil.getBoolean(
+				request, "inheritRedirect");
+
+			String redirect = null;
+
+			if (inheritRedirect) {
+				String noSuchEntryRedirect = ParamUtil.getString(
+					request, "noSuchEntryRedirect");
+
+				redirect = HttpUtil.getParameter(
+					noSuchEntryRedirect, "redirect", false);
+
+				redirect = HttpUtil.decodeURL(redirect);
+			}
+			else {
+				redirect = ParamUtil.getString(request, "redirect");
+			}
 
 			if (Validator.isNotNull(redirect)) {
 				portletURL.setParameter("redirect", redirect);

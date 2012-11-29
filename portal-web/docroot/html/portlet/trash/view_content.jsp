@@ -189,6 +189,12 @@
 								</liferay-ui:search-container>
 							</liferay-ui:panel>
 						</c:if>
+
+						<c:if test="<%= (containerModelsCount + baseModelsCount) <= 0 %>">
+							<div class="portlet-msg-info">
+								<liferay-ui:message arguments="<%= new String[] {ResourceActionsUtil.getModelResource(locale, className)} %>" key="this-x-does-not-contain-any-entry" />
+							</div>
+						</c:if>
 					</liferay-ui:panel-container>
 				</c:when>
 				<c:when test="<%= Validator.isNotNull(path) %>">

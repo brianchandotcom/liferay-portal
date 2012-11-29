@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -55,9 +56,14 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
 			themeDisplay.getScopeGroupId(), PortletKeys.WIKI);
 
-		String feedURL =
-			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
-				String.valueOf(nodeId);
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(layoutFullURL);
+		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
+		sb.append("wiki/");
+		sb.append(String.valueOf(nodeId));
+
+		String feedURL = sb.toString();
 
 		String entryURL = feedURL + StringPool.SLASH + title;
 

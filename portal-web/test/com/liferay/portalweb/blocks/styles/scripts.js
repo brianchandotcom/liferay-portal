@@ -1,10 +1,10 @@
 $(document).ready(function() {
-	$(".expand-macro-steps").click(function() {
-		if ($(this).children().eq(1).is(":hidden")) {
-			$(this).children().eq(1).slideDown("slow");
+	$(".expand-macro-steps > a").click(function () {
+		if ($(this).parent().children('.macro-steps:first').is(":hidden")) {
+			$(this).parent().children('.macro-steps:first').slideDown("fast");
 		} else {
-			$(this).children().eq(1).slideUp();
+			$(this).parent().children('.macro-steps:first').slideUp("fast");
 		}
 		event.preventDefault();
-	})
+	})	
 });

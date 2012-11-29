@@ -37,10 +37,10 @@
 	}
 	else if (sites.equals(SitesDirectoryTag.SITES_SIBLINGS) && group.isRoot()) {
 	}
-	else if (sites.equals(SitesDirectoryTag.SITES_PARENT) && (branchGroups.size() > 2)) {
+	else if (sites.equals(SitesDirectoryTag.SITES_PARENT_LEVEL) && (branchGroups.size() > 2)) {
 		rootGroup = branchGroups.get(2);
 	}
-	else if (sites.equals(SitesDirectoryTag.SITES_PARENT) && (branchGroups.size() == 2)) {
+	else if (sites.equals(SitesDirectoryTag.SITES_PARENT_LEVEL) && (branchGroups.size() == 2)) {
 	}
 	else {
 		hidden = true;

@@ -25,7 +25,7 @@ public class SitesDirectoryTag extends IncludeTag {
 
 	public static final String SITES_CHILDREN = "children";
 
-	public static final String SITES_PARENT = "parent";
+	public static final String SITES_PARENT_LEVEL = "parent-level";
 
 	public static final String SITES_SIBLINGS = "siblings";
 

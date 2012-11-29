@@ -22,28 +22,22 @@ select {
 	padding: 4px;
 }
 
-.display-panel-columns:after, .display-panel-columns:before {
-	position: fixed;
-	content: '';
-	display: block;
-	bottom: 0;
-	top: 0;
-	width: 238px;
-	z-index: -1;
-}
+.display-panel-columns {
+	&:after, &:before {
+		bottom: 0;
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		width: 239px;
+		z-index: -1;
+	}
 
-.display-panel-columns:after {
-	margin-left: 1px;
-	border-right: 1px solid #FFF;
-}
-
-.ie8 .display-panel-columns:after {
-	position: relative;
-}
-
-.display-panel-columns:before {
-	background-color: #CAD2DD;
-	border-right: 1px solid #B0B1B3;
+	&:before {
+		background-color: #CAD2DD;
+		border-right: 1px solid #B0B1B3;
+		outline: 1px solid #FFF;
+	}
 }
 
 body.portal-popup:after, body.portal-popup:before {
@@ -157,12 +151,42 @@ body.portal-popup:after, body.portal-popup:before {
 	position: relative;
 }
 
-.lfr-ctrl-panel .aui-tree-node-selected {
-	background: transparent;
-}
+.lfr-ctrl-panel {
+	display: table;
 
-.lfr-ctrl-panel .aui-tree-node-selected a {
-	color: #333;
+	.lfr-ctrl-panel-content {
+		border-collapse: collapse;
+		display: table-row;
+
+		.panel-page-menu {
+			background-color: #CAD2DD;
+			border-right: 1px solid #B0B1B3;
+			display: table-cell;
+			float: none;
+			height: 100%;
+			min-width: 239px;
+			vertical-align: top;
+			z-index: 1;
+		}
+
+		.panel-page-body {
+			border-left: 1px solid #FFF;
+			display: table-cell;
+			height: 100%;
+			top: 0;
+			vertical-align: top;
+			width: auto;
+			z-index: -1;
+		}
+	}
+
+	.aui-tree-node-selected {
+		background: transparent;
+
+		a {
+			color: #333;
+		}
+	}
 }
 
 .panel-page-application .lfr-panel.lfr-extended {
@@ -215,12 +239,17 @@ body.portal-popup:after, body.portal-popup:before {
 
 #wrapper div.panel-page-body {
 	float: none;
-	padding: 15px 20px 0 260px;
+	padding: 15px 20px 0 15px;
 	width: auto;
 }
 
 .panels-minimized #wrapper div.panel-page-body {
-	padding-left: 60px;
+	display: block;
+	margin-left: 42px; 
+}
+
+.chrome .panels-minimized #wrapper div.panel-page-body {
+	margin-left: 41px; 
 }
 
 .aui-tagselector-content {
@@ -710,6 +739,26 @@ body.portal-popup:after, body.portal-popup:before {
 
 .taglib-page-iterator .search-pages .page-links {
 	padding: 5px 0 0;
+}
+
+.ie .display-panel-columns {
+	bottom: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.ie7 .lfr-ctrl-panel .lfr-ctrl-panel-content, .ie6 .lfr-ctrl-panel .lfr-ctrl-panel-content  {
+	.panel-page-menu {
+		background-color: transparent;
+		float: left;
+		height: auto;
+	}
+
+	.panel-page-body {
+		border-left-width: 0;
+		margin-left: 0;
+	}
 }
 
 /*----- Extras -----*/

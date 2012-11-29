@@ -18,14 +18,10 @@ import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
 
 import java.util.Locale;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -69,16 +65,6 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 
 	public String getType() {
 		return TYPE;
-	}
-
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			String template)
-		throws Exception {
-
-		renderRequest.setAttribute(WebKeys.WIKI_NODE, _node);
-
-		return "/html/portlet/wiki/trash/node.jsp";
 	}
 
 	private WikiNode _node;

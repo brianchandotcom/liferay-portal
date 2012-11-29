@@ -55,14 +55,16 @@
 		title="<%= trashRenderer.getTitle(locale) %>"
 	/>
 
-	<c:if test="<%= ((entry != null) && (entry.getRootEntry() == null)) || Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
-
-		<%
-		request.setAttribute(WebKeys.TRASH_ENTRY, entry);
-		%>
-
-		<liferay-util:include page='<%= (entry != null) && (entry.getRootEntry() == null) ? "/html/portlet/trash/entry_action.jsp" : trashRenderer.renderActions(renderRequest, renderResponse) %>' />
-	</c:if>
+	<c:choose>
+		<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
+			<liferay-util:include page="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>" />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:app-view-toolbar>
+				<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "entryToolbar" %>' />
+			</liferay-ui:app-view-toolbar>
+		</c:otherwise>
+	</c:choose>
 
 	<c:choose>
 		<c:when test="<%= trashHandler.isContainerModel() %>">
@@ -165,7 +167,7 @@
 								%>
 
 								<liferay-ui:search-container-column-text
-									name="name"
+										name="name"
 								>
 									<liferay-ui:icon
 										label="<%= true %>"
@@ -184,6 +186,12 @@
 							<liferay-ui:search-iterator />
 						</liferay-ui:search-container>
 					</liferay-ui:panel>
+				</c:if>
+
+				<c:if test="<%= (containerModelsCount + baseModelsCount) == 0 %>">
+					<div class="portlet-msg-info">
+						<liferay-ui:message arguments="<%= new String[] {ResourceActionsUtil.getModelResource(locale, className)} %>" key="this-x-does-not-contain-any-entry" />
+					</div>
 				</c:if>
 			</liferay-ui:panel-container>
 		</c:when>
@@ -241,3 +249,103 @@
 		</c:if>
 	</c:if>
 </div>
+
+<c:if test="<%= Validator.isNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
+	<aui:script use="aui-base,aui-toolbar">
+		var buttonRow = A.one('#<portlet:namespace />entryToolbar');
+
+		var entryToolbarChildren = [];
+
+		<c:choose>
+			<c:when test="<%= entry != null %>">
+				<portlet:actionURL var="restoreEntryURL">
+					<portlet:param name="struts_action" value="/trash/edit_entry" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+				</portlet:actionURL>
+
+				entryToolbarChildren.push(
+					{
+						handler: function(event) {
+							Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= entry.getEntryId() %>, uri: '<%= restoreEntryURL.toString() %>'});
+						},
+						icon: 'undo',
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "restore") %>'
+					}
+				);
+
+				<portlet:actionURL var="deleteEntryURL">
+					<portlet:param name="struts_action" value="/trash/edit_entry" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+				</portlet:actionURL>
+
+				entryToolbarChildren.push(
+					{
+						handler: function(event) {
+							if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+								Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= entry.getEntryId() %>, uri: '<%= deleteEntryURL.toString() %>'});
+							}
+						},
+						icon: 'delete',
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>'
+					}
+				);
+			</c:when>
+			<c:otherwise>
+				<c:if test="<%= trashHandler.isMovable() %>">
+					<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="struts_action" value="/trash/view_container_model" />
+						<portlet:param name="redirect" value="<%= redirect %>" />
+						<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
+						<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
+						<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName() %>" />
+					</portlet:renderURL>
+
+					entryToolbarChildren.push(
+						{
+							handler: function(event) {
+								<portlet:namespace />restoreDialog('<%= moveURL %>');
+							},
+							icon: 'undo',
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "restore") %>'
+						}
+					);
+				</c:if>
+
+				<portlet:actionURL var="deleteEntryURL">
+					<portlet:param name="struts_action" value="/trash/edit_entry" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
+					<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
+				</portlet:actionURL>
+
+				entryToolbarChildren.push(
+					{
+						handler: function(event) {
+							if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+								location.href = '<%= deleteEntryURL %>';
+							}
+						},
+						icon: 'delete',
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>'
+					}
+				);
+
+			</c:otherwise>
+		</c:choose>
+
+		var entryToolbar = new A.Toolbar(
+			{
+				activeState: false,
+				boundingBox: buttonRow,
+				children: entryToolbarChildren
+			}
+		).render();
+
+		buttonRow.setData('entryToolbar', entryToolbar);
+	</aui:script>
+</c:if>

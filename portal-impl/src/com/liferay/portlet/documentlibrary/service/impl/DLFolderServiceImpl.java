@@ -185,12 +185,12 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			getPermissionChecker(), groupId, parentFolderId, ActionKeys.VIEW);
 
 		if (includeMountfolders) {
-			return dlFolderPersistence.filterFindByG_P_S(
-				groupId, parentFolderId, status, start, end, obc);
+			return dlFolderPersistence.filterFindByG_P_H_S(
+				groupId, parentFolderId, false, status, start, end, obc);
 		}
 		else {
-			return dlFolderPersistence.filterFindByG_M_P_S(
-				groupId, false, parentFolderId, status, start, end, obc);
+			return dlFolderPersistence.filterFindByG_M_P_H_S(
+				groupId, false, parentFolderId, false, status, start, end, obc);
 		}
 	}
 
@@ -285,12 +285,12 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		throws SystemException {
 
 		if (includeMountfolders) {
-			return dlFolderPersistence.filterCountByG_P_S(
-				groupId, parentFolderId, status);
+			return dlFolderPersistence.filterCountByG_P_H_S(
+				groupId, parentFolderId, false, status);
 		}
 		else {
-			return dlFolderPersistence.filterCountByG_M_P_S(
-				groupId, false, parentFolderId, status);
+			return dlFolderPersistence.filterCountByG_M_P_H_S(
+				groupId, false, parentFolderId, false, status);
 		}
 	}
 

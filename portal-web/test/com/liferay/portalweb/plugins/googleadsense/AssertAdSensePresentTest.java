@@ -28,6 +28,5 @@ public class AssertAdSensePresentTest extends BaseTestCase {
 		selenium.waitForElementPresent("link=Google Adsense Test Page");
 		selenium.click(RuntimeVariables.replace("link=Google Adsense Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("//img[@alt='AdChoices']"));
 	}
 }

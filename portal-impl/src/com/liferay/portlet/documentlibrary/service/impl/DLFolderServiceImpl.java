@@ -28,7 +28,6 @@ import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
@@ -187,11 +186,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		if (includeMountfolders) {
 			return dlFolderPersistence.filterFindByG_P_H_S(
-					groupId, parentFolderId, false, status, start, end, obc);
+				groupId, parentFolderId, false, status, start, end, obc);
 		}
 		else {
 			return dlFolderPersistence.filterFindByG_M_P_H_S(
-					groupId, false, parentFolderId, false, status, start, end, obc);
+				groupId, false, parentFolderId, false, status, start, end, obc);
 		}
 	}
 
@@ -287,11 +286,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		if (includeMountfolders) {
 			return dlFolderPersistence.filterCountByG_P_H_S(
-					groupId, parentFolderId, false, status);
+				groupId, parentFolderId, false, status);
 		}
 		else {
 			return dlFolderPersistence.filterCountByG_M_P_H_S(
-					groupId, false, parentFolderId, false, status);
+				groupId, false, parentFolderId, false, status);
 		}
 	}
 

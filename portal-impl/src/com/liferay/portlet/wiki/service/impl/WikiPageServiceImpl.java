@@ -342,6 +342,26 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
+	public List<WikiPage> getPages(
+			long groupId, long userId, long nodeId, int status, int start,
+			int end)
+		throws PortalException, SystemException {
+
+		WikiNodePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.VIEW);
+
+		if (userId > 0) {
+			return wikiPagePersistence.filterFindByG_U_N_S(
+				groupId, userId, nodeId, status, start, end,
+				new PageCreateDateComparator(false));
+		}
+		else {
+			return wikiPagePersistence.filterFindByG_N_S(
+				groupId, nodeId, status, start, end,
+				new PageCreateDateComparator(false));
+		}
+	}
+
 	public int getPagesCount(long groupId, long nodeId, boolean head)
 		throws PortalException, SystemException {
 
@@ -350,6 +370,22 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		return wikiPagePersistence.filterCountByG_N_H_S(
 			groupId, nodeId, head, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	public int getPagesCount(long groupId, long userId, long nodeId, int status)
+		throws PortalException, SystemException {
+
+		WikiNodePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.VIEW);
+
+		if (userId > 0) {
+			return wikiPagePersistence.filterCountByG_U_N_S(
+				groupId, userId, nodeId, status);
+		}
+		else {
+			return wikiPagePersistence.filterCountByG_N_S(
+				groupId, nodeId, status);
+		}
 	}
 
 	public String getPagesRSS(

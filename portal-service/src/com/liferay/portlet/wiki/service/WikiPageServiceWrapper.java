@@ -201,10 +201,24 @@ public class WikiPageServiceWrapper implements WikiPageService,
 			end, obc);
 	}
 
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
+		long groupId, long userId, long nodeId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageService.getPages(groupId, userId, nodeId, status,
+			start, end);
+	}
+
 	public int getPagesCount(long groupId, long nodeId, boolean head)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPageService.getPagesCount(groupId, nodeId, head);
+	}
+
+	public int getPagesCount(long groupId, long userId, long nodeId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageService.getPagesCount(groupId, userId, nodeId, status);
 	}
 
 	public java.lang.String getPagesRSS(long companyId, long nodeId,

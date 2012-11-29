@@ -205,8 +205,8 @@ else if (type.equals("draft_pages") || type.equals("pending_pages")) {
 		status = WorkflowConstants.STATUS_PENDING;
 	}
 
-	total = WikiPageLocalServiceUtil.getPagesCount(draftUserId, node.getNodeId(), status);
-	results = WikiPageLocalServiceUtil.getPages(draftUserId, node.getNodeId(), status, searchContainer.getStart(), searchContainer.getEnd());
+	total = WikiPageServiceUtil.getPagesCount(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status);
+	results = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status, searchContainer.getStart(), searchContainer.getEnd());
 }
 else if (type.equals("orphan_pages")) {
 	List<WikiPage> orphans = WikiPageLocalServiceUtil.getOrphans(node.getNodeId());

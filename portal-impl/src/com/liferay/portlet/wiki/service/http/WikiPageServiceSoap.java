@@ -318,11 +318,42 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiPageSoap[] getPages(
+		long groupId, long userId, long nodeId, int status, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getPages(groupId,
+					userId, nodeId, status, start, end);
+
+			return com.liferay.portlet.wiki.model.WikiPageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getPagesCount(long groupId, long nodeId, boolean head)
 		throws RemoteException {
 		try {
 			int returnValue = WikiPageServiceUtil.getPagesCount(groupId,
 					nodeId, head);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getPagesCount(long groupId, long userId, long nodeId,
+		int status) throws RemoteException {
+		try {
+			int returnValue = WikiPageServiceUtil.getPagesCount(groupId,
+					userId, nodeId, status);
 
 			return returnValue;
 		}

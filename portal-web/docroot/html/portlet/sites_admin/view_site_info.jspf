@@ -72,7 +72,7 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 				<liferay-ui:icon
 					image="user_icon"
 					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, (usersCount == 1) ? "x-site-member" : "x-site-members", usersCount) %>'
+					message='<%= LanguageUtil.format(pageContext, (usersCount == 1) ? "x-user" : "x-users", usersCount) %>'
 					url='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>'
 				/>
 			</c:if>

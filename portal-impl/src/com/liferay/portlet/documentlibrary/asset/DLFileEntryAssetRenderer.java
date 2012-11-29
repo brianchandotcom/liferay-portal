@@ -255,15 +255,6 @@ public class DLFileEntryAssetRenderer
 		}
 	}
 
-	@Override
-	public String renderActions(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		renderRequest.setAttribute("view_entries.jsp-fileEntry", _fileEntry);
-
-		return "/html/portlet/document_library/file_entry_action.jsp";
-	}
-
 	private FileEntry _fileEntry;
 	private FileVersion _fileVersion;
 	private int _type;

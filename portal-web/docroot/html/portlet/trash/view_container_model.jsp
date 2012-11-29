@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/trash/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 
@@ -35,6 +37,7 @@ if (containerModel != null) {
 PortletURL containerURL = renderResponse.createRenderURL();
 
 containerURL.setParameter("struts_action", "/trash/view_container_model");
+containerURL.setParameter("redirect", redirect);
 containerURL.setParameter("className", className);
 containerURL.setParameter("classPK", String.valueOf(classPK));
 containerURL.setParameter("containerModelClassName", trashHandler.getContainerModelClassName());
@@ -105,7 +108,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler, containerMod
 			/>
 
 			<%
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(10);
 
 			sb.append(renderResponse.getNamespace());
 			sb.append("selectContainer('");
@@ -114,7 +117,9 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler, containerMod
 			sb.append(classPK);
 			sb.append(", ");
 			sb.append(curContainerModel.getContainerModelId());
-			sb.append(");");
+			sb.append(", '");
+			sb.append(redirect);
+			sb.append("');");
 			%>
 
 			<liferay-ui:search-container-column-button
@@ -127,7 +132,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler, containerMod
 		<aui:button-row>
 
 			<%
-			String taglibSelectOnClick = renderResponse.getNamespace() + "selectContainer('"+ className + "', " + classPK + ", " + containerModelId + ");";
+			String taglibSelectOnClick = renderResponse.getNamespace() + "selectContainer('"+ className + "', " + classPK + ", " + containerModelId + ", '" + redirect + "');";
 			%>
 
 			<aui:button
@@ -143,9 +148,9 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler, containerMod
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />selectContainer(className, classPK, containerModelId) {
+	function <portlet:namespace />selectContainer(className, classPK, containerModelId, redirect) {
 		var topWindow = Liferay.Util.getTop();
 
-		topWindow.<portlet:namespace />submitForm(className, classPK, containerModelId);
+		topWindow.<portlet:namespace />submitForm(className, classPK, containerModelId, redirect);
 	}
 </aui:script>

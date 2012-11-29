@@ -44,6 +44,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRender
 	<c:if test="<%= trashHandler.isMovable() %>">
 		<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/trash/view_container_model" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
 			<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName() %>" />
@@ -67,7 +68,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRender
 	<portlet:actionURL var="deleteEntryURL">
 		<portlet:param name="struts_action" value="/trash/edit_entry" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-		<portlet:param name="redirect" value="<%= redirect %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 		<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
 	</portlet:actionURL>

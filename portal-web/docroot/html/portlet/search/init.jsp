@@ -144,9 +144,14 @@ private String _buildAssetCategoryPath(AssetCategory assetCategory, Locale local
 	return sb.toString();
 }
 
-private String _checkViewURL(ThemeDisplay themeDisplay, String viewURL, String currentURL) {
+private String _checkViewURL(boolean inheritRedirect, ThemeDisplay themeDisplay, String viewURL, String currentURL) {
 	if (Validator.isNotNull(viewURL) && viewURL.startsWith(themeDisplay.getURLPortal())) {
-		viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
+		if (inheritRedirect) {
+			viewURL = HttpUtil.setParameter(viewURL, "inheritRedirect", true);
+		}
+		else {
+			viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
+		}
 	}
 
 	return viewURL;

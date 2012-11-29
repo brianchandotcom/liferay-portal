@@ -231,8 +231,8 @@ else if (type.equals("outgoing_links")) {
 	results = ListUtil.subList(links, searchContainer.getStart(), searchContainer.getEnd());
 }
 else if (type.equals("recent_changes")) {
-	total = WikiPageLocalServiceUtil.getRecentChangesCount(themeDisplay.getScopeGroupId(), node.getNodeId());
-	results = WikiPageLocalServiceUtil.getRecentChanges(themeDisplay.getScopeGroupId(), node.getNodeId(), searchContainer.getStart(), searchContainer.getEnd());
+	total = WikiPageServiceUtil.getRecentChangesCount(themeDisplay.getScopeGroupId(), node.getNodeId());
+	results = WikiPageServiceUtil.getRecentChanges(themeDisplay.getScopeGroupId(), node.getNodeId(), searchContainer.getStart(), searchContainer.getEnd());
 }
 
 searchContainer.setTotal(total);

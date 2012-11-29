@@ -533,6 +533,25 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		_statusDate = statusDate;
 	}
 
+	public long getContainerModelId() {
+		return getNodeId();
+	}
+
+	public void setContainerModelId(long containerModelId) {
+		_nodeId = containerModelId;
+	}
+
+	public String getContainerModelName() {
+		return String.valueOf(getName());
+	}
+
+	public long getParentContainerModelId() {
+		return 0;
+	}
+
+	public void setParentContainerModelId(long parentContainerModelId) {
+	}
+
 	/**
 	 * @deprecated {@link #isApproved}
 	 */

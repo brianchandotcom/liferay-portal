@@ -397,6 +397,37 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiPageSoap[] getRecentChanges(
+		long groupId, long nodeId, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getRecentChanges(groupId,
+					nodeId, start, end);
+
+			return com.liferay.portlet.wiki.model.WikiPageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getRecentChangesCount(long groupId, long nodeId)
+		throws RemoteException {
+		try {
+			int returnValue = WikiPageServiceUtil.getRecentChangesCount(groupId,
+					nodeId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static java.lang.String[] getTempPageAttachmentNames(long nodeId,
 		java.lang.String tempFolderName) throws RemoteException {
 		try {

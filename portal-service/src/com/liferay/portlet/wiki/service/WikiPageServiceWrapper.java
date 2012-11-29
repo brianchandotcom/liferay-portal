@@ -238,6 +238,19 @@ public class WikiPageServiceWrapper implements WikiPageService,
 			type, version, displayStyle, feedURL, entryURL, locale);
 	}
 
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getRecentChanges(
+		long groupId, long nodeId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageService.getRecentChanges(groupId, nodeId, start, end);
+	}
+
+	public int getRecentChangesCount(long groupId, long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageService.getRecentChangesCount(groupId, nodeId);
+	}
+
 	public java.lang.String[] getTempPageAttachmentNames(long nodeId,
 		java.lang.String tempFolderName)
 		throws com.liferay.portal.kernel.exception.PortalException,

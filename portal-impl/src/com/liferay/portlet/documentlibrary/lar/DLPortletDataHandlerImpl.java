@@ -49,6 +49,7 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
 import com.liferay.portal.service.persistence.RepositoryUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -604,8 +605,15 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 							repository.getName());
 				}
 
+				long classNameId = 0;
+
+				if (existingRepository != null) {
+					classNameId = existingRepository.getClassNameId();	
+				}
+
 				if ((existingRepository == null) ||
-					!(existingRepository instanceof LiferayRepository)) {
+					(classNameId !=
+						PortalUtil.getClassNameId(LiferayRepository.class))) {
 
 					serviceContext.setUuid(repository.getUuid());
 

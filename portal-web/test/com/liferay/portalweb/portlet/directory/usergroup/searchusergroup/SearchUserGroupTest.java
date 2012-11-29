@@ -25,14 +25,13 @@ public class SearchUserGroupTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Directory Test Page");
 		selenium.clickAt("link=Directory Test Page",
 			RuntimeVariables.replace("Directory Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=User Groups",
 			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_11_name']",
+		selenium.type("//input[@id='_11_keywords']",
 			RuntimeVariables.replace("User Group Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
@@ -41,7 +40,7 @@ public class SearchUserGroupTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("User Group Description"),
 			selenium.getText("//tr[3]/td[2]"));
-		selenium.type("//input[@id='_11_name']",
+		selenium.type("//input[@id='_11_keywords']",
 			RuntimeVariables.replace("User1 Group1 Name1"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));

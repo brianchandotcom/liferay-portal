@@ -30,7 +30,6 @@ public class ViewOrganizationUserTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Directory Test Page");
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -38,7 +37,8 @@ public class ViewOrganizationUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Organizations"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
+				boolean basicVisible = selenium.isVisible(
+						"//a[.='\u00ab Basic']");
 
 				if (!basicVisible) {
 					label = 2;
@@ -46,7 +46,7 @@ public class ViewOrganizationUserTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=\u00ab Basic",
+				selenium.clickAt("//a[.='\u00ab Basic']",
 					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 2:
@@ -103,9 +103,14 @@ public class ViewOrganizationUserTest extends BaseTestCase {
 					selenium.getText("//dl[@class='property-list']/dt[4]"));
 				assertEquals(RuntimeVariables.replace("Test Organization"),
 					selenium.getText("//dl[@class='property-list']/dd[4]"));
-				assertEquals(RuntimeVariables.replace(
-						"Billing 12345 Test Street\n 11111, Diamond Bar (Mailing)"),
-					selenium.getText("//li[@class='primary']"));
+				assertEquals(RuntimeVariables.replace("Billing"),
+					selenium.getText("//li[@class='primary']/em"));
+				assertTrue(selenium.isPartialText("//li[@class='primary']",
+						"12345 Test Street"));
+				assertTrue(selenium.isPartialText("//li[@class='primary']",
+						"11111, Diamond Bar"));
+				assertTrue(selenium.isPartialText("//li[@class='primary']",
+						"(Mailing)"));
 
 			case 100:
 				label = -1;

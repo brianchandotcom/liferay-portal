@@ -30,9 +30,9 @@ public class DirectoryTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(UsersTestPlan.suite());
 		testSuite.addTest(OrganizationsTestPlan.suite());
 		testSuite.addTest(UserGroupTestPlan.suite());
+		testSuite.addTest(UsersTestPlan.suite());
 
 		return testSuite;
 	}

@@ -14,18 +14,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Directory Test Page</td>
-	<td>Directory Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Directory Test Page</td>
 	<td>Directory Test Page</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>clickAtAndWait</td>
+	<td>link=Users</td>
+	<td>Users</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//a[.='« Basic']</td>
 	<td>basicVisible</td>
 </tr>
 <tr>
@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=« Basic</td>
+	<td>//a[.='« Basic']</td>
 	<td>« Basic</td>
 </tr>
 <tr>
@@ -54,8 +54,8 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=userfn</td>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a</td>
 	<td>userfn</td>
 </tr>
 <tr>
@@ -69,8 +69,8 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=userfn</td>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a</td>
 	<td>userfn</td>
 </tr>
 <tr>
@@ -88,7 +88,6 @@
 	<td>userfn</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

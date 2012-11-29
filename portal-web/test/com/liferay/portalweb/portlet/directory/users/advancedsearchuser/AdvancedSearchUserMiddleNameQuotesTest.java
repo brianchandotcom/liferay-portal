@@ -31,7 +31,6 @@ public class AdvancedSearchUserMiddleNameQuotesTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Directory Test Page");
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -39,7 +38,7 @@ public class AdvancedSearchUserMiddleNameQuotesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean advancedVisible = selenium.isVisible(
-						"link=Advanced \u00bb");
+						"//a[.='Advanced \u00bb']");
 
 				if (!advancedVisible) {
 					label = 2;
@@ -47,7 +46,7 @@ public class AdvancedSearchUserMiddleNameQuotesTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=Advanced \u00bb",
+				selenium.clickAt("//a[.='Advanced \u00bb']",
 					RuntimeVariables.replace("Advanced \u00bb"));
 
 			case 2:
@@ -57,15 +56,16 @@ public class AdvancedSearchUserMiddleNameQuotesTest extends BaseTestCase {
 				selenium.type("//input[@id='_11_middleName']",
 					RuntimeVariables.replace("\"usermn\""));
 				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Search']"));
+						"xPath=(//input[@value='Search'])[2]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_11_middleName']",
 					RuntimeVariables.replace(""));
-				assertTrue(selenium.isElementPresent("link=userfn"));
+				assertEquals(RuntimeVariables.replace("userfn"),
+					selenium.getText("//tr[3]/td[1]/a"));
 				selenium.type("//input[@id='_11_middleName']",
 					RuntimeVariables.replace("\"usermn1\""));
 				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Search']"));
+						"xPath=(//input[@value='Search'])[2]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.select("//select[@id='_11_andOperator']",
 					RuntimeVariables.replace("All"));

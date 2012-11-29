@@ -177,6 +177,8 @@ else if (type.equals("categorized_pages") || type.equals("tagged_pages")) {
 
 	AssetEntryQuery assetEntryQuery = new AssetEntryQuery(WikiPage.class.getName(), searchContainer);
 
+	assetEntryQuery.setEnablePermissions(true);
+
 	total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 	List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 

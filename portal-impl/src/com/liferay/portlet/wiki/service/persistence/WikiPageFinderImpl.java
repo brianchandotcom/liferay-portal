@@ -54,15 +54,16 @@ public class WikiPageFinderImpl
 	public static final String FIND_BY_NO_ASSETS =
 		WikiPageFinder.class.getName() + ".findByNoAssets";
 
-	public int countByCreateDate(long nodeId, Date createDate, boolean before)
+	public int countByCreateDate(
+			long groupId, long nodeId, Date createDate, boolean before)
 		throws SystemException {
 
 		return countByCreateDate(
-			nodeId, new Timestamp(createDate.getTime()), before);
+			groupId, nodeId, new Timestamp(createDate.getTime()), before);
 	}
 
 	public int countByCreateDate(
-			long nodeId, Timestamp createDate, boolean before)
+			long groupId, long nodeId, Timestamp createDate, boolean before)
 		throws SystemException {
 
 		Session session = null;
@@ -87,6 +88,7 @@ public class WikiPageFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(groupId);
 			qPos.add(nodeId);
 			qPos.add(createDate);
 			qPos.add(true);
@@ -153,16 +155,18 @@ public class WikiPageFinderImpl
 	}
 
 	public List<WikiPage> findByCreateDate(
-			long nodeId, Date createDate, boolean before, int start, int end)
+			long groupId, long nodeId, Date createDate, boolean before,
+			int start, int end)
 		throws SystemException {
 
 		return findByCreateDate(
-			nodeId, new Timestamp(createDate.getTime()), before, start, end);
+			groupId, nodeId, new Timestamp(createDate.getTime()), before, start,
+			end);
 	}
 
 	public List<WikiPage> findByCreateDate(
-			long nodeId, Timestamp createDate, boolean before, int start,
-			int end)
+			long groupId, long nodeId, Timestamp createDate, boolean before,
+			int start, int end)
 		throws SystemException {
 
 		Session session = null;
@@ -187,6 +191,7 @@ public class WikiPageFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(groupId);
 			qPos.add(nodeId);
 			qPos.add(createDate);
 			qPos.add(true);

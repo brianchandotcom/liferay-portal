@@ -8,6 +8,7 @@
 			FROM
 				WikiPage
 			WHERE
+				(groupId = ?) AND
 				(nodeId = ?) AND
 				(createDate [$CREATE_DATE_COMPARATOR$] ?) AND
 				(head = ?) AND
@@ -32,6 +33,7 @@
 			FROM
 				WikiPage
 			WHERE
+				(groupId = ?) AND
 				(nodeId = ?) AND
 				(createDate [$CREATE_DATE_COMPARATOR$] ?) AND
 				(head = ?) AND

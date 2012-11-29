@@ -49,13 +49,23 @@
 	<td>Bookmarks</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Test Folder')]/td[1]/a/strong</td>
 	<td>Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>//tr[contains(.,'Test Folder')]/td[1]/a/strong</td>
+	<td>Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Test Subfolder')]/td[1]/a/strong</td>
+	<td>Test Subfolder</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[contains(.,'Test Subfolder')]/td[1]/a/strong</td>
 	<td>Test Subfolder</td>
 </tr>
 <tr>
@@ -105,13 +115,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Test Bookmark 2')]/td[1]/a</td>
 	<td>Test Bookmark 2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[2]/a</td>
-	<td>exact:http://www.digg.com</td>
+	<td>//tr[contains(.,'Test Bookmark 2')]/td[2]/a</td>
+	<td>http://www.digg.com</td>
 </tr>
 </tbody></table>
 </body>

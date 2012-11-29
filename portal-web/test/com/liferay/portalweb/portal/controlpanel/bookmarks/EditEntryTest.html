@@ -49,13 +49,23 @@
 	<td>Bookmarks</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Edited Test Folder')]/td[1]/a/strong</td>
 	<td>Edited Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>//tr[contains(.,'Edited Test Folder')]/td[1]/a/strong</td>
+	<td>Edited Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Edited Test Subfolder')]/td[1]/a/strong</td>
+	<td>Edited Test Subfolder</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[contains(.,'Edited Test Subfolder')]/td[1]/a/strong</td>
 	<td>Edited Test Subfolder</td>
 </tr>
 <tr>
@@ -70,17 +80,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -114,14 +124,14 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Edited Test Bookmark</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Edited Test Bookmark')]/td[1]/a</td>
+	<td>Edited Test Bookmark</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=http://www.narutofan.com</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Edited Test Bookmark')]/td[2]/a</td>
+	<td>http://www.narutofan.com</td>
 </tr>
 </tbody></table>
 </body>

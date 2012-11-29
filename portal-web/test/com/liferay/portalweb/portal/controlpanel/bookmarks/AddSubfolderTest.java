@@ -38,7 +38,10 @@ public class AddSubfolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
+		assertEquals(RuntimeVariables.replace("Test Folder"),
+			selenium.getText("//tr[contains(.,'Test Folder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Test Folder')]/td[1]/a/strong",
+			RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Subfolder')]");

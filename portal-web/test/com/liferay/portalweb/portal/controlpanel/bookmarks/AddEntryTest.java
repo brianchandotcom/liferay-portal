@@ -38,9 +38,15 @@ public class AddEntryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
+		assertEquals(RuntimeVariables.replace("Test Folder"),
+			selenium.getText("//tr[contains(.,'Test Folder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Test Folder')]/td[1]/a/strong",
+			RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong",
+		assertEquals(RuntimeVariables.replace("Test Subfolder"),
+			selenium.getText(
+				"//tr[contains(.,'Test Subfolder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Test Subfolder')]/td[1]/a/strong",
 			RuntimeVariables.replace("Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(
@@ -65,8 +71,8 @@ public class AddEntryTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Test Bookmark"),
-			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("exact:http://www.liferay.com"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Test Bookmark')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
+			selenium.getText("//tr[contains(.,'Test Bookmark')]/td[2]/a"));
 	}
 }

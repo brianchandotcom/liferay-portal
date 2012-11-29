@@ -43,7 +43,9 @@ public class SearchNullEntriesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("//td[3]/a"));
-		assertFalse(selenium.isTextPresent("//tr[4]/td[3]/a"));
+		assertFalse(selenium.isTextPresent(
+				"//tr[contains(.,'Test Bookmark')]/td[3]/a"));
+		assertFalse(selenium.isTextPresent(
+				"//tr[contains(.,'Test Bookmark 2')]/td[3]/a"));
 	}
 }

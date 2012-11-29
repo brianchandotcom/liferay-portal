@@ -42,9 +42,9 @@ public class AddNullFolderTest extends BaseTestCase {
 			"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Folder')]");
 		assertEquals(RuntimeVariables.replace("Add Folder"),
 			selenium.getText(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[3]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Folder')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[3]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Folder')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

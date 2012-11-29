@@ -38,7 +38,10 @@ public class AddNullEntryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong",
+		assertEquals(RuntimeVariables.replace("Edited Test Folder"),
+			selenium.getText(
+				"//tr[contains(.,'Edited Test Folder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Edited Test Folder')]/td[1]/a/strong",
 			RuntimeVariables.replace("Edited Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(

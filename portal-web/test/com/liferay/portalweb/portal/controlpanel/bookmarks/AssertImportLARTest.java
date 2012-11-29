@@ -39,13 +39,14 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Edited Test Folder"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong",
+			selenium.getText(
+				"//tr[contains(.,'Edited Test Folder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Edited Test Folder')]/td[1]/a/strong",
 			RuntimeVariables.replace("Edited Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Edited Test Bookmark"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'Edited Test Bookmark')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("http://www.narutofan.com"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Edited Test Bookmark')]/td[2]/a"));
 	}
 }

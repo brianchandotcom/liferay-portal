@@ -49,13 +49,23 @@
 	<td>Bookmarks</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Test Folder')]/td[1]/a/strong</td>
 	<td>Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>//tr[contains(.,'Test Folder')]/td[1]/a/strong</td>
+	<td>Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Test Subfolder')]/td[1]/a/strong</td>
+	<td>Test Subfolder</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[contains(.,'Test Subfolder')]/td[1]/a/strong</td>
 	<td>Test Subfolder</td>
 </tr>
 <tr>
@@ -70,17 +80,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -105,12 +115,12 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Home</td>
+	<td>//span[contains(.,'Home')]/a</td>
 	<td>Home</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Home</td>
+	<td>//span[contains(.,'Home')]/a</td>
 	<td>Home</td>
 </tr>
 <tr>
@@ -200,12 +210,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
+	<td>//tr[contains(.,'Test Folder')]/td[1]/a/strong</td>
 	<td>Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>//tr[contains(.,'Test Folder')]/td[1]/a/strong</td>
+	<td>Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Test Subfolder')]/td[1]/a/strong</td>
 	<td>Test Subfolder</td>
 </tr>
 <tr>

@@ -38,9 +38,15 @@ public class MoveEntryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
+		assertEquals(RuntimeVariables.replace("Test Folder"),
+			selenium.getText("//tr[contains(.,'Test Folder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Test Folder')]/td[1]/a/strong",
+			RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong",
+		assertEquals(RuntimeVariables.replace("Test Subfolder"),
+			selenium.getText(
+				"//tr[contains(.,'Test Subfolder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Test Subfolder')]/td[1]/a/strong",
 			RuntimeVariables.replace("Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -49,12 +55,12 @@ public class MoveEntryTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test Subfolder"),
 			selenium.getText("//a[@id='_28_folderName']"));
@@ -62,8 +68,9 @@ public class MoveEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Select"));
 		selenium.waitForPopUp("Bookmarks", RuntimeVariables.replace("30000"));
 		selenium.selectPopUp("");
-		selenium.waitForElementPresent("link=Home");
-		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
+		selenium.waitForElementPresent("//span[contains(.,'Home')]/a");
+		selenium.clickAt("//span[contains(.,'Home')]/a",
+			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//input[@value='Choose']");
 		selenium.selectWindow("null");
@@ -94,10 +101,13 @@ public class MoveEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test Folder"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong",
-			RuntimeVariables.replace("Test Subfolder"));
+			selenium.getText("//tr[contains(.,'Test Folder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Test Folder')]/td[1]/a/strong",
+			RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Test Subfolder"),
+			selenium.getText(
+				"//tr[contains(.,'Test Subfolder')]/td[1]/a/strong"));
 		assertTrue(selenium.isElementPresent("link=http://www.digg.com"));
 	}
 }

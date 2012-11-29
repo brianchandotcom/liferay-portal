@@ -408,7 +408,6 @@ public interface TrashHandler {
 	 * @param  containerModelId the primary key of the destination container
 	 *         model
 	 * @param  serviceContext the service context
-	 * @return the moved model entity
 	 * @throws PortalException if a model entity with the primary key or the
 	 *         destination container model with the primary key could not be
 	 *         found

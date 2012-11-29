@@ -48,7 +48,7 @@ import sun.reflect.Reflection;
  *
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
- * @authro Zsolt Berentey
+ * @author Zsolt Berentey
  */
 public class PortalSecurityManager extends SecurityManager {
 

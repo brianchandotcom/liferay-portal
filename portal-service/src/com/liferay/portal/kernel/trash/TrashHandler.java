@@ -257,6 +257,9 @@ public interface TrashHandler {
 	 */
 	public String getDeleteMessage();
 
+	public ContainerModel getParentContainerModel(long classPK)
+		throws PortalException, SystemException;
+
 	public List<ContainerModel> getParentContainerModels(long containerModelId)
 		throws PortalException, SystemException;
 

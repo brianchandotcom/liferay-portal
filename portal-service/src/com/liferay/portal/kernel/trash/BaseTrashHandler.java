@@ -171,6 +171,12 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return "deleted-in-x";
 	}
 
+	public ContainerModel getParentContainerModel(long classPK)
+		throws PortalException, SystemException {
+
+		return null;
+	}
+
 	/**
 	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred

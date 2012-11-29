@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
@@ -106,6 +107,14 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	public ContainerModel getParentContainerModel(long classPK)
+		throws PortalException, SystemException {
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
+
+		return page.getNode();
 	}
 
 	@Override

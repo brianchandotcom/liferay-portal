@@ -28,10 +28,13 @@ public class ViewWCWebContentScopeGlobalWCDTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Content"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']"));
-		assertTrue(selenium.isVisible("//img[@alt='Edit Web Content']"));
-		assertTrue(selenium.isVisible("//img[@alt='Select Web Content']"));
-		assertTrue(selenium.isVisible("//img[@alt='Add Web Content']"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='icon-actions']/span/a/span[contains(.,'Edit')]"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='icon-actions']/span/a/span[contains(.,'Select Web Content')]"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='icon-actions']/span/a/span[contains(.,'Add')]"));
 	}
 }

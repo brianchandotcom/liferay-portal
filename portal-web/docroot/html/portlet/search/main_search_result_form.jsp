@@ -114,7 +114,7 @@ if ((assetRendererFactory == null) && viewInContext) {
 	viewURL = viewFullContentURL.toString();
 }
 
-viewURL = _checkViewURL(inheritRedirect, themeDisplay, viewURL, currentURL);
+viewURL = _checkViewURL(themeDisplay, viewURL, currentURL, inheritRedirect);
 
 String[] queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");
 

@@ -24,7 +24,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Title
 
-	StringBundler sb = new StringBundler(14);
+	StringBundler sb = new StringBundler(13);
 
 	sb.append("<img alt=\"\" align=\"left\" border=\"0\" src=\"");
 

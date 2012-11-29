@@ -1,0 +1,23 @@
+WinWait("Opening", "", 10)
+WinActivate("Opening")
+Sleep(1000)
+
+Send("!d")
+Sleep(1000)
+Send("{TAB}")
+Send("{TAB}")
+Send("{TAB}")
+Send("{TAB}")
+Sleep(1000)
+Send("{TAB}")
+Sleep(2000)
+
+Send("+{DOWN 6}")
+Send("{ENTER}")
+Sleep(1000)
+
+Send("{b}")
+Sleep(1000)
+Send("{TAB}")
+Send("{TAB}")
+Send("{ENTER}")

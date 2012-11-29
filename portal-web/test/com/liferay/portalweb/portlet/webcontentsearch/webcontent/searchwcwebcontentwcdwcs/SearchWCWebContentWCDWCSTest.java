@@ -25,7 +25,6 @@ public class SearchWCWebContentWCDWCSTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Search Test Page");
 		selenium.clickAt("link=Web Content Search Test Page",
 			RuntimeVariables.replace("Web Content Search Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -35,11 +34,11 @@ public class SearchWCWebContentWCDWCSTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//tr[3]/td[2]"));
-		assertTrue(selenium.isPartialText("//tr[3]/td[3]",
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]"));
+		assertTrue(selenium.isPartialText(
+				"//tr[contains(.,'WC WebContent Title')]/td[4]",
 				"WC WebContent Content"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Search Test Page");
 		selenium.clickAt("link=Web Content Search Test Page",
 			RuntimeVariables.replace("Web Content Search Test Page"));
 		selenium.waitForPageToLoad("30000");

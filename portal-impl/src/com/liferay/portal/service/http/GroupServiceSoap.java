@@ -414,6 +414,23 @@ public class GroupServiceSoap {
 	}
 
 	public static com.liferay.portal.model.GroupSoap[] getUserPlaces(
+		long userId, java.lang.String name, java.lang.String[] classNames,
+		boolean includeControlPanel, boolean active, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.model.Group> returnValue = GroupServiceUtil.getUserPlaces(userId,
+					name, classNames, includeControlPanel, active, start, end);
+
+			return com.liferay.portal.model.GroupSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.model.GroupSoap[] getUserPlaces(
 		long userId, java.lang.String[] classNames,
 		boolean includeControlPanel, int max) throws RemoteException {
 		try {

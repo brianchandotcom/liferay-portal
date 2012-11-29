@@ -294,6 +294,13 @@ public interface GroupService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
+		long userId, java.lang.String name, java.lang.String[] classNames,
+		boolean includeControlPanel, boolean active, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		long userId, java.lang.String[] classNames,
 		boolean includeControlPanel, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,

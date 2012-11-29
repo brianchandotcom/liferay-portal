@@ -387,8 +387,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	public List<Group> getUserPlaces(
-			long userId, String[] classNames, boolean includeControlPanel,
-			int max)
+			long userId, String name, String[] classNames,
+			boolean includeControlPanel, boolean active, int start, int end)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.fetchByPrimaryKey(userId);
@@ -399,26 +399,18 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		List<Group> userPlaces = new UniqueList<Group>();
 
-		int start = QueryUtil.ALL_POS;
-		int end = QueryUtil.ALL_POS;
-
-		if (max != QueryUtil.ALL_POS) {
-			start = 0;
-			end = max;
-		}
-
 		if ((classNames == null) ||
 			ArrayUtil.contains(classNames, Group.class.getName())) {
 
 			LinkedHashMap<String, Object> groupParams =
 				new LinkedHashMap<String, Object>();
 
-			groupParams.put("active", Boolean.TRUE);
+			groupParams.put("active", active);
 			groupParams.put("usersGroups", new Long(userId));
 
 			userPlaces.addAll(
 				groupLocalService.search(
-					user.getCompanyId(), groupParams, start, end));
+					user.getCompanyId(), name, groupParams, start, end));
 		}
 
 		if ((classNames == null) ||
@@ -491,11 +483,21 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			userPlaces.add(0, controlPanelGroup);
 		}
 
-		if ((max != QueryUtil.ALL_POS) && (userPlaces.size() > max)) {
+		if ((end != QueryUtil.ALL_POS) && (userPlaces.size() > end)) {
 			userPlaces = ListUtil.subList(userPlaces, start, end);
 		}
 
 		return Collections.unmodifiableList(userPlaces);
+	}
+
+	public List<Group> getUserPlaces(
+			long userId, String[] classNames, boolean includeControlPanel,
+			int max)
+		throws PortalException, SystemException {
+
+		return getUserPlaces(
+			userId, null, classNames, includeControlPanel, true,
+			QueryUtil.ALL_POS, max);
 	}
 
 	/**

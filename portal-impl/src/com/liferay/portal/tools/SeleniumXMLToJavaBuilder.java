@@ -394,42 +394,76 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandActionsConditional(Element command) {
+	private String getCommandActionsConditional(Element conditional) {
 		StringBundler sb = new StringBundler();
 
-		String actionDefName = command.attributeValue("command");
-		String actionObjectName = command.attributeValue("name") + "Actions";
+		String conditionalName = conditional.attributeValue("name");
+		String conditionalCommand = conditional.attributeValue("command");
 
-		sb.append(lowerCaseFirstLetter(actionObjectName));
-		sb.append(StringPool.PERIOD);
-		sb.append(actionDefName);
+		if (conditionalCommand.contains("Not")) {
+			sb.append("!");
 
-		String actionLocator = command.attributeValue("locator");
-		String actionPath = command.attributeValue("path");
-
-		if (!(actionLocator == null)) {
-			sb.append("(");
-			sb.append(replaceVariables("\"" + actionLocator + "\""));
+			conditionalCommand = StringUtil.replace(
+				conditionalCommand, "Not", "");
 		}
-		else if (!(actionPath == null)) {
+
+		if (conditionalName == null) {
+			String seleniumCommand = conditionalCommand;
+			String seleniumTarget = conditional.attributeValue("target");
+			String seleniumValue = conditional.attributeValue("value");
+
+			sb.append("selenium.");
+			sb.append(seleniumCommand);
 			sb.append("(");
-			sb.append(replaceVariables("\"" + actionPath + "\""));
+
+			if (!(seleniumTarget == null)) {
+				sb.append("\"");
+				sb.append(seleniumTarget);
+				sb.append("\"");
+			}
+
+			if (!(seleniumValue == null)) {
+				sb.append(", \"");
+				sb.append(seleniumValue);
+				sb.append("\"");
+			}
+
+			sb.append(")");
 		}
 		else {
-			sb.append("(\"\"");
-		}
+			String actionCommand = conditionalCommand;
+			String actionLocator = conditional.attributeValue("locator");
+			String actionPath = conditional.attributeValue("path");
+			String actionValue = conditional.attributeValue("value");
 
-		String actionValue = command.attributeValue("value");
+			String actionObjectName = conditionalName + "Actions";
 
-		if (!(actionValue == null)) {
-			sb.append(", ");
-			sb.append(getCommandAttributeValue(command));
-		}
-		else {
-			sb.append(", \"\"");
-		}
+			sb.append(lowerCaseFirstLetter(actionObjectName));
+			sb.append(StringPool.PERIOD);
+			sb.append(actionCommand);
 
-		sb.append(")");
+			if (!(actionLocator == null)) {
+				sb.append("(");
+				sb.append(replaceVariables("\"" + actionLocator + "\""));
+			}
+			else if (!(actionPath == null)) {
+				sb.append("(");
+				sb.append(replaceVariables("\"" + actionPath + "\""));
+			}
+			else {
+				sb.append("(\"\"");
+			}
+
+			if (!(actionValue == null)) {
+				sb.append(", ");
+				sb.append(getCommandAttributeValue(conditional));
+			}
+			else {
+				sb.append(", \"\"");
+			}
+
+			sb.append(")");
+		}
 
 		return sb.toString();
 	}

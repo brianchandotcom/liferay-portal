@@ -523,19 +523,15 @@
 			<finder-column name="parentFolderId" />
 			<finder-column name="name" />
 		</finder>
-		<finder name="G_M_P" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="mountPoint" />
-			<finder-column name="parentFolderId" />
-		</finder>
 		<finder name="G_P_N" return-type="DLFolder" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="parentFolderId" />
 			<finder-column name="name" />
 		</finder>
-		<finder name="G_P_S" return-type="Collection">
+		<finder name="G_P_H_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="parentFolderId" />
+			<finder-column name="hidden" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="G_M_P_H" return-type="Collection">
@@ -544,10 +540,11 @@
 			<finder-column name="parentFolderId" />
 			<finder-column name="hidden" />
 		</finder>
-		<finder name="G_M_P_S" return-type="Collection">
+		<finder name="G_M_P_H_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="mountPoint" />
 			<finder-column name="parentFolderId" />
+			<finder-column name="hidden" />
 			<finder-column name="status" />
 		</finder>
 

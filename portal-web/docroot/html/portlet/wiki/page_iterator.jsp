@@ -209,7 +209,7 @@ else if (type.equals("draft_pages") || type.equals("pending_pages")) {
 	results = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status, searchContainer.getStart(), searchContainer.getEnd());
 }
 else if (type.equals("orphan_pages")) {
-	List<WikiPage> orphans = WikiPageLocalServiceUtil.getOrphans(node.getNodeId());
+	List<WikiPage> orphans = WikiPageServiceUtil.getOrphans(themeDisplay.getScopeGroupId(), node.getNodeId());
 
 	total = orphans.size();
 	results = ListUtil.subList(orphans, searchContainer.getStart(), searchContainer.getEnd());

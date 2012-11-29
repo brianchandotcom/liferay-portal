@@ -171,6 +171,13 @@ public class WikiPageServiceWrapper implements WikiPageService,
 			displayStyle, feedURL, entryURL);
 	}
 
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getOrphans(
+		long groupId, long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageService.getOrphans(groupId, nodeId);
+	}
+
 	public com.liferay.portlet.wiki.model.WikiPage getPage(long nodeId,
 		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,

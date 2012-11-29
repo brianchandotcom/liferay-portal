@@ -254,6 +254,21 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiPageSoap[] getOrphans(
+		long groupId, long nodeId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getOrphans(groupId,
+					nodeId);
+
+			return com.liferay.portlet.wiki.model.WikiPageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.wiki.model.WikiPageSoap getPage(
 		long nodeId, java.lang.String title) throws RemoteException {
 		try {

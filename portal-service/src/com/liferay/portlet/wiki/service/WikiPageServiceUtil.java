@@ -181,6 +181,13 @@ public class WikiPageServiceUtil {
 			feedURL, entryURL);
 	}
 
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getOrphans(
+		long groupId, long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getOrphans(groupId, nodeId);
+	}
+
 	public static com.liferay.portlet.wiki.model.WikiPage getPage(long nodeId,
 		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,

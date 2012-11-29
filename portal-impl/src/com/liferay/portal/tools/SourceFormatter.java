@@ -1300,7 +1300,7 @@ public class SourceFormatter {
 			fileNames = _getPluginJavaFiles();
 
 			_javaTermSortExclusions = _getPluginExclusionsProperties(
-				"source_formatter_javaterm_alphabetize_exclusions.properties");
+				"source_formatter_javaterm_sort_exclusions.properties");
 			_lineLengthExclusions = _getPluginExclusionsProperties(
 				"source_formatter_line_length_exclusions.properties");
 		}

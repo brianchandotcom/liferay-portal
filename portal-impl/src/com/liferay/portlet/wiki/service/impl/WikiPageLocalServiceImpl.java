@@ -906,7 +906,24 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return wikiPagePersistence.countByFormat(format);
 	}
 
+	/**
+	 * @deprecated {@link #getRecentChanges(long, long, int, int)}
+	 */
 	public List<WikiPage> getRecentChanges(long nodeId, int start, int end)
+		throws PortalException, SystemException {
+
+		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
+
+		Calendar cal = CalendarFactoryUtil.getCalendar();
+
+		cal.add(Calendar.WEEK_OF_YEAR, -1);
+
+		return wikiPageFinder.findByCreateDate(
+			node.getGroupId(), nodeId, cal.getTime(), false, start, end);
+	}
+
+	public List<WikiPage> getRecentChanges(
+			long groupId, long nodeId, int start, int end)
 		throws SystemException {
 
 		Calendar cal = CalendarFactoryUtil.getCalendar();
@@ -914,15 +931,34 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		cal.add(Calendar.WEEK_OF_YEAR, -1);
 
 		return wikiPageFinder.findByCreateDate(
-			nodeId, cal.getTime(), false, start, end);
+			groupId, nodeId, cal.getTime(), false, start, end);
 	}
 
-	public int getRecentChangesCount(long nodeId) throws SystemException {
+	/**
+	 * @deprecated {@link #getRecentChangesCount(long, long)}
+	 */
+	public int getRecentChangesCount(long nodeId)
+		throws PortalException, SystemException {
+
+		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
+
 		Calendar cal = CalendarFactoryUtil.getCalendar();
 
 		cal.add(Calendar.WEEK_OF_YEAR, -1);
 
-		return wikiPageFinder.countByCreateDate(nodeId, cal.getTime(), false);
+		return wikiPageFinder.countByCreateDate(
+			node.getGroupId(), nodeId, cal.getTime(), false);
+	}
+
+	public int getRecentChangesCount(long groupId, long nodeId)
+		throws SystemException {
+
+		Calendar cal = CalendarFactoryUtil.getCalendar();
+
+		cal.add(Calendar.WEEK_OF_YEAR, -1);
+
+		return wikiPageFinder.countByCreateDate(
+			groupId, nodeId, cal.getTime(), false);
 	}
 
 	public String[] getTempPageAttachmentNames(

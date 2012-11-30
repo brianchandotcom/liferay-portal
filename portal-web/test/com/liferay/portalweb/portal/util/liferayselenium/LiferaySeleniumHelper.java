@@ -25,6 +25,29 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
  */
 public class LiferaySeleniumHelper {
 
+	public static void addPortletKeyboard() {
+		if (!_BROWSER_TYPE.equals("*chrome") &&
+			!_BROWSER_TYPE.equals("*firefox")) {
+
+			return;
+		}
+
+		try {
+			Runtime runtime = Runtime.getRuntime();
+
+			String command = RuntimeVariables.replace(
+				TestPropsValues.SELENIUM_BROWSER_COMMANDS_DIR +
+					TestPropsValues.SELENIUM_ADD_PORTLET_KEYBOARD);
+
+			runtime.exec(command);
+
+			Thread.sleep(10000);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void assertAlert(
 		LiferaySelenium liferaySelenium, String pattern) {
 

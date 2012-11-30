@@ -25,6 +25,10 @@ public class EditEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -34,10 +38,16 @@ public class EditEntryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong",
+		assertEquals(RuntimeVariables.replace("Edited Test Folder"),
+			selenium.getText(
+				"//tr[contains(.,'Edited Test Folder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Edited Test Folder')]/td[1]/a/strong",
 			RuntimeVariables.replace("Edited Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong",
+		assertEquals(RuntimeVariables.replace("Edited Test Subfolder"),
+			selenium.getText(
+				"//tr[contains(.,'Edited Test Subfolder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Edited Test Subfolder')]/td[1]/a/strong",
 			RuntimeVariables.replace("Edited Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -45,12 +55,12 @@ public class EditEntryTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",
 			RuntimeVariables.replace("Edited Test Bookmark"));
@@ -65,7 +75,9 @@ public class EditEntryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isElementPresent("link=Edited Test Bookmark"));
-		assertTrue(selenium.isElementPresent("link=http://www.narutofan.com"));
+		assertEquals(RuntimeVariables.replace("Edited Test Bookmark"),
+			selenium.getText("//tr[contains(.,'Edited Test Bookmark')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("http://www.narutofan.com"),
+			selenium.getText("//tr[contains(.,'Edited Test Bookmark')]/td[2]/a"));
 	}
 }

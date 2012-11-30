@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,13 +49,23 @@
 	<td>Bookmarks</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Test Folder')]/td[1]/a/strong</td>
 	<td>Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>//tr[contains(.,'Test Folder')]/td[1]/a/strong</td>
+	<td>Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Test Subfolder')]/td[1]/a/strong</td>
+	<td>Test Subfolder</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[contains(.,'Test Subfolder')]/td[1]/a/strong</td>
 	<td>Test Subfolder</td>
 </tr>
 <tr>
@@ -60,17 +80,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -85,7 +105,7 @@
 </tr>
 <tr>
 	<td>waitForPopUp</td>
-	<td>folder</td>
+	<td>Bookmarks</td>
 	<td>30000</td>
 </tr>
 <tr>
@@ -95,12 +115,12 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Home</td>
+	<td>//span[contains(.,'Home')]/a</td>
 	<td>Home</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Home</td>
+	<td>//span[contains(.,'Home')]/a</td>
 	<td>Home</td>
 </tr>
 <tr>
@@ -154,6 +174,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -180,12 +210,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
+	<td>//tr[contains(.,'Test Folder')]/td[1]/a/strong</td>
 	<td>Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>//tr[contains(.,'Test Folder')]/td[1]/a/strong</td>
+	<td>Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Test Subfolder')]/td[1]/a/strong</td>
 	<td>Test Subfolder</td>
 </tr>
 <tr>

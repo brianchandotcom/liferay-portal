@@ -25,6 +25,10 @@ public class DeleteEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -34,7 +38,10 @@ public class DeleteEntryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
+		assertEquals(RuntimeVariables.replace("Test Folder"),
+			selenium.getText("//tr[contains(.,'Test Folder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Test Folder')]/td[1]/a/strong",
+			RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
@@ -42,15 +49,15 @@ public class DeleteEntryTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

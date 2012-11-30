@@ -25,6 +25,10 @@ public class SearchEntriesTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -40,8 +44,8 @@ public class SearchEntriesTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test Bookmark"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[contains(.,'Test Bookmark')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Test Bookmark 2"),
-			selenium.getText("//tr[4]/td[3]/a"));
+			selenium.getText("//tr[contains(.,'Test Bookmark 2')]/td[3]/a"));
 	}
 }

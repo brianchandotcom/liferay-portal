@@ -25,6 +25,10 @@ public class MoveEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -34,9 +38,15 @@ public class MoveEntryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
+		assertEquals(RuntimeVariables.replace("Test Folder"),
+			selenium.getText("//tr[contains(.,'Test Folder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Test Folder')]/td[1]/a/strong",
+			RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong",
+		assertEquals(RuntimeVariables.replace("Test Subfolder"),
+			selenium.getText(
+				"//tr[contains(.,'Test Subfolder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Test Subfolder')]/td[1]/a/strong",
 			RuntimeVariables.replace("Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -45,21 +55,22 @@ public class MoveEntryTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test Subfolder"),
 			selenium.getText("//a[@id='_28_folderName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
+		selenium.waitForPopUp("Bookmarks", RuntimeVariables.replace("30000"));
 		selenium.selectPopUp("");
-		selenium.waitForElementPresent("link=Home");
-		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
+		selenium.waitForElementPresent("//span[contains(.,'Home')]/a");
+		selenium.clickAt("//span[contains(.,'Home')]/a",
+			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//input[@value='Choose']");
 		selenium.selectWindow("null");
@@ -76,6 +87,10 @@ public class MoveEntryTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isElementNotPresent("link=http://www.digg.com"));
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -86,10 +101,13 @@ public class MoveEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test Folder"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong",
-			RuntimeVariables.replace("Test Subfolder"));
+			selenium.getText("//tr[contains(.,'Test Folder')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Test Folder')]/td[1]/a/strong",
+			RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Test Subfolder"),
+			selenium.getText(
+				"//tr[contains(.,'Test Subfolder')]/td[1]/a/strong"));
 		assertTrue(selenium.isElementPresent("link=http://www.digg.com"));
 	}
 }

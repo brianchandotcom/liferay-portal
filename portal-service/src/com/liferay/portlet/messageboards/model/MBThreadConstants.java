@@ -19,6 +19,8 @@ package com.liferay.portlet.messageboards.model;
  */
 public class MBThreadConstants {
 
+	public static final String NEW_THREAD_URL = "${newThreadURL}";
+
 	public static final double PRIORITY_NOT_GIVEN = -1.0;
 
 	public static final String THREAD_VIEW_COMBINATION = "combination";

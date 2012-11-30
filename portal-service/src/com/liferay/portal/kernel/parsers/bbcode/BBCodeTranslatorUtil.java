@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
  */
 public class BBCodeTranslatorUtil {
 
-	public static final String NEW_THREAD_URL = "${newThreadURL}";
-
 	public static BBCodeTranslator getBBCodeTranslator() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			BBCodeTranslatorUtil.class);

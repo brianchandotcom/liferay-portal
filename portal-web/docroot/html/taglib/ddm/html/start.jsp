@@ -24,8 +24,8 @@
 		<c:if test="<%= repeatable %>">
 			<aui:input id='<%= containerId + "repeatabaleFieldsMap" %>' name="__repeatabaleFieldsMap" type="hidden" />
 
-			<aui:script use="liferay-ddm-html-util">
-				new Liferay.DDMRepeatableUtil(
+			<aui:script use="liferay-ddm-repeatable-fields">
+				new Liferay.DDM.RepeatableFields(
 					{
 						classNameId: <%= classNameId %>,
 						classPK: <%= classPK %>,

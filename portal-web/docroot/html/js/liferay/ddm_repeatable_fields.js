@@ -1,10 +1,17 @@
 AUI.add(
-	'liferay-ddm-html-util',
+	'liferay-ddm-repeatable-fields',
 	function(A) {
+		var Lang = A.Lang;
+
+		var owns = A.Object.owns;
+
+		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button';
+
 		var TPL_ADD_REPEATABLE = '<a class="lfr-ddm-repeatable-add-button" href="javascript:;"></a>';
+
 		var TPL_DELETE_REPEATABLE = '<a class="lfr-ddm-repeatable-delete-button" href="javascript:;"></a>';
 
-		var RepeatableUtil = A.Component.create(
+		var RepeatableFields = A.Component.create(
 			{
 				ATTRS: {
 					classNameId: {
@@ -28,32 +35,30 @@ AUI.add(
 
 				EXTENDS: A.Base,
 
-				NAME: 'liferay-ddm-repeatable-util',
+				NAME: 'liferay-ddm-repeatable-fields',
 
 				prototype: {
-					fieldsCountMap: null,
-
-					fieldsMap: null,
-
 					initializer: function() {
 						var instance = this;
 
-						instance.fieldsMap = {};
-						instance.fieldsCountMap = {};
+						var fieldsCountMap = {};
+						var fieldsMap = {};
+
+						instance.fieldsCountMap = fieldsCountMap;
+						instance.fieldsMap = fieldsMap;
 
 						instance.getFieldsList().each(
 							function(item, index, collection) {
 								var fieldName = item.attr('data-fieldName');
 
-								if (!instance.fieldsCountMap.hasOwnProperty(fieldName)) {
-									instance.fieldsCountMap[fieldName] = 0;
+								if (!owns(fieldsCountMap, fieldName)) {
+									fieldsCountMap[fieldName] = 0;
 								}
 								else {
-									instance.fieldsCountMap[fieldName]++;
+									fieldsCountMap[fieldName]++;
 								}
 
 								instance.makeFieldRepeatable(item);
-
 								instance.syncFieldsMap(fieldName);
 							}
 						);
@@ -66,11 +71,11 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						container.delegate('click', A.bind(instance._onClickRepeatableButton, instance), '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button');
+						container.delegate('click', instance._onClickRepeatableButton, SELECTOR_REPEAT_BUTTONS, instance);
 
-						var hoverHandler = A.bind(instance._onHoverRepeatableButton, instance);
+						var hoverHandler = instance._onHoverRepeatableButton;
 
-						container.delegate('hover', hoverHandler, hoverHandler, '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button');
+						container.delegate('hover', hoverHandler, hoverHandler, SELECTOR_REPEAT_BUTTONS, instance);
 					},
 
 					addField: function(fieldName, repeatableIndex) {
@@ -80,16 +85,19 @@ AUI.add(
 
 						var fieldWrapper = fieldsList.item(repeatableIndex);
 
+						var fieldCount = (++instance.fieldsCountMap[fieldName]);
+
 						instance.getField(
 							fieldName,
-							++instance.fieldsCountMap[fieldName],
+							fieldCount,
 							function(fieldHTML) {
 								fieldWrapper.insert(fieldHTML, 'after');
 
 								fieldsList.refresh();
 
-								instance.makeFieldRepeatable(fieldsList.item(repeatableIndex + 1));
+								var nextField = fieldsList.item(repeatableIndex + 1);
 
+								instance.makeFieldRepeatable(nextField);
 								instance.syncFieldsMap(fieldName);
 							}
 						);
@@ -109,7 +117,7 @@ AUI.add(
 						var instance = this;
 
 						A.io.request(
-							themeDisplay.getPathContext() + themeDisplay.getPathMain() + '/dynamic_data_mapping/render_structure_field',
+							themeDisplay.getPathMain() + '/dynamic_data_mapping/render_structure_field',
 							{
 								data: {
 									classNameId: instance.get('classNameId'),
@@ -153,11 +161,13 @@ AUI.add(
 
 						var fieldsList = instance.getFieldsList(fieldName);
 
-						fieldWrapper.append(TPL_ADD_REPEATABLE);
+						var html = TPL_ADD_REPEATABLE;
 
 						if (fieldsList.indexOf(fieldWrapper) > 0) {
-							fieldWrapper.append(TPL_DELETE_REPEATABLE);
+							html += TPL_DELETE_REPEATABLE;
 						}
+
+						fieldWrapper.append(html);
 
 						fieldWrapper.plug(A.Plugin.ParseContent);
 					},
@@ -169,19 +179,23 @@ AUI.add(
 
 						var fieldsList = instance.getFieldsList(fieldName);
 
-						instance.fieldsMap[fieldName] = [];
+						var fieldsMap = instance.fieldsMap;
+
+						var fieldMap = [];
 
 						fieldsList.each(
 							function(item, index, collection) {
 								var repeatableIndex = item.attr('data-repeatableIndex');
 
 								if (repeatableIndex) {
-									instance.fieldsMap[fieldName].push(repeatableIndex);
+									fieldMap.push(repeatableIndex);
 								}
 							}
 						);
 
-						fieldsMapInput.val(JSON.stringify(instance.fieldsMap));
+						fieldsMap[fieldName] = fieldMap;
+
+						fieldsMapInput.val(A.JSON.stringify(fieldsMap));
 					},
 
 					_onClickRepeatableButton: function(event) {
@@ -190,14 +204,15 @@ AUI.add(
 						var currentTarget = event.currentTarget;
 
 						var fieldWrapper = currentTarget.ancestor('.aui-field-wrapper');
+
 						var fieldName = fieldWrapper.attr('data-fieldName');
 
 						var repeatableIndex = instance.getFieldsList(fieldName).indexOf(fieldWrapper);
 
-						if (currentTarget.test('.lfr-ddm-repeatable-add-button')) {
+						if (currentTarget.hasClass('lfr-ddm-repeatable-add-button')) {
 							instance.addField(fieldName, repeatableIndex);
 						}
-						else if (currentTarget.test('.lfr-ddm-repeatable-delete-button')) {
+						else if (currentTarget.hasClass('lfr-ddm-repeatable-delete-button')) {
 							instance.deleteField(fieldName, repeatableIndex);
 						}
 					},
@@ -207,19 +222,17 @@ AUI.add(
 
 						var fieldWrapper = event.currentTarget.ancestor('.aui-field-wrapper');
 
-						if (fieldWrapper) {
-							fieldWrapper.toggleClass('lfr-ddm-repeatable-active', (event.phase === 'over'));
-						}
+						fieldWrapper.toggleClass('lfr-ddm-repeatable-active', (event.phase === 'over'));
 					}
 
 				}
 			}
 		);
 
-		Liferay.DDMRepeatableUtil = RepeatableUtil;
+		Liferay.namespace('DDM').RepeatableFields = RepeatableFields;
 	},
 	'',
 	{
-		requires: ['liferay-portlet-url']
+		requires: ['aui-base', 'aui-io-request', 'aui-parse-content']
 	}
 );

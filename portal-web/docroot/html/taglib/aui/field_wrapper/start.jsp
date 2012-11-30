@@ -20,7 +20,7 @@
 String fieldCss = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, "wrapper", inlineField, false, false, first, last, cssClass);
 %>
 
-<div class="<%= fieldCss %>">
+<div class="<%= fieldCss %>" <%= AUIUtil.buildData(data) %>>
 	<div class="aui-field-wrapper-content">
 		<c:if test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
 			<label <%= AUIUtil.buildLabel(inlineLabel, showForLabel, name, false) %>>

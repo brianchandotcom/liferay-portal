@@ -33,6 +33,17 @@ import javax.servlet.jsp.PageContext;
  */
 public interface DDMXSD {
 
+	public String getFieldHTML(
+			PageContext pageContext, Element fieldElement, Fields fields,
+			String namespace, String mode, boolean readOnly, Locale locale)
+		throws Exception;
+
+	public String getFieldHTMLByName(
+			PageContext pageContext, long classNameId, long classPK,
+			String fieldName, int repeatableIndex, Fields fields,
+			String namespace, String mode, boolean readOnly, Locale locale)
+		throws Exception;
+
 	public String getHTML(
 			PageContext pageContext, DDMStructure ddmStructure, Fields fields,
 			String namespace, boolean readOnly, Locale locale)
@@ -66,5 +77,8 @@ public interface DDMXSD {
 
 	public JSONArray getJSONArray(String xml)
 		throws PortalException, SystemException;
+
+	public String getXSD(long classNameId, long classPK)
+		throws Exception;
 
 }

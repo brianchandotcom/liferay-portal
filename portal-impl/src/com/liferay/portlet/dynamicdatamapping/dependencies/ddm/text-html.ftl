@@ -1,7 +1,9 @@
 <#include "../init.ftl">
 
-<@aui["field-wrapper"] helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
-	<@liferay_ui["input-editor"] initMethod="${namespacedFieldName}InitEditor" name="${namespacedFieldName}Editor" />
+<#assign skipEditorLoading = repeatableIndex != "">
+
+<@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
+	<@liferay_ui["input-editor"] initMethod="${namespacedFieldName}InitEditor" name="${namespacedFieldName}Editor" skipEditorLoading=skipEditorLoading />
 
 	<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
 

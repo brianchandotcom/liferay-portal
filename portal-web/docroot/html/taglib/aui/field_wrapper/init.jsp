@@ -33,6 +33,7 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 }
 
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:field-wrapper:cssClass"));
+java.util.Map data = (java.util.Map)request.getAttribute("aui:field-wrapper:data");
 boolean first = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:field-wrapper:first")));
 java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("aui:field-wrapper:helpMessage"));
 boolean inlineField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:field-wrapper:inlineField")));
@@ -43,6 +44,7 @@ java.lang.String name = GetterUtil.getString((java.lang.String)request.getAttrib
 boolean required = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:field-wrapper:required")));
 
 _updateOptions(_options, "cssClass", cssClass);
+_updateOptions(_options, "data", data);
 _updateOptions(_options, "first", first);
 _updateOptions(_options, "helpMessage", helpMessage);
 _updateOptions(_options, "inlineField", inlineField);

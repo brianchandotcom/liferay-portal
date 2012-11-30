@@ -1,6 +1,6 @@
 <#include "../init.ftl">
 
-<div class="aui-field-wrapper-content lfr-forms-field-wrapper">
+<@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip)>
 	<@aui.input cssClass=cssClass helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName type="file">
 		<@aui.validator name="acceptFiles">
 			'${escapeJS(fieldStructure.acceptFiles)}'
@@ -38,4 +38,4 @@
 	</#if>
 
 	${fieldStructure.children}
-</div>
+</@>

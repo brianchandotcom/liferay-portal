@@ -1,6 +1,6 @@
 <#include "../init.ftl">
 
-<div class="aui-field-wrapper-content lfr-forms-field-wrapper">
+<@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip)>
 	<@aui.input cssClass=cssClass helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName type="text" value=fieldValue>
 		<@aui.validator name="number" />
 
@@ -10,4 +10,4 @@
 	</@aui.input>
 
 	${fieldStructure.children}
-</div>
+</@>

@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.youtube.portlet.removeportletyoutube;
 
+import com.liferay.portalweb.plugins.youtube.portlet.addportletyoutube.AddPageYoutubeTest;
+import com.liferay.portalweb.plugins.youtube.portlet.addportletyoutube.AddPortletYoutubeTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

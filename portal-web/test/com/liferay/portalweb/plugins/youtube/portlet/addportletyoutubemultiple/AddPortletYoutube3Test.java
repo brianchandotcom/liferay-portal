@@ -50,15 +50,9 @@ public class AddPortletYoutube3Test extends BaseTestCase {
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//div[1]/section");
 		assertTrue(selenium.isVisible("//div[1]/section"));
-		assertEquals(RuntimeVariables.replace("YouTube"),
-			selenium.getText("xpath=(//span[@class='portlet-title-text'])[1]"));
 		selenium.waitForVisible("//div[2]/section");
 		assertTrue(selenium.isVisible("//div[2]/section"));
-		assertEquals(RuntimeVariables.replace("YouTube"),
-			selenium.getText("xpath=(//span[@class='portlet-title-text'])[2]"));
-		assertTrue(selenium.isVisible("//div[3]/section"));
 		selenium.waitForVisible("//div[3]/section");
-		assertEquals(RuntimeVariables.replace("YouTube"),
-			selenium.getText("xpath=(//span[@class='portlet-title-text'])[3]"));
+		assertTrue(selenium.isVisible("//div[3]/section"));
 	}
 }

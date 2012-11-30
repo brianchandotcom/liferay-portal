@@ -31,6 +31,7 @@ public class RemovePortletYoutubeTest extends BaseTestCase {
 		selenium.click("//img[@alt='Remove']");
 		selenium.waitForConfirmation(
 			"Are you sure you want to remove this component?");
-		assertTrue(selenium.isElementNotPresent("//div[1]/section"));
+		selenium.waitForElementNotPresent("//section");
+		assertTrue(selenium.isElementNotPresent("//section"));
 	}
 }

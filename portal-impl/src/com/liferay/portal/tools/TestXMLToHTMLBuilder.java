@@ -107,9 +107,18 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 
 		sb.append(rootElement.attributeValue("name"));
 		sb.append("</title>\n");
-		sb.append("<script type='text/javascript' src='jquery.js'></script>");
-		sb.append("<script type='text/javascript' src='scripts.js'></script>");
-		sb.append("<link rel='stylesheet' href='style.css'>");
+
+		sb.append("<script type='text/javascript' src='");
+		sb.append(getDependenciesPath(fileName));
+		sb.append("jquery.js'></script>");
+
+		sb.append("<script type='text/javascript' src='");
+		sb.append(getDependenciesPath(fileName));
+		sb.append("scripts.js'></script>");
+
+		sb.append("<link rel='stylesheet' href='");
+		sb.append(getDependenciesPath(fileName));
+		sb.append("style.css'>");
 		sb.append("</head>\n");
 
 		sb.append("<body>\n");
@@ -163,6 +172,28 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append("</ol>\n");
 
 		sb.append("</div>\n");
+
+		return sb.toString();
+	}
+
+	protected String getDependenciesPath(String localPath) throws Exception {
+		String stylesPath = "com/liferay/portalweb/blocks/styles";
+
+		int x = localPath.indexOf("test");
+
+		String pathFromPortalWeb = localPath.substring(x);
+
+		String[] split = pathFromPortalWeb.split("/");
+
+		int numDirectories = split.length;
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < numDirectories; i++) {
+			sb.append("../");
+		}
+
+		sb.append("blocks/styles/");
 
 		return sb.toString();
 	}

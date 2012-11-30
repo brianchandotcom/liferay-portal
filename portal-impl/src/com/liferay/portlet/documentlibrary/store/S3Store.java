@@ -510,7 +510,7 @@ public class S3Store extends BaseStore {
 
 		int y = key.lastIndexOf(CharPool.SLASH);
 
-		return key.substring(x + 1, y);
+		return CharPool.SLASH + key.substring(x + 1, y);
 	}
 
 	protected String[] getFileNames(S3Object[] s3Objects) {
@@ -573,7 +573,11 @@ public class S3Store extends BaseStore {
 		sb.append(companyId);
 		sb.append(StringPool.SLASH);
 		sb.append(repositoryId);
-		sb.append(StringPool.SLASH);
+
+		if (!fileName.startsWith(StringPool.SLASH)) {
+			sb.append(StringPool.SLASH);
+		}
+
 		sb.append(fileName);
 
 		return sb.toString();
@@ -588,7 +592,11 @@ public class S3Store extends BaseStore {
 		sb.append(companyId);
 		sb.append(StringPool.SLASH);
 		sb.append(repositoryId);
-		sb.append(StringPool.SLASH);
+
+		if (!fileName.startsWith(StringPool.SLASH)) {
+			sb.append(StringPool.SLASH);
+		}
+
 		sb.append(fileName);
 		sb.append(StringPool.SLASH);
 		sb.append(versionLabel);

@@ -207,6 +207,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 			QueryParser queryParser = new QueryParser(
 				getVersion(), field, analyzer);
 
+			queryParser.setAllowLeadingWildcard(true);
+
 			Query query = null;
 
 			try {

@@ -155,37 +155,18 @@ int count = 0;
 	</tr>
 </c:if>
 
-<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+<c:if test="<%= enableRSS %>">
 	<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
 		<th>
 			<liferay-ui:message key="rss-subscription" />
 		</th>
 		<td>
-			<liferay-ui:icon-list>
-				<liferay-ui:icon
-					image="rss"
-					label="<%= true %>"
-					message="Atom 1.0"
-					target="_blank"
-					url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&companyId=" + company.getCompanyId() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() + rssURLAtomParams %>'
-				/>
-
-				<liferay-ui:icon
-					image="rss"
-					label="<%= true %>"
-					message="RSS 1.0"
-					target="_blank"
-					url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&companyId=" + company.getCompanyId() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() + rssURLRSS10Params %>'
-				/>
-
-				<liferay-ui:icon
-					image="rss"
-					label="<%= true %>"
-					message="RSS 2.0"
-					target="_blank"
-					url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&companyId=" + company.getCompanyId() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() + rssURLRSS20Params %>'
-				/>
-			</liferay-ui:icon-list>
+			<liferay-ui:rss
+				delta="<%= rssDelta %>"
+				displayStyle="<%= rssDisplayStyle %>"
+				feedType="<%= rssFeedType %>"
+				url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&companyId=" + company.getCompanyId() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() %>'
+			/>
 		</td>
 	</tr>
 </c:if>

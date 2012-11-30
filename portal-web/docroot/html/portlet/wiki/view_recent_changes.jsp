@@ -32,30 +32,11 @@ WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 
 <br />
 
-<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-	<liferay-ui:icon-list>
-		<liferay-ui:icon
-			image="rss"
-			label="<%= true %>"
-			message="Atom 1.0"
-			target="_blank"
-			url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&nodeId=" + node.getNodeId() + rssURLAtomParams %>'
-		/>
-
-		<liferay-ui:icon
-			image="rss"
-			label="<%= true %>"
-			message="RSS 1.0"
-			target="_blank"
-			url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&nodeId=" + node.getNodeId() + rssURLRSS10Params %>'
-		/>
-
-		<liferay-ui:icon
-			image="rss"
-			label="<%= true %>"
-			message="RSS 2.0"
-			target="_blank"
-			url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&nodeId=" + node.getNodeId() + rssURLRSS20Params %>'
-		/>
-	</liferay-ui:icon-list>
+<c:if test="<%= enableRSS %>">
+	<liferay-ui:rss
+		delta="<%= rssDelta %>"
+		displayStyle="<%= rssDisplayStyle %>"
+		feedType="<%= rssFeedType %>"
+		url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&nodeId=" + node.getNodeId() %>'
+	/>
 </c:if>

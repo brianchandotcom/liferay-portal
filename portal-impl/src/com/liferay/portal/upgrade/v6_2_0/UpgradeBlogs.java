@@ -26,8 +26,8 @@ import com.liferay.util.RSSUtil;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Eduardo Garcia
  * @author Sergio González
+ * @author Eduardo Garcia
  */
 public class UpgradeBlogs extends BaseUpgradePortletPreferences {
 
@@ -66,9 +66,11 @@ public class UpgradeBlogs extends BaseUpgradePortletPreferences {
 			portletPreferences.getValue("rssFormat", null));
 
 		if (Validator.isNotNull(rssFormat)) {
+			String rssFormatType = RSSUtil.getFormatType(rssFormat);
+			double rssFormatVersion = RSSUtil.getFormatVersion(rssFormat);
+
 			String rssFeedType = RSSUtil.getFeedType(
-				RSSUtil.getFormatType(rssFormat),
-				RSSUtil.getFormatVersion(rssFormat));
+				rssFormatType, rssFormatVersion);
 
 			portletPreferences.setValue("rssFeedType", rssFeedType);
 		}

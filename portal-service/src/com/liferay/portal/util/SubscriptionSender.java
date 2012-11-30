@@ -218,7 +218,7 @@ public class SubscriptionSender implements Serializable {
 		setContextAttribute("[$COMPANY_ID$]", company.getCompanyId());
 		setContextAttribute("[$COMPANY_MX$]", company.getMx());
 		setContextAttribute("[$COMPANY_NAME$]", company.getName());
-		setContextAttribute("[$PORTAL_URL$]", getPortalURL(company));
+		setContextAttribute("[$PORTAL_URL$]", company.getPortalURL(groupId));
 
 		if (groupId > 0) {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -356,18 +356,6 @@ public class SubscriptionSender implements Serializable {
 
 		SubscriptionLocalServiceUtil.deleteSubscription(
 			subscription.getSubscriptionId());
-	}
-
-	protected String getPortalURL(Company company) throws Exception {
-		if (serviceContext != null) {
-			String portalURL = serviceContext.getPortalURL();
-
-			if (Validator.isNotNull(portalURL)) {
-				return portalURL;
-			}
-		}
-
-		return company.getPortalURL(groupId);
 	}
 
 	protected boolean hasPermission(Subscription subscription, User user)
@@ -552,8 +540,8 @@ public class SubscriptionSender implements Serializable {
 				"href=\"/", "src=\"/"
 			},
 			new String[] {
-				"href=\"" + getPortalURL(company) + "/",
-				"src=\"" + getPortalURL(company) + "/"
+				"href=\"" + company.getPortalURL(groupId) + "/",
+				"src=\"" + company.getPortalURL(groupId) + "/"
 			});
 
 		return content;

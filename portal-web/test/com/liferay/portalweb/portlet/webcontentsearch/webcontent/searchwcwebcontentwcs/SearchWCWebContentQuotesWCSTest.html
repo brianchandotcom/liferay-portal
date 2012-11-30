@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Web Content Search Test Page</td>
-	<td>Web Content Search Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Search Test Page</td>
 	<td>Web Content Search Test Page</td>
@@ -34,24 +29,19 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[3]</td>
 	<td>WC WebContent Title</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertPartialText</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[4]</td>
 	<td>WC WebContent Content</td>
-	<td></td>
 </tr>
 <tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Web Content Search Test Page</td>
-	<td>Web Content Search Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -77,6 +67,11 @@
 	<td>assertTextNotPresent</td>
 	<td>WC WebContent Content</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No pages were found that matched the keywords: "WC1 WebContent1 Title1".</td>
 </tr>
 </tbody></table>
 </body>

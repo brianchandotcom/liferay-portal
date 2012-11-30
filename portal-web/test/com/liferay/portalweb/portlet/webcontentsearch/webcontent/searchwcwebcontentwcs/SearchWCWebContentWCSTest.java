@@ -25,7 +25,6 @@ public class SearchWCWebContentWCSTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Search Test Page");
 		selenium.clickAt("link=Web Content Search Test Page",
 			RuntimeVariables.replace("Web Content Search Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -34,10 +33,12 @@ public class SearchWCWebContentWCSTest extends BaseTestCase {
 		selenium.clickAt("//input[@type='image']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("WC WebContent Title"));
-		assertTrue(selenium.isTextPresent("WC WebContent Content"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]"));
+		assertTrue(selenium.isPartialText(
+				"//tr[contains(.,'WC WebContent Title')]/td[4]",
+				"WC WebContent Content"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Search Test Page");
 		selenium.clickAt("link=Web Content Search Test Page",
 			RuntimeVariables.replace("Web Content Search Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,5 +49,8 @@ public class SearchWCWebContentWCSTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("WC WebContent Title"));
 		assertFalse(selenium.isTextPresent("WC WebContent Content"));
+		assertEquals(RuntimeVariables.replace(
+				"No pages were found that matched the keywords: WC1 WebContent1 Title1."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

@@ -32,19 +32,6 @@ $theme.include($body_top_include)
 	</header>
 
 	<div id="content">
-		#if ($control_panel_category == "")
-			<nav class="site-breadcrumbs" id="breadcrumbs">
-		#else
-			<nav class="site-breadcrumbs control-panel-category" id="breadcrumbs">
-		#end
-
-			<h1>
-				<span>#language ("breadcrumbs")</span>
-			</h1>
-
-			#breadcrumbs("control_panel")
-		</nav>
-
 		#if ($selectable)
 			$theme.include($content_include)
 		#else

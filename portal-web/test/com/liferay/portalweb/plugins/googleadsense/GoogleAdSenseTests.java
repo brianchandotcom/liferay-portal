@@ -26,8 +26,8 @@ import junit.framework.TestSuite;
 public class GoogleAdSenseTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(AddPortletTest.class);
+		testSuite.addTestSuite(AddPageGATest.class);
+		testSuite.addTestSuite(AddPortletGATest.class);
 		testSuite.addTestSuite(AddAdSenseTest.class);
 		testSuite.addTestSuite(AssertAdSensePresentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

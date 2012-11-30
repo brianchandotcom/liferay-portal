@@ -34,11 +34,11 @@ public class AddAdSenseTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
 		selenium.waitForVisible(
 			"//iframe[contains(@id,'googleadsenseportlet')]");
@@ -70,7 +70,6 @@ public class AddAdSenseTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		Thread.sleep(5000);
 		selenium.selectFrame("relative=top");
 	}
 }

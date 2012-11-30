@@ -26,7 +26,7 @@ public class CPWebContentRelatedAssetsCalendarEventPaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content Related Assets Calendar Event Page"
+			"", "Control Panel Web Content Related Assets Calendar Event Frame"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

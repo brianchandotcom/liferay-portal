@@ -36,7 +36,7 @@ public class AddBlogsEntryTitle150CharactersTest extends BaseTestCase {
 	public void test() throws Exception {
 		CPBlogsEntryMacros cPBlogsEntryMacros = new CPBlogsEntryMacros(selenium);
 
-		cPBlogsEntryMacros.addBlogsEntry("|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15",
+		cPBlogsEntryMacros.add("|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15",
 			"Blogs Entry Content");
 	}
 
@@ -46,8 +46,8 @@ public class AddBlogsEntryTitle150CharactersTest extends BaseTestCase {
 		CPRecycleBinMacros cPRecycleBinMacros = new CPRecycleBinMacros(selenium);
 		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
 
-		cPBlogsEntryMacros.tearDownBlogsEntry();
-		cPRecycleBinMacros.emptyRecycleBin();
+		cPBlogsEntryMacros.tearDown();
+		cPRecycleBinMacros.empty();
 		portletSignInUserMacros.signOut();
 	}
 }

@@ -1,23 +1,23 @@
 <macros>
 	<macrodef
 		name="signIn"
-		description="Log into the portal as ${email} with the password ${password}."
 		params="email,password"
+		description="Log into the portal as ${email} with the password ${password}."
 	>
 		<action name="Home" command="open" path="URL_GUEST" />
 
-		<action name="PortletSignIn" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
-		<action name="PortletSignIn" command="type" path="PASSWORD_FIELD" value="${password}" />
-		<action name="PortletSignIn" command="check" path="REMEMBER_ME_LINK" />
-		<action name="PortletSignIn" command="click" path="SIGN_IN_LINK" />
+		<action name="PortletSignInHome" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
+		<action name="PortletSignInHome" command="type" path="PASSWORD_FIELD" value="${password}" />
+		<action name="PortletSignInHome" command="check" path="REMEMBER_ME_LINK" />
+		<action name="PortletSignInHome" command="click" path="SIGN_IN_LINK" />
 
-		<if name="PortletSignIn" command="isElementPresent" path="I_AGREE_LINK">
-			<action name="PortletSignIn" command="click" path="I_AGREE_LINK" />
+		<if name="PortletSignInHome" command="isElementPresent" path="I_AGREE_LINK">
+			<action name="PortletSignInHome" command="click" path="I_AGREE_LINK" />
 		</if>
 
-		<if name="PortletSignIn" command="isElementPresent" path="ANSWER_FIELD">
-			<action name="PortletSignIn" command="type" path="ANSWER_FIELD" value="test" />
-			<action name="PortletSignIn" command="click" path="SAVE_LINK" />
+		<if name="PortletSignInHome" command="isElementPresent" path="ANSWER_FIELD">
+			<action name="PortletSignInHome" command="type" path="ANSWER_FIELD" value="test" />
+			<action name="PortletSignInHome" command="click" path="SAVE_LINK" />
 		</if>
 	</macrodef>
 
@@ -27,6 +27,6 @@
 	>
 		<action name="Home" command="open" path="URL_GUEST" />
 
-		<action name="PortletSignIn" command="click" path="SIGN_OUT_LINK" />
+		<action name="PortletSignInHome" command="click" path="SIGN_OUT_LINK" />
 	</macrodef>
 </macros>

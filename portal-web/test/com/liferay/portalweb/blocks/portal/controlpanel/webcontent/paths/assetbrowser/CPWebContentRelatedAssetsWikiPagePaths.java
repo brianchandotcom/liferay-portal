@@ -26,7 +26,7 @@ public class CPWebContentRelatedAssetsWikiPagePaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content Related Assets Wiki Page"
+			"", "Control Panel Web Content Related Assets Wiki Frame"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

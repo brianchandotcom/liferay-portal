@@ -26,7 +26,7 @@ public class CPWebContentStructuresAddStructurePaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content Structures Add Structure Page"
+			"", "Control Panel Web Content Add Structure Page"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

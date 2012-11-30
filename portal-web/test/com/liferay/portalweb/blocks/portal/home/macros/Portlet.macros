@@ -1,19 +1,17 @@
 <macros>
 	<macrodef
-		name="addPortlet"
-		description="Add the ${portlet} Portlet to the ${portlet} Test Page in the Guest Community."
+		name="add"
 		params="portlet"
+		description="Add the &lt;strong&gt;${portlet} Portlet&lt;/strong&gt; to the &lt;strong&gt;${portlet} Page&lt;/strong&gt; in the &lt;strong&gt;Guest Community&lt;/strong&gt;."
 	>
-		<macro name="Navigation" command="navigatePortletPage">
-			<param name="page" value="${portlet}" />
+		<macro name="Goto" command="pagePortlet">
+			<param name="portlet" value="${portlet}" />
 		</macro>
 
 		<action name="Home" command="mouseOver" path="ADD_LINK" />
 		<action name="Home" command="click" path="ADD_LINK_APPLICATION" />
-
-		<action name="AddApplication" command="type" path="PORTLET_FIELD_SEARCH" value="${portlet}" value-first-letter="true" />
-		<action name="AddApplication" command="click" locator="//div[@title='${portlet}']/p/a" />
-
+		<action name="Home" command="type" path="PORTLET_FIELD_SEARCH" value="${portlet}" value-first-letter="true" />
+		<action name="Home" command="click" locator="//div[@title='${portlet}']/p/a" />
 		<action name="Home" command="assertTextEquals" path="PORTLET_TEXT_TITLE" value="${portlet}" />
 	</macrodef>
 </macros>

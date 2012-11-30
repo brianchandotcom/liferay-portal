@@ -36,12 +36,9 @@ public class AddBlogsEntriesCPTest extends BaseTestCase {
 	public void test() throws Exception {
 		CPBlogsEntryMacros cPBlogsEntryMacros = new CPBlogsEntryMacros(selenium);
 
-		cPBlogsEntryMacros.addBlogsEntry("Blogs Entry1 Title",
-			"Blogs Entry1 Content");
-		cPBlogsEntryMacros.addBlogsEntry("Blogs Entry2 Title",
-			"Blogs Entry2 Content");
-		cPBlogsEntryMacros.addBlogsEntry("Blogs Entry3 Title",
-			"Blogs Entry3 Content");
+		cPBlogsEntryMacros.add("Blogs Entry1 Title", "Blogs Entry1 Content");
+		cPBlogsEntryMacros.add("Blogs Entry2 Title", "Blogs Entry2 Content");
+		cPBlogsEntryMacros.add("Blogs Entry3 Title", "Blogs Entry3 Content");
 	}
 
 	@Override
@@ -50,8 +47,8 @@ public class AddBlogsEntriesCPTest extends BaseTestCase {
 		CPRecycleBinMacros cPRecycleBinMacros = new CPRecycleBinMacros(selenium);
 		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
 
-		cPBlogsEntryMacros.tearDownBlogsEntry();
-		cPRecycleBinMacros.emptyRecycleBin();
+		cPBlogsEntryMacros.tearDown();
+		cPRecycleBinMacros.empty();
 		portletSignInUserMacros.signOut();
 	}
 }

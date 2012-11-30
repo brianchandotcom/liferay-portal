@@ -14,12 +14,12 @@
 
 package com.liferay.portalweb.tests.portal.blogs.rc;
 
-import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.addentry.CPBlogsEntryAddActions;
+import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.addentry.CPBlogsAddEntryActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.entry.CPBlogsEntryViewActions;
-import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsPortletActions;
+import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsHomeActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.macros.CPBlogsEntryMacros;
 import com.liferay.portalweb.blocks.portal.controlpanel.recyclebin.macros.CPRecycleBinMacros;
-import com.liferay.portalweb.blocks.portal.home.macros.NavigationMacros;
+import com.liferay.portalweb.blocks.portal.home.macros.GotoMacros;
 import com.liferay.portalweb.blocks.portal.portlet.signin.macros.PortletSignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
@@ -38,21 +38,21 @@ public class AddBlogsEntryTitle151CharactersTest extends BaseTestCase {
 	}
 
 	public void test() throws Exception {
-		CPBlogsEntryAddActions cPBlogsEntryAddActions = new CPBlogsEntryAddActions(selenium);
+		CPBlogsAddEntryActions cPBlogsAddEntryActions = new CPBlogsAddEntryActions(selenium);
 		CPBlogsEntryViewActions cPBlogsEntryViewActions = new CPBlogsEntryViewActions(selenium);
-		CPBlogsPortletActions cPBlogsPortletActions = new CPBlogsPortletActions(selenium);
-		NavigationMacros navigationMacros = new NavigationMacros(selenium);
+		CPBlogsHomeActions cPBlogsHomeActions = new CPBlogsHomeActions(selenium);
+		GotoMacros gotoMacros = new GotoMacros(selenium);
 
-		navigationMacros.navigateControlPanelPage("Blogs");
-		cPBlogsPortletActions.click("PORTLET_LINK_ADD", "Add");
-		cPBlogsEntryAddActions.type("CONTENT_FIELD_TITLE",
+		gotoMacros.controlPanelPortlet("Blogs");
+		cPBlogsHomeActions.click("PORTLET_LINK_ADD", "Add");
+		cPBlogsAddEntryActions.type("CONTENT_FIELD_TITLE",
 			"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15X");
-		cPBlogsEntryAddActions.type("CONTENT_FIELD_CONTENT",
+		cPBlogsAddEntryActions.type("CONTENT_FIELD_CONTENT",
 			"Blogs Entry Content");
-		cPBlogsEntryAddActions.click("CONTENT_LINK_SAVE", "Publish");
-		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_SUCCESS",
+		cPBlogsAddEntryActions.click("CONTENT_LINK_SAVE", "Publish");
+		cPBlogsHomeActions.assertTextEquals("PORTLET_TEXT_SUCCESS",
 			"Your request completed successfully.");
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_TITLE_1",
+		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_TITLE_1",
 			"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15");
 		cPBlogsEntryViewActions.click("BLOGS_ENTRY_TEXT_TITLE",
 			"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15");
@@ -66,8 +66,8 @@ public class AddBlogsEntryTitle151CharactersTest extends BaseTestCase {
 		CPRecycleBinMacros cPRecycleBinMacros = new CPRecycleBinMacros(selenium);
 		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
 
-		cPBlogsEntryMacros.tearDownBlogsEntry();
-		cPRecycleBinMacros.emptyRecycleBin();
+		cPBlogsEntryMacros.tearDown();
+		cPRecycleBinMacros.empty();
 		portletSignInUserMacros.signOut();
 	}
 }

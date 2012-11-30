@@ -1,0 +1,104 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPWebContentAddArticleAbstract</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPWebContentAddArticleAbstract</td></tr></thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Web Content Add Article Abstract Section</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ABSTRACT-->
+<tr>
+	<td>ABSTRACT_SUMMARY</td>
+	<td>//textarea[@id='_15_description_en_US']</td>
+	<td>Abstract Summary</td>
+</tr>
+<tr>
+	<td>ABSTRACT_SMALL_IMAGE_CHECKBOX</td>
+	<td>//input[@id='_15_smallImageCheckbox']</td>
+	<td>User Small Image Checkbox</td>
+</tr>
+<tr>
+	<td>ABSTRACT_SMALL_IMAGE_URL</td>
+	<td>//input[@id='_15_smallImageURL']</td>
+	<td>Small Image URL</td>
+</tr>
+<tr>
+	<td>ABSTRACT_SMALL_IMAGE</td>
+	<td>//input[@id='_15_smallFile']</td>
+	<td>Small Image File</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SIDEBAR-->
+<tr>
+	<td>SIDEBAR_CONTENT</td>
+	<td>//a[@id='_15_contentLink']</td>
+	<td>Content</td>
+</tr>
+<tr>
+	<td>SIDEBAR_ABSTRACT</td>
+	<td>//a[@id='_15_abstractLink']</td>
+	<td>Abstract</td>
+</tr>
+<tr>
+	<td>SIDEBAR_CATEGORIZATION</td>
+	<td>//a[@id='_15_categorizationLink']</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>SIDEBAR_SCHEDULE</td>
+	<td>//a[@id='_15_scheduleLink']</td>
+	<td>Schedule</td>
+</tr>
+<tr>
+	<td>SIDEBAR_DISPLAY_PAGE</td>
+	<td>//a[@id='_15_displayPageLink']</td>
+	<td>Display Page</td>
+</tr>
+<tr>
+	<td>SIDEBAR_RELATED_ASSETS</td>
+	<td>//a[@id='_15_relatedAssetsLink']</td>
+	<td>Related Assets</td>
+</tr>
+<tr>
+	<td>SIDEBAR_RELATED_PERMISSIONS</td>
+	<td>//a[@id='_15_permissionsLink']</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>SIDEBAR_CUSTOM_FIELDS</td>
+	<td>//a[@id='_15_customFieldsLink']</td>
+	<td>Custom Fields</td>
+</tr>
+<tr>
+	<td>SIDEBAR_SAVE_AS_DRAFT</td>
+	<td>//input[@value='Save as Draft']</td>
+	<td>Save as Draft</td>
+</tr>
+<tr>
+	<td>SIDEBAR_PUBLISH</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>SIDEBAR_CANCEL</td>
+	<td>xpath=(//input[@value='Cancel'])[2]</td>
+	<td>Cancel</td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

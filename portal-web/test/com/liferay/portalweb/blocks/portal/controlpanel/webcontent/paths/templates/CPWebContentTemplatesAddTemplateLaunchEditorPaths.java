@@ -26,8 +26,7 @@ public class CPWebContentTemplatesAddTemplateLaunchEditorPaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"",
-			"Control Panel Web Content Templates Add Template Launch Editor Page"
+			"", "Control Panel Web Content Add Template Launch Editor Frame"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

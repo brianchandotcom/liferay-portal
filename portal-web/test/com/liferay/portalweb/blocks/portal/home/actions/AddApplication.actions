@@ -1,8 +1,0 @@
-<actions>
-	<actiondef name="type">
-		<conditional elements="PORTLET_FIELD_SEARCH">
-			<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]" />
-			<units command="sendKeys" />
-		</conditional>
-	</actiondef>
-</actions>

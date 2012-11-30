@@ -16,7 +16,7 @@ package com.liferay.portalweb.blocks.portal.controlpanel.recyclebin.macros;
 
 import com.liferay.portalweb.blocks.base.macros.BaseMacros;
 import com.liferay.portalweb.blocks.portal.controlpanel.recyclebin.actions.home.CPRecycleBinPortletActions;
-import com.liferay.portalweb.blocks.portal.home.macros.NavigationMacros;
+import com.liferay.portalweb.blocks.portal.home.macros.GotoMacros;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
@@ -27,11 +27,11 @@ public class CPRecycleBinMacros extends BaseMacros {
 		super(liferaySelenium);
 	}
 
-	public void emptyRecycleBin() throws Exception {
+	public void empty() throws Exception {
 		CPRecycleBinPortletActions cPRecycleBinPortletActions = new CPRecycleBinPortletActions(selenium);
-		NavigationMacros navigationMacros = new NavigationMacros(selenium);
+		GotoMacros gotoMacros = new GotoMacros(selenium);
 
-		navigationMacros.navigateControlPanelPage("Recycle Bin");
+		gotoMacros.controlPanelPortlet("Recycle Bin");
 
 		while (cPRecycleBinPortletActions.isElementPresent(
 					"EMPTY_RECYCLE_BIN", "")) {

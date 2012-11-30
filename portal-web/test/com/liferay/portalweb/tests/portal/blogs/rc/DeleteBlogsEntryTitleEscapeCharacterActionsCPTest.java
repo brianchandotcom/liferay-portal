@@ -14,10 +14,10 @@
 
 package com.liferay.portalweb.tests.portal.blogs.rc;
 
-import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsPortletActions;
+import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsHomeActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.macros.CPBlogsEntryMacros;
 import com.liferay.portalweb.blocks.portal.controlpanel.recyclebin.macros.CPRecycleBinMacros;
-import com.liferay.portalweb.blocks.portal.home.macros.NavigationMacros;
+import com.liferay.portalweb.blocks.portal.home.macros.GotoMacros;
 import com.liferay.portalweb.blocks.portal.portlet.signin.macros.PortletSignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
@@ -35,29 +35,29 @@ public class DeleteBlogsEntryTitleEscapeCharacterActionsCPTest
 		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
 
 		portletSignInUserMacros.signIn("test@liferay.com", "test");
-		cPBlogsEntryMacros.addBlogsEntry("<!-- -->", "Blogs Entry Content");
+		cPBlogsEntryMacros.add("<!-- -->", "Blogs Entry Content");
 	}
 
 	public void test() throws Exception {
-		CPBlogsPortletActions cPBlogsPortletActions = new CPBlogsPortletActions(selenium);
-		NavigationMacros navigationMacros = new NavigationMacros(selenium);
+		CPBlogsHomeActions cPBlogsHomeActions = new CPBlogsHomeActions(selenium);
+		GotoMacros gotoMacros = new GotoMacros(selenium);
 
-		navigationMacros.navigateControlPanelPage("Blogs");
-		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE_1",
+		gotoMacros.controlPanelPortlet("Blogs");
+		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE_1",
 			"<!-- -->");
-		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_AUTHOR_1",
+		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_AUTHOR_1",
 			"Joe Bloggs");
-		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_STATUS_1",
+		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_STATUS_1",
 			"Approved");
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS_1", "Actions");
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_ACTIONS_DELETE",
+		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_ACTIONS_1", "Actions");
+		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_ACTIONS_DELETE",
 			"Move to the Recycle Bin");
-		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_SUCCESS_UNDO",
+		cPBlogsHomeActions.assertTextEquals("PORTLET_TEXT_SUCCESS_UNDO",
 			"The selected item was moved to the Recycle Bin. Undo");
-		cPBlogsPortletActions.assertTextEquals("PORTLET_TEXT_INFO",
+		cPBlogsHomeActions.assertTextEquals("PORTLET_TEXT_INFO",
 			"No entries were found.");
-		cPBlogsPortletActions.assertTextNotPresent("", "<!-- -->");
-		cPBlogsPortletActions.assertTextNotPresent("", "Blogs Entry Content");
+		cPBlogsHomeActions.assertTextNotPresent("", "<!-- -->");
+		cPBlogsHomeActions.assertTextNotPresent("", "Blogs Entry Content");
 	}
 
 	@Override
@@ -66,8 +66,8 @@ public class DeleteBlogsEntryTitleEscapeCharacterActionsCPTest
 		CPRecycleBinMacros cPRecycleBinMacros = new CPRecycleBinMacros(selenium);
 		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
 
-		cPBlogsEntryMacros.tearDownBlogsEntry();
-		cPRecycleBinMacros.emptyRecycleBin();
+		cPBlogsEntryMacros.tearDown();
+		cPRecycleBinMacros.empty();
 		portletSignInUserMacros.signOut();
 	}
 }

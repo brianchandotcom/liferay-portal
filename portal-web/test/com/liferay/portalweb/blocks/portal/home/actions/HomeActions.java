@@ -17,6 +17,7 @@ package com.liferay.portalweb.blocks.portal.home.actions;
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
 import com.liferay.portalweb.blocks.base.units.ClickUnits;
+import com.liferay.portalweb.blocks.base.units.TypeUnits;
 import com.liferay.portalweb.blocks.portal.home.paths.HomePaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
@@ -68,6 +69,21 @@ public class HomeActions extends BaseActionsImpl implements LiferayActions {
 		}
 		else {
 			super.mouseOver(params[0], params[1]);
+		}
+	}
+
+	public void type(String param1, String param2) throws Exception {
+		String[] params = getParams(param1, param2);
+
+		TypeUnits typeUnits = new TypeUnits(selenium);
+
+		if ((param1.equals("PORTLET_FIELD_SEARCH"))) {
+			selenium.waitForElementPresent(
+				"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
+			typeUnits.sendKeys(params[0], params[1]);
+		}
+		else {
+			super.type(params[0], params[1]);
 		}
 	}
 }

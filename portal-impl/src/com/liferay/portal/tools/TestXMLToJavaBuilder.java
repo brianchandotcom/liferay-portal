@@ -74,8 +74,8 @@ public class TestXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append(testPackagePath);
 		sb.append(";\n");
 
-		sb.append("import com.liferay.portalweb.blocks.portlet.signin.macros.");
-		sb.append("PortletSignInUserMacros;\n");
+		sb.append("import com.liferay.portalweb.blocks.portal.portlet.signin.");
+		sb.append("macros.PortletSignInUserMacros;\n");
 
 		sb.append("import com.liferay.portalweb.portal.BaseTestCase;\n");
 		sb.append("import com.liferay.portalweb.portal.util.SeleniumUtil;\n");

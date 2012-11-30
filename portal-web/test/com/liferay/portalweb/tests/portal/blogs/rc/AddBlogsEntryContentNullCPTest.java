@@ -14,11 +14,11 @@
 
 package com.liferay.portalweb.tests.portal.blogs.rc;
 
-import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.addentry.CPBlogsEntryAddActions;
-import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsPortletActions;
+import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.addentry.CPBlogsAddEntryActions;
+import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsHomeActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.macros.CPBlogsEntryMacros;
 import com.liferay.portalweb.blocks.portal.controlpanel.recyclebin.macros.CPRecycleBinMacros;
-import com.liferay.portalweb.blocks.portal.home.macros.NavigationMacros;
+import com.liferay.portalweb.blocks.portal.home.macros.GotoMacros;
 import com.liferay.portalweb.blocks.portal.portlet.signin.macros.PortletSignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
@@ -37,22 +37,22 @@ public class AddBlogsEntryContentNullCPTest extends BaseTestCase {
 	}
 
 	public void test() throws Exception {
-		CPBlogsEntryAddActions cPBlogsEntryAddActions = new CPBlogsEntryAddActions(selenium);
-		CPBlogsPortletActions cPBlogsPortletActions = new CPBlogsPortletActions(selenium);
-		NavigationMacros navigationMacros = new NavigationMacros(selenium);
+		CPBlogsAddEntryActions cPBlogsAddEntryActions = new CPBlogsAddEntryActions(selenium);
+		CPBlogsHomeActions cPBlogsHomeActions = new CPBlogsHomeActions(selenium);
+		GotoMacros gotoMacros = new GotoMacros(selenium);
 
-		navigationMacros.navigateControlPanelPage("Blogs");
-		cPBlogsPortletActions.click("PORTLET_LINK_ADD", "Add");
-		cPBlogsEntryAddActions.type("CONTENT_FIELD_TITLE", "Blogs Entry Title");
-		cPBlogsEntryAddActions.type("CONTENT_FIELD_CONTENT", "");
-		cPBlogsEntryAddActions.click("CONTENT_LINK_SAVE", "Publish");
-		cPBlogsEntryAddActions.assertTextEquals("CONTENT_TEXT_ERROR_MESSAGE_1",
+		gotoMacros.controlPanelPortlet("Blogs");
+		cPBlogsHomeActions.click("PORTLET_LINK_ADD", "Add");
+		cPBlogsAddEntryActions.type("CONTENT_FIELD_TITLE", "Blogs Entry Title");
+		cPBlogsAddEntryActions.type("CONTENT_FIELD_CONTENT", "");
+		cPBlogsAddEntryActions.click("CONTENT_LINK_SAVE", "Publish");
+		cPBlogsAddEntryActions.assertTextEquals("CONTENT_TEXT_ERROR_MESSAGE_1",
 			"Your request failed to complete.");
-		cPBlogsEntryAddActions.assertTextEquals("CONTENT_TEXT_ERROR_MESSAGE_2",
+		cPBlogsAddEntryActions.assertTextEquals("CONTENT_TEXT_ERROR_MESSAGE_2",
 			"Please enter valid content.");
-		navigationMacros.navigateControlPanelPage("Blogs");
-		cPBlogsPortletActions.assertTextNotPresent("", "Blogs Entry Title");
-		cPBlogsPortletActions.assertTextNotPresent("", "Blogs Entry Content");
+		gotoMacros.controlPanelPortlet("Blogs");
+		cPBlogsHomeActions.assertTextNotPresent("", "Blogs Entry Title");
+		cPBlogsHomeActions.assertTextNotPresent("", "Blogs Entry Content");
 	}
 
 	@Override
@@ -61,8 +61,8 @@ public class AddBlogsEntryContentNullCPTest extends BaseTestCase {
 		CPRecycleBinMacros cPRecycleBinMacros = new CPRecycleBinMacros(selenium);
 		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
 
-		cPBlogsEntryMacros.tearDownBlogsEntry();
-		cPRecycleBinMacros.emptyRecycleBin();
+		cPBlogsEntryMacros.tearDown();
+		cPRecycleBinMacros.empty();
 		portletSignInUserMacros.signOut();
 	}
 }

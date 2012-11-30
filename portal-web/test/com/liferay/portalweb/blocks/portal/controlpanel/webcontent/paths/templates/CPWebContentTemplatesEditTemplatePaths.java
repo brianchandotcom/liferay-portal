@@ -26,7 +26,7 @@ public class CPWebContentTemplatesEditTemplatePaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content Templates Edit Template Page"
+			"", "Control Panel Web Content Edit Template Page"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

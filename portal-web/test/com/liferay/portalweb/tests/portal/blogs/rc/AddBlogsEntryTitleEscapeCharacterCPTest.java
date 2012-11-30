@@ -36,7 +36,7 @@ public class AddBlogsEntryTitleEscapeCharacterCPTest extends BaseTestCase {
 	public void test() throws Exception {
 		CPBlogsEntryMacros cPBlogsEntryMacros = new CPBlogsEntryMacros(selenium);
 
-		cPBlogsEntryMacros.addBlogsEntry("<!-- -->", "Blogs Entry Content");
+		cPBlogsEntryMacros.add("<!-- -->", "Blogs Entry Content");
 	}
 
 	@Override
@@ -45,8 +45,8 @@ public class AddBlogsEntryTitleEscapeCharacterCPTest extends BaseTestCase {
 		CPRecycleBinMacros cPRecycleBinMacros = new CPRecycleBinMacros(selenium);
 		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
 
-		cPBlogsEntryMacros.tearDownBlogsEntry();
-		cPRecycleBinMacros.emptyRecycleBin();
+		cPBlogsEntryMacros.tearDown();
+		cPRecycleBinMacros.empty();
 		portletSignInUserMacros.signOut();
 	}
 }

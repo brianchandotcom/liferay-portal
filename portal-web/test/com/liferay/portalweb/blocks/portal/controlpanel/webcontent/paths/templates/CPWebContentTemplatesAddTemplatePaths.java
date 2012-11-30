@@ -26,7 +26,7 @@ public class CPWebContentTemplatesAddTemplatePaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content Templates Add Template Page"
+			"", "Control Panel Web Content Add Template Page"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

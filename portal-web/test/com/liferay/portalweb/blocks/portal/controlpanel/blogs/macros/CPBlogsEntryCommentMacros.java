@@ -15,10 +15,9 @@
 package com.liferay.portalweb.blocks.portal.controlpanel.blogs.macros;
 
 import com.liferay.portalweb.blocks.base.macros.BaseMacros;
-import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.entry.CPBlogsEntryCommentAddActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.entry.CPBlogsEntryViewActions;
-import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsPortletActions;
-import com.liferay.portalweb.blocks.portal.home.macros.NavigationMacros;
+import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsHomeActions;
+import com.liferay.portalweb.blocks.portal.home.macros.GotoMacros;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
@@ -31,20 +30,19 @@ public class CPBlogsEntryCommentMacros extends BaseMacros {
 
 	public void addBlogsEntryComment1(String blogsEntry,
 		String blogsEntryComment) throws Exception {
-		CPBlogsEntryCommentAddActions cPBlogsEntryCommentAddActions = new CPBlogsEntryCommentAddActions(selenium);
 		CPBlogsEntryViewActions cPBlogsEntryViewActions = new CPBlogsEntryViewActions(selenium);
-		CPBlogsPortletActions cPBlogsPortletActions = new CPBlogsPortletActions(selenium);
-		NavigationMacros navigationMacros = new NavigationMacros(selenium);
+		CPBlogsHomeActions cPBlogsHomeActions = new CPBlogsHomeActions(selenium);
+		GotoMacros gotoMacros = new GotoMacros(selenium);
 
-		navigationMacros.navigateControlPanelPage("Blogs");
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_TITLE", blogsEntry);
+		gotoMacros.controlPanelPortlet("Blogs");
+		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_TITLE", blogsEntry);
 		cPBlogsEntryViewActions.assertTextEquals("PORTLET_TEXT_COMMENT_MESSAGE",
 			"No comments yet.");
 		cPBlogsEntryViewActions.click("BLOGS_ENTRY_LINK_ADD_COMMENT_1", null);
-		cPBlogsEntryCommentAddActions.type("BLOGS_COMMENT_FIELD_BODY",
+		cPBlogsEntryViewActions.type("BLOGS_COMMENT_ADD_FIELD_BODY",
 			blogsEntryComment);
-		cPBlogsEntryCommentAddActions.click("BLOGS_COMMENT_LINK_SAVE", null);
-		cPBlogsEntryCommentAddActions.assertTextEquals("BLOGS_COMMENT_TEXT_SUCCESS",
+		cPBlogsEntryViewActions.click("BLOGS_COMMENT_ADD_LINK_SAVE", null);
+		cPBlogsEntryViewActions.assertTextEquals("BLOGS_COMMENT_ADD_TEXT_SUCCESS",
 			null);
 		cPBlogsEntryViewActions.assertTextEquals("BLOGS_COMMENT_TEXT_BODY",
 			blogsEntryComment);
@@ -53,18 +51,17 @@ public class CPBlogsEntryCommentMacros extends BaseMacros {
 
 	public void addBlogsEntryComment2(String blogsEntry,
 		String blogsEntryComment) throws Exception {
-		CPBlogsEntryCommentAddActions cPBlogsEntryCommentAddActions = new CPBlogsEntryCommentAddActions(selenium);
 		CPBlogsEntryViewActions cPBlogsEntryViewActions = new CPBlogsEntryViewActions(selenium);
-		CPBlogsPortletActions cPBlogsPortletActions = new CPBlogsPortletActions(selenium);
-		NavigationMacros navigationMacros = new NavigationMacros(selenium);
+		CPBlogsHomeActions cPBlogsHomeActions = new CPBlogsHomeActions(selenium);
+		GotoMacros gotoMacros = new GotoMacros(selenium);
 
-		navigationMacros.navigateControlPanelPage("Blogs");
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_TITLE", blogsEntry);
+		gotoMacros.controlPanelPortlet("Blogs");
+		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_TITLE", blogsEntry);
 		cPBlogsEntryViewActions.click("BLOGS_ENTRY_LINK_ADD_COMMENT_2", null);
-		cPBlogsEntryCommentAddActions.type("BLOGS_COMMENT_FIELD_BODY",
+		cPBlogsEntryViewActions.type("BLOGS_COMMENT_ADD_FIELD_BODY",
 			blogsEntryComment);
-		cPBlogsEntryCommentAddActions.click("BLOGS_COMMENT_LINK_SAVE", null);
-		cPBlogsEntryCommentAddActions.assertTextEquals("BLOGS_COMMENT_TEXT_SUCCESS",
+		cPBlogsEntryViewActions.click("BLOGS_COMMENT_ADD_LINK_SAVE", null);
+		cPBlogsEntryViewActions.assertTextEquals("BLOGS_COMMENT_ADD_TEXT_SUCCESS",
 			null);
 		cPBlogsEntryViewActions.assertTextEquals("BLOGS_COMMENT_TEXT_BODY",
 			blogsEntryComment);

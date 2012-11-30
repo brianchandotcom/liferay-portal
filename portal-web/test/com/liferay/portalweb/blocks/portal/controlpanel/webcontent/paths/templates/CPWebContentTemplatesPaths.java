@@ -26,7 +26,7 @@ public class CPWebContentTemplatesPaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content Templates Page"
+			"", "Control Panel Web Content Templates Home Page"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

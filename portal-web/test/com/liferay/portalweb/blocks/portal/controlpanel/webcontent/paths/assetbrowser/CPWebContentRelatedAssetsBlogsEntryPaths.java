@@ -26,7 +26,7 @@ public class CPWebContentRelatedAssetsBlogsEntryPaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content Related Assets Blogs Entry Page"
+			"", "Control Panel Web Content Related Assets Blogs Entry Frame"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

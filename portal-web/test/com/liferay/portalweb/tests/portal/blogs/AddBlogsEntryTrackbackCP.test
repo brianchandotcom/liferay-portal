@@ -3,42 +3,42 @@
 	description="In the Control Panel Blogs Portlet, add a Blogs Entry with a title with a Trackback URL."
 >
 	<setup>
-		<macro name="CPBlogsEntry" command="addBlogsEntry">
+		<macro name="CPBlogsEntry" command="add">
 			<param name="title" value="Blogs Entry1 Title" />
 			<param name="title" value="Blogs Entry1 Content" />
 		</macro>
 	</setup>
 	<steps>
-		<macro name="Navigation" command="navigateControlPanelPage">
+		`<macro name="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE_1" value="Blogs Entry1 Title" />
+		<action name="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_TITLE_1" value="Blogs Entry1 Title" />
 
 		<action name="CPBlogsEntryView" command="copy" path="BLOGS_ENTRY_FIELD_TRACKBACK_URL" />
 
-		<macro name="Navigation" command="navigateControlPanelPage">
+		`<macro name="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action name="CPBlogsPortlet" command="click" path="PORTLET_LINK_ADD" />
+		<action name="CPBlogsHome" command="click" path="PORTLET_LINK_ADD" />
 
-		<action name="CPBlogsEntryAdd" command="type" path="CONTENT_FIELD_TITLE" value="Blogs Entry2 Title" />
-		<action name="CPBlogsEntryAdd" command="type" path="CONTENT_FIELD_CONTENT" value="Blogs Entry2 Content" />
-		<action name="CPBlogsEntryAdd" command="paste" path="CONTENT_FIELD_TRACKBACKS" />
-		<action name="CPBlogsEntryAdd" command="click" path="CONTENT_LINK_SAVE" value="Publish" />
+		<action name="CPBlogsAddEntry" command="type" path="CONTENT_FIELD_TITLE" value="Blogs Entry2 Title" />
+		<action name="CPBlogsAddEntry" command="type" path="CONTENT_FIELD_CONTENT" value="Blogs Entry2 Content" />
+		<action name="CPBlogsAddEntry" command="paste" path="CONTENT_FIELD_TRACKBACKS" />
+		<action name="CPBlogsAddEntry" command="click" path="CONTENT_LINK_SAVE" value="Publish" />
 
-		<action name="CPBlogsPortlet" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
-		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE_1" value="Blogs Entry2 Title" />
+		<action name="CPBlogsHome" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
+		<action name="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_TITLE_1" value="Blogs Entry2 Title" />
 
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_TITLE" value="Blogs Entry2 Title" />
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_CONTENT" value="Blogs Entry2 Content" />
 
-		<macro name="Navigation" command="navigateControlPanelPage">
+		`<macro name="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE_2" value="Blogs Entry1 Title" />
+		<action name="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_TITLE_2" value="Blogs Entry1 Title" />
 
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_TITLE" value="Blogs Entry1 Title" />
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_CONTENT" value="Blogs Entry1 Content" />
@@ -48,7 +48,7 @@
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_CONTENT" value="Blogs Entry2 Content" />
 	</steps>
 	<teardown>
-		<macro name="CPBlogsEntry" command="tearDownBlogsEntry" />
-		<macro name="CPRecycleBin" command="emptyRecycleBin" />
+		<macro name="CPBlogsEntry" command="tearDown" />
+		<macro name="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

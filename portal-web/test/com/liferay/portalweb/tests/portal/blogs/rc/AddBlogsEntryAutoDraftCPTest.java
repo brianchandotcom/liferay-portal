@@ -14,12 +14,12 @@
 
 package com.liferay.portalweb.tests.portal.blogs.rc;
 
-import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.addentry.CPBlogsEntryAddActions;
+import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.addentry.CPBlogsAddEntryActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.entry.CPBlogsEntryViewActions;
-import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsPortletActions;
+import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsHomeActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.macros.CPBlogsEntryMacros;
 import com.liferay.portalweb.blocks.portal.controlpanel.recyclebin.macros.CPRecycleBinMacros;
-import com.liferay.portalweb.blocks.portal.home.macros.NavigationMacros;
+import com.liferay.portalweb.blocks.portal.home.macros.GotoMacros;
 import com.liferay.portalweb.blocks.portal.portlet.signin.macros.PortletSignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
@@ -38,25 +38,23 @@ public class AddBlogsEntryAutoDraftCPTest extends BaseTestCase {
 	}
 
 	public void test() throws Exception {
-		CPBlogsEntryAddActions cPBlogsEntryAddActions = new CPBlogsEntryAddActions(selenium);
+		CPBlogsAddEntryActions cPBlogsAddEntryActions = new CPBlogsAddEntryActions(selenium);
 		CPBlogsEntryViewActions cPBlogsEntryViewActions = new CPBlogsEntryViewActions(selenium);
-		CPBlogsPortletActions cPBlogsPortletActions = new CPBlogsPortletActions(selenium);
-		NavigationMacros navigationMacros = new NavigationMacros(selenium);
+		CPBlogsHomeActions cPBlogsHomeActions = new CPBlogsHomeActions(selenium);
+		GotoMacros gotoMacros = new GotoMacros(selenium);
 
-		navigationMacros.navigateControlPanelPage("Blogs");
-		cPBlogsPortletActions.click("PORTLET_LINK_ADD", "Add");
-		cPBlogsEntryAddActions.type("CONTENT_FIELD_TITLE", "Blogs Entry Title");
-		cPBlogsEntryAddActions.type("CONTENT_FIELD_CONTENT",
+		gotoMacros.controlPanelPortlet("Blogs");
+		cPBlogsHomeActions.click("PORTLET_LINK_ADD", "Add");
+		cPBlogsAddEntryActions.type("CONTENT_FIELD_TITLE", "Blogs Entry Title");
+		cPBlogsAddEntryActions.type("CONTENT_FIELD_CONTENT",
 			"Blogs Entry Content");
-		cPBlogsEntryAddActions.assertTextEquals("CONTENT_TEXT_SAVE_STATUS",
+		cPBlogsAddEntryActions.assertTextEquals("CONTENT_TEXT_SAVE_STATUS",
 			"Draft saved");
-		navigationMacros.navigateControlPanelPage("Blogs");
-		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE",
+		gotoMacros.controlPanelPortlet("Blogs");
+		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE",
 			"Blogs Entry Title");
-		cPBlogsPortletActions.assertTextEquals("BLOGS_ENTRY_LINK_STATUS",
-			"Draft");
-		cPBlogsPortletActions.click("BLOGS_ENTRY_LINK_TITLE",
-			"Blogs Entry Title");
+		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_STATUS", "Draft");
+		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_TITLE", "Blogs Entry Title");
 		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_DRAFT",
 			"Draft");
 		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_TITLE",
@@ -71,8 +69,8 @@ public class AddBlogsEntryAutoDraftCPTest extends BaseTestCase {
 		CPRecycleBinMacros cPRecycleBinMacros = new CPRecycleBinMacros(selenium);
 		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
 
-		cPBlogsEntryMacros.tearDownBlogsEntry();
-		cPRecycleBinMacros.emptyRecycleBin();
+		cPBlogsEntryMacros.tearDown();
+		cPRecycleBinMacros.empty();
 		portletSignInUserMacros.signOut();
 	}
 }

@@ -26,8 +26,7 @@ public class CPWebContentTemplatesAddTemplateSelectStructurePaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"",
-			"Control Panel Web Content Templates Add Template Select Structure Page"
+			"", "Control Panel Web Content Add Template Select Structure Frame"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

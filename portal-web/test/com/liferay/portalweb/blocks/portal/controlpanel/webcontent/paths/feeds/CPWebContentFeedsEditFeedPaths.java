@@ -26,7 +26,7 @@ public class CPWebContentFeedsEditFeedPaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content Manage Feeds Add Feed Page"
+			"", "Control Panel Web Content Edit Feed Page"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

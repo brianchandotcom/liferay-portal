@@ -26,7 +26,7 @@ public class CPWebContentListViewPaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content List View Page"
+			"", "Control Panel Web Content List View Home Page"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

@@ -15,9 +15,8 @@
 package com.liferay.portalweb.blocks.portal.home.macros;
 
 import com.liferay.portalweb.blocks.base.macros.BaseMacros;
-import com.liferay.portalweb.blocks.portal.home.actions.AddApplicationActions;
 import com.liferay.portalweb.blocks.portal.home.actions.HomeActions;
-import com.liferay.portalweb.blocks.portal.home.macros.NavigationMacros;
+import com.liferay.portalweb.blocks.portal.home.macros.GotoMacros;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySeleniumHelper;
 
@@ -29,17 +28,16 @@ public class PortletMacros extends BaseMacros {
 		super(liferaySelenium);
 	}
 
-	public void addPortlet(String portlet) throws Exception {
-		AddApplicationActions addApplicationActions = new AddApplicationActions(selenium);
+	public void add(String portlet) throws Exception {
+		GotoMacros gotoMacros = new GotoMacros(selenium);
 		HomeActions homeActions = new HomeActions(selenium);
-		NavigationMacros navigationMacros = new NavigationMacros(selenium);
 
-		navigationMacros.navigatePortletPage(portlet);
+		gotoMacros.pagePortlet(portlet);
 		homeActions.mouseOver("ADD_LINK", null);
 		homeActions.click("ADD_LINK_APPLICATION", null);
-		addApplicationActions.type("PORTLET_FIELD_SEARCH",
+		homeActions.type("PORTLET_FIELD_SEARCH",
 			LiferaySeleniumHelper.firstLetter(portlet));
-		addApplicationActions.click("//div[@title='" + portlet + "']/p/a", null);
+		homeActions.click("//div[@title='" + portlet + "']/p/a", null);
 		homeActions.assertTextEquals("PORTLET_TEXT_TITLE", portlet);
 	}
 }

@@ -14,8 +14,8 @@
 
 package com.liferay.portalweb.tests.portal.webcontent.rc;
 
+import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.article.CPWebContentEditArticleActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.home.CPWebContentHomeActions;
-import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.webcontent.CPWebContentEditWebContentActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.macros.CPWebContentArticleMacros;
 import com.liferay.portalweb.blocks.portal.portlet.signin.macros.PortletSignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
@@ -36,16 +36,15 @@ public class AddWCWebContentCPTest extends BaseTestCase {
 
 	public void test() throws Exception {
 		CPWebContentArticleMacros cPWebContentArticleMacros = new CPWebContentArticleMacros(selenium);
-		CPWebContentEditWebContentActions cPWebContentEditWebContentActions = new CPWebContentEditWebContentActions(selenium);
+		CPWebContentEditArticleActions cPWebContentEditArticleActions = new CPWebContentEditArticleActions(selenium);
 		CPWebContentHomeActions cPWebContentHomeActions = new CPWebContentHomeActions(selenium);
 
-		cPWebContentArticleMacros.addCPWebContent("WC WebContent Title",
-			"WC WebContent Content");
-		cPWebContentHomeActions.click("ENTRIES_ARTICLE_1", "WC WebContent Title");
-		cPWebContentEditWebContentActions.assertTextEquals("ARTICLE_TITLE",
-			"WC WebContent Title");
-		cPWebContentEditWebContentActions.assertTextEquals("ARTICLE_CONTENT",
-			"WC WebContent Content");
+		cPWebContentArticleMacros.add("WC Article Title", "WC Article Content");
+		cPWebContentHomeActions.click("ENTRIES_ARTICLE_1", "WC Article Title");
+		cPWebContentEditArticleActions.assertTextEquals("ARTICLE_TITLE",
+			"WC Article Title");
+		cPWebContentEditArticleActions.assertTextEquals("ARTICLE_CONTENT",
+			"WC Article Content");
 	}
 
 	@Override
@@ -53,7 +52,7 @@ public class AddWCWebContentCPTest extends BaseTestCase {
 		CPWebContentArticleMacros cPWebContentArticleMacros = new CPWebContentArticleMacros(selenium);
 		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
 
-		cPWebContentArticleMacros.tearDownCPWebContent();
+		cPWebContentArticleMacros.tearDown();
 		portletSignInUserMacros.signOut();
 	}
 }

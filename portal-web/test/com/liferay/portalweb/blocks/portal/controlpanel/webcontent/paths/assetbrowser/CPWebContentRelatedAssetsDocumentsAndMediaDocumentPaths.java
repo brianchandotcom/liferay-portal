@@ -27,7 +27,7 @@ public class CPWebContentRelatedAssetsDocumentsAndMediaDocumentPaths {
 
 	private static String[] _PAGE_NAME = {
 			"",
-			"Control Panel Web Content Related Assets Documenst and Media Document Page"
+			"Control Panel Web Content Related Assets Documenst and Media Document Frame"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

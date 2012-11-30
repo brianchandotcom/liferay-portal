@@ -1,14 +1,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>CPWebContentManageFeeds</title>
+<title>CPWebContentFeeds</title>
 </head>
 <body>
-<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPWebContentManageFeeds</td></tr></thead><tbody>
+<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPWebContentFeeds</td></tr></thead><tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>Control Panel Web Content Manage Feeds Page</td>
+	<td>Control Panel Web Content Feeds Home Page</td>
 </tr>
 
 </tbody>

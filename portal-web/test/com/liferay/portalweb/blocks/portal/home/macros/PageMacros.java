@@ -16,7 +16,6 @@ package com.liferay.portalweb.blocks.portal.home.macros;
 
 import com.liferay.portalweb.blocks.base.macros.BaseMacros;
 import com.liferay.portalweb.blocks.portal.home.actions.HomeActions;
-import com.liferay.portalweb.blocks.portal.home.actions.NewPageActions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
@@ -27,16 +26,14 @@ public class PageMacros extends BaseMacros {
 		super(liferaySelenium);
 	}
 
-	public void addPage(String portlet) throws Exception {
+	public void add(String portlet) throws Exception {
 		HomeActions homeActions = new HomeActions(selenium);
-		NewPageActions newPageActions = new NewPageActions(selenium);
 
 		homeActions.open("URL_GUEST", null);
 		homeActions.mouseOver("ADD_LINK", null);
 		homeActions.click("ADD_LINK_PAGE", null);
-		newPageActions.type("NEW_PAGE_FIELD", "" + portlet + " Test Page");
-		newPageActions.click("NEW_PAGE_LINK_SAVE", null);
-		homeActions.type("link=" + portlet + " Test Page",
-			"" + portlet + " Test Page");
+		homeActions.type("NEW_PAGE_FIELD", "" + portlet + " Page");
+		homeActions.click("NEW_PAGE_LINK_SAVE", null);
+		homeActions.type("link=" + portlet + " Page", "" + portlet + " Page");
 	}
 }

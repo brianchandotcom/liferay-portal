@@ -25,7 +25,9 @@ public class CPBlogsEntryViewPaths {
 		return _paths;
 	}
 
-	private static String[] _PAGE_NAME = { "", "Control Panel Blogs Entry View" };
+	private static String[] _PAGE_NAME = {
+			"", "Control Panel Blogs Entry View Page"
+		};
 	private static String[] _BLOGS_COMMENT_LINK_AUTHOR_1 = {
 			"xpath=(//span[@class='user-name'])[1]", ""
 		};
@@ -119,6 +121,41 @@ public class CPBlogsEntryViewPaths {
 		};
 	private static String[] _BLOGS_COMMENT_TEXT_VOTE_UP_3 = {
 			"xpath=(//div[contains(@id,'_ratingThumbContent')]/a[1])[3]", ""
+		};
+	private static String[] _BLOGS_COMMENT_ADD_FIELD_BODY = {
+			"//textarea[contains(@id,'_postReplyBody0')]",
+			"Comment Content Field"
+		};
+	private static String[] _BLOGS_COMMENT_ADD_LINK_CANCEL = {
+			"//input[@value='Cancel']", "Comment Cancel Button"
+		};
+	private static String[] _BLOGS_COMMENT_ADD_LINK_SAVE = {
+			"//input[@value='Reply']", "Comment Reply Butotn"
+		};
+	private static String[] _BLOGS_COMMENT_ADD_LINK_SUBSCRIBE_ME = {
+			"_161_subscribeCheckbox", "Comment Subscribe Me Checkbox"
+		};
+	private static String[] _BLOGS_COMMENT_ADD_TEXT_SUBSCRIBE_ME = {
+			"//label[@for='_161_subscribeCheckbox']",
+			"Comment Subscribe Me Label"
+		};
+	private static String[] _BLOGS_COMMENT_ADD_TEXT_SUCCESS = {
+			"_161_discussion-status-messages",
+			"Comment Your request processed successfully. Success Message"
+		};
+	private static String[] _BLOGS_COMMENT_EDIT_FIELD_BODY = {
+			"//textarea[contains(@id,'_editReplyBody1')]",
+			"Comment Content Body Editor Field"
+		};
+	private static String[] _BLOGS_COMMENT_EDIT_LINK_CANCEL = {
+			"//input[@value='Cancel']", "Cancel Button"
+		};
+	private static String[] _BLOGS_COMMENT_EDIT_LINK_SAVE = {
+			"//input[@value='Publish']", "Publish Button"
+		};
+	private static String[] _BLOGS_COMMENT_EDIT_TEXT_SUCCESS = {
+			"_161_discussion-status-messages",
+			"Your request processed successfully. Success Message"
 		};
 	private static String[] _BLOGS_ENTRY_TEXT_TITLE = {
 			"//h1[@class='header-title']/span", "Entry Title"
@@ -294,6 +331,23 @@ public class CPBlogsEntryViewPaths {
 		_paths.put("BLOGS_COMMENT_TEXT_VOTE_UP_1", _BLOGS_COMMENT_TEXT_VOTE_UP_1);
 		_paths.put("BLOGS_COMMENT_TEXT_VOTE_UP_2", _BLOGS_COMMENT_TEXT_VOTE_UP_2);
 		_paths.put("BLOGS_COMMENT_TEXT_VOTE_UP_3", _BLOGS_COMMENT_TEXT_VOTE_UP_3);
+		_paths.put("BLOGS_COMMENT_ADD_FIELD_BODY", _BLOGS_COMMENT_ADD_FIELD_BODY);
+		_paths.put("BLOGS_COMMENT_ADD_LINK_CANCEL",
+			_BLOGS_COMMENT_ADD_LINK_CANCEL);
+		_paths.put("BLOGS_COMMENT_ADD_LINK_SAVE", _BLOGS_COMMENT_ADD_LINK_SAVE);
+		_paths.put("BLOGS_COMMENT_ADD_LINK_SUBSCRIBE_ME",
+			_BLOGS_COMMENT_ADD_LINK_SUBSCRIBE_ME);
+		_paths.put("BLOGS_COMMENT_ADD_TEXT_SUBSCRIBE_ME",
+			_BLOGS_COMMENT_ADD_TEXT_SUBSCRIBE_ME);
+		_paths.put("BLOGS_COMMENT_ADD_TEXT_SUCCESS",
+			_BLOGS_COMMENT_ADD_TEXT_SUCCESS);
+		_paths.put("BLOGS_COMMENT_EDIT_FIELD_BODY",
+			_BLOGS_COMMENT_EDIT_FIELD_BODY);
+		_paths.put("BLOGS_COMMENT_EDIT_LINK_CANCEL",
+			_BLOGS_COMMENT_EDIT_LINK_CANCEL);
+		_paths.put("BLOGS_COMMENT_EDIT_LINK_SAVE", _BLOGS_COMMENT_EDIT_LINK_SAVE);
+		_paths.put("BLOGS_COMMENT_EDIT_TEXT_SUCCESS",
+			_BLOGS_COMMENT_EDIT_TEXT_SUCCESS);
 		_paths.put("BLOGS_ENTRY_TEXT_TITLE", _BLOGS_ENTRY_TEXT_TITLE);
 		_paths.put("BLOGS_ENTRY_LINK_TEXT", _BLOGS_ENTRY_LINK_TEXT);
 		_paths.put("BLOGS_ENTRY_TEXT_DATE", _BLOGS_ENTRY_TEXT_DATE);

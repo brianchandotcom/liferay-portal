@@ -26,7 +26,7 @@ public class CPWebContentChooseADisplayPagePaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content Choose a Display Page"
+			"", "Control Panel Web Content Choose a Display Page Frame"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

@@ -4,19 +4,17 @@
 		description="In the &lt;strong&gt;Control Panel Blogs Portlet&lt;/strong&gt;, add the first &lt;em&gt;Blogs Entry Comment&lt;/em&gt; with the value &lt;strong&gt;&quot;${blogsEntryComment}&quot;&lt;/strong&gt; to the &lt;em&gt;Blogs Entry&lt;/em&gt; &lt;strong&gt;&quot;${blogsEntry}&quot;&lt;/strong&gt;."
 		params="blogsEntry,blogsEntryComment"
 	>
-		<macro name="Navigation" command="navigateControlPanelPage">
+		<macro name="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="${blogsEntry}" />
+		<action name="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="${blogsEntry}" />
 
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="PORTLET_TEXT_COMMENT_MESSAGE" value="No comments yet." />
 		<action name="CPBlogsEntryView" command="click" path="BLOGS_ENTRY_LINK_ADD_COMMENT_1" />
-
-		<action name="CPBlogsEntryCommentAdd" command="type" path="BLOGS_COMMENT_FIELD_BODY" value="${blogsEntryComment}" />
-		<action name="CPBlogsEntryCommentAdd" command="click" path="BLOGS_COMMENT_LINK_SAVE" />
-		<action name="CPBlogsEntryCommentAdd" command="assertTextEquals" path="BLOGS_COMMENT_TEXT_SUCCESS" />
-
+		<action name="CPBlogsEntryView" command="type" path="BLOGS_COMMENT_ADD_FIELD_BODY" value="${blogsEntryComment}" />
+		<action name="CPBlogsEntryView" command="click" path="BLOGS_COMMENT_ADD_LINK_SAVE" />
+		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_COMMENT_ADD_TEXT_SUCCESS" />
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_COMMENT_TEXT_BODY" value="${blogsEntryComment}" />
 		<action name="CPBlogsEntryView" command="assertTextNotPresent" value="No comments yet." />
 	</macrodef>
@@ -26,18 +24,16 @@
 		description="In the &lt;strong&gt;Control Panel Blogs Portlet&lt;/strong&gt;, add another &lt;em&gt;Blogs Entry Comment&lt;/em&gt; with the value &lt;strong&gt;&quot;${blogsEntryComment}&quot;&lt;/strong&gt; to the &lt;em&gt;Blogs Entry&lt;/em&gt; &lt;strong&gt;&quot;${blogsEntry}&quot;&lt;/strong&gt;."
 		params="blogsEntry,blogsEntryComment"
 	>
-		<macro name="Navigation" command="navigateControlPanelPage">
+		<macro name="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="${blogsEntry}" />
+		<action name="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="${blogsEntry}" />
 
 		<action name="CPBlogsEntryView" command="click" path="BLOGS_ENTRY_LINK_ADD_COMMENT_2" />
-
-		<action name="CPBlogsEntryCommentAdd" command="type" path="BLOGS_COMMENT_FIELD_BODY" value="${blogsEntryComment}" />
-		<action name="CPBlogsEntryCommentAdd" command="click" path="BLOGS_COMMENT_LINK_SAVE" />
-		<action name="CPBlogsEntryCommentAdd" command="assertTextEquals" path="BLOGS_COMMENT_TEXT_SUCCESS" />
-
+		<action name="CPBlogsEntryView" command="type" path="BLOGS_COMMENT_ADD_FIELD_BODY" value="${blogsEntryComment}" />
+		<action name="CPBlogsEntryView" command="click" path="BLOGS_COMMENT_ADD_LINK_SAVE" />
+		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_COMMENT_ADD_TEXT_SUCCESS" />
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_COMMENT_TEXT_BODY" value="${blogsEntryComment}" />
 		<action name="CPBlogsEntryView" command="assertTextNotPresent" value="No comments yet." />
 	</macrodef>

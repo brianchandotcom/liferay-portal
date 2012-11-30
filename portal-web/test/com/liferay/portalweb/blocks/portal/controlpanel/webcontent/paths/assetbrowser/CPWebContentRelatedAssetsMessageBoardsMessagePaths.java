@@ -27,7 +27,7 @@ public class CPWebContentRelatedAssetsMessageBoardsMessagePaths {
 
 	private static String[] _PAGE_NAME = {
 			"",
-			"Control Panel Web Content Related Assets Message Boards Message Page"
+			"Control Panel Web Content Related Assets Message Boards Message Frame"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

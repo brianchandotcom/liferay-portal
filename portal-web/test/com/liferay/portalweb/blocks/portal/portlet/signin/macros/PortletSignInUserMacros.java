@@ -16,7 +16,7 @@ package com.liferay.portalweb.blocks.portal.portlet.signin.macros;
 
 import com.liferay.portalweb.blocks.base.macros.BaseMacros;
 import com.liferay.portalweb.blocks.portal.home.actions.HomeActions;
-import com.liferay.portalweb.blocks.portal.portlet.signin.actions.home.PortletSignInActions;
+import com.liferay.portalweb.blocks.portal.portlet.signin.actions.home.PortletSignInHomeActions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
@@ -29,29 +29,29 @@ public class PortletSignInUserMacros extends BaseMacros {
 
 	public void signIn(String email, String password) throws Exception {
 		HomeActions homeActions = new HomeActions(selenium);
-		PortletSignInActions portletSignInActions = new PortletSignInActions(selenium);
+		PortletSignInHomeActions portletSignInHomeActions = new PortletSignInHomeActions(selenium);
 
 		homeActions.open("URL_GUEST", null);
-		portletSignInActions.type("EMAIL_ADDRESS_FIELD", email);
-		portletSignInActions.type("PASSWORD_FIELD", password);
-		portletSignInActions.check("REMEMBER_ME_LINK", null);
-		portletSignInActions.click("SIGN_IN_LINK", null);
+		portletSignInHomeActions.type("EMAIL_ADDRESS_FIELD", email);
+		portletSignInHomeActions.type("PASSWORD_FIELD", password);
+		portletSignInHomeActions.check("REMEMBER_ME_LINK", null);
+		portletSignInHomeActions.click("SIGN_IN_LINK", null);
 
-		if (portletSignInActions.isElementPresent("I_AGREE_LINK", "")) {
-			portletSignInActions.click("I_AGREE_LINK", null);
+		if (portletSignInHomeActions.isElementPresent("I_AGREE_LINK", "")) {
+			portletSignInHomeActions.click("I_AGREE_LINK", null);
 		}
 
-		if (portletSignInActions.isElementPresent("ANSWER_FIELD", "")) {
-			portletSignInActions.type("ANSWER_FIELD", "test");
-			portletSignInActions.click("SAVE_LINK", null);
+		if (portletSignInHomeActions.isElementPresent("ANSWER_FIELD", "")) {
+			portletSignInHomeActions.type("ANSWER_FIELD", "test");
+			portletSignInHomeActions.click("SAVE_LINK", null);
 		}
 	}
 
 	public void signOut() throws Exception {
 		HomeActions homeActions = new HomeActions(selenium);
-		PortletSignInActions portletSignInActions = new PortletSignInActions(selenium);
+		PortletSignInHomeActions portletSignInHomeActions = new PortletSignInHomeActions(selenium);
 
 		homeActions.open("URL_GUEST", null);
-		portletSignInActions.click("SIGN_OUT_LINK", null);
+		portletSignInHomeActions.click("SIGN_OUT_LINK", null);
 	}
 }

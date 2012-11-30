@@ -26,7 +26,7 @@ public class CPWebContentDescriptiveViewPaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content Descriptive View Page"
+			"", "Control Panel Web Content Descriptive View Home Page"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

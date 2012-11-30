@@ -15,9 +15,9 @@
 package com.liferay.portalweb.blocks.portal.controlpanel.webcontent.macros;
 
 import com.liferay.portalweb.blocks.base.macros.BaseMacros;
+import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.article.CPWebContentAddArticleActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.home.CPWebContentHomeActions;
-import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.webcontent.CPWebContentAddWebContentActions;
-import com.liferay.portalweb.blocks.portal.home.macros.NavigationMacros;
+import com.liferay.portalweb.blocks.portal.home.macros.GotoMacros;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
@@ -28,28 +28,27 @@ public class CPWebContentArticleMacros extends BaseMacros {
 		super(liferaySelenium);
 	}
 
-	public void addCPWebContent(String title, String content)
-		throws Exception {
-		CPWebContentAddWebContentActions cPWebContentAddWebContentActions = new CPWebContentAddWebContentActions(selenium);
+	public void add(String title, String content) throws Exception {
+		CPWebContentAddArticleActions cPWebContentAddArticleActions = new CPWebContentAddArticleActions(selenium);
 		CPWebContentHomeActions cPWebContentHomeActions = new CPWebContentHomeActions(selenium);
-		NavigationMacros navigationMacros = new NavigationMacros(selenium);
+		GotoMacros gotoMacros = new GotoMacros(selenium);
 
-		navigationMacros.navigateControlPanelPage("Web Content");
+		gotoMacros.controlPanelPortlet("Web Content");
 		cPWebContentHomeActions.click("BUTTONS_ADD", "Add");
 		cPWebContentHomeActions.click("ADD_BASIC_WEB_CONTENT",
 			"Basic Web Content");
-		cPWebContentAddWebContentActions.type("ARTICLE_TITLE", title);
-		cPWebContentAddWebContentActions.type("ARTICLE_CONTENT", content);
-		cPWebContentAddWebContentActions.click("SIDEBAR_PUBLISH", "Publish");
+		cPWebContentAddArticleActions.type("ARTICLE_TITLE", title);
+		cPWebContentAddArticleActions.type("ARTICLE_CONTENT", content);
+		cPWebContentAddArticleActions.click("SIDEBAR_PUBLISH", "Publish");
 		cPWebContentHomeActions.assertTextEquals("HEADER_PORTLET_SUCCESS",
 			"Your request completed successfully.");
 	}
 
-	public void tearDownCPWebContent() throws Exception {
+	public void tearDown() throws Exception {
 		CPWebContentHomeActions cPWebContentHomeActions = new CPWebContentHomeActions(selenium);
-		NavigationMacros navigationMacros = new NavigationMacros(selenium);
+		GotoMacros gotoMacros = new GotoMacros(selenium);
 
-		navigationMacros.navigateControlPanelPage("Web Content");
+		gotoMacros.controlPanelPortlet("Web Content");
 
 		while (cPWebContentHomeActions.isElementPresent("ENTRIES_ARTICLE_1", "")) {
 			cPWebContentHomeActions.check("ENTRIES_ARTICLE_1_CHECKBOX", null);

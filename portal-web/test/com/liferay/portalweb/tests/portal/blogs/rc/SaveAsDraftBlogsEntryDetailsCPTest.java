@@ -36,7 +36,7 @@ public class SaveAsDraftBlogsEntryDetailsCPTest extends BaseTestCase {
 	public void test() throws Exception {
 		CPBlogsEntryMacros cPBlogsEntryMacros = new CPBlogsEntryMacros(selenium);
 
-		cPBlogsEntryMacros.saveAsDraftBlogsEntry("Blogs Entry Title",
+		cPBlogsEntryMacros.saveAsDraft("Blogs Entry Title",
 			"Blogs Entry Content");
 	}
 
@@ -46,8 +46,8 @@ public class SaveAsDraftBlogsEntryDetailsCPTest extends BaseTestCase {
 		CPRecycleBinMacros cPRecycleBinMacros = new CPRecycleBinMacros(selenium);
 		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
 
-		cPBlogsEntryMacros.tearDownBlogsEntry();
-		cPRecycleBinMacros.emptyRecycleBin();
+		cPBlogsEntryMacros.tearDown();
+		cPRecycleBinMacros.empty();
 		portletSignInUserMacros.signOut();
 	}
 }

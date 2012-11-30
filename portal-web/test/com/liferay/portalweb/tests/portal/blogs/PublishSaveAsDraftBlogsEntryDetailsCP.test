@@ -3,29 +3,29 @@
 	description="In the Control Panel Blogs Portlet, approve a Blogs Entry draft."
 >
 	<setup>
-		<macro name="CPBlogsEntry" command="saveAsDraftBlogsEntry">
+		<macro name="CPBlogsEntry" command="saveAsDraft">
 			<param name="title" value="Blogs Entry Title" />
 			<param name="content" value="Blogs Entry Content" />
 		</macro>
 	</setup>
 	<steps>
-		<macro name="Navigation" command="navigateControlPanelPage">
+		`<macro name="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
-		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Draft" />
-		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_ACTIONS" value="Actions" />
-		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_ACTIONS_EDIT" value="Edit" />
+		<action name="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+		<action name="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Draft" />
+		<action name="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_ACTIONS" value="Actions" />
+		<action name="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_ACTIONS_EDIT" value="Edit" />
 
 		<action name="CPBlogsEntryEdit" command="click" path="CONTENT_LINK_SAVE" value="Publish" />
 		<action name="CPBlogsEntryEdit" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
 
-		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
-		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Approved" />
+		<action name="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+		<action name="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Approved" />
 	</steps>
 	<teardown>
-		<macro name="CPBlogsEntry" command="tearDownBlogsEntry" />
-		<macro name="CPRecycleBin" command="emptyRecycleBin" />
+		<macro name="CPBlogsEntry" command="tearDown" />
+		<macro name="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

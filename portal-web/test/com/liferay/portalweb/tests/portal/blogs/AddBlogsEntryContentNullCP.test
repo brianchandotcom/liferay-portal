@@ -5,27 +5,27 @@
 	<setup>
 	</setup>
 	<steps>
-		<macro name="Navigation" command="navigateControlPanelPage">
+		`<macro name="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action name="CPBlogsPortlet" command="click" path="PORTLET_LINK_ADD" value="Add" />
+		<action name="CPBlogsHome" command="click" path="PORTLET_LINK_ADD" value="Add" />
 
-		<action name="CPBlogsEntryAdd" command="type" path="CONTENT_FIELD_TITLE" value="Blogs Entry Title" />
-		<action name="CPBlogsEntryAdd" command="type" path="CONTENT_FIELD_CONTENT" value="" />
-		<action name="CPBlogsEntryAdd" command="click" path="CONTENT_LINK_SAVE" value="Publish" />
-		<action name="CPBlogsEntryAdd" command="assertTextEquals" path="CONTENT_TEXT_ERROR_MESSAGE_1" value="Your request failed to complete." />
-		<action name="CPBlogsEntryAdd" command="assertTextEquals" path="CONTENT_TEXT_ERROR_MESSAGE_2" value="Please enter valid content." />
+		<action name="CPBlogsAddEntry" command="type" path="CONTENT_FIELD_TITLE" value="Blogs Entry Title" />
+		<action name="CPBlogsAddEntry" command="type" path="CONTENT_FIELD_CONTENT" value="" />
+		<action name="CPBlogsAddEntry" command="click" path="CONTENT_LINK_SAVE" value="Publish" />
+		<action name="CPBlogsAddEntry" command="assertTextEquals" path="CONTENT_TEXT_ERROR_MESSAGE_1" value="Your request failed to complete." />
+		<action name="CPBlogsAddEntry" command="assertTextEquals" path="CONTENT_TEXT_ERROR_MESSAGE_2" value="Please enter valid content." />
 
-		<macro name="Navigation" command="navigateControlPanelPage">
+		`<macro name="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action name="CPBlogsPortlet" command="assertTextNotPresent" value="Blogs Entry Title" />
-		<action name="CPBlogsPortlet" command="assertTextNotPresent" value="Blogs Entry Content" />
+		<action name="CPBlogsHome" command="assertTextNotPresent" value="Blogs Entry Title" />
+		<action name="CPBlogsHome" command="assertTextNotPresent" value="Blogs Entry Content" />
 	</steps>
 	<teardown>
-		<macro name="CPBlogsEntry" command="tearDownBlogsEntry" />
-		<macro name="CPRecycleBin" command="emptyRecycleBin" />
+		<macro name="CPBlogsEntry" command="tearDown" />
+		<macro name="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

@@ -25,7 +25,9 @@ public class CPBlogsEntryEditPaths {
 		return _paths;
 	}
 
-	private static String[] _PAGE_NAME = { "", "Control Panel Blogs Entry Add" };
+	private static String[] _PAGE_NAME = {
+			"", "Control Panel Blogs Edit Entry Page"
+		};
 	private static String[] _ABSTRACT_FIELD_DESCRIPTION = {
 			"_161_description", "Abstract Field Description"
 		};

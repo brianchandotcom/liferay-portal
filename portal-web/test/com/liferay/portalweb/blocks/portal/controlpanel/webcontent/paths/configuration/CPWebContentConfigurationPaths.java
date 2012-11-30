@@ -26,7 +26,7 @@ public class CPWebContentConfigurationPaths {
 	}
 
 	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content Portlet Configuration Page"
+			"", "Control Panel Web Content Portlet Configuration Frame"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 

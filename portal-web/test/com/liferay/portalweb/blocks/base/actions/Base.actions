@@ -71,7 +71,7 @@
 
 	<actiondef
 		name="open"
-		description="While navigating the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, open a window to the URL: ${PATH.TARGET}."
+		description="Open a window to the URL: &lt;strong&gt;${URL}&lt;/strong&gt;."
 	/>
 
 	<actiondef

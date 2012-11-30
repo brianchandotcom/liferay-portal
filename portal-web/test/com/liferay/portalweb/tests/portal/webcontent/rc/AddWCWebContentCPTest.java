@@ -14,10 +14,10 @@
 
 package com.liferay.portalweb.tests.portal.webcontent.rc;
 
-import com.liferay.portalweb.blocks.controlpanel.webcontent.actions.home.CPWebContentHomeActions;
-import com.liferay.portalweb.blocks.controlpanel.webcontent.actions.webcontent.CPWebContentEditWebContentActions;
-import com.liferay.portalweb.blocks.controlpanel.webcontent.macros.CPWebContentArticleMacros;
-import com.liferay.portalweb.blocks.portlet.signin.macros.PortletSignInUserMacros;
+import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.home.CPWebContentHomeActions;
+import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.webcontent.CPWebContentEditWebContentActions;
+import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.macros.CPWebContentArticleMacros;
+import com.liferay.portalweb.blocks.portal.portlet.signin.macros.PortletSignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 

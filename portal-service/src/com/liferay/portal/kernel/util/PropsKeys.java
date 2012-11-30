@@ -1623,6 +1623,8 @@ public interface PropsKeys {
 
 	public static final String OPEN_ID_AX_TYPE_LAST_NAME = "open.id.ax.type.last.name";
 
+	public static final String OPEN_ID_AX_TYPES = "open.id.ax.types";
+
 	public static final String OPEN_ID_HOST = "open.id.host";
 
 	public static final String OPEN_ID_HOST_TYPES = "open.id.host.types";

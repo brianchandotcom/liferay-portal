@@ -193,17 +193,6 @@ public class OpenIdAction extends PortletAction {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
-	protected boolean isYahooOpenId(URL endpoint) {
-		String openIdHostType = getOpenIdHostType(endpoint);
-
-		if (openIdHostType.equals("yahoo")) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	protected String readOpenIdResponse(
 			ThemeDisplay themeDisplay, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -271,40 +260,50 @@ public class OpenIdAction extends PortletAction {
 			if (ext instanceof FetchResponse) {
 				FetchResponse fetchResp = (FetchResponse)ext;
 
-				if (Validator.isNull(emailAddress)) {
-					emailAddress = getFirstValue(
-						fetchResp.getAttributeValues(_OPEN_ID_ATTR_EMAIL));
-				}
-
 				URL endpoint = discovered.getOPEndpoint();
 
-				if (isYahooOpenId(endpoint)) {
-					String fullName = fetchResp.getAttributeValue(
-						_OPEN_ID_ATTR_FULLNAME);
+				String openIdHost = getOpenIdHostType(endpoint);
 
-					String[] names = splitName(fullName);
+				String[] openIdAXTypes = PropsUtil.getArray(
+					PropsKeys.OPEN_ID_AX_TYPES, new Filter(openIdHost));
 
-					if (names != null) {
+				for (String openIdAXType : openIdAXTypes) {
+					if (openIdAXType.equals(_OPEN_ID_ATTR_EMAIL)) {
+						if (Validator.isNull(emailAddress)) {
+							emailAddress = getFirstValue(
+								fetchResp.getAttributeValues(
+									_OPEN_ID_ATTR_EMAIL));
+						}
+					}
+					else if (openIdAXType.equals(_OPEN_ID_ATTR_FIRSTNAME)) {
 						if (Validator.isNull(firstName)) {
-							firstName = names[0];
+							firstName = getFirstValue(
+								fetchResp.getAttributeValues(
+									_OPEN_ID_ATTR_FIRSTNAME));
 						}
+					}
+					else if (openIdAXType.equals(_OPEN_ID_ATTR_FULLNAME)) {
+						String fullName = fetchResp.getAttributeValue(
+							_OPEN_ID_ATTR_FULLNAME);
 
+						String[] names = splitName(fullName);
+
+						if (names != null) {
+							if (Validator.isNull(firstName)) {
+								firstName = names[0];
+							}
+
+							if (Validator.isNull(lastName)) {
+								lastName = names[1];
+							}
+						}
+					}
+					else if (openIdAXType.equals(_OPEN_ID_ATTR_LASTNAME)) {
 						if (Validator.isNull(lastName)) {
-							lastName = names[1];
+							lastName = getFirstValue(
+								fetchResp.getAttributeValues(
+									_OPEN_ID_ATTR_LASTNAME));
 						}
-					}
-				}
-				else {
-					if (Validator.isNull(firstName)) {
-						firstName = getFirstValue(
-							fetchResp.getAttributeValues(
-								_OPEN_ID_ATTR_FIRSTNAME));
-					}
-
-					if (Validator.isNull(lastName)) {
-						lastName = getFirstValue(
-							fetchResp.getAttributeValues(
-								_OPEN_ID_ATTR_LASTNAME));
 					}
 				}
 			}
@@ -432,41 +431,40 @@ public class OpenIdAction extends PortletAction {
 
 				URL endpoint = discovered.getOPEndpoint();
 
-				String openIdProvider = "default";
+				String openIdHost = getOpenIdHostType(endpoint);
 
-				if (isYahooOpenId(endpoint)) {
-					openIdProvider = "yahoo";
+				String[] openIdAXTypes = PropsUtil.getArray
+					(PropsKeys.OPEN_ID_AX_TYPES, new Filter(openIdHost));
 
-					fetch.addAttribute(
-						_OPEN_ID_ATTR_EMAIL,
-						PropsUtil.get(
-							PropsKeys.OPEN_ID_AX_TYPE_EMAIL,
-							new Filter(openIdProvider)), true);
-
-					fetch.addAttribute(
-						_OPEN_ID_ATTR_FULLNAME,
-						PropsUtil.get(
-							PropsKeys.OPEN_ID_AX_TYPE_FULL_NAME,
-								new Filter(openIdProvider)), true);
-				}
-				else {
-					fetch.addAttribute(
-						_OPEN_ID_ATTR_EMAIL,
-						PropsUtil.get(
-							PropsKeys.OPEN_ID_AX_TYPE_EMAIL,
-							new Filter(openIdProvider)), true);
-
-					fetch.addAttribute(
-						_OPEN_ID_ATTR_FIRSTNAME,
-						PropsUtil.get(
-							PropsKeys.OPEN_ID_AX_TYPE_FIRST_NAME,
-							new Filter(openIdProvider)), true);
-
-					fetch.addAttribute(
-						_OPEN_ID_ATTR_LASTNAME,
-						PropsUtil.get(
-							PropsKeys.OPEN_ID_AX_TYPE_LAST_NAME,
-							new Filter(openIdProvider)), true);
+				for (String openIdAXType : openIdAXTypes) {
+					if (openIdAXType.equals(_OPEN_ID_ATTR_EMAIL)) {
+						fetch.addAttribute(
+							_OPEN_ID_ATTR_EMAIL,
+							PropsUtil.get(
+								PropsKeys.OPEN_ID_AX_TYPE_EMAIL,
+								new Filter(openIdHost)), true);
+					}
+					else if (openIdAXType.equals(_OPEN_ID_ATTR_FIRSTNAME)) {
+						fetch.addAttribute(
+							_OPEN_ID_ATTR_FIRSTNAME,
+							PropsUtil.get(
+								PropsKeys.OPEN_ID_AX_TYPE_FIRST_NAME,
+								new Filter(openIdHost)), true);
+					}
+					else if (openIdAXType.equals(_OPEN_ID_ATTR_FULLNAME)) {
+						fetch.addAttribute(
+							_OPEN_ID_ATTR_FULLNAME,
+							PropsUtil.get(
+								PropsKeys.OPEN_ID_AX_TYPE_FULL_NAME,
+									new Filter(openIdHost)), true);
+					}
+					else if (openIdAXType.equals(_OPEN_ID_ATTR_LASTNAME)) {
+						fetch.addAttribute(
+							_OPEN_ID_ATTR_LASTNAME,
+							PropsUtil.get(
+								PropsKeys.OPEN_ID_AX_TYPE_LAST_NAME,
+								new Filter(openIdHost)), true);
+					}
 				}
 
 				authRequest.addExtension(fetch);

@@ -14,9 +14,9 @@
 
 package com.liferay.portalweb.tests.portal.blogs.rc;
 
-import com.liferay.portalweb.blocks.controlpanel.blogs.macros.CPBlogsEntryMacros;
-import com.liferay.portalweb.blocks.controlpanel.recyclebin.macros.CPRecycleBinMacros;
-import com.liferay.portalweb.blocks.portlet.signin.macros.PortletSignInUserMacros;
+import com.liferay.portalweb.blocks.portal.controlpanel.blogs.macros.CPBlogsEntryMacros;
+import com.liferay.portalweb.blocks.portal.controlpanel.recyclebin.macros.CPRecycleBinMacros;
+import com.liferay.portalweb.blocks.portal.portlet.signin.macros.PortletSignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 

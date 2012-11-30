@@ -1,0 +1,225 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ControlPanelSettingsMailServer</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ControlPanelSettingsMailServer</td></tr>
+</thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Recycle Bin Home Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMBS-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[2]/span/a</td>
+	<td>Recycle Bin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//h1[@id='cpPortletTitle']/span</td>
+	<td>Recycle Bin</td>
+</tr>
+<tr>
+	<td>PORTLET_DESCRIPTION</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>The Recycle Bin shows all assets removed by users. Assets can be restored or permanently deleted.</td>
+</tr>
+<tr>
+	<td>PORTLET_INFO_EMPTY</td>
+	<td>//form[@id='_182_emptyForm']</td>
+	<td>Entries that have been in Recycle Bin for more than 30 days will be automatically deleted.</td>
+</tr>
+<tr>
+	<td>PORTLET_SUCCESS</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>EMPTY_RECYCLE_BIN</td>
+	<td>//a[@id='_182_empty']</td>
+	<td>Empty the Recycle Bin</td>
+</tr>
+<tr>
+	<td>EMPTY_RECYCLE_BIN_CONFIRM</td>
+	<td></td>
+	<td>Are you sure you want to empty the Recycle Bin?</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='_182_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECYCLE BIN TABLE EMPTY-->
+<tr>
+	<td>TABLE_EMPTY_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>The Recycle Bin is empty.</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECYCLE BIN TABLE HEADER-->
+<tr>
+	<td>TABLE_HEADER_NAME</td>
+	<td>//th[1]</td>
+	<td>Name</td>
+</tr>
+<tr>
+	<td>TABLE_HEADER_TYPE</td>
+	<td>//th[2]/span/a</td>
+	<td>Type</td>
+</tr>
+<tr>
+	<td>TABLE_HEADER_REMOVED_DATE</td>
+	<td>//th[3]/span/a</td>
+	<td>Removed Date</td>
+</tr>
+<tr>
+	<td>TABLE_HEADER_REMOVED_BY</td>
+	<td>//th[4]/span/a</td>
+	<td>Removed By</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECYCLE BIN TABLE ENTRIES-->
+<tr>
+	<td>TABLE_NAME_1</td>
+	<td>//tr[3]/td[1]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_NAME_2</td>
+	<td>//tr[4]/td[1]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_NAME_3</td>
+	<td>//tr[5]/td[1]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_TYPE_1</td>
+	<td>//tr[3]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_TYPE_2</td>
+	<td>//tr[4]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_TYPE_3</td>
+	<td>//tr[5]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_REMOVED_DATE_1</td>
+	<td>//tr[3]/td[3]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_REMOVED_DATE_2</td>
+	<td>//tr[4]/td[3]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_REMOVED_DATE_3</td>
+	<td>//tr[5]/td[3]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_REMOVED_BY_1</td>
+	<td>//tr[3]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_REMOVED_BY_2</td>
+	<td>//tr[4]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_REMOVED_BY_3</td>
+	<td>//tr[5]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ACTIONS_1</td>
+	<td>//tr[3]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>TABLE_ACTIONS_2</td>
+	<td>//tr[4]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>TABLE_ACTIONS_3</td>
+	<td>//tr[5]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS MENU-->
+<tr>
+	<td>ACTIONS_RESTORE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]</td>
+	<td>Restore</td>
+</tr>
+<tr>
+	<td>ACTIONS_DELETE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

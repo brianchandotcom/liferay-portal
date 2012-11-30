@@ -1,0 +1,68 @@
+<macros>
+	<macrodef
+		name="addBlogsEntry"
+		description="In the &lt;strong&gt;Control Panel Blogs Portlet&lt;/strong&gt;, add a &lt;em&gt;Blogs Entry&lt;/em&gt; with a title of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt; and the content &lt;strong&gt;&quot;${content}&quot;&lt;/strong&gt;."
+		params="title,content"
+	>
+		<macro name="Navigation" command="navigateControlPanelPage">
+			<param name="portlet" value="Blogs" />
+		</macro>
+
+		<action name="CPBlogsPortlet" command="click" path="PORTLET_LINK_ADD" value="Add" />
+
+		<action name="CPBlogsEntryAdd" command="type" path="CONTENT_FIELD_TITLE" value="${title}" />
+		<action name="CPBlogsEntryAdd" command="type" path="CONTENT_FIELD_CONTENT" value="${content}" />
+		<action name="CPBlogsEntryAdd" command="click" path="CONTENT_LINK_SAVE" value="Publish" />
+		<action name="CPBlogsEntryAdd" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
+
+		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE_1" value="${title}" />
+
+		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_TITLE" value="${title}" />
+		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_CONTENT" value="${content}" />
+	</macrodef>
+
+	<macrodef
+		name="saveAsDraftBlogsEntry"
+		description="In the &lt;strong&gt;Control Panel Blogs Portlet&lt;/strong&gt;, save a &lt;em&gt;Blogs Entry&lt;/em&gt; as a draft with a title of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt; and the content &lt;strong&gt;&quot;${content}&quot;&lt;/strong&gt;."
+		params="title,content"
+	>
+		<macro name="Navigation" command="navigateControlPanelPage">
+			<param name="portlet" value="Blogs" />
+		</macro>
+
+		<action name="CPBlogsPortlet" command="click" path="PORTLET_LINK_ADD" value="Add" />
+
+		<action name="CPBlogsEntryAdd" command="type" path="CONTENT_FIELD_TITLE" value="${title}" />
+		<action name="CPBlogsEntryAdd" command="type" path="CONTENT_FIELD_CONTENT" value="${content}" />
+		<action name="CPBlogsEntryAdd" command="click" path="CONTENT_LINK_DRAFT" value="Save as Draft" />
+		<action name="CPBlogsEntryAdd" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
+
+		<action name="CPBlogsEntryEdit" command="assertTextEquals" path="CONTENT_TEXT_STATUS" value="Draft" />
+
+		<macro name="Navigation" command="navigateControlPanelPage">
+			<param name="portlet" value="Blogs" />
+		</macro>
+
+		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="${title}" />
+		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Draft" />
+		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="${title}" />
+
+		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_DRAFT" value="Draft" />
+		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_TITLE" value="${title}" />
+		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_CONTENT" value="${content}" />
+	</macrodef>
+
+	<macrodef
+		name="tearDownBlogsEntry"
+		description="In the &lt;strong&gt;Control Panel Blogs Portlet&lt;/strong&gt;, delete all the &lt;em&gt;Blogs Entries&lt;/em&gt;."
+	>
+		<macro name="Navigation" command="navigateControlPanelPage">
+			<param name="portlet" value="Blogs" />
+		</macro>
+
+		<while name="CPBlogsPortlet" command="isElementPresent" path="BLOGS_ENTRY_LINK_CHECKBOX_1">
+			<action name="CPBlogsPortlet" command="check" path="BLOGS_ENTRY_LINK_CHECKBOX_ALL" />
+			<action name="CPBlogsPortlet" command="click" path="PORTLET_LINK_DELETE" value="Move to Recycle Bin" />
+		</while>
+	</macrodef>
+</macros>

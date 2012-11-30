@@ -60,27 +60,6 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		}
 	}
 
-	protected void getDependencies(String testFilePath) throws Exception {
-		String sourcePath = basedir + "/com/liferay/portalweb/blocks/styles/";
-
-		String destinationPath = basedir + "/" + testFilePath + "/";
-
-		if (!FileUtil.exists(destinationPath + "style.css")) {
-			FileUtil.copyFile(sourcePath + "style.css",
-				destinationPath + "style.css");
-		}
-
-		if (!FileUtil.exists(destinationPath + "jquery.js")) {
-			FileUtil.copyFile(sourcePath + "jquery.js",
-				destinationPath + "jquery.js");
-		}
-
-		if (!FileUtil.exists(destinationPath + "scripts.js")) {
-			FileUtil.copyFile(sourcePath + "scripts.js",
-				destinationPath + "scripts.js");
-		}
-	}
-
 	protected void generateTest(String fileName) throws Exception {
 		if (!FileUtil.exists(basedir + "/" + fileName)) {
 			return;
@@ -93,8 +72,6 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		String testFilePath = fileName.substring(0, x) + "/html";
 
 		String testFileName = testFilePath + "/" + testName + ".html";
-
-		getDependencies(testFilePath);
 
 		StringBundler sb = new StringBundler();
 
@@ -319,13 +296,23 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 							finalString, "${" + paramName + "}", paramValue);
 					}
 
-					sb.append(finalString);
-
+					sb.append(finalString);			
+					
 					sb.append("<div class='expand-macro-steps'>\n");
 					sb.append("<a href='#'>Expand Macro Steps</a>\n");
 					sb.append("<div class='macro-steps'>\n");
 					sb.append("<ol>\n");
+					
+					for (Element param : params) {
+						String paramName = param.attributeValue("name");
+						String paramValue = param.attributeValue("value");
+
+						steps = StringUtil.replace(
+							steps, "${" + paramName + "}", paramValue);
+					}
+
 					sb.append(steps);
+
 					sb.append("\n</ol>\n");
 					sb.append("</div>\n");
 					sb.append("</div>\n");

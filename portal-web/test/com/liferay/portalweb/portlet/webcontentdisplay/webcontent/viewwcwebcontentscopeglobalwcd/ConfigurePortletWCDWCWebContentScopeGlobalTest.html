@@ -58,12 +58,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
 	<td>Web Content Display - Configuration</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
 	<td>Web Content Display - Configuration</td>
 </tr>
 <tr>
@@ -72,59 +72,34 @@
 	<td>Navigation Interaction</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=Advanced »'))</td>
-	<td>advancedVisible</td>
+	<td>waitForText</td>
+	<td>//div[@class='portlet-msg-info']/span</td>
+	<td>Please select a web content from the list below.</td>
 </tr>
 <tr>
-	<td>gotoIf</td>
-	<td>!${advancedVisible}</td>
-	<td>AdvancedNotVisible</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=Advanced »</td>
-	<td>Advanced</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>AdvancedNotVisible</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//select[@id='_86_groupId']</td>
-	<td>My Sites</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_86_groupId']</td>
-	<td>Global</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
-	<td>Search</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']/span</td>
+	<td>Please select a web content from the list below.</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[@id='_86_ocerSearchContainer_col-title_row-1']/a</td>
-	<td>Web Content Name</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//td[@id='_86_ocerSearchContainer_col-title_row-1']/a</td>
-	<td>Web Content Name</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>//div[@class='portlet-msg-info']/span/span</td>
-	<td>Web Content Name (Modified)</td>
+	<td>WC WebContent Title (Modified)</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-info']/span/span</td>
-	<td>Web Content Name (Modified)</td>
+	<td>WC WebContent Title (Modified)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -137,31 +112,15 @@
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basicVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${basicVisible}</td>
-	<td>BasicNotVisible</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td>Basic</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>BasicNotVisible</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']/span[@class='displaying-article-id-holder ']</td>
+	<td>Displaying Content: WC WebContent Title</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
 	<td>top</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

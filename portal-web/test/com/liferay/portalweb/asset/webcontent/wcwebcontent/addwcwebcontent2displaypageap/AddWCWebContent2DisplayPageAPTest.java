@@ -39,8 +39,17 @@ public class AddWCWebContent2DisplayPageAPTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//input[@value='Add']",
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]");
+		assertEquals(RuntimeVariables.replace("Basic Web Content"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC WebContent2 Title"));
@@ -105,8 +114,24 @@ public class AddWCWebContent2DisplayPageAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
-			selenium.getText("//tr[4]/td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[4]/td[4]/a"));
+			selenium.getText(
+				"//a[@class='entry-link']/span[contains(.,'WC WebContent2 Title')]"));
+		selenium.clickAt("//a[@class='entry-link']/span[contains(.,'WC WebContent2 Title')]",
+			RuntimeVariables.replace("WC WebContent2 Title"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("Status: Approved"),
+			selenium.getText("//span[@class='workflow-status']"));
+		assertEquals("WC WebContent2 Title",
+			selenium.getValue("//input[@id='_15_title_en_US']"));
+		selenium.waitForVisible(
+			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
+		selenium.selectFrame(
+			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
+		selenium.waitForText("//p", "WC WebContent2 Content");
+		assertEquals(RuntimeVariables.replace("WC WebContent2 Content"),
+			selenium.getText("//p"));
+		selenium.selectFrame("relative=top");
 	}
 }

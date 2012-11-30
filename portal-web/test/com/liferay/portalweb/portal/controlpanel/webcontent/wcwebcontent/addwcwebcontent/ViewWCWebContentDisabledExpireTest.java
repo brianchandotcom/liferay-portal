@@ -25,6 +25,10 @@ public class ViewWCWebContentDisabledExpireTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -36,50 +40,57 @@ public class ViewWCWebContentDisabledExpireTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//td[3]/a"));
-		assertFalse(selenium.isChecked("//input[@name='_15_allRowIds']"));
-		assertFalse(selenium.isChecked("//input[@name='_15_rowIds']"));
-		assertTrue(selenium.isVisible(
-				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']"));
-		assertTrue(selenium.isVisible(
-				"//input[@value='Expire' and @disabled='']"));
-		selenium.clickAt("//input[@name='_15_allRowIds']",
-			RuntimeVariables.replace("Select All"));
-		assertTrue(selenium.isChecked("//input[@name='_15_allRowIds']"));
-		selenium.waitForElementNotPresent(
-			"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']");
+			selenium.getText("//a[@class='entry-link']/span"));
+		assertFalse(selenium.isChecked("//input[@id='_15_allRowIdsCheckbox']"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_15_rowIdsJournalArticleCheckbox']"));
+		assertFalse(selenium.isVisible(
+				"//span[@title='Actions']/ul/li/strong/a/span"));
 		assertTrue(selenium.isElementNotPresent(
-				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']"));
-		assertTrue(selenium.isElementNotPresent(
-				"//input[@value='Expire' and @disabled='']"));
-		assertTrue(selenium.isVisible("//input[@value='Expire']"));
-		selenium.clickAt("//input[@name='_15_allRowIds']",
-			RuntimeVariables.replace("Select All"));
-		assertFalse(selenium.isChecked("//input[@name='_15_allRowIds']"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
+		selenium.clickAt("//input[@id='_15_rowIdsJournalArticleCheckbox']",
+			RuntimeVariables.replace("WC WebContent Title CheckBox"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_15_rowIdsJournalArticleCheckbox']"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']");
-		assertTrue(selenium.isVisible(
-				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']"));
-		assertTrue(selenium.isVisible(
-				"//input[@value='Expire' and @disabled='']"));
-		selenium.clickAt("//input[@name='_15_rowIds']",
-			RuntimeVariables.replace("Row Entry Check Box"));
-		assertTrue(selenium.isChecked("//input[@name='_15_rowIds']"));
-		selenium.waitForElementNotPresent(
-			"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']");
-		assertTrue(selenium.isElementNotPresent(
-				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']"));
-		assertTrue(selenium.isElementNotPresent(
-				"//input[@value='Expire' and @disabled='']"));
-		assertTrue(selenium.isVisible("//input[@value='Expire']"));
-		selenium.clickAt("//input[@name='_15_rowIds']",
-			RuntimeVariables.replace("Row Entry Check Box"));
-		assertFalse(selenium.isChecked("//input[@name='_15_rowIds']"));
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]");
+		assertEquals(RuntimeVariables.replace("Expire"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_15_rowIdsJournalArticleCheckbox']"));
+		selenium.clickAt("//input[@id='_15_rowIdsJournalArticleCheckbox']",
+			RuntimeVariables.replace("WC WebContent Title CheckBox"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_15_rowIdsJournalArticleCheckbox']"));
+		assertFalse(selenium.isVisible(
+				"//span[@title='Actions']/ul/li/strong/a/span"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_15_rowIdsJournalArticleCheckbox']"));
+		selenium.clickAt("//input[@id='_15_rowIdsJournalArticleCheckbox']",
+			RuntimeVariables.replace("WC WebContent Title CheckBox"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_15_rowIdsJournalArticleCheckbox']"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']");
-		assertTrue(selenium.isVisible(
-				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']"));
-		assertTrue(selenium.isVisible(
-				"//input[@value='Expire' and @disabled='']"));
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]");
+		assertEquals(RuntimeVariables.replace("Expire"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_15_rowIdsJournalArticleCheckbox']"));
+		selenium.clickAt("//input[@id='_15_rowIdsJournalArticleCheckbox']",
+			RuntimeVariables.replace("WC WebContent Title CheckBox"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_15_rowIdsJournalArticleCheckbox']"));
+		assertFalse(selenium.isVisible(
+				"//span[@title='Actions']/ul/li/strong/a/span"));
 	}
 }

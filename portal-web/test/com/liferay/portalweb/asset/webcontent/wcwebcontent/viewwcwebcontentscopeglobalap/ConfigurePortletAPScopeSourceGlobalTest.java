@@ -29,10 +29,9 @@ public class ConfigurePortletAPScopeSourceGlobalTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("There are no results."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.waitForElementPresent(
-			"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']");
 		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));

@@ -82,14 +82,34 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Add']</td>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_title_en_US']</td>
-	<td>Web Content Name</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -119,7 +139,7 @@
 <tr>
 	<td>type</td>
 	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
-	<td>Web Content Content</td>
+	<td>WC WebContent Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -147,9 +167,9 @@
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>waitForText</td>
 	<td>//body</td>
-	<td>Web Content Content</td>
+	<td>WC WebContent Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -167,19 +187,14 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>Web Content Name</td>
+	<td>assertVisible</td>
+	<td>//div[@class='entry-thumbnail']/img</td>
+	<td>Web Content Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Approved</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[7]/a</td>
-	<td>Joe Bloggs</td>
+	<td>//a[@class='entry-link']/span</td>
+	<td>WC WebContent Title</td>
 </tr>
 </tbody></table>
 </body>

@@ -45,8 +45,10 @@ public class ConfigurePortletWCLSiteFilterGlobalTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a",
 			RuntimeVariables.replace("Configuration"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//select[@id='_86_groupId']");
@@ -63,7 +65,7 @@ public class ConfigurePortletWCLSiteFilterGlobalTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content List Test Page",
 			RuntimeVariables.replace("Web Content List Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[1]/a"));
 	}
 }

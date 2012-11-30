@@ -6,7 +6,7 @@ Liferay = window.Liferay || {};
 	var owns = A.Object.owns;
 
 	var isNode = function(node) {
-		return node._node || node.nodeType;
+		return node && (node._node || node.nodeType);
 	};
 
 	var REGEX_METHOD_GET = /^get$/i;
@@ -109,12 +109,7 @@ Liferay = window.Liferay || {};
 				delete payload.io;
 
 				if (!(ioConfig.on && ioConfig.on.success)) {
-					var callbacks = A.Array.filter(
-						args,
-						function(item, index, collection) {
-							return Lang.isFunction(item);
-						}
-					);
+					var callbacks = A.Array.filter(args, Lang.isFunction);
 
 					var callbackSuccess = callbacks[0];
 					var callbackException = callbacks[1];
@@ -160,7 +155,7 @@ Liferay = window.Liferay || {};
 				if (isNode(form)) {
 					A.namespace.call(ioConfig, 'form');
 
-					ioConfig.form.id = A.one(form);
+					ioConfig.form.id = form._node || form;
 				}
 			},
 
@@ -170,8 +165,10 @@ Liferay = window.Liferay || {};
 				var params = {};
 				var payload = {};
 
-				if (!Lang.isFunction(args[1]) && !isNode(args[1])) {
-					params = args[1];
+				var config = args[1];
+
+				if (!Lang.isFunction(config) && !isNode(config)) {
+					params = config;
 				}
 
 				payload[args[0]] = params;

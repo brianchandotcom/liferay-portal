@@ -21,16 +21,48 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class WikiPageFinderUtil {
-	public static int countByCreateDate(long nodeId, java.util.Date createDate,
-		boolean before)
+	public static int countByCreateDate(long groupId, long nodeId,
+		java.util.Date createDate, boolean before)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countByCreateDate(nodeId, createDate, before);
+		return getFinder().countByCreateDate(groupId, nodeId, createDate, before);
 	}
 
-	public static int countByCreateDate(long nodeId,
+	public static int countByCreateDate(long groupId, long nodeId,
 		java.sql.Timestamp createDate, boolean before)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countByCreateDate(nodeId, createDate, before);
+		return getFinder().countByCreateDate(groupId, nodeId, createDate, before);
+	}
+
+	public static int filterCountByCreateDate(long groupId, long nodeId,
+		java.util.Date createDate, boolean before)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterCountByCreateDate(groupId, nodeId, createDate, before);
+	}
+
+	public static int filterCountByCreateDate(long groupId, long nodeId,
+		java.sql.Timestamp createDate, boolean before)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterCountByCreateDate(groupId, nodeId, createDate, before);
+	}
+
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByCreateDate(
+		long groupId, long nodeId, java.util.Date createDate, boolean before,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterFindByCreateDate(groupId, nodeId, createDate, before,
+			start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByCreateDate(
+		long groupId, long nodeId, java.sql.Timestamp createDate,
+		boolean before, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterFindByCreateDate(groupId, nodeId, createDate, before,
+			start, end);
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPage findByResourcePrimKey(
@@ -41,17 +73,21 @@ public class WikiPageFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByCreateDate(
-		long nodeId, java.util.Date createDate, boolean before, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long nodeId, java.util.Date createDate, boolean before,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByCreateDate(nodeId, createDate, before, start, end);
+				   .findByCreateDate(groupId, nodeId, createDate, before,
+			start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByCreateDate(
-		long nodeId, java.sql.Timestamp createDate, boolean before, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long nodeId, java.sql.Timestamp createDate,
+		boolean before, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByCreateDate(nodeId, createDate, before, start, end);
+				   .findByCreateDate(groupId, nodeId, createDate, before,
+			start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByNoAssets()

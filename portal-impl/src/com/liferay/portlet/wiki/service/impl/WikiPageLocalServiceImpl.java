@@ -77,14 +77,11 @@ import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
 import java.io.File;
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -626,39 +623,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public List<WikiPage> getOrphans(long nodeId)
 		throws PortalException, SystemException {
 
-		List<Map<String, Boolean>> pageTitles =
-			new ArrayList<Map<String, Boolean>>();
-
 		List<WikiPage> pages = wikiPagePersistence.findByN_H_S(
 			nodeId, true, WorkflowConstants.STATUS_APPROVED);
 
-		for (WikiPage page : pages) {
-			pageTitles.add(WikiCacheUtil.getOutgoingLinks(page));
-		}
-
-		Set<WikiPage> notOrphans = new HashSet<WikiPage>();
-
-		for (WikiPage page : pages) {
-			for (Map<String, Boolean> pageTitle : pageTitles) {
-				if (pageTitle.get(page.getTitle().toLowerCase()) != null) {
-					notOrphans.add(page);
-
-					break;
-				}
-			}
-		}
-
-		List<WikiPage> orphans = new ArrayList<WikiPage>();
-
-		for (WikiPage page : pages) {
-			if (!notOrphans.contains(page)) {
-				orphans.add(page);
-			}
-		}
-
-		orphans = ListUtil.sort(orphans);
-
-		return orphans;
+		return WikiUtil.filterOrphans(pages);
 	}
 
 	public List<WikiPage> getOutgoingLinks(long nodeId, String title)
@@ -938,7 +906,19 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return wikiPagePersistence.countByFormat(format);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public List<WikiPage> getRecentChanges(long nodeId, int start, int end)
+		throws PortalException, SystemException {
+
+		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
+
+		return getRecentChanges(node.getGroupId(), nodeId, start, end);
+	}
+
+	public List<WikiPage> getRecentChanges(
+			long groupId, long nodeId, int start, int end)
 		throws SystemException {
 
 		Calendar cal = CalendarFactoryUtil.getCalendar();
@@ -946,15 +926,29 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		cal.add(Calendar.WEEK_OF_YEAR, -1);
 
 		return wikiPageFinder.findByCreateDate(
-			nodeId, cal.getTime(), false, start, end);
+			groupId, nodeId, cal.getTime(), false, start, end);
 	}
 
-	public int getRecentChangesCount(long nodeId) throws SystemException {
+	/**
+	 * @deprecated
+	 */
+	public int getRecentChangesCount(long nodeId)
+		throws PortalException, SystemException {
+
+		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
+
+		return getRecentChangesCount(node.getGroupId(), nodeId);
+	}
+
+	public int getRecentChangesCount(long groupId, long nodeId)
+		throws SystemException {
+
 		Calendar cal = CalendarFactoryUtil.getCalendar();
 
 		cal.add(Calendar.WEEK_OF_YEAR, -1);
 
-		return wikiPageFinder.countByCreateDate(nodeId, cal.getTime(), false);
+		return wikiPageFinder.countByCreateDate(
+			groupId, nodeId, cal.getTime(), false);
 	}
 
 	public String[] getTempPageAttachmentNames(

@@ -25,6 +25,10 @@ public class AddRepeatingEventTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -59,7 +63,9 @@ public class AddRepeatingEventTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("link=Repeating Test Event");
-		assertTrue(selenium.isVisible("link=Repeating Test Event"));
+		selenium.waitForText("//tr[contains(.,'Repeating Test Event')]/td[3]/a",
+			"Repeating Test Event");
+		assertEquals(RuntimeVariables.replace("Repeating Test Event"),
+			selenium.getText("//tr[contains(.,'Repeating Test Event')]/td[3]/a"));
 	}
 }

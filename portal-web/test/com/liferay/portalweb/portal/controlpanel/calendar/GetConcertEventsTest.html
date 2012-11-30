@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -49,18 +59,18 @@
 	<td>label=Concert</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Caedmon's Call Concert!</td>
+	<td>assertText</td>
+	<td>//div[@class='event-title']/a</td>
 	<td>Caedmon's Call Concert!</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Off to Yosemite!</td>
+	<td>assertTextNotPresent</td>
+	<td>//div[@class='event-title']/a</td>
 	<td>Off to Yosemite!</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Test Event</td>
+	<td>assertTextNotPresent</td>
+	<td>//div[@class='event-title']/a</td>
 	<td>Test Event</td>
 </tr>
 <tr>
@@ -74,18 +84,18 @@
 	<td>label=Concert</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Caedmon's Call Concert!</td>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-alternate results-row alt']/td/a</td>
 	<td>Caedmon's Call Concert!</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Off to Yosemite!</td>
+	<td>assertTextNotPresent</td>
+	<td>//tr[@class='portlet-section-alternate results-row alt']/td/a</td>
 	<td>Off to Yosemite!</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Test Event</td>
+	<td>assertTextNotPresent</td>
+	<td>//tr[@class='portlet-section-alternate results-row alt']/td/a</td>
 	<td>Test Event</td>
 </tr>
 <tr>
@@ -99,18 +109,18 @@
 	<td>label=Concert</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Caedmon's Call Concert!</td>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-alternate results-row alt']/td/a</td>
 	<td>Caedmon's Call Concert!</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Off to Yosemite!</td>
+	<td>assertTextNotPresent</td>
+	<td>//tr[@class='portlet-section-alternate results-row alt']/td/a</td>
 	<td>Off to Yosemite!</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Test Event</td>
+	<td>assertTextNotPresent</td>
+	<td>//tr[@class='portlet-section-alternate results-row alt']/td/a</td>
 	<td>Test Event</td>
 </tr>
 <tr>
@@ -119,9 +129,9 @@
 	<td>Events</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Caedmon's Call Concert!</td>
+	<td>assertTextPresent</td>
 	<td>Caedmon's Call Concert!</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

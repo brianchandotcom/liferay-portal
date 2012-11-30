@@ -30,6 +30,10 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -180,8 +184,10 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(0, 7, 2010);')]",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible("link=Repeating Test Event");
-				assertTrue(selenium.isVisible("link=Repeating Test Event"));
+				selenium.waitForText("//div[@class='event-title']/a",
+					"Repeating Test Event");
+				assertEquals(RuntimeVariables.replace("Repeating Test Event"),
+					selenium.getText("//div[@class='event-title']/a"));
 				selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForPartialText("//select", "2010");
@@ -191,8 +197,10 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(0, 14, 2010);')]",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible("link=Repeating Test Event");
-				assertTrue(selenium.isVisible("link=Repeating Test Event"));
+				selenium.waitForText("//div[@class='event-title']/a",
+					"Repeating Test Event");
+				assertEquals(RuntimeVariables.replace("Repeating Test Event"),
+					selenium.getText("//div[@class='event-title']/a"));
 				selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForPartialText("//select", "2010");
@@ -202,9 +210,9 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(0, 15, 2010);')]",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForElementNotPresent("link=Repeating Test Event");
-				assertTrue(selenium.isElementNotPresent(
-						"link=Repeating Test Event"));
+				selenium.waitForTextNotPresent("//div[@class='event-title']/a");
+				assertFalse(selenium.isTextPresent(
+						"//div[@class='event-title']/a"));
 
 			case 100:
 				label = -1;

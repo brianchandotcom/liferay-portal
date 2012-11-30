@@ -25,6 +25,10 @@ public class GetAppointmentEventsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -39,27 +43,37 @@ public class GetAppointmentEventsTest extends BaseTestCase {
 		selenium.select("//select",
 			RuntimeVariables.replace("label=Appointment"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Test Event"));
-		assertTrue(selenium.isElementNotPresent("link=Off to Yosemite!"));
-		assertTrue(selenium.isElementNotPresent("link=Caedmon's Call Concert!"));
+		assertEquals(RuntimeVariables.replace("Test Event"),
+			selenium.getText("//div[@class='event-title']/a"));
+		assertFalse(selenium.isTextPresent("//div[@class='event-title']/a"));
+		assertFalse(selenium.isTextPresent("//div[@class='event-title']/a"));
 		selenium.clickAt("link=Week", RuntimeVariables.replace("Week"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select",
 			RuntimeVariables.replace("label=Appointment"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Test Event"));
-		assertTrue(selenium.isElementNotPresent("link=Off to Yosemite!"));
-		assertTrue(selenium.isElementNotPresent("link=Caedmon's Call Concert!"));
+		assertEquals(RuntimeVariables.replace("Test Event"),
+			selenium.getText(
+				"//tr[@class='portlet-section-alternate results-row alt']/td/a"));
+		assertFalse(selenium.isTextPresent(
+				"//tr[@class='portlet-section-alternate results-row alt']/td/a"));
+		assertFalse(selenium.isTextPresent(
+				"//tr[@class='portlet-section-alternate results-row alt']/td/a"));
 		selenium.clickAt("link=Month", RuntimeVariables.replace("Month"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select",
 			RuntimeVariables.replace("label=Appointment"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Test Event"));
-		assertTrue(selenium.isElementNotPresent("link=Off to Yosemite!"));
-		assertTrue(selenium.isElementNotPresent("link=Caedmon's Call Concert!"));
+		assertEquals(RuntimeVariables.replace("Test Event"),
+			selenium.getText(
+				"//tr[@class='portlet-section-alternate results-row alt']/td/a"));
+		assertFalse(selenium.isTextPresent(
+				"//tr[@class='portlet-section-alternate results-row alt']/td/a"));
+		assertFalse(selenium.isTextPresent(
+				"//tr[@class='portlet-section-alternate results-row alt']/td/a"));
 		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Test Event"));
+		assertEquals(RuntimeVariables.replace("Test Event"),
+			selenium.getText("//tr[contains(.,'Test Event')]/td[3]/a"));
 	}
 }

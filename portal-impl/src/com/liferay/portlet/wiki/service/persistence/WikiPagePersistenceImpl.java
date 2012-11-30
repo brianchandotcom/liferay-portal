@@ -15912,7 +15912,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	private static final String _SQL_SELECT_WIKIPAGE_WHERE = "SELECT wikiPage FROM WikiPage wikiPage WHERE ";
 	private static final String _SQL_COUNT_WIKIPAGE = "SELECT COUNT(wikiPage) FROM WikiPage wikiPage";
 	private static final String _SQL_COUNT_WIKIPAGE_WHERE = "SELECT COUNT(wikiPage) FROM WikiPage wikiPage WHERE ";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "wikiPage.pageId";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "wikiPage.resourcePrimKey";
 	private static final String _FILTER_SQL_SELECT_WIKIPAGE_WHERE = "SELECT DISTINCT {wikiPage.*} FROM WikiPage wikiPage WHERE ";
 	private static final String _FILTER_SQL_SELECT_WIKIPAGE_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {WikiPage.*} FROM (SELECT DISTINCT wikiPage.pageId FROM WikiPage wikiPage WHERE ";

@@ -1,6 +1,6 @@
 <test
 	name="AddWCWebContentCP"
-	description="In the Control Panel Web Content portlet, add a Web Content article."
+	description="In the &lt;strong&gt;Control Panel Web Content Portlet&lt;/strong&gt;, add a Web Content Article."
 >
 	<setup>
 	</setup>

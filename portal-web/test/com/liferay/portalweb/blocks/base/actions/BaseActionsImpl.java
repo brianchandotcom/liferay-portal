@@ -194,6 +194,8 @@ public class BaseActionsImpl implements LiferayActions {
 
 		String[] params = getParams(param1, param2);
 
+		selenium.pause("1000");
+
 		return selenium.isElementPresent(params[0]);
 	}
 

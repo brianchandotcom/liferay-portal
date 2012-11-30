@@ -1,0 +1,160 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPWebContentAdd</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPWebContentAdd</td></tr></thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Web Content Add Web Content Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>HEADER_STRUCTURE</td>
+	<td>//span[@id='_15_structureNameLabel']</td>
+	<td>Structure Name</td>
+</tr>
+<tr>
+	<td>HEADER_EDIT_STRUCTURE</td>
+	<td>//a[@id='_15_editStructureLink']</td>
+	<td>Edit Structure Icon</td>
+</tr>
+<tr>
+	<td>HEADER_CHANGE_STRUCTURE</td>
+	<td>//a[@id='_15_changeStructureButton']</td>
+	<td>Change Structure Icon</td>
+</tr>
+<tr>
+	<td>HEADER_TEMPLATE</td>
+	<td>//span[@class='template-name-label']</td>
+	<td>Template Name</td>
+</tr>
+<tr>
+	<td>HEADER_CHOOSE_TEMPLATE</td>
+	<td>//a[@id='_15_selectTemplateLink']</td>
+	<td>Choose Template Icon</td>
+</tr>
+<tr>
+	<td>HEADER_CHANGE_LANGUAGE</td>
+	<td>//a[@id='_15_changeLanguageId']</td>
+	<td>Change Default Language Link</td>
+</tr>
+<tr>
+	<td>HEADER_ADD_TRANSLATION</td>
+	<td>//span[@class='lfr-translation-manager-add-menu']</td>
+	<td>Add Translation</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TRANSLATION-->
+<tr>
+	<td>TRANSLATION_CHINESE_CHINA</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>Chinese (China)</td>
+</tr>
+<tr>
+	<td>TRANSLATION_FRENCH_FRANCE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[17]/a</td>
+	<td>French (France)</td>
+</tr>
+<tr>
+	<td>TRANSLATION_JAPANESE_JAPAN</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[27]/a</td>
+	<td>Japanese (Japan)</td>
+</tr>
+<tr>
+	<td>TRANSLATION_SPANISH_SPAIN</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[41]/a</td>
+	<td>Spanish (Spain)</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ARTICLE-->
+<tr>
+	<td>ARTICLE_TITLE</td>
+	<td>//input[@id='_15_title_en_US']</td>
+	<td>Title Field</td>
+</tr>
+<tr>
+	<td>ARTICLE_CONTENT</td>
+	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']</td>
+	<td>Content Field</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SIDEBAR-->
+<tr>
+	<td>SIDEBAR_CONTENT</td>
+	<td>//a[@id='_15_contentLink']</td>
+	<td>Content Link</td>
+</tr>
+<tr>
+	<td>SIDEBAR_ABSTRACT</td>
+	<td>//a[@id='_15_abstractLink']</td>
+	<td>Abstract Link</td>
+</tr>
+<tr>
+	<td>SIDEBAR_CATEGORIZATION</td>
+	<td>//a[@id='_15_categorizationLink']</td>
+	<td>Categorization Link</td>
+</tr>
+<tr>
+	<td>SIDEBAR_SCHEDULE</td>
+	<td>//a[@id='_15_scheduleLink']</td>
+	<td>Schedule Link</td>
+</tr>
+<tr>
+	<td>SIDEBAR_DISPLAY_PAGE</td>
+	<td>//a[@id='_15_displayPageLink']</td>
+	<td>Display Page Link</td>
+</tr>
+<tr>
+	<td>SIDEBAR_RELATED_ASSETS</td>
+	<td>//a[@id='_15_relatedAssetsLink']</td>
+	<td>Related Assets Link</td>
+</tr>
+<tr>
+	<td>SIDEBAR_RELATED_PERMISSIONS</td>
+	<td>//a[@id='_15_permissionsLink']</td>
+	<td>Permissions Link</td>
+</tr>
+<tr>
+	<td>SIDEBAR_CUSTOM_FIELDS</td>
+	<td>//a[@id='_15_customFieldsLink']</td>
+	<td>Custom Fields Link</td>
+</tr>
+<tr>
+	<td>SIDEBAR_SAVE_AS_DRAFT</td>
+	<td>//input[@value='Save as Draft']</td>
+	<td>Save as Draft Button</td>
+</tr>
+<tr>
+	<td>SIDEBAR_PUBLISH</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish Button</td>
+</tr>
+<tr>
+	<td>SIDEBAR_CANCEL</td>
+	<td>xpath=(//input[@value='Cancel'])[2]</td>
+	<td>Cancel Button</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

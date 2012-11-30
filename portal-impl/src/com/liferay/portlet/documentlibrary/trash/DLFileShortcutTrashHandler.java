@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -59,6 +60,20 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	public ContainerModel getParentContainerModel(long classPK)
+		throws PortalException, SystemException {
+
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
+
+		long parentFolderId = dlFileShortcut.getFolderId();
+
+		if (parentFolderId <= 0) {
+			return null;
+		}
+
+		return getContainerModel(parentFolderId);
 	}
 
 	@Override

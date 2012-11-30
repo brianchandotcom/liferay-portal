@@ -35,7 +35,7 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean blogsEntry1Present = selenium.isElementPresent(
-						"//td[3]/span/a/span");
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]");
 
 				if (!blogsEntry1Present) {
 					label = 2;
@@ -44,12 +44,14 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText("//td[3]/span/a/span"));
-				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean blogsEntry2Present = selenium.isElementPresent(
-						"//td[3]/span/a/span");
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]");
 
 				if (!blogsEntry2Present) {
 					label = 3;
@@ -58,12 +60,14 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText("//td[3]/span/a/span"));
-				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean blogsEntry3Present = selenium.isElementPresent(
-						"//td[3]/span/a/span");
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]");
 
 				if (!blogsEntry3Present) {
 					label = 4;
@@ -72,12 +76,14 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText("//td[3]/span/a/span"));
-				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean blogsEntry4Present = selenium.isElementPresent(
-						"//td[3]/span/a/span");
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]");
 
 				if (!blogsEntry4Present) {
 					label = 5;
@@ -86,12 +92,14 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText("//td[3]/span/a/span"));
-				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean blogsEntry5Present = selenium.isElementPresent(
-						"//td[3]/span/a/span");
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]");
 
 				if (!blogsEntry5Present) {
 					label = 6;
@@ -100,8 +108,10 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText("//td[3]/span/a/span"));
-				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
 				selenium.waitForPageToLoad("30000");
 
 			case 2:

@@ -34,13 +34,12 @@ public class DeleteBlogsEntry2Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry2 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//h1[@class='header-title']"));
-		selenium.click(RuntimeVariables.replace("link=Move to the Recycle Bin"));
+		selenium.click(RuntimeVariables.replace(
+				"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("The asset could not be found."),
-			selenium.getText("//div[@class='portlet-msg-error']"));
-		assertTrue(selenium.isPartialText(
-				"//div[@class='portlet-msg-success taglib-trash-undo']/form",
-				"The selected item was moved to the Recycle Bin."));
-		assertFalse(selenium.isTextPresent("Blogs Entry2 Title"));
+		assertEquals(RuntimeVariables.replace(
+				"The selected item was moved to the Recycle Bin. Undo"),
+			selenium.getText(
+				"//div[@class='portlet-msg-success taglib-trash-undo']"));
 	}
 }

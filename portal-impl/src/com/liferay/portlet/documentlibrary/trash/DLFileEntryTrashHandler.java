@@ -108,7 +108,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	}
 
 	public ContainerModel getParentContainerModel(long classPK)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 

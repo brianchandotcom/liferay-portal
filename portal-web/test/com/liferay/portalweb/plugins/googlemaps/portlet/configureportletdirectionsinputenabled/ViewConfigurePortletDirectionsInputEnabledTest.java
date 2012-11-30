@@ -34,20 +34,14 @@ public class ViewConfigurePortletDirectionsInputEnabledTest extends BaseTestCase
 			selenium.getValue("//input[contains(@name,'_directionsAddress')]"));
 		assertTrue(selenium.isVisible("//input[@value='Get Directions']"));
 		assertEquals(RuntimeVariables.replace(
-				"1220 Brea Canyon Road, Diamond Bar, CA, 91789"),
-			selenium.getText("//div[@style='overflow: auto;']"));
+				"From 1220 Brea Canyon Road, Diamond Bar, CA, 91789"),
+			selenium.getText("//div[@class='aui-field-wrapper-content']"));
 		selenium.clickAt("//input[@value='Get Directions']",
 			RuntimeVariables.replace("Get Directions"));
 		Thread.sleep(5000);
-		selenium.selectWindow("name=undefined");
-		selenium.waitForVisible("//div[2]/input");
-		assertEquals("205 W. Wacker Dr, Suite 513 Chicago, IL, 60606 to 1220 Brea Canyon Road, Diamond Bar, CA, 91789",
-			selenium.getValue("//div[2]/input"));
-		assertEquals("205 W. Wacker Dr, Suite 513 Chicago, IL, 60606",
-			selenium.getValue("//input[@id='d_d']"));
-		assertEquals("1220 Brea Canyon Road, Diamond Bar, CA, 91789",
-			selenium.getValue("//input[@id='d_daddr']"));
-		selenium.close();
-		selenium.selectWindow("null");
+		assertEquals(RuntimeVariables.replace("Map"),
+			selenium.getText("//div[@title='Show street map']"));
+		assertEquals(RuntimeVariables.replace("Satellite"),
+			selenium.getText("//div[@title='Show satellite imagery']"));
 	}
 }

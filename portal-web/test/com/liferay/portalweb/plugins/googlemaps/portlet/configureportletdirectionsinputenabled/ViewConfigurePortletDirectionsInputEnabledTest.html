@@ -35,8 +35,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@style='overflow: auto;']</td>
-	<td>1220 Brea Canyon Road, Diamond Bar, CA, 91789</td>
+	<td>//div[@class='aui-field-wrapper-content']</td>
+	<td>From 1220 Brea Canyon Road, Diamond Bar, CA, 91789</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -49,39 +49,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>name=undefined</td>
-	<td>Google Maps</td>
+	<td>assertText</td>
+	<td>//div[@title='Show street map']</td>
+	<td>Map</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[2]/input</td>
-	<td>Directions</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>//div[2]/input</td>
-	<td>205 W. Wacker Dr, Suite 513 Chicago, IL, 60606 to 1220 Brea Canyon Road, Diamond Bar, CA, 91789</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>//input[@id='d_d']</td>
-	<td>205 W. Wacker Dr, Suite 513 Chicago, IL, 60606</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>//input[@id='d_daddr']</td>
-	<td>1220 Brea Canyon Road, Diamond Bar, CA, 91789</td>
-</tr>
-<tr>
-	<td>close</td>
-	<td>name=undefined</td>
-	<td>Google Maps</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@title='Show satellite imagery']</td>
+	<td>Satellite</td>
 </tr>
 </tbody></table>
 </body>

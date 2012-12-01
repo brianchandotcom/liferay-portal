@@ -47,18 +47,6 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		baseActionsMap = getBaseActionsMap();
 		macrosMap = getMacrosMap();
 		pathsMap = getPathsMap();
-		/*
-		for (String key : pathsMap.keySet()) {
-			System.out.println(key);
-			System.out.println("values:");
-			for (int i = 0; i < pathsMap.get(key).length; i++) {
-				System.out.println(pathsMap.get(key)[i]);
-			}
-
-			System.out.println("************");
-		}
-
-		*/
 
 		Set<String> testFileNames = getTestFileNames();
 
@@ -316,6 +304,7 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append(dereferenceParams(command, steps));
 
 		sb.append("\n</ol>\n");
+		
 		return sb.toString();
 	}
 

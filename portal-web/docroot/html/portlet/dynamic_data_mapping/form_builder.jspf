@@ -164,16 +164,10 @@ for (int i = 0; i < locales.length; i++) {
 	var availableFields;
 
 	<c:if test="<%= Validator.isNotNull(scopeAvailableFields) %>">
+		availableFields = A.Object.getValue(window, '<%= HtmlUtil.escapeJS(scopeAvailableFields) %>'.split('.'));
 
-		<%
-		scopeAvailableFields = HtmlUtil.escapeJS(scopeAvailableFields);
-		%>
-
-		if (A.Lang.isFunction(window['<%= scopeAvailableFields %>'])) {
-			availableFields = window['<%= scopeAvailableFields %>'](A, Liferay.FormBuilder);
-		}
-		else {
-			availableFields = A.Object.getValue(window, '<%= scopeAvailableFields %>'.split('.'));
+		if (A.Lang.isFunction(availableFields)) {
+			availableFields = availableFields(A, Liferay.FormBuilder);
 		}
 	</c:if>
 

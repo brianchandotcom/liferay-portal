@@ -22,12 +22,17 @@
 <tr>
 	<td>BREADCRUMB_1</td>
 	<td>//nav[@id='breadcrumbs']/ul/li[1]/span/a</td>
-	<td>Control Panel</td>
+	<td>First Breadcrumb</td>
 </tr>
 <tr>
 	<td>BREADCRUMB_2</td>
 	<td>//nav[@id='breadcrumbs']/ul/li[2]/span/a</td>
-	<td>Recycle Bin</td>
+	<td>Second Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td>Third Breadcrumb</td>
 </tr>
 <tr>
 	<td></td>
@@ -36,34 +41,46 @@
 </tr>
 <!--HEADER-->
 <tr>
-	<td>PORTLET_TITLE</td>
+	<td>HEADER_TITLE</td>
 	<td>//h1[@id='cpPortletTitle']/span</td>
-	<td>Recycle Bin</td>
+	<td>Portlet Title</td>
 </tr>
 <tr>
-	<td>PORTLET_DESCRIPTION</td>
+	<td>HEADER_DESCRIPTION</td>
 	<td>//div[@id='cpContextPanelTemplate']</td>
-	<td>The Recycle Bin shows all assets removed by users. Assets can be restored or permanently deleted.</td>
+	<td>Portlet Description</td>
 </tr>
 <tr>
-	<td>PORTLET_INFO_EMPTY</td>
+	<td>HEADER_INFO_EMPTY</td>
 	<td>//form[@id='_182_emptyForm']</td>
 	<td>Entries that have been in Recycle Bin for more than 30 days will be automatically deleted.</td>
 </tr>
 <tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PORTLET-->
+<tr>
 	<td>PORTLET_SUCCESS</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>Portlet Success Message</td>
 </tr>
 <tr>
-	<td>EMPTY_RECYCLE_BIN</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EMPTY_RECYCLE_BIN-->
+<tr>
+	<td>EMPTY_RECYCLE_BIN_LINK</td>
 	<td>//a[@id='_182_empty']</td>
-	<td>Empty the Recycle Bin</td>
+	<td>Empty Recycle Bin Link</td>
 </tr>
 <tr>
 	<td>EMPTY_RECYCLE_BIN_CONFIRM</td>
 	<td></td>
-	<td>Are you sure you want to empty the Recycle Bin?</td>
+	<td>Empty Recycle Bin Confirmation</td>
 </tr>
 <tr>
 	<td></td>
@@ -74,30 +91,30 @@
 <tr>
 	<td>SEARCH_FIELD</td>
 	<td>//input[@id='_182_keywords']</td>
-	<td></td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>SEARCH_BUTTON</td>
 	<td>//input[@value='Search']</td>
-	<td>Search</td>
+	<td>Search Button</td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
-<!--RECYCLE BIN TABLE EMPTY-->
+<!--TABLE_EMPTY-->
 <tr>
 	<td>TABLE_EMPTY_MESSAGE</td>
 	<td>//div[@class='portlet-msg-info']</td>
-	<td>The Recycle Bin is empty.</td>
+	<td>Portlet Info Message</td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
-<!--RECYCLE BIN TABLE HEADER-->
+<!--TABLE_HEADER-->
 <tr>
 	<td>TABLE_HEADER_NAME</td>
 	<td>//th[1]</td>
@@ -123,7 +140,7 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--RECYCLE BIN TABLE ENTRIES-->
+<!--TABLE-->
 <tr>
 	<td>TABLE_NAME_1</td>
 	<td>//tr[3]/td[1]/span/a/span</td>
@@ -207,12 +224,12 @@
 <!--ACTIONS MENU-->
 <tr>
 	<td>ACTIONS_RESTORE</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Restore')]</td>
 	<td>Restore</td>
 </tr>
 <tr>
 	<td>ACTIONS_DELETE</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>

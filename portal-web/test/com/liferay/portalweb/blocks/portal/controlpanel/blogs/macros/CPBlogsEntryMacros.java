@@ -86,7 +86,7 @@ public class CPBlogsEntryMacros extends BaseMacros {
 					"BLOGS_ENTRY_LINK_CHECKBOX_1", "")) {
 			cPBlogsHomeActions.check("BLOGS_ENTRY_LINK_CHECKBOX_ALL", null);
 			cPBlogsHomeActions.click("PORTLET_LINK_DELETE",
-				"Move to Recycle Bin");
+				"Move to the Recycle Bin");
 		}
 	}
 }

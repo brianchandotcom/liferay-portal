@@ -7,12 +7,12 @@
 			<param name="portlet" value="Recycle Bin" />
 		</macro>
 
-		<while name="CPRecycleBinPortlet" command="isElementPresent" path="EMPTY_RECYCLE_BIN">
-			<action name="CPRecycleBinPortlet" command="click" path="EMPTY_RECYCLE_BIN" />
-			<action name="CPRecycleBinPortlet" command="confirm" path="EMPTY_RECYCLE_BIN_CONFIRM" />
-			<action name="CPRecycleBinPortlet" command="assertTextEquals" path="PORTLET_SUCCESS" />
+		<while name="CPRecycleBinPortlet" command="isElementPresent" path="EMPTY_RECYCLE_BIN_LINK" value="Empty the Recycle Bin">
+			<action name="CPRecycleBinPortlet" command="click" path="EMPTY_RECYCLE_BIN_LINK" value="Empty the Recycle Bin" />
+			<action name="CPRecycleBinPortlet" command="confirm" path="EMPTY_RECYCLE_BIN_CONFIRM" value="Are you sure you want to empty the Recycle Bin?" />
+			<action name="CPRecycleBinPortlet" command="assertTextEquals" path="PORTLET_SUCCESS" value="Your request completed successfully." />
 		</while>
 
-		<action name="CPRecycleBinPortlet" command="assertTextEquals" path="TABLE_EMPTY_MESSAGE" />
+		<action name="CPRecycleBinPortlet" command="assertTextEquals" path="TABLE_EMPTY_MESSAGE" value="The Recycle Bin is empty." />
 	</macrodef>
 </macros>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.tests.portal.blogs.rc;
+package com.liferay.portalweb.tests.portal.blogs.entry.rc;
 
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.entry.CPBlogsEntryViewActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsHomeActions;
@@ -26,7 +26,7 @@ import com.liferay.portalweb.portal.util.SeleniumUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RateBlogsEntryCPTest extends BaseTestCase {
+public class DeleteBlogsEntryDetailsCPTest extends BaseTestCase {
 	@Override
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
@@ -44,16 +44,21 @@ public class RateBlogsEntryCPTest extends BaseTestCase {
 		GotoMacros gotoMacros = new GotoMacros(selenium);
 
 		gotoMacros.controlPanelPortlet("Blogs");
-		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_TITLE", "Blogs Entry Title");
-		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_TITLE",
+		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE",
 			"Blogs Entry Title");
-		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_CONTENT",
-			"Blogs Entry Content");
-		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_RATING_AVERAGE",
-			"0 Votes");
-		cPBlogsEntryViewActions.click("BLOGS_ENTRY_LINK_RATE_STAR_5", "");
-		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_RATING_AVERAGE",
-			"1 Vote");
+		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_AUTHOR",
+			"Joe Bloggs");
+		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_STATUS",
+			"Approved");
+		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_TITLE", "Blogs Entry Title");
+		cPBlogsEntryViewActions.click("BLOGS_ENTRY_LINK_DELETE",
+			"Move to the Recycle Bin");
+		cPBlogsHomeActions.assertTextEquals("PORTLET_TEXT_SUCCESS_UNDO",
+			"The selected item was moved to the Recycle Bin. Undo");
+		cPBlogsHomeActions.assertTextEquals("PORTLET_TEXT_INFO",
+			"No entries were found.");
+		cPBlogsHomeActions.assertTextNotPresent("", "Blogs Entry Title");
+		cPBlogsHomeActions.assertTextNotPresent("", "Blogs Entry Content");
 	}
 
 	@Override

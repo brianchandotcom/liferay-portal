@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.tests.portal.blogs.rc;
+package com.liferay.portalweb.tests.portal.blogs.entry.rc;
 
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.macros.CPBlogsEntryMacros;
 import com.liferay.portalweb.blocks.portal.controlpanel.recyclebin.macros.CPRecycleBinMacros;
@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.SeleniumUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddBlogsEntryCPTest extends BaseTestCase {
+public class AddBlogsEntryTitleEscapeCharacterCPTest extends BaseTestCase {
 	@Override
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
@@ -36,7 +36,7 @@ public class AddBlogsEntryCPTest extends BaseTestCase {
 	public void test() throws Exception {
 		CPBlogsEntryMacros cPBlogsEntryMacros = new CPBlogsEntryMacros(selenium);
 
-		cPBlogsEntryMacros.add("Blogs Entry Title", "Blogs Entry Content");
+		cPBlogsEntryMacros.add("<!-- -->", "Blogs Entry Content");
 	}
 
 	@Override

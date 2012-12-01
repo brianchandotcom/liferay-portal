@@ -146,22 +146,22 @@
 </tr>
 <tr>
 	<td>BLOGS_ENTRY_LINK_ACTIONS_DELETE</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td>Actions Menu Delete Link</td>
 </tr>
 <tr>
 	<td>BLOGS_ENTRY_LINK_ACTIONS_EDIT</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td>Actions Menu Edit Link</td>
 </tr>
 <tr>
 	<td>BLOGS_ENTRY_LINK_ACTIONS_PERMISSION</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td>Actions Menu Permissions Link</td>
 </tr>
 <tr>
 	<td>BLOGS_ENTRY_LINK_ACTIONS_VIEW</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]</td>
+	<td>//a[@role='menuitem' and contains(.,'View')]</td>
 	<td>Actions Menu View Link</td>
 </tr>
 <tr>
@@ -237,8 +237,8 @@
 </tr>
 <tr>
 	<td>PORTLET_LINK_DELETE</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete Button</td>
+	<td>//input[@value='Move to the Recycle Bin']</td>
+	<td>Recycle Button</td>
 </tr>
 <tr>
 	<td>PORTLET_TEXT_RESULTS</td>
@@ -253,7 +253,12 @@
 <tr>
 	<td>PORTLET_TEXT_SUCCESS</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully. Success Message</td>
+	<td>Portlet Success Mesage</td>
+</tr>
+<tr>
+	<td>PORTLET_TEXT_SUCCESS_UNDO</td>
+	<td>//form[@id='_161_undoForm']</td>
+	<td>Portlet Success Mesage</td>
 </tr>
 </tbody></table>
 </body>

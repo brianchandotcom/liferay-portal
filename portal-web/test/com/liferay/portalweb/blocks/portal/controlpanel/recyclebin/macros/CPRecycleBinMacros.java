@@ -34,12 +34,16 @@ public class CPRecycleBinMacros extends BaseMacros {
 		gotoMacros.controlPanelPortlet("Recycle Bin");
 
 		while (cPRecycleBinPortletActions.isElementPresent(
-					"EMPTY_RECYCLE_BIN", "")) {
-			cPRecycleBinPortletActions.click("EMPTY_RECYCLE_BIN", null);
-			cPRecycleBinPortletActions.confirm("EMPTY_RECYCLE_BIN_CONFIRM", null);
-			cPRecycleBinPortletActions.assertTextEquals("PORTLET_SUCCESS", null);
+					"EMPTY_RECYCLE_BIN_LINK", "Empty the Recycle Bin")) {
+			cPRecycleBinPortletActions.click("EMPTY_RECYCLE_BIN_LINK",
+				"Empty the Recycle Bin");
+			cPRecycleBinPortletActions.confirm("EMPTY_RECYCLE_BIN_CONFIRM",
+				"Are you sure you want to empty the Recycle Bin?");
+			cPRecycleBinPortletActions.assertTextEquals("PORTLET_SUCCESS",
+				"Your request completed successfully.");
 		}
 
-		cPRecycleBinPortletActions.assertTextEquals("TABLE_EMPTY_MESSAGE", null);
+		cPRecycleBinPortletActions.assertTextEquals("TABLE_EMPTY_MESSAGE",
+			"The Recycle Bin is empty.");
 	}
 }

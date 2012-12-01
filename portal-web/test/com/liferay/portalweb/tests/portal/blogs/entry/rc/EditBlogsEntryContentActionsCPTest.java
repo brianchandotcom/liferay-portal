@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.tests.portal.blogs.rc;
+package com.liferay.portalweb.tests.portal.blogs.entry.rc;
 
+import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.entry.CPBlogsEntryViewActions;
+import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.entryedit.CPBlogsEntryEditActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsHomeActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.macros.CPBlogsEntryMacros;
 import com.liferay.portalweb.blocks.portal.controlpanel.recyclebin.macros.CPRecycleBinMacros;
@@ -25,7 +27,7 @@ import com.liferay.portalweb.portal.util.SeleniumUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DeleteBlogsEntryListCPTest extends BaseTestCase {
+public class EditBlogsEntryContentActionsCPTest extends BaseTestCase {
 	@Override
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
@@ -38,25 +40,38 @@ public class DeleteBlogsEntryListCPTest extends BaseTestCase {
 	}
 
 	public void test() throws Exception {
+		CPBlogsEntryEditActions cPBlogsEntryEditActions = new CPBlogsEntryEditActions(selenium);
+		CPBlogsEntryViewActions cPBlogsEntryViewActions = new CPBlogsEntryViewActions(selenium);
 		CPBlogsHomeActions cPBlogsHomeActions = new CPBlogsHomeActions(selenium);
 		GotoMacros gotoMacros = new GotoMacros(selenium);
 
 		gotoMacros.controlPanelPortlet("Blogs");
 		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE",
 			"Blogs Entry Title");
-		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_AUTHOR",
-			"Joe Bloggs");
-		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_STATUS",
-			"Approved");
-		cPBlogsHomeActions.check("BLOGS_ENTRY_LINK_CHECKBOX", "");
-		cPBlogsHomeActions.click("PORTLET_LINK_DELETE",
-			"Move to the Recycle Bin");
-		cPBlogsHomeActions.assertTextEquals("PORTLET_TEXT_SUCCESS_UNDO",
-			"The selected item was moved to the Recycle Bin. Undo");
-		cPBlogsHomeActions.assertTextEquals("PORTLET_TEXT_INFO",
-			"No entries were found.");
-		cPBlogsHomeActions.assertTextNotPresent("", "Blogs Entry Title");
-		cPBlogsHomeActions.assertTextNotPresent("", "Blogs Entry Content");
+		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_TITLE", "Blogs Entry Title");
+		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_TITLE",
+			"Blogs Entry Title");
+		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_CONTENT",
+			"Blogs Entry Content");
+		gotoMacros.controlPanelPortlet("Blogs");
+		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE",
+			"Blogs Entry Title");
+		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_ACTIONS", "Actions");
+		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_ACTIONS_EDIT", "Edit");
+		cPBlogsEntryEditActions.type("CONTENT_FIELD_CONTENT",
+			"Blogs Entry Content Edit");
+		cPBlogsEntryEditActions.click("CONTENT_LINK_SAVE", "Publish");
+		cPBlogsEntryEditActions.assertTextEquals("PORTLET_TEXT_SUCCESS",
+			"Your request completed successfully.");
+		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE",
+			"Blogs Entry Title");
+		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_TITLE", "Blogs Entry Title");
+		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_TITLE",
+			"Blogs Entry Title");
+		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_CONTENT",
+			"Blogs Entry Content Edit");
+		cPBlogsEntryViewActions.assertTextNotEquals("BLOGS_ENTRY_TEXT_CONTENT",
+			"Blogs Entry Content");
 	}
 
 	@Override

@@ -62,7 +62,7 @@
 
 		<while name="CPBlogsHome" command="isElementPresent" path="BLOGS_ENTRY_LINK_CHECKBOX_1">
 			<action name="CPBlogsHome" command="check" path="BLOGS_ENTRY_LINK_CHECKBOX_ALL" />
-			<action name="CPBlogsHome" command="click" path="PORTLET_LINK_DELETE" value="Move to Recycle Bin" />
+			<action name="CPBlogsHome" command="click" path="PORTLET_LINK_DELETE" value="Move to the Recycle Bin" />
 		</while>
 	</macrodef>
 </macros>

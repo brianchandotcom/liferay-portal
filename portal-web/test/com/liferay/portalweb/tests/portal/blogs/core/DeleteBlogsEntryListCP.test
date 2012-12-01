@@ -14,7 +14,6 @@
 		</macro>
 
 		<action name="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
-		<action name="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_AUTHOR" value="Joe Bloggs" />
 		<action name="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Approved" />
 		<action name="CPBlogsHome" command="check" path="BLOGS_ENTRY_LINK_CHECKBOX" value="" />
 		<action name="CPBlogsHome" command="click" path="PORTLET_LINK_DELETE" value="Move to the Recycle Bin" />

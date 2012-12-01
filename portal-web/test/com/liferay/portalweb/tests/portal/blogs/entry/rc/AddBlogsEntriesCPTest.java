@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.tests.portal.blogs.rc;
+package com.liferay.portalweb.tests.portal.blogs.entry.rc;
 
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.macros.CPBlogsEntryMacros;
 import com.liferay.portalweb.blocks.portal.controlpanel.recyclebin.macros.CPRecycleBinMacros;
@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.SeleniumUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddBlogsEntryTitle150CharactersTest extends BaseTestCase {
+public class AddBlogsEntriesCPTest extends BaseTestCase {
 	@Override
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
@@ -36,8 +36,9 @@ public class AddBlogsEntryTitle150CharactersTest extends BaseTestCase {
 	public void test() throws Exception {
 		CPBlogsEntryMacros cPBlogsEntryMacros = new CPBlogsEntryMacros(selenium);
 
-		cPBlogsEntryMacros.add("|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15",
-			"Blogs Entry Content");
+		cPBlogsEntryMacros.add("Blogs Entry1 Title", "Blogs Entry1 Content");
+		cPBlogsEntryMacros.add("Blogs Entry2 Title", "Blogs Entry2 Content");
+		cPBlogsEntryMacros.add("Blogs Entry3 Title", "Blogs Entry3 Content");
 	}
 
 	@Override

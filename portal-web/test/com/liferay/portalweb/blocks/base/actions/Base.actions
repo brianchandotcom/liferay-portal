@@ -71,7 +71,7 @@
 
 	<actiondef
 		name="open"
-		description="Open a window to the URL: &lt;strong&gt;${URL}&lt;/strong&gt;."
+		description="Open a window to &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; (&lt;strong&gt;${PATH.VALUE}&lt;/strong&gt;)."
 	/>
 
 	<actiondef

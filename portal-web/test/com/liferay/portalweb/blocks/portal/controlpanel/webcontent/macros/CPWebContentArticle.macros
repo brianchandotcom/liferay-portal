@@ -5,7 +5,7 @@
 		description="In the &lt;strong&gt;Control Panel Web Content Portlet&lt;/strong&gt;, add a Web Content Article with title: &lt;strong&gt;${title}&lt;/strong&gt; and content: &lt;strong&gt;${content}&lt;/strong&gt;."
 	>
 		<macro name="Goto" command="controlPanelPortlet">
-			<param name="page" value="Web Content" />
+			<param name="portlet" value="Web Content" />
 		</macro>
 
 		<action name="CPWebContentHome" command="click" path="BUTTONS_ADD" value="Add" />
@@ -23,7 +23,7 @@
 		description="In the &lt;strong&gt;Control Panel Web Content Portlet&lt;/strong&gt;, delete all Web Content Articles."
 	>
 		<macro name="Goto" command="controlPanelPortlet">
-			<param name="page" value="Web Content" />
+			<param name="portlet" value="Web Content" />
 		</macro>
 
 		<while name="CPWebContentHome" command="isElementPresent" path="ENTRIES_ARTICLE_1">

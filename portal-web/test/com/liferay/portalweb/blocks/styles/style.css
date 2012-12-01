@@ -67,7 +67,6 @@ body {
 	text-transform: uppercase;
 	font-size: 0.75em;
 	font-weight: bold;
-	line-height: 3.0em;
 }
 
 .macro-steps {
@@ -91,13 +90,12 @@ body {
 
 
 strong {
-	border-bottom: 0px;
+	border-bottom: 1px;
 	border-left: 0px;
 	border-right: 0px;
 	border-top: 0px;
 	border-style: dashed;
 	border-color: #5C9EE6;
-	background-color: #FFB5D3;
 }
 
 a:link, a:visited, a:active {

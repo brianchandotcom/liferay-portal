@@ -161,12 +161,25 @@ for (int i = 0; i < locales.length; i++) {
 %>
 
 <aui:script position="inline" use="liferay-portlet-dynamic-data-mapping">
+	var availableFields;
+
+	<c:if test="<%= Validator.isNotNull(scopeAvailableFields) %>">
+
+		<%
+		scopeAvailableFields = HtmlUtil.escapeJS(scopeAvailableFields);
+		%>
+
+		if (A.Lang.isFunction(window['<%= scopeAvailableFields %>'])) {
+			availableFields = window['<%= scopeAvailableFields %>'](A, Liferay.FormBuilder);
+		}
+		else {
+			availableFields = A.Object.getValue(window, '<%= scopeAvailableFields %>'.split('.'));
+		}
+	</c:if>
+
 	window.<portlet:namespace />formBuilder = new Liferay.FormBuilder(
 		{
-			<c:if test="<%= Validator.isNotNull(scopeAvailableFields) %>">
-				availableFields: A.Object.getValue(window, '<%= HtmlUtil.escapeJS(scopeAvailableFields) %>'.split('.')),
-			</c:if>
-
+			availableFields: availableFields,
 			boundingBox: '#<portlet:namespace />formBuilder',
 			enableEditing: false,
 

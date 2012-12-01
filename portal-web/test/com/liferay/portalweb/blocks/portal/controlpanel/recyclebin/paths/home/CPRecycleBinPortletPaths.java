@@ -29,38 +29,41 @@ public class CPRecycleBinPortletPaths {
 			"", "Control Panel Recycle Bin Home Page"
 		};
 	private static String[] _BREADCRUMB_1 = {
-			"//nav[@id='breadcrumbs']/ul/li[1]/span/a", "Control Panel"
+			"//nav[@id='breadcrumbs']/ul/li[1]/span/a", "First Breadcrumb"
 		};
 	private static String[] _BREADCRUMB_2 = {
-			"//nav[@id='breadcrumbs']/ul/li[2]/span/a", "Recycle Bin"
+			"//nav[@id='breadcrumbs']/ul/li[2]/span/a", "Second Breadcrumb"
 		};
-	private static String[] _PORTLET_TITLE = {
-			"//h1[@id='cpPortletTitle']/span", "Recycle Bin"
+	private static String[] _BREADCRUMB_3 = {
+			"//nav[@id='breadcrumbs']/ul/li[3]/span/a", "Third Breadcrumb"
 		};
-	private static String[] _PORTLET_DESCRIPTION = {
-			"//div[@id='cpContextPanelTemplate']",
-			"The Recycle Bin shows all assets removed by users. Assets can be restored or permanently deleted."
+	private static String[] _HEADER_TITLE = {
+			"//h1[@id='cpPortletTitle']/span", "Portlet Title"
 		};
-	private static String[] _PORTLET_INFO_EMPTY = {
+	private static String[] _HEADER_DESCRIPTION = {
+			"//div[@id='cpContextPanelTemplate']", "Portlet Description"
+		};
+	private static String[] _HEADER_INFO_EMPTY = {
 			"//form[@id='_182_emptyForm']",
 			"Entries that have been in Recycle Bin for more than 30 days will be automatically deleted."
 		};
 	private static String[] _PORTLET_SUCCESS = {
-			"//div[@class='portlet-msg-success']",
-			"Your request completed successfully."
+			"//div[@class='portlet-msg-success']", "Portlet Success Message"
 		};
-	private static String[] _EMPTY_RECYCLE_BIN = {
-			"//a[@id='_182_empty']", "Empty the Recycle Bin"
+	private static String[] _EMPTY_RECYCLE_BIN_LINK = {
+			"//a[@id='_182_empty']", "Empty Recycle Bin Link"
 		};
 	private static String[] _EMPTY_RECYCLE_BIN_CONFIRM = {
-			"", "Are you sure you want to empty the Recycle Bin?"
+			"", "Empty Recycle Bin Confirmation"
 		};
-	private static String[] _SEARCH_FIELD = { "//input[@id='_182_keywords']", "" };
+	private static String[] _SEARCH_FIELD = {
+			"//input[@id='_182_keywords']", "Search Field"
+		};
 	private static String[] _SEARCH_BUTTON = {
-			"//input[@value='Search']", "Search"
+			"//input[@value='Search']", "Search Button"
 		};
 	private static String[] _TABLE_EMPTY_MESSAGE = {
-			"//div[@class='portlet-msg-info']", "The Recycle Bin is empty."
+			"//div[@class='portlet-msg-info']", "Portlet Info Message"
 		};
 	private static String[] _TABLE_HEADER_NAME = { "//th[1]", "Name" };
 	private static String[] _TABLE_HEADER_TYPE = { "//th[2]/span/a", "Type" };
@@ -95,12 +98,10 @@ public class CPRecycleBinPortletPaths {
 			"Actions"
 		};
 	private static String[] _ACTIONS_RESTORE = {
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]",
-			"Restore"
+			"//a[@role='menuitem' and contains(.,'Restore')]", "Restore"
 		};
 	private static String[] _ACTIONS_DELETE = {
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
-			"Delete"
+			"//a[@role='menuitem' and contains(.,'Delete')]", "Delete"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 
@@ -108,11 +109,12 @@ public class CPRecycleBinPortletPaths {
 		_paths.put("PAGE_NAME", _PAGE_NAME);
 		_paths.put("BREADCRUMB_1", _BREADCRUMB_1);
 		_paths.put("BREADCRUMB_2", _BREADCRUMB_2);
-		_paths.put("PORTLET_TITLE", _PORTLET_TITLE);
-		_paths.put("PORTLET_DESCRIPTION", _PORTLET_DESCRIPTION);
-		_paths.put("PORTLET_INFO_EMPTY", _PORTLET_INFO_EMPTY);
+		_paths.put("BREADCRUMB_3", _BREADCRUMB_3);
+		_paths.put("HEADER_TITLE", _HEADER_TITLE);
+		_paths.put("HEADER_DESCRIPTION", _HEADER_DESCRIPTION);
+		_paths.put("HEADER_INFO_EMPTY", _HEADER_INFO_EMPTY);
 		_paths.put("PORTLET_SUCCESS", _PORTLET_SUCCESS);
-		_paths.put("EMPTY_RECYCLE_BIN", _EMPTY_RECYCLE_BIN);
+		_paths.put("EMPTY_RECYCLE_BIN_LINK", _EMPTY_RECYCLE_BIN_LINK);
 		_paths.put("EMPTY_RECYCLE_BIN_CONFIRM", _EMPTY_RECYCLE_BIN_CONFIRM);
 		_paths.put("SEARCH_FIELD", _SEARCH_FIELD);
 		_paths.put("SEARCH_BUTTON", _SEARCH_BUTTON);

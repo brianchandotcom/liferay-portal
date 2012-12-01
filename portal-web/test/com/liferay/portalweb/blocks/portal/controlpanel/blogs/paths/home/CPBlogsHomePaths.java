@@ -112,19 +112,19 @@ public class CPBlogsHomePaths {
 			"//tr[5]/td/span/ul/li/strong/a/span", "Blog Entry 3 Actions Link"
 		};
 	private static String[] _BLOGS_ENTRY_LINK_ACTIONS_DELETE = {
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
+			"//a[@role='menuitem' and contains(.,'Delete')]",
 			"Actions Menu Delete Link"
 		};
 	private static String[] _BLOGS_ENTRY_LINK_ACTIONS_EDIT = {
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+			"//a[@role='menuitem' and contains(.,'Edit')]",
 			"Actions Menu Edit Link"
 		};
 	private static String[] _BLOGS_ENTRY_LINK_ACTIONS_PERMISSION = {
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]",
+			"//a[@role='menuitem' and contains(.,'Permissions')]",
 			"Actions Menu Permissions Link"
 		};
 	private static String[] _BLOGS_ENTRY_LINK_ACTIONS_VIEW = {
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]",
+			"//a[@role='menuitem' and contains(.,'View')]",
 			"Actions Menu View Link"
 		};
 	private static String[] _BLOGS_ENTRY_LINK_CONFIRM_DELETE_ACTIONS = {
@@ -172,7 +172,7 @@ public class CPBlogsHomePaths {
 			"//input[@value='Search']", "Portlet Search Button"
 		};
 	private static String[] _PORTLET_LINK_DELETE = {
-			"//input[@value='Delete']", "Delete Button"
+			"//input[@value='Move to the Recycle Bin']", "Recycle Button"
 		};
 	private static String[] _PORTLET_TEXT_RESULTS = {
 			"//div[@class='search-results']", "Portlet Search Results"
@@ -182,8 +182,10 @@ public class CPBlogsHomePaths {
 			"No entries were found. Search Results Message"
 		};
 	private static String[] _PORTLET_TEXT_SUCCESS = {
-			"//div[@class='portlet-msg-success']",
-			"Your request completed successfully. Success Message"
+			"//div[@class='portlet-msg-success']", "Portlet Success Mesage"
+		};
+	private static String[] _PORTLET_TEXT_SUCCESS_UNDO = {
+			"//form[@id='_161_undoForm']", "Portlet Success Mesage"
 		};
 	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
 
@@ -247,5 +249,6 @@ public class CPBlogsHomePaths {
 		_paths.put("PORTLET_TEXT_RESULTS", _PORTLET_TEXT_RESULTS);
 		_paths.put("PORTLET_TEXT_INFO", _PORTLET_TEXT_INFO);
 		_paths.put("PORTLET_TEXT_SUCCESS", _PORTLET_TEXT_SUCCESS);
+		_paths.put("PORTLET_TEXT_SUCCESS_UNDO", _PORTLET_TEXT_SUCCESS_UNDO);
 	}
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.tests.portal.blogs.rc;
+package com.liferay.portalweb.tests.portal.blogs.entry.rc;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 
@@ -22,13 +22,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsTestPlan extends BaseTestSuite {
+public class EntryTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTestSuite(AddBlogsEntriesCPTest.class);
 		testSuite.addTestSuite(AddBlogsEntryAutoDraftCPTest.class);
-		testSuite.addTestSuite(AddBlogsEntryCPTest.class);
 		testSuite.addTestSuite(AddBlogsEntryContentNullCPTest.class);
 		testSuite.addTestSuite(AddBlogsEntryTitle150CharactersTest.class);
 		testSuite.addTestSuite(AddBlogsEntryTitle151CharactersTest.class);
@@ -37,7 +36,6 @@ public class BlogsTestPlan extends BaseTestSuite {
 		testSuite.addTestSuite(AddBlogsEntryTrackbackCPTest.class);
 		testSuite.addTestSuite(DeleteBlogsEntryActionsCPTest.class);
 		testSuite.addTestSuite(DeleteBlogsEntryDetailsCPTest.class);
-		testSuite.addTestSuite(DeleteBlogsEntryListCPTest.class);
 		testSuite.addTestSuite(DeleteBlogsEntryTitle150CharactersActionsCPTest.class);
 		testSuite.addTestSuite(DeleteBlogsEntryTitleEscapeCharacterActionsCPTest.class);
 		testSuite.addTestSuite(EditBlogsEntryContentActionsCPTest.class);

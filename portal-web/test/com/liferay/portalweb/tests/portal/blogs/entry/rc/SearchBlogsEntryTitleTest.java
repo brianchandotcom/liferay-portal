@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.tests.portal.blogs.rc;
+package com.liferay.portalweb.tests.portal.blogs.entry.rc;
 
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsHomeActions;
+import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsSearchActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.macros.CPBlogsEntryMacros;
 import com.liferay.portalweb.blocks.portal.controlpanel.recyclebin.macros.CPRecycleBinMacros;
 import com.liferay.portalweb.blocks.portal.home.macros.GotoMacros;
@@ -25,8 +26,7 @@ import com.liferay.portalweb.portal.util.SeleniumUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DeleteBlogsEntryTitle150CharactersActionsCPTest
-	extends BaseTestCase {
+public class SearchBlogsEntryTitleTest extends BaseTestCase {
 	@Override
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
@@ -35,31 +35,29 @@ public class DeleteBlogsEntryTitle150CharactersActionsCPTest
 		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
 
 		portletSignInUserMacros.signIn("test@liferay.com", "test");
-		cPBlogsEntryMacros.add("|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15",
-			"Blogs Entry Content");
+		cPBlogsEntryMacros.add("Blogs Entry Title", "Blogs Entry Content");
 	}
 
 	public void test() throws Exception {
 		CPBlogsHomeActions cPBlogsHomeActions = new CPBlogsHomeActions(selenium);
+		CPBlogsSearchActions cPBlogsSearchActions = new CPBlogsSearchActions(selenium);
 		GotoMacros gotoMacros = new GotoMacros(selenium);
 
 		gotoMacros.controlPanelPortlet("Blogs");
-		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE_1",
-			"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15");
-		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_AUTHOR_1",
-			"Joe Bloggs");
-		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_STATUS_1",
-			"Approved");
-		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_ACTIONS_1", "Actions");
-		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_ACTIONS_DELETE",
-			"Move to the Recycle Bin");
-		cPBlogsHomeActions.assertTextEquals("PORTLET_TEXT_SUCCESS_UNDO",
-			"The selected item was moved to the Recycle Bin. Undo");
-		cPBlogsHomeActions.assertTextEquals("PORTLET_TEXT_INFO",
-			"No entries were found.");
-		cPBlogsHomeActions.assertTextNotPresent("",
-			"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15");
-		cPBlogsHomeActions.assertTextNotPresent("", "Blogs Entry Content");
+		cPBlogsHomeActions.type("PORTLET_FIELD_SEARCH", "Title");
+		cPBlogsHomeActions.click("PORTLET_LINK_SEARCH", "Search");
+		cPBlogsSearchActions.assertTextEquals("TABLE_NUMBER", "1.");
+		cPBlogsSearchActions.assertTextEquals("TABLE_ENTRY", "Blogs Entry Title");
+		cPBlogsSearchActions.assertTextEquals("SEARCH_RESULTS",
+			"Showing 1 result.");
+		cPBlogsSearchActions.type("SEARCH_FIELD", "Title1");
+		cPBlogsSearchActions.click("SEARCH_BUTTON", "Search");
+		cPBlogsSearchActions.assertElementNotPresent("TABLE_NUMBER", "1.");
+		cPBlogsSearchActions.assertElementNotPresent("TABLE_ENTRY",
+			"Blogs Entry Title");
+		cPBlogsSearchActions.assertTextNotPresent("", "Blogs Entry Title");
+		cPBlogsSearchActions.assertTextEquals("PORTLET_INFO",
+			"No entries were found that matched the keywords: Title1.");
 	}
 
 	@Override

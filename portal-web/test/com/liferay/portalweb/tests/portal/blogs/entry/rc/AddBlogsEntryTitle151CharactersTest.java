@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.tests.portal.blogs.rc;
+package com.liferay.portalweb.tests.portal.blogs.entry.rc;
 
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.addentry.CPBlogsAddEntryActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.entry.CPBlogsEntryViewActions;
@@ -27,7 +27,7 @@ import com.liferay.portalweb.portal.util.SeleniumUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddBlogsEntryAutoDraftCPTest extends BaseTestCase {
+public class AddBlogsEntryTitle151CharactersTest extends BaseTestCase {
 	@Override
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
@@ -45,21 +45,18 @@ public class AddBlogsEntryAutoDraftCPTest extends BaseTestCase {
 
 		gotoMacros.controlPanelPortlet("Blogs");
 		cPBlogsHomeActions.click("PORTLET_LINK_ADD", "Add");
-		cPBlogsAddEntryActions.type("CONTENT_FIELD_TITLE", "Blogs Entry Title");
+		cPBlogsAddEntryActions.type("CONTENT_FIELD_TITLE",
+			"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15X");
 		cPBlogsAddEntryActions.type("CONTENT_FIELD_CONTENT",
 			"Blogs Entry Content");
-		cPBlogsAddEntryActions.assertTextEquals("CONTENT_TEXT_SAVE_STATUS",
-			"Draft saved");
-		gotoMacros.controlPanelPortlet("Blogs");
-		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_TITLE",
-			"Blogs Entry Title");
-		cPBlogsHomeActions.assertTextEquals("BLOGS_ENTRY_LINK_STATUS", "Draft");
-		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_TITLE", "Blogs Entry Title");
-		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_DRAFT",
-			"Draft");
-		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_TITLE",
-			"Blogs Entry Title");
-		cPBlogsEntryViewActions.assertTextEquals("BLOGS_ENTRY_TEXT_CONTENT",
+		cPBlogsAddEntryActions.click("CONTENT_LINK_SAVE", "Publish");
+		cPBlogsHomeActions.assertTextEquals("PORTLET_TEXT_SUCCESS",
+			"Your request completed successfully.");
+		cPBlogsHomeActions.click("BLOGS_ENTRY_LINK_TITLE_1",
+			"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15");
+		cPBlogsEntryViewActions.click("BLOGS_ENTRY_TEXT_TITLE",
+			"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15");
+		cPBlogsEntryViewActions.click("BLOGS_ENTRY_TEXT_CONTENT",
 			"Blogs Entry Content");
 	}
 

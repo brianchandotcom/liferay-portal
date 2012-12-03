@@ -110,6 +110,26 @@ public class ClickFunctions extends BaseFunctions {
 		selenium.clickAtAndWait(param1, param2);
 	}
 
+	public void textClickAtHomeClickDockbar(String param1, String param2)
+		throws Exception {
+		selenium.clickAt("//div[@id='dockbar']", "");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]");
+
+		ClickFunctions clickFunctions = new ClickFunctions(selenium);
+
+		clickFunctions.textClickAt(param1, param2);
+	}
+
+	public void textClickAtPause(String param1, String param2)
+		throws Exception {
+		selenium.pause("1000");
+
+		ClickFunctions clickFunctions = new ClickFunctions(selenium);
+
+		clickFunctions.textClickAt(param1, param2);
+	}
+
 	public void valueClick(String param1, String param2)
 		throws Exception {
 		selenium.waitForVisible(param1);
@@ -140,5 +160,15 @@ public class ClickFunctions extends BaseFunctions {
 		selenium.waitForValue(param1, param2);
 		selenium.assertValue(param1, param2);
 		selenium.clickAtAndWait(param1, param2);
+	}
+
+	public void valueClickAtAndWaitCPBlogsCKEditor(String param1, String param2)
+		throws Exception {
+		selenium.waitForElementPresent(
+			"//textarea[@id='_161_editor' and @style='display: none;']");
+
+		ClickFunctions clickFunctions = new ClickFunctions(selenium);
+
+		clickFunctions.valueClickAtAndWait(param1, param2);
 	}
 }

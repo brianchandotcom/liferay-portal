@@ -16,6 +16,8 @@ package com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.home
 
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
+import com.liferay.portalweb.blocks.base.functions.CheckFunctions;
+import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
 import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.paths.home.CPWebContentHomePaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
@@ -32,11 +34,10 @@ public class CPWebContentHomeActions extends BaseActionsImpl
 	public void check(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
+		CheckFunctions checkFunctions = new CheckFunctions(selenium);
+
 		if ((param1.equals("ENTRIES_ARTICLE_1_CHECKBOX"))) {
-			selenium.waitForVisible(
-				"xpath=(//a[contains(@data-folder,'false')])[1]");
-			selenium.mouseOver("xpath=(//a[contains(@data-folder,'false')])[1]");
-			super.check(params[0], params[1]);
+			checkFunctions.clickAtWCMouseOverArticle(params[0], params[1]);
 		}
 		else {
 			super.check(params[0], params[1]);
@@ -46,10 +47,11 @@ public class CPWebContentHomeActions extends BaseActionsImpl
 	public void click(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		if ((param1.equals("BUTTONS_ACTIONS") || param1.equals(" BUTTONS_ADD") ||
-				param1.equals(" BUTTONS_MANAGE"))) {
-			selenium.pause("1000");
-			super.click(params[0], params[1]);
+		ClickFunctions clickFunctions = new ClickFunctions(selenium);
+
+		if ((param1.equals("BUTTONS_ACTIONS") || param1.equals("BUTTONS_ADD") ||
+				param1.equals("BUTTONS_MANAGE"))) {
+			clickFunctions.textClickAtPause(params[0], params[1]);
 		}
 		else {
 			super.click(params[0], params[1]);

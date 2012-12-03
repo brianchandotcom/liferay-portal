@@ -39,8 +39,8 @@ public class CPBlogsAddEntryActions extends BaseActionsImpl
 		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 
 		if ((param1.equals("CONTENT_TEXT_SAVE_STATUS"))) {
-			selenium.pause("25000");
-			assertTextEqualsFunctions.assertPartialText(params[0], params[1]);
+			assertTextEqualsFunctions.assertPartialTextPause(params[0],
+				params[1]);
 		}
 		else {
 			super.assertTextEquals(params[0], params[1]);
@@ -54,9 +54,8 @@ public class CPBlogsAddEntryActions extends BaseActionsImpl
 
 		if ((param1.equals("ADD_LINK") || param1.equals("GOTO_LINK") ||
 				param1.equals("MANAGE_LINK"))) {
-			selenium.waitForElementPresent(
-				"//textarea[@id='_161_editor' and @style='display: none;']");
-			clickFunctions.valueClickAtAndWait(params[0], params[1]);
+			clickFunctions.valueClickAtAndWaitCPBlogsCKEditor(params[0],
+				params[1]);
 		}
 		else {
 			super.click(params[0], params[1]);
@@ -69,7 +68,7 @@ public class CPBlogsAddEntryActions extends BaseActionsImpl
 		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
 		if ((param1.equals("CONTENT_FIELD_CONTENT"))) {
-			typeFunctions.typeCKEditorBlogs(params[0], params[1]);
+			typeFunctions.typeCPBlogsCKEditor(params[0], params[1]);
 		}
 		else {
 			super.type(params[0], params[1]);

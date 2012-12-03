@@ -31,6 +31,15 @@ public class AssertTextEqualsFunctions extends BaseFunctions {
 		selenium.assertPartialText(param1, param2);
 	}
 
+	public void assertPartialTextPause(String param1, String param2)
+		throws Exception {
+		selenium.pause("25000");
+
+		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
+
+		assertTextEqualsFunctions.assertPartialText(param1, param2);
+	}
+
 	public void assertText(String param1, String param2)
 		throws Exception {
 		selenium.waitForVisible(param1);
@@ -38,7 +47,7 @@ public class AssertTextEqualsFunctions extends BaseFunctions {
 		selenium.assertText(param1, param2);
 	}
 
-	public void assertTextCKEditorWebContent(String param1, String param2)
+	public void assertTextCPWebContenCKEditor(String param1, String param2)
 		throws Exception {
 		selenium.waitForElementPresent(
 			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");

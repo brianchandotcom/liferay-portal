@@ -17,6 +17,7 @@ package com.liferay.portalweb.blocks.portal.home.actions;
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
 import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
+import com.liferay.portalweb.blocks.base.functions.MouseOverFunctions;
 import com.liferay.portalweb.blocks.base.functions.TypeFunctions;
 import com.liferay.portalweb.blocks.portal.home.paths.HomePaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
@@ -37,10 +38,7 @@ public class HomeActions extends BaseActionsImpl implements LiferayActions {
 
 		if ((param1.equals("ADD_LINK") || param1.equals("GOTO_LINK") ||
 				param1.equals("MANAGE_LINK"))) {
-			selenium.clickAt("//div[@id='dockbar']", "");
-			selenium.waitForElementPresent(
-				"//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]");
-			super.click(params[0], params[1]);
+			clickFunctions.textClickAtHomeClickDockbar(params[0], params[1]);
 		}
 		else if ((param1.equals("ADD_LINK_APPLICATION"))) {
 			clickFunctions.partialTextClickAt(params[0], params[1]);
@@ -60,12 +58,12 @@ public class HomeActions extends BaseActionsImpl implements LiferayActions {
 		throws Exception {
 		String[] params = getParams(param1, param2);
 
+		MouseOverFunctions mouseOverFunctions = new MouseOverFunctions(selenium);
+
 		if ((param1.equals("ADD_LINK") || param1.equals("GOTO_LINK") ||
 				param1.equals("MANAGE_LINK"))) {
-			selenium.clickAt("//div[@id='dockbar']", "");
-			selenium.waitForElementPresent(
-				"//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]");
-			super.mouseOver(params[0], params[1]);
+			mouseOverFunctions.textMouseOverHomeClickDockbar(params[0],
+				params[1]);
 		}
 		else {
 			super.mouseOver(params[0], params[1]);
@@ -78,9 +76,7 @@ public class HomeActions extends BaseActionsImpl implements LiferayActions {
 		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
 		if ((param1.equals("PORTLET_FIELD_SEARCH"))) {
-			selenium.waitForElementPresent(
-				"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-			typeFunctions.sendKeys(params[0], params[1]);
+			typeFunctions.sendKeysHomeAddApplication(params[0], params[1]);
 		}
 		else {
 			super.type(params[0], params[1]);

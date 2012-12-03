@@ -1,9 +1,7 @@
 <actions>
 	<actiondef name="click">
 		<conditional elements="ADD_LINK,GOTO_LINK,MANAGE_LINK">
-			<selenium command="clickAt" target="//div[@id='dockbar']" value="" />
-			<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
-			<defaultcommand />
+			<functions command="textClickAtHomeClickDockbar" />
 		</conditional>
 
 		<conditional elements="ADD_LINK_APPLICATION">
@@ -21,16 +19,13 @@
 
 	<actiondef name="mouseOver">
 		<conditional elements="ADD_LINK,GOTO_LINK,MANAGE_LINK">
-			<selenium command="clickAt" target="//div[@id='dockbar']" value="" />
-			<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
-			<defaultcommand />
+			<functions command="textMouseOverHomeClickDockbar" />
 		</conditional>
 	</actiondef>
 
 	<actiondef name="type">
 		<conditional elements="PORTLET_FIELD_SEARCH">
-			<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]" />
-			<functions command="sendKeys" />
+			<functions command="sendKeysHomeAddApplication" />
 		</conditional>
 	</actiondef>
 </actions>

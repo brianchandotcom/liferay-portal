@@ -50,7 +50,7 @@ public class CPWebContentAddArticleActions extends BaseActionsImpl
 		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
 		if ((param1.equals("ARTICLE_CONTENT"))) {
-			typeFunctions.typeCKEditorWebContent(params[0], params[1]);
+			typeFunctions.typeCPWebContentCKEditor(params[0], params[1]);
 		}
 		else {
 			super.type(params[0], params[1]);

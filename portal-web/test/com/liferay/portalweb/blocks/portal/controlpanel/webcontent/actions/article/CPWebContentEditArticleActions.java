@@ -37,7 +37,7 @@ public class CPWebContentEditArticleActions extends BaseActionsImpl
 		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 
 		if ((param1.equals("ARTICLE_CONTENT"))) {
-			assertTextEqualsFunctions.assertTextCKEditorWebContent(params[0],
+			assertTextEqualsFunctions.assertTextCPWebContenCKEditor(params[0],
 				params[1]);
 		}
 		else if ((param1.equals("ARTICLE_TITLE"))) {

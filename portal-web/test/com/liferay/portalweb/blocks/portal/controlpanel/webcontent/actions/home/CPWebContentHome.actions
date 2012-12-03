@@ -1,18 +1,13 @@
 <actions>
 	<actiondef name="check">
 		<conditional elements="ENTRIES_ARTICLE_1_CHECKBOX">
-			<selenium command="waitForVisible" target="xpath=(//a[contains(@data-folder,'false')])[1]" />
-			<selenium command="mouseOver" target="xpath=(//a[contains(@data-folder,'false')])[1]" />
-
-			<defaultcommand />
+			<functions command="clickAtWCMouseOverArticle" />
 		</conditional>
 	</actiondef>
 
 	<actiondef name="click">
-		<conditional elements="BUTTONS_ACTIONS, BUTTONS_ADD, BUTTONS_MANAGE">
-			<selenium command="pause" target="1000" />
-
-			<defaultcommand />
+		<conditional elements="BUTTONS_ACTIONS,BUTTONS_ADD,BUTTONS_MANAGE">
+			<functions command="textClickAtPause" />
 		</conditional>
 	</actiondef>
 </actions>

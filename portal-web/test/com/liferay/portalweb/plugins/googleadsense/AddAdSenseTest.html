@@ -14,83 +14,103 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Google Adsense Test Page</td>
-	<td>Google Adsense Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Google Adsense Test Page</td>
 	<td>Google Adsense Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_86_adClient</td>
-	<td></td>
+	<td>//iframe[contains(@id,'googleadsenseportlet')]</td>
+	<td>Google Adsense - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'googleadsenseportlet')]</td>
+	<td>Google Adsense - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_86_adClient']</td>
+	<td>Ad Client</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_adClient</td>
+	<td>//input[@id='_86_adClient']</td>
 	<td>ca-pub-7910614330042482</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_adChannel</td>
+	<td>//input[@id='_86_adChannel']</td>
 	<td>12345678</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_86_adType</td>
-	<td>label=Text</td>
+	<td>//select[@id='_86_adType']</td>
+	<td>Text</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_86_adFormat</td>
-	<td>label=(728 x 90) - Leaderboard</td>
+	<td>//select[@id='_86_adFormat']</td>
+	<td>(728 x 90) - Leaderboard</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_colorBorder</td>
+	<td>//input[@id='_86_colorBorder']</td>
 	<td>FFFFFF</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_colorBg</td>
+	<td>//input[@id='_86_colorBg']</td>
 	<td>0000FF</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_colorLink</td>
+	<td>//input[@id='_86_colorLink']</td>
 	<td>FFFFFF</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_colorText</td>
+	<td>//input[@id='_86_colorText']</td>
 	<td>000000</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_colorUrl</td>
+	<td>//input[@id='_86_colorUrl']</td>
 	<td>008000</td>
 </tr>
 <tr>
@@ -99,7 +119,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
 </tr>
@@ -108,7 +128,11 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
 </tr>
-
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
 </tbody></table>
 </body>
 </html>

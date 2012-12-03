@@ -25,9 +25,14 @@ public class AssertAdSensePresentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Google Adsense Test Page");
-		selenium.click(RuntimeVariables.replace("link=Google Adsense Test Page"));
+		selenium.clickAt("link=Google Adsense Test Page",
+			RuntimeVariables.replace("Google Adsense Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("//img[@alt='AdChoices']"));
+		selenium.waitForVisible("//iframe[@id='aswift_0']");
+		selenium.selectFrame("//iframe[@id='aswift_0']");
+		selenium.waitForVisible("//iframe[@id='google_ads_frame1']");
+		selenium.selectFrame("//iframe[@id='google_ads_frame1']");
+		assertTrue(selenium.isVisible("//img[@alt='AdChoices']"));
+		selenium.selectFrame("relative=top");
 	}
 }

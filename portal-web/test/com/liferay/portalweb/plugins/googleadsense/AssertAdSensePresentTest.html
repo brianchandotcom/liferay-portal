@@ -14,21 +14,40 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>clickAtAndWait</td>
 	<td>link=Google Adsense Test Page</td>
 	<td>Google Adsense Test Page</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Google Adsense Test Page</td>
-	<td>Google Adsense Test Page</td>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='aswift_0']</td>
+	<td>Google AdSense</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>selectFrame</td>
+	<td>//iframe[@id='aswift_0']</td>
+	<td>Google AdSense</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='google_ads_frame1']</td>
+	<td>Google AdSense</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='google_ads_frame1']</td>
+	<td>Google AdSense</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
 	<td>//img[@alt='AdChoices']</td>
 	<td>AdChoices</td>
 </tr>
-
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
 </tbody></table>
 </body>
 </html>

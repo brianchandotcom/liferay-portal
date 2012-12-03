@@ -7,7 +7,7 @@
 
 	<actiondef name="type">
 		<conditional elements="ARTICLE_CONTENT">
-			<functions command="typeCKEditorWebContent" />
+			<functions command="typeCPWebContentCKEditor" />
 		</conditional>
 	</actiondef>
 </actions>

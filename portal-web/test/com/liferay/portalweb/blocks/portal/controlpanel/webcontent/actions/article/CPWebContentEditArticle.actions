@@ -1,7 +1,7 @@
 <actions>
 	<actiondef name="assertTextEquals">
 		<conditional elements="ARTICLE_CONTENT">
-			<functions command="assertTextCKEditorWebContent" />
+			<functions command="assertTextCPWebContenCKEditor" />
 		</conditional>
 
 		<conditional elements="ARTICLE_TITLE">

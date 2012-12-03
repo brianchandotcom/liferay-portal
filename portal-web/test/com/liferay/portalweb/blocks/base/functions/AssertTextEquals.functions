@@ -5,13 +5,19 @@
 		<selenium command="assertPartialText" />
 	</functiondef>
 
+	<functiondef name="assertPartialTextPause">
+		<selenium command="pause" target="25000" />
+
+		<functions command="assertPartialText" />
+	</functiondef>
+
 	<functiondef name="assertText">
 		<selenium command="waitForVisible" />
 		<selenium command="waitForText" />
 		<selenium command="assertText" />
 	</functiondef>
 
-	<functiondef name="assertTextCKEditorWebContent">
+	<functiondef name="assertTextCPWebContenCKEditor">
 		<selenium command="waitForElementPresent" target="//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']" />
 
 		<selenium command="waitForVisible" target="//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe" />

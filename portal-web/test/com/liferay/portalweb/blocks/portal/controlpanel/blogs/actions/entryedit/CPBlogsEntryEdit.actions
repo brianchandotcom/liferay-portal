@@ -7,14 +7,13 @@
 
 	<actiondef name="click">
 		<conditional elements="ADD_LINK,GOTO_LINK,MANAGE_LINK">
-			<selenium command="waitForElementPresent" target="//textarea[@id='_161_editor' and @style='display: none;']" />
-			<functions command="valueClickAtAndWait" />
+			<functions command="valueClickAtAndWaitCPBlogsCKEditor" />
 		</conditional>
 	</actiondef>
 
 	<actiondef name="type">
 		<conditional elements="CONTENT_FIELD_CONTENT">
-			<functions command="typeCKEditorBlogs" />
+			<functions command="typeCPBlogsCKEditor" />
 		</conditional>
 	</actiondef>
 </actions>

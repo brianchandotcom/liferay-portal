@@ -30,12 +30,22 @@ public class TypeFunctions extends BaseFunctions {
 		selenium.sendKeys(param1, param2);
 	}
 
+	public void sendKeysHomeAddApplication(String param1, String param2)
+		throws Exception {
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
+
+		TypeFunctions typeFunctions = new TypeFunctions(selenium);
+
+		typeFunctions.sendKeys(param1, param2);
+	}
+
 	public void type(String param1, String param2) throws Exception {
 		selenium.waitForVisible(param1);
 		selenium.type(param1, param2);
 	}
 
-	public void typeCKEditorBlogs(String param1, String param2)
+	public void typeCPBlogsCKEditor(String param1, String param2)
 		throws Exception {
 		selenium.waitForElementPresent(
 			"//textarea[@id='_161_editor' and @style='display: none;']");
@@ -57,7 +67,7 @@ public class TypeFunctions extends BaseFunctions {
 		selenium.selectFrame("relative=top");
 	}
 
-	public void typeCKEditorWebContent(String param1, String param2)
+	public void typeCPWebContentCKEditor(String param1, String param2)
 		throws Exception {
 		selenium.waitForElementPresent(
 			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");

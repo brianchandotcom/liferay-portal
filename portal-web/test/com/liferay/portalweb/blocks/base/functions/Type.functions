@@ -4,12 +4,17 @@
 		<selenium command="sendKeys" />
 	</functiondef>
 
+	<functiondef name="sendKeysHomeAddApplication">
+		<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]" />
+		<functions command="sendKeys" />
+	</functiondef>
+
 	<functiondef name="type">
 		<selenium command="waitForVisible" />
 		<selenium command="type" />
 	</functiondef>
 
-	<functiondef name="typeCKEditorBlogs">
+	<functiondef name="typeCPBlogsCKEditor">
 		<selenium command="waitForElementPresent" target="//textarea[@id='_161_editor' and @style='display: none;']" />
 
 		<selenium command="waitForVisible" target="//span[.='Source']" />
@@ -34,7 +39,7 @@
 		<selenium command="selectFrame" target="relative=top" />
 	</functiondef>
 
-	<functiondef name="typeCKEditorWebContent">
+	<functiondef name="typeCPWebContentCKEditor">
 		<selenium command="waitForElementPresent" target="//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']" />
 
 		<selenium command="waitForVisible" target="//span[.='Source']" />

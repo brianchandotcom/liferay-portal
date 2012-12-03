@@ -46,6 +46,17 @@ public class MouseOverFunctions extends BaseFunctions {
 		selenium.mouseOver(param1);
 	}
 
+	public void textMouseOverHomeClickDockbar(String param1, String param2)
+		throws Exception {
+		selenium.clickAt("//div[@id='dockbar']", "");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]");
+
+		MouseOverFunctions mouseOverFunctions = new MouseOverFunctions(selenium);
+
+		mouseOverFunctions.textMouseOver(param1, param2);
+	}
+
 	public void valueMouseOver(String param1, String param2)
 		throws Exception {
 		selenium.waitForVisible(param1);

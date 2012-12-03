@@ -47,19 +47,19 @@ if (Validator.isNotNull(portletResourceNamespace)) {
 		},
 		['aui-base']
 	);
-</aui:script>
 
-<aui:script use="liferay-portlet-dynamic-data-mapping">
-	var availableFields = A.Array(<%= scriptJSONArray.toString() %>);
+	window.<portlet:namespace />getAvailableFields = function(A, FormBuilder) {
+		var availableFields = <%= scriptJSONArray.toString() %>;
 
-	A.Array.each(
-		availableFields,
-		function(item, index, collection) {
-			item.iconClass = Liferay.FormBuilder.DEFAULT_ICON_CLASS;
-		}
-	);
+		A.Array.each(
+			availableFields,
+			function(item, index, collection) {
+				item.iconClass = FormBuilder.DEFAULT_ICON_CLASS;
+			}
+		);
 
-	window.<%= HtmlUtil.escapeJS(namespace) %>structureAvailableFields = availableFields.concat(Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_TEMPLATE);
+		return availableFields.concat(FormBuilder.AVAILABLE_FIELDS.DDM_TEMPLATE);
+	};
 </aui:script>
 
 <%!

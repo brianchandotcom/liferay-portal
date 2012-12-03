@@ -193,6 +193,7 @@ public class OpenIdAction extends PortletAction {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected String readOpenIdResponse(
 			ThemeDisplay themeDisplay, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -380,6 +381,7 @@ public class OpenIdAction extends PortletAction {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void sendOpenIdRequest(
 			ThemeDisplay themeDisplay, ActionRequest actionRequest,
 			ActionResponse actionResponse)

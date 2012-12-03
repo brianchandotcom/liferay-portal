@@ -1615,6 +1615,20 @@ public interface PropsKeys {
 
 	public static final String OPEN_ID_AUTH_ENABLED = "open.id.auth.enabled";
 
+	public static final String OPEN_ID_PROVIDERS = "open.id.providers";
+
+	public static final String OPEN_ID_SCHEMA = "open.id.schema";
+
+	public static final String OPEN_ID_TYPE_EMAIL = "open.id.type.email";
+
+	public static final String OPEN_ID_TYPE_FIRST_NAME = "open.id.type.first.name";
+
+	public static final String OPEN_ID_TYPE_FULL_NAME = "open.id.type.full.name";
+
+	public static final String OPEN_ID_TYPE_LAST_NAME = "open.id.type.last.name";
+
+	public static final String OPEN_ID_URL = "open.id.url";
+
 	public static final String OPEN_SSO_AUTH_ENABLED = "open.sso.auth.enabled";
 
 	public static final String OPEN_SSO_EMAIL_ADDRESS_ATTR = "open.sso.email.address.attr";

@@ -59,6 +59,8 @@ public class FilterMapping {
 
 		boolean matchURLPattern = false;
 
+		uri = uri.replaceFirst(";jsessionid=[0-9A-F]*", StringPool.BLANK);
+
 		for (String urlPattern : _urlPatterns) {
 			if (isMatchURLPattern(uri, urlPattern)) {
 				matchURLPattern = true;

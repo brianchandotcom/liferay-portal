@@ -300,15 +300,6 @@ public class GroupServiceWrapper implements GroupService,
 	}
 
 	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
-		long userId, java.lang.String[] classNames, java.lang.String name,
-		boolean active, boolean includeControlPanel, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _groupService.getUserPlaces(userId, classNames, name, active,
-			includeControlPanel, start, end);
-	}
-
-	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		long userId, java.lang.String[] classNames,
 		boolean includeControlPanel, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -347,6 +338,15 @@ public class GroupServiceWrapper implements GroupService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _groupService.getUserPlaces(userId, classNames, max);
+	}
+
+	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
+		long userId, java.lang.String[] classNames, java.lang.String name,
+		boolean active, boolean includeControlPanel, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupService.getUserPlaces(userId, classNames, name, active,
+			includeControlPanel, start, end);
 	}
 
 	/**

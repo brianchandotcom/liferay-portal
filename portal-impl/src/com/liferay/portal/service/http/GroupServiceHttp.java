@@ -503,51 +503,12 @@ public class GroupServiceHttp {
 
 	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		HttpPrincipal httpPrincipal, long userId,
-		java.lang.String[] classNames, java.lang.String name, boolean active,
-		boolean includeControlPanel, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"getUserPlaces", _getUserPlacesParameterTypes12);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					classNames, name, active, includeControlPanel, start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.portal.model.Group>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
-		HttpPrincipal httpPrincipal, long userId,
 		java.lang.String[] classNames, boolean includeControlPanel, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"getUserPlaces", _getUserPlacesParameterTypes13);
+					"getUserPlaces", _getUserPlacesParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					classNames, includeControlPanel, max);
@@ -585,10 +546,49 @@ public class GroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"getUserPlaces", _getUserPlacesParameterTypes14);
+					"getUserPlaces", _getUserPlacesParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					classNames, max);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portal.model.Group>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
+		HttpPrincipal httpPrincipal, long userId,
+		java.lang.String[] classNames, java.lang.String name, boolean active,
+		boolean includeControlPanel, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
+					"getUserPlaces", _getUserPlacesParameterTypes14);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					classNames, name, active, includeControlPanel, start, end);
 
 			Object returnObj = null;
 
@@ -1024,14 +1024,14 @@ public class GroupServiceHttp {
 			long.class, int.class, int.class
 		};
 	private static final Class<?>[] _getUserPlacesParameterTypes12 = new Class[] {
-			long.class, java.lang.String[].class, java.lang.String.class,
-			boolean.class, boolean.class, int.class, int.class
-		};
-	private static final Class<?>[] _getUserPlacesParameterTypes13 = new Class[] {
 			long.class, java.lang.String[].class, boolean.class, int.class
 		};
-	private static final Class<?>[] _getUserPlacesParameterTypes14 = new Class[] {
+	private static final Class<?>[] _getUserPlacesParameterTypes13 = new Class[] {
 			long.class, java.lang.String[].class, int.class
+		};
+	private static final Class<?>[] _getUserPlacesParameterTypes14 = new Class[] {
+			long.class, java.lang.String[].class, java.lang.String.class,
+			boolean.class, boolean.class, int.class, int.class
 		};
 	private static final Class<?>[] _getUserPlacesParameterTypes15 = new Class[] {
 			java.lang.String[].class, int.class

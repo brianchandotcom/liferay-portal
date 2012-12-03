@@ -868,6 +868,84 @@
 		</java>
 	</target>
 
+	<target name="build-selenium-actions">
+		<java
+			classname="com.liferay.portal.tools.ActionsXMLToJavaBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test" />
+		</java>
+	</target>
+
+	<target name="build-selenium-macros">
+		<java
+			classname="com.liferay.portal.tools.MacrosXMLToJavaBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test" />
+		</java>
+	</target>
+
+	<target name="build-selenium-new">
+		<java
+			classname="com.liferay.portal.tools.SeleniumXMLToJavaBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test" />
+		</java>
+	</target>
+
+	<target name="build-selenium-paths">
+		<java
+			classname="com.liferay.portal.tools.PathsXMLToJavaBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test" />
+		</java>
+	</target>
+
+	<target name="build-selenium-test-plans">
+		<java
+			classname="com.liferay.portal.tools.TestPlanBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test" />
+		</java>
+	</target>
+
+	<target name="build-selenium-tests">
+		<java
+			classname="com.liferay.portal.tools.TestXMLToJavaBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test" />
+		</java>
+	</target>
+
 	<target name="build-themes">
 		<antcall target="build-alloy" />
 

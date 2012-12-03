@@ -1,0 +1,6 @@
+<units>
+	<unitdef name="assertElementPresent">
+		<selenium command="waitForVisible" />
+		<selenium command="assertVisible" />
+	</unitdef>
+</units>

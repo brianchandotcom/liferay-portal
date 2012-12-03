@@ -1,0 +1,6 @@
+<units>
+	<unitdef name="confirm">
+		<selenium command="waitForConfirmation" />
+		<selenium command="pause" target="1000" />
+	</unitdef>
+</units>

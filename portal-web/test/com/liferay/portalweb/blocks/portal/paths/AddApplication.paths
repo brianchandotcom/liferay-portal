@@ -1,0 +1,33 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>AddApplication</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddApplication</td></tr>
+</thead><tbody>
+<tr>
+	<td>COMMUNITY_LINK</td>
+	<td>//h2/span[.='Community']</td>
+	<td>Community</td>
+</tr>
+<tr>
+	<td>COMMUNITY_LINK_PAGE_COMMENTS</td>
+	<td>//div[@title='Page Comments']/p</td>
+	<td>Page Comments</td>
+</tr>
+<tr>
+	<td>COMMUNITY_LINK_PAGE_COMMENTS_ADD</td>
+	<td>//div[@title='Page Comments']/p/a</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>PORTLET_FIELD_SEARCH</td>
+	<td>layout_configuration_content</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

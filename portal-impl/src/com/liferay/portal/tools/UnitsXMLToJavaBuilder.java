@@ -1,0 +1,355 @@
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.tools;
+
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.util.InitUtil;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.tools.ant.DirectoryScanner;
+
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
+
+	public static void main(String[] args) throws Exception {
+		InitUtil.initWithSpring();
+
+		new UnitsXMLToJavaBuilder(args);
+	}
+
+	public UnitsXMLToJavaBuilder(String[] args) throws Exception {
+		super(args);
+
+		Set<String> fileNames = getFileNames();
+
+		getSeleniumMethods();
+
+		for (String fileName : fileNames) {
+			if (fileName.length() > 161) {
+				System.out.println(
+					"Exceeds 177 characters: portal-web/test/" + fileName);
+			}
+
+			generateUnits(fileName);
+		}
+	}
+
+	protected void generateUnits(String fileName) throws Exception {
+		if (!FileUtil.exists(basedir + "/" + fileName)) {
+			return;
+		}
+
+		int x = fileName.lastIndexOf(StringPool.SLASH);
+		int y = fileName.indexOf(CharPool.PERIOD);
+
+		String unitsFilePath = fileName.substring(0, x);
+		String unitsName = fileName.substring(x + 1, y) + "Units";
+
+		String unitsFileName = unitsFilePath + "/" + unitsName + ".java";
+		String unitsPackagePath = StringUtil.replace(
+			unitsFilePath, StringPool.SLASH, StringPool.PERIOD);
+		String unitsXMLFileName =
+			unitsFilePath + "/" + fileName.substring(x + 1, y) + ".units";
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("package ");
+		sb.append(unitsPackagePath);
+		sb.append(";\n\n");
+
+		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
+		sb.append("LiferaySelenium;\n");
+
+		sb.append("public class ");
+		sb.append(unitsName);
+		sb.append(" extends BaseActionsUnits {\n\n");
+
+		sb.append("public ");
+		sb.append(unitsName);
+		sb.append("(LiferaySelenium liferaySelenium) {\n");
+
+		sb.append("super(liferaySelenium);\n");
+
+		sb.append("}\n");
+
+		Element rootElement = getRootElement(unitsXMLFileName);
+
+		sb.append(getUnitDefs(rootElement));
+
+		sb.append("}");
+
+		writeFile(unitsFileName, sb.toString(), true);
+	}
+
+	protected String getCommands(Element runBlock) {
+		StringBundler sb = new StringBundler();
+
+		List<Element> commands = runBlock.elements();
+
+		for (Element command : commands) {
+			String commandName = command.getName();
+
+			if (commandName.equals("else")) {
+				sb.append(getCommandElse(command));
+			}
+			else if (commandName.equals("selenium")) {
+				sb.append(getCommandSelenium(command));
+			}
+			else if (commandName.equals("if")) {
+				sb.append(getCommandIf(command));
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private String getCommandElse(Element command) {
+		StringBundler sb = new StringBundler();
+
+		sb.append("else {");
+		sb.append(getCommands(command));
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private String getCommandIf(Element command) {
+		StringBundler sb = new StringBundler();
+
+		sb.append("if (");
+		sb.append(getCommandSeleniumConditional(command));
+		sb.append(") {");
+		sb.append(getCommands(command));
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private String getCommandSelenium(Element command) {
+		StringBundler sb = new StringBundler();
+
+		String seleniumCommandName = command.attributeValue("command");
+
+		int numParams = 0;
+
+		if (_seleniumMethods.containsKey(seleniumCommandName)) {
+			numParams = _seleniumMethods.get(seleniumCommandName);
+		}
+
+		sb.append("selenium.");
+		sb.append(seleniumCommandName);
+		sb.append("(");
+
+		String seleniumTargetName = command.attributeValue("target");
+
+		if (!(seleniumTargetName == null)) {
+			sb.append("\"");
+			sb.append(seleniumTargetName);
+			sb.append("\"");
+		}
+		else if (seleniumCommandName.equals("assertConfirmation") ||
+				 seleniumCommandName.equals("assertTextNotPresent") ||
+				 seleniumCommandName.equals("assertTextPresent") ||
+				 seleniumCommandName.equals("waitForConfirmation") ||
+				 seleniumCommandName.equals("waitForTextNotPresent") ||
+				 seleniumCommandName.equals("waitForTextPresent")) {
+
+			sb.append("param2");
+		}
+		else if (numParams > 0) {
+			sb.append("param1");
+		}
+
+		String seleniumValueName = command.attributeValue("value");
+
+		if (!seleniumCommandName.equals("open")) {
+			if (!(seleniumValueName == null)) {
+				sb.append(", \"");
+				sb.append(seleniumValueName);
+				sb.append("\"");
+			}
+			else if (numParams > 1) {
+				sb.append(", param2");
+			}
+		}
+
+		sb.append(");\n");
+
+		return sb.toString();
+	}
+
+	private String getCommandSeleniumConditional(Element command) {
+		StringBundler sb = new StringBundler();
+
+		String seleniumCommandName = command.attributeValue("command");
+
+		if (seleniumCommandName.contains("Not")) {
+			sb.append("!");
+
+			seleniumCommandName = StringUtil.replace(
+				seleniumCommandName, "Not", "");
+		}
+
+		int numParams = 0;
+
+		if (_seleniumMethods.containsKey(seleniumCommandName)) {
+			numParams = _seleniumMethods.get(seleniumCommandName);
+		}
+
+		sb.append("selenium.");
+		sb.append(seleniumCommandName);
+		sb.append("(");
+
+		String seleniumTargetName = command.attributeValue("target");
+
+		if (!(seleniumTargetName == null)) {
+			sb.append("\"");
+			sb.append(seleniumTargetName);
+			sb.append("\"");
+		}
+		else if (numParams > 0) {
+			sb.append("param1");
+		}
+
+		String seleniumValueName = command.attributeValue("value");
+
+		if (!seleniumCommandName.equals("open")) {
+			if (!(seleniumValueName == null)) {
+				sb.append(", \"");
+				sb.append(seleniumValueName);
+				sb.append("\"");
+			}
+			else if (numParams > 1) {
+				sb.append(", param2");
+			}
+		}
+
+		sb.append(")");
+
+		return sb.toString();
+	}
+
+	private Set<String> getFileNames() throws Exception {
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(basedir);
+		directoryScanner.setIncludes(
+			new String[] {
+				"**\\portalweb\\blocks\\base\\units\\*.units"
+			});
+
+		directoryScanner.scan();
+
+		Set<String> fileNames = new TreeSet<String>();
+
+		for (String fileName : directoryScanner.getIncludedFiles()) {
+			fileName = normalizeFileName(fileName);
+
+			fileNames.add(fileName);
+		}
+
+		return fileNames;
+	}
+
+	private void getSeleniumFileMethods(String file) throws Exception {
+		String content = getNormalizedContent(file);
+
+		Pattern pattern = Pattern.compile(
+			"public (boolean|String|void) [A-Za-z0-9_]*\\(.*?\\)");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String methodDec = matcher.group();
+
+			int x = methodDec.indexOf("(");
+			int y = methodDec.indexOf(")");
+
+			String name = null;
+
+			if (methodDec.startsWith("public boolean")) {
+				name = methodDec.substring(15, x);
+			}
+			else if (methodDec.startsWith("public String")) {
+				name = methodDec.substring(14, x);
+			}
+			else if (methodDec.startsWith("public void")) {
+				name = methodDec.substring(12, x);
+			}
+
+			String params = methodDec.substring(x + 1, y);
+
+			String[] paramsArray = params.split(",");
+
+			int numParams;
+
+			if (params.equals("")) {
+				numParams = 0;
+			}
+			else {
+				numParams = paramsArray.length;
+			}
+
+			_seleniumMethods.put(name, numParams);
+		}
+	}
+
+	private void getSeleniumMethods() throws Exception {
+		getSeleniumFileMethods(
+			"com/liferay/portalweb/portal/util/liferayselenium/" +
+				"SeleniumWrapper.java");
+		getSeleniumFileMethods(
+			"com/liferay/portalweb/portal/util/liferayselenium/" +
+				"LiferaySelenium.java");
+	}
+
+	private String getUnitDefs(Element rootElement) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		List<Element> unitDefs = rootElement.elements("unitdef");
+
+		for (Element unitDef : unitDefs) {
+			String unitDefName = unitDef.attributeValue("name");
+
+			sb.append("public void ");
+			sb.append(unitDefName);
+			sb.append("(String param1, String param2) throws Exception {\n");
+
+			sb.append(getCommands(unitDef));
+
+			sb.append("}\n");
+		}
+
+		return sb.toString();
+	}
+
+	private static Map<String, Integer> _seleniumMethods =
+		new HashMap<String, Integer>();
+
+}

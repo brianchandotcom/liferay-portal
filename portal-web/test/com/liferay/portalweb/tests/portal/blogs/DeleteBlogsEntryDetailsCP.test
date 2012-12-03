@@ -1,0 +1,29 @@
+<test>
+	<setup>
+		<macro name="CPBlogsEntry" command="addBlogsEntry">
+			<param name="title" value="Blogs Entry Title" />
+			<param name="content" value="Blogs Entry Content" />
+		</macro>
+	</setup>
+	<steps>
+		<macro name="Navigation" command="navigateControlPanelPage">
+			<param name="page" value="Blogs" />
+		</macro>
+
+		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_AUTHOR" value="Joe Bloggs" />
+		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Approved" />
+		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+
+		<action name="CPBlogsEntryView" command="click" path="BLOGS_ENTRY_LINK_DELETE" />
+
+		<action name="CPBlogsPortlet" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS_UNDO" />
+		<action name="CPBlogsPortlet" command="assertTextEquals" path="PORTLET_TEXT_INFO" />
+		<action name="CPBlogsPortlet" command="assertTextNotPresent" value="Blogs Entry Title" />
+		<action name="CPBlogsPortlet" command="assertTextNotPresent" value="Blogs Entry Content" />
+	</steps>
+	<teardown>
+		<macro name="CPBlogsEntry" command="tearDownBlogsEntry" />
+		<macro name="CPRecycleBin" command="emptyRecycleBin" />
+	</teardown>
+</test>

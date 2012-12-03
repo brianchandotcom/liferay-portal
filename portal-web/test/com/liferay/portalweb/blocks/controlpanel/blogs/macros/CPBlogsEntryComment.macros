@@ -1,0 +1,36 @@
+<macros>
+	<macrodef name="addBlogsEntryComment1" params="blogsEntry,blogsEntryComment">
+		<macro name="Navigation" command="navigateControlPanelPage">
+			<param name="page" value="Blogs" />
+		</macro>
+
+		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="${blogsEntry}" />
+
+		<action name="CPBlogsEntryView" command="assertTextEquals" path="PORTLET_TEXT_COMMENT_MESSAGE" value="No comments yet." />
+		<action name="CPBlogsEntryView" command="click" path="BLOGS_ENTRY_LINK_ADD_COMMENT_1" />
+
+		<action name="CPBlogsEntryCommentAdd" command="type" path="BLOGS_COMMENT_FIELD_BODY" value="${blogsEntryComment}" />
+		<action name="CPBlogsEntryCommentAdd" command="click" path="BLOGS_COMMENT_LINK_SAVE" />
+		<action name="CPBlogsEntryCommentAdd" command="assertTextEquals" path="BLOGS_COMMENT_TEXT_SUCCESS" />
+
+		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_COMMENT_TEXT_BODY" value="${blogsEntryComment}" />
+		<action name="CPBlogsEntryView" command="assertTextNotPresent" value="No comments yet." />
+	</macrodef>
+
+	<macrodef name="addBlogsEntryComment2" params="blogsEntry,blogsEntryComment">
+		<macro name="Navigation" command="navigateControlPanelPage">
+			<param name="page" value="Blogs" />
+		</macro>
+
+		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="${blogsEntry}" />
+
+		<action name="CPBlogsEntryView" command="click" path="BLOGS_ENTRY_LINK_ADD_COMMENT_2" />
+
+		<action name="CPBlogsEntryCommentAdd" command="type" path="BLOGS_COMMENT_FIELD_BODY" value="${blogsEntryComment}" />
+		<action name="CPBlogsEntryCommentAdd" command="click" path="BLOGS_COMMENT_LINK_SAVE" />
+		<action name="CPBlogsEntryCommentAdd" command="assertTextEquals" path="BLOGS_COMMENT_TEXT_SUCCESS" />
+
+		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_COMMENT_TEXT_BODY" value="${blogsEntryComment}" />
+		<action name="CPBlogsEntryView" command="assertTextNotPresent" value="No comments yet." />
+	</macrodef>
+</macros>

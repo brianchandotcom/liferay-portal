@@ -1,0 +1,78 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>HomeBot</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Home</td></tr>
+</thead><tbody>
+<tr>
+	<td>ADD_LINK</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>ADD_LINK_APPLICATION</td>
+	<td>_145_addApplication</td>
+	<td>More</td>
+</tr>
+<tr>
+	<td>ADD_LINK_PAGE</td>
+	<td>addPage</td>
+	<td>Page</td>
+</tr>
+<tr>
+	<td>GOTO_LINK</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>GOTO_LINK_CONTROL_PANEL</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>MANAGE_LINK</td>
+	<td>//li[@id='_145_manageContent']/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>NAVIGATION_BLOGS_CP</td>
+	<td>link=Blogs</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>NAVIGATION_PAGE_COMMENTS</td>
+	<td>link=Page Comments Test Page</td>
+	<td>Page Comments Test Page</td>
+</tr>
+<tr>
+	<td>URL_GUEST</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_SITE</td>
+	<td>/web/site-name/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_SITE_1</td>
+	<td>/web/site1-name/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_SITE_2</td>
+	<td>/web/site2-name/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_SITE_3</td>
+	<td>/web/site3-name/home/</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

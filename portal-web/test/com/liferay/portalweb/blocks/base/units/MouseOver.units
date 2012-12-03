@@ -1,0 +1,27 @@
+<units>
+	<unitdef name="mouseOver">
+		<selenium command="waitForVisible" />
+		<selenium command="mouseOver" />
+	</unitdef>
+
+	<unitdef name="partialTextMouseOver">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForPartialText" />
+		<selenium command="assertPartialText" />
+		<selenium command="mouseOver" />
+	</unitdef>
+
+	<unitdef name="textMouseOver">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForText" />
+		<selenium command="assertText" />
+		<selenium command="mouseOver" />
+	</unitdef>
+
+	<unitdef name="valueMouseOver">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForValue" />
+		<selenium command="assertValue" />
+		<selenium command="mouseOver" />
+	</unitdef>
+</units>

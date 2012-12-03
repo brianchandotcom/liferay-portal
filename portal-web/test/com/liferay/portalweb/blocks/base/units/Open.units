@@ -1,0 +1,16 @@
+<units>
+	<unitdef name="open">
+		<selenium command="selectWindow" target="null" />
+		<selenium command="selectFrame" target="relative=top" />
+		<selenium command="open" />
+	</unitdef>
+
+	<unitdef name="openWindow">
+		<selenium command="pause" target="15000" />
+		<selenium command="selectWindow" target="null" />
+		<selenium command="selectFrame" target="relative=top" />
+		<selenium command="openWindow" value="windowName" />
+		<selenium command="waitForPopUp" target="windowName" value="windowName" />
+		<selenium command="selectWindow" target="windowName" />
+	</unitdef>
+</units>

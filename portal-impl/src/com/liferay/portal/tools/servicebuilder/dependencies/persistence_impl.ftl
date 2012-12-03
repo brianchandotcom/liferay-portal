@@ -637,29 +637,35 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#if uniqueFinderList?size &gt; 0>
 			if (isNew) {
+				Object[] args = null;
 				<#list uniqueFinderList as finder>
 					<#assign finderColsList = finder.getColumns()>
 
-					FinderCacheUtil.putResult(
-						FINDER_PATH_FETCH_BY_${finder.name?upper_case},
-						new Object[] {
-							<#list finderColsList as finderCol>
-								<#if finderCol.isPrimitiveType()>
-									${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-								</#if>
+					args = new Object[] {
+						<#list finderColsList as finderCol>
+							<#if finderCol.isPrimitiveType()>
+								${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+							</#if>
 
-								${entity.varName}.get${finderCol.methodName}()
+							${entity.varName}.get${finderCol.methodName}()
 
-								<#if finderCol.isPrimitiveType()>
-									)
-								</#if>
+							<#if finderCol.isPrimitiveType()>
+								)
+							</#if>
 
-								<#if finderCol_has_next>
-									,
-								</#if>
-							</#list>
-						},
-						${entity.varName});
+							<#if finderCol_has_next>
+								,
+							</#if>
+						</#list>
+					};
+
+					FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+
+					FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args, Long.valueOf(1));
+
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args);
+
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args, ${entity.varName});
 				</#list>
 			}
 			else {

@@ -510,7 +510,7 @@ public class S3Store extends BaseStore {
 
 		int y = key.lastIndexOf(CharPool.SLASH);
 
-		return CharPool.SLASH + key.substring(x + 1, y);
+		return key.substring(x, y);
 	}
 
 	protected String[] getFileNames(S3Object[] s3Objects) {
@@ -573,12 +573,7 @@ public class S3Store extends BaseStore {
 		sb.append(companyId);
 		sb.append(StringPool.SLASH);
 		sb.append(repositoryId);
-
-		if (!fileName.startsWith(StringPool.SLASH)) {
-			sb.append(StringPool.SLASH);
-		}
-
-		sb.append(fileName);
+		sb.append(getNormalizedFileName(fileName));
 
 		return sb.toString();
 	}
@@ -592,16 +587,26 @@ public class S3Store extends BaseStore {
 		sb.append(companyId);
 		sb.append(StringPool.SLASH);
 		sb.append(repositoryId);
-
-		if (!fileName.startsWith(StringPool.SLASH)) {
-			sb.append(StringPool.SLASH);
-		}
-
-		sb.append(fileName);
+		sb.append(getNormalizedFileName(fileName));
 		sb.append(StringPool.SLASH);
 		sb.append(versionLabel);
 
 		return sb.toString();
+	}
+
+	protected String getNormalizedFileName(String fileName) {
+		String normalizedFileName = fileName;
+
+		if (!fileName.startsWith(StringPool.SLASH)) {
+			normalizedFileName = StringPool.SLASH + normalizedFileName;
+		}
+
+		if (fileName.endsWith(StringPool.SLASH)) {
+			normalizedFileName = normalizedFileName.substring(
+				0, normalizedFileName.length() - 1);
+		}
+
+		return normalizedFileName;
 	}
 
 	protected S3Bucket getS3Bucket() throws S3ServiceException {
@@ -629,7 +634,7 @@ public class S3Store extends BaseStore {
 		sb.append(
 			DateUtil.getCurrentDate(
 				_TEMP_DIR_PATTERN, LocaleUtil.getDefault()));
-		sb.append(fileName);
+		sb.append(getNormalizedFileName(fileName));
 
 		Date lastModifiedDate = s3Object.getLastModifiedDate();
 

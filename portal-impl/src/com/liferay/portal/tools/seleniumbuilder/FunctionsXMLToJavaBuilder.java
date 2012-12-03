@@ -102,14 +102,14 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 		Element rootElement = getRootElement(functionsXMLFileName);
 
-		sb.append(getFunctionDefs(rootElement));
+		sb.append(getFunctionDefs(rootElement, functionsName));
 
 		sb.append("}");
 
 		writeFile(functionsFileName, sb.toString(), true);
 	}
 
-	protected String getCommands(Element runBlock) {
+	protected String getCommands(Element runBlock, String functionsName) {
 		StringBundler sb = new StringBundler();
 
 		List<Element> commands = runBlock.elements();
@@ -119,6 +119,10 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 			if (commandName.equals("else")) {
 				sb.append(getCommandElse(command));
+			}
+			else if (commandName.equals("functions")) {
+				sb.append(getObjectDeclaration(functionsName));
+				sb.append(getCommandFunctions(command, functionsName));
 			}
 			else if (commandName.equals("selenium")) {
 				sb.append(getCommandSelenium(command));
@@ -137,6 +141,19 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append("else {");
 		sb.append(getCommands(command));
 		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private String getCommandFunctions(Element command, String functionsName) {
+		StringBundler sb = new StringBundler();
+
+		String functionCommandName = command.attributeValue("command");
+
+		sb.append(lowerCaseFirstLetter(functionsName));
+		sb.append(StringPool.PERIOD);
+		sb.append(functionCommandName);
+		sb.append("(param1, param2);\n");
 
 		return sb.toString();
 	}
@@ -279,7 +296,9 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		return fileNames;
 	}
 
-	private String getFunctionDefs(Element rootElement) throws Exception {
+	private String getFunctionDefs(Element rootElement, String functionsName)
+		throws Exception {
+
 		StringBundler sb = new StringBundler();
 
 		List<Element> functionDefs = rootElement.elements("functiondef");
@@ -291,10 +310,26 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 			sb.append(functionDefName);
 			sb.append("(String param1, String param2) throws Exception {\n");
 
-			sb.append(getCommands(functionDef));
+			sb.append(getCommands(functionDef, functionsName));
 
 			sb.append("}\n");
 		}
+
+		return sb.toString();
+	}
+
+	private String getObjectDeclaration(String functionsName) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(functionsName);
+		sb.append(" ");
+		sb.append(lowerCaseFirstLetter(functionsName));
+		sb.append(" = new ");
+		sb.append(functionsName);
+		sb.append("(selenium);\n");
+
+		sb.append("\n");
 
 		return sb.toString();
 	}

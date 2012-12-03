@@ -171,17 +171,17 @@ public class OpenIdAction extends PortletAction {
 		return values.get(0);
 	}
 
-	protected String getOpenIdHostType(URL endpoint) {
-		String hostName = endpoint.getHost();
+	protected String getOpenIdProvider(URL endpointURL) {
+		String hostName = endpointURL.getHost();
 
-		String[] openIdHostTypes = PropsValues.OPEN_ID_HOST_TYPES;
+		String[] openIdProviders = PropsValues.OPEN_ID_PROVIDERS;
 
-		for (String openIdHostType : openIdHostTypes) {
-			String openIdHost = PropsUtil.get(
-				PropsKeys.OPEN_ID_HOST, new Filter(openIdHostType));
+		for (String openIdProvider : openIdProviders) {
+			String openIdURLString = PropsUtil.get(
+				PropsKeys.OPEN_ID_URL, new Filter(openIdProvider));
 
-			if (hostName.equals(openIdHost)) {
-				return openIdHostType;
+			if (hostName.equals(openIdURLString)) {
+				return openIdProvider;
 			}
 		}
 
@@ -240,7 +240,7 @@ public class OpenIdAction extends PortletAction {
 				SRegResponse sregResp = (SRegResponse)ext;
 
 				String fullName = GetterUtil.getString(
-					sregResp.getAttributeValue(_OPEN_ID_ATTR_FULLNAME));
+					sregResp.getAttributeValue(_OPEN_ID_SREG_ATTR_FULLNAME));
 
 				String[] names = splitName(fullName);
 
@@ -249,7 +249,8 @@ public class OpenIdAction extends PortletAction {
 					lastName = names[1];
 				}
 
-				emailAddress = sregResp.getAttributeValue(_OPEN_ID_ATTR_EMAIL);
+				emailAddress = sregResp.getAttributeValue(
+					_OPEN_ID_SREG_ATTR_EMAIL);
 			}
 		}
 
@@ -262,29 +263,29 @@ public class OpenIdAction extends PortletAction {
 
 				URL endpoint = discovered.getOPEndpoint();
 
-				String openIdHost = getOpenIdHostType(endpoint);
+				String openIdProvider = getOpenIdProvider(endpoint);
 
 				String[] openIdAXTypes = PropsUtil.getArray(
-					PropsKeys.OPEN_ID_AX_TYPES, new Filter(openIdHost));
+					PropsKeys.OPEN_ID_AX_SCHEMA, new Filter(openIdProvider));
 
 				for (String openIdAXType : openIdAXTypes) {
-					if (openIdAXType.equals(_OPEN_ID_ATTR_EMAIL)) {
+					if (openIdAXType.equals(_OPEN_ID_AX_ATTR_EMAIL)) {
 						if (Validator.isNull(emailAddress)) {
 							emailAddress = getFirstValue(
 								fetchResp.getAttributeValues(
-									_OPEN_ID_ATTR_EMAIL));
+									_OPEN_ID_AX_ATTR_EMAIL));
 						}
 					}
-					else if (openIdAXType.equals(_OPEN_ID_ATTR_FIRSTNAME)) {
+					else if (openIdAXType.equals(_OPEN_ID_AX_ATTR_FIRST_NAME)) {
 						if (Validator.isNull(firstName)) {
 							firstName = getFirstValue(
 								fetchResp.getAttributeValues(
-									_OPEN_ID_ATTR_FIRSTNAME));
+									_OPEN_ID_AX_ATTR_FIRST_NAME));
 						}
 					}
-					else if (openIdAXType.equals(_OPEN_ID_ATTR_FULLNAME)) {
+					else if (openIdAXType.equals(_OPEN_ID_AX_ATTR_FULL_NAME)) {
 						String fullName = fetchResp.getAttributeValue(
-							_OPEN_ID_ATTR_FULLNAME);
+							_OPEN_ID_AX_ATTR_FULL_NAME);
 
 						String[] names = splitName(fullName);
 
@@ -298,11 +299,11 @@ public class OpenIdAction extends PortletAction {
 							}
 						}
 					}
-					else if (openIdAXType.equals(_OPEN_ID_ATTR_LASTNAME)) {
+					else if (openIdAXType.equals(_OPEN_ID_AX_ATTR_LAST_NAME)) {
 						if (Validator.isNull(lastName)) {
 							lastName = getFirstValue(
 								fetchResp.getAttributeValues(
-									_OPEN_ID_ATTR_LASTNAME));
+									_OPEN_ID_AX_ATTR_LAST_NAME));
 						}
 					}
 				}
@@ -431,48 +432,25 @@ public class OpenIdAction extends PortletAction {
 
 				URL endpoint = discovered.getOPEndpoint();
 
-				String openIdHost = getOpenIdHostType(endpoint);
+				String openIdProvider = getOpenIdProvider(endpoint);
 
 				String[] openIdAXTypes = PropsUtil.getArray
-					(PropsKeys.OPEN_ID_AX_TYPES, new Filter(openIdHost));
+					(PropsKeys.OPEN_ID_AX_SCHEMA, new Filter(openIdProvider));
 
 				for (String openIdAXType : openIdAXTypes) {
-					if (openIdAXType.equals(_OPEN_ID_ATTR_EMAIL)) {
-						fetch.addAttribute(
-							_OPEN_ID_ATTR_EMAIL,
-							PropsUtil.get(
-								PropsKeys.OPEN_ID_AX_TYPE_EMAIL,
-								new Filter(openIdHost)), true);
-					}
-					else if (openIdAXType.equals(_OPEN_ID_ATTR_FIRSTNAME)) {
-						fetch.addAttribute(
-							_OPEN_ID_ATTR_FIRSTNAME,
-							PropsUtil.get(
-								PropsKeys.OPEN_ID_AX_TYPE_FIRST_NAME,
-								new Filter(openIdHost)), true);
-					}
-					else if (openIdAXType.equals(_OPEN_ID_ATTR_FULLNAME)) {
-						fetch.addAttribute(
-							_OPEN_ID_ATTR_FULLNAME,
-							PropsUtil.get(
-								PropsKeys.OPEN_ID_AX_TYPE_FULL_NAME,
-									new Filter(openIdHost)), true);
-					}
-					else if (openIdAXType.equals(_OPEN_ID_ATTR_LASTNAME)) {
-						fetch.addAttribute(
-							_OPEN_ID_ATTR_LASTNAME,
-							PropsUtil.get(
-								PropsKeys.OPEN_ID_AX_TYPE_LAST_NAME,
-								new Filter(openIdHost)), true);
-					}
+					fetch.addAttribute(
+						openIdAXType,
+						PropsUtil.get(
+							_OPEN_ID_AX_TYPE.concat(openIdAXType),
+							new Filter(openIdProvider)), true);
 				}
 
 				authRequest.addExtension(fetch);
 
 				SRegRequest sregRequest = SRegRequest.createFetchRequest();
 
-				sregRequest.addAttribute(_OPEN_ID_ATTR_FULLNAME, true);
-				sregRequest.addAttribute(_OPEN_ID_ATTR_EMAIL, true);
+				sregRequest.addAttribute(_OPEN_ID_SREG_ATTR_FULLNAME, true);
+				sregRequest.addAttribute(_OPEN_ID_SREG_ATTR_EMAIL, true);
 
 				authRequest.addExtension(sregRequest);
 			}
@@ -502,10 +480,19 @@ public class OpenIdAction extends PortletAction {
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
-	private static final String _OPEN_ID_ATTR_EMAIL = "email";
-	private static final String _OPEN_ID_ATTR_FIRSTNAME = "firstName";
-	private static final String _OPEN_ID_ATTR_FULLNAME = "fullname";
-	private static final String _OPEN_ID_ATTR_LASTNAME = "lastName";
+	private static final String _OPEN_ID_AX_ATTR_EMAIL = "email";
+
+	private static final String _OPEN_ID_AX_ATTR_FIRST_NAME = "firstname";
+
+	private static final String _OPEN_ID_AX_ATTR_FULL_NAME = "fullname";
+
+	private static final String _OPEN_ID_AX_ATTR_LAST_NAME = "lastname";
+
+	private static final String _OPEN_ID_AX_TYPE = "open.id.ax.type.";
+
+	private static final String _OPEN_ID_SREG_ATTR_EMAIL = "email";
+
+	private static final String _OPEN_ID_SREG_ATTR_FULLNAME = "fullname";
 
 	private static Log _log = LogFactoryUtil.getLog(OpenIdAction.class);
 

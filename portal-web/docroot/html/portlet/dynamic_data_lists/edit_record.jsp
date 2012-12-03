@@ -80,7 +80,7 @@ if (record != null) {
 		}
 		%>
 
-		<liferay-ddmddm:html
+		<liferay-ddm:html
 			classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 			classPK="<%= ddmStructure.getStructureId() %>"
 			fields="<%= fields %>"

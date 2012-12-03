@@ -171,17 +171,17 @@ public class OpenIdAction extends PortletAction {
 		return values.get(0);
 	}
 
-	protected String getOpenIdHostType(URL endpoint) {
+	protected String getOpenIdProvider(URL endpoint) {
 		String hostName = endpoint.getHost();
 
-		String[] openIdHostTypes = PropsValues.OPEN_ID_HOST_TYPES;
+		String[] openIdProviders = PropsValues.OPEN_ID_PROVIDERS;
 
-		for (String openIdHostType : openIdHostTypes) {
-			String openIdHost = PropsUtil.get(
-				PropsKeys.OPEN_ID_HOST, new Filter(openIdHostType));
+		for (String openIdProvider : openIdProviders) {
+			String openIdUrl = PropsUtil.get(
+				PropsKeys.OPEN_ID_URL, new Filter(openIdProvider));
 
-			if (hostName.equals(openIdHost)) {
-				return openIdHostType;
+			if (hostName.equals(openIdUrl)) {
+				return openIdProvider;
 			}
 		}
 
@@ -262,10 +262,10 @@ public class OpenIdAction extends PortletAction {
 
 				URL endpoint = discovered.getOPEndpoint();
 
-				String openIdHost = getOpenIdHostType(endpoint);
+				String openIdProvider = getOpenIdProvider(endpoint);
 
 				String[] openIdAXTypes = PropsUtil.getArray(
-					PropsKeys.OPEN_ID_AX_TYPES, new Filter(openIdHost));
+					PropsKeys.OPEN_ID_SCHEMA, new Filter(openIdProvider));
 
 				for (String openIdAXType : openIdAXTypes) {
 					if (openIdAXType.equals(_OPEN_ID_ATTR_EMAIL)) {
@@ -431,39 +431,39 @@ public class OpenIdAction extends PortletAction {
 
 				URL endpoint = discovered.getOPEndpoint();
 
-				String openIdHost = getOpenIdHostType(endpoint);
+				String openIdProvider = getOpenIdProvider(endpoint);
 
 				String[] openIdAXTypes = PropsUtil.getArray
-					(PropsKeys.OPEN_ID_AX_TYPES, new Filter(openIdHost));
+					(PropsKeys.OPEN_ID_SCHEMA, new Filter(openIdProvider));
 
 				for (String openIdAXType : openIdAXTypes) {
 					if (openIdAXType.equals(_OPEN_ID_ATTR_EMAIL)) {
 						fetch.addAttribute(
 							_OPEN_ID_ATTR_EMAIL,
 							PropsUtil.get(
-								PropsKeys.OPEN_ID_AX_TYPE_EMAIL,
-								new Filter(openIdHost)), true);
+								PropsKeys.OPEN_ID_TYPE_EMAIL,
+								new Filter(openIdProvider)), true);
 					}
 					else if (openIdAXType.equals(_OPEN_ID_ATTR_FIRSTNAME)) {
 						fetch.addAttribute(
 							_OPEN_ID_ATTR_FIRSTNAME,
 							PropsUtil.get(
-								PropsKeys.OPEN_ID_AX_TYPE_FIRST_NAME,
-								new Filter(openIdHost)), true);
+								PropsKeys.OPEN_ID_TYPE_FIRST_NAME,
+								new Filter(openIdProvider)), true);
 					}
 					else if (openIdAXType.equals(_OPEN_ID_ATTR_FULLNAME)) {
 						fetch.addAttribute(
 							_OPEN_ID_ATTR_FULLNAME,
 							PropsUtil.get(
-								PropsKeys.OPEN_ID_AX_TYPE_FULL_NAME,
-									new Filter(openIdHost)), true);
+								PropsKeys.OPEN_ID_TYPE_FULL_NAME,
+									new Filter(openIdProvider)), true);
 					}
 					else if (openIdAXType.equals(_OPEN_ID_ATTR_LASTNAME)) {
 						fetch.addAttribute(
 							_OPEN_ID_ATTR_LASTNAME,
 							PropsUtil.get(
-								PropsKeys.OPEN_ID_AX_TYPE_LAST_NAME,
-								new Filter(openIdHost)), true);
+								PropsKeys.OPEN_ID_TYPE_LAST_NAME,
+								new Filter(openIdProvider)), true);
 					}
 				}
 

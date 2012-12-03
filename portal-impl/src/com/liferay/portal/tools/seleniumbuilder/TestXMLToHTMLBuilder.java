@@ -60,6 +60,22 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		}
 	}
 
+	protected String dereferenceParams(Element commandElement, String command) {
+		String finalString = command;
+
+		List<Element> params = commandElement.elements("param");
+
+		for (Element param : params) {
+			String paramName = param.attributeValue("name");
+			String paramValue = param.attributeValue("value");
+
+			finalString = StringUtil.replace(
+				finalString, "${" + paramName + "}", paramValue);
+		}
+
+		return finalString;
+	}
+
 	protected void generateTest(String fileName) throws Exception {
 		if (!FileUtil.exists(basedir + "/" + fileName)) {
 			return;
@@ -129,26 +145,112 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		writeFile(testFileName, sb.toString(), false);
 	}
 
-	protected String getSetup(Element rootElement) throws Exception {
+	protected String getActionCommand(Element command) {
 		StringBundler sb = new StringBundler();
 
-		Element runBlock = rootElement.element("setup");
+		String actionFileName = command.attributeValue("name");
+		String actionCommand = command.attributeValue("command");
+		String actionPath = command.attributeValue("path");
+		String actionLocator = command.attributeValue("locator");
+		String actionValue = command.attributeValue("value");
 
-		sb.append("<div class='block-head'>Setup</div>\n");
+		String finalString = baseActionsMap.get(actionCommand);
 
-		sb.append("<div class='test-block'>\n");
+		String pageNameKey = actionFileName + "__PAGE_NAME";
+		String pageName = pathsMap.get(pageNameKey)[2];
 
-		sb.append("<ol>\n");
+		if (actionLocator == null) {
+			String pathKey = actionFileName + "__" + actionPath;
 
-		sb.append("<li>Log into the portal as ");
-		sb.append("<strong>test@liferay.com</strong> ");
-		sb.append("with the password <strong>test</strong>.</li>\n");
+			if (pathsMap.containsKey(pathKey)) {
+				String[] actionArray = pathsMap.get(pathKey);
 
-		sb.append(getCommands(runBlock));
+				finalString = StringUtil.replace(
+					finalString, "${PATH.PAGE_NAME}", pageName);
 
-		sb.append("</ol>\n");
+				finalString = StringUtil.replace(
+					finalString, "${PATH.DESCRIPTION}", actionArray[2]);
 
-		sb.append("</div>\n");
+				finalString = StringUtil.replace(
+					finalString, "${PATH.VALUE}", actionValue);
+			}
+			else {
+				finalString = StringUtil.replace(
+					finalString, "${PATH.PAGE_NAME}", pageName);
+
+				finalString = StringUtil.replace(
+					finalString, "${PATH.VALUE}", actionValue);
+			}
+		}
+		else {
+			finalString = StringUtil.replace(
+				finalString, "${PATH.PAGE_NAME}", pageName);
+
+			finalString = StringUtil.replace(
+				finalString, "${PATH.VALUE}", actionValue);
+
+			StringBundler elementDescription = new StringBundler();
+
+			elementDescription.append("element with xpath ");
+			elementDescription.append("<span class='xpath'>");
+			elementDescription.append(actionLocator + "</span>");
+
+			finalString = StringUtil.replace(
+				finalString, "${PATH.DESCRIPTION}",
+				elementDescription.toString());
+		}
+
+		sb.append(finalString);
+
+		return sb.toString();
+	}
+
+	protected String getBlockFilePath(String fileName) throws Exception {
+		String blockFilePath = "";
+
+		for (String key : macrosMap.keySet()) {
+			String[] values = macrosMap.get(key);
+
+			if (values[2].equals(fileName)) {
+				blockFilePath = values[3];
+			}
+		}
+
+		for (String key : pathsMap.keySet()) {
+			String[] values = pathsMap.get(key);
+
+			if (values[0].equals(fileName)) {
+				int x = values[3].indexOf(CharPool.PERIOD);
+
+				blockFilePath = values[3].substring(0, x) + ".actions";
+			}
+		}
+
+		return blockFilePath;
+	}
+
+	protected String getCommands(Element runBlock) {
+		StringBundler sb = new StringBundler();
+
+		List<Element> commands = runBlock.elements();
+
+		for (Element command : commands) {
+			String commandName = command.getName();
+
+			sb.append("<li>");
+
+			if (commandName.equals("action")) {
+				sb.append(getActionCommand(command));
+			}
+			else if (commandName.equals("macro")) {
+				sb.append(getMacroCommand(command));
+			}
+			else if (commandName.equals("while")) {
+				sb.append(getWhileCommand(command));
+			}
+
+			sb.append("</li>\n");
+		}
 
 		return sb.toString();
 	}
@@ -171,6 +273,99 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		}
 
 		sb.append("blocks/styles/");
+
+		return sb.toString();
+	}
+
+	protected String getMacroCommand(Element command) {
+		StringBundler sb = new StringBundler();
+
+		String macroCommand = command.attributeValue("command");
+		String macroFileName = command.attributeValue("name");
+
+		String steps = "";
+
+		try {
+			steps = getMacroSteps(macroFileName, macroCommand);
+		} catch (Exception e ) {
+			steps = "MACRO FILE NOT FOUND";
+		}
+
+		String macroKey = macroFileName + "__" + macroCommand;
+
+		if (macrosMap.containsKey(macroKey)) {
+			String[] macroArray = macrosMap.get(macroKey);
+
+			sb.append(dereferenceParams(command, macroArray[1]));
+
+			sb.append("<div class='expand-macro-steps'>\n");
+			sb.append("<a href='#'>Expand Macro Steps</a>\n");
+			sb.append("<div class='macro-steps'>\n");
+			sb.append("<ol>\n");
+
+			sb.append(dereferenceParams(command, steps));
+
+			sb.append("\n</ol>\n");
+			sb.append("</div>\n");
+			sb.append("</div>\n");
+		}
+
+		return sb.toString();
+	}
+
+	protected String getMacrosFilePath(String macroFileName) throws Exception {
+		String macroFilePath = "";
+
+		for (String key : macrosMap.keySet()) {
+			String[] value = macrosMap.get(key);
+
+			if (value[2].equals(macroFileName)) {
+				macroFilePath = value[3];
+			}
+		}
+
+		return macroFilePath;
+	}
+
+	protected String getMacroSteps(String macroFileName, String macroCommand)
+		throws Exception {
+
+		String macrosFilePath = getMacrosFilePath(macroFileName);
+
+		Element rootElement = getRootElement(macrosFilePath);
+
+		List<Element> macros = rootElement.elements();
+		String steps = "";
+
+		for (Element macro : macros) {
+			if (macro.attributeValue("name").equals(macroCommand)) {
+				steps = getCommands(macro);
+			}
+		}
+
+		return steps;
+	}
+
+	protected String getSetup(Element rootElement) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		Element runBlock = rootElement.element("setup");
+
+		sb.append("<div class='block-head'>Setup</div>\n");
+
+		sb.append("<div class='test-block'>\n");
+
+		sb.append("<ol>\n");
+
+		sb.append("<li>Log into the portal as ");
+		sb.append("<strong>test@liferay.com</strong> ");
+		sb.append("with the password <strong>test</strong>.</li>\n");
+
+		sb.append(getCommands(runBlock));
+
+		sb.append("</ol>\n");
+
+		sb.append("</div>\n");
 
 		return sb.toString();
 	}
@@ -217,51 +412,6 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	protected String getActionCommand(Element command) {
-		StringBundler sb = new StringBundler();
-
-		String actionCommand = command.attributeValue("command");
-		String actionLocator = command.attributeValue("locator");
-		String actionFileName = command.attributeValue("name");
-		String actionPath = command.attributeValue("path");
-		String actionValue = command.attributeValue("value");
-
-		String pathKey = actionFileName + "__" + actionPath;
-		String pageNameKey = actionFileName + "__PAGE_NAME";
-
-		String pageName = pathsMap.get(pageNameKey)[2];
-
-		if (pathsMap.containsKey(pathKey)) {
-			String[] actionArray = pathsMap.get(pathKey);
-
-			String finalString = baseActionsMap.get(actionCommand);
-
-			finalString = StringUtil.replace(
-				finalString, "${PATH.PAGE_NAME}", pageName);
-
-			finalString = StringUtil.replace(
-				finalString, "${PATH.DESCRIPTION}", actionArray[2]);
-
-			finalString = StringUtil.replace(
-				finalString, "${PATH.VALUE}", actionValue);
-
-			sb.append(finalString);
-		}
-		else {
-			String finalString = baseActionsMap.get(actionCommand);
-
-			finalString = StringUtil.replace(
-				finalString, "${PATH.PAGE_NAME}", pageName);
-
-			finalString = StringUtil.replace(
-				finalString, "${PATH.VALUE}", actionValue);
-
-			sb.append(finalString);
-		}
-
-		return sb.toString();
-	}
-
 	protected String getWhileCommand(Element command) {
 		StringBundler sb = new StringBundler();
 
@@ -304,108 +454,6 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append(dereferenceParams(command, steps));
 
 		sb.append("\n</ol>\n");
-
-		return sb.toString();
-	}
-
-	protected String getBlockFilePath(String fileName) throws Exception {
-		String blockFilePath = "";
-
-		for (String key : macrosMap.keySet()) {
-			String[] values = macrosMap.get(key);
-
-			if (values[2].equals(fileName)) {
-				blockFilePath = values[3];
-			}
-		}
-
-		for (String key : pathsMap.keySet()) {
-			String[] values = pathsMap.get(key);
-
-			if (values[0].equals(fileName)) {
-				int x = values[3].indexOf(CharPool.PERIOD);
-
-				blockFilePath = values[3].substring(0, x) + ".actions";
-			}
-		}
-
-		return blockFilePath;
-	}
-
-	protected String getMacroCommand(Element command) {
-		StringBundler sb = new StringBundler();
-
-		String macroCommand = command.attributeValue("command");
-		String macroFileName = command.attributeValue("name");
-
-		String steps = "";
-
-		try {
-			steps = getMacroSteps(macroFileName, macroCommand);
-		} catch (Exception e ) {
-			steps = "MACRO FILE NOT FOUND";
-		}
-
-		String macroKey = macroFileName + "__" + macroCommand;
-
-		if (macrosMap.containsKey(macroKey)) {
-			String[] macroArray = macrosMap.get(macroKey);
-
-			sb.append(dereferenceParams(command, macroArray[1]));
-
-			sb.append("<div class='expand-macro-steps'>\n");
-			sb.append("<a href='#'>Expand Macro Steps</a>\n");
-			sb.append("<div class='macro-steps'>\n");
-			sb.append("<ol>\n");
-
-			sb.append(dereferenceParams(command, steps));
-
-			sb.append("\n</ol>\n");
-			sb.append("</div>\n");
-			sb.append("</div>\n");
-		}
-
-		return sb.toString();
-	}
-
-	protected String dereferenceParams(Element commandElement, String command) {
-		String finalString = command;
-
-		List<Element> params = commandElement.elements("param");
-
-		for (Element param : params) {
-			String paramName = param.attributeValue("name");
-			String paramValue = param.attributeValue("value");
-
-			finalString = StringUtil.replace(
-				finalString, "${" + paramName + "}", paramValue);
-		}
-
-		return finalString;
-	}
-
-	protected String getCommands(Element runBlock) {
-		StringBundler sb = new StringBundler();
-
-		List<Element> commands = runBlock.elements();
-
-		for (Element command : commands) {
-			String commandName = command.getName();
-
-			sb.append("<li>");
-
-			if (commandName.equals("action")) {
-				sb.append(getActionCommand(command));
-			}
-			else if (commandName.equals("macro")) {
-				sb.append(getMacroCommand(command));
-			}
-			else if (commandName.equals("while")) {
-				sb.append(getWhileCommand(command));
-			}
-
-			sb.append("</li>\n");
-		}
 
 		return sb.toString();
 	}
@@ -481,39 +529,6 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		}
 
 		return macrosMap;
-	}
-
-	protected String getMacrosFilePath(String macroFileName) throws Exception {
-		String macroFilePath = "";
-
-		for (String key : macrosMap.keySet()) {
-			String[] value = macrosMap.get(key);
-
-			if (value[2].equals(macroFileName)) {
-				macroFilePath = value[3];
-			}
-		}
-
-		return macroFilePath;
-	}
-
-	protected String getMacroSteps(String macroFileName, String macroCommand)
-		throws Exception {
-
-		String macrosFilePath = getMacrosFilePath(macroFileName);
-
-		Element rootElement = getRootElement(macrosFilePath);
-
-		List<Element> macros = rootElement.elements();
-		String steps = "";
-
-		for (Element macro : macros) {
-			if (macro.attributeValue("name").equals(macroCommand)) {
-				steps = getCommands(macro);
-			}
-		}
-
-		return steps;
 	}
 
 	private Set<String> getPathFileNames() throws Exception {

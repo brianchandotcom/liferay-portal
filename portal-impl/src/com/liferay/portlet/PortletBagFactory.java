@@ -152,19 +152,7 @@ public class PortletBagFactory {
 			portlet);
 
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
-			new ArrayList<StagedModelDataHandler<?>>();
-
-		for (String stagedModelDataHandlerClass :
-				portlet.getStagedModelDataHandlerClasses()) {
-
-			StagedModelDataHandler<?> stagedModelDataHandler =
-				(StagedModelDataHandler<?>)newInstance(
-					StagedModelDataHandler.class, stagedModelDataHandlerClass);
-
-			stagedModelDataHandlerInstances.add(stagedModelDataHandler);
-
-			StagedModelDataHandlerRegistryUtil.register(stagedModelDataHandler);
-		}
+			newStagedModelDataHandler(portlet);
 
 		PortletDisplayTemplateHandler portletDisplayTemplateHandlerInstance =
 			newPortletDisplayTemplateHandler(portlet);
@@ -357,6 +345,32 @@ public class PortletBagFactory {
 		}
 
 		return portletBag;
+	}
+
+	private List<StagedModelDataHandler<?>> newStagedModelDataHandler(
+			Portlet portlet)
+		throws Exception {
+
+		if (Validator.isNull(portlet.getStagedModelDataHandlerClasses())) {
+			return null;
+		}
+
+		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
+			new ArrayList<StagedModelDataHandler<?>>();
+
+		for (String stagedModelDataHandlerClass :
+				portlet.getStagedModelDataHandlerClasses()) {
+
+			StagedModelDataHandler<?> stagedModelDataHandler =
+				(StagedModelDataHandler<?>)newInstance(
+					StagedModelDataHandler.class, stagedModelDataHandlerClass);
+
+			stagedModelDataHandlerInstances.add(stagedModelDataHandler);
+
+			StagedModelDataHandlerRegistryUtil.register(stagedModelDataHandler);
+		}
+
+		return stagedModelDataHandlerInstances;
 	}
 
 	public void setClassLoader(ClassLoader classLoader) {

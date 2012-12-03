@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools;
+package com.liferay.portal.tools.seleniumbuilder;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -31,15 +30,15 @@ import org.apache.tools.ant.DirectoryScanner;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
+public class TestXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();
 
-		new MacrosXMLToJavaBuilder(args);
+		new TestXMLToJavaBuilder(args);
 	}
 
-	public MacrosXMLToJavaBuilder(String[] args) throws Exception {
+	public TestXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
 		Set<String> fileNames = getFileNames();
@@ -50,11 +49,11 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
-			generateMacros(fileName);
+			generateTest(fileName);
 		}
 	}
 
-	protected void generateMacros(String fileName) throws Exception {
+	protected void generateTest(String fileName) throws Exception {
 		if (!FileUtil.exists(basedir + "/" + fileName)) {
 			return;
 		}
@@ -62,24 +61,24 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
-		String macrosFilePath = fileName.substring(0, x);
-		String macrosName = fileName.substring(x + 1, y) + "Macros";
+		String testName = fileName.substring(x + 1, y) + "Test";
+		String testFilePath = fileName.substring(0, x) + "/rc";
 
-		String macrosFileName = macrosFilePath + "/" + macrosName + ".java";
-		String macrosPackagePath = StringUtil.replace(
-			macrosFilePath, StringPool.SLASH, StringPool.PERIOD);
+		String testFileName = testFilePath + "/" + testName + ".java";
+		String testPackagePath = StringUtil.replace(
+			testFilePath, StringPool.SLASH, StringPool.PERIOD);
 
 		StringBundler sb = new StringBundler();
 
 		sb.append("package ");
-		sb.append(macrosPackagePath);
+		sb.append(testPackagePath);
 		sb.append(";\n");
 
-		sb.append("import com.liferay.portalweb.blocks.base.macros.");
-		sb.append("BaseMacros;\n");
+		sb.append("import com.liferay.portalweb.blocks.portal.portlet.signin.");
+		sb.append("macros.PortletSignInUserMacros;\n");
 
-		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
-		sb.append("LiferaySelenium;\n");
+		sb.append("import com.liferay.portalweb.portal.BaseTestCase;\n");
+		sb.append("import com.liferay.portalweb.portal.util.SeleniumUtil;\n");
 
 		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
 		sb.append("LiferaySeleniumHelper;\n");
@@ -89,72 +88,75 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append(getImportStatements(rootElement));
 
 		sb.append("public class ");
-		sb.append(macrosName);
-		sb.append(" extends BaseMacros {");
+		sb.append(testName);
+		sb.append(" extends BaseTestCase {");
 
-		sb.append("public ");
-		sb.append(macrosName);
-		sb.append("(LiferaySelenium liferaySelenium) {");
-		sb.append("super(liferaySelenium);");
-		sb.append("}");
+		sb.append(getSetup(rootElement));
 
-		sb.append(getMacroDefs(rootElement));
+		sb.append(getSteps(rootElement));
+
+		sb.append(getTeardown(rootElement));
 
 		sb.append("}");
 
-		writeFile(macrosFileName, sb.toString(), true);
+		writeFile(testFileName, sb.toString(), true);
 	}
 
-	protected String getMacroDefs(Element rootElement) throws Exception {
+	protected String getSetup(Element rootElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
-		List<Element> macroDefs = rootElement.elements("macrodef");
+		Element setupElement = rootElement.element("setup");
 
-		for (Element macroDef : macroDefs) {
-			String macroDefName = macroDef.attributeValue("name");
+		sb.append("@Override\n");
+		sb.append("public void setUp() throws Exception {");
 
-			sb.append("public void ");
-			sb.append(macroDefName);
-			sb.append("(");
-			sb.append(getParameterList(macroDef));
-			sb.append(") throws Exception {");
+		sb.append("selenium = SeleniumUtil.getSelenium();");
 
-			sb.append(getObjectDeclarations(macroDef));
+		sb.append(getObjectDeclarations(setupElement));
 
-			sb.append(getCommands(macroDef));
+		sb.append("portletSignInUserMacros.signIn(");
+		sb.append("\"test@liferay.com\", \"test\");");
 
-			sb.append("}");
-		}
+		sb.append(getCommands(setupElement));
+
+		sb.append("}");
 
 		return sb.toString();
 	}
 
-	protected String getParameterList(Element method) throws Exception {
-		String paramsList = "";
-		String paramsString = method.attributeValue("params");
+	protected String getSteps(Element rootElement) throws Exception {
+		StringBundler sb = new StringBundler();
 
-		if (!(paramsString == null)) {
-			if (paramsString.contains(",")) {
-				String[] params = paramsString.split(",");
+		Element stepsElement = rootElement.element("steps");
 
-				StringBundler sb = new StringBundler();
+		sb.append("public void test() throws Exception {");
 
-				for (String param : params) {
-					sb.append("String ");
-					sb.append(param);
-					sb.append(", ");
-				}
+		sb.append(getObjectDeclarations(stepsElement));
 
-				paramsList = sb.toString();
+		sb.append(getCommands(stepsElement));
 
-				paramsList = paramsList.substring(0, paramsList.length() - 2);
-			}
-			else {
-				paramsList = "String " + paramsString;
-			}
-		}
+		sb.append("}");
 
-		return paramsList;
+		return sb.toString();
+	}
+
+	protected String getTeardown(Element rootElement) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		Element teardownElement = rootElement.element("teardown");
+
+		sb.append("@Override\n");
+		sb.append("public void tearDown() throws Exception {");
+
+		sb.append(getObjectDeclarations(teardownElement));
+
+		sb.append(getCommands(teardownElement));
+
+		sb.append("portletSignInUserMacros.signOut();");
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private Set<String> getFileNames() throws Exception {
@@ -163,7 +165,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		directoryScanner.setBasedir(basedir);
 		directoryScanner.setIncludes(
 			new String[] {
-				"**\\portalweb\\blocks\\**\\*.macros"
+				"**\\portalweb\\**\\*.test"
 			});
 
 		directoryScanner.scan();

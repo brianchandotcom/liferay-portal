@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.portlet.softwarecatalog.NoSuchProductVersionException;
@@ -1970,16 +1969,6 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 
 	@BeanReference(type = SCFrameworkVersionPersistence.class)
 	protected SCFrameworkVersionPersistence scFrameworkVersionPersistence;
-	@BeanReference(type = SCLicensePersistence.class)
-	protected SCLicensePersistence scLicensePersistence;
-	@BeanReference(type = SCProductEntryPersistence.class)
-	protected SCProductEntryPersistence scProductEntryPersistence;
-	@BeanReference(type = SCProductScreenshotPersistence.class)
-	protected SCProductScreenshotPersistence scProductScreenshotPersistence;
-	@BeanReference(type = SCProductVersionPersistence.class)
-	protected SCProductVersionPersistence scProductVersionPersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	protected ContainsSCFrameworkVersion containsSCFrameworkVersion;
 	protected AddSCFrameworkVersion addSCFrameworkVersion;
 	protected ClearSCFrameworkVersions clearSCFrameworkVersions;

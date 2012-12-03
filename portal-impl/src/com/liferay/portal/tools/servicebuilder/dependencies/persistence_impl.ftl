@@ -1851,16 +1851,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	<#list referenceList as tempEntity>
-		<#if tempEntity.hasColumns() && (entity.name == "Counter" || tempEntity.name != "Counter")>
-			@BeanReference(type = ${tempEntity.name}Persistence.class)
-			protected ${tempEntity.name}Persistence ${tempEntity.varName}Persistence;
-		</#if>
-	</#list>
-
 	<#list entity.columnList as column>
 		<#if column.isCollection() && (column.isMappingManyToMany() || column.isMappingOneToMany())>
 			<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
+
+			@BeanReference(type = ${tempEntity.name}Persistence.class)
+			protected ${tempEntity.name}Persistence ${tempEntity.varName}Persistence;
 
 			protected Contains${tempEntity.name} contains${tempEntity.name};
 

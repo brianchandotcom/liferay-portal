@@ -1562,25 +1562,25 @@ public class LayoutImporter {
 
 	protected void updateTypeSettings(Layout importedLayout, Layout layout)
 		throws PortalException, SystemException {
-	
+
 		LayoutTypePortlet importedLayoutType =
 			(LayoutTypePortlet)importedLayout.getLayoutType();
-	
 		LayoutTypePortlet layoutType =
-						(LayoutTypePortlet)layout.getLayoutType();
-	
-		List<String> oldPortletIds = importedLayoutType.getPortletIds();
-		List<String> newPortletIds = layoutType.getPortletIds();
-	
-		oldPortletIds.removeAll(newPortletIds);
-	
-		if(!oldPortletIds.isEmpty()) {
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		List<String> importedPortletIds = importedLayoutType.getPortletIds();
+		List<String> portletIds = layoutType.getPortletIds();
+
+		importedPortletIds.removeAll(portletIds);
+
+		if (!importedPortletIds.isEmpty()) {
 			PortletLocalServiceUtil.deletePortlets(
 				importedLayout.getCompanyId(),
-				oldPortletIds.toArray(new String[oldPortletIds.size()]),
+				importedPortletIds.toArray(
+					new String[importedPortletIds.size()]),
 				importedLayout.getPlid());
 		}
-	
+
 		importedLayout.setTypeSettings(layout.getTypeSettings());
 	}
 

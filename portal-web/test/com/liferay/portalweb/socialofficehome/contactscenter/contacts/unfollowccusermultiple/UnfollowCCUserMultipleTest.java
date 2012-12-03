@@ -87,19 +87,19 @@ public class UnfollowCCUserMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You are not following this user anymore."),
 			selenium.getText("//span[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("User01 Social01"),
+		assertEquals(RuntimeVariables.replace("User01, Social01"),
 			selenium.getText(
-				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User01 Social01')]"));
+				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User01, Social01')]"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//div[@class='lfr-contact-thumb'])[4]"));
-		assertEquals(RuntimeVariables.replace("User02 Social02"),
+		assertEquals(RuntimeVariables.replace("User02, Social02"),
 			selenium.getText(
-				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User02 Social02')]"));
+				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User02, Social02')]"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//div[@class='lfr-contact-thumb'])[5]"));
-		assertEquals(RuntimeVariables.replace("User03 Social03"),
+		assertEquals(RuntimeVariables.replace("User03, Social03"),
 			selenium.getText(
-				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User03 Social03')]"));
+				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User03, Social03')]"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//div[@class='lfr-contact-thumb'])[6]"));
 		assertEquals(RuntimeVariables.replace("Follow"),

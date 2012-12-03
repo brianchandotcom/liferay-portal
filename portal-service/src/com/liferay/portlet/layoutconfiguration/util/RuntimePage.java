@@ -15,6 +15,7 @@
 package com.liferay.portlet.layoutconfiguration.util;
 
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,11 @@ import javax.servlet.jsp.PageContext;
  * @author Shuyang Zhou
  */
 public interface RuntimePage {
+
+	public StringBundler getProcessedTemplate(
+			PageContext pageContext, String portletId,
+			TemplateResource templateResource)
+		throws Exception;
 
 	public void processCustomizationSettings(
 			PageContext pageContext, TemplateResource templateResource)

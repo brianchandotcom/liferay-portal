@@ -86,11 +86,8 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 #breadcrumbs {
-	left: 257px;
-	position: absolute;
-	right: 20px;
-	top: 40px;
-	z-index: 1;
+	display: inline-block;
+	width: 100%;
 }
 
 #breadcrumbs .first {
@@ -123,6 +120,7 @@ body.portal-popup:after, body.portal-popup:before {
 #breadcrumbs li, #breadcrumbs li a {
 	color: #868686;
 	text-decoration: none;
+	word-wrap: break-word;
 }
 
 #breadcrumbs li a:hover {
@@ -131,14 +129,6 @@ body.portal-popup:after, body.portal-popup:before {
 
 #breadcrumbs li.last a {
 	color: #5C85AD;
-}
-
-#breadcrumbs.control-panel-category {
-	top: 10px;
-}
-
-.panels-minimized #breadcrumbs {
-	left: 57px;
 }
 
 .lfr-panel-container {
@@ -225,7 +215,7 @@ body.portal-popup:after, body.portal-popup:before {
 
 #wrapper div.panel-page-body {
 	float: none;
-	padding: 44px 20px 0 260px;
+	padding: 15px 20px 0 260px;
 	width: auto;
 }
 

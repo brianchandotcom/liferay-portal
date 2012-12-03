@@ -31,6 +31,7 @@ page import="com.liferay.portal.UserPasswordException" %><%@
 page import="com.liferay.portal.UserReminderQueryException" %><%@
 page import="com.liferay.portal.kernel.templateparser.TransformException" %><%@
 page import="com.liferay.portal.kernel.util.ProgressTracker" %><%@
+page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.service.permission.OrganizationPermissionUtil" %><%@
 page import="com.liferay.portal.struts.PortletRequestProcessor" %><%@
 page import="com.liferay.portal.util.LayoutLister" %><%@

@@ -47,8 +47,26 @@ if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMa
 		content = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
 	}
 
+	StringBundler sb = null;
+
 	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(content)) {
-		RuntimePageUtil.processTemplate(pageContext, ppid, new StringTemplateResource(velocityTemplateId, content));
+		sb = RuntimePageUtil.getProcessedTemplate(pageContext, ppid, new StringTemplateResource(velocityTemplateId, content));
+	}
+	%>
+
+	<div class="site-breadcrumbs" id="breadcrumbs">
+		<h1>
+			<span>
+				<liferay-ui:message key="breadcrumb" />
+			</span>
+		</h1>
+
+		<liferay-ui:breadcrumb />
+	</div>
+
+	<%
+	if (sb != null) {
+		sb.writeTo(pageContext.getOut());
 	}
 }
 else {

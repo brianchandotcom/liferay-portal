@@ -27,6 +27,7 @@ public class AddUserScreenNameNumberTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUserScreenNameNumberTest.class);
+		testSuite.addTestSuite(ViewUserScreenNameNumberTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;

@@ -46,7 +46,7 @@ public class ErrorAddUserScreenNameNumberSiteIdTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Site Name"),
-			selenium.getText("//td/a"));
+			selenium.getText("//tr[contains(.,'Site Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -63,6 +63,10 @@ public class ErrorAddUserScreenNameNumberSiteIdTest extends BaseTestCase {
 		String SiteID = selenium.getFirstNumber("//fieldset/div/div[1]/div");
 		RuntimeVariables.setValue("SiteID", SiteID);
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -78,12 +82,12 @@ public class ErrorAddUserScreenNameNumberSiteIdTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
 		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_125_screenName']",
 			RuntimeVariables.replace(RuntimeVariables.getValue("SiteID")));

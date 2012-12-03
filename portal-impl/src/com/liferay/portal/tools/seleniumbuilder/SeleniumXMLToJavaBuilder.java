@@ -306,6 +306,16 @@ public class SeleniumXMLToJavaBuilder {
 		return document.getRootElement();
 	}
 
+	protected String lowerCaseFirstLetter(String s) {
+		char[] chars = s.toCharArray();
+
+		if ((chars[0] >= 65) && (chars[0] <= 90)) {
+			chars[0] = (char)(chars[0] + 32);
+		}
+
+		return new String(chars);
+	}
+
 	protected String normalizeFileName(String fileName) {
 		return StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -900,16 +910,6 @@ public class SeleniumXMLToJavaBuilder {
 		}
 
 		return fileNames;
-	}
-
-	private String lowerCaseFirstLetter(String s) {
-		char[] chars = s.toCharArray();
-
-		if ((chars[0] >= 65) && (chars[0] <= 90)) {
-			chars[0] = (char)(chars[0] + 32);
-		}
-
-		return new String(chars);
 	}
 
 	private String replaceVariables(String text) {

@@ -1,7 +1,7 @@
 <actions>
 	<actiondef name="click">
 		<conditional elements="I_AGREE_LINK,I_DISAGREE_LINK,SAVE_LINK,SIGN_IN_LINK">
-			<units command="valueClickAtAndWait" />
+			<functions command="valueClickAtAndWait" />
 		</conditional>
 	</actiondef>
 </actions>

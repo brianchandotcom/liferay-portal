@@ -7,15 +7,15 @@
 		</conditional>
 
 		<conditional elements="ADD_LINK_APPLICATION">
-			<units command="partialTextClickAt" />
+			<functions command="partialTextClickAt" />
 		</conditional>
 
 		<conditional elements="GOTO_LINK_CONTROL_PANEL">
-			<units command="textClickAtAndWait" />
+			<functions command="textClickAtAndWait" />
 		</conditional>
 
 		<conditional startswith="link=">
-			<units command="textClickAtAndWait" />
+			<functions command="textClickAtAndWait" />
 		</conditional>
 	</actiondef>
 
@@ -30,7 +30,7 @@
 	<actiondef name="type">
 		<conditional elements="PORTLET_FIELD_SEARCH">
 			<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]" />
-			<units command="sendKeys" />
+			<functions command="sendKeys" />
 		</conditional>
 	</actiondef>
 </actions>

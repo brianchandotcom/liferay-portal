@@ -16,7 +16,7 @@ package com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.arti
 
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
-import com.liferay.portalweb.blocks.base.units.AssertTextEqualsUnits;
+import com.liferay.portalweb.blocks.base.functions.AssertTextEqualsFunctions;
 import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.paths.article.CPWebContentEditArticlePaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
@@ -34,14 +34,14 @@ public class CPWebContentEditArticleActions extends BaseActionsImpl
 		throws Exception {
 		String[] params = getParams(param1, param2);
 
-		AssertTextEqualsUnits assertTextEqualsUnits = new AssertTextEqualsUnits(selenium);
+		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 
 		if ((param1.equals("ARTICLE_CONTENT"))) {
-			assertTextEqualsUnits.assertTextCKEditorWebContent(params[0],
+			assertTextEqualsFunctions.assertTextCKEditorWebContent(params[0],
 				params[1]);
 		}
 		else if ((param1.equals("ARTICLE_TITLE"))) {
-			assertTextEqualsUnits.assertValue(params[0], params[1]);
+			assertTextEqualsFunctions.assertValue(params[0], params[1]);
 		}
 		else {
 			super.assertTextEquals(params[0], params[1]);

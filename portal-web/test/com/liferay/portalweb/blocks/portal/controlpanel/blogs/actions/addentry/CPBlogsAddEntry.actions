@@ -2,20 +2,20 @@
 	<actiondef name="assertTextEquals">
 		<conditional elements="CONTENT_TEXT_SAVE_STATUS">
 			<selenium command="pause" target="25000" />
-			<units command="assertPartialText" />
+			<functions command="assertPartialText" />
 		</conditional>
 	</actiondef>
 
 	<actiondef name="click">
 		<conditional elements="ADD_LINK,GOTO_LINK,MANAGE_LINK">
 			<selenium command="waitForElementPresent" target="//textarea[@id='_161_editor' and @style='display: none;']" />
-			<units command="valueClickAtAndWait" />
+			<functions command="valueClickAtAndWait" />
 		</conditional>
 	</actiondef>
 
 	<actiondef name="type">
 		<conditional elements="CONTENT_FIELD_CONTENT">
-			<units command="typeCKEditorBlogs" />
+			<functions command="typeCKEditorBlogs" />
 		</conditional>
 	</actiondef>
 </actions>

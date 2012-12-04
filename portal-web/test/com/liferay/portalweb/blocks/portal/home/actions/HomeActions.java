@@ -16,8 +16,8 @@ package com.liferay.portalweb.blocks.portal.home.actions;
 
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
-import com.liferay.portalweb.blocks.base.units.ClickUnits;
-import com.liferay.portalweb.blocks.base.units.TypeUnits;
+import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
+import com.liferay.portalweb.blocks.base.functions.TypeFunctions;
 import com.liferay.portalweb.blocks.portal.home.paths.HomePaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
@@ -33,7 +33,7 @@ public class HomeActions extends BaseActionsImpl implements LiferayActions {
 	public void click(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		ClickUnits clickUnits = new ClickUnits(selenium);
+		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
 		if ((param1.equals("ADD_LINK") || param1.equals("GOTO_LINK") ||
 				param1.equals("MANAGE_LINK"))) {
@@ -43,13 +43,13 @@ public class HomeActions extends BaseActionsImpl implements LiferayActions {
 			super.click(params[0], params[1]);
 		}
 		else if ((param1.equals("ADD_LINK_APPLICATION"))) {
-			clickUnits.partialTextClickAt(params[0], params[1]);
+			clickFunctions.partialTextClickAt(params[0], params[1]);
 		}
 		else if ((param1.equals("GOTO_LINK_CONTROL_PANEL"))) {
-			clickUnits.textClickAtAndWait(params[0], params[1]);
+			clickFunctions.textClickAtAndWait(params[0], params[1]);
 		}
 		else if (param1.startsWith("link=")) {
-			clickUnits.textClickAtAndWait(params[0], params[1]);
+			clickFunctions.textClickAtAndWait(params[0], params[1]);
 		}
 		else {
 			super.click(params[0], params[1]);
@@ -75,12 +75,12 @@ public class HomeActions extends BaseActionsImpl implements LiferayActions {
 	public void type(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		TypeUnits typeUnits = new TypeUnits(selenium);
+		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
 		if ((param1.equals("PORTLET_FIELD_SEARCH"))) {
 			selenium.waitForElementPresent(
 				"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-			typeUnits.sendKeys(params[0], params[1]);
+			typeFunctions.sendKeys(params[0], params[1]);
 		}
 		else {
 			super.type(params[0], params[1]);

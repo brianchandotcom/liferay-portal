@@ -986,6 +986,19 @@
 		</java>
 	</target>
 
+	<target name="build-selenium-test-html">
+		<java
+			classname="com.liferay.portal.tools.TestXMLToHTMLBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test" />
+		</java>
+	</target>
+
 	<target name="build-selenium-test-plans">
 		<java
 			classname="com.liferay.portal.tools.TestPlanBuilder"

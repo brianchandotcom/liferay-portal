@@ -264,7 +264,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 					item.set('hiddenAttributes', hiddenAttributes);
 				},
-				['liferay-portlet-dynamic-data-mapping']
+				['liferay-portlet-dynamic-data-mapping-init']
 			);
 
 			Liferay.provide(
@@ -281,7 +281,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 					A.Array.each(window.<portlet:namespace />formBuilder.get('availableFields'), A.rbind(<portlet:namespace />setFieldsHiddenAttributes, this, mode));
 				},
-				['liferay-portlet-dynamic-data-mapping']
+				['liferay-portlet-dynamic-data-mapping-init']
 			);
 
 			<portlet:namespace />toggleMode('<%= HtmlUtil.escape(mode) %>');

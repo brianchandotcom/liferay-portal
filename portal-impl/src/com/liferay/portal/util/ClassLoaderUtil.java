@@ -21,6 +21,14 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
  */
 public class ClassLoaderUtil {
 
+	public static String getImplCodeSource() {
+		return _codeSourceImpl;
+	}
+
+	public static String getKernelCodeSource() {
+		return _codeSourceKernel;
+	}
+
 	public static ClassLoader getPortalClassLoader() {
 		return _portalClassLoader;
 	}
@@ -29,8 +37,16 @@ public class ClassLoaderUtil {
 		_portalClassLoader = portalClassLoader;
 
 		PortalClassLoaderUtil.setClassLoader(portalClassLoader);
+
+		_codeSourceKernel = PortalClassLoaderUtil.getCodeSourceLocation(
+			PortalClassLoaderUtil.class);
+
+		_codeSourceImpl = PortalClassLoaderUtil.getCodeSourceLocation(
+			ClassLoaderUtil.class);
 	}
 
+	private static String _codeSourceImpl;
+	private static String _codeSourceKernel;
 	private static ClassLoader _portalClassLoader;
 
 }

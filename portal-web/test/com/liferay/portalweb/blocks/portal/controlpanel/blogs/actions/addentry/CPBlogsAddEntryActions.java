@@ -16,9 +16,9 @@ package com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.addentry;
 
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
-import com.liferay.portalweb.blocks.base.units.AssertTextEqualsUnits;
-import com.liferay.portalweb.blocks.base.units.ClickUnits;
-import com.liferay.portalweb.blocks.base.units.TypeUnits;
+import com.liferay.portalweb.blocks.base.functions.AssertTextEqualsFunctions;
+import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
+import com.liferay.portalweb.blocks.base.functions.TypeFunctions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.paths.addentry.CPBlogsAddEntryPaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
@@ -36,11 +36,11 @@ public class CPBlogsAddEntryActions extends BaseActionsImpl
 		throws Exception {
 		String[] params = getParams(param1, param2);
 
-		AssertTextEqualsUnits assertTextEqualsUnits = new AssertTextEqualsUnits(selenium);
+		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 
 		if ((param1.equals("CONTENT_TEXT_SAVE_STATUS"))) {
 			selenium.pause("25000");
-			assertTextEqualsUnits.assertPartialText(params[0], params[1]);
+			assertTextEqualsFunctions.assertPartialText(params[0], params[1]);
 		}
 		else {
 			super.assertTextEquals(params[0], params[1]);
@@ -50,13 +50,13 @@ public class CPBlogsAddEntryActions extends BaseActionsImpl
 	public void click(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		ClickUnits clickUnits = new ClickUnits(selenium);
+		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
 		if ((param1.equals("ADD_LINK") || param1.equals("GOTO_LINK") ||
 				param1.equals("MANAGE_LINK"))) {
 			selenium.waitForElementPresent(
 				"//textarea[@id='_161_editor' and @style='display: none;']");
-			clickUnits.valueClickAtAndWait(params[0], params[1]);
+			clickFunctions.valueClickAtAndWait(params[0], params[1]);
 		}
 		else {
 			super.click(params[0], params[1]);
@@ -66,10 +66,10 @@ public class CPBlogsAddEntryActions extends BaseActionsImpl
 	public void type(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		TypeUnits typeUnits = new TypeUnits(selenium);
+		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
 		if ((param1.equals("CONTENT_FIELD_CONTENT"))) {
-			typeUnits.typeCKEditorBlogs(params[0], params[1]);
+			typeFunctions.typeCKEditorBlogs(params[0], params[1]);
 		}
 		else {
 			super.type(params[0], params[1]);

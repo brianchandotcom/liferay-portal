@@ -16,8 +16,8 @@ package com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.arti
 
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
-import com.liferay.portalweb.blocks.base.units.ClickUnits;
-import com.liferay.portalweb.blocks.base.units.TypeUnits;
+import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
+import com.liferay.portalweb.blocks.base.functions.TypeFunctions;
 import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.paths.article.CPWebContentAddArticlePaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
@@ -34,10 +34,10 @@ public class CPWebContentAddArticleActions extends BaseActionsImpl
 	public void click(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		ClickUnits clickUnits = new ClickUnits(selenium);
+		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
 		if ((param1.equals("SIDEBAR_PUBLISH"))) {
-			clickUnits.clickAtAndWait(params[0], params[1]);
+			clickFunctions.clickAtAndWait(params[0], params[1]);
 		}
 		else {
 			super.click(params[0], params[1]);
@@ -47,10 +47,10 @@ public class CPWebContentAddArticleActions extends BaseActionsImpl
 	public void type(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		TypeUnits typeUnits = new TypeUnits(selenium);
+		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
 		if ((param1.equals("ARTICLE_CONTENT"))) {
-			typeUnits.typeCKEditorWebContent(params[0], params[1]);
+			typeFunctions.typeCKEditorWebContent(params[0], params[1]);
 		}
 		else {
 			super.type(params[0], params[1]);

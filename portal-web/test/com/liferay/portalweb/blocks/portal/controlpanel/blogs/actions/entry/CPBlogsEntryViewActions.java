@@ -16,7 +16,7 @@ package com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.entry;
 
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
-import com.liferay.portalweb.blocks.base.units.AssertTextEqualsUnits;
+import com.liferay.portalweb.blocks.base.functions.AssertTextEqualsFunctions;
 import com.liferay.portalweb.blocks.portal.controlpanel.blogs.paths.entry.CPBlogsEntryViewPaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
@@ -34,10 +34,10 @@ public class CPBlogsEntryViewActions extends BaseActionsImpl
 		throws Exception {
 		String[] params = getParams(param1, param2);
 
-		AssertTextEqualsUnits assertTextEqualsUnits = new AssertTextEqualsUnits(selenium);
+		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 
 		if ((param1.equals("BLOGS_ENTRY_TEXT_RATING_AVERAGE"))) {
-			assertTextEqualsUnits.assertPartialText(params[0], params[1]);
+			assertTextEqualsFunctions.assertPartialText(params[0], params[1]);
 		}
 		else {
 			super.assertTextEquals(params[0], params[1]);

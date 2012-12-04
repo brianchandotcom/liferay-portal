@@ -16,7 +16,7 @@ package com.liferay.portalweb.blocks.portal.portlet.signin.actions.home;
 
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
-import com.liferay.portalweb.blocks.base.units.ClickUnits;
+import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
 import com.liferay.portalweb.blocks.portal.portlet.signin.paths.home.PortletSignInHomePaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
@@ -33,11 +33,11 @@ public class PortletSignInHomeActions extends BaseActionsImpl
 	public void click(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		ClickUnits clickUnits = new ClickUnits(selenium);
+		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
 		if ((param1.equals("I_AGREE_LINK") || param1.equals("I_DISAGREE_LINK") ||
 				param1.equals("SAVE_LINK") || param1.equals("SIGN_IN_LINK"))) {
-			clickUnits.valueClickAtAndWait(params[0], params[1]);
+			clickFunctions.valueClickAtAndWait(params[0], params[1]);
 		}
 		else {
 			super.click(params[0], params[1]);

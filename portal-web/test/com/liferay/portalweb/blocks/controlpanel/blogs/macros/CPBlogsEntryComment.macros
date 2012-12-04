@@ -1,7 +1,7 @@
 <macros>
 	<macrodef
 		name="addBlogsEntryComment1"
-		description="In the Control Panel Blogs Portlet, add the first Blogs Comment with the value ${blogsEntryComment} to the Blogs Entry ${blogsEntry}."
+		description="In the &lt;strong&gt;Control Panel Blogs Portlet&lt;/strong&gt;, add the first &lt;em&gt;Blogs Entry Comment&lt;/em&gt; with the value &lt;strong&gt;&quot;${blogsEntryComment}&quot;&lt;/strong&gt; to the &lt;em&gt;Blogs Entry&lt;/em&gt; &lt;strong&gt;&quot;${blogsEntry}&quot;&lt;/strong&gt;."
 		params="blogsEntry,blogsEntryComment"
 	>
 		<macro name="Navigation" command="navigateControlPanelPage">
@@ -23,7 +23,7 @@
 
 	<macrodef
 		name="addBlogsEntryComment2"
-		description="In the Control Panel Blogs Portlet, add another Blogs Comment with the value ${blogsEntryComment} to the Blogs Entry ${blogsEntry}."
+		description="In the &lt;strong&gt;Control Panel Blogs Portlet&lt;/strong&gt;, add another &lt;em&gt;Blogs Entry Comment&lt;/em&gt; with the value &lt;strong&gt;&quot;${blogsEntryComment}&quot;&lt;/strong&gt; to the &lt;em&gt;Blogs Entry&lt;/em&gt; &lt;strong&gt;&quot;${blogsEntry}&quot;&lt;/strong&gt;."
 		params="blogsEntry,blogsEntryComment"
 	>
 		<macro name="Navigation" command="navigateControlPanelPage">

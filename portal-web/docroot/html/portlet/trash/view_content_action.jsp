@@ -34,7 +34,7 @@ if (row != null) {
 	trashRenderer = (TrashRenderer)row.getObject();
 }
 else {
-	trashRenderer = (TrashRenderer)request.getAttribute("curBaseModel");
+	trashRenderer = (TrashRenderer)request.getAttribute("curTrashRenderer");
 }
 
 TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRenderer.getClassName());

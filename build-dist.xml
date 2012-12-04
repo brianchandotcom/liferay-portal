@@ -947,6 +947,8 @@ release was successful.</echo>
 					<replacevalue>
 						<![CDATA[
 							<paths>
+								<path name="com/sun/crypto"/>
+								<path name="com/sun/crypto/provider"/>
 								<path name="com/sun/image/codec/jpeg" />
 								<path name="com/sun/org/apache/xml/internal/resolver" />
 								<path name="com/sun/org/apache/xml/internal/resolver/tools" />

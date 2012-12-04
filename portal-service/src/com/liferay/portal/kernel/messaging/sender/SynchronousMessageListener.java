@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.messaging.sender;
 
+import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusException;
@@ -76,6 +79,10 @@ public class SynchronousMessageListener implements MessageListener {
 		finally {
 			_messageBus.unregisterMessageListener(
 				responseDestinationName, this);
+
+			EntityCacheUtil.clearLocalCache();
+			FinderCacheUtil.clearLocalCache();
+			ThreadLocalCacheManager.destroy();
 		}
 	}
 

@@ -173,7 +173,14 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 		DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(classPK);
 
 		ddmContent.setModifiedDate(serviceContext.getModifiedDate(null));
-		ddmContent.setXml(DDMXMLUtil.getXML(classPK, fields, mergeFields));
+
+		Document document = null;
+
+		if (mergeFields) {
+			document = SAXReaderUtil.read(ddmContent.getXml());
+		}
+
+		ddmContent.setXml(DDMXMLUtil.getXML(fields, document));
 
 		DDMContentLocalServiceUtil.updateContent(
 			ddmContent.getPrimaryKey(), ddmContent.getName(),

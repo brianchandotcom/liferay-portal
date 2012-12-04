@@ -45,7 +45,7 @@ public interface DDMXML {
 	public String getXML(Fields fields)
 		throws PortalException, SystemException;
 
-	public String getXML(long ddmContentId, Fields fields, boolean mergeFields)
+	public String getXML(Fields fields, Document document)
 		throws PortalException, SystemException;
 
 	public String updateXMLDefaultLocale(

@@ -65,11 +65,10 @@ public class DDMXMLUtil {
 		return getDDMXML().getXML(fields);
 	}
 
-	public static String getXML(
-			long ddmContentId, Fields fields, boolean mergeFields)
+	public static String getXML(Fields fields, Document document)
 		throws PortalException, SystemException {
 
-		return getDDMXML().getXML(ddmContentId, fields, mergeFields);
+		return getDDMXML().getXML(fields, document);
 	}
 
 	public static String updateXMLDefaultLocale(

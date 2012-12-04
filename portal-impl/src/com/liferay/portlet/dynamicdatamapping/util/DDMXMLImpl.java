@@ -28,9 +28,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
-import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -139,23 +137,16 @@ public class DDMXMLImpl implements DDMXML {
 	public String getXML(Fields fields)
 		throws PortalException, SystemException {
 
-		return getXML(0, fields, false);
+		return getXML(fields, null);
 	}
 
-	public String getXML(long contentId, Fields fields, boolean mergeFields)
+	public String getXML(Fields fields, Document document)
 		throws PortalException, SystemException {
 
+		Element rootElement = null;
+
 		try {
-			Document document = null;
-
-			Element rootElement = null;
-
-			if (mergeFields && (contentId > 0)) {
-				DDMContent content = DDMContentLocalServiceUtil.getContent(
-					contentId);
-
-				document = SAXReaderUtil.read(content.getXml());
-
+			if (document != null) {
 				rootElement = document.getRootElement();
 			}
 			else {
@@ -196,9 +187,6 @@ public class DDMXMLImpl implements DDMXML {
 			}
 
 			return document.formattedString();
-		}
-		catch (DocumentException de) {
-			throw new SystemException(de);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);

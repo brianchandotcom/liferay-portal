@@ -1,29 +1,48 @@
-/**
- * XML Beautifier is based on vkBeautify
- *
- * Copyright (c) 2012 Vadim Kiryukhin
- * vkiryukhin @ gmail.com
- * http://www.eslinstructor.net/vkbeautify/
- *
- * Dual licensed under the MIT and GPL licenses:
- * http://www.opensource.org/licenses/mit-license.php
- * http://www.gnu.org/licenses/gpl.html
- */
-
 AUI.add(
-	'liferay-xml-beautifier',
+	'liferay-xml-formatter',
 	function(A) {
 		var Lang = A.Lang;
-
 		var AArray = A.Array;
+
+		var REGEX_DECLARATIVE_CLOSE = /-->|\]>/;
+
+		var REGEX_DECLARATIVE_OPEN = /<!/;
+
+		var REGEX_DIRECTIVE = /<\?/;
+
+		var REGEX_DOCTYPE = /!DOCTYPE/;
+
+		var REGEX_ELEMENT = /^<\w/;
+
+		var REGEX_ELEMENT_CLOSE = /^<\/\w/;
+
+		var REGEX_ELEMENT_NAMESPACED = /^<[\w:\-\.\,]+/;
+
+		var REGEX_ELEMENT_NAMESPACED_CLOSE = /^<\/[\w:\-\.\,]+/;
+
+		var REGEX_ELEMENT_OPEN = /<\w/;
+
+		var REGEX_NAMESPACE_XML = /xmlns(?:\:|\=)/g;
+
+		var REGEX_NAMESPACE_XML_ATTR = /\s*(xmlns)(\:|\=)/g;
+
+		var REGEX_TAG_CLOSE = /<\//;
+
+		var REGEX_TAG_OPEN = /</g;
+
+		var REGEX_TAG_SINGLE_CLOSE = /\/>/;
+
+		var REGEX_WHITESPACE_BETWEEN_TAGS = />\s+</g;
 
 		var STR_BLANK = '';
 
-		var XMLBeautifier = A.Component.create(
+		var STR_TOKEN = '~::~';
+
+		var XMLFormatter = A.Component.create(
 			{
 				EXTENDS: A.Base,
 
-				NAME: 'xmlbeautifier',
+				NAME: 'liferayxmlformatter',
 
 				ATTRS: {
 					lineIndent: {
@@ -38,18 +57,19 @@ AUI.add(
 				},
 
 				prototype: {
-					beautify: function(content) {
+					format: function(content) {
 						var instance = this;
 
 						var tagIndent = instance.get('tagIndent');
 
 						var lineIndent = instance.get('lineIndent');
 
-						var items = content.replace(/>\s{0,}</g, '><')
-							.replace(/</g, '~::~<')
-							.replace(/\s*xmlns\:/g, '~::~xmlns:')
-							.replace(/\s*xmlns\=/g, '~::~xmlns=')
-							.split('~::~');
+						content = instance.minify(content);
+
+						content = content.replace(REGEX_TAG_OPEN, STR_TOKEN + '<');
+						content = content.replace(REGEX_NAMESPACE_XML_ATTR, STR_TOKEN + '$1$2');
+
+						var items = content.split(STR_TOKEN);
 
 						var inComment = false;
 
@@ -60,29 +80,29 @@ AUI.add(
 						AArray.each(
 							items,
 							function(item, index, collection) {
-								if (/<!/.test(item)) {
+								if (REGEX_DECLARATIVE_OPEN.test(item)) {
 									result += instance._indent(lineIndent, tagIndent, level) + item;
 
 									inComment = true;
 
-									if (/-->/.test(item) || /\]>/.test(item) || /!DOCTYPE/.test(item)) {
+									if (REGEX_DECLARATIVE_CLOSE.test(item) || REGEX_DOCTYPE.test(item)) {
 										inComment = false;
 									}
 								}
-								else if(/-->/.test(item) || /\]>/.test(item)) {
+								else if (REGEX_DECLARATIVE_CLOSE.test(item)) {
 									result += item;
 
 									inComment = false;
 								}
-								else if(/^<\w/.exec(items[index - 1]) && /^<\/\w/.exec(item) &&
-									/^<[\w:\-\.\,]+/.exec(items[index - 1]) == /^<\/[\w:\-\.\,]+/.exec(item)[0].replace('/', STR_BLANK)) {
+								else if (REGEX_ELEMENT.exec(items[index - 1]) && REGEX_ELEMENT_CLOSE.exec(item) &&
+									REGEX_ELEMENT_NAMESPACED.exec(items[index - 1]) == REGEX_ELEMENT_NAMESPACED_CLOSE.exec(item)[0].replace('/', STR_BLANK)) {
 									result += item;
 
 									if (!inComment) {
 										--level;
 									}
 								}
-								else if(/<\w/.test(item) && !/<\//.test(item) && !/\/>/.test(item) ) {
+								else if (REGEX_ELEMENT_OPEN.test(item) && !REGEX_TAG_CLOSE.test(item) && !REGEX_TAG_SINGLE_CLOSE.test(item) ) {
 									if (inComment) {
 										result += item;
 									}
@@ -90,7 +110,7 @@ AUI.add(
 										result += instance._indent(lineIndent, tagIndent, level++) + item;
 									}
 								}
-								else if(/<\w/.test(item) && /<\//.test(item)) {
+								else if (REGEX_ELEMENT_OPEN.test(item) && REGEX_TAG_CLOSE.test(item)) {
 									if (inComment) {
 										result += item;
 									}
@@ -98,7 +118,7 @@ AUI.add(
 										result += instance._indent(lineIndent, tagIndent, level) + item;
 									}
 								}
-								else if(/<\//.test(item)) {
+								else if (REGEX_TAG_CLOSE.test(item)) {
 									if (inComment) {
 										result += item;
 									}
@@ -106,7 +126,7 @@ AUI.add(
 										result += instance._indent(lineIndent, tagIndent, --level) + item;
 									}
 								}
-								else if(/\/>/.test(item) ) {
+								else if (REGEX_TAG_SINGLE_CLOSE.test(item) ) {
 									if (inComment) {
 										result += item;
 									}
@@ -114,10 +134,10 @@ AUI.add(
 										result += instance._indent(lineIndent, tagIndent, level) + item;
 									}
 								}
-								else if(/<\?/.test(item)) {
+								else if (REGEX_DIRECTIVE.test(item)) {
 									result += instance._indent(lineIndent, tagIndent, level) + item;
 								}
-								else if(/xmlns\:/.test(item) || /xmlns\=/.test(item)) {
+								else if (REGEX_NAMESPACE_XML) {
 									result += instance._indent(lineIndent, tagIndent, level) + item;
 								}
 								else {
@@ -133,8 +153,8 @@ AUI.add(
 						return result;
 					},
 
-					uglify: function(content) {
-						return content.replace(/>\s{0,}</g, '><');
+					minify: function(content) {
+						return content.replace(REGEX_WHITESPACE_BETWEEN_TAGS, '><');
 					},
 
 					_indent: function(lineIndent, separator, times) {
@@ -146,7 +166,7 @@ AUI.add(
 			}
 		);
 
-		Liferay.XMLBeautifier = XMLBeautifier;
+		Liferay.XMLFormatter = XMLFormatter;
 	},
 	'',
 	{

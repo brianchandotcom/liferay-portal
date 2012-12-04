@@ -98,7 +98,7 @@
 			'upload': ['aui-io-request', 'aui-template', 'collection', 'liferay-portlet-base', 'uploader'],
 			'util-list-fields': ['aui-base'],
 			'util-window': ['aui-dialog', 'aui-dialog-iframe'],
-			'xml-beautifier': ['aui-base']
+			'xml-formatter': ['aui-base']
 		};
 
 		for (var i in moduleList) {

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.json.JSON;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class HitsImpl implements Hits {
 		return _docs[n];
 	}
 
+	@JSON
 	public Document[] getDocs() {
 		return _docs;
 	}
@@ -38,14 +41,17 @@ public class HitsImpl implements Hits {
 		return _length;
 	}
 
+	@JSON(include = false)
 	public Query getQuery() {
 		return _query;
 	}
 
+	@JSON
 	public String[] getQueryTerms() {
 		return _queryTerms;
 	}
 
+	@JSON
 	public float[] getScores() {
 		return _scores;
 	}
@@ -54,6 +60,7 @@ public class HitsImpl implements Hits {
 		return _searchTime;
 	}
 
+	@JSON
 	public String[] getSnippets() {
 		return _snippets;
 	}

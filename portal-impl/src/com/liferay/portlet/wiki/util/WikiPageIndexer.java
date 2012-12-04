@@ -180,6 +180,10 @@ public class WikiPageIndexer extends BaseIndexer {
 		document.addKeyword(Field.NODE_ID, page.getNodeId());
 		document.addText(Field.TITLE, page.getTitle());
 
+		document.addKeyword(
+			Field.ROOT_ENTRY_CLASS_NAME, WikiNode.class.getName());
+		document.addKeyword(Field.ROOT_ENTRY_CLASS_PK, page.getNodeId());
+
 		return document;
 	}
 

@@ -72,6 +72,29 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 	}
 
 	@Test
+	public void testCamelCaseNormalizedParameters() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put("/foo/camel", params);
+
+		params.put("goodName", "goodboy");
+		params.put("badNAME", "badboy");
+
+		String json = toJSON(map);
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
+
+		Object result = jsonWebServiceAction.invoke();
+
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
+
+		Assert.assertEquals("\"goodboy*badboy\"", toJSON(invokerResult));
+	}
+
+	@Test
 	public void testFiltering() throws Exception {
 		Map<String, Object> map1 = new LinkedHashMap<String, Object>();
 

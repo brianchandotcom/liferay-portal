@@ -82,6 +82,42 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 	}
 
 	@Test
+	public void testCamelCaseNormalizedParameters() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/camel/good-name/goodboy/bad-name/badboy");
+
+		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		String result = (String)jsonWebServiceAction.invoke();
+
+		Assert.assertEquals("goodboy*badboy", result);
+
+		mockHttpServletRequest = createHttpRequest("/foo/camel");
+
+		mockHttpServletRequest.setParameter("goodName", "goodboy");
+		mockHttpServletRequest.setParameter("badNAME", "badboy");
+
+		jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		result = (String)jsonWebServiceAction.invoke();
+
+		Assert.assertEquals("goodboy*badboy", result);
+
+		mockHttpServletRequest.removeAllParameters();
+		mockHttpServletRequest.setParameter("goodName", "goodboy");
+		mockHttpServletRequest.setParameter("badName", "badboy");
+
+		jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		result = (String)jsonWebServiceAction.invoke();
+
+		Assert.assertEquals("goodboy*badboy", result);
+	}
+
+	@Test
 	public void testCreateArgumentInstances() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			"/foo/use1/+foo-data");

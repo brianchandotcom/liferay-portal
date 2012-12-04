@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -304,7 +305,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Statement _parseStatement(
-		String assignment, Map<String, Object> parameterMap) {
+		String assignment, Map<String, Object> statementData) {
 
 		Statement statement = new Statement();
 
@@ -340,19 +341,16 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			statement.setMethod(assignment.substring(x + 1).trim());
 		}
 
+		HashMap<String, Object> parameterMap =
+			new HashMap<String, Object>(statementData.size());
+
 		statement.setParameterMap(parameterMap);
 
-		Set<String> keySet = parameterMap.keySet();
+		Set<String> keySet = statementData.keySet();
 
-		Iterator<String> iterator = keySet.iterator();
-
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-
+		for (String key : keySet) {
 			if (key.startsWith(StringPool.AT)) {
-				String value = (String)parameterMap.get(key);
-
-				iterator.remove();
+				String value = (String)statementData.get(key);
 
 				List<Flag> flags = statement.getFlags();
 
@@ -370,10 +368,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 				flags.add(flag);
 			}
 			else if (key.startsWith(StringPool.DOLLAR)) {
-				Map<String, Object> map = (Map<String, Object>)parameterMap.get(
-					key);
-
-				iterator.remove();
+				Map<String, Object> map =
+					(Map<String, Object>)statementData.get(key);
 
 				List<Statement> variableStatements =
 					statement.getVariableStatements();
@@ -387,6 +383,11 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 				Statement variableStatement = _parseStatement(key, map);
 
 				variableStatements.add(variableStatement);
+			}
+			else {
+				Object value = statementData.get(key);
+
+				parameterMap.put(CamelCaseUtil.normalizeCamelCase(key), value);
 			}
 		}
 

@@ -14,14 +14,14 @@
 
 package com.liferay.portal.security.pacl.checker;
 
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.security.Permission;
 
@@ -119,20 +119,27 @@ public class PortalRuntimeChecker extends BaseChecker {
 			return true;
 		}
 
+		int callDepth = 10;
+
 		if (Validator.isNotNull(property)) {
 			if (_getBeanPropertyClassNames.contains(
 					className.concat(StringPool.POUND).concat(property))) {
 
 				return true;
 			}
+
+			callDepth--;
 		}
 
-		if (clazz == PortalExecutorManagerUtil.class) {
-			Class<?> callerClass10 = Reflection.getCallerClass(10);
+		Class<?> callerClass = Reflection.getCallerClass(callDepth);
 
-			if (callerClass10 == BaseAsyncDestination.class) {
-				return true;
-			}
+		String callerCodeSource = PortalClassLoaderUtil.getCodeSourceLocation(
+			callerClass);
+
+		if (callerCodeSource.equals(ClassLoaderUtil.getKernelCodeSource()) ||
+			callerCodeSource.equals(ClassLoaderUtil.getImplCodeSource())) {
+
+			return true;
 		}
 
 		return false;
@@ -145,12 +152,27 @@ public class PortalRuntimeChecker extends BaseChecker {
 			return true;
 		}
 
+		int callDepth = 10;
+
 		if (Validator.isNotNull(property)) {
 			if (_setBeanPropertyClassNames.contains(
 					className.concat(StringPool.POUND).concat(property))) {
 
 				return true;
 			}
+
+			callDepth--;
+		}
+
+		Class<?> callerClass = Reflection.getCallerClass(callDepth);
+
+		String callerCodeSource = PortalClassLoaderUtil.getCodeSourceLocation(
+			callerClass);
+
+		if (callerCodeSource.equals(ClassLoaderUtil.getKernelCodeSource()) ||
+			callerCodeSource.equals(ClassLoaderUtil.getImplCodeSource())) {
+
+			return true;
 		}
 
 		return false;

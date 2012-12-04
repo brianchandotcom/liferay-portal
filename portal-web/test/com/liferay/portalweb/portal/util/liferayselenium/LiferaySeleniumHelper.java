@@ -191,6 +191,14 @@ public class LiferaySeleniumHelper {
 		System.out.println(message);
 	}
 
+	public static String getNumberDecrement(String expression) {
+		return StringUtil.valueOf(GetterUtil.getInteger(expression) - 1);
+	}
+
+	public static String getNumberIncrement(String expression) {
+		return StringUtil.valueOf(GetterUtil.getInteger(expression) + 1);
+	}
+
 	public static void pause(String waitTime) throws Exception {
 		Thread.sleep(GetterUtil.getInteger(waitTime));
 	}

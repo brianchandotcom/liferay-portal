@@ -954,9 +954,23 @@ public class SeleneseToJavaBuilder {
 				sb.append("\");");
 			}
 			else if (param1.equals("echo")) {
-				sb.append("System.out.println(\"");
-				sb.append(param2);
-				sb.append("\");");
+				sb.append("System.out.println(");
+
+				if (param2.startsWith("${")) {
+					sb.append("RuntimeVariables.getValue(\"");
+
+					String text = param2.substring(2, param2.length() - 1);
+
+					sb.append(text);
+					sb.append("\")");
+				}
+				else {
+					sb.append("\"");
+					sb.append(param2);
+					sb.append("\"");
+				}
+
+				sb.append(");");
 			}
 			else if (param1.equals("goBackAndWait") ||
 					 param1.equals("refreshAndWait") ||

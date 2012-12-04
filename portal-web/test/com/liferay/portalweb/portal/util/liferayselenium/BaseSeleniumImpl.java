@@ -175,13 +175,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	public String getNumberDecrement(String expression) {
-		return _commandProcessor.getString(
-			"getNumberDecrement", new String[] {expression,});
+		return LiferaySeleniumHelper.getNumberDecrement(expression);
 	}
 
 	public String getNumberIncrement(String expression) {
-		return _commandProcessor.getString(
-			"getNumberIncrement", new String[] {expression,});
+		return LiferaySeleniumHelper.getNumberIncrement(expression);
 	}
 
 	public void goBackAndWait() {

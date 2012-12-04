@@ -211,11 +211,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public String getNumberDecrement(String expression) {
-		return StringUtil.valueOf(GetterUtil.getInteger(expression) - 1);
+		return LiferaySeleniumHelper.getNumberDecrement(expression);
 	}
 
 	public String getNumberIncrement(String expression) {
-		return StringUtil.valueOf(GetterUtil.getInteger(expression) + 1);
+		return LiferaySeleniumHelper.getNumberIncrement(expression);
 	}
 
 	public void goBackAndWait() {

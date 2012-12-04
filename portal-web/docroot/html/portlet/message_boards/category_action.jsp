@@ -66,11 +66,9 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 
 	<c:if test="<%= portletName.equals(PortletKeys.MESSAGE_BOARDS) %>">
 
-		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+		<c:if test="<%= enableRSS %>">
 
 			<%
-			rssURL.setParameter("p_l_id", String.valueOf(plid));
-
 			if (category.getCategoryId() > 0) {
 				rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
 			}
@@ -79,11 +77,11 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 			}
 			%>
 
-			<liferay-ui:icon
-				image="rss"
-				method="get"
-				target="_blank"
-				url="<%= rssURL.toString() %>"
+			<liferay-ui:rss
+				delta="<%= rssDelta %>"
+				displayStyle="<%= rssDisplayStyle %>"
+				feedType="<%= rssFeedType %>"
+				resourceURL="<%= rssURL %>"
 			/>
 		</c:if>
 

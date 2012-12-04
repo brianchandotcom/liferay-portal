@@ -17,13 +17,12 @@
 <c:if test="<%= category == null %>">
 	<div class="category-subscriptions">
 		<div class="category-subscription-types">
-			<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-				<liferay-ui:icon
-					image="rss"
-					label="<%= true %>"
-					method="get"
-					target="_blank"
-					url="<%= rssURL.toString() %>"
+			<c:if test="<%= enableRSS %>">
+				<liferay-ui:rss
+					delta="<%= rssDelta %>"
+					displayStyle="<%= rssDisplayStyle %>"
+					feedType="<%= rssFeedType %>"
+					resourceURL="<%= rssURL %>"
 				/>
 			</c:if>
 

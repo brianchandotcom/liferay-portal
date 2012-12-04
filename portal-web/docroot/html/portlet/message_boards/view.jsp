@@ -184,11 +184,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<div class="thread-actions">
 				<liferay-ui:icon-list>
-					<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+					<c:if test="<%= enableRSS %>">
 
 						<%
-						rssURL.setParameter("p_l_id", String.valueOf(plid));
-
 						if (category.getCategoryId() > 0) {
 							rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
 						}
@@ -197,12 +195,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						}
 						%>
 
-						<liferay-ui:icon
-							image="rss"
-							label="<%= true %>"
-							method="get"
-							target="_blank"
-							url="<%= rssURL.toString() %>"
+						<liferay-ui:rss
+							delta="<%= rssDelta %>"
+							displayStyle="<%= rssDisplayStyle %>"
+							feedType="<%= rssFeedType %>"
+							resourceURL="<%= rssURL %>"
 						/>
 					</c:if>
 
@@ -309,7 +306,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 		<%@ include file="/html/portlet/message_boards/view_threads.jspf" %>
 
-		<c:if test='<%= PortalUtil.isRSSFeedsEnabled() && topLink.equals("recent-posts") %>'>
+		<c:if test='<%= enableRSS && topLink.equals("recent-posts") %>'>
 
 			<%
 			rssURL.setParameter("groupId", String.valueOf(scopeGroupId));
@@ -323,20 +320,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<br />
 
-			<table class="lfr-table">
-			<tr>
-				<td>
-					<liferay-ui:icon
-						image="rss"
-						label="<%= true %>"
-						message="subscribe-to-recent-posts"
-						method="get"
-						target="_blank"
-						url="<%= rssURL.toString() %>"
-					/>
-				</td>
-			</tr>
-			</table>
+			<liferay-ui:rss
+				delta="<%= rssDelta %>"
+				displayStyle="<%= rssDisplayStyle %>"
+				feedType="<%= rssFeedType %>"
+				message="subscribe-to-recent-posts"
+				resourceURL="<%= rssURL %>"
+			/>
 		</c:if>
 
 		<%

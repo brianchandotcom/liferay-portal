@@ -293,7 +293,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		Assert.assertEquals(
 			"{\"array\":[1,2,3],\"value\":\"value\"}", toJSON(invokerResult));
 
-		// hack 1
+		// Hack 1
 
 		map.clear();
 		map.put("$* = /foo/two", params);
@@ -308,12 +308,13 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		try {
 			toJSON(invokerResult);
+
 			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
 
-		// hack 2
+		// Hack 2
 
 		map.clear();
 		map.put("$secret = /foo/two", params);
@@ -329,7 +330,6 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		Assert.assertEquals(
 			"{\"array\":[1,2,3],\"value\":\"value\"}", toJSON(invokerResult));
 	}
-
 
 	@Test
 	public void testSimpleCall() throws Exception {

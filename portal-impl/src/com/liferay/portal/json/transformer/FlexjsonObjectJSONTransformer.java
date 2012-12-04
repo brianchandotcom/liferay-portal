@@ -72,7 +72,7 @@ public class FlexjsonObjectJSONTransformer
 				if (pathExpression.equals(expression) &&
 						expression.isIncluded()) {
 
-					// same path expression found, but it was included
+					// Same path expression found, but it was included
 					// therefore replace it with excluded path expression
 
 					pathExpressions.set(i, pathExpression);

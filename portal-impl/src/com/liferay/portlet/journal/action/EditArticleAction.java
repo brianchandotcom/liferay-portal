@@ -47,6 +47,13 @@ import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
+import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.ArticleContentException;
 import com.liferay.portlet.journal.ArticleContentSizeException;
 import com.liferay.portlet.journal.ArticleDisplayDateException;
@@ -59,13 +66,9 @@ import com.liferay.portlet.journal.ArticleTypeException;
 import com.liferay.portlet.journal.ArticleVersionException;
 import com.liferay.portlet.journal.DuplicateArticleIdException;
 import com.liferay.portlet.journal.NoSuchArticleException;
-import com.liferay.portlet.journal.NoSuchStructureException;
-import com.liferay.portlet.journal.NoSuchTemplateException;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
 import java.io.File;
@@ -539,6 +542,23 @@ public class EditArticleAction extends PortletAction {
 
 		String content = ParamUtil.getString(uploadPortletRequest, "content");
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			JournalArticle.class.getName(), actionRequest);
+
+		String structureId = ParamUtil.getString(
+			uploadPortletRequest, "structureId");
+
+		if (Validator.isNotNull(structureId)) {
+			DDMStructure ddmStructure =
+				DDMStructureLocalServiceUtil.fetchStructure(
+					groupId, structureId);
+
+			Fields fields = DDMUtil.getFields(
+				ddmStructure.getStructureId(), serviceContext);
+
+			content = DDMXMLUtil.getXML(fields);
+		}
+
 		Boolean fileItemThresholdSizeExceeded =
 				(Boolean)uploadPortletRequest.getAttribute(
 			WebKeys.FILE_ITEM_THRESHOLD_SIZE_EXCEEDED);
@@ -550,8 +570,6 @@ public class EditArticleAction extends PortletAction {
 		}
 
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
-		String structureId = ParamUtil.getString(
-			uploadPortletRequest, "structureId");
 		String templateId = ParamUtil.getString(
 			uploadPortletRequest, "templateId");
 		String layoutUuid = ParamUtil.getString(
@@ -636,9 +654,6 @@ public class EditArticleAction extends PortletAction {
 		String articleURL = ParamUtil.getString(
 			uploadPortletRequest, "articleURL");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			JournalArticle.class.getName(), actionRequest);
-
 		serviceContext.setAttribute("defaultLanguageId", defaultLanguageId);
 
 		JournalArticle article = null;
@@ -701,20 +716,6 @@ public class EditArticleAction extends PortletAction {
 							defaultLanguageId, defaultLanguageId, true,
 							localized);
 					}
-				}
-			}
-			else {
-				if (curArticle.isTemplateDriven()) {
-					JournalStructure structure =
-						JournalStructureLocalServiceUtil.getStructure(
-							groupId, structureId, true);
-
-					boolean translate = cmd.equals(Constants.TRANSLATE);
-
-					content = JournalUtil.mergeArticleContent(
-						curArticle.getContent(), content, !translate);
-					content = JournalUtil.removeOldContent(
-						content, structure.getMergedXsd());
 				}
 			}
 

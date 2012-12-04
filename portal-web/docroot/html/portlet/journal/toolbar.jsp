@@ -77,15 +77,6 @@
 			/>
 
 			<%
-			taglibURL = "javascript:" + renderResponse.getNamespace() + "openTemplatesView()";
-			%>
-
-			<liferay-ui:icon
-				message="templates"
-				url="<%= taglibURL %>"
-			/>
-
-			<%
 			taglibURL = "javascript:" + renderResponse.getNamespace() + "openFeedsView()";
 			%>
 
@@ -116,27 +107,20 @@
 	</c:if>
 
 	function <portlet:namespace />openStructuresView() {
-		Liferay.Util.openWindow(
+		Liferay.Util.openDDMPortlet(
 			{
+				ddmResource: '<%= ddmResource %>',
+				ddmResourceActionId: '<%= ActionKeys.ADD_TEMPLATE %>',
 				dialog: {
 					width: 820
 				},
-				id: '<portlet:namespace />openStructuresView',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>',
-				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_structures" /></liferay-portlet:renderURL>'
-			}
-		);
-	}
-
-	function <portlet:namespace />openTemplatesView() {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					width: 820
-				},
-				id: '<portlet:namespace />openTemplatesView',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>',
-				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_templates" /></liferay-portlet:renderURL>'
+				showGlobalScope: 'false',
+				showManageTemplates: 'true',
+				storageType: 'xml',
+				structureName: 'structure',
+				structureType: 'com.liferay.portlet.journal.model.JournalArticle',
+				templateType: '<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>',
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
 			}
 		);
 	}

@@ -19,8 +19,6 @@
 <%
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-String structureName = LanguageUtil.get(pageContext, "basic-web-content");
-
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
@@ -76,6 +74,8 @@ searchContainer.setRowChecker(entriesChecker);
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDisplayTerms();
 
 boolean showAddArticleButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE);
+
+String ddmStructureName = LanguageUtil.get(pageContext, "basic-web-content");
 %>
 
 <c:if test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
@@ -88,9 +88,9 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 			String structureId = StringPool.BLANK;
 
 			if (!displayTerms.getStructureId().equals("0")) {
-				JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(scopeGroupId, displayTerms.getStructureId());
+				DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(scopeGroupId, displayTerms.getStructureId());
 
-				structureName = structure.getName(locale);
+				ddmStructureName = ddmStructure.getName(locale);
 
 				structureId = displayTerms.getStructureId();
 			}
@@ -105,7 +105,7 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 				<portlet:param name="structureId" value="<%= structureId %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(structureName) %>" key="showing-content-filtered-by-structure-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= HtmlUtil.escape(structureName) %>" key="add-new-x" /></a>)
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="showing-content-filtered-by-structure-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="add-new-x" /></a>)
 		</div>
 	</c:if>
 </c:if>
@@ -117,8 +117,8 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 		<div class="portlet-msg-info">
 
 			<%
-			JournalTemplate template = JournalTemplateLocalServiceUtil.getTemplate(scopeGroupId, displayTerms.getTemplateId());
-			JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(scopeGroupId, template.getStructureId());
+			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(scopeGroupId, displayTerms.getTemplateId());
+			DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(ddmTemplate.getClassPK());
 			%>
 
 			<liferay-portlet:renderURL varImpl="addArticlesURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
@@ -127,11 +127,11 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-				<portlet:param name="structureId" value="<%= template.getStructureId() %>" />
+				<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
 				<portlet:param name="templateId" value="<%= displayTerms.getTemplateId() %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-ui:message arguments="<%= template.getName(locale) %>" key="showing-content-filtered-by-template-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= structure.getName(locale) %>" key="add-new-x" /></a>)
+			<liferay-ui:message arguments="<%= ddmTemplate.getName(locale) %>" key="showing-content-filtered-by-template-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= ddmStructure.getName(locale) %>" key="add-new-x" /></a>)
 		</div>
 	</c:if>
 </c:if>
@@ -232,10 +232,10 @@ request.setAttribute("view.jsp-total", String.valueOf(total));
 			<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
 				<c:choose>
 					<c:when test="<%= total == 0 %>">
-						<liferay-ui:message arguments="<%= HtmlUtil.escape(structureName) %>" key="there-is-no-web-content-with-structure-x" />
+						<liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="there-is-no-web-content-with-structure-x" />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:message arguments="<%= HtmlUtil.escape(structureName) %>" key="there-is-no-web-content-with-structure-x-on-this-page" />
+						<liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="there-is-no-web-content-with-structure-x-on-this-page" />
 					</c:otherwise>
 				</c:choose>
 			</c:when>

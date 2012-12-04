@@ -34,20 +34,18 @@ public class NtlmAutoLogin implements AutoLogin {
 	public String[] login(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		String[] credentials = null;
-
 		try {
 			long companyId = PortalUtil.getCompanyId(request);
 
 			if (!AuthSettingsUtil.isNtlmEnabled(companyId)) {
-				return credentials;
+				return null;
 			}
 
 			String screenName = (String)request.getAttribute(
 				WebKeys.NTLM_REMOTE_USER);
 
 			if (screenName == null) {
-				return credentials;
+				return null;
 			}
 
 			request.removeAttribute(WebKeys.NTLM_REMOTE_USER);
@@ -55,26 +53,30 @@ public class NtlmAutoLogin implements AutoLogin {
 			User user = PortalLDAPImporterUtil.importLDAPUserByScreenName(
 				companyId, screenName);
 
-			if (user != null) {
-				String redirect = ParamUtil.getString(request, "redirect");
-
-				if (Validator.isNotNull(redirect)) {
-					request.setAttribute(
-						AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE, redirect);
-				}
-
-				credentials = new String[3];
-
-				credentials[0] = String.valueOf(user.getUserId());
-				credentials[1] = user.getPassword();
-				credentials[2] = Boolean.TRUE.toString();
+			if (user == null) {
+				return null;
 			}
+
+			String redirect = ParamUtil.getString(request, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				request.setAttribute(
+					AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE, redirect);
+			}
+
+			String[] credentials = new String[3];
+
+			credentials[0] = String.valueOf(user.getUserId());
+			credentials[1] = user.getPassword();
+			credentials[2] = Boolean.TRUE.toString();
+
+			return credentials;
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
 
-		return credentials;
+			return null;
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(NtlmAutoLogin.class);

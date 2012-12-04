@@ -52,8 +52,6 @@ public class RequestHeaderAutoLogin implements AutoLogin {
 	public String[] login(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		String[] credentials = null;
-
 		String remoteAddr = request.getRemoteAddr();
 
 		if (AuthSettingsUtil.isAccessAllowed(request, _hostsAllowed)) {
@@ -66,7 +64,7 @@ public class RequestHeaderAutoLogin implements AutoLogin {
 				_log.warn("Access denied for " + remoteAddr);
 			}
 
-			return credentials;
+			return null;
 		}
 
 		try {
@@ -76,7 +74,7 @@ public class RequestHeaderAutoLogin implements AutoLogin {
 				HttpHeaders.LIFERAY_SCREEN_NAME);
 
 			if (Validator.isNull(screenName)) {
-				return credentials;
+				return null;
 			}
 
 			User user = null;
@@ -98,7 +96,7 @@ public class RequestHeaderAutoLogin implements AutoLogin {
 					companyId, screenName);
 			}
 
-			credentials = new String[3];
+			String[] credentials = new String[3];
 
 			credentials[0] = String.valueOf(user.getUserId());
 			credentials[1] = user.getPassword();
@@ -108,9 +106,9 @@ public class RequestHeaderAutoLogin implements AutoLogin {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
 
-		return credentials;
+			return null;
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -37,13 +37,11 @@ public class FacebookAutoLogin implements AutoLogin {
 	public String[] login(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		String[] credentials = null;
-
 		try {
 			long companyId = PortalUtil.getCompanyId(request);
 
 			if (!FacebookConnectUtil.isEnabled(companyId)) {
-				return credentials;
+				return null;
 			}
 
 			HttpSession session = request.getSession();
@@ -53,45 +51,39 @@ public class FacebookAutoLogin implements AutoLogin {
 
 			User user = null;
 
-			if (Validator.isNotNull(emailAddress)) {
-				session.removeAttribute(WebKeys.FACEBOOK_USER_EMAIL_ADDRESS);
+			try {
+				if (Validator.isNotNull(emailAddress)) {
+					session.removeAttribute(
+						WebKeys.FACEBOOK_USER_EMAIL_ADDRESS);
 
-				try {
 					user = UserLocalServiceUtil.getUserByEmailAddress(
 						companyId, emailAddress);
 				}
-				catch (NoSuchUserException nsue) {
-				}
-			}
-			else {
-				long facebookId = GetterUtil.getLong(
-					(String)session.getAttribute(WebKeys.FACEBOOK_USER_ID));
-
-				if (facebookId > 0) {
-					try {
-						user = UserLocalServiceUtil.getUserByFacebookId(
-							companyId, facebookId);
-					}
-					catch (NoSuchUserException nsue) {
-						return credentials;
-					}
-				}
 				else {
-					return credentials;
+					long facebookId = GetterUtil.getLong(
+						(String)session.getAttribute(WebKeys.FACEBOOK_USER_ID));
+
+					user = UserLocalServiceUtil.getUserByFacebookId(
+						companyId, facebookId);
 				}
 			}
+			catch (NoSuchUserException nsue) {
+				return null;
+			}
 
-			credentials = new String[3];
+			String[] credentials = new String[3];
 
 			credentials[0] = String.valueOf(user.getUserId());
 			credentials[1] = user.getPassword();
 			credentials[2] = Boolean.FALSE.toString();
+
+			return credentials;
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
 
-		return credentials;
+			return null;
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(FacebookAutoLogin.class);

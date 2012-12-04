@@ -48,8 +48,6 @@ public class CASAutoLogin implements AutoLogin {
 
 		HttpSession session = request.getSession();
 
-		String[] credentials = null;
-
 		try {
 			long companyId = PortalUtil.getCompanyId(request);
 
@@ -57,7 +55,7 @@ public class CASAutoLogin implements AutoLogin {
 					companyId, PropsKeys.CAS_AUTH_ENABLED,
 					PropsValues.CAS_AUTH_ENABLED)) {
 
-				return credentials;
+				return null;
 			}
 
 			String login = (String)session.getAttribute(WebKeys.CAS_LOGIN);
@@ -67,7 +65,7 @@ public class CASAutoLogin implements AutoLogin {
 					WebKeys.CAS_NO_SUCH_USER_EXCEPTION);
 
 				if (noSuchUserException == null) {
-					return credentials;
+					return null;
 				}
 
 				session.removeAttribute(WebKeys.CAS_NO_SUCH_USER_EXCEPTION);
@@ -80,7 +78,7 @@ public class CASAutoLogin implements AutoLogin {
 
 				request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
 
-				return credentials;
+				return null;
 			}
 
 			String authType = PrefsPropsUtil.getString(
@@ -124,7 +122,7 @@ public class CASAutoLogin implements AutoLogin {
 				request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
 			}
 
-			credentials = new String[3];
+			String[] credentials = new String[3];
 
 			credentials[0] = String.valueOf(user.getUserId());
 			credentials[1] = user.getPassword();
@@ -142,7 +140,7 @@ public class CASAutoLogin implements AutoLogin {
 			_log.error(e, e);
 		}
 
-		return credentials;
+		return null;
 	}
 
 	/**

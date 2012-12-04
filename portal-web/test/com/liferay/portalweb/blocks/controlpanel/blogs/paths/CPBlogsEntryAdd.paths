@@ -1,0 +1,333 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ControlPanelBlogsEntryAddBot</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ControlPanelBlogsEntryAdd</td></tr>
+</thead><tbody>
+<tr>
+	<td>ABSTRACT_FIELD_DESCRIPTION</td>
+	<td>_161_description</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ABSTRACT_FIELD_SMALL_IMAGE</td>
+	<td>_161_smallFile</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ABSTRACT_FIELD_SMALL_IMAGE_CHECKBOX</td>
+	<td>_161_smallImageCheckbox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ABSTRACT_FIELD_SMALL_IMAGE_URL</td>
+	<td>_161_smallImageURL</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSETS_LINK_SELECT</td>
+	<td>//span[@title='Select']/ul/li/strong/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSETS_LINK_SELECT_BLOGS_ENTRY</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blogs Entry')]</td>
+	<td>Blogs Entry</td>
+</tr>
+<tr>
+	<td>ASSETS_LINK_SELECT_BOOKMARKS_ENTRY</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]</td>
+	<td>Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>ASSETS_LINK_SELECT_CALENDAR_EVENT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Calendar Event')]</td>
+	<td>Calendar Event</td>
+</tr>
+<tr>
+	<td>ASSETS_LINK_SELECT_DOCUMENT_LIBRARY_DOCUMENT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Documents and Media Document')]</td>
+	<td>Documents and Media Document</td>
+</tr>
+<tr>
+	<td>ASSETS_LINK_SELECT_MESSAGE_BOARDS_MESSAGE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Message Boards Message')]</td>
+	<td>Message Boards Message</td>
+</tr>
+<tr>
+	<td>ASSETS_LINK_SELECT_WEB_CONTENT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>ASSETS_LINK_SELECT_WIKI_PAGE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Wiki Page')]</td>
+	<td>Wiki Page</td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_FIELD_TAG_FIELD</td>
+	<td>//input[@title='Add Tags']</td>
+	<td>Add Tags</td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_LINK_ADD_TAG</td>
+	<td>//button[@id='add']/span[.='Add']</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_LINK_SELECT_TAG</td>
+	<td>//button[@id='select']/span[.='Select']</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_LINK_SUGGEST_TAG</td>
+	<td>//button[@id='suggest']/span[.='Suggestions']</td>
+	<td>Suggestions</td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_ALLOW_PINGBACKS</td>
+	<td>_161_allowPingbacksCheckbox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_ALLOW_TRACKBACKS</td>
+	<td>_161_allowTrackbacksCheckbox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_CONTENT</td>
+	<td>_161_editor</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_DISPLAY_DATE_AM_PM</td>
+	<td>_161_displayDateAmPm</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_DISPLAY_DATE_DAY</td>
+	<td>_161_displayDateDay</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_DISPLAY_DATE_HOUR</td>
+	<td>_161_displayDateHour</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_DISPLAY_DATE_MINUTE</td>
+	<td>_161_displayDateMinute</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_DISPLAY_DATE_MONTH</td>
+	<td>_161_displayDateMonth</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_DISPLAY_DATE_YEAR</td>
+	<td>_161_displayDateYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_TITLE</td>
+	<td>_161_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_TITLE_ALERT</td>
+	<td>//div[@role='alert']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_TRACKBACKS</td>
+	<td>_161_trackbacks</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_VIEWABLE_BY</td>
+	<td>_161__inputPermissionsViewRole</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_CALENDAR</td>
+	<td>buttonTest</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_DRAFT</td>
+	<td>//input[@value='Save as Draft']</td>
+	<td>Save as Draft</td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_PREVIEW</td>
+	<td>//input[@value='Preview']</td>
+	<td>Preview</td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_SAVE</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_ALLOW_PINGBACKS_LABEL</td>
+	<td>//label[@for='_161_allowPingbacksCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_ALLOW_TRACKBACKS_LABEL</td>
+	<td>//label[@for='_161_allowTrackbacksCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_CONTENT_LABEL</td>
+	<td>//label[contains(.,'Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_DISPLAY_DATE_LABEL</td>
+	<td>//label[@for='_161_displayDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[@class='portlet-msg-error'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[@class='portlet-msg-error'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_HEADER</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_SAVE_STATUS</td>
+	<td>_161_saveStatus</td>
+	<td>Draft saved</td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_TITLE_LABEL</td>
+	<td>//label[@for='_161_title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_TRACKBACKS_LABEL</td>
+	<td>//label[@for='_161_trackbacks']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_VIEWABLE_BY_LABEL</td>
+	<td>//label[@for='_161__inputPermissionsViewRole']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_LINK_ABSTRACT</td>
+	<td>blogsEntryAbstractPanel</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_LINK_ASSETS</td>
+	<td>blogsEntryAssetLinksPanel</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_LINK_CATEGORIZATION</td>
+	<td>blogsEntryCategorizationPanel</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_LINK_BACK</td>
+	<td>_161_TabsBack</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_LINK_BREADCRUMB_1</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_LINK_BREADCRUMB_2</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[2]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_LINK_BREADCRUMB_3</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TEXT_DESCRIPTION</td>
+	<td>cpContextPanelTemplate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_LINK_OPTIONS</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_LINK_OPTIONS_EXPORT_IMPORT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TEXT_PORTLET_TITLE</td>
+	<td>cpPortletTitle</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TEXT_SUCCESS</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>TAG_TEXT_1</td>
+	<td>xpath=(//span[@class='aui-textboxlistentry-text'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_TEXT_2</td>
+	<td>xpath=(//span[@class='aui-textboxlistentry-text'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_TEXT_3</td>
+	<td>xpath=(//span[@class='aui-textboxlistentry-text'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_LINK_DELETE_1</td>
+	<td>xpath=(//span[contains(@class,'aui-textboxlistentry-close')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_LINK_DELETE_2</td>
+	<td>xpath=(//span[contains(@class,'aui-textboxlistentry-close')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_LINK_DELETE_3</td>
+	<td>xpath=(//span[contains(@class,'aui-textboxlistentry-close')])[3]</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -24,7 +24,7 @@ public class AssertTextNotEqualsFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void assertTextNotEquals(String param1, String param2)
+	public void assertNotText(String param1, String param2)
 		throws Exception {
 		selenium.waitForVisible(param1);
 		selenium.waitForNotText(param1, param2);

@@ -1,5 +1,5 @@
 <functions>
-	<functiondef name="assertElementPresent">
+	<functiondef name="assertElementPresent" default="true">
 		<selenium command="waitForVisible" />
 		<selenium command="assertVisible" />
 	</functiondef>

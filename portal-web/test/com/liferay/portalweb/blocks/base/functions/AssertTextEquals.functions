@@ -11,7 +11,7 @@
 		<functions command="assertPartialText" />
 	</functiondef>
 
-	<functiondef name="assertText">
+	<functiondef name="assertText" default="true">
 		<selenium command="waitForVisible" />
 		<selenium command="waitForText" />
 		<selenium command="assertText" />

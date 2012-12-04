@@ -1,5 +1,5 @@
 <functions>
-	<functiondef name="confirm">
+	<functiondef name="confirm" default="true">
 		<selenium command="waitForConfirmation" />
 		<selenium command="pause" target="1000" />
 	</functiondef>

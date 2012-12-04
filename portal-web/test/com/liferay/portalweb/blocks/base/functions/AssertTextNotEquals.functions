@@ -1,5 +1,5 @@
 <functions>
-	<functiondef name="assertTextNotEquals">
+	<functiondef name="assertNotText" default="true">
 		<selenium command="waitForVisible" />
 		<selenium command="waitForNotText" />
 		<selenium command="assertNotText" />

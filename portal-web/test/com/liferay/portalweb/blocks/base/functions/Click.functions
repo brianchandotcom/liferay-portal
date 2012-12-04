@@ -61,7 +61,7 @@
 		<selenium command="clickAndWait" />
 	</functiondef>
 
-	<functiondef name="textClickAt">
+	<functiondef name="textClickAt" default="true">
 		<selenium command="waitForVisible" />
 		<selenium command="waitForText" />
 		<selenium command="assertText" />

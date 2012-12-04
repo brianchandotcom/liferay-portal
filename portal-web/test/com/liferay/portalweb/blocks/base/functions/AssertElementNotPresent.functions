@@ -1,5 +1,5 @@
 <functions>
-	<functiondef name="assertElementNotPresent">
+	<functiondef name="assertElementNotPresent" default="true">
 		<if command="isElementPresent">
 			<selenium command="waitForNotVisible" />
 			<selenium command="assertNotVisible" />

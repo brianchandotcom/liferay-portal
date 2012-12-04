@@ -9,7 +9,7 @@
 		<functions command="sendKeys" />
 	</functiondef>
 
-	<functiondef name="type">
+	<functiondef name="type" default="true">
 		<selenium command="waitForVisible" />
 		<selenium command="type" />
 	</functiondef>

@@ -1,5 +1,5 @@
 <functions>
-	<functiondef name="close">
+	<functiondef name="close" default="true">
 	</functiondef>
 
 	<functiondef name="closeWindow">

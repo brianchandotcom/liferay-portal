@@ -1,5 +1,5 @@
 <functions>
-	<functiondef name="open">
+	<functiondef name="open" default="true">
 		<selenium command="selectWindow" target="null" />
 		<selenium command="selectFrame" target="relative=top" />
 		<selenium command="open" />

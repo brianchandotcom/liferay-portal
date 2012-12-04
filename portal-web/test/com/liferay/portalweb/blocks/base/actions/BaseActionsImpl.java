@@ -111,7 +111,7 @@ public class BaseActionsImpl implements LiferayActions {
 		AssertTextNotEqualsFunctions assertTextNotEqualsFunctions =
 			new AssertTextNotEqualsFunctions(selenium);
 
-		assertTextNotEqualsFunctions.assertTextNotEquals(params[0], params[1]);
+		assertTextNotEqualsFunctions.assertNotText(params[0], params[1]);
 	}
 
 	public void assertTextNotPresent(String param1, String param2)
@@ -237,7 +237,7 @@ public class BaseActionsImpl implements LiferayActions {
 
 		UncheckFunctions uncheckFunctions = new UncheckFunctions(selenium);
 
-		uncheckFunctions.click(params[0], params[1]);
+		uncheckFunctions.clickAt(params[0], params[1]);
 	}
 
 	protected String[] getParams(String param1, String param2) {

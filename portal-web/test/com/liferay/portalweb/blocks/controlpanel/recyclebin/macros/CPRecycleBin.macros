@@ -1,7 +1,7 @@
 <macros>
 	<macrodef
 		name="emptyRecycleBin"
-		description="In the Control Panel Recycle Bin Portlet, Delete all the Entries."
+		description="In the &lt;strong&gt;Control Panel Recycle Bin Portlet&lt;/strong&gt;, delete all the &lt;em&gt;Entries&lt;/em&gt;."
 	>
 		<macro name="Navigation" command="navigateControlPanelPage">
 			<param name="page" value="Recycle Bin" />

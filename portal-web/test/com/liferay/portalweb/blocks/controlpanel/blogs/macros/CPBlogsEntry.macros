@@ -1,7 +1,7 @@
 <macros>
 	<macrodef
 		name="addBlogsEntry"
-		description="In the Control Panel Blogs Portlet, add a Blogs Entry with a title of ${title} and the content ${content}."
+		description="In the &lt;strong&gt;Control Panel Blogs Portlet&lt;/strong&gt;, add a &lt;em&gt;Blogs Entry&lt;/em&gt; with a title of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt; and the content &lt;strong&gt;&quot;${content}&quot;&lt;/strong&gt;."
 		params="title,content"
 	>
 		<macro name="Navigation" command="navigateControlPanelPage">
@@ -23,7 +23,7 @@
 
 	<macrodef
 		name="saveAsDraftBlogsEntry"
-		description="In the Control Panel Blogs Portlet, Save a Blogs Entry as a Draft with a title of ${title} and the content ${content}."
+		description="In the &lt;strong&gt;Control Panel Blogs Portlet&lt;/strong&gt;, save a &lt;em&gt;Blogs Entry&lt;/em&gt; as a draft with a title of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt; and the content &lt;strong&gt;&quot;${content}&quot;&lt;/strong&gt;."
 		params="title,content"
 	>
 		<macro name="Navigation" command="navigateControlPanelPage">
@@ -54,7 +54,7 @@
 
 	<macrodef
 		name="tearDownBlogsEntry"
-		description="In the Control Panel Blogs Portlet, Delete all the Blogs Entries."
+		description="In the &lt;strong&gt;Control Panel Blogs Portlet&lt;/strong&gt;, delete all the &lt;em&gt;Blogs Entries&lt;/em&gt;."
 	>
 		<macro name="Navigation" command="navigateControlPanelPage">
 			<param name="portlet" value="Blogs" />

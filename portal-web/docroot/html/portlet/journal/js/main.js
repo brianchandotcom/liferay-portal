@@ -2396,39 +2396,6 @@ AUI.add(
 						}
 					);
 				}
-
-				if (publishButton) {
-					publishButton.detach('click');
-
-					publishButton.on(
-						'click',
-						function() {
-							instance.saveArticle('publish');
-						}
-					);
-				}
-
-				if (saveButton) {
-					saveButton.detach('click');
-
-					saveButton.on(
-						'click',
-						function() {
-							instance.saveArticle();
-						}
-					);
-				}
-
-				if (translateButton) {
-					translateButton.detach('click');
-
-					translateButton.on(
-						'click',
-						function() {
-							instance.translateArticle();
-						}
-					);
-				}
 			},
 
 			_createDynamicNode: function(nodeName, attributeMap) {

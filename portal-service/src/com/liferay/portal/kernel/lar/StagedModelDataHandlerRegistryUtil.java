@@ -51,6 +51,16 @@ public class StagedModelDataHandlerRegistryUtil {
 	}
 
 	public static void unregister(
+		List<StagedModelDataHandler<?>> stagedModelDataHandlers) {
+
+		for (StagedModelDataHandler stagedModelDataHandler :
+				stagedModelDataHandlers) {
+
+			unregister(stagedModelDataHandler);
+		}
+	}
+
+	public static void unregister(
 		StagedModelDataHandler<?> stagedModelDataHandler) {
 
 		getStagedModelDataHandlerRegistry().unregister(stagedModelDataHandler);

@@ -39,16 +39,12 @@ public class StagedModelDataHandlerRegistryImpl
 	}
 
 	public void register(StagedModelDataHandler<?> stagedModelDataHandler) {
-		/*String className = null;
-
 		_stagedModelDataHandlers.put(
-			className, stagedModelDataHandler);*/
+			stagedModelDataHandler.getClassName(), stagedModelDataHandler);
 	}
 
 	public void unregister(StagedModelDataHandler<?> stagedModelDataHandler) {
-		/*String className = null;
-
-		_stagedModelDataHandlers.remove(className);*/
+		_stagedModelDataHandlers.remove(stagedModelDataHandler.getClassName());
 	}
 
 	private Map<String, StagedModelDataHandler<?>> _stagedModelDataHandlers =

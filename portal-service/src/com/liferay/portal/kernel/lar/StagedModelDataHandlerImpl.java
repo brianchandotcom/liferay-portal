@@ -21,13 +21,15 @@ import com.liferay.portal.model.StagedModel;
  * @author Mate Thurzo
  * @author Daniel Kocsis
  */
-public class StagedModelDataHandlerImpl<T extends StagedModel>
+public abstract class StagedModelDataHandlerImpl<T extends StagedModel>
 	implements StagedModelDataHandler<T> {
 
 	public void export(
 		T stagedModel, PortletDataContext portletDataContext,
 		Element... elements) {
 	}
+
+	public abstract String getClassName();
 
 	public void importData(
 		Element stagedModelElement, PortletDataContext portletDataContext) {

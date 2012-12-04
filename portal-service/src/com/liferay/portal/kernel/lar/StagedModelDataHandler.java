@@ -28,6 +28,8 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 			Element... elements)
 		throws PortletDataException;
 
+	public String getClassName();
+
 	public void importData(
 			Element stagedModelElement, PortletDataContext portletDataContext)
 		throws PortletDataException;

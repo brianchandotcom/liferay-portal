@@ -1,0 +1,27 @@
+<functions>
+	<functiondef name="mouseOver">
+		<selenium command="waitForVisible" />
+		<selenium command="mouseOver" />
+	</functiondef>
+
+	<functiondef name="partialTextMouseOver">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForPartialText" />
+		<selenium command="assertPartialText" />
+		<selenium command="mouseOver" />
+	</functiondef>
+
+	<functiondef name="textMouseOver">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForText" />
+		<selenium command="assertText" />
+		<selenium command="mouseOver" />
+	</functiondef>
+
+	<functiondef name="valueMouseOver">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForValue" />
+		<selenium command="assertValue" />
+		<selenium command="mouseOver" />
+	</functiondef>
+</functions>

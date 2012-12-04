@@ -1,6 +1,0 @@
-<units>
-	<unitdef name="assertTextNotPresent">
-		<selenium command="waitForTextNotPresent" />
-		<selenium command="assertTextNotPresent" />
-	</unitdef>
-</units>

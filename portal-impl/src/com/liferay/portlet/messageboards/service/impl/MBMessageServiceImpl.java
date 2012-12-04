@@ -148,7 +148,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		MBMessage parentMessage = mbMessagePersistence.fetchByPrimaryKey(
+		MBMessage parentMessage = mbMessageLocalService.getMessage(
 			parentMessageId);
 
 		checkReplyToPermission(
@@ -697,11 +697,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				return;
 			}
 
-			MBMessage parentMessage = mbMessagePersistence.fetchByPrimaryKey(
-				parentMessageId);
-
-			if ((parentMessage == null) ||
-				!MBCategoryPermission.contains(
+			if (!MBCategoryPermission.contains(
 					getPermissionChecker(), groupId, categoryId,
 					ActionKeys.REPLY_TO_MESSAGE)) {
 

@@ -6888,18 +6888,38 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			DDMStructureImpl.class, ddmStructure.getPrimaryKey(), ddmStructure);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					ddmStructure.getUuid(),
 					Long.valueOf(ddmStructure.getGroupId())
-				}, ddmStructure);
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_S,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				ddmStructure);
+
+			args = new Object[] {
 					Long.valueOf(ddmStructure.getGroupId()),
 					
-				ddmStructure.getStructureKey()
-				}, ddmStructure);
+					ddmStructure.getStructureKey()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_S, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_S, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_S, args,
+				ddmStructure);
 		}
 		else {
 			if ((ddmStructureModelImpl.getColumnBitmask() &

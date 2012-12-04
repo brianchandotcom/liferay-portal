@@ -5246,12 +5246,25 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			socialActivity);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_MIRRORACTIVITYID,
-				new Object[] { Long.valueOf(
-						socialActivity.getMirrorActivityId()) }, socialActivity);
+			Object[] args = null;
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U_CD_C_C_T_R,
-				new Object[] {
+			args = new Object[] {
+					Long.valueOf(socialActivity.getMirrorActivityId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_MIRRORACTIVITYID,
+				args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_MIRRORACTIVITYID,
+				args, Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MIRRORACTIVITYID,
+				args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_MIRRORACTIVITYID,
+				args, socialActivity);
+
+			args = new Object[] {
 					Long.valueOf(socialActivity.getGroupId()),
 					Long.valueOf(socialActivity.getUserId()),
 					Long.valueOf(socialActivity.getCreateDate()),
@@ -5259,7 +5272,19 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 					Long.valueOf(socialActivity.getClassPK()),
 					Integer.valueOf(socialActivity.getType()),
 					Long.valueOf(socialActivity.getReceiverUserId())
-				}, socialActivity);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_CD_C_C_T_R,
+				args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U_CD_C_C_T_R,
+				args, Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U_CD_C_C_T_R,
+				args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U_CD_C_C_T_R,
+				args, socialActivity);
 		}
 		else {
 			if ((socialActivityModelImpl.getColumnBitmask() &

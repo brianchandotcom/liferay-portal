@@ -545,8 +545,19 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			ClassNameImpl.class, className.getPrimaryKey(), className);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VALUE,
-				new Object[] { className.getValue() }, className);
+			Object[] args = null;
+
+			args = new Object[] { className.getValue() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VALUE, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_VALUE, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VALUE, args,
+				className);
 		}
 		else {
 			if ((classNameModelImpl.getColumnBitmask() &

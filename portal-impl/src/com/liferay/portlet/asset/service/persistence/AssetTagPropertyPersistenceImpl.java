@@ -2157,12 +2157,23 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 			assetTagProperty);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_K,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(assetTagProperty.getTagId()),
 					
-				assetTagProperty.getKey()
-				}, assetTagProperty);
+					assetTagProperty.getKey()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_K, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_K, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_K, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_K, args,
+				assetTagProperty);
 		}
 		else {
 			if ((assetTagPropertyModelImpl.getColumnBitmask() &

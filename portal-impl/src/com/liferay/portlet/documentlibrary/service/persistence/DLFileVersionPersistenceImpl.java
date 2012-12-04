@@ -4286,18 +4286,38 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			dlFileVersion);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					dlFileVersion.getUuid(),
 					Long.valueOf(dlFileVersion.getGroupId())
-				}, dlFileVersion);
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				dlFileVersion);
+
+			args = new Object[] {
 					Long.valueOf(dlFileVersion.getFileEntryId()),
 					
-				dlFileVersion.getVersion()
-				}, dlFileVersion);
+					dlFileVersion.getVersion()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_F_V, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_F_V, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V, args,
+				dlFileVersion);
 		}
 		else {
 			if ((dlFileVersionModelImpl.getColumnBitmask() &

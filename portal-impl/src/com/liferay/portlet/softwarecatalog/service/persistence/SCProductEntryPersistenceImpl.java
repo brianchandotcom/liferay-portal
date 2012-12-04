@@ -2917,12 +2917,23 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			scProductEntry);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_RG_RA,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					scProductEntry.getRepoGroupId(),
 					
-				scProductEntry.getRepoArtifactId()
-				}, scProductEntry);
+					scProductEntry.getRepoArtifactId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RG_RA, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_RG_RA, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_RG_RA, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_RG_RA, args,
+				scProductEntry);
 		}
 		else {
 			if ((scProductEntryModelImpl.getColumnBitmask() &

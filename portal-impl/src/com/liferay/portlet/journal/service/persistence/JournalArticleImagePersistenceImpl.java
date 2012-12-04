@@ -2410,19 +2410,30 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			journalArticleImage);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(journalArticleImage.getGroupId()),
 					
-				journalArticleImage.getArticleId(),
+					journalArticleImage.getArticleId(),
 					Double.valueOf(journalArticleImage.getVersion()),
 					
-				journalArticleImage.getElInstanceId(),
+					journalArticleImage.getElInstanceId(),
 					
-				journalArticleImage.getElName(),
+					journalArticleImage.getElName(),
 					
-				journalArticleImage.getLanguageId()
-				}, journalArticleImage);
+					journalArticleImage.getLanguageId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A_V_E_E_L, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_A_V_E_E_L, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L, args,
+				journalArticleImage);
 		}
 		else {
 			if ((journalArticleImageModelImpl.getColumnBitmask() &

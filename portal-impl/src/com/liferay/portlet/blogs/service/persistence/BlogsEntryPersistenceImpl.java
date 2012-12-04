@@ -17813,17 +17813,37 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			BlogsEntryImpl.class, blogsEntry.getPrimaryKey(), blogsEntry);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					blogsEntry.getUuid(), Long.valueOf(blogsEntry.getGroupId())
-				}, blogsEntry);
+			Object[] args = null;
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_UT,
-				new Object[] {
+			args = new Object[] {
+					blogsEntry.getUuid(), Long.valueOf(blogsEntry.getGroupId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				blogsEntry);
+
+			args = new Object[] {
 					Long.valueOf(blogsEntry.getGroupId()),
 					
-				blogsEntry.getUrlTitle()
-				}, blogsEntry);
+					blogsEntry.getUrlTitle()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_UT, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_UT, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_UT, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_UT, args,
+				blogsEntry);
 		}
 		else {
 			if ((blogsEntryModelImpl.getColumnBitmask() &

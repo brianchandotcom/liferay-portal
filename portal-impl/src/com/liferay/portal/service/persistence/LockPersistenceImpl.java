@@ -2534,12 +2534,35 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			LockImpl.class, lock.getPrimaryKey(), lock);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K,
-				new Object[] { lock.getClassName(), lock.getKey() }, lock);
+			Object[] args = null;
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K_O,
-				new Object[] { lock.getClassName(), lock.getKey(), lock.getOwner() },
-				lock);
+			args = new Object[] { lock.getClassName(), lock.getKey() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_K, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K, args, lock);
+
+			args = new Object[] {
+					lock.getClassName(),
+					
+					lock.getKey(),
+					
+					lock.getOwner()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_K_O, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_K_O, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K_O, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K_O, args, lock);
 		}
 		else {
 			if ((lockModelImpl.getColumnBitmask() &

@@ -1142,13 +1142,24 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			ExpandoTableImpl.class, expandoTable.getPrimaryKey(), expandoTable);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_N,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(expandoTable.getCompanyId()),
 					Long.valueOf(expandoTable.getClassNameId()),
 					
-				expandoTable.getName()
-				}, expandoTable);
+					expandoTable.getName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_N, args,
+				expandoTable);
 		}
 		else {
 			if ((expandoTableModelImpl.getColumnBitmask() &

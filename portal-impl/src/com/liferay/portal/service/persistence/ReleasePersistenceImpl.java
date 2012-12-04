@@ -550,8 +550,21 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 			ReleaseImpl.class, release.getPrimaryKey(), release);
 
 		if (isNew) {
+			Object[] args = null;
+
+			args = new Object[] { release.getServletContextName() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
+				args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
+				args, Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
+				args);
+
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
-				new Object[] { release.getServletContextName() }, release);
+				args, release);
 		}
 		else {
 			if ((releaseModelImpl.getColumnBitmask() &

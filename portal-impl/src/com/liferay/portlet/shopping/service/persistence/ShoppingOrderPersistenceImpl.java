@@ -2715,11 +2715,31 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			shoppingOrder);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER,
-				new Object[] { shoppingOrder.getNumber() }, shoppingOrder);
+			Object[] args = null;
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID,
-				new Object[] { shoppingOrder.getPpTxnId() }, shoppingOrder);
+			args = new Object[] { shoppingOrder.getNumber() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NUMBER, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NUMBER, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NUMBER, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER, args,
+				shoppingOrder);
+
+			args = new Object[] { shoppingOrder.getPpTxnId() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PPTXNID, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PPTXNID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PPTXNID, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID, args,
+				shoppingOrder);
 		}
 		else {
 			if ((shoppingOrderModelImpl.getColumnBitmask() &

@@ -1618,12 +1618,23 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			ddlRecordVersion);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_V,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(ddlRecordVersion.getRecordId()),
 					
-				ddlRecordVersion.getVersion()
-				}, ddlRecordVersion);
+					ddlRecordVersion.getVersion()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_V, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_V, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_V, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_V, args,
+				ddlRecordVersion);
 		}
 		else {
 			if ((ddlRecordVersionModelImpl.getColumnBitmask() &

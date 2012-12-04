@@ -795,14 +795,32 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			ShardImpl.class, shard.getPrimaryKey(), shard);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
-				new Object[] { shard.getName() }, shard);
+			Object[] args = null;
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C,
-				new Object[] {
+			args = new Object[] { shard.getName() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NAME, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME, args, shard);
+
+			args = new Object[] {
 					Long.valueOf(shard.getClassNameId()),
 					Long.valueOf(shard.getClassPK())
-				}, shard);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args, shard);
 		}
 		else {
 			if ((shardModelImpl.getColumnBitmask() &

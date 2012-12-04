@@ -1956,12 +1956,23 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			expandoColumn);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_N,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(expandoColumn.getTableId()),
 					
-				expandoColumn.getName()
-				}, expandoColumn);
+					expandoColumn.getName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_N, args,
+				expandoColumn);
 		}
 		else {
 			if ((expandoColumnModelImpl.getColumnBitmask() &

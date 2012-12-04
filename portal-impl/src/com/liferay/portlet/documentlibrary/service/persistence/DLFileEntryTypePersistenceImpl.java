@@ -3314,18 +3314,38 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			dlFileEntryType);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					dlFileEntryType.getUuid(),
 					Long.valueOf(dlFileEntryType.getGroupId())
-				}, dlFileEntryType);
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				dlFileEntryType);
+
+			args = new Object[] {
 					Long.valueOf(dlFileEntryType.getGroupId()),
 					
-				dlFileEntryType.getName()
-				}, dlFileEntryType);
+					dlFileEntryType.getName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+				dlFileEntryType);
 		}
 		else {
 			if ((dlFileEntryTypeModelImpl.getColumnBitmask() &

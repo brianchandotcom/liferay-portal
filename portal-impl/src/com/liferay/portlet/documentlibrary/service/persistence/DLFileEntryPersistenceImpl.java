@@ -10170,27 +10170,56 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			DLFileEntryImpl.class, dlFileEntry.getPrimaryKey(), dlFileEntry);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					dlFileEntry.getUuid(),
 					Long.valueOf(dlFileEntry.getGroupId())
-				}, dlFileEntry);
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_N,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				dlFileEntry);
+
+			args = new Object[] {
 					Long.valueOf(dlFileEntry.getGroupId()),
 					Long.valueOf(dlFileEntry.getFolderId()),
 					
-				dlFileEntry.getName()
-				}, dlFileEntry);
+					dlFileEntry.getName()
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_T,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_N, args,
+				dlFileEntry);
+
+			args = new Object[] {
 					Long.valueOf(dlFileEntry.getGroupId()),
 					Long.valueOf(dlFileEntry.getFolderId()),
 					
-				dlFileEntry.getTitle()
-				}, dlFileEntry);
+					dlFileEntry.getTitle()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F_T, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_T, args,
+				dlFileEntry);
 		}
 		else {
 			if ((dlFileEntryModelImpl.getColumnBitmask() &

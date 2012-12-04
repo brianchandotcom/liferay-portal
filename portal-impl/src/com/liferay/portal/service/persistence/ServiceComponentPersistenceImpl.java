@@ -1138,11 +1138,22 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			serviceComponent);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BNS_BNU,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					serviceComponent.getBuildNamespace(),
 					Long.valueOf(serviceComponent.getBuildNumber())
-				}, serviceComponent);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BNS_BNU, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_BNS_BNU, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BNS_BNU, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BNS_BNU, args,
+				serviceComponent);
 		}
 		else {
 			if ((serviceComponentModelImpl.getColumnBitmask() &

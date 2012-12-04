@@ -2013,11 +2013,21 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			MBBanImpl.class, mbBan.getPrimaryKey(), mbBan);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_B,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(mbBan.getGroupId()),
 					Long.valueOf(mbBan.getBanUserId())
-				}, mbBan);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_B, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_B, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_B, args, mbBan);
 		}
 		else {
 			if ((mbBanModelImpl.getColumnBitmask() &

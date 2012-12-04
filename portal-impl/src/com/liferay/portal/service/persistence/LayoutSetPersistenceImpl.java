@@ -1597,11 +1597,21 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 			LayoutSetImpl.class, layoutSet.getPrimaryKey(), layoutSet);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(layoutSet.getGroupId()),
 					Boolean.valueOf(layoutSet.getPrivateLayout())
-				}, layoutSet);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P, args, layoutSet);
 		}
 		else {
 			if ((layoutSetModelImpl.getColumnBitmask() &

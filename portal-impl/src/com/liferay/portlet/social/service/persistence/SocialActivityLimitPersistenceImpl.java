@@ -1739,16 +1739,27 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 			socialActivityLimit);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U_C_C_A_A,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(socialActivityLimit.getGroupId()),
 					Long.valueOf(socialActivityLimit.getUserId()),
 					Long.valueOf(socialActivityLimit.getClassNameId()),
 					Long.valueOf(socialActivityLimit.getClassPK()),
 					Integer.valueOf(socialActivityLimit.getActivityType()),
 					
-				socialActivityLimit.getActivityCounterName()
-				}, socialActivityLimit);
+					socialActivityLimit.getActivityCounterName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_C_C_A_A, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U_C_C_A_A, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U_C_C_A_A, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U_C_C_A_A, args,
+				socialActivityLimit);
 		}
 		else {
 			if ((socialActivityLimitModelImpl.getColumnBitmask() &

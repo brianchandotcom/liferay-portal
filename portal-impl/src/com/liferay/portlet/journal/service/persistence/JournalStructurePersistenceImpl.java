@@ -5384,18 +5384,38 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			journalStructure);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					journalStructure.getUuid(),
 					Long.valueOf(journalStructure.getGroupId())
-				}, journalStructure);
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_S,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				journalStructure);
+
+			args = new Object[] {
 					Long.valueOf(journalStructure.getGroupId()),
 					
-				journalStructure.getStructureId()
-				}, journalStructure);
+					journalStructure.getStructureId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_S, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_S, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_S, args,
+				journalStructure);
 		}
 		else {
 			if ((journalStructureModelImpl.getColumnBitmask() &

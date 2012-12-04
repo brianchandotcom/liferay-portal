@@ -2401,15 +2401,26 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			DLContentImpl.class, dlContent.getPrimaryKey(), dlContent);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R_P_V,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(dlContent.getCompanyId()),
 					Long.valueOf(dlContent.getRepositoryId()),
 					
-				dlContent.getPath(),
+					dlContent.getPath(),
 					
-				dlContent.getVersion()
-				}, dlContent);
+					dlContent.getVersion()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_P_V, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R_P_V, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R_P_V, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R_P_V, args,
+				dlContent);
 		}
 		else {
 			if ((dlContentModelImpl.getColumnBitmask() &

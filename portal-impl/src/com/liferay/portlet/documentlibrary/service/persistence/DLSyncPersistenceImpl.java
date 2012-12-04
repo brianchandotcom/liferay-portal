@@ -1078,8 +1078,18 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 			DLSyncImpl.class, dlSync.getPrimaryKey(), dlSync);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FILEID,
-				new Object[] { Long.valueOf(dlSync.getFileId()) }, dlSync);
+			Object[] args = null;
+
+			args = new Object[] { Long.valueOf(dlSync.getFileId()) };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEID, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_FILEID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FILEID, args, dlSync);
 		}
 		else {
 			if ((dlSyncModelImpl.getColumnBitmask() &

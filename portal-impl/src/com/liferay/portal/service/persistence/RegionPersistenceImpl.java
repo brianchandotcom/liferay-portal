@@ -2090,12 +2090,22 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			RegionImpl.class, region.getPrimaryKey(), region);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(region.getCountryId()),
 					
-				region.getRegionCode()
-				}, region);
+					region.getRegionCode()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R, args, region);
 		}
 		else {
 			if ((regionModelImpl.getColumnBitmask() &

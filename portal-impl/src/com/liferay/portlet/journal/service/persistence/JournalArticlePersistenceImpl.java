@@ -25087,27 +25087,56 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			journalArticle);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					journalArticle.getUuid(),
 					Long.valueOf(journalArticle.getGroupId())
-				}, journalArticle);
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_S,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				journalArticle);
+
+			args = new Object[] {
 					Long.valueOf(journalArticle.getGroupId()),
 					Long.valueOf(journalArticle.getClassNameId()),
 					
-				journalArticle.getStructureId()
-				}, journalArticle);
+					journalArticle.getStructureId()
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A_V,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_S, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_S, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_S, args,
+				journalArticle);
+
+			args = new Object[] {
 					Long.valueOf(journalArticle.getGroupId()),
 					
-				journalArticle.getArticleId(),
+					journalArticle.getArticleId(),
 					Double.valueOf(journalArticle.getVersion())
-				}, journalArticle);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A_V, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_A_V, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A_V, args,
+				journalArticle);
 		}
 		else {
 			if ((journalArticleModelImpl.getColumnBitmask() &

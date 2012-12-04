@@ -3216,10 +3216,21 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 			DDLRecordImpl.class, ddlRecord.getPrimaryKey(), ddlRecord);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					ddlRecord.getUuid(), Long.valueOf(ddlRecord.getGroupId())
-				}, ddlRecord);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				ddlRecord);
 		}
 		else {
 			if ((ddlRecordModelImpl.getColumnBitmask() &

@@ -5135,11 +5135,22 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			dlFileShortcut);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					dlFileShortcut.getUuid(),
 					Long.valueOf(dlFileShortcut.getGroupId())
-				}, dlFileShortcut);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				dlFileShortcut);
 		}
 		else {
 			if ((dlFileShortcutModelImpl.getColumnBitmask() &

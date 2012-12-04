@@ -8176,35 +8176,80 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			LayoutImpl.class, layout.getPrimaryKey(), layout);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] { layout.getUuid(), Long.valueOf(
-						layout.getGroupId()) }, layout);
+			Object[] args = null;
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ICONIMAGEID,
-				new Object[] { Long.valueOf(layout.getIconImageId()) }, layout);
+			args = new Object[] {
+					layout.getUuid(), Long.valueOf(layout.getGroupId())
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_L,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args, layout);
+
+			args = new Object[] { Long.valueOf(layout.getIconImageId()) };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ICONIMAGEID, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ICONIMAGEID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ICONIMAGEID, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ICONIMAGEID, args,
+				layout);
+
+			args = new Object[] {
 					Long.valueOf(layout.getGroupId()),
 					Boolean.valueOf(layout.getPrivateLayout()),
 					Long.valueOf(layout.getLayoutId())
-				}, layout);
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_F,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_L, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_L, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_L, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_L, args, layout);
+
+			args = new Object[] {
 					Long.valueOf(layout.getGroupId()),
 					Boolean.valueOf(layout.getPrivateLayout()),
 					
-				layout.getFriendlyURL()
-				}, layout);
+					layout.getFriendlyURL()
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_SPLU,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_F, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_F, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_F, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_F, args, layout);
+
+			args = new Object[] {
 					Long.valueOf(layout.getGroupId()),
 					Boolean.valueOf(layout.getPrivateLayout()),
 					
-				layout.getSourcePrototypeLayoutUuid()
-				}, layout);
+					layout.getSourcePrototypeLayoutUuid()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_SPLU, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_SPLU, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_SPLU, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_SPLU, args,
+				layout);
 		}
 		else {
 			if ((layoutModelImpl.getColumnBitmask() &

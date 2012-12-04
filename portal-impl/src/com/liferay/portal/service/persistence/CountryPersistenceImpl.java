@@ -1510,14 +1510,40 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 			CountryImpl.class, country.getPrimaryKey(), country);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
-				new Object[] { country.getName() }, country);
+			Object[] args = null;
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A2,
-				new Object[] { country.getA2() }, country);
+			args = new Object[] { country.getName() };
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A3,
-				new Object[] { country.getA3() }, country);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NAME, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME, args, country);
+
+			args = new Object[] { country.getA2() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A2, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_A2, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A2, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A2, args, country);
+
+			args = new Object[] { country.getA3() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A3, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_A3, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A3, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A3, args, country);
 		}
 		else {
 			if ((countryModelImpl.getColumnBitmask() &

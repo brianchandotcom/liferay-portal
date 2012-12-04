@@ -4784,16 +4784,27 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			journalContentSearch.getPrimaryKey(), journalContentSearch);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_L_P_A,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(journalContentSearch.getGroupId()),
 					Boolean.valueOf(journalContentSearch.getPrivateLayout()),
 					Long.valueOf(journalContentSearch.getLayoutId()),
 					
-				journalContentSearch.getPortletId(),
+					journalContentSearch.getPortletId(),
 					
-				journalContentSearch.getArticleId()
-				}, journalContentSearch);
+					journalContentSearch.getArticleId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_L_P_A, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_L_P_A, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_L_P_A, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_L_P_A, args,
+				journalContentSearch);
 		}
 		else {
 			if ((journalContentSearchModelImpl.getColumnBitmask() &

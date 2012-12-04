@@ -1537,11 +1537,22 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKey(), mbThreadFlag);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(mbThreadFlag.getUserId()),
 					Long.valueOf(mbThreadFlag.getThreadId())
-				}, mbThreadFlag);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_T, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T, args,
+				mbThreadFlag);
 		}
 		else {
 			if ((mbThreadFlagModelImpl.getColumnBitmask() &

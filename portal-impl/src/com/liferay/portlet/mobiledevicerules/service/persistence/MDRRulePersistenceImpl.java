@@ -2173,10 +2173,20 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 			MDRRuleImpl.class, mdrRule.getPrimaryKey(), mdrRule);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					mdrRule.getUuid(), Long.valueOf(mdrRule.getGroupId())
-				}, mdrRule);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args, mdrRule);
 		}
 		else {
 			if ((mdrRuleModelImpl.getColumnBitmask() &

@@ -50,6 +50,8 @@
 	</div>
 </c:if>
 
+<liferay-ui:restore-entry />
+
 <portlet:actionURL var="selectContainerURL">
 	<portlet:param name="struts_action" value="/trash/edit_entry" />
 </portlet:actionURL>
@@ -62,15 +64,7 @@
 	<aui:input name="containerModelId" type="hidden" value="" />
 </aui:form>
 
-<aui:script use="aui-dialog-iframe,liferay-restore-entry,liferay-util-window">
-	new Liferay.RestoreEntry(
-		{
-			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" /><portlet:param name="struts_action" value="/trash/edit_entry" /></portlet:actionURL>',
-			namespace: '<portlet:namespace />',
-			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/trash/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
-		}
-	);
-
+<aui:script use="aui-dialog-iframe,liferay-util-window">
 	A.getBody().delegate(
 		'click',
 		function(event) {

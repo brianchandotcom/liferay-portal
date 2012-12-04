@@ -80,8 +80,6 @@ public class AppViewNavigationEntryTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		super.cleanUp();
-
 		_actionJsp = null;
 		_browseUp = false;
 		_cssClassName = "folder";

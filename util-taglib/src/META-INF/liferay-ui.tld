@@ -2476,6 +2476,31 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+    <tag>
+        <name>restore-entry</name>
+        <tag-class>com.liferay.taglib.ui.RestoreEntryTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>duplicateEntryAction</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+			<name>overrideMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+            <name>renameMessage</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>restoreEntryAction</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 	<tag>
 		<name>rss</name>
 		<tag-class>com.liferay.taglib.ui.RSSTag</tag-class>

@@ -113,8 +113,6 @@ public class AppViewEntryTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		super.cleanUp();
-
 		_actionJsp = null;
 		_assetCategoryClassName = null;
 		_assetCategoryClassPK = 0;

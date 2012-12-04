@@ -127,6 +127,29 @@ public class WSDDBuilder {
 		}
 	}
 
+	private void _createServiceWSDD(String entityName) throws Exception {
+		String className =
+			_packagePath + ".service.http." + entityName + "ServiceSoap";
+
+		String serviceName = StringUtil.replace(_portletShortName, " ", "_");
+
+		if (!_portletShortName.equals("Portal")) {
+			serviceName = _serviceNamespace + "_" + serviceName;
+		}
+
+		serviceName += ("_" + entityName + "Service");
+
+		String[] wsdds = Java2WsddTask.generateWsdd(className, serviceName);
+
+		FileUtil.write(
+			new File(_outputPath + "/" + entityName + "Service_deploy.wsdd"),
+			wsdds[0], true);
+
+		FileUtil.write(
+			new File(_outputPath + "/" + entityName + "Service_undeploy.wsdd"),
+			wsdds[1], true);
+	}
+
 	private String _getContent(String fileName) throws Exception {
 		Document document = _getContentDocument(fileName);
 
@@ -239,29 +262,6 @@ public class WSDDBuilder {
 		}
 
 		return document;
-	}
-
-	private void _createServiceWSDD(String entityName) throws Exception {
-		String className =
-			_packagePath + ".service.http." + entityName + "ServiceSoap";
-
-		String serviceName = StringUtil.replace(_portletShortName, " ", "_");
-
-		if (!_portletShortName.equals("Portal")) {
-			serviceName = _serviceNamespace + "_" + serviceName;
-		}
-
-		serviceName += ("_" + entityName + "Service");
-
-		String[] wsdds = Java2WsddTask.generateWsdd(className, serviceName);
-
-		FileUtil.write(
-			new File(_outputPath + "/" + entityName + "Service_deploy.wsdd"),
-			wsdds[0], true);
-
-		FileUtil.write(
-			new File(_outputPath + "/" + entityName + "Service_undeploy.wsdd"),
-			wsdds[1], true);
 	}
 
 	private String _fileName;

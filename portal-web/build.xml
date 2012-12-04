@@ -160,6 +160,10 @@
 					<replacefilter token="../../../../../build/aui-skin-base/images/" value="" />
 				</replace>
 
+				<replace file="docroot/html/ALLOY_ZIP/build/aui-skins/tmp/alloy.css">
+					<replacefilter token="../../../../../build/aui-skin-classic/images/" value="" />
+				</replace>
+
 				<copy
 					file="docroot/html/ALLOY_ZIP/build/aui-skins/tmp/alloy.css"
 					tofile="docroot/html/css/portal/aui.css"
@@ -170,6 +174,10 @@
 
 				<copy todir="docroot/html/themes/_unstyled/images/aui/">
 					<fileset dir="docroot/html/ALLOY_ZIP/build/aui-skin-base/images/" />
+				</copy>
+
+				<copy todir="docroot/html/themes/_unstyled/images/aui/">
+					<fileset dir="docroot/html/ALLOY_ZIP/build/aui-skin-classic/images/" />
 				</copy>
 
 				<!-- Clean up -->

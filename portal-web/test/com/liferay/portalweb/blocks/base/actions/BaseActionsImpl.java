@@ -14,26 +14,26 @@
 
 package com.liferay.portalweb.blocks.base.actions;
 
+import com.liferay.portalweb.blocks.base.functions.AssertCheckedFunctions;
+import com.liferay.portalweb.blocks.base.functions.AssertElementNotPresentFunctions;
+import com.liferay.portalweb.blocks.base.functions.AssertElementPresentFunctions;
+import com.liferay.portalweb.blocks.base.functions.AssertNotCheckedFunctions;
+import com.liferay.portalweb.blocks.base.functions.AssertTextEqualsFunctions;
+import com.liferay.portalweb.blocks.base.functions.AssertTextNotEqualsFunctions;
+import com.liferay.portalweb.blocks.base.functions.AssertTextNotPresentFunctions;
+import com.liferay.portalweb.blocks.base.functions.AssertTextPresentFunctions;
+import com.liferay.portalweb.blocks.base.functions.CheckFunctions;
+import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
+import com.liferay.portalweb.blocks.base.functions.CloseFunctions;
+import com.liferay.portalweb.blocks.base.functions.ConfirmFunctions;
+import com.liferay.portalweb.blocks.base.functions.CopyFunctions;
+import com.liferay.portalweb.blocks.base.functions.MouseOverFunctions;
+import com.liferay.portalweb.blocks.base.functions.OpenFunctions;
+import com.liferay.portalweb.blocks.base.functions.PasteFunctions;
+import com.liferay.portalweb.blocks.base.functions.SelectFunctions;
+import com.liferay.portalweb.blocks.base.functions.TypeFunctions;
+import com.liferay.portalweb.blocks.base.functions.UncheckFunctions;
 import com.liferay.portalweb.blocks.base.paths.BaseActionsPaths;
-import com.liferay.portalweb.blocks.base.units.AssertCheckedUnits;
-import com.liferay.portalweb.blocks.base.units.AssertElementNotPresentUnits;
-import com.liferay.portalweb.blocks.base.units.AssertElementPresentUnits;
-import com.liferay.portalweb.blocks.base.units.AssertNotCheckedUnits;
-import com.liferay.portalweb.blocks.base.units.AssertTextEqualsUnits;
-import com.liferay.portalweb.blocks.base.units.AssertTextNotEqualsUnits;
-import com.liferay.portalweb.blocks.base.units.AssertTextNotPresentUnits;
-import com.liferay.portalweb.blocks.base.units.AssertTextPresentUnits;
-import com.liferay.portalweb.blocks.base.units.CheckUnits;
-import com.liferay.portalweb.blocks.base.units.ClickUnits;
-import com.liferay.portalweb.blocks.base.units.CloseUnits;
-import com.liferay.portalweb.blocks.base.units.ConfirmUnits;
-import com.liferay.portalweb.blocks.base.units.CopyUnits;
-import com.liferay.portalweb.blocks.base.units.MouseOverUnits;
-import com.liferay.portalweb.blocks.base.units.OpenUnits;
-import com.liferay.portalweb.blocks.base.units.PasteUnits;
-import com.liferay.portalweb.blocks.base.units.SelectUnits;
-import com.liferay.portalweb.blocks.base.units.TypeUnits;
-import com.liferay.portalweb.blocks.base.units.UncheckUnits;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 import java.util.Map;
@@ -51,10 +51,10 @@ public class BaseActionsImpl implements LiferayActions {
 	public void assertChecked(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		AssertCheckedUnits assertCheckedUnits = new AssertCheckedUnits(
-			selenium);
+		AssertCheckedFunctions assertCheckedFunctions =
+			new AssertCheckedFunctions(selenium);
 
-		assertCheckedUnits.assertChecked(params[0], params[1]);
+		assertCheckedFunctions.assertChecked(params[0], params[1]);
 	}
 
 	public void assertElementNotPresent(String param1, String param2)
@@ -62,10 +62,10 @@ public class BaseActionsImpl implements LiferayActions {
 
 		String[] params = getParams(param1, param2);
 
-		AssertElementNotPresentUnits assertElementNotPresentUnits =
-			new AssertElementNotPresentUnits(selenium);
+		AssertElementNotPresentFunctions assertElementNotPresentFunctions =
+			new AssertElementNotPresentFunctions(selenium);
 
-		assertElementNotPresentUnits.assertElementNotPresent(
+		assertElementNotPresentFunctions.assertElementNotPresent(
 			params[0], params[1]);
 	}
 
@@ -74,10 +74,11 @@ public class BaseActionsImpl implements LiferayActions {
 
 		String[] params = getParams(param1, param2);
 
-		AssertElementPresentUnits assertElementPresentUnits =
-			new AssertElementPresentUnits(selenium);
+		AssertElementPresentFunctions assertElementPresentFunctions =
+			new AssertElementPresentFunctions(selenium);
 
-		assertElementPresentUnits.assertElementPresent(params[0], params[1]);
+		assertElementPresentFunctions.assertElementPresent(
+			params[0], params[1]);
 	}
 
 	public void assertNotChecked(String param1, String param2)
@@ -85,10 +86,10 @@ public class BaseActionsImpl implements LiferayActions {
 
 		String[] params = getParams(param1, param2);
 
-		AssertNotCheckedUnits assertNotCheckedUnits = new AssertNotCheckedUnits(
-			selenium);
+		AssertNotCheckedFunctions assertNotCheckedFunctions =
+			new AssertNotCheckedFunctions(selenium);
 
-		assertNotCheckedUnits.assertNotChecked(params[0], params[1]);
+		assertNotCheckedFunctions.assertNotChecked(params[0], params[1]);
 	}
 
 	public void assertTextEquals(String param1, String param2)
@@ -96,10 +97,10 @@ public class BaseActionsImpl implements LiferayActions {
 
 		String[] params = getParams(param1, param2);
 
-		AssertTextEqualsUnits assertTextEqualsUnits = new AssertTextEqualsUnits(
-			selenium);
+		AssertTextEqualsFunctions assertTextEqualsFunctions =
+			new AssertTextEqualsFunctions(selenium);
 
-		assertTextEqualsUnits.assertText(params[0], params[1]);
+		assertTextEqualsFunctions.assertText(params[0], params[1]);
 	}
 
 	public void assertTextNotEquals(String param1, String param2)
@@ -107,10 +108,10 @@ public class BaseActionsImpl implements LiferayActions {
 
 		String[] params = getParams(param1, param2);
 
-		AssertTextNotEqualsUnits assertTextNotEqualsUnits =
-			new AssertTextNotEqualsUnits(selenium);
+		AssertTextNotEqualsFunctions assertTextNotEqualsFunctions =
+			new AssertTextNotEqualsFunctions(selenium);
 
-		assertTextNotEqualsUnits.assertTextNotEquals(params[0], params[1]);
+		assertTextNotEqualsFunctions.assertTextNotEquals(params[0], params[1]);
 	}
 
 	public void assertTextNotPresent(String param1, String param2)
@@ -118,10 +119,11 @@ public class BaseActionsImpl implements LiferayActions {
 
 		String[] params = getParams(param1, param2);
 
-		AssertTextNotPresentUnits assertTextNotPresentUnits =
-			new AssertTextNotPresentUnits(selenium);
+		AssertTextNotPresentFunctions assertTextNotPresentFunctions =
+			new AssertTextNotPresentFunctions(selenium);
 
-		assertTextNotPresentUnits.assertTextNotPresent(params[0], params[1]);
+		assertTextNotPresentFunctions.assertTextNotPresent(
+			params[0], params[1]);
 	}
 
 	public void assertTextPresent(String param1, String param2)
@@ -129,59 +131,59 @@ public class BaseActionsImpl implements LiferayActions {
 
 		String[] params = getParams(param1, param2);
 
-		AssertTextPresentUnits assertTextPresentUnits =
-			new AssertTextPresentUnits(selenium);
+		AssertTextPresentFunctions assertTextPresentFunctions =
+			new AssertTextPresentFunctions(selenium);
 
-		assertTextPresentUnits.assertTextPresent(params[0], params[1]);
+		assertTextPresentFunctions.assertTextPresent(params[0], params[1]);
 	}
 
 	public void check(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		CheckUnits checkUnits = new CheckUnits(selenium);
+		CheckFunctions checkFunctions = new CheckFunctions(selenium);
 
-		checkUnits.clickAt(params[0], params[1]);
+		checkFunctions.clickAt(params[0], params[1]);
 	}
 
 	public void click(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		ClickUnits clickUnits = new ClickUnits(selenium);
+		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
 		if (params[0].contains("/input")) {
-			clickUnits.valueClickAtAndWait(params[0], params[1]);
+			clickFunctions.valueClickAtAndWait(params[0], params[1]);
 		}
 		else {
-			clickUnits.textClickAt(params[0], params[1]);
+			clickFunctions.textClickAt(params[0], params[1]);
 		}
 	}
 
 	public void close(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		CloseUnits closeUnits = new CloseUnits(selenium);
+		CloseFunctions closeFunctions = new CloseFunctions(selenium);
 
-		closeUnits.close(params[0], params[1]);
+		closeFunctions.close(params[0], params[1]);
 	}
 
 	public void confirm(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		ConfirmUnits confirmUnits = new ConfirmUnits(selenium);
+		ConfirmFunctions confirmFunctions = new ConfirmFunctions(selenium);
 
-		confirmUnits.confirm(params[0], params[1]);
+		confirmFunctions.confirm(params[0], params[1]);
 	}
 
 	public void copy(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		CopyUnits copyUnits = new CopyUnits(selenium);
+		CopyFunctions copyFunctions = new CopyFunctions(selenium);
 
 		if (params[0].contains("/input")) {
-			copyUnits.valueCopy(params[0], params[1]);
+			copyFunctions.valueCopy(params[0], params[1]);
 		}
 		else {
-			copyUnits.textCopy(params[0], params[1]);
+			copyFunctions.textCopy(params[0], params[1]);
 		}
 	}
 
@@ -202,49 +204,50 @@ public class BaseActionsImpl implements LiferayActions {
 	public void mouseOver(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		MouseOverUnits mouseOverUnits = new MouseOverUnits(selenium);
+		MouseOverFunctions mouseOverFunctions = new MouseOverFunctions(
+			selenium);
 
-		mouseOverUnits.textMouseOver(params[0], params[1]);
+		mouseOverFunctions.textMouseOver(params[0], params[1]);
 	}
 
 	public void open(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		OpenUnits openUnits = new OpenUnits(selenium);
+		OpenFunctions openFunctions = new OpenFunctions(selenium);
 
-		openUnits.open(params[0], params[1]);
+		openFunctions.open(params[0], params[1]);
 	}
 
 	public void paste(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		PasteUnits pasteUnits = new PasteUnits(selenium);
+		PasteFunctions pasteFunctions = new PasteFunctions(selenium);
 
-		pasteUnits.paste(params[0], params[1]);
+		pasteFunctions.paste(params[0], params[1]);
 	}
 
 	public void select(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		SelectUnits selectUnits = new SelectUnits(selenium);
+		SelectFunctions selectFunctions = new SelectFunctions(selenium);
 
-		selectUnits.select(params[0], params[1]);
+		selectFunctions.select(params[0], params[1]);
 	}
 
 	public void type(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		TypeUnits typeUnits = new TypeUnits(selenium);
+		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
-		typeUnits.type(params[0], params[1]);
+		typeFunctions.type(params[0], params[1]);
 	}
 
 	public void uncheck(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
-		UncheckUnits uncheckUnits = new UncheckUnits(selenium);
+		UncheckFunctions uncheckFunctions = new UncheckFunctions(selenium);
 
-		uncheckUnits.click(params[0], params[1]);
+		uncheckFunctions.click(params[0], params[1]);
 	}
 
 	protected String[] getParams(String param1, String param2) {

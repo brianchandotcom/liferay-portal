@@ -35,15 +35,15 @@ import org.apache.tools.ant.DirectoryScanner;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
+public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();
 
-		new UnitsXMLToJavaBuilder(args);
+		new FunctionsXMLToJavaBuilder(args);
 	}
 
-	public UnitsXMLToJavaBuilder(String[] args) throws Exception {
+	public FunctionsXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
 		Set<String> fileNames = getFileNames();
@@ -56,11 +56,11 @@ public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
-			generateUnits(fileName);
+			generateFunctions(fileName);
 		}
 	}
 
-	protected void generateUnits(String fileName) throws Exception {
+	protected void generateFunctions(String fileName) throws Exception {
 		if (!FileUtil.exists(basedir + "/" + fileName)) {
 			return;
 		}
@@ -68,43 +68,45 @@ public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
-		String unitsFilePath = fileName.substring(0, x);
-		String unitsName = fileName.substring(x + 1, y) + "Units";
+		String functionsFilePath = fileName.substring(0, x);
+		String functionsName = fileName.substring(x + 1, y) + "Functions";
 
-		String unitsFileName = unitsFilePath + "/" + unitsName + ".java";
-		String unitsPackagePath = StringUtil.replace(
-			unitsFilePath, StringPool.SLASH, StringPool.PERIOD);
-		String unitsXMLFileName =
-			unitsFilePath + "/" + fileName.substring(x + 1, y) + ".units";
+		String functionsFileName =
+			functionsFilePath + "/" + functionsName + ".java";
+		String functionsPackagePath = StringUtil.replace(
+			functionsFilePath, StringPool.SLASH, StringPool.PERIOD);
+		String functionsXMLFileName =
+			functionsFilePath + "/" + fileName.substring(x + 1, y) +
+				".functions";
 
 		StringBundler sb = new StringBundler();
 
 		sb.append("package ");
-		sb.append(unitsPackagePath);
+		sb.append(functionsPackagePath);
 		sb.append(";\n\n");
 
 		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
 		sb.append("LiferaySelenium;\n");
 
 		sb.append("public class ");
-		sb.append(unitsName);
-		sb.append(" extends BaseActionsUnits {\n\n");
+		sb.append(functionsName);
+		sb.append(" extends BaseFunctions {\n\n");
 
 		sb.append("public ");
-		sb.append(unitsName);
+		sb.append(functionsName);
 		sb.append("(LiferaySelenium liferaySelenium) {\n");
 
 		sb.append("super(liferaySelenium);\n");
 
 		sb.append("}\n");
 
-		Element rootElement = getRootElement(unitsXMLFileName);
+		Element rootElement = getRootElement(functionsXMLFileName);
 
-		sb.append(getUnitDefs(rootElement));
+		sb.append(getFunctionDefs(rootElement));
 
 		sb.append("}");
 
-		writeFile(unitsFileName, sb.toString(), true);
+		writeFile(functionsFileName, sb.toString(), true);
 	}
 
 	protected String getCommands(Element runBlock) {
@@ -261,7 +263,7 @@ public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		directoryScanner.setBasedir(basedir);
 		directoryScanner.setIncludes(
 			new String[] {
-				"**\\portalweb\\blocks\\base\\units\\*.units"
+				"**\\portalweb\\blocks\\base\\functions\\*.functions"
 			});
 
 		directoryScanner.scan();
@@ -275,6 +277,26 @@ public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		}
 
 		return fileNames;
+	}
+
+	private String getFunctionDefs(Element rootElement) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		List<Element> functionDefs = rootElement.elements("functiondef");
+
+		for (Element functionDef : functionDefs) {
+			String functionDefName = functionDef.attributeValue("name");
+
+			sb.append("public void ");
+			sb.append(functionDefName);
+			sb.append("(String param1, String param2) throws Exception {\n");
+
+			sb.append(getCommands(functionDef));
+
+			sb.append("}\n");
+		}
+
+		return sb.toString();
 	}
 
 	private void getSeleniumFileMethods(String file) throws Exception {
@@ -327,26 +349,6 @@ public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		getSeleniumFileMethods(
 			"com/liferay/portalweb/portal/util/liferayselenium/" +
 				"LiferaySelenium.java");
-	}
-
-	private String getUnitDefs(Element rootElement) throws Exception {
-		StringBundler sb = new StringBundler();
-
-		List<Element> unitDefs = rootElement.elements("unitdef");
-
-		for (Element unitDef : unitDefs) {
-			String unitDefName = unitDef.attributeValue("name");
-
-			sb.append("public void ");
-			sb.append(unitDefName);
-			sb.append("(String param1, String param2) throws Exception {\n");
-
-			sb.append(getCommands(unitDef));
-
-			sb.append("}\n");
-		}
-
-		return sb.toString();
 	}
 
 	private static Map<String, Integer> _seleniumMethods =

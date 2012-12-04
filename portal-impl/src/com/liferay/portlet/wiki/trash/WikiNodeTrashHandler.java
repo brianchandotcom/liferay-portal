@@ -21,7 +21,12 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -35,6 +40,9 @@ import com.liferay.portlet.wiki.service.permission.WikiNodePermission;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * Implements trash handling for the wiki node entity.
@@ -90,6 +98,31 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public String getRestoreLink(PortletRequest portletRequest, long classPK)
+			throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+				portletRequest, PortletKeys.WIKI_ADMIN,
+				PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
+				PortletRequest.RENDER_PHASE);
+
+		return portletURL.toString();
+	}
+
+	@Override
+	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
+			throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.translate("wiki");
 	}
 
 	@Override

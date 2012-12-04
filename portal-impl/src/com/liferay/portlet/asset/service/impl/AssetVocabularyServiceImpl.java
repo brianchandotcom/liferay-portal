@@ -125,6 +125,15 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	}
 
 	public List<AssetVocabulary> getGroupVocabularies(
+			long groupId, boolean createDefaultVocabulary)
+		throws PortalException, SystemException {
+
+		return filterVocabularies(
+			assetVocabularyLocalService.getGroupVocabularies(
+				groupId, createDefaultVocabulary));
+	}
+
+	public List<AssetVocabulary> getGroupVocabularies(
 			long groupId, int start, int end, OrderByComparator obc)
 		throws SystemException {
 

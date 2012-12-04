@@ -129,7 +129,9 @@ public class ActionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		if (actionsXMLFileExists) {
 			Element rootElement = getRootElement(actionsXMLFileName);
 
-			sb.append(getActionDefs(rootElement));
+			if (isValidActionDef(rootElement, actionsName)) {
+				sb.append(getActionDefs(rootElement));
+			}
 		}
 
 		sb.append("}");
@@ -159,6 +161,71 @@ public class ActionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		}
 
 		return sb.toString();
+	}
+
+	protected boolean isValidActionDef(Element rootElement, String actionsName)
+		throws Exception {
+		List<Element> actionDefs = rootElement.elements("actiondef");
+
+		boolean isValid = true;
+
+		for (Element actionDef : actionDefs) {
+			String actionDefName = actionDef.attributeValue("name");
+			String actionName = actionDef.attributeValue("name");
+
+			List<Element> actions = actionDef.elements("action");
+			List<Element> macros = actionDef.elements("macro");
+			List<Element> selenium = actionDef.elements("selenium");
+
+			isValid =
+				macros.isEmpty() && actions.isEmpty() && selenium.isEmpty();
+
+			if (!isValid) {
+				String message = "Invalid tag(s) used in ";
+
+				message += "Action definition of " + actionName;
+				message += " in Actions file " + actionsName + ":\n";
+
+				if (!macros.isEmpty()) {
+					String tags = "";
+
+					for (Element macro : macros) {
+						message += "Macro name ";
+						message += macro.attributeValue("name");
+						message += ", command ";
+						message += macro.attributeValue("command");
+						message += "\n";
+					}
+				}
+
+				if (!actions.isEmpty()) {
+					String tags = "";
+
+					for (Element action : actions) {
+						message += "Action name ";
+						message += action.attributeValue("name");
+						message += ", command ";
+						message += action.attributeValue("command");
+						message += "\n";
+					}
+				}
+
+				if (!selenium.isEmpty()) {
+					for (Element seleniumCommand : selenium) {
+						String command = seleniumCommand.attributeValue(
+							"command");
+
+						message += "Selenium command ";
+						message += command;
+						message += "\n";
+					}
+				}
+
+				throw new Exception(message);
+			}
+		}
+
+		return isValid;
 	}
 
 	private Set<String> getFileNames() throws Exception {

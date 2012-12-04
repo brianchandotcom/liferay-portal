@@ -102,11 +102,13 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 		Element rootElement = getRootElement(functionsXMLFileName);
 
-		sb.append(getFunctionDefs(rootElement, functionsName));
+		if (isValidFunctionDef(rootElement, functionsName)) {
+			sb.append(getFunctionDefs(rootElement, functionsName));
 
-		sb.append("}");
+			sb.append("}");
 
-		writeFile(functionsFileName, sb.toString(), true);
+			writeFile(functionsFileName, sb.toString(), true);
+		}
 	}
 
 	protected String getCommands(Element runBlock, String functionsName) {
@@ -133,6 +135,54 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		}
 
 		return sb.toString();
+	}
+
+	protected boolean isValidFunctionDef(
+		Element rootElement, String functionsName) throws Exception {
+
+		List<Element> functionDefs = rootElement.elements("functiondef");
+
+		boolean isValid = true;
+
+		for (Element functionDef : functionDefs) {
+			String functionName = functionDef.attributeValue("name");
+
+			List<Element> macros = functionDef.elements("macros");
+			List<Element> actions = functionDef.elements("actions");
+
+			isValid = macros.isEmpty() && actions.isEmpty();
+
+			if (!isValid) {
+				String message = "Invalid tag(s) used in ";
+
+				message += "Function definition of " + functionName;
+				message += " in Functions file " + functionsName + ":\n";
+
+				if (!macros.isEmpty()) {
+					String tags = "";
+
+					for (Element macro : macros) {
+						message += "Macro command ";
+						message += macro.attributeValue("command");
+						message += "\n";
+					}
+				}
+
+				if (!actions.isEmpty()) {
+					for (Element action : actions) {
+						String command = action.attributeValue("command");
+
+						message += "Action command ";
+						message += command;
+						message += "\n";
+					}
+				}
+
+				throw new Exception(message);
+			}
+		}
+
+		return isValid;
 	}
 
 	private String getCommandElse(Element command) {
@@ -319,7 +369,6 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 	}
 
 	private String getObjectDeclaration(String functionsName) {
-
 		StringBundler sb = new StringBundler();
 
 		sb.append(functionsName);

@@ -48,7 +48,7 @@ public class SeleniumXMLToJavaBuilder {
 		new PathsXMLToJavaBuilder(args);
 		new TestXMLToJavaBuilder(args);
 		new TestPlanBuilder(args);
-		new UnitsXMLToJavaBuilder(args);
+		new FunctionsXMLToJavaBuilder(args);
 	}
 
 	public SeleniumXMLToJavaBuilder(String[] args) throws Exception {
@@ -119,6 +119,9 @@ public class SeleniumXMLToJavaBuilder {
 				else if (commandName.equals("defaultcommand")) {
 					sb.append(getCommandDefaultCommand(actionDefName));
 				}
+				else if (commandName.equals("functions")) {
+					sb.append(getCommandFunctions(command, actionDefName));
+				}
 				else if (commandName.equals("if")) {
 					sb.append(getCommandIf(command));
 				}
@@ -127,9 +130,6 @@ public class SeleniumXMLToJavaBuilder {
 				}
 				else if (commandName.equals("selenium")) {
 					sb.append(getCommandSelenium(command));
-				}
-				else if (commandName.equals("units")) {
-					sb.append(getCommandUnits(command, actionDefName));
 				}
 				else if (commandName.equals("while")) {
 					sb.append(getCommandWhile(command));
@@ -169,15 +169,15 @@ public class SeleniumXMLToJavaBuilder {
 				objectPackageSet = getImportConditional(
 					objectPackageSet, command, actionDefName);
 			}
+			else if (commandName.equals("functions")) {
+				objectPackageSet = getImportFunctions(
+					objectPackageSet, actionDefName);
+			}
 			else if (commandName.equals("if")) {
 				objectPackageSet = getImportIf(objectPackageSet, command);
 			}
 			else if (commandName.equals("macro")) {
 				objectPackageSet = getImportMacros(objectPackageSet, command);
-			}
-			else if (commandName.equals("units")) {
-				objectPackageSet = getImportUnits(
-					objectPackageSet, actionDefName);
 			}
 			else if (commandName.equals("while")) {
 				objectPackageSet = getImportWhile(objectPackageSet, command);
@@ -280,15 +280,15 @@ public class SeleniumXMLToJavaBuilder {
 				objectNameSet = getObjectNameConditional(
 					objectNameSet, command, actionDefName);
 			}
+			else if (commandName.equals("functions")) {
+				objectNameSet = getObjectNameFunctions(
+					objectNameSet, actionDefName);
+			}
 			else if (commandName.equals("if")) {
 				objectNameSet = getObjectNameIf(objectNameSet, command);
 			}
 			else if (commandName.equals("macro")) {
 				objectNameSet = getObjectNameMacros(objectNameSet, command);
-			}
-			else if (commandName.equals("units")) {
-				objectNameSet = getObjectNameUnits(
-					objectNameSet, actionDefName);
 			}
 			else if (commandName.equals("while")) {
 				objectNameSet = getObjectNameWhile(objectNameSet, command);
@@ -556,6 +556,19 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
+	private String getCommandFunctions(Element command, String actionDefName) {
+		StringBundler sb = new StringBundler();
+
+		String functionCommandName = command.attributeValue("command");
+
+		sb.append(actionDefName);
+		sb.append("Functions.");
+		sb.append(functionCommandName);
+		sb.append("(params[0], params[1]);\n");
+
+		return sb.toString();
+	}
+
 	private String getCommandIf(Element command) {
 		List<Element> whileElements = command.elements();
 
@@ -629,19 +642,6 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandUnits(Element command, String actionDefName) {
-		StringBundler sb = new StringBundler();
-
-		String utilCommandName = command.attributeValue("command");
-
-		sb.append(actionDefName);
-		sb.append("Units.");
-		sb.append(utilCommandName);
-		sb.append("(params[0], params[1]);\n");
-
-		return sb.toString();
-	}
-
 	private String getCommandWhile(Element command) {
 		List<Element> whileElements = command.elements();
 
@@ -695,6 +695,32 @@ public class SeleniumXMLToJavaBuilder {
 		return objectPackageSet;
 	}
 
+	private Set<String> getImportFunctions(
+		Set<String> objectPackageSet, String actionDefName) throws Exception {
+
+		String functionsObjectName = StringUtil.upperCaseFirstLetter(
+			actionDefName);
+
+		for (String pageObject : pageObjectSet) {
+			if (pageObject.endsWith("/" + functionsObjectName + ".functions")) {
+				int x = pageObject.length() - 10;
+
+				String objectPackagePath =
+					StringUtil.replace(
+						pageObject.substring(0, x), StringPool.SLASH,
+						StringPool.PERIOD);
+
+				objectPackagePath = StringUtil.replace(
+					objectPackagePath, functionsObjectName,
+					functionsObjectName + "Functions");
+
+				objectPackageSet.add(objectPackagePath);
+			}
+		}
+
+		return objectPackageSet;
+	}
+
 	private Set<String> getImportIf(
 		Set<String> objectPackageSet, Element command) throws Exception {
 
@@ -741,31 +767,6 @@ public class SeleniumXMLToJavaBuilder {
 				objectPackagePath = StringUtil.replace(
 					objectPackagePath, macroObjectName,
 					macroObjectName + "Macros");
-
-				objectPackageSet.add(objectPackagePath);
-			}
-		}
-
-		return objectPackageSet;
-	}
-
-	private Set<String> getImportUnits(
-		Set<String> objectPackageSet, String actionDefName) throws Exception {
-
-		String unitsObjectName = StringUtil.upperCaseFirstLetter(actionDefName);
-
-		for (String pageObject : pageObjectSet) {
-			if (pageObject.endsWith("/" + unitsObjectName + ".units")) {
-				int x = pageObject.length() - 6;
-
-				String objectPackagePath =
-					StringUtil.replace(
-						pageObject.substring(0, x), StringPool.SLASH,
-						StringPool.PERIOD);
-
-				objectPackagePath = StringUtil.replace(
-					objectPackagePath, unitsObjectName,
-					unitsObjectName + "Units");
 
 				objectPackageSet.add(objectPackagePath);
 			}
@@ -825,6 +826,17 @@ public class SeleniumXMLToJavaBuilder {
 		return objectNameSet;
 	}
 
+	private Set<String> getObjectNameFunctions(
+		Set<String> objectNameSet, String actionDefName) throws Exception {
+
+		if (!(actionDefName == null)) {
+			objectNameSet.add(
+				StringUtil.upperCaseFirstLetter(actionDefName) + "Functions");
+		}
+
+		return objectNameSet;
+	}
+
 	private Set<String> getObjectNameIf(
 		Set<String> objectNameSet, Element command) throws Exception {
 
@@ -851,17 +863,6 @@ public class SeleniumXMLToJavaBuilder {
 		return objectNameSet;
 	}
 
-	private Set<String> getObjectNameUnits(
-		Set<String> objectNameSet, String actionDefName) throws Exception {
-
-		if (!(actionDefName == null)) {
-			objectNameSet.add(
-				StringUtil.upperCaseFirstLetter(actionDefName) + "Units");
-		}
-
-		return objectNameSet;
-	}
-
 	private Set<String> getObjectNameWhile(
 		Set<String> objectNameSet, Element command) throws Exception {
 
@@ -883,9 +884,9 @@ public class SeleniumXMLToJavaBuilder {
 		directoryScanner.setIncludes(
 			new String[] {
 				"**\\portalweb\\blocks\\**\\BaseActionsImpl.java",
+				"**\\portalweb\\blocks\\**\\*.functions",
 				"**\\portalweb\\blocks\\**\\*.paths",
-				"**\\portalweb\\blocks\\**\\*.macros",
-				"**\\portalweb\\blocks\\**\\*.units"
+				"**\\portalweb\\blocks\\**\\*.macros"
 			});
 
 		directoryScanner.scan();

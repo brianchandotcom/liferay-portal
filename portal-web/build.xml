@@ -947,6 +947,19 @@
 		</java>
 	</target>
 
+	<target name="build-selenium-functions">
+		<java
+			classname="com.liferay.portal.tools.FunctionsXMLToJavaBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test" />
+		</java>
+	</target>
+
 	<target name="build-selenium-macros">
 		<java
 			classname="com.liferay.portal.tools.MacrosXMLToJavaBuilder"

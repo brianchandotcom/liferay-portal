@@ -900,8 +900,10 @@ create unique index IX_7609B2AE on WikiNode (uuid_, groupId);
 
 create index IX_A2001730 on WikiPage (format);
 create index IX_16E99B0A on WikiPage (groupId, nodeId, head);
+create index IX_BA72B89A on WikiPage (groupId, nodeId, head, parentTitle, status);
 create index IX_E0092FF0 on WikiPage (groupId, nodeId, head, status);
 create index IX_941E429C on WikiPage (groupId, nodeId, status);
+create index IX_5FF21CE6 on WikiPage (groupId, nodeId, title, head);
 create index IX_CAA451D6 on WikiPage (groupId, userId, nodeId, status);
 create index IX_C8A9C476 on WikiPage (nodeId);
 create index IX_E7F635CA on WikiPage (nodeId, head);

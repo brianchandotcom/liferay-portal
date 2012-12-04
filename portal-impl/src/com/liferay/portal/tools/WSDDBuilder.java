@@ -16,6 +16,7 @@ package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -27,6 +28,7 @@ import java.io.File;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Brian Wing Shun Chan
@@ -60,7 +62,9 @@ public class WSDDBuilder {
 			FileUtil.write(_serverConfigFileName, serverConfigContent);
 		}
 
-		Document document = SAXReaderUtil.read(new File(_fileName), true);
+		String content = _getContent(_fileName);
+
+		Document document = SAXReaderUtil.read(content, true);
 
 		Element rootElement = document.getRootElement();
 
@@ -113,6 +117,128 @@ public class WSDDBuilder {
 
 	public void setServiceNamespace(String serviceNamespace) {
 		_serviceNamespace = serviceNamespace;
+	}
+
+	private void _addElements(Element element, Map<String, Element> elements) {
+		for (Map.Entry<String, Element> entry : elements.entrySet()) {
+			Element childElement = entry.getValue();
+
+			element.add(childElement);
+		}
+	}
+
+	private String _getContent(String fileName) throws Exception {
+		Document document = _getContentDocument(fileName);
+
+		Element rootElement = document.getRootElement();
+
+		Element authorElement = null;
+		Element namespaceElement = null;
+		Map<String, Element> entityElements = new TreeMap<String, Element>();
+		Map<String, Element> exceptionElements = new TreeMap<String, Element>();
+
+		for (Element element : rootElement.elements()) {
+			String elementName = element.getName();
+
+			if (elementName.equals("author")) {
+				element.detach();
+
+				if (authorElement != null) {
+					throw new IllegalArgumentException(
+						"There can only be one author element");
+				}
+
+				authorElement = element;
+			}
+			else if (elementName.equals("namespace")) {
+				element.detach();
+
+				if (namespaceElement != null) {
+					throw new IllegalArgumentException(
+						"There can only be one namespace element");
+				}
+
+				namespaceElement = element;
+			}
+			else if (elementName.equals("entity")) {
+				element.detach();
+
+				String name = element.attributeValue("name");
+
+				entityElements.put(name.toLowerCase(), element);
+			}
+			else if (elementName.equals("exceptions")) {
+				element.detach();
+
+				for (Element exceptionElement : element.elements("exception")) {
+					exceptionElement.detach();
+
+					exceptionElements.put(
+						exceptionElement.getText(), exceptionElement);
+				}
+			}
+		}
+
+		if (authorElement != null) {
+			rootElement.add(authorElement);
+		}
+
+		if (namespaceElement == null) {
+			throw new IllegalArgumentException(
+				"The namespace element is required");
+		}
+		else {
+			rootElement.add(namespaceElement);
+		}
+
+		_addElements(rootElement, entityElements);
+
+		if (!exceptionElements.isEmpty()) {
+			Element exceptionsElement = rootElement.addElement("exceptions");
+
+			_addElements(exceptionsElement, exceptionElements);
+		}
+
+		return document.asXML();
+	}
+
+	private Document _getContentDocument(String fileName) throws Exception {
+		String content = FileUtil.read(new File(fileName));
+
+		Document document = SAXReaderUtil.read(content);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element element : rootElement.elements()) {
+			String elementName = element.getName();
+
+			if (!elementName.equals("service-builder-import")) {
+				continue;
+			}
+
+			element.detach();
+
+			String dirName = fileName.substring(
+				0, fileName.lastIndexOf(StringPool.SLASH) + 1);
+			String serviceBuilderImportFileName = element.attributeValue(
+				"file");
+
+			Document serviceBuilderImportDocument = _getContentDocument(
+				dirName + serviceBuilderImportFileName);
+
+			Element serviceBuilderImportRootElement =
+				serviceBuilderImportDocument.getRootElement();
+
+			for (Element serviceBuilderImportElement :
+					serviceBuilderImportRootElement.elements()) {
+
+				serviceBuilderImportElement.detach();
+
+				rootElement.add(serviceBuilderImportElement);
+			}
+		}
+
+		return document;
 	}
 
 	private void _createServiceWSDD(String entityName) throws Exception {

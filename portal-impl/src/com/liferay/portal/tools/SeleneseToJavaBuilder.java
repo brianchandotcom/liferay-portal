@@ -623,6 +623,14 @@ public class SeleneseToJavaBuilder {
 					sb.append(text);
 					sb.append("\")");
 				}
+				else if (param3.startsWith("value=${")) {
+					sb.append("\"value=\" + RuntimeVariables.getValue(\"");
+
+					String text = param3.substring(8, param3.length() - 1);
+
+					sb.append(text);
+					sb.append("\")");
+				}
 				else {
 					sb.append("\"");
 					sb.append(param3);
@@ -946,9 +954,23 @@ public class SeleneseToJavaBuilder {
 				sb.append("\");");
 			}
 			else if (param1.equals("echo")) {
-				sb.append("System.out.println(\"");
-				sb.append(param2);
-				sb.append("\");");
+				sb.append("System.out.println(");
+
+				if (param2.startsWith("${")) {
+					sb.append("RuntimeVariables.getValue(\"");
+
+					String text = param2.substring(2, param2.length() - 1);
+
+					sb.append(text);
+					sb.append("\")");
+				}
+				else {
+					sb.append("\"");
+					sb.append(param2);
+					sb.append("\"");
+				}
+
+				sb.append(");");
 			}
 			else if (param1.equals("goBackAndWait") ||
 					 param1.equals("refreshAndWait") ||
@@ -1096,6 +1118,40 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append("\", ");
 				sb.append(param2);
+				sb.append(");");
+			}
+			else if (param1.equals("storeNumberIncrement")) {
+				sb.append("String ");
+				sb.append(param3);
+				sb.append(" = selenium.getNumberIncrement(");
+				sb.append("RuntimeVariables.getValue(\"");
+
+				String expression = param2.substring(2, param2.length() - 1);
+
+				sb.append(expression);
+				sb.append("\"));");
+
+				sb.append("RuntimeVariables.setValue(\"");
+				sb.append(param3);
+				sb.append("\", ");
+				sb.append(param3);
+				sb.append(");");
+			}
+			else if (param1.equals("storeNumberDecrement")) {
+				sb.append("String ");
+				sb.append(param3);
+				sb.append(" = selenium.getNumberDecrement(");
+				sb.append("RuntimeVariables.getValue(\"");
+
+				String expression = param2.substring(2, param2.length() - 1);
+
+				sb.append(expression);
+				sb.append("\"));");
+
+				sb.append("RuntimeVariables.setValue(\"");
+				sb.append(param3);
+				sb.append("\", ");
+				sb.append(param3);
 				sb.append(");");
 			}
 			else if (param1.equals("storeText")) {

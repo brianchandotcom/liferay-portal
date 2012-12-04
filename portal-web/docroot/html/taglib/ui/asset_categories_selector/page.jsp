@@ -30,14 +30,14 @@ List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
 Group group = themeDisplay.getScopeGroup();
 
 if (group.isLayout()) {
-	vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(group.getParentGroupId(), false));
+	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(group.getParentGroupId(), false));
 }
 else {
-	vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(scopeGroupId, false));
+	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, false));
 }
 
 if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
-	vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(themeDisplay.getCompanyGroupId(), false));
+	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(themeDisplay.getCompanyGroupId(), false));
 }
 
 if (Validator.isNotNull(className)) {
@@ -46,7 +46,7 @@ if (Validator.isNotNull(className)) {
 	for (AssetVocabulary vocabulary : vocabularies) {
 		vocabulary = vocabulary.toEscapedModel();
 
-		int vocabularyCategoriesCount = AssetCategoryLocalServiceUtil.getVocabularyCategoriesCount(vocabulary.getVocabularyId());
+		int vocabularyCategoriesCount = AssetCategoryServiceUtil.getVocabularyCategoriesCount(vocabulary.getGroupId(), vocabulary.getVocabularyId());
 
 		if (vocabularyCategoriesCount == 0) {
 			continue;
@@ -61,7 +61,7 @@ if (Validator.isNotNull(className)) {
 		}
 
 		if (Validator.isNotNull(className) && (classPK > 0)) {
-			List<AssetCategory> categories = AssetCategoryLocalServiceUtil.getCategories(className, classPK);
+			List<AssetCategory> categories = AssetCategoryServiceUtil.getCategories(className, classPK);
 
 			curCategoryIds = ListUtil.toString(categories, AssetCategory.CATEGORY_ID_ACCESSOR);
 			curCategoryNames = ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR);

@@ -20,6 +20,7 @@
 page import="com.liferay.portlet.asset.model.AssetCategoryConstants" %><%@
 page import="com.liferay.portlet.asset.model.AssetVocabulary" %><%@
 page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %>
+page import="com.liferay.portlet.asset.service.AssetCategoryServiceUtil" %><%@
+page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %>
 
 <portlet:defineObjects />

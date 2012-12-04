@@ -1,0 +1,21 @@
+<functions>
+	<functiondef name="click">
+		<selenium command="waitForVisible" />
+
+		<if command="isNotChecked">
+			<selenium command="click" />
+		</if>
+
+		<selenium command="assertChecked" />
+	</functiondef>
+
+	<functiondef name="clickAt">
+		<selenium command="waitForVisible" />
+
+		<if command="isNotChecked">
+			<selenium command="clickAt" />
+		</if>
+
+		<selenium command="assertChecked" />
+	</functiondef>
+</functions>

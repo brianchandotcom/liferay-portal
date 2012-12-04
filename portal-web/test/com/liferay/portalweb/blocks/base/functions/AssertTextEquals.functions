@@ -1,0 +1,30 @@
+<functions>
+	<functiondef name="assertPartialText">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForPartialText" />
+		<selenium command="assertPartialText" />
+	</functiondef>
+
+	<functiondef name="assertText">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForText" />
+		<selenium command="assertText" />
+	</functiondef>
+
+	<functiondef name="assertTextCKEditorWebContent">
+		<selenium command="waitForElementPresent" target="//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']" />
+
+		<selenium command="waitForVisible" target="//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe" />
+		<selenium command="selectFrame" target="//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe" />
+
+		<selenium command="waitForText" target="//body" />
+		<selenium command="assertText" target="//body" />
+		<selenium command="selectFrame" target="relative=top" />
+	</functiondef>
+
+	<functiondef name="assertValue">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForValue" />
+		<selenium command="assertValue" />
+	</functiondef>
+</functions>

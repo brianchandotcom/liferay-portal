@@ -1,7 +1,0 @@
-<units>
-	<unitdef name="assertTextNotEquals">
-		<selenium command="waitForVisible" />
-		<selenium command="waitForNotText" />
-		<selenium command="assertNotText" />
-	</unitdef>
-</units>

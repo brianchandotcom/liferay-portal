@@ -1,0 +1,11 @@
+<functions>
+	<functiondef name="close">
+	</functiondef>
+
+	<functiondef name="closeWindow">
+		<selenium command="pause" target="1000" />
+		<selenium command="close" />
+		<selenium command="selectWindow" target="null" />
+		<selenium command="selectFrame" target="relative=top" />
+	</functiondef>
+</functions>

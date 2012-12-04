@@ -86,23 +86,25 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 		Element rootElement = getRootElement(fileName);
 
-		sb.append(getImportStatements(rootElement));
+		if (isValidMacroDef(rootElement, macrosName)) {
+			sb.append(getImportStatements(rootElement));
 
-		sb.append("public class ");
-		sb.append(macrosName);
-		sb.append(" extends BaseMacros {");
+			sb.append("public class ");
+			sb.append(macrosName);
+			sb.append(" extends BaseMacros {");
 
-		sb.append("public ");
-		sb.append(macrosName);
-		sb.append("(LiferaySelenium liferaySelenium) {");
-		sb.append("super(liferaySelenium);");
-		sb.append("}");
+			sb.append("public ");
+			sb.append(macrosName);
+			sb.append("(LiferaySelenium liferaySelenium) {");
+			sb.append("super(liferaySelenium);");
+			sb.append("}");
 
-		sb.append(getMacroDefs(rootElement));
+			sb.append(getMacroDefs(rootElement));
 
-		sb.append("}");
+			sb.append("}");
 
-		writeFile(macrosFileName, sb.toString(), true);
+			writeFile(macrosFileName, sb.toString(), true);
+		}
 	}
 
 	protected String getMacroDefs(Element rootElement) throws Exception {
@@ -155,6 +157,54 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		}
 
 		return paramsList;
+	}
+
+	protected boolean isValidMacroDef(Element rootElement, String macrosName)
+		throws Exception {
+		List<Element> macroDefs = rootElement.elements("macrodef");
+
+		boolean isValid = true;
+
+		for (Element macroDef : macroDefs) {
+			String macroName = macroDef.attributeValue("name");
+
+			List<Element> functions = macroDef.elements("functions");
+			List<Element> selenium = macroDef.elements("selenium");
+
+			isValid = functions.isEmpty() && selenium.isEmpty();
+
+			if (!isValid) {
+				String message = "Invalid tag(s) used in ";
+
+				message += "Macro definition of " + macroName;
+				message += " in Macros file " + macrosName + ":\n";
+
+				if (!functions.isEmpty()) {
+					String tags = "";
+
+					for (Element function : functions) {
+						message += "Function command ";
+						message += function.attributeValue("command");
+						message += "\n";
+					}
+				}
+
+				if (!selenium.isEmpty()) {
+					for (Element seleniumCommand : selenium) {
+						String command = seleniumCommand.attributeValue(
+							"command");
+
+						message += "Selenium command ";
+						message += command;
+						message += "\n";
+					}
+				}
+
+				throw new Exception(message);
+			}
+		}
+
+		return isValid;
 	}
 
 	private Set<String> getFileNames() throws Exception {

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -85,21 +86,23 @@ public class TestXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 		Element rootElement = getRootElement(fileName);
 
-		sb.append(getImportStatements(rootElement));
+		if (isValidTest(rootElement, testName)) {
+			sb.append(getImportStatements(rootElement));
 
-		sb.append("public class ");
-		sb.append(testName);
-		sb.append(" extends BaseTestCase {");
+			sb.append("public class ");
+			sb.append(testName);
+			sb.append(" extends BaseTestCase {");
 
-		sb.append(getSetup(rootElement));
+			sb.append(getSetup(rootElement));
 
-		sb.append(getSteps(rootElement));
+			sb.append(getSteps(rootElement));
 
-		sb.append(getTeardown(rootElement));
+			sb.append(getTeardown(rootElement));
 
-		sb.append("}");
+			sb.append("}");
 
-		writeFile(testFileName, sb.toString(), true);
+			writeFile(testFileName, sb.toString(), true);
+		}
 	}
 
 	protected String getSetup(Element rootElement) throws Exception {
@@ -157,6 +160,53 @@ public class TestXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	protected boolean isValidTest(Element rootElement, String testName)
+		throws Exception {
+		List<Element> sections = rootElement.elements();
+
+		boolean isValid = true;
+
+		for (Element section : sections) {
+			String sectionName = section.getName();
+
+			List<Element> functions = section.elements("functions");
+			List<Element> selenium = section.elements("selenium");
+
+			isValid = functions.isEmpty() && selenium.isEmpty();
+
+			if (!isValid) {
+				String message = "Invalid tag(s) used in definition of ";
+
+				message += sectionName + " in Test " + testName + ":\n";
+
+				if (!functions.isEmpty()) {
+					String tags = "";
+
+					for (Element function : functions) {
+						message += "Function command ";
+						message += function.attributeValue("command");
+						message += "\n";
+					}
+				}
+
+				if (!selenium.isEmpty()) {
+					for (Element seleniumCommand : selenium) {
+						String command = seleniumCommand.attributeValue(
+							"command");
+
+						message += "Selenium command ";
+						message += command;
+						message += "\n";
+					}
+				}
+
+				throw new Exception(message);
+			}
+		}
+
+		return isValid;
 	}
 
 	private Set<String> getFileNames() throws Exception {

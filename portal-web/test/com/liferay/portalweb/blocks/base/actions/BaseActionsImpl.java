@@ -150,12 +150,7 @@ public class BaseActionsImpl implements LiferayActions {
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if (params[0].contains("/input")) {
-			clickFunctions.valueClickAtAndWait(params[0], params[1]);
-		}
-		else {
-			clickFunctions.textClickAt(params[0], params[1]);
-		}
+		clickFunctions.textClickAt(params[0], params[1]);
 	}
 
 	public void close(String param1, String param2) throws Exception {
@@ -179,12 +174,7 @@ public class BaseActionsImpl implements LiferayActions {
 
 		CopyFunctions copyFunctions = new CopyFunctions(selenium);
 
-		if (params[0].contains("/input")) {
-			copyFunctions.valueCopy(params[0], params[1]);
-		}
-		else {
-			copyFunctions.textCopy(params[0], params[1]);
-		}
+		copyFunctions.textCopy(params[0], params[1]);
 	}
 
 	public String get(String key) throws Exception {

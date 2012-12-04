@@ -638,6 +638,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		<#if uniqueFinderList?size &gt; 0>
 			if (isNew) {
 				Object[] args = null;
+
 				<#list uniqueFinderList as finder>
 					<#assign finderColsList = finder.getColumns()>
 

@@ -1764,14 +1764,25 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			resourceTypePermission.getPrimaryKey(), resourceTypePermission);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_G_N_R,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(resourceTypePermission.getCompanyId()),
 					Long.valueOf(resourceTypePermission.getGroupId()),
 					
-				resourceTypePermission.getName(),
+					resourceTypePermission.getName(),
 					Long.valueOf(resourceTypePermission.getRoleId())
-				}, resourceTypePermission);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_G_N_R, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_G_N_R, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_R, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_G_N_R, args,
+				resourceTypePermission);
 		}
 		else {
 			if ((resourceTypePermissionModelImpl.getColumnBitmask() &

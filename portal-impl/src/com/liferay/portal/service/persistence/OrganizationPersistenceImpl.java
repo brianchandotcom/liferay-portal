@@ -3247,12 +3247,23 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			OrganizationImpl.class, organization.getPrimaryKey(), organization);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(organization.getCompanyId()),
 					
-				organization.getName()
-				}, organization);
+					organization.getName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args,
+				organization);
 		}
 		else {
 			if ((organizationModelImpl.getColumnBitmask() &

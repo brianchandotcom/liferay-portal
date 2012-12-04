@@ -5915,20 +5915,40 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			socialRequest);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					socialRequest.getUuid(),
 					Long.valueOf(socialRequest.getGroupId())
-				}, socialRequest);
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_C_C_T_R,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				socialRequest);
+
+			args = new Object[] {
 					Long.valueOf(socialRequest.getUserId()),
 					Long.valueOf(socialRequest.getClassNameId()),
 					Long.valueOf(socialRequest.getClassPK()),
 					Integer.valueOf(socialRequest.getType()),
 					Long.valueOf(socialRequest.getReceiverUserId())
-				}, socialRequest);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_C_T_R, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_C_C_T_R, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_C_C_T_R, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_C_C_T_R, args,
+				socialRequest);
 		}
 		else {
 			if ((socialRequestModelImpl.getColumnBitmask() &

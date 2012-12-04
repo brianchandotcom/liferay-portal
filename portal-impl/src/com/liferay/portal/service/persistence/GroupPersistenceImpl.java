@@ -4656,43 +4656,97 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			GroupImpl.class, group.getPrimaryKey(), group);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
-				new Object[] { Long.valueOf(group.getLiveGroupId()) }, group);
+			Object[] args = null;
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
-				new Object[] { Long.valueOf(group.getCompanyId()), group.getName() },
+			args = new Object[] { Long.valueOf(group.getLiveGroupId()) };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LIVEGROUPID, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LIVEGROUPID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LIVEGROUPID, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LIVEGROUPID, args,
 				group);
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_F,
-				new Object[] {
+			args = new Object[] {
 					Long.valueOf(group.getCompanyId()),
 					
-				group.getFriendlyURL()
-				}, group);
+					group.getName()
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args, group);
+
+			args = new Object[] {
+					Long.valueOf(group.getCompanyId()),
+					
+					group.getFriendlyURL()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_F, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_F, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_F, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_F, args, group);
+
+			args = new Object[] {
 					Long.valueOf(group.getCompanyId()),
 					Long.valueOf(group.getClassNameId()),
 					Long.valueOf(group.getClassPK())
-				}, group);
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_L_N,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_C, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C, args, group);
+
+			args = new Object[] {
 					Long.valueOf(group.getCompanyId()),
 					Long.valueOf(group.getLiveGroupId()),
 					
-				group.getName()
-				}, group);
+					group.getName()
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_L_N,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_L_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_L_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_L_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_L_N, args, group);
+
+			args = new Object[] {
 					Long.valueOf(group.getCompanyId()),
 					Long.valueOf(group.getClassNameId()),
 					Long.valueOf(group.getLiveGroupId()),
 					
-				group.getName()
-				}, group);
+					group.getName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_L_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_L_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_L_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_L_N, args, group);
 		}
 		else {
 			if ((groupModelImpl.getColumnBitmask() &

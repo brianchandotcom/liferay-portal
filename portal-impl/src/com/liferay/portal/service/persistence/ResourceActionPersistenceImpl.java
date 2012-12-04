@@ -1133,12 +1133,23 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			resourceAction);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					resourceAction.getName(),
 					
-				resourceAction.getActionId()
-				}, resourceAction);
+					resourceAction.getActionId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_A, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_A, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_A, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A, args,
+				resourceAction);
 		}
 		else {
 			if ((resourceActionModelImpl.getColumnBitmask() &

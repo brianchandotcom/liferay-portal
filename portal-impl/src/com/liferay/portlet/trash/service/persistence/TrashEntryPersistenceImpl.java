@@ -2072,11 +2072,21 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 			TrashEntryImpl.class, trashEntry.getPrimaryKey(), trashEntry);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(trashEntry.getClassNameId()),
 					Long.valueOf(trashEntry.getClassPK())
-				}, trashEntry);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args, trashEntry);
 		}
 		else {
 			if ((trashEntryModelImpl.getColumnBitmask() &

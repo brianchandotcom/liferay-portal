@@ -4507,16 +4507,37 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			RoleImpl.class, role.getPrimaryKey(), role);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
-				new Object[] { Long.valueOf(role.getCompanyId()), role.getName() },
-				role);
+			Object[] args = null;
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C,
-				new Object[] {
+			args = new Object[] {
+					Long.valueOf(role.getCompanyId()),
+					
+					role.getName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args, role);
+
+			args = new Object[] {
 					Long.valueOf(role.getCompanyId()),
 					Long.valueOf(role.getClassNameId()),
 					Long.valueOf(role.getClassPK())
-				}, role);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_C, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C, args, role);
 		}
 		else {
 			if ((roleModelImpl.getColumnBitmask() &

@@ -1923,20 +1923,40 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			LayoutBranchImpl.class, layoutBranch.getPrimaryKey(), layoutBranch);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_L_P_N,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(layoutBranch.getLayoutSetBranchId()),
 					Long.valueOf(layoutBranch.getPlid()),
 					
-				layoutBranch.getName()
-				}, layoutBranch);
+					layoutBranch.getName()
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_L_P_M,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_P_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_L_P_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_P_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_L_P_N, args,
+				layoutBranch);
+
+			args = new Object[] {
 					Long.valueOf(layoutBranch.getLayoutSetBranchId()),
 					Long.valueOf(layoutBranch.getPlid()),
 					Boolean.valueOf(layoutBranch.getMaster())
-				}, layoutBranch);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_P_M, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_L_P_M, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_P_M, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_L_P_M, args,
+				layoutBranch);
 		}
 		else {
 			if ((layoutBranchModelImpl.getColumnBitmask() &

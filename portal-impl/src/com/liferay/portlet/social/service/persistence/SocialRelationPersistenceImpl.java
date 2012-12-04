@@ -5827,12 +5827,23 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			socialRelation);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U1_U2_T,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(socialRelation.getUserId1()),
 					Long.valueOf(socialRelation.getUserId2()),
 					Integer.valueOf(socialRelation.getType())
-				}, socialRelation);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U1_U2_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U1_U2_T, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U1_U2_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U1_U2_T, args,
+				socialRelation);
 		}
 		else {
 			if ((socialRelationModelImpl.getColumnBitmask() &

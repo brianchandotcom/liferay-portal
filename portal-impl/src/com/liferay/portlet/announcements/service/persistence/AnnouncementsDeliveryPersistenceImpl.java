@@ -1084,12 +1084,23 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			announcementsDelivery.getPrimaryKey(), announcementsDelivery);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(announcementsDelivery.getUserId()),
 					
-				announcementsDelivery.getType()
-				}, announcementsDelivery);
+					announcementsDelivery.getType()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_T, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T, args,
+				announcementsDelivery);
 		}
 		else {
 			if ((announcementsDeliveryModelImpl.getColumnBitmask() &

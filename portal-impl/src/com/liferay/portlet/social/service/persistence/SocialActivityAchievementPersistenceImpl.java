@@ -3372,13 +3372,24 @@ public class SocialActivityAchievementPersistenceImpl
 			socialActivityAchievement.getPrimaryKey(), socialActivityAchievement);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U_N,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(socialActivityAchievement.getGroupId()),
 					Long.valueOf(socialActivityAchievement.getUserId()),
 					
-				socialActivityAchievement.getName()
-				}, socialActivityAchievement);
+					socialActivityAchievement.getName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U_N, args,
+				socialActivityAchievement);
 		}
 		else {
 			if ((socialActivityAchievementModelImpl.getColumnBitmask() &

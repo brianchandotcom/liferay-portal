@@ -1438,9 +1438,18 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			TeamImpl.class, team.getPrimaryKey(), team);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-				new Object[] { Long.valueOf(team.getGroupId()), team.getName() },
-				team);
+			Object[] args = null;
+
+			args = new Object[] { Long.valueOf(team.getGroupId()), team.getName() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args, team);
 		}
 		else {
 			if ((teamModelImpl.getColumnBitmask() &

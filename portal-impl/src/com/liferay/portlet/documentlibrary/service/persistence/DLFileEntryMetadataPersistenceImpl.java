@@ -2634,11 +2634,22 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			dlFileEntryMetadata);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_D_F,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(dlFileEntryMetadata.getDDMStructureId()),
 					Long.valueOf(dlFileEntryMetadata.getFileVersionId())
-				}, dlFileEntryMetadata);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_D_F, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_D_F, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_D_F, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_D_F, args,
+				dlFileEntryMetadata);
 		}
 		else {
 			if ((dlFileEntryMetadataModelImpl.getColumnBitmask() &

@@ -2158,24 +2158,61 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 			ShoppingItemImpl.class, shoppingItem.getPrimaryKey(), shoppingItem);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID,
-				new Object[] { Long.valueOf(shoppingItem.getSmallImageId()) },
+			Object[] args = null;
+
+			args = new Object[] { Long.valueOf(shoppingItem.getSmallImageId()) };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SMALLIMAGEID, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SMALLIMAGEID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID, args,
 				shoppingItem);
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_MEDIUMIMAGEID,
-				new Object[] { Long.valueOf(shoppingItem.getMediumImageId()) },
+			args = new Object[] { Long.valueOf(shoppingItem.getMediumImageId()) };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_MEDIUMIMAGEID,
+				args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_MEDIUMIMAGEID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MEDIUMIMAGEID,
+				args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_MEDIUMIMAGEID, args,
 				shoppingItem);
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LARGEIMAGEID,
-				new Object[] { Long.valueOf(shoppingItem.getLargeImageId()) },
+			args = new Object[] { Long.valueOf(shoppingItem.getLargeImageId()) };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LARGEIMAGEID, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LARGEIMAGEID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LARGEIMAGEID, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LARGEIMAGEID, args,
 				shoppingItem);
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_S,
-				new Object[] {
+			args = new Object[] {
 					Long.valueOf(shoppingItem.getCompanyId()),
 					
-				shoppingItem.getSku()
-				}, shoppingItem);
+					shoppingItem.getSku()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_S, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_S, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_S, args,
+				shoppingItem);
 		}
 		else {
 			if ((shoppingItemModelImpl.getColumnBitmask() &

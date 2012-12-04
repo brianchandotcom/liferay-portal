@@ -1534,8 +1534,18 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			ddmStructureLink);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSPK,
-				new Object[] { Long.valueOf(ddmStructureLink.getClassPK()) },
+			Object[] args = null;
+
+			args = new Object[] { Long.valueOf(ddmStructureLink.getClassPK()) };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSPK, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CLASSPK, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSPK, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSPK, args,
 				ddmStructureLink);
 		}
 		else {

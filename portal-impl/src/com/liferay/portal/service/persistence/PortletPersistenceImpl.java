@@ -1071,12 +1071,22 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 			PortletImpl.class, portlet.getPrimaryKey(), portlet);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(portlet.getCompanyId()),
 					
-				portlet.getPortletId()
-				}, portlet);
+					portlet.getPortletId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_P, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P, args, portlet);
 		}
 		else {
 			if ((portletModelImpl.getColumnBitmask() &

@@ -786,14 +786,34 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 			VirtualHostImpl.class, virtualHost.getPrimaryKey(), virtualHost);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTNAME,
-				new Object[] { virtualHost.getHostname() }, virtualHost);
+			Object[] args = null;
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_L,
-				new Object[] {
+			args = new Object[] { virtualHost.getHostname() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_HOSTNAME, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_HOSTNAME, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTNAME, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTNAME, args,
+				virtualHost);
+
+			args = new Object[] {
 					Long.valueOf(virtualHost.getCompanyId()),
 					Long.valueOf(virtualHost.getLayoutSetId())
-				}, virtualHost);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_L, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_L, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_L, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_L, args,
+				virtualHost);
 		}
 		else {
 			if ((virtualHostModelImpl.getColumnBitmask() &

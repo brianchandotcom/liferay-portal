@@ -1125,12 +1125,23 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			wikiPageResource);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(wikiPageResource.getNodeId()),
 					
-				wikiPageResource.getTitle()
-				}, wikiPageResource);
+					wikiPageResource.getTitle()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T, args,
+				wikiPageResource);
 		}
 		else {
 			if ((wikiPageResourceModelImpl.getColumnBitmask() &

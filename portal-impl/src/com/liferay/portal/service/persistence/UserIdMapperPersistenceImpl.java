@@ -1367,19 +1367,39 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			UserIdMapperImpl.class, userIdMapper.getPrimaryKey(), userIdMapper);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(userIdMapper.getUserId()),
 					
-				userIdMapper.getType()
-				}, userIdMapper);
+					userIdMapper.getType()
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_E,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_T, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T, args,
+				userIdMapper);
+
+			args = new Object[] {
 					userIdMapper.getType(),
 					
-				userIdMapper.getExternalUserId()
-				}, userIdMapper);
+					userIdMapper.getExternalUserId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_E, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_E, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_E, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_E, args,
+				userIdMapper);
 		}
 		else {
 			if ((userIdMapperModelImpl.getColumnBitmask() &

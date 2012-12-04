@@ -1083,12 +1083,23 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			announcementsFlag);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_E_V,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(announcementsFlag.getUserId()),
 					Long.valueOf(announcementsFlag.getEntryId()),
 					Integer.valueOf(announcementsFlag.getValue())
-				}, announcementsFlag);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_E_V, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_E_V, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_E_V, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_E_V, args,
+				announcementsFlag);
 		}
 		else {
 			if ((announcementsFlagModelImpl.getColumnBitmask() &

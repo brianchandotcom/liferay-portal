@@ -8086,18 +8086,38 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			DDMTemplateImpl.class, ddmTemplate.getPrimaryKey(), ddmTemplate);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					ddmTemplate.getUuid(),
 					Long.valueOf(ddmTemplate.getGroupId())
-				}, ddmTemplate);
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_T,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				ddmTemplate);
+
+			args = new Object[] {
 					Long.valueOf(ddmTemplate.getGroupId()),
 					
-				ddmTemplate.getTemplateKey()
-				}, ddmTemplate);
+					ddmTemplate.getTemplateKey()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_T, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_T, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_T, args,
+				ddmTemplate);
 		}
 		else {
 			if ((ddmTemplateModelImpl.getColumnBitmask() &

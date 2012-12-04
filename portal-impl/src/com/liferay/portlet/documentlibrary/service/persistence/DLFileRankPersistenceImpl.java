@@ -2679,12 +2679,23 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			DLFileRankImpl.class, dlFileRank.getPrimaryKey(), dlFileRank);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_F,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(dlFileRank.getCompanyId()),
 					Long.valueOf(dlFileRank.getUserId()),
 					Long.valueOf(dlFileRank.getFileEntryId())
-				}, dlFileRank);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_F, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_F, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_F, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_F, args,
+				dlFileRank);
 		}
 		else {
 			if ((dlFileRankModelImpl.getColumnBitmask() &

@@ -559,11 +559,22 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			portalPreferences);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_O_O,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(portalPreferences.getOwnerId()),
 					Integer.valueOf(portalPreferences.getOwnerType())
-				}, portalPreferences);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_O_O, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_O_O, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_O_O, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_O_O, args,
+				portalPreferences);
 		}
 		else {
 			if ((portalPreferencesModelImpl.getColumnBitmask() &

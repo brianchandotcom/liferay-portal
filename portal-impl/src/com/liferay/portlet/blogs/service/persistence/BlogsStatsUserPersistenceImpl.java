@@ -3115,11 +3115,22 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			blogsStatsUser);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(blogsStatsUser.getGroupId()),
 					Long.valueOf(blogsStatsUser.getUserId())
-				}, blogsStatsUser);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U, args,
+				blogsStatsUser);
 		}
 		else {
 			if ((blogsStatsUserModelImpl.getColumnBitmask() &

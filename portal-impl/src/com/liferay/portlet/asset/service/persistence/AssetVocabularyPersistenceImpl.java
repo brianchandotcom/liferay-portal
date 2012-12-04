@@ -3331,18 +3331,38 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			assetVocabulary);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					assetVocabulary.getUuid(),
 					Long.valueOf(assetVocabulary.getGroupId())
-				}, assetVocabulary);
+				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-				new Object[] {
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				assetVocabulary);
+
+			args = new Object[] {
 					Long.valueOf(assetVocabulary.getGroupId()),
 					
-				assetVocabulary.getName()
-				}, assetVocabulary);
+					assetVocabulary.getName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+				assetVocabulary);
 		}
 		else {
 			if ((assetVocabularyModelImpl.getColumnBitmask() &

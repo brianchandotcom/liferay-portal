@@ -1541,11 +1541,21 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			PollsVoteImpl.class, pollsVote.getPrimaryKey(), pollsVote);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_U,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(pollsVote.getQuestionId()),
 					Long.valueOf(pollsVote.getUserId())
-				}, pollsVote);
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_Q_U, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_Q_U, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_U, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_U, args, pollsVote);
 		}
 		else {
 			if ((pollsVoteModelImpl.getColumnBitmask() &

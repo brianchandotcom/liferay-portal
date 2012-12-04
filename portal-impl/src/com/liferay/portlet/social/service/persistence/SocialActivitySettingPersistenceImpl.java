@@ -2815,14 +2815,25 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 			socialActivitySetting.getPrimaryKey(), socialActivitySetting);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_A_N,
-				new Object[] {
+			Object[] args = null;
+
+			args = new Object[] {
 					Long.valueOf(socialActivitySetting.getGroupId()),
 					Long.valueOf(socialActivitySetting.getClassNameId()),
 					Integer.valueOf(socialActivitySetting.getActivityType()),
 					
-				socialActivitySetting.getName()
-				}, socialActivitySetting);
+					socialActivitySetting.getName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_A_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_A_N, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_A_N, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_A_N, args,
+				socialActivitySetting);
 		}
 		else {
 			if ((socialActivitySettingModelImpl.getColumnBitmask() &

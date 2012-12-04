@@ -1051,8 +1051,19 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			shoppingCoupon);
 
 		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CODE,
-				new Object[] { shoppingCoupon.getCode() }, shoppingCoupon);
+			Object[] args = null;
+
+			args = new Object[] { shoppingCoupon.getCode() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CODE, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CODE, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CODE, args);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CODE, args,
+				shoppingCoupon);
 		}
 		else {
 			if ((shoppingCouponModelImpl.getColumnBitmask() &

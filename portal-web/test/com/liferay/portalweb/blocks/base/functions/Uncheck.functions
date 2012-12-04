@@ -9,7 +9,7 @@
 		<selenium command="assertNotChecked" />
 	</functiondef>
 
-	<functiondef name="clickAt">
+	<functiondef name="clickAt" default="true">
 		<selenium command="waitForVisible" />
 
 		<if command="isChecked">

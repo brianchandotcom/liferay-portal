@@ -11,7 +11,7 @@
 		<selenium command="mouseOver" />
 	</functiondef>
 
-	<functiondef name="textMouseOver">
+	<functiondef name="textMouseOver" default="true">
 		<selenium command="waitForVisible" />
 		<selenium command="waitForText" />
 		<selenium command="assertText" />

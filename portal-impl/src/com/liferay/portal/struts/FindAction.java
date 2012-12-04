@@ -25,7 +25,11 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -142,6 +146,9 @@ public abstract class FindAction extends Action {
 		long groupId = ParamUtil.getLong(
 			request, "groupId", themeDisplay.getScopeGroupId());
 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		if (primaryKey > 0) {
 			try {
 				groupId = getGroupId(primaryKey);
@@ -163,7 +170,10 @@ public abstract class FindAction extends Action {
 					(LayoutTypePortlet)layout.getLayoutType();
 
 				for (String portletId : _portletIds) {
-					if (layoutTypePortlet.hasPortletId(portletId)) {
+					if (layoutTypePortlet.hasPortletId(portletId) &&
+						LayoutPermissionUtil.contains(
+							permissionChecker, layout, ActionKeys.VIEW)) {
+
 						return new Object[] {plid, portletId};
 					}
 				}
@@ -178,21 +188,25 @@ public abstract class FindAction extends Action {
 			if (plid != LayoutConstants.DEFAULT_PLID) {
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-				LayoutTypePortlet layoutTypePortlet =
-					(LayoutTypePortlet)layout.getLayoutType();
+				if (LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.VIEW)) {
 
-				for (String curPortletId : layoutTypePortlet.getPortletIds()) {
-					String curRootPortletId = PortletConstants.getRootPortletId(
-						curPortletId);
+					LayoutTypePortlet layoutTypePortlet =
+						(LayoutTypePortlet)layout.getLayoutType();
 
-					if (portletId.equals(curRootPortletId)) {
-						portletId = curPortletId;
+					for (String curPortletId : layoutTypePortlet.getPortletIds()) {
+						String curRootPortletId = PortletConstants.getRootPortletId(
+							curPortletId);
 
-						break;
+						if (portletId.equals(curRootPortletId)) {
+							portletId = curPortletId;
+
+							break;
+						}
 					}
-				}
 
-				return new Object[] {plid, portletId};
+					return new Object[] {plid, portletId};
+				}
 			}
 		}
 

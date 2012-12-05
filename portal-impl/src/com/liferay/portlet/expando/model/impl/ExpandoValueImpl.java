@@ -17,9 +17,12 @@ package com.liferay.portlet.expando.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
@@ -28,10 +31,14 @@ import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
+ * @author Marcellus Tavares
  */
 public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 
@@ -202,6 +209,12 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
 			return getStringArray();
 		}
+		else if (type == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED) {
+			return (Serializable)getStringArrayMap();
+		}
+		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+			return (Serializable)getStringMap();
+		}
 		else {
 			return getData();
 		}
@@ -225,17 +238,56 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		return getData();
 	}
 
+	public String getString(Locale locale)
+		throws PortalException, SystemException {
+
+		validate(ExpandoColumnConstants.STRING_LOCALIZED);
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getData(languageId);
+	}
+
 	public String[] getStringArray() throws PortalException, SystemException {
 		validate(ExpandoColumnConstants.STRING_ARRAY);
 
-		String[] dataArray = StringUtil.split(getData());
+		return split(getData());
+	}
 
-		for (int i = 0; i < dataArray.length; i++) {
-			dataArray[i] = StringUtil.replace(
-				dataArray[i], _EXPANDO_COMMA, StringPool.COMMA);
+	public String[] getStringArray(Locale locale)
+		throws PortalException, SystemException {
+
+		validate(ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return split(getData(languageId));
+	}
+
+	public Map<Locale, String[]> getStringArrayMap()
+		throws PortalException, SystemException {
+
+		validate(ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
+
+		Map<Locale, String> stringMap = LocalizationUtil.getLocalizationMap(
+			getData());
+
+		Map<Locale, String[]> stringArrayMap = new HashMap<Locale, String[]>(
+			stringMap.size());
+
+		for (Map.Entry<Locale, String> entry : stringMap.entrySet()) {
+			stringArrayMap.put(entry.getKey(), split(entry.getValue()));
 		}
 
-		return dataArray;
+		return stringArrayMap;
+	}
+
+	public Map<Locale, String> getStringMap()
+		throws PortalException, SystemException {
+
+		validate(ExpandoColumnConstants.STRING_LOCALIZED);
+
+		return LocalizationUtil.getLocalizationMap(getData());
 	}
 
 	public void setBoolean(boolean data)
@@ -364,11 +416,57 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		setData(data);
 	}
 
+	public void setString(String data, Locale locale)
+		throws PortalException, SystemException {
+
+		validate(ExpandoColumnConstants.STRING_LOCALIZED);
+
+		setString(data, locale, LocaleUtil.getDefault());
+	}
+
 	public void setStringArray(String[] data)
 		throws PortalException, SystemException {
 
 		validate(ExpandoColumnConstants.STRING_ARRAY);
 
+		setData(merge(data));
+	}
+
+	public void setStringArray(String[] data, Locale locale)
+		throws PortalException, SystemException {
+
+		validate(ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
+
+		setString(merge(data), locale, LocaleUtil.getDefault());
+	}
+
+	public void setStringArrayMap(Map<Locale, String[]> dataMap)
+		throws PortalException, SystemException {
+
+		validate(ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
+
+		Map<Locale, String> stringMap = new HashMap<Locale, String>();
+
+		for (Map.Entry<Locale, String[]> entry : dataMap.entrySet()) {
+			stringMap.put(entry.getKey(), merge(entry.getValue()));
+		}
+
+		setStringMap(stringMap, LocaleUtil.getDefault());
+	}
+
+	public void setStringMap(Map<Locale, String> dataMap)
+		throws PortalException, SystemException {
+
+		validate(ExpandoColumnConstants.STRING_LOCALIZED);
+
+		setStringMap(dataMap, LocaleUtil.getDefault());
+	}
+
+	protected String getData(String languageId) {
+		return LocalizationUtil.getLocalization(getData(), languageId);
+	}
+
+	protected String merge(String[] data) {
 		if (data != null) {
 			for (int i = 0; i < data.length; i++) {
 				data[i] = StringUtil.replace(
@@ -376,7 +474,47 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 			}
 		}
 
-		setData(StringUtil.merge(data));
+		return StringUtil.merge(data);
+	}
+
+	protected void setString(String data, Locale locale, Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(data)) {
+			data = LocalizationUtil.updateLocalization(
+				getData(), "Data", data, languageId, defaultLanguageId);
+		}
+		else {
+			data = LocalizationUtil.removeLocalization(
+				getData(), "Data", languageId);
+		}
+
+		setData(data);
+	}
+
+	protected void setStringMap(
+		Map<Locale, String> dataMap, Locale defaultLocale) {
+
+		if (dataMap == null) {
+			return;
+		}
+
+		String data = LocalizationUtil.updateLocalization(
+			dataMap, getData(), "Data", LocaleUtil.toLanguageId(defaultLocale));
+
+		setData(data);
+	}
+
+	protected String[] split(String data) {
+		String[] dataArray = StringUtil.split(data);
+
+		for (int i = 0; i < dataArray.length; i++) {
+			dataArray[i] = StringUtil.replace(
+				dataArray[i], _EXPANDO_COMMA, StringPool.COMMA);
+		}
+
+		return dataArray;
 	}
 
 	protected void validate(int type) throws PortalException, SystemException {

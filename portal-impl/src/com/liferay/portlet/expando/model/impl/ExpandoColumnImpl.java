@@ -96,6 +96,12 @@ public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 			else if (type == ExpandoColumnConstants.STRING_ARRAY) {
 				return value.getStringArray();
 			}
+			else if (type == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED) {
+				return (Serializable)value.getStringArrayMap();
+			}
+			else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+				return (Serializable)value.getStringMap();
+			}
 			else {
 				return value.getString();
 			}

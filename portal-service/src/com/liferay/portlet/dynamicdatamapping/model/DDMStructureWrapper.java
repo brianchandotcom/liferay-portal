@@ -927,6 +927,12 @@ public class DDMStructureWrapper implements DDMStructure,
 		return _ddmStructure.hasField(fieldName);
 	}
 
+	public boolean isFieldRepeatable(java.lang.String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructure.isFieldRepeatable(fieldName);
+	}
+
 	public void setDocument(com.liferay.portal.kernel.xml.Document document) {
 		_ddmStructure.setDocument(document);
 	}

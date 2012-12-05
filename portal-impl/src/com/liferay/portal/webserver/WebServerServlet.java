@@ -693,10 +693,11 @@ public class WebServerServlet extends HttpServlet {
 			String[] pathArray)
 		throws Exception {
 
-		if (pathArray.length == 4) {
+		if (pathArray.length == 5) {
 			String className = GetterUtil.getString(pathArray[1]);
 			long classPK = GetterUtil.getLong(pathArray[2]);
 			String fieldName = GetterUtil.getString(pathArray[3]);
+			int valueIndex = GetterUtil.getInteger(pathArray[4]);
 
 			Field field = null;
 
@@ -717,7 +718,7 @@ public class WebServerServlet extends HttpServlet {
 				field = fields.get(fieldName);
 			}
 
-			DDMUtil.sendFieldFile(request, response, field);
+			DDMUtil.sendFieldFile(request, response, field, valueIndex);
 		}
 	}
 

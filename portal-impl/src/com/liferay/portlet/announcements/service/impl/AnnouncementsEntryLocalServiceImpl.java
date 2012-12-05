@@ -125,10 +125,13 @@ public class AnnouncementsEntryLocalServiceImpl
 	public void checkEntries() throws PortalException, SystemException {
 		Date now = new Date();
 
+		if (_previousCheckDate == null) {
+			_previousCheckDate = new Date(
+				now.getTime() - _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL);
+		}
+
 		List<AnnouncementsEntry> entries =
-			announcementsEntryFinder.findByDisplayDate(
-				now,
-				new Date(now.getTime() - _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL));
+			announcementsEntryFinder.findByDisplayDate(now, _previousCheckDate);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Processing " + entries.size() + " entries");
@@ -137,6 +140,8 @@ public class AnnouncementsEntryLocalServiceImpl
 		for (AnnouncementsEntry entry : entries) {
 			notifyUsers(entry);
 		}
+
+		_previousCheckDate = now;
 	}
 
 	public void deleteEntry(AnnouncementsEntry entry)
@@ -501,5 +506,7 @@ public class AnnouncementsEntryLocalServiceImpl
 
 	private static Log _log = LogFactoryUtil.getLog(
 		AnnouncementsEntryLocalServiceImpl.class);
+
+	private Date _previousCheckDate = null;
 
 }

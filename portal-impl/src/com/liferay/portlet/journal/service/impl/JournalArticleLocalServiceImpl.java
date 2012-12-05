@@ -483,9 +483,14 @@ public class JournalArticleLocalServiceImpl
 			CacheUtil.clearCache(companyId);
 		}
 
+		if (_previousCheckDate == null) {
+			_previousCheckDate = new Date(
+				now.getTime() - _JOURNAL_ARTICLE_CHECK_INTERVAL);
+		}
+
 		articles = journalArticleFinder.findByReviewDate(
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, now,
-			new Date(now.getTime() - _JOURNAL_ARTICLE_CHECK_INTERVAL));
+			_previousCheckDate);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -510,6 +515,8 @@ public class JournalArticleLocalServiceImpl
 				article, articleURL, preferences, "review",
 				new ServiceContext());
 		}
+
+		_previousCheckDate = now;
 	}
 
 	public void checkNewLine(long groupId, String articleId, double version)
@@ -3678,5 +3685,7 @@ public class JournalArticleLocalServiceImpl
 
 	private static Log _log = LogFactoryUtil.getLog(
 		JournalArticleLocalServiceImpl.class);
+
+	private Date _previousCheckDate = null;
 
 }

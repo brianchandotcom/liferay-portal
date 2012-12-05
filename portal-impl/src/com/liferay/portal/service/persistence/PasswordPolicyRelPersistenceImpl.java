@@ -1175,19 +1175,111 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		}
 	}
 
+	protected void cacheUniqueFindersCache(PasswordPolicyRel passwordPolicyRel) {
+		if (passwordPolicyRel.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(passwordPolicyRel.getClassNameId()),
+					Long.valueOf(passwordPolicyRel.getClassPK())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
+				passwordPolicyRel);
+
+			args = new Object[] {
+					Long.valueOf(passwordPolicyRel.getPasswordPolicyId()),
+					Long.valueOf(passwordPolicyRel.getClassNameId()),
+					Long.valueOf(passwordPolicyRel.getClassPK())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_P_C_C, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_C_C, args,
+				passwordPolicyRel);
+		}
+		else {
+			PasswordPolicyRelModelImpl passwordPolicyRelModelImpl = (PasswordPolicyRelModelImpl)passwordPolicyRel;
+
+			if ((passwordPolicyRelModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(passwordPolicyRel.getClassNameId()),
+						Long.valueOf(passwordPolicyRel.getClassPK())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
+					passwordPolicyRel);
+			}
+
+			if ((passwordPolicyRelModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_P_C_C.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(passwordPolicyRel.getPasswordPolicyId()),
+						Long.valueOf(passwordPolicyRel.getClassNameId()),
+						Long.valueOf(passwordPolicyRel.getClassPK())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_P_C_C, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_C_C, args,
+					passwordPolicyRel);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(PasswordPolicyRel passwordPolicyRel) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
-			new Object[] {
+		PasswordPolicyRelModelImpl passwordPolicyRelModelImpl = (PasswordPolicyRelModelImpl)passwordPolicyRel;
+
+		Object[] args = new Object[] {
 				Long.valueOf(passwordPolicyRel.getClassNameId()),
 				Long.valueOf(passwordPolicyRel.getClassPK())
-			});
+			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_C_C,
-			new Object[] {
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
+
+		if ((passwordPolicyRelModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(passwordPolicyRelModelImpl.getOriginalClassNameId()),
+					Long.valueOf(passwordPolicyRelModelImpl.getOriginalClassPK())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(passwordPolicyRel.getPasswordPolicyId()),
 				Long.valueOf(passwordPolicyRel.getClassNameId()),
 				Long.valueOf(passwordPolicyRel.getClassPK())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_C_C, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_C_C, args);
+
+		if ((passwordPolicyRelModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_P_C_C.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(passwordPolicyRelModelImpl.getOriginalPasswordPolicyId()),
+					Long.valueOf(passwordPolicyRelModelImpl.getOriginalClassNameId()),
+					Long.valueOf(passwordPolicyRelModelImpl.getOriginalClassPK())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_C_C, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_C_C, args);
+		}
 	}
 
 	/**
@@ -1356,59 +1448,8 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 			PasswordPolicyRelImpl.class, passwordPolicyRel.getPrimaryKey(),
 			passwordPolicyRel);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C,
-				new Object[] {
-					Long.valueOf(passwordPolicyRel.getClassNameId()),
-					Long.valueOf(passwordPolicyRel.getClassPK())
-				}, passwordPolicyRel);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_C_C,
-				new Object[] {
-					Long.valueOf(passwordPolicyRel.getPasswordPolicyId()),
-					Long.valueOf(passwordPolicyRel.getClassNameId()),
-					Long.valueOf(passwordPolicyRel.getClassPK())
-				}, passwordPolicyRel);
-		}
-		else {
-			if ((passwordPolicyRelModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(passwordPolicyRelModelImpl.getOriginalClassNameId()),
-						Long.valueOf(passwordPolicyRelModelImpl.getOriginalClassPK())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C,
-					new Object[] {
-						Long.valueOf(passwordPolicyRel.getClassNameId()),
-						Long.valueOf(passwordPolicyRel.getClassPK())
-					}, passwordPolicyRel);
-			}
-
-			if ((passwordPolicyRelModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_P_C_C.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(passwordPolicyRelModelImpl.getOriginalPasswordPolicyId()),
-						Long.valueOf(passwordPolicyRelModelImpl.getOriginalClassNameId()),
-						Long.valueOf(passwordPolicyRelModelImpl.getOriginalClassPK())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_C_C, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_C_C, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_C_C,
-					new Object[] {
-						Long.valueOf(passwordPolicyRel.getPasswordPolicyId()),
-						Long.valueOf(passwordPolicyRel.getClassNameId()),
-						Long.valueOf(passwordPolicyRel.getClassPK())
-					}, passwordPolicyRel);
-			}
-		}
+		clearUniqueFindersCache(passwordPolicyRel);
+		cacheUniqueFindersCache(passwordPolicyRel);
 
 		return passwordPolicyRel;
 	}

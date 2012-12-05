@@ -2517,12 +2517,83 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		}
 	}
 
-	protected void clearUniqueFindersCache(ShoppingOrder shoppingOrder) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NUMBER,
-			new Object[] { shoppingOrder.getNumber() });
+	protected void cacheUniqueFindersCache(ShoppingOrder shoppingOrder) {
+		if (shoppingOrder.isNew()) {
+			Object[] args = new Object[] { shoppingOrder.getNumber() };
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PPTXNID,
-			new Object[] { shoppingOrder.getPpTxnId() });
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NUMBER, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER, args,
+				shoppingOrder);
+
+			args = new Object[] { shoppingOrder.getPpTxnId() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PPTXNID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID, args,
+				shoppingOrder);
+		}
+		else {
+			ShoppingOrderModelImpl shoppingOrderModelImpl = (ShoppingOrderModelImpl)shoppingOrder;
+
+			if ((shoppingOrderModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_NUMBER.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { shoppingOrder.getNumber() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NUMBER, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER, args,
+					shoppingOrder);
+			}
+
+			if ((shoppingOrderModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_PPTXNID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { shoppingOrder.getPpTxnId() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PPTXNID, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID, args,
+					shoppingOrder);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(ShoppingOrder shoppingOrder) {
+		ShoppingOrderModelImpl shoppingOrderModelImpl = (ShoppingOrderModelImpl)shoppingOrder;
+
+		Object[] args = new Object[] { shoppingOrder.getNumber() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NUMBER, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NUMBER, args);
+
+		if ((shoppingOrderModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_NUMBER.getColumnBitmask()) != 0) {
+			args = new Object[] { shoppingOrderModelImpl.getOriginalNumber() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NUMBER, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NUMBER, args);
+		}
+
+		args = new Object[] { shoppingOrder.getPpTxnId() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PPTXNID, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PPTXNID, args);
+
+		if ((shoppingOrderModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_PPTXNID.getColumnBitmask()) != 0) {
+			args = new Object[] { shoppingOrderModelImpl.getOriginalPpTxnId() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PPTXNID, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PPTXNID, args);
+		}
 	}
 
 	/**
@@ -2714,42 +2785,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			ShoppingOrderImpl.class, shoppingOrder.getPrimaryKey(),
 			shoppingOrder);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER,
-				new Object[] { shoppingOrder.getNumber() }, shoppingOrder);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID,
-				new Object[] { shoppingOrder.getPpTxnId() }, shoppingOrder);
-		}
-		else {
-			if ((shoppingOrderModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_NUMBER.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						shoppingOrderModelImpl.getOriginalNumber()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NUMBER, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NUMBER, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER,
-					new Object[] { shoppingOrder.getNumber() }, shoppingOrder);
-			}
-
-			if ((shoppingOrderModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_PPTXNID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						shoppingOrderModelImpl.getOriginalPpTxnId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PPTXNID, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PPTXNID, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID,
-					new Object[] { shoppingOrder.getPpTxnId() }, shoppingOrder);
-			}
-		}
+		clearUniqueFindersCache(shoppingOrder);
+		cacheUniqueFindersCache(shoppingOrder);
 
 		return shoppingOrder;
 	}

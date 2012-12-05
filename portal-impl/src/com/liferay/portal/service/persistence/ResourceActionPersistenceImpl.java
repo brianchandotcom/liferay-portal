@@ -965,9 +965,65 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		}
 	}
 
+	protected void cacheUniqueFindersCache(ResourceAction resourceAction) {
+		if (resourceAction.isNew()) {
+			Object[] args = new Object[] {
+					resourceAction.getName(),
+					
+					resourceAction.getActionId()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_A, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A, args,
+				resourceAction);
+		}
+		else {
+			ResourceActionModelImpl resourceActionModelImpl = (ResourceActionModelImpl)resourceAction;
+
+			if ((resourceActionModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_N_A.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						resourceAction.getName(),
+						
+						resourceAction.getActionId()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_A, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A, args,
+					resourceAction);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(ResourceAction resourceAction) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_A,
-			new Object[] { resourceAction.getName(), resourceAction.getActionId() });
+		ResourceActionModelImpl resourceActionModelImpl = (ResourceActionModelImpl)resourceAction;
+
+		Object[] args = new Object[] {
+				resourceAction.getName(),
+				
+				resourceAction.getActionId()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_A, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_A, args);
+
+		if ((resourceActionModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_N_A.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					resourceActionModelImpl.getOriginalName(),
+					
+					resourceActionModelImpl.getOriginalActionId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_A, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_A, args);
+		}
 	}
 
 	/**
@@ -1132,35 +1188,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			ResourceActionImpl.class, resourceAction.getPrimaryKey(),
 			resourceAction);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A,
-				new Object[] {
-					resourceAction.getName(),
-					
-				resourceAction.getActionId()
-				}, resourceAction);
-		}
-		else {
-			if ((resourceActionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_N_A.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						resourceActionModelImpl.getOriginalName(),
-						
-						resourceActionModelImpl.getOriginalActionId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_A, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_A, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A,
-					new Object[] {
-						resourceAction.getName(),
-						
-					resourceAction.getActionId()
-					}, resourceAction);
-			}
-		}
+		clearUniqueFindersCache(resourceAction);
+		cacheUniqueFindersCache(resourceAction);
 
 		return resourceAction;
 	}

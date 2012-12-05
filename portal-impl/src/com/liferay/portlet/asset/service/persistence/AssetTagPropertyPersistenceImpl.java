@@ -1939,13 +1939,65 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 		}
 	}
 
+	protected void cacheUniqueFindersCache(AssetTagProperty assetTagProperty) {
+		if (assetTagProperty.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(assetTagProperty.getTagId()),
+					
+					assetTagProperty.getKey()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_K, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_K, args,
+				assetTagProperty);
+		}
+		else {
+			AssetTagPropertyModelImpl assetTagPropertyModelImpl = (AssetTagPropertyModelImpl)assetTagProperty;
+
+			if ((assetTagPropertyModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_T_K.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(assetTagProperty.getTagId()),
+						
+						assetTagProperty.getKey()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_K, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_K, args,
+					assetTagProperty);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(AssetTagProperty assetTagProperty) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_K,
-			new Object[] {
+		AssetTagPropertyModelImpl assetTagPropertyModelImpl = (AssetTagPropertyModelImpl)assetTagProperty;
+
+		Object[] args = new Object[] {
 				Long.valueOf(assetTagProperty.getTagId()),
 				
-			assetTagProperty.getKey()
-			});
+				assetTagProperty.getKey()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_K, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_K, args);
+
+		if ((assetTagPropertyModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_T_K.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(assetTagPropertyModelImpl.getOriginalTagId()),
+					
+					assetTagPropertyModelImpl.getOriginalKey()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_K, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_K, args);
+		}
 	}
 
 	/**
@@ -2156,35 +2208,8 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 			AssetTagPropertyImpl.class, assetTagProperty.getPrimaryKey(),
 			assetTagProperty);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_K,
-				new Object[] {
-					Long.valueOf(assetTagProperty.getTagId()),
-					
-				assetTagProperty.getKey()
-				}, assetTagProperty);
-		}
-		else {
-			if ((assetTagPropertyModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_T_K.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(assetTagPropertyModelImpl.getOriginalTagId()),
-						
-						assetTagPropertyModelImpl.getOriginalKey()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_K, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_K, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_K,
-					new Object[] {
-						Long.valueOf(assetTagProperty.getTagId()),
-						
-					assetTagProperty.getKey()
-					}, assetTagProperty);
-			}
-		}
+		clearUniqueFindersCache(assetTagProperty);
+		cacheUniqueFindersCache(assetTagProperty);
 
 		return assetTagProperty;
 	}

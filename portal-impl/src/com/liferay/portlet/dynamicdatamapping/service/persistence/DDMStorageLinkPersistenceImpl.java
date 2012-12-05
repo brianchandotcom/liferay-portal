@@ -1371,9 +1371,55 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		}
 	}
 
+	protected void cacheUniqueFindersCache(DDMStorageLink ddmStorageLink) {
+		if (ddmStorageLink.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(ddmStorageLink.getClassPK())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CLASSPK, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSPK, args,
+				ddmStorageLink);
+		}
+		else {
+			DDMStorageLinkModelImpl ddmStorageLinkModelImpl = (DDMStorageLinkModelImpl)ddmStorageLink;
+
+			if ((ddmStorageLinkModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_CLASSPK.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(ddmStorageLink.getClassPK())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CLASSPK, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSPK, args,
+					ddmStorageLink);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(DDMStorageLink ddmStorageLink) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSPK,
-			new Object[] { Long.valueOf(ddmStorageLink.getClassPK()) });
+		DDMStorageLinkModelImpl ddmStorageLinkModelImpl = (DDMStorageLinkModelImpl)ddmStorageLink;
+
+		Object[] args = new Object[] { Long.valueOf(ddmStorageLink.getClassPK()) };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSPK, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSPK, args);
+
+		if ((ddmStorageLinkModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_CLASSPK.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(ddmStorageLinkModelImpl.getOriginalClassPK())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSPK, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSPK, args);
+		}
 	}
 
 	/**
@@ -1569,27 +1615,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 			DDMStorageLinkImpl.class, ddmStorageLink.getPrimaryKey(),
 			ddmStorageLink);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSPK,
-				new Object[] { Long.valueOf(ddmStorageLink.getClassPK()) },
-				ddmStorageLink);
-		}
-		else {
-			if ((ddmStorageLinkModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_CLASSPK.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(ddmStorageLinkModelImpl.getOriginalClassPK())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSPK, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSPK, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSPK,
-					new Object[] { Long.valueOf(ddmStorageLink.getClassPK()) },
-					ddmStorageLink);
-			}
-		}
+		clearUniqueFindersCache(ddmStorageLink);
+		cacheUniqueFindersCache(ddmStorageLink);
 
 		return ddmStorageLink;
 	}

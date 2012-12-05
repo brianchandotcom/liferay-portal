@@ -632,15 +632,95 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		}
 	}
 
-	protected void clearUniqueFindersCache(VirtualHost virtualHost) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTNAME,
-			new Object[] { virtualHost.getHostname() });
+	protected void cacheUniqueFindersCache(VirtualHost virtualHost) {
+		if (virtualHost.isNew()) {
+			Object[] args = new Object[] { virtualHost.getHostname() };
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_L,
-			new Object[] {
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_HOSTNAME, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTNAME, args,
+				virtualHost);
+
+			args = new Object[] {
+					Long.valueOf(virtualHost.getCompanyId()),
+					Long.valueOf(virtualHost.getLayoutSetId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_L, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_L, args,
+				virtualHost);
+		}
+		else {
+			VirtualHostModelImpl virtualHostModelImpl = (VirtualHostModelImpl)virtualHost;
+
+			if ((virtualHostModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_HOSTNAME.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { virtualHost.getHostname() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_HOSTNAME, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTNAME, args,
+					virtualHost);
+			}
+
+			if ((virtualHostModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_L.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(virtualHost.getCompanyId()),
+						Long.valueOf(virtualHost.getLayoutSetId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_L, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_L, args,
+					virtualHost);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(VirtualHost virtualHost) {
+		VirtualHostModelImpl virtualHostModelImpl = (VirtualHostModelImpl)virtualHost;
+
+		Object[] args = new Object[] { virtualHost.getHostname() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_HOSTNAME, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTNAME, args);
+
+		if ((virtualHostModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_HOSTNAME.getColumnBitmask()) != 0) {
+			args = new Object[] { virtualHostModelImpl.getOriginalHostname() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_HOSTNAME, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTNAME, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(virtualHost.getCompanyId()),
 				Long.valueOf(virtualHost.getLayoutSetId())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_L, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_L, args);
+
+		if ((virtualHostModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_L.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(virtualHostModelImpl.getOriginalCompanyId()),
+					Long.valueOf(virtualHostModelImpl.getOriginalLayoutSetId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_L, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_L, args);
+		}
 	}
 
 	/**
@@ -785,49 +865,8 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		EntityCacheUtil.putResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 			VirtualHostImpl.class, virtualHost.getPrimaryKey(), virtualHost);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTNAME,
-				new Object[] { virtualHost.getHostname() }, virtualHost);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_L,
-				new Object[] {
-					Long.valueOf(virtualHost.getCompanyId()),
-					Long.valueOf(virtualHost.getLayoutSetId())
-				}, virtualHost);
-		}
-		else {
-			if ((virtualHostModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_HOSTNAME.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						virtualHostModelImpl.getOriginalHostname()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_HOSTNAME, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTNAME, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTNAME,
-					new Object[] { virtualHost.getHostname() }, virtualHost);
-			}
-
-			if ((virtualHostModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_L.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(virtualHostModelImpl.getOriginalCompanyId()),
-						Long.valueOf(virtualHostModelImpl.getOriginalLayoutSetId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_L, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_L, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_L,
-					new Object[] {
-						Long.valueOf(virtualHost.getCompanyId()),
-						Long.valueOf(virtualHost.getLayoutSetId())
-					}, virtualHost);
-			}
-		}
+		clearUniqueFindersCache(virtualHost);
+		cacheUniqueFindersCache(virtualHost);
 
 		return virtualHost;
 	}

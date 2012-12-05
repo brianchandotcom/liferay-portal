@@ -16972,24 +16972,158 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		}
 	}
 
-	protected void clearUniqueFindersCache(WikiPage wikiPage) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { wikiPage.getUuid(), Long.valueOf(
-					wikiPage.getGroupId()) });
+	protected void cacheUniqueFindersCache(WikiPage wikiPage) {
+		if (wikiPage.isNew()) {
+			Object[] args = new Object[] {
+					wikiPage.getUuid(), Long.valueOf(wikiPage.getGroupId())
+				};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_N_V,
-			new Object[] {
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				wikiPage);
+
+			args = new Object[] {
+					Long.valueOf(wikiPage.getResourcePrimKey()),
+					Long.valueOf(wikiPage.getNodeId()),
+					Double.valueOf(wikiPage.getVersion())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_N_V, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_N_V, args, wikiPage);
+
+			args = new Object[] {
+					Long.valueOf(wikiPage.getNodeId()),
+					
+					wikiPage.getTitle(), Double.valueOf(wikiPage.getVersion())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T_V, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_V, args, wikiPage);
+		}
+		else {
+			WikiPageModelImpl wikiPageModelImpl = (WikiPageModelImpl)wikiPage;
+
+			if ((wikiPageModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						wikiPage.getUuid(), Long.valueOf(wikiPage.getGroupId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+					wikiPage);
+			}
+
+			if ((wikiPageModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_R_N_V.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPage.getResourcePrimKey()),
+						Long.valueOf(wikiPage.getNodeId()),
+						Double.valueOf(wikiPage.getVersion())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_N_V, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_N_V, args,
+					wikiPage);
+			}
+
+			if ((wikiPageModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_N_T_V.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(wikiPage.getNodeId()),
+						
+						wikiPage.getTitle(),
+						Double.valueOf(wikiPage.getVersion())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T_V, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_V, args,
+					wikiPage);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(WikiPage wikiPage) {
+		WikiPageModelImpl wikiPageModelImpl = (WikiPageModelImpl)wikiPage;
+
+		Object[] args = new Object[] {
+				wikiPage.getUuid(), Long.valueOf(wikiPage.getGroupId())
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+		if ((wikiPageModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					wikiPageModelImpl.getOriginalUuid(),
+					Long.valueOf(wikiPageModelImpl.getOriginalGroupId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(wikiPage.getResourcePrimKey()),
 				Long.valueOf(wikiPage.getNodeId()),
 				Double.valueOf(wikiPage.getVersion())
-			});
+			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_V,
-			new Object[] {
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N_V, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_N_V, args);
+
+		if ((wikiPageModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_R_N_V.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(wikiPageModelImpl.getOriginalResourcePrimKey()),
+					Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+					Double.valueOf(wikiPageModelImpl.getOriginalVersion())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N_V, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_N_V, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(wikiPage.getNodeId()),
 				
-			wikiPage.getTitle(), Double.valueOf(wikiPage.getVersion())
-			});
+				wikiPage.getTitle(), Double.valueOf(wikiPage.getVersion())
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_V, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_V, args);
+
+		if ((wikiPageModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_N_T_V.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
+					
+					wikiPageModelImpl.getOriginalTitle(),
+					Double.valueOf(wikiPageModelImpl.getOriginalVersion())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_V, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_V, args);
+		}
 	}
 
 	/**
@@ -17719,85 +17853,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		EntityCacheUtil.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageImpl.class, wikiPage.getPrimaryKey(), wikiPage);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					wikiPage.getUuid(), Long.valueOf(wikiPage.getGroupId())
-				}, wikiPage);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_N_V,
-				new Object[] {
-					Long.valueOf(wikiPage.getResourcePrimKey()),
-					Long.valueOf(wikiPage.getNodeId()),
-					Double.valueOf(wikiPage.getVersion())
-				}, wikiPage);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_V,
-				new Object[] {
-					Long.valueOf(wikiPage.getNodeId()),
-					
-				wikiPage.getTitle(), Double.valueOf(wikiPage.getVersion())
-				}, wikiPage);
-		}
-		else {
-			if ((wikiPageModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						wikiPageModelImpl.getOriginalUuid(),
-						Long.valueOf(wikiPageModelImpl.getOriginalGroupId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-					new Object[] {
-						wikiPage.getUuid(), Long.valueOf(wikiPage.getGroupId())
-					}, wikiPage);
-			}
-
-			if ((wikiPageModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_R_N_V.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(wikiPageModelImpl.getOriginalResourcePrimKey()),
-						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
-						Double.valueOf(wikiPageModelImpl.getOriginalVersion())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N_V, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_N_V, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_N_V,
-					new Object[] {
-						Long.valueOf(wikiPage.getResourcePrimKey()),
-						Long.valueOf(wikiPage.getNodeId()),
-						Double.valueOf(wikiPage.getVersion())
-					}, wikiPage);
-			}
-
-			if ((wikiPageModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_N_T_V.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(wikiPageModelImpl.getOriginalNodeId()),
-						
-						wikiPageModelImpl.getOriginalTitle(),
-						Double.valueOf(wikiPageModelImpl.getOriginalVersion())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_V, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_V, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_V,
-					new Object[] {
-						Long.valueOf(wikiPage.getNodeId()),
-						
-					wikiPage.getTitle(), Double.valueOf(wikiPage.getVersion())
-					}, wikiPage);
-			}
-		}
+		clearUniqueFindersCache(wikiPage);
+		cacheUniqueFindersCache(wikiPage);
 
 		return wikiPage;
 	}

@@ -932,9 +932,50 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(DLSync dlSync) {
+		if (dlSync.isNew()) {
+			Object[] args = new Object[] { Long.valueOf(dlSync.getFileId()) };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_FILEID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FILEID, args, dlSync);
+		}
+		else {
+			DLSyncModelImpl dlSyncModelImpl = (DLSyncModelImpl)dlSync;
+
+			if ((dlSyncModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_FILEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { Long.valueOf(dlSync.getFileId()) };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_FILEID, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FILEID, args,
+					dlSync);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(DLSync dlSync) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID,
-			new Object[] { Long.valueOf(dlSync.getFileId()) });
+		DLSyncModelImpl dlSyncModelImpl = (DLSyncModelImpl)dlSync;
+
+		Object[] args = new Object[] { Long.valueOf(dlSync.getFileId()) };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEID, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID, args);
+
+		if ((dlSyncModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_FILEID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(dlSyncModelImpl.getOriginalFileId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEID, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID, args);
+		}
 	}
 
 	/**
@@ -1077,25 +1118,8 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		EntityCacheUtil.putResult(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncImpl.class, dlSync.getPrimaryKey(), dlSync);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FILEID,
-				new Object[] { Long.valueOf(dlSync.getFileId()) }, dlSync);
-		}
-		else {
-			if ((dlSyncModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_FILEID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(dlSyncModelImpl.getOriginalFileId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEID, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FILEID,
-					new Object[] { Long.valueOf(dlSync.getFileId()) }, dlSync);
-			}
-		}
+		clearUniqueFindersCache(dlSync);
+		cacheUniqueFindersCache(dlSync);
 
 		return dlSync;
 	}

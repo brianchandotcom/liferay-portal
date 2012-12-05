@@ -1811,12 +1811,59 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(MBBan mbBan) {
+		if (mbBan.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(mbBan.getGroupId()),
+					Long.valueOf(mbBan.getBanUserId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_B, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_B, args, mbBan);
+		}
+		else {
+			MBBanModelImpl mbBanModelImpl = (MBBanModelImpl)mbBan;
+
+			if ((mbBanModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_G_B.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(mbBan.getGroupId()),
+						Long.valueOf(mbBan.getBanUserId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_B, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_B, args, mbBan);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(MBBan mbBan) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B,
-			new Object[] {
+		MBBanModelImpl mbBanModelImpl = (MBBanModelImpl)mbBan;
+
+		Object[] args = new Object[] {
 				Long.valueOf(mbBan.getGroupId()),
 				Long.valueOf(mbBan.getBanUserId())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_B, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B, args);
+
+		if ((mbBanModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_B.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(mbBanModelImpl.getOriginalGroupId()),
+					Long.valueOf(mbBanModelImpl.getOriginalBanUserId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_B, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B, args);
+		}
 	}
 
 	/**
@@ -2012,32 +2059,8 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		EntityCacheUtil.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 			MBBanImpl.class, mbBan.getPrimaryKey(), mbBan);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_B,
-				new Object[] {
-					Long.valueOf(mbBan.getGroupId()),
-					Long.valueOf(mbBan.getBanUserId())
-				}, mbBan);
-		}
-		else {
-			if ((mbBanModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_B.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(mbBanModelImpl.getOriginalGroupId()),
-						Long.valueOf(mbBanModelImpl.getOriginalBanUserId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_B, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_B,
-					new Object[] {
-						Long.valueOf(mbBan.getGroupId()),
-						Long.valueOf(mbBan.getBanUserId())
-					}, mbBan);
-			}
-		}
+		clearUniqueFindersCache(mbBan);
+		cacheUniqueFindersCache(mbBan);
 
 		return mbBan;
 	}

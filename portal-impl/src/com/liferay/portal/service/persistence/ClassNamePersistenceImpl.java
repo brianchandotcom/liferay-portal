@@ -398,9 +398,49 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(ClassName className) {
+		if (className.isNew()) {
+			Object[] args = new Object[] { className.getValue() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_VALUE, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VALUE, args,
+				className);
+		}
+		else {
+			ClassNameModelImpl classNameModelImpl = (ClassNameModelImpl)className;
+
+			if ((classNameModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_VALUE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { className.getValue() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_VALUE, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VALUE, args,
+					className);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(ClassName className) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE,
-			new Object[] { className.getValue() });
+		ClassNameModelImpl classNameModelImpl = (ClassNameModelImpl)className;
+
+		Object[] args = new Object[] { className.getValue() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VALUE, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE, args);
+
+		if ((classNameModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_VALUE.getColumnBitmask()) != 0) {
+			args = new Object[] { classNameModelImpl.getOriginalValue() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VALUE, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE, args);
+		}
 	}
 
 	/**
@@ -544,25 +584,8 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		EntityCacheUtil.putResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
 			ClassNameImpl.class, className.getPrimaryKey(), className);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VALUE,
-				new Object[] { className.getValue() }, className);
-		}
-		else {
-			if ((classNameModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_VALUE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						classNameModelImpl.getOriginalValue()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VALUE, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VALUE,
-					new Object[] { className.getValue() }, className);
-			}
-		}
+		clearUniqueFindersCache(className);
+		cacheUniqueFindersCache(className);
 
 		return className;
 	}

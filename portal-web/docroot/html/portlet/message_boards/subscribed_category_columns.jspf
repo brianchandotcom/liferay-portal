@@ -15,23 +15,29 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	buffer="buffer"
 	name="category"
 >
 
-	<%
-	buffer.append("<a href=\"");
-	buffer.append(rowURL);
-	buffer.append("\">");
-	buffer.append("<strong>");
-	buffer.append(curCategory.getName());
-	buffer.append("</strong>");
+<%
+StringBundler sb = new StringBundler();
 
-	if (Validator.isNotNull(curCategory.getDescription())) {
-		buffer.append("<br />");
-		buffer.append(curCategory.getDescription());
-	}
-	%>
+_buildCategoryBreadcrumb(request, curCategory, sb);
+
+sb.append("<br />");
+sb.append("<a href=\"");
+sb.append(rowURL);
+sb.append("\">");
+sb.append("<strong>");
+sb.append(curCategory.getName());
+sb.append("</strong>");
+
+if (Validator.isNotNull(curCategory.getDescription())) {
+	sb.append("<br />");
+	sb.append(curCategory.getDescription());
+}
+%>
+
+<%= sb.toString() %>
 
 </liferay-ui:search-container-column-text>
 
@@ -54,3 +60,27 @@
 />
 
 <%@ include file="/html/portlet/message_boards/subscribed_category_columns_action.jspf" %>
+
+<%!
+private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory category, StringBundler sb) throws PortalException, SystemException {
+	ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+
+	List<MBCategory> ancestors = category.getAncestors();
+
+	Collections.reverse(ancestors);
+
+	for (MBCategory ancestor : ancestors) {
+		PortletURL portletURL = PortletURLFactoryUtil.create(request, PortletKeys.MESSAGE_BOARDS, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("struts_action", "/message_boards/view");
+		portletURL.setParameter("mbCategoryId", String.valueOf(ancestor.getCategoryId()));
+
+		sb.append("<a href=\"");
+		sb.append(HtmlUtil.escape(portletURL.toString()));
+		sb.append("\">");
+		sb.append(ancestor.getName());
+		sb.append("</a>");
+		sb.append(" &raquo; ");
+	}
+}
+%>

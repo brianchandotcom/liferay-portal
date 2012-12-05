@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -32,20 +34,44 @@ import java.util.Locale;
 public class FileUploadFieldRenderer extends BaseFieldRenderer {
 
 	@Override
-	protected String doRender(Field field, Locale locale) {
-		Serializable fieldValue = field.getValue();
+	protected String doRender(Field field, Locale locale) throws Exception {
+		List<Serializable> values = field.getValues();
 
-		if (Validator.isNull(fieldValue) ||
-			fieldValue.equals(JSONFactoryUtil.getNullJSON())) {
+		StringBundler sb = new StringBundler(values.size() * 2);
 
+		for (int i = 0; i < values.size(); i++) {
+			String value = String.valueOf(values.get(i));
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			sb.append(handleJSON(value));
+
+			if ((i + 1) < values.size()) {
+				sb.append(", ");
+			}
+		}
+
+		return sb.toString();
+	}
+
+	@Override
+	protected String doRender(Field field, Locale locale, int valueIndex) {
+		String value = String.valueOf(field.getValue(valueIndex));
+
+		if (Validator.isNull(value)) {
 			return StringPool.BLANK;
 		}
 
+		return handleJSON(value);
+	}
+
+	protected String handleJSON(String json) {
 		JSONObject fieldValueJSONObject = null;
 
 		try {
-			fieldValueJSONObject = JSONFactoryUtil.createJSONObject(
-				String.valueOf(fieldValue));
+			fieldValueJSONObject = JSONFactoryUtil.createJSONObject(json);
 		}
 		catch (JSONException jsone) {
 			if (_log.isDebugEnabled()) {

@@ -21,7 +21,7 @@
 				<liferay-ui:message key="your-request-processed-successfully" />
 			</div>
 
-			<aui:input name="saveStructureStructureGroupId" type="hidden" value="<%= structureGroupId %>" />
+			<aui:input name="saveStructureStructureGroupId" type="hidden" value="<%= ddmStructureGroupId %>" />
 
 			<aui:input cssClass="save-structure-name lfr-input-text-container" label="structure-name" name="saveStructureStructureName" size="50" type="text" />
 

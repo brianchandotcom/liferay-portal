@@ -152,6 +152,10 @@
 			<value>/html/portlet/journal/configuration.jsp</value>
 		</init-param>
 		<init-param>
+			<name>ddm-resource</name>
+			<value>com.liferay.portlet.journal</value>
+		</init-param>
+		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/journal/</value>
 		</init-param>
@@ -930,6 +934,10 @@
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/journal_articles/configuration.jsp</value>
+		</init-param>
+		<init-param>
+			<name>ddm-resource</name>
+			<value>com.liferay.portlet.journal</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>

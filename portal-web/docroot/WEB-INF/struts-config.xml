@@ -807,16 +807,6 @@
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
 
-		<action path="/journal/copy_structure" type="com.liferay.portlet.journal.action.CopyStructureAction">
-			<forward name="portlet.journal.copy_structure" path="portlet.journal.copy_structure" />
-			<forward name="portlet.journal.error" path="portlet.journal.error" />
-		</action>
-
-		<action path="/journal/copy_template" type="com.liferay.portlet.journal.action.CopyTemplateAction">
-			<forward name="portlet.journal.copy_template" path="portlet.journal.copy_template" />
-			<forward name="portlet.journal.error" path="portlet.journal.error" />
-		</action>
-
 		<action path="/journal/edit_article" type="com.liferay.portlet.journal.action.EditArticleAction">
 			<forward name="portlet.journal.asset.add_asset_redirect" path="portlet.journal.asset.add_asset_redirect" />
 			<forward name="portlet.journal.edit_article" path="portlet.journal.edit_article" />
@@ -843,18 +833,6 @@
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
 
-		<action path="/journal/edit_structure" type="com.liferay.portlet.journal.action.EditStructureAction">
-			<forward name="portlet.journal.edit_structure" path="portlet.journal.edit_structure" />
-			<forward name="portlet.journal.error" path="portlet.journal.error" />
-		</action>
-
-		<action path="/journal/edit_template" type="com.liferay.portlet.journal.action.EditTemplateAction">
-			<forward name="portlet.journal.edit_template" path="portlet.journal.edit_template" />
-			<forward name="portlet.journal.error" path="portlet.journal.error" />
-		</action>
-
-		<action path="/journal/edit_template_xsl" forward="portlet.journal.edit_template_xsl" />
-
 		<action path="/journal/get_article" type="com.liferay.portlet.journal.action.GetArticleAction" />
 
 		<action path="/journal/get_article_content" type="com.liferay.portlet.journal.action.GetArticleContentAction" />
@@ -862,14 +840,6 @@
 		<action path="/journal/get_articles" type="com.liferay.portlet.journal.action.GetArticlesAction" />
 
 		<action path="/journal/get_latest_article_content" type="com.liferay.portlet.journal.action.GetLatestArticleContentAction" />
-
-		<action path="/journal/get_structure" type="com.liferay.portlet.journal.action.GetStructureAction" />
-
-		<action path="/journal/get_structure_content" type="com.liferay.portlet.journal.action.GetStructureContentAction" />
-
-		<action path="/journal/get_template" type="com.liferay.portlet.journal.action.GetTemplateAction" />
-
-		<action path="/journal/get_template_content" type="com.liferay.portlet.journal.action.GetTemplateContentAction" />
 
 		<action path="/journal/move_article" type="com.liferay.portlet.journal.action.EditArticleAction">
 			<forward name="portlet.journal.edit_article" path="portlet.journal.move_article" />
@@ -904,10 +874,6 @@
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
 
-		<action path="/journal/select_structure" forward="portlet.journal.select_structure" />
-
-		<action path="/journal/select_template" forward="portlet.journal.select_template" />
-
 		<action path="/journal/view" type="com.liferay.portlet.journal.action.ViewAction">
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 			<forward name="portlet.journal.view" path="portlet.journal.view" />
@@ -931,10 +897,6 @@
 		<action path="/journal/view_feeds" forward="portlet.journal.view_feeds" />
 
 		<action path="/journal/view_recent" forward="portlet.journal.view_recent" />
-
-		<action path="/journal/view_structures" forward="portlet.journal.view_structures" />
-
-		<action path="/journal/view_templates" forward="portlet.journal.view_templates" />
 
 		<!-- Journal Articles -->
 

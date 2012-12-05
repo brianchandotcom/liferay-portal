@@ -36,7 +36,7 @@ if (recordSet != null) {
 
 String ddmStructureName = StringPool.BLANK;
 
-if (Validator.isNotNull(ddmStructureId)) {
+if (ddmStructureId > 0) {
 	try {
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(ddmStructureId);
 

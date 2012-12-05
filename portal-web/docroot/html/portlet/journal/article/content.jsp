@@ -32,51 +32,47 @@ String instanceIdKey = PwdGenerator.KEY1 + PwdGenerator.KEY2 + PwdGenerator.KEY3
 
 String structureId = BeanParamUtil.getString(article, request, "structureId");
 
-String parentStructureId = StringPool.BLANK;
-long structureGroupId = groupId;
-String structureName = LanguageUtil.get(pageContext, "default");
-String structureDescription = StringPool.BLANK;
-String structureXSD = StringPool.BLANK;
+long ddmStructureGroupId = groupId;
+String ddmStructureName = LanguageUtil.get(pageContext, "default");
+String ddmStructureDescription = StringPool.BLANK;
+String ddmStructureXSD = StringPool.BLANK;
 
-JournalStructure structure = (JournalStructure)request.getAttribute("edit_article.jsp-structure");
+DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
 
-if (structure != null) {
-	structureGroupId = structure.getGroupId();
-	parentStructureId = structure.getParentStructureId();
-	structureName = structure.getName(locale);
-	structureDescription = structure.getDescription(locale);
-	structureXSD = structure.getMergedXsd();
+if (ddmStructure != null) {
+	ddmStructureGroupId = ddmStructure.getGroupId();
+	ddmStructureName = ddmStructure.getName(locale);
+	ddmStructureDescription = ddmStructure.getDescription(locale);
+	ddmStructureXSD = ddmStructure.getXsd();
 }
 
-List<JournalTemplate> templates = new ArrayList<JournalTemplate>();
+List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
 
-if (structure != null) {
-	templates.addAll(JournalTemplateServiceUtil.getStructureTemplates(structureGroupId, structureId));
+if (ddmStructure != null) {
+	ddmTemplates.addAll(DDMTemplateServiceUtil.getTemplates(ddmStructureGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
 
-	if (groupId != structureGroupId) {
-		templates.addAll(JournalTemplateServiceUtil.getStructureTemplates(groupId, structureId));
+	if (groupId != ddmStructureGroupId) {
+		ddmTemplates.addAll(DDMTemplateServiceUtil.getTemplates(groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
 	}
 }
 
 String templateId = BeanParamUtil.getString(article, request, "templateId");
 
-if ((structure == null) && Validator.isNotNull(templateId)) {
-	JournalTemplate template = null;
+if ((ddmStructure == null) && Validator.isNotNull(templateId)) {
+	DDMTemplate ddmTemplate = null;
 
 	try {
-		template = JournalTemplateLocalServiceUtil.getTemplate(groupId, templateId, true);
+		ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(groupId, templateId, true);
 	}
 	catch (NoSuchTemplateException nste) {
 	}
 
-	if (template != null) {
-		structureId = template.getStructureId();
+	if (ddmTemplate != null) {
+		ddmStructure = DDMStructureLocalServiceUtil.getStructure(ddmTemplate.getClassPK());
 
-		structure = JournalStructureLocalServiceUtil.getStructure(structureGroupId, structureId);
+		ddmStructureName = ddmStructure.getName(locale);
 
-		structureName = structure.getName(locale);
-
-		templates = JournalTemplateLocalServiceUtil.getStructureTemplates(structureGroupId, structureId);
+		ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(ddmStructureGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmTemplate.getClassPK());
 	}
 }
 
@@ -138,7 +134,7 @@ if (Validator.isNotNull(content)) {
 			availableLocales = ArrayUtil.append(availableLocales, defaultLanguageId);
 		}
 
-		if (structure == null) {
+		if (ddmStructure == null) {
 			content = contentDoc.getRootElement().element("static-content").getText();
 		}
 	}
@@ -223,27 +219,21 @@ if (Validator.isNotNull(content)) {
 								<div class="journal-form-presentation-label">
 									<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 									<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
-									<aui:input name="structureName" type="hidden" value="<%= structureName %>" />
-									<aui:input name="structureDescription" type="hidden" value="<%= structureDescription %>" />
-									<aui:input name="structureXSD" type="hidden" value="<%= structureXSD %>" />
+									<aui:input name="structureName" type="hidden" value="<%= ddmStructureName %>" />
+									<aui:input name="structureDescription" type="hidden" value="<%= ddmStructureDescription %>" />
+									<aui:input name="structureXSD" type="hidden" value="<%= ddmStructureXSD %>" />
 
 									<span class="structure-name-label" id="<portlet:namespace />structureNameLabel">
-										<%= HtmlUtil.escape(structureName) %>
+										<%= HtmlUtil.escape(ddmStructureName) %>
 									</span>
 
 									<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-										<c:if test="<%= (structure == null) || JournalStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
-											<liferay-ui:icon id="editStructureLink" image="edit" url="javascript:;" />
-										</c:if>
-
-										<portlet:renderURL var="changeStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-											<portlet:param name="struts_action" value="/journal/select_structure" />
-											<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-										</portlet:renderURL>
-
-										<span class="structure-links">
-											<liferay-ui:icon id="changeStructureButton" image="configuration" message="change" url="<%= changeStructureURL %>" />
-										</span>
+										<liferay-ui:icon
+											image="add"
+											label="<%= true %>"
+											message="select"
+											url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
+										/>
 
 										<c:if test="<%= Validator.isNotNull(structureId) %>">
 											<span class="default-link">(<a href="javascript:;" id="<portlet:namespace />loadDefaultStructure"><liferay-ui:message key="use-default" /></a>)</span>
@@ -267,7 +257,7 @@ if (Validator.isNotNull(content)) {
 							<aui:fieldset cssClass="article-template-toolbar">
 								<div class="journal-form-presentation-label">
 									<c:choose>
-										<c:when test="<%= templates.isEmpty() %>">
+										<c:when test="<%= ddmTemplates.isEmpty() %>">
 											<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
 
 											<div id="selectTemplateMessage"></div>
@@ -275,57 +265,48 @@ if (Validator.isNotNull(content)) {
 											<span class="template-name-label">
 												<liferay-ui:message key="none" />
 											</span>
-
-											<liferay-ui:icon id="selectTemplateLink" image="configuration" message="choose" url="javascript:;" />
 										</c:when>
-										<c:when test="<%= templates.size() == 1 %>">
+										<c:when test="<%= ddmTemplates.size() == 1 %>">
 
 											<%
-											JournalTemplate template = templates.get(0);
+											DDMTemplate ddmTemplate = ddmTemplates.get(0);
 											%>
 
-											<aui:input name="templateId" type="hidden" value="<%= template.getTemplateId() %>" />
+											<aui:input name="templateId" type="hidden" value="<%= ddmTemplate.getTemplateKey() %>" />
 
 											<span class="template-name-label">
-												<%= HtmlUtil.escape(template.getName(locale)) %>
+												<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
 											</span>
 
-											<c:if test="<%= JournalTemplatePermission.contains(permissionChecker, template.getGroupId(), template.getTemplateId(), ActionKeys.UPDATE) %>">
-												<c:if test="<%= template.isSmallImage() %>">
-													<img class="article-template-image" id="<portlet:namespace />templateImage" src="<%= _getTemplateImage(themeDisplay, template) %>" />
+											<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
+												<c:if test="<%= ddmTemplate.isSmallImage() %>">
+													<img class="article-template-image" id="<portlet:namespace />templateImage" src="<%= _getTemplateImage(themeDisplay, ddmTemplate) %>" />
 												</c:if>
 
-												<portlet:renderURL var="templateURL">
-													<portlet:param name="struts_action" value="/journal/edit_template" />
-													<portlet:param name="redirect" value="<%= currentURL %>" />
-													<portlet:param name="groupId" value="<%= String.valueOf(template.getGroupId()) %>" />
-													<portlet:param name="templateId" value="<%= template.getTemplateId() %>" />
-												</portlet:renderURL>
-
-												<liferay-ui:icon image="edit" url="<%= templateURL %>" />
+												<liferay-ui:icon id="editDDMTemplate" image="edit" url="javascript:;" />
 											</c:if>
 										</c:when>
 										<c:otherwise>
 											<aui:select inlineField="<%= true %>" label="" name="templateId">
 
 												<%
-												for (JournalTemplate template : templates) {
-													String imageURL = _getTemplateImage(themeDisplay, template);
+												for (DDMTemplate ddmTemplate : ddmTemplates) {
+													String imageURL = _getTemplateImage(themeDisplay, ddmTemplate);
 												%>
 
 													<portlet:renderURL var="templateURL">
 														<portlet:param name="struts_action" value="/journal/edit_template" />
 														<portlet:param name="redirect" value="<%= currentURL %>" />
-														<portlet:param name="groupId" value="<%= String.valueOf(template.getGroupId()) %>" />
-														<portlet:param name="templateId" value="<%= template.getTemplateId() %>" />
+														<portlet:param name="groupId" value="<%= String.valueOf(ddmTemplate.getGroupId()) %>" />
+														<portlet:param name="templateId" value="<%= ddmTemplate.getTemplateKey() %>" />
 													</portlet:renderURL>
 
 													<aui:option
 														data-img="<%= imageURL != null ? imageURL : StringPool.BLANK %>"
 														data-url="<%= templateURL %>"
-														label="<%= HtmlUtil.escape(template.getName(locale)) %>"
-														selected="<%= templateId.equals(template.getTemplateId()) %>"
-														value="<%= template.getTemplateId() %>"
+														label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
+														selected="<%= templateId.equals(ddmTemplate.getTemplateId()) %>"
+														value="<%= ddmTemplate.getTemplateId() %>"
 													/>
 
 												<%
@@ -491,7 +472,7 @@ if (Validator.isNotNull(content)) {
 
 		<div class="journal-article-container" id="<portlet:namespace />journalArticleContainer">
 			<c:choose>
-				<c:when test="<%= structure == null %>">
+				<c:when test="<%= ddmStructure == null %>">
 					<div id="<portlet:namespace />structureTreeWrapper">
 						<ul class="structure-tree" id="<portlet:namespace />structureTree">
 							<li class="structure-field" dataName="<liferay-ui:message key="content" />" dataType="text_area">
@@ -533,42 +514,19 @@ if (Validator.isNotNull(content)) {
 				<c:otherwise>
 
 					<%
-					Document xsdDoc = SAXReaderUtil.read(structure.getMergedXsd());
+					Fields ddmFields = null;
 
-					if (contentDoc != null) {
-						if ((availableLocales != null) && (availableLocales.length > 0)) {
-							for (int i = 0; i < availableLocales.length ; i++) {
-					%>
-
-								<input id="<portlet:namespace />availableLocales<%= HtmlUtil.escapeAttribute(availableLocales[i]) %>" name="<portlet:namespace />available_locales" type="hidden" value="<%= HtmlUtil.escapeAttribute(availableLocales[i]) %>" />
-
-					<%
-							}
-						}
-
-						if (Validator.isNotNull(toLanguageId)) {
-					%>
-
-							<input id="<portlet:namespace />availableLocales<%= languageId %>" name="<portlet:namespace />available_locales" type="hidden" value="<%= languageId %>" />
-
-					<%
-						}
-					}
-					else {
-						contentDoc = SAXReaderUtil.createDocument(SAXReaderUtil.createElement("root"));
-					%>
-
-						<input id="<portlet:namespace />availableLocales<%= HtmlUtil.escapeAttribute(defaultLanguageId) %>" name="<portlet:namespace />available_locales" type="hidden" value="<%= HtmlUtil.escapeAttribute(defaultLanguageId) %>" />
-
-					<%
+					if (Validator.isNotNull(content)) {
+						ddmFields = DDMXMLUtil.getFields(ddmStructure, content);
 					}
 					%>
 
-					<div class="structure-tree-wrapper" id="<portlet:namespace />structureTreeWrapper">
-						<ul class="structure-tree" id="<portlet:namespace />structureTree">
-							<% _format(groupId, contentDoc.getRootElement(), xsdDoc.getRootElement(), new IntegerWrapper(0), new Integer(-1), true, defaultLanguageId, pageContext, request); %>
-						</ul>
-					</div>
+					<liferay-ddm:html
+						classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+						classPK="<%= ddmStructure.getStructureId() %>"
+						fields="<%= ddmFields %>"
+					/>
+
 				</c:otherwise>
 			</c:choose>
 
@@ -683,21 +641,71 @@ if (Validator.isNotNull(content)) {
 	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoArticleIdCheckbox','<portlet:namespace />newArticleId', true);
 </aui:script>
 
-<aui:script use="aui-base,aui-dialog-iframe,liferay-portlet-journal">
-	var selectTemplateLink = A.one('#<portlet:namespace />selectTemplateLink');
+<aui:script>
+	function <portlet:namespace />openDDMStructureSelector(strutsAction, ddmStructureId) {
+		Liferay.Util.openDDMPortlet(
+			{
+				chooseCallback: '<portlet:namespace />selectStructure',
+				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
+				classPK: ddmStructureId,
+				ddmResource: '<%= ddmResource %>',
+				ddmResourceActionId: '<%= ActionKeys.ADD_TEMPLATE %>',
+				dialog: {
+					width: 820
+				},
+				groupId: <%= groupId %>,
+				saveCallback: '<portlet:namespace />selectStructure',
+				storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
+				structureName: 'structure',
+				structureType: 'com.liferay.portlet.journal.model.JournalArticle',
+				struts_action: strutsAction,
+				templateType: '<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>',
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
+			}
+		);
+	}
+</aui:script>
 
-	if (selectTemplateLink) {
-		selectTemplateLink.on(
+<aui:script use="aui-base,aui-dialog-iframe,liferay-portlet-journal">
+	var editDDMTemplate = A.one('#<portlet:namespace />editDDMTemplate');
+
+	if (editDDMTemplate) {
+		var windowId = A.guid();
+
+		editDDMTemplate.on(
 			'click',
-			function() {
+			function (event) {
 				Liferay.Util.openWindow(
-					{
-						dialog: {
-							width:680
-						},
-						id: '<portlet:namespace />templateSelector',
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "template") %>',
-						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/select_template" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="structureId" value="<%= String.valueOf(structureId) %>" /></portlet:renderURL>'
+				{
+					dialog: {
+						constrain: true,
+						width: 820
+					},
+					id: windowId,
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-templates") %>',
+
+					<%
+					long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
+
+					LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(request, PortletKeys.PORTLET_DISPLAY_TEMPLATES, controlPanelPlid, PortletRequest.RENDER_PHASE);
+
+					liferayPortletURL.setDoAsGroupId(groupId);
+					liferayPortletURL.setParameter("struts_action", "/dynamic_data_mapping/edit_template");
+					liferayPortletURL.setParameter("groupId", String.valueOf(groupId));
+
+					DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(groupId, templateId);
+
+					liferayPortletURL.setParameter("templateId", ((ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : ""));
+
+					liferayPortletURL.setPortletMode(PortletMode.VIEW);
+					liferayPortletURL.setWindowState(LiferayWindowState.POP_UP);
+
+					String liferayPortletURLString = liferayPortletURL.toString();
+
+					liferayPortletURLString = HttpUtil.addParameter(liferayPortletURLString, "classNameId", classNameId);
+					%>
+
+					uri: '<%= liferayPortletURLString %>'
 					}
 				);
 			}
@@ -808,229 +816,18 @@ if (Validator.isNotNull(content)) {
 <%!
 public static final String EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.journal.edit_article_content.jsp";
 
-private String _getTemplateImage(ThemeDisplay themeDisplay, JournalTemplate template) {
+private String _getTemplateImage(ThemeDisplay themeDisplay, DDMTemplate ddmTemplate) {
 	String imageURL = null;
 
-	if (template.isSmallImage()) {
-		if (Validator.isNotNull(template.getSmallImageURL())) {
-			imageURL = template.getSmallImageURL();
+	if (ddmTemplate.isSmallImage()) {
+		if (Validator.isNotNull(ddmTemplate.getSmallImageURL())) {
+			imageURL = ddmTemplate.getSmallImageURL();
 		}
 		else {
-			imageURL = themeDisplay.getPathImage() + "/journal/template?img_id=" + template.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(template.getSmallImageId());
+			imageURL = themeDisplay.getPathImage() + "/journal/template?img_id=" + ddmTemplate.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(ddmTemplate.getSmallImageId());
 		}
 	}
 
 	return imageURL;
-}
-
-private void _format(long groupId, Element contentParentElement, Element xsdParentElement, IntegerWrapper count, Integer depth, boolean repeatablePrototype, String defaultLanguageId, PageContext pageContext, HttpServletRequest request) throws Exception {
-	depth = new Integer(depth.intValue() + 1);
-
-	String languageId = LanguageUtil.getLanguageId(request);
-
-	String toLanguageId = ParamUtil.getString(request, "toLanguageId");
-
-	List<Element> xsdElements = xsdParentElement.elements();
-
-	for (Element xsdElement : xsdElements) {
-		String nodeName = xsdElement.getName();
-
-		if (nodeName.equals("meta-data") || nodeName.equals("entry")) {
-			continue;
-		}
-
-		String elName = xsdElement.attributeValue("name", StringPool.BLANK);
-		String elType = xsdElement.attributeValue("type", StringPool.BLANK);
-		String elIndexType = xsdElement.attributeValue("index-type", StringPool.BLANK);
-		String repeatable = xsdElement.attributeValue("repeatable");
-
-		boolean elRepeatable = GetterUtil.getBoolean(repeatable);
-
-		if (Validator.isNotNull(toLanguageId)) {
-			elRepeatable = false;
-		}
-
-		String elParentStructureId = xsdElement.attributeValue("parent-structure-id");
-
-		Map<String, String> elMetaData = _getMetaData(xsdElement, elName);
-
-		List<Element> elSiblings = null;
-
-		List<Element> contentElements = contentParentElement.elements();
-
-		for (Element contentElement : contentElements) {
-			if (elName.equals(contentElement.attributeValue("name", StringPool.BLANK))) {
-				elSiblings = _getSiblings(contentParentElement, elName);
-
-				break;
-			}
-		}
-
-		if (elSiblings == null) {
-			elSiblings = new ArrayList<Element>();
-
-			Element contentElement = SAXReaderUtil.createElement("dynamic-element");
-
-			contentElement.addAttribute("instance-id", PwdGenerator.getPassword());
-			contentElement.addAttribute("name", elName);
-			contentElement.addAttribute("type", elType);
-			contentElement.addAttribute("index-type", elIndexType);
-
-			contentElement.add(SAXReaderUtil.createElement("dynamic-content"));
-
-			elSiblings.add(contentElement);
-		}
-
-		for (int siblingIndex = 0; siblingIndex < elSiblings.size(); siblingIndex++) {
-			Element contentElement = elSiblings.get(siblingIndex);
-
-			String elInstanceId = contentElement.attributeValue("instance-id");
-
-			String elContent = GetterUtil.getString(contentElement.elementText("dynamic-content"));
-
-			if (!elType.equals("document_library") && !elType.equals("image") && !elType.equals("image_gallery") && !elType.equals("text") && !elType.equals("text_area") && !elType.equals("text_box")) {
-				elContent = HtmlUtil.toInputSafe(elContent);
-			}
-
-			if (elType.equals("list") || elType.equals("multi-list") || elType.equals("text") || elType.equals("text_box")) {
-				elContent = HtmlUtil.unescapeCDATA(elContent);
-			}
-
-			String elLanguageId = StringPool.BLANK;
-
-			Element dynamicContentEl = contentElement.element("dynamic-content");
-
-			if (dynamicContentEl != null) {
-				elLanguageId = dynamicContentEl.attributeValue("language-id", StringPool.BLANK);
-
-				if (Validator.isNotNull(toLanguageId)) {
-					if (Validator.isNull(elLanguageId)) {
-						continue;
-					}
-
-					elLanguageId = toLanguageId;
-				}
-			}
-			else {
-				elLanguageId = (Validator.isNotNull(toLanguageId))? toLanguageId: defaultLanguageId;
-			}
-
-			if (!_hasRepeatedParent(contentElement)) {
-				repeatablePrototype = (siblingIndex == 0);
-			}
-
-			request.setAttribute(WebKeys.JOURNAL_ARTICLE_GROUP_ID, String.valueOf(groupId));
-
-			request.setAttribute(WebKeys.JOURNAL_ARTICLE_CONTENT_EL, contentElement);
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL, xsdElement);
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_CONTENT, elContent);
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_COUNT, count);
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_DEPTH, depth);
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_INSTANCE_ID, elInstanceId);
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_LANGUAGE_ID, elLanguageId);
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_META_DATA, elMetaData);
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_NAME, elName);
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_PARENT_ID, elParentStructureId);
-
-			if (elRepeatable || _hasRepeatedParent(contentElement)) {
-				Map <String, Integer> repeatCountMap = (Map<String, Integer>)request.getAttribute(WebKeys.JOURNAL_STRUCTURE_EL_REPEAT_COUNT_MAP);
-
-				if (repeatCountMap == null) {
-					repeatCountMap = new HashMap<String, Integer>();
-				}
-
-				Integer repeatCount = repeatCountMap.get(elName);
-
-				if (repeatCount == null) {
-					repeatCount = 0;
-				}
-
-				repeatCount++;
-
-				repeatCountMap.put(elName, repeatCount);
-
-				request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_REPEAT_COUNT_MAP, repeatCountMap);
-			}
-
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_REPEATABLE, String.valueOf(elRepeatable));
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_REPEATABLE_PROTOTYPE, String.valueOf(repeatablePrototype));
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_TYPE, elType);
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_INDEX_TYPE, elIndexType);
-
-			pageContext.include("/html/portlet/journal/edit_article_content_xsd_el.jsp");
-
-			count.increment();
-
-			if (!elType.equals("list") && !elType.equals("multi-list") && !contentElement.elements().isEmpty()) {
-				pageContext.include("/html/portlet/journal/edit_article_content_xsd_el_top.jsp");
-
-				_format(groupId, contentElement, xsdElement, count, depth, repeatablePrototype, defaultLanguageId, pageContext, request);
-
-				request.setAttribute(WebKeys.JOURNAL_STRUCTURE_CLOSE_DROPPABLE_TAG, Boolean.TRUE.toString());
-
-				pageContext.include("/html/portlet/journal/edit_article_content_xsd_el_bottom.jsp");
-			}
-
-			request.setAttribute(WebKeys.JOURNAL_STRUCTURE_CLOSE_DROPPABLE_TAG, Boolean.FALSE.toString());
-
-			pageContext.include("/html/portlet/journal/edit_article_content_xsd_el_bottom.jsp");
-		}
-	}
-}
-
-private Map<String, String> _getMetaData(Element xsdElement, String elName) {
-	Map<String, String> elMetaData = new HashMap<String, String>();
-
-	Element metaData = xsdElement.element("meta-data");
-
-	if (Validator.isNotNull(metaData)) {
-		List<Element> elMetaDataements = metaData.elements();
-
-		for (Element elMetaDataement : elMetaDataements) {
-			String name = elMetaDataement.attributeValue("name");
-			String content = elMetaDataement.getText().trim();
-
-			elMetaData.put(name, content);
-		}
-	}
-	else {
-		elMetaData.put("label", elName);
-	}
-
-	return elMetaData;
-}
-
-private List<Element> _getSiblings(Element element, String name) {
-	List<Element> elements = new ArrayList<Element>();
-
-	List<Element> curElements = element.elements();
-
-	for (Element curElement : curElements) {
-		if (name.equals(curElement.attributeValue("name", StringPool.BLANK))) {
-			elements.add(curElement);
-		}
-	}
-
-	return elements;
-}
-
-private boolean _hasRepeatedParent(Element element) {
-	Element parentElement = element.getParent();
-
-	while (parentElement != null) {
-		Element parentParentElement = parentElement.getParent();
-
-		if (parentParentElement != null) {
-			List<Element> parentSiblings = _getSiblings(parentParentElement, parentElement.attributeValue("name", StringPool.BLANK));
-
-			if (parentSiblings.indexOf(parentElement) > 0) {
-				return true;
-			}
-		}
-
-		parentElement = parentParentElement;
-	}
-
-	return false;
 }
 %>

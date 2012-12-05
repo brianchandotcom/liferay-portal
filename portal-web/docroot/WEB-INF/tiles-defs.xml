@@ -648,14 +648,6 @@
 		<put name="portlet_content" value="/portlet/journal/copy_article.jsp" />
 	</definition>
 
-	<definition name="portlet.journal.copy_structure" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/copy_structure.jsp" />
-	</definition>
-
-	<definition name="portlet.journal.copy_template" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/copy_template.jsp" />
-	</definition>
-
 	<definition name="portlet.journal.edit_article" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/edit_article.jsp" />
 	</definition>
@@ -666,18 +658,6 @@
 
 	<definition name="portlet.journal.edit_folder" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/edit_folder.jsp" />
-	</definition>
-
-	<definition name="portlet.journal.edit_structure" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/edit_structure.jsp" />
-	</definition>
-
-	<definition name="portlet.journal.edit_template" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/edit_template.jsp" />
-	</definition>
-
-	<definition name="portlet.journal.edit_template_xsl" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/edit_template_xsl.jsp" />
 	</definition>
 
 	<definition name="portlet.journal.error" extends="portlet.journal">
@@ -708,14 +688,6 @@
 		<put name="portlet_content" value="/portlet/journal/select_folder.jsp" />
 	</definition>
 
-	<definition name="portlet.journal.select_structure" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/select_structure.jsp" />
-	</definition>
-
-	<definition name="portlet.journal.select_template" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/select_template.jsp" />
-	</definition>
-
 	<definition name="portlet.journal.update_translation_redirect" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/update_translation_redirect.jsp" />
 	</definition>
@@ -742,14 +714,6 @@
 
 	<definition name="portlet.journal.view_recent" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/view_recent.jsp" />
-	</definition>
-
-	<definition name="portlet.journal.view_structures" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/view_structures.jsp" />
-	</definition>
-
-	<definition name="portlet.journal.view_templates" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/view_templates.jsp" />
 	</definition>
 
 	<!-- Journal Articles -->

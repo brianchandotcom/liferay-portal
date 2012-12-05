@@ -57,15 +57,26 @@ double version = BeanParamUtil.getDouble(article, request, "version", JournalArt
 
 String structureId = BeanParamUtil.getString(article, request, "structureId");
 
-JournalStructure structure = null;
+DDMStructure ddmStructure = null;
 
-long structureGroupId = groupId;
+long ddmStructureId = ParamUtil.getLong(request, "ddmStructureId");
 
-if (Validator.isNotNull(structureId)) {
+long ddmStructureGroupId = groupId;
+
+if (ddmStructureId > 0) {
 	try {
-		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId, true);
+		ddmStructure = DDMStructureLocalServiceUtil.getStructure(ddmStructureId);
 
-		structureGroupId = structure.getGroupId();
+		ddmStructureGroupId = ddmStructure.getGroupId();
+	}
+	catch (NoSuchStructureException nsse2) {
+	}
+}
+else if (Validator.isNotNull(structureId)) {
+	try {
+		ddmStructure = DDMStructureLocalServiceUtil.getStructure(scopeGroupId, structureId);
+
+		ddmStructureGroupId = ddmStructure.getGroupId();
 	}
 	catch (NoSuchStructureException nsse) {
 	}
@@ -115,7 +126,7 @@ String[][] categorySections = {mainSections};
 
 request.setAttribute("edit_article.jsp-redirect", redirect);
 
-request.setAttribute("edit_article.jsp-structure", structure);
+request.setAttribute("edit_article.jsp-structure", ddmStructure);
 
 request.setAttribute("edit_article.jsp-languageId", languageId);
 request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
@@ -161,6 +172,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	<aui:input name="languageId" type="hidden" value="<%= languageId %>" />
 	<aui:input id="articleContent" name="content" type="hidden" />
 	<aui:input name="articleURL" type="hidden" value="<%= editArticleRenderURL %>" />
+	<aui:input name="ddmStructureId" type="hidden" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-article-content-size-allowed" />
@@ -349,9 +361,9 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 		document.getElementById(<portlet:namespace />imageGalleryInput).value = url;
 	}
 
-	function <portlet:namespace />selectStructure(structureId, structureName, dialog) {
-		if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>') && (document.<portlet:namespace />fm1.<portlet:namespace />structureId.value != structureId)) {
-			document.<portlet:namespace />fm1.<portlet:namespace />structureId.value = structureId;
+	function <portlet:namespace />selectStructure(ddmStructureId, structureName, dialog) {
+		if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>') && (document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value != ddmStructureId)) {
+			document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value = ddmStructureId;
 			document.<portlet:namespace />fm1.<portlet:namespace />templateId.value = "";
 
 			if (dialog) {

@@ -23,6 +23,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.journal.DuplicateFeedIdException;
 import com.liferay.portlet.journal.FeedContentFieldException;
 import com.liferay.portlet.journal.FeedIdException;
@@ -163,6 +165,18 @@ public class EditFeedAction extends PortletAction {
 			actionRequest, "targetPortletId");
 		String contentField = ParamUtil.getString(
 			actionRequest, "contentField");
+
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
+
+		if (ddmStructureId > 0) {
+			DDMStructure ddmStructure =
+				DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId);
+
+			if (ddmStructure != null) {
+				structureId = ddmStructure.getStructureKey();
+			}
+		}
 
 		String feedType = ParamUtil.getString(
 			actionRequest, "feedType", RSSUtil.FEED_TYPE_DEFAULT);

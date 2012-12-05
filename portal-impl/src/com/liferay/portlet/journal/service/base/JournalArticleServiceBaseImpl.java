@@ -63,6 +63,14 @@ import com.liferay.portlet.asset.service.persistence.AssetLinkFinder;
 import com.liferay.portlet.asset.service.persistence.AssetLinkPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetTagFinder;
 import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplatePersistence;
 import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 import com.liferay.portlet.expando.service.ExpandoValueService;
 import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
@@ -1352,6 +1360,154 @@ public abstract class JournalArticleServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the d d m structure local service.
+	 *
+	 * @return the d d m structure local service
+	 */
+	public DDMStructureLocalService getDDMStructureLocalService() {
+		return ddmStructureLocalService;
+	}
+
+	/**
+	 * Sets the d d m structure local service.
+	 *
+	 * @param ddmStructureLocalService the d d m structure local service
+	 */
+	public void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+		this.ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	/**
+	 * Returns the d d m structure remote service.
+	 *
+	 * @return the d d m structure remote service
+	 */
+	public DDMStructureService getDDMStructureService() {
+		return ddmStructureService;
+	}
+
+	/**
+	 * Sets the d d m structure remote service.
+	 *
+	 * @param ddmStructureService the d d m structure remote service
+	 */
+	public void setDDMStructureService(DDMStructureService ddmStructureService) {
+		this.ddmStructureService = ddmStructureService;
+	}
+
+	/**
+	 * Returns the d d m structure persistence.
+	 *
+	 * @return the d d m structure persistence
+	 */
+	public DDMStructurePersistence getDDMStructurePersistence() {
+		return ddmStructurePersistence;
+	}
+
+	/**
+	 * Sets the d d m structure persistence.
+	 *
+	 * @param ddmStructurePersistence the d d m structure persistence
+	 */
+	public void setDDMStructurePersistence(
+		DDMStructurePersistence ddmStructurePersistence) {
+		this.ddmStructurePersistence = ddmStructurePersistence;
+	}
+
+	/**
+	 * Returns the d d m structure finder.
+	 *
+	 * @return the d d m structure finder
+	 */
+	public DDMStructureFinder getDDMStructureFinder() {
+		return ddmStructureFinder;
+	}
+
+	/**
+	 * Sets the d d m structure finder.
+	 *
+	 * @param ddmStructureFinder the d d m structure finder
+	 */
+	public void setDDMStructureFinder(DDMStructureFinder ddmStructureFinder) {
+		this.ddmStructureFinder = ddmStructureFinder;
+	}
+
+	/**
+	 * Returns the d d m template local service.
+	 *
+	 * @return the d d m template local service
+	 */
+	public DDMTemplateLocalService getDDMTemplateLocalService() {
+		return ddmTemplateLocalService;
+	}
+
+	/**
+	 * Sets the d d m template local service.
+	 *
+	 * @param ddmTemplateLocalService the d d m template local service
+	 */
+	public void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+		this.ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	/**
+	 * Returns the d d m template remote service.
+	 *
+	 * @return the d d m template remote service
+	 */
+	public DDMTemplateService getDDMTemplateService() {
+		return ddmTemplateService;
+	}
+
+	/**
+	 * Sets the d d m template remote service.
+	 *
+	 * @param ddmTemplateService the d d m template remote service
+	 */
+	public void setDDMTemplateService(DDMTemplateService ddmTemplateService) {
+		this.ddmTemplateService = ddmTemplateService;
+	}
+
+	/**
+	 * Returns the d d m template persistence.
+	 *
+	 * @return the d d m template persistence
+	 */
+	public DDMTemplatePersistence getDDMTemplatePersistence() {
+		return ddmTemplatePersistence;
+	}
+
+	/**
+	 * Sets the d d m template persistence.
+	 *
+	 * @param ddmTemplatePersistence the d d m template persistence
+	 */
+	public void setDDMTemplatePersistence(
+		DDMTemplatePersistence ddmTemplatePersistence) {
+		this.ddmTemplatePersistence = ddmTemplatePersistence;
+	}
+
+	/**
+	 * Returns the d d m template finder.
+	 *
+	 * @return the d d m template finder
+	 */
+	public DDMTemplateFinder getDDMTemplateFinder() {
+		return ddmTemplateFinder;
+	}
+
+	/**
+	 * Sets the d d m template finder.
+	 *
+	 * @param ddmTemplateFinder the d d m template finder
+	 */
+	public void setDDMTemplateFinder(DDMTemplateFinder ddmTemplateFinder) {
+		this.ddmTemplateFinder = ddmTemplateFinder;
+	}
+
+	/**
 	 * Returns the expando value local service.
 	 *
 	 * @return the expando value local service
@@ -1720,6 +1876,22 @@ public abstract class JournalArticleServiceBaseImpl extends BaseServiceImpl
 	protected AssetTagPersistence assetTagPersistence;
 	@BeanReference(type = AssetTagFinder.class)
 	protected AssetTagFinder assetTagFinder;
+	@BeanReference(type = DDMStructureLocalService.class)
+	protected DDMStructureLocalService ddmStructureLocalService;
+	@BeanReference(type = DDMStructureService.class)
+	protected DDMStructureService ddmStructureService;
+	@BeanReference(type = DDMStructurePersistence.class)
+	protected DDMStructurePersistence ddmStructurePersistence;
+	@BeanReference(type = DDMStructureFinder.class)
+	protected DDMStructureFinder ddmStructureFinder;
+	@BeanReference(type = DDMTemplateLocalService.class)
+	protected DDMTemplateLocalService ddmTemplateLocalService;
+	@BeanReference(type = DDMTemplateService.class)
+	protected DDMTemplateService ddmTemplateService;
+	@BeanReference(type = DDMTemplatePersistence.class)
+	protected DDMTemplatePersistence ddmTemplatePersistence;
+	@BeanReference(type = DDMTemplateFinder.class)
+	protected DDMTemplateFinder ddmTemplateFinder;
 	@BeanReference(type = ExpandoValueLocalService.class)
 	protected ExpandoValueLocalService expandoValueLocalService;
 	@BeanReference(type = ExpandoValueService.class)

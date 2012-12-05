@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -102,15 +103,23 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
+
+		String portletName = PortletKeys.WIKI;
+
+		long plid = PortalUtil.getPlidFromPortletId(
+			node.getGroupId(), PortletKeys.WIKI);
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
+
+			portletName = PortletKeys.WIKI_ADMIN;
+		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, PortletKeys.WIKI_ADMIN,
-				PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
-				PortletRequest.RENDER_PHASE);
+			portletRequest, portletName, plid, PortletRequest.RENDER_PHASE);
 
 		return portletURL.toString();
 	}

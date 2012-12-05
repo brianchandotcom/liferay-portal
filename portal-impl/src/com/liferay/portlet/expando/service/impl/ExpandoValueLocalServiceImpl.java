@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -323,7 +324,7 @@ public class ExpandoValueLocalServiceImpl
 
 	public ExpandoValue addValue(
 			long companyId, String className, String tableName,
-			String columnName, long classPK, Map dataMap)
+			String columnName, long classPK, Map<Locale, ?> dataMap)
 		throws PortalException, SystemException {
 
 		ExpandoTable table = expandoTableLocalService.getTable(
@@ -340,10 +341,10 @@ public class ExpandoValueLocalServiceImpl
 		value.setColumnId(column.getColumnId());
 
 		if (type == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED) {
-			value.setStringArrayMap(dataMap);
+			value.setStringArrayMap((Map<Locale, String[]>)dataMap);
 		}
 		else {
-			value.setStringMap(dataMap);
+			value.setStringMap((Map<Locale, String>)dataMap);
 		}
 
 		return expandoValueLocalService.addValue(

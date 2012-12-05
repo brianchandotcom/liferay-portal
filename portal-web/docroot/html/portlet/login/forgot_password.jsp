@@ -116,7 +116,7 @@ if (reminderAttempts == null) {
 						<%= LanguageUtil.format(pageContext, "a-new-password-will-be-sent-to-x-if-you-can-correctly-answer-the-following-question", login) %>
 					</div>
 
-					<aui:input label="<%= user2.getReminderQueryQuestion() %>" name="answer" type="text" />
+					<aui:input label="<%= HtmlUtil.escape(user2.getReminderQueryQuestion()) %>" name="answer" type="text" />
 				</c:if>
 
 				<c:choose>

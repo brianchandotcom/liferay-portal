@@ -185,28 +185,30 @@ public abstract class FindAction extends Action {
 		for (String portletId : _portletIds) {
 			plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
 
-			if (plid != LayoutConstants.DEFAULT_PLID) {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			if (plid == LayoutConstants.DEFAULT_PLID) {
+				continue;
+			}
 
-				if (LayoutPermissionUtil.contains(
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+			if (LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.VIEW)) {
 
-					LayoutTypePortlet layoutTypePortlet =
-						(LayoutTypePortlet)layout.getLayoutType();
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
 
-					for (String curPortletId : layoutTypePortlet.getPortletIds()) {
-						String curRootPortletId = PortletConstants.getRootPortletId(
-							curPortletId);
+				for (String curPortletId : layoutTypePortlet.getPortletIds()) {
+					String curRootPortletId = PortletConstants.getRootPortletId(
+						curPortletId);
 
-						if (portletId.equals(curRootPortletId)) {
-							portletId = curPortletId;
+					if (portletId.equals(curRootPortletId)) {
+						portletId = curPortletId;
 
-							break;
-						}
+						break;
 					}
-
-					return new Object[] {plid, portletId};
 				}
+
+				return new Object[] {plid, portletId};
 			}
 		}
 

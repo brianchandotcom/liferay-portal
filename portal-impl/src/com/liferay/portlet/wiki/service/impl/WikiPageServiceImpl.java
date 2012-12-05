@@ -42,6 +42,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
@@ -237,6 +238,18 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		wikiPageLocalService.deleteTrashPageAttachments(nodeId, title);
 	}
 
+	public List<WikiPage> getChildren(
+			long groupId, long nodeId, boolean head, String parentTitle)
+		throws PortalException, SystemException {
+
+		WikiNodePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.VIEW);
+
+		return wikiPagePersistence.filterFindByG_N_H_P_S(
+			groupId, nodeId, head, parentTitle,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
 	public WikiPage getDraftPage(long nodeId, String title)
 		throws PortalException, SystemException {
 
@@ -309,6 +322,20 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			groupId, nodeId, true, WorkflowConstants.STATUS_APPROVED);
 
 		return WikiUtil.filterOrphans(pages);
+	}
+
+	public WikiPage getPage(long groupId, long nodeId, String title)
+		throws PortalException, SystemException {
+
+		List<WikiPage> pages = wikiPagePersistence.filterFindByG_N_T_H(
+			groupId, nodeId, title, true, 0, 1);
+
+		if (!pages.isEmpty()) {
+			return pages.get(0);
+		}
+		else {
+			throw new NoSuchPageException();
+		}
 	}
 
 	public WikiPage getPage(long nodeId, String title)

@@ -207,6 +207,22 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiPageSoap[] getChildren(
+		long groupId, long nodeId, boolean head, java.lang.String parentTitle)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getChildren(groupId,
+					nodeId, head, parentTitle);
+
+			return com.liferay.portlet.wiki.model.WikiPageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.wiki.model.WikiPageSoap getDraftPage(
 		long nodeId, java.lang.String title) throws RemoteException {
 		try {
@@ -261,6 +277,22 @@ public class WikiPageServiceSoap {
 					nodeId);
 
 			return com.liferay.portlet.wiki.model.WikiPageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiPageSoap getPage(
+		long groupId, long nodeId, java.lang.String title)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.wiki.model.WikiPage returnValue = WikiPageServiceUtil.getPage(groupId,
+					nodeId, title);
+
+			return com.liferay.portlet.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

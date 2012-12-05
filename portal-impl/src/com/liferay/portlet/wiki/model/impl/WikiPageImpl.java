@@ -27,6 +27,7 @@ import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.portlet.wiki.util.WikiPageAttachmentsUtil;
 
 import java.util.ArrayList;
@@ -177,6 +178,53 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		}
 
 		return page;
+	}
+
+	public List<WikiPage> getViewableChildPages() {
+		List<WikiPage> pages = null;
+
+		try {
+			pages = WikiPageServiceUtil.getChildren(
+				getGroupId(), getNodeId(), true, getTitle());
+		}
+		catch (Exception e) {
+			pages = new ArrayList<WikiPage>();
+
+			_log.error(e);
+		}
+
+		return pages;
+	}
+
+	public WikiPage getViewableParentPage() {
+		if (Validator.isNull(getParentTitle())) {
+			return null;
+		}
+
+		WikiPage page = null;
+
+		try {
+			page = WikiPageServiceUtil.getPage(
+				getGroupId(), getNodeId(), getParentTitle());
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
+		return page;
+	}
+
+	public List<WikiPage> getViewableParentPages() {
+		List<WikiPage> parentPages = new ArrayList<WikiPage>();
+
+		WikiPage parentPage = getViewableParentPage();
+
+		if (parentPage != null) {
+			parentPages.addAll(parentPage.getViewableParentPages());
+			parentPages.add(parentPage);
+		}
+
+		return parentPages;
 	}
 
 	public boolean isInTrashFolder() {

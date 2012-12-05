@@ -148,6 +148,13 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		_wikiPageService.deleteTrashPageAttachments(nodeId, title);
 	}
 
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getChildren(
+		long groupId, long nodeId, boolean head, java.lang.String parentTitle)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageService.getChildren(groupId, nodeId, head, parentTitle);
+	}
+
 	public com.liferay.portlet.wiki.model.WikiPage getDraftPage(long nodeId,
 		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -176,6 +183,13 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPageService.getOrphans(groupId, nodeId);
+	}
+
+	public com.liferay.portlet.wiki.model.WikiPage getPage(long groupId,
+		long nodeId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageService.getPage(groupId, nodeId, title);
 	}
 
 	public com.liferay.portlet.wiki.model.WikiPage getPage(long nodeId,

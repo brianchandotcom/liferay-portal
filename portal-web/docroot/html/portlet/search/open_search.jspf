@@ -125,7 +125,9 @@ for (int i = 0; i < portlets.size(); i++) {
 	boolean isFilterSearch = false;
 
 	if (openSearch instanceof HitsOpenSearchImpl) {
-		Indexer indexer = ((HitsOpenSearchImpl)openSearch).getIndexer();
+		HitsOpenSearchImpl hitsOpenSearchImpl = (HitsOpenSearchImpl)openSearch;
+
+		Indexer indexer = hitsOpenSearchImpl.getIndexer();
 
 		isFilterSearch = indexer.isFilterSearch();
 	}
@@ -313,7 +315,17 @@ for (int i = 0; i < portlets.size(); i++) {
 
 		sb.append(portletTitle);
 
-		if(!isFilterSearch){
+		// When the total is <= to the delta, we know the result is accurate since we've filtered the entire result set.
+		// Otherwise, we simply indicate that there are possibly many more. (à la Google)
+
+		if (isFilterSearch && (openSearchSearchContainer.getTotal() > openSearchSearchContainer.getDelta())) {
+			sb.append(" (");
+			sb.append(openSearchSearchContainer.getDelta());
+			sb.append(StringPool.SPACE);
+			sb.append(LanguageUtil.get(pageContext, "of-many"));
+			sb.append(StringPool.CLOSE_BRACKET);
+		}
+		else {
 			sb.append(" (");
 			sb.append(openSearchSearchContainer.getTotal());
 			sb.append(StringPool.CLOSE_BRACKET);

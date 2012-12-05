@@ -527,6 +527,29 @@ public class GroupServiceSoap {
 	}
 
 	/**
+	* Returns the count of the guest or current user's group &quot;places&quot;
+	* associated with the group entity class names, including the control panel
+	* group if the user is permitted to view the control panel.
+	*
+	* @return the count of user's group &quot;places&quot;
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*
+	*/
+	public static int getUserPlacesCount() throws RemoteException {
+		try {
+			int returnValue = GroupServiceUtil.getUserPlacesCount();
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns the guest or current user's layout set group, organization
 	* groups, inherited organization groups, and site groups.
 	*

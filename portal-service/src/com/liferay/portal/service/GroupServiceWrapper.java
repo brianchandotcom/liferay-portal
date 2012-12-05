@@ -381,6 +381,21 @@ public class GroupServiceWrapper implements GroupService,
 	}
 
 	/**
+	* Returns the count of the guest or current user's group &quot;places&quot;
+	* associated with the group entity class names, including the control panel
+	* group if the user is permitted to view the control panel.
+	*
+	* @return the count of user's group &quot;places&quot;
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public int getUserPlacesCount()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupService.getUserPlacesCount();
+	}
+
+	/**
 	* Returns the guest or current user's layout set group, organization
 	* groups, inherited organization groups, and site groups.
 	*

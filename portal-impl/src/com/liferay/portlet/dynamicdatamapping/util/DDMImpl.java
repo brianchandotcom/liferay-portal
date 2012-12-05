@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.service.ServiceContext;
@@ -101,7 +100,8 @@ public class DDMImpl implements DDM {
 		DDMStructure ddmStructure = getDDMStructure(
 			ddmStructureId, ddmTemplateId);
 
-		JSONObject repeatabaleFields = getRepeatableFieldsJSON(serviceContext);
+		JSONObject repeatabaleFields = getRepeatableFieldsMapJSON(
+			serviceContext);
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 
@@ -112,7 +112,7 @@ public class DDMImpl implements DDM {
 				ddmStructure, repeatabaleFields, fieldName, fieldNamespace,
 				serviceContext);
 
-			if (fieldValues == null) {
+			if (fieldValues.isEmpty()) {
 				continue;
 			}
 
@@ -277,9 +277,10 @@ public class DDMImpl implements DDM {
 		DDMStructure ddmStructure =
 			DDMStructureLocalServiceUtil.getDDMStructure(structureId);
 
-		JSONObject repeatabaleFields = getRepeatableFieldsJSON(serviceContext);
+		JSONObject repeatabaleFields = getRepeatableFieldsMapJSON(
+			serviceContext);
 
-		List<String> namespacedFieldNames = getNamespacedFieldNames(
+		List<String> fieldNames = getFieldNames(
 			ddmStructure, fieldNamespace, fieldName, repeatabaleFields);
 
 		UploadRequest uploadRequest = (UploadRequest)request;
@@ -290,18 +291,15 @@ public class DDMImpl implements DDM {
 
 		List<Serializable> fieldValues = new ArrayList<Serializable>();
 
-		for (String namespacedFieldName : namespacedFieldNames) {
+		for (String fieldNameValue : fieldNames) {
 			try {
-				String fileName = uploadRequest.getFileName(
-					namespacedFieldName);
+				String fileName = uploadRequest.getFileName(fieldNameValue);
 
-				inputStream = uploadRequest.getFileAsStream(
-					namespacedFieldName, true);
+				inputStream = uploadRequest.getFileAsStream(fieldName, true);
 
 				if (inputStream != null) {
 					String filePath = storeFieldFile(
-						baseModel, namespacedFieldName, inputStream,
-						serviceContext);
+						baseModel, fieldName, inputStream, serviceContext);
 
 					JSONObject recordFileJSONObject =
 						JSONFactoryUtil.createJSONObject();
@@ -357,6 +355,30 @@ public class DDMImpl implements DDM {
 		return ddmStructure;
 	}
 
+	protected List<String> getFieldNames(
+			DDMStructure ddmStructure, String fieldNamespace, String fieldName,
+			JSONObject repeatabaleFields)
+		throws PortalException, SystemException {
+
+		List<String> fieldNames = new ArrayList<String>();
+
+		fieldNames.add(fieldNamespace + fieldName);
+
+		boolean repeatable = ddmStructure.isFieldRepeatable(fieldName);
+
+		if (repeatable && (repeatabaleFields != null)) {
+			JSONArray jsonArray = repeatabaleFields.getJSONArray(
+				fieldNamespace + fieldName);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				fieldNames.add(
+					fieldNamespace + fieldName + jsonArray.getString(i));
+			}
+		}
+
+		return fieldNames;
+	}
+
 	protected List<Serializable> getFieldValues(
 			DDMStructure ddmStructure, JSONObject repeatabaleFields,
 			String fieldName, String fieldNamespace,
@@ -366,23 +388,23 @@ public class DDMImpl implements DDM {
 		String fieldDataType = ddmStructure.getFieldDataType(fieldName);
 		String fieldType = ddmStructure.getFieldType(fieldName);
 
-		List<String> namespacedFieldNames = getNamespacedFieldNames(
+		List<String> fieldNames = getFieldNames(
 			ddmStructure, fieldNamespace, fieldName, repeatabaleFields);
 
 		List<Serializable> fieldValues = new ArrayList<Serializable>(
-			namespacedFieldNames.size());
+			fieldNames.size());
 
-		for (String namespacedFieldName : namespacedFieldNames) {
+		for (String fieldNameValue : fieldNames) {
 			Serializable fieldValue = serviceContext.getAttribute(
-				namespacedFieldName);
+					fieldNameValue);
 
 			if (fieldDataType.equals(FieldConstants.DATE)) {
 				int fieldValueMonth = GetterUtil.getInteger(
-					serviceContext.getAttribute(namespacedFieldName + "Month"));
+					serviceContext.getAttribute(fieldNameValue + "Month"));
 				int fieldValueYear = GetterUtil.getInteger(
-					serviceContext.getAttribute(namespacedFieldName + "Year"));
+					serviceContext.getAttribute(fieldNameValue + "Year"));
 				int fieldValueDay = GetterUtil.getInteger(
-					serviceContext.getAttribute(namespacedFieldName + "Day"));
+					serviceContext.getAttribute(fieldNameValue + "Day"));
 
 				Date fieldValueDate = PortalUtil.getDate(
 					fieldValueMonth, fieldValueDay, fieldValueYear);
@@ -418,41 +440,13 @@ public class DDMImpl implements DDM {
 		return fieldValues;
 	}
 
-	protected List<String> getNamespacedFieldNames(
-			DDMStructure ddmStructure, String fieldNamespace, String fieldName,
-			JSONObject repeatabaleFields)
-		throws PortalException, SystemException {
-
-		List<String> namespacedFieldNames = new ArrayList<String>();
-
-		namespacedFieldNames.add(fieldNamespace + fieldName);
-
-		boolean repeatable = ddmStructure.isFieldRepeatable(fieldName);
-
-		if (repeatable && (repeatabaleFields != null)) {
-			JSONArray jsonArray = repeatabaleFields.getJSONArray(
-				fieldNamespace + fieldName);
-
-			for (int i = 0; i < jsonArray.length(); i++) {
-				namespacedFieldNames.add(
-					fieldNamespace + fieldName + jsonArray.getString(i));
-			}
-		}
-
-		return namespacedFieldNames;
-	}
-
-	protected JSONObject getRepeatableFieldsJSON(
+	protected JSONObject getRepeatableFieldsMapJSON(
 		ServiceContext serviceContext) {
 
-		String repeatabaleFieldsMap = GetterUtil.getString(
-			serviceContext.getAttribute("__repeatabaleFieldsMap"));
-
-		if (Validator.isNull(repeatabaleFieldsMap)) {
-			return null;
-		}
-
 		try {
+			String repeatabaleFieldsMap = GetterUtil.getString(
+				serviceContext.getAttribute("__repeatabaleFieldsMap"));
+
 			return JSONFactoryUtil.createJSONObject(repeatabaleFieldsMap);
 		}
 		catch (Exception e) {

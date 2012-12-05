@@ -130,11 +130,11 @@ public class Field implements Serializable {
 
 			boolean repeatable = isRepeatable();
 
-			if (!repeatable) {
-				return _values.get(0);
+			if (repeatable) {
+				return FieldConstants.getSerializable(getType(), _values);
 			}
 
-			return FieldConstants.getSerializable(getType(), _values);
+			return _values.get(0);
 		}
 		catch (Exception e) {
 			_log.error(e);
@@ -149,10 +149,6 @@ public class Field implements Serializable {
 
 	public List<Serializable> getValues() {
 		return _values;
-	}
-
-	public int getValuesSize() {
-		return _values.size();
 	}
 
 	public boolean isRepeatable() throws PortalException, SystemException {

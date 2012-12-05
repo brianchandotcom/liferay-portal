@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -30,7 +30,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.io.Serializable;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -40,25 +40,20 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
-		List<Serializable> values = field.getValues();
 
-		StringBundler sb = new StringBundler(values.size() * 2);
+		ArrayList<String> values = new ArrayList<String>();
 
-		for (int i = 0; i < values.size(); i++) {
-			String value = String.valueOf(values.get(i));
+		for (Serializable value : field.getValues()) {
+			String valueString = String.valueOf(value);
 
-			if (Validator.isNull(value)) {
+			if (Validator.isNull(valueString)) {
 				continue;
 			}
 
-			sb.append(handleJSON(value, locale));
-
-			if ((i + 1) < values.size()) {
-				sb.append(", ");
-			}
+			values.add(handleJSON(valueString, locale));
 		}
 
-		return sb.toString();
+		return StringUtil.merge(values, ", ");
 	}
 
 	@Override

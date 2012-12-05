@@ -15,15 +15,15 @@
 package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.text.Format;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -36,25 +36,19 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 	protected String doRender(Field field, Locale locale) throws Exception {
 		Format format = FastDateFormatFactoryUtil.getDate(locale);
 
-		List<Serializable> values = field.getValues();
+		ArrayList<String> values = new ArrayList<String>();
 
-		StringBundler sb = new StringBundler(values.size() * 2);
+		for (Serializable value : field.getValues()) {
+			String valueString = String.valueOf(value);
 
-		for (int i = 0; i < values.size(); i++) {
-			String value = String.valueOf(values.get(i));
-
-			if (Validator.isNull(value)) {
+			if (Validator.isNull(valueString)) {
 				continue;
 			}
 
-			sb.append(format.format(value));
-
-			if ((i + 1) < values.size()) {
-				sb.append(", ");
-			}
+			values.add(format.format(valueString));
 		}
 
-		return sb.toString();
+		return StringUtil.merge(values, ", ");
 	}
 
 	@Override

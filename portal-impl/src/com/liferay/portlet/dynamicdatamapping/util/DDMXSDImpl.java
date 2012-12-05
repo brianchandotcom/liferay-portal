@@ -60,6 +60,7 @@ import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.Writer;
 
 import java.net.URL;
@@ -130,9 +131,11 @@ public class DDMXSDImpl implements DDMXSD {
 
 			Field field = fields.get(name);
 
-			StringBuffer sb = new StringBuffer(field.getValuesSize());
+			List<Serializable> values = field.getValues();
 
-			for (int i = 0; i < field.getValuesSize(); i++) {
+			StringBuffer sb = new StringBuffer(values.size());
+
+			for (int i = 0; i < values.size(); i++) {
 				fieldStructure.put("repeatableIndex", String.valueOf(i));
 
 				String childrenHTML = getHTML(

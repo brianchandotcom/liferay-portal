@@ -19,13 +19,14 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 
 import java.io.Serializable;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 
@@ -38,31 +39,25 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 	protected String doRender(Field field, Locale locale) throws Exception {
 		String fieldType = getFieldType(field);
 
-		List<Serializable> values = field.getValues();
+		ArrayList<String> values = new ArrayList<String>();
 
-		StringBundler sb = new StringBundler(values.size() * 2);
+		for (Serializable value : field.getValues()) {
+			String valueString = String.valueOf(value);
 
-		for (int i = 0; i < values.size(); i++) {
-			String value = String.valueOf(values.get(i));
-
-			if (Validator.isNull(value)) {
+			if (Validator.isNull(valueString)) {
 				continue;
 			}
 
 			if (fieldType.equals(DDMImpl.TYPE_RADIO) ||
 				fieldType.equals(DDMImpl.TYPE_SELECT)) {
 
-				value = handleJSON(field, value, locale);
+				valueString = handleJSON(field, valueString, locale);
 			}
 
-			sb.append(value);
-
-			if ((i + 1) < values.size()) {
-				sb.append(", ");
-			}
+			values.add(valueString);
 		}
 
-		return sb.toString();
+		return StringUtil.merge(values, ", ");
 	}
 
 	@Override

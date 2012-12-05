@@ -130,38 +130,7 @@ else {
 	%>
 
 	<aui:fieldset>
-		<aui:select label="question" name="reminderQueryQuestion">
-
-			<%
-			Set<String> questions = selUser.getReminderQueryQuestions();
-
-			for (String question : questions) {
-				if (selUser.getReminderQueryQuestion().equals(question)) {
-					hasCustomQuestion = false;
-			%>
-
-					<aui:option label="<%= question %>" selected="<%= true %>" value="<%= question %>" />
-
-			<%
-				}
-				else {
-			%>
-
-					<aui:option label="<%= question %>" />
-
-			<%
-				}
-			}
-
-			if (hasCustomQuestion && Validator.isNull(selUser.getReminderQueryQuestion())) {
-				hasCustomQuestion = false;
-			}
-			%>
-
-			<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
-				<aui:option label="write-my-own-question" selected="<%= hasCustomQuestion %>" useModelValue="<%= false %>" value="<%= UsersAdminUtil.CUSTOM_QUESTION %>" />
-			</c:if>
-		</aui:select>
+		<%@ include file="/html/portlet/users_admin/user/password_reminder_query_question.jspf" %>
 
 		<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
 			<div id="<portlet:namespace />customQuestionDiv">

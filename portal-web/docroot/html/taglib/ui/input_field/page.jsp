@@ -373,6 +373,7 @@ if (hints != null) {
 			String displayHeight = ModelHintsConstants.TEXT_DISPLAY_HEIGHT;
 			String displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
 			String maxLength = ModelHintsConstants.TEXT_MAX_LENGTH;
+			boolean autoSize = false;
 			boolean secret = false;
 			boolean upperCase = false;
 			boolean checkTab = false;
@@ -381,12 +382,17 @@ if (hints != null) {
 				displayHeight = GetterUtil.getString(hints.get("display-height"), displayHeight);
 				displayWidth = GetterUtil.getString(hints.get("display-width"), displayWidth);
 				maxLength = GetterUtil.getString(hints.get("max-length"), maxLength);
+				autoSize = GetterUtil.getBoolean(hints.get("autoSize"), autoSize);
 				secret = GetterUtil.getBoolean(hints.get("secret"), secret);
 				upperCase = GetterUtil.getBoolean(hints.get("upper-case"), upperCase);
 				checkTab = GetterUtil.getBoolean(hints.get("check-tab"), checkTab);
 			}
 
 			boolean localized = ModelHintsUtil.isLocalized(model, field);
+
+			if (autoSize) {
+				displayHeight = "auto";
+			}
 
 			String xml = StringPool.BLANK;
 
@@ -433,6 +439,34 @@ if (hints != null) {
 							<textarea <%= Validator.isNotNull(cssClass) ? "class=\"" + cssClass + " lfr-textarea\"" : StringPool.BLANK %> <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="height: <%= displayHeight %><%= Validator.isDigit(displayHeight) ? "px" : "" %>; max-width: <%= displayWidth %><%= Validator.isDigit(displayWidth) ? "px" : "" %>;" wrap="soft" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : "" %> Liferay.Util.disableEsc();"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
 						</c:otherwise>
 					</c:choose>
+
+					<c:if test="<%= autoSize %>">
+						<%
+							String mainLanguageId = defaultLanguageId;
+
+							if (Validator.isNotNull(languageId)) {
+								mainLanguageId = languageId;
+							}
+
+						%>
+						<aui:script use="liferay-textarea">
+							new Liferay.Textarea(
+								{
+									autoSize: true
+
+									<c:if test="<%= Validator.isDigit(displayHeight) %>">
+										,
+										minHeight: <%= displayHeight %>
+									</c:if>
+
+									,
+									node: '#<%= namespace %><%= id %>' + '<%= StringPool.UNDERLINE %>' + '<%= mainLanguageId %>',
+
+									width: <%= displayWidth %>
+								}
+							).render();
+						</aui:script>
+					</c:if>
 				</c:otherwise>
 			</c:choose>
 
@@ -446,6 +480,7 @@ if (hints != null) {
 					);
 				</aui:script>
 			</c:if>
+
 		</c:when>
 	</c:choose>
 </c:if>

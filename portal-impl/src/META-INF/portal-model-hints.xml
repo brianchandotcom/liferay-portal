@@ -1612,6 +1612,7 @@
 		</field>
 		<field name="description" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
+			<hint name="autoSize">true</hint>
 		</field>
 		<field name="type" type="String" />
 		<field name="mode" type="String" />
@@ -1853,6 +1854,7 @@
 		</field>
 		<field name="description" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
+			<hint name="autoSize">true</hint>
 		</field>
 		<field name="xsl" type="String">
 			<hint-collection name="CLOB" />

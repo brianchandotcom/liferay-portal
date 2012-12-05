@@ -226,7 +226,7 @@ public class Message implements Cloneable, Serializable {
 		sb.append(", payload=");
 		sb.append(_payload);
 		sb.append(", values=");
-		sb.append(MapUtil.toString(_values, null, "password"));
+		sb.append(MapUtil.toString(_values, null, ".*[pP]assword.*"));
 		sb.append("}");
 
 		return sb.toString();

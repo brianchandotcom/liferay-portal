@@ -941,7 +941,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		Calendar cal, Calendar tzICal, CalEvent event) {
 
 		Calendar eventCal = CalendarFactoryUtil.getCalendar(
-			TimeZoneUtil.getTimeZone(StringPool.UTC));
+			TimeZoneUtil.getDefault());
 
 		eventCal.setTime(event.getStartDate());
 

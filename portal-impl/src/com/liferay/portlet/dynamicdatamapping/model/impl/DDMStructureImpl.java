@@ -277,6 +277,12 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return hasField;
 	}
 
+	public boolean isFieldRepeatable(String fieldName)
+		throws PortalException, SystemException {
+
+		return GetterUtil.getBoolean(getFieldProperty(fieldName, "repeatable"));
+	}
+
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {

@@ -125,10 +125,18 @@ public class DDMXMLImpl implements DDMXML {
 			Serializable fieldValueSerializable =
 				FieldConstants.getSerializable(fieldDataType, fieldValue);
 
-			Field field = new Field(
-				structure.getStructureId(), fieldName, fieldValueSerializable);
+			Field field = fields.get(fieldName);
 
-			fields.put(field);
+			if (field == null) {
+				field = new Field(
+					structure.getStructureId(), fieldName,
+					fieldValueSerializable);
+
+				fields.put(field);
+			}
+			else {
+				field.addValue(fieldValueSerializable);
+			}
 		}
 
 		return fields;
@@ -154,30 +162,13 @@ public class DDMXMLImpl implements DDMXML {
 			while (itr.hasNext()) {
 				Field field = itr.next();
 
-				Object value = field.getValue();
+				List<Node> nodes = getElementsByName(document, field.getName());
 
-				if (value instanceof Date) {
-					Date valueDate = (Date)value;
-
-					value = valueDate.getTime();
+				for (Node node : nodes) {
+					document.remove(node);
 				}
 
-				String valueString = String.valueOf(value);
-
-				if (valueString != null) {
-					valueString = valueString.trim();
-				}
-
-				Element dynamicElementElement = getElementByName(
-					document, field.getName());
-
-				if (dynamicElementElement == null) {
-					appendField(rootElement, field.getName(), valueString);
-				}
-				else {
-					updateField(
-						dynamicElementElement, field.getName(), valueString);
-				}
+				appendField(rootElement, field);
 			}
 
 			return document.formattedString();
@@ -246,16 +237,15 @@ public class DDMXMLImpl implements DDMXML {
 		}
 	}
 
-	protected Element appendField(
-		Element element, String fieldName, String fieldValue) {
+	protected void appendField(Element element, Field field) {
+		for (Serializable fieldValue : field.getValues()) {
+			Element dynamicElementElement = element.addElement(
+				"dynamic-element");
 
-		Element dynamicElementElement = element.addElement("dynamic-element");
+			dynamicElementElement.addElement("dynamic-content");
 
-		dynamicElementElement.addElement("dynamic-content");
-
-		updateField(dynamicElementElement, fieldName, fieldValue);
-
-		return dynamicElementElement;
+			updateField(dynamicElementElement, field.getName(), fieldValue);
+		}
 	}
 
 	protected void fixElementsDefaultLocale(
@@ -295,24 +285,17 @@ public class DDMXMLImpl implements DDMXML {
 		}
 	}
 
-	protected Element getElementByName(Document document, String name) {
+	protected List<Node> getElementsByName(Document document, String name) {
 		name = HtmlUtil.escapeXPathAttribute(name);
 
 		XPath xPathSelector = SAXReaderUtil.createXPath(
 			"//dynamic-element[@name=".concat(name).concat("]"));
 
-		List<Node> nodes = xPathSelector.selectNodes(document);
-
-		if (nodes.size() == 1) {
-			return (Element)nodes.get(0);
-		}
-		else {
-			return null;
-		}
+		return xPathSelector.selectNodes(document);
 	}
 
 	protected void updateField(
-		Element element, String fieldName, String value) {
+		Element element, String fieldName, Serializable fieldValue) {
 
 		Element dynamicContentElement = element.element("dynamic-content");
 
@@ -320,7 +303,19 @@ public class DDMXMLImpl implements DDMXML {
 
 		dynamicContentElement.clearContent();
 
-		dynamicContentElement.addCDATA(value);
+		if (fieldValue instanceof Date) {
+			Date valueDate = (Date)fieldValue;
+
+			fieldValue = valueDate.getTime();
+		}
+
+		String valueString = String.valueOf(fieldValue);
+
+		if (valueString != null) {
+			valueString = valueString.trim();
+		}
+
+		dynamicContentElement.addCDATA(valueString);
 	}
 
 	private static final String _AVAILABLE_LOCALES = "available-locales";

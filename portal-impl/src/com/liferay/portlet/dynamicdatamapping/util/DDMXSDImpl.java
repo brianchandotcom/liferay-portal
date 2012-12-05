@@ -49,6 +49,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
 
@@ -59,6 +60,7 @@ import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.Writer;
 
 import java.net.URL;
@@ -81,6 +83,7 @@ import javax.servlet.jsp.PageContext;
  * @author Bruno Basto
  * @author Eduardo Lundgren
  * @author Brian Wing Shun Chan
+ * @author Marcellus Tavares
  */
 public class DDMXSDImpl implements DDMXSD {
 
@@ -118,68 +121,45 @@ public class DDMXSDImpl implements DDMXSD {
 		freeMarkerContext.put("portletNamespace", portletNamespace);
 		freeMarkerContext.put("namespace", namespace);
 
+		Map<String, Object> fieldStructure =
+			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
+
 		if (fields != null) {
 			freeMarkerContext.put("fields", fields);
-		}
 
-		Map<String, Object> field =
-			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
+			String name = element.attributeValue("name");
+
+			Field field = fields.get(name);
+
+			List<Serializable> values = field.getValues();
+
+			StringBuffer sb = new StringBuffer(values.size());
+
+			for (int i = 0; i < values.size(); i++) {
+				fieldStructure.put("repeatableIndex", String.valueOf(i));
+
+				String childrenHTML = getHTML(
+					pageContext, element, fields, namespace, mode, readOnly,
+					locale);
+
+				fieldStructure.put("children", childrenHTML);
+
+				sb.append(
+					processFTL(
+						pageContext, element, mode, readOnly,
+						freeMarkerContext));
+			}
+
+			return sb.toString();
+		}
 
 		String childrenHTML = getHTML(
 			pageContext, element, fields, namespace, mode, readOnly, locale);
 
-		field.put("children", childrenHTML);
+		fieldStructure.put("children", childrenHTML);
 
-		String fieldNamespace = element.attributeValue(
-			"fieldNamespace", _DEFAULT_NAMESPACE);
-
-		TemplateResource templateResource = _defaultTemplateResource;
-
-		boolean fieldReadOnly = GetterUtil.getBoolean(field.get("readOnly"));
-
-		if ((fieldReadOnly && Validator.isNotNull(mode) &&
-			 mode.equalsIgnoreCase(
-				DDMTemplateConstants.TEMPLATE_MODE_EDIT)) || readOnly) {
-
-			fieldNamespace = _DEFAULT_READ_ONLY_NAMESPACE;
-
-			templateResource = _defaultReadOnlyTemplateResource;
-		}
-
-		String type = element.attributeValue("type");
-
-		String templateName = StringUtil.replaceFirst(
-			type, fieldNamespace.concat(StringPool.DASH), StringPool.BLANK);
-
-		StringBundler resourcePath = new StringBundler(5);
-
-		resourcePath.append(_TPL_PATH);
-		resourcePath.append(fieldNamespace.toLowerCase());
-		resourcePath.append(CharPool.SLASH);
-		resourcePath.append(templateName);
-		resourcePath.append(_TPL_EXT);
-
-		String resource = resourcePath.toString();
-
-		URL url = getResource(resource);
-
-		if (url != null) {
-			templateResource = new URLTemplateResource(resource, url);
-		}
-
-		if (templateResource == null) {
-			throw new Exception("Unable to load template resource " + resource);
-		}
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateManager.FREEMARKER, templateResource,
-			TemplateContextType.STANDARD);
-
-		for (Map.Entry<String, Object> entry : freeMarkerContext.entrySet()) {
-			template.put(entry.getKey(), entry.getValue());
-		}
-
-		return processFTL(pageContext, template);
+		return processFTL(
+			pageContext, element, mode, readOnly, freeMarkerContext);
 	}
 
 	public String getFieldHTMLByName(
@@ -193,7 +173,7 @@ public class DDMXSDImpl implements DDMXSD {
 		Document document = SAXReaderUtil.read(xsd);
 
 		String xPathExpression =
-			"dynamic-element[@name=".concat(
+			"//dynamic-element[@name=".concat(
 				HtmlUtil.escapeXPathAttribute(fieldName)).concat("]");
 
 		XPath xPathSelector = SAXReaderUtil.createXPath(xPathExpression);
@@ -507,6 +487,67 @@ public class DDMXSDImpl implements DDMXSD {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		return classLoader.getResource(name);
+	}
+
+	protected String processFTL(
+			PageContext pageContext, Element element, String mode,
+			boolean readOnly, Map<String, Object> freeMarkerContext)
+		throws Exception {
+
+		String fieldNamespace = element.attributeValue(
+			"fieldNamespace", _DEFAULT_NAMESPACE);
+
+		TemplateResource templateResource = _defaultTemplateResource;
+
+		Map<String, Object> fieldStructure =
+			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
+
+		boolean fieldReadOnly = GetterUtil.getBoolean(
+			fieldStructure.get("readOnly"));
+
+		if ((fieldReadOnly && Validator.isNotNull(mode) &&
+			 mode.equalsIgnoreCase(
+				DDMTemplateConstants.TEMPLATE_MODE_EDIT)) || readOnly) {
+
+			fieldNamespace = _DEFAULT_READ_ONLY_NAMESPACE;
+
+			templateResource = _defaultReadOnlyTemplateResource;
+		}
+
+		String type = element.attributeValue("type");
+
+		String templateName = StringUtil.replaceFirst(
+			type, fieldNamespace.concat(StringPool.DASH), StringPool.BLANK);
+
+		StringBundler resourcePath = new StringBundler(5);
+
+		resourcePath.append(_TPL_PATH);
+		resourcePath.append(fieldNamespace.toLowerCase());
+		resourcePath.append(CharPool.SLASH);
+		resourcePath.append(templateName);
+		resourcePath.append(_TPL_EXT);
+
+		String resource = resourcePath.toString();
+
+		URL url = getResource(resource);
+
+		if (url != null) {
+			templateResource = new URLTemplateResource(resource, url);
+		}
+
+		if (templateResource == null) {
+			throw new Exception("Unable to load template resource " + resource);
+		}
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateManager.FREEMARKER, templateResource,
+			TemplateContextType.STANDARD);
+
+		for (Map.Entry<String, Object> entry : freeMarkerContext.entrySet()) {
+			template.put(entry.getKey(), entry.getValue());
+		}
+
+		return processFTL(pageContext, template);
 	}
 
 	/**

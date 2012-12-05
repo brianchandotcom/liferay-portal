@@ -8,6 +8,6 @@
 		<#assign className = fileJSONObject.getString("className")>
 		<#assign classPK = fileJSONObject.getString("classPK")>
 
-		<a href="/documents/ddm/${className}/${classPK}/${fieldName}">${fileName}</a>
+		<a href="/documents/ddm/${className}/${classPK}/${fieldName}/${valueIndex}">${fileName}</a>
 	</#if>
 </@>

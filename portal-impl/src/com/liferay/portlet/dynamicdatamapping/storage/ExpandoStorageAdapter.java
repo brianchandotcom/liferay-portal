@@ -340,29 +340,80 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 
 		String fieldDataType = ddmStructure.getFieldDataType(name);
 
+		boolean repeatable = ddmStructure.isFieldRepeatable(name);
+
 		if (fieldDataType.equals(FieldConstants.BOOLEAN)) {
+			if (repeatable) {
+				return ExpandoColumnConstants.BOOLEAN_ARRAY;
+			}
+
 			return ExpandoColumnConstants.BOOLEAN;
 		}
 		else if (fieldDataType.equals(FieldConstants.DATE)) {
+			if (repeatable) {
+				return ExpandoColumnConstants.DATE_ARRAY;
+			}
+
 			return ExpandoColumnConstants.DATE;
 		}
+		else if (fieldDataType.equals(FieldConstants.DOCUMENT_LIBRARY)) {
+			if (repeatable) {
+				return ExpandoColumnConstants.STRING_ARRAY;
+			}
+
+			return ExpandoColumnConstants.STRING;
+		}
 		else if (fieldDataType.equals(FieldConstants.DOUBLE)) {
+			if (repeatable) {
+				return ExpandoColumnConstants.DOUBLE_ARRAY;
+			}
+
 			return ExpandoColumnConstants.DOUBLE;
 		}
+		else if (fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
+			if (repeatable) {
+				return ExpandoColumnConstants.STRING_ARRAY;
+			}
+
+			return ExpandoColumnConstants.STRING;
+		}
 		else if (fieldDataType.equals(FieldConstants.FLOAT)) {
+			if (repeatable) {
+				return ExpandoColumnConstants.FLOAT_ARRAY;
+			}
+
 			return ExpandoColumnConstants.FLOAT;
 		}
 		else if (fieldDataType.equals(FieldConstants.INTEGER)) {
+			if (repeatable) {
+				return ExpandoColumnConstants.INTEGER_ARRAY;
+			}
+
 			return ExpandoColumnConstants.INTEGER;
 		}
 		else if (fieldDataType.equals(FieldConstants.LONG)) {
+			if (repeatable) {
+				return ExpandoColumnConstants.LONG_ARRAY;
+			}
+
 			return ExpandoColumnConstants.LONG;
 		}
 		else if (fieldDataType.equals(FieldConstants.NUMBER)) {
+			if (repeatable) {
+				return ExpandoColumnConstants.NUMBER_ARRAY;
+			}
+
 			return ExpandoColumnConstants.NUMBER;
 		}
 		else if (fieldDataType.equals(FieldConstants.SHORT)) {
+			if (repeatable) {
+				return ExpandoColumnConstants.SHORT_ARRAY;
+			}
+
 			return ExpandoColumnConstants.SHORT;
+		}
+		else if (repeatable) {
+			return ExpandoColumnConstants.STRING_ARRAY;
 		}
 		else {
 			return ExpandoColumnConstants.STRING;

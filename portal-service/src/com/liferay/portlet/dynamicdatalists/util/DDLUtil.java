@@ -54,10 +54,11 @@ public class DDLUtil {
 
 	public static void getRecordFileUpload(
 			HttpServletRequest request, HttpServletResponse response,
-			DDLRecord record, String fieldName)
+			DDLRecord record, String fieldName, int valueIndex)
 		throws Exception {
 
-		getDDL().sendRecordFileUpload(request, response, record, fieldName);
+		getDDL().sendRecordFileUpload(
+			request, response, record, fieldName, valueIndex);
 	}
 
 	public static JSONObject getRecordJSONObject(DDLRecord record)
@@ -123,18 +124,20 @@ public class DDLUtil {
 
 	public static void sendRecordFileUpload(
 			HttpServletRequest request, HttpServletResponse response,
-			DDLRecord record, String fieldName)
+			DDLRecord record, String fieldName, int valueIndex)
 		throws Exception {
 
-		getDDL().sendRecordFileUpload(request, response, record, fieldName);
+		getDDL().sendRecordFileUpload(
+			request, response, record, fieldName, valueIndex);
 	}
 
 	public static void sendRecordFileUpload(
 			HttpServletRequest request, HttpServletResponse response,
-			long recordId, String fieldName)
+			long recordId, String fieldName, int valueIndex)
 		throws Exception {
 
-		getDDL().sendRecordFileUpload(request, response, recordId, fieldName);
+		getDDL().sendRecordFileUpload(
+			request, response, recordId, fieldName, valueIndex);
 	}
 
 	public static DDLRecord updateRecord(
@@ -156,12 +159,11 @@ public class DDLUtil {
 			recordId, recordSetId, mergeFields, serviceContext);
 	}
 
-	public static String uploadRecordFieldFile(
+	public static void uploadRecordFieldFile(
 			DDLRecord record, String fieldName, ServiceContext serviceContext)
 		throws Exception {
 
-		return getDDL().uploadRecordFieldFile(
-			record, fieldName, serviceContext);
+		getDDL().uploadRecordFieldFile(record, fieldName, serviceContext);
 	}
 
 	public void setDDL(DDL ddl) {

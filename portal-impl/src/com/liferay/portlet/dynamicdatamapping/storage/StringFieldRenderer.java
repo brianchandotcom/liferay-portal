@@ -19,10 +19,14 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 
@@ -33,23 +37,62 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
-		String value = String.valueOf(field.getValue());
+		String fieldType = getFieldType(field);
+
+		ArrayList<String> values = new ArrayList<String>();
+
+		for (Serializable value : field.getValues()) {
+			String valueString = String.valueOf(value);
+
+			if (Validator.isNull(valueString)) {
+				continue;
+			}
+
+			if (fieldType.equals(DDMImpl.TYPE_RADIO) ||
+				fieldType.equals(DDMImpl.TYPE_SELECT)) {
+
+				valueString = handleJSON(field, valueString, locale);
+			}
+
+			values.add(valueString);
+		}
+
+		return StringUtil.merge(values, ", ");
+	}
+
+	@Override
+	protected String doRender(Field field, Locale locale, int valueIndex)
+		throws Exception {
+
+		String value = String.valueOf(field.getValue(valueIndex));
 
 		if (Validator.isNull(value)) {
 			return StringPool.BLANK;
 		}
 
-		DDMStructure ddmStructure = field.getDDMStructure();
+		String fieldType = getFieldType(field);
 
-		String fieldType = ddmStructure.getFieldType(field.getName());
+		if (fieldType.equals(DDMImpl.TYPE_RADIO) ||
+			fieldType.equals(DDMImpl.TYPE_SELECT)) {
 
-		if (!fieldType.equals(DDMImpl.TYPE_RADIO) &&
-			!fieldType.equals(DDMImpl.TYPE_SELECT)) {
-
-			return value;
+			return handleJSON(field, value, locale);
 		}
 
-		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray(value);
+		return value;
+	}
+
+	protected String getFieldType(Field field) throws Exception {
+		DDMStructure ddmStructure = field.getDDMStructure();
+
+		return ddmStructure.getFieldType(field.getName());
+	}
+
+	protected String handleJSON(Field field, String json, Locale locale)
+		throws Exception {
+
+		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray(json);
+
+		DDMStructure ddmStructure = field.getDDMStructure();
 
 		StringBundler sb = new StringBundler(valuesJSONArray.length() * 2);
 

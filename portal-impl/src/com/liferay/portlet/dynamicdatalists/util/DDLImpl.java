@@ -366,22 +366,22 @@ public class DDLImpl implements DDL {
 
 	public void sendRecordFileUpload(
 			HttpServletRequest request, HttpServletResponse response,
-			DDLRecord record, String fieldName)
+			DDLRecord record, String fieldName, int valueIndex)
 		throws Exception {
 
 		Field field = record.getField(fieldName);
 
-		DDMUtil.sendFieldFile(request, response, field);
+		DDMUtil.sendFieldFile(request, response, field, valueIndex);
 	}
 
 	public void sendRecordFileUpload(
 			HttpServletRequest request, HttpServletResponse response,
-			long recordId, String fieldName)
+			long recordId, String fieldName, int valueIndex)
 		throws Exception {
 
 		DDLRecord record = DDLRecordServiceUtil.getRecord(recordId);
 
-		sendRecordFileUpload(request, response, record, fieldName);
+		sendRecordFileUpload(request, response, record, fieldName, valueIndex);
 	}
 
 	public DDLRecord updateRecord(
@@ -458,7 +458,7 @@ public class DDLImpl implements DDL {
 			recordId, recordSetId, mergeFields, true, serviceContext);
 	}
 
-	public String uploadRecordFieldFile(
+	public void uploadRecordFieldFile(
 			DDLRecord record, String fieldName, ServiceContext serviceContext)
 		throws Exception {
 
@@ -468,7 +468,7 @@ public class DDLImpl implements DDL {
 
 		DDLRecordVersion recordVersion = record.getLatestRecordVersion();
 
-		return DDMUtil.uploadFieldFile(
+		DDMUtil.uploadFieldFile(
 			ddmStructure.getStructureId(), recordVersion.getDDMStorageId(),
 			record, fieldName, serviceContext);
 	}

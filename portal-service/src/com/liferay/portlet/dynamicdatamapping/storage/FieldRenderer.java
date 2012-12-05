@@ -18,9 +18,12 @@ import java.util.Locale;
 
 /**
  * @author Bruno Basto
+ * @author Marcellus Tavares
  */
 public interface FieldRenderer {
 
 	public String render(Field field, Locale locale);
+
+	public String render(Field field, Locale locale, int valueIndex);
 
 }

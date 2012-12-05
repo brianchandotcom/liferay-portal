@@ -16,12 +16,17 @@ package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -32,14 +37,25 @@ public class Field implements Serializable {
 	public Field() {
 	}
 
+	public Field(long ddmStructureId, String name, List<Serializable> values) {
+		_ddmStructureId = ddmStructureId;
+		_name = name;
+		_values = values;
+	}
+
 	public Field(long ddmStructureId, String name, Serializable value) {
 		_ddmStructureId = ddmStructureId;
 		_name = name;
-		_value = value;
+
+		setValue(value);
 	}
 
 	public Field(String name, Serializable value) {
 		this(0, name, value);
+	}
+
+	public void addValue(Serializable value) {
+		_values.add(value);
 	}
 
 	@Override
@@ -52,7 +68,7 @@ public class Field implements Serializable {
 
 		if ((_ddmStructureId == field._ddmStructureId) &&
 			Validator.equals(_name, field._name) &&
-			Validator.equals(_value, field._value)) {
+			Validator.equals(_values, field._values)) {
 
 			return true;
 		}
@@ -81,18 +97,17 @@ public class Field implements Serializable {
 	public String getRenderedValue(Locale locale)
 		throws PortalException, SystemException {
 
-		DDMStructure ddmStructure = getDDMStructure();
+		FieldRenderer fieldRenderer = getFieldRenderer();
 
-		String dataType = null;
+		return fieldRenderer.render(this, locale);
+	}
 
-		if (ddmStructure != null) {
-			dataType = getDataType();
-		}
+	public String getRenderedValue(Locale locale, int valueIndex)
+		throws PortalException, SystemException {
 
-		FieldRenderer fieldrenderer = FieldRendererFactory.getFieldRenderer(
-			dataType);
+		FieldRenderer fieldRenderer = getFieldRenderer();
 
-		return fieldrenderer.render(this, locale);
+		return fieldRenderer.render(this, locale, valueIndex);
 	}
 
 	public String getType() throws PortalException, SystemException {
@@ -102,7 +117,44 @@ public class Field implements Serializable {
 	}
 
 	public Serializable getValue() {
-		return _value;
+		if (_values.isEmpty()) {
+			return null;
+		}
+
+		try {
+			DDMStructure ddmStructure = getDDMStructure();
+
+			if (ddmStructure == null) {
+				return _values.get(0);
+			}
+
+			boolean repeatable = isRepeatable();
+
+			if (repeatable) {
+				return FieldConstants.getSerializable(getType(), _values);
+			}
+
+			return _values.get(0);
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
+		return null;
+	}
+
+	public Serializable getValue(int index) {
+		return _values.get(index);
+	}
+
+	public List<Serializable> getValues() {
+		return _values;
+	}
+
+	public boolean isRepeatable() throws PortalException, SystemException {
+		DDMStructure ddmStructure = getDDMStructure();
+
+		return ddmStructure.isFieldRepeatable(_name);
 	}
 
 	public void setDDMStructureId(long ddmStructureId) {
@@ -114,11 +166,38 @@ public class Field implements Serializable {
 	}
 
 	public void setValue(Serializable value) {
-		_value = value;
+		Class<?> clazz = value.getClass();
+
+		if (clazz.isArray()) {
+			_values = ListUtil.fromArray((Serializable[])value);
+		}
+		else {
+			_values.add(value);
+		}
 	}
+
+	public void setValues(List<Serializable> values) {
+		_values = values;
+	}
+
+	protected FieldRenderer getFieldRenderer()
+		throws PortalException, SystemException {
+
+		DDMStructure ddmStructure = getDDMStructure();
+
+		String dataType = null;
+
+		if (ddmStructure != null) {
+			dataType = getDataType();
+		}
+
+		return FieldRendererFactory.getFieldRenderer(dataType);
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(Field.class);
 
 	private long _ddmStructureId;
 	private String _name;
-	private Serializable _value;
+	private List<Serializable> _values = new ArrayList<Serializable>();
 
 }

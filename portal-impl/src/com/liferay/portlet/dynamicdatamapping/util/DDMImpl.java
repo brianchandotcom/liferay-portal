@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -56,7 +57,9 @@ import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateModifiedDa
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,6 +69,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Eduardo Lundgren
  * @author Brian Wing Shun Chan
  * @author Eduardo Garcia
+ * @author Marcellus Tavares
  */
 public class DDMImpl implements DDM {
 
@@ -93,76 +97,26 @@ public class DDMImpl implements DDM {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
-			ddmStructureId);
+		DDMStructure ddmStructure = getDDMStructure(
+			ddmStructureId, ddmTemplateId);
 
-		try {
-			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-				ddmTemplateId);
-
-			// Clone ddmStructure to make sure changes are never persisted
-
-			ddmStructure = (DDMStructure)ddmStructure.clone();
-
-			ddmStructure.setXsd(ddmTemplate.getScript());
-		}
-		catch (NoSuchTemplateException nste) {
-		}
+		JSONObject repeatabaleFields = getRepeatableFieldsMapJSON(
+			serviceContext);
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 
 		Fields fields = new Fields();
 
 		for (String fieldName : fieldNames) {
-			Field field = new Field();
+			List<Serializable> fieldValues = getFieldValues(
+				ddmStructure, repeatabaleFields, fieldName, fieldNamespace,
+				serviceContext);
 
-			field.setName(fieldName);
-
-			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
-			String fieldType = ddmStructure.getFieldType(fieldName);
-			Serializable fieldValue = serviceContext.getAttribute(
-				fieldNamespace + fieldName);
-
-			if (fieldDataType.equals(FieldConstants.DATE)) {
-				int fieldValueMonth = GetterUtil.getInteger(
-					serviceContext.getAttribute(
-						fieldNamespace + fieldName + "Month"));
-				int fieldValueYear = GetterUtil.getInteger(
-					serviceContext.getAttribute(
-						fieldNamespace + fieldName + "Year"));
-				int fieldValueDay = GetterUtil.getInteger(
-					serviceContext.getAttribute(
-						fieldNamespace + fieldName + "Day"));
-
-				Date fieldValueDate = PortalUtil.getDate(
-					fieldValueMonth, fieldValueDay, fieldValueYear);
-
-				if (fieldValueDate != null) {
-					fieldValue = String.valueOf(fieldValueDate.getTime());
-				}
-			}
-
-			if ((fieldValue == null) ||
-				fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
-
+			if (fieldValues.isEmpty()) {
 				continue;
 			}
 
-			if (fieldType.equals(DDMImpl.TYPE_RADIO) ||
-				fieldType.equals(DDMImpl.TYPE_SELECT)) {
-
-				if (fieldValue instanceof String) {
-					fieldValue = new String[] {String.valueOf(fieldValue)};
-				}
-
-				fieldValue = JSONFactoryUtil.serialize(fieldValue);
-			}
-
-			Serializable fieldValueSerializable =
-				FieldConstants.getSerializable(
-					fieldDataType, GetterUtil.getString(fieldValue));
-
-			field.setValue(fieldValueSerializable);
+			Field field = new Field(ddmStructureId, fieldName, fieldValues);
 
 			fields.put(field);
 		}
@@ -271,7 +225,7 @@ public class DDMImpl implements DDM {
 
 	public void sendFieldFile(
 			HttpServletRequest request, HttpServletResponse response,
-			Field field)
+			Field field, int valueIndex)
 		throws Exception {
 
 		if (field == null) {
@@ -280,7 +234,7 @@ public class DDMImpl implements DDM {
 
 		DDMStructure structure = field.getDDMStructure();
 
-		Serializable fieldValue = field.getValue();
+		Serializable fieldValue = field.getValue(valueIndex);
 
 		JSONObject fileJSONObject = JSONFactoryUtil.createJSONObject(
 			String.valueOf(fieldValue));
@@ -298,17 +252,17 @@ public class DDMImpl implements DDM {
 			request, response, fileName, is, contentLength, contentType);
 	}
 
-	public String uploadFieldFile(
+	public void uploadFieldFile(
 			long structureId, long storageId, BaseModel<?> baseModel,
 			String fieldName, ServiceContext serviceContext)
 		throws Exception {
 
-		return uploadFieldFile(
+		uploadFieldFile(
 			structureId, storageId, baseModel, fieldName, StringPool.BLANK,
 			serviceContext);
 	}
 
-	public String uploadFieldFile(
+	public void uploadFieldFile(
 			long structureId, long storageId, BaseModel<?> baseModel,
 			String fieldName, String fieldNamespace,
 			ServiceContext serviceContext)
@@ -317,54 +271,187 @@ public class DDMImpl implements DDM {
 		HttpServletRequest request = serviceContext.getRequest();
 
 		if (!(request instanceof UploadRequest)) {
-			return StringPool.BLANK;
+			return;
 		}
+
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.getDDMStructure(structureId);
+
+		JSONObject repeatabaleFields = getRepeatableFieldsMapJSON(
+			serviceContext);
+
+		List<String> fieldNames = getFieldNames(
+			ddmStructure, fieldNamespace, fieldName, repeatabaleFields);
 
 		UploadRequest uploadRequest = (UploadRequest)request;
 
-		String fileName = uploadRequest.getFileName(fieldNamespace + fieldName);
-
-		String fieldValue = StringPool.BLANK;
+		Fields fields = StorageEngineUtil.getFields(storageId);
 
 		InputStream inputStream = null;
 
-		Fields fields = StorageEngineUtil.getFields(storageId);
+		List<Serializable> fieldValues = new ArrayList<Serializable>();
+
+		for (String fieldNameValue : fieldNames) {
+			try {
+				String fileName = uploadRequest.getFileName(fieldNameValue);
+
+				inputStream = uploadRequest.getFileAsStream(fieldName, true);
+
+				if (inputStream != null) {
+					String filePath = storeFieldFile(
+						baseModel, fieldName, inputStream, serviceContext);
+
+					JSONObject recordFileJSONObject =
+						JSONFactoryUtil.createJSONObject();
+
+					recordFileJSONObject.put("name", fileName);
+					recordFileJSONObject.put("path", filePath);
+					recordFileJSONObject.put(
+						"className", baseModel.getModelClassName());
+					recordFileJSONObject.put(
+						"classPK",
+						String.valueOf(baseModel.getPrimaryKeyObj()));
+
+					String fieldValue = recordFileJSONObject.toString();
+
+					fieldValues.add(fieldValue);
+				}
+				else if (fields.contains(fieldName)) {
+					continue;
+				}
+			}
+			finally {
+				StreamUtil.cleanUp(inputStream);
+			}
+		}
+
+		Field field = new Field(structureId, fieldName, fieldValues);
+
+		fields.put(field);
+
+		StorageEngineUtil.update(storageId, fields, true, serviceContext);
+	}
+
+	protected DDMStructure getDDMStructure(
+			long ddmStructureId, long ddmTemplateId)
+		throws PortalException, SystemException {
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStructureId);
 
 		try {
-			inputStream = uploadRequest.getFileAsStream(
-				fieldNamespace + fieldName, true);
+			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+				ddmTemplateId);
 
-			if (inputStream != null) {
-				String filePath = storeFieldFile(
-					baseModel, fieldName, inputStream, serviceContext);
+			// Clone ddmStructure to make sure changes are never persisted
 
-				JSONObject recordFileJSONObject =
-					JSONFactoryUtil.createJSONObject();
+			ddmStructure = (DDMStructure)ddmStructure.clone();
 
-				recordFileJSONObject.put("name", fileName);
-				recordFileJSONObject.put("path", filePath);
-				recordFileJSONObject.put(
-					"className", baseModel.getModelClassName());
-				recordFileJSONObject.put(
-					"classPK", String.valueOf(baseModel.getPrimaryKeyObj()));
-
-				fieldValue = recordFileJSONObject.toString();
-			}
-			else if (fields.contains(fieldName)) {
-				return StringPool.BLANK;
-			}
-
-			Field field = new Field(structureId, fieldName, fieldValue);
-
-			fields.put(field);
-
-			StorageEngineUtil.update(storageId, fields, true, serviceContext);
+			ddmStructure.setXsd(ddmTemplate.getScript());
 		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
+		catch (NoSuchTemplateException nste) {
 		}
 
-		return fieldValue;
+		return ddmStructure;
+	}
+
+	protected List<String> getFieldNames(
+			DDMStructure ddmStructure, String fieldNamespace, String fieldName,
+			JSONObject repeatabaleFields)
+		throws PortalException, SystemException {
+
+		List<String> fieldNames = new ArrayList<String>();
+
+		fieldNames.add(fieldNamespace + fieldName);
+
+		boolean repeatable = ddmStructure.isFieldRepeatable(fieldName);
+
+		if (repeatable && (repeatabaleFields != null)) {
+			JSONArray jsonArray = repeatabaleFields.getJSONArray(
+				fieldNamespace + fieldName);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				fieldNames.add(
+					fieldNamespace + fieldName + jsonArray.getString(i));
+			}
+		}
+
+		return fieldNames;
+	}
+
+	protected List<Serializable> getFieldValues(
+			DDMStructure ddmStructure, JSONObject repeatabaleFields,
+			String fieldName, String fieldNamespace,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		String fieldDataType = ddmStructure.getFieldDataType(fieldName);
+		String fieldType = ddmStructure.getFieldType(fieldName);
+
+		List<String> fieldNames = getFieldNames(
+			ddmStructure, fieldNamespace, fieldName, repeatabaleFields);
+
+		List<Serializable> fieldValues = new ArrayList<Serializable>(
+			fieldNames.size());
+
+		for (String fieldNameValue : fieldNames) {
+			Serializable fieldValue = serviceContext.getAttribute(
+					fieldNameValue);
+
+			if (fieldDataType.equals(FieldConstants.DATE)) {
+				int fieldValueMonth = GetterUtil.getInteger(
+					serviceContext.getAttribute(fieldNameValue + "Month"));
+				int fieldValueYear = GetterUtil.getInteger(
+					serviceContext.getAttribute(fieldNameValue + "Year"));
+				int fieldValueDay = GetterUtil.getInteger(
+					serviceContext.getAttribute(fieldNameValue + "Day"));
+
+				Date fieldValueDate = PortalUtil.getDate(
+					fieldValueMonth, fieldValueDay, fieldValueYear);
+
+				if (fieldValueDate != null) {
+					fieldValue = String.valueOf(fieldValueDate.getTime());
+				}
+			}
+
+			if ((fieldValue == null) ||
+				fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
+
+				return null;
+			}
+
+			if (fieldType.equals(DDMImpl.TYPE_RADIO) ||
+				fieldType.equals(DDMImpl.TYPE_SELECT)) {
+
+				if (fieldValue instanceof String) {
+					fieldValue = new String[] {String.valueOf(fieldValue)};
+				}
+
+				fieldValue = JSONFactoryUtil.serialize(fieldValue);
+			}
+
+			Serializable fieldValueSerializable =
+				FieldConstants.getSerializable(
+					fieldDataType, GetterUtil.getString(fieldValue));
+
+			fieldValues.add(fieldValueSerializable);
+		}
+
+		return fieldValues;
+	}
+
+	protected JSONObject getRepeatableFieldsMapJSON(
+		ServiceContext serviceContext) {
+
+		try {
+			String repeatabaleFieldsMap = GetterUtil.getString(
+				serviceContext.getAttribute("__repeatabaleFieldsMap"));
+
+			return JSONFactoryUtil.createJSONObject(repeatabaleFieldsMap);
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	protected String storeFieldFile(

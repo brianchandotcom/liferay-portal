@@ -179,15 +179,6 @@ if (Validator.isNotNull(structureAvailableFields)) {
 							<aui:option label="create" />
 							<aui:option label="edit" />
 						</aui:select>
-
-						<aui:script use="aui-base,event-valuechange">
-							A.one('#<portlet:namespace />mode').on(
-								'valueChange',
-								function(event) {
-									<portlet:namespace />toggleMode(event.newVal);
-								}
-							);
-						</aui:script>
 					</c:when>
 					<c:otherwise>
 						<div id="<portlet:namespace />smallImageContainer">
@@ -264,7 +255,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 					item.set('hiddenAttributes', hiddenAttributes);
 				},
-				['liferay-portlet-dynamic-data-mapping-init']
+				['aui-base']
 			);
 
 			Liferay.provide(
@@ -281,10 +272,32 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 					A.Array.each(window.<portlet:namespace />formBuilder.get('availableFields'), A.rbind(<portlet:namespace />setFieldsHiddenAttributes, this, mode));
 				},
-				['liferay-portlet-dynamic-data-mapping-init']
+				['aui-base']
 			);
 
-			<portlet:namespace />toggleMode('<%= HtmlUtil.escape(mode) %>');
+			Liferay.provide(
+				window,
+				'<portlet:namespace />attachValueChange',
+				function(mode) {
+					var A = AUI();
+
+					A.one('#<portlet:namespace />mode').on(
+						'valueChange',
+						function(event) {
+							<portlet:namespace />toggleMode(event.newVal);
+						}
+					);
+				},
+				['event-valuechange']
+			);
+
+			Liferay.on(
+				'<portlet:namespace />formBuilderLoaded',
+				function(event) {
+					<portlet:namespace />attachValueChange();
+					<portlet:namespace />toggleMode('<%= HtmlUtil.escape(mode) %>');
+				}
+			);
 		</aui:script>
 	</c:when>
 	<c:otherwise>

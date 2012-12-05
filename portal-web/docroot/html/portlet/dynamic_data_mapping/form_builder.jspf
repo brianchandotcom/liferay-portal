@@ -160,52 +160,50 @@ for (int i = 0; i < locales.length; i++) {
 }
 %>
 
-<aui:script>
-	AUI.add(
-		'liferay-portlet-dynamic-data-mapping-init',
-		function(A) {
-			var availableFields;
+<aui:script use="aui-datepicker,json,liferay-portlet-dynamic-data-lists,liferay-portlet-dynamic-data-mapping,liferay-portlet-dynamic-data-mapping-custom-fields">
+	var availableFields;
 
-			<c:if test="<%= Validator.isNotNull(scopeAvailableFields) %>">
-				availableFields = A.Object.getValue(window, '<%= HtmlUtil.escapeJS(scopeAvailableFields) %>'.split('.'));
+	<c:if test="<%= Validator.isNotNull(scopeAvailableFields) %>">
+		availableFields = A.Object.getValue(window, '<%= HtmlUtil.escapeJS(scopeAvailableFields) %>'.split('.'));
 
-				if (A.Lang.isFunction(availableFields)) {
-					availableFields = availableFields(A, Liferay.FormBuilder);
-				}
+		if (A.Lang.isFunction(availableFields)) {
+			availableFields = availableFields(A, Liferay.FormBuilder);
+		}
+	</c:if>
+
+	window.<portlet:namespace />formBuilder = new Liferay.FormBuilder(
+		{
+			availableFields: availableFields,
+			boundingBox: '#<portlet:namespace />formBuilder',
+			enableEditing: false,
+
+			<c:if test="<%= scriptJSONArray != null %>">
+				fields: <%= scriptJSONArray.toString() %>,
 			</c:if>
 
-			window.<portlet:namespace />formBuilder = new Liferay.FormBuilder(
-				{
-					availableFields: availableFields,
-					boundingBox: '#<portlet:namespace />formBuilder',
-					enableEditing: false,
+			portletNamespace: '<portlet:namespace />',
+			portletResourceNamespace: '<%= HtmlUtil.escapeJS(portletResourceNamespace) %>',
 
-					<c:if test="<%= scriptJSONArray != null %>">
-						fields: <%= scriptJSONArray.toString() %>,
-					</c:if>
+			translationManager: {
 
-					portletNamespace: '<portlet:namespace />',
-					portletResourceNamespace: '<%= HtmlUtil.escapeJS(portletResourceNamespace) %>',
+				<c:if test="<%= availableLocalesJSONArray.length() > 0 %>">
+					availableLocales: <%= availableLocalesJSONArray.toString() %>,
+				</c:if>
 
-					translationManager: {
+				boundingBox: '#<portlet:namespace />translationManager',
+				defaultLocale: '<%= defaultLanguageId %>',
+				localesMap: <%= localesMapJSONObject.toString() %>,
+				srcNode: '#<portlet:namespace />translationManager .lfr-translation-manager-content'
+			},
 
-						<c:if test="<%= availableLocalesJSONArray.length() > 0 %>">
-							availableLocales: <%= availableLocalesJSONArray.toString() %>,
-						</c:if>
+			srcNode: '#<portlet:namespace />formBuilderContent'
+		}
+	).render();
 
-						boundingBox: '#<portlet:namespace />translationManager',
-						defaultLocale: '<%= defaultLanguageId %>',
-						localesMap: <%= localesMapJSONObject.toString() %>,
-						srcNode: '#<portlet:namespace />translationManager .lfr-translation-manager-content'
-					},
-
-					srcNode: '#<portlet:namespace />formBuilderContent'
-				}
-			).render();
-		},
-		'',
+	Liferay.fire(
+		'<portlet:namespace />formBuilderLoaded',
 		{
-			requires: ['aui-datepicker', 'json', 'liferay-portlet-dynamic-data-lists', 'liferay-portlet-dynamic-data-mapping', 'liferay-portlet-dynamic-data-mapping-custom-fields']
+			formBuilder: window.<portlet:namespace />formBuilder
 		}
 	);
 </aui:script>

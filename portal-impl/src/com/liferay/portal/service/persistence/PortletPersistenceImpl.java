@@ -900,13 +900,64 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(Portlet portlet) {
+		if (portlet.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(portlet.getCompanyId()),
+					
+					portlet.getPortletId()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_P, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P, args, portlet);
+		}
+		else {
+			PortletModelImpl portletModelImpl = (PortletModelImpl)portlet;
+
+			if ((portletModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_P.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(portlet.getCompanyId()),
+						
+						portlet.getPortletId()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_P, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P, args,
+					portlet);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(Portlet portlet) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
-			new Object[] {
+		PortletModelImpl portletModelImpl = (PortletModelImpl)portlet;
+
+		Object[] args = new Object[] {
 				Long.valueOf(portlet.getCompanyId()),
 				
-			portlet.getPortletId()
-			});
+				portlet.getPortletId()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P, args);
+
+		if ((portletModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_P.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(portletModelImpl.getOriginalCompanyId()),
+					
+					portletModelImpl.getOriginalPortletId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P, args);
+		}
 	}
 
 	/**
@@ -1071,35 +1122,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		EntityCacheUtil.putResult(PortletModelImpl.ENTITY_CACHE_ENABLED,
 			PortletImpl.class, portlet.getPrimaryKey(), portlet);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P,
-				new Object[] {
-					Long.valueOf(portlet.getCompanyId()),
-					
-				portlet.getPortletId()
-				}, portlet);
-		}
-		else {
-			if ((portletModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_P.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(portletModelImpl.getOriginalCompanyId()),
-						
-						portletModelImpl.getOriginalPortletId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P,
-					new Object[] {
-						Long.valueOf(portlet.getCompanyId()),
-						
-					portlet.getPortletId()
-					}, portlet);
-			}
-		}
+		clearUniqueFindersCache(portlet);
+		cacheUniqueFindersCache(portlet);
 
 		return portlet;
 	}

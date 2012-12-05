@@ -964,12 +964,61 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		}
 	}
 
+	protected void cacheUniqueFindersCache(ServiceComponent serviceComponent) {
+		if (serviceComponent.isNew()) {
+			Object[] args = new Object[] {
+					serviceComponent.getBuildNamespace(),
+					Long.valueOf(serviceComponent.getBuildNumber())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_BNS_BNU, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BNS_BNU, args,
+				serviceComponent);
+		}
+		else {
+			ServiceComponentModelImpl serviceComponentModelImpl = (ServiceComponentModelImpl)serviceComponent;
+
+			if ((serviceComponentModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_BNS_BNU.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						serviceComponent.getBuildNamespace(),
+						Long.valueOf(serviceComponent.getBuildNumber())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_BNS_BNU, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BNS_BNU, args,
+					serviceComponent);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(ServiceComponent serviceComponent) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BNS_BNU,
-			new Object[] {
+		ServiceComponentModelImpl serviceComponentModelImpl = (ServiceComponentModelImpl)serviceComponent;
+
+		Object[] args = new Object[] {
 				serviceComponent.getBuildNamespace(),
 				Long.valueOf(serviceComponent.getBuildNumber())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BNS_BNU, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BNS_BNU, args);
+
+		if ((serviceComponentModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_BNS_BNU.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					serviceComponentModelImpl.getOriginalBuildNamespace(),
+					Long.valueOf(serviceComponentModelImpl.getOriginalBuildNumber())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BNS_BNU, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BNS_BNU, args);
+		}
 	}
 
 	/**
@@ -1138,32 +1187,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			ServiceComponentImpl.class, serviceComponent.getPrimaryKey(),
 			serviceComponent);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BNS_BNU,
-				new Object[] {
-					serviceComponent.getBuildNamespace(),
-					Long.valueOf(serviceComponent.getBuildNumber())
-				}, serviceComponent);
-		}
-		else {
-			if ((serviceComponentModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_BNS_BNU.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						serviceComponentModelImpl.getOriginalBuildNamespace(),
-						Long.valueOf(serviceComponentModelImpl.getOriginalBuildNumber())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BNS_BNU, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BNS_BNU, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BNS_BNU,
-					new Object[] {
-						serviceComponent.getBuildNamespace(),
-						Long.valueOf(serviceComponent.getBuildNumber())
-					}, serviceComponent);
-			}
-		}
+		clearUniqueFindersCache(serviceComponent);
+		cacheUniqueFindersCache(serviceComponent);
 
 		return serviceComponent;
 	}

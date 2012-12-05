@@ -406,9 +406,53 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(Release release) {
+		if (release.isNew()) {
+			Object[] args = new Object[] { release.getServletContextName() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
+				args, Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
+				args, release);
+		}
+		else {
+			ReleaseModelImpl releaseModelImpl = (ReleaseModelImpl)release;
+
+			if ((releaseModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { release.getServletContextName() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
+					args, Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
+					args, release);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(Release release) {
+		ReleaseModelImpl releaseModelImpl = (ReleaseModelImpl)release;
+
+		Object[] args = new Object[] { release.getServletContextName() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
+			args);
+
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
-			new Object[] { release.getServletContextName() });
+			args);
+
+		if ((releaseModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME.getColumnBitmask()) != 0) {
+			args = new Object[] { releaseModelImpl.getOriginalServletContextName() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
+				args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
+				args);
+		}
 	}
 
 	/**
@@ -550,27 +594,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		EntityCacheUtil.putResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
 			ReleaseImpl.class, release.getPrimaryKey(), release);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
-				new Object[] { release.getServletContextName() }, release);
-		}
-		else {
-			if ((releaseModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						releaseModelImpl.getOriginalServletContextName()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
-					args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
-					args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
-					new Object[] { release.getServletContextName() }, release);
-			}
-		}
+		clearUniqueFindersCache(release);
+		cacheUniqueFindersCache(release);
 
 		return release;
 	}

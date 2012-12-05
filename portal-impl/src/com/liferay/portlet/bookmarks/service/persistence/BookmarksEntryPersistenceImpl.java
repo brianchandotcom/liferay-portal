@@ -4935,12 +4935,61 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		}
 	}
 
+	protected void cacheUniqueFindersCache(BookmarksEntry bookmarksEntry) {
+		if (bookmarksEntry.isNew()) {
+			Object[] args = new Object[] {
+					bookmarksEntry.getUuid(),
+					Long.valueOf(bookmarksEntry.getGroupId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				bookmarksEntry);
+		}
+		else {
+			BookmarksEntryModelImpl bookmarksEntryModelImpl = (BookmarksEntryModelImpl)bookmarksEntry;
+
+			if ((bookmarksEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						bookmarksEntry.getUuid(),
+						Long.valueOf(bookmarksEntry.getGroupId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+					bookmarksEntry);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(BookmarksEntry bookmarksEntry) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
+		BookmarksEntryModelImpl bookmarksEntryModelImpl = (BookmarksEntryModelImpl)bookmarksEntry;
+
+		Object[] args = new Object[] {
 				bookmarksEntry.getUuid(),
 				Long.valueOf(bookmarksEntry.getGroupId())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+		if ((bookmarksEntryModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					bookmarksEntryModelImpl.getOriginalUuid(),
+					Long.valueOf(bookmarksEntryModelImpl.getOriginalGroupId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 	}
 
 	/**
@@ -5218,32 +5267,8 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			BookmarksEntryImpl.class, bookmarksEntry.getPrimaryKey(),
 			bookmarksEntry);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					bookmarksEntry.getUuid(),
-					Long.valueOf(bookmarksEntry.getGroupId())
-				}, bookmarksEntry);
-		}
-		else {
-			if ((bookmarksEntryModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						bookmarksEntryModelImpl.getOriginalUuid(),
-						Long.valueOf(bookmarksEntryModelImpl.getOriginalGroupId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-					new Object[] {
-						bookmarksEntry.getUuid(),
-						Long.valueOf(bookmarksEntry.getGroupId())
-					}, bookmarksEntry);
-			}
-		}
+		clearUniqueFindersCache(bookmarksEntry);
+		cacheUniqueFindersCache(bookmarksEntry);
 
 		return bookmarksEntry;
 	}

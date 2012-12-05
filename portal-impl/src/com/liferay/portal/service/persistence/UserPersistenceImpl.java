@@ -6327,43 +6327,358 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(User user) {
+		if (user.isNew()) {
+			Object[] args = new Object[] { Long.valueOf(user.getContactId()) };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CONTACTID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CONTACTID, args, user);
+
+			args = new Object[] { Long.valueOf(user.getPortraitId()) };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PORTRAITID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PORTRAITID, args,
+				user);
+
+			args = new Object[] {
+					Long.valueOf(user.getCompanyId()),
+					Long.valueOf(user.getUserId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U, args, user);
+
+			args = new Object[] {
+					Long.valueOf(user.getCompanyId()),
+					Boolean.valueOf(user.getDefaultUser())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_DU, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_DU, args, user);
+
+			args = new Object[] {
+					Long.valueOf(user.getCompanyId()),
+					
+					user.getScreenName()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_SN, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_SN, args, user);
+
+			args = new Object[] {
+					Long.valueOf(user.getCompanyId()),
+					
+					user.getEmailAddress()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_EA, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_EA, args, user);
+
+			args = new Object[] {
+					Long.valueOf(user.getCompanyId()),
+					Long.valueOf(user.getFacebookId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_FID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_FID, args, user);
+
+			args = new Object[] {
+					Long.valueOf(user.getCompanyId()),
+					
+					user.getOpenId()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_O, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_O, args, user);
+		}
+		else {
+			UserModelImpl userModelImpl = (UserModelImpl)user;
+
+			if ((userModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_CONTACTID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { Long.valueOf(user.getContactId()) };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CONTACTID, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CONTACTID, args,
+					user);
+			}
+
+			if ((userModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_PORTRAITID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { Long.valueOf(user.getPortraitId()) };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PORTRAITID,
+					args, Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PORTRAITID,
+					args, user);
+			}
+
+			if ((userModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_U.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(user.getCompanyId()),
+						Long.valueOf(user.getUserId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U, args, user);
+			}
+
+			if ((userModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_DU.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(user.getCompanyId()),
+						Boolean.valueOf(user.getDefaultUser())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_DU, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_DU, args, user);
+			}
+
+			if ((userModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_SN.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(user.getCompanyId()),
+						
+						user.getScreenName()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_SN, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_SN, args, user);
+			}
+
+			if ((userModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_EA.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(user.getCompanyId()),
+						
+						user.getEmailAddress()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_EA, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_EA, args, user);
+			}
+
+			if ((userModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_FID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(user.getCompanyId()),
+						Long.valueOf(user.getFacebookId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_FID, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_FID, args, user);
+			}
+
+			if ((userModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_O.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(user.getCompanyId()),
+						
+						user.getOpenId()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_O, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_O, args, user);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(User user) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CONTACTID,
-			new Object[] { Long.valueOf(user.getContactId()) });
+		UserModelImpl userModelImpl = (UserModelImpl)user;
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PORTRAITID,
-			new Object[] { Long.valueOf(user.getPortraitId()) });
+		Object[] args = new Object[] { Long.valueOf(user.getContactId()) };
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U,
-			new Object[] {
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CONTACTID, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CONTACTID, args);
+
+		if ((userModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_CONTACTID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(userModelImpl.getOriginalContactId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CONTACTID, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CONTACTID, args);
+		}
+
+		args = new Object[] { Long.valueOf(user.getPortraitId()) };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PORTRAITID, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PORTRAITID, args);
+
+		if ((userModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_PORTRAITID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(userModelImpl.getOriginalPortraitId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PORTRAITID, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PORTRAITID, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(user.getCompanyId()),
 				Long.valueOf(user.getUserId())
-			});
+			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_DU,
-			new Object[] {
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U, args);
+
+		if ((userModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_U.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(userModelImpl.getOriginalCompanyId()),
+					Long.valueOf(userModelImpl.getOriginalUserId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(user.getCompanyId()),
 				Boolean.valueOf(user.getDefaultUser())
-			});
+			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_SN,
-			new Object[] { Long.valueOf(user.getCompanyId()), user.getScreenName() });
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_DU, args);
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_EA,
-			new Object[] {
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_DU, args);
+
+		if ((userModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_DU.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(userModelImpl.getOriginalCompanyId()),
+					Boolean.valueOf(userModelImpl.getOriginalDefaultUser())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_DU, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_DU, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(user.getCompanyId()),
 				
-			user.getEmailAddress()
-			});
+				user.getScreenName()
+			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_FID,
-			new Object[] {
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_SN, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_SN, args);
+
+		if ((userModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_SN.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(userModelImpl.getOriginalCompanyId()),
+					
+					userModelImpl.getOriginalScreenName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_SN, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_SN, args);
+		}
+
+		args = new Object[] {
+				Long.valueOf(user.getCompanyId()),
+				
+				user.getEmailAddress()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_EA, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_EA, args);
+
+		if ((userModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_EA.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(userModelImpl.getOriginalCompanyId()),
+					
+					userModelImpl.getOriginalEmailAddress()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_EA, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_EA, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(user.getCompanyId()),
 				Long.valueOf(user.getFacebookId())
-			});
+			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_O,
-			new Object[] { Long.valueOf(user.getCompanyId()), user.getOpenId() });
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_FID, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_FID, args);
+
+		if ((userModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_FID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(userModelImpl.getOriginalCompanyId()),
+					Long.valueOf(userModelImpl.getOriginalFacebookId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_FID, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_FID, args);
+		}
+
+		args = new Object[] { Long.valueOf(user.getCompanyId()), user.getOpenId() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_O, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_O, args);
+
+		if ((userModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_O.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(userModelImpl.getOriginalCompanyId()),
+					
+					userModelImpl.getOriginalOpenId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_O, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_O, args);
+		}
 	}
 
 	/**
@@ -6733,196 +7048,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		EntityCacheUtil.putResult(UserModelImpl.ENTITY_CACHE_ENABLED,
 			UserImpl.class, user.getPrimaryKey(), user);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CONTACTID,
-				new Object[] { Long.valueOf(user.getContactId()) }, user);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PORTRAITID,
-				new Object[] { Long.valueOf(user.getPortraitId()) }, user);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U,
-				new Object[] {
-					Long.valueOf(user.getCompanyId()),
-					Long.valueOf(user.getUserId())
-				}, user);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_DU,
-				new Object[] {
-					Long.valueOf(user.getCompanyId()),
-					Boolean.valueOf(user.getDefaultUser())
-				}, user);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_SN,
-				new Object[] {
-					Long.valueOf(user.getCompanyId()),
-					
-				user.getScreenName()
-				}, user);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_EA,
-				new Object[] {
-					Long.valueOf(user.getCompanyId()),
-					
-				user.getEmailAddress()
-				}, user);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_FID,
-				new Object[] {
-					Long.valueOf(user.getCompanyId()),
-					Long.valueOf(user.getFacebookId())
-				}, user);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_O,
-				new Object[] { Long.valueOf(user.getCompanyId()), user.getOpenId() },
-				user);
-		}
-		else {
-			if ((userModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_CONTACTID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(userModelImpl.getOriginalContactId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CONTACTID,
-					args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CONTACTID,
-					args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CONTACTID,
-					new Object[] { Long.valueOf(user.getContactId()) }, user);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_PORTRAITID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(userModelImpl.getOriginalPortraitId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PORTRAITID,
-					args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PORTRAITID,
-					args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PORTRAITID,
-					new Object[] { Long.valueOf(user.getPortraitId()) }, user);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_U.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(userModelImpl.getOriginalCompanyId()),
-						Long.valueOf(userModelImpl.getOriginalUserId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U,
-					new Object[] {
-						Long.valueOf(user.getCompanyId()),
-						Long.valueOf(user.getUserId())
-					}, user);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_DU.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(userModelImpl.getOriginalCompanyId()),
-						Boolean.valueOf(userModelImpl.getOriginalDefaultUser())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_DU, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_DU, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_DU,
-					new Object[] {
-						Long.valueOf(user.getCompanyId()),
-						Boolean.valueOf(user.getDefaultUser())
-					}, user);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_SN.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(userModelImpl.getOriginalCompanyId()),
-						
-						userModelImpl.getOriginalScreenName()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_SN, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_SN, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_SN,
-					new Object[] {
-						Long.valueOf(user.getCompanyId()),
-						
-					user.getScreenName()
-					}, user);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_EA.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(userModelImpl.getOriginalCompanyId()),
-						
-						userModelImpl.getOriginalEmailAddress()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_EA, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_EA, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_EA,
-					new Object[] {
-						Long.valueOf(user.getCompanyId()),
-						
-					user.getEmailAddress()
-					}, user);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_FID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(userModelImpl.getOriginalCompanyId()),
-						Long.valueOf(userModelImpl.getOriginalFacebookId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_FID, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_FID, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_FID,
-					new Object[] {
-						Long.valueOf(user.getCompanyId()),
-						Long.valueOf(user.getFacebookId())
-					}, user);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_O.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(userModelImpl.getOriginalCompanyId()),
-						
-						userModelImpl.getOriginalOpenId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_O, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_O, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_O,
-					new Object[] {
-						Long.valueOf(user.getCompanyId()),
-						
-					user.getOpenId()
-					}, user);
-			}
-		}
+		clearUniqueFindersCache(user);
+		cacheUniqueFindersCache(user);
 
 		return user;
 	}

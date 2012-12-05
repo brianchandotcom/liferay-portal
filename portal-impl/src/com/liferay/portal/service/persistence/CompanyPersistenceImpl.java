@@ -1326,15 +1326,115 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(Company company) {
+		if (company.isNew()) {
+			Object[] args = new Object[] { company.getWebId() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_WEBID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_WEBID, args, company);
+
+			args = new Object[] { company.getMx() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_MX, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_MX, args, company);
+
+			args = new Object[] { Long.valueOf(company.getLogoId()) };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LOGOID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LOGOID, args, company);
+		}
+		else {
+			CompanyModelImpl companyModelImpl = (CompanyModelImpl)company;
+
+			if ((companyModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_WEBID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { company.getWebId() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_WEBID, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_WEBID, args,
+					company);
+			}
+
+			if ((companyModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_MX.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { company.getMx() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_MX, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_MX, args, company);
+			}
+
+			if ((companyModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_LOGOID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { Long.valueOf(company.getLogoId()) };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LOGOID, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LOGOID, args,
+					company);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(Company company) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_WEBID,
-			new Object[] { company.getWebId() });
+		CompanyModelImpl companyModelImpl = (CompanyModelImpl)company;
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MX,
-			new Object[] { company.getMx() });
+		Object[] args = new Object[] { company.getWebId() };
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LOGOID,
-			new Object[] { Long.valueOf(company.getLogoId()) });
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_WEBID, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_WEBID, args);
+
+		if ((companyModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_WEBID.getColumnBitmask()) != 0) {
+			args = new Object[] { companyModelImpl.getOriginalWebId() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_WEBID, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_WEBID, args);
+		}
+
+		args = new Object[] { company.getMx() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_MX, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MX, args);
+
+		if ((companyModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_MX.getColumnBitmask()) != 0) {
+			args = new Object[] { companyModelImpl.getOriginalMx() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_MX, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MX, args);
+		}
+
+		args = new Object[] { Long.valueOf(company.getLogoId()) };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LOGOID, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LOGOID, args);
+
+		if ((companyModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_LOGOID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(companyModelImpl.getOriginalLogoId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LOGOID, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LOGOID, args);
+		}
 	}
 
 	/**
@@ -1497,55 +1597,8 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		EntityCacheUtil.putResult(CompanyModelImpl.ENTITY_CACHE_ENABLED,
 			CompanyImpl.class, company.getPrimaryKey(), company);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_WEBID,
-				new Object[] { company.getWebId() }, company);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_MX,
-				new Object[] { company.getMx() }, company);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LOGOID,
-				new Object[] { Long.valueOf(company.getLogoId()) }, company);
-		}
-		else {
-			if ((companyModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_WEBID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { companyModelImpl.getOriginalWebId() };
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_WEBID, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_WEBID, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_WEBID,
-					new Object[] { company.getWebId() }, company);
-			}
-
-			if ((companyModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_MX.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { companyModelImpl.getOriginalMx() };
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_MX, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MX, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_MX,
-					new Object[] { company.getMx() }, company);
-			}
-
-			if ((companyModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_LOGOID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(companyModelImpl.getOriginalLogoId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LOGOID, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LOGOID, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LOGOID,
-					new Object[] { Long.valueOf(company.getLogoId()) }, company);
-			}
-		}
+		clearUniqueFindersCache(company);
+		cacheUniqueFindersCache(company);
 
 		return company;
 	}

@@ -1340,19 +1340,145 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		}
 	}
 
+	protected void cacheUniqueFindersCache(
+		SCProductScreenshot scProductScreenshot) {
+		if (scProductScreenshot.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(scProductScreenshot.getThumbnailId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_THUMBNAILID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_THUMBNAILID, args,
+				scProductScreenshot);
+
+			args = new Object[] {
+					Long.valueOf(scProductScreenshot.getFullImageId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_FULLIMAGEID, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FULLIMAGEID, args,
+				scProductScreenshot);
+
+			args = new Object[] {
+					Long.valueOf(scProductScreenshot.getProductEntryId()),
+					Integer.valueOf(scProductScreenshot.getPriority())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_P_P, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_P, args,
+				scProductScreenshot);
+		}
+		else {
+			SCProductScreenshotModelImpl scProductScreenshotModelImpl = (SCProductScreenshotModelImpl)scProductScreenshot;
+
+			if ((scProductScreenshotModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_THUMBNAILID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(scProductScreenshot.getThumbnailId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_THUMBNAILID,
+					args, Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
+					args, scProductScreenshot);
+			}
+
+			if ((scProductScreenshotModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_FULLIMAGEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(scProductScreenshot.getFullImageId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_FULLIMAGEID,
+					args, Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
+					args, scProductScreenshot);
+			}
+
+			if ((scProductScreenshotModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_P_P.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(scProductScreenshot.getProductEntryId()),
+						Integer.valueOf(scProductScreenshot.getPriority())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_P_P, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_P, args,
+					scProductScreenshot);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(
 		SCProductScreenshot scProductScreenshot) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
-			new Object[] { Long.valueOf(scProductScreenshot.getThumbnailId()) });
+		SCProductScreenshotModelImpl scProductScreenshotModelImpl = (SCProductScreenshotModelImpl)scProductScreenshot;
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
-			new Object[] { Long.valueOf(scProductScreenshot.getFullImageId()) });
+		Object[] args = new Object[] {
+				Long.valueOf(scProductScreenshot.getThumbnailId())
+			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_P,
-			new Object[] {
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THUMBNAILID, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THUMBNAILID, args);
+
+		if ((scProductScreenshotModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_THUMBNAILID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(scProductScreenshotModelImpl.getOriginalThumbnailId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THUMBNAILID, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THUMBNAILID, args);
+		}
+
+		args = new Object[] { Long.valueOf(scProductScreenshot.getFullImageId()) };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FULLIMAGEID, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FULLIMAGEID, args);
+
+		if ((scProductScreenshotModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_FULLIMAGEID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(scProductScreenshotModelImpl.getOriginalFullImageId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FULLIMAGEID, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FULLIMAGEID, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(scProductScreenshot.getProductEntryId()),
 				Integer.valueOf(scProductScreenshot.getPriority())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_P, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_P, args);
+
+		if ((scProductScreenshotModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_P_P.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(scProductScreenshotModelImpl.getOriginalProductEntryId()),
+					Integer.valueOf(scProductScreenshotModelImpl.getOriginalPriority())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_P, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_P, args);
+		}
 	}
 
 	/**
@@ -1521,78 +1647,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 			SCProductScreenshotImpl.class, scProductScreenshot.getPrimaryKey(),
 			scProductScreenshot);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
-				new Object[] { Long.valueOf(
-						scProductScreenshot.getThumbnailId()) },
-				scProductScreenshot);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
-				new Object[] { Long.valueOf(
-						scProductScreenshot.getFullImageId()) },
-				scProductScreenshot);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_P,
-				new Object[] {
-					Long.valueOf(scProductScreenshot.getProductEntryId()),
-					Integer.valueOf(scProductScreenshot.getPriority())
-				}, scProductScreenshot);
-		}
-		else {
-			if ((scProductScreenshotModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_THUMBNAILID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(scProductScreenshotModelImpl.getOriginalThumbnailId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THUMBNAILID,
-					args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
-					args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
-					new Object[] {
-						Long.valueOf(scProductScreenshot.getThumbnailId())
-					}, scProductScreenshot);
-			}
-
-			if ((scProductScreenshotModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_FULLIMAGEID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(scProductScreenshotModelImpl.getOriginalFullImageId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FULLIMAGEID,
-					args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
-					args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
-					new Object[] {
-						Long.valueOf(scProductScreenshot.getFullImageId())
-					}, scProductScreenshot);
-			}
-
-			if ((scProductScreenshotModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_P_P.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(scProductScreenshotModelImpl.getOriginalProductEntryId()),
-						Integer.valueOf(scProductScreenshotModelImpl.getOriginalPriority())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_P, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_P, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_P,
-					new Object[] {
-						Long.valueOf(scProductScreenshot.getProductEntryId()),
-						Integer.valueOf(scProductScreenshot.getPriority())
-					}, scProductScreenshot);
-			}
-		}
+		clearUniqueFindersCache(scProductScreenshot);
+		cacheUniqueFindersCache(scProductScreenshot);
 
 		return scProductScreenshot;
 	}

@@ -1350,12 +1350,60 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(PollsVote pollsVote) {
+		if (pollsVote.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(pollsVote.getQuestionId()),
+					Long.valueOf(pollsVote.getUserId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_Q_U, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_U, args, pollsVote);
+		}
+		else {
+			PollsVoteModelImpl pollsVoteModelImpl = (PollsVoteModelImpl)pollsVote;
+
+			if ((pollsVoteModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_Q_U.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(pollsVote.getQuestionId()),
+						Long.valueOf(pollsVote.getUserId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_Q_U, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_U, args,
+					pollsVote);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(PollsVote pollsVote) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_U,
-			new Object[] {
+		PollsVoteModelImpl pollsVoteModelImpl = (PollsVoteModelImpl)pollsVote;
+
+		Object[] args = new Object[] {
 				Long.valueOf(pollsVote.getQuestionId()),
 				Long.valueOf(pollsVote.getUserId())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_Q_U, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_U, args);
+
+		if ((pollsVoteModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_Q_U.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(pollsVoteModelImpl.getOriginalQuestionId()),
+					Long.valueOf(pollsVoteModelImpl.getOriginalUserId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_Q_U, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_U, args);
+		}
 	}
 
 	/**
@@ -1542,32 +1590,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		EntityCacheUtil.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteImpl.class, pollsVote.getPrimaryKey(), pollsVote);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_U,
-				new Object[] {
-					Long.valueOf(pollsVote.getQuestionId()),
-					Long.valueOf(pollsVote.getUserId())
-				}, pollsVote);
-		}
-		else {
-			if ((pollsVoteModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_Q_U.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(pollsVoteModelImpl.getOriginalQuestionId()),
-						Long.valueOf(pollsVoteModelImpl.getOriginalUserId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_Q_U, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_U, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_U,
-					new Object[] {
-						Long.valueOf(pollsVote.getQuestionId()),
-						Long.valueOf(pollsVote.getUserId())
-					}, pollsVote);
-			}
-		}
+		clearUniqueFindersCache(pollsVote);
+		cacheUniqueFindersCache(pollsVote);
 
 		return pollsVote;
 	}

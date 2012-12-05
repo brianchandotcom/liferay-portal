@@ -883,9 +883,49 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		}
 	}
 
+	protected void cacheUniqueFindersCache(ShoppingCoupon shoppingCoupon) {
+		if (shoppingCoupon.isNew()) {
+			Object[] args = new Object[] { shoppingCoupon.getCode() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CODE, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CODE, args,
+				shoppingCoupon);
+		}
+		else {
+			ShoppingCouponModelImpl shoppingCouponModelImpl = (ShoppingCouponModelImpl)shoppingCoupon;
+
+			if ((shoppingCouponModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_CODE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { shoppingCoupon.getCode() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CODE, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CODE, args,
+					shoppingCoupon);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(ShoppingCoupon shoppingCoupon) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CODE,
-			new Object[] { shoppingCoupon.getCode() });
+		ShoppingCouponModelImpl shoppingCouponModelImpl = (ShoppingCouponModelImpl)shoppingCoupon;
+
+		Object[] args = new Object[] { shoppingCoupon.getCode() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CODE, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CODE, args);
+
+		if ((shoppingCouponModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_CODE.getColumnBitmask()) != 0) {
+			args = new Object[] { shoppingCouponModelImpl.getOriginalCode() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CODE, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CODE, args);
+		}
 	}
 
 	/**
@@ -1052,25 +1092,8 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			ShoppingCouponImpl.class, shoppingCoupon.getPrimaryKey(),
 			shoppingCoupon);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CODE,
-				new Object[] { shoppingCoupon.getCode() }, shoppingCoupon);
-		}
-		else {
-			if ((shoppingCouponModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_CODE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						shoppingCouponModelImpl.getOriginalCode()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CODE, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CODE, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CODE,
-					new Object[] { shoppingCoupon.getCode() }, shoppingCoupon);
-			}
-		}
+		clearUniqueFindersCache(shoppingCoupon);
+		cacheUniqueFindersCache(shoppingCoupon);
 
 		return shoppingCoupon;
 	}

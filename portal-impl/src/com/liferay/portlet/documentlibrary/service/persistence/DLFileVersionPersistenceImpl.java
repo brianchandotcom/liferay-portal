@@ -3985,19 +3985,111 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		}
 	}
 
+	protected void cacheUniqueFindersCache(DLFileVersion dlFileVersion) {
+		if (dlFileVersion.isNew()) {
+			Object[] args = new Object[] {
+					dlFileVersion.getUuid(),
+					Long.valueOf(dlFileVersion.getGroupId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				dlFileVersion);
+
+			args = new Object[] {
+					Long.valueOf(dlFileVersion.getFileEntryId()),
+					
+					dlFileVersion.getVersion()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_F_V, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V, args,
+				dlFileVersion);
+		}
+		else {
+			DLFileVersionModelImpl dlFileVersionModelImpl = (DLFileVersionModelImpl)dlFileVersion;
+
+			if ((dlFileVersionModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						dlFileVersion.getUuid(),
+						Long.valueOf(dlFileVersion.getGroupId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+					dlFileVersion);
+			}
+
+			if ((dlFileVersionModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_F_V.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlFileVersion.getFileEntryId()),
+						
+						dlFileVersion.getVersion()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_F_V, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V, args,
+					dlFileVersion);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(DLFileVersion dlFileVersion) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
+		DLFileVersionModelImpl dlFileVersionModelImpl = (DLFileVersionModelImpl)dlFileVersion;
+
+		Object[] args = new Object[] {
 				dlFileVersion.getUuid(),
 				Long.valueOf(dlFileVersion.getGroupId())
-			});
+			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V,
-			new Object[] {
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+		if ((dlFileVersionModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					dlFileVersionModelImpl.getOriginalUuid(),
+					Long.valueOf(dlFileVersionModelImpl.getOriginalGroupId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(dlFileVersion.getFileEntryId()),
 				
-			dlFileVersion.getVersion()
-			});
+				dlFileVersion.getVersion()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_F_V, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V, args);
+
+		if ((dlFileVersionModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_F_V.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(dlFileVersionModelImpl.getOriginalFileEntryId()),
+					
+					dlFileVersionModelImpl.getOriginalVersion()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_F_V, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V, args);
+		}
 	}
 
 	/**
@@ -4287,59 +4379,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			DLFileVersionImpl.class, dlFileVersion.getPrimaryKey(),
 			dlFileVersion);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					dlFileVersion.getUuid(),
-					Long.valueOf(dlFileVersion.getGroupId())
-				}, dlFileVersion);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V,
-				new Object[] {
-					Long.valueOf(dlFileVersion.getFileEntryId()),
-					
-				dlFileVersion.getVersion()
-				}, dlFileVersion);
-		}
-		else {
-			if ((dlFileVersionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						dlFileVersionModelImpl.getOriginalUuid(),
-						Long.valueOf(dlFileVersionModelImpl.getOriginalGroupId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-					new Object[] {
-						dlFileVersion.getUuid(),
-						Long.valueOf(dlFileVersion.getGroupId())
-					}, dlFileVersion);
-			}
-
-			if ((dlFileVersionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_F_V.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(dlFileVersionModelImpl.getOriginalFileEntryId()),
-						
-						dlFileVersionModelImpl.getOriginalVersion()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_F_V, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V,
-					new Object[] {
-						Long.valueOf(dlFileVersion.getFileEntryId()),
-						
-					dlFileVersion.getVersion()
-					}, dlFileVersion);
-			}
-		}
+		clearUniqueFindersCache(dlFileVersion);
+		cacheUniqueFindersCache(dlFileVersion);
 
 		return dlFileVersion;
 	}

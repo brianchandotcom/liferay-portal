@@ -2588,18 +2588,110 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		}
 	}
 
-	protected void clearUniqueFindersCache(DDLRecordSet ddlRecordSet) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				ddlRecordSet.getUuid(), Long.valueOf(ddlRecordSet.getGroupId())
-			});
+	protected void cacheUniqueFindersCache(DDLRecordSet ddlRecordSet) {
+		if (ddlRecordSet.isNew()) {
+			Object[] args = new Object[] {
+					ddlRecordSet.getUuid(),
+					Long.valueOf(ddlRecordSet.getGroupId())
+				};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_R,
-			new Object[] {
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				ddlRecordSet);
+
+			args = new Object[] {
+					Long.valueOf(ddlRecordSet.getGroupId()),
+					
+					ddlRecordSet.getRecordSetKey()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_R, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_R, args,
+				ddlRecordSet);
+		}
+		else {
+			DDLRecordSetModelImpl ddlRecordSetModelImpl = (DDLRecordSetModelImpl)ddlRecordSet;
+
+			if ((ddlRecordSetModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						ddlRecordSet.getUuid(),
+						Long.valueOf(ddlRecordSet.getGroupId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+					ddlRecordSet);
+			}
+
+			if ((ddlRecordSetModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_G_R.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(ddlRecordSet.getGroupId()),
+						
+						ddlRecordSet.getRecordSetKey()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_R, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_R, args,
+					ddlRecordSet);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(DDLRecordSet ddlRecordSet) {
+		DDLRecordSetModelImpl ddlRecordSetModelImpl = (DDLRecordSetModelImpl)ddlRecordSet;
+
+		Object[] args = new Object[] {
+				ddlRecordSet.getUuid(), Long.valueOf(ddlRecordSet.getGroupId())
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+		if ((ddlRecordSetModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					ddlRecordSetModelImpl.getOriginalUuid(),
+					Long.valueOf(ddlRecordSetModelImpl.getOriginalGroupId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(ddlRecordSet.getGroupId()),
 				
-			ddlRecordSet.getRecordSetKey()
-			});
+				ddlRecordSet.getRecordSetKey()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_R, args);
+
+		if ((ddlRecordSetModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_R.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(ddlRecordSetModelImpl.getOriginalGroupId()),
+					
+					ddlRecordSetModelImpl.getOriginalRecordSetKey()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_R, args);
+		}
 	}
 
 	/**
@@ -2813,59 +2905,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		EntityCacheUtil.putResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
 			DDLRecordSetImpl.class, ddlRecordSet.getPrimaryKey(), ddlRecordSet);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					ddlRecordSet.getUuid(),
-					Long.valueOf(ddlRecordSet.getGroupId())
-				}, ddlRecordSet);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_R,
-				new Object[] {
-					Long.valueOf(ddlRecordSet.getGroupId()),
-					
-				ddlRecordSet.getRecordSetKey()
-				}, ddlRecordSet);
-		}
-		else {
-			if ((ddlRecordSetModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						ddlRecordSetModelImpl.getOriginalUuid(),
-						Long.valueOf(ddlRecordSetModelImpl.getOriginalGroupId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-					new Object[] {
-						ddlRecordSet.getUuid(),
-						Long.valueOf(ddlRecordSet.getGroupId())
-					}, ddlRecordSet);
-			}
-
-			if ((ddlRecordSetModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_R.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(ddlRecordSetModelImpl.getOriginalGroupId()),
-						
-						ddlRecordSetModelImpl.getOriginalRecordSetKey()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_R, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_R,
-					new Object[] {
-						Long.valueOf(ddlRecordSet.getGroupId()),
-						
-					ddlRecordSet.getRecordSetKey()
-					}, ddlRecordSet);
-			}
-		}
+		clearUniqueFindersCache(ddlRecordSet);
+		cacheUniqueFindersCache(ddlRecordSet);
 
 		return ddlRecordSet;
 	}

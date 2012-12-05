@@ -1883,13 +1883,63 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(Region region) {
+		if (region.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(region.getCountryId()),
+					
+					region.getRegionCode()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R, args, region);
+		}
+		else {
+			RegionModelImpl regionModelImpl = (RegionModelImpl)region;
+
+			if ((regionModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_R.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(region.getCountryId()),
+						
+						region.getRegionCode()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R, args, region);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(Region region) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R,
-			new Object[] {
+		RegionModelImpl regionModelImpl = (RegionModelImpl)region;
+
+		Object[] args = new Object[] {
 				Long.valueOf(region.getCountryId()),
 				
-			region.getRegionCode()
-			});
+				region.getRegionCode()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R, args);
+
+		if ((regionModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_R.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(regionModelImpl.getOriginalCountryId()),
+					
+					regionModelImpl.getOriginalRegionCode()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R, args);
+		}
 	}
 
 	/**
@@ -2090,35 +2140,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		EntityCacheUtil.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionImpl.class, region.getPrimaryKey(), region);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R,
-				new Object[] {
-					Long.valueOf(region.getCountryId()),
-					
-				region.getRegionCode()
-				}, region);
-		}
-		else {
-			if ((regionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_R.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(regionModelImpl.getOriginalCountryId()),
-						
-						regionModelImpl.getOriginalRegionCode()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R,
-					new Object[] {
-						Long.valueOf(region.getCountryId()),
-						
-					region.getRegionCode()
-					}, region);
-			}
-		}
+		clearUniqueFindersCache(region);
+		cacheUniqueFindersCache(region);
 
 		return region;
 	}

@@ -18217,11 +18217,59 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(MBMessage mbMessage) {
+		if (mbMessage.isNew()) {
+			Object[] args = new Object[] {
+					mbMessage.getUuid(), Long.valueOf(mbMessage.getGroupId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				mbMessage);
+		}
+		else {
+			MBMessageModelImpl mbMessageModelImpl = (MBMessageModelImpl)mbMessage;
+
+			if ((mbMessageModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						mbMessage.getUuid(),
+						Long.valueOf(mbMessage.getGroupId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+					mbMessage);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(MBMessage mbMessage) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
+		MBMessageModelImpl mbMessageModelImpl = (MBMessageModelImpl)mbMessage;
+
+		Object[] args = new Object[] {
 				mbMessage.getUuid(), Long.valueOf(mbMessage.getGroupId())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+		if ((mbMessageModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					mbMessageModelImpl.getOriginalUuid(),
+					Long.valueOf(mbMessageModelImpl.getOriginalGroupId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 	}
 
 	/**
@@ -18961,31 +19009,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		EntityCacheUtil.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageImpl.class, mbMessage.getPrimaryKey(), mbMessage);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					mbMessage.getUuid(), Long.valueOf(mbMessage.getGroupId())
-				}, mbMessage);
-		}
-		else {
-			if ((mbMessageModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						mbMessageModelImpl.getOriginalUuid(),
-						Long.valueOf(mbMessageModelImpl.getOriginalGroupId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-					new Object[] {
-						mbMessage.getUuid(),
-						Long.valueOf(mbMessage.getGroupId())
-					}, mbMessage);
-			}
-		}
+		clearUniqueFindersCache(mbMessage);
+		cacheUniqueFindersCache(mbMessage);
 
 		return mbMessage;
 	}

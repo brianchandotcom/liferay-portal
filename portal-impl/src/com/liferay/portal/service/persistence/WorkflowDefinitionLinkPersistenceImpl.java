@@ -1593,16 +1593,75 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		}
 	}
 
+	protected void cacheUniqueFindersCache(
+		WorkflowDefinitionLink workflowDefinitionLink) {
+		if (workflowDefinitionLink.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(workflowDefinitionLink.getGroupId()),
+					Long.valueOf(workflowDefinitionLink.getCompanyId()),
+					Long.valueOf(workflowDefinitionLink.getClassNameId()),
+					Long.valueOf(workflowDefinitionLink.getClassPK()),
+					Long.valueOf(workflowDefinitionLink.getTypePK())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args,
+				Long.valueOf(1));
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T, args,
+				workflowDefinitionLink);
+		}
+		else {
+			WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl = (WorkflowDefinitionLinkModelImpl)workflowDefinitionLink;
+
+			if ((workflowDefinitionLinkModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_G_C_C_C_T.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(workflowDefinitionLink.getGroupId()),
+						Long.valueOf(workflowDefinitionLink.getCompanyId()),
+						Long.valueOf(workflowDefinitionLink.getClassNameId()),
+						Long.valueOf(workflowDefinitionLink.getClassPK()),
+						Long.valueOf(workflowDefinitionLink.getTypePK())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args,
+					Long.valueOf(1));
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T, args,
+					workflowDefinitionLink);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(
 		WorkflowDefinitionLink workflowDefinitionLink) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
-			new Object[] {
+		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl = (WorkflowDefinitionLinkModelImpl)workflowDefinitionLink;
+
+		Object[] args = new Object[] {
 				Long.valueOf(workflowDefinitionLink.getGroupId()),
 				Long.valueOf(workflowDefinitionLink.getCompanyId()),
 				Long.valueOf(workflowDefinitionLink.getClassNameId()),
 				Long.valueOf(workflowDefinitionLink.getClassPK()),
 				Long.valueOf(workflowDefinitionLink.getTypePK())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args);
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T, args);
+
+		if ((workflowDefinitionLinkModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_C_C_C_T.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalGroupId()),
+					Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalCompanyId()),
+					Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalClassNameId()),
+					Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalClassPK()),
+					Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalTypePK())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args);
+
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T, args);
+		}
 	}
 
 	/**
@@ -1797,43 +1856,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			WorkflowDefinitionLinkImpl.class,
 			workflowDefinitionLink.getPrimaryKey(), workflowDefinitionLink);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
-				new Object[] {
-					Long.valueOf(workflowDefinitionLink.getGroupId()),
-					Long.valueOf(workflowDefinitionLink.getCompanyId()),
-					Long.valueOf(workflowDefinitionLink.getClassNameId()),
-					Long.valueOf(workflowDefinitionLink.getClassPK()),
-					Long.valueOf(workflowDefinitionLink.getTypePK())
-				}, workflowDefinitionLink);
-		}
-		else {
-			if ((workflowDefinitionLinkModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_C_C_C_T.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalGroupId()),
-						Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalCompanyId()),
-						Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalClassNameId()),
-						Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalClassPK()),
-						Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalTypePK())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_T,
-					args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
-					args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
-					new Object[] {
-						Long.valueOf(workflowDefinitionLink.getGroupId()),
-						Long.valueOf(workflowDefinitionLink.getCompanyId()),
-						Long.valueOf(workflowDefinitionLink.getClassNameId()),
-						Long.valueOf(workflowDefinitionLink.getClassPK()),
-						Long.valueOf(workflowDefinitionLink.getTypePK())
-					}, workflowDefinitionLink);
-			}
-		}
+		clearUniqueFindersCache(workflowDefinitionLink);
+		cacheUniqueFindersCache(workflowDefinitionLink);
 
 		return workflowDefinitionLink;
 	}

@@ -113,13 +113,13 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler, containerMod
 			sb.append(renderResponse.getNamespace());
 			sb.append("selectContainer('");
 			sb.append(redirect);
-			sb.append(", '");
+			sb.append("', '");
 			sb.append(className);
 			sb.append("', ");
 			sb.append(classPK);
 			sb.append(", ");
 			sb.append(curContainerModel.getContainerModelId());
-			sb.append("');");
+			sb.append(");");
 			%>
 
 			<liferay-ui:search-container-column-button
@@ -132,7 +132,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler, containerMod
 		<aui:button-row>
 
 			<%
-			String taglibSelectOnClick = renderResponse.getNamespace() + "selectContainer('" + redirect + "', " + classPK + ", " + containerModelId + ", '" + className + "');";
+			String taglibSelectOnClick = renderResponse.getNamespace() + "selectContainer('" + redirect + "', '" + className + "', " + classPK + ", " + containerModelId + ");";
 			%>
 
 			<aui:button
@@ -148,7 +148,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler, containerMod
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />selectContainer(className, classPK, containerModelId) {
+	function <portlet:namespace />selectContainer(redirect, className, classPK, containerModelId) {
 		var topWindow = Liferay.Util.getTop();
 
 		topWindow.<portlet:namespace />submitForm(redirect, className, classPK, containerModelId);

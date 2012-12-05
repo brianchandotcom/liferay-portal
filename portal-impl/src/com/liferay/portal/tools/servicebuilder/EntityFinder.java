@@ -43,6 +43,11 @@ public class EntityFinder {
 					"it has an arrayable column. See the ExpandoColumn " +
 						"service.xml declaration for an example.");
 		}
+
+		if ((!isCollection() || isUnique()) && hasCustomComparator()) {
+			throw new IllegalArgumentException(
+				"Unique finder can not have custom comparator");
+		}
 	}
 
 	public EntityColumn getColumn(String name) {

@@ -54,15 +54,17 @@ if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMa
 	}
 	%>
 
-	<div class="site-breadcrumbs" id="breadcrumbs">
-		<h1>
-			<span>
-				<liferay-ui:message key="breadcrumb" />
-			</span>
-		</h1>
+	<c:if test="<%= controlPanelCategory.equals(StringPool.BLANK) || controlPanelCategory.equals(StringPool.CONTENT) %>">
+		<div class="site-breadcrumbs" id="breadcrumbs">
+			<h1>
+				<span>
+					<liferay-ui:message key="breadcrumb" />
+				</span>
+			</h1>
 
-		<liferay-ui:breadcrumb />
-	</div>
+			<liferay-ui:breadcrumb />
+		</div>
+	</c:if>
 
 	<%
 	if (sb != null) {

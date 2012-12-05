@@ -18,7 +18,7 @@
 
 <#assign repeatableIndex = "">
 
-<#if fieldStructure.repeatableIndex?? && (fieldStructure.repeatableIndex != "")>
+<#if fieldStructure.repeatableIndex?? && (fieldStructure.repeatableIndex != "0")>
 	<#assign repeatableIndex = "__" + fieldStructure.repeatableIndex>
 </#if>
 
@@ -65,8 +65,10 @@
 <#if fields?? && fields.get(fieldName)??>
 	<#assign field = fields.get(fieldName)>
 
-	<#assign fieldValue = field.getRenderedValue(locale)>
-	<#assign fieldRawValue = field.getValue()>
+	<#assign valueIndex = getterUtil.getInteger(repeatableIndex)>
+
+	<#assign fieldValue = field.getRenderedValue(locale, valueIndex)>
+	<#assign fieldRawValue = field.getValue(valueIndex)>
 </#if>
 
 <#-- Label -->

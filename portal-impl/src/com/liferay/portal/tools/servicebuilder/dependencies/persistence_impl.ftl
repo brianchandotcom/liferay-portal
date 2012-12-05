@@ -248,13 +248,15 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	<#if entity.getUniqueFinderList()?size &gt; 0>
-		protected void clearUniqueFindersCache(${entity.name} ${entity.varName}) {
-			<#list entity.getUniqueFinderList() as finder>
-				<#assign finderColsList = finder.getColumns()>
+		protected void cacheUniqueFindersCache(${entity.name} ${entity.varName}) {
+			if (${entity.varName}.isNew()) {
+				<#list entity.getUniqueFinderList() as finder>
+					<#assign finderColsList = finder.getColumns()>
 
-				FinderCacheUtil.removeResult(
-					FINDER_PATH_FETCH_BY_${finder.name?upper_case},
-					new Object[] {
+					<#if finder_index == 0>
+						Object[]
+					</#if>
+					args = new Object[] {
 						<#list finderColsList as finderCol>
 							<#if finderCol.isPrimitiveType()>
 								${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
@@ -270,7 +272,100 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 								,
 							</#if>
 						</#list>
-					});
+					};
+
+					FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args, Long.valueOf(1));
+
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args, ${entity.varName});
+				</#list>
+			}
+			else {
+				${entity.name}ModelImpl ${entity.varName}ModelImpl = (${entity.name}ModelImpl)${entity.varName};
+
+				<#list entity.getUniqueFinderList() as finder>
+					<#assign finderColsList = finder.getColumns()>
+
+					if ((${entity.varName}ModelImpl.getColumnBitmask() & FINDER_PATH_FETCH_BY_${finder.name?upper_case}.getColumnBitmask()) != 0) {
+						Object[] args = new Object[] {
+							<#list finderColsList as finderCol>
+								<#if finderCol.isPrimitiveType()>
+									${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+								</#if>
+
+								${entity.varName}.get${finderCol.methodName}()
+
+								<#if finderCol.isPrimitiveType()>
+									)
+								</#if>
+
+								<#if finderCol_has_next>
+									,
+								</#if>
+							</#list>
+						};
+
+						FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args, Long.valueOf(1));
+
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args, ${entity.varName});
+					}
+				</#list>
+			}
+		}
+
+		protected void clearUniqueFindersCache(${entity.name} ${entity.varName}) {
+			${entity.name}ModelImpl ${entity.varName}ModelImpl = (${entity.name}ModelImpl)${entity.varName};
+
+			<#list entity.getUniqueFinderList() as finder>
+				<#assign finderColsList = finder.getColumns()>
+
+				<#if finder_index == 0>
+					Object[]
+				</#if>
+				args = new Object[] {
+					<#list finderColsList as finderCol>
+						<#if finderCol.isPrimitiveType()>
+							${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+						</#if>
+
+						${entity.varName}.get${finderCol.methodName}()
+
+						<#if finderCol.isPrimitiveType()>
+							)
+						</#if>
+
+						<#if finderCol_has_next>
+							,
+						</#if>
+					</#list>
+				};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args);
+
+				if ((${entity.varName}ModelImpl.getColumnBitmask() & FINDER_PATH_FETCH_BY_${finder.name?upper_case}.getColumnBitmask()) != 0) {
+					args = new Object[] {
+						<#list finderColsList as finderCol>
+							<#if finderCol.isPrimitiveType()>
+								${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+							</#if>
+
+							${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
+
+							<#if finderCol.isPrimitiveType()>
+								)
+							</#if>
+
+							<#if finderCol_has_next>
+								,
+							</#if>
+						</#list>
+					};
+
+					FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args);
+				}
 			</#list>
 		}
 	</#if>
@@ -636,90 +731,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName});
 
 		<#if uniqueFinderList?size &gt; 0>
-			if (isNew) {
-				Object[] args = null;
-				<#list uniqueFinderList as finder>
-					<#assign finderColsList = finder.getColumns()>
-
-					args = new Object[] {
-						<#list finderColsList as finderCol>
-							<#if finderCol.isPrimitiveType()>
-								${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-							</#if>
-
-							${entity.varName}.get${finderCol.methodName}()
-
-							<#if finderCol.isPrimitiveType()>
-								)
-							</#if>
-
-							<#if finderCol_has_next>
-								,
-							</#if>
-						</#list>
-					};
-
-					FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
-
-					FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args, Long.valueOf(1));
-
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args);
-
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args, ${entity.varName});
-				</#list>
-			}
-			else {
-				<#list uniqueFinderList as finder>
-					<#assign finderColsList = finder.getColumns()>
-
-					if ((${entity.varName}ModelImpl.getColumnBitmask() & FINDER_PATH_FETCH_BY_${finder.name?upper_case}.getColumnBitmask()) != 0) {
-						Object[] args = new Object[] {
-							<#list finderColsList as finderCol>
-								<#if finderCol.isPrimitiveType()>
-									${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-								</#if>
-
-								${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
-
-								<#if finderCol.isPrimitiveType()>
-									)
-								</#if>
-
-								<#if finderCol_has_next>
-									,
-								</#if>
-							</#list>
-						};
-
-						<#if !finder.hasCustomComparator()>
-							FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
-						</#if>
-
-						FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_${finder.name?upper_case}, args);
-
-						FinderCacheUtil.putResult(
-							FINDER_PATH_FETCH_BY_${finder.name?upper_case},
-							new Object[] {
-								<#list finderColsList as finderCol>
-									<#if finderCol.isPrimitiveType()>
-										${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-									</#if>
-
-									${entity.varName}.get${finderCol.methodName}()
-
-									<#if finderCol.isPrimitiveType()>
-										)
-									</#if>
-
-									<#if finderCol_has_next>
-										,
-									</#if>
-								</#list>
-							},
-							${entity.varName});
-					}
-				</#list>
-			}
+			clearUniqueFindersCache(${entity.varName});
+			cacheUniqueFindersCache(${entity.varName});
 		</#if>
 
 		<#if entity.hasLazyBlobColumn()>

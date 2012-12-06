@@ -231,6 +231,15 @@ public class JSONWebServiceActionsManagerImpl
 			new JSONWebServiceActionConfig(
 				servletContextPath, actionClass, actionMethod, path, method);
 
+		if (_jsonWebServiceActionConfigs.contains(jsonWebServiceActionConfig)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"JSON Web Service action already registered: " + path);
+			}
+
+			return;
+		}
+
 		_jsonWebServiceActionConfigs.add(jsonWebServiceActionConfig);
 	}
 

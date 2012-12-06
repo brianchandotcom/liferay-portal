@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.kaleo.workflowconfiguration.resource.configurecommentsdefaultnoworkflow;
 
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrydefaultnoworkflow.TearDownWorkflowConfigurationTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;

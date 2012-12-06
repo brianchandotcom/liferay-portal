@@ -54,7 +54,7 @@ if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMa
 	}
 	%>
 
-	<c:if test="<%= controlPanelCategory.equals(StringPool.BLANK) || controlPanelCategory.equals(StringPool.CONTENT) %>">
+	<c:if test="<%= Validator.isNull(controlPanelCategory) || controlPanelCategory.equals(PortletCategoryKeys.CONTENT) %>">
 		<div class="site-breadcrumbs" id="breadcrumbs">
 			<h1>
 				<span>

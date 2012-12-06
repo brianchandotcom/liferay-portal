@@ -55,8 +55,6 @@ public class StringPool {
 
 	public static final String COMMA_AND_SPACE = ", ";
 
-	public static final String CONTENT = "content";
-
 	public static final String DASH = "-";
 
 	public static final String DEFAULT_CHARSET_NAME =

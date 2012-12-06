@@ -683,10 +683,10 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				if (orderByComparator != null) {
 					if (getDB().isSupportsInlineDistinct()) {
-						appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
 					}
 					else {
-						appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE, orderByComparator);
+						appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
 					}
 				}
 				else {
@@ -1170,10 +1170,10 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					if (orderByComparator != null) {
 						if (getDB().isSupportsInlineDistinct()) {
-							appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+							appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
 						}
 						else {
-							appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE, orderByComparator);
+							appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
 						}
 					}
 					else {

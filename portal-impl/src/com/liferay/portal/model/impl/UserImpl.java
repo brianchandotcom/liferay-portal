@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Digester;
@@ -103,7 +104,14 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	public Contact getContact() throws PortalException, SystemException {
-		return ContactLocalServiceUtil.getContact(getContactId());
+		try {
+			ShardUtil.pushCompanyService(getCompanyId());
+
+			return ContactLocalServiceUtil.getContact(getContactId());
+		}
+		finally {
+			ShardUtil.popCompanyService();
+		}
 	}
 
 	@Override

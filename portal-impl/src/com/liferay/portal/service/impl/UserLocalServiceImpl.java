@@ -44,6 +44,7 @@ import com.liferay.portal.UserPortraitTypeException;
 import com.liferay.portal.UserReminderQueryException;
 import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.UserSmsException;
+import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -5463,7 +5464,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Callable<Void> callable = new Callable<Void>() {
 
 			public Void call() throws Exception {
-				indexer.reindex(user);
+				try {
+					ShardUtil.pushCompanyService(user.getCompanyId());
+
+					indexer.reindex(user);
+				}
+				finally {
+					ShardUtil.popCompanyService();
+				}
 
 				return null;
 			}

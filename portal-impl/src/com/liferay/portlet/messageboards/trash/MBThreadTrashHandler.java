@@ -18,7 +18,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
@@ -26,6 +30,7 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * Implements trash handling for message boards thread entity.
@@ -59,8 +64,25 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
 
-		return MBUtil.getMBControlPanelLink(
-			portletRequest, thread.getCategoryId());
+		String portletName = PortletKeys.MESSAGE_BOARDS;
+
+		long plid = PortalUtil.getPlidFromPortletId(
+			thread.getGroupId(), PortletKeys.MESSAGE_BOARDS);
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
+
+			portletName = PortletKeys.MESSAGE_BOARDS_ADMIN;
+		}
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, portletName, plid, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("struts_action", "/message_boards_admin/view");
+		portletURL.setParameter(
+			"mbCategoryId", String.valueOf(thread.getCategoryId()));
+
+		return portletURL.toString();
 	}
 
 	@Override

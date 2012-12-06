@@ -44,10 +44,8 @@ import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -484,24 +482,6 @@ public class MBUtil {
 		sb.append(mx);
 
 		return sb.toString();
-	}
-
-	public static String getMBControlPanelLink(
-			PortletRequest portletRequest, long mbCategoryId)
-		throws PortalException, SystemException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletKeys.MESSAGE_BOARDS_ADMIN,
-			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("struts_action", "/message_boards_admin/view");
-		portletURL.setParameter("mbCategoryId", String.valueOf(mbCategoryId));
-
-		return portletURL.toString();
 	}
 
 	public static String getMessageFormat(PortletPreferences preferences) {

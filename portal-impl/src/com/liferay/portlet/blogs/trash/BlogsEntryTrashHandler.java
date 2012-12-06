@@ -17,11 +17,20 @@ package com.liferay.portlet.blogs.trash;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * Implements trash handling for the blogs entry entity.
@@ -47,6 +56,40 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public String getRestoreLink(PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.getBlogsEntry(
+			classPK);
+
+		String portletName = PortletKeys.BLOGS;
+
+		long plid = PortalUtil.getPlidFromPortletId(
+			blogsEntry.getGroupId(), PortletKeys.BLOGS);
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
+
+			portletName = PortletKeys.BLOGS_ADMIN;
+		}
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, portletName, plid, PortletRequest.RENDER_PHASE);
+
+		return portletURL.toString();
+	}
+
+	@Override
+	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.translate("blogs");
 	}
 
 	public boolean isInTrash(long classPK)

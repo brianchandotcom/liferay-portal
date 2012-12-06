@@ -60,6 +60,19 @@ public class DDMTemplateLocalServiceImpl
 
 	public DDMTemplate addTemplate(
 			long userId, long groupId, long classNameId, long classPK,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String type, String mode, String language, String script,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addTemplate(
+			userId, groupId, classNameId, classPK, null, nameMap,
+			descriptionMap, type, mode, language, script, false, false, null,
+			null, serviceContext);
+	}
+
+	public DDMTemplate addTemplate(
+			long userId, long groupId, long classNameId, long classPK,
 			String templateKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type, String mode,
 			String language, String script, boolean cacheable,

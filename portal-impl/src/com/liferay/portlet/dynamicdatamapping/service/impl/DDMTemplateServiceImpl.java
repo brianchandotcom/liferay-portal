@@ -40,6 +40,28 @@ import java.util.Map;
 public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 	public DDMTemplate addTemplate(
+		long groupId, long classNameId, long classPK,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String type, String mode, String language, String script,
+		ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
+
+		String ddmResourceActionId = getDDMResourceActionId(
+			ddmResource, serviceContext);
+
+		DDMPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ddmResource, ddmResourceActionId);
+
+		return ddmTemplateLocalService.addTemplate(
+			getUserId(), groupId, classNameId, classPK, null, nameMap,
+			descriptionMap, type, mode, language, script, false, false, null,
+			null, serviceContext);
+	}
+
+	public DDMTemplate addTemplate(
 			long groupId, long classNameId, long classPK, String templateKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String type, String mode, String language, String script,
@@ -49,17 +71,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
 
-		String ddmResourceActionId = ParamUtil.getString(
-			serviceContext, "ddmResourceActionId");
-
-		if (Validator.isNull(ddmResourceActionId)) {
-			if (ddmResource.equals(_DDL_CLASS_NAME)) {
-				ddmResourceActionId = ActionKeys.ADD_TEMPLATE;
-			}
-			else {
-				ddmResourceActionId = ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
-			}
-		}
+		String ddmResourceActionId = getDDMResourceActionId(
+			ddmResource, serviceContext);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -248,6 +261,24 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			templateId, nameMap, descriptionMap, type, mode, language, script,
 			cacheable, smallImage, smallImageURL, smallImageFile,
 			serviceContext);
+	}
+
+	protected String getDDMResourceActionId(
+		String ddmResource, ServiceContext serviceContext) {
+
+		String ddmResourceActionId = ParamUtil.getString(
+			serviceContext, "ddmResourceActionId");
+
+		if (Validator.isNull(ddmResourceActionId)) {
+			if (ddmResource.equals(_DDL_CLASS_NAME)) {
+				ddmResourceActionId = ActionKeys.ADD_TEMPLATE;
+			}
+			else {
+				ddmResourceActionId = ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
+			}
+		}
+
+		return ddmResourceActionId;
 	}
 
 	private static final String _DDL_CLASS_NAME =

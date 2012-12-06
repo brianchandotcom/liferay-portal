@@ -25,9 +25,9 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalStructure;
-import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.model.JournalTemplateConstants;
 import com.liferay.portlet.journal.service.BaseJournalServiceTestCase;
 import com.liferay.portlet.journal.util.JournalUtil;
@@ -61,12 +61,12 @@ public class JournalTransformerTest extends BaseJournalServiceTestCase {
 
 		String xsd = document.asXML();
 
-		JournalStructure struture = addStrucure(xsd);
+		DDMStructure structure = addStructure(xsd);
 
 		String xsl = "$name.getData()";
 
-		JournalTemplate template = addTemplate(
-			struture.getStructureId(), xsl,
+		DDMTemplate template = addTemplate(
+			structure.getStructureId(), xsl,
 			JournalTemplateConstants.LANG_TYPE_VM);
 
 		document = createDocument("en_US", "en_US");
@@ -79,7 +79,7 @@ public class JournalTransformerTest extends BaseJournalServiceTestCase {
 		String xml = document.asXML();
 
 		JournalArticle article = addArticle(
-			xml, struture.getStructureId(), template.getTemplateId());
+			xml, structure.getStructureKey(), template.getTemplateKey());
 
 		Map<String, String> tokens = getTokens();
 

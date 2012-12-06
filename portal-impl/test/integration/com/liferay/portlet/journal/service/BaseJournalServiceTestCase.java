@@ -16,10 +16,14 @@ package com.liferay.portlet.journal.service;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalStructure;
-import com.liferay.portlet.journal.model.JournalTemplate;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -52,7 +56,7 @@ public class BaseJournalServiceTestCase {
 			serviceContext);
 	}
 
-	protected JournalStructure addStrucure(String xsd) throws Exception {
+	protected DDMStructure addStructure(String xsd) throws Exception {
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
 		nameMap.put(Locale.US, "Test Structure");
@@ -62,13 +66,13 @@ public class BaseJournalServiceTestCase {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		return JournalStructureLocalServiceUtil.addStructure(
+		return DDMStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			StringPool.BLANK, true, null, nameMap, null, xsd, serviceContext);
+			PortalUtil.getClassNameId(JournalArticle.class.getName()), nameMap,
+			null, xsd, serviceContext);
 	}
 
-	protected JournalTemplate addTemplate(
-			String structureId, String xsl, String langType)
+	protected DDMTemplate addTemplate(long structureId, String xsl, String lang)
 		throws Exception {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
@@ -80,10 +84,12 @@ public class BaseJournalServiceTestCase {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		return JournalTemplateLocalServiceUtil.addTemplate(
+		return DDMTemplateLocalServiceUtil.addTemplate(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			StringPool.BLANK, true, structureId, nameMap, null, xsl, true,
-			langType, false, false, null, null, serviceContext);
+			PortalUtil.getClassNameId(DDMStructure.class.getName()),
+			structureId, nameMap, null,
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null, lang, xsl,
+			serviceContext);
 	}
 
 }

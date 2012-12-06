@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.social.NoSuchRequestException;
 import com.liferay.portlet.social.RequestUserIdException;
 import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.model.SocialRequestConstants;
@@ -77,17 +76,15 @@ public class SocialRequestLocalServiceImpl
 			throw new RequestUserIdException();
 		}
 
-		try {
-			socialRequestPersistence.removeByU_C_C_T_R(
-				userId, classNameId, classPK, type, receiverUserId);
-		}
-		catch (NoSuchRequestException nsre) {
-		}
+		SocialRequest request = socialRequestPersistence.fetchByU_C_C_T_R(
+			userId, classNameId, classPK, type, receiverUserId);
 
-		long requestId = counterLocalService.increment(
-			SocialRequest.class.getName());
+		if (request == null) {
+			long requestId = counterLocalService.increment(
+				SocialRequest.class.getName());
 
-		SocialRequest request = socialRequestPersistence.create(requestId);
+			request = socialRequestPersistence.create(requestId);
+		}
 
 		request.setGroupId(groupId);
 		request.setCompanyId(user.getCompanyId());

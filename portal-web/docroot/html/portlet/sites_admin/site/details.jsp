@@ -146,9 +146,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 									String servletContextName = settingsProperties.getProperty("customJspServletContextName", StringPool.BLANK);
 								%>
 
-									<c:if test="<%= (privateLayoutSetPrototype == null) || (curLayoutSetPrototype.getLayoutSetPrototypeId() != privateLayoutSetPrototype.getLayoutSetPrototypeId()) %>">
-										<aui:option data-servletContextName="<%= servletContextName %>" value="<%= curLayoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(curLayoutSetPrototype.getName(user.getLanguageId())) %></aui:option>
-									</c:if>
+									<aui:option data-servletContextName="<%= servletContextName %>" disabled="<%= (privateLayoutSetPrototype != null) && (curLayoutSetPrototype.getLayoutSetPrototypeId() == privateLayoutSetPrototype.getLayoutSetPrototypeId()) %>" value="<%= curLayoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(curLayoutSetPrototype.getName(user.getLanguageId())) %></aui:option>
 
 								<%
 								}
@@ -220,9 +218,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 									String servletContextName = settingsProperties.getProperty("customJspServletContextName", StringPool.BLANK);
 								%>
 
-									<c:if test="<%= (publicLayoutSetPrototype == null) || (curLayoutSetPrototype.getLayoutSetPrototypeId() != publicLayoutSetPrototype.getLayoutSetPrototypeId()) %>">
-										<aui:option data-servletContextName="<%= servletContextName %>" value="<%= curLayoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(curLayoutSetPrototype.getName(user.getLanguageId())) %></aui:option>
-									</c:if>
+									<aui:option data-servletContextName="<%= servletContextName %>" disabled="<%= (publicLayoutSetPrototype != null) && (curLayoutSetPrototype.getLayoutSetPrototypeId() == publicLayoutSetPrototype.getLayoutSetPrototypeId() %>" value="<%= curLayoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(curLayoutSetPrototype.getName(user.getLanguageId())) %></aui:option>
 
 								<%
 								}

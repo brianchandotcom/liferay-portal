@@ -561,6 +561,16 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return getUserPlaces(getGuestOrUserId(), classNames, false, max);
 	}
 
+	/**
+	 * Returns the number of the guest or current user's group
+	 * &quot;places&quot; associated with the group entity class names,
+	 * including the control panel group if the user is permitted to view the
+	 * control panel.
+	 *
+	 * @return the number of user's group &quot;places&quot;
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getUserPlacesCount() throws PortalException, SystemException {
 		List<Group> userPlaces = getUserPlaces(
 			getGuestOrUserId(), null, true, QueryUtil.ALL_POS);

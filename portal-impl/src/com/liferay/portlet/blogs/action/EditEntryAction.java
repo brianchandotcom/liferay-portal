@@ -351,15 +351,11 @@ public class EditEntryAction extends PortletAction {
 	protected void restoreEntries(ActionRequest actionRequest)
 		throws PortalException, SystemException {
 
-		ThemeDisplay themeDislay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long[] restoreEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "restoreEntryIds"), 0L);
 
 		for (long restoreEntryId : restoreEntryIds) {
-			BlogsEntryLocalServiceUtil.restoreEntryFromTrash(
-				themeDislay.getUserId(), restoreEntryId);
+			BlogsEntryServiceUtil.restoreEntryFromTrash(restoreEntryId);
 		}
 	}
 

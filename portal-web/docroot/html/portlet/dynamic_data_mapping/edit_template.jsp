@@ -295,6 +295,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 				'<portlet:namespace />formBuilderLoaded',
 				function(event) {
 					<portlet:namespace />attachValueChange();
+
 					<portlet:namespace />toggleMode('<%= HtmlUtil.escape(mode) %>');
 				}
 			);

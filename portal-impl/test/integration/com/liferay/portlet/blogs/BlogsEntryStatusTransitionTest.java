@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -58,6 +59,8 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		WorkflowThreadLocal.setEnabled(false);
+
 		FinderCacheUtil.clearCache();
 
 		group = ServiceTestUtil.addGroup();
@@ -73,6 +76,8 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupLocalServiceUtil.deleteGroup(group);
+
+		WorkflowThreadLocal.setEnabled(true);
 	}
 
 	@Test

@@ -23,9 +23,6 @@ if (Validator.isNotNull(scriptContent)) {
 
 String langType = ParamUtil.getString(request, "langType");
 
-String editorContentInputElement = ParamUtil.getString(request, "editorContentInputElement");
-String editorContentOutputElement = ParamUtil.getString(request, "editorContentOutputElement");
-
 String editorType = ParamUtil.getString(request, "editorType");
 
 if (Validator.isNotNull(editorType)) {
@@ -66,28 +63,24 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 <aui:field-wrapper label="script">
 	<aui:input label="" name="script" type="file" />
 
+	<aui:fieldset>
+		<aui:select name="editorType">
+			<aui:option label="rich" selected="<%= useRichEditor %>" value="rich" />
+			<aui:option label="plain" value="plain" />
+		</aui:select>
+
+		<div class="lfr-plain-editor <%= useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />plainEditor">
+			<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-editor-textarea" label="" name="plainEditorField" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" value="" wrap="off" />
+		</div>
+
+		<div class="lfr-rich-editor <%= !useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />richEditor"></div>
+	</aui:fieldset>
 </aui:field-wrapper>
 
-<aui:fieldset>
-	<aui:select name="editorType">
-		<aui:option label="plain" value="plain" />
-		<aui:option label="rich" selected="<%= useRichEditor %>" value="rich" />
-	</aui:select>
-
-	<div class="lfr-plain-editor <%= useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />plainEditor">
-		<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-editor-textarea" label="" name="plainEditorField" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" value="" wrap="off" />
-	</div>
-
-	<div class="lfr-rich-editor <%= !useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />richEditor"></div>
-</aui:fieldset>
-
-<aui:script use="aui-ace-editor,aui-dialog,aui-io-request">
+<aui:script use="aui-ace-editor">
 	var editorType = '<%= HtmlUtil.escapeJS(editorType) %>';
 
-	var openerAUI = Liferay.Util.getOpener().AUI();
-
-	var editorContentInputElement = openerAUI.one('<%= HtmlUtil.escapeJS(editorContentInputElement) %>');
-	var editorContentOutputElement = openerAUI.one('<%= HtmlUtil.escapeJS(editorContentOutputElement) %>');
+	var editorContentElement = A.one('#<portlet:namespace />scriptContent');
 
 	var plainEditorField = A.one('#<portlet:namespace />plainEditorField');
 
@@ -144,26 +137,6 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 		editorType = newEditorType;
 	}
 
-	function updateTemplateXsl() {
-		var content = getEditorContent(editorType);
-
-		if (editorContentOutputElement) {
-			var editorMode = '<%= editorMode %>';
-
-			editorContentOutputElement.val(content);
-
-			var dialog = Liferay.Util.getWindow();
-
-			if (dialog) {
-				dialog.close();
-
-				if (content != prevEditorContent) {
-					dialog.fire('update');
-				}
-			}
-		}
-	}
-
 	A.on(
 		'domready',
 		function(event) {
@@ -176,12 +149,15 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 				}
 			).render();
 
-			if (editorContentInputElement) {
-				setEditorContent(editorType, editorContentInputElement.val());
+			if (editorContentElement) {
+				setEditorContent(editorType, editorContentElement.val());
 			}
 
 			A.one('#<portlet:namespace />editorType').on('change', updateEditorType);
-			A.one('#<portlet:namespace />update-button').on('click', updateTemplateXsl);
+
+			Liferay.on('<portlet:namespace />saveTemplate', function(event) {
+				editorContentElement.val(getEditorContent());
+			});
 		},
 		'#<portlet:namespace />richEditor'
 	);

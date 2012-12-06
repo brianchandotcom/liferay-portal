@@ -22,8 +22,11 @@ import java.net.URLClassLoader;
 
 import java.security.Permission;
 
+import sun.reflect.Reflection;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Zsolt Berentey
  */
 public class PortalClassLoaderUtil {
 
@@ -31,14 +34,34 @@ public class PortalClassLoaderUtil {
 		SecurityManager securityManager = System.getSecurityManager();
 
 		if (securityManager != null) {
-			Permission permission = new RuntimePermission(
-				PACLConstants.RUNTIME_PERMISSION_GET_CLASSLOADER.concat(
-				StringPool.PERIOD).concat("portal"));
+			Class<?> callerClass = Reflection.getCallerClass(2);
 
-			securityManager.checkPermission(permission);
+			if (!_codeSourceKernel.equals(getCodeSourceLocation(callerClass)) &&
+				!_codeSourceImpl.equals(getCodeSourceLocation(callerClass))) {
+
+				Permission permission = new RuntimePermission(
+					PACLConstants.RUNTIME_PERMISSION_GET_CLASSLOADER.concat(
+					StringPool.PERIOD).concat("portal"));
+
+				securityManager.checkPermission(permission);
+			}
 		}
 
 		return _classLoader;
+	}
+
+	public static String getCodeSourceLocation(Class<?> clazz) {
+		String className = clazz.getName();
+
+		String resourceName =
+			StringPool.SLASH + className.replace('.', '/') + ".class";
+
+		URL location = clazz.getResource(resourceName);
+
+		String codeSource = location.toString();
+
+		return codeSource.substring(
+			0, codeSource.length() - resourceName.length());
 	}
 
 	public static void setClassLoader(ClassLoader classLoader) {
@@ -51,8 +74,20 @@ public class PortalClassLoaderUtil {
 		else {
 			_classLoader = classLoader;
 		}
+
+		_codeSourceKernel = getCodeSourceLocation(PortalClassLoaderUtil.class);
+
+		Class<?> callerClass = Reflection.getCallerClass(2);
+
+		String callerClassName = callerClass.getName();
+
+		if (callerClassName.equals("com.liferay.portal.util.ClassLoaderUtil")) {
+			_codeSourceImpl = getCodeSourceLocation(callerClass);
+		}
 	}
 
 	private static ClassLoader _classLoader;
+	private static String _codeSourceImpl;
+	private static String _codeSourceKernel;
 
 }

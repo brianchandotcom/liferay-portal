@@ -48,6 +48,18 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	public MBCategory addCategory(
 			long userId, long parentCategoryId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addCategory(
+			userId, parentCategoryId, name, description,
+			MBCategoryConstants.DEFAULT_DISPLAY_STYLE, null, null, null, 0,
+			false, null, null, 0, null, false, null, 0, false, null, null,
+			false, false, serviceContext);
+	}
+
+	public MBCategory addCategory(
+			long userId, long parentCategoryId, String name, String description,
 			String displayStyle, String emailAddress, String inProtocol,
 			String inServerName, int inServerPort, boolean inUseSSL,
 			String inUserName, String inPassword, int inReadInterval,

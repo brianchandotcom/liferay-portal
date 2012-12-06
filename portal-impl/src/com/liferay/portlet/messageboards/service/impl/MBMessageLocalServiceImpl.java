@@ -396,6 +396,22 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			allowPingbacks, serviceContext);
 	}
 
+	public MBMessage addMessage(
+			long userId, String userName, long categoryId, String subject,
+			String body, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		MBCategory category = mbCategoryService.getCategory(categoryId);
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+
+		return addMessage(
+			userId, userName, category.getGroupId(), categoryId, 0, 0, subject,
+			body, MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
+			0.0, false, serviceContext);
+	}
+
 	public void addMessageResources(
 			long messageId, boolean addGroupPermissions,
 			boolean addGuestPermissions)

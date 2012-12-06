@@ -35,6 +35,19 @@ import java.util.List;
 public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	public MBCategory addCategory(
+			long userId, long parentCategoryId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		MBCategoryPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			parentCategoryId, ActionKeys.ADD_CATEGORY);
+
+		return mbCategoryLocalService.addCategory(
+			userId, parentCategoryId, name, description, serviceContext);
+	}
+
+	public MBCategory addCategory(
 			long parentCategoryId, String name, String description,
 			String displayStyle, String emailAddress, String inProtocol,
 			String inServerName, int inServerPort, boolean inUseSSL,

@@ -37,6 +37,7 @@ import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
@@ -139,6 +140,22 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			getGuestOrUserId(), null, groupId, categoryId, subject, body,
 			format, inputStreamOVPs, anonymous, priority, allowPingbacks,
 			serviceContext);
+	}
+
+	public MBMessage addMessage(
+			long categoryId, String subject, String body,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		MBCategory category = mbCategoryService.getCategory(categoryId);
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+				Collections.emptyList();
+
+		return addMessage(
+			category.getGroupId(), categoryId, subject, body,
+			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
+			false, serviceContext);
 	}
 
 	public MBMessage addMessage(

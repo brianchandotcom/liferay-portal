@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.networkutilities.portlet.addportletduplicate;
+package com.liferay.portalweb.portlet.networkutilities.portlet.addportletnuduplicate;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

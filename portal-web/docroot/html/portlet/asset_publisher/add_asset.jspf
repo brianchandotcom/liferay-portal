@@ -188,9 +188,9 @@ public PortletURL getAddPortletURL(LiferayPortletRequest liferayPortletRequest, 
 		}
 
 		if (className.equals(JournalArticle.class.getName())) {
-			JournalStructure structure = JournalStructureLocalServiceUtil.getJournalStructure(classTypeId);
+			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(classTypeId);
 
-			addPortletURL.setParameter("structureId", structure.getStructureId());
+			addPortletURL.setParameter("structureId", structure.getStructureKey());
 		}
 	}
 

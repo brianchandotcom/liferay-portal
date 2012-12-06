@@ -23,22 +23,23 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
-import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
-import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
-import com.liferay.portlet.journal.service.permission.JournalStructurePermission;
 
 import java.util.HashMap;
 import java.util.List;
@@ -122,11 +123,14 @@ public class JournalArticleAssetRendererFactory
 		Map<Long, String> classTypes = new HashMap<Long, String>();
 
 		for (long groupId : groupIds) {
-			List<JournalStructure> structures =
-				JournalStructureLocalServiceUtil.getStructures(groupId);
+			List<DDMStructure> structures =
+				DDMStructureLocalServiceUtil.getStructures(
+					groupId,
+					PortalUtil.getClassNameId(JournalArticle.class.getName()));
 
-			for (JournalStructure structure : structures) {
-				classTypes.put(structure.getId(), structure.getName(locale));
+			for (DDMStructure structure : structures) {
+				classTypes.put(
+					structure.getStructureId(), structure.getName(locale));
 			}
 		}
 
@@ -161,7 +165,7 @@ public class JournalArticleAssetRendererFactory
 				WebKeys.ASSET_RENDERER_FACTORY_CLASS_TYPE_ID));
 
 		if ((classTypeId > 0) &&
-			!JournalStructurePermission.contains(
+			!DDMStructurePermission.contains(
 				themeDisplay.getPermissionChecker(), classTypeId,
 				ActionKeys.VIEW)) {
 

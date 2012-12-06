@@ -109,6 +109,10 @@ public class FooService {
 		return clazz.getName();
 	}
 
+	public static FooData2 two() {
+		return new FooData2();
+	}
+
 	public static String use1(FooDataImpl fooData) {
 		return "using #1: " + fooData.toString();
 	}

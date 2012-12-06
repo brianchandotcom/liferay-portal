@@ -15,6 +15,7 @@
 package com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.userviewwebcontentassignedtomyrolesstaging;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 
@@ -37,7 +38,7 @@ public class User_ViewWebContentAssignedToMyRolesStagingTests
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User_SignInTest.class);
 		testSuite.addTestSuite(User_ViewWebContent1WorkflowTasksAssignedToMyRolesTest.class);
-		testSuite.addTestSuite(User_SignOutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(ActivateStagingTest.class);
 		testSuite.addTestSuite(ConfigureWebContentSingleApproverSiteStagingTest.class);
@@ -45,7 +46,7 @@ public class User_ViewWebContentAssignedToMyRolesStagingTests
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User_SignInTest.class);
 		testSuite.addTestSuite(User_ViewWebContent2AssignedToMyRolesStagingTest.class);
-		testSuite.addTestSuite(User_SignOutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

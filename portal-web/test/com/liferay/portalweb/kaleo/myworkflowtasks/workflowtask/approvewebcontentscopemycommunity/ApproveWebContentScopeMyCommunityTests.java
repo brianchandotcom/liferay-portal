@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.approvewebcontentscopemycommunity;
 
+import com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.assigntomewebcontentscopemycommunity.AddWebContentScopeMyCommunityTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;

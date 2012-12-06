@@ -14,7 +14,14 @@
 
 package com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.assigntomewebcontentresubmitactions;
 
+import com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.advancedsearchwebcontentworkflowtaskname.AddWebContentTest;
+import com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.assigntomewebcontentactions.AssignToMeWebContentActionsTest;
+import com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.rejectwebcontentactions.RejectWebContentActionsTest;
+import com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.resubmitwebcontentactions.ResubmitWebContentActionsTest;
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrydefaultnoworkflow.TearDownWorkflowConfigurationTest;
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configurewebcontentsingleapprover.ConfigureWebContentSingleApproverTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +39,7 @@ public class AssignToMeWebContentResubmitActionsTests extends BaseTestSuite {
 		testSuite.addTestSuite(ResubmitWebContentActionsTest.class);
 		testSuite.addTestSuite(AssignToMeWebContentResubmitActionsTest.class);
 		testSuite.addTestSuite(ViewWebContentResubmitAssignedToMeTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
 
 		return testSuite;

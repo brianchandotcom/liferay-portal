@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -64,7 +84,7 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>
@@ -84,6 +104,16 @@
 	<td>Activities</td>
 </tr>
 <tr>
+	<td>storeVisible</td>
+	<td>//div[@class='task-activity task-type-3']/div[2]</td>
+	<td>activities1NotVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${activities1NotVisible}</td>
+	<td>Activities1Visible</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//div[@class='lfr-panel-container task-panel-container']/div[2]/div/div/span</td>
 	<td>Activities</td>
@@ -91,6 +121,11 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='task-activity task-type-3']/div[2]</td>
+	<td>Activities</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Activities1Visible</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,33 +160,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Single Approver</td>
-</tr>
-<tr>
-	<td>assertText</td>
 	<td>//td[2]/a</td>
 	<td>Web Content Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>Web Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Approved</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[5]/a</td>
-	<td>Last Activity Date</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[6]/a</td>
-	<td>End Date</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -171,7 +181,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='task-activity task-type-3']/div[2]</td>
-	<td></td>
+	<td>Activities</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -189,34 +199,29 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//td[2]/a</td>
-	<td>Web Content ID</td>
+	<td>assertVisible</td>
+	<td>//a[contains(@title,'Web Content Name')]/div/img</td>
+	<td>Web Content Name Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//a[@class='entry-link']/span[@class='entry-title']</td>
+	<td>Web Content Name</td>
+</tr>
+<tr>
+	<td>assertNotPartialText</td>
+	<td>//a[@class='entry-link']/span[@class='entry-title']</td>
+	<td>(Pending)</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@class='entry-link']/span[@class='entry-title']</td>
 	<td>Web Content Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//strong[@class='workflow-status-approved']</td>
 	<td>Approved</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[5]/a</td>
-	<td>Modified Date</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[6]/a</td>
-	<td>Display Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[7]/a</td>
-	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -245,33 +250,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Single Approver</td>
-</tr>
-<tr>
-	<td>assertText</td>
 	<td>//td[2]/a</td>
 	<td>Web Content Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>Web Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Approved</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[5]/a</td>
-	<td>Last Activity Date</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[6]/a</td>
-	<td>End Date</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -284,6 +264,16 @@
 	<td>Activities</td>
 </tr>
 <tr>
+	<td>storeVisible</td>
+	<td>//div[@class='task-activity task-type-3']/div[2]</td>
+	<td>activities2NotVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${activities2NotVisible}</td>
+	<td>Activities2Visible</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//div[@class='lfr-panel-container task-panel-container']/div[3]/div/div/span</td>
 	<td>Activities</td>
@@ -291,6 +281,11 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='task-activity task-type-3']/div[2]</td>
+	<td>Activities</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Activities2Visible</td>
 	<td></td>
 </tr>
 <tr>
@@ -303,7 +298,6 @@
 	<td>//div[@class='task-activity task-type-3']/div[3]</td>
 	<td>Web Content Comment Approve</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

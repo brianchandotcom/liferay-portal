@@ -10,8 +10,18 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/web/joebloggs/home/</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -50,28 +60,38 @@
 </tr>
 <tr>
 	<td>select</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']</td>
+	<td>No Workflow</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.User']</td>
+	<td>No Workflow</td>
+</tr>
+<tr>
+	<td>select</td>
 	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']</td>
-	<td>label=No workflow</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']</td>
-	<td>label=No workflow</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']</td>
-	<td>label=No workflow</td>
+	<td>No Workflow</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']</td>
-	<td>label=No workflow</td>
+	<td>No Workflow</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']</td>
+	<td>No Workflow</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']</td>
+	<td>No Workflow</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']</td>
-	<td>label=No workflow</td>
+	<td>No Workflow</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -82,6 +102,41 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']</td>
+	<td>No Workflow</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.User']</td>
+	<td>No Workflow</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']</td>
+	<td>No Workflow</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']</td>
+	<td>No Workflow</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']</td>
+	<td>No Workflow</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']</td>
+	<td>No Workflow</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']</td>
+	<td>No Workflow</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -90,28 +145,33 @@
 </tr>
 <tr>
 	<td>select</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']</td>
+	<td>Default: No Workflow</td>
+</tr>
+<tr>
+	<td>select</td>
 	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']</td>
-	<td>label=Default: No workflow</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']</td>
-	<td>label=Default: No workflow</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']</td>
-	<td>label=Default: No workflow</td>
+	<td>Default: No Workflow</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']</td>
-	<td>label=Default: No workflow</td>
+	<td>Default: No Workflow</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']</td>
+	<td>Default: No Workflow</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']</td>
+	<td>Default: No Workflow</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']</td>
-	<td>label=Default: No workflow</td>
+	<td>Default: No Workflow</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -123,7 +183,36 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']</td>
+	<td>Default: No Workflow</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']</td>
+	<td>Default: No Workflow</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']</td>
+	<td>Default: No Workflow</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']</td>
+	<td>Default: No Workflow</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']</td>
+	<td>Default: No Workflow</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']</td>
+	<td>Default: No Workflow</td>
+</tr>
 </tbody></table>
 </body>
 </html>

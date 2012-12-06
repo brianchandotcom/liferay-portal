@@ -161,7 +161,7 @@ AUI.add(
 
 				var hash = location.hash;
 
-				if (hash != instance._hash) {
+				if (hash && hash != instance._hash) {
 					A.fire('formNavigator:revealSection', hash);
 
 					Liferay.Util.getTop().Liferay.fire(

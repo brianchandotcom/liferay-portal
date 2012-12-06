@@ -17,7 +17,10 @@ package com.liferay.portlet.messageboards.action;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,6 +52,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Daniel Sanz
@@ -68,10 +74,12 @@ public class EditCategoryAction extends PortletAction {
 				updateCategory(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCategories(actionRequest, false);
+				deleteCategories(
+					(LiferayPortletConfig)portletConfig, actionRequest, false);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteCategories(actionRequest, true);
+				deleteCategories(
+					(LiferayPortletConfig)portletConfig, actionRequest, true);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribeCategory(actionRequest);
@@ -135,12 +143,13 @@ public class EditCategoryAction extends PortletAction {
 	}
 
 	protected void deleteCategories(
+			LiferayPortletConfig liferayPortletConfig,
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
-		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
-
 		long[] deleteCategoryIds = null;
+
+		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
 
 		if (categoryId > 0) {
 			deleteCategoryIds = new long[] {categoryId};
@@ -161,6 +170,23 @@ public class EditCategoryAction extends PortletAction {
 				MBCategoryServiceUtil.deleteCategory(
 					themeDisplay.getScopeGroupId(), deleteCategoryId);
 			}
+		}
+
+		if (moveToTrash && (deleteCategoryIds.length > 0)) {
+			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(
+				"restoreEntryIds", ArrayUtil.toStringArray(deleteCategoryIds));
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 		}
 	}
 

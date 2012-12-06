@@ -68,21 +68,9 @@ public class JSONWebServiceActionsManagerImpl
 	public JSONWebServiceAction getJSONWebServiceAction(
 		HttpServletRequest request) {
 
-		HttpSession session = request.getSession();
-
-		ServletContext servletContext = session.getServletContext();
-
-		String servletContextPath = ContextPathUtil.getContextPath(
-			servletContext);
-
 		String path = GetterUtil.getString(request.getPathInfo());
-		String method = GetterUtil.getString(request.getMethod());
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Request JSON web service action with path " + path +
-					" and method " + method + " for /" + servletContextPath);
-		}
+		String method = GetterUtil.getString(request.getMethod());
 
 		String parameterPath = null;
 
@@ -115,16 +103,15 @@ public class JSONWebServiceActionsManagerImpl
 		jsonWebServiceActionParameters.collectAll(
 			request, parameterPath, jsonRPCRequest, null);
 
-		int slashIndex = path.indexOf(CharPool.FORWARD_SLASH, 1);
+		String[] paths = _resolvePaths(request, path);
 
-		if (slashIndex != -1) {
-			int dotIndex = path.lastIndexOf(CharPool.PERIOD, slashIndex);
+		String servletContextPath = paths[0];
+		path = paths[1];
 
-			if (dotIndex != -1) {
-				servletContextPath = path.substring(0, dotIndex);
-
-				path = CharPool.FORWARD_SLASH + path.substring(dotIndex + 1);
-			}
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Request JSON web service action with path " + path +
+					" and method " + method + " for /" + servletContextPath);
 		}
 
 		int jsonWebServiceActionConfigIndex =
@@ -158,12 +145,10 @@ public class JSONWebServiceActionsManagerImpl
 		String[] parameterNames =
 			jsonWebServiceActionParameters.getParameterNames();
 
-		HttpSession session = request.getSession();
+		String[] paths = _resolvePaths(request, path);
 
-		ServletContext servletContext = session.getServletContext();
-
-		String servletContextPath = ContextPathUtil.getContextPath(
-			servletContext);
+		String servletContextPath = paths[0];
+		path = paths[1];
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -395,6 +380,32 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		return index;
+	}
+
+	private String[] _resolvePaths(HttpServletRequest request, String path) {
+		String servletContextPath = null;
+
+		int slashIndex = path.indexOf(CharPool.FORWARD_SLASH, 1);
+
+		if (slashIndex != -1) {
+			int dotIndex = path.lastIndexOf(CharPool.PERIOD, slashIndex);
+
+			if (dotIndex != -1) {
+				servletContextPath = path.substring(0, dotIndex);
+
+				path = CharPool.FORWARD_SLASH + path.substring(dotIndex + 1);
+			}
+		}
+
+		if (servletContextPath == null) {
+			HttpSession session = request.getSession();
+
+			ServletContext servletContext = session.getServletContext();
+
+			servletContextPath = ContextPathUtil.getContextPath(servletContext);
+		}
+
+		return new String[] {servletContextPath, path};
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

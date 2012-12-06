@@ -72,8 +72,6 @@ public class JSONWebServiceServiceActionTest
 
 		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction(
 			servletContext, null);
-
-		registerActionClass(FooService.class);
 	}
 
 	@AfterClass
@@ -94,6 +92,8 @@ public class JSONWebServiceServiceActionTest
 
 	@Test
 	public void testInvokerNullCall() throws Exception {
+		registerActionClass(FooService.class);
+
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
@@ -116,6 +116,8 @@ public class JSONWebServiceServiceActionTest
 
 	@Test
 	public void testInvokerSimpleCall() throws Exception {
+		registerActionClass(FooService.class);
+
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
@@ -139,6 +141,42 @@ public class JSONWebServiceServiceActionTest
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
 
+	@Test
+	public void testServletContextInvoker1() throws Exception {
+		testServletContextInvoker("/somectx", true, "/foo/hello-world");
+	}
+
+	@Test
+	public void testServletContextInvoker2() throws Exception {
+		testServletContextInvoker(
+			"/somectx", false, "/somectx.foo/hello-world");
+	}
+
+	@Test
+	public void testServletContextRequestParams1() throws Exception {
+		testServletContextRequestParams("/somectx", true, "/foo/hello-world");
+	}
+
+	@Test
+	public void testServletContextRequestParams2() throws Exception {
+		testServletContextRequestParams(
+			"/somectx", false, "/somectx.foo/hello-world");
+	}
+
+	@Test
+	public void testServletContextUrl1() throws Exception {
+		testServletContextUrl(
+			"/somectx", true,
+			"/foo/hello-world/user-id/173/world-name/Jupiter");
+	}
+
+	@Test
+	public void testServletContextUrl2() throws Exception {
+		testServletContextUrl(
+			"/somectx", false,
+			"/somectx.foo/hello-world/user-id/173/world-name/Jupiter");
+	}
+
 	protected MockHttpServletRequest createInvokerHttpServletRequest(
 		String content) {
 
@@ -150,6 +188,92 @@ public class JSONWebServiceServiceActionTest
 		mockHttpServletRequest.setRemoteUser("root");
 
 		return mockHttpServletRequest;
+	}
+
+	protected void testServletContextInvoker(
+			String ctx, boolean setContextPath, String query)
+		throws Exception {
+
+		registerActionClass(FooService.class, ctx);
+
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put(query, params);
+
+		params.put("userId", 173);
+		params.put("worldName", "Jupiter");
+
+		String json = toJSON(map);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			createInvokerHttpServletRequest(json);
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		if (setContextPath) {
+			mockHttpServletRequest.setContextPath(ctx);
+		}
+
+		json = _jsonWebServiceServiceAction.getJSON(
+			new ActionMapping(), new DynaActionForm(), mockHttpServletRequest,
+			mockHttpServletResponse);
+
+		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
+	}
+
+	protected void testServletContextRequestParams(
+			String ctx, boolean setContextPath, String request)
+		throws Exception {
+
+		registerActionClass(FooService.class, ctx);
+
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			request);
+
+		mockHttpServletRequest.setParameter("userId", "173");
+		mockHttpServletRequest.setParameter("worldName", "Jupiter");
+
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
+
+		if (setContextPath) {
+			mockHttpServletRequest.setContextPath(ctx);
+		}
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		String json = _jsonWebServiceServiceAction.getJSON(
+			new ActionMapping(), new DynaActionForm(), mockHttpServletRequest,
+			mockHttpServletResponse);
+
+		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
+	}
+
+	protected void testServletContextUrl(
+			String ctx, boolean setContextPath, String request)
+		throws Exception {
+
+		registerActionClass(FooService.class, ctx);
+
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			request);
+
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
+
+		if (setContextPath) {
+			mockHttpServletRequest.setContextPath(ctx);
+		}
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		String json = _jsonWebServiceServiceAction.getJSON(
+			new ActionMapping(), new DynaActionForm(), mockHttpServletRequest,
+			mockHttpServletResponse);
+
+		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
 
 	private static JSONWebServiceServiceAction _jsonWebServiceServiceAction;

@@ -260,12 +260,14 @@ if (scriptJSONArray != null) {
 	);
 </aui:script>
 
-<aui:script use="liferay-portlet-dynamic-data-mapping">
+<aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveStructure',
 		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getXSD();
+			if (window.<portlet:namespace />formBuilder) {
+				document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getXSD();
+			}
 
 			submitForm(document.<portlet:namespace />fm);
 		},

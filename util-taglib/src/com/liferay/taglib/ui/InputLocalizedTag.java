@@ -24,6 +24,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputLocalizedTag extends IncludeTag {
 
+	public void setAutoSize(boolean autoSize) {
+		_autoSize = autoSize;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}
@@ -70,6 +74,7 @@ public class InputLocalizedTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_autoSize = false;
 		_cssClass = null;
 		_disabled = false;
 		_formName = null;
@@ -101,6 +106,8 @@ public class InputLocalizedTag extends IncludeTag {
 			id = _name;
 		}
 
+		request.setAttribute(
+			"liferay-ui:input-localized:autoSize", String.valueOf(_autoSize));
 		request.setAttribute("liferay-ui:input-localized:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:input-localized:defaultLanguageId", _defaultLanguageId);
@@ -126,6 +133,7 @@ public class InputLocalizedTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/input_localized/page.jsp";
 
+	private boolean _autoSize;
 	private String _cssClass;
 	private String _defaultLanguageId;
 	private boolean _disabled;

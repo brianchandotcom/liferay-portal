@@ -19,6 +19,7 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_localized_page");
 
+boolean autoSize = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:autoSize"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:cssClass"));
 String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-localized:defaultLanguageId");
 boolean disabled = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:input-localized:disabled"));
@@ -70,6 +71,17 @@ if (Validator.isNull(mainLanguageValue)) {
 			<textarea class="language-value <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= id + StringPool.UNDERLINE + mainLanguageId %>" name="<portlet:namespace /><%= name + StringPool.UNDERLINE + mainLanguageId %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(mainLanguageValue) %></textarea>
 		</c:when>
 	</c:choose>
+
+	<c:if test="<%= autoSize %>">
+		<aui:script use="liferay-textarea">
+			new Liferay.Textarea(
+				{
+					autoSize: true,
+					node: '#<portlet:namespace /><%= id + StringPool.UNDERLINE + mainLanguageId %>'
+				}
+			).render();
+		</aui:script>
+	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(maxLength) %>">
 		<aui:script use="aui-char-counter">

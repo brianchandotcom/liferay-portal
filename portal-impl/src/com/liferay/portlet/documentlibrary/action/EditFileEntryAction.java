@@ -775,11 +775,16 @@ public class EditFileEntryAction extends PortletAction {
 
 			long size = uploadPortletRequest.getSize("file");
 
-			if ((cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_DYNAMIC)) && (size == 0)) {
+			if ((cmd.equals(Constants.ADD) ||
+			    cmd.equals(Constants.ADD_DYNAMIC)) &&
+			    (size == 0)) {
+
 				contentType = MimeTypesUtil.getContentType(title);
 			}
 
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_DYNAMIC) || (size > 0)) {
+			if (cmd.equals(Constants.ADD) ||
+			    cmd.equals(Constants.ADD_DYNAMIC) || (size > 0)) {
+
 				String portletName = portletConfig.getPortletName();
 
 				if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
@@ -812,7 +817,8 @@ public class EditFileEntryAction extends PortletAction {
 
 			FileEntry fileEntry = null;
 
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_DYNAMIC)) {
+			if (cmd.equals(Constants.ADD) ||
+			    cmd.equals(Constants.ADD_DYNAMIC)) {
 
 				// Add file entry
 

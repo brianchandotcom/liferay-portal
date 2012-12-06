@@ -1,23 +1,5 @@
 @import "compass";
 
-.app-view-entry-taglib {
-	.upload-error:after {
-		content: url(@theme_image_path@/messages/alert.png);
-		display: block;
-		left: 50%;
-		position: absolute;
-		top: 50%;
-	}
-
-	.upload-success:after {
-		content: url(@theme_image_path@/messages/success.png);
-		display: block;
-		left: 50%;
-		position: absolute;
-		top: 50%;
-	}
-}
-
 .portlet-document-library, .portlet-document-library-display {
 	.file-entry-list-description {
 		font-style: italic;
@@ -407,6 +389,38 @@
 			clear: left;
 		}
 	}
+
+	.app-view-entry-taglib.entry-display-style.display-icon {
+		.entry-title {
+			padding-right: 20px;
+			position: relative;
+
+			.folder-error-icon {
+				background: url(@theme_image_path@/messages/error.png) no-repeat 50%;
+				display: inline-block;
+				height: 16px;
+				position: absolute;
+				right: 5px;
+				vertical-align: middle;
+				width: 16px;
+			}
+		}
+
+		.upload-error:after, .upload-success:after {
+			display: block;
+			left: 50%;
+			position: absolute;
+			top: 50%;
+		}
+
+		.upload-error:after {
+			content: url(@theme_image_path@/messages/alert.png);
+		}
+
+		.upload-success:after {
+			content: url(@theme_image_path@/messages/success.png);
+		}
+	}
 }
 
 .portlet-document-library, .portlet-document-library-display, .portlet-trash {
@@ -556,6 +570,12 @@
 			.lfr-panel-titlebar {
 				border-bottom-width: 0;
 			}
+		}
+	}
+
+	.upload-drop-active &, .upload-drop-intent & {
+		.document-container {
+			background-color: #EEF4FF;
 		}
 	}
 }

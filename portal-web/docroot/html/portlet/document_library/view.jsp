@@ -79,16 +79,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 </portlet:actionURL>
 
 <liferay-util:buffer var="uploadURL">
-	<liferay-portlet:actionURL>
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" />
-		<portlet:param name="folderId" value="{folderId}" />
-		<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-		<portlet:param name="struts_action" value="/document_library/view_file_entry" />
-	</liferay-portlet:actionURL>
-</liferay-util:buffer>
-
-<liferay-util:buffer var="inputPermissions">
-	<liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />
+	<liferay-portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /><portlet:param name="struts_action" value="/document_library/view_file_entry" /></liferay-portlet:actionURL><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />
 </liferay-util:buffer>
 
 <liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
@@ -157,7 +148,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 						<c:otherwise>
 							<liferay-util:include page="/html/portlet/document_library/view_entries.jsp" />
 
-							<%@ include file="/html/portlet/document_library/file_entries_template.jsp" %>
+							<%@ include file="/html/portlet/document_library/file_entries_template.jspf" %>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -287,7 +278,7 @@ if (folder != null) {
 			syncMessageSuppressed: <%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true")) %>,
 			tempFolderURL: '',
 			updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>,
-			uploadURL: '<%= HtmlUtil.extractText(uploadURL + inputPermissions) %>',
+			uploadURL: '<%= HtmlUtil.extractText(uploadURL) %>',
 			viewFileEntryUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/view_file_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
 		}
 	);

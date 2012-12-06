@@ -190,13 +190,12 @@ public abstract class FindAction extends Action {
 								if (portletId.equals(curRootPortletId)) {
 									portletId = curPortletId;
 
-									return new Object[] {plid, portletId};
+									break;
 								}
 							}
 						}
-						else {
-							return new Object[] {plid, portletId};
-						}
+
+						return new Object[] {plid, portletId};
 					}
 				}
 			}

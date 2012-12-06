@@ -41,7 +41,7 @@ if (Validator.isNotNull(scriptContent)) {
 <aui:field-wrapper label="script">
 	<aui:input label="" name="script" type="file" />
 
-	<aui:button name="editorButton" value="launch-editor" />
+	<liferay-util:include page="/html/portlet/dynamic_data_mapping/edit_template_xsl.jsp" />
 </aui:field-wrapper>
 
 <aui:script>

@@ -27,6 +27,8 @@ public class CharPool {
 
 	public static final char BACK_SLASH = '\\';
 
+	public static final char BACK_TICK = '`';
+
 	public static final char CLOSE_BRACKET = ']';
 
 	public static final char CLOSE_CURLY_BRACE = '}';
@@ -38,6 +40,8 @@ public class CharPool {
 	public static final char COMMA = ',';
 
 	public static final char DASH = '-';
+
+	public static final char DOLLAR = '$';
 
 	public static final char EQUAL = '=';
 

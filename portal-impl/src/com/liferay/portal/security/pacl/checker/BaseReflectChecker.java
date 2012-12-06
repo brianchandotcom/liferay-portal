@@ -24,6 +24,8 @@ import com.liferay.portal.security.pacl.PACLClassUtil;
 
 import java.beans.Introspector;
 
+import jodd.util.ReflectUtil;
+
 import org.hibernate.property.BasicPropertyAccessor;
 import org.hibernate.tuple.entity.EntityTuplizerFactory;
 import org.hibernate.util.ReflectHelper;
@@ -89,6 +91,14 @@ public abstract class BaseReflectChecker extends BaseChecker {
 				return true;
 			}
 		//}
+
+		// jodd.util.ReflectUtil
+
+		if (callerClass9 == ReflectUtil.class) {
+			logReflect(callerClass9, 9);
+
+			return true;
+		}
 
 		// java.lang.Class
 

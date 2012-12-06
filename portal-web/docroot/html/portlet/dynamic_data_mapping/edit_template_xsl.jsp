@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
 
 <%
 String langType = ParamUtil.getString(request, "langType");
@@ -25,10 +25,10 @@ String editorContentOutputElement = ParamUtil.getString(request, "editorContentO
 String editorType = ParamUtil.getString(request, "editorType");
 
 if (Validator.isNotNull(editorType)) {
-	portalPreferences.setValue(PortletKeys.JOURNAL, "editor-type", editorType);
+	portalPreferences.setValue(PortletKeys.DYNAMIC_DATA_MAPPING, "editor-type", editorType);
 }
 else {
-	editorType = portalPreferences.getValue(PortletKeys.JOURNAL, "editor-type", "plain");
+	editorType = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "editor-type", "plain");
 }
 
 boolean useRichEditor = editorType.equals("rich");
@@ -119,7 +119,7 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 			richEditor.editor.resize();
 		}
 
-		var uri = '<portlet:renderURL><portlet:param name="struts_action" value="/journal/edit_template_xsl" /></portlet:renderURL>&editorType=' + newEditorType;
+		var uri = '<portlet:renderURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template_xsl" /></portlet:renderURL>&editorType=' + newEditorType;
 
 		A.io.request(uri);
 

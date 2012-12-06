@@ -552,6 +552,10 @@
 		<put name="portlet_content" value="/portlet/dynamic_data_mapping/edit_template.jsp" />
 	</definition>
 
+	<definition name="portlet.dynamic_data_mapping.edit_template_xsl" extends="portlet.dynamic_data_mapping">
+		<put name="portlet_content" value="/portlet/dynamic_data_mapping/edit_template_xsl.jsp" />
+	</definition>
+
 	<definition name="portlet.dynamic_data_mapping.error" extends="portlet.dynamic_data_mapping">
 		<put name="portlet_content" value="/portlet/dynamic_data_mapping/error.jsp" />
 	</definition>

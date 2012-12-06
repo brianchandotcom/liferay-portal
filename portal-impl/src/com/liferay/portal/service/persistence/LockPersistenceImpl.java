@@ -2940,6 +2940,12 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "uuid", "key" };
 	private static final String _SQL_SELECT_LOCK = "SELECT lock FROM Lock lock";
 	private static final String _SQL_SELECT_LOCK_WHERE = "SELECT lock FROM Lock lock WHERE ";
 	private static final String _SQL_COUNT_LOCK = "SELECT COUNT(lock) FROM Lock lock";

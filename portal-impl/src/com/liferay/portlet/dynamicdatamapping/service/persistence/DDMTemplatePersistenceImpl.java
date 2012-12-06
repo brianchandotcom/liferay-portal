@@ -1886,11 +1886,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -3733,6 +3733,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "ddmTemplate.type IS NULL";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "ddmTemplate.type = ?";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = ?)";
+	private static final String _FINDER_COLUMN_TYPE_TYPE_1_ = "ddmTemplate.type_ IS NULL";
+	private static final String _FINDER_COLUMN_TYPE_TYPE_2_ = "ddmTemplate.type_ = ?";
+	private static final String _FINDER_COLUMN_TYPE_TYPE_3_ = "(ddmTemplate.type IS NULL OR ddmTemplate.type_ = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LANGUAGE = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLanguage",
@@ -4770,11 +4773,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -5951,11 +5954,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -6933,6 +6936,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	private static final String _FINDER_COLUMN_C_C_T_TYPE_1 = "ddmTemplate.type IS NULL";
 	private static final String _FINDER_COLUMN_C_C_T_TYPE_2 = "ddmTemplate.type = ?";
 	private static final String _FINDER_COLUMN_C_C_T_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = ?)";
+	private static final String _FINDER_COLUMN_C_C_T_TYPE_1_ = "ddmTemplate.type_ IS NULL";
+	private static final String _FINDER_COLUMN_C_C_T_TYPE_2_ = "ddmTemplate.type_ = ?";
+	private static final String _FINDER_COLUMN_C_C_T_TYPE_3_ = "(ddmTemplate.type IS NULL OR ddmTemplate.type_ = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_T_M = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T_M",
@@ -7593,9 +7599,15 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	private static final String _FINDER_COLUMN_C_C_T_M_TYPE_1 = "ddmTemplate.type IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_C_T_M_TYPE_2 = "ddmTemplate.type = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_T_M_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = ?) AND ";
+	private static final String _FINDER_COLUMN_C_C_T_M_TYPE_1_ = "ddmTemplate.type_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_C_T_M_TYPE_2_ = "ddmTemplate.type_ = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_T_M_TYPE_3_ = "(ddmTemplate.type IS NULL OR ddmTemplate.type_ = ?) AND ";
 	private static final String _FINDER_COLUMN_C_C_T_M_MODE_1 = "ddmTemplate.mode IS NULL";
 	private static final String _FINDER_COLUMN_C_C_T_M_MODE_2 = "ddmTemplate.mode = ?";
 	private static final String _FINDER_COLUMN_C_C_T_M_MODE_3 = "(ddmTemplate.mode IS NULL OR ddmTemplate.mode = ?)";
+	private static final String _FINDER_COLUMN_C_C_T_M_MODE_1_ = "ddmTemplate.mode_ IS NULL";
+	private static final String _FINDER_COLUMN_C_C_T_M_MODE_2_ = "ddmTemplate.mode_ = ?";
+	private static final String _FINDER_COLUMN_C_C_T_M_MODE_3_ = "(ddmTemplate.mode IS NULL OR ddmTemplate.mode_ = ?)";
 
 	/**
 	 * Caches the d d m template in the entity cache if it is enabled.
@@ -8508,6 +8520,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"uuid", "type", "mode"
+		};
 	private static final String _SQL_SELECT_DDMTEMPLATE = "SELECT ddmTemplate FROM DDMTemplate ddmTemplate";
 	private static final String _SQL_SELECT_DDMTEMPLATE_WHERE = "SELECT ddmTemplate FROM DDMTemplate ddmTemplate WHERE ";
 	private static final String _SQL_COUNT_DDMTEMPLATE = "SELECT COUNT(ddmTemplate) FROM DDMTemplate ddmTemplate";

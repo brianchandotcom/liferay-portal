@@ -2801,6 +2801,14 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"uuid", "type"
+		};
 	private static final String _SQL_SELECT_USERNOTIFICATIONEVENT = "SELECT userNotificationEvent FROM UserNotificationEvent userNotificationEvent";
 	private static final String _SQL_SELECT_USERNOTIFICATIONEVENT_WHERE = "SELECT userNotificationEvent FROM UserNotificationEvent userNotificationEvent WHERE ";
 	private static final String _SQL_COUNT_USERNOTIFICATIONEVENT = "SELECT COUNT(userNotificationEvent) FROM UserNotificationEvent userNotificationEvent";

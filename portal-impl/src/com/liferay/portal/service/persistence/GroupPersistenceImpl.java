@@ -7884,6 +7884,14 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		private SqlUpdate _sqlUpdate;
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"type", "active"
+		};
 	private static final String _SQL_SELECT_GROUP_ = "SELECT group_ FROM Group group_";
 	private static final String _SQL_SELECT_GROUP__WHERE = "SELECT group_ FROM Group group_ WHERE ";
 	private static final String _SQL_COUNT_GROUP_ = "SELECT COUNT(group_) FROM Group group_";

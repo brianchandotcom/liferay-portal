@@ -2456,6 +2456,12 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "active" };
 	private static final String _SQL_SELECT_REGION = "SELECT region FROM Region region";
 	private static final String _SQL_SELECT_REGION_WHERE = "SELECT region FROM Region region WHERE ";
 	private static final String _SQL_COUNT_REGION = "SELECT COUNT(region) FROM Region region";

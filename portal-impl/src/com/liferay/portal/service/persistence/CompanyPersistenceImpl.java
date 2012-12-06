@@ -1910,6 +1910,14 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"key", "active"
+		};
 	private static final String _SQL_SELECT_COMPANY = "SELECT company FROM Company company";
 	private static final String _SQL_SELECT_COMPANY_WHERE = "SELECT company FROM Company company WHERE ";
 	private static final String _SQL_COUNT_COMPANY = "SELECT COUNT(company) FROM Company company";

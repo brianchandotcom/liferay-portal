@@ -2545,6 +2545,14 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"uuid", "type"
+		};
 	private static final String _SQL_SELECT_MDRRULE = "SELECT mdrRule FROM MDRRule mdrRule";
 	private static final String _SQL_SELECT_MDRRULE_WHERE = "SELECT mdrRule FROM MDRRule mdrRule WHERE ";
 	private static final String _SQL_COUNT_MDRRULE = "SELECT COUNT(mdrRule) FROM MDRRule mdrRule";

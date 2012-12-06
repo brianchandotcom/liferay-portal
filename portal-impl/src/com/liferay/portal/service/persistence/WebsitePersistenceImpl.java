@@ -3336,6 +3336,12 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "primary" };
 	private static final String _SQL_SELECT_WEBSITE = "SELECT website FROM Website website";
 	private static final String _SQL_SELECT_WEBSITE_WHERE = "SELECT website FROM Website website WHERE ";
 	private static final String _SQL_COUNT_WEBSITE = "SELECT COUNT(website) FROM Website website";

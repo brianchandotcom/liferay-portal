@@ -1883,11 +1883,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -4513,11 +4513,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -5700,11 +5700,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -6952,14 +6952,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_1_);
 		}
 		else {
 			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_3_);
 			}
 			else {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_2_);
 			}
 		}
 
@@ -6970,11 +6970,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -7096,14 +7096,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_1_);
 		}
 		else {
 			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_3_);
 			}
 			else {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_2_);
 			}
 		}
 
@@ -7346,14 +7346,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_1_);
 		}
 		else {
 			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_3_);
 			}
 			else {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_2_);
 			}
 		}
 
@@ -7398,6 +7398,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_1 = "layout.type IS NULL";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_2 = "layout.type = ?";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_3 = "(layout.type IS NULL OR layout.type = ?)";
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_1_ = "layout.type_ IS NULL";
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_2_ = "layout.type_ = ?";
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_3_ = "(layout.type IS NULL OR layout.type_ = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_P_SPLU = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_SPLU",
@@ -8716,6 +8719,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"uuid", "type", "hidden"
+		};
 	private static final String _SQL_SELECT_LAYOUT = "SELECT layout FROM Layout layout";
 	private static final String _SQL_SELECT_LAYOUT_WHERE = "SELECT layout FROM Layout layout WHERE ";
 	private static final String _SQL_COUNT_LAYOUT = "SELECT COUNT(layout) FROM Layout layout";

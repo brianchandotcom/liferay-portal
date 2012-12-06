@@ -14,17 +14,21 @@
 
 package com.liferay.portlet.blogs.util;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.blogs.EntryDisplayDateException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.model.impl.BlogsEntryImpl;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
-import java.io.InputStream;
+import java.util.Date;
 
 /**
  * @author Zsolt Berentey
@@ -45,30 +49,57 @@ public class BlogsTestUtil {
 		int displayDateMinute = 0;
 		boolean allowPingbacks = true;
 		boolean allowTrackbacks = true;
-		String[] trackbacks = new String[0];
 		boolean smallImage = false;
 		String smallImageURL = StringPool.BLANK;
-		String smallImageFileName = StringPool.BLANK;
-		InputStream smallImageInputStream = null;
+
+		User user = UserLocalServiceUtil.getUser(userId);
+
+		Date displayDate = PortalUtil.getDate(
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, user.getTimeZone(),
+			EntryDisplayDateException.class);
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			userId, title, description, content, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
-			smallImageURL, smallImageFileName, smallImageInputStream,
-			serviceContext);
+		Date now = new Date();
+
+		int status = WorkflowConstants.STATUS_DRAFT;
 
 		if (approved) {
-			BlogsEntryLocalServiceUtil.updateStatus(
-				GetterUtil.getLong(PrincipalThreadLocal.getName()),
-				blogsEntry.getEntryId(), WorkflowConstants.STATUS_APPROVED,
-				serviceContext);
+			status = WorkflowConstants.STATUS_APPROVED;
 		}
+
+		BlogsEntry blogsEntry = new BlogsEntryImpl();
+
+		long blogsEntryId = CounterLocalServiceUtil.increment();
+
+		blogsEntry.setEntryId(blogsEntryId);
+		blogsEntry.setUuid(serviceContext.getUuid());
+		blogsEntry.setGroupId(group.getGroupId());
+		blogsEntry.setCompanyId(user.getCompanyId());
+		blogsEntry.setUserId(user.getUserId());
+		blogsEntry.setUserName(user.getFullName());
+		blogsEntry.setCreateDate(serviceContext.getCreateDate(now));
+		blogsEntry.setModifiedDate(serviceContext.getModifiedDate(now));
+		blogsEntry.setTitle(title);
+		blogsEntry.setDescription(description);
+		blogsEntry.setContent(content);
+		blogsEntry.setDisplayDate(displayDate);
+		blogsEntry.setAllowPingbacks(allowPingbacks);
+		blogsEntry.setAllowTrackbacks(allowTrackbacks);
+		blogsEntry.setSmallImage(smallImage);
+		blogsEntry.setSmallImageURL(smallImageURL);
+		blogsEntry.setStatus(status);
+		blogsEntry.setStatusDate(serviceContext.getModifiedDate(now));
+		blogsEntry.setExpandoBridgeAttributes(serviceContext);
+
+		BlogsEntryLocalServiceUtil.addBlogsEntry(blogsEntry);
+
+		BlogsEntryLocalServiceUtil.updateAsset(
+			userId, blogsEntry, new long[0], new String[0], new long[0]);
 
 		return blogsEntry;
 	}

@@ -18,6 +18,7 @@
 
 <%
 String portletURL = (String)request.getAttribute("liferay-ui:trash-undo:portletURL");
+String redirect = GetterUtil.getString((String)request.getAttribute("liferay-ui:trash-undo:redirect"), currentURL);
 
 if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA)) {
 	Map<String, String[]> data = (HashMap<String, String[]>)SessionMessages.get(portletRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
@@ -40,7 +41,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 
 				<a class="trash-undo-link" href="javascript:;" id="<%= namespace %>undo"><liferay-ui:message key="undo" /></a>
 
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 				<%
 				for (String key : keys) {

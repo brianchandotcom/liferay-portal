@@ -38,9 +38,14 @@ public class TrashUndoTag extends IncludeTag {
 		_portletURL = portletURL;
 	}
 
+	public void setRedirect(String redirect) {
+		_redirect = redirect;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_portletURL = null;
+		_redirect = null;
 	}
 
 	@Override
@@ -56,6 +61,7 @@ public class TrashUndoTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:trash-undo:portletURL", _portletURL);
+		request.setAttribute("liferay-ui:trash-undo:redirect", _redirect);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -63,5 +69,6 @@ public class TrashUndoTag extends IncludeTag {
 	private static final String _PAGE = "/html/taglib/ui/trash_undo/page.jsp";
 
 	private String _portletURL;
+	private String _redirect;
 
 }

@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.sitemap.portlet.configureportletrootlayout
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.sitemap.portlet.addportletchildpage.AddChildPageTest;
 import com.liferay.portalweb.portlet.sitemap.portlet.addportletsm.AddPageSMTest;
 import com.liferay.portalweb.portlet.sitemap.portlet.addportletsm.AddPortletSMTest;
 

@@ -30,9 +30,9 @@ public class AssertConfigurePortletDisplayStyle2Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText(
-				"//div/ul[@class='breadcrumbs breadcrumbs-vertical lfr-component']/li[1]/span/a"));
+				"//div[@class='portlet-body']/ul/li[@class='first']/span/a"));
 		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
 			selenium.getText(
-				"//div/ul[@class='breadcrumbs breadcrumbs-vertical lfr-component']/li[2]/span/a"));
+				"//div[@class='portlet-body']/ul/li[@class='last']/span/a"));
 	}
 }

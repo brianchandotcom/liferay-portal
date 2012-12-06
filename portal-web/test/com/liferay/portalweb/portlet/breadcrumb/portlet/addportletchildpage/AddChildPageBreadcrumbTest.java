@@ -132,12 +132,12 @@ public class AddChildPageBreadcrumbTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 				selenium.mouseOver("link=Breadcrumb Test Page");
 				selenium.waitForVisible("link=Child Test Page");
-				assertTrue(selenium.isVisible("link=Child Test Page"));
 				selenium.clickAt("link=Child Test Page",
 					RuntimeVariables.replace("Child Test Page"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Child Test Page"),
-					selenium.getText("//nav/ul/li[3]/span/a"));
+					selenium.getText(
+						"//nav[@id='breadcrumbs']/ul/li[@class='last']/span/a"));
 
 			case 100:
 				label = -1;

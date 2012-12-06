@@ -358,3 +358,15 @@ update WikiNode set status = 0;
 update WikiNode set statusByUserId = userId;
 update WikiNode set statusByUserName = userName;
 update WikiNode set statusDate = modifiedDate;
+
+alter table MBCategory add status INTEGER;
+alter table MBCategory add statusByUserId LONG;
+alter table MBCategory add statusByUserName VARCHAR(75) null;
+alter table MBCategory add statusDate DATE null;
+
+COMMIT_TRANSACTION;
+
+update MBCategory set status = 0;
+update MBCategory set statusByUserId = userId;
+update MBCategory set statusByUserName = userName;
+update MBCategory set statusDate = modifiedDate;

@@ -23,8 +23,10 @@ import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 /**
@@ -69,6 +71,22 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		return null;
 	}
 
+	public MBCategory getTrashCategory() {
+		try {
+			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
+				getCategoryId());
+
+			if (category.isInTrash()) {
+				return category;
+			}
+
+			return category.getTrashCategory();
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
 	public boolean hasLock(long userId) {
 		try {
 			return LockLocalServiceUtil.hasLock(
@@ -78,6 +96,15 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		}
 
 		return false;
+	}
+
+	public boolean isInTrashCategory() {
+		if (getTrashCategory() != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public boolean isLocked() {

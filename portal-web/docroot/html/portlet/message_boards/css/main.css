@@ -13,6 +13,10 @@
 		float: right;
 	}
 
+	.col-category-subscription {
+		font-size: large;
+	}
+
 	.code {
 		background: #fff;
 		border: 1px solid #777;

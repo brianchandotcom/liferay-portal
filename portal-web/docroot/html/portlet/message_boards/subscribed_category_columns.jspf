@@ -23,13 +23,16 @@ StringBundler sb = new StringBundler();
 
 _buildCategoryBreadcrumb(request, curCategory, sb);
 
-sb.append("<br />");
-sb.append("<a href=\"");
+if (!curCategory.isRoot()) {
+	sb.append("<br />");
+}
+sb.append("<a class=\"col-category-subscription\" href=\"");
 sb.append(rowURL);
 sb.append("\">");
 sb.append("<strong>");
 sb.append(curCategory.getName());
 sb.append("</strong>");
+sb.append("</a>");
 
 if (Validator.isNotNull(curCategory.getDescription())) {
 	sb.append("<br />");
@@ -69,7 +72,8 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 
 	Collections.reverse(ancestors);
 
-	for (MBCategory ancestor : ancestors) {
+	for (int i = 0; i < ancestors.size(); i++) {
+		MBCategory ancestor = ancestors.get(i);
 		PortletURL portletURL = PortletURLFactoryUtil.create(request, PortletKeys.MESSAGE_BOARDS, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/message_boards/view");
@@ -80,7 +84,10 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 		sb.append("\">");
 		sb.append(ancestor.getName());
 		sb.append("</a>");
-		sb.append(" &raquo; ");
+
+		if ((i == 0) || ((i + 1) < ancestors.size())) {
+			sb.append(" &raquo; ");
+		}
 	}
 }
 %>

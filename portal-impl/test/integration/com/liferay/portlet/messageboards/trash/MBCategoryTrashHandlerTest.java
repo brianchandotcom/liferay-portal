@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.trash;
 
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -22,26 +21,19 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
- * @author Zsolt Berentey
  * @author Eduardo Garcia
  */
 @ExecutionTestListeners(
@@ -50,7 +42,7 @@ import org.junit.runner.RunWith;
 		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	public void testTrashAndDeleteDraft() throws Exception {
@@ -83,42 +75,39 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		MBCategory category = (MBCategory)parentBaseModel;
+		MBCategory parentCategory = (MBCategory)parentBaseModel;
 
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-			category.getCategoryId(), _SUBJECT, _BODY, serviceContext);
-
-		if (!approved) {
-			message = MBMessageLocalServiceUtil.updateStatus(
-				message.getStatusByUserId(), message.getMessageId(),
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
-		}
-
-		return message.getThread();
+		return MBCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(), parentCategory.getCategoryId(),
+			getSearchKeywords(), StringPool.BLANK, serviceContext);
 	}
 
 	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
-		return MBThreadLocalServiceUtil.getThread(primaryKey);
+		return MBCategoryLocalServiceUtil.getCategory(primaryKey);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return MBThread.class;
+		return MBCategory.class;
+	}
+
+	@Override
+	protected String getBaseModelName(ClassedModel classedModel) {
+		MBCategory category = (MBCategory)classedModel;
+
+		return category.getName();
 	}
 
 	@Override
 	protected int getBaseModelsNotInTrashCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_ANY);
+		MBCategory parentCategory = (MBCategory)parentBaseModel;
 
-		MBCategory category = (MBCategory)parentBaseModel;
-
-		return MBThreadLocalServiceUtil.getGroupThreadsCount(
-			category.getGroupId(), queryDefinition);
+		return MBCategoryLocalServiceUtil.getCategoriesCount(
+			parentCategory.getGroupId(), parentCategory.getCategoryId(),
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
@@ -126,39 +115,34 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		return MBCategoryServiceUtil.addCategory(
+		return MBCategoryLocalServiceUtil.addCategory(
 			TestPropsValues.getUserId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
-	}
-
-	@Override
-	protected Class<?> getParentBaseModelClass() {
-		return MBCategory.class;
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, getSearchKeywords(),
+			StringPool.BLANK, serviceContext);
 	}
 
 	@Override
 	protected String getSearchKeywords() {
-		return _SUBJECT;
+		return "Title";
 	}
 
 	@Override
-	protected boolean isAssetEntryVisible(ClassedModel classedModel)
-		throws Exception {
+	protected boolean isAssetableModel() {
+		return false;
+	}
 
-		MBMessage rootMessage = MBMessageLocalServiceUtil.getMBMessage(
-			((MBThread)classedModel).getRootMessageId());
-
-		return super.isAssetEntryVisible(rootMessage);
+	@Override
+	protected boolean isIndexableBaseModel() {
+		return false;
 	}
 
 	@Override
 	protected boolean isInTrashFolder(ClassedModel classedModel)
 		throws Exception {
 
-		MBThread thread = (MBThread)classedModel;
+		MBCategory category = (MBCategory)classedModel;
 
-		return thread.isInTrashCategory();
+		return category.isInTrashCategory();
 	}
 
 	@Override
@@ -170,34 +154,25 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		MBThreadServiceUtil.moveThreadFromTrash(
-			(Long)parentBaseModel.getPrimaryKeyObj(),
-			(Long)classedModel.getPrimaryKeyObj());
+		MBCategoryLocalServiceUtil.moveCategoryFromTrash(
+			TestPropsValues.getUserId(), (Long)classedModel.getPrimaryKeyObj(),
+			(Long)parentBaseModel.getPrimaryKeyObj());
 
 		return parentBaseModel;
 	}
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		MBThreadServiceUtil.moveThreadToTrash(primaryKey);
+		MBCategoryLocalServiceUtil.moveCategoryToTrash(
+			TestPropsValues.getUserId(), primaryKey);
 	}
 
 	@Override
 	protected void moveParentBaseModelToTrash(long primaryKey)
 		throws Exception {
 
-		MBCategoryServiceUtil.moveCategoryToTrash(primaryKey);
+		MBCategoryLocalServiceUtil.moveCategoryToTrash(
+			TestPropsValues.getUserId(), primaryKey);
 	}
-
-	@Override
-	protected int searchBaseModelsCount(Class<?> clazz, long groupId)
-		throws Exception {
-
-		return super.searchBaseModelsCount(MBMessage.class, groupId);
-	}
-
-	private static final String _BODY = "Body";
-
-	private static final String _SUBJECT = "Subject";
 
 }

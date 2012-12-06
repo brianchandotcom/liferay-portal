@@ -43,6 +43,14 @@ public class SocialActivitiesTag extends IncludeTag {
 		_displayRSSFeed = displayRSSFeed;
 	}
 
+	public void setFeedDelta(int feedDelta) {
+		_feedDelta = feedDelta;
+	}
+
+	public void setFeedDisplayStyle(String feedDisplayStyle) {
+		_feedDisplayStyle = feedDisplayStyle;
+	}
+
 	public void setFeedEnabled(boolean feedEnabled) {
 		_feedEnabled = feedEnabled;
 	}
@@ -59,16 +67,23 @@ public class SocialActivitiesTag extends IncludeTag {
 		_feedTitle = feedTitle;
 	}
 
+	public void setFeedType(String feedType) {
+		_feedType = feedType;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_activities = null;
 		_className = StringPool.BLANK;
 		_classPK = 0;
 		_displayRSSFeed = false;
+		_feedDelta = 0;
+		_feedDisplayStyle = null;
 		_feedEnabled = false;
 		_feedLink = StringPool.BLANK;
 		_feedLinkMessage = StringPool.BLANK;
 		_feedTitle = null;
+		_feedType = null;
 	}
 
 	@Override
@@ -88,6 +103,11 @@ public class SocialActivitiesTag extends IncludeTag {
 			"liferay-ui:social-activities:displayRSSFeed",
 			String.valueOf(_displayRSSFeed));
 		request.setAttribute(
+			"liferay-ui:social-activities:feedDelta",
+			String.valueOf(_feedDelta));
+		request.setAttribute(
+			"liferay-ui:social-activities:feedDisplayStyle", _feedDisplayStyle);
+		request.setAttribute(
 			"liferay-ui:social-activities:feedEnabled",
 			String.valueOf(_feedEnabled));
 		request.setAttribute(
@@ -96,6 +116,8 @@ public class SocialActivitiesTag extends IncludeTag {
 			"liferay-ui:social-activities:feedLinkMessage", _feedLinkMessage);
 		request.setAttribute(
 			"liferay-ui:social-activities:feedTitle", _feedTitle);
+		request.setAttribute(
+			"liferay-ui:social-activities:feedType", _feedType);
 	}
 
 	private static final String _PAGE =
@@ -105,9 +127,12 @@ public class SocialActivitiesTag extends IncludeTag {
 	private String _className = StringPool.BLANK;
 	private long _classPK;
 	private boolean _displayRSSFeed;
+	private int _feedDelta;
+	private String _feedDisplayStyle;
 	private boolean _feedEnabled;
 	private String _feedLink = StringPool.BLANK;
 	private String _feedLinkMessage = StringPool.BLANK;
 	private String _feedTitle;
+	private String _feedType;
 
 }

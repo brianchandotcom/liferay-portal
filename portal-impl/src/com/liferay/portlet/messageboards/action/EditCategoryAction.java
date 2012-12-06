@@ -68,7 +68,10 @@ public class EditCategoryAction extends PortletAction {
 				updateCategory(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCategories(actionRequest);
+				deleteCategories(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteCategories(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribeCategory(actionRequest);
@@ -131,25 +134,32 @@ public class EditCategoryAction extends PortletAction {
 			getForward(renderRequest, "portlet.message_boards.edit_category"));
 	}
 
-	protected void deleteCategories(ActionRequest actionRequest)
+	protected void deleteCategories(
+			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
 
+		long[] deleteCategoryIds = null;
+
 		if (categoryId > 0) {
-			MBCategoryServiceUtil.deleteCategory(
-				themeDisplay.getScopeGroupId(), categoryId);
+			deleteCategoryIds = new long[] {categoryId};
 		}
 		else {
-			long[] deleteCategoryIds = StringUtil.split(
+			deleteCategoryIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "deleteCategoryIds"), 0L);
+		}
 
-			for (int i = 0; i < deleteCategoryIds.length; i++) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		for (long deleteCategoryId : deleteCategoryIds) {
+			if (moveToTrash) {
+				MBCategoryServiceUtil.moveCategoryToTrash(deleteCategoryId);
+			}
+			else {
 				MBCategoryServiceUtil.deleteCategory(
-					themeDisplay.getScopeGroupId(), deleteCategoryIds[i]);
+					themeDisplay.getScopeGroupId(), deleteCategoryId);
 			}
 		}
 	}

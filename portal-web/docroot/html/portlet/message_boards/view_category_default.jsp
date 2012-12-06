@@ -26,13 +26,15 @@ MBCategoryDisplay categoryDisplay = (MBCategoryDisplay)request.getAttribute("vie
 Set<Long> categorySubscriptionClassPKs = (Set<Long>)request.getAttribute("view.jsp-categorySubscriptionClassPKs");
 Set<Long> threadSubscriptionClassPKs = (Set<Long>)request.getAttribute("view.jsp-threadSubscriptionClassPKs");
 
+int status = WorkflowConstants.STATUS_APPROVED;
+
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 %>
 
 <liferay-ui:panel-container cssClass="message-boards-panels" extended="<%= false %>" id="messageBoardsPanelContainer" persistState="<%= true %>">
 
 	<%
-	int categoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, categoryId);
+	int categoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, categoryId, status);
 	%>
 
 	<c:if test="<%= categoriesCount > 0 %>">
@@ -44,7 +46,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 				iteratorURL="<%= portletURL %>"
 			>
 				<liferay-ui:search-container-results
-					results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, categoryId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+					results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, categoryId, status, searchContainer.getStart(), searchContainer.getEnd()) %>"
 					total="<%= categoriesCount %>"
 				/>
 
@@ -77,8 +79,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 			iteratorURL="<%= portletURL %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= MBThreadServiceUtil.getThreads(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
+				results="<%= MBThreadServiceUtil.getThreads(scopeGroupId, categoryId, status, searchContainer.getStart(), searchContainer.getEnd()) %>"
+				total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, status) %>"
 			/>
 
 			<liferay-ui:search-container-row

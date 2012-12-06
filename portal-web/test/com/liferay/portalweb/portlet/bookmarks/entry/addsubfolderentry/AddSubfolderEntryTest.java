@@ -38,8 +38,9 @@ public class AddSubfolderEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Bookmark"),
-			selenium.getText("//div[2]/ul/li[5]/a"));
-		selenium.clickAt("//div[2]/ul/li[5]/a",
+			selenium.getText(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Bookmark')]"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Bookmark')]",
 			RuntimeVariables.replace("Add Bookmark"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",

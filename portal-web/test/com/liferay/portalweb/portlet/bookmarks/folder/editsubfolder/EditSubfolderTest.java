@@ -38,9 +38,8 @@ public class EditSubfolderTest extends BaseTestCase {
 				"This is a test subfolder."));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText(
-				"//td[4]/span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//td[4]/span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");

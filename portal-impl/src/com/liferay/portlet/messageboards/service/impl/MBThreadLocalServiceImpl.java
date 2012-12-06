@@ -679,7 +679,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (thread.getCategoryId() ==
-			MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
+				MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
 
 			return thread;
 		}
@@ -818,7 +818,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	public void updateQuestion(long threadId, boolean question)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 

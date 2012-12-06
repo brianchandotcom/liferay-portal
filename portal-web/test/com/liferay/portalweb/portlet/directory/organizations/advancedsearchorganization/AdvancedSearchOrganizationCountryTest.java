@@ -31,7 +31,6 @@ public class AdvancedSearchOrganizationCountryTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Directory Test Page");
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -40,7 +39,7 @@ public class AdvancedSearchOrganizationCountryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean advancedVisible = selenium.isVisible(
-						"link=Advanced \u00bb");
+						"//a[.='Advanced \u00bb']");
 
 				if (!advancedVisible) {
 					label = 2;
@@ -48,7 +47,7 @@ public class AdvancedSearchOrganizationCountryTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=Advanced \u00bb",
+				selenium.clickAt("//a[.='Advanced \u00bb']",
 					RuntimeVariables.replace("Advanced \u00bb"));
 
 			case 2:
@@ -59,7 +58,7 @@ public class AdvancedSearchOrganizationCountryTest extends BaseTestCase {
 					"United States");
 				selenium.select("//select[@id='_11_countryId']",
 					RuntimeVariables.replace("United States"));
-				selenium.clickAt("//input[@value='Search']",
+				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForPartialText("//select[@id='_11_countryId']",
@@ -71,7 +70,7 @@ public class AdvancedSearchOrganizationCountryTest extends BaseTestCase {
 					"Afghanistan");
 				selenium.select("//select[@id='_11_countryId']",
 					RuntimeVariables.replace("Afghanistan"));
-				selenium.clickAt("//input[@value='Search']",
+				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForPartialText("//select[@id='_11_countryId']",

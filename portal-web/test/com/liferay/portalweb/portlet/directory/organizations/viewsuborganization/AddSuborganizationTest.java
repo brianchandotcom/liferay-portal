@@ -30,7 +30,14 @@ public class AddSuborganizationTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Control Panel");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -41,7 +48,8 @@ public class AddSuborganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Search All Organizations"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
+				boolean basicVisible = selenium.isVisible(
+						"//a[.='\u00ab Basic']");
 
 				if (!basicVisible) {
 					label = 2;
@@ -49,7 +57,7 @@ public class AddSuborganizationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=\u00ab Basic",
+				selenium.clickAt("//a[.='\u00ab Basic']",
 					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 2:
@@ -59,17 +67,18 @@ public class AddSuborganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[8]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[8]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]");
 				assertEquals(RuntimeVariables.replace(
 						"Add Regular Organization"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//td[1]/a", "Test Organization");
 				assertEquals(RuntimeVariables.replace("Test Organization"),

@@ -30,7 +30,6 @@ public class SearchOrganizationTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Directory Test Page");
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -38,7 +37,8 @@ public class SearchOrganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Organizations"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
+				boolean basicVisible = selenium.isVisible(
+						"//a[.='\u00ab Basic']");
 
 				if (!basicVisible) {
 					label = 2;
@@ -46,7 +46,7 @@ public class SearchOrganizationTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=\u00ab Basic",
+				selenium.clickAt("//a[.='\u00ab Basic']",
 					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 2:
@@ -57,7 +57,8 @@ public class SearchOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace(""));
-				assertTrue(selenium.isElementPresent("link=Test Organization"));
+				assertEquals(RuntimeVariables.replace("Test Organization"),
+					selenium.getText("//tr[3]/td[1]/a"));
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("Test1 Organization1"));
 				selenium.clickAt("//input[@value='Search']",

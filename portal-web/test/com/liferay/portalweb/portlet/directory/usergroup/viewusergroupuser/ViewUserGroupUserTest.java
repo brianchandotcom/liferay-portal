@@ -25,7 +25,6 @@ public class ViewUserGroupUserTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Directory Test Page");
 		selenium.clickAt("link=Directory Test Page",
 			RuntimeVariables.replace("Directory Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -37,8 +36,9 @@ public class ViewUserGroupUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("User Group Description"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("View Users"),
-			selenium.getText("//span/a/span"));
-		selenium.clickAt("//span/a/span", RuntimeVariables.replace("View Users"));
+			selenium.getText("//a[contains(@id,'_1_menu_view-users')]/span"));
+		selenium.clickAt("//a[contains(@id,'_1_menu_view-users')]/span",
+			RuntimeVariables.replace("View Users"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("userfn"),
 			selenium.getText("//td[1]/a"));

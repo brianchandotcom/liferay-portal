@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Directory Test Page</td>
-	<td>Directory Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Directory Test Page</td>
 	<td>Directory Test Page</td>
@@ -29,8 +24,8 @@
 	<td>Organizations</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=Advanced »'))</td>
+	<td>storeVisible</td>
+	<td>//a[.='Advanced »']</td>
 	<td>advancedVisible</td>
 </tr>
 <tr>
@@ -40,7 +35,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Advanced »</td>
+	<td>//a[.='Advanced »']</td>
 	<td>Advanced »</td>
 </tr>
 <tr>
@@ -80,7 +75,7 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
+	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
 </tr>
 <tr>
@@ -130,7 +125,7 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
+	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
 </tr>
 <tr>
@@ -163,7 +158,6 @@
 	<td>Test Organization</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

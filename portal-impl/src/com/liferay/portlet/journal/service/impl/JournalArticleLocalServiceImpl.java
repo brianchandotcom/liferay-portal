@@ -3686,6 +3686,6 @@ public class JournalArticleLocalServiceImpl
 	private static Log _log = LogFactoryUtil.getLog(
 		JournalArticleLocalServiceImpl.class);
 
-	private Date _previousCheckDate = null;
+	private static Date _previousCheckDate = null;
 
 }

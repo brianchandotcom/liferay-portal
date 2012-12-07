@@ -297,7 +297,12 @@ public class AssetEntryQuery {
 	public void setAllTagIds(long[] allTagIds) {
 		_allTagIds = allTagIds;
 
-		_allTagIdsArray = new long[][] {_allTagIds};
+		_allTagIdsArray = new long[0][];
+
+		for (int i = 0; i < allTagIds.length; i++) {
+			_allTagIdsArray = ArrayUtil.append(
+				_allTagIdsArray, new long[]{_allTagIds[i]});
+		}
 
 		_toString = null;
 	}
@@ -391,7 +396,12 @@ public class AssetEntryQuery {
 	public void setNotAllTagIds(long[] notAllTagIds) {
 		_notAllTagIds = notAllTagIds;
 
-		_notAllTagIdsArray = new long[][] {_notAllTagIds};
+		_notAllTagIdsArray = new long[0][];
+
+		for (int i = 0; i < notAllTagIds.length; i++) {
+			_notAllTagIdsArray = ArrayUtil.append(
+				_notAllTagIdsArray, new long[]{_notAllTagIds[i]});
+		}
 
 		_toString = null;
 	}

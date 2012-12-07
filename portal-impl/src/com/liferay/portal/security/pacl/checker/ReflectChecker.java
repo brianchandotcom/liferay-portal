@@ -28,7 +28,7 @@ public class ReflectChecker extends BaseReflectChecker {
 	}
 
 	public void checkPermission(Permission permission) {
-		if (!hasReflect(permission.getName(), permission.getActions())) {
+		if (!hasReflect(permission)) {
 			throwSecurityException(_log, "Attempted to reflect");
 		}
 	}

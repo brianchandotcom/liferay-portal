@@ -42,17 +42,24 @@ public class ViewKBAArticleTest extends BaseTestCase {
 		selenium.clickAt("link=Articles", RuntimeVariables.replace("Articles"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals("1.0",
-			selenium.getValue("//tr[3]/td[2]/span/span/span/input"));
+			selenium.getValue(
+				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[2]/span/span/span/input"));
 		assertEquals(RuntimeVariables.replace(
 				"Knowledge Base Admin Article Title"),
-			selenium.getText("//tr[3]/td[3]"));
+			selenium.getText(
+				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//tr[3]/td[4]"));
-		assertTrue(selenium.isVisible("//tr[3]/td[5]"));
-		assertTrue(selenium.isVisible("//tr[3]/td[6]"));
+			selenium.getText(
+				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[4]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[5]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[6]"));
 		assertEquals(RuntimeVariables.replace("0 (Approved)"),
-			selenium.getText("//tr[3]/td[7]"));
-		assertTrue(selenium.isVisible("//tr[3]/td[8]"));
+			selenium.getText(
+				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[7]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[8]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -69,11 +76,14 @@ public class ViewKBAArticleTest extends BaseTestCase {
 				"Knowledge Base Admin Article Title"),
 			selenium.getText("//div[@class='kb-title']"));
 		assertEquals(RuntimeVariables.replace("Subscribe"),
-			selenium.getText("//td[contains(.,'Subscribe')]/span/a/span"));
+			selenium.getText(
+				"//div[@class='kb-article-tools']/span/a[contains(.,'Subscribe')]"));
 		assertEquals(RuntimeVariables.replace("History"),
-			selenium.getText("//td[contains(.,'History')]/span/a/span"));
+			selenium.getText(
+				"//div[@class='kb-article-tools']/span/a[contains(.,'History')]"));
 		assertEquals(RuntimeVariables.replace("Print"),
-			selenium.getText("//td[contains(.,'Print')]/span/a/span"));
+			selenium.getText(
+				"//div[@class='kb-article-tools']/span/a[contains(.,'Print')]"));
 		assertEquals(RuntimeVariables.replace("Add Child Article"),
 			selenium.getText(
 				"//td[contains(.,'Add Child Article')]/span/a/span"));

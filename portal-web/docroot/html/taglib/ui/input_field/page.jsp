@@ -17,6 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+boolean autoSize = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:autoSize"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:cssClass"));
 String formName = (String)request.getAttribute("liferay-ui:input-field:formName");
 String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-field:defaultLanguageId");
@@ -373,19 +374,18 @@ if (hints != null) {
 			String displayHeight = ModelHintsConstants.TEXT_DISPLAY_HEIGHT;
 			String displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
 			String maxLength = ModelHintsConstants.TEXT_MAX_LENGTH;
-			boolean autoSize = false;
 			boolean secret = false;
 			boolean upperCase = false;
 			boolean checkTab = false;
 
 			if (hints != null) {
+				autoSize = GetterUtil.getBoolean(hints.get("autoSize"), autoSize);
+				checkTab = GetterUtil.getBoolean(hints.get("check-tab"), checkTab);
 				displayHeight = GetterUtil.getString(hints.get("display-height"), displayHeight);
 				displayWidth = GetterUtil.getString(hints.get("display-width"), displayWidth);
 				maxLength = GetterUtil.getString(hints.get("max-length"), maxLength);
-				autoSize = GetterUtil.getBoolean(hints.get("autoSize"), autoSize);
 				secret = GetterUtil.getBoolean(hints.get("secret"), secret);
 				upperCase = GetterUtil.getBoolean(hints.get("upper-case"), upperCase);
-				checkTab = GetterUtil.getBoolean(hints.get("check-tab"), checkTab);
 			}
 
 			boolean localized = ModelHintsUtil.isLocalized(model, field);

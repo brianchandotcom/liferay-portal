@@ -16,8 +16,6 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -41,107 +39,7 @@ import javax.servlet.http.HttpSession;
  * @author Wesley Gong
  * @author Daeyoung Song
  */
-public class CASAutoLogin implements AutoLogin {
-
-	public String[] login(
-		HttpServletRequest request, HttpServletResponse response) {
-
-		HttpSession session = request.getSession();
-
-		try {
-			long companyId = PortalUtil.getCompanyId(request);
-
-			if (!PrefsPropsUtil.getBoolean(
-					companyId, PropsKeys.CAS_AUTH_ENABLED,
-					PropsValues.CAS_AUTH_ENABLED)) {
-
-				return null;
-			}
-
-			String login = (String)session.getAttribute(WebKeys.CAS_LOGIN);
-
-			if (Validator.isNull(login)) {
-				Object noSuchUserException = session.getAttribute(
-					WebKeys.CAS_NO_SUCH_USER_EXCEPTION);
-
-				if (noSuchUserException == null) {
-					return null;
-				}
-
-				session.removeAttribute(WebKeys.CAS_NO_SUCH_USER_EXCEPTION);
-
-				session.setAttribute(WebKeys.CAS_FORCE_LOGOUT, Boolean.TRUE);
-
-				String redirect = PrefsPropsUtil.getString(
-					companyId, PropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
-					PropsValues.CAS_NO_SUCH_USER_REDIRECT_URL);
-
-				request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
-
-				return null;
-			}
-
-			String authType = PrefsPropsUtil.getString(
-				companyId, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
-				PropsValues.COMPANY_SECURITY_AUTH_TYPE);
-
-			User user = null;
-
-			if (PrefsPropsUtil.getBoolean(
-					companyId, PropsKeys.CAS_IMPORT_FROM_LDAP,
-					PropsValues.CAS_IMPORT_FROM_LDAP)) {
-
-				try {
-					if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-						user = PortalLDAPImporterUtil.importLDAPUser(
-							companyId, StringPool.BLANK, login);
-					}
-					else {
-						user = PortalLDAPImporterUtil.importLDAPUser(
-							companyId, login, StringPool.BLANK);
-					}
-				}
-				catch (SystemException se) {
-				}
-			}
-
-			if (user == null) {
-				if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-					user = UserLocalServiceUtil.getUserByScreenName(
-						companyId, login);
-				}
-				else {
-					user = UserLocalServiceUtil.getUserByEmailAddress(
-						companyId, login);
-				}
-			}
-
-			String redirect = ParamUtil.getString(request, "redirect");
-
-			if (Validator.isNotNull(redirect)) {
-				request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
-			}
-
-			String[] credentials = new String[3];
-
-			credentials[0] = String.valueOf(user.getUserId());
-			credentials[1] = user.getPassword();
-			credentials[2] = Boolean.TRUE.toString();
-
-			return credentials;
-		}
-		catch (NoSuchUserException nsue) {
-			session.removeAttribute(WebKeys.CAS_LOGIN);
-
-			session.setAttribute(
-				WebKeys.CAS_NO_SUCH_USER_EXCEPTION, Boolean.TRUE);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return null;
-	}
+public class CASAutoLogin extends BaseAutoLogin {
 
 	/**
 	 * @deprecated Use <code>importLDAPUser</code>.
@@ -151,6 +49,115 @@ public class CASAutoLogin implements AutoLogin {
 			companyId, StringPool.BLANK, screenName);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CASAutoLogin.class);
+	@Override
+	protected String[] doHandleException(
+			HttpServletRequest request, HttpServletResponse response,
+			Exception e)
+		throws AutoLoginException {
+
+		HttpSession session = request.getSession();
+
+		if (e instanceof NoSuchUserException) {
+			session.removeAttribute(WebKeys.CAS_LOGIN);
+
+			session.setAttribute(
+				WebKeys.CAS_NO_SUCH_USER_EXCEPTION, Boolean.TRUE);
+		}
+
+		if (getLog().isErrorEnabled()) {
+			getLog().error(e, e);
+		}
+
+		return null;
+	}
+
+	@Override
+	protected String[] doLogin(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		HttpSession session = request.getSession();
+
+		long companyId = PortalUtil.getCompanyId(request);
+
+		if (!PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.CAS_AUTH_ENABLED,
+				PropsValues.CAS_AUTH_ENABLED)) {
+
+			return null;
+		}
+
+		String login = (String)session.getAttribute(WebKeys.CAS_LOGIN);
+
+		if (Validator.isNull(login)) {
+			Object noSuchUserException = session.getAttribute(
+				WebKeys.CAS_NO_SUCH_USER_EXCEPTION);
+
+			if (noSuchUserException == null) {
+				return null;
+			}
+
+			session.removeAttribute(WebKeys.CAS_NO_SUCH_USER_EXCEPTION);
+
+			session.setAttribute(WebKeys.CAS_FORCE_LOGOUT, Boolean.TRUE);
+
+			String redirect = PrefsPropsUtil.getString(
+				companyId, PropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
+				PropsValues.CAS_NO_SUCH_USER_REDIRECT_URL);
+
+			request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
+
+			return null;
+		}
+
+		String authType = PrefsPropsUtil.getString(
+			companyId, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
+			PropsValues.COMPANY_SECURITY_AUTH_TYPE);
+
+		User user = null;
+
+		if (PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.CAS_IMPORT_FROM_LDAP,
+				PropsValues.CAS_IMPORT_FROM_LDAP)) {
+
+			try {
+				if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+					user = PortalLDAPImporterUtil.importLDAPUser(
+						companyId, StringPool.BLANK, login);
+				}
+				else {
+					user = PortalLDAPImporterUtil.importLDAPUser(
+						companyId, login, StringPool.BLANK);
+				}
+			}
+			catch (SystemException se) {
+			}
+		}
+
+		if (user == null) {
+			if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+				user = UserLocalServiceUtil.getUserByScreenName(
+					companyId, login);
+			}
+			else {
+				user = UserLocalServiceUtil.getUserByEmailAddress(
+					companyId, login);
+			}
+		}
+
+		String redirect = ParamUtil.getString(request, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
+		}
+
+		String[] credentials = new String[3];
+
+		credentials[0] = String.valueOf(user.getUserId());
+		credentials[1] = user.getPassword();
+		credentials[2] = Boolean.TRUE.toString();
+
+		return credentials;
+	}
 
 }

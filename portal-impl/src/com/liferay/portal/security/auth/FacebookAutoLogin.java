@@ -14,12 +14,9 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
@@ -34,43 +31,31 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Wilson Man
  */
-public class FacebookAutoLogin implements AutoLogin {
+public class FacebookAutoLogin extends BaseAutoLogin {
 
-	public String[] login(
-		HttpServletRequest request, HttpServletResponse response) {
+	@Override
+	protected String[] doLogin(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
 
-		try {
-			long companyId = PortalUtil.getCompanyId(request);
+		long companyId = PortalUtil.getCompanyId(request);
 
-			if (!FacebookConnectUtil.isEnabled(companyId)) {
-				return null;
-			}
-
-			User user = null;
-
-			try {
-				user = getUser(request, companyId);
-			}
-			catch (NoSuchUserException nsue) {
-				return null;
-			}
-
-			String[] credentials = new String[3];
-
-			credentials[0] = String.valueOf(user.getUserId());
-			credentials[1] = user.getPassword();
-			credentials[2] = Boolean.FALSE.toString();
-
-			return credentials;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
+		if (!FacebookConnectUtil.isEnabled(companyId)) {
 			return null;
 		}
+
+		User user = getUser(request, companyId);
+
+		String[] credentials = new String[3];
+
+		credentials[0] = String.valueOf(user.getUserId());
+		credentials[1] = user.getPassword();
+		credentials[2] = Boolean.FALSE.toString();
+
+		return credentials;
 	}
 
-	protected User getUser(HttpServletRequest request, long companyId)
+	private User getUser(HttpServletRequest request, long companyId)
 		throws PortalException, SystemException {
 
 		HttpSession session = request.getSession();
@@ -92,7 +77,5 @@ public class FacebookAutoLogin implements AutoLogin {
 				companyId, facebookId);
 		}
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(FacebookAutoLogin.class);
 
 }

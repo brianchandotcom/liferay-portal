@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.OpenIdUtil;
@@ -29,45 +27,38 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Jorge Ferrer
  */
-public class OpenIdAutoLogin implements AutoLogin {
+public class OpenIdAutoLogin extends BaseAutoLogin {
 
-	public String[] login(
-		HttpServletRequest request, HttpServletResponse response) {
+	@Override
+	protected String[] doLogin(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
 
-		try {
-			long companyId = PortalUtil.getCompanyId(request);
+		long companyId = PortalUtil.getCompanyId(request);
 
-			if (!OpenIdUtil.isEnabled(companyId)) {
-				return null;
-			}
-
-			HttpSession session = request.getSession();
-
-			Long userId = (Long)session.getAttribute(WebKeys.OPEN_ID_LOGIN);
-
-			if (userId == null) {
-				return null;
-			}
-
-			session.removeAttribute(WebKeys.OPEN_ID_LOGIN);
-
-			User user = UserLocalServiceUtil.getUserById(userId);
-
-			String[] credentials = new String[3];
-
-			credentials[0] = String.valueOf(user.getUserId());
-			credentials[1] = user.getPassword();
-			credentials[2] = Boolean.TRUE.toString();
-
-			return credentials;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
+		if (!OpenIdUtil.isEnabled(companyId)) {
 			return null;
 		}
-	}
 
-	private static Log _log = LogFactoryUtil.getLog(OpenIdAutoLogin.class);
+		HttpSession session = request.getSession();
+
+		Long userId = (Long)session.getAttribute(WebKeys.OPEN_ID_LOGIN);
+
+		if (userId == null) {
+			return null;
+		}
+
+		session.removeAttribute(WebKeys.OPEN_ID_LOGIN);
+
+		User user = UserLocalServiceUtil.getUserById(userId);
+
+		String[] credentials = new String[3];
+
+		credentials[0] = String.valueOf(user.getUserId());
+		credentials[1] = user.getPassword();
+		credentials[2] = Boolean.TRUE.toString();
+
+		return credentials;
+	}
 
 }

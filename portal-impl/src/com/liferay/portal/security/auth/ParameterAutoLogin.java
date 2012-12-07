@@ -33,77 +33,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author Minhchau Dang
  * @author Tomas Polesovsky
  */
-public class ParameterAutoLogin implements AuthVerifier, AutoLogin {
+public class ParameterAutoLogin extends BaseAutoLogin implements AuthVerifier {
 
 	public String getAuthType() {
 		return ParameterAutoLogin.class.getSimpleName();
-	}
-
-	public String[] login(
-			HttpServletRequest request, HttpServletResponse response)
-		throws AutoLoginException {
-
-		try {
-			String login = ParamUtil.getString(request, getLoginParam());
-
-			if (Validator.isNull(login)) {
-				return null;
-			}
-
-			String password = ParamUtil.getString(request, getPasswordParam());
-
-			if (Validator.isNull(password)) {
-				return null;
-			}
-
-			Company company = PortalUtil.getCompany(request);
-
-			String authType = company.getAuthType();
-
-			long userId = 0;
-
-			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-				userId = UserLocalServiceUtil.getUserIdByEmailAddress(
-					company.getCompanyId(), login);
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-				userId = UserLocalServiceUtil.getUserIdByScreenName(
-					company.getCompanyId(), login);
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-				userId = GetterUtil.getLong(login);
-			}
-			else {
-				return null;
-			}
-
-			if (userId > 0) {
-				User user = UserLocalServiceUtil.getUserById(userId);
-
-				String userPassword = user.getPassword();
-
-				if (!user.isPasswordEncrypted()) {
-					userPassword = PwdEncryptor.encrypt(userPassword);
-				}
-
-				String encPassword = PwdEncryptor.encrypt(password);
-
-				if (!userPassword.equals(password) &&
-					!userPassword.equals(encPassword)) {
-
-					return null;
-				}
-			}
-
-			String[] credentials = new String[] {
-				String.valueOf(userId), password, Boolean.FALSE.toString()
-			};
-
-			return credentials;
-		}
-		catch (Exception e) {
-			throw new AutoLoginException(e);
-		}
 	}
 
 	public AuthVerifierResult verify(
@@ -130,11 +63,74 @@ public class ParameterAutoLogin implements AuthVerifier, AutoLogin {
 		}
 	}
 
-	protected String getLoginParam() {
+	@Override
+	protected String[] doLogin(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		String login = ParamUtil.getString(request, getLoginParam());
+
+		if (Validator.isNull(login)) {
+			return null;
+		}
+
+		String password = ParamUtil.getString(request, getPasswordParam());
+
+		if (Validator.isNull(password)) {
+			return null;
+		}
+
+		Company company = PortalUtil.getCompany(request);
+
+		String authType = company.getAuthType();
+
+		long userId = 0;
+
+		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+			userId = UserLocalServiceUtil.getUserIdByEmailAddress(
+				company.getCompanyId(), login);
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+			userId = UserLocalServiceUtil.getUserIdByScreenName(
+				company.getCompanyId(), login);
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+			userId = GetterUtil.getLong(login);
+		}
+		else {
+			return null;
+		}
+
+		if (userId > 0) {
+			User user = UserLocalServiceUtil.getUserById(userId);
+
+			String userPassword = user.getPassword();
+
+			if (!user.isPasswordEncrypted()) {
+				userPassword = PwdEncryptor.encrypt(userPassword);
+			}
+
+			String encPassword = PwdEncryptor.encrypt(password);
+
+			if (!userPassword.equals(password) &&
+				!userPassword.equals(encPassword)) {
+
+				return null;
+			}
+		}
+
+		String[] credentials = new String[] {
+			String.valueOf(userId), password, Boolean.FALSE.toString()
+		};
+
+		return credentials;
+	}
+
+	private String getLoginParam() {
 		return _LOGIN_PARAM;
 	}
 
-	protected String getPasswordParam() {
+	private String getPasswordParam() {
 		return _PASSWORD_PARAM;
 	}
 

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
@@ -63,86 +61,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author Brian Wing Shun Chan
  * @author Tomas Polesovsky
  */
-public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
+public class BasicAuthHeaderAutoLogin
+	extends BaseAutoLogin implements AuthVerifier {
 
 	public String getAuthType() {
 		return HttpServletRequest.BASIC_AUTH;
-	}
-
-	public String[] login(
-			HttpServletRequest request, HttpServletResponse response)
-		throws AutoLoginException {
-
-		try {
-
-			// Get the Authorization header, if one was supplied
-
-			String authorization = request.getHeader("Authorization");
-
-			if (authorization == null) {
-				return null;
-			}
-
-			StringTokenizer st = new StringTokenizer(authorization);
-
-			if (!st.hasMoreTokens()) {
-				return null;
-			}
-
-			String basic = st.nextToken();
-
-			// We only handle HTTP Basic authentication
-
-			if (!basic.equalsIgnoreCase(HttpServletRequest.BASIC_AUTH)) {
-				return null;
-			}
-
-			String encodedCredentials = st.nextToken();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Encoded credentials are " + encodedCredentials);
-			}
-
-			String decodedCredentials = new String(
-				Base64.decode(encodedCredentials));
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Decoded credentials are " + decodedCredentials);
-			}
-
-			int pos = decodedCredentials.indexOf(CharPool.COLON);
-
-			if (pos == -1) {
-				return null;
-			}
-
-			String login = GetterUtil.getString(
-				decodedCredentials.substring(0, pos));
-			String password = decodedCredentials.substring(pos + 1);
-
-			try {
-				long userId = LoginUtil.getAuthenticatedUserId(
-					request, login, password, null);
-
-				String[] credentials = new String[3];
-
-				credentials[0] = String.valueOf(userId);
-				credentials[1] = password;
-				credentials[2] = Boolean.TRUE.toString();
-
-				return credentials;
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(login + " is not a valid login", e);
-				}
-
-				return null;
-			}
-		}
-		catch (Exception e) {
-			throw new AutoLoginException(e);
-		}
 	}
 
 	public AuthVerifierResult verify(
@@ -189,10 +112,69 @@ public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 		}
 	}
 
+	@Override
+	protected String[] doLogin(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		// Get the Authorization header, if one was supplied
+
+		String authorization = request.getHeader("Authorization");
+
+		if (authorization == null) {
+			return null;
+		}
+
+		StringTokenizer st = new StringTokenizer(authorization);
+
+		if (!st.hasMoreTokens()) {
+			return null;
+		}
+
+		String basic = st.nextToken();
+
+		// We only handle HTTP Basic authentication
+
+		if (!basic.equalsIgnoreCase(HttpServletRequest.BASIC_AUTH)) {
+			return null;
+		}
+
+		String encodedCredentials = st.nextToken();
+
+		if (getLog().isDebugEnabled()) {
+			getLog().debug("Encoded credentials are " + encodedCredentials);
+		}
+
+		String decodedCredentials = new String(
+			Base64.decode(encodedCredentials));
+
+		if (getLog().isDebugEnabled()) {
+			getLog().debug("Decoded credentials are " + decodedCredentials);
+		}
+
+		int pos = decodedCredentials.indexOf(CharPool.COLON);
+
+		if (pos == -1) {
+			return null;
+		}
+
+		String login = GetterUtil.getString(
+			decodedCredentials.substring(0, pos));
+		String password = decodedCredentials.substring(pos + 1);
+
+		long userId = LoginUtil.getAuthenticatedUserId(
+			request, login, password, null);
+
+		String[] credentials = new String[3];
+
+		credentials[0] = String.valueOf(userId);
+		credentials[1] = password;
+		credentials[2] = Boolean.TRUE.toString();
+
+		return credentials;
+	}
+
 	private static final String _BASIC_REALM =
 		"Basic realm=\"" + Portal.PORTAL_REALM + "\"";
-
-	private static Log _log = LogFactoryUtil.getLog(
-		BasicAuthHeaderAutoLogin.class);
 
 }

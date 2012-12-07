@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
@@ -219,23 +220,24 @@ public class AutoLoginFilter extends BasePortalFilter {
 					}
 				}
 				catch (Exception e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(e, e);
-					}
-
 					String currentURL = PortalUtil.getCurrentURL(request);
+
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("Current URL ");
+					sb.append(currentURL);
+					sb.append(" generates exception: ");
+					sb.append(e.getMessage());
 
 					if (currentURL.endsWith(_PATH_CHAT_LATEST)) {
 						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Current URL " + currentURL +
-									" generates exception: " + e.getMessage());
+							_log.warn(sb.toString());
 						}
 					}
 					else {
-						_log.error(
-							"Current URL " + currentURL +
-								" generates exception: " + e.getMessage());
+						if (_log.isErrorEnabled()) {
+							_log.error(sb.toString());
+						}
 					}
 				}
 			}

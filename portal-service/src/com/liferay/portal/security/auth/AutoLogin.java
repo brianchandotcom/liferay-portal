@@ -36,6 +36,11 @@ public interface AutoLogin {
 	public static final String AUTO_LOGIN_REDIRECT_AND_CONTINUE =
 		"AUTO_LOGIN_REDIRECT_AND_CONTINUE";
 
+	public String[] handleException(
+			HttpServletRequest request, HttpServletResponse response,
+			Exception e)
+		throws AutoLoginException;
+
 	public String[] login(
 			HttpServletRequest request, HttpServletResponse response)
 		throws AutoLoginException;

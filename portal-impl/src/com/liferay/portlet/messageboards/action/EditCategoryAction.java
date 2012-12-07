@@ -42,6 +42,9 @@ import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
@@ -51,9 +54,6 @@ import javax.portlet.RenderResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -176,7 +176,8 @@ public class EditCategoryAction extends PortletAction {
 			Map<String, String[]> data = new HashMap<String, String[]>();
 
 			data.put(
-				"restoreEntryIds", ArrayUtil.toStringArray(deleteCategoryIds));
+				"restoreCategoryIds",
+				ArrayUtil.toStringArray(deleteCategoryIds));
 
 			SessionMessages.add(
 				actionRequest,

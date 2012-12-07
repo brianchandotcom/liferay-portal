@@ -75,7 +75,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
 <portlet:actionURL var="undoTrashURL">
-	<portlet:param name="struts_action" value="/message_boards/restore_thread" />
+	<portlet:param name="struts_action" value="/message_boards/edit_entry" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 

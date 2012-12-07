@@ -35,7 +35,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 %>
 
 <portlet:actionURL var="undoTrashURL">
-	<portlet:param name="struts_action" value="/message_boards_admin/restore_thread" />
+	<portlet:param name="struts_action" value="/message_boards_admin/edit_entry" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 

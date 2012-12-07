@@ -35,7 +35,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Zsolt Berentey
  */
-public class RestoreThreadAction extends PortletAction {
+public class EditEntryAction extends PortletAction {
 
 	@Override
 	public void processAction(

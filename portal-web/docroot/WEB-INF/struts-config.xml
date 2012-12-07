@@ -1148,7 +1148,7 @@
 			<forward name="portlet.trash.view" path="portlet.message_boards.view_message" />
 		</action>
 
-		<action path="/message_boards/restore_thread" type="com.liferay.portlet.messageboards.action.RestoreThreadAction">
+		<action path="/message_boards/restore_thread" type="com.liferay.portlet.messageboards.action.EditEntryAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 		</action>
 
@@ -1237,7 +1237,7 @@
 			<forward name="portlet.trash.view" path="portlet.message_boards.view_message" />
 		</action>
 
-		<action path="/message_boards_admin/restore_thread" type="com.liferay.portlet.messageboards.action.RestoreThreadAction">
+		<action path="/message_boards_admin/restore_thread" type="com.liferay.portlet.messageboards.action.EditEntryAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 		</action>
 

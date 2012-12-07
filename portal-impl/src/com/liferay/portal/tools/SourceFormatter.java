@@ -601,7 +601,7 @@ public class SourceFormatter {
 
 	private static void _compareJavaTermNames(
 		String fileName, String previousJavaTermName, String javaTermName,
-		int lineCount) {
+		int javaTermType, int lineCount) {
 
 		if (Validator.isNull(previousJavaTermName) ||
 			Validator.isNull(javaTermName)) {
@@ -609,24 +609,26 @@ public class SourceFormatter {
 			return;
 		}
 
-		if (javaTermName.equals("_log")) {
-			_sourceFormatterHelper.printError(
-				fileName, "sort: " + fileName + " " + lineCount);
+		if (javaTermType == _TYPE_VARIABLE_PRIVATE_STATIC) {
+			if (javaTermName.equals("_log")) {
+				_sourceFormatterHelper.printError(
+					fileName, "sort: " + fileName + " " + lineCount);
 
-			return;
-		}
+				return;
+			}
 
-		if (previousJavaTermName.equals("_instance") ||
-			previousJavaTermName.equals("_log")) {
+			if (previousJavaTermName.equals("_instance") ||
+				previousJavaTermName.equals("_log")) {
 
-			return;
-		}
+				return;
+			}
 
-		if (javaTermName.equals("_instance")) {
-			_sourceFormatterHelper.printError(
-				fileName, "sort: " + fileName + " " + lineCount);
+			if (javaTermName.equals("_instance")) {
+				_sourceFormatterHelper.printError(
+					fileName, "sort: " + fileName + " " + lineCount);
 
-			return;
+				return;
+			}
 		}
 
 		if (previousJavaTermName.compareToIgnoreCase(javaTermName) <= 0) {
@@ -1679,7 +1681,8 @@ public class SourceFormatter {
 									else {
 										_compareJavaTermNames(
 											fileName, previousJavaTermName,
-											javaTermName, lineCount);
+											javaTermName, javaTermType,
+											lineCount);
 									}
 								}
 							}

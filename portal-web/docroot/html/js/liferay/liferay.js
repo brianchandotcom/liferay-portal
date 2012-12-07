@@ -175,7 +175,8 @@ Liferay = window.Liferay || {};
 
 				return payload;
 			}
-		}
+		},
+		true
 	);
 
 	A.each(

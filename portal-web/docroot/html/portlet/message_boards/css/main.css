@@ -13,8 +13,20 @@
 		float: right;
 	}
 
+	.subscription-breadcrumbs {
+		color: #999;
+
+		a {
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
 	.col-category-subscription {
-		font-size: large;
+		font-size: 1.4em;
 	}
 
 	.code {

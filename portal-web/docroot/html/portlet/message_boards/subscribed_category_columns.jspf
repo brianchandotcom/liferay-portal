@@ -23,9 +23,6 @@ StringBundler sb = new StringBundler();
 
 _buildCategoryBreadcrumb(request, curCategory, sb);
 
-if (!curCategory.isRoot()) {
-	sb.append("<br />");
-}
 sb.append("<a class=\"col-category-subscription\" href=\"");
 sb.append(rowURL);
 sb.append("\">");
@@ -72,6 +69,8 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 
 	Collections.reverse(ancestors);
 
+	sb.append("<div class=\"subscription-breadcrumbs\">");
+
 	for (int i = 0; i < ancestors.size(); i++) {
 		MBCategory ancestor = ancestors.get(i);
 		PortletURL portletURL = PortletURLFactoryUtil.create(request, PortletKeys.MESSAGE_BOARDS, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
@@ -85,9 +84,11 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 		sb.append(ancestor.getName());
 		sb.append("</a>");
 
-		if ((i == 0) || ((i + 1) < ancestors.size())) {
+		if ((i == 0) || (i < ancestors.size())) {
 			sb.append(" &raquo; ");
 		}
 	}
+
+	sb.append("</div>");
 }
 %>

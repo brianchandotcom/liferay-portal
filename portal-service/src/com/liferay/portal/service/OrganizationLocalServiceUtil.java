@@ -452,6 +452,14 @@ public class OrganizationLocalServiceUtil {
 				   .getOrganizations(companyId, parentOrganizationId, start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Organization> getOrganizations(
+		long companyId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getOrganizations(companyId, userId, start, end, obc);
+	}
+
 	/**
 	* Returns the organizations with the primary keys.
 	*

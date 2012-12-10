@@ -444,6 +444,15 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 			parentOrganizationId, start, end);
 	}
 
+	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
+		long companyId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _organizationLocalService.getOrganizations(companyId, userId,
+			start, end, obc);
+	}
+
 	/**
 	* Returns the organizations with the primary keys.
 	*

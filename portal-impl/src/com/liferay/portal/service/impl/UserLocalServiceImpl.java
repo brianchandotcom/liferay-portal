@@ -775,17 +775,20 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		PasswordPolicy passwordPolicy = defaultUser.getPasswordPolicy();
 
-		if ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
-			passwordPolicy.isChangeRequired()) {
+		boolean passwordReset = false;
 
-			user.setPasswordReset(true);
+		if (passwordPolicy != null) {
+			if (passwordPolicy.isChangeable() &&
+				passwordPolicy.isChangeRequired()) {
+
+				passwordReset = true;
+			}
 
 			addPasswordPolicyUsers(
-				passwordPolicy.getPasswordPolicyId(), new long[]{userId});
+				passwordPolicy.getPasswordPolicyId(), new long[] {userId});
 		}
-		else {
-			user.setPasswordReset(false);
-		}
+
+		user.setPasswordReset(passwordReset);
 
 		user.setDigest(StringPool.BLANK);
 		user.setScreenName(screenName);

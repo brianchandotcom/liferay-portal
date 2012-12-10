@@ -23,7 +23,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Implementation class for the staged model data handler registry framework
+ *
  * @author Mate Thurzo
+ * @see    com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil
+ * @since  6.2
  */
 public class StagedModelDataHandlerRegistryImpl
 	implements StagedModelDataHandlerRegistry {

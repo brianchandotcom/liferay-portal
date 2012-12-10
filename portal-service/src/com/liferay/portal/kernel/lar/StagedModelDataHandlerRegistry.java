@@ -18,6 +18,8 @@ import java.util.List;
 
 /**
  * @author Mate Thurzo
+ * @see    com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil
+ * @since  6.2
  */
 public interface StagedModelDataHandlerRegistry {
 

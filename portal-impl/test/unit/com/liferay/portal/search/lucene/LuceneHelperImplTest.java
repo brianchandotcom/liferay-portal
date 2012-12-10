@@ -28,10 +28,12 @@ import com.liferay.portal.kernel.cluster.ClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.SocketUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.security.auth.TransientTokenUtil;
@@ -110,16 +112,17 @@ public class LuceneHelperImplTest {
 
 		clusterExecutorUtil.setClusterExecutor(_mockClusterExecutor);
 
-		Class<LuceneHelperImpl> clazz = LuceneHelperImpl.class;
+		Class<LuceneHelperImpl> luceneHelperImplClass = LuceneHelperImpl.class;
 
 		Constructor<LuceneHelperImpl> luceneHelperImplConstructor =
-			clazz.getDeclaredConstructor();
+			luceneHelperImplClass.getDeclaredConstructor();
 
 		luceneHelperImplConstructor.setAccessible(true);
 
 		_luceneHelperImpl = luceneHelperImplConstructor.newInstance();
 
-		Field indexAccessorsField = clazz.getDeclaredField("_indexAccessors");
+		Field indexAccessorsField = luceneHelperImplClass.getDeclaredField(
+			"_indexAccessors");
 
 		indexAccessorsField.setAccessible(true);
 
@@ -207,7 +210,7 @@ public class LuceneHelperImplTest {
 	public void testLoadIndexClusterEventListener3() throws Exception {
 		_mockClusterExecutor.setNodeNumber(3);
 
-		//Debug is enabled
+		// Debug is enabled
 
 		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			LuceneHelperImpl.class.getName(), Level.FINE);
@@ -222,7 +225,7 @@ public class LuceneHelperImplTest {
 			logRecords.get(0),
 			"Number of original cluster members is greater than one", null);
 
-		//Debug is not enabled
+		// Debug is not enabled
 
 		logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			LuceneHelperImpl.class.getName(), Level.INFO);
@@ -799,20 +802,12 @@ public class LuceneHelperImplTest {
 		}
 
 		public void loadIndex(InputStream inputStream) throws IOException {
-			_bytes = new byte[_RESPONSE_MESSAGE.length];
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
 
-			int offset = 0;
+			StreamUtil.transfer(inputStream, unsyncByteArrayOutputStream);;
 
-			while (offset < _RESPONSE_MESSAGE.length) {
-				int bytesRead = inputStream.read(
-					_bytes, offset, _RESPONSE_MESSAGE.length - offset);
-
-				if (bytesRead == -1) {
-					break;
-				}
-
-				offset += bytesRead;
-			}
+			_bytes = unsyncByteArrayOutputStream.toByteArray();
 		}
 
 		public void updateDocument(Term term, Document document)
@@ -842,46 +837,45 @@ public class LuceneHelperImplTest {
 
 		@Override
 		public void run() {
-			Socket connection = null;
+			Socket socket = null;
 
 			try {
-				connection = _serverSocket.accept();
+				socket = _serverSocket.accept();
 
 				_serverSocket.close();
 
 				UnsyncBufferedReader reader =
 					new UnsyncBufferedReader(
-						new InputStreamReader(connection.getInputStream()));
+						new InputStreamReader(socket.getInputStream()));
 
 				String request = reader.readLine();
 
-				connection.shutdownInput();
+				socket.shutdownInput();
 
 				if (!request.contains("/lucene/dump")) {
 					return;
 				}
 
-				StringBundler stringBundler = new StringBundler(3);
+				StringBundler sb = new StringBundler(3);
 
-				stringBundler.append(
-					"HTTP/1.0 200 OK\r\nServer: \r\nContent-length: ");
-				stringBundler.append(_RESPONSE_MESSAGE.length);
-				stringBundler.append("\r\nContent-type: text/plain\r\n\r\n");
+				sb.append("HTTP/1.0 200 OK\r\nServer: \r\nContent-length: ");
+				sb.append(_RESPONSE_MESSAGE.length);
+				sb.append("\r\nContent-type: text/plain\r\n\r\n");
 
-				OutputStream outputStream = connection.getOutputStream();
+				OutputStream outputStream = socket.getOutputStream();
 
-				outputStream.write(stringBundler.toString().getBytes());
+				outputStream.write(sb.toString().getBytes());
 				outputStream.write(_RESPONSE_MESSAGE);
 
-				connection.shutdownOutput();
+				socket.shutdownOutput();
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
 			}
 			finally {
-				if (connection != null) {
+				if (socket != null) {
 					try {
-						connection.close();
+						socket.close();
 					}
 					catch (IOException ioe) {
 					}

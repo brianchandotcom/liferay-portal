@@ -98,6 +98,7 @@ public class SourceFormatter {
 						_formatSQL();
 						_formatStrutsConfigXML();
 						_formatTilesDefsXML();
+						_formatTLD();
 						_formatWebXML();
 					}
 					catch (Exception e) {
@@ -3087,6 +3088,36 @@ public class SourceFormatter {
 			_fileUtil.write(file, newContent);
 
 			_sourceFormatterHelper.printError(fileName, file);
+		}
+	}
+
+	private static void _formatTLD() throws IOException {
+		String basedir = "./";
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(basedir);
+		directoryScanner.setIncludes(new String[] {"**\\*.tld"});
+		directoryScanner.setExcludes(
+			new String[] {
+				"**\\classes\\**", "**\\bin\\**", "**\\WEB-INF\\tld\\**"
+			});
+
+		List<String> fileNames = _sourceFormatterHelper.scanForFiles(
+			directoryScanner);
+
+		for (String fileName : fileNames) {
+			File file = new File(basedir + fileName);
+
+			String content = _fileUtil.read(file);
+
+			String newContent = _trimContent(content);
+
+			if ((newContent != null) && !content.equals(newContent)) {
+				_fileUtil.write(file, newContent);
+
+				_sourceFormatterHelper.printError(fileName, file);
+			}
 		}
 	}
 

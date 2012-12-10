@@ -73,6 +73,9 @@ public interface DDMXSD {
 
 	public JSONArray getJSONArray(Document document) throws PortalException;
 
+	public JSONArray getJSONArray(DDMStructure structure, String xsd)
+		throws PortalException, SystemException;
+
 	public JSONArray getJSONArray(Element element) throws PortalException;
 
 	public JSONArray getJSONArray(String xml)

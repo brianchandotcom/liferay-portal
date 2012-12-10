@@ -656,6 +656,8 @@
 
 		<action path="/dynamic_data_mapping/get_structure" type="com.liferay.portlet.dynamicdatamapping.action.GetStructureAction" />
 
+		<action path="/dynamic_data_mapping/get_structure_json" type="com.liferay.portlet.dynamicdatamapping.action.GetStructureJSONAction" />
+
 		<action path="/dynamic_data_mapping/get_template" type="com.liferay.portlet.dynamicdatamapping.action.GetTemplateAction" />
 
 		<action path="/dynamic_data_mapping/render_structure_field" type="com.liferay.portlet.dynamicdatamapping.action.RenderStructureFieldAction" />

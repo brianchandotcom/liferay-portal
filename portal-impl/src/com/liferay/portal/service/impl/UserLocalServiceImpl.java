@@ -779,6 +779,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			passwordPolicy.isChangeRequired()) {
 
 			user.setPasswordReset(true);
+
+			addPasswordPolicyUsers(
+				passwordPolicy.getPasswordPolicyId(), new long[]{userId});
 		}
 		else {
 			user.setPasswordReset(false);

@@ -30,7 +30,6 @@ public class ViewBlogsTagSuggestionsNoTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Blogs Test Page");
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -55,8 +54,6 @@ public class ViewBlogsTagSuggestionsNoTest extends BaseTestCase {
 					"//div[@id='blogsEntryCategorizationPanel' and contains(@class,'lfr-collapsed')]");
 
 			case 2:
-				assertEquals(RuntimeVariables.replace("Tags"),
-					selenium.getText("//label[contains(@for,'TagNames')]"));
 				assertTrue(selenium.isVisible("//input[@title='Add Tags']"));
 				assertFalse(selenium.isTextPresent("Suggestions"));
 				assertTrue(selenium.isElementNotPresent(

@@ -69,6 +69,10 @@ try {
 
 	}
 
+	if (assetEntry.getVisible() == false){
+		throw new NoSuchModelException();
+	}
+
 	String title = assetRenderer.getTitle(locale);
 	String summary = StringPool.BLANK;
 	String viewURL = StringPool.BLANK;

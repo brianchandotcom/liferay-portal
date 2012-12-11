@@ -46,38 +46,46 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 
 <aui:input name="scriptContent" type="hidden" value="<%= script %>" />
 
-<aui:select label="language-type" name="language">
+<liferay-ui:panel-container extended="<%= false %>" id="templateScriptPanelContainer" persistState="<%= true %>">
+	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" persistState="<%= true %>" title="script">
+		<div class="editor-toolbar">
+			<aui:select cssClass="language-type" inlineField="<%= true %>" label="" name="language" title="language-type">
 
-	<%
-	for (int i = 0; i < DDMTemplateConstants.LANG_TYPES.length; i++) {
-	%>
+				<%
+				for (String curLangType : DDMTemplateConstants.LANG_TYPES) {
+					StringBundler sb = new StringBundler(5);
 
-		<aui:option label="<%= DDMTemplateConstants.LANG_TYPES[i].toUpperCase() %>" selected="<%= language.equals(DDMTemplateConstants.LANG_TYPES[i]) %>" value="<%= DDMTemplateConstants.LANG_TYPES[i] %>" />
+					sb.append(LanguageUtil.get(pageContext, curLangType));
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.OPEN_PARENTHESIS);
+					sb.append(StringPool.PERIOD);
+					sb.append(curLangType);
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+				%>
 
-	<%
-	}
-	%>
+					<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(curLangType) %>" value="<%= curLangType %>" />
 
-</aui:select>
+				<%
+				}
+				%>
 
-<aui:fieldset label="script-file">
-	<aui:input label="" name="script" type="file" />
-
-	<liferay-ui:panel-container extended="<%= false %>" id="templateScriptPanelContainer" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" persistState="<%= true %>" title="script">
-			<aui:select name="editorType">
-				<aui:option label="rich" selected="<%= useRichEditor %>" value="rich" />
-				<aui:option label="plain" value="plain" />
 			</aui:select>
 
-			<div class="lfr-plain-editor <%= useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />plainEditor">
-				<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-editor-textarea" label="" name="plainEditorField" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" value="" wrap="off" />
-			</div>
+			<aui:select cssClass="editor-type" inlineField="<%= true %>" name="editorType">
+				<aui:option label="rich" selected="<%= useRichEditor %>" value="rich" />
+				<aui:option label="plain" selected="<%= !useRichEditor %>" value="plain" />
+			</aui:select>
+		</div>
 
-			<div class="lfr-rich-editor <%= !useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />richEditor"></div>
-		</liferay-ui:panel>
-	</liferay-ui:panel-container>
-</aui:fieldset>
+		<div class="lfr-plain-editor <%= useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />plainEditor">
+			<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-editor-textarea" label="" name="plainEditorField" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" value="" wrap="off" />
+		</div>
+
+		<div class="lfr-rich-editor <%= !useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />richEditor"></div>
+
+		<aui:input label="script-file" name="script" type="file" />
+	</liferay-ui:panel>
+</liferay-ui:panel-container>
 
 <aui:script use="aui-ace-editor">
 	var editorType = '<%= HtmlUtil.escapeJS(editorType) %>';

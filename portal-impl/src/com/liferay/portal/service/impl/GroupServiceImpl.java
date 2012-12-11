@@ -457,13 +457,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		if ((classNames == null) ||
 			ArrayUtil.contains(classNames, Organization.class.getName())) {
 
-			LinkedHashMap<String, Object> organizationParams =
-				new LinkedHashMap<String, Object>();
-
-			organizationParams.put("usersOrgs", new Long(userId));
-
-			List<Organization> userOrgs = organizationLocalService.search(
-				user.getCompanyId(), organizationParams, start, end);
+			List<Organization> userOrgs =
+				organizationLocalService.getOrganizations(
+					user.getCompanyId(), userId, start, end, null);
 
 			for (Organization organization : userOrgs) {
 				if (!organization.hasPrivateLayouts() &&

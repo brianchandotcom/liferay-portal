@@ -17,7 +17,11 @@ package com.liferay.portal.kernel.lar;
 import java.util.List;
 
 /**
+ * The interface for the staged model data handler registry framework.
+ *
  * @author Mate Thurzo
+ * @see    com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil
+ * @since  6.2
  */
 public interface StagedModelDataHandlerRegistry {
 

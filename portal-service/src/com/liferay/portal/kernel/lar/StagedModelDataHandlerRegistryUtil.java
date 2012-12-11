@@ -19,11 +19,22 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import java.util.List;
 
 /**
+ * Provides a utility facade to the staged model data handler registry
+ * framework.
+ *
  * @author Mate Thurzo
  * @author Brian Wing Shun Chan
+ * @since  6.2
  */
 public class StagedModelDataHandlerRegistryUtil {
 
+	/**
+	 * Returns the registered staged model data handler with the class name.
+	 *
+	 * @param  className the name of the staged model class
+	 * @return the registered staged model data handler with the class name, or
+	 *         <code>null</code> if none are registered with the class name
+	 */
 	public static StagedModelDataHandler<?> getStagedModelDataHandler(
 		String className) {
 
@@ -31,6 +42,11 @@ public class StagedModelDataHandlerRegistryUtil {
 			className);
 	}
 
+	/**
+	 * Returns the staged model data handler registry.
+	 *
+	 * @return the staged model data handler registry
+	 */
 	public static StagedModelDataHandlerRegistry
 		getStagedModelDataHandlerRegistry() {
 
@@ -40,16 +56,32 @@ public class StagedModelDataHandlerRegistryUtil {
 		return _stagedModelDataHandlerRegistry;
 	}
 
+	/**
+	 * Returns all the registered staged model data handlers.
+	 *
+	 * @return the registered staged model data handlers
+	 */
 	public static List<StagedModelDataHandler<?>> getStagedModelDataHandlers() {
 		return getStagedModelDataHandlerRegistry().getStagedModelDataHandlers();
 	}
 
+	/**
+	 * Registers the staged model data handler.
+	 *
+	 * @param stagedModelDataHandler the staged model data handler to register
+	 */
 	public static void register(
 		StagedModelDataHandler<?> stagedModelDataHandler) {
 
 		getStagedModelDataHandlerRegistry().register(stagedModelDataHandler);
 	}
 
+	/**
+	 * Unregisters the staged model data handlers.
+	 *
+	 * @param stagedModelDataHandlers the staged model data handlers to
+	 *        unregister
+	 */
 	public static void unregister(
 		List<StagedModelDataHandler<?>> stagedModelDataHandlers) {
 
@@ -60,12 +92,23 @@ public class StagedModelDataHandlerRegistryUtil {
 		}
 	}
 
+	/**
+	 * Unregisters the staged model data handler.
+	 *
+	 * @param stagedModelDataHandler the staged model data handler to unregister
+	 */
 	public static void unregister(
 		StagedModelDataHandler<?> stagedModelDataHandler) {
 
 		getStagedModelDataHandlerRegistry().unregister(stagedModelDataHandler);
 	}
 
+	/**
+	 * Sets the staged model data handler registry.
+	 *
+	 * @param stagedModelDataHandlerRegistry the staged model data handler
+	 *        registry
+	 */
 	public void setStagedModelDataHandlerRegistry(
 		StagedModelDataHandlerRegistry stagedModelDataHandlerRegistry) {
 

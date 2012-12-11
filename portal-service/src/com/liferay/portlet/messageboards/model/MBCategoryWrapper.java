@@ -60,6 +60,10 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		attributes.put("threadCount", getThreadCount());
 		attributes.put("messageCount", getMessageCount());
 		attributes.put("lastPostDate", getLastPostDate());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -153,6 +157,30 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 
 		if (lastPostDate != null) {
 			setLastPostDate(lastPostDate);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -464,6 +492,231 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		_mbCategory.setLastPostDate(lastPostDate);
 	}
 
+	/**
+	* Returns the status of this message boards category.
+	*
+	* @return the status of this message boards category
+	*/
+	public int getStatus() {
+		return _mbCategory.getStatus();
+	}
+
+	/**
+	* Sets the status of this message boards category.
+	*
+	* @param status the status of this message boards category
+	*/
+	public void setStatus(int status) {
+		_mbCategory.setStatus(status);
+	}
+
+	/**
+	* Returns the status by user ID of this message boards category.
+	*
+	* @return the status by user ID of this message boards category
+	*/
+	public long getStatusByUserId() {
+		return _mbCategory.getStatusByUserId();
+	}
+
+	/**
+	* Sets the status by user ID of this message boards category.
+	*
+	* @param statusByUserId the status by user ID of this message boards category
+	*/
+	public void setStatusByUserId(long statusByUserId) {
+		_mbCategory.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Returns the status by user uuid of this message boards category.
+	*
+	* @return the status by user uuid of this message boards category
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getStatusByUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategory.getStatusByUserUuid();
+	}
+
+	/**
+	* Sets the status by user uuid of this message boards category.
+	*
+	* @param statusByUserUuid the status by user uuid of this message boards category
+	*/
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_mbCategory.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Returns the status by user name of this message boards category.
+	*
+	* @return the status by user name of this message boards category
+	*/
+	public java.lang.String getStatusByUserName() {
+		return _mbCategory.getStatusByUserName();
+	}
+
+	/**
+	* Sets the status by user name of this message boards category.
+	*
+	* @param statusByUserName the status by user name of this message boards category
+	*/
+	public void setStatusByUserName(java.lang.String statusByUserName) {
+		_mbCategory.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Returns the status date of this message boards category.
+	*
+	* @return the status date of this message boards category
+	*/
+	public java.util.Date getStatusDate() {
+		return _mbCategory.getStatusDate();
+	}
+
+	/**
+	* Sets the status date of this message boards category.
+	*
+	* @param statusDate the status date of this message boards category
+	*/
+	public void setStatusDate(java.util.Date statusDate) {
+		_mbCategory.setStatusDate(statusDate);
+	}
+
+	/**
+	* @deprecated Renamed to {@link #isApproved()}
+	*/
+	public boolean getApproved() {
+		return _mbCategory.getApproved();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards category is approved.
+	*
+	* @return <code>true</code> if this message boards category is approved; <code>false</code> otherwise
+	*/
+	public boolean isApproved() {
+		return _mbCategory.isApproved();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards category is denied.
+	*
+	* @return <code>true</code> if this message boards category is denied; <code>false</code> otherwise
+	*/
+	public boolean isDenied() {
+		return _mbCategory.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards category is a draft.
+	*
+	* @return <code>true</code> if this message boards category is a draft; <code>false</code> otherwise
+	*/
+	public boolean isDraft() {
+		return _mbCategory.isDraft();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards category is expired.
+	*
+	* @return <code>true</code> if this message boards category is expired; <code>false</code> otherwise
+	*/
+	public boolean isExpired() {
+		return _mbCategory.isExpired();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards category is inactive.
+	*
+	* @return <code>true</code> if this message boards category is inactive; <code>false</code> otherwise
+	*/
+	public boolean isInactive() {
+		return _mbCategory.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards category is incomplete.
+	*
+	* @return <code>true</code> if this message boards category is incomplete; <code>false</code> otherwise
+	*/
+	public boolean isIncomplete() {
+		return _mbCategory.isIncomplete();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards category is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this message boards category is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	public boolean isInTrash() {
+		return _mbCategory.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards category is pending.
+	*
+	* @return <code>true</code> if this message boards category is pending; <code>false</code> otherwise
+	*/
+	public boolean isPending() {
+		return _mbCategory.isPending();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards category is scheduled.
+	*
+	* @return <code>true</code> if this message boards category is scheduled; <code>false</code> otherwise
+	*/
+	public boolean isScheduled() {
+		return _mbCategory.isScheduled();
+	}
+
+	/**
+	* Returns the container model ID of this message boards category.
+	*
+	* @return the container model ID of this message boards category
+	*/
+	public long getContainerModelId() {
+		return _mbCategory.getContainerModelId();
+	}
+
+	/**
+	* Sets the container model ID of this message boards category.
+	*
+	* @param container model ID of this message boards category
+	*/
+	public void setContainerModelId(long containerModelId) {
+		_mbCategory.setContainerModelId(containerModelId);
+	}
+
+	/**
+	* Returns the container name of this message boards category.
+	*
+	* @return the container name of this message boards category
+	*/
+	public java.lang.String getContainerModelName() {
+		return _mbCategory.getContainerModelName();
+	}
+
+	/**
+	* Returns the parent container model ID of this message boards category.
+	*
+	* @return the parent container model ID of this message boards category
+	*/
+	public long getParentContainerModelId() {
+		return _mbCategory.getParentContainerModelId();
+	}
+
+	/**
+	* Sets the parent container model ID of this message boards category.
+	*
+	* @param parent container model ID of this message boards category
+	*/
+	public void setParentContainerModelId(long parentContainerModelId) {
+		_mbCategory.setParentContainerModelId(parentContainerModelId);
+	}
+
 	public boolean isNew() {
 		return _mbCategory.isNew();
 	}
@@ -558,6 +811,14 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _mbCategory.getParentCategory();
+	}
+
+	public com.liferay.portlet.messageboards.model.MBCategory getTrashCategory() {
+		return _mbCategory.getTrashCategory();
+	}
+
+	public boolean isInTrashCategory() {
+		return _mbCategory.isInTrashCategory();
 	}
 
 	public boolean isRoot() {

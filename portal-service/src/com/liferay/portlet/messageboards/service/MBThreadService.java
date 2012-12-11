@@ -129,6 +129,11 @@ public interface MBThreadService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portlet.messageboards.model.MBThread moveThreadFromTrash(
+		long categoryId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.messageboards.model.MBThread moveThreadToTrash(
 		long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,

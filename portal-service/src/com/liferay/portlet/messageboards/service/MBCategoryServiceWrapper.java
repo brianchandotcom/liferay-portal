@@ -50,6 +50,16 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	public com.liferay.portlet.messageboards.model.MBCategory addCategory(
+		long userId, long parentCategoryId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryService.addCategory(userId, parentCategoryId, name,
+			description, serviceContext);
+	}
+
+	public com.liferay.portlet.messageboards.model.MBCategory addCategory(
 		long parentCategoryId, java.lang.String name,
 		java.lang.String description, java.lang.String displayStyle,
 		java.lang.String emailAddress, java.lang.String inProtocol,
@@ -71,6 +81,12 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 			allowAnonymousEmail, serviceContext);
 	}
 
+	public void deleteCategory(long categoryId, boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbCategoryService.deleteCategory(categoryId, includeTrashedEntries);
+	}
+
 	public void deleteCategory(long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -84,10 +100,23 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
+		long groupId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryService.getCategories(groupId, status);
+	}
+
+	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
 		long groupId, long parentCategoryId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbCategoryService.getCategories(groupId, parentCategoryId,
 			start, end);
+	}
+
+	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
+		long groupId, long parentCategoryId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryService.getCategories(groupId, parentCategoryId,
+			status, start, end);
 	}
 
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
@@ -97,14 +126,33 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 			start, end);
 	}
 
+	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
+		long groupId, long[] parentCategoryIds, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
+			status, start, end);
+	}
+
 	public int getCategoriesCount(long groupId, long parentCategoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbCategoryService.getCategoriesCount(groupId, parentCategoryId);
 	}
 
+	public int getCategoriesCount(long groupId, long parentCategoryId,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryService.getCategoriesCount(groupId, parentCategoryId,
+			status);
+	}
+
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbCategoryService.getCategoriesCount(groupId, parentCategoryIds);
+	}
+
+	public int getCategoriesCount(long groupId, long[] parentCategoryIds,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryService.getCategoriesCount(groupId,
+			parentCategoryIds, status);
 	}
 
 	public com.liferay.portlet.messageboards.model.MBCategory getCategory(
@@ -145,6 +193,27 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _mbCategoryService.moveCategory(categoryId, parentCategoryId,
 			mergeWithParentCategory);
+	}
+
+	public com.liferay.portlet.messageboards.model.MBCategory moveCategoryFromTrash(
+		long categoryId, long newCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryService.moveCategoryFromTrash(categoryId,
+			newCategoryId);
+	}
+
+	public com.liferay.portlet.messageboards.model.MBCategory moveCategoryToTrash(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategoryService.moveCategoryToTrash(categoryId);
+	}
+
+	public void restoreCategoryFromTrash(long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbCategoryService.restoreCategoryFromTrash(categoryId);
 	}
 
 	public void subscribeCategory(long groupId, long categoryId)

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -50,6 +49,10 @@ public class TestXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
+			importObjects = new TreeSet<String>();
+
+			classType = classTypes.TEST;
+
 			generateTest(fileName);
 		}
 	}
@@ -63,9 +66,13 @@ public class TestXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		int y = fileName.indexOf(CharPool.PERIOD);
 
 		String testName = fileName.substring(x + 1, y) + "Test";
+
 		String testFilePath = fileName.substring(0, x) + "/rc";
 
 		String testFileName = testFilePath + "/" + testName + ".java";
+
+		filePath = testFileName;
+
 		String testPackagePath = StringUtil.replace(
 			testFilePath, StringPool.SLASH, StringPool.PERIOD);
 
@@ -86,127 +93,67 @@ public class TestXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 		Element rootElement = getRootElement(fileName);
 
-		if (isValidTest(rootElement, testName)) {
-			sb.append(getImportStatements(rootElement));
+		String header = "public class " + testName + " extends BaseTestCase {";
 
-			sb.append("public class ");
-			sb.append(testName);
-			sb.append(" extends BaseTestCase {");
+		Element setupBlock = rootElement.element("setup");
+		Element stepsBlock = rootElement.element("steps");
+		Element teardownBlock = rootElement.element("teardown");
 
-			sb.append(getSetup(rootElement));
+		String setup = getSetup(setupBlock);
+		String steps = getSteps(stepsBlock);
+		String teardown = getTeardown(teardownBlock);
 
-			sb.append(getSteps(rootElement));
+		String importStatements = getImportStatements();
 
-			sb.append(getTeardown(rootElement));
+		sb.append(importStatements);
+		sb.append(header);
+		sb.append(setup);
+		sb.append(steps);
+		sb.append(teardown);
 
-			sb.append("}");
+		sb.append("}");
 
-			writeFile(testFileName, sb.toString(), true);
-		}
+		writeFile(testFileName, sb.toString(), true);
 	}
 
-	protected String getSetup(Element rootElement) throws Exception {
+	protected String getSetup(Element setupElement) throws Exception {
 		StringBundler sb = new StringBundler();
-
-		Element setupElement = rootElement.element("setup");
 
 		sb.append("@Override\n");
 		sb.append("public void setUp() throws Exception {");
-
 		sb.append("selenium = SeleniumUtil.getSelenium();");
 
-		sb.append(getObjectDeclarations(setupElement));
-
-		sb.append("portletSignInUserMacros.signIn(");
-		sb.append("\"test@liferay.com\", \"test\");");
-
-		sb.append(getCommands(setupElement));
+		sb.append(processBlock(setupElement));
 
 		sb.append("}");
 
 		return sb.toString();
 	}
 
-	protected String getSteps(Element rootElement) throws Exception {
+	protected String getSteps(Element stepsElement) throws Exception {
 		StringBundler sb = new StringBundler();
-
-		Element stepsElement = rootElement.element("steps");
 
 		sb.append("public void test() throws Exception {");
 
-		sb.append(getObjectDeclarations(stepsElement));
-
-		sb.append(getCommands(stepsElement));
+		sb.append(processBlock(stepsElement));
 
 		sb.append("}");
 
 		return sb.toString();
 	}
 
-	protected String getTeardown(Element rootElement) throws Exception {
+	protected String getTeardown(Element teardownElement) throws Exception {
 		StringBundler sb = new StringBundler();
-
-		Element teardownElement = rootElement.element("teardown");
 
 		sb.append("@Override\n");
 		sb.append("public void tearDown() throws Exception {");
 
-		sb.append(getObjectDeclarations(teardownElement));
-
-		sb.append(getCommands(teardownElement));
-
+		sb.append(processBlock(teardownElement));
 		sb.append("portletSignInUserMacros.signOut();");
 
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	protected boolean isValidTest(Element rootElement, String testName)
-		throws Exception {
-		List<Element> sections = rootElement.elements();
-
-		boolean isValid = true;
-
-		for (Element section : sections) {
-			String sectionName = section.getName();
-
-			List<Element> functions = section.elements("functions");
-			List<Element> selenium = section.elements("selenium");
-
-			isValid = functions.isEmpty() && selenium.isEmpty();
-
-			if (!isValid) {
-				String message = "Invalid tag(s) used in definition of ";
-
-				message += sectionName + " in Test " + testName + ":\n";
-
-				if (!functions.isEmpty()) {
-					String tags = "";
-
-					for (Element function : functions) {
-						message += "Function command ";
-						message += function.attributeValue("command");
-						message += "\n";
-					}
-				}
-
-				if (!selenium.isEmpty()) {
-					for (Element seleniumCommand : selenium) {
-						String command = seleniumCommand.attributeValue(
-							"command");
-
-						message += "Selenium command ";
-						message += command;
-						message += "\n";
-					}
-				}
-
-				throw new Exception(message);
-			}
-		}
-
-		return isValid;
 	}
 
 	private Set<String> getFileNames() throws Exception {

@@ -60,11 +60,24 @@ public class SeleniumXMLToJavaBuilder {
 		cmdLineParser.parse(args);
 
 		basedir = (String)cmdLineParser.getOptionValue(basedirOption);
-		pageObjectSet = getPageObjects();
+		//pageObjectSet = getPageObjects();
 	}
 
-	protected String getActionDefBlock(Element runBlock, String actionDefName) {
+	protected String findBlockDefName(Element block) throws Exception {
+		String blockType = block.getName();
+
+		if (blockType.equals("actiondef") || blockType.equals("macrodef")) {
+			return block.attributeValue("name");
+		}
+		else {
+			return findBlockDefName(block.getParent());
+		}
+	}
+
+	protected String getActionDefBlock(Element runBlock) throws Exception {
 		StringBundler sb = new StringBundler();
+
+		String actionDefName = runBlock.attributeValue("name");
 
 		List<Element> commands = runBlock.elements();
 
@@ -80,7 +93,7 @@ public class SeleniumXMLToJavaBuilder {
 				sb.append("else if ");
 			}
 
-			sb.append(getCommandConditional(command, actionDefName));
+			sb.append(getCommandConditional(command));
 		}
 
 		sb.append("else {");
@@ -90,118 +103,45 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	protected String getCommands(Element runBlock) {
-		return getCommands(runBlock, "");
-	}
-
-	protected String getCommands(Element runBlock, String actionDefName) {
-		StringBundler sb = new StringBundler();
-
-		List<Element> commands = runBlock.elements();
-
-		String runBlockName = runBlock.getName();
-
-		if (runBlockName.equals("actiondef")) {
-			actionDefName = runBlock.attributeValue("name");
-
-			sb.append(getActionDefBlock(runBlock, actionDefName));
+	protected Set<String> getAllObjects(Element runBlock, Set<String>objects) {
+		if (runBlock.elements().isEmpty()) {
+			return objects;
 		}
 		else {
-			for (Element command : commands) {
-				String commandName = command.getName();
+			for (Element child : runBlock.elements()) {
+				if (isCommand(child)) {
+					String type =
+						StringUtil.upperCaseFirstLetter(child.getName()) + "s";
+					if (child.getName().equals("while")) {
+						type = "Actions";
+					}
 
-				if (commandName.equals("action")) {
-					sb.append(getCommandActions(command));
-				}
-				else if (commandName.equals("conditional")) {
-					sb.append(getCommandConditional(command, actionDefName));
-				}
-				else if (commandName.equals("defaultcommand")) {
-					sb.append(getCommandDefaultCommand(actionDefName));
-				}
-				else if (commandName.equals("functions")) {
-					sb.append(getCommandFunctions(command, actionDefName));
-				}
-				else if (commandName.equals("if")) {
-					sb.append(getCommandIf(command));
-				}
-				else if (commandName.equals("macro")) {
-					sb.append(getCommandMacros(command));
-				}
-				else if (commandName.equals("selenium")) {
-					sb.append(getCommandSelenium(command));
-				}
-				else if (commandName.equals("while")) {
-					sb.append(getCommandWhile(command));
+					objects.add(child.attributeValue("name") + type);
+
+					getAllObjects(child, objects);
 				}
 			}
 		}
 
-		return sb.toString();
+		return objects;
 	}
 
-	protected Set<String> getImports(
-		Set<String> objectPackageSet, Element runBlock) throws Exception {
-
-		return getImports(objectPackageSet, runBlock, "");
-	}
-
-	protected Set<String> getImports(
-		Set<String> objectPackageSet, Element runBlock, String actionDefName)
-			throws Exception {
-
-		List<Element> commands = runBlock.elements();
-
-		String runBlockName = runBlock.getName();
-
-		if (runBlockName.equals("actiondef")) {
-			actionDefName = runBlock.attributeValue("name");
-		}
-
-		for (Element command : commands) {
-			String commandName = command.getName();
-			String objectName = command.attributeValue("name");
-
-			if (commandName.equals("action")) {
-				objectPackageSet = getImportActions(objectPackageSet, command);
-			}
-			else if (commandName.equals("conditional")) {
-				objectPackageSet = getImportConditional(
-					objectPackageSet, command, actionDefName);
-			}
-			else if (commandName.equals("functions")) {
-				objectPackageSet = getImportFunctions(
-					objectPackageSet, actionDefName);
-			}
-			else if (commandName.equals("if")) {
-				objectPackageSet = getImportIf(objectPackageSet, command);
-			}
-			else if (commandName.equals("macro")) {
-				objectPackageSet = getImportMacros(objectPackageSet, command);
-			}
-			else if (commandName.equals("while")) {
-				objectPackageSet = getImportWhile(objectPackageSet, command);
-			}
-		}
-
-		return objectPackageSet;
-	}
-
-	protected String getImportStatements(Element rootElement) throws Exception {
-
+	protected String getImportStatements() throws Exception {
 		StringBundler sb = new StringBundler();
 
-		List<Element> runBlocks = rootElement.elements();
-
-		Set<String> objectPackageSet = new TreeSet<String>();
-
-		for (Element runBlock : runBlocks) {
-			objectPackageSet = getImports(objectPackageSet, runBlock);
-		}
-
-		for (String objectPackage : objectPackageSet) {
+		for (String importObject : importObjects) {
 			sb.append("import ");
-			sb.append(objectPackage);
+
+			if (importObject.endsWith("Actions")) {
+				sb.append(getImportActions(importObject));
+			}
+			else if (importObject.endsWith("Macros")) {
+				sb.append(getImportMacros(importObject));
+			}
+			else if (importObject.endsWith("Functions")) {
+				sb.append(getImportFunctions(importObject));
+			}
+
 			sb.append(";\n");
 		}
 
@@ -222,20 +162,14 @@ public class SeleniumXMLToJavaBuilder {
 		return content;
 	}
 
-	protected String getObjectDeclarations(Element runBlock) throws Exception {
+	protected String getObjectDeclarations(
+		Set<String> objectNameSet, String runBlockName)
+		throws Exception {
 		StringBundler sb = new StringBundler();
-
-		List<Element> commands = runBlock.elements();
-
-		Set<String> objectNameSet = new TreeSet<String>();
-
-		String runBlockName = runBlock.getName();
 
 		if (runBlockName.equals("setup") || runBlockName.equals("teardown")) {
 			objectNameSet.add("PortletSignInUserMacros");
 		}
-
-		objectNameSet = getObjectNames(objectNameSet, runBlock);
 
 		for (String objectName : objectNameSet) {
 			sb.append(objectName);
@@ -251,53 +185,6 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	protected Set<String> getObjectNames(
-		Set<String> objectNameSet, Element runBlock) throws Exception {
-
-		return getObjectNames(objectNameSet, runBlock, null);
-	}
-
-	protected Set<String> getObjectNames(
-		Set<String> objectNameSet, Element runBlock, String actionDefName)
-			throws Exception {
-
-		List<Element> commands = runBlock.elements();
-
-		String runBlockName = runBlock.getName();
-
-		if (runBlockName.equals("actiondef")) {
-			actionDefName = runBlock.attributeValue("name");
-		}
-
-		for (Element command : commands) {
-			String commandName = command.getName();
-			String objectName = command.attributeValue("name");
-
-			if (commandName.equals("action")) {
-				objectNameSet = getObjectNameActions(objectNameSet, command);
-			}
-			else if (commandName.equals("conditional")) {
-				objectNameSet = getObjectNameConditional(
-					objectNameSet, command, actionDefName);
-			}
-			else if (commandName.equals("functions")) {
-				objectNameSet = getObjectNameFunctions(
-					objectNameSet, actionDefName);
-			}
-			else if (commandName.equals("if")) {
-				objectNameSet = getObjectNameIf(objectNameSet, command);
-			}
-			else if (commandName.equals("macro")) {
-				objectNameSet = getObjectNameMacros(objectNameSet, command);
-			}
-			else if (commandName.equals("while")) {
-				objectNameSet = getObjectNameWhile(objectNameSet, command);
-			}
-		}
-
-		return objectNameSet;
-	}
-
 	protected Element getRootElement(String fileName) throws Exception {
 		String content = getNormalizedContent(fileName);
 
@@ -306,19 +193,111 @@ public class SeleniumXMLToJavaBuilder {
 		return document.getRootElement();
 	}
 
-	protected String lowerCaseFirstLetter(String s) {
-		char[] chars = s.toCharArray();
+	protected boolean isCommand(Element element) {
+		String name = element.getName();
 
-		if ((chars[0] >= 65) && (chars[0] <= 90)) {
-			chars[0] = (char)(chars[0] + 32);
-		}
-
-		return new String(chars);
+		return (name.equals("macro") ||
+				name.equals("action") ||
+				name.equals("while") ||
+				name.equals("if"));
 	}
 
 	protected String normalizeFileName(String fileName) {
 		return StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+	}
+
+	protected String processBlock(Element block) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		String blockName = block.getName();
+
+		String blockDefName = "";
+
+		if (!blockName.equals("setup") &&
+			!blockName.equals("steps") &&
+			!blockName.equals("teardown")) {
+
+			blockDefName = findBlockDefName(block);
+		}
+
+		Set<String> blockObjects = getAllObjects(block, new TreeSet<String>());
+
+		importObjects.addAll(blockObjects);
+
+		if (!(blockName.equals("while") || blockName.equals("if"))) {
+			sb.append(getObjectDeclarations(blockObjects, blockName));
+		}
+
+		if (blockName.equals("setup")) {
+			sb.append("portletSignInUserMacros.signIn(");
+			sb.append("\"test@liferay.com\", \"test\");");
+		}
+
+		if (blockName.equals("actiondef")) {
+			sb.append(getActionDefBlock(block));
+		}
+
+		else {
+			List<Element> commands = block.elements();
+
+			for (Element command : commands) {
+				sb.append(processCommand(command, blockName, blockDefName));
+			}
+		}
+
+		return sb.toString();
+	}
+
+	protected String processCommand(
+		Element command, String blockName, String blockDefName)
+			throws Exception {
+
+		String commandName = command.getName();
+
+		if (isValidCommand(commandName)) {
+			if (commandName.equals("action")) {
+				return getCommandActions(command);
+			}
+			else if (commandName.equals("conditional")) {
+				return getCommandConditional(command);
+			}
+			else if (commandName.equals("defaultcommand")) {
+				return getCommandDefaultCommand(blockDefName);
+			}
+			else if (commandName.equals("functions")) {
+				return getCommandFunctions(command, blockDefName);
+			}
+			else if (commandName.equals("if")) {
+				return getCommandIf(command);
+			}
+			else if (commandName.equals("macro")) {
+				return getCommandMacros(command);
+			}
+			else if (commandName.equals("selenium")) {
+				return getCommandSelenium(command);
+			}
+			else if (commandName.equals("while")) {
+				return getCommandWhile(command);
+			}
+			else {
+				StringBundler message = new StringBundler();
+
+				message.append("Command '" + commandName + "'");
+				message.append(" used in " + filePath);
+				message.append(" does not exist in vocabulary");
+
+				throw new Exception(message.toString());
+			}
+		}
+		else {
+			StringBundler message = new StringBundler();
+
+			message.append("Invalid command '" + commandName + "'");
+			message.append(" used in " + filePath);
+
+			throw new Exception(message.toString());
+		}
 	}
 
 	protected String readFile(String fileName) throws Exception {
@@ -340,9 +319,14 @@ public class SeleniumXMLToJavaBuilder {
 		}
 	}
 
-	protected String basedir;
+	protected classTypes classType = classTypes.TEST;
+	protected enum classTypes { TEST, MACROS, ACTIONS, FUNCTIONS };
 
+	protected Set<String> importObjects = new TreeSet<String>();
 	protected Set<String> pageObjectSet;
+
+	protected String basedir;
+	protected String filePath = "";
 
 	private String combineConditionals(
 		List<String> conditionalList, String delimiter) {
@@ -499,9 +483,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandConditional(
-		Element conditional, String actionDefName) {
-
+	private String getCommandConditional(Element conditional) throws Exception {
 		List<String> clauseList = new ArrayList<String>();
 
 		String elements = conditional.attributeValue("elements");
@@ -551,7 +533,7 @@ public class SeleniumXMLToJavaBuilder {
 		sb.append("(");
 		sb.append(combineConditionals(clauseList, "&&"));
 		sb.append(") {");
-		sb.append(getCommands(conditional, actionDefName));
+		sb.append(processBlock(conditional));
 		sb.append("}");
 
 		return sb.toString();
@@ -579,7 +561,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandIf(Element command) {
+	private String getCommandIf(Element command) throws Exception {
 		List<Element> whileElements = command.elements();
 
 		String seleniumCommandName = command.attributeValue("command");
@@ -589,7 +571,7 @@ public class SeleniumXMLToJavaBuilder {
 		sb.append("if (");
 		sb.append(getCommandActionsConditional(command));
 		sb.append(") {");
-		sb.append(getCommands(command));
+		sb.append(processBlock(command));
 		sb.append("}");
 
 		return sb.toString();
@@ -652,7 +634,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandWhile(Element command) {
+	private String getCommandWhile(Element command) throws Exception {
 		List<Element> whileElements = command.elements();
 
 		String seleniumCommandName = command.attributeValue("command");
@@ -662,24 +644,26 @@ public class SeleniumXMLToJavaBuilder {
 		sb.append("while (");
 		sb.append(getCommandActionsConditional(command));
 		sb.append(") {");
-		sb.append(getCommands(command));
+		sb.append(processBlock(command));
 		sb.append("}");
 
 		return sb.toString();
 	}
 
-	private Set<String> getImportActions(
-		Set<String> objectPackageSet, Element command) throws Exception {
+	private String getImportActions(String object) throws Exception {
+		int x = object.length() - 7;
 
-		String actionObjectName = command.attributeValue("name");
+		String actionObjectName = object.substring(0, x);
+
+		String objectPackagePath = "";
 
 		for (String pageObject : pageObjectSet) {
 			if (pageObject.endsWith("/" + actionObjectName + ".paths")) {
-				int x = pageObject.length() - 6;
+				int y = pageObject.length() - 6;
 
-				String objectPackagePath =
+				objectPackagePath =
 					StringUtil.replace(
-						pageObject.substring(0, x), StringPool.SLASH,
+						pageObject.substring(0, y), StringPool.SLASH,
 						StringPool.PERIOD);
 
 				objectPackagePath = StringUtil.replace(
@@ -688,203 +672,44 @@ public class SeleniumXMLToJavaBuilder {
 					objectPackagePath, actionObjectName,
 					actionObjectName + "Actions");
 
-				objectPackageSet.add(objectPackagePath);
+				break;
 			}
 		}
 
-		return objectPackageSet;
+		return objectPackagePath;
 	}
 
-	private Set<String> getImportConditional(
-		Set<String> objectPackageSet, Element conditional, String actionDefName)
-			throws Exception {
+	private String getImportFunctions(String object) throws Exception {
 
-		objectPackageSet = getImports(
-			objectPackageSet, conditional, actionDefName);
+		String functionsBase = "com/liferay/portalweb/blocks/base/functions/";
 
-		return objectPackageSet;
+		return functionsBase + object + "Functions";
 	}
 
-	private Set<String> getImportFunctions(
-		Set<String> objectPackageSet, String actionDefName) throws Exception {
+	private String getImportMacros(String object) throws Exception {
 
-		String functionsObjectName = StringUtil.upperCaseFirstLetter(
-			actionDefName);
+		int x = object.length() - 6;
 
-		for (String pageObject : pageObjectSet) {
-			if (pageObject.endsWith("/" + functionsObjectName + ".functions")) {
-				int x = pageObject.length() - 10;
+		String macroObjectName = object.substring(0, x);
 
-				String objectPackagePath =
-					StringUtil.replace(
-						pageObject.substring(0, x), StringPool.SLASH,
-						StringPool.PERIOD);
-
-				objectPackagePath = StringUtil.replace(
-					objectPackagePath, functionsObjectName,
-					functionsObjectName + "Functions");
-
-				objectPackageSet.add(objectPackagePath);
-			}
-		}
-
-		return objectPackageSet;
-	}
-
-	private Set<String> getImportIf(
-		Set<String> objectPackageSet, Element command) throws Exception {
-
-		String actionObjectName = command.attributeValue("name");
-
-		for (String pageObject : pageObjectSet) {
-			if (pageObject.endsWith("/" + actionObjectName + ".paths")) {
-				int x = pageObject.length() - 6;
-
-				String objectPackagePath =
-					StringUtil.replace(
-						pageObject.substring(0, x), StringPool.SLASH,
-						StringPool.PERIOD);
-
-				objectPackagePath = StringUtil.replace(
-					objectPackagePath, ".paths.", ".actions.");
-				objectPackagePath = StringUtil.replace(
-					objectPackagePath, actionObjectName,
-					actionObjectName + "Actions");
-
-				objectPackageSet.add(objectPackagePath);
-			}
-		}
-
-		objectPackageSet = getImports(objectPackageSet, command);
-
-		return objectPackageSet;
-	}
-
-	private Set<String> getImportMacros(
-		Set<String> objectPackageSet, Element command) throws Exception {
-
-		String macroObjectName = command.attributeValue("name");
+		String objectPackagePath = "";
 
 		for (String pageObject : pageObjectSet) {
 			if (pageObject.endsWith("/" + macroObjectName + ".macros")) {
-				int x = pageObject.length() - 7;
+				int y = pageObject.length() - 7;
 
-				String objectPackagePath =
+				objectPackagePath =
 					StringUtil.replace(
-						pageObject.substring(0, x), StringPool.SLASH,
+						pageObject.substring(0, y), StringPool.SLASH,
 						StringPool.PERIOD);
 
 				objectPackagePath = StringUtil.replace(
 					objectPackagePath, macroObjectName,
 					macroObjectName + "Macros");
-
-				objectPackageSet.add(objectPackagePath);
 			}
 		}
 
-		return objectPackageSet;
-	}
-
-	private Set<String> getImportWhile(
-		Set<String> objectPackageSet, Element command) throws Exception {
-
-		String actionObjectName = command.attributeValue("name");
-
-		for (String pageObject : pageObjectSet) {
-			if (pageObject.endsWith("/" + actionObjectName + ".paths")) {
-				int x = pageObject.length() - 6;
-
-				String objectPackagePath =
-					StringUtil.replace(
-						pageObject.substring(0, x), StringPool.SLASH,
-						StringPool.PERIOD);
-
-				objectPackagePath = StringUtil.replace(
-					objectPackagePath, ".paths.", ".actions.");
-				objectPackagePath = StringUtil.replace(
-					objectPackagePath, actionObjectName,
-					actionObjectName + "Actions");
-
-				objectPackageSet.add(objectPackagePath);
-			}
-		}
-
-		objectPackageSet = getImports(objectPackageSet, command);
-
-		return objectPackageSet;
-	}
-
-	private Set<String> getObjectNameActions(
-		Set<String> objectNameSet, Element command) throws Exception {
-
-		String actionObjectName = command.attributeValue("name");
-
-		if (!(actionObjectName == null)) {
-			objectNameSet.add(actionObjectName + "Actions");
-		}
-
-		return objectNameSet;
-	}
-
-	private Set<String> getObjectNameConditional(
-		Set<String> objectNameSet, Element conditional, String actionDefName)
-			throws Exception {
-
-		objectNameSet = getObjectNames(
-			objectNameSet, conditional, actionDefName);
-
-		return objectNameSet;
-	}
-
-	private Set<String> getObjectNameFunctions(
-		Set<String> objectNameSet, String actionDefName) throws Exception {
-
-		if (!(actionDefName == null)) {
-			objectNameSet.add(
-				StringUtil.upperCaseFirstLetter(actionDefName) + "Functions");
-		}
-
-		return objectNameSet;
-	}
-
-	private Set<String> getObjectNameIf(
-		Set<String> objectNameSet, Element command) throws Exception {
-
-		String actionObjectName = command.attributeValue("name");
-
-		if (!(actionObjectName == null)) {
-			objectNameSet.add(actionObjectName + "Actions");
-		}
-
-		objectNameSet = getObjectNames(objectNameSet, command);
-
-		return objectNameSet;
-	}
-
-	private Set<String> getObjectNameMacros(
-		Set<String> objectNameSet, Element command) throws Exception {
-
-		String macroObjectName = command.attributeValue("name");
-
-		if (!(macroObjectName == null)) {
-			objectNameSet.add(macroObjectName + "Macros");
-		}
-
-		return objectNameSet;
-	}
-
-	private Set<String> getObjectNameWhile(
-		Set<String> objectNameSet, Element command) throws Exception {
-
-		String actionObjectName = command.attributeValue("name");
-
-		if (!(actionObjectName == null)) {
-			objectNameSet.add(actionObjectName + "Actions");
-		}
-
-		objectNameSet = getObjectNames(objectNameSet, command);
-
-		return objectNameSet;
+		return objectPackagePath;
 	}
 
 	private Set<String> getPageObjects() throws Exception {
@@ -912,6 +737,65 @@ public class SeleniumXMLToJavaBuilder {
 		return fileNames;
 	}
 
+	private boolean isValidCommand(String command) {
+		boolean isValid = true;
+
+		Set<String> validTestCommands = new TreeSet<String>();
+		validTestCommands.add("macro");
+		validTestCommands.add("action");
+
+		Set<String> validMacroCommands = new TreeSet<String>();
+		validMacroCommands.add("macro");
+		validMacroCommands.add("action");
+		validMacroCommands.add("while");
+		validMacroCommands.add("if");
+
+		Set<String> validActionCommands = new TreeSet<String>();
+		validActionCommands.add("function");
+		validActionCommands.add("conditional");
+		validActionCommands.add("if");
+		validActionCommands.add("while");
+		validActionCommands.add("defaultCommand");
+
+		Set<String> validFunctionCommands = new TreeSet<String>();
+		validFunctionCommands.add("selenium");
+		validFunctionCommands.add("function");
+
+		switch(classType) {
+			case TEST:
+				isValid = validTestCommands.contains(command);
+
+				break;
+
+			case MACROS:
+				isValid = validMacroCommands.contains(command);
+
+				break;
+
+			case ACTIONS:
+				isValid = validActionCommands.contains(command);
+
+				break;
+
+			case FUNCTIONS:
+				isValid = validFunctionCommands.contains(command);
+
+				break;
+		}
+
+		return isValid;
+	}
+
+	private String lowerCaseFirstLetter(String s) {
+		char[] chars = s.toCharArray();
+
+		if ((chars[0] >= 65) && (chars[0] <= 90)) {
+			chars[0] = (char)(chars[0] + 32);
+		}
+
+		return new String(chars);
+	}
+
 	private String replaceVariables(String text) {
 		if (text.startsWith("\"${") && text.endsWith("}\"")) {
 			return text.substring(3, text.length() - 2);
@@ -923,5 +807,4 @@ public class SeleniumXMLToJavaBuilder {
 
 		return text;
 	}
-
 }

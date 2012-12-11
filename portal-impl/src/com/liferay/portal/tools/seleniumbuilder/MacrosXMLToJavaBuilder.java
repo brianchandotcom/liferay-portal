@@ -50,6 +50,10 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
+			importObjects = new TreeSet<String>();
+
+			classType = classTypes.MACROS;
+
 			generateMacros(fileName);
 		}
 	}
@@ -66,6 +70,9 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		String macrosName = fileName.substring(x + 1, y) + "Macros";
 
 		String macrosFileName = macrosFilePath + "/" + macrosName + ".java";
+
+		filePath = macrosFileName;
+
 		String macrosPackagePath = StringUtil.replace(
 			macrosFilePath, StringPool.SLASH, StringPool.PERIOD);
 
@@ -86,25 +93,27 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 		Element rootElement = getRootElement(fileName);
 
-		if (isValidMacroDef(rootElement, macrosName)) {
-			sb.append(getImportStatements(rootElement));
+		List<Element> runBlocks = rootElement.elements();
 
-			sb.append("public class ");
-			sb.append(macrosName);
-			sb.append(" extends BaseMacros {");
+		Set<String> blockObjects = new TreeSet<String>();
 
-			sb.append("public ");
-			sb.append(macrosName);
-			sb.append("(LiferaySelenium liferaySelenium) {");
-			sb.append("super(liferaySelenium);");
-			sb.append("}");
+		sb.append(getImportStatements());
 
-			sb.append(getMacroDefs(rootElement));
+		sb.append("public class ");
+		sb.append(macrosName);
+		sb.append(" extends BaseMacros {");
 
-			sb.append("}");
+		sb.append("public ");
+		sb.append(macrosName);
+		sb.append("(LiferaySelenium liferaySelenium) {");
+		sb.append("super(liferaySelenium);");
+		sb.append("}");
 
-			writeFile(macrosFileName, sb.toString(), true);
-		}
+		sb.append(getMacroDefs(rootElement));
+
+		sb.append("}");
+
+		writeFile(macrosFileName, sb.toString(), true);
 	}
 
 	protected String getMacroDefs(Element rootElement) throws Exception {
@@ -121,9 +130,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 			sb.append(getParameterList(macroDef));
 			sb.append(") throws Exception {");
 
-			sb.append(getObjectDeclarations(macroDef));
-
-			sb.append(getCommands(macroDef));
+			sb.append(processBlock(macroDef));
 
 			sb.append("}");
 		}
@@ -157,54 +164,6 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		}
 
 		return paramsList;
-	}
-
-	protected boolean isValidMacroDef(Element rootElement, String macrosName)
-		throws Exception {
-		List<Element> macroDefs = rootElement.elements("macrodef");
-
-		boolean isValid = true;
-
-		for (Element macroDef : macroDefs) {
-			String macroName = macroDef.attributeValue("name");
-
-			List<Element> functions = macroDef.elements("functions");
-			List<Element> selenium = macroDef.elements("selenium");
-
-			isValid = functions.isEmpty() && selenium.isEmpty();
-
-			if (!isValid) {
-				String message = "Invalid tag(s) used in ";
-
-				message += "Macro definition of " + macroName;
-				message += " in Macros file " + macrosName + ":\n";
-
-				if (!functions.isEmpty()) {
-					String tags = "";
-
-					for (Element function : functions) {
-						message += "Function command ";
-						message += function.attributeValue("command");
-						message += "\n";
-					}
-				}
-
-				if (!selenium.isEmpty()) {
-					for (Element seleniumCommand : selenium) {
-						String command = seleniumCommand.attributeValue(
-							"command");
-
-						message += "Selenium command ";
-						message += command;
-						message += "\n";
-					}
-				}
-
-				throw new Exception(message);
-			}
-		}
-
-		return isValid;
 	}
 
 	private Set<String> getFileNames() throws Exception {

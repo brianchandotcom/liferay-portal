@@ -29,12 +29,11 @@ import java.util.List;
 public class StagedModelDataHandlerRegistryUtil {
 
 	/**
-	 * Returns the staged model data handler for a given class name from the
-	 * registry.
+	 * Returns the registered staged model data handler with the class name.
 	 *
 	 * @param  className the name of the staged model class
-	 * @return the staged model data handler for the staged model class if it
-	 *         has been registered, <code>null</code> otherwise
+	 * @return the registered staged model data handler with the class name, or
+	 *         <code>null</code> if none are registered with the class name
 	 */
 	public static StagedModelDataHandler<?> getStagedModelDataHandler(
 		String className) {
@@ -43,6 +42,11 @@ public class StagedModelDataHandlerRegistryUtil {
 			className);
 	}
 
+	/**
+	 * Returns the staged model data handler registry.
+	 *
+	 * @return the staged model data handler registry
+	 */
 	public static StagedModelDataHandlerRegistry
 		getStagedModelDataHandlerRegistry() {
 
@@ -53,20 +57,18 @@ public class StagedModelDataHandlerRegistryUtil {
 	}
 
 	/**
-	 * Returns the list of staged model data handlers registered in the
-	 * registry.
+	 * Returns all the registered staged model data handlers.
 	 *
-	 * @return a list of staged model data handlers registered in the registry
+	 * @return the registered staged model data handlers
 	 */
 	public static List<StagedModelDataHandler<?>> getStagedModelDataHandlers() {
 		return getStagedModelDataHandlerRegistry().getStagedModelDataHandlers();
 	}
 
 	/**
-	 * Registers a staged model data handler.
+	 * Registers the staged model data handler.
 	 *
-	 * @param stagedModelDataHandler the staged model data handler to register,
-	 *        a passed <code>null</code> value won't be registered
+	 * @param stagedModelDataHandler the staged model data handler to register
 	 */
 	public static void register(
 		StagedModelDataHandler<?> stagedModelDataHandler) {
@@ -75,9 +77,9 @@ public class StagedModelDataHandlerRegistryUtil {
 	}
 
 	/**
-	 * Unregister a list of staged model data handlers.
+	 * Unregisters the staged model data handlers.
 	 *
-	 * @param stagedModelDataHandlers the list of staged model data handlers to
+	 * @param stagedModelDataHandlers the staged model data handlers to
 	 *        unregister
 	 */
 	public static void unregister(
@@ -91,7 +93,7 @@ public class StagedModelDataHandlerRegistryUtil {
 	}
 
 	/**
-	 * Unregister a staged model data handler.
+	 * Unregisters the staged model data handler.
 	 *
 	 * @param stagedModelDataHandler the staged model data handler to unregister
 	 */
@@ -101,6 +103,12 @@ public class StagedModelDataHandlerRegistryUtil {
 		getStagedModelDataHandlerRegistry().unregister(stagedModelDataHandler);
 	}
 
+	/**
+	 * Sets the staged model data handler registry.
+	 *
+	 * @param stagedModelDataHandlerRegistry the staged model data handler
+	 *        registry
+	 */
 	public void setStagedModelDataHandlerRegistry(
 		StagedModelDataHandlerRegistry stagedModelDataHandlerRegistry) {
 

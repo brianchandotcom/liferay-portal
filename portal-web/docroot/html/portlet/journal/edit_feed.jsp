@@ -376,7 +376,7 @@ if (feed != null) {
 			},
 			groupId: <%= groupId %>,
 			saveCallback: '<portlet:namespace />selectStructure',
-			storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
+			storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
 			structureName: 'structure',
 			structureType: 'com.liferay.portlet.journal.model.JournalArticle',
 			title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'

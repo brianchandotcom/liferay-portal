@@ -116,7 +116,7 @@
 				},
 				showGlobalScope: 'false',
 				showManageTemplates: 'true',
-				storageType: 'xml',
+				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
 				structureName: 'structure',
 				structureType: 'com.liferay.portlet.journal.model.JournalArticle',
 				templateType: '<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>',

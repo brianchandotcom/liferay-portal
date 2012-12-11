@@ -320,7 +320,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		// Statistics
 
 		blogsStatsUserLocalService.updateStatsUser(
-			entry.getGroupId(), entry.getUserId());
+			entry.getGroupId(), entry.getUserId(), entry.getDisplayDate());
 
 		// Asset
 

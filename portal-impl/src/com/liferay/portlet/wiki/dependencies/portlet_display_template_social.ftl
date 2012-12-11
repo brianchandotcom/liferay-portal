@@ -164,7 +164,7 @@
 	<@liferay_ui["icon"]
 		image="clip"
 		label=true
-		message='${entry.getAttachmentsFilesCount() + languageUtil.get(locale, "attachments")}'
+		message='${entry.getAttachmentsFileEntriesCount() + languageUtil.get(locale, "attachments")}'
 		url=viewPageAttachmentsURL?string
 	/>
 </#macro>

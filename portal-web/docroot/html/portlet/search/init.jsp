@@ -91,29 +91,7 @@ boolean displayOpenSearchResults = GetterUtil.getBoolean(portletPreferences.getV
 String searchConfiguration = portletPreferences.getValue("searchConfiguration", StringPool.BLANK);
 
 if (!advancedConfiguration && Validator.isNull(searchConfiguration)) {
-	StringBundler sb = new StringBundler(6);
-
-	sb.append("{facets: [");
-
-	if (displayAssetTypeFacet) {
-		sb.append("{className: 'com.liferay.portal.kernel.search.facet.AssetEntriesFacet', data: {frequencyThreshold: 1, values: ['com.liferay.portlet.bookmarks.model.BookmarksEntry','com.liferay.portlet.blogs.model.BlogsEntry','com.liferay.portlet.calendar.model.CalEvent','com.liferay.portlet.documentlibrary.model.DLFileEntry','com.liferay.portlet.journal.model.JournalArticle','com.liferay.portlet.messageboards.model.MBMessage','com.liferay.portlet.wiki.model.WikiPage','com.liferay.portal.model.User']}, displayStyle: 'asset_entries', fieldName: 'entryClassName', label: 'asset-type', order: 'OrderHitsDesc', static: false, weight: 1.5},");
-	}
-
-	if (displayAssetTagsFacet) {
-		sb.append("{className: 'com.liferay.portal.kernel.search.facet.MultiValueFacet', data: {displayStyle: 'list', frequencyThreshold: 1, maxTerms: 10, showAssetCount: true}, displayStyle: 'asset_tags', fieldName: 'assetTagNames', label: 'tag', order: 'OrderHitsDesc', static: false, weight: 1.4},");
-	}
-
-	if (displayAssetCategoriesFacet) {
-		sb.append("{className: 'com.liferay.portal.kernel.search.facet.MultiValueFacet', data: {displayStyle: 'list', frequencyThreshold: 1, maxTerms: 10, showAssetCount: true}, displayStyle: 'asset_tags', fieldName: 'assetCategoryTitles', label: 'category', order: 'OrderHitsDesc', static: false, weight: 1.3},");
-	}
-
-	if (displayModifiedRangeFacet) {
-		sb.append("{className: 'com.liferay.portal.kernel.search.facet.ModifiedFacet', data: {frequencyThreshold: 0, ranges: [{label:'past-hour', range:'[past-hour TO *]'}, {label:'past-24-hours', range:'[past-24-hours TO *]'}, {label:'past-week', range:'[past-week TO *]'}, {label:'past-month', range:'[past-month TO *]'}, {label:'past-year', range:'[past-year TO *]'}]}, displayStyle: 'modified', fieldName: 'modified', label: 'modified', order: 'OrderHitsDesc', static: false, weight: 1.1}");
-	}
-
-	sb.append("]}");
-
-	searchConfiguration = sb.toString();
+	searchConfiguration = ContentUtil.get(PropsValues.SEARCH_FACET_CONFIGURATION);
 }
 
 boolean dlLinkToViewURL = false;

@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 /**
  * @author Brian Wing Shun Chan
  * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
 public class ReflectionUtil {
 
@@ -38,6 +39,41 @@ public class ReflectionUtil {
 			return getAnnotationDeclaringClass(
 				annotationClass, clazz.getSuperclass());
 		}
+	}
+
+	public static Method getBridgeMethod(
+			Class<?> clazz, String name, Class<?> ... parameterTypes)
+		throws Exception {
+
+		Method method = clazz.getMethod(name, parameterTypes);
+
+		if (!method.isBridge()) {
+			Method :
+			for (Method currentMethod : clazz.getMethods()) {
+				if (currentMethod.isBridge() &&
+						currentMethod.getName().equals(name)) {
+
+					Class<?>[] currentParameterTypes =
+						currentMethod.getParameterTypes();
+
+					if (currentParameterTypes.length == parameterTypes.length) {
+						for (int i = 0; i < currentParameterTypes.length; i++) {
+							if (!currentParameterTypes[i].isAssignableFrom(
+									parameterTypes[i])) {
+
+								continue Method;
+							}
+						}
+
+						method = currentMethod;
+
+						break;
+					}
+				}
+			}
+		}
+
+		return method;
 	}
 
 	public static Field getDeclaredField(Class<?> clazz, String name)

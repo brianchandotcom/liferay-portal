@@ -10674,6 +10674,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		private SqlUpdate _sqlUpdate;
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"uuid", "password"
+		};
 	private static final String _SQL_SELECT_USER = "SELECT user FROM User user";
 	private static final String _SQL_SELECT_USER_WHERE = "SELECT user FROM User user WHERE ";
 	private static final String _SQL_COUNT_USER = "SELECT COUNT(user) FROM User user";

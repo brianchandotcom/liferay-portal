@@ -3331,6 +3331,14 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"number", "primary"
+		};
 	private static final String _SQL_SELECT_PHONE = "SELECT phone FROM Phone phone";
 	private static final String _SQL_SELECT_PHONE_WHERE = "SELECT phone FROM Phone phone WHERE ";
 	private static final String _SQL_COUNT_PHONE = "SELECT COUNT(phone) FROM Phone phone";

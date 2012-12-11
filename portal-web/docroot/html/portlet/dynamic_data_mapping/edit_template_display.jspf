@@ -79,10 +79,6 @@ boolean useRichEditor = editorType.equals("rich");
 <aui:script use="aui-ace-editor">
 	var editorType = '<%= HtmlUtil.escapeJS(editorType) %>';
 
-	var editorContentElement = A.one('#<portlet:namespace />scriptContent');
-
-	var plainEditorField = A.one('#<portlet:namespace />plainEditorField');
-
 	var richEditor;
 
 	var prevEditorContent;
@@ -152,15 +148,22 @@ boolean useRichEditor = editorType.equals("rich");
 				}
 			).render();
 
+			var editorContentElement = A.one('#<portlet:namespace />scriptContent');
+
+			var plainEditorField = A.one('#<portlet:namespace />plainEditorField');
+
 			if (editorContentElement) {
 				setEditorContent(editorType, editorContentElement.val());
 			}
 
 			A.one('#<portlet:namespace />editorType').on('change', updateEditorType);
 
-			Liferay.on('<portlet:namespace />saveTemplate', function(event) {
-				editorContentElement.val(getEditorContent());
-			});
+			Liferay.on(
+				'<portlet:namespace />saveTemplate',
+				function(event) {
+					editorContentElement.val(getEditorContent());
+				}
+			);
 		},
 		'#<portlet:namespace />richEditor'
 	);

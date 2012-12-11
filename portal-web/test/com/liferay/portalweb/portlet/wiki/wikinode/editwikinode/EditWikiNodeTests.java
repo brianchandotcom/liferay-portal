@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.wiki.wikinode.editwikinode;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.AddWikiNodeTest;
 import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;
 
 import junit.framework.Test;

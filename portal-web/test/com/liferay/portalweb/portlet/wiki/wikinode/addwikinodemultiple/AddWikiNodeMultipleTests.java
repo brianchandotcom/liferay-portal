@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portlet.wiki.wikinode.addwikinodemultiple;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.AddWikiNode1Test;
+import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.AddWikiNode2Test;
+import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.AddWikiNode3Test;
 import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;
 
 import junit.framework.Test;
@@ -29,6 +32,7 @@ public class AddWikiNodeMultipleTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddWikiNode1Test.class);
 		testSuite.addTestSuite(AddWikiNode2Test.class);
 		testSuite.addTestSuite(AddWikiNode3Test.class);
+		testSuite.addTestSuite(ViewWikiNodeMultipleTest.class);
 		testSuite.addTestSuite(TearDownWikiNodeTest.class);
 
 		return testSuite;

@@ -18,6 +18,7 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPageWikiTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPortletWikiTest;
+import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.AddWikiNodeTest;
 import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikifrontpage.AddWikiFrontPageTest;
 
@@ -33,7 +34,7 @@ public class ViewWikiNodeFrontPageTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageWikiTest.class);
 		testSuite.addTestSuite(AddPortletWikiTest.class);
 		testSuite.addTestSuite(AddWikiFrontPageTest.class);
-		testSuite.addTestSuite(AddWikiNodeCPTest.class);
+		testSuite.addTestSuite(AddWikiNodeTest.class);
 		testSuite.addTestSuite(AddWikiNodeFrontPageTest.class);
 		testSuite.addTestSuite(ViewWikiNodeFrontPageTest.class);
 		testSuite.addTestSuite(TearDownWikiNodeTest.class);

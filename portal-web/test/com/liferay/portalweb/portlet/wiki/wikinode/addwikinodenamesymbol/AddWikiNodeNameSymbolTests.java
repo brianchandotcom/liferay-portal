@@ -27,6 +27,7 @@ public class AddWikiNodeNameSymbolTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddWikiNodeNameSymbolTest.class);
+		testSuite.addTestSuite(ViewWikiNodeNameSymbolTest.class);
 		testSuite.addTestSuite(TearDownWikiNodeTest.class);
 
 		return testSuite;

@@ -25,7 +25,14 @@ public class AddWikiNodeTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -48,10 +55,10 @@ public class AddWikiNodeTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Wiki Node Name"),
-			selenium.getText("//tr[4]/td[1]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//tr[4]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[4]/td[3]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[3]/a"));
 	}
 }

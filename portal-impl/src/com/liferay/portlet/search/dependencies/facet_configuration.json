@@ -3,7 +3,16 @@
 		className: 'com.liferay.portal.kernel.search.facet.AssetEntriesFacet',
 		data: {
 			frequencyThreshold: 1,
-			values: ['com.liferay.portlet.bookmarks.model.BookmarksEntry','com.liferay.portlet.blogs.model.BlogsEntry','com.liferay.portlet.calendar.model.CalEvent','com.liferay.portlet.documentlibrary.model.DLFileEntry','com.liferay.portlet.journal.model.JournalArticle','com.liferay.portlet.messageboards.model.MBMessage','com.liferay.portlet.wiki.model.WikiPage','com.liferay.portal.model.User']
+			values: [
+				'com.liferay.portlet.bookmarks.model.BookmarksEntry',
+				'com.liferay.portlet.blogs.model.BlogsEntry',
+				'com.liferay.portlet.calendar.model.CalEvent',
+				'com.liferay.portlet.documentlibrary.model.DLFileEntry',
+				'com.liferay.portlet.journal.model.JournalArticle',
+				'com.liferay.portlet.messageboards.model.MBMessage',
+				'com.liferay.portlet.wiki.model.WikiPage',
+				'com.liferay.portal.model.User'
+			]
 		},
 		displayStyle: 'asset_entries',
 		fieldName: 'entryClassName',
@@ -46,7 +55,28 @@
 		className: 'com.liferay.portal.kernel.search.facet.ModifiedFacet',
 		data: {
 			frequencyThreshold: 0,
-			ranges: [{label:'past-hour', range:'[past-hour TO *]'}, {label:'past-24-hours', range:'[past-24-hours TO *]'}, {label:'past-week', range:'[past-week TO *]'}, {label:'past-month', range:'[past-month TO *]'}, {label:'past-year', range:'[past-year TO *]'}]
+			ranges: [
+				{
+					label:'past-hour',
+					range:'[past-hour TO *]'
+				},
+				{
+					label:'past-24-hours',
+					range:'[past-24-hours TO *]'
+				},
+				{
+					label:'past-week',
+					range:'[past-week TO *]'
+				},
+				{
+					label:'past-month',
+					range:'[past-month TO *]'
+				},
+				{
+					label:'past-year',
+					range:'[past-year TO *]'
+				}
+			]
 		},
 		displayStyle: 'modified',
 		fieldName: 'modified',

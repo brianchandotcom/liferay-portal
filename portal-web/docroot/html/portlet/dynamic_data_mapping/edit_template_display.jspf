@@ -27,7 +27,7 @@ if (Validator.isNotNull(editorType)) {
 	portalPreferences.setValue(PortletKeys.DYNAMIC_DATA_MAPPING, "editor-type", editorType);
 }
 else {
-	editorType = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "editor-type", "plain");
+	editorType = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "editor-type", "rich");
 }
 
 boolean useRichEditor = editorType.equals("rich");

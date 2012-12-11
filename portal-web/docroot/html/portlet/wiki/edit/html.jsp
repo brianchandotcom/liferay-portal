@@ -21,7 +21,16 @@ WikiPage wikiPage = (WikiPage)request.getAttribute("edit_page.jsp-wikiPage");
 String content = BeanParamUtil.getString(wikiPage, request, "content");
 %>
 
-<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" width="100%" />
+<%@ include file="/html/portlet/wiki/edit/editor_config.jspf" %>
+
+<liferay-ui:input-editor
+	configParams="<%= configParams %>"
+	editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
+	fileBrowserParams="<%= fileBrowserParams %>"
+	name="content"
+	resizable="<%= false %>"
+	width="100%"
+/>
 
 <aui:input name="content" type="hidden" />
 

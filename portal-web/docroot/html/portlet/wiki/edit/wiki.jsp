@@ -42,28 +42,7 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 	<aui:layout>
 		<aui:column columnWidth="<%= showSyntaxHelp ? 70 : 100 %>" id="wikiEditorContainer">
 
-			<%
-			long resourcePrimKey = 0;
-
-			String attachmentURLPrefix = StringPool.BLANK;
-
-			if (wikiPage != null) {
-				resourcePrimKey = wikiPage.getResourcePrimKey();
-
-				attachmentURLPrefix = themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/wiki/get_page_attachment?p_l_id=" + themeDisplay.getPlid() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + HttpUtil.encodeURL(wikiPage.getTitle()) + "&fileName=";
-			}
-
-			Map<String,String> configParams = new HashMap();
-
-			configParams.put("attachmentURLPrefix", attachmentURLPrefix);
-			configParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));
-
-			Map<String,String> fileBrowserParams = new HashMap();
-
-			fileBrowserParams.put("attachmentURLPrefix", attachmentURLPrefix);
-			fileBrowserParams.put("Type", "Attachment");
-			fileBrowserParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));
-			%>
+		<%@ include file="/html/portlet/wiki/edit/editor_config.jspf" %>
 
 		<c:choose>
 			<c:when test='<%= format.equals("creole") %>'>

@@ -21,8 +21,6 @@ if (Validator.isNotNull(scriptContent)) {
 	script = scriptContent;
 }
 
-String langType = ParamUtil.getString(request, "langType");
-
 String editorType = ParamUtil.getString(request, "editorType");
 
 if (Validator.isNotNull(editorType)) {
@@ -33,15 +31,6 @@ else {
 }
 
 boolean useRichEditor = editorType.equals("rich");
-
-String editorMode = "php";
-
-if (langType.equals("css")) {
-	editorMode = "css";
-}
-else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xsd")) {
-	editorMode = "xml";
-}
 %>
 
 <aui:input name="scriptContent" type="hidden" value="<%= script %>" />
@@ -147,6 +136,10 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 		editorType = newEditorType;
 	}
 
+	<%
+	String langType = ParamUtil.getString(request, "langType");
+	%>
+
 	A.on(
 		'domready',
 		function(event) {
@@ -155,7 +148,7 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 					boundingBox: '#<portlet:namespace />richEditor',
 					width: '100%',
 					height: '400',
-					mode: '<%= editorMode %>'
+					mode: '<%= EditorUtil.getEditorMode(langType) %>'
 				}
 			).render();
 

@@ -218,7 +218,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 									String servletContextName = settingsProperties.getProperty("customJspServletContextName", StringPool.BLANK);
 								%>
 
-									<aui:option data-servletContextName="<%= servletContextName %>" disabled="<%= (publicLayoutSetPrototype != null) && (curLayoutSetPrototype.getLayoutSetPrototypeId() == publicLayoutSetPrototype.getLayoutSetPrototypeId() %>" value="<%= curLayoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(curLayoutSetPrototype.getName(user.getLanguageId())) %></aui:option>
+									<aui:option data-servletContextName="<%= servletContextName %>" disabled="<%= (publicLayoutSetPrototype != null) && (curLayoutSetPrototype.getLayoutSetPrototypeId() == publicLayoutSetPrototype.getLayoutSetPrototypeId()) %>" value="<%= curLayoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(curLayoutSetPrototype.getName(user.getLanguageId())) %></aui:option>
 
 								<%
 								}

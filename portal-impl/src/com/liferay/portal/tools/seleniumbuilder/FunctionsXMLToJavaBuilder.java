@@ -56,6 +56,10 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
+			importObjects = new TreeSet<String>();
+
+			classType = classTypes.FUNCTIONS;
+
 			generateFunctions(fileName);
 		}
 	}
@@ -103,7 +107,7 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		Element rootElement = getRootElement(functionsXMLFileName);
 
 		if (isValidFunctionDef(rootElement, functionsName)) {
-			sb.append(getFunctionDefs(rootElement, functionsName));
+			sb.append(getFunctionDefs(rootElement));
 
 			sb.append("}");
 
@@ -111,7 +115,7 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		}
 	}
 
-	protected String getCommands(Element runBlock, String functionsName) {
+	protected String getCommands(Element runBlock) {
 		StringBundler sb = new StringBundler();
 
 		List<Element> commands = runBlock.elements();
@@ -121,10 +125,6 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 			if (commandName.equals("else")) {
 				sb.append(getCommandElse(command));
-			}
-			else if (commandName.equals("functions")) {
-				sb.append(getObjectDeclaration(functionsName));
-				sb.append(getCommandFunctions(command, functionsName));
 			}
 			else if (commandName.equals("selenium")) {
 				sb.append(getCommandSelenium(command));
@@ -137,14 +137,14 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	protected boolean isValidFunctionDef(
-		Element rootElement, String functionsName) throws Exception {
-
+	protected boolean isValidFunctionDef(Element rootElement,
+		String functionsName) throws Exception {
 		List<Element> functionDefs = rootElement.elements("functiondef");
 
 		boolean isValid = true;
 
 		for (Element functionDef : functionDefs) {
+
 			String functionName = functionDef.attributeValue("name");
 
 			List<Element> macros = functionDef.elements("macros");
@@ -160,7 +160,6 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 				if (!macros.isEmpty()) {
 					String tags = "";
-
 					for (Element macro : macros) {
 						message += "Macro command ";
 						message += macro.attributeValue("command");
@@ -191,19 +190,6 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append("else {");
 		sb.append(getCommands(command));
 		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String getCommandFunctions(Element command, String functionsName) {
-		StringBundler sb = new StringBundler();
-
-		String functionCommandName = command.attributeValue("command");
-
-		sb.append(lowerCaseFirstLetter(functionsName));
-		sb.append(StringPool.PERIOD);
-		sb.append(functionCommandName);
-		sb.append("(param1, param2);\n");
 
 		return sb.toString();
 	}
@@ -346,9 +332,7 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		return fileNames;
 	}
 
-	private String getFunctionDefs(Element rootElement, String functionsName)
-		throws Exception {
-
+	private String getFunctionDefs(Element rootElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		List<Element> functionDefs = rootElement.elements("functiondef");
@@ -360,25 +344,10 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 			sb.append(functionDefName);
 			sb.append("(String param1, String param2) throws Exception {\n");
 
-			sb.append(getCommands(functionDef, functionsName));
+			sb.append(getCommands(functionDef));
 
 			sb.append("}\n");
 		}
-
-		return sb.toString();
-	}
-
-	private String getObjectDeclaration(String functionsName) {
-		StringBundler sb = new StringBundler();
-
-		sb.append(functionsName);
-		sb.append(" ");
-		sb.append(lowerCaseFirstLetter(functionsName));
-		sb.append(" = new ");
-		sb.append(functionsName);
-		sb.append("(selenium);\n");
-
-		sb.append("\n");
 
 		return sb.toString();
 	}

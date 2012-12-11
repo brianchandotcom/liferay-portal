@@ -137,7 +137,7 @@ public class DeployUtil {
 	}
 
 	public static void redeployTomcat(String context) throws Exception {
-		File webXml = new File(getAutoDeployDestDir(), "/WEB-INF/web.xml");
+		File webXml = new File(getAutoDeployDestDir(), "/" + context + "/WEB-INF/web.xml");
 
 		FileUtils.touch(webXml);
 	}

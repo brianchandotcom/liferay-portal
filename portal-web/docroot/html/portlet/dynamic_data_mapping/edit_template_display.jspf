@@ -60,27 +60,24 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 
 </aui:select>
 
-<aui:field-wrapper label="script-file">
+<aui:fieldset label="script-file">
 	<aui:input label="" name="script" type="file" />
 
-	<aui:fieldset>
-		<liferay-ui:panel-container extended="<%= false %>" id="templateScriptPanelContainer" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" persistState="<%= true %>" title="script">
-				<aui:select name="editorType">
-					<aui:option label="rich" selected="<%= useRichEditor %>" value="rich" />
-					<aui:option label="plain" value="plain" />
-				</aui:select>
-			
+	<liferay-ui:panel-container extended="<%= false %>" id="templateScriptPanelContainer" persistState="<%= true %>">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" persistState="<%= true %>" title="script">
+			<aui:select name="editorType">
+				<aui:option label="rich" selected="<%= useRichEditor %>" value="rich" />
+				<aui:option label="plain" value="plain" />
+			</aui:select>
 
-				<div class="lfr-plain-editor <%= useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />plainEditor">
-					<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-editor-textarea" label="" name="plainEditorField" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" value="" wrap="off" />
-				</div>
+			<div class="lfr-plain-editor <%= useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />plainEditor">
+				<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-editor-textarea" label="" name="plainEditorField" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" value="" wrap="off" />
+			</div>
 
-				<div class="lfr-rich-editor <%= !useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />richEditor"></div>
-			</liferay-ui:panel>
-		</liferay-ui:panel-container>
-	</aui:fieldset>
-</aui:field-wrapper>
+			<div class="lfr-rich-editor <%= !useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />richEditor"></div>
+		</liferay-ui:panel>
+	</liferay-ui:panel-container>
+</aui:fieldset>
 
 <aui:script use="aui-ace-editor">
 	var editorType = '<%= HtmlUtil.escapeJS(editorType) %>';

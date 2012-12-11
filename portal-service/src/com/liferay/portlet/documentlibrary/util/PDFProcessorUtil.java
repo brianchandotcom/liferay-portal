@@ -146,7 +146,9 @@ public class PDFProcessorUtil {
 
 		PDFProcessor pdfProcessor = getPDFProcessor();
 
-		pdfProcessor.trigger(sourceFileVersion, destinationFileVersion);
+		if (pdfProcessor != null) {
+			pdfProcessor.trigger(sourceFileVersion, destinationFileVersion);
+		}
 	}
 
 	/**

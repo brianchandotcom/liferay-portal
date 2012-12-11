@@ -1937,8 +1937,6 @@ public interface PropsKeys {
 
 	public static final String SC_PRODUCT_COMMENTS_ENABLED = "sc.product.comments.enabled";
 
-	public static final String SCHEDULER_CLASSES = "scheduler.classes";
-
 	public static final String SCHEDULER_DESCRIPTION_MAX_LENGTH = "scheduler.description.max.length";
 
 	public static final String SCHEDULER_ENABLED = "scheduler.enabled";

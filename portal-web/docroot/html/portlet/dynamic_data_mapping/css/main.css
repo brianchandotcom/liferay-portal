@@ -98,4 +98,22 @@
 			height: 400px;
 		}
 	}
+
+	.editor-toolbar {
+		background-color: #DDD;
+		border: 1px solid #CCC;
+		border-bottom: none;
+		font-size: 0.8em;
+	}
+
+	.editor-type {
+		display: block;
+		padding: .2em;
+		text-align: right;
+	}
+
+	.language-type {
+		float: left;
+		padding: .2em;
+	}
 }

@@ -1155,37 +1155,6 @@
 		['aui-base']
 	);
 
-	/**
-	 * OPTIONS
-	 *
-	 * Required
-	 * button {string|object}: The button that opens the popup when clicked.
-	 * height {number}: The height to set the popup to.
-	 * textarea {string}: the name of the textarea to auto-resize.
-	 * url {string}: The url to open that sets the editor.
-	 * width {number}: The width to set the popup to.
-	 */
-
-	Liferay.provide(
-		Util,
-		'inlineEditor',
-		function(options, callback) {
-			var editorButton = A.one(options.button);
-
-			if (options.uri && editorButton) {
-				delete options.button;
-
-				editorButton.on(
-					EVENT_CLICK,
-					function(event) {
-						Util.openWindow(options, callback);
-					}
-				);
-			}
-		},
-		['aui-dialog', 'aui-io']
-	);
-
 	Liferay.provide(
 		Util,
 		'moveItem',

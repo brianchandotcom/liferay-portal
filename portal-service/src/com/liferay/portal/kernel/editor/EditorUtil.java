@@ -26,6 +26,22 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class EditorUtil {
 
+	public static String getEditorMode(String langType) {
+		String editorMode = "php";
+
+		if (langType.equals("css")) {
+			editorMode = "css";
+		}
+		else if (langType.equals("xml") ||
+				 langType.equals("xsl") ||
+				 langType.equals("xsd")) {
+
+			editorMode = "xml";
+		}
+
+		return editorMode;
+	}
+
 	public static String getEditorValue(
 		HttpServletRequest request, String editorImpl) {
 

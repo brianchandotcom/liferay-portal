@@ -366,7 +366,20 @@ if (Validator.isNotNull(structureAvailableFields)) {
 </c:choose>
 
 <aui:button-row>
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveTemplate();" %>' value='<%= LanguageUtil.get(pageContext, "save") %>' />
+	<aui:script>
+		Liferay.after(
+			'<portlet:namespace />saveTemplate',
+			function(){
+				submitForm(document.<portlet:namespace />fm);
+			}
+		);
+	</aui:script>
+
+	<%
+	String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
+	%>
+
+	<aui:button onClick="<%= taglibOnClick %>" value='<%= LanguageUtil.get(pageContext, "save") %>' />
 
 	<aui:button href="<%= redirect %>" type="cancel" />
 </aui:button-row>

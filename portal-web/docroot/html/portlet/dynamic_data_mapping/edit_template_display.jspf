@@ -20,61 +20,151 @@ String scriptContent = ParamUtil.getString(request, "scriptContent");
 if (Validator.isNotNull(scriptContent)) {
 	script = scriptContent;
 }
+
+String editorType = ParamUtil.getString(request, "editorType");
+
+if (Validator.isNotNull(editorType)) {
+	portalPreferences.setValue(PortletKeys.DYNAMIC_DATA_MAPPING, "editor-type", editorType);
+}
+else {
+	editorType = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "editor-type", "rich");
+}
+
+boolean useRichEditor = editorType.equals("rich");
 %>
 
 <aui:input name="scriptContent" type="hidden" value="<%= script %>" />
 
-<aui:select label="language-type" name="language">
+<liferay-ui:panel-container extended="<%= false %>" id="templateScriptPanelContainer" persistState="<%= true %>">
+	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" persistState="<%= true %>" title="script">
+		<div class="editor-toolbar">
+			<aui:select cssClass="language-type" inlineField="<%= true %>" label="" name="language" title="language-type">
 
-	<%
-	for (int i = 0; i < DDMTemplateConstants.LANG_TYPES.length; i++) {
-	%>
+				<%
+				for (String curLangType : DDMTemplateConstants.LANG_TYPES) {
+					StringBundler sb = new StringBundler(5);
 
-		<aui:option label="<%= DDMTemplateConstants.LANG_TYPES[i].toUpperCase() %>" selected="<%= language.equals(DDMTemplateConstants.LANG_TYPES[i]) %>" value="<%= DDMTemplateConstants.LANG_TYPES[i] %>" />
+					sb.append(LanguageUtil.get(pageContext, curLangType));
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.OPEN_PARENTHESIS);
+					sb.append(StringPool.PERIOD);
+					sb.append(curLangType);
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+				%>
 
-	<%
-	}
-	%>
+					<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(curLangType) %>" value="<%= curLangType %>" />
 
-</aui:select>
+				<%
+				}
+				%>
 
-<aui:field-wrapper label="script">
-	<aui:input label="" name="script" type="file" />
+			</aui:select>
 
-	<aui:button name="editorButton" value="launch-editor" />
-</aui:field-wrapper>
+			<aui:select cssClass="editor-type" inlineField="<%= true %>" name="editorType">
+				<aui:option label="rich" selected="<%= useRichEditor %>" value="rich" />
+				<aui:option label="plain" selected="<%= !useRichEditor %>" value="plain" />
+			</aui:select>
+		</div>
 
-<aui:script>
-	Liferay.Util.inlineEditor(
-		{
-			button: '#<portlet:namespace />editorButton',
-			cache: false,
-			id: '<portlet:namespace />scriptContentIFrame',
-			textarea: '<portlet:namespace />scriptContent',
-			title: '<%= UnicodeLanguageUtil.get(pageContext, "editor") %>',
+		<div class="lfr-plain-editor <%= useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />plainEditor">
+			<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-editor-textarea" label="" name="plainEditorField" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" value="" wrap="off" />
+		</div>
 
-			<%
-			long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
+		<div class="lfr-rich-editor <%= !useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />richEditor"></div>
 
-			PortletURL portletURL = PortletURLFactoryUtil.create(request, PortletKeys.JOURNAL, controlPanelPlid, PortletRequest.RENDER_PHASE);
+		<aui:input label="script-file" name="script" type="file" />
+	</liferay-ui:panel>
+</liferay-ui:panel-container>
 
-			portletURL.setParameter("struts_action", "/journal/edit_template_xsl");
-			portletURL.setParameter("editorContentInputElement", "#" + renderResponse.getNamespace() + "scriptContent");
-			portletURL.setParameter("editorContentOutputElement", "#" + renderResponse.getNamespace() + "scriptContent");
-			portletURL.setPortletMode(PortletMode.VIEW);
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-			%>
+<aui:script use="aui-ace-editor">
+	var editorType = '<%= HtmlUtil.escapeJS(editorType) %>';
 
-			uri: '<%= portletURL.toString() %>&langType=' + document.<portlet:namespace />fm.<portlet:namespace />language.value
+	var richEditor;
+
+	var prevEditorContent;
+
+	function getEditorContent(type) {
+		var content = '';
+
+		if (type == 'plain') {
+			content = plainEditorField.val();
 		}
-	);
+		else {
+			content = richEditor.getSession().getValue();
+		}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveTemplate',
-		function() {
-			submitForm(document.<portlet:namespace />fm);
+		return content;
+	}
+
+	function setEditorContent(type, content) {
+		if (type == 'plain') {
+			plainEditorField.val(content);
+		}
+		else {
+			richEditor.getSession().setValue(content);
+		}
+
+		prevEditorContent = content;
+	}
+
+	function updateEditorType(event) {
+		var oldEditorType = editorType;
+
+		var newEditorType = A.one('#<portlet:namespace />editorType').val();
+
+		var oldEditorContent = getEditorContent(oldEditorType);
+
+		setEditorContent(newEditorType, oldEditorContent);
+
+		var richEditorType = (newEditorType != 'plain');
+
+		A.one('#<portlet:namespace />plainEditor').toggle(!richEditorType);
+		A.one('#<portlet:namespace />richEditor').toggle(richEditorType);
+
+		if (richEditorType) {
+			richEditor.editor.resize();
+		}
+
+		var uri = '<portlet:renderURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template_xsl" /></portlet:renderURL>&editorType=' + newEditorType;
+
+		A.io.request(uri);
+
+		editorType = newEditorType;
+	}
+
+	<%
+	String langType = ParamUtil.getString(request, "langType");
+	%>
+
+	A.on(
+		'domready',
+		function(event) {
+			richEditor = new A.AceEditor(
+				{
+					boundingBox: '#<portlet:namespace />richEditor',
+					width: '100%',
+					height: '400',
+					mode: '<%= EditorUtil.getEditorMode(langType) %>'
+				}
+			).render();
+
+			var editorContentElement = A.one('#<portlet:namespace />scriptContent');
+
+			var plainEditorField = A.one('#<portlet:namespace />plainEditorField');
+
+			if (editorContentElement) {
+				setEditorContent(editorType, editorContentElement.val());
+			}
+
+			A.one('#<portlet:namespace />editorType').on('change', updateEditorType);
+
+			Liferay.on(
+				'<portlet:namespace />saveTemplate',
+				function(event) {
+					editorContentElement.val(getEditorContent());
+				}
+			);
 		},
-		['aui-base']
+		'#<portlet:namespace />richEditor'
 	);
 </aui:script>

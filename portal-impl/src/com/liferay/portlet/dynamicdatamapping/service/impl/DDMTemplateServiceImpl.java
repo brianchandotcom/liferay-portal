@@ -84,6 +84,21 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			smallImageURL, smallImageFile, serviceContext);
 	}
 
+	public DDMTemplate copyTemplate(
+			long templateId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
+
+		DDMPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ddmResource, ActionKeys.ADD_TEMPLATE);
+
+		return ddmTemplateLocalService.copyTemplate(
+			getUserId(), templateId, nameMap, descriptionMap, serviceContext);
+	}
+
 	public List<DDMTemplate> copyTemplates(
 			long classNameId, long classPK, long newClassPK, String type,
 			ServiceContext serviceContext)

@@ -258,7 +258,7 @@ update DLFileShortcut set active_ = TRUE;
 
 alter table DLFileVersion add checksum VARCHAR(75) null;
 
-alter table DLFolder add hidden_ BOOLEAN;
+alter table DLFolder add hidden BOOLEAN;
 alter table DLFolder add status INTEGER;
 alter table DLFolder add statusByUserId LONG;
 alter table DLFolder add statusByUserName VARCHAR(75) null;
@@ -266,7 +266,7 @@ alter table DLFolder add statusDate DATE null;
 
 COMMIT_TRANSACTION;
 
-update DLFolder set hidden_ = FALSE;
+update DLFolder set hidden = FALSE;
 update DLFolder set status = 0;
 update DLFolder set statusByUserId = userId;
 update DLFolder set statusByUserName = userName;

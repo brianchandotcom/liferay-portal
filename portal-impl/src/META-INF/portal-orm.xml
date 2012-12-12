@@ -306,9 +306,7 @@
 				<column name="TYPE_" />
 			</basic>
 			<basic name="typeSettings" />
-			<basic name="hidden">
-				<column name="HIDDEN_" />
-			</basic>
+			<basic name="hidden" />
 			<basic name="friendlyURL" />
 			<basic name="iconImage" />
 			<basic name="iconImageId" />
@@ -2035,9 +2033,7 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="defaultFileEntryTypeId" />
-			<basic name="hidden">
-				<column name="HIDDEN_" />
-			</basic>
+			<basic name="hidden" />
 			<basic name="overrideFileEntryTypes" />
 			<basic name="status" />
 			<basic name="statusByUserId" />

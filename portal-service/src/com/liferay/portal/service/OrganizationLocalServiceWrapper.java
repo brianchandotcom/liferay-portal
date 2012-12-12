@@ -396,6 +396,15 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.getOrganizationId(companyId, name);
 	}
 
+	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _organizationLocalService.getOrganizations(userId, start, end,
+			obc);
+	}
+
 	/**
 	* Returns all the organizations belonging to the parent organization.
 	*
@@ -442,15 +451,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _organizationLocalService.getOrganizations(companyId,
 			parentOrganizationId, start, end);
-	}
-
-	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _organizationLocalService.getOrganizations(userId, start, end,
-			obc);
 	}
 
 	/**

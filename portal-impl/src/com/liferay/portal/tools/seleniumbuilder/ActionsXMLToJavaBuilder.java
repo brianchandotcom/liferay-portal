@@ -52,7 +52,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 			importObjects = new TreeSet<String>();
 
-			classType = classTypes.ACTIONS;
+			classType = ClassTypes.ACTIONS;
 
 			generateActions(fileName);
 		}

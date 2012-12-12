@@ -51,7 +51,7 @@ public class TestXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 			importObjects = new TreeSet<String>();
 
-			classType = classTypes.TEST;
+			classType = ClassTypes.TEST;
 
 			generateTest(fileName);
 		}

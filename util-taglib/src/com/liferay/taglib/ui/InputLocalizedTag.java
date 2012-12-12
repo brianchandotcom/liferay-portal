@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ModelHintsConstants;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +39,10 @@ public class InputLocalizedTag extends IncludeTag {
 
 	public void setDisabled(boolean disabled) {
 		_disabled = disabled;
+	}
+
+	public void setDisplayWidth(String displayWidth) {
+		_displayWidth = displayWidth;
 	}
 
 	public void setFormName(String formName) {
@@ -77,6 +82,7 @@ public class InputLocalizedTag extends IncludeTag {
 		_autoSize = false;
 		_cssClass = null;
 		_disabled = false;
+		_displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
 		_formName = null;
 		_id = null;
 		_ignoreRequestValue = false;
@@ -112,6 +118,8 @@ public class InputLocalizedTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:input-localized:defaultLanguageId", _defaultLanguageId);
 		request.setAttribute(
+			"liferay-ui:input-localized:displayWidth", _displayWidth);
+		request.setAttribute(
 			"liferay-ui:input-localized:disabled", String.valueOf(_disabled));
 		request.setAttribute(
 			"liferay-ui:input-localized:dynamicAttributes",
@@ -137,6 +145,7 @@ public class InputLocalizedTag extends IncludeTag {
 	private String _cssClass;
 	private String _defaultLanguageId;
 	private boolean _disabled;
+	private String _displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
 	private String _formName;
 	private String _id;
 	private boolean _ignoreRequestValue;

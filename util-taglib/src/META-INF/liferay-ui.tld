@@ -1650,6 +1650,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>displayWidth</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

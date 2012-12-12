@@ -23,6 +23,7 @@ boolean autoSize = GetterUtil.getBoolean((String)request.getAttribute("liferay-u
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:cssClass"));
 String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-localized:defaultLanguageId");
 boolean disabled = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:input-localized:disabled"));
+int displayWidth = GetterUtil.getInteger((String) request.getAttribute("liferay-ui:input-localized:displayWidth"));
 String id = (String)request.getAttribute("liferay-ui:input-localized:id");
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-ui:input-localized:dynamicAttributes");
 String formName = (String)request.getAttribute("liferay-ui:input-localized:formName");
@@ -77,7 +78,8 @@ if (Validator.isNull(mainLanguageValue)) {
 			new Liferay.Textarea(
 				{
 					autoSize: true,
-					node: '#<portlet:namespace /><%= id + StringPool.UNDERLINE + mainLanguageId %>'
+					node: '#<portlet:namespace /><%= id + StringPool.UNDERLINE + mainLanguageId %>',
+					width: <%= displayWidth %>
 				}
 			).render();
 		</aui:script>

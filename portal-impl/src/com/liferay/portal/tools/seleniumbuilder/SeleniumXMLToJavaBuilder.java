@@ -60,7 +60,7 @@ public class SeleniumXMLToJavaBuilder {
 		cmdLineParser.parse(args);
 
 		basedir = (String)cmdLineParser.getOptionValue(basedirOption);
-		//pageObjectSet = getPageObjects();
+		pageObjectSet = getPageObjects();
 	}
 
 	protected String findBlockDefName(Element block) throws Exception {
@@ -198,6 +198,7 @@ public class SeleniumXMLToJavaBuilder {
 
 		return (name.equals("macro") ||
 				name.equals("action") ||
+				name.equals("function") ||
 				name.equals("while") ||
 				name.equals("if"));
 	}
@@ -265,7 +266,7 @@ public class SeleniumXMLToJavaBuilder {
 			else if (commandName.equals("defaultcommand")) {
 				return getCommandDefaultCommand(blockDefName);
 			}
-			else if (commandName.equals("functions")) {
+			else if (commandName.equals("function")) {
 				return getCommandFunctions(command, blockDefName);
 			}
 			else if (commandName.equals("if")) {
@@ -319,14 +320,14 @@ public class SeleniumXMLToJavaBuilder {
 		}
 	}
 
-	protected classTypes classType = classTypes.TEST;
-	protected enum classTypes { TEST, MACROS, ACTIONS, FUNCTIONS };
+	protected String basedir;
+
+	protected ClassTypes classType;
+
+	protected String filePath = "";
 
 	protected Set<String> importObjects = new TreeSet<String>();
 	protected Set<String> pageObjectSet;
-
-	protected String basedir;
-	protected String filePath = "";
 
 	private String combineConditionals(
 		List<String> conditionalList, String delimiter) {
@@ -807,4 +808,5 @@ public class SeleniumXMLToJavaBuilder {
 
 		return text;
 	}
+
 }

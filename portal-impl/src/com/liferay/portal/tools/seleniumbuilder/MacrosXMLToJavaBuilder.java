@@ -52,7 +52,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 			importObjects = new TreeSet<String>();
 
-			classType = classTypes.MACROS;
+			classType = ClassTypes.MACROS;
 
 			generateMacros(fileName);
 		}

@@ -298,6 +298,8 @@ create table JournalFolder (
 	description STRING null
 );
 
+alter table Layout add hidden BOOLEAN;
+
 alter table MBCategory add status INTEGER;
 alter table MBCategory add statusByUserId LONG;
 alter table MBCategory add statusByUserName VARCHAR(75) null;

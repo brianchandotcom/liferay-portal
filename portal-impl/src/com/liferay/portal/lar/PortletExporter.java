@@ -1068,6 +1068,13 @@ public class PortletExporter {
 
 				jxPreferences.store();
 			}
+			catch (UnsupportedOperationException uoe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Not updating the portlet setup for " +
+						portletId + " because no setup was returned for" +
+							" the current page");
+				}
+			}
 			catch (Exception e) {
 				_log.error(e, e);
 			}

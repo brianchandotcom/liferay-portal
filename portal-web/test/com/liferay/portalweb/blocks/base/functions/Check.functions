@@ -23,6 +23,6 @@
 		<selenium command="waitForVisible" target="xpath=(//a[contains(@data-folder,'false')])[1]" />
 		<selenium command="mouseOver" target="xpath=(//a[contains(@data-folder,'false')])[1]" />
 
-		<functions command="clickAt" />
+		<function name="Check" command="clickAt" />
 	</functiondef>
 </functions>

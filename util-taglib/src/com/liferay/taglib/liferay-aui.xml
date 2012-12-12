@@ -341,6 +341,11 @@
 	<component name="Input">
 		<attributes>
 			<attribute>
+				<name>autoSize</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
 				<name>bean</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>

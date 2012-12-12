@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ModelHintsConstants;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author Julio Camarero
  */
 public class InputLocalizedTag extends IncludeTag {
+
+	public void setAutoSize(boolean autoSize) {
+		_autoSize = autoSize;
+	}
 
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
@@ -34,6 +39,10 @@ public class InputLocalizedTag extends IncludeTag {
 
 	public void setDisabled(boolean disabled) {
 		_disabled = disabled;
+	}
+
+	public void setDisplayWidth(String displayWidth) {
+		_displayWidth = displayWidth;
 	}
 
 	public void setFormName(String formName) {
@@ -70,8 +79,10 @@ public class InputLocalizedTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_autoSize = false;
 		_cssClass = null;
 		_disabled = false;
+		_displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
 		_formName = null;
 		_id = null;
 		_ignoreRequestValue = false;
@@ -101,9 +112,13 @@ public class InputLocalizedTag extends IncludeTag {
 			id = _name;
 		}
 
+		request.setAttribute(
+			"liferay-ui:input-localized:autoSize", String.valueOf(_autoSize));
 		request.setAttribute("liferay-ui:input-localized:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:input-localized:defaultLanguageId", _defaultLanguageId);
+		request.setAttribute(
+			"liferay-ui:input-localized:displayWidth", _displayWidth);
 		request.setAttribute(
 			"liferay-ui:input-localized:disabled", String.valueOf(_disabled));
 		request.setAttribute(
@@ -126,9 +141,11 @@ public class InputLocalizedTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/input_localized/page.jsp";
 
+	private boolean _autoSize;
 	private String _cssClass;
 	private String _defaultLanguageId;
 	private boolean _disabled;
+	private String _displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
 	private String _formName;
 	private String _id;
 	private boolean _ignoreRequestValue;

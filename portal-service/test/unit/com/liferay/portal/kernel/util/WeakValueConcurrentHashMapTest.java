@@ -16,13 +16,41 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.memory.DummyFinalizeAction;
 import com.liferay.portal.kernel.memory.FinalizeManager;
-import com.liferay.portal.kernel.test.BaseTestCase;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Shuyang Zhou
  */
-public class WeakValueConcurrentHashMapTest extends BaseTestCase {
+@PrepareForTest(PropsUtil.class)
+@RunWith(PowerMockRunner.class)
+public class WeakValueConcurrentHashMapTest extends PowerMockito {
 
+	@Before
+	public void setUp() throws Exception {
+		mockStatic(PropsUtil.class);
+
+		when(
+			PropsUtil.get(PropsKeys.FINALIZE_MANAGER_THREAD_ENABLED)
+		).thenReturn(
+			"false"
+		);
+	}
+
+	@After
+	public void tearDown() {
+		PowerMockito.verifyStatic();
+	}
+
+	@Test
 	public void testAutoRemove() throws Exception {
 		WeakValueConcurrentHashMap<String, Object> weakValueConcurrentHashMap =
 			new WeakValueConcurrentHashMap<String, Object>();
@@ -39,7 +67,7 @@ public class WeakValueConcurrentHashMapTest extends BaseTestCase {
 
 			Thread.sleep(1);
 
-			assertTrue(weakValueConcurrentHashMap.containsKey(testKey));
+			Assert.assertTrue(weakValueConcurrentHashMap.containsKey(testKey));
 		}
 
 		testValue = null;
@@ -61,7 +89,7 @@ public class WeakValueConcurrentHashMapTest extends BaseTestCase {
 			}
 		}
 
-		assertFalse(weakValueConcurrentHashMap.containsKey(testKey));
+		Assert.assertFalse(weakValueConcurrentHashMap.containsKey(testKey));
 	}
 
 }

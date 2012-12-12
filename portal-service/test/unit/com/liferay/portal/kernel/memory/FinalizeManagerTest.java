@@ -14,14 +14,44 @@
 
 package com.liferay.portal.kernel.memory;
 
-import com.liferay.portal.kernel.test.BaseTestCase;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Shuyang Zhou
  */
-public class FinalizeManagerTest extends BaseTestCase {
+@PrepareForTest(PropsUtil.class)
+@RunWith(PowerMockRunner.class)
+public class FinalizeManagerTest extends PowerMockito {
 
-	public void testRegister() throws InterruptedException {
+	@Before
+	public void setUp() throws Exception {
+		mockStatic(PropsUtil.class);
+
+		when(
+			PropsUtil.get(PropsKeys.FINALIZE_MANAGER_THREAD_ENABLED)
+		).thenReturn(
+			"false"
+		);
+	}
+
+	@After
+	public void tearDown() {
+		PowerMockito.verifyStatic();
+	}
+
+	@Test
+	public void testRegister() throws Exception {
 		if (FinalizeManager.THREAD_ENABLED) {
 			registerWithThread();
 		}
@@ -37,7 +67,7 @@ public class FinalizeManagerTest extends BaseTestCase {
 
 		FinalizeManager.register(testObject, markFinalizeAction);
 
-		assertFalse(markFinalizeAction.isMarked());
+		Assert.assertFalse(markFinalizeAction.isMarked());
 
 		testObject = null;
 
@@ -54,7 +84,7 @@ public class FinalizeManagerTest extends BaseTestCase {
 
 		FinalizeManager.register(new Object(), markFinalizeAction);
 
-		assertTrue(markFinalizeAction.isMarked());
+		Assert.assertTrue(markFinalizeAction.isMarked());
 	}
 
 	protected void registerWithThread() throws InterruptedException {
@@ -64,7 +94,7 @@ public class FinalizeManagerTest extends BaseTestCase {
 
 		FinalizeManager.register(testObject, markFinalizeAction);
 
-		assertFalse(markFinalizeAction.isMarked());
+		Assert.assertFalse(markFinalizeAction.isMarked());
 
 		testObject = null;
 
@@ -80,7 +110,7 @@ public class FinalizeManagerTest extends BaseTestCase {
 			}
 		}
 
-		assertTrue(markFinalizeAction.isMarked());
+		Assert.assertTrue(markFinalizeAction.isMarked());
 	}
 
 	private class MarkFinalizeAction implements FinalizeAction {

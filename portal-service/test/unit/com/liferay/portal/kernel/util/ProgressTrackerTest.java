@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.TestCase;
-import com.liferay.portal.upload.LiferayFileUpload;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,14 +29,13 @@ public class ProgressTrackerTest extends TestCase {
 	public void testGetMessage() throws Exception {
 		_mockInstallProcess.initialize();
 
-		ProgressTracker progressTracker = getAttribute(
-			LiferayFileUpload.PERCENT);
+		ProgressTracker progressTracker = getAttribute(ProgressTracker.PERCENT);
 
 		Assert.assertEquals(StringPool.BLANK, progressTracker.getMessage());
 
 		_mockInstallProcess.download();
 
-		progressTracker = getAttribute(LiferayFileUpload.PERCENT);
+		progressTracker = getAttribute(ProgressTracker.PERCENT);
 
 		Assert.assertEquals("downloading", progressTracker.getMessage());
 	}
@@ -45,15 +43,14 @@ public class ProgressTrackerTest extends TestCase {
 	public void testGetPercent() throws Exception {
 		_mockInstallProcess.initialize();
 
-		ProgressTracker progressTracker = getAttribute(
-			LiferayFileUpload.PERCENT);
+		ProgressTracker progressTracker = getAttribute(ProgressTracker.PERCENT);
 
 		Assert.assertEquals(0, progressTracker.getPercent());
 
 		_mockInstallProcess.download();
 		_mockInstallProcess.copy();
 
-		progressTracker = getAttribute(LiferayFileUpload.PERCENT);
+		progressTracker = getAttribute(ProgressTracker.PERCENT);
 
 		Assert.assertEquals(progressTracker.getPercent(), 50);
 	}
@@ -62,8 +59,7 @@ public class ProgressTrackerTest extends TestCase {
 	public void testGetStatus() throws Exception {
 		_mockInstallProcess.initialize();
 
-		ProgressTracker progressTracker = getAttribute(
-			LiferayFileUpload.PERCENT);
+		ProgressTracker progressTracker = getAttribute(ProgressTracker.PERCENT);
 
 		_mockInstallProcess.download();
 		_mockInstallProcess.copy();
@@ -76,14 +72,13 @@ public class ProgressTrackerTest extends TestCase {
 	public void testInitializeAndFinish() throws Exception {
 		_mockInstallProcess.initialize();
 
-		ProgressTracker progressTracker = getAttribute(
-			LiferayFileUpload.PERCENT);
+		ProgressTracker progressTracker = getAttribute(ProgressTracker.PERCENT);
 
 		Assert.assertNotNull(progressTracker);
 
 		_mockInstallProcess.finish();
 
-		progressTracker = getAttribute(LiferayFileUpload.PERCENT);
+		progressTracker = getAttribute(ProgressTracker.PERCENT);
 
 		Assert.assertNull(progressTracker);
 	}
@@ -92,8 +87,7 @@ public class ProgressTrackerTest extends TestCase {
 	public void testInitialStatus() throws Exception {
 		_mockInstallProcess.initialize();
 
-		ProgressTracker progressTracker = getAttribute(
-			LiferayFileUpload.PERCENT);
+		ProgressTracker progressTracker = getAttribute(ProgressTracker.PERCENT);
 
 		Assert.assertEquals(
 			ProgressStatusConstants.PREPARED, progressTracker.getStatus());

@@ -36,6 +36,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.Team;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.AdvancedPermissionChecker;
@@ -49,9 +50,11 @@ import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -157,13 +160,23 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		throws Exception {
 
 		Group group = null;
+		List<Team> teams = Collections.emptyList();
 
 		if (groupId > 0) {
 			group = GroupLocalServiceUtil.getGroup(groupId);
+
+			teams = TeamLocalServiceUtil.getGroupTeams(groupId);
 		}
 
 		List<Role> roles = ResourceActionsUtil.getRoles(
 			companyId, group, className, null);
+
+		for (Team team : teams) {
+			Role role = RoleLocalServiceUtil.getTeamRole(
+				team.getCompanyId(), team.getTeamId());
+
+			roles.add(role);
+		}
 
 		long[] roleIdsArray = new long[roles.size()];
 

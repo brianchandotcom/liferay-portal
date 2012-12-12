@@ -521,6 +521,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		if ((end != QueryUtil.ALL_POS) && (userPlaces.size() > end)) {
+			if (start < 0) {
+				start = 0;
+			}
+
 			userPlaces = ListUtil.subList(userPlaces, start, end);
 		}
 

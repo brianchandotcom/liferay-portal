@@ -280,9 +280,9 @@ public class MBStatsUserLocalServiceUtil {
 		getService().deleteStatsUsersByUserId(userId);
 	}
 
-	public static java.util.Date getLasPostDateByUserId(long groupId,
+	public static java.util.Date getLastPostDateByUserId(long groupId,
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getLasPostDateByUserId(groupId, userId);
+		return getService().getLastPostDateByUserId(groupId, userId);
 	}
 
 	public static long getMessageCountByGroupId(long groupId)

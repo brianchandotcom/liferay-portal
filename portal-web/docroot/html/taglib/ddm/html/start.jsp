@@ -29,7 +29,8 @@
 						classNameId: <%= classNameId %>,
 						classPK: <%= classPK %>,
 						container: '#<portlet:namespace /><%= containerId %>',
-						fieldsMapInput: '#<portlet:namespace /><%= containerId %>repeatabaleFieldsMap'
+						fieldsMapInput: '#<portlet:namespace /><%= containerId %>repeatabaleFieldsMap',
+						namespace: '<portlet:namespace />'
 					}
 				);
 			</aui:script>

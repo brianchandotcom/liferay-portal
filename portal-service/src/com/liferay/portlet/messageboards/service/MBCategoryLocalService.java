@@ -449,7 +449,7 @@ public interface MBCategoryLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void updateStatuses(com.liferay.portal.model.User user,
-		java.util.List<java.lang.Object> mbCategoriesAndThreads, int status)
+		java.util.List<java.lang.Object> categoriesAndThreads, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

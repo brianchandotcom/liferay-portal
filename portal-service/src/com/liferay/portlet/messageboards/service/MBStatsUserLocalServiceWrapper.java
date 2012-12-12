@@ -275,9 +275,9 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 		_mbStatsUserLocalService.deleteStatsUsersByUserId(userId);
 	}
 
-	public java.util.Date getLasPostDateByUserId(long groupId, long userId)
+	public java.util.Date getLastPostDateByUserId(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbStatsUserLocalService.getLasPostDateByUserId(groupId, userId);
+		return _mbStatsUserLocalService.getLastPostDateByUserId(groupId, userId);
 	}
 
 	public long getMessageCountByGroupId(long groupId)

@@ -249,7 +249,7 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date getLasPostDateByUserId(long groupId, long userId)
+	public java.util.Date getLastPostDateByUserId(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

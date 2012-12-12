@@ -1,11 +1,11 @@
 <actions>
 	<actiondef name="assertTextEquals">
 		<conditional elements="ARTICLE_CONTENT">
-			<functions command="assertTextCPWebContenCKEditor" />
+			<function name="AssertTextEquals" command="assertTextCPWebContenCKEditor" />
 		</conditional>
 
 		<conditional elements="ARTICLE_TITLE">
-			<functions command="assertValue" />
+			<function name="AssertTextEquals" command="assertValue" />
 		</conditional>
 	</actiondef>
 </actions>

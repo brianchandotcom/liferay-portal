@@ -1,13 +1,13 @@
 <actions>
 	<actiondef name="click">
 		<conditional elements="SIDEBAR_PUBLISH">
-			<functions command="clickAtAndWait" />
+			<function name="Click" command="clickAtAndWait" />
 		</conditional>
 	</actiondef>
 
 	<actiondef name="type">
 		<conditional elements="ARTICLE_CONTENT">
-			<functions command="typeCPWebContentCKEditor" />
+			<function name="Type" command="typeCPWebContentCKEditor" />
 		</conditional>
 	</actiondef>
 </actions>

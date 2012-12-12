@@ -8,7 +8,7 @@
 	<functiondef name="assertPartialTextPause">
 		<selenium command="pause" target="25000" />
 
-		<functions command="assertPartialText" />
+		<function name="AssertTextEquals" command="assertPartialText" />
 	</functiondef>
 
 	<functiondef name="assertText" default="true">

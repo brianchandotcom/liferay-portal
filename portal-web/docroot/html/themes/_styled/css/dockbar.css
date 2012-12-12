@@ -20,6 +20,10 @@
 	border-width: 0;
 }
 
+.ie.rtl .dockbar .menu-button span {
+	background-position-x: -25px;
+}
+
 .dockbar {
 	background: #97A1AE url(../images/dockbar/dockbar_bg.png) repeat-x 0 0;
 	border-bottom: 1px solid #636364;

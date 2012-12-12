@@ -135,7 +135,7 @@ public class MBStatsUserLocalServiceImpl
 
 		List<Date> results = mbStatsUserLocalService.dynamicQuery(dynamicQuery);
 
-		if (results.isEmpty()) {
+		if (results.contains(null)) {
 			return null;
 		}
 
@@ -157,7 +157,7 @@ public class MBStatsUserLocalServiceImpl
 
 		List<Long> results = mbStatsUserLocalService.dynamicQuery(dynamicQuery);
 
-		if (results.isEmpty()) {
+		if (results.contains(null)) {
 			return 0;
 		}
 
@@ -179,7 +179,7 @@ public class MBStatsUserLocalServiceImpl
 
 		List<Long> results = mbStatsUserLocalService.dynamicQuery(dynamicQuery);
 
-		if (results.isEmpty()) {
+		if (results.contains(null)) {
 			return 0;
 		}
 

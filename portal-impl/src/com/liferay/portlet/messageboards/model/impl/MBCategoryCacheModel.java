@@ -38,7 +38,7 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -70,6 +70,14 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		sb.append(messageCount);
 		sb.append(", lastPostDate=");
 		sb.append(lastPostDate);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -144,6 +152,23 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 			mbCategoryImpl.setLastPostDate(new Date(lastPostDate));
 		}
 
+		mbCategoryImpl.setStatus(status);
+		mbCategoryImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			mbCategoryImpl.setStatusByUserName(StringPool.BLANK);
+		}
+		else {
+			mbCategoryImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			mbCategoryImpl.setStatusDate(null);
+		}
+		else {
+			mbCategoryImpl.setStatusDate(new Date(statusDate));
+		}
+
 		mbCategoryImpl.resetOriginalValues();
 
 		return mbCategoryImpl;
@@ -165,6 +190,10 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		threadCount = objectInput.readInt();
 		messageCount = objectInput.readInt();
 		lastPostDate = objectInput.readLong();
+		status = objectInput.readInt();
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	public void writeExternal(ObjectOutput objectOutput)
@@ -216,6 +245,17 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		objectOutput.writeInt(threadCount);
 		objectOutput.writeInt(messageCount);
 		objectOutput.writeLong(lastPostDate);
+		objectOutput.writeInt(status);
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public String uuid;
@@ -233,4 +273,8 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 	public int threadCount;
 	public int messageCount;
 	public long lastPostDate;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 }

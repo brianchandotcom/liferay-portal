@@ -18,16 +18,24 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -56,6 +64,38 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public List<ContainerModel> getContainerModels(
+			long classPK, long parentContainerModelId, int start, int end)
+		throws PortalException, SystemException {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
+			thread.getGroupId(), parentContainerModelId,
+			WorkflowConstants.STATUS_APPROVED, start, end);
+
+		List<ContainerModel> containerModels = new ArrayList<ContainerModel>();
+
+		for (MBCategory curCategory : categories) {
+			containerModels.add(curCategory);
+		}
+
+		return containerModels;
+	}
+
+	@Override
+	public int getContainerModelsCount(
+			long classPK, long parentContainerModelId)
+		throws PortalException, SystemException {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		return MBCategoryLocalServiceUtil.getCategoriesCount(
+			thread.getGroupId(), parentContainerModelId,
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
@@ -103,8 +143,37 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		return new MBThreadTrashRenderer(thread);
 	}
 
-	public boolean isInTrash(long classPK) {
+	public boolean isInTrash(long classPK)
+		throws PortalException, SystemException {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		if (thread.isInTrash() || thread.isInTrashCategory()) {
+			return true;
+		}
+
 		return false;
+	}
+
+	@Override
+	public boolean isMovable() {
+		return true;
+	}
+
+	@Override
+	public void moveEntry(
+			long classPK, long containerModelId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		MBThreadServiceUtil.moveThread(containerModelId, classPK);
+	}
+
+	@Override
+	public void moveTrashEntry(
+			long classPK, long containerModelId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		MBThreadServiceUtil.moveThreadFromTrash(containerModelId, classPK);
 	}
 
 	public void restoreTrashEntries(long[] classPKs)

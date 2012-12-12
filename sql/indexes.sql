@@ -473,8 +473,11 @@ create unique index IX_8ABC4E3B on MBBan (groupId, banUserId);
 create index IX_48814BBA on MBBan (userId);
 
 create index IX_BC735DCF on MBCategory (companyId);
+create index IX_E15A5DB5 on MBCategory (companyId, status);
 create index IX_BB870C11 on MBCategory (groupId);
 create index IX_ED292508 on MBCategory (groupId, parentCategoryId);
+create index IX_C295DBEE on MBCategory (groupId, parentCategoryId, status);
+create index IX_DA84A9F7 on MBCategory (groupId, status);
 create index IX_C2626EDB on MBCategory (uuid_);
 create index IX_13DF4E6D on MBCategory (uuid_, companyId);
 create unique index IX_F7D28C2F on MBCategory (uuid_, groupId);

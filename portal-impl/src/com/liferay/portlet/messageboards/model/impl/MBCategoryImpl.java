@@ -76,6 +76,41 @@ public class MBCategoryImpl extends MBCategoryBaseImpl {
 		return MBCategoryLocalServiceUtil.getCategory(getParentCategoryId());
 	}
 
+	public MBCategory getTrashCategory() {
+		MBCategory category = null;
+
+		try {
+			category = getParentCategory();
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		while (category != null) {
+			if (category.isInTrash()) {
+				return category;
+			}
+
+			try {
+				category = category.getParentCategory();
+			}
+			catch (Exception e) {
+				return null;
+			}
+		}
+
+		return null;
+	}
+
+	public boolean isInTrashCategory() {
+		if (getTrashCategory() != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public boolean isRoot() {
 		if (getParentCategoryId() ==
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {

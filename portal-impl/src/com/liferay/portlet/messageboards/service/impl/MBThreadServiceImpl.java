@@ -308,6 +308,19 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			thread.getGroupId(), categoryId, threadId);
 	}
 
+	public MBThread moveThreadFromTrash(long categoryId, long threadId)
+		throws PortalException, SystemException {
+
+		MBThread thread = mbThreadLocalService.getThread(threadId);
+
+		MBCategoryPermission.check(
+			getPermissionChecker(), thread.getGroupId(), thread.getCategoryId(),
+			ActionKeys.UPDATE);
+
+		return mbThreadLocalService.moveThreadFromTrash(
+			getUserId(), categoryId, threadId);
+	}
+
 	public MBThread moveThreadToTrash(long threadId)
 		throws PortalException, SystemException {
 

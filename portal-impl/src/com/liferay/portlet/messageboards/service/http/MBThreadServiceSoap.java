@@ -251,6 +251,21 @@ public class MBThreadServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBThreadSoap moveThreadFromTrash(
+		long categoryId, long threadId) throws RemoteException {
+		try {
+			com.liferay.portlet.messageboards.model.MBThread returnValue = MBThreadServiceUtil.moveThreadFromTrash(categoryId,
+					threadId);
+
+			return com.liferay.portlet.messageboards.model.MBThreadSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBThreadSoap moveThreadToTrash(
 		long threadId) throws RemoteException {
 		try {

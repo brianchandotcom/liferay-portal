@@ -42,7 +42,12 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(classPK);
 
-		return message.isInTrash();
+		if (message.isInTrash() || message.isInTrashThread()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public void restoreTrashEntries(long[] classPKs) {

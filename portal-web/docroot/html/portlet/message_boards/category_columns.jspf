@@ -34,9 +34,9 @@
 
 	buffer.append("</a>");
 
-	List subcategories = MBCategoryServiceUtil.getCategories(scopeGroupId, curCategory.getCategoryId(), 0, 5);
+	List subcategories = MBCategoryServiceUtil.getCategories(scopeGroupId, curCategory.getCategoryId(), WorkflowConstants.STATUS_APPROVED, 0, 5);
 
-	int subcategoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, curCategory.getCategoryId());
+	int subcategoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, curCategory.getCategoryId(), WorkflowConstants.STATUS_APPROVED);
 
 	if (subcategoriesCount > 0) {
 		buffer.append("<br /><span class=\"subcategories\">");

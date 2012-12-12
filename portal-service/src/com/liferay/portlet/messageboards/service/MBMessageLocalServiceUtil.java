@@ -320,6 +320,17 @@ public class MBMessageLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
+		long userId, java.lang.String userName, long categoryId,
+		java.lang.String subject, java.lang.String body,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addMessage(userId, userName, categoryId, subject, body,
+			serviceContext);
+	}
+
 	public static void addMessageResources(long messageId,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException,

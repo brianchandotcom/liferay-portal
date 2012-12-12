@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -41,8 +43,8 @@ import java.util.Date;
  * @see com.liferay.portlet.messageboards.model.impl.MBCategoryModelImpl
  * @generated
  */
-public interface MBCategoryModel extends BaseModel<MBCategory>, GroupedModel,
-	StagedModel {
+public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
+	GroupedModel, StagedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -292,6 +294,181 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, GroupedModel,
 	 * @param lastPostDate the last post date of this message boards category
 	 */
 	public void setLastPostDate(Date lastPostDate);
+
+	/**
+	 * Returns the status of this message boards category.
+	 *
+	 * @return the status of this message boards category
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this message boards category.
+	 *
+	 * @param status the status of this message boards category
+	 */
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this message boards category.
+	 *
+	 * @return the status by user ID of this message boards category
+	 */
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this message boards category.
+	 *
+	 * @param statusByUserId the status by user ID of this message boards category
+	 */
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this message boards category.
+	 *
+	 * @return the status by user uuid of this message boards category
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getStatusByUserUuid() throws SystemException;
+
+	/**
+	 * Sets the status by user uuid of this message boards category.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this message boards category
+	 */
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this message boards category.
+	 *
+	 * @return the status by user name of this message boards category
+	 */
+	@AutoEscape
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this message boards category.
+	 *
+	 * @param statusByUserName the status by user name of this message boards category
+	 */
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this message boards category.
+	 *
+	 * @return the status date of this message boards category
+	 */
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this message boards category.
+	 *
+	 * @param statusDate the status date of this message boards category
+	 */
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * @deprecated Renamed to {@link #isApproved()}
+	 */
+	public boolean getApproved();
+
+	/**
+	 * Returns <code>true</code> if this message boards category is approved.
+	 *
+	 * @return <code>true</code> if this message boards category is approved; <code>false</code> otherwise
+	 */
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this message boards category is denied.
+	 *
+	 * @return <code>true</code> if this message boards category is denied; <code>false</code> otherwise
+	 */
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this message boards category is a draft.
+	 *
+	 * @return <code>true</code> if this message boards category is a draft; <code>false</code> otherwise
+	 */
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this message boards category is expired.
+	 *
+	 * @return <code>true</code> if this message boards category is expired; <code>false</code> otherwise
+	 */
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this message boards category is inactive.
+	 *
+	 * @return <code>true</code> if this message boards category is inactive; <code>false</code> otherwise
+	 */
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this message boards category is incomplete.
+	 *
+	 * @return <code>true</code> if this message boards category is incomplete; <code>false</code> otherwise
+	 */
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this message boards category is in the Recycle Bin.
+	 *
+	 * @return <code>true</code> if this message boards category is in the Recycle Bin; <code>false</code> otherwise
+	 */
+	public boolean isInTrash();
+
+	/**
+	 * Returns <code>true</code> if this message boards category is pending.
+	 *
+	 * @return <code>true</code> if this message boards category is pending; <code>false</code> otherwise
+	 */
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this message boards category is scheduled.
+	 *
+	 * @return <code>true</code> if this message boards category is scheduled; <code>false</code> otherwise
+	 */
+	public boolean isScheduled();
+
+	/**
+	 * Returns the container model ID of this message boards category.
+	 *
+	 * @return the container model ID of this message boards category
+	 */
+	public long getContainerModelId();
+
+	/**
+	 * Sets the container model ID of this message boards category.
+	 *
+	 * @param container model ID of this message boards category
+	 */
+	public void setContainerModelId(long containerModelId);
+
+	/**
+	 * Returns the container name of this message boards category.
+	 *
+	 * @return the container name of this message boards category
+	 */
+	public String getContainerModelName();
+
+	/**
+	 * Returns the parent container model ID of this message boards category.
+	 *
+	 * @return the parent container model ID of this message boards category
+	 */
+	public long getParentContainerModelId();
+
+	/**
+	 * Sets the parent container model ID of this message boards category.
+	 *
+	 * @param parent container model ID of this message boards category
+	 */
+	public void setParentContainerModelId(long parentContainerModelId);
 
 	public boolean isNew();
 

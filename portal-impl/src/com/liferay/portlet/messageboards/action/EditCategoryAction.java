@@ -17,7 +17,10 @@ package com.liferay.portlet.messageboards.action;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,6 +41,9 @@ import com.liferay.portlet.messageboards.MailingListOutUserNameException;
 import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -68,7 +74,12 @@ public class EditCategoryAction extends PortletAction {
 				updateCategory(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCategories(actionRequest);
+				deleteCategories(
+					(LiferayPortletConfig)portletConfig, actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteCategories(
+					(LiferayPortletConfig)portletConfig, actionRequest, true);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribeCategory(actionRequest);
@@ -131,26 +142,52 @@ public class EditCategoryAction extends PortletAction {
 			getForward(renderRequest, "portlet.message_boards.edit_category"));
 	}
 
-	protected void deleteCategories(ActionRequest actionRequest)
+	protected void deleteCategories(
+			LiferayPortletConfig liferayPortletConfig,
+			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		long[] deleteCategoryIds = null;
 
 		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
 
 		if (categoryId > 0) {
-			MBCategoryServiceUtil.deleteCategory(
-				themeDisplay.getScopeGroupId(), categoryId);
+			deleteCategoryIds = new long[] {categoryId};
 		}
 		else {
-			long[] deleteCategoryIds = StringUtil.split(
+			deleteCategoryIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "deleteCategoryIds"), 0L);
+		}
 
-			for (int i = 0; i < deleteCategoryIds.length; i++) {
-				MBCategoryServiceUtil.deleteCategory(
-					themeDisplay.getScopeGroupId(), deleteCategoryIds[i]);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		for (long deleteCategoryId : deleteCategoryIds) {
+			if (moveToTrash) {
+				MBCategoryServiceUtil.moveCategoryToTrash(deleteCategoryId);
 			}
+			else {
+				MBCategoryServiceUtil.deleteCategory(
+					themeDisplay.getScopeGroupId(), deleteCategoryId);
+			}
+		}
+
+		if (moveToTrash && (deleteCategoryIds.length > 0)) {
+			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(
+				"restoreCategoryIds",
+				ArrayUtil.toStringArray(deleteCategoryIds));
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 		}
 	}
 

@@ -274,6 +274,14 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		_mbThreadLocalService.deleteThreads(groupId, categoryId);
 	}
 
+	public void deleteThreads(long groupId, long categoryId,
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbThreadLocalService.deleteThreads(groupId, categoryId,
+			includeTrashedEntries);
+	}
+
 	public com.liferay.portlet.messageboards.model.MBThread fetchThread(
 		long threadId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -490,6 +498,14 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		return _mbThreadLocalService.moveThread(groupId, categoryId, threadId);
 	}
 
+	public com.liferay.portlet.messageboards.model.MBThread moveThreadFromTrash(
+		long userId, long categoryId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.moveThreadFromTrash(userId, categoryId,
+			threadId);
+	}
+
 	public void moveThreadsToTrash(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -529,6 +545,14 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_mbThreadLocalService.updateQuestion(threadId, question);
+	}
+
+	public com.liferay.portlet.messageboards.model.MBThread updateStatus(
+		long userId, long threadId, int status, int categoryStatus)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.updateStatus(userId, threadId, status,
+			categoryStatus);
 	}
 
 	/**

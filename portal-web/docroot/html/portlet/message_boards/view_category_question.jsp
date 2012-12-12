@@ -38,7 +38,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 <liferay-ui:panel-container cssClass="message-boards-panels" extended="<%= false %>" id="messageBoardsPanelContainer" persistState="<%= true %>">
 
 	<%
-	int categoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, categoryId);
+	int categoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED);
 	%>
 
 	<c:if test="<%= categoriesCount > 0 %>">
@@ -50,7 +50,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 				iteratorURL="<%= portletURL %>"
 			>
 				<liferay-ui:search-container-results
-					results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, categoryId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+					results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
 					total="<%= categoriesCount %>"
 				/>
 

@@ -45,7 +45,7 @@
 
 		<!-- PK fields -->
 
-		<column name="categoryId" type="long" primary="true" />
+		<column name="categoryId" type="long" primary="true" container-model="true" />
 
 		<!-- Group instance -->
 
@@ -61,13 +61,17 @@
 
 		<!-- Other fields -->
 
-		<column name="parentCategoryId" type="long" />
+		<column name="parentCategoryId" type="long" parent-container-model="true" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="displayStyle" type="String" />
 		<column name="threadCount" type="int" />
 		<column name="messageCount" type="int" />
 		<column name="lastPostDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 
@@ -88,13 +92,28 @@
 			<finder-column name="groupId" />
 			<finder-column name="parentCategoryId" arrayable-operator="OR" />
 		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_P_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentCategoryId" arrayable-operator="OR" />
+			<finder-column name="status" />
+		</finder>
 
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Subscription" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
 	<entity name="MBDiscussion" human-name="message boards discussion" local-service="true" remote-service="false">
 

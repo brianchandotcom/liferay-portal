@@ -37,12 +37,12 @@ if (containerModel != null) {
 PortletURL containerURL = renderResponse.createRenderURL();
 
 containerURL.setParameter("struts_action", "/trash/view_container_model");
-containerURL.setParameter("redirect", redirect);
+containerURL.setParameter("redirect", currentURL);
 containerURL.setParameter("className", className);
 containerURL.setParameter("classPK", String.valueOf(classPK));
 containerURL.setParameter("containerModelClassName", trashHandler.getContainerModelClassName());
 
-TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler, containerModel, containerURL);
+TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerModelClassName(), containerModelId, containerURL);
 %>
 
 <div class="portlet-msg-alert">
@@ -51,6 +51,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler, containerMod
 
 <aui:form method="post" name="fm">
 	<liferay-ui:header
+		showBackURL="<%= containerModel != null %>"
 		title='<%= LanguageUtil.format(pageContext, "select-x", trashHandler.getContainerModelName(), true) %>'
 	/>
 

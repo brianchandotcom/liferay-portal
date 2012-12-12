@@ -39,6 +39,9 @@ import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -110,6 +113,14 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		return CLASS_NAME;
 	}
 
+	public String getContainerModelClassName() {
+		return WikiNode.class.getName();
+	}
+
+	public String getContainerModelName() {
+		return "wiki-node";
+	}
+
 	@Override
 	public ContainerModel getParentContainerModel(long classPK)
 		throws PortalException, SystemException {
@@ -117,6 +128,17 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
 
 		return page.getNode();
+	}
+
+	@Override
+	public List<ContainerModel> getParentContainerModels(long classPK)
+		throws PortalException, SystemException {
+
+		List<ContainerModel> containerModels = new ArrayList<ContainerModel>();
+
+		containerModels.add(getParentContainerModel(classPK));
+
+		return containerModels;
 	}
 
 	@Override

@@ -84,12 +84,18 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public List<ContainerModel> getParentContainerModels(long containerModelId)
+	public List<ContainerModel> getParentContainerModels(long classPK)
 		throws PortalException, SystemException {
 
 		List<ContainerModel> containerModels = new ArrayList<ContainerModel>();
 
-		ContainerModel containerModel = getContainerModel(containerModelId);
+		ContainerModel containerModel = getParentContainerModel(classPK);
+
+		if (containerModel == null) {
+			return containerModels;
+		}
+
+		containerModels.add(containerModel);
 
 		while (containerModel.getParentContainerModelId() > 0) {
 			containerModel = getContainerModel(

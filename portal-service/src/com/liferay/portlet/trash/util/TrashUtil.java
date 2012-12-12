@@ -18,9 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -51,13 +49,22 @@ public class TrashUtil {
 
 	public static final String TRASH_TIME_SEPARATOR = "_TRASH_TIME_";
 
+	public static void addBaseModelBreadcrumbEntries(
+			HttpServletRequest request, String className, long classPK,
+			PortletURL containerModelURL)
+		throws PortalException, SystemException {
+
+		getTrash().addBaseModelBreadcrumbEntries(
+			request, className, classPK, containerModelURL);
+	}
+
 	public static void addContainerModelBreadcrumbEntries(
-			HttpServletRequest request, TrashHandler trashHandler,
-			ContainerModel containerModel, PortletURL containerModelURL)
+			HttpServletRequest request, String className, long classPK,
+			PortletURL containerModelURL)
 		throws PortalException, SystemException {
 
 		getTrash().addContainerModelBreadcrumbEntries(
-			request, trashHandler, containerModel, containerModelURL);
+			request, className, classPK, containerModelURL);
 	}
 
 	public static String appendTrashNamespace(String title) {

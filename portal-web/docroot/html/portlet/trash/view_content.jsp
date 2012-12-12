@@ -47,6 +47,14 @@
 	TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 
 	String path = trashRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_FULL_CONTENT);
+
+	PortletURL containerModelURL = renderResponse.createRenderURL();
+
+	containerModelURL.setParameter("struts_action", "/trash/view_content");
+	containerModelURL.setParameter("redirect", redirect);
+	containerModelURL.setParameter("className", trashHandler.getContainerModelClassName());
+
+	TrashUtil.addBaseModelBreadcrumbEntries(request, className, classPK, containerModelURL);
 	%>
 
 	<liferay-ui:header

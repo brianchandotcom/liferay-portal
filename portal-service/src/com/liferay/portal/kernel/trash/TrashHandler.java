@@ -174,6 +174,9 @@ public interface TrashHandler {
 	public ContainerModel getContainerModel(long containerModelId)
 		throws PortalException, SystemException;
 
+	/**
+	 * Returns the parent class name of the container model
+	 */
 	public String getContainerModelClassName();
 
 	/**
@@ -257,10 +260,22 @@ public interface TrashHandler {
 	 */
 	public String getDeleteMessage();
 
+	/**
+	 * Returns the parent container model of the entity identified by classPK.
+	 */
 	public ContainerModel getParentContainerModel(long classPK)
 		throws PortalException, SystemException;
 
-	public List<ContainerModel> getParentContainerModels(long containerModelId)
+	/**
+	 * Returns all the parent container models of the entity identified by
+	 * classPK ordered by hierarchy. For example, if classPK is a fileEntryId
+	 * identifying a fileEntry which is inside the folder C, which is inside the
+	 * folder B, which is inside the folder A; this method would return A,B,C.
+	 *
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<ContainerModel> getParentContainerModels(long classPK)
 		throws PortalException, SystemException;
 
 	/**
@@ -305,20 +320,61 @@ public interface TrashHandler {
 	 */
 	public String getSubcontainerModelName();
 
+	/**
+	 * Returns the name of the contained model (e.g. for a folder the
+	 * contained model name may be "files", and for a wiki node, it may be
+	 * "pages").
+	 *
+	 * @return the name of the contained model
+	 */
 	public String getTrashContainedModelName();
 
+	/**
+	 * Returns the number of entities (does not include container models) that
+	 * are children of the parent container model identified by the classPK.
+	 * e.g. for a folder with subfolders and documents, this method would return
+	 * the number of documents which have not been explicitely moved to the
+	 * recycle bin.
+	 */
 	public int getTrashContainedModelsCount(long classPK)
 		throws PortalException, SystemException;
 
+	/**
+	 * Returns a range of trash renderers of entities (does not include
+	 * container models)that are children of the parent container model
+	 * identified by the classPK. e.g. for a folder with subfolders and
+	 * documents, this method would return a range of trash renderers
+	 * representing docuements which have not been explicitly moved to the
+	 * recycle bin.
+	 */
 	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
 			long classPK, int start, int end)
 		throws PortalException, SystemException;
 
+	/**
+	 * Returns the name of the container model (e.g. for a fileEntry the
+	 * container model name may be "folder").
+	 *
+	 * @return the name of the container model
+	 */
 	public String getTrashContainerModelName();
 
+	/**
+	 * Returns the number of container models that are children of the parent
+	 * container model identified by the classPK. e.g. for a folder with
+	 * subfolders and documents, this method would return the number of folders
+	 * which have not been explicitly moved to the recycle bin.
+	 */
 	public int getTrashContainerModelsCount(long classPK)
 		throws PortalException, SystemException;
 
+	/**
+	 * Returns a range of trash renderers of entities that are children of the
+	 * parent container model identified by the classPK. e.g. for a folder with
+	 * subfolders and documents, this method would return a range of trash
+	 * renderers representing folders which have not been explicitly moved
+	 * to the recycle bin.
+	 */
 	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
 			long classPK, int start, int end)
 		throws PortalException, SystemException;
@@ -361,6 +417,9 @@ public interface TrashHandler {
 			String trashActionId)
 		throws PortalException, SystemException;
 
+	/**
+	 * Returns <code>true</code> if the entity is a container model.
+	 */
 	public boolean isContainerModel();
 
 	/**
@@ -377,6 +436,10 @@ public interface TrashHandler {
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException;
 
+	/**
+	 * Returns <code>true</code> if the entity can be moved from one container
+	 * model to another (such as folders).
+	 */
 	public boolean isMovable();
 
 	/**
@@ -399,6 +462,10 @@ public interface TrashHandler {
 	public boolean isRestorable(long classPK)
 		throws PortalException, SystemException;
 
+	/**
+	 * Moves the entity identified by classPK to the Container Model identified
+	 * by containerModelId.
+	 */
 	public void moveEntry(
 			long classPK, long containerModelId, ServiceContext serviceContext)
 		throws PortalException, SystemException;

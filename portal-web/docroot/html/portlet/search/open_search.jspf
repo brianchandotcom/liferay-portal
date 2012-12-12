@@ -311,7 +311,7 @@ for (int i = 0; i < portlets.size(); i++) {
 		<%
 		totalResults = totalResults + openSearchSearchContainer.getTotal();
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append(portletTitle);
 
@@ -320,16 +320,18 @@ for (int i = 0; i < portlets.size(); i++) {
 		// indicate that there are possibly many more. (à la Google)
 
 		if (filterSearch && (openSearchSearchContainer.getTotal() > openSearchSearchContainer.getDelta())) {
-			sb.append(" (");
+			sb.append(StringPool.SPACE);
+			sb.append(OPEN_PARENTHESIS);
 			sb.append(openSearchSearchContainer.getDelta());
 			sb.append(StringPool.SPACE);
 			sb.append(LanguageUtil.get(pageContext, "of-many"));
-			sb.append(StringPool.CLOSE_BRACKET);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
 		else {
-			sb.append(" (");
+			sb.append(StringPool.SPACE);
+			sb.append(OPEN_PARENTHESIS);
 			sb.append(openSearchSearchContainer.getTotal());
-			sb.append(StringPool.CLOSE_BRACKET);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
 		%>
 

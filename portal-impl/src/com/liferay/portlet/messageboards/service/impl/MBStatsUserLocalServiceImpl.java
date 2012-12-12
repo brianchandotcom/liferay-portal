@@ -106,7 +106,7 @@ public class MBStatsUserLocalServiceImpl
 		}
 	}
 
-	public Date getLasPostDateByUserId(long groupId, long userId)
+	public Date getLastPostDateByUserId(long groupId, long userId)
 		throws SystemException {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
@@ -234,7 +234,7 @@ public class MBStatsUserLocalServiceImpl
 		throws SystemException {
 
 		return updateStatsUser(
-			groupId, userId, getLasPostDateByUserId(groupId, userId));
+			groupId, userId, getLastPostDateByUserId(groupId, userId));
 	}
 
 	public MBStatsUser updateStatsUser(

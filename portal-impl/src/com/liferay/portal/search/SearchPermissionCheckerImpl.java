@@ -54,6 +54,7 @@ import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -159,23 +160,22 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		throws Exception {
 
 		Group group = null;
-		List<Team> teams = null;
+		List<Team> teams = Collections.emptyList();
 
 		if (groupId > 0) {
 			group = GroupLocalServiceUtil.getGroup(groupId);
+
 			teams = TeamLocalServiceUtil.getGroupTeams(groupId);
 		}
 
 		List<Role> roles = ResourceActionsUtil.getRoles(
 			companyId, group, className, null);
 
-		if (teams != null) {
-			for (Team team : teams) {
-				Role role = RoleLocalServiceUtil.getTeamRole(
-					team.getCompanyId(), team.getTeamId());
+		for (Team team : teams) {
+			Role role = RoleLocalServiceUtil.getTeamRole(
+				team.getCompanyId(), team.getTeamId());
 
-				roles.add(role);
-			}
+			roles.add(role);
 		}
 
 		long[] roleIdsArray = new long[roles.size()];

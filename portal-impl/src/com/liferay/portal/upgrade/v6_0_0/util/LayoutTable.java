@@ -36,7 +36,7 @@ public class LayoutTable {
 		{"description", Types.VARCHAR},
 		{"type_", Types.VARCHAR},
 		{"typeSettings", Types.CLOB},
-		{"hidden_", Types.BOOLEAN},
+		{"hidden", Types.BOOLEAN},
 		{"friendlyURL", Types.VARCHAR},
 		{"iconImage", Types.BOOLEAN},
 		{"iconImageId", Types.BIGINT},
@@ -50,7 +50,7 @@ public class LayoutTable {
 		{"dlFolderId", Types.BIGINT}
 	};
 
-	public static final String TABLE_SQL_CREATE = "create table Layout (plid LONG not null primary key,groupId LONG,companyId LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImage BOOLEAN,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,priority INTEGER,layoutPrototypeId LONG,dlFolderId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (plid LONG not null primary key,groupId LONG,companyId LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden BOOLEAN,friendlyURL VARCHAR(255) null,iconImage BOOLEAN,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,priority INTEGER,layoutPrototypeId LONG,dlFolderId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 

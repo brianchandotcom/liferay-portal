@@ -150,10 +150,13 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+
 		return addMessage(
 			category.getGroupId(), categoryId, subject, body,
-			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(), false,
-			0.0, false, serviceContext);
+			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
+			false, serviceContext);
 	}
 
 	public MBMessage addMessage(

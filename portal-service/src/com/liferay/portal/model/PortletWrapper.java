@@ -317,7 +317,6 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	* @param obj the object to compare this portlet against
 	* @return <code>true</code> if the portlet is equal to the specified object
 	*/
-	@Override
 	public boolean equals(java.lang.Object obj) {
 		return _portlet.equals(obj);
 	}

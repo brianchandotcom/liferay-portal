@@ -405,6 +405,14 @@ public class OrganizationLocalServiceUtil {
 		return getService().getOrganizationId(companyId, name);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Organization> getOrganizations(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getOrganizations(userId, start, end, obc);
+	}
+
 	/**
 	* Returns all the organizations belonging to the parent organization.
 	*
@@ -450,14 +458,6 @@ public class OrganizationLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getOrganizations(companyId, parentOrganizationId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portal.model.Organization> getOrganizations(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getOrganizations(userId, start, end, obc);
 	}
 
 	/**

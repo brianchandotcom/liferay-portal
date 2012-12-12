@@ -262,10 +262,10 @@ create unique index IX_C99B2650 on DLFileVersion (uuid_, groupId);
 
 create index IX_A74DB14C on DLFolder (companyId);
 create index IX_F2EA1ACE on DLFolder (groupId);
-create index IX_F78286C5 on DLFolder (groupId, mountPoint, parentFolderId, hidden_);
-create index IX_C88430AB on DLFolder (groupId, mountPoint, parentFolderId, hidden_, status);
+create index IX_CE2D79BE on DLFolder (groupId, mountPoint, parentFolderId, hidden);
+create index IX_3CAD1AA4 on DLFolder (groupId, mountPoint, parentFolderId, hidden, status);
 create index IX_49C37475 on DLFolder (groupId, parentFolderId);
-create index IX_CE360BF6 on DLFolder (groupId, parentFolderId, hidden_, status);
+create index IX_C0FD29F9 on DLFolder (groupId, parentFolderId, hidden, status);
 create unique index IX_902FD874 on DLFolder (groupId, parentFolderId, name);
 create index IX_51556082 on DLFolder (parentFolderId, name);
 create index IX_EE29C715 on DLFolder (repositoryId);

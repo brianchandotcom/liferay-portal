@@ -363,6 +363,13 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public long getOrganizationId(long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns all the organizations belonging to the parent organization.
 	*
@@ -406,13 +413,6 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
 		long companyId, long parentOrganizationId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the organizations with the primary keys.

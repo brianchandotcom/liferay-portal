@@ -371,7 +371,7 @@
 		<property name="robots" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="hidden" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="hidden_" />
+		<property name="hidden" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="friendlyURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="iconImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="iconImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -1538,7 +1538,7 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPostDate" type="org.hibernate.type.TimestampType" />
 		<property name="defaultFileEntryTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="hidden" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="hidden_" />
+		<property name="hidden" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="overrideFileEntryTypes" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

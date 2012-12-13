@@ -48,14 +48,14 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.journal.NoSuchStructureException;
+import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
-import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.service.persistence.JournalArticleActionableDynamicQuery;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -274,18 +274,18 @@ public class JournalIndexer extends BaseIndexer {
 		document.addKeyword("structureId", article.getStructureId());
 		document.addKeyword("templateId", article.getTemplateId());
 
-		JournalStructure structure = null;
+		DDMStructure ddmStructure = null;
 
 		if (Validator.isNotNull(article.getStructureId())) {
 			try {
-				structure = JournalStructureLocalServiceUtil.getStructure(
+				ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 					article.getGroupId(), article.getStructureId(), true);
 			}
 			catch (NoSuchStructureException nsse) {
 			}
 		}
 
-		processStructure(structure, document, article.getContent());
+		processStructure(ddmStructure, document, article.getContent());
 
 		return document;
 	}
@@ -487,10 +487,10 @@ public class JournalIndexer extends BaseIndexer {
 			return;
 		}
 
-		com.liferay.portal.kernel.xml.Document structureDocument =
+		com.liferay.portal.kernel.xml.Document ddmStructureDocument =
 			element.getDocument();
 
-		Element rootElement = structureDocument.getRootElement();
+		Element rootElement = ddmStructureDocument.getRootElement();
 
 		String defaultLocale = GetterUtil.getString(
 			rootElement.attributeValue("default-locale"));
@@ -551,7 +551,7 @@ public class JournalIndexer extends BaseIndexer {
 	}
 
 	protected void processStructure(
-			com.liferay.portal.kernel.xml.Document structureDocument,
+			com.liferay.portal.kernel.xml.Document ddmStructureDocument,
 			Document document, Element rootElement)
 		throws Exception {
 
@@ -566,21 +566,22 @@ public class JournalIndexer extends BaseIndexer {
 			String elIndexType = element.attributeValue(
 				"index-type", StringPool.BLANK);
 
-			if (structureDocument != null) {
+			if (ddmStructureDocument != null) {
 				String path = element.getPath();
 
 				path = path.concat("[@name=").concat(
 					HtmlUtil.escapeXPathAttribute(elName)).concat("]");
 
-				Node structureNode = structureDocument.selectSingleNode(path);
+				Node ddmStructureNode = ddmStructureDocument.selectSingleNode(
+					path);
 
-				if (structureNode != null) {
-					Element structureElement = (Element)structureNode;
+				if (ddmStructureNode != null) {
+					Element ddmStructureElement = (Element)ddmStructureNode;
 
-					elType = structureElement.attributeValue(
+					elType = ddmStructureElement.attributeValue(
 						"type", StringPool.BLANK);
-					elIndexType = structureElement.attributeValue(
-						"index-type", StringPool.BLANK);
+					elIndexType = ddmStructureElement.attributeValue(
+						"indexType", StringPool.BLANK);
 				}
 			}
 
@@ -593,13 +594,14 @@ public class JournalIndexer extends BaseIndexer {
 	}
 
 	protected void processStructure(
-		JournalStructure structure, Document document, String content) {
+		DDMStructure ddmStructure, Document document, String content) {
 
 		try {
-			com.liferay.portal.kernel.xml.Document structureDocument = null;
+			com.liferay.portal.kernel.xml.Document ddmStructureDocument = null;
 
-			if (structure != null) {
-				structureDocument = SAXReaderUtil.read(structure.getXsd());
+			if (ddmStructure != null) {
+				ddmStructureDocument = SAXReaderUtil.read(
+					ddmStructure.getXsd());
 			}
 
 			com.liferay.portal.kernel.xml.Document contentDocument =
@@ -607,7 +609,7 @@ public class JournalIndexer extends BaseIndexer {
 
 			Element rootElement = contentDocument.getRootElement();
 
-			processStructure(structureDocument, document, rootElement);
+			processStructure(ddmStructureDocument, document, rootElement);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

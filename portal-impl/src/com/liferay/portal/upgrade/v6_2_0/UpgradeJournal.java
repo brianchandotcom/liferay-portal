@@ -31,6 +31,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -333,8 +334,7 @@ public class UpgradeJournal extends UpgradeProcess {
 					modifiedDate, classPK, templateKey, name, description,
 					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 					DDMTemplateConstants.TEMPLATE_MODE_CREATE, language, script,
-					cacheable, smallImage, smallImageId,
-					smallImageURL);
+					cacheable, smallImage, smallImageId, smallImageURL);
 
 				templateIdsMap.put(id_, newTemplateId);
 			}

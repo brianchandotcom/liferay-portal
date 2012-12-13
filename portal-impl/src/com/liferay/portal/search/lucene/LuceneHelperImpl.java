@@ -446,7 +446,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 				tokenStream, s, maxNumFragments, fragmentSuffix);
 
 			if (Validator.isNotNull(snippet) &&
-				!StringUtil.endsWith(snippet, fragmentSuffix)) {
+				!StringUtil.endsWith(snippet, fragmentSuffix) &&
+				!s.equals(snippet)) {
 
 				snippet = snippet.concat(fragmentSuffix);
 			}

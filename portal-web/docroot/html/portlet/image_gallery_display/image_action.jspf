@@ -16,6 +16,9 @@
 
 <%
 boolean view = GetterUtil.getBoolean((String)request.getAttribute("view_image.jsp-view"));
+
+boolean checkedOut = fileEntry.isCheckedOut();
+boolean hasLock = fileEntry.hasLock();
 %>
 
 <portlet:renderURL var="viewFolderURL">

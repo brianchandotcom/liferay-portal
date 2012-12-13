@@ -18,7 +18,7 @@
 FileVersion fileVersion = fileEntry.getFileVersion();
 %>
 
-<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && ((portletName.equals(PortletKeys.TRASH) && (restore || !fileVersion.isInTrash())) || showActions) %>">
+<c:if test="<%= (!checkedOut || (checkedOut && hasLock)) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && ((portletName.equals(PortletKeys.TRASH) && (restore || !fileVersion.isInTrash())) || showActions) %>">
 
 	<%
 	PortletURL moveURL = liferayPortletResponse.createRenderURL(PortletKeys.DOCUMENT_LIBRARY);

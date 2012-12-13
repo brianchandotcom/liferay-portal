@@ -407,8 +407,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			permissionChecker, serviceContext.getScopeGroupId(), parentFolderId,
 			ActionKeys.ADD_FOLDER);
 
-		boolean hasLock = lockLocalService.hasLock(
-			getUserId(), DLFolder.class.getName(), folderId);
+		boolean hasLock = hasFolderLock(folderId);
 
 		Lock lock = null;
 
@@ -474,8 +473,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			getPermissionChecker(), serviceContext.getScopeGroupId(), folderId,
 			ActionKeys.UPDATE);
 
-		boolean hasLock = lockLocalService.hasLock(
-			getUserId(), DLFolder.class.getName(), folderId);
+		boolean hasLock = hasFolderLock(folderId);
 
 		Lock lock = null;
 

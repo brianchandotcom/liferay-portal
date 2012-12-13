@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -26,21 +27,38 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Marcellus Tavares
  */
 public class Field implements Serializable {
 
 	public Field() {
 	}
 
-	public Field(long ddmStructureId, String name, List<Serializable> values) {
+	public Field(
+		long ddmStructureId, String name, List<Serializable> values,
+		Locale locale) {
+
 		_ddmStructureId = ddmStructureId;
 		_name = name;
-		_values = values;
+		_valuesMap.put(locale, values);
+	}
+
+	public Field(
+		long ddmStructureId, String name,
+		Map<Locale, List<Serializable>> valuesMap, Locale defaultLocale) {
+
+		_ddmStructureId = ddmStructureId;
+		_defaultLocale = defaultLocale;
+		_name = name;
+		_valuesMap = valuesMap;
 	}
 
 	public Field(long ddmStructureId, String name, Serializable value) {
@@ -54,8 +72,16 @@ public class Field implements Serializable {
 		this(0, name, value);
 	}
 
-	public void addValue(Serializable value) {
-		_values.add(value);
+	public void addValue(Locale locale, Serializable value) {
+		List<Serializable> values = _valuesMap.get(locale);
+
+		if (values == null) {
+			values = new ArrayList<Serializable>();
+
+			_valuesMap.put(locale, values);
+		}
+
+		values.add(value);
 	}
 
 	@Override
@@ -68,12 +94,16 @@ public class Field implements Serializable {
 
 		if ((_ddmStructureId == field._ddmStructureId) &&
 			Validator.equals(_name, field._name) &&
-			Validator.equals(_values, field._values)) {
+			Validator.equals(_valuesMap, field._valuesMap)) {
 
 			return true;
 		}
 
 		return false;
+	}
+
+	public Set<Locale> getAvailableLocales() {
+		return _valuesMap.keySet();
 	}
 
 	public String getDataType() throws PortalException, SystemException {
@@ -88,6 +118,10 @@ public class Field implements Serializable {
 
 	public long getDDMStructureId() {
 		return _ddmStructureId;
+	}
+
+	public Locale getDefaultLocale() {
+		return _defaultLocale;
 	}
 
 	public String getName() {
@@ -117,7 +151,15 @@ public class Field implements Serializable {
 	}
 
 	public Serializable getValue() {
-		if (_values.isEmpty()) {
+		Locale defaultLocale = getDefaultLocale();
+
+		return getValue(defaultLocale);
+	}
+
+	public Serializable getValue(Locale locale) {
+		List<Serializable> values = _getValues(locale);
+
+		if (values.isEmpty()) {
 			return null;
 		}
 
@@ -125,16 +167,16 @@ public class Field implements Serializable {
 			DDMStructure ddmStructure = getDDMStructure();
 
 			if (ddmStructure == null) {
-				return _values.get(0);
+				return values.get(0);
 			}
 
 			boolean repeatable = isRepeatable();
 
 			if (repeatable) {
-				return FieldConstants.getSerializable(getType(), _values);
+				return FieldConstants.getSerializable(getType(), values);
 			}
 
-			return _values.get(0);
+			return values.get(0);
 		}
 		catch (Exception e) {
 			_log.error(e);
@@ -143,12 +185,18 @@ public class Field implements Serializable {
 		return null;
 	}
 
-	public Serializable getValue(int index) {
-		return _values.get(index);
+	public Serializable getValue(Locale locale, int index) {
+		List<Serializable> values = _getValues(locale);
+
+		return values.get(index);
 	}
 
-	public List<Serializable> getValues() {
-		return _values;
+	public List<Serializable> getValues(Locale locale) {
+		return _getValues(locale);
+	}
+
+	public Map<Locale, List<Serializable>> getValuesMap() {
+		return _valuesMap;
 	}
 
 	public boolean isRepeatable() throws PortalException, SystemException {
@@ -161,23 +209,41 @@ public class Field implements Serializable {
 		_ddmStructureId = ddmStructureId;
 	}
 
+	public void setDefaultLocale(Locale defaultLocale) {
+		_defaultLocale = defaultLocale;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
 
-	public void setValue(Serializable value) {
+	public void setValue(Locale locale, Serializable value) {
 		Class<?> clazz = value.getClass();
 
+		List<Serializable> values = null;
+
 		if (clazz.isArray()) {
-			_values = ListUtil.fromArray((Serializable[])value);
+			values = ListUtil.fromArray((Serializable[])value);
 		}
 		else {
-			_values.add(value);
+			values = new ArrayList<Serializable>();
+
+			values.add(value);
 		}
+
+		_valuesMap.put(locale, values);
 	}
 
-	public void setValues(List<Serializable> values) {
-		_values = values;
+	public void setValue(Serializable value) {
+		setValue(LocaleUtil.getDefault(), value);
+	}
+
+	public void setValues(Locale locale, List<Serializable> values) {
+		_valuesMap.put(locale, values);
+	}
+
+	public void setValuesMap(Map<Locale, List<Serializable>> valuesMap) {
+		_valuesMap = valuesMap;
 	}
 
 	protected FieldRenderer getFieldRenderer()
@@ -194,10 +260,22 @@ public class Field implements Serializable {
 		return FieldRendererFactory.getFieldRenderer(dataType);
 	}
 
+	private List<Serializable> _getValues(Locale locale) {
+		Set<Locale> availableLocales = getAvailableLocales();
+
+		if (!availableLocales.contains(locale)) {
+			locale = getDefaultLocale();
+		}
+
+		return _valuesMap.get(locale);
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(Field.class);
 
 	private long _ddmStructureId;
+	private Locale _defaultLocale;
 	private String _name;
-	private List<Serializable> _values = new ArrayList<Serializable>();
+	private Map<Locale, List<Serializable>> _valuesMap =
+		new HashMap<Locale, List<Serializable>>();
 
 }

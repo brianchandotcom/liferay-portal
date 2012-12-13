@@ -56,6 +56,8 @@ public interface DDM {
 	public OrderByComparator getTemplateOrderByComparator(
 		String orderByCol, String orderByType);
 
+	public Fields mergeFields(Fields newFields, Fields existingFields);
+
 	public void sendFieldFile(
 			HttpServletRequest request, HttpServletResponse response,
 			Field field, int valueIndex)

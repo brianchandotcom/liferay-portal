@@ -4,32 +4,6 @@ alter table Contact_ add classNameId LONG;
 alter table Contact_ add classPK LONG;
 alter table Contact_ add emailAddress VARCHAR(75) null;
 
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (228, 'aland-islands', 'AX', 'ALA', '248', '359', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (229, 'antigua-barbuda', 'AG', 'ATG', '28', '268', FALSE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (230, 'st-barthelemy', 'BL', 'BLM', '652', '590', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (231, 'bonaire-st-eustatius-saba', 'BQ', 'BES', '535', '599', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (232, 'bouvet-island', 'BV', 'BVT', '74', '047', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (233, 'curacao', 'CW', 'CUW', '531', '599', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (234, 'western-sahara', 'EH', 'ESH', '732', '212', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (235, 'guernsey', 'GG', 'GGY', '831', '044', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (236, 'south-georgia-south-sandwich-islands', 'GS', 'SGS', '239', '044', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (237, 'heard-island-mcdonald-islands', 'HM', 'HMD', '334', '061', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (238, 'isle-of-man', 'IM', 'IMN', '833', '044', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (239, 'british-indian-ocean-territory', 'IO', 'IOT', '86', '246', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (240, 'jersey', 'JE', 'JEY', '832', '044', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (241, 'st-martin', 'MF', 'MAF', '663', '590', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (242, 'northern-mariana-islands', 'MP', 'MNP', '580', '670', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (243, 'pitcairn', 'PN', 'PCN', '612', '649', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (244, 'south-sudan', 'SS', 'SSD', '728', '211', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (245, 'sint-maarten', 'SX', 'SXM', '534', '721', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (246, 'french-southern-territories', 'TF', 'ATF', '260', '033', FALSE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (247, 'tokelau', 'TK', 'TKL', '772', '690', FALSE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (248, 'timor-leste', 'TL', 'TLS', '626', '670', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (249, 'united-states-minor-outlying-islands', 'UM', 'UMI', '581', '699', TRUE, TRUE);
-insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (250, 'united-states-virgin-islands', 'VI', 'VIR', '850', '340', TRUE, TRUE);
-
-update Country set a2 = 'WS', a3 = 'WSM', number_ = '882' where countryId = '224';
-
 update Country set name = 'canada' where name = 'Canada';
 update Country set name = 'china' where name = 'China';
 update Country set name = 'france' where name = 'France';
@@ -257,6 +231,32 @@ update Country set name = 'western-samoa' where name = 'Western Samoa';
 update Country set name = 'yemen' where name = 'Yemen';
 update Country set name = 'zambia' where name = 'Zambia';
 update Country set name = 'zimbabwe' where name = 'Zimbabwe';
+
+update Country set a2 = 'WS', a3 = 'WSM', number_ = '882' where countryId = '224';
+
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (228, 'aland-islands', 'AX', 'ALA', '248', '359', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (229, 'antigua-barbuda', 'AG', 'ATG', '28', '268', FALSE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (230, 'st-barthelemy', 'BL', 'BLM', '652', '590', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (231, 'bonaire-st-eustatius-saba', 'BQ', 'BES', '535', '599', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (232, 'bouvet-island', 'BV', 'BVT', '74', '047', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (233, 'curacao', 'CW', 'CUW', '531', '599', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (234, 'western-sahara', 'EH', 'ESH', '732', '212', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (235, 'guernsey', 'GG', 'GGY', '831', '044', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (236, 'south-georgia-south-sandwich-islands', 'GS', 'SGS', '239', '044', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (237, 'heard-island-mcdonald-islands', 'HM', 'HMD', '334', '061', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (238, 'isle-of-man', 'IM', 'IMN', '833', '044', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (239, 'british-indian-ocean-territory', 'IO', 'IOT', '86', '246', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (240, 'jersey', 'JE', 'JEY', '832', '044', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (241, 'st-martin', 'MF', 'MAF', '663', '590', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (242, 'northern-mariana-islands', 'MP', 'MNP', '580', '670', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (243, 'pitcairn', 'PN', 'PCN', '612', '649', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (244, 'south-sudan', 'SS', 'SSD', '728', '211', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (245, 'sint-maarten', 'SX', 'SXM', '534', '721', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (246, 'french-southern-territories', 'TF', 'ATF', '260', '033', FALSE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (247, 'tokelau', 'TK', 'TKL', '772', '690', FALSE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (248, 'timor-leste', 'TL', 'TLS', '626', '670', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (249, 'united-states-minor-outlying-islands', 'UM', 'UMI', '581', '699', TRUE, TRUE);
+insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (250, 'united-states-virgin-islands', 'VI', 'VIR', '850', '340', TRUE, TRUE);
 
 alter table DDMStructure add parentStructureId LONG;
 

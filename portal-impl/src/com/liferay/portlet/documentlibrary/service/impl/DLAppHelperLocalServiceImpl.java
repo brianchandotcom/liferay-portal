@@ -421,6 +421,15 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Moves the file entry to the recycle bin.
+	 * 
+	 * @param userId the ID of the user deleting the file entry
+	 * @param fileEntry the file entry to be deleted
+	 * @return the deleted file entry
+	 * @throws PortalExcpetion if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException, SystemException {
 
@@ -457,6 +466,15 @@ public class DLAppHelperLocalServiceImpl
 			dlFileShortcut.getToFileEntryId(), serviceContext);
 	}
 
+	/**
+	 * Moves the file shortcut to the recycle bin.
+	 * 
+	 * @param userId the ID of the user deleting the file shortcut
+	 * @param dlFileShortcut the file shortcut to be deleted
+	 * @return the deleted file shortcut
+	 * @throws PortalExcpetion if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DLFileShortcut moveFileShortcutToTrash(
 			long userId, DLFileShortcut dlFileShortcut)
 		throws PortalException, SystemException {
@@ -521,6 +539,15 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Moves the folder to the recycle bin.
+	 * 
+	 * @param userId the ID of the user deleting the folder
+	 * @param folder the folder to be deleted
+	 * @return the deleted folder
+	 * @throws PortalExcpetion if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public Folder moveFolderToTrash(long userId, Folder folder)
 		throws PortalException, SystemException {
 

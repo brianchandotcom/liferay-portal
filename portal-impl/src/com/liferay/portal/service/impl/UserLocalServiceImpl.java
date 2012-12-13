@@ -687,9 +687,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 		screenName = getScreenName(screenName);
-		emailAddress = emailAddress.trim().toLowerCase();
 		openId = openId.trim();
 		Date now = new Date();
+
+		if (Validator.isNotNull(emailAddress)) {
+			emailAddress = emailAddress.trim().toLowerCase();
+		}
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE)) {

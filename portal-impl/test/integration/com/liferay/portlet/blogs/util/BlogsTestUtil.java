@@ -17,6 +17,7 @@ package com.liferay.portlet.blogs.util;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
@@ -34,6 +35,10 @@ public class BlogsTestUtil {
 	public static BlogsEntry addBlogsEntry(
 			long userId, Group group, boolean approved)
 		throws Exception {
+
+		boolean workflowThreadLocal = WorkflowThreadLocal.isEnabled();
+
+		WorkflowThreadLocal.setEnabled(true);
 
 		String title = "Title";
 		String description = "Description";
@@ -69,6 +74,8 @@ public class BlogsTestUtil {
 				blogsEntry.getEntryId(), WorkflowConstants.STATUS_APPROVED,
 				serviceContext);
 		}
+
+		WorkflowThreadLocal.setEnabled(workflowThreadLocal);
 
 		return blogsEntry;
 	}

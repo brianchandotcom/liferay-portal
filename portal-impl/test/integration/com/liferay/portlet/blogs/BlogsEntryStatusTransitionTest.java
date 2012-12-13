@@ -24,7 +24,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
@@ -46,11 +46,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Zsolt Berentey
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 
@@ -315,6 +311,8 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 
 	protected void checkSocialActivity(int activityType, int expectedCount)
 		throws Exception {
+
+		Thread.sleep(500 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		List<SocialActivity> activities =
 			SocialActivityLocalServiceUtil.getGroupActivities(

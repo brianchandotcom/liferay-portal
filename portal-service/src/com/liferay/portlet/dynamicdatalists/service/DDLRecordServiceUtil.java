@@ -77,6 +77,14 @@ public class DDLRecordServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord deleteRecordLocale(
+		long recordId, java.util.Locale locale,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteRecordLocale(recordId, locale, serviceContext);
+	}
+
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord getRecord(
 		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException,

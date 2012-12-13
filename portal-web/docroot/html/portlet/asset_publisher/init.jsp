@@ -148,9 +148,10 @@ String assetTagName = ParamUtil.getString(request, "tag");
 if (Validator.isNotNull(assetTagName)) {
 	allAssetTagNames = new String[] {assetTagName};
 
-	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(scopeGroupId, allAssetTagNames);
+	long[] showableScopeGroupIds = {scopeGroupId, themeDisplay.getCompanyGroupId()};
+	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(showableScopeGroupIds, allAssetTagNames);
 
-	assetEntryQuery.setAllTagIds(assetTagIds);
+	assetEntryQuery.setAnyTagIds(assetTagIds);
 
 	PortalUtil.setPageKeywords(assetTagName, request);
 }

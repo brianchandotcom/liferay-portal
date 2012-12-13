@@ -789,7 +789,8 @@ public class LayoutImporter {
 
 		// Page count
 
-		LayoutSetLocalServiceUtil.updatePageCount(groupId, privateLayout);
+		layoutSet = LayoutSetLocalServiceUtil.updatePageCount(
+			groupId, privateLayout);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Importing layouts takes " + stopWatch.getTime() + " ms");
@@ -819,6 +820,21 @@ public class LayoutImporter {
 
 				LayoutUtil.update(layout);
 			}
+		}
+
+		// Update merge-time for layout set prototypes
+
+		if (layoutsImportMode.equals(
+				PortletDataHandlerKeys.
+					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+			UnicodeProperties settingsProperties =
+				layoutSet.getSettingsProperties();
+
+			settingsProperties.setProperty(
+				"last-merge-time", String.valueOf(System.currentTimeMillis()));
+
+			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}
 
 		zipReader.close();

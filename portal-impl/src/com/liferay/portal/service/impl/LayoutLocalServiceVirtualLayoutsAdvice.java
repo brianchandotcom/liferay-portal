@@ -129,20 +129,23 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 						SitesUtil.mergeLayoutSetProtypeLayouts(
 							group, layoutSet);
 					}
+					else {
+						boolean modified = false;
 
-					boolean modified = false;
+						for (Layout layout : layouts) {
+							if (SitesUtil.isLayoutModifiedSinceLastMerge(
+									layout)) {
 
-					for (Layout layout : layouts) {
-						if (SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
-							modified = true;
+								modified = true;
 
-							break;
+								break;
+							}
 						}
-					}
 
-					if (!modified) {
-						SitesUtil.mergeLayoutSetProtypeLayouts(
-							group, layoutSet);
+						if (!modified) {
+							SitesUtil.mergeLayoutSetProtypeLayouts(
+								group, layoutSet);
+						}
 					}
 				}
 				finally {

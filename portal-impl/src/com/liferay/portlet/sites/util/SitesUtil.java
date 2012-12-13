@@ -1084,16 +1084,6 @@ public class SitesUtil {
 			importLayoutSetPrototype(
 				layoutSetPrototype, layoutSet.getGroupId(),
 				layoutSet.isPrivateLayout(), parameterMap, importData);
-
-			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout());
-
-			settingsProperties = layoutSet.getSettingsProperties();
-
-			settingsProperties.setProperty(
-				"last-merge-time", String.valueOf(System.currentTimeMillis()));
-
-			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -103,6 +103,7 @@ taggedPagesURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 PortletURL viewAttachmentsURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
 viewAttachmentsURL.setParameter("struts_action", "/wiki/view_page_attachments");
+viewAttachmentsURL.setParameter("redirect", currentURL);
 
 AssetEntryServiceUtil.incrementViewCounter(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
 

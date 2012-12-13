@@ -2196,13 +2196,9 @@ public class JournalArticleLocalServiceImpl
 			Image oldImage = imageLocalService.getImage(
 				article.getSmallImageId());
 
-			if ((oldImage != null) && (smallImageBytes != null)) {
-				boolean sameImage = Arrays.equals(
-					oldImage.getTextObj(), smallImageBytes);
-
-				if (!sameImage) {
+			if ((oldImage != null) && (smallImageBytes != null) &&
+				(!Arrays.equals(oldImage.getTextObj(), smallImageBytes))) {
 					article.setSmallImageId(counterLocalService.increment());
-				}
 			}
 		}
 

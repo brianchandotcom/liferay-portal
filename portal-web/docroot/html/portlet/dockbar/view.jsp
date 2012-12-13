@@ -483,7 +483,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 		</span>
 	</div>
 
-	<aui:script use="aui-base">
+	<aui:script use="aui-base,aui-io">
 		var toggleCustomizedView = A.one('#<portlet:namespace />toggleCustomizedView');
 
 		if (toggleCustomizedView) {

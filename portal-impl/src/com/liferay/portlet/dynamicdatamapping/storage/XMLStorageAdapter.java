@@ -36,6 +36,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.query.FieldCondition;
 import com.liferay.portlet.dynamicdatamapping.storage.query.FieldConditionImpl;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Junction;
 import com.liferay.portlet.dynamicdatamapping.storage.query.LogicalOperator;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.ArrayList;
@@ -174,13 +175,11 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 
 		ddmContent.setModifiedDate(serviceContext.getModifiedDate(null));
 
-		Document document = null;
-
 		if (mergeFields) {
-			document = SAXReaderUtil.read(ddmContent.getXml());
+			fields = DDMUtil.mergeFields(fields, getFields(classPK));
 		}
 
-		ddmContent.setXml(DDMXMLUtil.getXML(document, fields));
+		ddmContent.setXml(DDMXMLUtil.getXML(fields));
 
 		DDMContentLocalServiceUtil.updateContent(
 			ddmContent.getPrimaryKey(), ddmContent.getName(),

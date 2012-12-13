@@ -87,6 +87,10 @@ public class DDMUtil {
 		return getDDM().getTemplateOrderByComparator(orderByCol, orderByType);
 	}
 
+	public static Fields mergeFields(Fields newFields, Fields existingFields) {
+		return getDDM().mergeFields(newFields, existingFields);
+	}
+
 	public static void sendFieldFile(
 			HttpServletRequest request, HttpServletResponse response,
 			Field field, int valueIndex)

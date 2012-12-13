@@ -33,6 +33,7 @@ import com.liferay.portlet.expando.model.ExpandoValue;
 import java.io.Serializable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -59,6 +60,7 @@ public class ExpandoValueLocalServiceTest {
 		_classNameId = PortalUtil.getClassNameId(BlogsEntry.class);
 
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
+		_frLocale = LocaleUtil.fromLanguageId("fr_FR");
 		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");
 	}
 
@@ -167,7 +169,8 @@ public class ExpandoValueLocalServiceTest {
 			ExpandoValueLocalServiceUtil.addValue(
 				TestPropsValues.getCompanyId(),
 				PortalUtil.getClassName(_classNameId), table.getName(),
-				column.getName(), CounterLocalServiceUtil.increment(), dataMap);
+				column.getName(), CounterLocalServiceUtil.increment(), dataMap,
+				LocaleUtil.getDefault());
 
 			Assert.fail();
 		}
@@ -197,9 +200,47 @@ public class ExpandoValueLocalServiceTest {
 	}
 
 	@Test
-	public void testGetSerializableData() throws Exception {
+	public void testGetNonExistingLocaleValue() throws Exception {
 		ExpandoTable table = ExpandoTableLocalServiceUtil.addTable(
 			TestPropsValues.getCompanyId(), _classNameId, "Test Table 6");
+
+		ExpandoColumn column = ExpandoColumnLocalServiceUtil.addColumn(
+			table.getTableId(), "Test Column",
+			ExpandoColumnConstants.STRING_LOCALIZED);
+
+		Map<Locale, String> dataMap = new HashMap<Locale, String>();
+
+		dataMap.put(_enLocale, "one");
+		dataMap.put(_ptLocale, "um");
+
+		ExpandoValue value = ExpandoValueLocalServiceUtil.addValue(
+			TestPropsValues.getCompanyId(),
+			PortalUtil.getClassName(_classNameId), table.getName(),
+			column.getName(), CounterLocalServiceUtil.increment(), dataMap,
+			_ptLocale);
+
+		value = ExpandoValueLocalServiceUtil.getExpandoValue(
+			value.getValueId());
+
+		Assert.assertEquals(_ptLocale, value.getDefaultLocale());
+
+		List<Locale> availableLocales = value.getAvailableLocales();
+
+		Assert.assertEquals(_ptLocale, availableLocales.get(0));
+		Assert.assertEquals(_enLocale, availableLocales.get(1));
+
+		Assert.assertEquals("um" , value.getString(_ptLocale));
+		Assert.assertEquals("one" , value.getString(_enLocale));
+
+		// Default value
+
+		Assert.assertEquals("um" , value.getString(_frLocale));
+	}
+
+	@Test
+	public void testGetSerializableData() throws Exception {
+		ExpandoTable table = ExpandoTableLocalServiceUtil.addTable(
+			TestPropsValues.getCompanyId(), _classNameId, "Test Table 7");
 
 		ExpandoColumn column = ExpandoColumnLocalServiceUtil.addColumn(
 			table.getTableId(), "Test Column",
@@ -234,6 +275,7 @@ public class ExpandoValueLocalServiceTest {
 
 	private long _classNameId;
 	private Locale _enLocale;
+	private Locale _frLocale;
 	private Locale _ptLocale;
 
 }

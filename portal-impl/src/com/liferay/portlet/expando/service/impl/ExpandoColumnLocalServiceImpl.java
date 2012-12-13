@@ -16,6 +16,7 @@ package com.liferay.portlet.expando.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.expando.ColumnNameException;
@@ -486,10 +487,13 @@ public class ExpandoColumnLocalServiceImpl
 				value.setStringArray((String[])defaultData);
 			}
 			else if (type == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED) {
-				value.setStringArrayMap((Map<Locale, String[]>)defaultData);
+				value.setStringArrayMap(
+					(Map<Locale, String[]>)defaultData,
+					LocaleUtil.getDefault());
 			}
 			else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
-				value.setStringMap((Map<Locale, String>)defaultData);
+				value.setStringMap(
+					(Map<Locale, String>)defaultData, LocaleUtil.getDefault());
 			}
 		}
 

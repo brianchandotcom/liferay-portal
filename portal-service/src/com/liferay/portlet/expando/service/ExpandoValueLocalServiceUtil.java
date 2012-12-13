@@ -384,12 +384,13 @@ public class ExpandoValueLocalServiceUtil {
 	public static com.liferay.portlet.expando.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, long classPK,
-		java.util.Map<java.util.Locale, ?> dataMap)
+		java.util.Map<java.util.Locale, ?> dataMap,
+		java.util.Locale defautlLocale)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addValue(companyId, className, tableName, columnName,
-			classPK, dataMap);
+			classPK, dataMap, defautlLocale);
 	}
 
 	public static com.liferay.portlet.expando.model.ExpandoValue addValue(

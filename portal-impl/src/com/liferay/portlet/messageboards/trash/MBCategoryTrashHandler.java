@@ -161,7 +161,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		portletURL.setParameter("struts_action", "/message_boards_admin/view");
 		portletURL.setParameter(
-			"mbCategoryId", String.valueOf(category.getCategoryId()));
+			"mbCategoryId", String.valueOf(category.getParentCategoryId()));
 
 		return portletURL.toString();
 	}
@@ -172,7 +172,8 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
-		return MBUtil.getAbsolutePath(portletRequest, category.getCategoryId());
+		return MBUtil.getAbsolutePath(
+			portletRequest, category.getParentCategoryId());
 	}
 
 	@Override

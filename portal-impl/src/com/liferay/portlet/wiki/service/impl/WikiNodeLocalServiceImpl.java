@@ -40,6 +40,8 @@ import com.liferay.portlet.wiki.importers.WikiImporter;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.base.WikiNodeLocalServiceBaseImpl;
+import com.liferay.portlet.wiki.util.WikiCacheThreadLocal;
+import com.liferay.portlet.wiki.util.WikiCacheUtil;
 
 import java.io.InputStream;
 
@@ -425,13 +427,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		// Pages
 
-		List<WikiPage> pages = wikiPagePersistence.findByNodeId(
-			node.getNodeId());
-
-		for (WikiPage page : pages) {
-			wikiPageLocalService.updateStatus(
-				userId, page, status, status, serviceContext);
-		}
+		updateStatues(node.getNodeId(), status);
 
 		// Trash
 
@@ -513,6 +509,72 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		}
 
 		return wikiImporter;
+	}
+
+	protected void updateStatues(long nodeId, int status)
+		throws PortalException, SystemException {
+
+		List<WikiPage> pages = wikiPagePersistence.findByNodeId(nodeId);
+
+		for (WikiPage page : pages) {
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				if (page.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						WikiPage.class.getName(), page.getResourcePrimKey(),
+						false);
+				}
+
+				// Social
+
+				socialActivityCounterLocalService.disableActivityCounters(
+					WikiPage.class.getName(), page.getResourcePrimKey());
+
+				// Index
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					WikiPage.class);
+
+				indexer.reindex(page);
+
+				// Cache
+
+				if (WikiCacheThreadLocal.isClearCache()) {
+					WikiCacheUtil.clearCache(page.getNodeId());
+				}
+
+				if (page.getStatus() == WorkflowConstants.STATUS_PENDING) {
+					page.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+					wikiPagePersistence.update(page);
+
+					workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+						page.getCompanyId(), page.getGroupId(),
+						WikiPage.class.getName(), page.getResourcePrimKey());
+				}
+			}
+			else {
+
+				// Asset
+
+				if (page.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						WikiPage.class.getName(), page.getResourcePrimKey(),
+						true);
+				}
+
+				// Social
+
+				socialActivityCounterLocalService.enableActivityCounters(
+					WikiPage.class.getName(), page.getResourcePrimKey());
+
+				// Index
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					WikiPage.class);
+
+				indexer.reindex(page);
+			}
+		}
 	}
 
 	protected void validate(long nodeId, long groupId, String name)

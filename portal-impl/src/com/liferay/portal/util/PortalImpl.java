@@ -2377,14 +2377,11 @@ public class PortalImpl implements Portal {
 		String queryString = StringPool.BLANK;
 
 		if (Validator.isNull(friendlyURL)) {
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			layout = LayoutLocalServiceUtil.fetchFirstLayout(
 				groupId, privateLayout,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-			if (!layouts.isEmpty()) {
-				layout = layouts.get(0);
-			}
-			else {
+			if (layout == null) {
 				throw new NoSuchLayoutException(
 					"{groupId=" + groupId + ",privateLayout=" + privateLayout +
 						"} does not have any layouts");

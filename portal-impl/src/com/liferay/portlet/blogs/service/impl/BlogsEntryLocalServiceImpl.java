@@ -782,6 +782,16 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Moves the blog entry to the recycle bin.
+	 * Social activity counters for this entry gets disabled.
+	 * 
+	 * @param userId the ID of the user deleting the blog entry
+	 * @param entry the blog entry to be deleted
+	 * @return the deleted blog entry
+	 * @throws PortalExcpetion if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public BlogsEntry moveEntryToTrash(long userId, BlogsEntry entry)
 		throws PortalException, SystemException {
 
@@ -824,6 +834,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
+	/**
+	 * Moves the blog entry with the ID to the recycle bin.
+	 * 
+	 * @param userId the ID of the user deleting the blog entry
+	 * @param entryId the ID of the blog entry to be deleted
+	 * @return the deleted blog entry
+	 * @throws PortalExcpetion if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public BlogsEntry moveEntryToTrash(long userId, long entryId)
 		throws PortalException, SystemException {
 
@@ -832,6 +851,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return moveEntryToTrash(userId, entry);
 	}
 
+	/**
+	 * Restores the blog entry with the ID from the recycle bin.
+	 * Social activity counters for this entry gets activated.
+	 * 
+	 * @param userId the ID of the user restoring the blog entry
+	 * @param entryId the ID of the blog entry to be restored
+	 * @throws PortalExcpetion if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void restoreEntryFromTrash(long userId, long entryId)
 		throws PortalException, SystemException {
 

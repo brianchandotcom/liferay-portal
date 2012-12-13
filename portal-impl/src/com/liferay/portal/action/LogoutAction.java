@@ -83,6 +83,25 @@ public class LogoutAction extends Action {
 			passwordCookie.setMaxAge(0);
 			passwordCookie.setPath(StringPool.SLASH);
 
+			String rememberMeValue =
+				CookieKeys.getCookie(request, CookieKeys.REMEMBER_ME);
+
+			if (Validator.isNull(rememberMeValue) ||
+				!rememberMeValue.equals(Boolean.TRUE.toString())) {
+
+				Cookie loginCookie = new Cookie(
+					CookieKeys.LOGIN, StringPool.BLANK);
+
+				if (Validator.isNotNull(domain)) {
+					loginCookie.setDomain(domain);
+				}
+
+				loginCookie.setMaxAge(0);
+				loginCookie.setPath(StringPool.SLASH);
+
+				CookieKeys.addCookie(request, response, loginCookie);
+			}
+
 			Cookie rememberMeCookie = new Cookie(
 				CookieKeys.REMEMBER_ME, StringPool.BLANK);
 

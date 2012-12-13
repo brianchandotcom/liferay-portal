@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.internal.AssumptionViolatedException;
 import org.junit.internal.runners.model.MultipleFailureException;
 import org.junit.runners.model.Statement;
 
@@ -48,7 +49,9 @@ public class RunAfterTestMethodCallback extends AbstractStatementCallback {
 				statement.evaluate();
 			}
 			catch (Throwable t) {
-				throwables.add(t);
+				if (!(t instanceof AssumptionViolatedException)) {
+					throwables.add(t);
+				}
 			}
 		}
 

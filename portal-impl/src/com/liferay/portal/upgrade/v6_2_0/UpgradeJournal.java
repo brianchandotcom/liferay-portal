@@ -178,6 +178,11 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 		return ddmTemplateId;
 	}
 
+	protected void cleanUpTables() throws Exception {
+		runSQL("drop table JournalStructure");
+		runSQL("drop table JournalTemplate");
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		try {
@@ -196,6 +201,8 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 		updateTemplates();
 
 		updatePortletPreferences();
+
+		cleanUpTables();
 	}
 
 	@Override

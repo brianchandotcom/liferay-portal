@@ -52,7 +52,6 @@ boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT)
 PortletURL viewPageURL = renderResponse.createRenderURL();
 
 viewPageURL.setParameter("struts_action", "/wiki/view");
-viewPageURL.setParameter("redirect", currentURL);
 viewPageURL.setParameter("nodeName", node.getName());
 viewPageURL.setParameter("title", title);
 
@@ -104,6 +103,7 @@ taggedPagesURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 PortletURL viewAttachmentsURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
 viewAttachmentsURL.setParameter("struts_action", "/wiki/view_page_attachments");
+viewAttachmentsURL.setParameter("redirect", currentURL);
 
 AssetEntryServiceUtil.incrementViewCounter(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
 
@@ -196,6 +196,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				PortletURL viewPageDetailsURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
 				viewPageDetailsURL.setParameter("struts_action", "/wiki/view_page_details");
+				viewPageDetailsURL.setParameter("redirect", currentURL);
 				%>
 
 				<liferay-ui:icon

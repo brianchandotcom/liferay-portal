@@ -40,7 +40,7 @@ public class CallbackMatcher {
 			String replacement = callback.foundMatch(matchResult);
 
 			if (replacement == null) {
-				return null;
+				continue;
 			}
 
 			int matchStart = offset + matchResult.start();

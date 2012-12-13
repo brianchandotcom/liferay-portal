@@ -41,6 +41,11 @@ import javax.servlet.ServletContext;
  */
 public class ServletContextUtil {
 
+	public static final String PATH_WEB_XML = "/WEB-INF/web.xml";
+
+	public static final String URI_ATTRIBUTE =
+		ServletContextUtil.class.getName().concat(".rootURI");
+
 	public static Set<String> getClassNames(ServletContext servletContext)
 		throws IOException {
 
@@ -153,20 +158,22 @@ public class ServletContextUtil {
 	public static URI getRootURI(ServletContext servletContext)
 		throws MalformedURLException {
 
-		URI rootURI = (URI)servletContext.getAttribute(_URI_ATTRIBUTE);
+		URI rootURI = (URI)servletContext.getAttribute(URI_ATTRIBUTE);
 
 		if (rootURI != null) {
 			return rootURI;
 		}
 
 		try {
-			URL rootURL = servletContext.getResource(_PATH_WEB_XML);
+			URL rootURL = servletContext.getResource(PATH_WEB_XML);
 
-			URI uri = rootURL.toURI();
+			String path = rootURL.getPath();
 
-			String path = uri.getPath();
+			int index = path.indexOf(PATH_WEB_XML);
 
-			int index = path.indexOf(_PATH_WEB_XML);
+			if (index < 0) {
+				throw new MalformedURLException("Invalid URL: " + rootURL);
+			}
 
 			if (index == 0) {
 				path = StringPool.SLASH;
@@ -175,10 +182,9 @@ public class ServletContextUtil {
 				path = path.substring(0, index);
 			}
 
-			rootURI = new URI(
-				uri.getScheme(), uri.getAuthority(), path, null, null);
+			rootURI = new URI(rootURL.getProtocol(), path, null);
 
-			servletContext.setAttribute(_URI_ATTRIBUTE, rootURI);
+			servletContext.setAttribute(URI_ATTRIBUTE, rootURI);
 		}
 		catch (URISyntaxException urise) {
 			throw new MalformedURLException(urise.getMessage());
@@ -265,11 +271,6 @@ public class ServletContextUtil {
 	private static final String _EXT_CLASS = ".class";
 
 	private static final String _EXT_JAR = ".jar";
-
-	private static final String _PATH_WEB_XML = "/WEB-INF/web.xml";
-
-	private static final String _URI_ATTRIBUTE =
-		ServletContextUtil.class.getName().concat(".rootURI");
 
 	private static Log _log = LogFactoryUtil.getLog(ServletContextUtil.class);
 

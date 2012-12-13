@@ -48,14 +48,11 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
-import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.service.persistence.JournalArticleActionableDynamicQuery;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -273,19 +270,6 @@ public class JournalIndexer extends BaseIndexer {
 		document.addKeyword("layoutUuid", article.getLayoutUuid());
 		document.addKeyword("structureId", article.getStructureId());
 		document.addKeyword("templateId", article.getTemplateId());
-
-		JournalStructure structure = null;
-
-		if (Validator.isNotNull(article.getStructureId())) {
-			try {
-				structure = JournalStructureLocalServiceUtil.getStructure(
-					article.getGroupId(), article.getStructureId(), true);
-			}
-			catch (NoSuchStructureException nsse) {
-			}
-		}
-
-		processStructure(structure, document, article.getContent());
 
 		return document;
 	}
@@ -589,28 +573,6 @@ public class JournalIndexer extends BaseIndexer {
 			}
 
 			queue.addAll(element.elements());
-		}
-	}
-
-	protected void processStructure(
-		JournalStructure structure, Document document, String content) {
-
-		try {
-			com.liferay.portal.kernel.xml.Document structureDocument = null;
-
-			if (structure != null) {
-				structureDocument = SAXReaderUtil.read(structure.getXsd());
-			}
-
-			com.liferay.portal.kernel.xml.Document contentDocument =
-				SAXReaderUtil.read(content);
-
-			Element rootElement = contentDocument.getRootElement();
-
-			processStructure(structureDocument, document, rootElement);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
 		}
 	}
 

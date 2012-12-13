@@ -23,14 +23,12 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,33 +37,22 @@ import org.junit.runner.RunWith;
  * @author Laszlo Csontos
  */
 @ExecutionTestListeners(listeners = { PersistenceExecutionTestListener.class} )
-@RunWith(LiferayPersistenceIntegrationJUnitTestRunner.class)
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DB2DialectTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_persistence = new BasePersistenceImpl();
-
-		_persistence.setDataSource(_liferayDataSource);
-		_persistence.setSessionFactory(_liferaySessionFactory);
+		Assume.assumeTrue(DB.TYPE_DB2.equals(DBFactoryUtil.getDB().getType()));
 	}
 
 	@Test
 	public void testPagingWithOffset() {
-		checkDBType();
-
 		doPaging(_MOCK_SQL, 10, 20);
 	}
 
 	@Test
 	public void testPagingWithoutOffset() {
-		checkDBType();
-
 		doPaging(_MOCK_SQL, 0, 20);
-	}
-
-	protected void checkDBType() {
-		Assert.assertEquals(DB.TYPE_DB2, _db.getType());
 	}
 
 	protected void doPaging(String sql, int offset, int limit) {
@@ -75,7 +62,7 @@ public class DB2DialectTest {
 		List<?> result = null;
 
 		try {
-			session = _persistence.openSession();
+			session = _liferaySessionFactory.openSession();
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -83,7 +70,7 @@ public class DB2DialectTest {
 				q, _liferaySessionFactory.getDialect(), offset, offset + limit);
 		}
 		finally {
-			_persistence.closeSession(session);
+			_liferaySessionFactory.closeSession(session);
 		}
 
 		Assert.assertNotNull(result);
@@ -94,14 +81,7 @@ public class DB2DialectTest {
 		"SELECT tabname FROM syscat.tables " +
 		"WHERE tabschema = 'SYSIBM' ORDER BY tabname";
 
-	private DB _db = DBFactoryUtil.getDB();
-
-	private DataSource _liferayDataSource =
-		(DataSource) PortalBeanLocatorUtil.locate("liferayDataSource");
-
 	private SessionFactory _liferaySessionFactory =
 		(SessionFactory) PortalBeanLocatorUtil.locate("liferaySessionFactory");
-
-	private BasePersistenceImpl<?> _persistence;
 
 }

@@ -60,6 +60,8 @@ public class UpgradeJournal extends UpgradeProcess {
 		updateJournalStructures();
 
 		updateJournalTemplates();
+
+		cleanUpTables();
 	}
 
 	private long addDDMStructure(
@@ -188,6 +190,11 @@ public class UpgradeJournal extends UpgradeProcess {
 		}
 
 		return newTemplateId;
+	}
+
+	private void cleanUpTables() throws Exception {
+		runSQL("drop table JournalStructure");
+		runSQL("drop table JournalTemplate");
 	}
 
 	private long updateJournalStructure(String structureId) throws Exception {

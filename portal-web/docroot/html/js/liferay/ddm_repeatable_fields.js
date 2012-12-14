@@ -26,6 +26,9 @@ AUI.add(
 						value: null
 					},
 
+					namespace: {
+					},
+
 					fieldsMapInput: {
 						setter: A.one,
 						validator: A.Lang.isNode,
@@ -123,6 +126,7 @@ AUI.add(
 									classNameId: instance.get('classNameId'),
 									classPK: instance.get('classPK'),
 									fieldName: fieldName,
+									namespace: instance.get('namespace'),
 									p_p_isolated: true,
 									readOnly: instance.get('readOnly'),
 									repeatableIndex: repeatableIndex

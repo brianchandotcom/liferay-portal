@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
@@ -249,7 +250,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext();
 
-		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setGroupIds(new long[]{groupId});
 
 		Hits results = indexer.search(searchContext);
 
@@ -293,7 +294,13 @@ public abstract class BaseTrashHandlerTestCase {
 				getSearchKeywords(), serviceContext);
 		}
 
+		boolean workflowThreadLocal = WorkflowThreadLocal.isEnabled();
+
+		WorkflowThreadLocal.setEnabled(true);
+
 		baseModel = addBaseModel(parentBaseModel, approved, serviceContext);
+
+		WorkflowThreadLocal.setEnabled(workflowThreadLocal);
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
@@ -329,7 +336,7 @@ public abstract class BaseTrashHandlerTestCase {
 			Assert.assertEquals(approved, isAssetEntryVisible(baseModel));
 		}
 
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long) baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(
 			initialBaseModelsCount,
@@ -438,7 +445,13 @@ public abstract class BaseTrashHandlerTestCase {
 			parentBaseModel);
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
+		boolean workflowThreadLocal = WorkflowThreadLocal.isEnabled();
+
+		WorkflowThreadLocal.setEnabled(true);
+
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		WorkflowThreadLocal.setEnabled(workflowThreadLocal);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
@@ -453,10 +466,16 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assert.assertTrue(isBaseModelTrashName(baseModel));
 
+		workflowThreadLocal = WorkflowThreadLocal.isEnabled();
+
+		WorkflowThreadLocal.setEnabled(true);
+
 		BaseModel<?> duplicateBaseModel = addBaseModel(
 			parentBaseModel, true, serviceContext);
 
-		moveBaseModelToTrash((Long)duplicateBaseModel.getPrimaryKeyObj());
+		WorkflowThreadLocal.setEnabled(workflowThreadLocal);
+
+		moveBaseModelToTrash((Long) duplicateBaseModel.getPrimaryKeyObj());
 
 		duplicateBaseModel = getBaseModel(
 			(Long)duplicateBaseModel.getPrimaryKeyObj());
@@ -483,7 +502,13 @@ public abstract class BaseTrashHandlerTestCase {
 			parentBaseModel);
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
+		boolean workflowThreadLocal = WorkflowThreadLocal.isEnabled();
+
+		WorkflowThreadLocal.setEnabled(true);
+
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		WorkflowThreadLocal.setEnabled(workflowThreadLocal);
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
@@ -502,7 +527,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assert.assertFalse(isInTrashFolder(baseModel));
 
-		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
+		moveParentBaseModelToTrash((Long) parentBaseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(
 			initialTrashEntriesCount + 2,
@@ -561,7 +586,13 @@ public abstract class BaseTrashHandlerTestCase {
 				getSearchKeywords(), serviceContext);
 		}
 
+		boolean workflowThreadLocal = WorkflowThreadLocal.isEnabled();
+
+		WorkflowThreadLocal.setEnabled(true);
+
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		WorkflowThreadLocal.setEnabled(workflowThreadLocal);
 
 		baseModel = updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);

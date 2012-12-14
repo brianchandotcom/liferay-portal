@@ -2009,7 +2009,7 @@ public class DLFileEntryLocalServiceImpl
 						dlFileEntry.getDataRepositoryId(),
 						dlFileEntry.getName(), lastDLFileVersion.getVersion());
 
-					lastChecksum = DigesterUtil.digest(lastInputStream);
+					lastChecksum = DigesterUtil.digestBase64(lastInputStream);
 
 					lastDLFileVersion.setChecksum(lastChecksum);
 

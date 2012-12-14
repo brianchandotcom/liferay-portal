@@ -184,7 +184,7 @@ public class ImageMagickImpl implements ImageMagick {
 				_resourceLimitsProperties = getResourceLimitsProperties();
 			}
 			catch (Exception e) {
-				_log.warn(e, e);
+				_log.error(e, e);
 			}
 		}
 	}

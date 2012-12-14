@@ -102,8 +102,14 @@ public class GhostscriptImpl implements Ghostscript {
 		}
 
 		if (commandPath == null) {
-			throw new FileNotFoundException(
-				"Unable to find Ghostscript command");
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Unable to find the Ghostscript command. Please verify ");
+			sb.append("the path specified in the Server Administration ");
+			sb.append("control panel at: http://<server>/group/control_panel/");
+			sb.append("manage/-/server/external-services");
+
+			throw new FileNotFoundException(sb.toString());
 		}
 
 		return commandPath;

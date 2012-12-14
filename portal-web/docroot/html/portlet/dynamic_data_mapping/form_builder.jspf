@@ -29,7 +29,7 @@ for (int i = 0; i < availableLanguageIds.length; i++) {
 
 <div class="separator"><!-- --></div>
 
-<aui:translation-manager availableLocales="<%= availableLocales %>" canAddTranslations="<%= true %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" initialize="<%= false %>" />
+<aui:translation-manager availableLocales="<%= availableLocales %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" initialize="<%= false %>" readOnly="<%= true %>" />
 
 <div class="aui-diagram-builder" id="<portlet:namespace />formBuilder">
 	<div class="aui-diagram-builder-content aui-helper-clearfix" id="<portlet:namespace />formBuilderContent">

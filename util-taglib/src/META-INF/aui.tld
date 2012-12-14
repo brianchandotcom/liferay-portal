@@ -1813,12 +1813,6 @@
 			<type>java.util.Locale[]</type>
 		</attribute>
 		<attribute>
-			<name>canAddTranslations</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
 			<name>defaultLanguageId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1838,6 +1832,12 @@
 		</attribute>
 		<attribute>
 			<name>initialize</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>readOnly</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>

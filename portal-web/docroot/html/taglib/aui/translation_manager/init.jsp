@@ -33,18 +33,18 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 }
 
 java.util.Locale[] availableLocales = (java.util.Locale[])request.getAttribute("aui:translation-manager:availableLocales");
-boolean canAddTranslations = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:translation-manager:canAddTranslations")));
 java.lang.String defaultLanguageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:translation-manager:defaultLanguageId"));
 java.lang.String editingLanguageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:translation-manager:editingLanguageId"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:translation-manager:id"));
 boolean initialize = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:translation-manager:initialize")), true);
+boolean readOnly = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:translation-manager:readOnly")));
 
 _updateOptions(_options, "availableLocales", availableLocales);
-_updateOptions(_options, "canAddTranslations", canAddTranslations);
 _updateOptions(_options, "defaultLanguageId", defaultLanguageId);
 _updateOptions(_options, "editingLanguageId", editingLanguageId);
 _updateOptions(_options, "id", id);
 _updateOptions(_options, "initialize", initialize);
+_updateOptions(_options, "readOnly", readOnly);
 %>
 
 <%@ include file="/html/taglib/aui/translation_manager/init-ext.jspf" %>

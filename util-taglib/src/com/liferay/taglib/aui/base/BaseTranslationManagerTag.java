@@ -37,10 +37,6 @@ public class BaseTranslationManagerTag extends com.liferay.taglib.util.IncludeTa
 		return _availableLocales;
 	}
 
-	public boolean getCanAddTranslations() {
-		return _canAddTranslations;
-	}
-
 	public java.lang.String getDefaultLanguageId() {
 		return _defaultLanguageId;
 	}
@@ -57,16 +53,14 @@ public class BaseTranslationManagerTag extends com.liferay.taglib.util.IncludeTa
 		return _initialize;
 	}
 
+	public boolean getReadOnly() {
+		return _readOnly;
+	}
+
 	public void setAvailableLocales(java.util.Locale[] availableLocales) {
 		_availableLocales = availableLocales;
 
 		setScopedAttribute("availableLocales", availableLocales);
-	}
-
-	public void setCanAddTranslations(boolean canAddTranslations) {
-		_canAddTranslations = canAddTranslations;
-
-		setScopedAttribute("canAddTranslations", canAddTranslations);
 	}
 
 	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
@@ -93,14 +87,20 @@ public class BaseTranslationManagerTag extends com.liferay.taglib.util.IncludeTa
 		setScopedAttribute("initialize", initialize);
 	}
 
+	public void setReadOnly(boolean readOnly) {
+		_readOnly = readOnly;
+
+		setScopedAttribute("readOnly", readOnly);
+	}
+
 	@Override
 	protected void cleanUp() {
 		_availableLocales = null;
-		_canAddTranslations = false;
 		_defaultLanguageId = null;
 		_editingLanguageId = null;
 		_id = null;
 		_initialize = true;
+		_readOnly = false;
 	}
 
 	@Override
@@ -111,11 +111,11 @@ public class BaseTranslationManagerTag extends com.liferay.taglib.util.IncludeTa
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "availableLocales", _availableLocales);
-		setNamespacedAttribute(request, "canAddTranslations", _canAddTranslations);
 		setNamespacedAttribute(request, "defaultLanguageId", _defaultLanguageId);
 		setNamespacedAttribute(request, "editingLanguageId", _editingLanguageId);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "initialize", _initialize);
+		setNamespacedAttribute(request, "readOnly", _readOnly);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:translation-manager:";
@@ -124,10 +124,10 @@ public class BaseTranslationManagerTag extends com.liferay.taglib.util.IncludeTa
 		"/html/taglib/aui/translation_manager/page.jsp";
 
 	private java.util.Locale[] _availableLocales = null;
-	private boolean _canAddTranslations = false;
 	private java.lang.String _defaultLanguageId = null;
 	private java.lang.String _editingLanguageId = null;
 	private java.lang.String _id = null;
 	private boolean _initialize = true;
+	private boolean _readOnly = false;
 
 }

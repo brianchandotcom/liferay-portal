@@ -112,7 +112,7 @@ if (translating) {
 	<aui:fieldset>
 		<c:if test="<%= !translating %>">
 
-			<aui:translation-manager availableLocales="<%= availableLocales %>" canAddTranslations="<%= recordId > 0 %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" />
+			<aui:translation-manager availableLocales="<%= availableLocales %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" readOnly="<%= recordId > 0 %>" />
 
 			<liferay-portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="updateDefaultLanguageURL">
 				<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
@@ -128,11 +128,10 @@ if (translating) {
 				var translationManager = Liferay.component('<portlet:namespace />translationManager');
 
 				translationManager.on(
-					{
-						defaultLocaleChange: function(event) {
-							if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "changing-the-default-language-will-delete-all-unsaved-content") %>')) {
-								event.preventDefault();
-							}
+					'defaultLocaleChange',
+					function(event) {
+						if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "changing-the-default-language-will-delete-all-unsaved-content") %>')) {
+							event.preventDefault();
 						}
 					}
 				);
@@ -165,10 +164,10 @@ if (translating) {
 									)
 								}
 							);
-
 						},
 						editingLocaleChange: function(event) {
 							var editingLocale = event.newVal;
+
 							var defaultLocale = translationManager.get('defaultLocale');
 
 							if (editingLocale !== defaultLocale) {
@@ -229,7 +228,6 @@ if (translating) {
 		</c:if>
 
 		<aui:button-row>
-
 			<c:choose>
 				<c:when test="<%= translating %>">
 					<aui:button name="saveTranslationButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(false);" %>' type="submit" value="add-translation" />
@@ -259,7 +257,6 @@ if (translating) {
 					<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 				</c:otherwise>
 			</c:choose>
-
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>

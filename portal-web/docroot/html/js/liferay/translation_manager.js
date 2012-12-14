@@ -87,11 +87,6 @@ AUI.add(
 						valueFn: '_valueAvailableTranslationsLinksNode'
 					},
 
-					canAddTranslations: {
-						validator: Lang.isBoolean,
-						value: true
-					},
-
 					changeDefaultLocaleNode: {
 						valueFn: '_valueChangeDefaultLocaleNode'
 					},
@@ -132,6 +127,11 @@ AUI.add(
 
 					portletNamespace: {
 						value: STR_BLANK
+					},
+
+					readOnly: {
+						validator: Lang.isBoolean,
+						value: true
 					}
 				},
 
@@ -147,7 +147,7 @@ AUI.add(
 					iconMenuNode: STR_DOT + CSS_ICON_MENU
 				},
 
-				UI_ATTRS: ['availableLocales', 'canAddTranslations', 'defaultLocale', 'editingLocale'],
+				UI_ATTRS: ['availableLocales', 'defaultLocale', 'editingLocale', 'readOnly'],
 
 				prototype: {
 					renderUI: function() {
@@ -367,10 +367,10 @@ AUI.add(
 					_uiSetAvailableLocales: function(val) {
 						var instance = this;
 
-						var canAddTranslations = instance.get('canAddTranslations');
 						var defaultLocale = instance.get('defaultLocale');
 						var editingLocale = instance.get('editingLocale');
 						var localesMap = instance.get('localesMap');
+						var readOnly = instance.get('readOnly');
 
 						var buffer = [];
 
@@ -396,7 +396,7 @@ AUI.add(
 							}
 						);
 
-						instance._availableTranslationsNode.toggle(!!buffer.length && canAddTranslations);
+						instance._availableTranslationsNode.toggle(!!buffer.length && readOnly);
 
 						instance._availableTranslationsLinksNode.setContent(buffer.join(STR_BLANK));
 					},

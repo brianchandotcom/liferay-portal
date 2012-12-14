@@ -21,7 +21,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.*;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
@@ -44,7 +43,6 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(
 	listeners = {
-		EnvironmentExecutionTestListener.class,
 		MainServletExecutionTestListener.class,
 		TransactionalCallbackAwareExecutionTestListener.class
 	})

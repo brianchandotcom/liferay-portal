@@ -16,8 +16,7 @@
 
 <%@ include file="/html/portlet/currency_converter/init.jsp" %>
 
-<form action="<portlet:actionURL />" method="post" name="<portlet:namespace />fm">
-<input name="<portlet:namespace />struts_action" value="/currency_converter/edit" />
+<form action="<portlet:actionURL><portlet:param name="struts_action" value="/currency_converter/edit" /></portlet:actionURL>" method="post" name="<portlet:namespace />fm">
 <input name="<portlet:namespace /><%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 <input name="<portlet:namespace />symbols" type="hidden" value="" />
 

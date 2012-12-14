@@ -38,8 +38,11 @@ catch (Exception e) {
 	title='<%= (company2 == null) ? "new-portal-instance" : company2.getName() %>'
 />
 
-<aui:form action="<portlet:actionURL />" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCompany();" %>'>
-	<aui:input name="struts_action" value="/admin/edit_instance" />
+<portlet:actionURL var="editInstanceURL">
+	<portlet:param name="struts_action" value="/admin/edit_instance" />
+</portlet:actionURL>
+
+<aui:form action="<%= editInstanceURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCompany();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="companyId" type="hidden" value="<%= companyId %>" />

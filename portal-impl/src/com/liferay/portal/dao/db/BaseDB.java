@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.velocity.VelocityUtil;
 import com.liferay.util.SimpleCounter;
@@ -705,6 +706,7 @@ public abstract class BaseDB implements DB {
 		Map<String, Object> variables = new HashMap<String, Object>();
 
 		variables.put("counter", new SimpleCounter());
+		variables.put("PortalUUIDUtil", PortalUUIDUtil.class);
 
 		ClassLoader classLoader = PACLClassLoaderUtil.getContextClassLoader();
 

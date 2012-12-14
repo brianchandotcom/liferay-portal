@@ -44,6 +44,10 @@ if (ddmStructure != null) {
 	ddmStructureName = ddmStructure.getName(locale);
 	ddmStructureDescription = ddmStructure.getDescription(locale);
 	ddmStructureXSD = ddmStructure.getXsd();
+	
+	if (Validator.isNull(structureId)) {
+		structureId = ddmStructure.getStructureKey();
+	}
 }
 
 List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();

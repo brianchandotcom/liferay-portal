@@ -26,6 +26,10 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.NoSuchStructureException;
@@ -34,14 +38,10 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.model.JournalStructure;
-import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFeedServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
-import com.liferay.portlet.journal.service.JournalStructureServiceUtil;
-import com.liferay.portlet.journal.service.JournalTemplateServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.journal.util.JournalUtil;
 
@@ -177,10 +177,10 @@ public class ActionUtil {
 				groupId, className, classPK);
 		}
 		else if (Validator.isNotNull(structureId)) {
-			JournalStructure structure = null;
+			DDMStructure structure = null;
 
 			try {
-				structure = JournalStructureServiceUtil.getStructure(
+				structure = DDMStructureServiceUtil.getStructure(
 					groupId, structureId);
 			}
 			catch (NoSuchStructureException nsse1) {
@@ -189,7 +189,7 @@ public class ActionUtil {
 				}
 
 				try {
-					structure = JournalStructureServiceUtil.getStructure(
+					structure = DDMStructureServiceUtil.getStructure(
 						themeDisplay.getCompanyGroupId(), structureId);
 				}
 				catch (NoSuchStructureException nsse2) {
@@ -198,7 +198,8 @@ public class ActionUtil {
 			}
 
 			article = JournalArticleServiceUtil.getArticle(
-				groupId, JournalStructure.class.getName(), structure.getId());
+				groupId, DDMStructure.class.getName(),
+				structure.getStructureId());
 
 			article.setNew(true);
 
@@ -347,10 +348,10 @@ public class ActionUtil {
 		long groupId = ParamUtil.getLong(request, "groupId");
 		String structureId = ParamUtil.getString(request, "structureId");
 
-		JournalStructure structure = null;
+		DDMStructure structure = null;
 
 		if (Validator.isNotNull(structureId)) {
-			structure = JournalStructureServiceUtil.getStructure(
+			structure = DDMStructureServiceUtil.getStructure(
 				groupId, structureId);
 		}
 
@@ -365,8 +366,8 @@ public class ActionUtil {
 
 		getStructure(request);
 
-		JournalStructure structure =
-			(JournalStructure)portletRequest.getAttribute(
+		DDMStructure structure =
+			(DDMStructure)portletRequest.getAttribute(
 				WebKeys.JOURNAL_STRUCTURE);
 
 		JournalUtil.addRecentStructure(portletRequest, structure);
@@ -378,11 +379,10 @@ public class ActionUtil {
 		long groupId = ParamUtil.getLong(request, "groupId");
 		String templateId = ParamUtil.getString(request, "templateId");
 
-		JournalTemplate template = null;
+		DDMTemplate template = null;
 
 		if (Validator.isNotNull(templateId)) {
-			template = JournalTemplateServiceUtil.getTemplate(
-				groupId, templateId);
+			template = DDMTemplateServiceUtil.getTemplate(groupId, templateId);
 		}
 
 		request.setAttribute(WebKeys.JOURNAL_TEMPLATE, template);
@@ -396,7 +396,7 @@ public class ActionUtil {
 
 		getTemplate(request);
 
-		JournalTemplate template = (JournalTemplate)portletRequest.getAttribute(
+		DDMTemplate template = (DDMTemplate)portletRequest.getAttribute(
 			WebKeys.JOURNAL_TEMPLATE);
 
 		JournalUtil.addRecentTemplate(portletRequest, template);

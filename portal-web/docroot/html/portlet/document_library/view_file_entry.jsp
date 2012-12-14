@@ -459,9 +459,11 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							<%= dateFormatDateTime.format(fileVersion.getModifiedDate()) %>
 						</div>
 
-						<div class="lfr-asset-summary">
-							<aui:workflow-status model="<%= DLFileEntry.class %>" status="<%= fileVersion.getStatus() %>" />
-						</div>
+						<c:if test="<%= !portletId.equals(PortletKeys.TRASH) %>">
+							<div class="lfr-asset-summary">
+								<aui:workflow-status model="<%= DLFileEntry.class %>" status="<%= fileVersion.getStatus() %>" />
+							</div>
+						</c:if>
 
 						<c:if test="<%= Validator.isNotNull(fileVersion.getDescription()) %>">
 							<blockquote class="lfr-asset-description">

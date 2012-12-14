@@ -16,7 +16,6 @@ package com.liferay.portal.upload;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upload.FileItem;
@@ -473,9 +472,6 @@ public class UploadServletRequestImpl
 			inputStream = new ByteArrayFileInputStream(
 				liferayFileItem.getStoreLocation(),
 				liferayFileItem.getSizeThreshold(), deleteOnClose);
-		}
-		else if (liferayFileItem.getSize() == 0) {
-			inputStream = new UnsyncByteArrayInputStream(new byte[0]);
 		}
 
 		return inputStream;

@@ -174,7 +174,7 @@ request.setAttribute("view_event.jsp-event", event);
 				<liferay-ui:message key="type" />:
 			</dt>
 			<dd>
-				<span class="categories"><%= LanguageUtil.get(pageContext, event.getType()) %></span>
+				<span class="categories"><%= HtmlUtil.escape(LanguageUtil.get(pageContext, event.getType())) %></span>
 			</dd>
 
 			<c:if test="<%= Validator.isNotNull(event.getLocation()) %>">

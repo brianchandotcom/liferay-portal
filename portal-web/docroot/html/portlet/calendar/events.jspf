@@ -83,7 +83,7 @@ for (int i = 0; i < results.size(); i++) {
 	// Title and type
 
 	row.addText(event.getTitle(), rowURL);
-	row.addText(LanguageUtil.get(pageContext, HtmlUtil.unescape(event.getType())), rowURL);
+	row.addText(LanguageUtil.get(pageContext, event.getType()), rowURL);
 
 	// Details
 

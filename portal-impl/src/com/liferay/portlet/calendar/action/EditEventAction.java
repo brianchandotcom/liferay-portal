@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.Duration;
 import com.liferay.portal.kernel.cal.Recurrence;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -108,7 +110,8 @@ public class EditEventAction extends PortletAction {
 			else if (e instanceof EventDurationException ||
 					 e instanceof EventEndDateException ||
 					 e instanceof EventStartDateException ||
-					 e instanceof EventTitleException) {
+					 e instanceof EventTitleException ||
+					 e instanceof SanitizerException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}
@@ -116,6 +119,11 @@ public class EditEventAction extends PortletAction {
 					 e instanceof AssetTagException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else if (e instanceof SystemException &&
+					 e.getCause() instanceof SanitizerException) {
+
+				SessionErrors.add(actionRequest, SanitizerException.class);
 			}
 			else {
 				throw e;

@@ -185,9 +185,18 @@ catch (Exception e) {
 											"src=\"" + baseURL + "/",
 											"href=\"" + baseURL + "/"
 										});
+
+									String sanitizedValue;
+
+									try {
+										sanitizedValue = SanitizerUtil.sanitize(company.getCompanyId(), scopeGroupId, user.getUserId(), null, 0, ContentTypes.TEXT_HTML, Sanitizer.MODE_XSS, value, null);
+									}
+									catch (SanitizerException se) {
+										sanitizedValue = StringPool.BLANK;
+									}
 							%>
 
-									<%= SanitizerUtil.sanitize(company.getCompanyId(), scopeGroupId, user.getUserId(), null, 0, ContentTypes.TEXT_HTML, Sanitizer.MODE_XSS, value, null) %>
+									<%= sanitizedValue %>
 
 							<%
 								}

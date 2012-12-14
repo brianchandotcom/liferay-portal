@@ -14,7 +14,9 @@
 
 package com.liferay.portlet.wiki.action;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
@@ -135,7 +137,8 @@ public class EditPageAction extends PortletAction {
 			else if (e instanceof DuplicatePageException ||
 					 e instanceof PageContentException ||
 					 e instanceof PageVersionException ||
-					 e instanceof PageTitleException) {
+					 e instanceof PageTitleException ||
+					 e instanceof SanitizerException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}
@@ -143,6 +146,11 @@ public class EditPageAction extends PortletAction {
 					 e instanceof AssetTagException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else if (e instanceof SystemException &&
+					 e.getCause() instanceof SanitizerException) {
+
+				SessionErrors.add(actionRequest, SanitizerException.class);
 			}
 			else {
 				throw e;

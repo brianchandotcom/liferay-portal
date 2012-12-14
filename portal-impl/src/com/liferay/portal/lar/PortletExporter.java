@@ -806,7 +806,7 @@ public class PortletExporter {
 
 		if (exportPortletData) {
 			javax.portlet.PortletPreferences jxPreferences =
-				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+				PortletPreferencesFactoryUtil.getStrictPortletSetup(
 					layout, portletId);
 
 			if (!portlet.isPreferencesUniquePerLayout()) {

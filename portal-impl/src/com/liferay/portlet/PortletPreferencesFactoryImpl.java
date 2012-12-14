@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -477,6 +478,15 @@ public class PortletPreferencesFactoryImpl
 			portletId);
 	}
 
+	public PortletPreferences getStrictPortletSetup(
+			Layout layout, String portletId)
+		throws SystemException {
+
+		return getPortletSetup(
+			LayoutConstants.DEFAULT_PLID, layout, portletId, StringPool.BLANK,
+			true);
+	}
+
 	public String toXML(PortalPreferences portalPreferences) {
 		PortalPreferencesImpl portalPreferencesImpl =
 			(PortalPreferencesImpl)portalPreferences;
@@ -554,6 +564,11 @@ public class PortletPreferencesFactoryImpl
 				ownerId = layout.getCompanyId();
 				ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
 			}
+		}
+
+		if (strictMode) {
+			return PortletPreferencesLocalServiceUtil.getStrictPreferences(
+				layout.getCompanyId(), ownerId, ownerType, plid, portletId);
 		}
 
 		return PortletPreferencesLocalServiceUtil.getPreferences(

@@ -39,7 +39,7 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 
 		List<String> values = new ArrayList<String>();
 
-		for (Serializable value : field.getValues()) {
+		for (Serializable value : field.getValues(locale)) {
 			if (Validator.isNull(value)) {
 				continue;
 			}
@@ -52,7 +52,7 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(Field field, Locale locale, int valueIndex) {
-		Serializable value = field.getValue(valueIndex);
+		Serializable value = field.getValue(locale, valueIndex);
 
 		if (Validator.isNull(value)) {
 			return StringPool.BLANK;

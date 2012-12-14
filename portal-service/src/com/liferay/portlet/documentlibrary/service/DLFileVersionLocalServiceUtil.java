@@ -294,6 +294,12 @@ public class DLFileVersionLocalServiceUtil {
 		return getService().getFileVersions(fileEntryId, status);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getFileVersionsByMimeType(
+		java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFileVersionsByMimeType(mimeType);
+	}
+
 	public static int getFileVersionsCount(long fileEntryId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getFileVersionsCount(fileEntryId, status);

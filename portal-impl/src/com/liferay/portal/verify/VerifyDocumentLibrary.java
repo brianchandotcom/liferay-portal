@@ -124,15 +124,17 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(dlFileEntryType);
 	}
 
-	protected void checkMimeTypes() throws Exception {
+	protected void checkFileEntryMimeTypes(String originalMimeType)
+		throws Exception {
+
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getFileEntriesByMimeType(
-				ContentTypes.APPLICATION_OCTET_STREAM);
+				originalMimeType);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Processing " + dlFileEntries.size() + " file entries with " +
-					ContentTypes.APPLICATION_OCTET_STREAM);
+					originalMimeType);
 		}
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
@@ -146,7 +148,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 			String mimeType = MimeTypesUtil.getContentType(inputStream, title);
 
-			if (mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+			if (mimeType.equals(originalMimeType)) {
 				continue;
 			}
 
@@ -160,6 +162,52 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
 		}
+	}
+
+	protected void checkFileVersionMimeTypes(String originalMimeType)
+		throws Exception {
+
+		List<DLFileVersion> dlFileVersions =
+			DLFileVersionLocalServiceUtil.getFileVersionsByMimeType(
+				originalMimeType);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + dlFileVersions.size() + " file versions with " +
+					originalMimeType);
+		}
+
+		for (DLFileVersion dlFileVersion : dlFileVersions) {
+			InputStream inputStream =
+				DLFileEntryLocalServiceUtil.getFileAsStream(
+					dlFileVersion.getUserId(), dlFileVersion.getFileEntryId(),
+					dlFileVersion.getVersion(), false);
+
+			String title = DLUtil.getTitleWithExtension(
+				dlFileVersion.getTitle(), dlFileVersion.getExtension());
+
+			String mimeType = MimeTypesUtil.getContentType(inputStream, title);
+
+			if (mimeType.equals(originalMimeType)) {
+				continue;
+			}
+
+			dlFileVersion.setMimeType(mimeType);
+
+			dlFileVersion.setMimeType(mimeType);
+
+			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+		}
+	}
+
+	protected void checkMimeTypes() throws Exception {
+		checkFileEntryMimeTypes(ContentTypes.APPLICATION_OCTET_STREAM);
+
+		checkFileVersionMimeTypes(ContentTypes.APPLICATION_OCTET_STREAM);
+
+		checkFileEntryMimeTypes(ContentTypes.TEXT_XML_UTF8_2);
+
+		checkFileVersionMimeTypes(ContentTypes.TEXT_XML_UTF8_2);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Fixed file entries with invalid mime types");

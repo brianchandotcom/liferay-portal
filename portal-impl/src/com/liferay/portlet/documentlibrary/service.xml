@@ -439,6 +439,9 @@
 		<finder name="FileEntryId" return-type="Collection">
 			<finder-column name="fileEntryId" />
 		</finder>
+		<finder name="MimeType" return-type="Collection" db-index="false" >
+			<finder-column name="mimeType" />
+		</finder>
 		<finder name="F_V" return-type="DLFileVersion" unique="true">
 			<finder-column name="fileEntryId" />
 			<finder-column name="version" />

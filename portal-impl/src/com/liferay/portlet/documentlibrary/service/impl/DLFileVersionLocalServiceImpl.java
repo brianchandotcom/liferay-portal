@@ -73,6 +73,12 @@ public class DLFileVersionLocalServiceImpl
 		return dlFileVersions;
 	}
 
+	public List<DLFileVersion> getFileVersionsByMimeType(String mimeType)
+		throws SystemException {
+
+		return dlFileVersionPersistence.findByMimeType(mimeType);
+	}
+
 	public int getFileVersionsCount(long fileEntryId, int status)
 		throws SystemException {
 

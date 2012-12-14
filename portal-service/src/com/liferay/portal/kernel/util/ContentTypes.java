@@ -95,6 +95,8 @@ public interface ContentTypes {
 
 	public static final String TEXT_XML_UTF8 = "text/xml; charset=UTF-8";
 
+	public static final String TEXT_XML_UTF8_2 = "text/xml; charset=\"utf-8\"";
+
 	public static final String XHTML_MP = "application/vnd.wap.xhtml+xml";
 
 }

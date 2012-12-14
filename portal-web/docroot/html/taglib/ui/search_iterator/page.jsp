@@ -231,7 +231,7 @@ int sortColumnIndex = -1;
 			String rowClassName = _ROW_CLASS_NAME_ALTERNATE + " results-row alt";
 			String rowClassHoverName = _ROW_CLASS_NAME_ALTERNATE_HOVER + " results-row alt " + _CLASS_NAME_HOVER;
 
-			primaryKeys.add(row.getPrimaryKey());
+			primaryKeys.add(HtmlUtil.escape(row.getPrimaryKey()));
 
 			if (MathUtil.isEven(i)) {
 				rowClassName = _ROW_CLASS_NAME_BODY + " results-row";

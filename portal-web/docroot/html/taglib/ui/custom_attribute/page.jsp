@@ -59,7 +59,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 	String localizedName = LanguageUtil.get(pageContext, name);
 
 	if (name.equals(localizedName)) {
-		localizedName = TextFormatter.format(name, TextFormatter.J);
+		localizedName = HtmlUtil.escape(TextFormatter.format(name, TextFormatter.J));
 	}
 
 	Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

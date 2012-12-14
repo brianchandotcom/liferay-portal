@@ -174,22 +174,32 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
-		DLFolder dlFolder = getDLFolder(classPK);
+		try {
+			DLFolder dlFolder = getDLFolder(classPK);
 
-		if (dlFolder.isInTrash() || dlFolder.isInTrashFolder()) {
-			return true;
+			if (dlFolder.isInTrash() || dlFolder.isInTrashFolder()) {
+				return true;
+			}
+
+			return false;
 		}
-
-		return false;
+		catch (InvalidRepositoryException ire) {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean isRestorable(long classPK)
 		throws PortalException, SystemException {
 
-		DLFolder dlFolder = getDLFolder(classPK);
+		try {
+			DLFolder dlFolder = getDLFolder(classPK);
 
-		return !dlFolder.isInTrashFolder();
+			return !dlFolder.isInTrashFolder();
+		}
+		catch (InvalidRepositoryException ire) {
+			return false;
+		}
 	}
 
 	@Override

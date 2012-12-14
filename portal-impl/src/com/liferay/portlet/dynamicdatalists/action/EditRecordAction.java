@@ -155,7 +155,7 @@ public class EditRecordAction extends PortletAction {
 		long recordSetId = ParamUtil.getLong(serviceContext, "recordSetId");
 
 		return DDLUtil.updateRecord(
-			recordId, recordSetId, false, serviceContext);
+			recordId, recordSetId, true, serviceContext);
 	}
 
 }

@@ -30,8 +30,8 @@ import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.LiferayWorkflowIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
@@ -59,8 +59,8 @@ import org.junit.runner.RunWith;
  * @author Julio Camarero
  * @author Eudaldo Alonso
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
+@RunWith(LiferayWorkflowIntegrationJUnitTestRunner.class)
 public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Test

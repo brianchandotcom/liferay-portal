@@ -14,10 +14,12 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Portlet;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 
 import javax.servlet.ServletContext;
 
@@ -34,6 +36,22 @@ public class PortletConfigFactoryUtil {
 
 	public static void destroy(Portlet portlet) {
 		getPortletConfigFactory().destroy(portlet);
+	}
+
+	public static PortletConfig getPortletConfig(
+			long companyId, String portletId, ServletContext servletContext)
+		throws PortletException, SystemException {
+
+		return getPortletConfigFactory().getPortletConfig(
+			companyId, portletId, servletContext);
+	}
+
+	public static PortletConfig getPortletConfig(
+			Portlet portlet, ServletContext servletContext)
+		throws PortletException, SystemException {
+
+		return getPortletConfigFactory().getPortletConfig(
+			portlet, servletContext);
 	}
 
 	public static PortletConfigFactory getPortletConfigFactory() {

@@ -14,13 +14,16 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
 
 import javax.servlet.ServletContext;
 
@@ -62,6 +65,26 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 
 	public void destroy(Portlet portlet) {
 		_pool.remove(portlet.getRootPortletId());
+	}
+
+	public PortletConfig getPortletConfig(
+			long companyId, String portletId, ServletContext servletContext)
+		throws PortletException, SystemException {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			companyId, portletId);
+
+		return getPortletConfig(portlet, servletContext);
+	}
+
+	public PortletConfig getPortletConfig(
+			Portlet portlet, ServletContext servletContext)
+		throws PortletException, SystemException {
+
+		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
+			portlet, servletContext);
+
+		return invokerPortlet.getPortletConfig();
 	}
 
 	public PortletConfig update(Portlet portlet) {

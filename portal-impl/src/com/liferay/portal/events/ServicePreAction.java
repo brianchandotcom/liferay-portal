@@ -1621,19 +1621,7 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		boolean hasOnlyPrivateLayouts = true;
-
-		if (layouts != null) {
-			for (Layout _layout : layouts) {
-				if (_layout.isPublicLayout()) {
-					hasOnlyPrivateLayouts = false;
-
-					break;
-				}
-			}
-		}
-
-		if ((layout == null) || hasOnlyPrivateLayouts) {
+		if ((layout == null) || layout.isPrivateLayout()) {
 
 			// Check the Guest site
 

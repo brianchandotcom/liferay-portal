@@ -55,6 +55,7 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -197,6 +198,30 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
 
 		deleteRecord(record);
+	}
+
+	public DDLRecord deleteRecordLocale(
+			long recordId, Locale locale, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
+
+		Fields fields = StorageEngineUtil.getFields(record.getDDMStorageId());
+
+		Iterator<Field> it = fields.iterator();
+
+		while (it.hasNext()) {
+			Field field = it.next();
+
+			Map<Locale, List<Serializable>> valuesMap = field.getValuesMap();
+
+			valuesMap.remove(locale);
+		}
+
+		return updateRecord(
+			serviceContext.getUserId(), recordId, false,
+			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields, false,
+			serviceContext);
 	}
 
 	public void deleteRecords(long recordSetId)
@@ -449,6 +474,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		if (recordVersion.isApproved()) {
 			DDLRecordSet recordSet = record.getRecordSet();
+
+			if (mergeFields) {
+				Fields existingFields = StorageEngineUtil.getFields(
+					recordVersion.getDDMStorageId());
+
+				fields = DDMUtil.mergeFields(fields, existingFields);
+			}
 
 			long ddmStorageId = StorageEngineUtil.create(
 				recordSet.getCompanyId(), recordSet.getDDMStructureId(), fields,

@@ -2015,7 +2015,8 @@ public class DLFileEntryLocalServiceImpl
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					latestDLFileVersion.getVersion());
 
-				String latestChecksum = DigesterUtil.digest(latestInputStream);
+				String latestChecksum = DigesterUtil.digestBase64(
+					latestInputStream);
 
 				if (lastChecksum.equals(latestChecksum)) {
 					return true;

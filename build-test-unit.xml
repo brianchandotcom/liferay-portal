@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-unit" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="prepare-database-jars">
+		<delete failonerror="false">
+			<fileset
+				dir="lib/development"
+				includes="db2jcc.jar,db2jcc_license_cu.jar,ojdbc14.jar,ojdbc5.jar,ojdbc6.jar"
+			/>
+		</delete>
+
+		<if>
+			<or>
+				<equals arg1="${db.type}" arg2="db2" />
+				<equals arg1="${db.type}" arg2="oracle-10" />
+				<equals arg1="${db.type}" arg2="oracle-11" />
+			</or>
+			<then>
+				<antcall target="copy-optional-jars" inheritAll="false">
+					<param name="todir" value="lib/development" />
+				</antcall>
+			</then>
+		</if>
+	</target>
+
+	<target name="run-unit-plugins-test">
+		<antcall target="clean-up-bundles" />
+
+		<antcall target="clean-up-plugins" />
+
+		<antcall target="prepare-mysql" />
+
+		<antcall target="rebuild-database">
+			<param name="test.database.minimal" value="true" />
+		</antcall>
+
+		<ant antfile="build-test-plugins.xml" target="test-build-plugins-release" inheritAll="false" />
+		<ant antfile="build-test-plugins.xml" target="test-create" inheritAll="false" />
+		<ant antfile="build-test-plugins.xml" target="test-service-builder" inheritAll="false" />
+	</target>
+
+	<target name="run-unit-portal-test">
+		<antcall target="clean-up-bundles" />
+
+		<antcall target="clean-up-plugins" />
+
+		<antcall target="prepare-${db.type}" />
+
+		<antcall target="prepare-database-jars" />
+
+		<antcall target="rebuild-database">
+			<param name="test.database.minimal" value="true" />
+		</antcall>
+
+		<antcall target="revert-test-properties" />
+
+		<antcall target="prepare-test-properties" />
+
+		<antcall target="test-integration" inheritAll="false" />
+
+		<antcall target="test-unit" inheritAll="false" />
+
+		<ant dir="sql" target="test-sample-sql" inheritAll="false" />
+	</target>
+</project>

@@ -87,6 +87,8 @@ import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
 /**
+ * The implementation of the blogs entry local service.
+ *
  * @author Brian Wing Shun Chan
  * @author Wilson S. Man
  * @author Raymond Augé
@@ -782,6 +784,18 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Moves the blogs entry to the recycle bin. Social activity counters for
+	 * this entry get disabled.
+	 *
+	 * @param  userId the primary key of the user moving the blogs entry
+	 * @param  entry the blogs entry to be moved
+	 * @return the moved blogs entry
+	 * @throws PortalException if a user with the primary key could not be found
+	 *         or if the blogs entry owner's social activity counter could not
+	 *         be updated
+	 * @throws SystemException if a system exception occurred
+	 */
 	public BlogsEntry moveEntryToTrash(long userId, BlogsEntry entry)
 		throws PortalException, SystemException {
 
@@ -824,6 +838,17 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
+	/**
+	 * Moves the blogs entry with the ID to the recycle bin.
+	 *
+	 * @param  userId the primary key of the user moving the blogs entry
+	 * @param  entryId the primary key of the blogs entry to be moved
+	 * @return the moved blogs entry
+	 * @throws PortalException if a user or blogs entry with the primary key
+	 *         could not be found or if the blogs entry owner's social activity
+	 *         counter could not be updated
+	 * @throws SystemException if a system exception occurred
+	 */
 	public BlogsEntry moveEntryToTrash(long userId, long entryId)
 		throws PortalException, SystemException {
 
@@ -832,6 +857,17 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return moveEntryToTrash(userId, entry);
 	}
 
+	/**
+	 * Restores the blogs entry with the ID from the recycle bin. Social
+	 * activity counters for this entry get activated.
+	 *
+	 * @param  userId the primary key of the user restoring the blogs entry
+	 * @param  entryId the primary key of the blogs entry to be restored
+	 * @throws PortalException if a user or blogs entry with the primary key
+	 *         could not be found or if the blogs entry owner's social activity
+	 *         counter could not be updated
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void restoreEntryFromTrash(long userId, long entryId)
 		throws PortalException, SystemException {
 

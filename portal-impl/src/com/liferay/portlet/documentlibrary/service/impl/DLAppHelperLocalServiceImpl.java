@@ -71,6 +71,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
+ * The implementation the document library application helper local service.
+ *
  * @author Alexander Chow
  */
 public class DLAppHelperLocalServiceImpl
@@ -421,6 +423,15 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Moves the file entry to the recycle bin.
+	 * 
+	 * @param userId the primary key of the user moving the file entry
+	 * @param fileEntry the file entry to be moved
+	 * @return the moved file entry
+	 * @throws PortalExcpetion if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException, SystemException {
 
@@ -457,6 +468,15 @@ public class DLAppHelperLocalServiceImpl
 			dlFileShortcut.getToFileEntryId(), serviceContext);
 	}
 
+	/**
+	 * Moves the file shortcut to the recycle bin.
+	 * 
+	 * @param userId the primary key of the user moving the file shortcut
+	 * @param dlFileShortcut the file shortcut to be moved
+	 * @return the moved file shortcut
+	 * @throws PortalExcpetion if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DLFileShortcut moveFileShortcutToTrash(
 			long userId, DLFileShortcut dlFileShortcut)
 		throws PortalException, SystemException {
@@ -521,6 +541,15 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Moves the folder to the recycle bin.
+	 * 
+	 * @param userId the primary key of the user moving the folder
+	 * @param folder the folder to be moved
+	 * @return the moved folder
+	 * @throws PortalExcpetion if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public Folder moveFolderToTrash(long userId, Folder folder)
 		throws PortalException, SystemException {
 

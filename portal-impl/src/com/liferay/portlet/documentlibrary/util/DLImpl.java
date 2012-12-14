@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -797,6 +798,27 @@ public class DLImpl implements DL {
 		}
 
 		return false;
+	}
+
+	public boolean isMSOfficeOpenable(
+		HttpServletRequest request, PortletDisplay portletDisplay,
+		String extension) {
+
+		if (portletDisplay.isWebDAVEnabled() &&
+			BrowserSnifferUtil.isIe(request) &&
+			(extension.equalsIgnoreCase("doc") ||
+				extension.equalsIgnoreCase("docx") ||
+				extension.equalsIgnoreCase("dot") ||
+				extension.equalsIgnoreCase("ppt") ||
+				extension.equalsIgnoreCase("pptx") ||
+				extension.equalsIgnoreCase("xls") ||
+				extension.equalsIgnoreCase("xlsx"))) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	protected long getDefaultFolderId(HttpServletRequest request)

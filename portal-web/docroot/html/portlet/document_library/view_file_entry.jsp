@@ -814,7 +814,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 		['aui-base', 'selector-css3']
 	);
 
-	<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request) %>">
+	<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isMSOfficeOpenable(request, portletDisplay, extension) %>">
 		Liferay.provide(
 			window,
 			'<portlet:namespace />openDocument',
@@ -885,32 +885,21 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			);
 
 			<%
-			if (portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request)) {
+			if (DLUtil.isMSOfficeOpenable(request, portletDisplay, extension)) {
 				webDavUrl = DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED);
-
-				String curExtension = fileEntry.getExtension();
-
-				if (curExtension.equalsIgnoreCase("doc") ||
-					curExtension.equalsIgnoreCase("docx") ||
-					curExtension.equalsIgnoreCase("dot") ||
-					curExtension.equalsIgnoreCase("ppt") ||
-					curExtension.equalsIgnoreCase("pptx") ||
-					curExtension.equalsIgnoreCase("xls") ||
-					curExtension.equalsIgnoreCase("xlsx")) {
 			%>
 
-					fileEntryToolbarChildren.push(
-						{
-							handler: function(event) {
-								<portlet:namespace />openDocument('<%= webDavUrl %>');
-							},
-							icon: 'msoffice',
-							label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>'
-						}
-					);
+				fileEntryToolbarChildren.push(
+					{
+						handler: function(event) {
+							<portlet:namespace />openDocument('<%= webDavUrl %>');
+						},
+						icon: 'msoffice',
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>'
+					}
+				);
 
 			<%
-				}
 			}
 			%>
 

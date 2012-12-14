@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
@@ -117,7 +118,24 @@ public abstract class BaseTrashHandlerTestCase {
 		trashVersionBaseModel(false);
 	}
 
-	protected abstract BaseModel<?> addBaseModel(
+	protected BaseModel<?> addBaseModel(
+			BaseModel<?> parentBaseModel, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		boolean workflowThreadLocalEnabled =  WorkflowThreadLocal.isEnabled();
+
+		WorkflowThreadLocal.setEnabled(true);
+
+		BaseModel<?> baseModel = addBaseModelWithWorkflow(
+			parentBaseModel, approved, serviceContext);
+
+		WorkflowThreadLocal.setEnabled(workflowThreadLocalEnabled);
+
+		return baseModel;
+	}
+
+	protected abstract BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception;
@@ -249,7 +267,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext();
 
-		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setGroupIds(new long[]{groupId});
 
 		Hits results = indexer.search(searchContext);
 
@@ -329,7 +347,7 @@ public abstract class BaseTrashHandlerTestCase {
 			Assert.assertEquals(approved, isAssetEntryVisible(baseModel));
 		}
 
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long) baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(
 			initialBaseModelsCount,
@@ -456,7 +474,7 @@ public abstract class BaseTrashHandlerTestCase {
 		BaseModel<?> duplicateBaseModel = addBaseModel(
 			parentBaseModel, true, serviceContext);
 
-		moveBaseModelToTrash((Long)duplicateBaseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long) duplicateBaseModel.getPrimaryKeyObj());
 
 		duplicateBaseModel = getBaseModel(
 			(Long)duplicateBaseModel.getPrimaryKeyObj());
@@ -502,7 +520,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assert.assertFalse(isInTrashFolder(baseModel));
 
-		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
+		moveParentBaseModelToTrash((Long) parentBaseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(
 			initialTrashEntriesCount + 2,

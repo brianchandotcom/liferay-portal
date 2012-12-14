@@ -106,6 +106,17 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		}
 	}
 
+	public void deleteLayout(
+			LayoutLocalService layoutLocalService, long groupId,
+			boolean privateLayout, long layoutId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Layout layout = layoutLocalService.getLayout(
+			groupId, privateLayout, layoutId);
+
+		deleteLayout(layoutLocalService, layout, true, serviceContext);
+	}
+
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		if (!StagingAdvicesThreadLocal.isEnabled()) {
 			return methodInvocation.proceed();
@@ -126,10 +137,18 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		Object thisObject = methodInvocation.getThis();
 		Object[] arguments = methodInvocation.getArguments();
 
-		if (methodName.equals("deleteLayout") && (arguments.length == 3)) {
-			deleteLayout(
-				(LayoutLocalService)thisObject, (Layout)arguments[0],
-				(Boolean)arguments[1], (ServiceContext)arguments[2]);
+		if (methodName.equals("deleteLayout")) {
+			if (arguments.length == 3) {
+				deleteLayout(
+					(LayoutLocalService)thisObject, (Layout)arguments[0],
+					(Boolean)arguments[1], (ServiceContext)arguments[2]);
+			}
+			else if (arguments.length == 4) {
+				deleteLayout(
+					(LayoutLocalService)thisObject, (Long)arguments[0],
+					(Boolean)arguments[1], (Long)arguments[2],
+					(ServiceContext)arguments[3]);
+			}
 		}
 		else if (methodName.equals("getLayouts")) {
 			if (arguments.length == 6) {

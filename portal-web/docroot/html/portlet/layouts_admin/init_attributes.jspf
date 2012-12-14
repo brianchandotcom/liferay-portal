@@ -105,10 +105,6 @@ try {
 catch (NoSuchLayoutException nsle) {
 }
 
-if (selLayout != null) {
-	layoutId = selLayout.getLayoutId();
-}
-
 Organization organization = null;
 User selUser = null;
 UserGroup userGroup = null;

@@ -1411,12 +1411,12 @@ public class SourceFormatter {
 			newContent = StringUtil.replace(
 				newContent,
 				new String[] {
-					";\n/**", "\t/*\n\t *", "else{", "if(", "for(", "while(",
-					"List <", "){\n", "]{\n", "\n\n\n"
+					";\n/**", "\t/*\n\t *", "catch(", "else{", "if(", "for(",
+					"while(", "List <", "){\n", "]{\n", "\n\n\n"
 				},
 				new String[] {
-					";\n\n/**", "\t/**\n\t *", "else {", "if (", "for (",
-					"while (", "List<", ") {\n", "] {\n", "\n\n"
+					";\n\n/**", "\t/**\n\t *", "catch (", "else {", "if (",
+					"for (", "while (", "List<", ") {\n", "] {\n", "\n\n"
 				});
 
 			if (newContent.contains("*/\npackage ")) {

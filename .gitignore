@@ -38,7 +38,11 @@ _sass_cache_*.css
 
 /classes/Test.class
 
+/lib/development/db2jcc.jar
+/lib/development/db2jcc_license_cu.jar
 /lib/development/ojdbc14.jar
+/lib/development/ojdbc5.jar
+/lib/development/ojdbc6.jar
 
 /nbproject/private
 

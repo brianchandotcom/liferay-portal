@@ -288,7 +288,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="5" />
+		<property name="build-test-ant-scripts.version" value="6" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -2111,6 +2111,16 @@
 			<param name="test.ant.script.template" value="ant-script-tck.xml" />
 		</antcall>
 
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="unit-plugins" />
+			<param name="test.ant.script.template" value="ant-script-unit.xml" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="unit-portal" />
+			<param name="test.ant.script.template" value="ant-script-unit.xml" />
+		</antcall>
+
 		<echo file="portal-web/test-ant-scripts/version">${build-test-ant-scripts.version}</echo>
 	</target>
 
@@ -2290,7 +2300,7 @@
 					/>
 				</delete>
 
-				<copy todir="${app.server.lib.global.dir}">
+				<copy todir="${todir}">
 						<fileset
 							dir="${jdbc.drivers.optional.dir}/db2/8.1.18"
 							includes="*.jar"
@@ -2305,7 +2315,7 @@
 					</not>
 				</and>
 				<then>
-					<copy todir="${app.server.lib.global.dir}">
+					<copy todir="${todir}">
 						<fileset
 							dir="${jdbc.drivers.optional.dir}/mysql/5.0.7"
 							includes="*.jar"
@@ -2323,7 +2333,7 @@
 						/>
 					</delete>
 
-					<copy todir="${app.server.lib.global.dir}">
+					<copy todir="${todir}">
 						<fileset
 							dir="${jdbc.drivers.optional.dir}/oracle/10.2.0.1.0"
 							includes="*.jar"
@@ -2341,7 +2351,7 @@
 						/>
 					</delete>
 
-					<copy todir="${app.server.lib.global.dir}">
+					<copy todir="${todir}">
 						<fileset
 							dir="${jdbc.drivers.optional.dir}/oracle/11.2.0.1.0"
 							includes="*.jar"
@@ -3089,6 +3099,47 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 		<antcall target="prepare-common" />
 	</target>
 
+	<target name="prepare-test-properties">
+		<echo file="portal-impl/test/portal-test-ext.properties">
+jdbc.default.driverClassName=${db.driver}
+jdbc.default.url=${db.url}
+jdbc.default.username=${db.username}
+jdbc.default.password=${db.password}
+		</echo>
+
+		<if>
+			<contains string="${db.type}" substring="db2" />
+			<then>
+				<echo file="portal-impl/test/portal-test-ext.properties" append="true">
+
+hibernate.dialect=com.liferay.portal.dao.orm.hibernate.DB2Dialect
+custom.sql.function.isnull=CAST(? AS VARCHAR(32672)) IS NULL
+custom.sql.function.isnotnull=CAST(? AS VARCHAR(32672)) IS NOT NULL</echo>
+			</then>
+			<elseif>
+				<contains string="${db.type}" substring="oracle" />
+				<then>
+					<echo file="portal-impl/test/portal-test-ext.properties" append="true">
+
+jdbc.default.acquireIncrement=1
+jdbc.default.maxPoolSize=5
+jdbc.default.minPoolSize=1
+jdbc.default.numHelperThreads=1</echo>
+				</then>
+			</elseif>
+			<elseif>
+				<contains string="${db.type}" substring="sybase" />
+				<then>
+					<echo file="portal-impl/test/portal-test-ext.properties" append="true">
+
+hibernate.dialect=org.hibernate.dialect.SybaseDialect
+custom.sql.function.isnull=CONVERT(VARCHAR,?) IS NULL
+custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
+				</then>
+			</elseif>
+		</if>
+	</target>
+
 	<target name="prepare-virtual-host-name-properties">
 		<if>
 			<isset property="virtual.host.name" />
@@ -3670,6 +3721,18 @@ file.
 
 	<target name="revert-test-properties">
 		<liferay-format
+			arguments="portal-impl/test/portal-test.properties"
+			message="${scm.revert.command}"
+			property="scm.revert.command.formatted"
+		/>
+
+		<exec executable="${shell.executable}">
+			<arg line="${scm.revert.command.formatted}" />
+		</exec>
+
+		<delete file="portal-impl/test/portal-test-ext.properties" failonerror="false" />
+
+		<liferay-format
 			arguments="portal-impl/test/test-portal-impl.properties"
 			message="${scm.revert.command}"
 			property="scm.revert.command.formatted"
@@ -3737,7 +3800,9 @@ file.
 	<target name="run-simple-server">
 		<antcall target="rebuild-database" inheritAll="false" />
 
-		<antcall target="copy-optional-jars" inheritAll="false" />
+		<antcall target="copy-optional-jars" inheritAll="false">
+			<param name="todir" value="${app.server.lib.global.dir}" />
+		</antcall>
 
 		<if>
 			<not>

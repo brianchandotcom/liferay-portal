@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-${test.ant.script.command}" basedir="../../." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="../../build-test.xml" />
+
+	<target name="test-${test.ant.script.command}-tomcat-db2-firefox">
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="db2-9.7" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
+			<property name="db.type" value="db2" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
+		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test">
+			<property name="db.type" value="mysql" />
+		</ant>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-oracle-10-firefox">
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="oracle-10.2.0.1.0" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
+			<property name="db.type" value="oracle-10" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-oracle-11-firefox">
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="oracle-11.2.0.1.0" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
+			<property name="db.type" value="oracle-11" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-postgresql-8.4-firefox">
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="postgresql-8.4.2-1" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
+			<property name="db.type" value="postgresql-8.4" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-postgresql-9.0-firefox">
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="postgresql-9.0.4-1" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
+			<property name="db.type" value="postgresql-9.0" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-sql-server-2005-firefox">
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="sql-server-2005-sp2" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
+			<property name="db.type" value="sql-server-2005" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-sql-server-2008-firefox">
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="sql-server-2008-r2" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
+			<property name="db.type" value="sql-server-2008" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-sybase-firefox">
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="sybase-15.0.2" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
+			<property name="db.type" value="sybase" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+</project>

@@ -516,7 +516,7 @@ if (Validator.isNotNull(content)) {
 					<%
 					Fields ddmFields = null;
 
-					if (Validator.isNotNull(content)) {
+					if ((article != null) && Validator.isNotNull(article.getStructureId()) && Validator.isNotNull(content)) {
 						ddmFields = DDMXMLUtil.getFields(ddmStructure, content);
 					}
 					%>

@@ -280,6 +280,28 @@ import javax.sql.DataSource;
 		}
 
 		<#if entity.hasUuid() && entity.hasColumn("groupId")>
+			<#if entity.name == "Layout">
+				/**
+				 * Returns the ${entity.humanName} with the UUID in the group/isPrivateLayout.
+				 *
+				 * @param uuid the UUID of ${entity.humanName}
+				 * @param groupId the group id of the ${entity.humanName}
+				 * @param isPrivateLayout the isPrivateLayout of the ${entity.humanName}
+				 * @return the ${entity.humanName}
+				<#list serviceBaseExceptions as exception>
+				<#if exception == "PortalException">
+				 * @throws PortalException if a ${entity.humanName} with the UUID in the group/isPrivateLayout could not be found
+				<#elseif exception == "SystemException">
+				 * @throws SystemException if a system exception occurred
+				<#else>
+				 * @throws ${exception}
+				</#if>
+				</#list>
+				 */
+				public ${entity.name} get${entity.name}ByUuidGroupIdPrivateLayout(String uuid, long groupId, boolean isPrivateLayout) throws ${stringUtil.merge(serviceBaseExceptions)} {
+					return ${entity.varName}Persistence.findByUUID_G_P(uuid, groupId, isPrivateLayout);
+				}
+			<#else>
 			/**
 			 * Returns the ${entity.humanName} with the UUID in the group.
 			 *
@@ -299,6 +321,7 @@ import javax.sql.DataSource;
 			public ${entity.name} get${entity.name}ByUuidAndGroupId(String uuid, long groupId) throws ${stringUtil.merge(serviceBaseExceptions)} {
 				return ${entity.varName}Persistence.findByUUID_G(uuid, groupId);
 			}
+		</#if>
 		</#if>
 
 		/**

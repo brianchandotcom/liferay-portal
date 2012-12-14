@@ -4685,22 +4685,45 @@ public class ServiceBuilder {
 			}
 
 			if (columnList.contains(new EntityColumn("groupId"))) {
-				Element finderElement = SAXReaderUtil.createElement("finder");
+				if (ejbName.equals("Layout")) {
+					Element finderElement = SAXReaderUtil.createElement("finder");
 
-				finderElement.addAttribute("name", "UUID_G");
-				finderElement.addAttribute("return-type", ejbName);
-				finderElement.addAttribute("unique", "true");
+					finderElement.addAttribute("name", "UUID_G_P");
+					finderElement.addAttribute("return-type", ejbName);
+					finderElement.addAttribute("unique", "true");
 
-				Element finderColumnElement = finderElement.addElement(
-					"finder-column");
+					Element finderColumnElement = finderElement.addElement("finder-column");
 
-				finderColumnElement.addAttribute("name", "uuid");
+					finderColumnElement.addAttribute("name", "uuid");
 
-				finderColumnElement = finderElement.addElement("finder-column");
+					finderColumnElement = finderElement.addElement("finder-column");
 
-				finderColumnElement.addAttribute("name", "groupId");
+					finderColumnElement.addAttribute("name", "groupId");
 
-				finderElements.add(0, finderElement);
+					finderColumnElement = finderElement.addElement("finder-column");
+
+					finderColumnElement.addAttribute("name", "privateLayout");
+
+					finderElements.add(0, finderElement);
+				}
+				else {
+					Element finderElement = SAXReaderUtil.createElement("finder");
+
+					finderElement.addAttribute("name", "UUID_G");
+					finderElement.addAttribute("return-type", ejbName);
+					finderElement.addAttribute("unique", "true");
+
+					Element finderColumnElement = finderElement.addElement(
+						"finder-column");
+
+					finderColumnElement.addAttribute("name", "uuid");
+
+					finderColumnElement = finderElement.addElement("finder-column");
+
+					finderColumnElement.addAttribute("name", "groupId");
+
+					finderElements.add(0, finderElement);
+				}
 			}
 
 			Element finderElement = SAXReaderUtil.createElement("finder");

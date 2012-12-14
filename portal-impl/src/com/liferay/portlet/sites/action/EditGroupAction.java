@@ -82,6 +82,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.liferay.portlet.trash.util.TrashUtil;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -530,7 +531,8 @@ public class EditGroupAction extends PortletAction {
 		int trashEnabled = ParamUtil.getInteger(
 			actionRequest, "trashEnabled",
 			GetterUtil.getInteger(
-				typeSettingsProperties.getProperty("trashEnabled")));
+				typeSettingsProperties.getProperty("trashEnabled"),
+				TrashUtil.TRASH_DEFAULT_VALUE));
 
 		typeSettingsProperties.setProperty(
 			"trashEnabled", String.valueOf(trashEnabled));

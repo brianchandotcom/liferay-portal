@@ -2192,8 +2192,13 @@ public class JournalArticleLocalServiceImpl
 		article.setIndexable(indexable);
 		article.setSmallImage(smallImage);
 
-		if (article.getSmallImageId() == 0) {
-			article.setSmallImageId(counterLocalService.increment());
+		if (smallImage) {
+			if ((smallImageFile != null) && (smallImageBytes != null)) {
+				article.setSmallImageId(counterLocalService.increment());
+			}
+		}
+		else {
+			article.setSmallImageId(0);
 		}
 
 		article.setSmallImageURL(smallImageURL);

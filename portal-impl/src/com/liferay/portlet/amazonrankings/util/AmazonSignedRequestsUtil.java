@@ -78,6 +78,10 @@ public class AmazonSignedRequestsUtil {
 		String amazonSecretAccessKey =
 			AmazonRankingsUtil.getAmazonSecretAccessKey();
 
+		if (amazonSecretAccessKey == null) {
+			return null;
+		}
+
 		SecretKeySpec secretKeySpec = new SecretKeySpec(
 			amazonSecretAccessKey.getBytes(), _HMAC_SHA256_ALGORITHM);
 
@@ -95,6 +99,10 @@ public class AmazonSignedRequestsUtil {
 	}
 
 	private static String _rfc3986Encode(String string) throws Exception {
+		if (string == null) {
+			return null;
+		}
+
 		string = URLEncoder.encode(string, StringPool.UTF_8);
 
 		string = StringUtil.replace(

@@ -35,15 +35,7 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
+import javax.portlet.*;
 
 import javax.servlet.ServletContext;
 
@@ -123,7 +115,15 @@ public class DefaultConfigurationAction
 		}
 
 		if (SessionErrors.isEmpty(actionRequest)) {
-			portletPreferences.store();
+			try {
+				portletPreferences.store();
+			}
+			catch (ValidatorException ve) {
+				SessionErrors.add(
+					actionRequest, ValidatorException.class.getName(), ve);
+
+				return;
+			}
 
 			LiferayPortletConfig liferayPortletConfig =
 				(LiferayPortletConfig)portletConfig;

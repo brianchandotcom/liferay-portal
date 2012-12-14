@@ -66,6 +66,7 @@ String scopeStructureName = ParamUtil.getString(request, "scopeStructureName");
 String scopeStructureType = ParamUtil.getString(request, "scopeStructureType");
 String scopeTemplateMode = ParamUtil.getString(request, "scopeTemplateMode");
 String scopeTemplateType = ParamUtil.getString(request, "scopeTemplateType");
+String scopeTitle = ParamUtil.getString(request, "scopeTitle");
 boolean showGlobalScope = ParamUtil.getBoolean(request, "showGlobalScope");
 boolean showManageTemplates = ParamUtil.getBoolean(request, "showManageTemplates", true);
 boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);

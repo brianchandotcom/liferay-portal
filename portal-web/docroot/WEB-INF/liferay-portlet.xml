@@ -1738,7 +1738,7 @@
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<autopropagated-parameters>chooseCallback,ddmResource,ddmResourceActionId,saveCallback,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTemplateType,showGlobalScope,showManageTemplates,showToolbar,templateHeaderTitle</autopropagated-parameters>
+		<autopropagated-parameters>chooseCallback,ddmResource,ddmResourceActionId,saveCallback,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTemplateType,scopeTitle,showGlobalScope,showManageTemplates,showToolbar,templateHeaderTitle</autopropagated-parameters>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.css</header-portlet-css>
 		<header-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</header-portlet-javascript>
@@ -1983,7 +1983,7 @@
 		<scopeable>true</scopeable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<autopropagated-parameters>chooseCallback,ddmResource,ddmResourceActionId,saveCallback,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTemplateType,showGlobalScope,showManageTemplates,showToolbar,templateHeaderTitle</autopropagated-parameters>
+		<autopropagated-parameters>chooseCallback,ddmResource,ddmResourceActionId,saveCallback,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTitle,scopeTemplateType,showGlobalScope,showManageTemplates,showToolbar,templateHeaderTitle</autopropagated-parameters>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-dynamic-data-mapping</css-class-wrapper>

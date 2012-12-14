@@ -221,11 +221,11 @@ if (Validator.isNotNull(script)) {
 			saveCallback: '<%= renderResponse.getNamespace() + "selectParentStructure" %>',
 			showGlobalScope: true,
 			showManageTemplates: false,
-			storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
-			structureName: 'data-definition',
-			structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
+			storageType: '<%= scopeStorageType %>',
+			structureName: '<%= scopeStructureName %>',
+			structureType: '<%= scopeStructureType %>',
 			struts_action: '/dynamic_data_mapping/select_structure',
-			title: '<%= UnicodeLanguageUtil.get(pageContext, "data-definitions") %>'
+			title: '<%= scopeTitle %>'
 		}
 		);
 	}

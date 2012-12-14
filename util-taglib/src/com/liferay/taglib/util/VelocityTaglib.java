@@ -717,6 +717,17 @@ public class VelocityTaglib {
 		mySitesTag.runTag();
 	}
 
+	public void permissionsURL(
+			String redirect, String modelResource,
+			String modelResourceDescription, Object resourceGroupId,
+			String resourcePrimKey, String windowState, int[] roleTypes)
+		throws Exception {
+
+		PermissionsURLTag.doTag(
+			redirect, modelResource, modelResourceDescription, resourceGroupId,
+			resourcePrimKey, windowState, null, roleTypes, _pageContext);
+	}
+
 	/**
 	 * @deprecated {@link #permissionsURL(String, String, String, long, String,
 	 *             String, int[])}
@@ -730,17 +741,6 @@ public class VelocityTaglib {
 		permissionsURL(
 			redirect, modelResourceDescription, modelResourceDescription, null,
 			resourcePrimKey, windowState, roleTypes);
-	}
-
-	public void permissionsURL(
-			String redirect, String modelResource,
-			String modelResourceDescription, String resourceGroupId,
-			String resourcePrimKey, String windowState, int[] roleTypes)
-		throws Exception {
-
-		PermissionsURLTag.doTag(
-			redirect, modelResource, modelResourceDescription, resourceGroupId,
-			resourcePrimKey, windowState, null, roleTypes, _pageContext);
 	}
 
 	public void ratings(

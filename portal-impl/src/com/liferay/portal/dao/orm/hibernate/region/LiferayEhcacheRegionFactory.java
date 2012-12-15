@@ -18,8 +18,10 @@ import com.liferay.portal.cache.ehcache.EhcacheConfigurationUtil;
 import com.liferay.portal.cache.ehcache.ModifiableEhcacheWrapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
@@ -178,18 +180,26 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 			manager = new CacheManager(configuration);
 
-			FailSafeTimer failSafeTimer = manager.getTimer();
+			boolean skipUpdateCheck = GetterUtil.getBoolean(
+				SystemProperties.get("net.sf.ehcache.skipUpdateCheck"));
+			boolean tcActive = GetterUtil.getBoolean(
+				SystemProperties.get("tc.active"));
 
-			failSafeTimer.cancel();
+			if (skipUpdateCheck && !tcActive) {
+				FailSafeTimer failSafeTimer = manager.getTimer();
 
-			try {
-				Field cacheManagerTimerField = ReflectionUtil.getDeclaredField(
-					CacheManager.class, "cacheManagerTimer");
+				failSafeTimer.cancel();
 
-				cacheManagerTimerField.set(manager, null);
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+				try {
+					Field cacheManagerTimerField =
+						ReflectionUtil.getDeclaredField(
+							CacheManager.class, "cacheManagerTimer");
+
+					cacheManagerTimerField.set(manager, null);
+				}
+				catch (Exception e) {
+					throw new RuntimeException(e);
+				}
 			}
 
 			mbeanRegistrationHelper.registerMBean(manager, properties);

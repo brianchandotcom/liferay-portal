@@ -39,10 +39,15 @@
 	<bean id="com.liferay.portal.kernel.cache.MultiVMPoolUtil" class="com.liferay.portal.kernel.cache.MultiVMPoolUtil">
 		<property name="multiVMPool" ref="com.liferay.portal.kernel.cache.MultiVMPool" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.cache.MultiVMPortalCacheManager" class="com.liferay.portal.cache.ehcache.EhcachePortalCacheManager">
-		<property name="clusterAware" value="true" />
-		<property name="configPropertyKey" value="ehcache.multi.vm.config.location" />
-		<property name="MBeanServer" ref="registryAwareMBeanServer" />
+	<bean id="com.liferay.portal.kernel.cache.MultiVMPortalCacheManager" class="com.liferay.portal.resiliency.spi.cache.SPIPortalCacheManagerConfigurator" factory-method="createSPIPortalCacheManager">
+		<constructor-arg name="portalCacheManager">
+			<bean class="com.liferay.portal.cache.ehcache.EhcachePortalCacheManager">
+				<property name="clusterAware" value="true" />
+				<property name="configPropertyKey" value="ehcache.multi.vm.config.location" />
+				<property name="MBeanServer" ref="registryAwareMBeanServer" />
+				<property name="mpiOnly" value="true" />
+			</bean>
+		</constructor-arg>
 	</bean>
 	<!--<bean id="com.liferay.kernel.portal.cache.MultiVMPortalCacheManager" class="com.liferay.portal.cache.memory.MemoryPortalCacheManager" />-->
 	<bean id="com.liferay.portal.kernel.cache.SingleVMPool" class="com.liferay.portal.cache.SingleVMPoolImpl">
@@ -258,6 +263,20 @@
 			<bean class="com.liferay.portal.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.resiliency.spi.SPIRuntimeMappingUtil" class="com.liferay.portal.kernel.resiliency.spi.SPIRuntimeMappingUtil">
+		<property name="sPIRuntimeMapping">
+			<bean class="com.liferay.portal.resiliency.spi.SPIRuntimeMappingImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.resiliency.spi.agent.SPIAgentFactoryUtil" class="com.liferay.portal.kernel.resiliency.spi.agent.SPIAgentFactoryUtil">
+		<property name="agentClasses">
+			<set>
+				<bean class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getClassName">
+					<constructor-arg value="com.liferay.portal.resiliency.spi.agent.HttpClientSPIAgent" />
+				</bean>
+			</set>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.sanitizer.SanitizerUtil" class="com.liferay.portal.kernel.sanitizer.SanitizerUtil">
 		<property name="sanitizer">
 			<bean class="com.liferay.portal.sanitizer.SanitizerImpl" />
@@ -300,6 +319,7 @@
 				<entry key="com.liferay.portal.increment.BufferedIncrementAdvice" value="nextMethodInterceptor" />
 				<entry key="com.liferay.portal.messaging.async.AsyncAdvice" value="defaultDestinationName,nextMethodInterceptor" />
 				<entry key="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice" value="monitoringDestinationName,nextMethodInterceptor" />
+				<entry key="com.liferay.portal.resiliency.service.PortalResiliencyAdvice" value="nextMethodInterceptor" />
 				<entry key="com.liferay.portal.search.IndexableAdvice" value="nextMethodInterceptor" />
 				<entry key="com.liferay.portal.security.ac.AccessControlAdvice" value="accessControlAdvisor,nextMethodInterceptor" />
 				<entry key="com.liferay.portal.security.ac.AccessControlAdvisorImpl" value="" />
@@ -718,8 +738,11 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.PortletContainerImpl" class="com.liferay.portlet.PortletContainerImpl" />
-	<bean id="com.liferay.portlet.RestrictPortletContainerWrapper" class="com.liferay.portlet.RestrictPortletContainerWrapper" factory-method="createRestrictPortletContainerWrapper">
+	<bean id="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" class="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.PortletContainerImpl" />
+	</bean>
+	<bean id="com.liferay.portlet.RestrictPortletContainerWrapper" class="com.liferay.portlet.RestrictPortletContainerWrapper" factory-method="createRestrictPortletContainerWrapper">
+		<constructor-arg name="portletContainer" ref="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" />
 	</bean>
 	<bean id="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" class="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil">
 		<property name="assetRendererFactoryRegistry">

@@ -16,6 +16,7 @@ package com.liferay.portal.search.lucene;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -68,9 +69,11 @@ public class IndexAccessorImpl implements IndexAccessor {
 	public IndexAccessorImpl(long companyId) {
 		_companyId = companyId;
 
-		_checkLuceneDir();
-		_initIndexWriter();
-		_initCommitScheduler();
+		if (!SPIUtil.isSPI()) {
+			_checkLuceneDir();
+			_initIndexWriter();
+			_initCommitScheduler();
+		}
 	}
 
 	public void addDocument(Document document) throws IOException {
@@ -82,6 +85,10 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	public void close() {
+		if (SPIUtil.isSPI()) {
+			return;
+		}
+
 		try {
 			_indexWriter.close();
 		}

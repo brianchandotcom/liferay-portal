@@ -25,6 +25,17 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
+import com.liferay.portal.kernel.nio.intraband.IntraBand;
+import com.liferay.portal.kernel.nio.intraband.SystemDataType;
+import com.liferay.portal.kernel.nio.intraband.cache.PortalCacheDatagramReceiveHandler;
+import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxDatagramReceiveHandler;
+import com.liferay.portal.kernel.nio.intraband.messaging.MessageDatagramReceiveHandler;
+import com.liferay.portal.kernel.nio.intraband.rpc.RPCDatagramReceiveHandler;
+import com.liferay.portal.kernel.resiliency.mpi.MPIUtil;
+import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgent;
+import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
+import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
+import com.liferay.portal.kernel.resiliency.spi.agent.annotation.MatchType;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.JspFactorySwapper;
@@ -37,7 +48,10 @@ import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -64,6 +78,31 @@ public class StartupAction extends SimpleAction {
 		// Print release information
 
 		System.out.println("Starting " + ReleaseInfo.getReleaseInfo());
+
+		// Portal Resiliency
+
+		DistributedRegistry.registerDistributed(SPIAgent.class);
+
+		DistributedRegistry.registerDistributed(WebKeys.class);
+
+		DistributedRegistry.registerDistributed(
+			PortletRequest.LIFECYCLE_PHASE, Direction.Duplex, MatchType.Exact);
+
+		// IntraBand
+
+		IntraBand intraBand = MPIUtil.getIntraBand();
+
+		intraBand.registerDatagramReceiveHandler(
+			SystemDataType.RPC.getValue(), new RPCDatagramReceiveHandler());
+		intraBand.registerDatagramReceiveHandler(
+			SystemDataType.PORTAL_CACHE.getValue(),
+			new PortalCacheDatagramReceiveHandler());
+		intraBand.registerDatagramReceiveHandler(
+			SystemDataType.MESSAGE.getValue(),
+			new MessageDatagramReceiveHandler());
+		intraBand.registerDatagramReceiveHandler(
+			SystemDataType.MAILBOX.getValue(),
+			new MailboxDatagramReceiveHandler());
 
 		// Clear locks
 

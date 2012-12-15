@@ -16,7 +16,6 @@ package com.liferay.portal.security.ac;
 
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -35,7 +34,7 @@ public class AccessControlAdvice extends
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		AccessControlled accessControlled = findAnnotation(methodInvocation);
 
-		if (accessControlled == _nullAccessControlled) {
+		if (accessControlled == AccessControlled.NULL_ACCESS_CONTROLLED) {
 			return null;
 		}
 
@@ -52,7 +51,7 @@ public class AccessControlAdvice extends
 
 	@Override
 	public AccessControlled getNullAnnotation() {
-		return _nullAccessControlled;
+		return AccessControlled.NULL_ACCESS_CONTROLLED;
 	}
 
 	public void setAccessControlAdvisor(
@@ -60,15 +59,6 @@ public class AccessControlAdvice extends
 
 		_accessControlAdvisor = accessControlAdvisor;
 	}
-
-	private static AccessControlled _nullAccessControlled =
-		new AccessControlled() {
-
-		public Class<? extends Annotation> annotationType() {
-			return AccessControlled.class;
-		}
-
-	};
 
 	private AccessControlAdvisor _accessControlAdvisor;
 

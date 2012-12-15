@@ -87,42 +87,25 @@ if (Validator.isNull(redirect)) {
 	<liferay-ui:message key="preview" />:
 
 	<%
-	MBMessage temp = null;
+	MBMessage previewMessage = message;
 
-	if (message != null) {
-		temp = message;
+	if (message == null) {
+		previewMessage = new MBMessageImpl();
 
-		message = new MBMessageImpl();
-
-		message.setMessageId(temp.getMessageId());
-		message.setCompanyId(temp.getCompanyId());
-		message.setUserId(temp.getUserId());
-		message.setUserName(temp.getUserName());
-		message.setCreateDate(temp.getCreateDate());
-		message.setModifiedDate(temp.getModifiedDate());
-		message.setThreadId(temp.getThreadId());
-		message.setSubject(subject);
-		message.setBody(body);
-		message.setFormat(messageFormat);
-		message.setAttachments(temp.isAttachments());
-		message.setAnonymous(temp.isAnonymous());
+		previewMessage.setMessageId(messageId);
+		previewMessage.setCompanyId(user.getCompanyId());
+		previewMessage.setUserId(user.getUserId());
+		previewMessage.setUserName(user.getFullName());
+		previewMessage.setCreateDate(new Date());
+		previewMessage.setModifiedDate(new Date());
+		previewMessage.setThreadId(threadId);
+		previewMessage.setFormat(messageFormat);
+		previewMessage.setAttachments(attachments);
+		previewMessage.setAnonymous(ParamUtil.getBoolean(request, "anonymous"));
 	}
-	else {
-		message = new MBMessageImpl();
 
-		message.setMessageId(messageId);
-		message.setCompanyId(user.getCompanyId());
-		message.setUserId(user.getUserId());
-		message.setUserName(user.getFullName());
-		message.setCreateDate(new Date());
-		message.setModifiedDate(new Date());
-		message.setThreadId(threadId);
-		message.setSubject(subject);
-		message.setBody(body);
-		message.setFormat(messageFormat);
-		message.setAttachments(attachments);
-		message.setAnonymous(BeanParamUtil.getBoolean(message, request, "anonymous"));
-	}
+	previewMessage.setSubject(subject);
+	previewMessage.setBody(body);
 
 	boolean editable = false;
 
@@ -138,7 +121,7 @@ if (Validator.isNull(redirect)) {
 	request.setAttribute("edit_message.jsp-className", className);
 	request.setAttribute("edit_message.jsp-depth", depth);
 	request.setAttribute("edit_message.jsp-editable", editable);
-	request.setAttribute("edit_message.jsp-message", message);
+	request.setAttribute("edit_message.jsp-message", previewMessage);
 	request.setAttribute("edit_message.jsp-thread", thread);
 	%>
 
@@ -146,8 +129,6 @@ if (Validator.isNull(redirect)) {
 
 	<%
 	request.removeAttribute("edit_message.jsp-assetTagNames");
-
-	message = temp;
 	%>
 
 	<br />

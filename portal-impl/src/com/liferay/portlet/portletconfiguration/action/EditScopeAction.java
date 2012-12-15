@@ -160,8 +160,9 @@ public class EditScopeAction extends EditConfigurationAction {
 				actionRequest, "scopeLayoutUuid");
 
 			Layout scopeLayout =
-				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-					scopeLayoutUuid, layout.getGroupId());
+				LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
+					scopeLayoutUuid, layout.getGroupId(),
+					layout.isPrivateLayout());
 
 			if (!scopeLayout.hasScopeGroup()) {
 				String name = String.valueOf(scopeLayout.getPlid());
@@ -216,8 +217,9 @@ public class EditScopeAction extends EditConfigurationAction {
 
 			try {
 				Layout scopeLayout =
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						scopeLayoutUuid, layout.getGroupId());
+					LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
+						scopeLayoutUuid, layout.getGroupId(),
+						layout.isPrivateLayout());
 
 				scopeName = scopeLayout.getName(themeDisplay.getLocale());
 			}

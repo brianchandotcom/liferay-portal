@@ -25,12 +25,14 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 String layoutUuid = BeanParamUtil.getString(article, request, "layoutUuid");
 
 Layout selLayout = null;
+boolean privateLayout = Boolean.parseBoolean((String)request.getAttribute("edit_article.jsp-privateLayout"));
 
 String layoutBreadcrumb = StringPool.BLANK;
 
 if (Validator.isNotNull(layoutUuid)) {
 	try {
-		selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getParentGroupId());
+		selLayout = LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(layoutUuid, themeDisplay.getParentGroupId(),
+			privateLayout);
 
 		layoutBreadcrumb = _getLayoutBreadcrumb(selLayout, locale);
 	}
@@ -544,7 +546,7 @@ Group parentGroup = themeDisplay.getParentGroup();
 <c:if test="<%= (article != null) && Validator.isNotNull(layoutUuid) %>">
 
 	<%
-	Layout defaultDisplayLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, scopeGroupId);
+	Layout defaultDisplayLayout = LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(layoutUuid, scopeGroupId, privateLayout);
 
 	defaultDisplayLayout = defaultDisplayLayout.toEscapedModel();
 

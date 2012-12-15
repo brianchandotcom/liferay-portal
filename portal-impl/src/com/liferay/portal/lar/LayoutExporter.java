@@ -720,6 +720,8 @@ public class LayoutExporter {
 		layoutElement.addAttribute("layout-uuid", layout.getUuid());
 		layoutElement.addAttribute(
 			"layout-id", String.valueOf(layout.getLayoutId()));
+		layoutElement.addAttribute(
+			"private-layout", String.valueOf(layout.isPrivateLayout()));
 
 		long parentLayoutId = layout.getParentLayoutId();
 
@@ -866,9 +868,10 @@ public class LayoutExporter {
 						Layout scopeLayout = null;
 
 						scopeLayout = LayoutLocalServiceUtil.
-							fetchLayoutByUuidAndGroupId(
+							fetchLayoutByUuidGroupIdPrivateLayout(
 								scopeLayoutUuid,
-								portletDataContext.getGroupId());
+								portletDataContext.getGroupId(),
+								portletDataContext.isPrivateLayout());
 
 						if (scopeLayout == null) {
 							continue;

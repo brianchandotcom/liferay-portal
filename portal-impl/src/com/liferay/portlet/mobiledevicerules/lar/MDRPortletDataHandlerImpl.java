@@ -595,8 +595,9 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 		try {
 			if (Validator.isNotNull(layoutUuid)) {
 				Layout layout =
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						layoutUuid, portletDataContext.getScopeGroupId());
+					LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
+						layoutUuid, portletDataContext.getScopeGroupId(),
+						portletDataContext.isPrivateLayout());
 
 				classPK = layout.getPrimaryKey();
 			}
@@ -696,6 +697,7 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		String targetLayoutUuid = actionElement.attributeValue("layout-uuid");
+		boolean privateLayout = Boolean.parseBoolean(actionElement.attributeValue("private-layout"));
 
 		if (Validator.isNull(targetLayoutUuid)) {
 			return;
@@ -709,8 +711,9 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		try {
 			Layout targetLayout =
-				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-					targetLayoutUuid, targetGroupId);
+				LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
+					targetLayoutUuid, targetGroupId,
+					privateLayout);
 
 			typeSettingsProperties.setProperty(
 				"plid", String.valueOf(targetLayout.getPlid()));

@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.module.framework;
+package com.liferay.osgi.bootstrap.impl;
 
 import aQute.libg.header.OSGiHeader;
 
+import com.liferay.osgi.bootstrap.ModuleFramework;
+import com.liferay.osgi.bootstrap.ModuleFrameworkUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,6 +28,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.module.framework.LogBridge;
+import com.liferay.portal.module.framework.ModuleFrameworkConstants;
+import com.liferay.portal.module.framework.ModuleFrameworkException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -67,90 +72,14 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Raymond Augé
  */
-public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
+public class ModuleFrameworkImpl
+	implements ModuleFramework, ModuleFrameworkConstants {
 
-	public static Object addBundle(String location) throws PortalException {
+	public Object addBundle(String location) throws PortalException {
 		return addBundle(location, null);
 	}
 
-	public static Object addBundle(String location, InputStream inputStream)
-		throws PortalException {
-
-		return _instance._addBundle(location, inputStream);
-	}
-
-	public static Framework getFramework() {
-		return _instance._getFramework();
-	}
-
-	public static String getState(long bundleId) throws PortalException {
-		return _instance._getState(bundleId);
-	}
-
-	public static void registerContext(Object context) {
-		_instance._registerContext(context);
-	}
-
-	public static void setBundleStartLevel(long bundleId, int startLevel)
-		throws PortalException {
-
-		_instance._setBundleStartLevel(bundleId, startLevel);
-	}
-
-	public static void startBundle(long bundleId) throws PortalException {
-		_instance._startBundle(bundleId);
-	}
-
-	public static void startBundle(long bundleId, int options)
-		throws PortalException {
-
-		_instance._startBundle(bundleId, options);
-	}
-
-	public static void startFramework() throws Exception {
-		_instance._startFramework();
-	}
-
-	public static void startRuntime() throws Exception {
-		_instance._startRuntime();
-	}
-
-	public static void stopBundle(long bundleId) throws PortalException {
-		_instance._stopBundle(bundleId);
-	}
-
-	public static void stopBundle(long bundleId, int options)
-		throws PortalException {
-
-		_instance._stopBundle(bundleId, options);
-	}
-
-	public static void stopFramework() throws Exception {
-		_instance._stopFramework();
-	}
-
-	public static void stopRuntime() throws Exception {
-		_instance._stopRuntime();
-	}
-
-	public static void uninstallBundle(long bundleId) throws PortalException {
-		_instance._uninstallBundle(bundleId);
-	}
-
-	public static void updateBundle(long bundleId) throws PortalException {
-		_instance._updateBundle(bundleId);
-	}
-
-	public static void updateBundle(long bundleId, InputStream inputStream)
-		throws PortalException {
-
-		_instance._updateBundle(bundleId, inputStream);
-	}
-
-	private ModuleFrameworkUtil() {
-	}
-
-	private Object _addBundle(String location, InputStream inputStream)
+	public Object addBundle(String location, InputStream inputStream)
 		throws PortalException {
 
 		_checkPermission();
@@ -192,7 +121,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		UniqueList<String> packages = new UniqueList<String>();
 
 		try {
-			_getBundleExportPackages(
+			getBundleExportPackages(
 				PropsValues.MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES,
 				packages);
 		}
@@ -231,7 +160,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		return bundleContext.getBundle(bundleId);
 	}
 
-	private void _getBundleExportPackages(
+	public void getBundleExportPackages(
 			String[] bundleSymbolicNames, List<String> packages)
 		throws Exception {
 
@@ -299,7 +228,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		}
 	}
 
-	private Framework _getFramework() {
+	public Framework getFramework() {
 		return _framework;
 	}
 
@@ -323,7 +252,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		return interfaces;
 	}
 
-	private String _getState(long bundleId) throws PortalException {
+	public String getState(long bundleId) throws PortalException {
 		_checkPermission();
 
 		Bundle bundle = _getBundle(bundleId);
@@ -380,7 +309,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		}
 	}
 
-	private void _registerContext(Object context) {
+	public void registerContext(Object context) {
 		if (context == null) {
 			return;
 		}
@@ -438,7 +367,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 			properties);
 	}
 
-	private void _setBundleStartLevel(long bundleId, int startLevel)
+	public void setBundleStartLevel(long bundleId, int startLevel)
 		throws PortalException {
 
 		_checkPermission();
@@ -463,7 +392,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		_logBridge.start(bundleContext);
 	}
 
-	private void _startBundle(long bundleId) throws PortalException {
+	public void startBundle(long bundleId) throws PortalException {
 		_checkPermission();
 
 		Bundle bundle = _getBundle(bundleId);
@@ -482,7 +411,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		}
 	}
 
-	private void _startBundle(long bundleId, int options)
+	public void startBundle(long bundleId, int options)
 		throws PortalException {
 
 		_checkPermission();
@@ -503,7 +432,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		}
 	}
 
-	private void _startFramework() throws Exception {
+	public void startFramework() throws Exception {
 		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
 			FrameworkFactory.class);
 
@@ -524,7 +453,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		_framework.start();
 	}
 
-	private void _startRuntime() throws Exception {
+	public void startRuntime() throws Exception {
 		if (_framework == null) {
 			return;
 		}
@@ -537,7 +466,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 			(FrameworkListener)null);
 	}
 
-	private void _stopBundle(long bundleId) throws PortalException {
+	public void stopBundle(long bundleId) throws PortalException {
 		_checkPermission();
 
 		Bundle bundle = _getBundle(bundleId);
@@ -556,7 +485,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		}
 	}
 
-	private void _stopBundle(long bundleId, int options)
+	public void stopBundle(long bundleId, int options)
 		throws PortalException {
 
 		_checkPermission();
@@ -577,7 +506,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		}
 	}
 
-	private void _stopFramework() throws Exception {
+	public void stopFramework() throws Exception {
 		if (_framework == null) {
 			return;
 		}
@@ -589,7 +518,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		_framework.stop();
 	}
 
-	private void _stopRuntime() throws Exception {
+	public void stopRuntime() throws Exception {
 		if (_framework == null) {
 			return;
 		}
@@ -602,7 +531,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 			(FrameworkListener)null);
 	}
 
-	private void _uninstallBundle(long bundleId) throws PortalException {
+	public void uninstallBundle(long bundleId) throws PortalException {
 		_checkPermission();
 
 		Bundle bundle = _getBundle(bundleId);
@@ -621,7 +550,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		}
 	}
 
-	private void _updateBundle(long bundleId) throws PortalException {
+	public void updateBundle(long bundleId) throws PortalException {
 		_checkPermission();
 
 		Bundle bundle = _getBundle(bundleId);
@@ -640,7 +569,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		}
 	}
 
-	private void _updateBundle(long bundleId, InputStream inputStream)
+	public void updateBundle(long bundleId, InputStream inputStream)
 		throws PortalException {
 
 		_checkPermission();
@@ -662,8 +591,6 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkUtil.class);
-
-	private static ModuleFrameworkUtil _instance = new ModuleFrameworkUtil();
 
 	private Framework _framework;
 	private LogBridge _logBridge;

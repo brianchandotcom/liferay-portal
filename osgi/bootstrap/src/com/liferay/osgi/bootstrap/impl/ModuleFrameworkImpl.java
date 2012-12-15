@@ -100,66 +100,6 @@ public class ModuleFrameworkImpl
 		}
 	}
 
-	private Map<String, String> _buildProperties() {
-		Map<String, String> properties = new HashMap<String, String>();
-
-		properties.put(
-			Constants.BUNDLE_DESCRIPTION, ReleaseInfo.getReleaseInfo());
-		properties.put(Constants.BUNDLE_NAME, ReleaseInfo.getName());
-		properties.put(Constants.BUNDLE_VENDOR, ReleaseInfo.getVendor());
-		properties.put(Constants.BUNDLE_VERSION, ReleaseInfo.getVersion());
-		properties.put(
-			Constants.FRAMEWORK_BEGINNING_STARTLEVEL,
-			String.valueOf(PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
-		properties.put(
-			Constants.FRAMEWORK_BUNDLE_PARENT,
-			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
-		properties.put(
-			Constants.FRAMEWORK_STORAGE,
-			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
-
-		UniqueList<String> packages = new UniqueList<String>();
-
-		try {
-			getBundleExportPackages(
-				PropsValues.MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES,
-				packages);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		packages.addAll(
-			Arrays.asList(PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA));
-
-		Collections.sort(packages);
-
-		properties.put(
-			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA,
-			StringUtil.merge(packages));
-
-		return properties;
-	}
-
-	private void _checkPermission() throws PrincipalException {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if ((permissionChecker == null) || !permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
-		}
-	}
-
-	private Bundle _getBundle(long bundleId) {
-		if (_framework == null) {
-			return null;
-		}
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		return bundleContext.getBundle(bundleId);
-	}
-
 	public void getBundleExportPackages(
 			String[] bundleSymbolicNames, List<String> packages)
 		throws Exception {
@@ -232,26 +172,6 @@ public class ModuleFrameworkImpl
 		return _framework;
 	}
 
-	private Set<Class<?>> _getInterfaces(Object bean) {
-		Set<Class<?>> interfaces = new HashSet<Class<?>>();
-
-		Class<?> beanClass = bean.getClass();
-
-		for (Class<?> interfaceClass : beanClass.getInterfaces()) {
-			interfaces.add(interfaceClass);
-		}
-
-		while ((beanClass = beanClass.getSuperclass()) != null) {
-			for (Class<?> interfaceClass : beanClass.getInterfaces()) {
-				if (!interfaces.contains(interfaceClass)) {
-					interfaces.add(interfaceClass);
-				}
-			}
-		}
-
-		return interfaces;
-	}
-
 	public String getState(long bundleId) throws PortalException {
 		_checkPermission();
 
@@ -286,29 +206,6 @@ public class ModuleFrameworkImpl
 		}
 	}
 
-	private void _registerApplicationContext(
-		ApplicationContext applicationContext) {
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		for (String beanName : applicationContext.getBeanDefinitionNames()) {
-			Object bean = null;
-
-			try {
-				bean = applicationContext.getBean(beanName);
-			}
-			catch (BeanIsAbstractException biae) {
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-
-			if (bean != null) {
-				_registerService(bundleContext, beanName, bean);
-			}
-		}
-	}
-
 	public void registerContext(Object context) {
 		if (context == null) {
 			return;
@@ -328,45 +225,6 @@ public class ModuleFrameworkImpl
 		}
 	}
 
-	private void _registerService(
-		BundleContext bundleContext, String beanName, Object bean) {
-
-		Set<Class<?>> interfaces = _getInterfaces(bean);
-
-		List<String> names = new ArrayList<String>();
-
-		for (Class<?> interfaceClass : interfaces) {
-			names.add(interfaceClass.getName());
-		}
-
-		if (names.isEmpty()) {
-			return;
-		}
-
-		Hashtable<String, Object> properties = new Hashtable<String, Object>();
-
-		properties.put(BEAN_ID, beanName);
-		properties.put(ORIGINAL_BEAN, Boolean.TRUE);
-		properties.put(SERVICE_VENDOR, ReleaseInfo.getVendor());
-
-		bundleContext.registerService(
-			names.toArray(new String[names.size()]), bean, properties);
-	}
-
-	private void _registerServletContext(ServletContext servletContext) {
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		Hashtable<String, Object> properties = new Hashtable<String, Object>();
-
-		properties.put(BEAN_ID, ServletContext.class.getName());
-		properties.put(ORIGINAL_BEAN, Boolean.TRUE);
-		properties.put(SERVICE_VENDOR, ReleaseInfo.getVendor());
-
-		bundleContext.registerService(
-			new String[] {ServletContext.class.getName()}, servletContext,
-			properties);
-	}
-
 	public void setBundleStartLevel(long bundleId, int startLevel)
 		throws PortalException {
 
@@ -382,14 +240,6 @@ public class ModuleFrameworkImpl
 			BundleStartLevel.class);
 
 		bundleStartLevel.setStartLevel(startLevel);
-	}
-
-	private void _setupLogBridge() throws Exception {
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		_logBridge = new LogBridge();
-
-		_logBridge.start(bundleContext);
 	}
 
 	public void startBundle(long bundleId) throws PortalException {
@@ -588,6 +438,156 @@ public class ModuleFrameworkImpl
 
 			throw new ModuleFrameworkException(be);
 		}
+	}
+
+	private Map<String, String> _buildProperties() {
+		Map<String, String> properties = new HashMap<String, String>();
+
+		properties.put(
+			Constants.BUNDLE_DESCRIPTION, ReleaseInfo.getReleaseInfo());
+		properties.put(Constants.BUNDLE_NAME, ReleaseInfo.getName());
+		properties.put(Constants.BUNDLE_VENDOR, ReleaseInfo.getVendor());
+		properties.put(Constants.BUNDLE_VERSION, ReleaseInfo.getVersion());
+		properties.put(
+			Constants.FRAMEWORK_BEGINNING_STARTLEVEL,
+			String.valueOf(PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
+		properties.put(
+			Constants.FRAMEWORK_BUNDLE_PARENT,
+			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
+		properties.put(
+			Constants.FRAMEWORK_STORAGE,
+			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
+
+		UniqueList<String> packages = new UniqueList<String>();
+
+		try {
+			getBundleExportPackages(
+				PropsValues.MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES,
+				packages);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		packages.addAll(
+			Arrays.asList(PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA));
+
+		Collections.sort(packages);
+
+		properties.put(
+			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA,
+			StringUtil.merge(packages));
+
+		return properties;
+	}
+
+	private void _checkPermission() throws PrincipalException {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker == null) || !permissionChecker.isOmniadmin()) {
+			throw new PrincipalException();
+		}
+	}
+
+	private Bundle _getBundle(long bundleId) {
+		if (_framework == null) {
+			return null;
+		}
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		return bundleContext.getBundle(bundleId);
+	}
+
+	private Set<Class<?>> _getInterfaces(Object bean) {
+		Set<Class<?>> interfaces = new HashSet<Class<?>>();
+
+		Class<?> beanClass = bean.getClass();
+
+		for (Class<?> interfaceClass : beanClass.getInterfaces()) {
+			interfaces.add(interfaceClass);
+		}
+
+		while ((beanClass = beanClass.getSuperclass()) != null) {
+			for (Class<?> interfaceClass : beanClass.getInterfaces()) {
+				if (!interfaces.contains(interfaceClass)) {
+					interfaces.add(interfaceClass);
+				}
+			}
+		}
+
+		return interfaces;
+	}
+
+	private void _registerApplicationContext(
+		ApplicationContext applicationContext) {
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		for (String beanName : applicationContext.getBeanDefinitionNames()) {
+			Object bean = null;
+
+			try {
+				bean = applicationContext.getBean(beanName);
+			}
+			catch (BeanIsAbstractException biae) {
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+
+			if (bean != null) {
+				_registerService(bundleContext, beanName, bean);
+			}
+		}
+	}
+
+	private void _registerService(
+		BundleContext bundleContext, String beanName, Object bean) {
+
+		Set<Class<?>> interfaces = _getInterfaces(bean);
+
+		List<String> names = new ArrayList<String>();
+
+		for (Class<?> interfaceClass : interfaces) {
+			names.add(interfaceClass.getName());
+		}
+
+		if (names.isEmpty()) {
+			return;
+		}
+
+		Hashtable<String, Object> properties = new Hashtable<String, Object>();
+
+		properties.put(BEAN_ID, beanName);
+		properties.put(ORIGINAL_BEAN, Boolean.TRUE);
+		properties.put(SERVICE_VENDOR, ReleaseInfo.getVendor());
+
+		bundleContext.registerService(
+			names.toArray(new String[names.size()]), bean, properties);
+	}
+
+	private void _registerServletContext(ServletContext servletContext) {
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		Hashtable<String, Object> properties = new Hashtable<String, Object>();
+
+		properties.put(BEAN_ID, ServletContext.class.getName());
+		properties.put(ORIGINAL_BEAN, Boolean.TRUE);
+		properties.put(SERVICE_VENDOR, ReleaseInfo.getVendor());
+
+		bundleContext.registerService(
+			new String[] {ServletContext.class.getName()}, servletContext,
+			properties);
+	}
+
+	private void _setupLogBridge() throws Exception {
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		_logBridge = new LogBridge();
+
+		_logBridge.start(bundleContext);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkUtil.class);

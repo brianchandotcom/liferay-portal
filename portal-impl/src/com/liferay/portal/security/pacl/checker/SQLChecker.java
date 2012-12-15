@@ -16,34 +16,26 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.io.StringReader;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.pacl.util.StatementInfo;
+import com.liferay.portal.security.pacl.util.StatementInfoExtractor;
 
 import java.security.Permission;
 
-import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
-
-import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.operators.relational.ItemsList;
-import net.sf.jsqlparser.parser.CCJSqlParserManager;
-import net.sf.jsqlparser.parser.JSqlParser;
-import net.sf.jsqlparser.schema.Table;
-import net.sf.jsqlparser.statement.Statement;
-import net.sf.jsqlparser.statement.create.table.CreateTable;
-import net.sf.jsqlparser.statement.delete.Delete;
-import net.sf.jsqlparser.statement.drop.Drop;
-import net.sf.jsqlparser.statement.insert.Insert;
-import net.sf.jsqlparser.statement.replace.Replace;
-import net.sf.jsqlparser.statement.select.Select;
-import net.sf.jsqlparser.statement.select.SelectBody;
-import net.sf.jsqlparser.statement.truncate.Truncate;
-import net.sf.jsqlparser.statement.update.Update;
-import net.sf.jsqlparser.test.tablesfinder.TablesNamesFinder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Zsolt Berentey
  */
 public class SQLChecker extends BaseChecker {
 
@@ -56,162 +48,116 @@ public class SQLChecker extends BaseChecker {
 	}
 
 	public boolean hasSQL(String sql) {
-		Statement statement = null;
+		sql = StringUtil.trim(sql);
 
-		try {
-			statement = _jSqlParser.parse(new StringReader(sql));
-		}
-		catch (Exception e) {
+		sql = sql.toLowerCase();
+
+		StatementInfo statementInfo = StatementInfoExtractor.getStatementInfo(
+			sql);
+
+		if (statementInfo == null) {
 			_log.error("Unable to parse SQL " + sql);
 
 			return false;
 		}
 
-		if (statement instanceof CreateTable) {
-			CreateTable createTable = (CreateTable)statement;
+		if (statementInfo.hasMainTable()) {
+			if (!isAllowedTable(
+					statementInfo.getOperation(), statementInfo.getObjectType(),
+					statementInfo.getMainTable())) {
 
-			return hasSQL(createTable);
+				return false;
+			}
 		}
-		else if (statement instanceof Select) {
-			Select select = (Select)statement;
+		else if (!statementInfo.isParseTables()) {
 
-			return hasSQL(select);
+			// Non-table operations e.g. drop index
+
+			if (!isAllowedTable(
+					statementInfo.getOperation(), statementInfo.getObjectType(),
+					"yes")) {
+
+				return false;
+			}
 		}
-		else if (statement instanceof Delete) {
-			Delete delete = (Delete)statement;
 
-			return hasSQL(delete);
+		return isAllowedTables("select", null, statementInfo.getReadTables());
+	}
+
+	protected void addTableNames(String key) {
+		Set<TableNameWrapper> propertySet = new HashSet<TableNameWrapper>();
+
+		for (String property : getPropertyArray(key)) {
+			propertySet.add(new TableNameWrapper(property.toLowerCase()));
 		}
-		else if (statement instanceof Drop) {
-			Drop drop = (Drop)statement;
 
-			return hasSQL(drop);
+		_tableNames.put(key.substring(28), propertySet);
+	}
+
+	protected void initTableNames() {
+		Properties properties = getProperties();
+
+		for (Enumeration<?> propertyNames = properties.propertyNames();
+				propertyNames.hasMoreElements();) {
+
+			String propertyName = (String)propertyNames.nextElement();
+
+			if (propertyName.startsWith("security-manager-sql-tables-")) {
+				addTableNames(propertyName);
+			}
 		}
-		else if (statement instanceof Insert) {
-			Insert insert = (Insert)statement;
+	}
 
-			return hasSQL(insert);
+	protected boolean isAllowedTable(String key, String tableName) {
+		Set<TableNameWrapper> tableNames = _tableNames.get(key);
+
+		if (tableNames == null) {
+			return false;
 		}
-		else if (statement instanceof Replace) {
-			Replace replace = (Replace)statement;
 
-			return hasSQL(replace);
-		}
-		else if (statement instanceof Select) {
-			Select select = (Select)statement;
-
-			return hasSQL(select);
-		}
-		else if (statement instanceof Truncate) {
-			Truncate truncate = (Truncate)statement;
-
-			return hasSQL(truncate);
-		}
-		else if (statement instanceof Update) {
-			Update update = (Update)statement;
-
-			return hasSQL(update);
+		for (TableNameWrapper wrapper : tableNames) {
+			if (wrapper.equals(tableName)) {
+				return true;
+			}
 		}
 
 		return false;
 	}
 
-	protected boolean hasSQL(CreateTable createTable) {
-		return isAllowedTable(createTable.getTable(), _createTableNames);
-	}
-
-	protected boolean hasSQL(Delete delete) {
-		TableNamesFinder tableNamesFinder = new TableNamesFinder();
-
-		List<String> tableNames = tableNamesFinder.getTableNames(delete);
-
-		return isAllowedTables(tableNames, _deleteTableNames);
-	}
-
-	protected boolean hasSQL(Drop drop) {
-		return isAllowedTable(drop.getName(), _dropTableNames);
-	}
-
-	protected boolean hasSQL(Insert insert) {
-		TableNamesFinder tableNamesFinder = new TableNamesFinder();
-
-		List<String> tableNames = tableNamesFinder.getTableNames(insert);
-
-		return isAllowedTables(tableNames, _insertTableNames);
-	}
-
-	protected boolean hasSQL(Replace replace) {
-		TableNamesFinder tableNamesFinder = new TableNamesFinder();
-
-		List<String> tableNames = tableNamesFinder.getTableNames(replace);
-
-		return isAllowedTables(tableNames, _replaceTableNames);
-	}
-
-	protected boolean hasSQL(Select select) {
-		TableNamesFinder tableNamesFinder = new TableNamesFinder();
-
-		List<String> tableNames = tableNamesFinder.getTableNames(select);
-
-		return isAllowedTables(tableNames, _selectTableNames);
-	}
-
-	protected boolean hasSQL(Truncate truncate) {
-		return isAllowedTable(truncate.getTable(), _truncateTableNames);
-	}
-
-	protected boolean hasSQL(Update update) {
-		TableNamesFinder tableNamesFinder = new TableNamesFinder();
-
-		List<String> tableNames = tableNamesFinder.getTableNames(update);
-
-		return isAllowedTables(tableNames, _updateTableNames);
-	}
-
-	protected void initTableNames() {
-		_allTableNames = getPropertySet("security-manager-sql-tables-all");
-		_createTableNames = getPropertySet(
-			"security-manager-sql-tables-create");
-		_deleteTableNames = getPropertySet(
-			"security-manager-sql-tables-delete");
-		_dropTableNames = getPropertySet("security-manager-sql-tables-drop");
-		_insertTableNames = getPropertySet(
-			"security-manager-sql-tables-insert");
-		_replaceTableNames = getPropertySet(
-			"security-manager-sql-tables-replace");
-		_selectTableNames = getPropertySet(
-			"security-manager-sql-tables-select");
-		_truncateTableNames = getPropertySet(
-			"security-manager-sql-tables-truncate");
-		_updateTableNames = getPropertySet(
-			"security-manager-sql-tables-update");
-	}
-
 	protected boolean isAllowedTable(
-		String tableName, Set<String> allowedTableNames) {
+		String operation, String objectType, String tableName) {
 
-		if (_allTableNames.contains(tableName) ||
-			allowedTableNames.contains(tableName)) {
+		if (objectType == null) {
+			objectType = StringPool.BLANK;
+		}
+		else {
+			objectType = StringPool.DASH + objectType;
+		}
+
+		if (tableName == null) {
+			return true;
+		}
+
+		if (isAllowedTable("all", tableName) ||
+			isAllowedTable(operation + objectType, tableName)) {
 
 			return true;
 		}
 
+		if (!objectType.isEmpty()) {
+			if (isAllowedTable(operation + "-any", tableName)) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 
-	protected boolean isAllowedTable(
-		Table table, Set<String> allowedTableNames) {
-
-		String tableName = table.getName();
-
-		return isAllowedTable(tableName, allowedTableNames);
-	}
-
 	protected boolean isAllowedTables(
-		List<String> tableNames, Set<String> allowedTableNames) {
+		String operation, String objectType, List<String> tableNames) {
 
 		for (String tableName : tableNames) {
-			if (!isAllowedTable(tableName, allowedTableNames)) {
+			if (!isAllowedTable(operation, objectType, tableName)) {
 				return false;
 			}
 		}
@@ -221,78 +167,47 @@ public class SQLChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(SQLChecker.class);
 
-	private Set<String> _allTableNames;
-	private Set<String> _createTableNames;
-	private Set<String> _deleteTableNames;
-	private Set<String> _dropTableNames;
-	private Set<String> _insertTableNames;
-	private JSqlParser _jSqlParser = new CCJSqlParserManager();
-	private Set<String> _replaceTableNames;
-	private Set<String> _selectTableNames;
-	private Set<String> _truncateTableNames;
-	private Set<String> _updateTableNames;
+	private Map<String, Set<TableNameWrapper>> _tableNames =
+		new HashMap<String, Set<TableNameWrapper>>();
 
-	private class TableNamesFinder extends TablesNamesFinder {
+	private class TableNameWrapper {
 
-		public TableNamesFinder() {
-			tables = new ArrayList<String>();
+		public TableNameWrapper(String tableName) {
+			if (tableName.contains(StringPool.STAR)) {
+				_wildCardCheck = true;
+
+				try {
+					_tableNamePattern = Pattern.compile(
+						tableName.replaceAll("\\*", ".*?"));
+				}
+				catch (PatternSyntaxException pse) {
+					_wildCardCheck = false;
+				}
+			}
+
+			_tableName = tableName;
 		}
 
-		public List<String> getTableNames(Delete delete) {
-			Table table = delete.getTable();
+		@Override
+		public boolean equals(Object obj) {
+			if (!(obj instanceof String)) {
+				return false;
+			}
 
-			tables.add(table.getName());
+			String tableName = (String)obj;
 
-			Expression where = delete.getWhere();
+			if (_wildCardCheck) {
+				Matcher m = _tableNamePattern.matcher(tableName);
 
-			where.accept(this);
+				return m.matches();
+			}
 
-			return tables;
+			return _tableName.equals(tableName);
 		}
 
-		public List<String> getTableNames(Insert insert) {
-			Table table = insert.getTable();
-
-			tables.add(table.getName());
-
-			ItemsList itemsList = insert.getItemsList();
-
-			itemsList.accept(this);
-
-			return tables;
-		}
-
-		public List<String> getTableNames(Replace replace) {
-			Table table = replace.getTable();
-
-			tables.add(table.getName());
-
-			ItemsList itemsList = replace.getItemsList();
-
-			itemsList.accept(this);
-
-			return tables;
-		}
-
-		public List<String> getTableNames(Select select) {
-			SelectBody selectBody = select.getSelectBody();
-
-			selectBody.accept(this);
-
-			return tables;
-		}
-
-		public List<String> getTableNames(Update update) {
-			Table table = update.getTable();
-
-			tables.add(table.getName());
-
-			Expression where = update.getWhere();
-
-			where.accept(this);
-
-			return tables;
-		}
+		private String _tableName = null;
+		private Pattern _tableNamePattern = null;
+		private boolean _wildCardCheck = false;
 
 	}
 

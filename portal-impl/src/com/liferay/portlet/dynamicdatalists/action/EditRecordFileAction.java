@@ -108,7 +108,7 @@ public class EditRecordFileAction extends PortletAction {
 
 		Field field = fields.get(fieldName);
 
-		List<Serializable> values = field.getValues();
+		List<Serializable> values = field.getValues(themeDisplay.getLocale());
 
 		int valueIndex = ParamUtil.getInteger(portletRequest, "valueIndex");
 

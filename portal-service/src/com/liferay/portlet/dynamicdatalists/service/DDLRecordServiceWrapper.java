@@ -69,6 +69,15 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 			fieldsMap, serviceContext);
 	}
 
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecord deleteRecordLocale(
+		long recordId, java.util.Locale locale,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordService.deleteRecordLocale(recordId, locale,
+			serviceContext);
+	}
+
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord getRecord(
 		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException,

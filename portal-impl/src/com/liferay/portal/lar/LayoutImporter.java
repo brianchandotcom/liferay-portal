@@ -832,7 +832,8 @@ public class LayoutImporter {
 				layoutSet.getSettingsProperties();
 
 			settingsProperties.setProperty(
-				"last-merge-time", String.valueOf(System.currentTimeMillis()));
+				SitesUtil.LAST_MERGE_TIME,
+				String.valueOf(System.currentTimeMillis()));
 
 			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}

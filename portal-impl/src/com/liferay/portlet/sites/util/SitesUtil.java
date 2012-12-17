@@ -121,6 +121,11 @@ public class SitesUtil {
 
 	public static final String ANALYTICS_PREFIX = "analytics_";
 
+	public static final String LAST_MERGE_TIME = "last-merge-time";
+	public static final String LAST_RESET_TIME = "last-reset-time";
+	public static final String LAYOUT_UPDATEABLE = "layoutUpdateable";
+	public static final String MERGE_FAIL_COUNT = "merge-fail-count";
+
 	public static void addPortletBreadcrumbEntries(
 			Group group, HttpServletRequest request,
 			RenderResponse renderResponse)
@@ -236,7 +241,7 @@ public class SitesUtil {
 			targetLayout.getTypeSettingsProperties();
 
 		typeSettingsProperties.setProperty(
-			"last-merge-time",
+			LAST_MERGE_TIME,
 			String.valueOf(targetLayout.getModifiedDate().getTime()));
 
 		LayoutLocalServiceUtil.updateLayout(targetLayout);
@@ -244,7 +249,7 @@ public class SitesUtil {
 		UnicodeProperties prototypeTypeSettingsProperties =
 			layoutPrototypeLayout.getTypeSettingsProperties();
 
-		prototypeTypeSettingsProperties.setProperty("merge-fail-count", "0");
+		prototypeTypeSettingsProperties.setProperty(MERGE_FAIL_COUNT, "0");
 
 		LayoutLocalServiceUtil.updateLayout(layoutPrototypeLayout);
 	}
@@ -685,7 +690,7 @@ public class SitesUtil {
 		LayoutSet existingLayoutSet = layout.getLayoutSet();
 
 		long lastMergeTime = GetterUtil.getLong(
-			existingLayoutSet.getSettingsProperty("last-merge-time"));
+			existingLayoutSet.getSettingsProperty(LAST_MERGE_TIME));
 
 		Date existingLayoutModifiedDate = layout.getModifiedDate();
 
@@ -752,11 +757,9 @@ public class SitesUtil {
 				Layout layoutSetPrototypeLayout = getLayoutSetPrototypeLayout(
 					layout);
 
-				UnicodeProperties typeSettingsProperties =
-					layoutSetPrototypeLayout.getTypeSettingsProperties();
-
-				String layoutUpdateable = typeSettingsProperties.getProperty(
-					"layoutUpdateable");
+				String layoutUpdateable =
+					layoutSetPrototypeLayout.getTypeSettingsProperty(
+						LAYOUT_UPDATEABLE);
 
 				if (Validator.isNull(layoutUpdateable)) {
 					return true;
@@ -880,14 +883,14 @@ public class SitesUtil {
 					sourcePrototypeLayoutUuid,
 					layoutSetPrototypeGroup.getGroupId());
 
-			doMergeLayoutProtypeLayout(
+			doMergeLayoutPrototypeLayout(
 				layoutSetPrototypeGroup, sourcePrototypeLayout);
 		}
 
 		doMergeLayoutProtypeLayout(group, layout);
 	}
 
-	public static void mergeLayoutSetProtypeLayouts(
+	public static void mergeLayoutSetPrototypeLayouts(
 		Group group, LayoutSet layoutSet)
 		throws Exception {
 
@@ -901,7 +904,7 @@ public class SitesUtil {
 			layoutSet.getSettingsProperties();
 
 		long lastMergeTime = GetterUtil.getLong(
-			settingsProperties.getProperty("last-merge-time"));
+			settingsProperties.getProperty(LAST_MERGE_TIME));
 
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutSetPrototypeLocalServiceUtil.
@@ -923,7 +926,7 @@ public class SitesUtil {
 
 		int mergeFailCount = GetterUtil.getInteger(
 			layoutSetPrototypeSettingsProperties.getProperty(
-				"merge-fail-count"));
+				MERGE_FAIL_COUNT));
 
 		if (mergeFailCount >
 			PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD) {
@@ -986,7 +989,7 @@ public class SitesUtil {
 			boolean importData = true;
 
 			long lastResetTime = GetterUtil.getLong(
-				settingsProperties.getProperty("last-reset-time"));
+				settingsProperties.getProperty(LAST_RESET_TIME));
 
 			if ((lastMergeTime > 0) || (lastResetTime > 0)) {
 				importData = false;
@@ -1003,7 +1006,7 @@ public class SitesUtil {
 			_log.error(e, e);
 
 			layoutSetPrototypeSettingsProperties.setProperty(
-				"merge-fail-count", String.valueOf(++mergeFailCount));
+				MERGE_FAIL_COUNT, String.valueOf(++mergeFailCount));
 
 			// Invoke updateImpl so that we do not trigger the listeners
 
@@ -1027,10 +1030,10 @@ public class SitesUtil {
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 
-		settingsProperties.remove("last-merge-time");
+		settingsProperties.remove(LAST_MERGE_TIME);
 
 		settingsProperties.setProperty(
-			"last-reset-time", String.valueOf(System.currentTimeMillis()));
+			LAST_RESET_TIME, String.valueOf(System.currentTimeMillis()));
 
 		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 	}
@@ -1097,7 +1100,8 @@ public class SitesUtil {
 			publicLayoutSetPrototypeLinkEnabled);
 	}
 
-	protected static void doMergeLayoutProtypeLayout(Group group, Layout layout)
+	protected static void doMergeLayoutPrototypeLayout(
+			Group group, Layout layout)
 		throws Exception {
 
 		if (!layout.isLayoutPrototypeLinkActive() ||
@@ -1106,11 +1110,8 @@ public class SitesUtil {
 			return;
 		}
 
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
-
 		long lastMergeTime = GetterUtil.getLong(
-			typeSettingsProperties.getProperty("last-merge-time"));
+			layout.getTypeSettingsProperty(LAST_MERGE_TIME));
 
 		LayoutPrototype layoutPrototype =
 			LayoutPrototypeLocalServiceUtil.
@@ -1129,7 +1130,7 @@ public class SitesUtil {
 			layoutPrototypeLayout.getTypeSettingsProperties();
 
 		int mergeFailCount = GetterUtil.getInteger(
-			prototypeTypeSettingsProperties.getProperty("merge-fail-count"));
+			prototypeTypeSettingsProperties.getProperty(MERGE_FAIL_COUNT));
 
 		if (mergeFailCount >
 			PropsValues.LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD) {
@@ -1195,7 +1196,7 @@ public class SitesUtil {
 			_log.error(e, e);
 
 			prototypeTypeSettingsProperties.setProperty(
-				"merge-fail-count", String.valueOf(++mergeFailCount));
+				MERGE_FAIL_COUNT, String.valueOf(++mergeFailCount));
 
 			// Invoke updateImpl so that we do not trigger the listeners
 

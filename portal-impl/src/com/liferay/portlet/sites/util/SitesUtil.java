@@ -863,7 +863,26 @@ public class SitesUtil {
 	}
 
 	public static void mergeLayoutProtypeLayout(Group group, Layout layout)
-		throws Exception {
+			throws Exception {
+
+		String sourcePrototypeLayoutUuid =
+			layout.getSourcePrototypeLayoutUuid();
+
+		if (Validator.isNotNull(sourcePrototypeLayoutUuid)) {
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			Group layoutSetPrototypeGroup =
+				GroupLocalServiceUtil.getLayoutSetPrototypeGroup(
+					layout.getCompanyId(), layoutSet.getLayoutSetPrototypeId());
+
+			Layout sourcePrototypeLayout =
+				LayoutUtil.findByUUID_G(
+					sourcePrototypeLayoutUuid,
+					layoutSetPrototypeGroup.getGroupId());
+
+			doMergeLayoutProtypeLayout(
+				layoutSetPrototypeGroup, sourcePrototypeLayout);
+		}
 
 		doMergeLayoutProtypeLayout(group, layout);
 	}

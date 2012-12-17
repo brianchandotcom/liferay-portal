@@ -228,8 +228,9 @@ public class GetFileAction extends PortletAction {
 		}
 
 		if (Validator.isNull(version)) {
-			if ((fileEntry!=null) &&
-				Validator.isNotNull(fileEntry.getVersion())) {
+			if ((fileEntry != null) &&
+			    Validator.isNotNull(fileEntry.getVersion())) {
+
 				version = fileEntry.getVersion();
 			}
 			else {

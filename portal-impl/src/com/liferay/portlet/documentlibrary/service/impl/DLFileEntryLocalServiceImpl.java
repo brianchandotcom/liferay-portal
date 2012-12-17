@@ -1490,11 +1490,15 @@ public class DLFileEntryLocalServiceImpl
 				dlFileVersionPersistence.update(curDLFileVersion);
 			}
 
+			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+			typeSettingsProperties.put("title", dlFileEntry.getTitle());
+
 			trashEntryLocalService.addTrashEntry(
 				userId, dlFileEntry.getGroupId(),
 				DLFileEntryConstants.getClassName(),
 				dlFileEntry.getFileEntryId(), oldDLFileVersionStatus,
-				dlFileVersionStatusOVPs, null);
+				dlFileVersionStatusOVPs, typeSettingsProperties);
 		}
 
 		// App helper

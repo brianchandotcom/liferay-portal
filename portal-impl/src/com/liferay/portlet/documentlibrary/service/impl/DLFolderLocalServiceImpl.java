@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
@@ -619,7 +620,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		if (dlFolder.isInTrash() &&
 			(status == WorkflowConstants.STATUS_APPROVED)) {
 
-			dlFolder.setName(TrashUtil.stripTrashNamespace(dlFolder.getName()));
+			dlFolder.setName(TrashUtil.getOriginalTitle(dlFolder.getName()));
 		}
 
 		dlFolder.setStatus(status);
@@ -644,10 +645,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		// Trash
 
 		if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+			typeSettingsProperties.put("title", dlFolder.getName());
+
 			trashEntryLocalService.addTrashEntry(
 				userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
 				dlFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, null,
-				null);
+				typeSettingsProperties);
 		}
 
 		return dlFolder;

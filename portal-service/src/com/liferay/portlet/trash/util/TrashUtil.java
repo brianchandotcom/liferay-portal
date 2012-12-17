@@ -67,14 +67,6 @@ public class TrashUtil {
 			request, className, classPK, containerModelURL);
 	}
 
-	public static String appendTrashNamespace(String title) {
-		return getTrash().appendTrashNamespace(title);
-	}
-
-	public static String appendTrashNamespace(String title, String separator) {
-		return getTrash().appendTrashNamespace(title, separator);
-	}
-
 	public static void deleteEntriesAttachments(
 			long companyId, long repositoryId, Date date,
 			String[] attachmentFileNames)
@@ -106,6 +98,10 @@ public class TrashUtil {
 		return getTrash().getNewName(themeDisplay, oldName);
 	}
 
+	public static String getOriginalTitle(String title) {
+		return getTrash().getOriginalTitle(title);
+	}
+
 	public static Trash getTrash() {
 		PortalRuntimePermission.checkGetBeanProperty(TrashUtil.class);
 
@@ -114,6 +110,10 @@ public class TrashUtil {
 
 	public static String getTrashTime(String title, String separator) {
 		return getTrash().getTrashTime(title, separator);
+	}
+
+	public static String getTrashTitle(long trashEntryId) {
+		return getTrash().getTrashTitle(trashEntryId);
 	}
 
 	public static boolean isInTrash(String className, long classPK)
@@ -126,14 +126,6 @@ public class TrashUtil {
 		throws PortalException, SystemException {
 
 		return getTrash().isTrashEnabled(groupId);
-	}
-
-	public static String stripTrashNamespace(String title) {
-		return getTrash().stripTrashNamespace(title);
-	}
-
-	public static String stripTrashNamespace(String title, String separator) {
-		return getTrash().stripTrashNamespace(title, separator);
 	}
 
 	public void setTrash(Trash trash) {

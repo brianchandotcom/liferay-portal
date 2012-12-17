@@ -134,6 +134,11 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected String getUniqueTitle(BaseModel<?> baseModel) {
+		return null;
+	}
+
+	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
 		BlogsEntryLocalServiceUtil.moveEntryToTrash(
 			TestPropsValues.getUserId(), primaryKey);

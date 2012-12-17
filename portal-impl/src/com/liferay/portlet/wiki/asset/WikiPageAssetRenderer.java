@@ -112,7 +112,7 @@ public class WikiPageAssetRenderer
 			return _page.getTitle();
 		}
 
-		return TrashUtil.stripTrashNamespace(_page.getTitle());
+		return TrashUtil.getOriginalTitle(_page.getTitle());
 	}
 
 	public String getType() {

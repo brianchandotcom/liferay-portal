@@ -60,7 +60,7 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 			return _node.getName();
 		}
 
-		return TrashUtil.stripTrashNamespace(_node.getName());
+		return TrashUtil.getOriginalTitle(_node.getName());
 	}
 
 	public String getType() {

@@ -26,7 +26,6 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
@@ -148,8 +147,6 @@ public class MBAttachmentsTrashTest {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			fileEntryId);
 
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
 		Assert.assertEquals(
 			initialNotInTrashCount, _message.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(
@@ -159,7 +156,7 @@ public class MBAttachmentsTrashTest {
 		if (restore) {
 			MBMessageLocalServiceUtil.restoreMessageAttachmentFromTrash(
 				TestPropsValues.getUserId(), _message.getMessageId(),
-				dlFileEntry.getTitle());
+				fileEntry.getTitle());
 
 			Assert.assertEquals(
 				initialNotInTrashCount + 1,
@@ -173,7 +170,7 @@ public class MBAttachmentsTrashTest {
 		}
 		else {
 			MBMessageLocalServiceUtil.deleteMessageAttachment(
-				_message.getMessageId(), dlFileEntry.getTitle());
+				_message.getMessageId(), fileEntry.getTitle());
 
 			Assert.assertEquals(
 				initialNotInTrashCount,

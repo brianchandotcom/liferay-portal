@@ -114,7 +114,7 @@ public class GetMessageAttachmentAction extends PortletAction {
 		}
 
 		if (dlFileVersion.isInTrash()) {
-			fileName = TrashUtil.stripTrashNamespace(dlFileEntry.getTitle());
+			fileName = TrashUtil.getOriginalTitle(dlFileEntry.getTitle());
 		}
 
 		ServletResponseUtil.sendFile(

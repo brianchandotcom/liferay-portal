@@ -31,6 +31,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -75,10 +76,15 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
+		String randomName = ServiceTestUtil.randomString(
+			_MAX_FOLDER_NAME_LENGTH - getSearchKeywords().length());
+
+		String name = getSearchKeywords().concat(randomName);
+
 		DLFolder dlFolder = DLFolderLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), parentDLFolder.getGroupId(),
 			parentDLFolder.getGroupId(), false, parentDLFolder.getFolderId(),
-			getSearchKeywords(), StringPool.BLANK, false, serviceContext);
+			name, StringPool.BLANK, false, serviceContext);
 
 		return dlFolder;
 	}
@@ -129,6 +135,15 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected String getUniqueTitle(BaseModel<?> baseModel) {
+		DLFolder dlFolder = (DLFolder)baseModel;
+
+		String name = dlFolder.getName();
+
+		return TrashUtil.getOriginalTitle(name);
+	}
+
+	@Override
 	protected boolean isAssetableModel() {
 		return false;
 	}
@@ -174,5 +189,7 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		DLAppServiceUtil.moveFolderToTrash(primaryKey);
 	}
+
+	private static final int _MAX_FOLDER_NAME_LENGTH = 100;
 
 }

@@ -24,6 +24,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Locale;
 
@@ -84,7 +85,7 @@ public class DLFolderTrashRenderer extends BaseTrashRenderer {
 	}
 
 	public String getTitle(Locale locale) {
-		return _folder.getName();
+		return TrashUtil.getOriginalTitle(_folder.getName());
 	}
 
 	public String getType() {

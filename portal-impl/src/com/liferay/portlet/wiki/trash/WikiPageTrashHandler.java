@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -29,7 +28,6 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -66,13 +64,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 			containerModelId = page.getNodeId();
 		}
 
-		String restoredTitle = page.getTitle();
-
-		if (Validator.isNotNull(newName)) {
-			restoredTitle = newName;
-		}
-
-		String originalTitle = TrashUtil.stripTrashNamespace(restoredTitle);
+		String originalTitle = trashEntry.getTypeSettingsProperty("title");
 
 		WikiPageResource pageResource =
 			WikiPageResourceLocalServiceUtil.fetchPageResource(

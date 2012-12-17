@@ -161,8 +161,6 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 	>
 
 		<%
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
 		int status = WorkflowConstants.STATUS_APPROVED;
 
 		if (viewTrashAttachments) {
@@ -175,7 +173,7 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 			<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-			<portlet:param name="fileName" value="<%= dlFileEntry.getTitle() %>" />
+			<portlet:param name="fileName" value="<%= fileEntry.getTitle() %>" />
 			<portlet:param name="status" value="<%= String.valueOf(status) %>" />
 		</liferay-portlet:actionURL>
 
@@ -183,7 +181,7 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 			href="<%= rowURL %>"
 			name="file-name"
 		>
-			<img align="left" alt="" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(fileEntry.getExtension()) %>.png"> <%= fileEntry.getTitle() %>
+			<img align="left" alt="" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(fileEntry.getExtension()) %>.png"> <%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text

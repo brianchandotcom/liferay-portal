@@ -25,6 +25,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -61,9 +62,14 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
+		String randomTitle = ServiceTestUtil.randomString(
+			_MAX_PAGE_TITLE_LENGTH - getSearchKeywords().length());
+
+		String pageTitle = getSearchKeywords().concat(randomTitle);
+
 		WikiPage page = WikiPageLocalServiceUtil.addPage(
 			TestPropsValues.getUserId(),
-			(Long)parentBaseModel.getPrimaryKeyObj(), getSearchKeywords(),
+			(Long)parentBaseModel.getPrimaryKeyObj(), pageTitle,
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
 			true, serviceContext);
 
@@ -115,7 +121,8 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		serviceContext.setWorkflowAction(WorkflowConstants.STATUS_APPROVED);
 
 		return WikiNodeLocalServiceUtil.addNode(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
+			TestPropsValues.getUserId(),
+			ServiceTestUtil.randomString(_MAX_NODE_NAME_LENGTH),
 			ServiceTestUtil.randomString(), serviceContext);
 	}
 
@@ -134,6 +141,15 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		WikiPage page = (WikiPage)classedModel;
 
 		return page.getResourcePrimKey();
+	}
+
+	@Override
+	protected String getUniqueTitle(BaseModel<?> baseModel) {
+		WikiPage page = (WikiPage)baseModel;
+
+		String title = page.getTitle();
+
+		return TrashUtil.getOriginalTitle(title);
 	}
 
 	@Override
@@ -178,10 +194,14 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return WikiPageLocalServiceUtil.updatePage(
-			TestPropsValues.getUserId(), page.getNodeId(), getSearchKeywords(),
+			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle(),
 			page.getVersion(), ServiceTestUtil.randomString(),
 			ServiceTestUtil.randomString(), false, page.getFormat(),
 			page.getParentTitle(), page.getRedirectTitle(), serviceContext);
 	}
+
+	private static final int _MAX_NODE_NAME_LENGTH = 75;
+
+	private static final int _MAX_PAGE_TITLE_LENGTH = 255;
 
 }

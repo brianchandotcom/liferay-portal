@@ -23,7 +23,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -177,7 +176,7 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	}
 
 	public String getTitle() {
-		return TrashUtil.stripTrashNamespace(_dlFileVersion.getTitle());
+		return _dlFileVersion.getTitle();
 	}
 
 	public DLFolder getTrashFolder() {

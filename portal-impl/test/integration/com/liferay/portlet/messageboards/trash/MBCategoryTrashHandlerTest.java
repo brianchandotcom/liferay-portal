@@ -122,6 +122,11 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected String getUniqueTitle(BaseModel<?> baseModel) {
+		return null;
+	}
+
+	@Override
 	protected boolean isAssetableModel() {
 		return false;
 	}

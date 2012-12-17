@@ -109,7 +109,7 @@ CKEDITOR.on(
 			infoTab.remove('htmlHeightType');
 			infoTab.remove('txtBorder');
 			infoTab.remove('txtCellPad');
-			infoTab.remove('txtCellSpace'); 
+			infoTab.remove('txtCellSpace');
 			infoTab.remove('txtHeight');
 			infoTab.remove('txtSummary');
 			infoTab.remove('txtWidth');

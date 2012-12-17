@@ -306,20 +306,18 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 							containerNode.one('.cke_dialog_ui_hbox_child').hide();
 
 							var cellTypeWrapper = containerNode.one('.cke_dialog_ui_hbox_last');
-							
+
 							cellTypeWrapper.replaceClass('cke_dialog_ui_hbox_last', 'cke_dialog_ui_hbox_first');
 
-							cellTypeWrapper.setStyle('100%');
+							cellTypeWrapper.setStyle('width', '100%');
 
-							var containerNodeRowElements = cellTypeWrapper.all('tr');
-
-							containerNodeRowElements.each(
-								function(item, index) {
+							cellTypeWrapper.all('tr').each(
+								function(item, index, collection) {
 									if (index > 0) {
 										item.hide();
 									}
 								}
-							)							
+							);
 
 							containerNode.setData(MODIFIED, true);
 						}

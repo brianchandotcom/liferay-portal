@@ -483,30 +483,36 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 		</span>
 	</div>
 
-	<aui:script use="aui-base,aui-io">
+	<aui:script>
+		Liferay.provide(
+			window,
+			'<portlet:namespace />toggleCustomizedView',
+			function(event) {
+				A.io.request(
+					themeDisplay.getPathMain() + '/portal/update_layout',
+					{
+						data: {
+							cmd: 'toggle_customized_view',
+							customized_view: '<%= String.valueOf(!layoutTypePortlet.isCustomizedView()) %>',
+							p_auth: '<%= AuthTokenUtil.getToken(request) %>'
+						},
+						on: {
+							success: function(event, id, obj) {
+								window.location.href = themeDisplay.getLayoutURL();
+							}
+						}
+					}
+				);
+			},
+			['aui-io-request']
+		);
+	</aui:script>
+
+	<aui:script use="aui-base">
 		var toggleCustomizedView = A.one('#<portlet:namespace />toggleCustomizedView');
 
 		if (toggleCustomizedView) {
-			toggleCustomizedView.on(
-				'click',
-				function(event) {
-					A.io.request(
-						themeDisplay.getPathMain() + '/portal/update_layout',
-						{
-							data: {
-								cmd: 'toggle_customized_view',
-								customized_view: '<%= String.valueOf(!layoutTypePortlet.isCustomizedView()) %>',
-								p_auth: '<%= AuthTokenUtil.getToken(request) %>'
-							},
-							on: {
-								success: function(event, id, obj) {
-									window.location.href = themeDisplay.getLayoutURL();
-								}
-							}
-						}
-					);
-				}
-			);
+			toggleCustomizedView.on('click', <portlet:namespace />toggleCustomizedView);
 		}
 	</aui:script>
 </c:if>

@@ -173,17 +173,18 @@ public interface LayoutLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the layout with the UUID in the group.
+	* Returns the layout with the UUID in the group/isPrivateLayout.
 	*
 	* @param uuid the UUID of layout
 	* @param groupId the group id of the layout
+	* @param isPrivateLayout the isPrivateLayout of the layout
 	* @return the layout
-	* @throws PortalException if a layout with the UUID in the group could not be found
+	* @throws PortalException if a layout with the UUID in the group/isPrivateLayout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Layout getLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+	public com.liferay.portal.model.Layout getLayoutByUuidGroupIdPrivateLayout(
+		java.lang.String uuid, long groupId, boolean isPrivateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -570,13 +571,14 @@ public interface LayoutLocalService extends BaseLocalService,
 	*
 	* @param uuid the universally unique identifier of the scope layout
 	* @param groupId the primary key of the group
+	* @param privateLayout the private layout status of the group
 	* @return the layout, or <code>null</code> if a matching layout could not
 	be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+	public com.liferay.portal.model.Layout fetchLayoutByUuidGroupIdPrivateLayout(
+		java.lang.String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -892,7 +894,20 @@ public interface LayoutLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLayoutSetPrototypeLayout(
 		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
-		long companyId)
+		long companyId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLayoutSetPrototypeLayout(long layoutSetPrototypeId,
+		java.lang.String layoutUuid, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLayoutSetPrototypeLayout(
+		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
+		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

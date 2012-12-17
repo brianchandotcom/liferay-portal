@@ -67,17 +67,16 @@ long assetClassPK = 0;
 
 <portlet:actionURL var="editMultipleFileEntriesURL">
 	<portlet:param name="struts_action" value="document_library/edit_file_entry" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_MULTIPLE %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editMultipleFileEntriesURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "updateMultipleFiles();" %>'>
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
+	<aui:input name="repositoryId" type="hidden" value="<%= String.valueOf(repositoryId) %>" />
+	<aui:input name="folderId" type="hidden" value="<%= String.valueOf(folderId) %>" />
+
 	<div class="no-files-selected-info portlet-msg-info aui-helper-hidden" id="<portlet:namespace />metadataExplanationContainer">
 		<liferay-ui:message key="select-documents-from-the-left-to-add-them-to-the-documents-and-media" />
 	</div>
-
-	<aui:input name="repositoryId" type="hidden" value="<%= String.valueOf(repositoryId) %>" />
-
-	<aui:input name="folderId" type="hidden" value="<%= String.valueOf(folderId) %>" />
 
 	<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 

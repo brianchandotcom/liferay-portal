@@ -224,8 +224,8 @@ public class LoginUtil {
 		portletURL.setWindowState(WindowState.MAXIMIZED);
 		portletURL.setPortletMode(PortletMode.VIEW);
 
-		portletURL.setParameter("saveLastPath", "0");
 		portletURL.setParameter("struts_action", "/login/login");
+		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 
 		return portletURL;
 	}

@@ -38,10 +38,10 @@ portletURL.setParameter("callback", callback);
 <div class="asset-search">
 	<liferay-portlet:renderURL varImpl="searchURL">
 		<portlet:param name="struts_action" value="/asset_browser/view" />
-		<portlet:param name="callback" value="<%= callback %>" />
 	</liferay-portlet:renderURL>
 
 	<aui:form action="<%= searchURL %>" method="post" name="searchFm">
+		<aui:input name="callback" type="hidden" value="<%= callback %>" />
 		<aui:input name="typeSelection" type="hidden" value="<%= typeSelection %>" />
 
 		<%

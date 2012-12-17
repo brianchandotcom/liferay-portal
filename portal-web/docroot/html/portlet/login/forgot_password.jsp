@@ -31,7 +31,6 @@ if (reminderAttempts == null) {
 %>
 
 <portlet:actionURL var="forgotPasswordURL">
-	<portlet:param name="saveLastPath" value="0" />
 	<portlet:param name="struts_action" value="/login/forgot_password" />
 </portlet:actionURL>
 
@@ -39,6 +38,7 @@ if (reminderAttempts == null) {
 	<portlet:renderURL var="redirectURL" />
 
 	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
+	<aui:input name="saveLastPath" type="hidden" value="<%= Boolean.FALSE.toString() %>" />
 
 	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 

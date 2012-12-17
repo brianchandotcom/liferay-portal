@@ -17,12 +17,12 @@
 <%@ include file="/html/portlet/login/init.jsp" %>
 
 <portlet:actionURL var="createAnonymousAccountURL">
-	<portlet:param name="saveLastPath" value="0" />
 	<portlet:param name="struts_action" value="/login/create_anonymous_account" />
 </portlet:actionURL>
 
 <aui:form action="<%= createAnonymousAccountURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+	<aui:input name="saveLastPath" type="hidden" value="<%= Boolean.FALSE.toString() %>" />
 
 	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 	<liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />

@@ -32,14 +32,14 @@ birthday.set(Calendar.YEAR, 1970);
 boolean male = ParamUtil.getBoolean(request, "male", true);
 %>
 
-<portlet:actionURL secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccoutURL">
-	<portlet:param name="saveLastPath" value="0" />
+<portlet:actionURL secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccountURL">
 	<portlet:param name="struts_action" value="/login/create_account" />
 </portlet:actionURL>
 
-<aui:form action="<%= createAccoutURL %>" method="post" name="fm">
+<aui:form action="<%= createAccountURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="saveLastPath" type="hidden" value="<%= Boolean.FALSE.toString() %>" />
 	<aui:input name="openId" type="hidden" value="<%= openId %>" />
 
 	<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />

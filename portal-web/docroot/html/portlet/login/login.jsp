@@ -44,13 +44,13 @@
 		%>
 
 		<portlet:actionURL secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="loginURL">
-			<portlet:param name="saveLastPath" value="0" />
 			<portlet:param name="struts_action" value="/login/login" />
-			<portlet:param name="doActionAfterLogin" value="<%= portletName.equals(PortletKeys.FAST_LOGIN) ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" />
 		</portlet:actionURL>
 
 		<aui:form action="<%= loginURL %>" autocomplete='<%= PropsValues.COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE ? "on" : "off" %>' method="post" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input name="saveLastPath" type="hidden" value="<%= Boolean.FALSE.toString() %>" />
+			<aui:input name="doActionAfterLogin" type="hidden" value="<%= portletName.equals(PortletKeys.FAST_LOGIN) ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" />
 
 			<c:choose>
 				<c:when test='<%= SessionMessages.contains(request, "userAdded") %>'>

@@ -148,7 +148,6 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 			String.valueOf(
 				AssetPublisherUtil.getRecentFolderId(
 					liferayPortletRequest, CLASS_NAME)));
-		portletURL.setParameter("uploader", "classic");
 
 		return portletURL;
 	}

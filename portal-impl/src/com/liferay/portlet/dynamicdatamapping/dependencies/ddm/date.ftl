@@ -4,7 +4,7 @@
 	<#assign fieldDateValue = fieldRawValue>
 <#else>
 	<#if (validator.isNotNull(predefinedValue))>
-		<#assign fieldDateValue = dateUtil.parseDate(predefinedValue, locale)>
+		<#assign fieldDateValue = dateUtil.parseDate(predefinedValue, requestedLocale)>
 	<#else>
 		<#assign fieldDateValue = dateUtil.newDate()>
 	</#if>

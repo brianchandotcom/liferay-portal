@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<taglibs short-name="liferay-ddm" uri="http://liferay.com/tld/ddm" tlib-version="1.0">
+<taglibs short-name="ddm" uri="http://liferay.com/tld/ddm" tlib-version="1.0">
 	<authors>
 		<author>Bruno Basto</author>
 	</authors>
@@ -43,6 +43,12 @@
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
+				<name>requestedLocale</name>
+				<inputType>java.util.Locale</inputType>
+				<outputType>java.util.Locale</outputType>
+				<required>false</required>
 			</attribute>
 		</attributes>
 	</component>

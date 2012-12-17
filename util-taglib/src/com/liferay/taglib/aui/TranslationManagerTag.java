@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %>
+package com.liferay.taglib.aui;
 
-<%
-String containerId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+import com.liferay.taglib.aui.base.BaseTranslationManagerTag;
 
-String xsd = DDMXSDUtil.getXSD(classNameId, classPK);
-
-if (requestedLocale == null) {
-	requestedLocale = locale;
+/**
+ * @author Eduardo Lundgren
+ * @author Bruno Basto
+ * @author Nathan Cavanaugh
+ * @author Julio Camarero
+ */
+public class TranslationManagerTag extends BaseTranslationManagerTag {
 }
-%>

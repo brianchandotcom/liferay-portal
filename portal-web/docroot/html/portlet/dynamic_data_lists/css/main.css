@@ -16,6 +16,10 @@
 	.add-record-button-row {
 		margin: 10px 0;
 	}
+
+	.record-toolbar {
+		margin-bottom: 5px;
+	}
 }
 
 .yui3-skin-sam .lfr-spreadsheet-container {

@@ -517,6 +517,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 		freeMarkerContext.put("fieldStructure", fieldContext);
 		freeMarkerContext.put("parentFieldStructure", parentFieldContext);
+		freeMarkerContext.put("requestedLocale", locale);
 
 		return freeMarkerContext;
 	}

@@ -67,8 +67,8 @@
 
 	<#assign valueIndex = getterUtil.getInteger(repeatableIndex)>
 
-	<#assign fieldValue = field.getRenderedValue(locale, valueIndex)>
-	<#assign fieldRawValue = field.getValue(valueIndex)>
+	<#assign fieldValue = field.getRenderedValue(requestedLocale, valueIndex)>
+	<#assign fieldRawValue = field.getValue(requestedLocale, valueIndex)>
 </#if>
 
 <#-- Label -->

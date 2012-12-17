@@ -58,6 +58,10 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _repeatable;
 	}
 
+	public java.util.Locale getRequestedLocale() {
+		return _requestedLocale;
+	}
+
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
 
@@ -100,6 +104,12 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("repeatable", repeatable);
 	}
 
+	public void setRequestedLocale(java.util.Locale requestedLocale) {
+		_requestedLocale = requestedLocale;
+
+		setScopedAttribute("requestedLocale", requestedLocale);
+	}
+
 	@Override
 	protected void cleanUp() {
 		_classNameId = 0;
@@ -109,6 +119,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_mode = null;
 		_readOnly = false;
 		_repeatable = true;
+		_requestedLocale = null;
 	}
 
 	@Override
@@ -130,6 +141,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "mode", _mode);
 		setNamespacedAttribute(request, "readOnly", _readOnly);
 		setNamespacedAttribute(request, "repeatable", _repeatable);
+		setNamespacedAttribute(request, "requestedLocale", _requestedLocale);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "ddm:html:";
@@ -147,5 +159,6 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _mode = null;
 	private boolean _readOnly = false;
 	private boolean _repeatable = true;
+	private java.util.Locale _requestedLocale = null;
 
 }

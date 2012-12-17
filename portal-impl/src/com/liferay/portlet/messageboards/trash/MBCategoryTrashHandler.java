@@ -306,6 +306,14 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		return false;
 	}
 
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+
+		return category.isInTrashCategory();
+	}
+
 	@Override
 	public boolean isMovable() {
 		return true;

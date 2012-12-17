@@ -194,6 +194,14 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		return false;
 	}
 
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
+
+		return page.isInTrashFolder();
+	}
+
 	public void restoreTrashEntries(long[] classPKs)
 		throws PortalException, SystemException {
 

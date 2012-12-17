@@ -518,6 +518,9 @@ public interface TrashHandler {
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException;
 
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException;
+
 	/**
 	 * Returns <code>true</code> if the entity can be moved from one container
 	 * model (such as a folder) to another.

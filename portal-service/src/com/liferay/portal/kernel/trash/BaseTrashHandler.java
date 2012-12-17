@@ -329,6 +329,12 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return false;
 	}
 
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		return false;
+	}
+
 	public boolean isMovable() {
 		return false;
 	}

@@ -14,12 +14,14 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Igor Spasic
@@ -32,6 +34,12 @@ public class FooService {
 
 	public static String camel(String goodName, String badNAME) {
 		return goodName + '*' + badNAME;
+	}
+
+	public static int complex(
+		List<Long> longs, int[] ints, Map<String, Long> map) {
+
+		return longs.size() + ints.length + map.size();
 	}
 
 	public static FooData getFooData(int id) {
@@ -105,6 +113,10 @@ public class FooService {
 
 	public static String nullReturn() {
 		return null;
+	}
+
+	public static String search(String name, String... params) {
+		return "search " + name + '>' + StringUtil.merge(params);
 	}
 
 	public static String srvcctx(ServiceContext serviceContext) {

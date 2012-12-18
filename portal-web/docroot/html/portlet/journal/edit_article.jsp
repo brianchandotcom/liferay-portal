@@ -291,6 +291,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 					<liferay-ui:form-navigator
 						categoryNames="<%= _CATEGORY_NAMES %>"
 						categorySections="<%= categorySections %>"
+						formName="fm1"
 						htmlBottom="<%= htmlBottom %>"
 						htmlTop="<%= htmlTop %>"
 						jspPath="/html/portlet/journal/article/"

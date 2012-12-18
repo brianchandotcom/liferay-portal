@@ -12,6 +12,18 @@
 				[$FOLDER_ID$]
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_U_C">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			WHERE
+				(groupId = ?) AND
+				(userId = ?) AND
+				(classNameId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_F_S">
 		<![CDATA[
 			SELECT
@@ -22,6 +34,44 @@
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.status = ?)
 				[$FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_C_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			WHERE
+				(groupId = ?) AND
+				(classNameId = ?) AND
+				(structureId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_U_C_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			WHERE
+				(groupId = ?) AND
+				(userId = ?) AND
+				(classNameId = ?) AND
+				(status = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_C_S_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			WHERE
+				(groupId = ?) AND
+				(classNameId = ?) AND
+				(structureId = ?) AND
+				(status = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R">
@@ -104,6 +154,116 @@
 				(indexable = [$TRUE$])
 			ORDER BY
 				version DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_U_C">
+		<![CDATA[
+			SELECT
+				JournalArticle.*
+			FROM
+				(
+					SELECT
+						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
+					FROM
+						JournalArticle
+					WHERE
+						(groupId = ?) AND
+						(classNameId = ?)
+					GROUP BY
+						groupId, articleId
+				) TEMP_TABLE
+				INNER JOIN
+					JournalArticle ON
+						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
+						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
+						(TEMP_TABLE.tempVersion = JournalArticle.version)
+			WHERE
+				(userId = ?)
+			ORDER BY
+				id_ ASC
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_C_S">
+		<![CDATA[
+			SELECT
+				JournalArticle.*
+			FROM
+				(
+					SELECT
+						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
+					FROM
+						JournalArticle
+					WHERE
+						(groupId = ?) AND
+						(classNameId = ?)
+					GROUP BY
+						groupId, articleId
+				) TEMP_TABLE
+				INNER JOIN
+					JournalArticle ON
+						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
+						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
+						(TEMP_TABLE.tempVersion = JournalArticle.version)
+			WHERE
+				(structureId = ?)
+			ORDER BY
+				id_ ASC
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_U_C_S">
+		<![CDATA[
+			SELECT
+				JournalArticle.*
+			FROM
+				(
+					SELECT
+						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
+					FROM
+						JournalArticle
+					WHERE
+						(groupId = ?) AND
+						(classNameId = ?)
+					GROUP BY
+						groupId, articleId
+				) TEMP_TABLE
+				INNER JOIN
+					JournalArticle ON
+						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
+						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
+						(TEMP_TABLE.tempVersion = JournalArticle.version)
+			WHERE
+				(userId = ?) AND
+				(status = ?)
+			ORDER BY
+				id_ ASC
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_C_S_S">
+		<![CDATA[
+			SELECT
+				JournalArticle.*
+			FROM
+				(
+					SELECT
+						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
+					FROM
+						JournalArticle
+					WHERE
+						(groupId = ?) AND
+						(classNameId = ?)
+					GROUP BY
+						groupId, articleId
+				) TEMP_TABLE
+				INNER JOIN
+					JournalArticle ON
+						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
+						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
+						(TEMP_TABLE.tempVersion = JournalArticle.version)
+			WHERE
+				(structureId = ?) AND
+				(status = ?)
+			ORDER BY
+				id_ ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R">

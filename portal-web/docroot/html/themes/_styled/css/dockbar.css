@@ -427,6 +427,10 @@ html > .lfr-dockbar-pinned {
 	}
 }
 
+.ie.rtl .dockbar .menu-button span {
+	background-position-x: -25px;
+}
+
 .ie7 {
 	.dockbar {
 		zoom: 1;
@@ -446,8 +450,6 @@ html > .lfr-dockbar-pinned {
 			float: none;
 		}
 	}
-
-
 }
 
 .ie6 {

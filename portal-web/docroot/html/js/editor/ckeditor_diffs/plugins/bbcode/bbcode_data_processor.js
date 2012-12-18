@@ -67,6 +67,10 @@
 
 	var REGEX_PX = /px$/i;
 
+	var REGEX_SINGLE_QUOTE = /'/g;
+
+	var STR_EMPTY = '';
+
 	var STR_MAILTO = 'mailto:';
 
 	var TAG_BLOCKQUOTE = 'blockquote';
@@ -200,7 +204,7 @@
 
 			instance._handle(node);
 
-			var endResult = instance._endResult.join('');
+			var endResult = instance._endResult.join(STR_EMPTY);
 
 			instance._endResult = null;
 
@@ -439,7 +443,7 @@
 
 			if (data) {
 				if (!instance._allowNewLine(element)) {
-					data = data.replace(REGEX_NEWLINE, '');
+					data = data.replace(REGEX_NEWLINE, STR_EMPTY);
 				}
 				else if (instance._checkParentElement(element, TAG_LINK) &&
 					data.indexOf(STR_MAILTO) === 0) {
@@ -701,7 +705,7 @@
 			var fontFamily = style.fontFamily;
 
 			if (fontFamily) {
-				stylesTagsIn.push('[font=', fontFamily, ']');
+				stylesTagsIn.push('[font=', fontFamily.replace(REGEX_SINGLE_QUOTE, STR_EMPTY), ']');
 
 				stylesTagsOut.push('[/font]');
 			}

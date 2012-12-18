@@ -687,7 +687,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 		screenName = getScreenName(screenName);
-		emailAddress = emailAddress.trim().toLowerCase();
 		openId = openId.trim();
 		Date now = new Date();
 
@@ -704,8 +703,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		EmailAddressGenerator emailAddressGenerator =
 			EmailAddressGeneratorFactory.getInstance();
 
-		if (emailAddressGenerator.isGenerated(emailAddress)) {
+		if ((emailAddress == null) ||
+			emailAddressGenerator.isGenerated(emailAddress)) {
+
 			emailAddress = StringPool.BLANK;
+		}
+		else {
+			emailAddress = emailAddress.trim().toLowerCase();
 		}
 
 		if (!PropsValues.USERS_EMAIL_ADDRESS_REQUIRED &&

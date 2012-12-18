@@ -52,8 +52,10 @@ public class CPBlogsAddEntryActions extends BaseActionsImpl
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("ADD_LINK") || param1.equals("GOTO_LINK") ||
-				param1.equals("MANAGE_LINK"))) {
+		if ((param1.equals("CONTENT_LINK_DRAFT") ||
+				param1.equals("CONTENT_LINK_PREVIEW") ||
+				param1.equals("CONTENT_LINK_SAVE") ||
+				param1.equals("CONTENT_LINK_CANCEL"))) {
 			clickFunctions.valueClickAtAndWaitCPBlogsCKEditor(params[0],
 				params[1]);
 		}

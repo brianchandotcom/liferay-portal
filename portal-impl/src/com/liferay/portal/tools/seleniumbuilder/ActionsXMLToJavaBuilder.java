@@ -84,59 +84,71 @@ public class ActionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		String actionsXMLFileName =
 			actionsFilePath + "/" + fileName.substring(x + 1, y) + ".actions";
 
-		StringBundler sb = new StringBundler();
+		StringBundler header = new StringBundler();
 
-		sb.append("package ");
-		sb.append(actionsPackagePath);
-		sb.append(";\n\n");
+		header.append("package ");
+		header.append(actionsPackagePath);
+		header.append(";\n\n");
 
-		sb.append("import com.liferay.portalweb.blocks.base.actions.");
-		sb.append("BaseActionsImpl;\n");
+		StringBundler imports = new StringBundler();
 
-		sb.append("import com.liferay.portalweb.blocks.base.actions.");
-		sb.append("LiferayActions;\n");
+		imports.append("import com.liferay.portalweb.blocks.base.actions.");
+		imports.append("BaseActionsImpl;\n");
 
-		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
-		sb.append("LiferaySelenium;\n");
+		imports.append("import com.liferay.portalweb.blocks.base.actions.");
+		imports.append("LiferayActions;\n");
 
-		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
-		sb.append("LiferaySeleniumHelper;\n");
+		imports.append("import com.liferay.portalweb.portal.util.");
+		imports.append("liferayselenium.LiferaySelenium;\n");
 
-		sb.append("import ");
-		sb.append(pathsPackagePath);
-		sb.append(StringPool.PERIOD);
-		sb.append(pathsName);
-		sb.append(";\n");
+		imports.append("import com.liferay.portalweb.portal.util.");
+		imports.append("liferayselenium.LiferaySeleniumHelper;\n");
+
+		imports.append("import ");
+		imports.append(pathsPackagePath);
+		imports.append(StringPool.PERIOD);
+		imports.append(pathsName);
+		imports.append(";\n");
 
 		Boolean actionsXMLFileExists = FileUtil.exists(
 			basedir + "/" + actionsXMLFileName);
 
+		StringBundler constructor = new StringBundler();
+
+		constructor.append("public class ");
+		constructor.append(actionsName);
+		constructor.append(" extends BaseActionsImpl implements");
+		constructor.append(" LiferayActions {\n\n");
+
+		constructor.append("public ");
+		constructor.append(actionsName);
+		constructor.append("(LiferaySelenium liferaySelenium) {\n");
+
+		constructor.append("super(liferaySelenium);\n");
+
+		constructor.append("paths = ");
+		constructor.append(pathsName);
+		constructor.append(".getPaths();\n");
+
+		constructor.append("}\n");
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(header);
+
 		if (actionsXMLFileExists) {
 			Element rootElement = getRootElement(actionsXMLFileName);
 
-			sb.append(getImportStatements());
+			String actionDefs = getActionDefs(rootElement);
+			imports.append(getImportStatements());
+
+			sb.append(imports);
+			sb.append(constructor);
+			sb.append(actionDefs);
 		}
-
-		sb.append("public class ");
-		sb.append(actionsName);
-		sb.append(" extends BaseActionsImpl implements LiferayActions {\n\n");
-
-		sb.append("public ");
-		sb.append(actionsName);
-		sb.append("(LiferaySelenium liferaySelenium) {\n");
-
-		sb.append("super(liferaySelenium);\n");
-
-		sb.append("paths = ");
-		sb.append(pathsName);
-		sb.append(".getPaths();\n");
-
-		sb.append("}\n");
-
-		if (actionsXMLFileExists) {
-			Element rootElement = getRootElement(actionsXMLFileName);
-
-			sb.append(getActionDefs(rootElement));
+		else {
+			sb.append(imports);
+			sb.append(constructor);
 		}
 
 		sb.append("}");

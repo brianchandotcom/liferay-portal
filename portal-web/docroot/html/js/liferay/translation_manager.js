@@ -131,7 +131,7 @@ AUI.add(
 
 					readOnly: {
 						validator: Lang.isBoolean,
-						value: true
+						value: false
 					}
 				},
 
@@ -396,15 +396,9 @@ AUI.add(
 							}
 						);
 
-						instance._availableTranslationsNode.toggle(!!buffer.length && readOnly);
+						instance._availableTranslationsNode.toggle(!!buffer.length && !readOnly);
 
 						instance._availableTranslationsLinksNode.setContent(buffer.join(STR_BLANK));
-					},
-
-					_uiSetCanAddTranslations: function(val) {
-						var instance = this;
-
-						instance._iconMenuNode.toggle(val);
 					},
 
 					_uiSetDefaultLocale: function(val) {
@@ -451,6 +445,12 @@ AUI.add(
 						if (localeNode) {
 							localeNode.addClass(CSS_TRANSLATION_EDITING);
 						}
+					},
+
+					_uiSetReadOnly: function(val) {
+						var instance = this;
+
+						instance._iconMenuNode.toggle(!val);
 					},
 
 					_valueAvailableLocales: function() {

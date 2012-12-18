@@ -44,7 +44,7 @@
 
 		<a class="lfr-translation-manager-change-default-locale" href="javascript:;"><liferay-ui:message key="change" /></a>
 
-		<c:if test="<%= readOnly %>">
+		<c:if test="<%= !readOnly %>">
 			<span class="lfr-translation-manager-add-menu">
 				<liferay-ui:icon-menu
 					cssClass="lfr-translation-manager-icon-menu"

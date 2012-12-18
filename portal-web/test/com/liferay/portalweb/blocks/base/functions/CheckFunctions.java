@@ -46,12 +46,11 @@ public class CheckFunctions extends BaseFunctions {
 
 	public void clickAtWCMouseOverArticle(String param1, String param2)
 		throws Exception {
+		CheckFunctions checkFunctions = new CheckFunctions(selenium);
+
 		selenium.waitForVisible(
 			"xpath=(//a[contains(@data-folder,'false')])[1]");
 		selenium.mouseOver("xpath=(//a[contains(@data-folder,'false')])[1]");
-
-		CheckFunctions checkFunctions = new CheckFunctions(selenium);
-
 		checkFunctions.clickAt(param1, param2);
 	}
 }

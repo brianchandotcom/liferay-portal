@@ -25,7 +25,6 @@ public class DeleteAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Announcements Test Page");
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -42,7 +41,7 @@ public class DeleteAnnouncementsEntryGeneralTest extends BaseTestCase {
 				"//td[@class='delete-entry']/span/a/span"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 		assertFalse(selenium.isTextPresent("Announcements Entry Title"));
 		assertFalse(selenium.isTextPresent(
 				"General Announcements Entry Content"));

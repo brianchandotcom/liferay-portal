@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Announcements Test Page</td>
-	<td>Announcements Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Announcements Test Page</td>
 	<td>Announcements Test Page</td>
@@ -179,28 +174,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Announcements Test Page</td>
-	<td>Announcements Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Announcements Test Page</td>
 	<td>Announcements Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h3[@class='entry-title']/a</td>
+	<td>//div[contains(.,'Normal')]/h3/a</td>
 	<td>Announcements Entry Title Priority Normal</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='entry-scope']</td>
+	<td>//div[contains(.,'Normal')]/div/span[@class='entry-scope']</td>
 	<td>General</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class=' entry-content entry-type-general']/p</td>
+	<td>//div[contains(.,'Normal')]/div/p</td>
 	<td>Announcements Entry Content Priority Normal</td>
 </tr>
 </tbody></table>

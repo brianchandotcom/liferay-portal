@@ -50,8 +50,6 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
-			case 2:
-
 				boolean entry2Present = selenium.isElementPresent("link=Delete");
 
 				if (!entry2Present) {
@@ -64,8 +62,6 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-
-			case 3:
 
 				boolean entry3Present = selenium.isElementPresent("link=Delete");
 
@@ -80,8 +76,6 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
-			case 4:
-
 				boolean entry4Present = selenium.isElementPresent("link=Delete");
 
 				if (!entry4Present) {
@@ -94,8 +88,6 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-
-			case 5:
 
 				boolean entry5Present = selenium.isElementPresent("link=Delete");
 
@@ -110,6 +102,10 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6:
 			case 100:
 				label = -1;

@@ -25,7 +25,6 @@ public class AddAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Announcements Test Page");
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -69,7 +68,6 @@ public class AddAnnouncementsEntryGeneralTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText("//td[2]/a"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Announcements Test Page");
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");

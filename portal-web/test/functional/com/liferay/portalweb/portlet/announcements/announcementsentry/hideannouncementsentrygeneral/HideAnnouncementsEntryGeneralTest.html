@@ -14,33 +14,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Announcements Test Page</td>
-	<td>Announcements Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Announcements Test Page</td>
 	<td>Announcements Test Page</td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/store.js')]</td>
+	<td>Liferay Store</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//td[@class='control-entry']/a</td>
+	<td>//a[contains(.,'Show')]</td>
 	<td>Show</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[@class='control-entry']/a</td>
+	<td>//a[contains(.,'Show')]</td>
 	<td>Show</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//td[@class='control-entry']/a</td>
+	<td>//a[contains(.,'Hide')]</td>
 	<td>Hide</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@class='control-entry']/a</td>
+	<td>//a[contains(.,'Hide')]</td>
 	<td>Hide</td>
 </tr>
 <tr>
@@ -50,17 +55,17 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[@class='control-entry']/a</td>
+	<td>//a[contains(.,'Hide')]</td>
 	<td>Hide</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//td[@class='control-entry']/a</td>
+	<td>//a[contains(.,'Show')]</td>
 	<td>Show</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@class='control-entry']/a</td>
+	<td>//a[contains(.,'Show')]</td>
 	<td>Show</td>
 </tr>
 <tr>
@@ -68,7 +73,6 @@
 	<td>//p</td>
 	<td>General Announcements Entry Content</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

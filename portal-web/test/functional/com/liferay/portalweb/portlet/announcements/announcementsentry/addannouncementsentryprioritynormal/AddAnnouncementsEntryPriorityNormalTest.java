@@ -26,7 +26,6 @@ public class AddAnnouncementsEntryPriorityNormalTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Announcements Test Page");
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -93,18 +92,17 @@ public class AddAnnouncementsEntryPriorityNormalTest extends BaseTestCase {
 		assertEquals("Normal",
 			selenium.getSelectedLabel("//select[@id='_84_priority']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Announcements Test Page");
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Announcements Entry Title Priority Normal"),
-			selenium.getText("//h3[@class='entry-title']/a"));
+			selenium.getText("//div[contains(.,'Normal')]/h3/a"));
 		assertEquals(RuntimeVariables.replace("General"),
-			selenium.getText("//span[@class='entry-scope']"));
+			selenium.getText(
+				"//div[contains(.,'Normal')]/div/span[@class='entry-scope']"));
 		assertEquals(RuntimeVariables.replace(
 				"Announcements Entry Content Priority Normal"),
-			selenium.getText(
-				"//div[@class=' entry-content entry-type-general']/p"));
+			selenium.getText("//div[contains(.,'Normal')]/div/p"));
 	}
 }

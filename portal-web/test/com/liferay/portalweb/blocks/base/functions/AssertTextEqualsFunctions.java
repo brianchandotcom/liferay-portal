@@ -33,10 +33,9 @@ public class AssertTextEqualsFunctions extends BaseFunctions {
 
 	public void assertPartialTextPause(String param1, String param2)
 		throws Exception {
-		selenium.pause("25000");
-
 		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 
+		selenium.pause("25000");
 		assertTextEqualsFunctions.assertPartialText(param1, param2);
 	}
 

@@ -32,11 +32,10 @@ public class TypeFunctions extends BaseFunctions {
 
 	public void sendKeysHomeAddApplication(String param1, String param2)
 		throws Exception {
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-
 		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		typeFunctions.sendKeys(param1, param2);
 	}
 

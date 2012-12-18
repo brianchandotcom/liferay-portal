@@ -117,7 +117,7 @@ if (translating) {
 				availableLocales="<%= availableLocales %>"
 				defaultLanguageId="<%= defaultLanguageId %>"
 				id="translationManager"
-				readOnly="<%= recordId > 0 %>"
+				readOnly="<%= recordId <= 0 %>"
 			/>
 
 			<liferay-portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="updateDefaultLanguageURL">

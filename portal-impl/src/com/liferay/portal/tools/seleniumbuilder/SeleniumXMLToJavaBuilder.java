@@ -103,7 +103,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	protected Set<String> getAllObjects(Element runBlock, Set<String>objects) {
+	protected Set<String> getAllObjects(Element runBlock, Set<String> objects) {
 		if (runBlock.elements().isEmpty()) {
 			return objects;
 		}
@@ -112,14 +112,19 @@ public class SeleniumXMLToJavaBuilder {
 				if (isCommand(child)) {
 					String type =
 						StringUtil.upperCaseFirstLetter(child.getName()) + "s";
-					if (child.getName().equals("while")) {
+					if (child.getName().equals("while") ||
+						child.getName().equals("if")) {
 						type = "Actions";
 					}
 
-					objects.add(child.attributeValue("name") + type);
+					if (child.getName().equals("function")) {
+						type = "Functions";
+					}
 
-					getAllObjects(child, objects);
+					objects.add(child.attributeValue("name") + type);
 				}
+
+				getAllObjects(child, objects);
 			}
 		}
 
@@ -163,8 +168,7 @@ public class SeleniumXMLToJavaBuilder {
 	}
 
 	protected String getObjectDeclarations(
-		Set<String> objectNameSet, String runBlockName)
-		throws Exception {
+		Set<String> objectNameSet, String runBlockName) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		if (runBlockName.equals("setup") || runBlockName.equals("teardown")) {
@@ -226,7 +230,10 @@ public class SeleniumXMLToJavaBuilder {
 
 		importObjects.addAll(blockObjects);
 
-		if (!(blockName.equals("while") || blockName.equals("if"))) {
+		if (blockName.equals("actiondef") || blockName.equals("macrodef") ||
+			blockName.equals("functiondef") || blockName.equals("setup") ||
+			blockName.equals("steps") || blockName.equals("teardown")) {
+
 			sb.append(getObjectDeclarations(blockObjects, blockName));
 		}
 
@@ -238,7 +245,6 @@ public class SeleniumXMLToJavaBuilder {
 		if (blockName.equals("actiondef")) {
 			sb.append(getActionDefBlock(block));
 		}
-
 		else {
 			List<Element> commands = block.elements();
 
@@ -307,7 +313,6 @@ public class SeleniumXMLToJavaBuilder {
 
 	protected void writeFile(String fileName, String content, boolean format)
 		throws Exception {
-
 		File file = new File(basedir + "/" + fileName);
 
 		if (format) {
@@ -602,7 +607,6 @@ public class SeleniumXMLToJavaBuilder {
 		}
 
 		sb.append(paramList);
-
 		sb.append(");\n");
 
 		return sb.toString();
@@ -681,14 +685,12 @@ public class SeleniumXMLToJavaBuilder {
 	}
 
 	private String getImportFunctions(String object) throws Exception {
+		String functionsBase = "com.liferay.portalweb.blocks.base.functions.";
 
-		String functionsBase = "com/liferay/portalweb/blocks/base/functions/";
-
-		return functionsBase + object + "Functions";
+		return functionsBase + object;
 	}
 
 	private String getImportMacros(String object) throws Exception {
-
 		int x = object.length() - 6;
 
 		String macroObjectName = object.substring(0, x);
@@ -765,22 +767,18 @@ public class SeleniumXMLToJavaBuilder {
 		switch(classType) {
 			case TEST:
 				isValid = validTestCommands.contains(command);
-
 				break;
 
 			case MACROS:
 				isValid = validMacroCommands.contains(command);
-
 				break;
 
 			case ACTIONS:
 				isValid = validActionCommands.contains(command);
-
 				break;
 
 			case FUNCTIONS:
 				isValid = validFunctionCommands.contains(command);
-
 				break;
 		}
 

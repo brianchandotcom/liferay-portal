@@ -95,9 +95,11 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 		List<Element> runBlocks = rootElement.elements();
 
-		Set<String> blockObjects = new TreeSet<String>();
+		String macroDefs = getMacroDefs(rootElement);
 
-		sb.append(getImportStatements());
+		String importStatements = getImportStatements();
+
+		sb.append(importStatements);
 
 		sb.append("public class ");
 		sb.append(macrosName);
@@ -109,7 +111,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append("super(liferaySelenium);");
 		sb.append("}");
 
-		sb.append(getMacroDefs(rootElement));
+		sb.append(macroDefs);
 
 		sb.append("}");
 

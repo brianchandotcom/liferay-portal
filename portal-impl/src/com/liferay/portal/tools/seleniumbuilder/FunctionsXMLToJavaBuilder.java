@@ -22,13 +22,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -47,8 +43,6 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		super(args);
 
 		Set<String> fileNames = getFileNames();
-
-		getSeleniumMethods();
 
 		for (String fileName : fileNames) {
 			if (fileName.length() > 161) {
@@ -113,154 +107,6 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		writeFile(functionsFileName, sb.toString(), true);
 	}
 
-	protected String getCommands(Element runBlock) {
-		StringBundler sb = new StringBundler();
-
-		List<Element> commands = runBlock.elements();
-
-		for (Element command : commands) {
-			String commandName = command.getName();
-
-			if (commandName.equals("else")) {
-				sb.append(getCommandElse(command));
-			}
-			else if (commandName.equals("selenium")) {
-				sb.append(getCommandSelenium(command));
-			}
-			else if (commandName.equals("if")) {
-				sb.append(getCommandIf(command));
-			}
-		}
-
-		return sb.toString();
-	}
-
-	private String getCommandElse(Element command) {
-		StringBundler sb = new StringBundler();
-
-		sb.append("else {");
-		sb.append(getCommands(command));
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String getCommandIf(Element command) {
-		StringBundler sb = new StringBundler();
-
-		sb.append("if (");
-		sb.append(getCommandSeleniumConditional(command));
-		sb.append(") {");
-		sb.append(getCommands(command));
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String getCommandSelenium(Element command) {
-		StringBundler sb = new StringBundler();
-
-		String seleniumCommandName = command.attributeValue("command");
-
-		int numParams = 0;
-
-		if (_seleniumMethods.containsKey(seleniumCommandName)) {
-			numParams = _seleniumMethods.get(seleniumCommandName);
-		}
-
-		sb.append("selenium.");
-		sb.append(seleniumCommandName);
-		sb.append("(");
-
-		String seleniumTargetName = command.attributeValue("target");
-
-		if (!(seleniumTargetName == null)) {
-			sb.append("\"");
-			sb.append(seleniumTargetName);
-			sb.append("\"");
-		}
-		else if (seleniumCommandName.equals("assertConfirmation") ||
-				 seleniumCommandName.equals("assertTextNotPresent") ||
-				 seleniumCommandName.equals("assertTextPresent") ||
-				 seleniumCommandName.equals("waitForConfirmation") ||
-				 seleniumCommandName.equals("waitForTextNotPresent") ||
-				 seleniumCommandName.equals("waitForTextPresent")) {
-
-			sb.append("param2");
-		}
-		else if (numParams > 0) {
-			sb.append("param1");
-		}
-
-		String seleniumValueName = command.attributeValue("value");
-
-		if (!seleniumCommandName.equals("open")) {
-			if (!(seleniumValueName == null)) {
-				sb.append(", \"");
-				sb.append(seleniumValueName);
-				sb.append("\"");
-			}
-			else if (numParams > 1) {
-				sb.append(", param2");
-			}
-		}
-
-		sb.append(");\n");
-
-		return sb.toString();
-	}
-
-	private String getCommandSeleniumConditional(Element command) {
-		StringBundler sb = new StringBundler();
-
-		String seleniumCommandName = command.attributeValue("command");
-
-		if (seleniumCommandName.contains("Not")) {
-			sb.append("!");
-
-			seleniumCommandName = StringUtil.replace(
-				seleniumCommandName, "Not", "");
-		}
-
-		int numParams = 0;
-
-		if (_seleniumMethods.containsKey(seleniumCommandName)) {
-			numParams = _seleniumMethods.get(seleniumCommandName);
-		}
-
-		sb.append("selenium.");
-		sb.append(seleniumCommandName);
-		sb.append("(");
-
-		String seleniumTargetName = command.attributeValue("target");
-
-		if (!(seleniumTargetName == null)) {
-			sb.append("\"");
-			sb.append(seleniumTargetName);
-			sb.append("\"");
-		}
-		else if (numParams > 0) {
-			sb.append("param1");
-		}
-
-		String seleniumValueName = command.attributeValue("value");
-
-		if (!seleniumCommandName.equals("open")) {
-			if (!(seleniumValueName == null)) {
-				sb.append(", \"");
-				sb.append(seleniumValueName);
-				sb.append("\"");
-			}
-			else if (numParams > 1) {
-				sb.append(", param2");
-			}
-		}
-
-		sb.append(")");
-
-		return sb.toString();
-	}
-
 	private Set<String> getFileNames() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -295,67 +141,12 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 			sb.append(functionDefName);
 			sb.append("(String param1, String param2) throws Exception {\n");
 
-			sb.append(getCommands(functionDef));
+			sb.append(processBlock(functionDef));
 
 			sb.append("}\n");
 		}
 
 		return sb.toString();
 	}
-
-	private void getSeleniumFileMethods(String file) throws Exception {
-		String content = getNormalizedContent(file);
-
-		Pattern pattern = Pattern.compile(
-			"public (boolean|String|void) [A-Za-z0-9_]*\\(.*?\\)");
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String methodDec = matcher.group();
-
-			int x = methodDec.indexOf("(");
-			int y = methodDec.indexOf(")");
-
-			String name = null;
-
-			if (methodDec.startsWith("public boolean")) {
-				name = methodDec.substring(15, x);
-			}
-			else if (methodDec.startsWith("public String")) {
-				name = methodDec.substring(14, x);
-			}
-			else if (methodDec.startsWith("public void")) {
-				name = methodDec.substring(12, x);
-			}
-
-			String params = methodDec.substring(x + 1, y);
-
-			String[] paramsArray = params.split(",");
-
-			int numParams;
-
-			if (params.equals("")) {
-				numParams = 0;
-			}
-			else {
-				numParams = paramsArray.length;
-			}
-
-			_seleniumMethods.put(name, numParams);
-		}
-	}
-
-	private void getSeleniumMethods() throws Exception {
-		getSeleniumFileMethods(
-			"com/liferay/portalweb/portal/util/liferayselenium/" +
-				"SeleniumWrapper.java");
-		getSeleniumFileMethods(
-			"com/liferay/portalweb/portal/util/liferayselenium/" +
-				"LiferaySelenium.java");
-	}
-
-	private static Map<String, Integer> _seleniumMethods =
-		new HashMap<String, Integer>();
 
 }

@@ -6,7 +6,7 @@
 	</actiondef>
 
 	<actiondef name="click">
-		<conditional elements="ADD_LINK,GOTO_LINK,MANAGE_LINK">
+		<conditional elements="CONTENT_LINK_DRAFT,CONTENT_LINK_PREVIEW,CONTENT_LINK_SAVE,CONTENT_LINK_CANCEL">
 			<function name="Click" command="valueClickAtAndWaitCPBlogsCKEditor" />
 		</conditional>
 	</actiondef>

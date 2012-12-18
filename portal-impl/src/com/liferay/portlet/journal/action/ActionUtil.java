@@ -411,6 +411,23 @@ public class ActionUtil {
 
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
 
+		if (Validator.isNull(articleId)) {
+			String[] articleIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "articleIds"));
+
+			if (articleIds.length <= 0) {
+				return false;
+			}
+
+			articleId = articleIds[0];
+		}
+
+		int pos = articleId.lastIndexOf(EditArticleAction.VERSION_SEPARATOR);
+
+		if (pos != -1) {
+			articleId = articleId.substring(0, pos);
+		}
+
 		try {
 			JournalArticleLocalServiceUtil.getArticle(
 				themeDisplay.getScopeGroupId(), articleId);

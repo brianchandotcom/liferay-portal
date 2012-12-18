@@ -40,6 +40,19 @@ public class JournalArticleFinderUtil {
 		return getFinder().countByG_F_S(groupId, folderIds, status);
 	}
 
+	public static int countByG_U_C_S(long groupId, long userId,
+		long classNameId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countByG_U_C_S(groupId, userId, classNameId, status);
+	}
+
+	public static int countByG_C_S_S(long groupId, long classNameId,
+		java.lang.String structureId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .countByG_C_S_S(groupId, classNameId, structureId, status);
+	}
+
 	public static int countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(long companyId,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
@@ -108,6 +121,21 @@ public class JournalArticleFinderUtil {
 		return getFinder().filterCountByG_F_S(groupId, folderIds, status);
 	}
 
+	public static int filterCountByG_U_C_S(long groupId, long userId,
+		long classNameId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterCountByG_U_C_S(groupId, userId, classNameId, status);
+	}
+
+	public static int filterCountByG_C_S_S(long groupId, long classNameId,
+		java.lang.String structureId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterCountByG_C_S_S(groupId, classNameId, structureId,
+			status);
+	}
+
 	public static int filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
@@ -171,6 +199,26 @@ public class JournalArticleFinderUtil {
 			classNameId, keywords, version, type, structureId, templateId,
 			displayDateGT, displayDateLT, status, reviewDate, start, end,
 			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_C_S(
+		long groupId, long userId, long classNameId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterFindByG_U_C_S(groupId, userId, classNameId, status,
+			start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_C_S_S(
+		long groupId, long classNameId, java.lang.String structureId,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterFindByG_C_S_S(groupId, classNameId, structureId,
+			status, start, end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
@@ -263,6 +311,26 @@ public class JournalArticleFinderUtil {
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException {
 		return getFinder().findByR_D(resourcePrimKey, displayDate);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U_C_S(
+		long groupId, long userId, long classNameId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByG_U_C_S(groupId, userId, classNameId, status, start,
+			end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_S_S(
+		long groupId, long classNameId, java.lang.String structureId,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByG_C_S_S(groupId, classNameId, structureId, status,
+			start, end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(

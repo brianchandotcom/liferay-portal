@@ -238,6 +238,15 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	}
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByStructureId(
+		long groupId, long classNameId, java.lang.String structureId,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getArticlesByStructureId(groupId,
+			classNameId, structureId, status, start, end, obc);
+	}
+
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByStructureId(
 		long groupId, java.lang.String structureId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -263,6 +272,13 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleService.getArticlesCountByArticleId(groupId,
 			articleId);
+	}
+
+	public int getArticlesCountByStructureId(long groupId, long classNameId,
+		java.lang.String structureId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getArticlesCountByStructureId(groupId,
+			classNameId, structureId, status);
 	}
 
 	public int getArticlesCountByStructureId(long groupId,

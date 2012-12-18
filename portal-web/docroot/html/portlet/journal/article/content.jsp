@@ -274,9 +274,11 @@ if (Validator.isNotNull(content)) {
 
 											<%
 											DDMTemplate ddmTemplate = ddmTemplates.get(0);
+
+											templateId = ddmTemplate.getTemplateKey();
 											%>
 
-											<aui:input name="templateId" type="hidden" value="<%= ddmTemplate.getTemplateKey() %>" />
+											<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
 
 											<span class="template-name-label">
 												<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
@@ -298,16 +300,16 @@ if (Validator.isNotNull(content)) {
 													String imageURL = _getTemplateImage(themeDisplay, ddmTemplate);
 												%>
 
-													<portlet:renderURL var="templateURL">
-														<portlet:param name="struts_action" value="/journal/edit_template" />
-														<portlet:param name="redirect" value="<%= currentURL %>" />
-														<portlet:param name="groupId" value="<%= String.valueOf(ddmTemplate.getGroupId()) %>" />
-														<portlet:param name="templateId" value="<%= ddmTemplate.getTemplateKey() %>" />
-													</portlet:renderURL>
+													<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+														<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+														<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+														<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+														<portlet:param name="templateId" value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>" />
+													</liferay-portlet:renderURL>
 
 													<aui:option
 														data-img="<%= imageURL != null ? imageURL : StringPool.BLANK %>"
-														data-url="<%= templateURL %>"
+														data-url="<%= editTemplateURL %>"
 														label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
 														selected="<%= templateId.equals(ddmTemplate.getTemplateId()) %>"
 														value="<%= ddmTemplate.getTemplateId() %>"
@@ -686,30 +688,20 @@ if (Validator.isNotNull(content)) {
 						width: 820
 					},
 					id: windowId,
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-templates") %>',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>',
 
 					<%
-					long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
-
-					LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(request, PortletKeys.PORTLET_DISPLAY_TEMPLATES, controlPanelPlid, PortletRequest.RENDER_PHASE);
-
-					liferayPortletURL.setDoAsGroupId(groupId);
-					liferayPortletURL.setParameter("struts_action", "/dynamic_data_mapping/edit_template");
-					liferayPortletURL.setParameter("groupId", String.valueOf(groupId));
-
 					DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(groupId, templateId);
-
-					liferayPortletURL.setParameter("templateId", ((ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : ""));
-
-					liferayPortletURL.setPortletMode(PortletMode.VIEW);
-					liferayPortletURL.setWindowState(LiferayWindowState.POP_UP);
-
-					String liferayPortletURLString = liferayPortletURL.toString();
-
-					liferayPortletURLString = HttpUtil.addParameter(liferayPortletURLString, "classNameId", classNameId);
 					%>
 
-					uri: '<%= liferayPortletURLString %>'
+					<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+						<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+						<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
+					</liferay-portlet:renderURL>
+
+					uri: '<%= editTemplateURL %>'
 					}
 				);
 			}
@@ -726,7 +718,6 @@ if (Validator.isNotNull(content)) {
 			var selectedOption = templateIdSelector.one(':selected');
 
 			var imageURL = selectedOption.attr('data-img');
-			var templateURL = selectedOption.attr('data-url');
 
 			if (imageURL) {
 				templateImage.attr('src', imageURL);
@@ -736,8 +727,6 @@ if (Validator.isNotNull(content)) {
 			else {
 				templateImage.hide();
 			}
-
-			editTemplateLink.attr('href', templateURL);
 		}
 
 		changeTemplate();
@@ -745,12 +734,25 @@ if (Validator.isNotNull(content)) {
 		if (editTemplateLink) {
 			templateIdSelector.on('change', changeTemplate);
 
+			var windowId = A.guid();
+
 			editTemplateLink.on(
 				'click',
 				function(event) {
 					var selectedOption = templateIdSelector.one(':selected');
+					var editTemplateURL = selectedOption.attr('data-url');
 
-					window.location = selectedOption.attr('data-url');
+					Liferay.Util.openWindow(
+					{
+						dialog: {
+							constrain: true,
+							width: 820
+						},
+						id: windowId,
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>',
+						uri: editTemplateURL
+						}
+					);
 				}
 			);
 		}

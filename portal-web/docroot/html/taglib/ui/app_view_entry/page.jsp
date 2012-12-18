@@ -45,7 +45,7 @@ String shortTitle = StringUtil.shorten(title, 60);
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 		<div class="app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" data-draggable="<%= showCheckbox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= HtmlUtil.escapeAttribute(shortTitle) %>">
 			<c:if test="<%= showCheckbox %>">
-					<aui:input cssClass="overlay entry-selector" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" type="checkbox" value="<%= rowCheckerId %>" />
+				<aui:input cssClass="overlay entry-selector" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" type="checkbox" value="<%= rowCheckerId %>" />
 			</c:if>
 
 			<%
@@ -175,6 +175,10 @@ String shortTitle = StringUtil.shorten(title, 60);
 			<span class="workflow-status-<%= statusLabel %>">
 				(<liferay-ui:message key="<%= statusLabel %>" />)
 			</span>
+		</c:if>
+
+		<c:if test="<%= locked %>">
+			<liferay-ui:icon cssClass="app-view-entry-taglib entry-display-style locked-icon" image="lock" />
 		</c:if>
 	</c:when>
 </c:choose>

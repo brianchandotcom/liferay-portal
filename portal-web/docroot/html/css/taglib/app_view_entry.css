@@ -34,6 +34,10 @@
 		background-color: #5AD300 !important;
 	}
 
+	.locked-icon {
+		float: right;
+	}
+
 	.overlay.folder-action a, .overlay.entry-action a {
 		display: block;
 		float: right;

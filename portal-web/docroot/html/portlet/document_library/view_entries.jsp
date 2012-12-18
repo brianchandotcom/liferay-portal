@@ -294,6 +294,7 @@ for (int i = 0; i < results.size(); i++) {
 
 						<liferay-ui:app-view-entry
 							displayStyle="list"
+							locked="<%= fileEntry.isCheckedOut() %>"
 							showCheckbox="<%= true %>"
 							status="<%= latestFileVersion.getStatus() %>"
 							thumbnailSrc='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
@@ -422,6 +423,7 @@ for (int i = 0; i < results.size(); i++) {
 							data="<%= data %>"
 							displayStyle="list"
 							folder="<%= true %>"
+							locked="<%= fileEntry.isCheckedOut() %>"
 							showCheckbox="<%= false %>"
 							thumbnailSrc="<%= folderImage %>"
 							title="<%= curFolder.getName() %>"

@@ -947,8 +947,8 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.getViewableParentPages();
 	}
 
-	public boolean isInTrashFolder() {
-		return _wikiPage.isInTrashFolder();
+	public boolean isInTrashNode() {
+		return _wikiPage.isInTrashNode();
 	}
 
 	public void setAttachmentsFolderId(long attachmentsFolderId) {

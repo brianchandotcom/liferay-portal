@@ -14,10 +14,10 @@
 
 package com.liferay.portalweb.tests.portal.webcontent.rc;
 
-import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.article.CPWebContentEditArticleActions;
-import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.actions.home.CPWebContentHomeActions;
-import com.liferay.portalweb.blocks.portal.controlpanel.webcontent.macros.CPWebContentArticleMacros;
-import com.liferay.portalweb.blocks.portal.portlet.signin.macros.PortletSignInUserMacros;
+import com.liferay.portalweb.blocks.portal.signin.page.macros.SignInUserMacros;
+import com.liferay.portalweb.blocks.portal.webcontent.controlpanel.actions.article.CPWebContentEditArticleActions;
+import com.liferay.portalweb.blocks.portal.webcontent.controlpanel.actions.home.CPWebContentHomeActions;
+import com.liferay.portalweb.blocks.portal.webcontent.controlpanel.macros.CPWebContentArticleMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 
@@ -29,9 +29,9 @@ public class AddWCWebContentCPTest extends BaseTestCase {
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
 
-		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
+		SignInUserMacros signInUserMacros = new SignInUserMacros(selenium);
 
-		portletSignInUserMacros.signIn("test@liferay.com", "test");
+		signInUserMacros.signIn("test@liferay.com", "test");
 	}
 
 	public void test() throws Exception {
@@ -50,9 +50,9 @@ public class AddWCWebContentCPTest extends BaseTestCase {
 	@Override
 	public void tearDown() throws Exception {
 		CPWebContentArticleMacros cPWebContentArticleMacros = new CPWebContentArticleMacros(selenium);
-		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
+		SignInUserMacros signInUserMacros = new SignInUserMacros(selenium);
 
 		cPWebContentArticleMacros.tearDown();
-		portletSignInUserMacros.signOut();
+		signInUserMacros.signOut();
 	}
 }

@@ -14,12 +14,12 @@
 
 package com.liferay.portalweb.tests.portal.blogs.entry.rc;
 
-import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.addentry.CPBlogsAddEntryActions;
-import com.liferay.portalweb.blocks.portal.controlpanel.blogs.actions.home.CPBlogsHomeActions;
-import com.liferay.portalweb.blocks.portal.controlpanel.blogs.macros.CPBlogsEntryMacros;
-import com.liferay.portalweb.blocks.portal.controlpanel.recyclebin.macros.CPRecycleBinMacros;
-import com.liferay.portalweb.blocks.portal.home.macros.GotoMacros;
-import com.liferay.portalweb.blocks.portal.portlet.signin.macros.PortletSignInUserMacros;
+import com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.addentry.CPBlogsAddEntryActions;
+import com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.home.CPBlogsHomeActions;
+import com.liferay.portalweb.blocks.portal.blogs.controlpanel.macros.CPBlogsEntryMacros;
+import com.liferay.portalweb.blocks.portal.home.page.macros.GotoMacros;
+import com.liferay.portalweb.blocks.portal.recyclebin.controlpanel.macros.CPRecycleBinMacros;
+import com.liferay.portalweb.blocks.portal.signin.page.macros.SignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 
@@ -31,9 +31,9 @@ public class AddBlogsEntryTitleNullCPTest extends BaseTestCase {
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
 
-		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
+		SignInUserMacros signInUserMacros = new SignInUserMacros(selenium);
 
-		portletSignInUserMacros.signIn("test@liferay.com", "test");
+		signInUserMacros.signIn("test@liferay.com", "test");
 	}
 
 	public void test() throws Exception {
@@ -60,10 +60,10 @@ public class AddBlogsEntryTitleNullCPTest extends BaseTestCase {
 	public void tearDown() throws Exception {
 		CPBlogsEntryMacros cPBlogsEntryMacros = new CPBlogsEntryMacros(selenium);
 		CPRecycleBinMacros cPRecycleBinMacros = new CPRecycleBinMacros(selenium);
-		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
+		SignInUserMacros signInUserMacros = new SignInUserMacros(selenium);
 
 		cPBlogsEntryMacros.tearDown();
 		cPRecycleBinMacros.empty();
-		portletSignInUserMacros.signOut();
+		signInUserMacros.signOut();
 	}
 }

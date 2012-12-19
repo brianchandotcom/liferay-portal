@@ -82,8 +82,8 @@ public class TestXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append(testPackagePath);
 		sb.append(";\n");
 
-		sb.append("import com.liferay.portalweb.blocks.portal.portlet.signin.");
-		sb.append("macros.PortletSignInUserMacros;\n");
+		sb.append("import com.liferay.portalweb.blocks.portal.signin.page.");
+		sb.append("macros.SignInUserMacros;\n");
 
 		sb.append("import com.liferay.portalweb.portal.BaseTestCase;\n");
 		sb.append("import com.liferay.portalweb.portal.util.SeleniumUtil;\n");
@@ -149,7 +149,7 @@ public class TestXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append("public void tearDown() throws Exception {");
 
 		sb.append(processBlock(teardownElement));
-		sb.append("portletSignInUserMacros.signOut();");
+		sb.append("signInUserMacros.signOut();");
 
 		sb.append("}");
 

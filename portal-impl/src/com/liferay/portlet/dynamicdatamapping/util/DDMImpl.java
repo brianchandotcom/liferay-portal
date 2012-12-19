@@ -117,7 +117,7 @@ public class DDMImpl implements DDM {
 				ddmStructure, repeatabaleFieldsMapJSONObject, fieldName,
 				fieldNamespace, serviceContext);
 
-			if (fieldValues.isEmpty()) {
+			if ((fieldValues == null) || fieldValues.isEmpty()) {
 				continue;
 			}
 
@@ -456,7 +456,7 @@ public class DDMImpl implements DDM {
 
 		for (String fieldNameValue : fieldNames) {
 			Serializable fieldValue = serviceContext.getAttribute(
-					fieldNameValue);
+				fieldNameValue);
 
 			if (fieldDataType.equals(FieldConstants.DATE)) {
 				int fieldValueMonth = GetterUtil.getInteger(

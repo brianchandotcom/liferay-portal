@@ -173,7 +173,6 @@ public class SeleniumXMLToJavaBuilder {
 			content = StringUtil.replace(content, "\t", " ");
 			content = content.replaceAll(" +", " ");
 		}
-
 		return content;
 	}
 

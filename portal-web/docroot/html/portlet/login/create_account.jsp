@@ -39,7 +39,7 @@ boolean male = ParamUtil.getBoolean(request, "male", true);
 <aui:form action="<%= createAccountURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="saveLastPath" type="hidden" value="<%= Boolean.FALSE.toString() %>" />
+	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 	<aui:input name="openId" type="hidden" value="<%= openId %>" />
 
 	<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />

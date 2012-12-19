@@ -25,7 +25,7 @@ String openId = ParamUtil.getString(request, "openId");
 </portlet:actionURL>
 
 <aui:form action="<%= openIdURL %>" method="post" name="fm">
-	<aui:input name="saveLastPath" type="hidden" value="<%= Boolean.FALSE.toString() %>" />
+	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 
 	<liferay-ui:error exception="<%= AssociationException.class %>" message="an-error-occurred-while-establishing-an-association-with-the-open-id-provider" />
 	<liferay-ui:error exception="<%= ConsumerException.class %>" message="an-error-occurred-while-initializing-the-open-id-consumer" />

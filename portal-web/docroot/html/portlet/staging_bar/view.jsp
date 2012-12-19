@@ -295,7 +295,7 @@ if (layout != null) {
 								<aui:input name="groupId" type="hidden" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
 								<aui:input name="layoutRevisionId" type="hidden" value="<%= layoutRevision.getLayoutRevisionId() %>" />
 								<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
-								<aui:input name="updateRecentLayoutRevisionId" type="hidden" value="<%= Boolean.FALSE.toString() %>" />
+								<aui:input name="updateRecentLayoutRevisionId" type="hidden" value="<%= false %>" />
 
 								<portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 									<portlet:param name="struts_action" value="/staging_bar/view_layout_branches" />

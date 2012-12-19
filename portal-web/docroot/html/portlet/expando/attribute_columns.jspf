@@ -62,7 +62,7 @@
 
 			for (String stringValue : expandoValue.getStringArray()) {
 				buffer.append("<br />");
-				buffer.append(stringValue);
+				buffer.append(HtmlUtil.escape(stringValue));
 			}
 		}
 		else {

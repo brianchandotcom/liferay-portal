@@ -16,6 +16,7 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -82,6 +83,24 @@ public class LogoutAction extends Action {
 
 			passwordCookie.setMaxAge(0);
 			passwordCookie.setPath(StringPool.SLASH);
+
+			boolean rememberMe =
+				GetterUtil.getBoolean(
+					CookieKeys.getCookie(request, CookieKeys.REMEMBER_ME));
+
+			if (!rememberMe) {
+				Cookie loginCookie = new Cookie(
+					CookieKeys.LOGIN, StringPool.BLANK);
+
+				if (Validator.isNotNull(domain)) {
+					loginCookie.setDomain(domain);
+				}
+
+				loginCookie.setMaxAge(0);
+				loginCookie.setPath(StringPool.SLASH);
+
+				CookieKeys.addCookie(request, response, loginCookie);
+			}
 
 			Cookie rememberMeCookie = new Cookie(
 				CookieKeys.REMEMBER_ME, StringPool.BLANK);

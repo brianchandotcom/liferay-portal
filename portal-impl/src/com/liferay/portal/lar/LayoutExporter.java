@@ -720,8 +720,6 @@ public class LayoutExporter {
 		layoutElement.addAttribute("layout-uuid", layout.getUuid());
 		layoutElement.addAttribute(
 			"layout-id", String.valueOf(layout.getLayoutId()));
-		layoutElement.addAttribute(
-			"private-layout", String.valueOf(layout.isPrivateLayout()));
 
 		long parentLayoutId = layout.getParentLayoutId();
 

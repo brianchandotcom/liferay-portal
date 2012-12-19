@@ -118,6 +118,10 @@ public interface PortletPreferencesFactory {
 			Layout layout, String portletId)
 		throws SystemException;
 
+	public PortletPreferences getStrictPortletSetup(
+			Layout layout, String portletId)
+		throws SystemException;
+
 	public String toXML(PortalPreferences portalPreferences);
 
 	public String toXML(PortletPreferences portletPreferences);

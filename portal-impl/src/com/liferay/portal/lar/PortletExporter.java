@@ -806,7 +806,7 @@ public class PortletExporter {
 
 		if (exportPortletData) {
 			javax.portlet.PortletPreferences jxPreferences =
-				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+				PortletPreferencesFactoryUtil.getStrictPortletSetup(
 					layout, portletId);
 
 			if (!portlet.isPreferencesUniquePerLayout()) {
@@ -1067,6 +1067,13 @@ public class PortletExporter {
 					"last-publish-date", String.valueOf(endDate.getTime()));
 
 				jxPreferences.store();
+			}
+			catch (UnsupportedOperationException uoe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Not updating the portlet setup for " +
+						portletId + " because no setup was returned for" +
+							" the current page");
+				}
 			}
 			catch (Exception e) {
 				_log.error(e, e);

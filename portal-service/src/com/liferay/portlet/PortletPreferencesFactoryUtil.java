@@ -215,6 +215,14 @@ public class PortletPreferencesFactoryUtil {
 			layout, portletId);
 	}
 
+	public static PortletPreferences getStrictPortletSetup(
+			Layout layout, String portletId)
+		throws SystemException {
+
+		return getPortletPreferencesFactory().getStrictPortletSetup(
+			layout, portletId);
+	}
+
 	public static String toXML(PortalPreferences portalPreferences) {
 		return getPortletPreferencesFactory().toXML(portalPreferences);
 	}

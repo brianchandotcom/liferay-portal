@@ -52,7 +52,8 @@
 								(reviewDate <= ? [$AND_OR_NULL_CHECK$])
 							)
 						)
-					[$GROUP_BY_CLAUSE$]
+					GROUP BY
+						groupId, articleId
 				) TEMP_TABLE
 				INNER JOIN
 					JournalArticle ON
@@ -133,7 +134,8 @@
 								(reviewDate <= ? [$AND_OR_NULL_CHECK$])
 							)
 						)
-					[$GROUP_BY_CLAUSE$]
+					GROUP BY
+						groupId, articleId
 				) TEMP_TABLE
 				INNER JOIN
 					JournalArticle ON

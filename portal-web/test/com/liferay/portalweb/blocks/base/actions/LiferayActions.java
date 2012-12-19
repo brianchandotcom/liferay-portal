@@ -55,6 +55,9 @@ public interface LiferayActions {
 	public boolean isElementPresent(String param1, String param2)
 		throws Exception;
 
+	public boolean isVisible(String param1, String param2)
+		throws Exception;
+
 	public void mouseOver(String param1, String param2) throws Exception;
 
 	public void open(String param1, String param2) throws Exception;

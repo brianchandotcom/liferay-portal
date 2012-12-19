@@ -134,9 +134,9 @@
 
 		.entry-link {
 			display: block;
+			overflow: hidden;
 			text-align: center;
 			text-decoration: none;
-			overflow: hidden;
 		}
 
 		.folder-action, .entry-action {

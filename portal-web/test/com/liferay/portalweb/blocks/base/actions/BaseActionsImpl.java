@@ -31,6 +31,7 @@ import com.liferay.portalweb.blocks.base.functions.MouseOverFunctions;
 import com.liferay.portalweb.blocks.base.functions.OpenFunctions;
 import com.liferay.portalweb.blocks.base.functions.PasteFunctions;
 import com.liferay.portalweb.blocks.base.functions.SelectFunctions;
+import com.liferay.portalweb.blocks.base.functions.SelectWindowFunctions;
 import com.liferay.portalweb.blocks.base.functions.TypeFunctions;
 import com.liferay.portalweb.blocks.base.functions.UncheckFunctions;
 import com.liferay.portalweb.blocks.base.paths.BaseActionsPaths;
@@ -222,6 +223,15 @@ public class BaseActionsImpl implements LiferayActions {
 		SelectFunctions selectFunctions = new SelectFunctions(selenium);
 
 		selectFunctions.select(params[0], params[1]);
+	}
+
+	public void selectWindow(String param1, String param2) throws Exception {
+		String[] params = getParams(param1, param2);
+
+		SelectWindowFunctions selectWindowFunctions = new SelectWindowFunctions(
+			selenium);
+
+		selectWindowFunctions.selectFrame(params[0], params[1]);
 	}
 
 	public void type(String param1, String param2) throws Exception {

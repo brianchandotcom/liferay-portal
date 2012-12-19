@@ -518,8 +518,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 	loginURL.setWindowState(LiferayWindowState.POP_UP);
 	loginURL.setPortletMode(PortletMode.VIEW);
 
-	loginURL.setParameter("saveLastPath", "0");
 	loginURL.setParameter("struts_action", "/login/login");
+	loginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 	%>
 
 	<aui:script>

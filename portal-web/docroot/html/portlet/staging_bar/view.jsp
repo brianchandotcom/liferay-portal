@@ -285,14 +285,14 @@ if (layout != null) {
 						</div>
 
 						<div class="staging-details">
-							<portlet:actionURL var="editLayoutRevisonURL">
+							<portlet:actionURL var="editLayoutRevisionURL">
 								<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
-								<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
 							</portlet:actionURL>
 
-							<aui:form action="<%= editLayoutRevisonURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
+							<aui:form action="<%= editLayoutRevisionURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
 								<aui:input name="<%= Constants.CMD %>" type="hidden" />
 								<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+								<aui:input name="groupId" type="hidden" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
 								<aui:input name="layoutRevisionId" type="hidden" value="<%= layoutRevision.getLayoutRevisionId() %>" />
 								<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
 								<aui:input name="updateRecentLayoutRevisionId" type="hidden" value="<%= false %>" />

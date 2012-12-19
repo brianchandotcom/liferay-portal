@@ -46,11 +46,11 @@ portletURL.setParameter("struts_action", "/workflow_definitions/view");
 
 <portlet:actionURL var="editWorkflowDefinitionURL">
 	<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editWorkflowDefinitionURL %>" enctype="multipart/form-data" method="post">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (workflowDefinition == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="name" type="hidden" value="<%= name %>" />
 	<aui:input name="version" type="hidden" value="<%= version %>" />
 

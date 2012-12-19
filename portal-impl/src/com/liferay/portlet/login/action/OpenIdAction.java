@@ -399,7 +399,7 @@ public class OpenIdAction extends PortletAction {
 
 		portletURL.setParameter("struts_action", "/login/open_id");
 		portletURL.setParameter(Constants.CMD, Constants.READ);
-		portletURL.setParameter("saveLastPath", "0");
+		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 
 		ConsumerManager manager = OpenIdUtil.getConsumerManager();
 

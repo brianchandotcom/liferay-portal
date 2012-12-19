@@ -37,11 +37,11 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 
 <portlet:actionURL var="editActionURL">
 	<portlet:param name="struts_action" value="/mobile_device_rules/edit_action" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editActionURL %>" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (action == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="actionId" type="hidden" value="<%= actionId %>" />
 	<aui:input name="ruleGroupInstanceId" type="hidden" value="<%= ruleGroupInstance.getRuleGroupInstanceId() %>" />
 

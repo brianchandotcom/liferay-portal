@@ -36,7 +36,6 @@ String renameMessage = ParamUtil.getString(request, "renameMessage");
 
 <portlet:actionURL var="restoreActionURL">
 	<portlet:param name="struts_action" value="<%= restoreEntryAction %>" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= restoreActionURL %>" enctype="multipart/form-data" method="post" name="restoreTrashEntryFm" onSubmit="event.preventDefault();">

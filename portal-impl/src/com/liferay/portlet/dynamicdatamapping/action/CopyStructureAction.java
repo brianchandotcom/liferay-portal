@@ -203,7 +203,7 @@ public class CopyStructureAction extends PortletAction {
 		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
 		portletURL.setParameter(
-			"classNamId", String.valueOf(classNameId), false);
+			"classNameId", String.valueOf(classNameId), false);
 
 		portletURL.setParameter(
 			"classPK", String.valueOf(structure.getStructureId()), false);

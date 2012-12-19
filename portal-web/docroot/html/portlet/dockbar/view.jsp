@@ -404,12 +404,13 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 
 		<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPrototypeURL">
 			<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-			<portlet:param name="<%= Constants.CMD %>" value="reset_prototype" />
-			<portlet:param name="redirect" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
 		</liferay-portlet:actionURL>
 
 		<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="reset_prototype" />
+			<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
+			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
+
 			<aui:button name="submit" type="submit" value="reset" />
 		</aui:form>
 	</div>

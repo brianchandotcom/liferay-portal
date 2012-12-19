@@ -29,12 +29,13 @@ for (String servletContextName : ServletContextPool.keySet()) {
 	List<Portlet> portlets = portletApp.getPortlets();
 
 	for (Portlet portlet : portlets) {
-        PortletConfig portletConfig = PortletConfigFactoryUtil.create(portlet, servletContext);
-        String invokerPortletName = portletConfig.getInitParameter(INIT_INVOKER_PORTLET_NAME);
+		PortletConfig portletConfig = PortletConfigFactoryUtil.create(portlet, servletContext);
 
-        if (invokerPortletName == null) {
-            invokerPortletName = portletConfig.getPortletName();
-        }
+		String invokerPortletName = portletConfig.getInitParameter(INIT_INVOKER_PORTLET_NAME);
+
+		if (invokerPortletName == null) {
+			invokerPortletName = portletConfig.getPortletName();
+		}
 
 		String portletName = PortalUtil.getJsSafePortletId(invokerPortletName);
 
@@ -57,9 +58,7 @@ for (String servletContextName : ServletContextPool.keySet()) {
 %>
 
 <%!
-public static String INIT_INVOKER_PORTLET_NAME = "com.liferay.portal.invokerPortletName";
-%>
+private static final String INIT_INVOKER_PORTLET_NAME = "com.liferay.portal.invokerPortletName";
 
-<%!
 private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portal.extend_session_jsp");
 %>

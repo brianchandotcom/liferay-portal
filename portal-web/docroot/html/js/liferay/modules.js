@@ -92,7 +92,6 @@
 			'staging-branch': ['liferay-staging'],
 			'staging-version': ['aui-button-item', 'liferay-staging'],
 			'store': ['aui-io-request'],
-			'textarea': ['aui-textareabase'],
 			'token-list': ['aui-base', 'aui-template'],
 			'translation-manager': ['aui-base'],
 			'undo-manager': ['aui-data-set', 'base'],

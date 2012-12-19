@@ -70,20 +70,14 @@ if (Validator.isNull(mainLanguageValue)) {
 		</c:when>
 		<c:when test='<%= type.equals("textarea") %>'>
 			<textarea class="language-value <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= id + StringPool.UNDERLINE + mainLanguageId %>" name="<portlet:namespace /><%= name + StringPool.UNDERLINE + mainLanguageId %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(mainLanguageValue) %></textarea>
+
+			<c:if test="<%= autoSize %>">
+				<aui:script use="aui-autosize">
+					A.one('#<portlet:namespace /><%= id + StringPool.UNDERLINE + mainLanguageId %>').plug(A.Plugin.Autosize);
+				</aui:script>
+			</c:if>
 		</c:when>
 	</c:choose>
-
-	<c:if test="<%= autoSize %>">
-		<aui:script use="liferay-textarea">
-			new Liferay.Textarea(
-				{
-					autoSize: true,
-					node: '#<portlet:namespace /><%= id + StringPool.UNDERLINE + mainLanguageId %>',
-					width: <%= displayWidth %>
-				}
-			).render();
-		</aui:script>
-	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(maxLength) %>">
 		<aui:script use="aui-char-counter">

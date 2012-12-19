@@ -433,29 +433,23 @@ if (hints != null) {
 				<c:otherwise>
 					<c:choose>
 						<c:when test="<%= localized %>">
-							<liferay-ui:input-localized autoSize="<%= autoSize %>" cssClass='<%= cssClass + " lfr-input-text" %>' defaultLanguageId="<%= defaultLanguageId %>" disabled="<%= disabled %>" displayWidth="<%= displayWidth %>" formName="<%= formName %>" id="<%= id %>" ignoreRequestValue="<%= ignoreRequestValue %>" languageId="<%= languageId %>" maxLength="<%= maxLength %>" name="<%= fieldParam %>" onKeyDown='<%= (checkTab ? "Liferay.Util.checkTab(this); " : "") + "Liferay.Util.disableEsc();" %>' style='<%= "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : "" ) + "; " + "max-width: " + displayWidth + (Validator.isDigit(displayWidth) ? "px" : "") +";" %>' type="textarea" wrap="soft" xml="<%= xml %>" />
+							<liferay-ui:input-localized autoSize="<%= autoSize %>" cssClass='<%= cssClass + " lfr-input-text" %>' defaultLanguageId="<%= defaultLanguageId %>" disabled="<%= disabled %>" displayWidth="<%= displayWidth %>" formName="<%= formName %>" id="<%= id %>" ignoreRequestValue="<%= ignoreRequestValue %>" languageId="<%= languageId %>" maxLength="<%= maxLength %>" name="<%= fieldParam %>" onKeyDown='<%= (checkTab ? "Liferay.Util.checkTab(this); " : "") + "Liferay.Util.disableEsc();" %>' style='<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK + "max-width: " + displayWidth + (Validator.isDigit(displayWidth) ? "px" : "") +";" %>' type="textarea" wrap="soft" xml="<%= xml %>" />
 						</c:when>
 						<c:otherwise>
-							<textarea <%= Validator.isNotNull(cssClass) ? "class=\"" + cssClass + " lfr-textarea\"" : StringPool.BLANK %> <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="height: <%= displayHeight %><%= Validator.isDigit(displayHeight) ? "px" : "" %>; max-width: <%= displayWidth %><%= Validator.isDigit(displayWidth) ? "px" : "" %>;" wrap="soft" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : "" %> Liferay.Util.disableEsc();"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
+							<textarea <%= Validator.isNotNull(cssClass) ? "class=\"" + cssClass + " lfr-textarea\"" : StringPool.BLANK %> <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %> max-width: <%= displayWidth %><%= Validator.isDigit(displayWidth) ? "px" : "" %>;" wrap="soft" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : "" %> Liferay.Util.disableEsc();"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
 						</c:otherwise>
 					</c:choose>
 
 					<c:if test="<%= autoSize && !localized  %>">
-						<aui:script use="liferay-textarea">
-							new Liferay.Textarea(
+						<aui:script use="aui-autosize">
+							A.one('#<%= namespace %><%= id %>').plug(
+								A.Plugin.Autosize,
 								{
-									autoSize: true
-
 									<c:if test="<%= Validator.isDigit(displayHeight) %>">
-										,
 										minHeight: <%= displayHeight %>
 									</c:if>
-
-									,
-									node: '#<%= namespace %><%= id %>',
-									width: <%= displayWidth %>
 								}
-							).render();
+							);
 						</aui:script>
 					</c:if>
 				</c:otherwise>

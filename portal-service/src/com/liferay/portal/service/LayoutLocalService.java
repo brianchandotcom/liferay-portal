@@ -183,7 +183,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Layout getLayoutByUuidGroupIdPrivateLayout(
+	public com.liferay.portal.model.Layout getLayoutByUuidAndGroupIdAndPrivateLayout(
 		java.lang.String uuid, long groupId, boolean isPrivateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -577,7 +577,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Layout fetchLayoutByUuidGroupIdPrivateLayout(
+	public com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupIdAndPrivateLayout(
 		java.lang.String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -892,13 +892,6 @@ public interface LayoutLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasLayoutSetPrototypeLayout(
-		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
-		long companyId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLayoutSetPrototypeLayout(long layoutSetPrototypeId,
 		java.lang.String layoutUuid, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -908,6 +901,13 @@ public interface LayoutLocalService extends BaseLocalService,
 	public boolean hasLayoutSetPrototypeLayout(
 		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
 		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLayoutSetPrototypeLayout(
+		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
+		long companyId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

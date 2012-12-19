@@ -198,12 +198,12 @@ public class LayoutLocalServiceUtil {
 	* @throws PortalException if a layout with the UUID in the group/isPrivateLayout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Layout getLayoutByUuidGroupIdPrivateLayout(
+	public static com.liferay.portal.model.Layout getLayoutByUuidAndGroupIdAndPrivateLayout(
 		java.lang.String uuid, long groupId, boolean isPrivateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getLayoutByUuidGroupIdPrivateLayout(uuid, groupId,
+				   .getLayoutByUuidAndGroupIdAndPrivateLayout(uuid, groupId,
 			isPrivateLayout);
 	}
 
@@ -645,11 +645,11 @@ public class LayoutLocalServiceUtil {
 	be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Layout fetchLayoutByUuidGroupIdPrivateLayout(
+	public static com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupIdAndPrivateLayout(
 		java.lang.String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .fetchLayoutByUuidGroupIdPrivateLayout(uuid, groupId,
+				   .fetchLayoutByUuidAndGroupIdAndPrivateLayout(uuid, groupId,
 			privateLayout);
 	}
 
@@ -997,16 +997,6 @@ public class LayoutLocalServiceUtil {
 	}
 
 	public static boolean hasLayoutSetPrototypeLayout(
-		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
-		long companyId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
-			layoutUuid, companyId, privateLayout);
-	}
-
-	public static boolean hasLayoutSetPrototypeLayout(
 		long layoutSetPrototypeId, java.lang.String layoutUuid,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1024,6 +1014,16 @@ public class LayoutLocalServiceUtil {
 		return getService()
 				   .hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
 			layoutUuid, privateLayout);
+	}
+
+	public static boolean hasLayoutSetPrototypeLayout(
+		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
+		long companyId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
+			layoutUuid, companyId, privateLayout);
 	}
 
 	/**

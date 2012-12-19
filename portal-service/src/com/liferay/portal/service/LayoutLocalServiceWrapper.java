@@ -190,11 +190,11 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @throws PortalException if a layout with the UUID in the group/isPrivateLayout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout getLayoutByUuidGroupIdPrivateLayout(
+	public com.liferay.portal.model.Layout getLayoutByUuidAndGroupIdAndPrivateLayout(
 		java.lang.String uuid, long groupId, boolean isPrivateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _layoutLocalService.getLayoutByUuidGroupIdPrivateLayout(uuid,
+		return _layoutLocalService.getLayoutByUuidAndGroupIdAndPrivateLayout(uuid,
 			groupId, isPrivateLayout);
 	}
 
@@ -629,10 +629,10 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout fetchLayoutByUuidGroupIdPrivateLayout(
+	public com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupIdAndPrivateLayout(
 		java.lang.String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _layoutLocalService.fetchLayoutByUuidGroupIdPrivateLayout(uuid,
+		return _layoutLocalService.fetchLayoutByUuidAndGroupIdAndPrivateLayout(uuid,
 			groupId, privateLayout);
 	}
 
@@ -981,15 +981,6 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			includeUserGroups);
 	}
 
-	public boolean hasLayoutSetPrototypeLayout(
-		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
-		long companyId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _layoutLocalService.hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
-			layoutUuid, companyId, privateLayout);
-	}
-
 	public boolean hasLayoutSetPrototypeLayout(long layoutSetPrototypeId,
 		java.lang.String layoutUuid, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1005,6 +996,15 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutLocalService.hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
 			layoutUuid, privateLayout);
+	}
+
+	public boolean hasLayoutSetPrototypeLayout(
+		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
+		long companyId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
+			layoutUuid, companyId, privateLayout);
 	}
 
 	/**

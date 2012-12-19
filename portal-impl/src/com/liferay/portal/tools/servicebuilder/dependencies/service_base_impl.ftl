@@ -298,7 +298,7 @@ import javax.sql.DataSource;
 				</#if>
 				</#list>
 				 */
-				public ${entity.name} get${entity.name}ByUuidGroupIdPrivateLayout(String uuid, long groupId, boolean isPrivateLayout) throws ${stringUtil.merge(serviceBaseExceptions)} {
+				public ${entity.name} get${entity.name}ByUuidAndGroupIdAndPrivateLayout(String uuid, long groupId, boolean isPrivateLayout) throws ${stringUtil.merge(serviceBaseExceptions)} {
 					return ${entity.varName}Persistence.findByUUID_G_P(uuid, groupId, isPrivateLayout);
 				}
 			<#else>

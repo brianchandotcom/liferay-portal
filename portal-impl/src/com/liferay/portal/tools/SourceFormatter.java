@@ -600,102 +600,6 @@ public class SourceFormatter {
 		}
 	}
 
-	private static boolean _hasUnsortedJavaTerms(
-		String fileName, String previousJavaTermName, String javaTermName,
-		int javaTermType) {
-
-		if (Validator.isNull(previousJavaTermName) ||
-			Validator.isNull(javaTermName)) {
-
-			return false;
-		}
-
-		if (javaTermType == _TYPE_VARIABLE_PRIVATE_STATIC) {
-			if (javaTermName.equals("_log")) {
-				return true;
-			}
-
-			if (previousJavaTermName.equals("_instance") ||
-				previousJavaTermName.equals("_log")) {
-
-				return false;
-			}
-
-			if (javaTermName.equals("_instance")) {
-				return true;
-			}
-		}
-
-		String javaTermNameLowerCase = javaTermName.toLowerCase();
-		String previousJavaTermNameLowerCase =
-			previousJavaTermName.toLowerCase();
-
-		if (fileName.contains("persistence") &&
-			((previousJavaTermName.startsWith("doCount") &&
-			  javaTermName.startsWith("doCount")) ||
-			 (previousJavaTermName.startsWith("doFind") &&
-			  javaTermName.startsWith("doFind")) ||
-			 (previousJavaTermNameLowerCase.startsWith("count") &&
-			  javaTermNameLowerCase.startsWith("count")) ||
-			 (previousJavaTermNameLowerCase.startsWith("filter") &&
-			  javaTermNameLowerCase.startsWith("filter")) ||
-			 (previousJavaTermNameLowerCase.startsWith("find") &&
-			  javaTermNameLowerCase.startsWith("find")) ||
-			 (previousJavaTermNameLowerCase.startsWith("join") &&
-			  javaTermNameLowerCase.startsWith("join")))) {
-
-			return false;
-		}
-
-		if (previousJavaTermName.compareToIgnoreCase(javaTermName) <= 0) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private static boolean _hasUnsortedConstructorsOrMethods(
-		List<String> previousMethodParameterTypes,
-		List<String> methodParameterTypes) {
-
-		if (methodParameterTypes.isEmpty()) {
-			return true;
-		}
-
-		for (int i = 0; i < previousMethodParameterTypes.size(); i++) {
-			if (methodParameterTypes.size() < (i + 1)) {
-				return true;
-			}
-
-			String previousParameterType = previousMethodParameterTypes.get(i);
-
-			if (previousParameterType.endsWith("...")) {
-				previousParameterType = StringUtil.replaceLast(
-					previousParameterType, "...", StringPool.BLANK);
-			}
-
-			String parameterType = methodParameterTypes.get(i);
-
-			if (previousParameterType.compareToIgnoreCase(parameterType) < 0) {
-				return false;
-			}
-
-			if (previousParameterType.compareToIgnoreCase(parameterType) > 0) {
-				return true;
-			}
-
-			if (previousParameterType.compareTo(parameterType) > 0) {
-				return false;
-			}
-
-			if (previousParameterType.compareTo(parameterType) < 0) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private static String _fixAntXMLProjectName(
 			String basedir, String fileName, String content)
 		throws IOException {
@@ -4136,6 +4040,102 @@ public class SourceFormatter {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private static boolean _hasUnsortedConstructorsOrMethods(
+		List<String> previousMethodParameterTypes,
+		List<String> methodParameterTypes) {
+
+		if (methodParameterTypes.isEmpty()) {
+			return true;
+		}
+
+		for (int i = 0; i < previousMethodParameterTypes.size(); i++) {
+			if (methodParameterTypes.size() < (i + 1)) {
+				return true;
+			}
+
+			String previousParameterType = previousMethodParameterTypes.get(i);
+
+			if (previousParameterType.endsWith("...")) {
+				previousParameterType = StringUtil.replaceLast(
+					previousParameterType, "...", StringPool.BLANK);
+			}
+
+			String parameterType = methodParameterTypes.get(i);
+
+			if (previousParameterType.compareToIgnoreCase(parameterType) < 0) {
+				return false;
+			}
+
+			if (previousParameterType.compareToIgnoreCase(parameterType) > 0) {
+				return true;
+			}
+
+			if (previousParameterType.compareTo(parameterType) > 0) {
+				return false;
+			}
+
+			if (previousParameterType.compareTo(parameterType) < 0) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static boolean _hasUnsortedJavaTerms(
+		String fileName, String previousJavaTermName, String javaTermName,
+		int javaTermType) {
+
+		if (Validator.isNull(previousJavaTermName) ||
+			Validator.isNull(javaTermName)) {
+
+			return false;
+		}
+
+		if (javaTermType == _TYPE_VARIABLE_PRIVATE_STATIC) {
+			if (javaTermName.equals("_log")) {
+				return true;
+			}
+
+			if (previousJavaTermName.equals("_instance") ||
+				previousJavaTermName.equals("_log")) {
+
+				return false;
+			}
+
+			if (javaTermName.equals("_instance")) {
+				return true;
+			}
+		}
+
+		String javaTermNameLowerCase = javaTermName.toLowerCase();
+		String previousJavaTermNameLowerCase =
+			previousJavaTermName.toLowerCase();
+
+		if (fileName.contains("persistence") &&
+			((previousJavaTermName.startsWith("doCount") &&
+			  javaTermName.startsWith("doCount")) ||
+			 (previousJavaTermName.startsWith("doFind") &&
+			  javaTermName.startsWith("doFind")) ||
+			 (previousJavaTermNameLowerCase.startsWith("count") &&
+			  javaTermNameLowerCase.startsWith("count")) ||
+			 (previousJavaTermNameLowerCase.startsWith("filter") &&
+			  javaTermNameLowerCase.startsWith("filter")) ||
+			 (previousJavaTermNameLowerCase.startsWith("find") &&
+			  javaTermNameLowerCase.startsWith("find")) ||
+			 (previousJavaTermNameLowerCase.startsWith("join") &&
+			  javaTermNameLowerCase.startsWith("join")))) {
+
+			return false;
+		}
+
+		if (previousJavaTermName.compareToIgnoreCase(javaTermName) <= 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static boolean _isGenerated(String content) {

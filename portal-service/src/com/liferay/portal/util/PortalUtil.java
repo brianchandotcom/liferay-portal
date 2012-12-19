@@ -625,7 +625,8 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getJournalArticleActualURL(
-			groupId, mainPath, friendlyURL, params, requestContext, privateLayout);
+			groupId, mainPath, friendlyURL, params, requestContext,
+			privateLayout);
 	}
 
 	public static String getJsSafePortletId(String portletId) {

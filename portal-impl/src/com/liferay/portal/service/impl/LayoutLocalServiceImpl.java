@@ -840,7 +840,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout fetchLayoutByUuidGroupIdPrivateLayout(String uuid, long groupId, boolean privateLayout)
+	public Layout fetchLayoutByUuidGroupIdPrivateLayout(
+			String uuid, long groupId, boolean privateLayout)
 		throws SystemException {
 
 		return layoutPersistence.fetchByUUID_G_P(uuid, groupId, privateLayout);
@@ -1346,6 +1347,31 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	public boolean hasLayoutSetPrototypeLayout(
+			long layoutSetPrototypeId, String layoutUuid, boolean privateLayout)
+		throws PortalException, SystemException {
+
+		LayoutSetPrototype layoutSetPrototype =
+			layoutSetPrototypeLocalService.getLayoutSetPrototype(
+				layoutSetPrototypeId);
+
+		return layoutLocalServiceHelper.hasLayoutSetPrototypeLayout(
+			layoutSetPrototype, layoutUuid, privateLayout);
+	}
+
+	public boolean hasLayoutSetPrototypeLayout(
+			String layoutSetPrototypeUuid, String layoutUuid,
+			boolean privateLayout)
+		throws PortalException, SystemException {
+
+		LayoutSetPrototype layoutSetPrototype =
+			layoutSetPrototypeLocalService.getLayoutSetPrototypeByUuid(
+				layoutSetPrototypeUuid);
+
+		return layoutLocalServiceHelper.hasLayoutSetPrototypeLayout(
+			layoutSetPrototype, layoutUuid, privateLayout);
+	}
+
+	public boolean hasLayoutSetPrototypeLayout(
 			String layoutSetPrototypeUuid, String layoutUuid, long companyId,
 			boolean privateLayout)
 		throws PortalException, SystemException {
@@ -1359,29 +1385,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layoutSetPrototype, layoutUuid, privateLayout);
 	}
 
-	public boolean hasLayoutSetPrototypeLayout(
-			long layoutSetPrototypeId, String layoutUuid, boolean privateLayout)
-		throws PortalException, SystemException {
-
-		LayoutSetPrototype layoutSetPrototype =
-			layoutSetPrototypeLocalService.getLayoutSetPrototype(
-				layoutSetPrototypeId);
-
-		return layoutLocalServiceHelper.hasLayoutSetPrototypeLayout(
-			layoutSetPrototype, layoutUuid, privateLayout);
-	}
-
-	public boolean hasLayoutSetPrototypeLayout(
-			String layoutSetPrototypeUuid, String layoutUuid, boolean privateLayout)
-		throws PortalException, SystemException {
-
-		LayoutSetPrototype layoutSetPrototype =
-			layoutSetPrototypeLocalService.getLayoutSetPrototypeByUuid(
-				layoutSetPrototypeUuid);
-
-		return layoutLocalServiceHelper.hasLayoutSetPrototypeLayout(
-			layoutSetPrototype, layoutUuid, privateLayout);
-	}
 	/**
 	 * Imports the layouts from the byte array.
 	 *

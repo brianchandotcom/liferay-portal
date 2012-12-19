@@ -607,8 +607,7 @@ public class LayoutImporter {
 
 				Layout sourcePrototypeLayout = LayoutUtil.fetchByUUID_G_P(
 					sourcePrototypeLayoutUuid,
-					layoutSetPrototypeGroup.getGroupId(),
-					privateLayout);
+					layoutSetPrototypeGroup.getGroupId(), privateLayout);
 
 				if (sourcePrototypeLayout == null) {
 					LayoutLocalServiceUtil.deleteLayout(
@@ -978,8 +977,9 @@ public class LayoutImporter {
 			layoutElement.attributeValue("delete"));
 
 		if (deleteLayout) {
-			Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdPrivateLayout(
-				layoutUuid, groupId, privateLayout);
+			Layout layout =
+				LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdPrivateLayout(
+					layoutUuid, groupId, privateLayout);
 
 			if (layout != null) {
 				newLayoutsMap.put(oldLayoutId, layout);

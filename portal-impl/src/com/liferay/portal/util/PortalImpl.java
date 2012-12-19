@@ -822,7 +822,7 @@ public class PortalImpl implements Portal {
 
 				try {
 					actualURL = getJournalArticleActualURL(
-						groupId, mainPath, friendlyURL, params, requestContext, 
+						groupId, mainPath, friendlyURL, params, requestContext,
 						privateLayout);
 				}
 				catch (Exception e) {
@@ -2227,7 +2227,7 @@ public class PortalImpl implements Portal {
 
 	public String getJournalArticleActualURL(
 			long groupId, String mainPath, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext, 
+			Map<String, String[]> params, Map<String, Object> requestContext,
 			boolean isPrivate)
 		throws PortalException, SystemException {
 
@@ -2238,9 +2238,9 @@ public class PortalImpl implements Portal {
 			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
 				groupId, articleUrlTitle);
 
-		Layout layout = LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
-			journalArticle.getLayoutUuid(), groupId,
-			isPrivate);
+		Layout layout =
+			LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
+			journalArticle.getLayoutUuid(), groupId, isPrivate);
 
 		String layoutActualURL = getLayoutActualURL(layout, mainPath);
 
@@ -3706,7 +3706,7 @@ public class PortalImpl implements Portal {
 					!liveGroup.isStagedPortlet(portletId)) {
 
 					Layout liveGroupLayout =
-						LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdPrivateLayout(
+				LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdPrivateLayout(
 							layout.getUuid(), liveGroup.getGroupId(),
 							layout.isPrivateLayout());
 

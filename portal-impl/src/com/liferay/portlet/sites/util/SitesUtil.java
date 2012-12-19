@@ -659,9 +659,7 @@ public class SitesUtil {
 			if (LayoutLocalServiceUtil.hasLayoutSetPrototypeLayout(
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layout.getSourcePrototypeLayoutUuid(),
-					layout.getCompanyId(),
-					layout.isPrivateLayout())) {
-
+					layout.getCompanyId(), layout.isPrivateLayout())) {
 				return false;
 			}
 		}

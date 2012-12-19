@@ -197,7 +197,7 @@ public class WikiPageIndexer extends BaseIndexer {
 		document.addKeyword(Field.NODE_ID, page.getNodeId());
 		document.addText(Field.TITLE, page.getTitle());
 
-		if (!page.isInTrash() && page.isInTrashFolder()) {
+		if (!page.isInTrash() && page.isInTrashNode()) {
 			addTrashFields(
 				document, WikiNode.class.getName(), page.getNodeId(), null,
 				null, WikiPageAssetRendererFactory.TYPE);

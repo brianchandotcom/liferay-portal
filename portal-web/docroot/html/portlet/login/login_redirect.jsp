@@ -81,10 +81,10 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 								var userStatus = response.userStatus;
 
 								if (userStatus == 'user_added') {
-									message = '<%= LanguageUtil.format(pageContext, "thank-you-for-creating-an-account-your-password-has-been-sent-to-x", new Object[] {emailAddress}) %>';
+									message = '<%= HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "thank-you-for-creating-an-account-your-password-has-been-sent-to-x", new Object[] {emailAddress})) %>';
 								}
 								else if (userStatus == 'user_pending') {
-									message = '<%= LanguageUtil.format(pageContext, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", new Object[] {emailAddress}) %>';
+									message = '<%= HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", new Object[] {emailAddress})) %>';
 								}
 
 								<portlet:namespace />showStatusMessage('success', message);

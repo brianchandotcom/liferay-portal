@@ -1,0 +1,342 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPUsersAndOrganizationsEditUserRoles</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPUsersAndOrganizationsEditUserRoles</td></tr></thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Users and Organizations Edit User Roles Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMBS-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td>Breadcrumb 1</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[2]/span</td>
+	<td>Breadcrumb 2</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td>Breadcrumb 3</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_4</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[4]/span</td>
+	<td>Breadcrumb 4</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_5</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[5]/span/a</td>
+	<td>Breadcrumb 5</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>HEADER_PORTLET_TITLE</td>
+	<td>//h1[@id='cpPortletTitle']/span</td>
+	<td>Portlet Title</td>
+</tr>
+<tr>
+	<td>HEADER_PORTLET_DESCRIPTION</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Portlet Description</td>
+</tr>
+<tr>
+	<td>HEADER_PORTLET_SUCCESS</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Portlet Succes Message</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_BROWSE</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][1])/a</td>
+	<td>Browse</td>
+</tr>
+<tr>
+	<td>TOOLBAR_VIEW_ORGANIZATIONS</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][2])/a</td>
+	<td>View Organizations</td>
+</tr>
+<tr>
+	<td>TOOLBAR_VIEW_USERS</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][3])/a</td>
+	<td>View Users</td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>TOOLBAR_EXPORT_USERS</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][4])/a</td>
+	<td>Export Users</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REGULAR_ROLES-->
+<tr>
+	<td>REGULAR_ROLES_SELECT</td>
+	<td>//a[contains(@href,'_125_openRegularRoleSelector')]/span</td>
+	<td>Select Regular Roles</td>
+</tr>
+<tr>
+	<td>REGULAR_ROLES_FIRST_REGULAR_ROLE</td>
+	<td>//table[@data-searchcontainerid='_125_rolesSearchContainer']/tbody[1]/tr[3]/td[1]</td>
+	<td>First Regular Role's Name</td>
+</tr>
+<tr>
+	<td>REGULAR_ROLES_REMOVE_FIRST_REGULAR_ROLE</td>
+	<td>//table[@data-searchcontainerid='_125_rolesSearchContainer']/tbody[1]/tr[3]/td[2]/a/span/span</td>
+	<td>Remove First Regular Role</td>
+</tr>
+<tr>
+	<td>REGULAR_ROLES_SECOND_REGULAR_ROLE</td>
+	<td>//table[@data-searchcontainerid='_125_rolesSearchContainer']/tbody[1]/tr[4]/td[1]</td>
+	<td>Second Regular Role's Name</td>
+</tr>
+<tr>
+	<td>REGULAR_ROLES_REMOVE_SECOND_REGULAR_ROLE</td>
+	<td>//table[@data-searchcontainerid='_125_rolesSearchContainer']/tbody[1]/tr[4]/td[2]/a/span/span</td>
+	<td>Remove Second Regular Role</td>
+</tr>
+<tr>
+	<td>REGULAR_ROLES_THIRD_REGULAR_ROLE</td>
+	<td>//table[@data-searchcontainerid='_125_rolesSearchContainer']/tbody[1]/tr[5]/td[1]</td>
+	<td>Third Regular Role's Name</td>
+</tr>
+<tr>
+	<td>REGULAR_ROLES_REMOVE_THIRD_REGULAR_ROLE</td>
+	<td>//table[@data-searchcontainerid='_125_rolesSearchContainer']/tbody[1]/tr[5]/td[2]/a/span/span</td>
+	<td>Remove Third Regular Role</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--INHERITED_ROLES-->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATION_ROLES-->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ROLES-->
+<tr>
+	<td>SITE_ROLES_SELECT</td>
+	<td>//a[contains(@href,'_125_openSiteRoleSelector')]/span</td>
+	<td>Select Site Role</td>
+</tr>
+<tr>
+	<td>SITE_ROLES_FIRST_SITE_ROLE_NAME</td>
+	<td>//table[@data-searchcontainerid='_125_siteRolesSearchContainer']/tbody[1]/tr[3]/td[1]</td>
+	<td>First Site Role's Name</td>
+</tr>
+<tr>
+	<td>SITE_ROLES_FIRST_SITE_ROLE_SITE</td>
+	<td>//table[@data-searchcontainerid='_125_siteRolesSearchContainer']/tbody[1]/tr[3]/td[2]</td>
+	<td>First Site Role's Site</td>
+</tr>
+<tr>
+	<td>SITE_ROLES_REMOVE_FIRST_SITE_ROLE</td>
+	<td>//table[@data-searchcontainerid='_125_siteRolesSearchContainer']/tbody[1]/tr[3]/td[3]/a/span/span</td>
+	<td>Remove First Site Role</td>
+</tr>
+<tr>
+	<td>SITE_ROLES_SECOND_SITE_ROLE_NAME</td>
+	<td>//table[@data-searchcontainerid='_125_siteRolesSearchContainer']/tbody[1]/tr[4]/td[1]</td>
+	<td>Second Site Role's Name</td>
+</tr>
+<tr>
+	<td>SITE_ROLES_SECOND_SITE_ROLE_SITE</td>
+	<td>//table[@data-searchcontainerid='_125_siteRolesSearchContainer']/tbody[1]/tr[4]/td[2]</td>
+	<td>Second Site Role's Site</td>
+</tr>
+<tr>
+	<td>SITE_ROLES_REMOVE_SECOND_SITE_ROLE</td>
+	<td>//table[@data-searchcontainerid='_125_siteRolesSearchContainer']/tbody[1]/tr[4]/td[3]/a/span/span</td>
+	<td>Remove Second Site Role</td>
+</tr>
+<tr>
+	<td>SITE_ROLES_THIRD_SITE_ROLE_NAME</td>
+	<td>//table[@data-searchcontainerid='_125_siteRolesSearchContainer']/tbody[1]/tr[5]/td[1]</td>
+	<td>Third Site Role's Name</td>
+</tr>
+<tr>
+	<td>SITE_ROLES_THIRD_SITE_ROLE_SITE</td>
+	<td>//table[@data-searchcontainerid='_125_siteRolesSearchContainer']/tbody[1]/tr[5]/td[2]</td>
+	<td>Third Site Role's Site</td>
+</tr>
+<tr>
+	<td>SITE_ROLES_REMOVE_THIRD_SITE_ROLE</td>
+	<td>//table[@data-searchcontainerid='_125_siteRolesSearchContainer']/tbody[1]/tr[5]/td[3]/a/span/span</td>
+	<td>Remove Third Site Role</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER INFORMATION-->
+<tr>
+	<td>USER_INFORMATION_DETAILS</td>
+	<td>//a[@id='_125_detailsLink']</td>
+	<td>Details</td>
+</tr>
+<tr>
+	<td>USER_INFORMATION_PASSWORD</td>
+	<td>//a[@id='_125_passwordLink']</td>
+	<td>Password</td>
+</tr>
+<tr>
+	<td>USER_INFORMATION_ORGANIZATIONS</td>
+	<td>//a[@id='_125_organizationsLink']</td>
+	<td>Organizations</td>
+</tr>
+<tr>
+	<td>USER_INFORMATION__SITES</td>
+	<td>//a[@id='_125_sitesLink']</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>USER_INFORMATION__USER_GROUPS</td>
+	<td>//a[@id='_125_userGroupsLink']</td>
+	<td>User Groups</td>
+</tr>
+<tr>
+	<td>USER_INFORMATION_ROLES</td>
+	<td>//a[@id='_125_rolesLink']</td>
+	<td>Roles</td>
+</tr>
+<tr>
+	<td>USER_INFORMATION_PERSONAL_SITE</td>
+	<td>//a[@id='_125_personalSiteLink']</td>
+	<td>Personal site</td>
+</tr>
+<tr>
+	<td>USER_INFORMATION_CATEGORIZATION</td>
+	<td>//a[@id='_125_categorizationLink']</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--IDENTIFICATION-->
+<tr>
+	<td>IDENTIFICATION_ADDRESSES</td>
+	<td>//a[@id='_125_addressesLink']</td>
+	<td>Addresses</td>
+</tr>
+<tr>
+	<td>IDENTIFICATION_ADDRESSES_PHONE_NUMBERS</td>
+	<td>//a[@id='_125_phoneNumbersLink']</td>
+	<td>Phone Numbers</td>
+</tr>
+<tr>
+	<td>IDENTIFICATION_ADDRESSES_ADDITIONAL_EMAIL_ADDRESSES</td>
+	<td>//a[@id='_125_additionalEmailAddressesLink']</td>
+	<td>Additional Email Addresses</td>
+</tr>
+<tr>
+	<td>IDENTIFICATION_ADDRESSES_WEBSITES</td>
+	<td>//a[@id='_125_websitesLink']</td>
+	<td>Websites</td>
+</tr>
+<tr>
+	<td>IDENTIFICATION_ADDRESSES_INSTANT_MESSENGER</td>
+	<td>//a[@id='_125_instantMessengerLink']</td>
+	<td>Instant Messenger</td>
+</tr>
+<tr>
+	<td>IDENTIFICATION_ADDRESSES_SOCIAL_NETWORK</td>
+	<td>//a[@id='_125_socialNetworkLink']</td>
+	<td>Social Network</td>
+</tr>
+<tr>
+	<td>IDENTIFICATION_ADDRESSES_SMS</td>
+	<td>//a[@id='_125_smsLink']</td>
+	<td>SMS</td>
+</tr>
+<tr>
+	<td>IDENTIFICATION_ADDRESSES_OPENID</td>
+	<td>//a[@id='_125_openIdLink']</td>
+	<td>OpenID</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MISCELLANEOUS-->
+<tr>
+	<td>MISCELLANEOUS_ANNOUNCEMENTS</td>
+	<td>//a[@id='_125_announcementsLink']</td>
+	<td>Announcements</td>
+</tr>
+<tr>
+	<td>MISCELLANEOUS_DISPLAY_SETTINGS</td>
+	<td>//a[@id='_125_displaySettingsLink']</td>
+	<td>Display Settings</td>
+</tr>
+<tr>
+	<td>MISCELLANEOUS_COMMENTS</td>
+	<td>//a[@id='_125_commentsLink']</td>
+	<td>Comments</td>
+</tr>
+<tr>
+	<td>MISCELLANEOUS_CUSTOM_FIELDS</td>
+	<td>//a[@id='_125_customFieldsLink']</td>
+	<td>Custom Fields</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BUTTONS-->
+<tr>
+	<td>BUTTONS_SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>BUTTONS_CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

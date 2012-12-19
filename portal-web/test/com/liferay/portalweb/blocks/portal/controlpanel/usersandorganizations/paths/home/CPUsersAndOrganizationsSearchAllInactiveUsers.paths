@@ -1,0 +1,369 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPUsersAndOrganizationsSearchAllInactiveUsers</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPUsersAndOrganizationsSearchAllInactiveUsers</td></tr></thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Users and Organizations Search All Inactive Users Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMBS-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td>Breadcrumb 1</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[2]/span</td>
+	<td>Breadcrumb 2</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td>Breadcrumb 3</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>HEADER_PORTLET_TITLE</td>
+	<td>//h1[@id='cpPortletTitle']/span</td>
+	<td>Portlet Title</td>
+</tr>
+<tr>
+	<td>HEADER_PORTLET_DESCRIPTION</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Portlet Description</td>
+</tr>
+<tr>
+	<td>HEADER_PORTLET_SUCCESS</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Portlet Succes Message</td>
+</tr>
+<tr>
+	<td>HEADER_CONFIRMATION</td>
+	<td></td>
+	<td>Confirmation Message</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_BROWSE</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][1])/a</td>
+	<td>Browse</td>
+</tr>
+<tr>
+	<td>TOOLBAR_VIEW_ORGANIZATIONS</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][2])/a</td>
+	<td>View Organizations</td>
+</tr>
+<tr>
+	<td>TOOLBAR_VIEW_USERS</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][3])/a</td>
+	<td>View Users</td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>TOOLBAR_EXPORT_USERS</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][4])/a</td>
+	<td>Export Users</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD-->
+<tr>
+	<td>ADD_USER</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
+	<td>Add User</td>
+</tr>
+<tr>
+	<td>ADD_REGULAR_ORGANIZATION</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]</td>
+	<td>Add Regular Organization</td>
+</tr>
+<tr>
+	<td>ADD_LOCATION</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Location')]</td>
+	<td>Location</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BASIC SEARCH-->
+<tr>
+	<td>BASIC_SEARCH_FIELD</td>
+	<td>//input[@id='_125_toggle_id_users_admin_user_searchkeywords']</td>
+	<td>Basic Search Field</td>
+</tr>
+<tr>
+	<td>BASIC_SEARCH_BUTTON</td>
+	<td>//input[@value='Search']</td>
+	<td>Basic Search Button</td>
+</tr>
+<tr>
+	<td>BASIC_SEARCH_ADVANCED_LINK</td>
+	<td>//a[contains(.,'Advanced')]</td>
+	<td>Advanced Search Link</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADVANCED SEARCH-->
+<tr>
+	<td>ADVANCED_SEARCH_MATCH</td>
+	<td>//select[@id='_125_andOperator']</td>
+	<td>Advanced Search Match Dropdown</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_FIRST_NAME</td>
+	<td>//input[@id='_125_firstName']</td>
+	<td>User's First Name</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_MIDDLE_NAME</td>
+	<td>//input[@id='_125_middleName']</td>
+	<td>User's Middle Name</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_LAST_NAME</td>
+	<td>//input[@id='_125_lastName']</td>
+	<td>User's Last Name</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_SCREEN_NAME</td>
+	<td>//input[@id='_125_screenName']</td>
+	<td>User's Screen Name</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_EMAIL_ADDRESS</td>
+	<td>//input[@id='_125_emailAddress']</td>
+	<td>User's Email Address</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_STATUS</td>
+	<td>//select[@id='_125_status']</td>
+	<td>User's Status Drop Down</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_BUTTON</td>
+	<td>xpath=(//input[@value='Search'])[2]</td>
+	<td>Advanced Search Button</td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_BASIC_LINK</td>
+	<td>//a[contains(.,'Basic')]</td>
+	<td>Basic Search Link</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USERS-->
+<tr>
+	<td>USERS_DELETE</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete User Button</td>
+</tr>
+<tr>
+	<td>USERS_RESTORE</td>
+	<td>//input[@value='Restore']</td>
+	<td>Restore User Button</td>
+</tr>
+<tr>
+	<td>USERS_CHECK_ALL</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Flag All Users</td>
+</tr>
+<tr>
+	<td>USERS_USER_1_CHECK</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-rowChecker'])[1]/input</td>
+	<td>Flag First User</td>
+</tr>
+<tr>
+	<td>USERS_USER_1_FIRST_NAME</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-first-name'])[1]/a</td>
+	<td>First User's First Name</td>
+</tr>
+<tr>
+	<td>USERS_USER_1_LAST_NAME</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-last-name'])[1]/a</td>
+	<td>First User's Last Name</td>
+</tr>
+<tr>
+	<td>USERS_USER_1_SCREEN_NAME</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-screen-name'])[1]/a</td>
+	<td>First User's Screen Name</td>
+</tr>
+<tr>
+	<td>USERS_USER_1_JOB_TITLE</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-job-title'])[1]/a</td>
+	<td>First User's Job Title</td>
+</tr>
+<tr>
+	<td>USERS_USER_1_ORGANIZATIONS</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-organizations'])[1]/a</td>
+	<td>First User's Organizations</td>
+</tr>
+<tr>
+	<td>USERS_USER_1_USER_GROUPS</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-user-groups'])[1]/a</td>
+	<td>First User's User Groups</td>
+</tr>
+<tr>
+	<td>USERS_USER_1_ACTIONS</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-8'])[1]//span[@title='Actions']/ul/li/strong/a</td>
+	<td>First User's Actions</td>
+</tr>
+<tr>
+	<td>USERS_USER_2_CHECK</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-rowChecker'])[2]/input</td>
+	<td>Flag Second User</td>
+</tr>
+<tr>
+	<td>USERS_USER_2_FIRST_NAME</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-first-name'])[2]/a</td>
+	<td>Second User's First Name</td>
+</tr>
+<tr>
+	<td>USERS_USER_2_LAST_NAME</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-last-name'])[2]/a</td>
+	<td>Second User's Last Name</td>
+</tr>
+<tr>
+	<td>USERS_USER_2_SCREEN_NAME</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-screen-name'])[2]/a</td>
+	<td>Second User's Screen Name</td>
+</tr>
+<tr>
+	<td>USERS_USER_2_JOB_TITLE</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-job-title'])[2]/a</td>
+	<td>Second User's Job Title</td>
+</tr>
+<tr>
+	<td>USERS_USER_2_ORGANIZATIONS</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-organizations'])[2]/a</td>
+	<td>Second User's Organizations</td>
+</tr>
+<tr>
+	<td>USERS_USER_2_USER_GROUPS</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-user-groups'])[2]/a</td>
+	<td>Second User's User Groups</td>
+</tr>
+<tr>
+	<td>USERS_USER_2_ACTIONS</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-8'])[2]//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Second User's Actions</td>
+</tr>
+<tr>
+	<td>USERS_USER_3_CHECK</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-rowChecker'])[3]/input</td>
+	<td>Flag Third User</td>
+</tr>
+<tr>
+	<td>USERS_USER_3_FIRST_NAME</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-first-name'])[3]/a</td>
+	<td>Third User's First Name</td>
+</tr>
+<tr>
+	<td>USERS_USER_3_LAST_NAME</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-last-name'])[3]/a</td>
+	<td>Third User's Last Name</td>
+</tr>
+<tr>
+	<td>USERS_USER_3_SCREEN_NAME</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-screen-name'])[3]/a</td>
+	<td>Third User's Screen Name</td>
+</tr>
+<tr>
+	<td>USERS_USER_3_JOB_TITLE</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-job-title'])[3]/a</td>
+	<td>Third User's Job Title</td>
+</tr>
+<tr>
+	<td>USERS_USER_3_ORGANIZATIONS</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-organizations'])[3]/a</td>
+	<td>Third User's Organizations</td>
+</tr>
+<tr>
+	<td>USERS_USER_3_USER_GROUPS</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-user-groups'])[3]/a</td>
+	<td>Third User's User Groups</td>
+</tr>
+<tr>
+	<td>USERS_USER_3_ACTIONS</td>
+	<td>xpath=(//td[@headers='_125_usersSearchContainer_col-8'])[3]//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Third User's Actions</td>
+</tr>
+<tr>
+	<td>USERS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>Users Message</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USERS ACTIONS-->
+<tr>
+	<td>USERS_ACTIONS_EDIT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>USERS_ACTIONS_PERMISSIONS</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>USERS_ACTIONS_MANAGE_PAGES</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]</td>
+	<td>Manage Pages</td>
+</tr>
+<tr>
+	<td>USERS_ACTIONS_IMPERSONATE_USER</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Impersonate User')]</td>
+	<td>Impersonate User</td>
+</tr>
+<tr>
+	<td>USERS_ACTIONS_ACTIVATE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Activate')]</td>
+	<td>Activate</td>
+</tr>
+<tr>
+	<td>USERS_ACTIONS_DELETE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

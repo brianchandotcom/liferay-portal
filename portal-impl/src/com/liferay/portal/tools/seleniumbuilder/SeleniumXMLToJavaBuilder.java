@@ -183,7 +183,7 @@ public class SeleniumXMLToJavaBuilder {
 		StringBundler sb = new StringBundler();
 
 		if (runBlockName.equals("setup") || runBlockName.equals("teardown")) {
-			objectNameSet.add("PortletSignInUserMacros");
+			objectNameSet.add("SignInUserMacros");
 		}
 
 		for (String objectName : objectNameSet) {
@@ -249,7 +249,7 @@ public class SeleniumXMLToJavaBuilder {
 		}
 
 		if (blockName.equals("setup")) {
-			sb.append("portletSignInUserMacros.signIn(");
+			sb.append("signInUserMacros.signIn(");
 			sb.append("\"test@liferay.com\", \"test\");");
 		}
 

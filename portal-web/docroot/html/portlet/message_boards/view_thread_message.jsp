@@ -292,9 +292,9 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 
 				<c:if test="<%= message.getMessageId() > 0 %>">
 
-				<%
+					<%
 					List<FileEntry> deletedAttachmentsFileEntries = message.getDeletedAttachmentsFileEntries();
-				%>
+					%>
 
 					<c:if test="<%= (message.isAttachments() || ((deletedAttachmentsFileEntries.size() > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE))) %>">
 						<div class="message-attachments">

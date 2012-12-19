@@ -68,16 +68,17 @@ public class SeleniumXMLToJavaBuilder {
 		getSeleniumMethods();
 	}
 
-	protected String findBlockDefName(Element block) throws Exception {
+	protected String findRootBlockName(Element block) throws Exception {
 		String blockType = block.getName();
 
 		if (blockType.equals("actiondef") || blockType.equals("functiondef") ||
-			blockType.equals("macrodef")) {
+			blockType.equals("macrodef") || blockType.equals("setup") ||
+			blockType.equals("steps") || blockType.equals("teardown")) {
 
 			return block.attributeValue("name");
 		}
 		else {
-			return findBlockDefName(block.getParent());
+			return findRootBlockName(block.getParent());
 		}
 	}
 
@@ -233,7 +234,7 @@ public class SeleniumXMLToJavaBuilder {
 			!blockName.equals("steps") &&
 			!blockName.equals("teardown")) {
 
-			blockDefName = findBlockDefName(block);
+			blockDefName = findRootBlockName(block);
 		}
 
 		Set<String> blockObjects = getAllObjects(block, new TreeSet<String>());
@@ -299,6 +300,9 @@ public class SeleniumXMLToJavaBuilder {
 			}
 			else if (commandName.equals("while")) {
 				return getCommandWhile(command);
+			}
+			else if (commandName.equals("window")) {
+				return getCommandWindow(command);
 			}
 			else {
 				StringBundler message = new StringBundler();
@@ -708,6 +712,24 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
+	private String getCommandWindow(Element command) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		String windowObjectName = command.attributeValue("name") + "Actions";
+
+		sb.append(StringUtil.lowerCaseFirstLetter(windowObjectName));
+		sb.append(StringPool.PERIOD);
+		sb.append("selectWindow(\"PAGE_NAME\", \"\");\n");
+
+		sb.append(processBlock(command));
+
+		sb.append(StringUtil.lowerCaseFirstLetter(windowObjectName));
+		sb.append(StringPool.PERIOD);
+		sb.append("selectWindow(\"TOP\", \"\");\n");
+
+		return sb.toString();
+	}
+
 	private String getImportActions(String object) throws Exception {
 		int x = object.length() - 7;
 
@@ -853,12 +875,14 @@ public class SeleniumXMLToJavaBuilder {
 		Set<String> validTestCommands = new TreeSet<String>();
 		validTestCommands.add("macro");
 		validTestCommands.add("action");
+		validTestCommands.add("window");
 
 		Set<String> validMacroCommands = new TreeSet<String>();
 		validMacroCommands.add("macro");
 		validMacroCommands.add("action");
 		validMacroCommands.add("while");
 		validMacroCommands.add("if");
+		validMacroCommands.add("window");
 
 		Set<String> validActionCommands = new TreeSet<String>();
 		validActionCommands.add("function");

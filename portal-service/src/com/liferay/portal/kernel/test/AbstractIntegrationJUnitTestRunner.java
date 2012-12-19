@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.test;
 
+import org.junit.runner.manipulation.Sorter;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
@@ -37,6 +38,8 @@ public abstract class AbstractIntegrationJUnitTestRunner
 		}
 
 		_testContextHandler = new TestContextHandler(clazz);
+
+		sort(new Sorter(new AlphabetizingDescriptionComparator()));
 	}
 
 	public abstract void initApplicationContext();

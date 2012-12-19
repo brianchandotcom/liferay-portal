@@ -44,6 +44,12 @@ public class PortletSignInHomePaths {
 	private static String[] _I_DISAGREE_LINK = {
 			"//input[@value='I Disagree']", "I Disagree"
 		};
+	private static String[] _NEW_PASSWORD_ENTER_AGAIN_FIELD = {
+			"//input[@id='password2']", "Enter New Password Again"
+		};
+	private static String[] _NEW_PASSWORD_FIELD = {
+			"//input[@id='password1']", "New Password"
+		};
 	private static String[] _PASSWORD_FIELD = {
 			"//input[@id='_58_password']", "test"
 		};
@@ -80,6 +86,9 @@ public class PortletSignInHomePaths {
 		_paths.put("EMAIL_ADDRESS_TEXT", _EMAIL_ADDRESS_TEXT);
 		_paths.put("I_AGREE_LINK", _I_AGREE_LINK);
 		_paths.put("I_DISAGREE_LINK", _I_DISAGREE_LINK);
+		_paths.put("NEW_PASSWORD_ENTER_AGAIN_FIELD",
+			_NEW_PASSWORD_ENTER_AGAIN_FIELD);
+		_paths.put("NEW_PASSWORD_FIELD", _NEW_PASSWORD_FIELD);
 		_paths.put("PASSWORD_FIELD", _PASSWORD_FIELD);
 		_paths.put("PASSWORD_TEXT", _PASSWORD_TEXT);
 		_paths.put("QUESTION_FIELD", _QUESTION_FIELD);

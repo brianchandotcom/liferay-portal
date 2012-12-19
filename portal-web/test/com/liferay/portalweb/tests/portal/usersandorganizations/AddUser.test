@@ -1,0 +1,34 @@
+<test
+	name="AddUser"
+	description="In the &lt;strong&gt;Control Panel Users and Organizations Portlet&lt;/strong&gt;, add a User."
+>
+	<setup>
+	</setup>
+	<steps>
+		<macro name="CPUsersAndOrganizationsUsers" command="add">
+			<param name="screenName" value="usersn" />
+			<param name="emailAddress" value="userea@liferay.com" />
+			<param name="firstName" value="userfn" />
+			<param name="lastName" value="userln" />
+		</macro>
+
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Users and Organizations" />
+		</macro>
+
+		<action name="CPUsersAndOrganizationsHome" command="click" path="USERS_SEARCH_ALL" value="Search All Users" />
+
+		<action name="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" path="BASIC_SEARCH_FIELD" value="userfn" />
+		<action name="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="BASIC_SEARCH_BUTTON" value="Search" />
+		<action name="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="USERS_USER_1_FIRST_NAME" value="userfn" />
+
+		<action name="CPUsersAndOrganizationsEditUser" command="assertTextEquals" path="USER_SCREEN_NAME" value="usersn" />
+		<action name="CPUsersAndOrganizationsEditUser" command="assertTextEquals" path="USER_EMAIL_ADDRESS" value="userea@liferay.com" />
+		<action name="CPUsersAndOrganizationsEditUser" command="assertTextEquals" path="USER_FIRST_NAME" value="userfn" />
+		<action name="CPUsersAndOrganizationsEditUser" command="assertTextEquals" path="USER_LAST_NAME" value="userln" />
+	</steps>
+	<teardown>
+		<macro name="CPUsersAndOrganizationsUsers" command="tearDown">
+		</macro>
+	</teardown>
+</test>

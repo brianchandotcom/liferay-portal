@@ -47,6 +47,34 @@ public class SignInUserMacros extends BaseMacros {
 		}
 	}
 
+	public void signInNewPassword(String email, String password,
+		String newPassword) throws Exception {
+		HomeActions homeActions = new HomeActions(selenium);
+		PortletSignInHomeActions portletSignInHomeActions = new PortletSignInHomeActions(selenium);
+
+		homeActions.open("URL_GUEST", null);
+		portletSignInHomeActions.type("EMAIL_ADDRESS_FIELD", email);
+		portletSignInHomeActions.type("PASSWORD_FIELD", password);
+		portletSignInHomeActions.check("REMEMBER_ME_LINK", null);
+		portletSignInHomeActions.click("SIGN_IN_LINK", null);
+
+		if (portletSignInHomeActions.isElementPresent("I_AGREE_LINK", "")) {
+			portletSignInHomeActions.click("I_AGREE_LINK", null);
+		}
+
+		if (portletSignInHomeActions.isElementPresent("NEW_PASSWORD_FIELD", "")) {
+			portletSignInHomeActions.type("NEW_PASSWORD_FIELD", newPassword);
+			portletSignInHomeActions.type("NEW_PASSWORD_ENTER_AGAIN_FIELD",
+				newPassword);
+			portletSignInHomeActions.click("SAVE_LINK", "Save");
+		}
+
+		if (portletSignInHomeActions.isElementPresent("ANSWER_FIELD", "")) {
+			portletSignInHomeActions.type("ANSWER_FIELD", "test");
+			portletSignInHomeActions.click("SAVE_LINK", null);
+		}
+	}
+
 	public void signOut() throws Exception {
 		HomeActions homeActions = new HomeActions(selenium);
 		PortletSignInHomeActions portletSignInHomeActions = new PortletSignInHomeActions(selenium);

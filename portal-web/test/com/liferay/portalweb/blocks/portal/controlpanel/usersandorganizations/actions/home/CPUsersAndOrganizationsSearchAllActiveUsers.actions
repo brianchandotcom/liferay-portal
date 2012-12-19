@@ -1,0 +1,15 @@
+<actions>
+	<actiondef name="click">
+		<conditional elements="BASIC_SEARCH_ADVANCED_LINK,ADVANCED_SEARCH_BASIC_LINK">
+			<function name="Click" command="clickAt" />
+		</conditional>
+
+		<conditional elements="ADVANCED_SEARCH_BUTTON,BASIC_SEARCH_BUTTON,USERS_DEACTIVATE,">
+			<function name="Click" command="valueClickAtAndWait" />
+		</conditional>
+
+		<conditional elements="USERS_USER_1_FIRST_NAME">
+			<function name="Click" command="textClickAndWait" />
+		</conditional>
+	</actiondef>
+</actions>

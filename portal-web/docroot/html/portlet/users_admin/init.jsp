@@ -99,6 +99,7 @@ boolean filterManageableUserGroups = true;
 
 if (portletName.equals(PortletKeys.MY_ACCOUNT)) {
 	filterManageableGroups = false;
+	filterManageableOrganizations = false;
 	filterManageableRoles = false;
 	filterManageableUserGroupRoles = false;
 	filterManageableUserGroups = false;

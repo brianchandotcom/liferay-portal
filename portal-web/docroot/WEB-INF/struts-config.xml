@@ -1342,10 +1342,6 @@
 			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
 		</action>
 
-		<action path="/my_account/select_regular_role" forward="portlet.roles_admin.select_regular_role" />
-
-		<action path="/my_account/select_site" forward="portlet.sites_admin.select_site" />
-
 		<action path="/my_account/view" type="com.liferay.portlet.myaccount.action.ViewAction">
 			<forward name="portlet.my_account.edit_user" path="portlet.users_admin.edit_user" />
 			<forward name="portlet.my_account.view" path="portlet.my_account.view" />

@@ -26,7 +26,6 @@ import com.liferay.taglib.aui.base.BaseScriptTag;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
 
@@ -85,15 +84,7 @@ public class ScriptTag extends BaseScriptTag {
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 
-		ScriptData scriptData = AUIUtil.getScriptData(request);
-
-		if (scriptData != null) {
-			ScriptTag scriptTag = new ScriptTag();
-
-			scriptTag.setPageContext(pageContext);
-
-			scriptTag.processEndTag(scriptData);
-		}
+		AUIUtil.outputScriptData(request, pageContext.getOut());
 	}
 
 	@Override
@@ -132,7 +123,7 @@ public class ScriptTag extends BaseScriptTag {
 					PortalIncludeUtil.include(pageContext, page);
 				}
 				else {
-					processEndTag(scriptData);
+					AUIUtil.outputScriptData(request, pageContext.getOut());
 				}
 			}
 			else {
@@ -180,15 +171,6 @@ public class ScriptTag extends BaseScriptTag {
 	protected void cleanUp() {
 		setPosition(null);
 		setUse(null);
-	}
-
-	protected void processEndTag(ScriptData scriptData) throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		AUIUtil.buildScriptData(jspWriter, request, scriptData);
 	}
 
 }

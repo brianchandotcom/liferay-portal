@@ -1,3 +1,5 @@
+@import "compass";
+
 /* ---------- Browser normalization ---------- */
 
 article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
@@ -157,6 +159,9 @@ body.html-editor {
 }
 
 .html-editor.portlet-message-boards {
+	@include hyphenation;
+	word-wrap: break-word;
+
 	blockquote {
 		background: #EEF0F2 url(../images/message_boards/quoteleft.png) no-repeat 5px 5px;
 		border: 1px solid #777;

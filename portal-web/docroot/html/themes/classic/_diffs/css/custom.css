@@ -382,6 +382,10 @@ hr, .separator {
 	#navigation ul {
 		padding: 2px;
 	}
+
+	.portlet-message-boards .thread-body {
+		word-wrap: break-word;
+	}
 }
 
 .ie6 {

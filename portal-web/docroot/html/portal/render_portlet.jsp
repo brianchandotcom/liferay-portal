@@ -79,7 +79,7 @@ if (allowAddPortletDefaultResource) {
 	String scopeLayoutUuid = portletPreferences.getValue("lfrScopeLayoutUuid", null);
 
 	if (Validator.isNotNull(scopeLayoutUuid)) {
-		Layout scopeLayout = LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdPrivateLayout(scopeLayoutUuid, group.getGroupId(), privateLayout);
+		Layout scopeLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupIdAndPrivateLayout(scopeLayoutUuid, group.getGroupId(), privateLayout);
 
 		if (scopeLayout != null) {
 			portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, scopeLayout, portletId);

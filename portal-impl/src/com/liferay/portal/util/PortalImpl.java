@@ -2239,7 +2239,7 @@ public class PortalImpl implements Portal {
 				groupId, articleUrlTitle);
 
 		Layout layout =
-			LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
+			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
 			journalArticle.getLayoutUuid(), groupId, isPrivate);
 
 		String layoutActualURL = getLayoutActualURL(layout, mainPath);
@@ -3706,7 +3706,7 @@ public class PortalImpl implements Portal {
 					!liveGroup.isStagedPortlet(portletId)) {
 
 					Layout liveGroupLayout =
-				LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdPrivateLayout(
+		LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupIdAndPrivateLayout(
 							layout.getUuid(), liveGroup.getGroupId(),
 							layout.isPrivateLayout());
 
@@ -3778,7 +3778,7 @@ public class PortalImpl implements Portal {
 					portletSetup.getValue("lfrScopeLayoutUuid", null));
 
 				Layout scopeLayout =
-					LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
+			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
 						scopeLayoutUuid, layout.getGroupId(),
 						layout.isPrivateLayout());
 

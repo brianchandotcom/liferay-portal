@@ -273,7 +273,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 				try {
 					Layout linkedLayout =
-				LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
+			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
 							linkToLayoutUuid, layout.getGroupId(),
 							layout.isPrivateLayout());
 

@@ -840,7 +840,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout fetchLayoutByUuidGroupIdPrivateLayout(
+	public Layout fetchLayoutByUuidAndGroupIdAndPrivateLayout(
 			String uuid, long groupId, boolean privateLayout)
 		throws SystemException {
 

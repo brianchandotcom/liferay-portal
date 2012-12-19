@@ -978,7 +978,7 @@ public class LayoutImporter {
 
 		if (deleteLayout) {
 			Layout layout =
-				LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdPrivateLayout(
+		LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupIdAndPrivateLayout(
 					layoutUuid, groupId, privateLayout);
 
 			if (layout != null) {
@@ -1169,7 +1169,7 @@ public class LayoutImporter {
 		}
 		else if (Validator.isNotNull(parentLayoutUuid)) {
 			Layout parentLayout =
-				LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
+			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
 					parentLayoutUuid, groupId, privateLayout);
 
 			parentLayoutId = parentLayout.getLayoutId();

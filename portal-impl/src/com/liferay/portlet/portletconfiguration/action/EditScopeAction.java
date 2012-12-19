@@ -160,7 +160,7 @@ public class EditScopeAction extends EditConfigurationAction {
 				actionRequest, "scopeLayoutUuid");
 
 			Layout scopeLayout =
-				LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
+			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
 					scopeLayoutUuid, layout.getGroupId(),
 					layout.isPrivateLayout());
 
@@ -217,7 +217,7 @@ public class EditScopeAction extends EditConfigurationAction {
 
 			try {
 				Layout scopeLayout =
-					LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
+			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
 						scopeLayoutUuid, layout.getGroupId(),
 						layout.isPrivateLayout());
 

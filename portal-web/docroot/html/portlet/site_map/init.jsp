@@ -46,7 +46,7 @@ Layout rootLayout = null;
 long rootLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
 if (Validator.isNotNull(rootLayoutUuid)) {
-	rootLayout = LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(rootLayoutUuid, scopeGroupId, privateLayout);
+	rootLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(rootLayoutUuid, scopeGroupId, privateLayout);
 
 	if (rootLayout != null) {
 		rootLayoutId = rootLayout.getLayoutId();

@@ -581,7 +581,7 @@ public class EditArticleAction extends PortletAction {
 		// The target page and the article must belong to the same group
 
 		Layout targetLayout =
-			LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdPrivateLayout(
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupIdAndPrivateLayout(
 				layoutUuid, groupId, isPrivate);
 
 		if (targetLayout == null) {

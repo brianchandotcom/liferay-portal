@@ -546,7 +546,7 @@ public class SitesUtil {
 
 			Group group = layoutSetPrototype.getGroup();
 
-			return LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdPrivateLayout(
+	return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupIdAndPrivateLayout(
 				layout.getSourcePrototypeLayoutUuid(), group.getGroupId(),
 				layout.isPrivateLayout());
 		}
@@ -1136,7 +1136,7 @@ public class SitesUtil {
 		}
 
 		Layout targetScopeLayout =
-			LayoutLocalServiceUtil.getLayoutByUuidGroupIdPrivateLayout(
+			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
 				targetLayout.getUuid(), targetLayout.getGroupId(),
 				targetLayout.isPrivateLayout());
 

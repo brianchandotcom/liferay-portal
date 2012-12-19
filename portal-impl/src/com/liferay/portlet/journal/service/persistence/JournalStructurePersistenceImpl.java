@@ -3854,7 +3854,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			}
 		}
 
-		if ((result == null) || (result.equals(Collections.EMPTY_LIST))){
+		if (result == null) {
 			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_SELECT_JOURNALSTRUCTURE_WHERE);

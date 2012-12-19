@@ -172,51 +172,10 @@ public class AUIUtil {
 		return sb.toString();
 	}
 
-	public static void buildScriptData(
-			Writer writer, HttpServletRequest request, ScriptData scriptData)
+	public static void outputScriptData(
+			HttpServletRequest request, Writer writer)
 		throws IOException {
 
-		writer.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
-
-		StringBundler rawSB = scriptData.getRawSB();
-
-		rawSB.writeTo(writer);
-
-		StringBundler callbackSB = scriptData.getCallbackSB();
-
-		if (callbackSB.index() > 0) {
-			String loadMethod = "use";
-
-			if (BrowserSnifferUtil.isIe(request) &&
-				(BrowserSnifferUtil.getMajorVersion(request) < 8)) {
-
-				loadMethod = "ready";
-			}
-
-			writer.write("AUI().");
-			writer.write( loadMethod );
-			writer.write("(");
-
-			Set<String> useSet = scriptData.getUseSet();
-
-			for (String use : useSet) {
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(use);
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(StringPool.COMMA_AND_SPACE);
-			}
-
-			writer.write("function(A) {");
-
-			callbackSB.writeTo(writer);
-
-			writer.write("});");
-		}
-
-		writer.write("\n// ]]>\n</script>");
-	}
-
-	public static ScriptData getScriptData(HttpServletRequest request) {
 		ScriptData scriptData = (ScriptData)request.getAttribute(
 			ScriptTag.class.getName());
 
@@ -229,7 +188,46 @@ public class AUIUtil {
 			}
 		}
 
-		return scriptData;
+		if (scriptData != null) {
+			writer.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
+
+			StringBundler rawSB = scriptData.getRawSB();
+
+			rawSB.writeTo(writer);
+
+			StringBundler callbackSB = scriptData.getCallbackSB();
+
+			if (callbackSB.index() > 0) {
+				String loadMethod = "use";
+
+				if (BrowserSnifferUtil.isIe(request) &&
+					(BrowserSnifferUtil.getMajorVersion(request) < 8)) {
+
+					loadMethod = "ready";
+				}
+
+				writer.write("AUI().");
+				writer.write( loadMethod );
+				writer.write("(");
+
+				Set<String> useSet = scriptData.getUseSet();
+
+				for (String use : useSet) {
+					writer.write(StringPool.APOSTROPHE);
+					writer.write(use);
+					writer.write(StringPool.APOSTROPHE);
+					writer.write(StringPool.COMMA_AND_SPACE);
+				}
+
+				writer.write("function(A) {");
+
+				callbackSB.writeTo(writer);
+
+				writer.write("});");
+			}
+
+			writer.write("\n// ]]>\n</script>");
+		}
 	}
 
 }

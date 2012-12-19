@@ -16,7 +16,6 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
-import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -26,8 +25,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.taglib.aui.AUIUtil;
-
-import java.io.PrintWriter;
 
 import javax.portlet.WindowState;
 
@@ -95,13 +92,7 @@ public class RenderPortletAction extends Action {
 		PortletContainerUtil.render(request, response, portlet);
 
 		if (themeDisplay.isIsolated() || themeDisplay.isStateExclusive()) {
-			ScriptData scriptData = AUIUtil.getScriptData(request);
-
-			if (scriptData != null) {
-				PrintWriter writer = response.getWriter();
-
-				AUIUtil.buildScriptData(writer, request, scriptData);
-			}
+			AUIUtil.outputScriptData(request, response.getWriter());
 		}
 
 		return null;

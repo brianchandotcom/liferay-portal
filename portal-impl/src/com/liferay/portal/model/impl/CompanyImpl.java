@@ -180,7 +180,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@Override
 	public String getVirtualHostname() {
-		if (_virtualHostname != null) {
+		if (Validator.isNotNull(_virtualHostname)) {
 			return _virtualHostname;
 		}
 

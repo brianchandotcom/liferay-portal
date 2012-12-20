@@ -135,26 +135,24 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 			</aui:script>
 		</c:if>
 
-		<c:if test="<%= (searchRepositoryId == scopeGroupId) %>">
-			<aui:script use="aui-base">
-				A.one('#<portlet:namespace />closeSearch').on(
-					'click',
-					function(event) {
-						Liferay.fire(
-							'<portlet:namespace />dataRequest',
-							{
-								requestParams: {
-									'<portlet:namespace />struts_action': '/document_library/view',
-									'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
-									'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>
-								},
-								src: Liferay.DL_SEARCH_END
-							}
-						);
-					}
-				);
-			</aui:script>
-		</c:if>
+		<aui:script use="aui-base">
+			A.one('#<portlet:namespace />closeSearch').on(
+				'click',
+				function(event) {
+					Liferay.fire(
+						'<portlet:namespace />dataRequest',
+						{
+							requestParams: {
+								'<portlet:namespace />struts_action': '/document_library/view',
+								'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
+								'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>
+							},
+							src: Liferay.DL_SEARCH_END
+						}
+					);
+				}
+			);
+		</aui:script>
 	</liferay-util:buffer>
 
 	<div id="<portlet:namespace />searchInfo">

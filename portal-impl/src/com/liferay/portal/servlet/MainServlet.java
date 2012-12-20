@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
@@ -1216,8 +1217,8 @@ public class MainServlet extends ActionServlet {
 				if ((plid == LayoutConstants.DEFAULT_PLID) ||
 					 group.isStagingGroup()) {
 
-					Group guestGroup = GroupLocalServiceUtil.getGuestGroup(
-						layout.getCompanyId());
+					Group guestGroup = GroupLocalServiceUtil.getGroup(
+						layout.getCompanyId(), GroupConstants.GUEST);
 
 					plid = guestGroup.getDefaultPublicPlid();
 				}

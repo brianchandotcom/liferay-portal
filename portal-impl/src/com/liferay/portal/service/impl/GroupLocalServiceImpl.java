@@ -1053,12 +1053,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groups;
 	}
 
-	public Group getGuestGroup(long companyId)
-		throws PortalException, SystemException {
-
-		return getGroup(companyId, GroupConstants.GUEST);
-	}
-
 	/**
 	 * Returns the group associated with the layout.
 	 *

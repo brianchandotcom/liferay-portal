@@ -99,7 +99,7 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			smallImageInputStream, serviceContext);
 
 		if (approved) {
-			BlogsEntryLocalServiceUtil.updateStatus(
+			entry = BlogsEntryLocalServiceUtil.updateStatus(
 				TestPropsValues.getUserId(), entry.getEntryId(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 		}

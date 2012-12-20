@@ -73,7 +73,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
 			true, serviceContext);
 
-		WikiPageLocalServiceUtil.updateStatus(
+		page = WikiPageLocalServiceUtil.updateStatus(
 			TestPropsValues.getUserId(), page.getResourcePrimKey(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 

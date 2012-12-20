@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.messaging.DefaultMessageBus;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.scheduler.CronTrigger;
 import com.liferay.portal.kernel.scheduler.IntervalTrigger;
@@ -84,7 +83,6 @@ import org.quartz.SchedulerMetaData;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
-import org.quartz.UnableToInterruptJobException;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.spi.JobFactory;
 
@@ -140,7 +138,7 @@ public class QuartzSchedulerEngineTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		if (_quartzSchedulerEngine != null) {
 			_quartzSchedulerEngine.destroy();
 		}
@@ -149,7 +147,8 @@ public class QuartzSchedulerEngineTest {
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testDelete1() throws Exception {
-		//Delete by groupName
+
+		// Delete by groupName
 
 		List<SchedulerResponse> schedulerResponses =
 			_quartzSchedulerEngine.getScheduledJobs(_MEMORY_TEST_GROUP_NAME);
@@ -163,7 +162,7 @@ public class QuartzSchedulerEngineTest {
 
 		Assert.assertTrue(schedulerResponses.isEmpty());
 
-		//Delete by jobName and groupName
+		// Delete by jobName and groupName
 
 		SchedulerResponse schedulerResponse =
 			_quartzSchedulerEngine.getScheduledJob(
@@ -241,7 +240,7 @@ public class QuartzSchedulerEngineTest {
 
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
-	public void testGetQuartzTrigger2() throws Exception {
+	public void testGetQuartzTrigger2() {
 		String wrongCronTriggerContent = "bad-cron-trigger-content";
 
 		Trigger cronTrigger = new CronTrigger(
@@ -491,7 +490,8 @@ public class QuartzSchedulerEngineTest {
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testUnschedule1() throws Exception {
-		//Unschedule Memory Job
+
+		// Unschedule Memory Job
 
 		List<SchedulerResponse> schedulerResponses =
 			_quartzSchedulerEngine.getScheduledJobs(_MEMORY_TEST_GROUP_NAME);
@@ -505,7 +505,7 @@ public class QuartzSchedulerEngineTest {
 
 		Assert.assertTrue(schedulerResponses.isEmpty());
 
-		//Unschedule Persisted Job
+		// Unschedule Persisted Job
 
 		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
 			_PERSISTED_TEST_GROUP_NAME);
@@ -527,7 +527,8 @@ public class QuartzSchedulerEngineTest {
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testUnschedule2() throws Exception {
-		//Unschedule Memory Job
+
+		// Unschedule Memory Job
 
 		SchedulerResponse schedulerResponse =
 			_quartzSchedulerEngine.getScheduledJob(
@@ -543,7 +544,7 @@ public class QuartzSchedulerEngineTest {
 
 		Assert.assertNull(schedulerResponse);
 
-		//Unschedule Persisted Job
+		// Unschedule Persisted Job
 
 		schedulerResponse = _quartzSchedulerEngine.getScheduledJob(
 			_TEST_JOB_NAME_0, _PERSISTED_TEST_GROUP_NAME);
@@ -682,7 +683,7 @@ public class QuartzSchedulerEngineTest {
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues.SCHEDULER_ENABLED)")
-		public Object enableClusterLink(ProceedingJoinPoint proceedingJoinPoint)
+		public Object enableScheduler(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
 			return proceedingJoinPoint.proceed(new Object[]{Boolean.TRUE});
@@ -692,7 +693,7 @@ public class QuartzSchedulerEngineTest {
 
 	public static class TestMessageListener implements MessageListener {
 
-		public void receive(Message message) throws MessageListenerException {
+		public void receive(Message message) {
 		}
 
 	}
@@ -736,41 +737,10 @@ public class QuartzSchedulerEngineTest {
 
 	private class MockScheduler implements Scheduler {
 
-		public final void addJob(
-			String jobName, String groupName, StorageType storageType,
-			org.quartz.Trigger trigger) {
-
-			JobKey jobKey = new JobKey(jobName, groupName);
-
-			JobDetail jobDetail = JobBuilder.newJob(
-				MessageSenderJob.class). withIdentity(jobKey). build();
-
-			JobDataMap jobDataMap = jobDetail.getJobDataMap();
-
-			jobDataMap.put(
-				SchedulerEngine.MESSAGE,
-				JSONFactoryUtil.serialize(new Message()));
-			jobDataMap.put(
-				SchedulerEngine.DESTINATION_NAME, _TEST_DESTINATION_NAME);
-			jobDataMap.put(
-				SchedulerEngine.STORAGE_TYPE, storageType.toString());
-
-			JobState jobState = new JobState(TriggerState.NORMAL);
-
-			jobState.addException(
-				new Exception(), new Date(System.currentTimeMillis()));
-
-			jobDataMap.put(
-				SchedulerEngine.JOB_STATE,
-				JobStateSerializeUtil.serialize(jobState));
-
-			_jobs.put(
-				jobKey, new Tuple(jobDetail, trigger, TriggerState.NORMAL));
-		}
-
 		public MockScheduler(StorageType storageType) {
 			for (int i = 0; i < _DEFAULT_JOB_NUMBER; i++) {
-				TriggerBuilder triggerBuilder = TriggerBuilder.newTrigger();
+				TriggerBuilder<org.quartz.Trigger> triggerBuilder =
+					TriggerBuilder.newTrigger();
 
 				triggerBuilder.withIdentity(
 					_TEST_JOB_NAME_PREFIX + i, _TEST_GROUP_NAME);
@@ -786,8 +756,40 @@ public class QuartzSchedulerEngineTest {
 			}
 		}
 
+		public final void addJob(
+			String jobName, String groupName, StorageType storageType,
+			org.quartz.Trigger trigger) {
+
+			JobKey jobKey = new JobKey(jobName, groupName);
+
+			JobDetail jobDetail = JobBuilder.newJob(
+				MessageSenderJob.class).withIdentity(jobKey).build();
+
+			JobDataMap jobDataMap = jobDetail.getJobDataMap();
+
+			jobDataMap.put(
+				SchedulerEngine.MESSAGE,
+				JSONFactoryUtil.serialize(new Message()));
+			jobDataMap.put(
+				SchedulerEngine.DESTINATION_NAME, _TEST_DESTINATION_NAME);
+			jobDataMap.put(
+				SchedulerEngine.STORAGE_TYPE, storageType.toString());
+
+			JobState jobState = new JobState(TriggerState.NORMAL);
+
+			jobState.addException(new Exception(), new Date());
+
+			jobDataMap.put(
+				SchedulerEngine.JOB_STATE,
+				JobStateSerializeUtil.serialize(jobState));
+
+			_jobs.put(
+				jobKey, new Tuple(jobDetail, trigger, TriggerState.NORMAL));
+		}
+
 		public void addCalendar(
-			String string, Calendar calendar, boolean bln, boolean bln1) {
+			String name, Calendar calendar, boolean replace,
+			boolean updateTriggers) {
 		}
 
 		public void addJob(JobDetail jobDetail, boolean replace) {
@@ -807,7 +809,7 @@ public class QuartzSchedulerEngineTest {
 		public void clear() {
 		}
 
-		public boolean deleteCalendar(String string) {
+		public boolean deleteCalendar(String name) {
 			return false;
 		}
 
@@ -817,11 +819,11 @@ public class QuartzSchedulerEngineTest {
 			return true;
 		}
 
-		public boolean deleteJobs(List<JobKey> list) {
+		public boolean deleteJobs(List<JobKey> jobKeys) {
 			return false;
 		}
 
-		public Calendar getCalendar(String string) {
+		public Calendar getCalendar(String name) {
 			return null;
 		}
 
@@ -927,15 +929,11 @@ public class QuartzSchedulerEngineTest {
 			return null;
 		}
 
-		public boolean interrupt(JobKey jobkey)
-			throws UnableToInterruptJobException {
-
+		public boolean interrupt(JobKey jobkey) {
 			return false;
 		}
 
-		public boolean interrupt(String string)
-			throws UnableToInterruptJobException {
-
+		public boolean interrupt(String fireInstanceId) {
 			return false;
 		}
 

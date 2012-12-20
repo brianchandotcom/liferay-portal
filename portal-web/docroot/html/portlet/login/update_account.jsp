@@ -36,24 +36,24 @@ int suffixId = ParamUtil.getInteger(request, "suffixId");
 <div class="anonymous-account">
 	<portlet:actionURL var="createAccountURL">
 		<portlet:param name="struts_action" value="/login/create_account" />
-		<portlet:param name="birthdayDay" value="<%= String.valueOf(birthdayDay) %>" />
-		<portlet:param name="birthdayMonth" value="<%= String.valueOf(birthdayMonth) %>" />
-		<portlet:param name="birthdayYear" value="<%= String.valueOf(birthdayYear) %>" />
-		<portlet:param name="emailAddress" value="<%= emailAddress %>" />
-		<portlet:param name="facebookId" value="<%= String.valueOf(facebookId) %>" />
-		<portlet:param name="firstName" value="<%= firstName %>" />
-		<portlet:param name="jobTitle" value="<%= jobTitle %>" />
-		<portlet:param name="lastName" value="<%= lastName %>" />
-		<portlet:param name="male" value="<%= String.valueOf(male) %>" />
-		<portlet:param name="middleName" value="<%= middleName %>" />
-		<portlet:param name="openId" value="<%= openId %>" />
-		<portlet:param name="prefixId" value="<%= String.valueOf(prefixId) %>" />
-		<portlet:param name="screenName" value="<%= screenName %>" />
-		<portlet:param name="suffixId" value="<%= String.valueOf(suffixId) %>" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= createAccountURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="birthdayDay" type="hidden" value="<%= String.valueOf(birthdayDay) %>" />
+		<aui:input name="birthdayMonth" type="hidden" value="<%= String.valueOf(birthdayMonth) %>" />
+		<aui:input name="birthdayYear" type="hidden" value="<%= String.valueOf(birthdayYear) %>" />
+		<aui:input name="emailAddress" type="hidden" value="<%= emailAddress %>" />
+		<aui:input name="facebookId" type="hidden" value="<%= String.valueOf(facebookId) %>" />
+		<aui:input name="firstName" type="hidden" value="<%= firstName %>" />
+		<aui:input name="jobTitle" type="hidden" value="<%= jobTitle %>" />
+		<aui:input name="lastName" type="hidden" value="<%= lastName %>" />
+		<aui:input name="male" type="hidden" value="<%= String.valueOf(male) %>" />
+		<aui:input name="middleName" type="hidden" value="<%= middleName %>" />
+		<aui:input name="openId" type="hidden" value="<%= openId %>" />
+		<aui:input name="prefixId" type="hidden" value="<%= String.valueOf(prefixId) %>" />
+		<aui:input name="screenName" type="hidden" value="<%= screenName %>" />
+		<aui:input name="suffixId" type="hidden" value="<%= String.valueOf(suffixId) %>" />
 	</aui:form>
 
 	<div class="portlet-msg-alert">

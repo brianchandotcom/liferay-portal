@@ -364,6 +364,16 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return value;
 		}
 
+		if (!isInheritLookAndFeel()) {
+			try {
+				Theme theme = getTheme(device);
+
+				return theme.getSetting(key);
+			}
+			catch (Exception e) {
+			}
+		}
+
 		try {
 			LayoutSet layoutSet = getLayoutSet();
 
@@ -667,6 +677,17 @@ public class LayoutImpl extends LayoutBaseImpl {
 		_typeSettingsProperties = typeSettingsProperties;
 
 		super.setTypeSettings(_typeSettingsProperties.toString());
+	}
+
+	protected Theme getTheme(String device)
+		throws PortalException, SystemException {
+
+		if (device.equals("regular")) {
+			return getTheme();
+		}
+		else {
+			return getWapTheme();
+		}
 	}
 
 	private static String _getFriendlyURLKeyword(String friendlyURL) {

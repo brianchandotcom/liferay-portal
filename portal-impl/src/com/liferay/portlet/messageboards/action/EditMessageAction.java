@@ -314,33 +314,28 @@ public class EditMessageAction extends PortletAction {
 			preferences.getValue("messageFormat", null),
 			MBMessageConstants.DEFAULT_FORMAT);
 
-		boolean attachments = ParamUtil.getBoolean(
-			actionRequest, "attachments");
-
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			new ArrayList<ObjectValuePair<String, InputStream>>(5);
 
 		try {
-			if (attachments) {
-				UploadPortletRequest uploadPortletRequest =
-					PortalUtil.getUploadPortletRequest(actionRequest);
+			UploadPortletRequest uploadPortletRequest =
+				PortalUtil.getUploadPortletRequest(actionRequest);
 
-				for (int i = 1; i <= 5; i++) {
-					String fileName = uploadPortletRequest.getFileName(
-						"msgFile" + i);
-					InputStream inputStream =
-						uploadPortletRequest.getFileAsStream("msgFile" + i);
+			for (int i = 1; i <= 5; i++) {
+				String fileName = uploadPortletRequest.getFileName(
+					"msgFile" + i);
+				InputStream inputStream =
+					uploadPortletRequest.getFileAsStream("msgFile" + i);
 
-					if ((inputStream == null) || Validator.isNull(fileName)) {
-						continue;
-					}
-
-					ObjectValuePair<String, InputStream> inputStreamOVP =
-						new ObjectValuePair<String, InputStream>(
-							fileName, inputStream);
-
-					inputStreamOVPs.add(inputStreamOVP);
+				if ((inputStream == null) || Validator.isNull(fileName)) {
+					continue;
 				}
+
+				ObjectValuePair<String, InputStream> inputStreamOVP =
+					new ObjectValuePair<String, InputStream>(
+						fileName, inputStream);
+
+				inputStreamOVPs.add(inputStreamOVP);
 			}
 
 			boolean question = ParamUtil.getBoolean(actionRequest, "question");
@@ -429,14 +424,12 @@ public class EditMessageAction extends PortletAction {
 			return message;
 		}
 		finally {
-			if (attachments) {
-				for (ObjectValuePair<String, InputStream> inputStreamOVP :
-						inputStreamOVPs) {
+			for (ObjectValuePair<String, InputStream> inputStreamOVP :
+					inputStreamOVPs) {
 
-					InputStream inputStream = inputStreamOVP.getValue();
+				InputStream inputStream = inputStreamOVP.getValue();
 
-					StreamUtil.cleanUp(inputStream);
-				}
+				StreamUtil.cleanUp(inputStream);
 			}
 		}
 	}

@@ -218,7 +218,6 @@
 		<column name="subject" type="String" />
 		<column name="body" type="String" />
 		<column name="format" type="String" />
-		<column name="attachments" type="boolean" />
 		<column name="anonymous" type="boolean" />
 		<column name="priority" type="double" />
 		<column name="allowPingbacks" type="boolean" />

@@ -133,12 +133,6 @@ public class EditMessageAttachmentsAction extends PortletAction {
 
 		MBMessageServiceUtil.restoreMessageAttachmentFromTrash(
 			messageId, fileName);
-
-		MBMessage message = MBMessageServiceUtil.getMessage(messageId);
-
-		message.setAttachments(true);
-
-		MBMessageLocalServiceUtil.updateMBMessage(message);
 	}
 
 }

@@ -863,7 +863,7 @@ public class SitesUtil {
 	}
 
 	public static void mergeLayoutProtypeLayout(Group group, Layout layout)
-			throws Exception {
+		throws Exception {
 
 		String sourcePrototypeLayoutUuid =
 			layout.getSourcePrototypeLayoutUuid();
@@ -876,7 +876,7 @@ public class SitesUtil {
 					layout.getCompanyId(), layoutSet.getLayoutSetPrototypeId());
 
 			Layout sourcePrototypeLayout =
-				LayoutUtil.findByUUID_G(
+				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 					sourcePrototypeLayoutUuid,
 					layoutSetPrototypeGroup.getGroupId());
 

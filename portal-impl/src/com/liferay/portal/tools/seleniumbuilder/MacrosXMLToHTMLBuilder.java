@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -54,6 +56,28 @@ public class MacrosXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 
 			generateMacrosHTML(fileName);
 		}
+
+		generateAPIFile();
+	}
+
+protected void createMacroEntry(
+		String macrosName, String macrosFilePath, String description,
+		Element rootElement) throws Exception {
+
+		String[] macroData = new String[5];
+
+		allMacros.put(macrosName, macroData);
+
+		allMacros.get(macrosName)[0] = description;
+
+		allMacros.get(macrosName)[1] = macrosFilePath;
+
+		allMacros.get(macrosName)[2] = getObjectsReferenced(rootElement);
+
+		allMacros.get(macrosName)[3] = getOutlineLink(
+											macrosFilePath, macrosName);
+
+		allMacros.get(macrosName)[4] = getMethodOutline(rootElement);
 	}
 
 	protected String formatDescription(String description) {
@@ -68,8 +92,79 @@ public class MacrosXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		return formatted;
 	}
 
+	protected void generateAPIFile() throws Exception {
+
+		String root = "com/liferay/portalweb/blocks/styles/templates/";
+
+		StringBundler sb = new StringBundler();
+
+		String headerTemplate = readFile(root + "macroapi/head.html");
+
+		sb.append(headerTemplate);
+
+		for (String key : allMacros.keySet()) {
+			String blockTemplate = readFile(root + "macroapi/block.html");
+
+			String macrosName = key;
+			String description = allMacros.get(macrosName)[0];
+			String macrosFilePath = allMacros.get(macrosName)[1];
+			String objectsReferenced = allMacros.get(macrosName)[2];
+			String outlineLink = allMacros.get(macrosName)[3];
+			String methodOutline = allMacros.get(macrosName)[4];
+
+			blockTemplate = blockTemplate.replace("${macroname}", macrosName);
+
+			blockTemplate = blockTemplate.replace(
+				"${description}", description);
+
+			blockTemplate = blockTemplate.replace(
+				"${outlinelink}", outlineLink);
+
+			int x = macrosFilePath.indexOf("blocks");
+
+			String location = macrosFilePath.substring(x + 7);
+
+			String[] dirs = location.split("/");
+
+			StringBundler locationFinal = new StringBundler();
+
+			int tabs = 1;
+
+			for (String dir : dirs) {
+				for (int j = 0; j < tabs; j++) {
+					locationFinal.append("&rarr; ");
+				}
+
+				locationFinal.append("/" + dir);
+
+				locationFinal.append("<br>");
+
+				tabs++;
+			}
+
+			blockTemplate = blockTemplate.replace(
+				"${location}", locationFinal.toString());
+
+			blockTemplate = blockTemplate.replace(
+				"${methodoutline}", methodOutline);
+
+			blockTemplate = blockTemplate.replace(
+				"${pageobjects}", objectsReferenced);
+
+			sb.append(blockTemplate);
+
+			sb.append("</body>\n");
+			sb.append("</html>\n");
+		}
+
+		String macroAPIPath = "com/liferay/portalweb/blocks/MacroAPI.html";
+
+		writeFile(macroAPIPath, sb.toString(), false);
+	}
+
 	protected String generateHeader(String fileName, Element rootElement)
 		throws Exception {
+
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
@@ -104,6 +199,8 @@ public class MacrosXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		String tableofcontents = getTableOfContents();
 
 		template = template.replace("${tableofcontents}", tableofcontents);
+
+		createMacroEntry(macrosName, macrosFilePath, description, rootElement);
 
 		return template;
 	}
@@ -208,6 +305,57 @@ public class MacrosXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
+	protected String getMethodOutline(Element rootElement) {
+		List<Element> macroDefs = rootElement.elements("macrodef");
+
+		StringBundler sb = new StringBundler();
+
+		for (Element macroDef : macroDefs) {
+			String macroName = macroDef.attributeValue("name");
+			String params = macroDef.attributeValue("params");
+
+			sb.append("<li>");
+			sb.append(macroName);
+			sb.append("(" + params + ")");
+			sb.append("</li>\n");
+		}
+
+		return sb.toString();
+	}
+
+	protected String getObjectsReferenced(Element rootElement)
+		throws Exception {
+
+		List<Element> macroDefs = rootElement.elements("macrodef");
+
+		Set<String> objects = new TreeSet<String>();
+
+		for (Element macroDef : macroDefs) {
+			Set<String> newSet = new TreeSet<String>();
+
+			objects.addAll(getAllObjects(macroDef, newSet));
+		}
+
+		StringBundler sb = new StringBundler();
+
+		for (String object : objects) {
+			sb.append("<li>");
+			sb.append(object);
+			sb.append("</li>\n");
+		}
+
+		return sb.toString();
+	}
+
+	protected String getOutlineLink(String macrosFilePath, String macrosName) {
+
+		int x = macrosFilePath.lastIndexOf("blocks");
+
+		String path = macrosFilePath.substring(x + 7);
+
+		return path + "/" + macrosName + ".html";
+	}
+
 	protected String getTableOfContents() {
 		StringBundler sb = new StringBundler();
 
@@ -269,6 +417,8 @@ public class MacrosXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 	}
 
 	private List<String> allMacroDefs = new ArrayList();
+
+	private Map<String, String[]> allMacros = new HashMap<String, String[]>();
 
 	private String macrosFileName = "";
 

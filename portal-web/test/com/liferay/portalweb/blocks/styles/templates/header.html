@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Macro List</title>
+		<title>${title}</title>
 		<script type="text/javascript" src="${styledir}jquery.js"></script>
 		<script type="text/javascript" src="${styledir}scripts.js"></script>
 		<link rel="stylesheet" href="${styledir}macrostyle.css">
@@ -8,29 +8,26 @@
 	<body>
 
 	<div id="macro-outline">
-		<div class="title">
-			Macro List
+		<div class="macro-name">
+			${macroname}
+		</div>
+		
+		<div class="block-head">
+			Description
+		</div>
+		<div class="description-content">
+			${macrodescription}
 		</div>
 
-		<table cellspacing=0 cellpadding=0 border=0>
-			<tr>
-				<td>
-					<strong>Name</strong>
-				</td>
-				<td>
-					<strong>Description</strong>
-				</td>
-				<td>
-					<strong>Location</strong>
-				</td>
-				<td>
-					<strong>Page Objects Referenced</strong>
-				</td>
-				<td>
-					<strong>Method Outline</strong>
-				</td>
-			</tr>
+		<div class="block-head">
+			Method Summary
+		</div>
 
+		<div class="">
+			<ul>
+				${tableofcontents}
+			</ul>
+		</div>
 
 	</body>
 </html>

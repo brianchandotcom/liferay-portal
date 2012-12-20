@@ -301,8 +301,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreads(
-	 * 				long, long, boolean, boolean, QueryDefinition)}
+	 * @deprecated {As of 6.2.0, replaced by @link #getGroupThreads( long, long,
+	 *             boolean, boolean, QueryDefinition)}
 	 */
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, int status, boolean subscribed,
@@ -317,8 +317,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreads(
-	 * 				long, long, boolean, QueryDefinition)}
+	 * @deprecated {As of 6.2.0, replaced by @link #getGroupThreads( long, long,
+	 *             boolean, QueryDefinition)}
 	 */
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, int status, boolean subscribed,
@@ -332,8 +332,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreads(
-	 * 				long, long, QueryDefinition)}
+	 * @deprecated {As of 6.2.0, replaced by @link #getGroupThreads( long, long,
+	 *             QueryDefinition)}
 	 */
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, int status, int start, int end)
@@ -371,8 +371,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreadsCount(
-	 * 				long, QueryDefinition)}
+	 * @deprecated {As of 6.2.0, replaced by @link #getGroupThreadsCount( long,
+	 *             QueryDefinition)}
 	 */
 	public int getGroupThreadsCount(long groupId, int status)
 			throws SystemException {
@@ -418,8 +418,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreadsCount(
-	 * 				long, long, QueryDefinition)}
+	 * @deprecated {As of 6.2.0, replaced by @link #getGroupThreadsCount( long,
+	 *             long, QueryDefinition)}
 	 */
 	public int getGroupThreadsCount(long groupId, long userId, int status)
 		throws SystemException {
@@ -430,8 +430,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreadsCount(
-	 * 				long, long, boolean, QueryDefinition)}
+	 * @deprecated {As of 6.2.0, replaced by @link #getGroupThreadsCount( long,
+	 *             long, boolean, QueryDefinition)}
 	 */
 	public int getGroupThreadsCount(
 			long groupId, long userId, int status, boolean subscribed)
@@ -444,8 +444,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupThreadsCount(
-	 * 				long, long, boolean, boolean, QueryDefinition)}
+	 * @deprecated {As of 6.2.0, replaced by @link #getGroupThreadsCount( long,
+	 *             long, boolean, boolean, QueryDefinition)}
 	 */
 	public int getGroupThreadsCount(
 			long groupId, long userId, int status, boolean subscribed,

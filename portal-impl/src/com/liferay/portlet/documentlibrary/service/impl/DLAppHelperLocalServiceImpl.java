@@ -426,10 +426,10 @@ public class DLAppHelperLocalServiceImpl
 	/**
 	 * Moves the file entry to the recycle bin.
 	 *
-	 * @param userId the primary key of the user moving the file entry
-	 * @param fileEntry the file entry to be moved
+	 * @param  userId the primary key of the user moving the file entry
+	 * @param  fileEntry the file entry to be moved
 	 * @return the moved file entry
-	 * @throws PortalExcpetion if a user with the primary key could not be found
+	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
@@ -471,10 +471,10 @@ public class DLAppHelperLocalServiceImpl
 	/**
 	 * Moves the file shortcut to the recycle bin.
 	 *
-	 * @param userId the primary key of the user moving the file shortcut
-	 * @param dlFileShortcut the file shortcut to be moved
+	 * @param  userId the primary key of the user moving the file shortcut
+	 * @param  dlFileShortcut the file shortcut to be moved
 	 * @return the moved file shortcut
-	 * @throws PortalExcpetion if a user with the primary key could not be found
+	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileShortcut moveFileShortcutToTrash(
@@ -544,10 +544,10 @@ public class DLAppHelperLocalServiceImpl
 	/**
 	 * Moves the folder to the recycle bin.
 	 *
-	 * @param userId the primary key of the user moving the folder
-	 * @param folder the folder to be moved
+	 * @param  userId the primary key of the user moving the folder
+	 * @param  folder the folder to be moved
 	 * @return the moved folder
-	 * @throws PortalExcpetion if a user with the primary key could not be found
+	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Folder moveFolderToTrash(long userId, Folder folder)

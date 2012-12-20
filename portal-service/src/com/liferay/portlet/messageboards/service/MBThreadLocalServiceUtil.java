@@ -325,8 +325,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreads(
-	long, long, boolean, boolean, QueryDefinition)}
+	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreads( long, long,
+	boolean, boolean, QueryDefinition)}
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed,
@@ -338,8 +338,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreads(
-	long, long, boolean, QueryDefinition)}
+	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreads( long, long,
+	boolean, QueryDefinition)}
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed, int start,
@@ -350,8 +350,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreads(
-	long, long, QueryDefinition)}
+	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreads( long, long,
+	QueryDefinition)}
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, int start, int end)
@@ -374,8 +374,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreadsCount(
-	long, QueryDefinition)}
+	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreadsCount( long,
+	QueryDefinition)}
 	*/
 	public static int getGroupThreadsCount(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -401,8 +401,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreadsCount(
-	long, long, QueryDefinition)}
+	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreadsCount( long,
+	long, QueryDefinition)}
 	*/
 	public static int getGroupThreadsCount(long groupId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -410,8 +410,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreadsCount(
-	long, long, boolean, QueryDefinition)}
+	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreadsCount( long,
+	long, boolean, QueryDefinition)}
 	*/
 	public static int getGroupThreadsCount(long groupId, long userId,
 		int status, boolean subscribed)
@@ -421,8 +421,8 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupThreadsCount(
-	long, long, boolean, boolean, QueryDefinition)}
+	* @deprecated {As of 6.2.0, replaced by @link #getGroupThreadsCount( long,
+	long, boolean, boolean, QueryDefinition)}
 	*/
 	public static int getGroupThreadsCount(long groupId, long userId,
 		int status, boolean subscribed, boolean includeAnonymous)

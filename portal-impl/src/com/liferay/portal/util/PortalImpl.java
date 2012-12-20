@@ -1444,9 +1444,9 @@ public class PortalImpl implements Portal {
 			createAccountURL.setPortletMode(PortletMode.VIEW);
 
 			createAccountURL.setParameter(
-				"struts_action", "/login/create_account");
-			createAccountURL.setParameter(
 				"saveLastPath", Boolean.FALSE.toString());
+			createAccountURL.setParameter(
+				"struts_action", "/login/create_account");
 
 			if (!PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS) {
 				return createAccountURL.toString();

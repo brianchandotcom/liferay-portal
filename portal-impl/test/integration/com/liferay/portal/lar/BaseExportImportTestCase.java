@@ -69,8 +69,8 @@ public class BaseExportImportTestCase extends PowerMockito {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 	}
 
-	protected void propagateChanges(Layout layout) throws Exception {
-		LayoutLocalServiceUtil.getLayout(layout.getPlid());
+	protected Layout propagateChanges(Layout layout) throws Exception {
+		return LayoutLocalServiceUtil.getLayout(layout.getPlid());
 	}
 
 	protected Layout updateLayoutTemplateId(

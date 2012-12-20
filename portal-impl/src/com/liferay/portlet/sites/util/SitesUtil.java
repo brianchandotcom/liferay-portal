@@ -546,8 +546,10 @@ public class SitesUtil {
 
 			Group group = layoutSetPrototype.getGroup();
 
-			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layout.getSourcePrototypeLayoutUuid(), group.getGroupId());
+			return LayoutLocalServiceUtil.
+				fetchLayoutByUuidGroupIdAndPrivateLayout(
+					layout.getSourcePrototypeLayoutUuid(), group.getGroupId(),
+					layout.isPrivateLayout());
 		}
 		catch (Exception e) {
 			_log.error(
@@ -658,7 +660,7 @@ public class SitesUtil {
 			if (LayoutLocalServiceUtil.hasLayoutSetPrototypeLayout(
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layout.getSourcePrototypeLayoutUuid(),
-					layout.getCompanyId())) {
+					layout.getCompanyId(), layout.isPrivateLayout())) {
 
 				return false;
 			}
@@ -1136,8 +1138,9 @@ public class SitesUtil {
 		}
 
 		Layout targetScopeLayout =
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-				targetLayout.getUuid(), targetLayout.getGroupId());
+			LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(
+				targetLayout.getUuid(), targetLayout.getGroupId(),
+				targetLayout.isPrivateLayout());
 
 		if (!targetScopeLayout.hasScopeGroup()) {
 			GroupLocalServiceUtil.addGroup(

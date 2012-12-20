@@ -174,66 +174,73 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the layout where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutException} if it could not be found.
+	* Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param privateLayout the private layout
 	* @return the matching layout
 	* @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public com.liferay.portal.model.Layout findByUUID_G_P(
+		java.lang.String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the layout where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param privateLayout the private layout
 	* @return the matching layout, or <code>null</code> if a matching layout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout fetchByUUID_G(
-		java.lang.String uuid, long groupId)
+	public com.liferay.portal.model.Layout fetchByUUID_G_P(
+		java.lang.String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the layout where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param privateLayout the private layout
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching layout, or <code>null</code> if a matching layout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
+	public com.liferay.portal.model.Layout fetchByUUID_G_P(
+		java.lang.String uuid, long groupId, boolean privateLayout,
+		boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the layout where uuid = &#63; and groupId = &#63; from the database.
+	* Removes the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param privateLayout the private layout
 	* @return the layout that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public com.liferay.portal.model.Layout removeByUUID_G_P(
+		java.lang.String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of layouts where uuid = &#63; and groupId = &#63;.
+	* Returns the number of layouts where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
+	* @param privateLayout the private layout
 	* @return the number of matching layouts
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId)
+	public int countByUUID_G_P(java.lang.String uuid, long groupId,
+		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

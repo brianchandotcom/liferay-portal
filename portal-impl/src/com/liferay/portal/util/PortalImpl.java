@@ -822,7 +822,8 @@ public class PortalImpl implements Portal {
 
 				try {
 					actualURL = getJournalArticleActualURL(
-						groupId, mainPath, friendlyURL, params, requestContext);
+						groupId, mainPath, friendlyURL, params, requestContext,
+						privateLayout);
 				}
 				catch (Exception e) {
 					throw new NoSuchLayoutException(e);
@@ -2225,7 +2226,8 @@ public class PortalImpl implements Portal {
 
 	public String getJournalArticleActualURL(
 			long groupId, String mainPath, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			Map<String, String[]> params, Map<String, Object> requestContext,
+			boolean privateLayout)
 		throws PortalException, SystemException {
 
 		String articleUrlTitle = friendlyURL.substring(
@@ -2235,8 +2237,9 @@ public class PortalImpl implements Portal {
 			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
 				groupId, articleUrlTitle);
 
-		Layout layout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-			journalArticle.getLayoutUuid(), groupId);
+		Layout layout =
+			LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(
+				journalArticle.getLayoutUuid(), groupId, privateLayout);
 
 		String layoutActualURL = getLayoutActualURL(layout, mainPath);
 
@@ -3702,8 +3705,10 @@ public class PortalImpl implements Portal {
 					!liveGroup.isStagedPortlet(portletId)) {
 
 					Layout liveGroupLayout =
-						LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-							layout.getUuid(), liveGroup.getGroupId());
+						LayoutLocalServiceUtil.
+							fetchLayoutByUuidGroupIdAndPrivateLayout(
+								layout.getUuid(), liveGroup.getGroupId(),
+								layout.isPrivateLayout());
 
 					if ((liveGroupLayout != null) &&
 						liveGroupLayout.hasScopeGroup()) {
@@ -3772,9 +3777,10 @@ public class PortalImpl implements Portal {
 				String scopeLayoutUuid = GetterUtil.getString(
 					portletSetup.getValue("lfrScopeLayoutUuid", null));
 
-				Layout scopeLayout =
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						scopeLayoutUuid, layout.getGroupId());
+				Layout scopeLayout = LayoutLocalServiceUtil.
+					getLayoutByUuidGroupIdAndPrivateLayout(
+						scopeLayoutUuid, layout.getGroupId(),
+						layout.isPrivateLayout());
 
 				Group scopeGroup = scopeLayout.getScopeGroup();
 

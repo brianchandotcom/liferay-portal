@@ -816,9 +816,8 @@ public class DLImpl implements DL {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected long getDefaultFolderId(HttpServletRequest request)

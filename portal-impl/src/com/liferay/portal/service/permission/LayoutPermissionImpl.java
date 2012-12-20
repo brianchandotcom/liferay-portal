@@ -213,6 +213,26 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			}
 		}
 
+		// Control panel layouts are only viewable by authenticated users
+
+		if (group.isControlPanel()) {
+			if (!permissionChecker.isSignedIn()) {
+				return false;
+			}
+
+			if (PortalPermissionUtil.contains(
+					permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
+
+				return true;
+			}
+
+			if (Validator.isNotNull(controlPanelCategory)) {
+				return true;
+			}
+
+			return false;
+		}
+
 		if (GroupPermissionUtil.contains(
 				permissionChecker, layout.getGroupId(),
 				ActionKeys.MANAGE_LAYOUTS)) {
@@ -373,26 +393,6 @@ public class LayoutPermissionImpl implements LayoutPermission {
 					permissionChecker, group.getGroupId(),
 					ActionKeys.VIEW_STAGING)) {
 
-				return true;
-			}
-
-			return false;
-		}
-
-		// Control panel layouts are only viewable by authenticated users
-
-		if (group.isControlPanel()) {
-			if (!permissionChecker.isSignedIn()) {
-				return false;
-			}
-
-			if (PortalPermissionUtil.contains(
-					permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
-
-				return true;
-			}
-
-			if (Validator.isNotNull(controlPanelCategory)) {
 				return true;
 			}
 

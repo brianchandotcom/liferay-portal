@@ -831,7 +831,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	/**
 	 * Returns the layout matching the universally unique identifier and group
-	 * ID
+	 * ID and privateLayout
 	 *
 	 * @param  uuid the universally unique identifier of the scope layout
 	 * @param  groupId the primary key of the group
@@ -840,7 +840,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout fetchLayoutByUuidAndGroupIdAndPrivateLayout(
+	public Layout fetchLayoutByUuidGroupIdAndPrivateLayout(
 			String uuid, long groupId, boolean privateLayout)
 		throws SystemException {
 

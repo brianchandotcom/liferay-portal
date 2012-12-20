@@ -221,7 +221,7 @@ for (int i = 0; i < locales.length; i++) {
 
 	var setEditorSize = function() {
 		if (!isViewTabActive()) {
-			formEditor.set('width', A.one('#<portlet:namespace />formBuilderSourceWrapper').get('clientWidth'));
+			getFormEditor().set('width', A.one('#<portlet:namespace />formBuilderSourceWrapper').get('clientWidth'));
 		}
 	}
 

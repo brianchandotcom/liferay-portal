@@ -39,7 +39,6 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 
 <portlet:actionURL var="editPRPURL">
 	<portlet:param name="struts_action" value="/portlet_configuration/edit_public_render_parameters" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SAVE %>" />
 </portlet:actionURL>
 
 <div class="portlet-msg-info">
@@ -47,6 +46,7 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 </div>
 
 <aui:form action="<%= editPRPURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.SAVE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= editPublicRenderParameterURL.toString() %>" />
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />

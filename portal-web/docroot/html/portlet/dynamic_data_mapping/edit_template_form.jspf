@@ -34,20 +34,9 @@ if (Validator.isNotNull(portletResourceNamespace)) {
 %>
 
 <aui:input name="language" type="hidden" value="xsd" />
-<aui:input name="script" type="hidden" />
+<aui:input name="scriptContent" type="hidden" />
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveTemplate',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />script.value = window.<portlet:namespace />formBuilder.getContentXSD();
-
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base']
-	);
-
 	window.<portlet:namespace />getAvailableFields = function(A, FormBuilder) {
 		var availableFields = <%= scriptJSONArray.toString() %>;
 

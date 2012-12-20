@@ -48,10 +48,10 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 
 <portlet:actionURL var="editSharingURL">
 	<portlet:param name="struts_action" value="/portlet_configuration/edit_sharing" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SAVE %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editSharingURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.SAVE %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />

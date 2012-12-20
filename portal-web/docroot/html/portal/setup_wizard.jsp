@@ -363,8 +363,8 @@
 							loginURL.setWindowState(WindowState.NORMAL);
 							loginURL.setPortletMode(PortletMode.VIEW);
 
-							loginURL.setParameter("struts_action", "/login/login");
 							loginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
+							loginURL.setParameter("struts_action", "/login/login");
 							%>
 
 							<aui:form action="<%= loginURL %>" method="post" name="fm">

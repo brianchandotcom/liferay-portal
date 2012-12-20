@@ -35,10 +35,11 @@ if (reminderAttempts == null) {
 </portlet:actionURL>
 
 <aui:form action="<%= forgotPasswordURL %>" method="post" name="fm">
+	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
+
 	<portlet:renderURL var="redirectURL" />
 
 	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
-	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 
 	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 

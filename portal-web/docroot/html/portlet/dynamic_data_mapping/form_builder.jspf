@@ -295,7 +295,7 @@ for (int i = 0; i < locales.length; i++) {
 	window.<portlet:namespace />getContentXSD = function() {
 		var content;
 
-		if (formEditor && formBuilderTabs && formBuilderTabs.getTab(1).get('active')) {
+		if (formEditor && !isViewTabActive()) {
 			content = formEditor.get(STR_VALUE);
 		}
 		else {

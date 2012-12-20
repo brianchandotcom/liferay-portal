@@ -595,9 +595,10 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 		try {
 			if (Validator.isNotNull(layoutUuid)) {
 				Layout layout =
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
-						layoutUuid, portletDataContext.getScopeGroupId(),
-						portletDataContext.isPrivateLayout());
+					LayoutLocalServiceUtil.
+						getLayoutByUuidGroupIdAndPrivateLayout(
+							layoutUuid, portletDataContext.getScopeGroupId(),
+							portletDataContext.isPrivateLayout());
 
 				classPK = layout.getPrimaryKey();
 			}
@@ -712,7 +713,7 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		try {
 			Layout targetLayout =
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
+				LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(
 					targetLayoutUuid, targetGroupId, privateLayout);
 
 			typeSettingsProperties.setProperty(

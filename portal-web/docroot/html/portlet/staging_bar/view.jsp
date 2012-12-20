@@ -49,7 +49,7 @@ if (layout != null) {
 
 	if (liveGroup != null) {
 		try {
-			liveLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(layout.getUuid(), liveGroup.getGroupId(), layout.getPrivateLayout());
+			liveLayout = LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(layout.getUuid(), liveGroup.getGroupId(), layout.getPrivateLayout());
 
 			liveFriendlyURL = PortalUtil.getLayoutFriendlyURL(liveLayout, themeDisplay);
 		}
@@ -64,7 +64,7 @@ if (layout != null) {
 
 	if (stagingGroup != null) {
 		try {
-			Layout stagingLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(layout.getUuid(), stagingGroup.getGroupId(), layout.getPrivateLayout());
+			Layout stagingLayout = LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(layout.getUuid(), stagingGroup.getGroupId(), layout.getPrivateLayout());
 
 			stagingFriendlyURL = PortalUtil.getLayoutFriendlyURL(stagingLayout, themeDisplay);
 		}

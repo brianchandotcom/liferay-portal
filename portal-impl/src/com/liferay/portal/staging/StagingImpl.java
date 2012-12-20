@@ -179,7 +179,7 @@ public class StagingImpl implements Staging {
 		Group liveGroup = stagingGroup.getLiveGroup();
 
 		Layout sourceLayout =
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
+			LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(
 				targetLayout.getUuid(), liveGroup.getGroupId(),
 				targetLayout.isPrivateLayout());
 
@@ -624,7 +624,7 @@ public class StagingImpl implements Staging {
 				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
 
 			try {
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
+				LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(
 					parentLayout.getUuid(), liveGroupId,
 					parentLayout.isPrivateLayout());
 
@@ -1091,7 +1091,7 @@ public class StagingImpl implements Staging {
 			liveGroup = stagingGroup.getLiveGroup();
 
 			targetLayout =
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
+				LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(
 					sourceLayout.getUuid(), liveGroup.getGroupId(),
 					sourceLayout.isPrivateLayout());
 		}

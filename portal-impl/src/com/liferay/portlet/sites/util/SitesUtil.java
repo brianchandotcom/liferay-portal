@@ -546,9 +546,10 @@ public class SitesUtil {
 
 			Group group = layoutSetPrototype.getGroup();
 
-	return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupIdAndPrivateLayout(
-				layout.getSourcePrototypeLayoutUuid(), group.getGroupId(),
-				layout.isPrivateLayout());
+			return
+				LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdAndPrivateLayout(
+					layout.getSourcePrototypeLayoutUuid(), group.getGroupId(),
+					layout.isPrivateLayout());
 		}
 		catch (Exception e) {
 			_log.error(
@@ -1136,7 +1137,7 @@ public class SitesUtil {
 		}
 
 		Layout targetScopeLayout =
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
+			LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(
 				targetLayout.getUuid(), targetLayout.getGroupId(),
 				targetLayout.isPrivateLayout());
 

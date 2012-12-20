@@ -160,7 +160,7 @@ public class EditScopeAction extends EditConfigurationAction {
 				actionRequest, "scopeLayoutUuid");
 
 			Layout scopeLayout =
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
+				LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(
 					scopeLayoutUuid, layout.getGroupId(),
 					layout.isPrivateLayout());
 
@@ -217,9 +217,10 @@ public class EditScopeAction extends EditConfigurationAction {
 
 			try {
 				Layout scopeLayout =
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupIdAndPrivateLayout(
-						scopeLayoutUuid, layout.getGroupId(),
-						layout.isPrivateLayout());
+					LayoutLocalServiceUtil.
+						getLayoutByUuidGroupIdAndPrivateLayout(
+							scopeLayoutUuid, layout.getGroupId(),
+							layout.isPrivateLayout());
 
 				scopeName = scopeLayout.getName(themeDisplay.getLocale());
 			}

@@ -129,13 +129,13 @@ public class CompareVersionsAction extends PortletAction {
 			sourceContent = WikiUtil.processContent(sourceContent);
 			targetContent = WikiUtil.processContent(targetContent);
 
-			if (type.equals("escape") || type.equals("text")) {
-				sourceContent = HtmlUtil.escape(sourceContent);
-				targetContent = HtmlUtil.escape(targetContent);
-			}
-			else if (type.equals("strip")) {
+			if (type.equals("strip")) {
 				sourceContent = HtmlUtil.extractText(sourceContent);
 				targetContent = HtmlUtil.extractText(targetContent);
+			}
+			else {
+				sourceContent = HtmlUtil.escape(sourceContent);
+				targetContent = HtmlUtil.escape(targetContent);
 			}
 
 			List<DiffResult>[] diffResults = DiffUtil.diff(

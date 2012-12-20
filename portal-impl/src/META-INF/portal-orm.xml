@@ -2751,7 +2751,6 @@
 			<basic name="subject" />
 			<basic name="body" />
 			<basic name="format" />
-			<basic name="attachments" />
 			<basic name="anonymous" />
 			<basic name="priority" />
 			<basic name="allowPingbacks" />

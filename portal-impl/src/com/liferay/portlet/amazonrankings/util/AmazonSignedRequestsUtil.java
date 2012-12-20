@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URLEncoder;
 
@@ -77,8 +78,8 @@ public class AmazonSignedRequestsUtil {
 		String amazonSecretAccessKey =
 			AmazonRankingsUtil.getAmazonSecretAccessKey();
 
-		if (amazonSecretAccessKey == null) {
-			return null;
+		if (Validator.isNull(amazonSecretAccessKey)) {
+			return StringPool.BLANK;
 		}
 
 		SecretKeySpec secretKeySpec = new SecretKeySpec(
@@ -98,8 +99,8 @@ public class AmazonSignedRequestsUtil {
 	}
 
 	private static String _rfc3986Encode(String string) throws Exception {
-		if (string == null) {
-			return null;
+		if (Validator.isNull(string)) {
+			return StringPool.BLANK;
 		}
 
 		string = URLEncoder.encode(string, StringPool.UTF8);

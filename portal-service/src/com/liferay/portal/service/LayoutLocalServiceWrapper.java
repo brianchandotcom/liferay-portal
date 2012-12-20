@@ -181,20 +181,20 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	/**
-	* Returns the layout with the UUID in the group/isPrivateLayout.
+	* Returns the layout with the UUID in the group and isPrivateLayout.
 	*
 	* @param uuid the UUID of layout
 	* @param groupId the group id of the layout
 	* @param isPrivateLayout the isPrivateLayout of the layout
 	* @return the layout
-	* @throws PortalException if a layout with the UUID in the group/isPrivateLayout could not be found
+	* @throws PortalException if a layout with the UUID in the group and isPrivateLayout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout getLayoutByUuidAndGroupIdAndPrivateLayout(
+	public com.liferay.portal.model.Layout getLayoutByUuidGroupIdAndPrivateLayout(
 		java.lang.String uuid, long groupId, boolean isPrivateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _layoutLocalService.getLayoutByUuidAndGroupIdAndPrivateLayout(uuid,
+		return _layoutLocalService.getLayoutByUuidGroupIdAndPrivateLayout(uuid,
 			groupId, isPrivateLayout);
 	}
 
@@ -620,7 +620,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* Returns the layout matching the universally unique identifier and group
-	* ID
+	* ID and privateLayout
 	*
 	* @param uuid the universally unique identifier of the scope layout
 	* @param groupId the primary key of the group
@@ -629,10 +629,10 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupIdAndPrivateLayout(
+	public com.liferay.portal.model.Layout fetchLayoutByUuidGroupIdAndPrivateLayout(
 		java.lang.String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _layoutLocalService.fetchLayoutByUuidAndGroupIdAndPrivateLayout(uuid,
+		return _layoutLocalService.fetchLayoutByUuidGroupIdAndPrivateLayout(uuid,
 			groupId, privateLayout);
 	}
 

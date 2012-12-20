@@ -173,17 +173,17 @@ public interface LayoutLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the layout with the UUID in the group/isPrivateLayout.
+	* Returns the layout with the UUID in the group and isPrivateLayout.
 	*
 	* @param uuid the UUID of layout
 	* @param groupId the group id of the layout
 	* @param isPrivateLayout the isPrivateLayout of the layout
 	* @return the layout
-	* @throws PortalException if a layout with the UUID in the group/isPrivateLayout could not be found
+	* @throws PortalException if a layout with the UUID in the group and isPrivateLayout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Layout getLayoutByUuidAndGroupIdAndPrivateLayout(
+	public com.liferay.portal.model.Layout getLayoutByUuidGroupIdAndPrivateLayout(
 		java.lang.String uuid, long groupId, boolean isPrivateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -567,7 +567,7 @@ public interface LayoutLocalService extends BaseLocalService,
 
 	/**
 	* Returns the layout matching the universally unique identifier and group
-	* ID
+	* ID and privateLayout
 	*
 	* @param uuid the universally unique identifier of the scope layout
 	* @param groupId the primary key of the group
@@ -577,7 +577,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupIdAndPrivateLayout(
+	public com.liferay.portal.model.Layout fetchLayoutByUuidGroupIdAndPrivateLayout(
 		java.lang.String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

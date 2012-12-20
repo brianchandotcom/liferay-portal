@@ -91,4 +91,10 @@ public class TypeFunctions extends BaseFunctions {
 		selenium.assertText("//body", param2);
 		selenium.selectFrame("relative=top");
 	}
+
+	public void uploadCommonFile(String param1, String param2)
+		throws Exception {
+		selenium.waitForVisible(param1);
+		selenium.uploadCommonFile(param1, param2);
+	}
 }

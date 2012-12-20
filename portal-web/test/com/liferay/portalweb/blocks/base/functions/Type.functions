@@ -63,4 +63,9 @@
 		<selenium command="assertText" target="//body" />
 		<selenium command="selectFrame" target="relative=top" />
 	</functiondef>
+
+	<functiondef name="uploadCommonFile">
+		<selenium command="waitForVisible" />
+		<selenium command="uploadCommonFile" />
+	</functiondef>
 </functions>

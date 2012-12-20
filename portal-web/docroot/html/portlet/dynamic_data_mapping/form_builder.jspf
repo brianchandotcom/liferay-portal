@@ -118,42 +118,24 @@ for (int i = 0; i < locales.length; i++) {
 
 	var CSS_MESSAGE_SUCCESS = 'portlet-msg-success';
 
-	var SELECTOR_FORMBUILDER_SOURCE = '#<portlet:namespace />formBuilderSourceWrapper';
-
-	var SELECTOR_MESSAGE_CONTAINER = '#<portlet:namespace />messageContainer';
-
-	var STR_ACTIVE = 'active';
-
 	var STR_VALUE = 'value';
 
 	var availableFields;
-
 	var formEditor;
-
 	var xmlFormatter;
 
-	var afterShowTab = function(event) {
-		if (isViewTabActive()) {
-			switchToView();
-		}
-		else {
-			switchToSource();
-		}
-	};
-
 	var displayMessage = function(type, message) {
-		var messageContainer = A.one(SELECTOR_MESSAGE_CONTAINER);
+		var messageContainer = A.one('#<portlet:namespace />messageContainer');
 
 		messageContainer.removeClass(CSS_MESSAGE_SUCCESS).removeClass(CSS_MESSAGE_ERROR);
 
-		var messageClass = MESSAGE_SUCCESS;
+		var messageClass = CSS_MESSAGE_SUCCESS;
 
 		if (type === MESSAGE_FAILURE) {
 			messageClass = CSS_MESSAGE_ERROR;
 		}
 
 		messageContainer.addClass(messageClass);
-
 		messageContainer.html(message);
 
 		messageContainer.show();
@@ -196,52 +178,42 @@ for (int i = 0; i < locales.length; i++) {
 		return xmlFormatter;
 	};
 
-	var hideLoadingMask = function(node) {
-		setLoadingMask(node, false);
-	};
-
 	var isViewTabActive = function() {
-		return !A.one('#<portlet:namespace />formBuilderTab').get('parentNode').hasClass('aui-helper-hidden');
-	};
-
-	var onFormBuilderDataFailure = function(message) {
-		displayMessage(MESSAGE_FAILURE, Liferay.Language.get('your-request-failed-to-complete'));
-	};
-
-	var onFormBuilderDataSuccess = function(event) {
-		var instance = this;
-
-		var responseData = instance.get('responseData');
-
-		if (Lang.isArray(responseData)) {
-			formBuilder.set('fields', responseData);
-		}
-		else if(Lang.isObject(responseData)) {
-			displayMessage(MESSAGE_FAILURE, responseData.exception);
-		}
-
-		hideLoadingMask();
+		return !A.one('#<portlet:namespace />formBuilderTab').ancestor().hasClass('aui-helper-hidden');
 	};
 
 	var reloadFormBuilderData = function(content) {
-		showLoadingMask();
+		getLoadingMask().toggle(true);
 
 		if (!Lang.isValue(content)) {
 			content = window.<portlet:namespace />getContentXSD();
 		}
 
-		content = xmlFormatter.minimize(content);
+		content = xmlFormatter.minify(content);
 
 		A.io.request(
-			themeDisplay.getPathContext() + themeDisplay.getPathMain() + '/dynamic_data_mapping/get_structure_json',
+			themeDisplay.getPathMain() + '/dynamic_data_mapping/get_structure_json',
 			{
 				data: {
 					xsd: content
 				},
 				dataType: 'json',
 				on: {
-					failure: onFormBuilderDataFailure,
-					success: onFormBuilderDataSuccess
+					failure: function(message) {
+						displayMessage(MESSAGE_FAILURE, '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>');
+					},
+					success: function(event) {
+						var responseData = this.get('responseData');
+
+						if (Lang.isArray(responseData)) {
+							formBuilder.set('fields', responseData);
+						}
+						else if(Lang.isObject(responseData)) {
+							displayMessage(MESSAGE_FAILURE, responseData.exception);
+						}
+
+						getLoadingMask().toggle(false);
+					}
 				}
 			}
 		);
@@ -249,37 +221,18 @@ for (int i = 0; i < locales.length; i++) {
 
 	var setEditorSize = function() {
 		if (!isViewTabActive()) {
-			formEditor.set('width', A.one(SELECTOR_FORMBUILDER_SOURCE).get('clientWidth'));
+			formEditor.set('width', A.one('#<portlet:namespace />formBuilderSourceWrapper').get('clientWidth'));
 		}
 	}
 
-	var setLoadingMask = function(node, visible) {
-		var loadingMask = getLoadingMask(node);
-
-		if (visible) {
-			loadingMask.show();
-		}
-		else {
-			loadingMask.hide();
-		}
-	};
-
-	var showLoadingMask = function(node) {
-		setLoadingMask(node, true);
-	};
-
 	var switchToSource = function() {
-		formEditor = getFormEditor();
-
 		setEditorSize();
-
-		xmlFormatter = getXMLFormatter();
 
 		var content = formBuilder.getXSD();
 
-		content = xmlFormatter.format(content);
+		content = getXMLFormatter().format(content);
 
-		formEditor.set(STR_VALUE, content);
+		getFormEditor().set(STR_VALUE, content);
 	};
 
 	var switchToView = function() {
@@ -325,14 +278,24 @@ for (int i = 0; i < locales.length; i++) {
 
 	Liferay.Util.getWindow().after('widthChange', setEditorSize);
 
-	Liferay.after('showTab', afterShowTab);
+	Liferay.after(
+		'showTab',
+		function(event) {
+			if (isViewTabActive()) {
+				switchToView();
+			}
+			else {
+				switchToSource();
+			}
+		}
+	);
 
 	window.<portlet:namespace />formBuilder = formBuilder;
-	
+
 	window.<portlet:namespace />getContentXSD = function() {
 		var content;
 
-		if (formEditor && formBuilderTabs && formBuilderTabs.getTab(1).get(STR_ACTIVE)) {
+		if (formEditor && formBuilderTabs && formBuilderTabs.getTab(1).get('active')) {
 			content = formEditor.get(STR_VALUE);
 		}
 		else {

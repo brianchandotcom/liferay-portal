@@ -122,8 +122,11 @@ public class SitesUtil {
 	public static final String ANALYTICS_PREFIX = "analytics_";
 
 	public static final String LAST_MERGE_TIME = "last-merge-time";
+
 	public static final String LAST_RESET_TIME = "last-reset-time";
+
 	public static final String LAYOUT_UPDATEABLE = "layoutUpdateable";
+
 	public static final String MERGE_FAIL_COUNT = "merge-fail-count";
 
 	public static void addPortletBreadcrumbEntries(
@@ -615,7 +618,7 @@ public class SitesUtil {
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.THEME,
-			new String[] {Boolean.FALSE.toString()});
+			new String[]{Boolean.FALSE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.THEME_REFERENCE,
 			new String[] {Boolean.TRUE.toString()});
@@ -865,7 +868,7 @@ public class SitesUtil {
 		return userGroupUser;
 	}
 
-	public static void mergeLayoutProtypeLayout(Group group, Layout layout)
+	public static void mergeLayoutPrototypeLayout(Group group, Layout layout)
 		throws Exception {
 
 		String sourcePrototypeLayoutUuid =
@@ -887,7 +890,7 @@ public class SitesUtil {
 				layoutSetPrototypeGroup, sourcePrototypeLayout);
 		}
 
-		doMergeLayoutProtypeLayout(group, layout);
+		doMergeLayoutPrototypeLayout(group, layout);
 	}
 
 	public static void mergeLayoutSetPrototypeLayouts(
@@ -925,8 +928,7 @@ public class SitesUtil {
 			layoutSetPrototypeLayoutSet.getSettingsProperties();
 
 		int mergeFailCount = GetterUtil.getInteger(
-			layoutSetPrototypeSettingsProperties.getProperty(
-				MERGE_FAIL_COUNT));
+			layoutSetPrototypeSettingsProperties.getProperty(MERGE_FAIL_COUNT));
 
 		if (mergeFailCount >
 			PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD) {

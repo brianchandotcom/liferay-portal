@@ -98,4 +98,7 @@ public interface PortalService extends BaseService {
 
 	public boolean testHasClassName()
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void testAutoSyncHibernateSessionStateOnTxCreation()
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

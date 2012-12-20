@@ -15,6 +15,8 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -25,9 +27,12 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.model.ClassName;
+import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.service.PortalService;
 import com.liferay.portal.service.base.PortalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -91,6 +96,75 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		addClassName(PortalService.class.getName());
 
 		addTransactionPortletBar(transactionPortletBarText, false);
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void testAutoSyncHibernateSessionStateOnTxCreation()
+		throws SystemException {
+
+		String testClassName = "testClassName";
+
+		// 1) Add in new tx
+
+		ClassName className = classNameLocalService.addClassName(testClassName);
+
+		try {
+
+			// 2) Fetch in current tx
+
+			// Clear entity cache to force populate Hibernate 1st level cache
+
+			EntityCacheUtil.clearCache();
+
+			className = classNamePersistence.fetchByPrimaryKey(
+				className.getClassNameId());
+
+			Session currentSession = classNamePersistence.getCurrentSession();
+
+			if (!currentSession.contains(className)) {
+				throw new IllegalStateException(
+					"After fetch ClassName is not cached by hibernate 1st " +
+						"level cache");
+			}
+
+			String newTestClassName = "newTestClassName";
+			ClassName newClassName = new ClassNameImpl();
+
+			newClassName.setPrimaryKey(className.getClassNameId());
+			newClassName.setValue(newTestClassName);
+
+			// 3) Update in new tx
+
+			classNameLocalService.updateClassName(newClassName);
+
+			if (currentSession.contains(className)) {
+				throw new IllegalStateException(
+					"After launched new tx ClassName is still cached by " +
+						"hibernate 1st level cache");
+			}
+
+			// 4) Refetch in current tx
+
+			// Clear entity cache to force load through Hibernate 1st level
+			// cache
+
+			EntityCacheUtil.clearCache();
+
+			className = classNamePersistence.fetchByPrimaryKey(
+				className.getClassNameId());
+
+			if (!className.getValue().equals(newTestClassName)) {
+				throw new IllegalStateException(
+					"Expected " + newTestClassName + ", found " +
+						className.getClassName());
+			}
+		}
+		finally {
+
+			// 5) Clean up
+
+			classNameLocalService.deleteClassName(className);
+		}
 	}
 
 	public void testCounterIncrement_Rollback() throws SystemException {

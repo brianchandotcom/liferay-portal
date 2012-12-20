@@ -499,8 +499,8 @@ public class EditArticleAction extends PortletAction {
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
 
-		boolean isPrivate = ParamUtil.getBoolean(
-				uploadPortletRequest, "privateLayout");
+		boolean privateLayout = ParamUtil.getBoolean(
+			uploadPortletRequest, "privateLayout");
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 		long classNameId = ParamUtil.getLong(
 			uploadPortletRequest, "classNameId");
@@ -580,9 +580,9 @@ public class EditArticleAction extends PortletAction {
 
 		// The target page and the article must belong to the same group
 
-		Layout targetLayout =
-			LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdAndPrivateLayout(
-				layoutUuid, groupId, isPrivate);
+		Layout targetLayout = LayoutLocalServiceUtil.
+			fetchLayoutByUuidGroupIdAndPrivateLayout(
+				layoutUuid, groupId, privateLayout);
 
 		if (targetLayout == null) {
 			layoutUuid = null;

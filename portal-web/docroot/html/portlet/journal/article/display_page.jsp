@@ -24,8 +24,9 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 String layoutUuid = BeanParamUtil.getString(article, request, "layoutUuid");
 
+boolean privateLayout = ((Boolean)request.getAttribute("edit_article.jsp-privateLayout")).booleanValue();
+
 Layout selLayout = null;
-boolean privateLayout = Boolean.parseBoolean((String)request.getAttribute("edit_article.jsp-privateLayout"));
 
 String layoutBreadcrumb = StringPool.BLANK;
 

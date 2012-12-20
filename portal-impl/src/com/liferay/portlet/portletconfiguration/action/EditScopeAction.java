@@ -216,11 +216,10 @@ public class EditScopeAction extends EditConfigurationAction {
 				preferences.getValue("lfrScopeLayoutUuid", null));
 
 			try {
-				Layout scopeLayout =
-					LayoutLocalServiceUtil.
-						getLayoutByUuidGroupIdAndPrivateLayout(
-							scopeLayoutUuid, layout.getGroupId(),
-							layout.isPrivateLayout());
+				Layout scopeLayout = LayoutLocalServiceUtil.
+					getLayoutByUuidGroupIdAndPrivateLayout(
+						scopeLayoutUuid, layout.getGroupId(),
+						layout.isPrivateLayout());
 
 				scopeName = scopeLayout.getName(themeDisplay.getLocale());
 			}

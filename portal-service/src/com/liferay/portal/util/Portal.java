@@ -686,7 +686,7 @@ public interface Portal {
 	public String getJournalArticleActualURL(
 			long groupId, String mainPath, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext,
-			boolean isPrivate)
+			boolean privateLayout)
 		throws PortalException, SystemException;
 
 	public String getJsSafePortletId(String portletId);

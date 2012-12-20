@@ -546,8 +546,8 @@ public class SitesUtil {
 
 			Group group = layoutSetPrototype.getGroup();
 
-			return
-				LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdAndPrivateLayout(
+			return LayoutLocalServiceUtil.
+				fetchLayoutByUuidGroupIdAndPrivateLayout(
 					layout.getSourcePrototypeLayoutUuid(), group.getGroupId(),
 					layout.isPrivateLayout());
 		}
@@ -661,6 +661,7 @@ public class SitesUtil {
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layout.getSourcePrototypeLayoutUuid(),
 					layout.getCompanyId(), layout.isPrivateLayout())) {
+
 				return false;
 			}
 		}

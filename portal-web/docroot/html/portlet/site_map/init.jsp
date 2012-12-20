@@ -39,14 +39,12 @@ boolean showCurrentPage = GetterUtil.getBoolean(preferences.getValue("showCurren
 boolean useHtmlTitle = GetterUtil.getBoolean(preferences.getValue("useHtmlTitle", StringPool.BLANK));
 boolean showHiddenPages = GetterUtil.getBoolean(preferences.getValue("showHiddenPages", StringPool.BLANK));
 
-boolean privateLayout = layout.getPrivateLayout();
-
 Layout rootLayout = null;
 
 long rootLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
 if (Validator.isNotNull(rootLayoutUuid)) {
-	rootLayout = LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(rootLayoutUuid, scopeGroupId, privateLayout);
+	rootLayout = LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(rootLayoutUuid, scopeGroupId, layout.getPrivateLayout());
 
 	if (rootLayout != null) {
 		rootLayoutId = rootLayout.getLayoutId();

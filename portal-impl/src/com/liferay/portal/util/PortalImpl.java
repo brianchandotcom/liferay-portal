@@ -2228,7 +2228,7 @@ public class PortalImpl implements Portal {
 	public String getJournalArticleActualURL(
 			long groupId, String mainPath, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext,
-			boolean isPrivate)
+			boolean privateLayout)
 		throws PortalException, SystemException {
 
 		String articleUrlTitle = friendlyURL.substring(
@@ -2240,7 +2240,7 @@ public class PortalImpl implements Portal {
 
 		Layout layout =
 			LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(
-				journalArticle.getLayoutUuid(), groupId, isPrivate);
+				journalArticle.getLayoutUuid(), groupId, privateLayout);
 
 		String layoutActualURL = getLayoutActualURL(layout, mainPath);
 
@@ -3778,11 +3778,10 @@ public class PortalImpl implements Portal {
 				String scopeLayoutUuid = GetterUtil.getString(
 					portletSetup.getValue("lfrScopeLayoutUuid", null));
 
-				Layout scopeLayout =
-					LayoutLocalServiceUtil.
-						getLayoutByUuidGroupIdAndPrivateLayout(
-							scopeLayoutUuid, layout.getGroupId(),
-							layout.isPrivateLayout());
+				Layout scopeLayout = LayoutLocalServiceUtil.
+					getLayoutByUuidGroupIdAndPrivateLayout(
+						scopeLayoutUuid, layout.getGroupId(),
+						layout.isPrivateLayout());
 
 				Group scopeGroup = scopeLayout.getScopeGroup();
 

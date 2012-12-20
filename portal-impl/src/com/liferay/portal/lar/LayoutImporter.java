@@ -977,8 +977,8 @@ public class LayoutImporter {
 			layoutElement.attributeValue("delete"));
 
 		if (deleteLayout) {
-			Layout layout =
-				LayoutLocalServiceUtil.fetchLayoutByUuidGroupIdAndPrivateLayout(
+			Layout layout = LayoutLocalServiceUtil.
+				fetchLayoutByUuidGroupIdAndPrivateLayout(
 					layoutUuid, groupId, privateLayout);
 
 			if (layout != null) {
@@ -1168,8 +1168,8 @@ public class LayoutImporter {
 			parentLayoutId = parentLayout.getLayoutId();
 		}
 		else if (Validator.isNotNull(parentLayoutUuid)) {
-			Layout parentLayout =
-				LayoutLocalServiceUtil.getLayoutByUuidGroupIdAndPrivateLayout(
+			Layout parentLayout = LayoutLocalServiceUtil.
+				getLayoutByUuidGroupIdAndPrivateLayout(
 					parentLayoutUuid, groupId, privateLayout);
 
 			parentLayoutId = parentLayout.getLayoutId();

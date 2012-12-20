@@ -59,8 +59,11 @@ public class DirectTagMatcher extends CallbackMatcher {
 						continue;
 					}
 
-					return StringUtil.replace(
+					fileName = StringUtil.replace(
 						fileName, StringPool.UNDERLINE, "%5F");
+
+					return StringUtil.replace(
+						matchResult.group(0), matchResult.group(1), fileName);
 				}
 			}
 			catch (Exception e) {

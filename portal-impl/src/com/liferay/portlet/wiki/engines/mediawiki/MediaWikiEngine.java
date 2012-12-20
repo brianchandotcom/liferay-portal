@@ -165,19 +165,12 @@ public class MediaWikiEngine implements WikiEngine {
 
 		String content = StringPool.BLANK;
 
-		boolean hasUnderscore = false;
-
 		try {
 			content = page.getContent();
 
 			DirectTagMatcher directTagMatcher = new DirectTagMatcher(page);
 
-			String tagMatch = directTagMatcher.replaceMatches(content);
-
-			if (tagMatch != null) {
-				content = tagMatch;
-				hasUnderscore = true;
-			}
+			content = directTagMatcher.replaceMatches(content);
 
 			ImageTagMatcher imageTagMatcher = new ImageTagMatcher();
 
@@ -195,12 +188,7 @@ public class MediaWikiEngine implements WikiEngine {
 			DirectURLMatcher attachmentURLMatcher =
 				new DirectURLMatcher(page, attachmentURLPrefix);
 
-			String result = attachmentURLMatcher.replaceMatches(
-				content, hasUnderscore);
-
-			if (result != null) {
-				content = result;
-			}
+			content = attachmentURLMatcher.replaceMatches(content);
 
 			ImageURLMatcher imageURLMatcher = new ImageURLMatcher(
 				attachmentURLPrefix);

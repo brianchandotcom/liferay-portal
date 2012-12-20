@@ -37,18 +37,9 @@ public class DirectURLMatcher extends CallbackMatcher {
 		setRegex(_URL_REGEX);
 	}
 
-	public String replaceMatches(
-		CharSequence charSequence, boolean hasUnderscore) {
-
-		if (hasUnderscore) {
-			setRegex(_UNDERSCORE_REGEX);
-		}
-
+	public String replaceMatches(CharSequence charSequence) {
 		return replaceMatches(charSequence, _callBack);
 	}
-
-	private static final String _UNDERSCORE_REGEX =
-		"<p>([^|<]*)[|]*?([^|<]*)<\\/p>";
 
 	private static final String _URL_REGEX =
 		"<a href=\"[^\"]*?Special:Edit[^\"]*?topic=[^\"]*?\".*?title=\"" +

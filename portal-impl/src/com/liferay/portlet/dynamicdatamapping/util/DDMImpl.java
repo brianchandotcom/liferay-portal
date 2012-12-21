@@ -326,7 +326,7 @@ public class DDMImpl implements DDM {
 		Fields fields = StorageEngineUtil.getFields(storageId);
 
 		List<String> fieldNames = getFieldNames(
-			structureId, fieldName, fieldNamespace, serviceContext);
+			structureId, fieldNamespace, fieldName, serviceContext);
 
 		List<Serializable> fieldValues = new ArrayList<Serializable>(
 			fieldNames.size());

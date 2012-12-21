@@ -221,7 +221,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 			if (deletePage) {
 				LayoutLocalServiceUtil.deleteLayout(
-					layout.getPlid(), ServiceTestUtil.getServiceContext());
+					layout, true, ServiceTestUtil.getServiceContext());
 
 				groupLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 					group, false);

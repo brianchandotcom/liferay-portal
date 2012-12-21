@@ -770,14 +770,11 @@ public class PortalImpl implements Portal {
 
 				String hostAddress = inetAddress.getHostAddress();
 
-				String serverIp = getComputerAddress();
-
-				for (String ip : allowedIps) {
-					if ((ip.equals("SERVER_IP") &&
-							serverIp.equals(hostAddress)) ||
-						ip.equals(hostAddress)) {
-
-						return url;
+				if (getComputerAddress().equals(hostAddress)) {
+					for (String ip : allowedIps) {
+						if (ip.equals("SERVER_IP") || ip.equals(hostAddress)) {
+							return url;
+						}
 					}
 				}
 

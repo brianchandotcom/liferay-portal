@@ -55,7 +55,7 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 			_manualCheckInRequired = true;
 		}
 
-		_path = pathInfo;
+		_path = WebDAVUtil.stripOfficeExtension(pathInfo);
 
 		_companyId = PortalUtil.getCompanyId(request);
 		_groupId = WebDAVUtil.getGroupId(_companyId, _path);

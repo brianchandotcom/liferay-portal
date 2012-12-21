@@ -18,18 +18,9 @@
 
 	<%
 	if (portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request)) {
-		String webDavUrl = DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED);
+		String webDavUrl = DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED, true);
 
-		String curExtension = fileEntry.getExtension();
-
-		if (curExtension.equalsIgnoreCase("doc") ||
-			curExtension.equalsIgnoreCase("docx") ||
-			curExtension.equalsIgnoreCase("dot") ||
-			curExtension.equalsIgnoreCase("ppt") ||
-			curExtension.equalsIgnoreCase("pptx") ||
-			curExtension.equalsIgnoreCase("xls") ||
-			curExtension.equalsIgnoreCase("xlsx")) {
-
+		if (DLUtil.isOfficeExtension(fileEntry.getExtension())) {
 			String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "openDocument', {webDavUrl: '" + webDavUrl + "'});";
 	%>
 

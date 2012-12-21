@@ -168,6 +168,8 @@ public class WebDAVServlet extends HttpServlet {
 		String pathInfo = WebDAVUtil.stripManualCheckInRequiredPath(
 			request.getPathInfo());
 
+		pathInfo = WebDAVUtil.stripOfficeExtension(pathInfo);
+
 		String[] pathArray = WebDAVUtil.getPathArray(pathInfo, true);
 
 		WebDAVStorage storage = null;

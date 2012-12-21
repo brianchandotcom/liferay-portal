@@ -89,6 +89,8 @@ public class SharepointServlet extends HttpServlet {
 
 				rootPath = WebDAVUtil.stripManualCheckInRequiredPath(rootPath);
 
+				rootPath = WebDAVUtil.stripOfficeExtension(rootPath);
+
 				rootPath = SharepointUtil.stripService(rootPath, true);
 
 				if (_log.isInfoEnabled()) {

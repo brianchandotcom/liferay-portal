@@ -699,7 +699,16 @@ public class DLImpl implements DL {
 			boolean manualCheckInRequired)
 		throws PortalException, SystemException {
 
-		StringBundler webDavURL = new StringBundler(7);
+		return getWebDavURL(
+			themeDisplay, folder, fileEntry, manualCheckInRequired, false);
+	}
+
+	public String getWebDavURL(
+			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
+			boolean manualCheckInRequired, boolean openDocumentUrl)
+		throws PortalException, SystemException {
+
+		StringBundler webDavURL = new StringBundler(8);
 
 		boolean secure = false;
 
@@ -719,6 +728,22 @@ public class DLImpl implements DL {
 
 		if (manualCheckInRequired) {
 			webDavURL.append(DLUtil.MANUAL_CHECK_IN_REQUIRED_PATH);
+		}
+
+		String fileEntryTitle = null;
+
+		if (fileEntry != null) {
+			String extension = fileEntry.getExtension();
+
+			fileEntryTitle = fileEntry.getTitle();
+
+			if (openDocumentUrl && DLUtil.isOfficeExtension(extension) &&
+				!fileEntryTitle.endsWith(StringPool.PERIOD + extension)) {
+
+				webDavURL.append(DLUtil.OFFICE_EXTENSION_PATH);
+
+				fileEntryTitle += StringPool.PERIOD + extension;
+			}
 		}
 
 		Group group = themeDisplay.getScopeGroup();
@@ -749,7 +774,7 @@ public class DLImpl implements DL {
 
 		if (fileEntry != null) {
 			sb.append(StringPool.SLASH);
-			sb.append(HttpUtil.encodeURL(fileEntry.getTitle(), true));
+			sb.append(HttpUtil.encodeURL(fileEntryTitle, true));
 		}
 
 		webDavURL.append(sb.toString());
@@ -793,6 +818,21 @@ public class DLImpl implements DL {
 		String ddmStructureKey) {
 
 		if (ddmStructureKey.startsWith("auto_")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isOfficeExtension(String extension) {
+		if (extension.equalsIgnoreCase("doc") ||
+			extension.equalsIgnoreCase("docx") ||
+			extension.equalsIgnoreCase("dot") ||
+			extension.equalsIgnoreCase("ppt") ||
+			extension.equalsIgnoreCase("pptx") ||
+			extension.equalsIgnoreCase("xls") ||
+			extension.equalsIgnoreCase("xlsx")) {
+
 			return true;
 		}
 

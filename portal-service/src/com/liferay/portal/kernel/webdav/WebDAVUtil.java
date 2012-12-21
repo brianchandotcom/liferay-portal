@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -316,18 +317,30 @@ public class WebDAVUtil {
 		return getInstance()._isOverwrite(request);
 	}
 
-	public static String stripManualCheckInRequiredPath(String pathInfo) {
-		int index = pathInfo.indexOf(DLUtil.MANUAL_CHECK_IN_REQUIRED_PATH);
+	public static String stripManualCheckInRequiredPath(String url) {
+		return stripToken(url, DLUtil.MANUAL_CHECK_IN_REQUIRED_PATH);
+	}
 
-		if (index >= 0) {
-			pathInfo =
-				pathInfo.substring(0, index) +
-					pathInfo.substring(
-						index + DLUtil.MANUAL_CHECK_IN_REQUIRED_PATH.length(),
-						pathInfo.length());
+	public static String stripOfficeExtension(String url) {
+		String strippedUrl = stripToken(url, DLUtil.OFFICE_EXTENSION_PATH);
+
+		if (strippedUrl.length() != url.length()) {
+			strippedUrl = FileUtil.stripExtension(strippedUrl);
 		}
 
-		return pathInfo;
+		return strippedUrl;
+	}
+
+	public static String stripToken(String url, String token) {
+		int index = url.indexOf(token);
+
+		if (index >= 0) {
+			url =
+				url.substring(0, index) +
+					url.substring(index + token.length(), url.length());
+		}
+
+		return url;
 	}
 
 	private WebDAVUtil() {

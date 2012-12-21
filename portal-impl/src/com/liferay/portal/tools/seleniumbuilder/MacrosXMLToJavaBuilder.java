@@ -126,13 +126,16 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		for (Element macroDef : macroDefs) {
 			String macroDefName = macroDef.attributeValue("name");
 
+			Element params = macroDef.element("params");
+			Element stepsBlock = macroDef.element("steps");
+
 			sb.append("public void ");
 			sb.append(macroDefName);
 			sb.append("(");
-			sb.append(getParameterList(macroDef));
+			sb.append(getParameterList(params));
 			sb.append(") throws Exception {");
 
-			sb.append(processBlock(macroDef));
+			sb.append(processBlock(stepsBlock));
 
 			sb.append("}");
 		}
@@ -141,31 +144,27 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 	}
 
 	protected String getParameterList(Element method) throws Exception {
-		String paramsList = "";
-		String paramsString = method.attributeValue("params");
+		StringBundler sb = new StringBundler();
 
-		if (!(paramsString == null)) {
-			if (paramsString.contains(",")) {
-				String[] params = paramsString.split(",");
+		String paramList = "";
 
-				StringBundler sb = new StringBundler();
+		List<Element> params = method.elements("param");
 
-				for (String param : params) {
-					sb.append("String ");
-					sb.append(param);
-					sb.append(", ");
-				}
+		for (Element param : params) {
+			String paramName = param.attributeValue("name");
 
-				paramsList = sb.toString();
-
-				paramsList = paramsList.substring(0, paramsList.length() - 2);
-			}
-			else {
-				paramsList = "String " + paramsString;
-			}
+			sb.append("String ");
+			sb.append(paramName);
+			sb.append(", ");
 		}
 
-		return paramsList;
+		paramList = sb.toString();
+
+		if (paramList.length() > 0) {
+			paramList = paramList.substring(0, paramList.length() - 2);
+		}
+
+		return paramList;
 	}
 
 	private Set<String> _getFileNames() throws Exception {

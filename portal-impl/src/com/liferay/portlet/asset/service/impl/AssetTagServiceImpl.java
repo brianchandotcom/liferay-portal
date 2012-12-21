@@ -103,8 +103,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 			long groupId, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return assetTagFinder.filterFindByGroupId(
-			groupId, start, end, obc);
+		return assetTagFinder.filterFindByGroupId(groupId, start, end, obc);
 	}
 
 	public int getGroupTagsCount(long groupId) throws SystemException {

@@ -336,6 +336,9 @@ protected void createTestEntry(
 			if (commandName.equals("action")) {
 				sb.append(getActionCommand(command));
 			}
+			else if (commandName.equals("if")) {
+				sb.append(getIfCommand(command));
+			}
 			else if (commandName.equals("macro")) {
 				sb.append(getMacroCommand(command));
 			}
@@ -367,6 +370,52 @@ protected void createTestEntry(
 		}
 
 		sb.append("blocks/styles/");
+
+		return sb.toString();
+	}
+
+	protected String getIfCommand(Element command) {
+		StringBundler sb = new StringBundler();
+
+		String fileName = command.attributeValue("name");
+		String elementPathName = command.attributeValue("path");
+
+		String steps = getCommands(command);
+
+		String pathKey = fileName + "__" + elementPathName;
+		String pageNameKey = fileName + "__PAGE_NAME";
+
+		String pageName = pathsMap.get(pageNameKey)[2];
+
+		String finalString = "In the ";
+		finalString += "<strong>${PATH.PAGE_NAME}</strong>, ";
+		finalString += "if <strong>${PATH.DESCRIPTION}</strong>";
+		finalString += " is present, ";
+		finalString += "perform the following steps:";
+
+		if (pathsMap.containsKey(pathKey)) {
+			String[] actionArray = pathsMap.get(pathKey);
+
+			finalString = StringUtil.replace(
+				finalString, "${PATH.PAGE_NAME}", pageName);
+
+			finalString = StringUtil.replace(
+				finalString, "${PATH.DESCRIPTION}", actionArray[2]);
+
+			sb.append(finalString);
+		}
+		else {
+			finalString = StringUtil.replace(
+				finalString, "${PATH.PAGE_NAME}", pageName);
+
+			sb.append(finalString);
+		}
+
+		sb.append("<ol>\n");
+
+		sb.append(dereferenceParams(command, steps));
+
+		sb.append("\n</ol>\n");
 
 		return sb.toString();
 	}

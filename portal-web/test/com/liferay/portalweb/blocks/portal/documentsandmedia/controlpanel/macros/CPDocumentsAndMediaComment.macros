@@ -1,0 +1,57 @@
+<macros name="CPDocumentsAndMediaComment">
+	<macrodef
+		name="add"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add the first &lt;em&gt;Document Comment&lt;/em&gt; with the value &lt;strong&gt;&quot;${documentComment}&quot;&lt;/strong&gt; to the &lt;em&gt;Document&lt;/em&gt; &lt;strong&gt;&quot;${document}&quot;&lt;/strong&gt;."
+		params="document,documentComment"
+	>
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Documents and Media" />
+		</macro>
+
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="${document}" />
+
+		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_MESSAGE_INFO" value="No comments yet." />
+		<action name="CPDocumentsAndMediaDocument" command="click" path="COMMENT_LINK_ADD" value="Be the first." />
+		<action name="CPDocumentsAndMediaDocument" command="type" path="COMMENT_TEXTAREA" value="${documentComment}" />
+		<action name="CPDocumentsAndMediaDocument" command="click" path="COMMENT_BUTTON_REPLY" value="Reply" />
+		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_MESSAGE_SUCCESS" value="Your request processed successfully." />
+		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_VIEW_MESSAGE_1" value="${documentComment}" />
+		<action name="CPDocumentsAndMediaDocument" command="assertTextNotPresent" value="No comments yet." />
+	</macrodef>
+
+	<macrodef
+		name="add2"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add the second &lt;em&gt;Document Comment&lt;/em&gt; with the value &lt;strong&gt;&quot;${documentComment}&quot;&lt;/strong&gt; to the &lt;em&gt;Document&lt;/em&gt; &lt;strong&gt;&quot;${document}&quot;&lt;/strong&gt;."
+		params="document,documentComment"
+	>
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Documents and Media" />
+		</macro>
+
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="${document}" />
+
+		<action name="CPDocumentsAndMediaDocument" command="click" path="COMMENT_LINK_ADD" value="Add Comment" />
+		<action name="CPDocumentsAndMediaDocument" command="type" path="COMMENT_TEXTAREA" value="${documentComment}" />
+		<action name="CPDocumentsAndMediaDocument" command="click" path="COMMENT_BUTTON_REPLY" value="Reply" />
+		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_MESSAGE_SUCCESS" value="Your request processed successfully." />
+		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_VIEW_MESSAGE_2" value="${documentComment}" />
+	</macrodef>
+
+	<macrodef
+		name="add3"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add the third &lt;em&gt;Document Comment&lt;/em&gt; with the value &lt;strong&gt;&quot;${documentComment}&quot;&lt;/strong&gt; to the &lt;em&gt;Document&lt;/em&gt; &lt;strong&gt;&quot;${document}&quot;&lt;/strong&gt;."
+		params="document,documentComment"
+	>
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Documents and Media" />
+		</macro>
+
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="${document}" />
+
+		<action name="CPDocumentsAndMediaDocument" command="click" path="COMMENT_LINK_ADD" value="Add Comment" />
+		<action name="CPDocumentsAndMediaDocument" command="type" path="COMMENT_TEXTAREA" value="${documentComment}" />
+		<action name="CPDocumentsAndMediaDocument" command="click" path="COMMENT_BUTTON_REPLY" value="Reply" />
+		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_MESSAGE_SUCCESS" value="Your request processed successfully." />
+		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_VIEW_MESSAGE_2" value="${documentComment}" />
+	</macrodef>
+</macros>

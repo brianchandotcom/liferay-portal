@@ -1,0 +1,102 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPDocumentsAndMediaAddFolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPDocumentsAndMediaAddFolder</td></tr>
+</thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Documents and Media Add Folder Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMB-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>//div[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td>1st Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>//div[@id='breadcrumbs']/ul/li[2]/span/a</td>
+	<td>2nd Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>//div[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td>3rd Breadcrumb</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>HEADER_PORTLET_TITLE</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Portlet Title Header</td>
+</tr>
+<tr>
+	<td>HEADER_PORTLET_INFO</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Portlet Information Header</td>
+</tr>
+<tr>
+	<td>HEADER_OPTIONS_ICON</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options Icon</td>
+</tr>
+<tr>
+	<td>HEADER_PAGE_TITLE</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Page Title</td>
+</tr>
+<tr>
+	<td>HEADER_BACK_BUTTON</td>
+	<td>//a[@id='_20_TabsBack']</td>
+	<td>Back Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT-->
+<tr>
+	<td>CONTENT_NAME</td>
+	<td>//input[@id='_20_name']</td>
+	<td>Name Field</td>
+</tr>
+<tr>
+	<td>CONTENT_DESCRIPTION</td>
+	<td>//textarea[@id='_20_description']</td>
+	<td>Description Field</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BUTTON-->
+<tr>
+	<td>BUTTON_SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>BUTTON_CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
+</tr>
+</tbody></table>
+</body>
+</html>

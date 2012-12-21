@@ -1,0 +1,7 @@
+<actions>
+	<actiondef name="click">
+		<conditional elements="BUTTON_SAVE,BUTTON_CANCEL">
+			<function name="Click" command="valueClickAtAndWait" />
+		</conditional>
+	</actiondef>
+</actions>

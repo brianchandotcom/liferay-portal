@@ -15,7 +15,7 @@
 package com.liferay.portalweb.tests.portal.usersandorganizations.rc;
 
 import com.liferay.portalweb.blocks.portal.controlpanel.usersandorganizations.macros.CPUsersAndOrganizationsUsersMacros;
-import com.liferay.portalweb.blocks.portal.portlet.signin.macros.PortletSignInUserMacros;
+import com.liferay.portalweb.blocks.portal.signin.page.macros.SignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 
@@ -28,30 +28,30 @@ public class SignInUserTest extends BaseTestCase {
 		selenium = SeleniumUtil.getSelenium();
 
 		CPUsersAndOrganizationsUsersMacros cPUsersAndOrganizationsUsersMacros = new CPUsersAndOrganizationsUsersMacros(selenium);
-		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
+		SignInUserMacros signInUserMacros = new SignInUserMacros(selenium);
 
-		portletSignInUserMacros.signIn("test@liferay.com", "test");
+		signInUserMacros.signIn("test@liferay.com", "test");
 		cPUsersAndOrganizationsUsersMacros.add("usersn", "userea@liferay.com",
 			"userfn", "userln");
 		cPUsersAndOrganizationsUsersMacros.changePassword("userfn", "password");
 	}
 
 	public void test() throws Exception {
-		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
+		SignInUserMacros signInUserMacros = new SignInUserMacros(selenium);
 
-		portletSignInUserMacros.signOut();
-		portletSignInUserMacros.signInNewPassword("userea@liferay.com",
-			"password", "test");
-		portletSignInUserMacros.signOut();
-		portletSignInUserMacros.signIn("test@liferay.com", "test");
+		signInUserMacros.signOut();
+		signInUserMacros.signInNewPassword("userea@liferay.com", "password",
+			"test");
+		signInUserMacros.signOut();
+		signInUserMacros.signIn("test@liferay.com", "test");
 	}
 
 	@Override
 	public void tearDown() throws Exception {
 		CPUsersAndOrganizationsUsersMacros cPUsersAndOrganizationsUsersMacros = new CPUsersAndOrganizationsUsersMacros(selenium);
-		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
+		SignInUserMacros signInUserMacros = new SignInUserMacros(selenium);
 
 		cPUsersAndOrganizationsUsersMacros.tearDown();
-		portletSignInUserMacros.signOut();
+		signInUserMacros.signOut();
 	}
 }

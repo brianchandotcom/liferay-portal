@@ -16,9 +16,13 @@ package com.liferay.portlet.messageboards.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 
@@ -39,15 +43,32 @@ import org.junit.runner.RunWith;
 public class MBCategoryLocalServiceTest {
 
 	@Test
-	public void testGetDiscussionCategory() throws Exception {
-		long pk = MBCategoryConstants.DISCUSSION_CATEGORY_ID;
-
+	public void testDiscussionParentCategory() throws Exception {
 		MBCategory discussionCategory =
-			MBCategoryLocalServiceUtil.getCategory(pk);
+			MBCategoryLocalServiceUtil.getCategory(
+				MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 
 		Assert.assertNotNull(discussionCategory);
 
 		Assert.assertNull(discussionCategory.getParentCategory());
+	}
+
+	@Test
+	public void testParentCategory() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		MBCategory parentCategory = MBCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		MBCategory childCategory = MBCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(), parentCategory.getCategoryId(),
+			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		Assert.assertNotNull(childCategory.getParentCategory());
+
+		Assert.assertNull(parentCategory.getParentCategory());
 	}
 
 }

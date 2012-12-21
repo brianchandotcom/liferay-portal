@@ -58,6 +58,26 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 
 			generateTest(testFileName);
 		}
+
+		generateAPIFile();
+	}
+
+protected void createTestEntry(
+		String testName, String testFilePath, String description,
+		Element rootElement) throws Exception {
+
+		String[] testData = new String[4];
+
+		allTests.put(testName, testData);
+
+		allTests.get(testName)[0] = description;
+
+		allTests.get(testName)[1] = testFilePath;
+
+		allTests.get(testName)[2] = getObjectsReferenced(rootElement);
+
+		allTests.get(testName)[3] = getOutlineLink(testFilePath, testName);
+
 	}
 
 	protected String dereferenceParams(Element commandElement, String command) {
@@ -76,6 +96,72 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		return finalString;
 	}
 
+	protected void generateAPIFile() throws Exception {
+
+		String root = "com/liferay/portalweb/blocks/styles/templates/";
+
+		StringBundler sb = new StringBundler();
+
+		String headerTemplate = readFile(root + "testapi/head.html");
+
+		sb.append(headerTemplate);
+
+		for (String key : allTests.keySet()) {
+			String blockTemplate = readFile(root + "testapi/block.html");
+
+			String testName = key;
+			String description = allTests.get(testName)[0];
+			String testFilePath = allTests.get(testName)[1];
+			String objectsReferenced = allTests.get(testName)[2];
+			String outlineLink = allTests.get(testName)[3];
+
+			blockTemplate = blockTemplate.replace("${testname}", testName);
+
+			blockTemplate = blockTemplate.replace(
+				"${description}", description);
+
+			blockTemplate = blockTemplate.replace(
+				"${outlinelink}", outlineLink);
+
+			int x = testFilePath.indexOf("tests");
+
+			String location = testFilePath.substring(x + 6);
+
+			String[] dirs = location.split("/");
+
+			StringBundler locationFinal = new StringBundler();
+
+			int tabs = 1;
+
+			for (String dir : dirs) {
+				for (int j = 0; j < tabs; j++) {
+					locationFinal.append("&rarr; ");
+				}
+
+				locationFinal.append("/" + dir);
+
+				locationFinal.append("<br>");
+
+				tabs++;
+			}
+
+			blockTemplate = blockTemplate.replace(
+				"${location}", locationFinal.toString());
+
+			blockTemplate = blockTemplate.replace(
+				"${pageobjects}", objectsReferenced);
+
+			sb.append(blockTemplate);
+
+			sb.append("</body>\n");
+			sb.append("</html>\n");
+		}
+
+		String testAPIPath = "com/liferay/portalweb/tests/TestAPI.html";
+
+		writeFile(testAPIPath, sb.toString(), false);
+	}
+
 	protected void generateTest(String fileName) throws Exception {
 		if (!FileUtil.exists(basedir + "/" + fileName)) {
 			return;
@@ -92,6 +178,14 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		StringBundler sb = new StringBundler();
 
 		Element rootElement = getRootElement(fileName);
+
+		String description = rootElement.attributeValue("description");
+
+		if (description == null) {
+			description = "Description Pending";
+		}
+
+		createTestEntry(testName, testFilePath, description, rootElement);
 
 		sb.append("<html>\n");
 
@@ -127,7 +221,7 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append("</div>\n");
 
 		sb.append("<div class='description-content'>\n");
-		sb.append(rootElement.attributeValue("description"));
+		sb.append(description);
 		sb.append("</div>\n");
 
 		sb.append(getSetup(rootElement));
@@ -344,6 +438,40 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		}
 
 		return steps;
+	}
+
+	protected String getObjectsReferenced(Element rootElement)
+		throws Exception {
+
+		List<Element> sections = rootElement.elements();
+
+		Set<String> objects = new TreeSet<String>();
+
+		for (Element section : sections) {
+			Set<String> newSet = new TreeSet<String>();
+
+			objects.addAll(getAllObjects(section, newSet));
+		}
+
+		StringBundler sb = new StringBundler();
+
+		for (String object : objects) {
+			sb.append("<li>");
+			sb.append(object);
+			sb.append("</li>\n");
+		}
+
+		return sb.toString();
+	}
+
+	protected String getOutlineLink(String testFilePath, String testName) {
+		System.out.println("testFilePath: " + testFilePath);
+
+		int x = testFilePath.lastIndexOf("tests");
+
+		String path = testFilePath.substring(x + 6);
+
+		return path + "/" + testName + ".html";
 	}
 
 	protected String getSetup(Element rootElement) throws Exception {
@@ -612,8 +740,14 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		return fileNames;
 	}
 
+	private Map<String, String[]> allTests = new HashMap<String, String[]>();
+
 	private Map<String, String> baseActionsMap;
+
 	private Map<String, String[]> macrosMap;
+
 	private Map<String, String[]> pathsMap;
+
+	private String testFileName = "";
 
 }

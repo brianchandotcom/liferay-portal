@@ -125,6 +125,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 
 				Map<String, Object> dataView = new HashMap<String, Object>();
 
+				dataView.put("folder", Boolean.TRUE.toString());
 				dataView.put("folder-id", rootFolderId);
 				dataView.put("navigation", "home");
 				dataView.put("title", LanguageUtil.get(pageContext, "home"));

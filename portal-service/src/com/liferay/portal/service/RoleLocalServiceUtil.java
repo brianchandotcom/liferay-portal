@@ -332,6 +332,7 @@ public class RoleLocalServiceUtil {
 	* @param descriptionMap the role's localized descriptions (optionally
 	<code>null</code>)
 	* @param type the role's type (optionally <code>0</code>)
+	* @param subType the role's subtype (optionally <code>null</code>)
 	* @return the role
 	* @throws PortalException if the class name or the role name were invalid,
 	if the role is a duplicate, or if a user with the primary key

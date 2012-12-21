@@ -151,9 +151,9 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 </portlet:actionURL>
 
 <aui:form action="<%= editMultiplePageAttachmentsURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateMultiplePageAttachments();" %>'>
-	<aui:input name="<portlet:namespace /><%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
-	<aui:input name="<portlet:namespace />nodeId" type="hidden" value="<%= String.valueOf(node.getNodeId()) %>" />
-	<aui:input name="<portlet:namespace />title" type="hidden" value="<%= wikiPage.getTitle() %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
+	<aui:input name="nodeId" type="hidden" value="<%= String.valueOf(node.getNodeId()) %>" />
+	<aui:input name="title" type="hidden" value="<%= wikiPage.getTitle() %>" />
 
 	<span id="<portlet:namespace />selectedFileNameContainer"></span>
 

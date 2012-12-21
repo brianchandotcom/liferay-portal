@@ -159,6 +159,9 @@
 					getParentLayoutId: function() {
 						return "<%= layout.getParentLayoutId() %>";
 					},
+					isVirtualLayout: function() {
+						return <%= (layout instanceof VirtualLayout) %>;
+					},
 				</c:if>
 
 				getScopeGroupId: function() {

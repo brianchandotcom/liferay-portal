@@ -1,0 +1,13 @@
+<actions>
+	<actiondef name="click">
+		<conditional elements="SEARCH_BUTTON">
+			<function name="Click" command="valueClickAtAndWait" />
+		</conditional>
+	</actiondef>
+
+	<actiondef name="selectWindow">
+		<conditional elements="TOP">
+			<function name="SelectWindow" command="selectFrameTop" />
+		</conditional>
+	</actiondef>
+</actions>

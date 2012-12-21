@@ -1,0 +1,13 @@
+<actions>
+	<actiondef name="assertTextEquals">
+		<conditional elements="COMMENT_MESSAGE_INFO,DOCUMENT_LOCK_MESSAGE">
+			<function name="AssertTextEquals" command="assertPartialText" />
+		</conditional>
+	</actiondef>
+
+	<actiondef name="click">
+		<conditional elements="COMMENT_BUTTON_CANCEL,COMMENT_BUTTON_REPLY">
+			<function name="Click" command="valueClickAt" />
+		</conditional>
+	</actiondef>
+</actions>

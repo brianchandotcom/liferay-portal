@@ -1,0 +1,126 @@
+<macros name="CPDocumentsAndMediaDocument">
+	<macrodef
+		name="add"
+		params="title, file"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add a &lt;em&gt;Document&lt;/em&gt; with a name of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt; and the file &lt;strong&gt;&quot;${file}&quot;&lt;/strong&gt;."
+	>
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Documents and Media" />
+		</macro>
+
+		<action name="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_ADD_BUTTON" value="Add" />
+		<action name="CPDocumentsAndMediaHome" command="click" path="ADD_BASIC_DOCUMENT" value="Basic Document" />
+
+		<action name="CPDocumentsAndMediaAddFileEntry" command="type" path="CONTENT_FILE" value="${file}" />
+		<action name="CPDocumentsAndMediaAddFileEntry" command="type" path="CONTENT_TITLE" value="${title}" />
+		<action name="CPDocumentsAndMediaAddFileEntry" command="click" path="BUTTON_PUBLISH" value="Publish" />
+
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${title}" />
+	</macrodef>
+
+	<macrodef
+		name="checkin"
+		params="oldTitle, newTitle"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, checkin the &lt;em&gt;Document&lt;/em&gt; with a name of &lt;strong&gt;&quot;${newTitle}&quot;&lt;/strong&gt; that before the checkin had a name &lt;strong&gt;&quot;${oldTitle}&quot;&lt;/strong&gt;."
+	>
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Documents and Media" />
+		</macro>
+
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${oldTitle} (Draft)" />
+		<action name="CPDocumentsAndMediaHome" command="assertElementPresent" path="DOCUMENT_IMAGE_LOCK" />
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_CHECKIN" value="Checkin" />
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${newTitle}" />
+		<action name="CPDocumentsAndMediaHome" command="assertElementNotPresent" path="DOCUMENT_IMAGE_LOCK" />
+	</macrodef>
+
+	<macrodef
+		name="checkout"
+		params="title"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, checkout the &lt;em&gt;Document&lt;/em&gt; with a name of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt;."
+	>
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Documents and Media" />
+		</macro>
+
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${title}" />
+		<action name="CPDocumentsAndMediaHome" command="assertElementNotPresent" path="DOCUMENT_IMAGE_LOCK" />
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_CHECKOUT" value="Checkout" />
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${title} (Draft)" />
+		<action name="CPDocumentsAndMediaHome" command="assertElementPresent" path="DOCUMENT_IMAGE_LOCK" />
+	</macrodef>
+
+	<macrodef
+		name="delete"
+		params="title"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, delete a &lt;em&gt;Document&lt;/em&gt; with a name of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt;."
+	>
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Documents and Media" />
+		</macro>
+
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${title}" />
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE_UNDO" value="The selected item was moved to the Recycle Bin. Undo" />
+		<action name="CPDocumentsAndMediaHome" command="assertTextNotPresent" value="${title}" />
+	</macrodef>
+
+	<macrodef
+		name="edit"
+		params="oldTitle, newTitle"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, edit a &lt;em&gt;Document&lt;/em&gt; with a name of &lt;strong&gt;&quot;${oldTitle}&quot;&lt;/strong&gt; to a new name of &lt;strong&gt;&quot;${newTitle}&quot;&lt;/strong&gt;."
+	>
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Documents and Media" />
+		</macro>
+
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${oldTitle}" />
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_EDIT" value="Edit" />
+
+		<action name="CPDocumentsAndMediaDocumentEdit" command="type" path="CONTENT_TITLE" value="${newTitle}" />
+		<action name="CPDocumentsAndMediaDocumentEdit" command="click" path="BUTTON_PUBLISH" value="Publish" />
+
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${newTitle}" />
+	</macrodef>
+
+	<macrodef
+		name="editCheckout"
+		params="oldTitle, newTitle"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, edit a checked out &lt;em&gt;Document&lt;/em&gt; with a name of &lt;strong&gt;&quot;${oldTitle}&quot;&lt;/strong&gt; to a new name of &lt;strong&gt;&quot;${newTitle}&quot;&lt;/strong&gt;."
+	>
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Documents and Media" />
+		</macro>
+
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${oldTitle} (Draft)" />
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
+		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_EDIT" value="Edit" />
+
+		<action name="CPDocumentsAndMediaDocumentEdit" command="type" path="CONTENT_TITLE" value="${newTitle}" />
+		<action name="CPDocumentsAndMediaDocumentEdit" command="click" path="BUTTON_SAVE" value="Save" />
+
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${oldTitle} (Draft)" />
+	</macrodef>
+
+	<macrodef
+		name="tearDown"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, delete all the &lt;em&gt;Entries&lt;/em&gt;."
+	>
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Documents and Media" />
+		</macro>
+
+		<while name="CPDocumentsAndMediaHome" command="isElementPresent" path="DOCUMENT_NAME">
+			<action name="CPDocumentsAndMediaHome" command="check" path="TOOLBAR_ALL_ROWS" />
+			<action name="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_ACTIONS_BUTTON" value="Actions" />
+			<action name="CPDocumentsAndMediaHome" command="click" path="ALL_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
+		</while>
+	</macrodef>
+</macros>

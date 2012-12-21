@@ -1,0 +1,143 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPDocumentsAndMediaDocumentTypesHome</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPDocumentsAndMediaDocumentTypesHome</td></tr>
+</thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td>//iframe[@id='_20_openFileEntryTypeView']</td>
+	<td>Control Panel Documents and Media Document Types Home Page</td>
+</tr>
+<tr>
+	<td>TOP</td>
+	<td>relative=top</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>HEADER_SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Document Type Success Message</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BUTTON-->
+<tr>
+	<td>BUTTON_VIEW_ALL</td>
+	<td>//span[contains(@class,'view-button')]/a</td>
+	<td>Document Types 'View All' Button</td>
+</tr>
+<tr>
+	<td>BUTTON_ADD</td>
+	<td>//span[contains(@class,'add-button')]/a</td>
+	<td>Document Types 'View All' Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='_20_keywords']</td>
+	<td>Document Type Search Field</td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//input[@value='Search']</td>
+	<td>Document Type Search Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TABLE-->
+<tr>
+	<td>TABLE_NAME_1</td>
+	<td>//tr[3]/td[1]</td>
+	<td>1st Document Type 'Name' Entry</td>
+</tr>
+<tr>
+	<td>TABLE_MODIFIED_DATE_1</td>
+	<td>//tr[3]/td[2]</td>
+	<td>1st Document Type 'Modified Date' Entry</td>
+</tr>
+<tr>
+	<td>TABLE_ACTIONS_1</td>
+	<td>//tr[3]/td[3]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>1st Document Type 'Actions' Entry</td>
+</tr>
+<tr>
+	<td>TABLE_NAME_2</td>
+	<td>//tr[4]/td[1]</td>
+	<td>2nd Document Type 'Name' Entry</td>
+</tr>
+<tr>
+	<td>TABLE_MODIFIED_DATE_2</td>
+	<td>//tr[4]/td[2]</td>
+	<td>2nd Document Type 'Modified Date' Entry</td>
+</tr>
+<tr>
+	<td>TABLE_ACTIONS_2</td>
+	<td>//tr[4]/td[3]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>2nd Document Type 'Actions' Entry</td>
+</tr>
+<tr>
+	<td>TABLE_NAME_3</td>
+	<td>//tr[5]/td[1]</td>
+	<td>2nd Document Type 'Name' Entry</td>
+</tr>
+<tr>
+	<td>TABLE_MODIFIED_DATE_3</td>
+	<td>//tr[5]/td[2]</td>
+	<td>3rd Document Type 'Modified Date' Entry</td>
+</tr>
+<tr>
+	<td>TABLE_ACTIONS_3</td>
+	<td>//tr[5]/td[3]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>3rd Document Type 'Actions' Entry</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS-->
+<tr>
+	<td>ACTIONS_EDIT</td>
+	<td>//a[contains(.,'Edit') and @role='menuitem']</td>
+	<td>Document Type Actions 'Edit' Link</td>
+</tr>
+<tr>
+	<td>ACTIONS_PERMISSIONS</td>
+	<td>//a[contains(.,'Permissions') and @role='menuitem']</td>
+	<td>Document Type Actions 'Permissions' Link</td>
+</tr>
+<tr>
+	<td>ACTIONS_DELETE</td>
+	<td>//a[contains(.,'Delete') and @role='menuitem']</td>
+	<td>Document Type Actions 'Delete' Link</td>
+</tr>
+<tr>
+	<td>ACTIONS_DELETE_CONFIRMATION</td>
+	<td></td>
+	<td>Delete Confirmation Popup</td>
+</tr>
+</tbody></table>
+</body>
+</html>

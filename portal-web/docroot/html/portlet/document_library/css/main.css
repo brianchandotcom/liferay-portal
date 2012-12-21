@@ -212,6 +212,10 @@
 			background-image: url(@theme_image_path@/common/submit.png);
 		}
 
+		.aui-icon-msoffice {
+			background-image: url(@theme_image_path@/document_library/msoffice.png);
+		}
+
 		.aui-icon-permissions {
 			background-image: url(@theme_image_path@/common/permissions.png);
 		}

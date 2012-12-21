@@ -42,7 +42,7 @@ boolean useRichEditor = editorType.equals("rich");
 
 				<%
 				for (String curLangType : DDMTemplateConstants.LANG_TYPES) {
-					StringBundler sb = new StringBundler(5);
+					StringBundler sb = new StringBundler(6);
 
 					sb.append(LanguageUtil.get(pageContext, curLangType + "[stands-for]"));
 					sb.append(StringPool.SPACE);

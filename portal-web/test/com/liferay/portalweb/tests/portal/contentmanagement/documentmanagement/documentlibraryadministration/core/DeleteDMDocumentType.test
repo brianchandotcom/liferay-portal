@@ -1,0 +1,26 @@
+<test
+	name="DeleteDMDocumentType"
+	description="In the Control Panel Documents and Media Portlet, delete a Document Type."
+>
+	<setup>
+		<macro name="CPDocumentsAndMediaDocumentType" command="add">
+			<param name="name" value="DM DocumentType Name" />
+		</macro>
+	</setup>
+	<steps>
+		<macro name="CPDocumentsAndMediaDocumentType" command="delete">
+			<param name="name" value="DM DocumentType Name" />
+		</macro>
+
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Documents and Media" />
+		</macro>
+
+		<action name="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_ADD_BUTTON" value="Add" />
+		<action name="CPDocumentsAndMediaHome" command="assertTextNotPresent" value="DM DocumentType Name" />
+	</steps>
+	<teardown>
+		<macro name="CPDocumentsAndMediaDocumentType" command="tearDown" />
+		<macro name="CPRecycleBin" command="empty" />
+	</teardown>
+</test>

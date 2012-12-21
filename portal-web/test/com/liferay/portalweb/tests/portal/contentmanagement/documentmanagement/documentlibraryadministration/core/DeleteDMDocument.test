@@ -1,0 +1,27 @@
+<test
+	name="DeleteDMDocument"
+	description="In the Control Panel Documents and Media Portlet, delete a Document."
+>
+	<setup>
+		<macro name="CPDocumentsAndMediaDocument" command="add">
+			<param name="title" value="DM Document Title" />
+			<param name="file" value="Document_1.doc" />
+		</macro>
+	</setup>
+	<steps>
+		<macro name="CPDocumentsAndMediaDocument" command="delete">
+			<param name="title" value="DM Document Title"  />
+		</macro>
+
+		<macro name="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Documents and Media" />
+		</macro>
+
+		<action name="CPDocumentsAndMediaHome" command="assertElementNotPresent" path="DOCUMENT_NAME" />
+		<action name="CPDocumentsAndMediaHome" command="assertTextNotPresent" value="DM Document Title" />
+	</steps>
+	<teardown>
+		<macro name="CPDocumentsAndMediaDocument" command="tearDown" />
+		<macro name="CPRecycleBin" command="empty" />
+	</teardown>
+</test>

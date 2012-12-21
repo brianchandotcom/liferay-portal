@@ -70,12 +70,16 @@ public class RoleServiceSoap {
 	/**
 	* Adds a role. The user is reindexed after role is added.
 	*
+	* @param className the name of the class for which the role is created
+	* @param classPK the primary key of the class for which the role is
+	created (optionally <code>0</code>)
 	* @param name the role's name
 	* @param titleMap the role's localized titles (optionally
 	<code>null</code>)
 	* @param descriptionMap the role's localized descriptions (optionally
 	<code>null</code>)
 	* @param type the role's type (optionally <code>0</code>)
+	* @param subType the role's subtype (optionally <code>null</code>)
 	* @return the role
 	* @throws PortalException if a user with the primary key could not be
 	found, if the user did not have permission to add roles, if the

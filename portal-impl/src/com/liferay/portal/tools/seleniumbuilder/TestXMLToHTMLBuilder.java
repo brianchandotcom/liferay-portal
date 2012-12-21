@@ -465,8 +465,6 @@ protected void createTestEntry(
 	}
 
 	protected String getOutlineLink(String testFilePath, String testName) {
-		System.out.println("testFilePath: " + testFilePath);
-
 		int x = testFilePath.lastIndexOf("tests");
 
 		String path = testFilePath.substring(x + 6);

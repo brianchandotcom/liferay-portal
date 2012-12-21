@@ -384,6 +384,8 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 
 		_metaData._location = location;
 
+		setStatus(SC_FOUND);
+
 		_committed = true;
 
 		super.sendRedirect(location);

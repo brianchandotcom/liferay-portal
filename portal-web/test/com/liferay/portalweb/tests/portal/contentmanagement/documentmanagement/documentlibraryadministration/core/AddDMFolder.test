@@ -1,0 +1,16 @@
+<test
+	name="AddDMDocument"
+	description="In the Control Panel Documents and Media Portlet, add a Folder."
+>
+	<setup>
+	</setup>
+	<steps>
+		<macro name="CPDocumentsAndMediaFolder" command="add">
+			<param name="title" value="DM Folder" />
+		</macro>
+	</steps>
+	<teardown>
+		<macro name="CPDocumentsAndMediaFolder" command="tearDown" />
+		<macro name="CPRecycleBin" command="empty" />
+	</teardown>
+</test>

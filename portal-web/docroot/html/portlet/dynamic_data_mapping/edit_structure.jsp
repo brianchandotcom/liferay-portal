@@ -214,6 +214,7 @@ if (Validator.isNotNull(script)) {
 	function <portlet:namespace />openParentStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 		{
+			classPK: <%= (structure != null) ? structure.getPrimaryKey() : 0 %>,
 			ddmResource: '<%= ddmResource %>',
 			dialog: {
 				width: 820

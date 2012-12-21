@@ -18,6 +18,7 @@
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
+long classPK = ParamUtil.getLong(request, "classPK");
 %>
 
 <c:if test="<%= showToolbar %>">
@@ -59,17 +60,21 @@ long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 		>
 
 			<%
-			StringBundler sb = new StringBundler(7);
+			String rowHREF = null;
 
-			sb.append("javascript:Liferay.Util.getOpener().");
-			sb.append(saveCallback);
-			sb.append("('");
-			sb.append(structure.getStructureId());
-			sb.append("', '");
-			sb.append(HtmlUtil.escapeJS(structure.getName(locale)));
-			sb.append("', Liferay.Util.getWindow());");
+			if (structure.getStructureId() != classPK) {
+				StringBundler sb = new StringBundler(7);
 
-			String rowHREF = sb.toString();
+				sb.append("javascript:Liferay.Util.getOpener().");
+				sb.append(saveCallback);
+				sb.append("('");
+				sb.append(structure.getStructureId());
+				sb.append("', '");
+				sb.append(HtmlUtil.escapeJS(structure.getName(locale)));
+				sb.append("', Liferay.Util.getWindow());");
+
+				rowHREF = sb.toString();
+			}
 			%>
 
 			<liferay-ui:search-container-column-text

@@ -285,55 +285,60 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry, lastDLFileVersion, latestDLFileVersion,
 				serviceContext.getWorkflowAction())) {
 
-			if (lastDLFileVersion.getSize() == latestDLFileVersion.getSize()) {
-				removeFileVersion(dlFileEntry, latestDLFileVersion);
+			if (lastDLFileVersion.getSize() != latestDLFileVersion.getSize()) {
 
-				return;
-			}
+				// File version
 
-			lastDLFileVersion.setSize(latestDLFileVersion.getSize());
+				lastDLFileVersion.setExtension(
+					latestDLFileVersion.getExtension());
+				lastDLFileVersion.setMimeType(
+					latestDLFileVersion.getMimeType());
+				lastDLFileVersion.setSize(latestDLFileVersion.getSize());
 
-			dlFileVersionPersistence.update(lastDLFileVersion);
+				dlFileVersionPersistence.update(lastDLFileVersion);
 
-			// Folder
+				// File
 
-			if (dlFileEntry.getFolderId() !=
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				try {
+					DLStoreUtil.deleteFile(
+						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+						dlFileEntry.getName(), lastDLFileVersion.getVersion());
+				}
+				catch (NoSuchModelException nsme) {
+				}
 
-				dlFolderLocalService.updateLastPostDate(
-					dlFileEntry.getFolderId(), dlFileEntry.getModifiedDate());
-			}
-
-			// File
-
-			try {
-				DLStoreUtil.deleteFile(
+				DLStoreUtil.copyFileVersion(
 					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-					dlFileEntry.getName(), lastDLFileVersion.getVersion());
+					dlFileEntry.getName(),
+					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
+					lastDLFileVersion.getVersion());
 			}
-			catch (NoSuchModelException nsme) {
-			}
-
-			DLStoreUtil.copyFileVersion(
-				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(),
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-				lastDLFileVersion.getVersion());
 
 			// Latest file version
 
 			removeFileVersion(dlFileEntry, latestDLFileVersion);
 
-			return;
+			latestDLFileVersion = lastDLFileVersion;
 		}
+		else {
 
-		String version = getNextVersion(
-			dlFileEntry, majorVersion, serviceContext.getWorkflowAction());
+			// File version
 
-		latestDLFileVersion.setVersion(version);
-		latestDLFileVersion.setChangeLog(changeLog);
+			String version = getNextVersion(
+				dlFileEntry, majorVersion, serviceContext.getWorkflowAction());
 
-		dlFileVersionPersistence.update(latestDLFileVersion);
+			latestDLFileVersion.setVersion(version);
+			latestDLFileVersion.setChangeLog(changeLog);
+
+			dlFileVersionPersistence.update(latestDLFileVersion);
+
+			// File
+
+			DLStoreUtil.updateFileVersion(
+				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(),
+				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
+		}
 
 		// Folder
 
@@ -344,12 +349,7 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.getFolderId(), dlFileEntry.getModifiedDate());
 		}
 
-		// File
-
-		DLStoreUtil.updateFileVersion(
-			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(),
-			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
+		// Workflow
 
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_PUBLISH) {
@@ -806,6 +806,7 @@ public class DLFileEntryLocalServiceImpl
 						dlLatestFileVersion.getCreateDate());
 					dlFileEntry.setExtension(
 						dlLatestFileVersion.getExtension());
+					dlFileEntry.setMimeType(dlLatestFileVersion.getMimeType());
 					dlFileEntry.setTitle(dlLatestFileVersion.getTitle());
 					dlFileEntry.setDescription(
 						dlLatestFileVersion.getDescription());
@@ -1401,6 +1402,7 @@ public class DLFileEntryLocalServiceImpl
 					dlFileVersion.getVersion()) <= 0) {
 
 				dlFileEntry.setExtension(dlFileVersion.getExtension());
+				dlFileEntry.setMimeType(dlFileVersion.getMimeType());
 				dlFileEntry.setTitle(dlFileVersion.getTitle());
 				dlFileEntry.setDescription(dlFileVersion.getDescription());
 				dlFileEntry.setExtraSettings(dlFileVersion.getExtraSettings());
@@ -1842,12 +1844,6 @@ public class DLFileEntryLocalServiceImpl
 
 		if ((lastDLFileVersion.getFolderId() ==
 				latestDLFileVersion.getFolderId()) &&
-			Validator.equals(
-				lastDLFileVersion.getExtension(),
-				latestDLFileVersion.getExtension()) &&
-			Validator.equals(
-				lastDLFileVersion.getMimeType(),
-				latestDLFileVersion.getMimeType()) &&
 			Validator.equals(
 				lastDLFileVersion.getTitle(), latestDLFileVersion.getTitle()) &&
 			Validator.equals(

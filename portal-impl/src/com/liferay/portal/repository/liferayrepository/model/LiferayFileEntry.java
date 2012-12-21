@@ -323,6 +323,11 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return _dlFileEntry.toString();
+	}
+
 	public FileEntry toUnescapedModel() {
 		if (isEscapedModel()) {
 			return new LiferayFileEntry(_dlFileEntry.toUnescapedModel(), true);

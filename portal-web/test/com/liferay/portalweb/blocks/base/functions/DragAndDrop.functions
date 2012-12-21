@@ -1,0 +1,10 @@
+<functions>
+	<functiondef name="dragAndDrop" default="true">
+		<selenium command="waitForVisible" target="${path1}" />
+		<selenium command="waitForText" target="${path1}" value="${value1}" />
+
+		<selenium command="waitForVisible" target="${path2}" />
+
+		<selenium command="dragAndDropToObject" target="${path1}" value="${path2}" />
+	</functiondef>
+</functions>

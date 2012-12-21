@@ -380,30 +380,45 @@ public class SeleniumXMLToJavaBuilder {
 		sb.append(StringUtil.lowerCaseFirstLetter(actionObjectName));
 		sb.append(StringPool.PERIOD);
 		sb.append(actionDefName);
+		sb.append("(");
 
-		String actionLocator = command.attributeValue("locator");
-		String actionPath = command.attributeValue("path");
+		List<String> suffixList = new ArrayList<String>();
 
-		if (!(actionLocator == null)) {
-			sb.append("(");
-			sb.append(replaceVariables("\"" + actionLocator + "\""));
-		}
-		else if (!(actionPath == null)) {
-			sb.append("(");
-			sb.append(replaceVariables("\"" + actionPath + "\""));
+		if (actionDefName.equals("dragAndDrop")) {
+			suffixList.add("1");
+			suffixList.add("2");
 		}
 		else {
-			sb.append("(\"\"");
+			suffixList.add("");
 		}
 
-		String actionValue = command.attributeValue("value");
+		for (String suffix : suffixList) {
+			String actionLocator = command.attributeValue("locator" + suffix);
+			String actionPath = command.attributeValue("path" + suffix);
 
-		if (!(actionValue == null)) {
-			sb.append(", ");
-			sb.append(getCommandAttributeValue(command));
-		}
-		else {
-			sb.append(", null");
+			if (!(actionLocator == null)) {
+				sb.append(replaceVariables("\"" + actionLocator + "\""));
+			}
+			else if (!(actionPath == null)) {
+				sb.append(replaceVariables("\"" + actionPath + "\""));
+			}
+			else {
+				sb.append("\"\"");
+			}
+
+			String actionValue = command.attributeValue("value" + suffix);
+
+			if (!(actionValue == null)) {
+				sb.append(", ");
+				sb.append(getCommandAttributeValue(command, "value" + suffix));
+			}
+			else {
+				sb.append(", null");
+			}
+
+			if (suffix.equals("1")) {
+				sb.append(", ");
+			}
 		}
 
 		sb.append(");\n");
@@ -475,12 +490,17 @@ public class SeleniumXMLToJavaBuilder {
 	}
 
 	private String getCommandAttributeValue(Element command) {
+		return getCommandAttributeValue(command, "value");
+	}
+
+	private String getCommandAttributeValue(Element command, String attribute) {
 		StringBundler sb = new StringBundler();
 
-		String attributeValue = command.attributeValue("value");
+		String attributeValue = command.attributeValue(attribute);
 
 		if (!(attributeValue == null)) {
-			String firstLetter = command.attributeValue("value-first-letter");
+			String firstLetter = command.attributeValue(
+				attribute + "-first-letter");
 
 			if (!(firstLetter == null) && firstLetter.equals("true")) {
 				sb.append("LiferaySeleniumHelper.firstLetter(");
@@ -493,6 +513,7 @@ public class SeleniumXMLToJavaBuilder {
 		}
 
 		return sb.toString();
+
 	}
 
 	private String getCommandConditional(Element conditional) throws Exception {
@@ -662,7 +683,7 @@ public class SeleniumXMLToJavaBuilder {
 
 		if (!(seleniumTargetName == null)) {
 			sb.append("\"");
-			sb.append(seleniumTargetName);
+			sb.append(replaceVariables(seleniumTargetName));
 			sb.append("\"");
 		}
 		else if (seleniumCommandName.equals("assertConfirmation") ||
@@ -683,7 +704,7 @@ public class SeleniumXMLToJavaBuilder {
 		if (!seleniumCommandName.equals("open")) {
 			if (!(seleniumValueName == null)) {
 				sb.append(", \"");
-				sb.append(seleniumValueName);
+				sb.append(replaceVariables(seleniumValueName));
 				sb.append("\"");
 			}
 			else if (numParams > 1) {

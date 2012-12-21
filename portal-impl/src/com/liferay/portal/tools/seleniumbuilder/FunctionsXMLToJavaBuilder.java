@@ -139,7 +139,16 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 			sb.append("public void ");
 			sb.append(functionDefName);
-			sb.append("(String param1, String param2) throws Exception {\n");
+
+			if (functionDefName.equals("dragAndDrop")) {
+				sb.append("(String path1, String value1, String path2, ");
+				sb.append("String value2)");
+			}
+			else {
+				sb.append("(String param1, String param2)");
+			}
+
+			sb.append(" throws Exception {\n");
 
 			sb.append(processBlock(functionDef));
 

@@ -31,7 +31,7 @@ import org.apache.tools.ant.DirectoryScanner;
 /**
  * @author Brian Wing Shun Chan
  */
-public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
+public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();
@@ -42,7 +42,7 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 	public FunctionsXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
-		Set<String> fileNames = getFileNames();
+		Set<String> fileNames = _getFileNames();
 
 		for (String fileName : fileNames) {
 			if (fileName.length() > 161) {
@@ -100,14 +100,14 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 		Element rootElement = getRootElement(functionsXMLFileName);
 
-		sb.append(getFunctionDefs(rootElement));
+		sb.append(_getFunctionDefs(rootElement));
 
 		sb.append("}");
 
 		writeFile(functionsFileName, sb.toString(), true);
 	}
 
-	private Set<String> getFileNames() throws Exception {
+	private Set<String> _getFileNames() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(basedir);
@@ -129,7 +129,7 @@ public class FunctionsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		return fileNames;
 	}
 
-	private String getFunctionDefs(Element rootElement) throws Exception {
+	private String _getFunctionDefs(Element rootElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		List<Element> functionDefs = rootElement.elements("functiondef");

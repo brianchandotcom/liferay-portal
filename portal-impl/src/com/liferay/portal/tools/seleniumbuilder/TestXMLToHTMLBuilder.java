@@ -33,7 +33,7 @@ import org.apache.tools.ant.DirectoryScanner;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
+public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();
@@ -44,9 +44,9 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 	public TestXMLToHTMLBuilder(String[] args) throws Exception {
 		super(args);
 
-		baseActionsMap = getBaseActionsMap();
-		macrosMap = getMacrosMap();
-		pathsMap = getPathsMap();
+		_baseActionsMap = _getBaseActionsMap();
+		_macrosMap = _getMacrosMap();
+		_pathsMap = _getPathsMap();
 
 		Set<String> testFileNames = getTestFileNames();
 
@@ -62,21 +62,22 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		generateAPIFile();
 	}
 
-protected void createTestEntry(
-		String testName, String testFilePath, String description,
-		Element rootElement) throws Exception {
+	protected void createTestEntry(
+			String testName, String testFilePath, String description,
+			Element rootElement)
+		throws Exception {
 
 		String[] testData = new String[4];
 
-		allTests.put(testName, testData);
+		_allTests.put(testName, testData);
 
-		allTests.get(testName)[0] = description;
+		_allTests.get(testName)[0] = description;
 
-		allTests.get(testName)[1] = testFilePath;
+		_allTests.get(testName)[1] = testFilePath;
 
-		allTests.get(testName)[2] = getObjectsReferenced(rootElement);
+		_allTests.get(testName)[2] = getObjectsReferenced(rootElement);
 
-		allTests.get(testName)[3] = getOutlineLink(testFilePath, testName);
+		_allTests.get(testName)[3] = getOutlineLink(testFilePath, testName);
 
 	}
 
@@ -106,14 +107,14 @@ protected void createTestEntry(
 
 		sb.append(headerTemplate);
 
-		for (String key : allTests.keySet()) {
+		for (String key : _allTests.keySet()) {
 			String blockTemplate = readFile(root + "testapi/block.html");
 
 			String testName = key;
-			String description = allTests.get(testName)[0];
-			String testFilePath = allTests.get(testName)[1];
-			String objectsReferenced = allTests.get(testName)[2];
-			String outlineLink = allTests.get(testName)[3];
+			String description = _allTests.get(testName)[0];
+			String testFilePath = _allTests.get(testName)[1];
+			String objectsReferenced = _allTests.get(testName)[2];
+			String outlineLink = _allTests.get(testName)[3];
 
 			blockTemplate = blockTemplate.replace("${testname}", testName);
 
@@ -248,16 +249,16 @@ protected void createTestEntry(
 		String actionLocator = command.attributeValue("locator");
 		String actionValue = command.attributeValue("value");
 
-		String finalString = baseActionsMap.get(actionCommand);
+		String finalString = _baseActionsMap.get(actionCommand);
 
 		String pageNameKey = actionFileName + "__PAGE_NAME";
-		String pageName = pathsMap.get(pageNameKey)[2];
+		String pageName = _pathsMap.get(pageNameKey)[2];
 
 		if (actionLocator == null) {
 			String pathKey = actionFileName + "__" + actionPath;
 
-			if (pathsMap.containsKey(pathKey)) {
-				String[] actionArray = pathsMap.get(pathKey);
+			if (_pathsMap.containsKey(pathKey)) {
+				String[] actionArray = _pathsMap.get(pathKey);
 
 				finalString = StringUtil.replace(
 					finalString, "${PATH.PAGE_NAME}", pageName);
@@ -302,16 +303,16 @@ protected void createTestEntry(
 	protected String getBlockFilePath(String fileName) throws Exception {
 		String blockFilePath = "";
 
-		for (String key : macrosMap.keySet()) {
-			String[] values = macrosMap.get(key);
+		for (String key : _macrosMap.keySet()) {
+			String[] values = _macrosMap.get(key);
 
 			if (values[2].equals(fileName)) {
 				blockFilePath = values[3];
 			}
 		}
 
-		for (String key : pathsMap.keySet()) {
-			String[] values = pathsMap.get(key);
+		for (String key : _pathsMap.keySet()) {
+			String[] values = _pathsMap.get(key);
 
 			if (values[0].equals(fileName)) {
 				int x = values[3].indexOf(CharPool.PERIOD);
@@ -385,7 +386,7 @@ protected void createTestEntry(
 		String pathKey = fileName + "__" + elementPathName;
 		String pageNameKey = fileName + "__PAGE_NAME";
 
-		String pageName = pathsMap.get(pageNameKey)[2];
+		String pageName = _pathsMap.get(pageNameKey)[2];
 
 		String finalString = "In the ";
 		finalString += "<strong>${PATH.PAGE_NAME}</strong>, ";
@@ -393,8 +394,8 @@ protected void createTestEntry(
 		finalString += " is present, ";
 		finalString += "perform the following steps:";
 
-		if (pathsMap.containsKey(pathKey)) {
-			String[] actionArray = pathsMap.get(pathKey);
+		if (_pathsMap.containsKey(pathKey)) {
+			String[] actionArray = _pathsMap.get(pathKey);
 
 			finalString = StringUtil.replace(
 				finalString, "${PATH.PAGE_NAME}", pageName);
@@ -436,8 +437,8 @@ protected void createTestEntry(
 
 		String macroKey = macroFileName + "__" + macroCommand;
 
-		if (macrosMap.containsKey(macroKey)) {
-			String[] macroArray = macrosMap.get(macroKey);
+		if (_macrosMap.containsKey(macroKey)) {
+			String[] macroArray = _macrosMap.get(macroKey);
 
 			sb.append(dereferenceParams(command, macroArray[1]));
 
@@ -459,8 +460,8 @@ protected void createTestEntry(
 	protected String getMacrosFilePath(String macroFileName) throws Exception {
 		String macroFilePath = "";
 
-		for (String key : macrosMap.keySet()) {
-			String[] value = macrosMap.get(key);
+		for (String key : _macrosMap.keySet()) {
+			String[] value = _macrosMap.get(key);
 
 			if (value[2].equals(macroFileName)) {
 				macroFilePath = value[3];
@@ -598,7 +599,7 @@ protected void createTestEntry(
 		String pathKey = fileName + "__" + elementPathName;
 		String pageNameKey = fileName + "__PAGE_NAME";
 
-		String pageName = pathsMap.get(pageNameKey)[2];
+		String pageName = _pathsMap.get(pageNameKey)[2];
 
 		String finalString = "In the ";
 		finalString += "<strong>${PATH.PAGE_NAME}</strong>, ";
@@ -606,8 +607,8 @@ protected void createTestEntry(
 		finalString += " is present, ";
 		finalString += "perform the following steps:";
 
-		if (pathsMap.containsKey(pathKey)) {
-			String[] actionArray = pathsMap.get(pathKey);
+		if (_pathsMap.containsKey(pathKey)) {
+			String[] actionArray = _pathsMap.get(pathKey);
 
 			finalString = StringUtil.replace(
 				finalString, "${PATH.PAGE_NAME}", pageName);
@@ -633,7 +634,7 @@ protected void createTestEntry(
 		return sb.toString();
 	}
 
-	private Map<String, String> getBaseActionsMap() throws Exception {
+	private Map<String, String> _getBaseActionsMap() throws Exception {
 		Map<String, String> hashMap = new HashMap<String, String>();
 
 		String baseActionsXML =
@@ -653,7 +654,7 @@ protected void createTestEntry(
 		return hashMap;
 	}
 
-	private Set<String> getMacroFileNames() throws Exception {
+	private Set<String> _getMacroFileNames() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(basedir);
@@ -675,10 +676,10 @@ protected void createTestEntry(
 		return fileNames;
 	}
 
-	private Map<String, String[]> getMacrosMap() throws Exception {
-		Map<String, String[]> macrosMap = new HashMap<String, String[]>();
+	private Map<String, String[]> _getMacrosMap() throws Exception {
+		Map<String, String[]> hashMap = new HashMap<String, String[]>();
 
-		Set<String> macroFilePaths = getMacroFileNames();
+		Set<String> macroFilePaths = _getMacroFileNames();
 
 		for (String macroFilePath : macroFilePaths) {
 			int x = macroFilePath.lastIndexOf(StringPool.SLASH);
@@ -699,14 +700,14 @@ protected void createTestEntry(
 				String[] macroValue =
 					{ name, description, macroFileName, macroFilePath };
 
-				macrosMap.put(macroKey, macroValue);
+				hashMap.put(macroKey, macroValue);
 			}
 		}
 
-		return macrosMap;
+		return hashMap;
 	}
 
-	private Set<String> getPathFileNames() throws Exception {
+	private Set<String> _getPathFileNames() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(basedir);
@@ -728,10 +729,10 @@ protected void createTestEntry(
 		return fileNames;
 	}
 
-	private Map<String, String[]> getPathsMap() throws Exception {
-		Map<String, String[]> pathsMap = new HashMap<String, String[]>();
+	private Map<String, String[]> _getPathsMap() throws Exception {
+		Map<String, String[]> hashMap = new HashMap<String, String[]>();
 
-		Set<String> pathFileNames = getPathFileNames();
+		Set<String> pathFileNames = _getPathFileNames();
 
 		for (String pathFileName : pathFileNames) {
 			int x = pathFileName.lastIndexOf(StringPool.SLASH);
@@ -758,11 +759,11 @@ protected void createTestEntry(
 					pathsName, key, value, pathFileName
 				};
 
-				pathsMap.put(pathKey, pathValue);
+				hashMap.put(pathKey, pathValue);
 			}
 		}
 
-		return pathsMap;
+		return hashMap;
 	}
 
 	private Set<String> getTestFileNames() throws Exception {
@@ -787,14 +788,9 @@ protected void createTestEntry(
 		return fileNames;
 	}
 
-	private Map<String, String[]> allTests = new HashMap<String, String[]>();
-
-	private Map<String, String> baseActionsMap;
-
-	private Map<String, String[]> macrosMap;
-
-	private Map<String, String[]> pathsMap;
-
-	private String testFileName = "";
+	private Map<String, String[]> _allTests = new HashMap<String, String[]>();
+	private Map<String, String> _baseActionsMap;
+	private Map<String, String[]> _macrosMap;
+	private Map<String, String[]> _pathsMap;
 
 }

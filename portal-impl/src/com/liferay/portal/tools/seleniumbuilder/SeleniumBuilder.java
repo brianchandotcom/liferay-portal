@@ -42,7 +42,7 @@ import org.apache.tools.ant.DirectoryScanner;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SeleniumXMLToJavaBuilder {
+public class SeleniumBuilder {
 
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();
@@ -55,7 +55,7 @@ public class SeleniumXMLToJavaBuilder {
 		new FunctionsXMLToJavaBuilder(args);
 	}
 
-	public SeleniumXMLToJavaBuilder(String[] args) throws Exception {
+	public SeleniumBuilder(String[] args) throws Exception {
 		CmdLineParser cmdLineParser = new CmdLineParser();
 
 		CmdLineParser.Option basedirOption = cmdLineParser.addStringOption(
@@ -64,8 +64,8 @@ public class SeleniumXMLToJavaBuilder {
 		cmdLineParser.parse(args);
 
 		basedir = (String)cmdLineParser.getOptionValue(basedirOption);
-		pageObjectSet = getPageObjects();
-		getSeleniumMethods();
+		pageObjectSet = _getPageObjects();
+		_getSeleniumMethods();
 	}
 
 	protected String findRootBlockName(Element block) throws Exception {
@@ -101,11 +101,11 @@ public class SeleniumXMLToJavaBuilder {
 				sb.append("else if ");
 			}
 
-			sb.append(getCommandConditional(command));
+			sb.append(_getCommandConditional(command));
 		}
 
 		sb.append("else {");
-		sb.append(getCommandDefaultCommand(actionDefName));
+		sb.append(_getCommandDefaultCommand(actionDefName));
 		sb.append("}");
 
 		return sb.toString();
@@ -148,13 +148,13 @@ public class SeleniumXMLToJavaBuilder {
 			sb.append("import ");
 
 			if (importObject.endsWith("Actions")) {
-				sb.append(getImportActions(importObject));
+				sb.append(_getImportActions(importObject));
 			}
 			else if (importObject.endsWith("Macros")) {
-				sb.append(getImportMacros(importObject));
+				sb.append(_getImportMacros(importObject));
 			}
 			else if (importObject.endsWith("Functions")) {
-				sb.append(getImportFunctions(importObject));
+				sb.append(_getImportFunctions(importObject));
 			}
 
 			sb.append(";\n");
@@ -273,36 +273,36 @@ public class SeleniumXMLToJavaBuilder {
 
 		String commandName = command.getName();
 
-		if (isValidCommand(commandName)) {
+		if (_isValidCommand(commandName)) {
 			if (commandName.equals("action")) {
-				return getCommandActions(command);
+				return _getCommandActions(command);
 			}
 			else if (commandName.equals("conditional")) {
-				return getCommandConditional(command);
+				return _getCommandConditional(command);
 			}
 			else if (commandName.equals("defaultcommand")) {
-				return getCommandDefaultCommand(blockDefName);
+				return _getCommandDefaultCommand(blockDefName);
 			}
 			else if (commandName.equals("else")) {
-				return getCommandElse(command);
+				return _getCommandElse(command);
 			}
 			else if (commandName.equals("function")) {
-				return getCommandFunctions(command, blockDefName);
+				return _getCommandFunctions(command, blockDefName);
 			}
 			else if (commandName.equals("if")) {
-				return getCommandIf(command);
+				return _getCommandIf(command);
 			}
 			else if (commandName.equals("macro")) {
-				return getCommandMacros(command);
+				return _getCommandMacros(command);
 			}
 			else if (commandName.equals("selenium")) {
-				return getCommandSelenium(command);
+				return _getCommandSelenium(command);
 			}
 			else if (commandName.equals("while")) {
-				return getCommandWhile(command);
+				return _getCommandWhile(command);
 			}
 			else if (commandName.equals("window")) {
-				return getCommandWindow(command);
+				return _getCommandWindow(command);
 			}
 			else {
 				StringBundler message = new StringBundler();
@@ -351,7 +351,7 @@ public class SeleniumXMLToJavaBuilder {
 	protected Set<String> importObjects = new TreeSet<String>();
 	protected Set<String> pageObjectSet;
 
-	private String combineConditionals(
+	private String _combineConditionals(
 		List<String> conditionalList, String delimiter) {
 
 		boolean firstConditional = true;
@@ -371,7 +371,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandActions(Element command) {
+	private String _getCommandActions(Element command) {
 		StringBundler sb = new StringBundler();
 
 		String actionDefName = command.attributeValue("command");
@@ -397,10 +397,10 @@ public class SeleniumXMLToJavaBuilder {
 			String actionPath = command.attributeValue("path" + suffix);
 
 			if (!(actionLocator == null)) {
-				sb.append(replaceVariables("\"" + actionLocator + "\""));
+				sb.append(_replaceVariables("\"" + actionLocator + "\""));
 			}
 			else if (!(actionPath == null)) {
-				sb.append(replaceVariables("\"" + actionPath + "\""));
+				sb.append(_replaceVariables("\"" + actionPath + "\""));
 			}
 			else {
 				sb.append("\"\"");
@@ -410,7 +410,7 @@ public class SeleniumXMLToJavaBuilder {
 
 			if (!(actionValue == null)) {
 				sb.append(", ");
-				sb.append(getCommandAttributeValue(command, "value" + suffix));
+				sb.append(_getCommandAttributeValue(command, "value" + suffix));
 			}
 			else {
 				sb.append(", null");
@@ -426,7 +426,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandActionsConditional(Element conditional) {
+	private String _getCommandActionsConditional(Element conditional) {
 		StringBundler sb = new StringBundler();
 
 		String conditionalName = conditional.attributeValue("name");
@@ -440,7 +440,7 @@ public class SeleniumXMLToJavaBuilder {
 		}
 
 		if (conditionalName == null) {
-			String seleniumCommand = getCommandSelenium(conditional);
+			String seleniumCommand = _getCommandSelenium(conditional);
 			seleniumCommand = StringUtil.replace(seleniumCommand, "Not", "");
 			seleniumCommand = StringUtil.replace(seleniumCommand, ";\n", "");
 
@@ -465,11 +465,11 @@ public class SeleniumXMLToJavaBuilder {
 
 			if (!(actionLocator == null)) {
 				sb.append("(");
-				sb.append(replaceVariables("\"" + actionLocator + "\""));
+				sb.append(_replaceVariables("\"" + actionLocator + "\""));
 			}
 			else if (!(actionPath == null)) {
 				sb.append("(");
-				sb.append(replaceVariables("\"" + actionPath + "\""));
+				sb.append(_replaceVariables("\"" + actionPath + "\""));
 			}
 			else {
 				sb.append("(\"\"");
@@ -477,7 +477,7 @@ public class SeleniumXMLToJavaBuilder {
 
 			if (!(actionValue == null)) {
 				sb.append(", ");
-				sb.append(getCommandAttributeValue(conditional));
+				sb.append(_getCommandAttributeValue(conditional));
 			}
 			else {
 				sb.append(", \"\"");
@@ -489,11 +489,13 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandAttributeValue(Element command) {
-		return getCommandAttributeValue(command, "value");
+	private String _getCommandAttributeValue(Element command) {
+		return _getCommandAttributeValue(command, "value");
 	}
 
-	private String getCommandAttributeValue(Element command, String attribute) {
+	private String _getCommandAttributeValue(
+		Element command, String attribute) {
+
 		StringBundler sb = new StringBundler();
 
 		String attributeValue = command.attributeValue(attribute);
@@ -504,11 +506,11 @@ public class SeleniumXMLToJavaBuilder {
 
 			if (!(firstLetter == null) && firstLetter.equals("true")) {
 				sb.append("LiferaySeleniumHelper.firstLetter(");
-				sb.append(replaceVariables("\"" + attributeValue + "\""));
+				sb.append(_replaceVariables("\"" + attributeValue + "\""));
 				sb.append(")");
 			}
 			else {
-				sb.append(replaceVariables("\"" + attributeValue + "\""));
+				sb.append(_replaceVariables("\"" + attributeValue + "\""));
 			}
 		}
 
@@ -516,7 +518,9 @@ public class SeleniumXMLToJavaBuilder {
 
 	}
 
-	private String getCommandConditional(Element conditional) throws Exception {
+	private String _getCommandConditional(Element conditional)
+		throws Exception {
+
 		List<String> clauseList = new ArrayList<String>();
 
 		String elements = conditional.attributeValue("elements");
@@ -533,7 +537,7 @@ public class SeleniumXMLToJavaBuilder {
 			}
 
 			sbConditional.append("(");
-			sbConditional.append(combineConditionals(elementList, "||"));
+			sbConditional.append(_combineConditionals(elementList, "||"));
 			sbConditional.append(")");
 
 			clauseList.add(sbConditional.toString());
@@ -564,7 +568,7 @@ public class SeleniumXMLToJavaBuilder {
 		StringBundler sb = new StringBundler();
 
 		sb.append("(");
-		sb.append(combineConditionals(clauseList, "&&"));
+		sb.append(_combineConditionals(clauseList, "&&"));
 		sb.append(") {");
 		sb.append(processBlock(conditional));
 		sb.append("}");
@@ -572,7 +576,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandDefaultCommand(String actionDefName) {
+	private String _getCommandDefaultCommand(String actionDefName) {
 		StringBundler sb = new StringBundler();
 
 		sb.append("super." + actionDefName);
@@ -581,7 +585,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandElse(Element command) throws Exception {
+	private String _getCommandElse(Element command) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		sb.append("else {");
@@ -591,7 +595,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandFunctions(Element command, String actionDefName) {
+	private String _getCommandFunctions(Element command, String actionDefName) {
 		StringBundler sb = new StringBundler();
 
 		String functionCommandName = command.attributeValue("command");
@@ -619,7 +623,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandIf(Element command) throws Exception {
+	private String _getCommandIf(Element command) throws Exception {
 		List<Element> whileElements = command.elements();
 
 		String seleniumCommandName = command.attributeValue("command");
@@ -627,7 +631,7 @@ public class SeleniumXMLToJavaBuilder {
 		StringBundler sb = new StringBundler();
 
 		sb.append("if (");
-		sb.append(getCommandActionsConditional(command));
+		sb.append(_getCommandActionsConditional(command));
 		sb.append(") {");
 		sb.append(processBlock(command));
 		sb.append("}");
@@ -635,7 +639,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandMacros(Element command) {
+	private String _getCommandMacros(Element command) {
 		StringBundler sb = new StringBundler();
 
 		String macroDefName = command.attributeValue("command");
@@ -651,7 +655,7 @@ public class SeleniumXMLToJavaBuilder {
 		String paramList = "";
 
 		for (Element macroParam : macroParams) {
-			paramList += getCommandAttributeValue(macroParam) + ", ";
+			paramList += _getCommandAttributeValue(macroParam) + ", ";
 		}
 
 		if (paramList.endsWith(", ")) {
@@ -664,7 +668,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandSelenium(Element command) {
+	private String _getCommandSelenium(Element command) {
 		StringBundler sb = new StringBundler();
 
 		String seleniumCommandName = command.attributeValue("command");
@@ -683,7 +687,7 @@ public class SeleniumXMLToJavaBuilder {
 
 		if (!(seleniumTargetName == null)) {
 			sb.append("\"");
-			sb.append(replaceVariables(seleniumTargetName));
+			sb.append(_replaceVariables(seleniumTargetName));
 			sb.append("\"");
 		}
 		else if (seleniumCommandName.equals("assertConfirmation") ||
@@ -704,7 +708,7 @@ public class SeleniumXMLToJavaBuilder {
 		if (!seleniumCommandName.equals("open")) {
 			if (!(seleniumValueName == null)) {
 				sb.append(", \"");
-				sb.append(replaceVariables(seleniumValueName));
+				sb.append(_replaceVariables(seleniumValueName));
 				sb.append("\"");
 			}
 			else if (numParams > 1) {
@@ -717,7 +721,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandWhile(Element command) throws Exception {
+	private String _getCommandWhile(Element command) throws Exception {
 		List<Element> whileElements = command.elements();
 
 		String seleniumCommandName = command.attributeValue("command");
@@ -725,7 +729,7 @@ public class SeleniumXMLToJavaBuilder {
 		StringBundler sb = new StringBundler();
 
 		sb.append("while (");
-		sb.append(getCommandActionsConditional(command));
+		sb.append(_getCommandActionsConditional(command));
 		sb.append(") {");
 		sb.append(processBlock(command));
 		sb.append("}");
@@ -733,7 +737,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandWindow(Element command) throws Exception {
+	private String _getCommandWindow(Element command) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		String windowObjectName = command.attributeValue("name") + "Actions";
@@ -751,7 +755,7 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getImportActions(String object) throws Exception {
+	private String _getImportActions(String object) throws Exception {
 		int x = object.length() - 7;
 
 		String actionObjectName = object.substring(0, x);
@@ -780,13 +784,13 @@ public class SeleniumXMLToJavaBuilder {
 		return objectPackagePath;
 	}
 
-	private String getImportFunctions(String object) throws Exception {
+	private String _getImportFunctions(String object) throws Exception {
 		String functionsBase = "com.liferay.portalweb.blocks.base.functions.";
 
 		return functionsBase + object;
 	}
 
-	private String getImportMacros(String object) throws Exception {
+	private String _getImportMacros(String object) throws Exception {
 		int x = object.length() - 6;
 
 		String macroObjectName = object.substring(0, x);
@@ -811,7 +815,7 @@ public class SeleniumXMLToJavaBuilder {
 		return objectPackagePath;
 	}
 
-	private Set<String> getPageObjects() throws Exception {
+	private Set<String> _getPageObjects() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(basedir);
@@ -836,7 +840,7 @@ public class SeleniumXMLToJavaBuilder {
 		return fileNames;
 	}
 
-	private void getSeleniumFileMethods(String file) throws Exception {
+	private void _getSeleniumFileMethods(String file) throws Exception {
 		String content = getNormalizedContent(file);
 
 		Pattern pattern = Pattern.compile(
@@ -881,16 +885,16 @@ public class SeleniumXMLToJavaBuilder {
 		_seleniumMethods.put("isNotChecked", 1);
 	}
 
-	private void getSeleniumMethods() throws Exception {
-		getSeleniumFileMethods(
+	private void _getSeleniumMethods() throws Exception {
+		_getSeleniumFileMethods(
 			"com/liferay/portalweb/portal/util/liferayselenium/" +
 				"SeleniumWrapper.java");
-		getSeleniumFileMethods(
+		_getSeleniumFileMethods(
 			"com/liferay/portalweb/portal/util/liferayselenium/" +
 				"LiferaySelenium.java");
 	}
 
-	private boolean isValidCommand(String command) {
+	private boolean _isValidCommand(String command) {
 		boolean isValid = true;
 
 		Set<String> validTestCommands = new TreeSet<String>();
@@ -940,7 +944,7 @@ public class SeleniumXMLToJavaBuilder {
 		return isValid;
 	}
 
-	private String replaceVariables(String text) {
+	private String _replaceVariables(String text) {
 		if (text.startsWith("\"${") && text.endsWith("}\"")) {
 			return text.substring(3, text.length() - 2);
 		}

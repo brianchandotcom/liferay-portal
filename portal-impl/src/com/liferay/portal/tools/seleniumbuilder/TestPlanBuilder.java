@@ -28,7 +28,7 @@ import org.apache.tools.ant.DirectoryScanner;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TestPlanBuilder extends SeleniumXMLToJavaBuilder {
+public class TestPlanBuilder extends SeleniumBuilder {
 
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();
@@ -39,7 +39,7 @@ public class TestPlanBuilder extends SeleniumXMLToJavaBuilder {
 	public TestPlanBuilder(String[] args) throws Exception {
 		super(args);
 
-		Set<String> directoryNames = getDirectoryNames();
+		Set<String> directoryNames = _getDirectoryNames();
 
 		for (String directoryName : directoryNames) {
 			generateTestPlan(directoryName);
@@ -79,7 +79,7 @@ public class TestPlanBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append("public static Test suite() {\n");
 		sb.append("TestSuite testSuite = new TestSuite();\n\n");
 
-		Set<String> testFileNames = getTestFileNames(directoryName);
+		Set<String> testFileNames = _getTestFileNames(directoryName);
 
 		for (String testFileName : testFileNames) {
 			String testFileNameJava = StringUtil.replace(
@@ -98,7 +98,7 @@ public class TestPlanBuilder extends SeleniumXMLToJavaBuilder {
 		writeFile(testPlanFileName, sb.toString(), true);
 	}
 
-	private Set<String> getDirectoryNames() throws Exception {
+	private Set<String> _getDirectoryNames() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(basedir);
@@ -122,7 +122,7 @@ public class TestPlanBuilder extends SeleniumXMLToJavaBuilder {
 		return fileNames;
 	}
 
-	private Set<String> getTestFileNames(String directoryName)
+	private Set<String> _getTestFileNames(String directoryName)
 		throws Exception {
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();

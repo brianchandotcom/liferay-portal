@@ -31,7 +31,7 @@ import org.apache.tools.ant.DirectoryScanner;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PathsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
+public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();
@@ -42,7 +42,7 @@ public class PathsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 	public PathsXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
-		Set<String> fileNames = getFileNames();
+		Set<String> fileNames = _getFileNames();
 
 		for (String fileName : fileNames) {
 			if (fileName.length() > 161) {
@@ -145,7 +145,7 @@ public class PathsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private Set<String> getFileNames() throws Exception {
+	private Set<String> _getFileNames() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(basedir);

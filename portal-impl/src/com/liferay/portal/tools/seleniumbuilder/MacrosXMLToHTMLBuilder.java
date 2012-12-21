@@ -33,7 +33,7 @@ import org.apache.tools.ant.DirectoryScanner;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MacrosXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
+public class MacrosXMLToHTMLBuilder extends SeleniumBuilder {
 
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();
@@ -44,7 +44,7 @@ public class MacrosXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 	public MacrosXMLToHTMLBuilder(String[] args) throws Exception {
 		super(args);
 
-		Set<String> fileNames = getFileNames();
+		Set<String> fileNames = _getFileNames();
 
 		for (String fileName : fileNames) {
 			if (fileName.length() > 161) {
@@ -52,7 +52,7 @@ public class MacrosXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
-			allMacroDefs = new ArrayList();
+			_allMacroDefs = new ArrayList();
 
 			generateMacrosHTML(fileName);
 		}
@@ -60,24 +60,25 @@ public class MacrosXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		generateAPIFile();
 	}
 
-protected void createMacroEntry(
-		String macrosName, String macrosFilePath, String description,
-		Element rootElement) throws Exception {
+	protected void createMacroEntry(
+			String macrosName, String macrosFilePath, String description,
+			Element rootElement)
+		throws Exception {
 
 		String[] macroData = new String[5];
 
-		allMacros.put(macrosName, macroData);
+		_allMacros.put(macrosName, macroData);
 
-		allMacros.get(macrosName)[0] = description;
+		_allMacros.get(macrosName)[0] = description;
 
-		allMacros.get(macrosName)[1] = macrosFilePath;
+		_allMacros.get(macrosName)[1] = macrosFilePath;
 
-		allMacros.get(macrosName)[2] = getObjectsReferenced(rootElement);
+		_allMacros.get(macrosName)[2] = getObjectsReferenced(rootElement);
 
-		allMacros.get(macrosName)[3] = getOutlineLink(
+		_allMacros.get(macrosName)[3] = getOutlineLink(
 											macrosFilePath, macrosName);
 
-		allMacros.get(macrosName)[4] = getMethodOutline(rootElement);
+		_allMacros.get(macrosName)[4] = getMethodOutline(rootElement);
 	}
 
 	protected String formatDescription(String description) {
@@ -93,7 +94,6 @@ protected void createMacroEntry(
 	}
 
 	protected void generateAPIFile() throws Exception {
-
 		String root = "com/liferay/portalweb/blocks/styles/templates/";
 
 		StringBundler sb = new StringBundler();
@@ -102,15 +102,15 @@ protected void createMacroEntry(
 
 		sb.append(headerTemplate);
 
-		for (String key : allMacros.keySet()) {
+		for (String key : _allMacros.keySet()) {
 			String blockTemplate = readFile(root + "macroapi/block.html");
 
 			String macrosName = key;
-			String description = allMacros.get(macrosName)[0];
-			String macrosFilePath = allMacros.get(macrosName)[1];
-			String objectsReferenced = allMacros.get(macrosName)[2];
-			String outlineLink = allMacros.get(macrosName)[3];
-			String methodOutline = allMacros.get(macrosName)[4];
+			String description = _allMacros.get(macrosName)[0];
+			String macrosFilePath = _allMacros.get(macrosName)[1];
+			String objectsReferenced = _allMacros.get(macrosName)[2];
+			String outlineLink = _allMacros.get(macrosName)[3];
+			String methodOutline = _allMacros.get(macrosName)[4];
 
 			blockTemplate = blockTemplate.replace("${macroname}", macrosName);
 
@@ -172,9 +172,7 @@ protected void createMacroEntry(
 
 		String macrosName = fileName.substring(x + 1, y) + "Macros";
 
-		macrosFileName = macrosName;
-
-		String macrosFileName = macrosFilePath + "/" + macrosName + ".java";
+		_macrosFileName = macrosName;
 
 		String root = "com/liferay/portalweb/blocks/styles/";
 
@@ -272,7 +270,7 @@ protected void createMacroEntry(
 
 			String macroDefName = macroDef.attributeValue("name");
 
-			allMacroDefs.add(macroDefName);
+			_allMacroDefs.add(macroDefName);
 
 			String description = macroDef.attributeValue("description");
 
@@ -348,7 +346,6 @@ protected void createMacroEntry(
 	}
 
 	protected String getOutlineLink(String macrosFilePath, String macrosName) {
-
 		int x = macrosFilePath.lastIndexOf("blocks");
 
 		String path = macrosFilePath.substring(x + 7);
@@ -359,7 +356,7 @@ protected void createMacroEntry(
 	protected String getTableOfContents() {
 		StringBundler sb = new StringBundler();
 
-		for (String macroDef : allMacroDefs) {
+		for (String macroDef : _allMacroDefs) {
 			sb.append("<li>");
 			sb.append("<a href='#" + macroDef + "'>");
 			sb.append(macroDef);
@@ -375,7 +372,7 @@ protected void createMacroEntry(
 		StringBundler sb = new StringBundler();
 
 		sb.append("&lt;macro name='");
-		sb.append(macrosFileName);
+		sb.append(_macrosFileName);
 		sb.append("' command='");
 		sb.append(macroDefName);
 		sb.append("' ");
@@ -394,7 +391,7 @@ protected void createMacroEntry(
 		return sb.toString();
 	}
 
-	private Set<String> getFileNames() throws Exception {
+	private Set<String> _getFileNames() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(basedir);
@@ -416,10 +413,8 @@ protected void createMacroEntry(
 		return fileNames;
 	}
 
-	private List<String> allMacroDefs = new ArrayList();
-
-	private Map<String, String[]> allMacros = new HashMap<String, String[]>();
-
-	private String macrosFileName = "";
+	private List<String> _allMacroDefs = new ArrayList();
+	private Map<String, String[]> _allMacros = new HashMap<String, String[]>();
+	private String _macrosFileName = "";
 
 }

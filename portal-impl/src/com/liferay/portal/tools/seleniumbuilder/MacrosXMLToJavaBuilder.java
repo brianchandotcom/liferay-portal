@@ -143,14 +143,14 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
-	protected String getParameterList(Element method) throws Exception {
+	protected String getParameterList(Element params) throws Exception {
 		StringBundler sb = new StringBundler();
 
-		String paramList = "";
+		String paramsString = "";
 
-		List<Element> params = method.elements("param");
+		List<Element> paramList = params.elements("param");
 
-		for (Element param : params) {
+		for (Element param : paramList) {
 			String paramName = param.attributeValue("name");
 
 			sb.append("String ");
@@ -158,13 +158,13 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 			sb.append(", ");
 		}
 
-		paramList = sb.toString();
+		paramsString = sb.toString();
 
-		if (paramList.length() > 0) {
-			paramList = paramList.substring(0, paramList.length() - 2);
+		if (paramsString.length() > 0) {
+			paramsString = paramsString.substring(0, paramsString.length() - 2);
 		}
 
-		return paramList;
+		return paramsString;
 	}
 
 	private Set<String> _getFileNames() throws Exception {

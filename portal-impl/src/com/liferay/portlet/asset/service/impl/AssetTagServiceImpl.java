@@ -96,19 +96,19 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	public List<AssetTag> getGroupTags(long groupId) throws SystemException {
-		return assetTagPersistence.filterFindByGroupId(groupId);
+		return assetTagFinder.filterFindByGroupId(
+			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	public List<AssetTag> getGroupTags(
 			long groupId, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return assetTagPersistence.filterFindByGroupId(
-			groupId, start, end, obc);
+		return assetTagFinder.filterFindByGroupId(groupId, start, end, obc);
 	}
 
 	public int getGroupTagsCount(long groupId) throws SystemException {
-		return assetTagPersistence.filterCountByGroupId(groupId);
+		return assetTagFinder.filterCountByGroupId(groupId);
 	}
 
 	public JSONObject getJSONGroupTags(

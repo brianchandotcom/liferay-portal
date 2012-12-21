@@ -95,15 +95,15 @@ if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
 		templatePage = WikiPageServiceUtil.getPage(templateNodeId, templateTitle);
 
 		if (Validator.isNull(parentTitle)) {
-	parentTitle = templatePage.getParentTitle();
+			parentTitle = templatePage.getParentTitle();
 
-	if (wikiPage.isNew()) {
-		format = templatePage.getFormat();
+			if (wikiPage.isNew()) {
+				format = templatePage.getFormat();
 
-		wikiPage.setContent(templatePage.getContent());
-		wikiPage.setFormat(format);
-		wikiPage.setParentTitle(parentTitle);
-	}
+				wikiPage.setContent(templatePage.getContent());
+				wikiPage.setFormat(format);
+				wikiPage.setParentTitle(parentTitle);
+			}
 		}
 	}
 	catch (Exception e) {
@@ -146,6 +146,13 @@ if (Validator.isNull(redirect)) {
 	<%
 	if (wikiPage == null) {
 		wikiPage = new WikiPageImpl();
+	}
+
+	try {
+		content = SanitizerUtil.sanitize(themeDisplay.getCompanyId(), scopeGroupId, themeDisplay.getUserId(), WikiPage.class.getName(), 0, "text/" + format, content);
+	}
+	catch (SanitizerException se) {
+		content = StringPool.BLANK;
 	}
 
 	wikiPage.setContent(content);

@@ -37,7 +37,7 @@ else {
 }
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu showWhenSingleIcon="<%= true %>">
 	<%@ include file="/html/portlet/trash/action/restore.jspf" %>
 	<%@ include file="/html/portlet/trash/action/delete.jspf" %>
 </liferay-ui:icon-menu>

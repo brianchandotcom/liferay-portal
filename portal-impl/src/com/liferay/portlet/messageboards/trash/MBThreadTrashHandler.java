@@ -155,6 +155,14 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		return false;
 	}
 
+	public boolean isInTrashContainer(long classPK)
+			throws PortalException, SystemException {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		return thread.isInTrashCategory();
+	}
+
 	@Override
 	public boolean isMovable() {
 		return true;

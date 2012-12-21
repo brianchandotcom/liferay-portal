@@ -137,6 +137,15 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 		return false;
 	}
 
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		DLFileShortcut fileShortcut =
+			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+
+		return fileShortcut.isInTrashFolder();
+	}
+
 	@Override
 	public boolean isRestorable(long classPK)
 		throws PortalException, SystemException {

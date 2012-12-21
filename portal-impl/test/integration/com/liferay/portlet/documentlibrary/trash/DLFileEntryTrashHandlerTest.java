@@ -191,7 +191,7 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected boolean isInTrashFolder(ClassedModel classedModel)
+	protected boolean isInTrashContainer(ClassedModel classedModel)
 		throws Exception {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)classedModel;

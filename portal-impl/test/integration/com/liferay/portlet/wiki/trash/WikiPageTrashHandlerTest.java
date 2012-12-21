@@ -158,12 +158,12 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected boolean isInTrashFolder(ClassedModel classedModel)
+	protected boolean isInTrashContainer(ClassedModel classedModel)
 		throws Exception {
 
 		WikiPage page = (WikiPage)classedModel;
 
-		return page.isInTrashFolder();
+		return page.isInTrashNode();
 	}
 
 	@Override

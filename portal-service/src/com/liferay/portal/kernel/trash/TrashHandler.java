@@ -523,6 +523,9 @@ public interface TrashHandler {
 	 * a container that is in the Recycle Bin.
 	 *
 	 * @param  classPK the primary key of the model entity
+	 * @return <code>true</code> if the model entity with the primary key is in
+	 *         a container that is in the Recycle Bin; <code>false</code>
+	 *         otherwise
 	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found in the portal
 	 * @throws SystemException if a system exception occurred

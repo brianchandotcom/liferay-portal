@@ -211,7 +211,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findA_ByG_F">
 		<![CDATA[
 			SELECT
-				DISTINCT JournalArticle.folderId AS modelFolderId, JournalArticle.articleId as articleId, MAX(JournalArticle.version) AS version, JournalArticle.displayDate as displayDate, 0 AS modelFolder
+				DISTINCT JournalArticle.folderId AS modelFolderId, JournalArticle.articleId as articleId, MAX(JournalArticle.version) AS version, 0 AS modelFolder
 			FROM
 				JournalArticle
 			WHERE
@@ -225,7 +225,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findF_ByG_F">
 		<![CDATA[
 			SELECT
-				DISTINCT folderId AS modelFolderId, '' AS articleId, 0 AS version, JournalFolder.createDate as displayDate, 1 AS modelFolder
+				DISTINCT folderId AS modelFolderId, '' AS articleId, 0 AS version, 1 AS modelFolder
 			FROM
 				JournalFolder
 			WHERE

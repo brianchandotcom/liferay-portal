@@ -968,6 +968,10 @@
 		<put name="portlet_content" value="/portlet/monitoring/edit_session.jsp" />
 	</definition>
 
+	<definition name="portlet.monitoring.error" extends="portlet.monitoring">
+		<put name="portlet_content" value="/portlet/monitoring/error.jsp" />
+	</definition>
+
 	<definition name="portlet.monitoring.view" extends="portlet.monitoring">
 		<put name="portlet_content" value="/portlet/monitoring/view.jsp" />
 	</definition>

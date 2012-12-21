@@ -54,7 +54,7 @@ public class EditSessionAction extends PortletAction {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (!permissionChecker.isOmniadmin()) {
+		if (!permissionChecker.isCompanyAdmin()) {
 			SessionErrors.add(
 				actionRequest, PrincipalException.class.getName());
 

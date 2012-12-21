@@ -973,6 +973,19 @@
 		</java>
 	</target>
 
+	<target name="build-selenium-macros-html">
+		<java
+			classname="com.liferay.portal.tools.seleniumbuilder.MacrosXMLToHTMLBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test" />
+		</java>
+	</target>
+
 	<target name="build-selenium-new">
 		<java
 			classname="com.liferay.portal.tools.seleniumbuilder.SeleniumXMLToJavaBuilder"

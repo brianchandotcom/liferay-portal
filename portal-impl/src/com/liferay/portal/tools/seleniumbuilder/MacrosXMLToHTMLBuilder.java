@@ -38,7 +38,7 @@ public class MacrosXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();
 
-		new MacrosXMLToJavaBuilder(args);
+		new MacrosXMLToHTMLBuilder(args);
 	}
 
 	public MacrosXMLToHTMLBuilder(String[] args) throws Exception {

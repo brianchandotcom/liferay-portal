@@ -1,35 +1,44 @@
 <macros>
 	<macrodef
 		name="add"
-		params="title, content"
 		description="In the &lt;strong&gt;Control Panel Web Content Portlet&lt;/strong&gt;, add a Web Content Article with title: &lt;strong&gt;${title}&lt;/strong&gt; and content: &lt;strong&gt;${content}&lt;/strong&gt;."
 	>
-		<macro name="Goto" command="controlPanelPortlet">
-			<param name="portlet" value="Web Content" />
-		</macro>
+		<params>
+			<param name="title" description="Title of the Web Content Article" example="WC Article Title" />
+			<param name="content" description="Content of the Web Content Article" example="WC Article Content" />
+		</params>
+		<steps>
+			<macro name="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Web Content" />
+			</macro>
 
-		<action name="CPWebContentHome" command="click" path="BUTTONS_ADD" value="Add" />
-		<action name="CPWebContentHome" command="click" path="ADD_BASIC_WEB_CONTENT" value="Basic Web Content" />
+			<action name="CPWebContentHome" command="click" path="BUTTONS_ADD" value="Add" />
+			<action name="CPWebContentHome" command="click" path="ADD_BASIC_WEB_CONTENT" value="Basic Web Content" />
 
-		<action name="CPWebContentAddArticle" command="type" path="ARTICLE_TITLE" value="${title}" />
-		<action name="CPWebContentAddArticle" command="type" path="ARTICLE_CONTENT" value="${content}" />
-		<action name="CPWebContentAddArticle" command="click" path="SIDEBAR_PUBLISH" value="Publish" />
+			<action name="CPWebContentAddArticle" command="type" path="ARTICLE_TITLE" value="${title}" />
+			<action name="CPWebContentAddArticle" command="type" path="ARTICLE_CONTENT" value="${content}" />
+			<action name="CPWebContentAddArticle" command="click" path="SIDEBAR_PUBLISH" value="Publish" />
 
-		<action name="CPWebContentHome" command="assertTextEquals" path="HEADER_PORTLET_SUCCESS" value="Your request completed successfully." />
+			<action name="CPWebContentHome" command="assertTextEquals" path="HEADER_PORTLET_SUCCESS" value="Your request completed successfully." />
+		</steps>
 	</macrodef>
 
 	<macrodef
 		name="tearDown"
 		description="In the &lt;strong&gt;Control Panel Web Content Portlet&lt;/strong&gt;, delete all Web Content Articles."
 	>
-		<macro name="Goto" command="controlPanelPortlet">
-			<param name="portlet" value="Web Content" />
-		</macro>
+		<params>
+		</params>
+		<steps>
+			<macro name="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Web Content" />
+			</macro>
 
-		<while name="CPWebContentHome" command="isElementPresent" path="ENTRIES_ARTICLE_1">
-			<action name="CPWebContentHome" command="check" path="ENTRIES_ARTICLE_1_CHECKBOX" />
-			<action name="CPWebContentHome" command="click" path="BUTTONS_ACTIONS" value="Actions" />
-			<action name="CPWebContentHome" command="click" path="ACTIONS_DELETE" value="Delete" />
-		</while>
+			<while name="CPWebContentHome" command="isElementPresent" path="ENTRIES_ARTICLE_1">
+				<action name="CPWebContentHome" command="check" path="ENTRIES_ARTICLE_1_CHECKBOX" />
+				<action name="CPWebContentHome" command="click" path="BUTTONS_ACTIONS" value="Actions" />
+				<action name="CPWebContentHome" command="click" path="ACTIONS_DELETE" value="Delete" />
+			</while>
+		</steps>
 	</macrodef>
 </macros>

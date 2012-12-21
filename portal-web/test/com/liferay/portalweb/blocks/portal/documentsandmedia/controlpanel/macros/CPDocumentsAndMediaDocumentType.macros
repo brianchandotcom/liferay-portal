@@ -1,74 +1,86 @@
-<macros name="CPDocumentsAndMediaFolder">
+<macros name="CPDocumentsAndMediaDocumentType">
 	<macrodef
 		name="add"
-		params="name"
-		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add a &lt;em&gt;Folder&lt;/em&gt; with a name of &lt;strong&gt;&quot;${name}&quot;&lt;/strong&gt;."
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add a &lt;em&gt;Document Type&lt;/em&gt; with a name of &lt;strong&gt;&quot;${name}&quot;&lt;/strong&gt;."
 	>
-		<macro name="Goto" command="controlPanelPortlet">
-			<param name="portlet" value="Documents and Media" />
-		</macro>
+		<params>
+			<param name="name" description="Title of the Document Type" example="DM DocumentType Name" />
+		</params>
+		<steps>
+			<macro name="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
 
-		<action name="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_MANAGE_BUTTON" value="Manage" />
-		<action name="CPDocumentsAndMediaHome" command="click" path="MANAGE_DOCUMENT_TYPES" value="Document Types" />
+			<action name="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_MANAGE_BUTTON" value="Manage" />
+			<action name="CPDocumentsAndMediaHome" command="click" path="MANAGE_DOCUMENT_TYPES" value="Document Types" />
 
-		<window name="CPDocumentsAndMediaDocumentTypeHome">
-			<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="BUTTON_ADD" value="Add" />
+			<window name="CPDocumentsAndMediaDocumentTypeHome">
+				<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="BUTTON_ADD" value="Add" />
 
-			<action name="CPDocumentsAndMediaAddDocumentType" command="type" path="CONTENT_NAME" value="${name}" />
-			<action name="CPDocumentsAndMediaAddDocumentType" command="dragAndDrop"
-				path1="METADATA_FIELD_TEXT" value1="Text"
-				path2="METADATA_CANVAS_BUILDER" value2=""
-			/>
-			<action name="CPDocumentsAndMediaAddDocumentType" command="click" path="BUTTON_SAVE" value="Save" />
+				<action name="CPDocumentsAndMediaAddDocumentType" command="type" path="CONTENT_NAME" value="${name}" />
+				<action name="CPDocumentsAndMediaAddDocumentType" command="dragAndDrop"
+					path1="METADATA_FIELD_TEXT" value1="Text"
+					path2="METADATA_CANVAS_BUILDER" value2=""
+				/>
+				<action name="CPDocumentsAndMediaAddDocumentType" command="click" path="BUTTON_SAVE" value="Save" />
 
-			<action name="CPDocumentsAndMediaDocumentTypeHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
-			<action name="CPDocumentsAndMediaDocumentTypeHome" command="assertTextPresent" value="${name}" />
-		</window>
+				<action name="CPDocumentsAndMediaDocumentTypeHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+				<action name="CPDocumentsAndMediaDocumentTypeHome" command="assertTextPresent" value="${name}" />
+			</window>
+		</steps>
 	</macrodef>
 
 	<macrodef
 		name="delete"
-		params="name"
 		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, delete a &lt;em&gt;Document Type&lt;/em&gt; named: &lt;strong&gt;&quot;${name}&quot;&lt;/strong&gt;."
 	>
-		<macro name="Goto" command="controlPanelPortlet">
-			<param name="portlet" value="Documents and Media" />
-		</macro>
+		<params>
+			<param name="name" description="Title of the Document Type" example="DM DocumentType Name" />
+		</params>
+		<steps>
+			<macro name="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
 
-		<action name="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_MANAGE_BUTTON" value="Manage" />
-		<action name="CPDocumentsAndMediaHome" command="click" path="MANAGE_DOCUMENT_TYPES" value="Document Types" />
+			<action name="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_MANAGE_BUTTON" value="Manage" />
+			<action name="CPDocumentsAndMediaHome" command="click" path="MANAGE_DOCUMENT_TYPES" value="Document Types" />
 
-		<window name="CPDocumentsAndMediaDocumentTypeHome">
-			<action name="CPDocumentsAndMediaDocumentTypeHome" command="type" path="SEARCH_FIELD" value="${name}" />
-			<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="SEARCH_BUTTON" value="Search" />
-			<action name="CPDocumentsAndMediaDocumentTypeHome" command="assertTextEquals" path="TABLE_NAME_1" value="${name}" />
-			<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="TABLE_ACTIONS_1" value="Actions" />
-			<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="ACTIONS_DELETE" value="Delete" />
-			<action name="CPDocumentsAndMediaDocumentTypeHome" command="confirm" path="ACTIONS_DELETE_CONFIRMATION" value="Are you sure you want to delete this? It will be deleted immediately." />
-			<action name="CPDocumentsAndMediaDocumentTypeHome" command="assertTextNotPresent" value="${name}" />
-		</window>
+			<window name="CPDocumentsAndMediaDocumentTypeHome">
+				<action name="CPDocumentsAndMediaDocumentTypeHome" command="type" path="SEARCH_FIELD" value="${name}" />
+				<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="SEARCH_BUTTON" value="Search" />
+				<action name="CPDocumentsAndMediaDocumentTypeHome" command="assertTextEquals" path="TABLE_NAME_1" value="${name}" />
+				<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="TABLE_ACTIONS_1" value="Actions" />
+				<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="ACTIONS_DELETE" value="Delete" />
+				<action name="CPDocumentsAndMediaDocumentTypeHome" command="confirm" path="ACTIONS_DELETE_CONFIRMATION" value="Are you sure you want to delete this? It will be deleted immediately." />
+				<action name="CPDocumentsAndMediaDocumentTypeHome" command="assertTextNotPresent" value="${name}" />
+			</window>
+		</steps>
 	</macrodef>
 
 	<macrodef
 		name="tearDown"
 		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, delete all the &lt;em&gt;Document Types&lt;/em&gt;."
 	>
-		<macro name="Goto" command="controlPanelPortlet">
-			<param name="portlet" value="Documents and Media" />
-		</macro>
+		<params>
+		</params>
+		<steps>
+			<macro name="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
 
-		<action name="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_MANAGE_BUTTON" value="Manage" />
-		<action name="CPDocumentsAndMediaHome" command="click" path="MANAGE_DOCUMENT_TYPES" value="Document Types" />
+			<action name="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_MANAGE_BUTTON" value="Manage" />
+			<action name="CPDocumentsAndMediaHome" command="click" path="MANAGE_DOCUMENT_TYPES" value="Document Types" />
 
-		<window name="CPDocumentsAndMediaDocumentTypeHome">
-			<action name="CPDocumentsAndMediaDocumentTypeHome" command="type" path="SEARCH_FIELD" value="DM" />
-			<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="SEARCH_BUTTON" value="Search" />
+			<window name="CPDocumentsAndMediaDocumentTypeHome">
+				<action name="CPDocumentsAndMediaDocumentTypeHome" command="type" path="SEARCH_FIELD" value="DM" />
+				<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="SEARCH_BUTTON" value="Search" />
 
-			<while name="CPDocumentsAndMediaDocumentTypeHome" command="isElementPresent" path="TABLE_ACTIONS_1">
-				<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="TABLE_ACTIONS_1" value="Actions" />
-				<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="ACTIONS_DELETE" value="Delete" />
-				<action name="CPDocumentsAndMediaDocumentTypeHome" command="confirm" path="ACTIONS_DELETE_CONFIRMATION" value="Are you sure you want to delete this? It will be deleted immediately." />
-			</while>
-		</window>
+				<while name="CPDocumentsAndMediaDocumentTypeHome" command="isElementPresent" path="TABLE_ACTIONS_1">
+					<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="TABLE_ACTIONS_1" value="Actions" />
+					<action name="CPDocumentsAndMediaDocumentTypeHome" command="click" path="ACTIONS_DELETE" value="Delete" />
+					<action name="CPDocumentsAndMediaDocumentTypeHome" command="confirm" path="ACTIONS_DELETE_CONFIRMATION" value="Are you sure you want to delete this? It will be deleted immediately." />
+				</while>
+			</window>
+		</steps>
 	</macrodef>
 </macros>

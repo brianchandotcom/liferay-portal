@@ -1,30 +1,42 @@
 <macros>
 	<macrodef
 		name="controlPanelPortlet"
-		params="portlet"
 		description="Navigate to the &lt;strong&gt;Control Panel ${portlet} Portlet&lt;/strong&gt; in the &lt;strong&gt;Guest Community&lt;/strong&gt;."
 	>
-		<action name="Home" command="open" path="URL_GUEST" value="http://localhost:8080/web/guest/home/" />
-		<action name="Home" command="mouseOver" path="GOTO_LINK" value="Go to" />
-		<action name="Home" command="click" path="GOTO_LINK_CONTROL_PANEL" value="Control Panel" />
-		<action name="Home" command="click" locator="link=${portlet}" value="${portlet}" />
+		<params>
+			<param name="portlet" description="Name of the Portlet in the Control Panel" example="Blogs" />
+		</params>
+		<steps>
+			<action name="Home" command="open" path="URL_GUEST" value="http://localhost:8080/web/guest/home/" />
+			<action name="Home" command="mouseOver" path="GOTO_LINK" value="Go to" />
+			<action name="Home" command="click" path="GOTO_LINK_CONTROL_PANEL" value="Control Panel" />
+			<action name="Home" command="click" locator="link=${portlet}" value="${portlet}" />
+		</steps>
 	</macrodef>
 
 	<macrodef
 		name="pagePortlet"
-		params="portlet"
-		description="Navigate to the &lt;strong&gt;$Page {portlet} Portlet&lt;/strong&gt; in the &lt;strong&gt;Guest Community&lt;/strong&gt;."
+		description="Navigate to the &lt;strong&gt;Page ${portlet} Portlet&lt;/strong&gt; in the &lt;strong&gt;Guest Community&lt;/strong&gt;."
 	>
-		<action name="Home" command="open" path="URL_GUEST" value="http://localhost:8080/web/guest/home/" />
-		<action name="Home" command="click" locator="link=${portlet} Page" value="${portlet} Page" />
+		<params>
+			<param name="portlet" description="Name of the Portlet Page" example="Blogs" />
+		</params>
+		<steps>
+			<action name="Home" command="open" path="URL_GUEST" value="http://localhost:8080/web/guest/home/" />
+			<action name="Home" command="click" locator="link=${portlet} Page" value="${portlet} Page" />
+		</steps>
 	</macrodef>
 
 	<macrodef
 		name="siteContentPortlet"
-		params="portlet"
 		description="Navigate to the &lt;strong&gt;Site Content ${portlet} Portlet&lt;/strong&gt; in the &lt;strong&gt;Guest Community&lt;/strong&gt;."
 	>
-		<action name="Home" command="open" path="URL_GUEST" value="http://localhost:8080/web/guest/home/" />
-		<action name="Home" command="click" locator="link=${portlet} Page" value="${portlet} Page" />
+		<params>
+			<param name="portlet" description="Name of the Portlet in Site Content" example="Blogs" />
+		</params>
+		<steps>
+			<action name="Home" command="open" path="URL_GUEST" value="http://localhost:8080/web/guest/home/" />
+			<action name="Home" command="click" locator="link=${portlet} Page" value="${portlet} Page" />
+		</steps>
 	</macrodef>
 </macros>

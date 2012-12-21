@@ -1,24 +1,29 @@
 <macros>
 	<macrodef
 		name="signIn"
-		params="email,password"
 		description="Log into the portal as ${email} with the password ${password}."
 	>
-		<action name="Home" command="open" path="URL_GUEST" />
+		<params>
+			<param name="email" description="User's email address" example="test@liferay.com" />
+			<param name="password" description="User's password" example="test" />
+		</params>
+		<steps>
+			<action name="Home" command="open" path="URL_GUEST" />
 
-		<action name="PortletSignInHome" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
-		<action name="PortletSignInHome" command="type" path="PASSWORD_FIELD" value="${password}" />
-		<action name="PortletSignInHome" command="check" path="REMEMBER_ME_LINK" />
-		<action name="PortletSignInHome" command="click" path="SIGN_IN_LINK" />
+			<action name="PortletSignInHome" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
+			<action name="PortletSignInHome" command="type" path="PASSWORD_FIELD" value="${password}" />
+			<action name="PortletSignInHome" command="check" path="REMEMBER_ME_LINK" />
+			<action name="PortletSignInHome" command="click" path="SIGN_IN_LINK" />
 
-		<if name="PortletSignInHome" command="isElementPresent" path="I_AGREE_LINK">
-			<action name="PortletSignInHome" command="click" path="I_AGREE_LINK" />
-		</if>
+			<if name="PortletSignInHome" command="isElementPresent" path="I_AGREE_LINK">
+				<action name="PortletSignInHome" command="click" path="I_AGREE_LINK" />
+			</if>
 
-		<if name="PortletSignInHome" command="isElementPresent" path="ANSWER_FIELD">
-			<action name="PortletSignInHome" command="type" path="ANSWER_FIELD" value="test" />
-			<action name="PortletSignInHome" command="click" path="SAVE_LINK" />
-		</if>
+			<if name="PortletSignInHome" command="isElementPresent" path="ANSWER_FIELD">
+				<action name="PortletSignInHome" command="type" path="ANSWER_FIELD" value="test" />
+				<action name="PortletSignInHome" command="click" path="SAVE_LINK" />
+			</if>
+		</steps>
 	</macrodef>
 
 	<macrodef
@@ -26,35 +31,46 @@
 		params="email,password,newPassword"
 		description="Log into the portal for the first time as ${email} with the password ${password} and reset the password to ${newPassword}."
 	>
-		<action name="Home" command="open" path="URL_GUEST" />
+		<params>
+			<param name="email" description="User's email address" example="test@liferay.com" />
+			<param name="password" description="User's password" example="password" />
+			<param name="newPassword" description="User's new password" example="test" />
+		</params>
+		<steps>
+			<action name="Home" command="open" path="URL_GUEST" />
 
-		<action name="PortletSignInHome" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
-		<action name="PortletSignInHome" command="type" path="PASSWORD_FIELD" value="${password}" />
-		<action name="PortletSignInHome" command="check" path="REMEMBER_ME_LINK" />
-		<action name="PortletSignInHome" command="click" path="SIGN_IN_LINK" />
+			<action name="PortletSignInHome" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
+			<action name="PortletSignInHome" command="type" path="PASSWORD_FIELD" value="${password}" />
+			<action name="PortletSignInHome" command="check" path="REMEMBER_ME_LINK" />
+			<action name="PortletSignInHome" command="click" path="SIGN_IN_LINK" />
 
-		<if name="PortletSignInHome" command="isElementPresent" path="I_AGREE_LINK">
-			<action name="PortletSignInHome" command="click" path="I_AGREE_LINK" />
-		</if>
+			<if name="PortletSignInHome" command="isElementPresent" path="I_AGREE_LINK">
+				<action name="PortletSignInHome" command="click" path="I_AGREE_LINK" />
+			</if>
 
-		<if name="PortletSignInHome" command="isElementPresent" path="NEW_PASSWORD_FIELD">
-			<action name="PortletSignInHome" command="type" path="NEW_PASSWORD_FIELD" value="${newPassword}" />
-			<action name="PortletSignInHome" command="type" path="NEW_PASSWORD_ENTER_AGAIN_FIELD" value="${newPassword}" />
-			<action name="PortletSignInHome" command="click" path="SAVE_LINK" value="Save" />
-		</if>
+			<if name="PortletSignInHome" command="isElementPresent" path="NEW_PASSWORD_FIELD">
+				<action name="PortletSignInHome" command="type" path="NEW_PASSWORD_FIELD" value="${newPassword}" />
+				<action name="PortletSignInHome" command="type" path="NEW_PASSWORD_ENTER_AGAIN_FIELD" value="${newPassword}" />
+				<action name="PortletSignInHome" command="click" path="SAVE_LINK" value="Save" />
+			</if>
 
-		<if name="PortletSignInHome" command="isElementPresent" path="ANSWER_FIELD">
-			<action name="PortletSignInHome" command="type" path="ANSWER_FIELD" value="test" />
-			<action name="PortletSignInHome" command="click" path="SAVE_LINK" />
-		</if>
+			<if name="PortletSignInHome" command="isElementPresent" path="ANSWER_FIELD">
+				<action name="PortletSignInHome" command="type" path="ANSWER_FIELD" value="test" />
+				<action name="PortletSignInHome" command="click" path="SAVE_LINK" />
+			</if>
+		</steps>
 	</macrodef>
 
 	<macrodef
 		name="signOut"
 		description="Log out of the portal."
 	>
-		<action name="Home" command="open" path="URL_GUEST" />
+		<params>
+		</params>
+		<steps>
+			<action name="Home" command="open" path="URL_GUEST" />
 
-		<action name="PortletSignInHome" command="click" path="SIGN_OUT_LINK" />
+			<action name="PortletSignInHome" command="click" path="SIGN_OUT_LINK" />
+		</steps>
 	</macrodef>
 </macros>

@@ -43,7 +43,7 @@ public class CPDocumentsAndMediaFolderMacros extends BaseMacros {
 		cPDocumentsAndMediaHomeActions.assertTextEquals("FOLDER_NAME", name);
 	}
 
-	public void delete(String title) throws Exception {
+	public void delete(String name) throws Exception {
 		CPDocumentsAndMediaHomeActions cPDocumentsAndMediaHomeActions = new CPDocumentsAndMediaHomeActions(selenium);
 		GotoMacros gotoMacros = new GotoMacros(selenium);
 

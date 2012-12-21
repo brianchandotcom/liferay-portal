@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.tests.portal.contentmanagement.webcontent.webcontentadministration.rc;
+package com.liferay.portalweb.tests.portal.contentmanagement.webcontent.webcontentadministration.core.rc;
 
 import com.liferay.portalweb.blocks.portal.signin.page.macros.SignInUserMacros;
 import com.liferay.portalweb.blocks.portal.webcontent.controlpanel.actions.article.CPWebContentEditArticleActions;

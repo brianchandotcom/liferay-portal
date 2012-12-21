@@ -374,6 +374,10 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../portal-web" target="build-selenium-macros" />
 	</target>
 
+	<target name="build-selenium-macros-html">
+		<ant dir="../portal-web" target="build-selenium-macros-html" />
+	</target>
+
 	<target name="build-selenium-new">
 		<ant dir="../portal-web" target="build-selenium-new" />
 	</target>

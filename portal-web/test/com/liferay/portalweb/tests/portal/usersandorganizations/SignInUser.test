@@ -16,19 +16,19 @@
 		</macro>
 	</setup>
 	<steps>
-		<macro name="PortletSignInUser" command="signOut">
+		<macro name="SignInUser" command="signOut">
 		</macro>
 
-		<macro name="PortletSignInUser" command="signInNewPassword">
+		<macro name="SignInUser" command="signInNewPassword">
 			<param name="email" value="userea@liferay.com" />
 			<param name="password" value="password" />
 			<param name="newPassword" value="test" />
 		</macro>
 
-		<macro name="PortletSignInUser" command="signOut">
+		<macro name="SignInUser" command="signOut">
 		</macro>
 
-		<macro name="PortletSignInUser" command="signIn">
+		<macro name="SignInUser" command="signIn">
 			<param name="email" value="test@liferay.com" />
 			<param name="password" value="test" />
 		</macro>

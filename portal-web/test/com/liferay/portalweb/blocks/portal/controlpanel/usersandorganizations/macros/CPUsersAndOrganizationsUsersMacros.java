@@ -21,7 +21,7 @@ import com.liferay.portalweb.blocks.portal.controlpanel.usersandorganizations.ac
 import com.liferay.portalweb.blocks.portal.controlpanel.usersandorganizations.actions.home.CPUsersAndOrganizationsHomeActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.usersandorganizations.actions.home.CPUsersAndOrganizationsSearchAllActiveUsersActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.usersandorganizations.actions.home.CPUsersAndOrganizationsSearchAllInactiveUsersActions;
-import com.liferay.portalweb.blocks.portal.home.macros.GotoMacros;
+import com.liferay.portalweb.blocks.portal.home.page.macros.GotoMacros;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**

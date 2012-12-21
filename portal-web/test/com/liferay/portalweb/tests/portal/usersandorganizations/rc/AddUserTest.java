@@ -18,8 +18,8 @@ import com.liferay.portalweb.blocks.portal.controlpanel.usersandorganizations.ac
 import com.liferay.portalweb.blocks.portal.controlpanel.usersandorganizations.actions.home.CPUsersAndOrganizationsHomeActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.usersandorganizations.actions.home.CPUsersAndOrganizationsSearchAllActiveUsersActions;
 import com.liferay.portalweb.blocks.portal.controlpanel.usersandorganizations.macros.CPUsersAndOrganizationsUsersMacros;
-import com.liferay.portalweb.blocks.portal.home.macros.GotoMacros;
-import com.liferay.portalweb.blocks.portal.portlet.signin.macros.PortletSignInUserMacros;
+import com.liferay.portalweb.blocks.portal.home.page.macros.GotoMacros;
+import com.liferay.portalweb.blocks.portal.signin.page.macros.SignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 
@@ -31,9 +31,9 @@ public class AddUserTest extends BaseTestCase {
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
 
-		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
+		SignInUserMacros signInUserMacros = new SignInUserMacros(selenium);
 
-		portletSignInUserMacros.signIn("test@liferay.com", "test");
+		signInUserMacros.signIn("test@liferay.com", "test");
 	}
 
 	public void test() throws Exception {
@@ -69,9 +69,9 @@ public class AddUserTest extends BaseTestCase {
 	@Override
 	public void tearDown() throws Exception {
 		CPUsersAndOrganizationsUsersMacros cPUsersAndOrganizationsUsersMacros = new CPUsersAndOrganizationsUsersMacros(selenium);
-		PortletSignInUserMacros portletSignInUserMacros = new PortletSignInUserMacros(selenium);
+		SignInUserMacros signInUserMacros = new SignInUserMacros(selenium);
 
 		cPUsersAndOrganizationsUsersMacros.tearDown();
-		portletSignInUserMacros.signOut();
+		signInUserMacros.signOut();
 	}
 }

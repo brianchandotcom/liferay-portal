@@ -22,7 +22,10 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.util.FileImpl;
+import com.liferay.portal.util.PropsUtil;
 
 import com.sun.media.jai.codec.ImageCodec;
 import com.sun.media.jai.codec.ImageDecoder;
@@ -43,6 +46,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -60,11 +64,95 @@ import org.im4java.core.IMOperation;
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Shuyang Zhou
  */
 public class ImageToolImpl implements ImageTool {
 
 	public static ImageTool getInstance() {
 		return _instance;
+	}
+
+	public void afterPropertiesSet() {
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		try {
+			InputStream is = classLoader.getResourceAsStream(
+				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_SPACER));
+
+			if (is == null) {
+				_log.error("Default spacer is not available");
+			}
+
+			_defaultSpacer = getImage(is);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to configure the default spacer: " + e.getMessage());
+		}
+
+		try {
+			InputStream is = classLoader.getResourceAsStream(
+				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO));
+
+			if (is == null) {
+				_log.error("Default company logo is not available");
+			}
+
+			_defaultCompanyLogo = getImage(is);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to configure the default company logo: " +
+					e.getMessage());
+		}
+
+		try {
+			InputStream is = classLoader.getResourceAsStream(
+				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_ORGANIZATION_LOGO));
+
+			if (is == null) {
+				_log.error("Default organization logo is not available");
+			}
+
+			_defaultOrganizationLogo = getImage(is);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to configure the default organization logo: " +
+					e.getMessage());
+		}
+
+		try {
+			InputStream is = classLoader.getResourceAsStream(
+				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_USER_FEMALE_PORTRAIT));
+
+			if (is == null) {
+				_log.error("Default user female portrait is not available");
+			}
+
+			_defaultUserFemalePortrait = getImage(is);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to configure the default user female portrait: " +
+					e.getMessage());
+		}
+
+		try {
+			InputStream is = classLoader.getResourceAsStream(
+				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_USER_MALE_PORTRAIT));
+
+			if (is == null) {
+				_log.error("Default user male portrait is not available");
+			}
+
+			_defaultUserMalePortrait = getImage(is);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to configure the default user male portrait: " +
+					e.getMessage());
+		}
 	}
 
 	public Future<RenderedImage> convertCMYKtoRGB(byte[] bytes, String type) {
@@ -214,6 +302,94 @@ public class ImageToolImpl implements ImageTool {
 		write(renderedImage, contentType, baos);
 
 		return baos.toByteArray();
+	}
+
+	public com.liferay.portal.model.Image getDefaultCompanyLogo() {
+		return _defaultCompanyLogo;
+	}
+
+	public com.liferay.portal.model.Image getDefaultOrganizationLogo() {
+		return _defaultOrganizationLogo;
+	}
+
+	public com.liferay.portal.model.Image getDefaultSpacer() {
+		return _defaultSpacer;
+	}
+
+	public com.liferay.portal.model.Image getDefaultUserFemalePortrait() {
+		return _defaultUserFemalePortrait;
+	}
+
+	public com.liferay.portal.model.Image getDefaultUserMalePortrait() {
+		return _defaultUserMalePortrait;
+	}
+
+	public com.liferay.portal.model.Image getImage(byte[] bytes)
+		throws IOException {
+
+		if (bytes == null) {
+			return null;
+		}
+
+		ImageBag imageBag = read(bytes);
+
+		RenderedImage renderedImage = imageBag.getRenderedImage();
+
+		if (renderedImage == null) {
+			throw new IOException("Unable to decode image");
+		}
+
+		String type = imageBag.getType();
+
+		int height = renderedImage.getHeight();
+		int width = renderedImage.getWidth();
+		int size = bytes.length;
+
+		com.liferay.portal.model.Image image = new ImageImpl();
+
+		image.setTextObj(bytes);
+		image.setType(type);
+		image.setHeight(height);
+		image.setWidth(width);
+		image.setSize(size);
+
+		return image;
+	}
+
+	public com.liferay.portal.model.Image getImage(File file)
+		throws IOException {
+
+		byte[] bytes = _fileUtil.getBytes(file);
+
+		return getImage(bytes);
+	}
+
+	public com.liferay.portal.model.Image getImage(InputStream is)
+		throws IOException {
+
+		byte[] bytes = _fileUtil.getBytes(is, -1, true);
+
+		return getImage(bytes);
+	}
+
+	public com.liferay.portal.model.Image getImage(
+			InputStream is, boolean cleanUpStream)
+		throws IOException {
+
+		byte[] bytes = _fileUtil.getBytes(is, -1, cleanUpStream);
+
+		return getImage(bytes);
+	}
+
+	public boolean isNullOrDefaultSpacer(byte[] bytes) {
+		if ((bytes == null) || (bytes.length == 0) ||
+			(Arrays.equals(bytes, getDefaultSpacer().getTextObj()))) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public ImageBag read(byte[] bytes) {
@@ -460,6 +636,16 @@ public class ImageToolImpl implements ImageTool {
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 	private static ImageMagick _imageMagick;
+
+	private com.liferay.portal.model.Image _defaultCompanyLogo;
+
+	private com.liferay.portal.model.Image _defaultOrganizationLogo;
+
+	private com.liferay.portal.model.Image _defaultSpacer;
+
+	private com.liferay.portal.model.Image _defaultUserFemalePortrait;
+
+	private com.liferay.portal.model.Image _defaultUserMalePortrait;
 
 	private class RenderedImageFuture implements Future<RenderedImage> {
 

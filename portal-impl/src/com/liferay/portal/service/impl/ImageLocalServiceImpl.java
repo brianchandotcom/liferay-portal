@@ -14,32 +14,22 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.image.HookFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.Hook;
-import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.Image;
-import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.service.base.ImageLocalServiceBaseImpl;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
-import java.awt.image.RenderedImage;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -49,92 +39,6 @@ import java.util.List;
  * @author Shuyang Zhou
  */
 public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
-
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		ClassLoader classLoader = getClassLoader();
-
-		try {
-			InputStream is = classLoader.getResourceAsStream(
-				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_SPACER));
-
-			if (is == null) {
-				_log.error("Default spacer is not available");
-			}
-
-			_defaultSpacer = getImage(is);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to configure the default spacer: " + e.getMessage());
-		}
-
-		try {
-			InputStream is = classLoader.getResourceAsStream(
-				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO));
-
-			if (is == null) {
-				_log.error("Default company logo is not available");
-			}
-
-			_defaultCompanyLogo = getImage(is);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to configure the default company logo: " +
-					e.getMessage());
-		}
-
-		try {
-			InputStream is = classLoader.getResourceAsStream(
-				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_ORGANIZATION_LOGO));
-
-			if (is == null) {
-				_log.error("Default organization logo is not available");
-			}
-
-			_defaultOrganizationLogo = getImage(is);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to configure the default organization logo: " +
-					e.getMessage());
-		}
-
-		try {
-			InputStream is = classLoader.getResourceAsStream(
-				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_USER_FEMALE_PORTRAIT));
-
-			if (is == null) {
-				_log.error("Default user female portrait is not available");
-			}
-
-			_defaultUserFemalePortrait = getImage(is);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to configure the default user female portrait: " +
-					e.getMessage());
-		}
-
-		try {
-			InputStream is = classLoader.getResourceAsStream(
-				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_USER_MALE_PORTRAIT));
-
-			if (is == null) {
-				_log.error("Default user male portrait is not available");
-			}
-
-			_defaultUserMalePortrait = getImage(is);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to configure the default user male portrait: " +
-					e.getMessage());
-		}
-	}
 
 	@Override
 	public Image deleteImage(long imageId)
@@ -182,57 +86,10 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		Image image = getImage(imageId);
 
 		if (image == null) {
-			image = getDefaultCompanyLogo();
+			image = ImageToolUtil.getDefaultCompanyLogo();
 		}
 
 		return image;
-	}
-
-	public Image getDefaultCompanyLogo() {
-		return _defaultCompanyLogo;
-	}
-
-	public Image getDefaultOrganizationLogo() {
-		return _defaultOrganizationLogo;
-	}
-
-	public Image getDefaultSpacer() {
-		return _defaultSpacer;
-	}
-
-	public Image getDefaultUserFemalePortrait() {
-		return _defaultUserFemalePortrait;
-	}
-
-	public Image getDefaultUserMalePortrait() {
-		return _defaultUserMalePortrait;
-	}
-
-	public Image getImage(byte[] bytes)
-		throws PortalException, SystemException {
-
-		return getImage(null, bytes);
-	}
-
-	public Image getImage(File file) throws PortalException, SystemException {
-		try {
-			return getImage(new FileInputStream(file));
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
-	public Image getImage(InputStream is)
-		throws PortalException, SystemException {
-
-		return getImage(is, null);
-	}
-
-	public Image getImage(InputStream is, boolean cleanUpStream)
-		throws PortalException, SystemException {
-
-		return getImage(is, null, cleanUpStream);
 	}
 
 	@Override
@@ -257,7 +114,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		Image image = getImage(imageId);
 
 		if (image == null) {
-			image = getDefaultSpacer();
+			image = ImageToolUtil.getDefaultSpacer();
 		}
 
 		return image;
@@ -271,21 +128,17 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		return imagePersistence.findByLtSize(size);
 	}
 
-	public boolean isNullOrDefaultSpacer(byte[] bytes) {
-		if ((bytes == null) || (bytes.length == 0) ||
-			(Arrays.equals(bytes, getDefaultSpacer().getTextObj()))) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	public Image updateImage(long imageId, byte[] bytes)
 		throws PortalException, SystemException {
 
-		Image image = getImage(bytes);
+		Image image = null;
+
+		try {
+			image = ImageToolUtil.getImage(bytes);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 
 		return updateImage(
 			imageId, image.getTextObj(), image.getType(), image.getHeight(),
@@ -323,7 +176,14 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 	public Image updateImage(long imageId, File file)
 		throws PortalException, SystemException {
 
-		Image image = getImage(file);
+		Image image = null;
+
+		try {
+			image = ImageToolUtil.getImage(file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 
 		return updateImage(
 			imageId, image.getTextObj(), image.getType(), image.getHeight(),
@@ -333,7 +193,14 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 	public Image updateImage(long imageId, InputStream is)
 		throws PortalException, SystemException {
 
-		Image image = getImage(is);
+		Image image = null;
+
+		try {
+			image = ImageToolUtil.getImage(is);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 
 		return updateImage(
 			imageId, image.getTextObj(), image.getType(), image.getHeight(),
@@ -344,67 +211,21 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			long imageId, InputStream is, boolean cleanUpStream)
 		throws PortalException, SystemException {
 
-		Image image = getImage(is, cleanUpStream);
+		Image image = null;
+
+		try {
+			image = ImageToolUtil.getImage(is, cleanUpStream);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 
 		return updateImage(
 			imageId, image.getTextObj(), image.getType(), image.getHeight(),
 			image.getWidth(), image.getSize());
 	}
 
-	protected Image getImage(InputStream is, byte[] bytes)
-		throws PortalException, SystemException {
-
-		return getImage(is, bytes, true);
-	}
-
-	protected Image getImage(
-			InputStream is, byte[] bytes, boolean cleanUpStream)
-		throws PortalException, SystemException {
-
-		try {
-			if (is != null) {
-				bytes = FileUtil.getBytes(is, -1, cleanUpStream);
-			}
-
-			if (bytes == null) {
-				return null;
-			}
-
-			ImageBag imageBag = ImageToolUtil.read(bytes);
-
-			RenderedImage renderedImage = imageBag.getRenderedImage();
-			String type = imageBag.getType();
-
-			if (renderedImage == null) {
-				throw new ImageTypeException();
-			}
-
-			int height = renderedImage.getHeight();
-			int width = renderedImage.getWidth();
-			int size = bytes.length;
-
-			Image image = new ImageImpl();
-
-			image.setTextObj(bytes);
-			image.setType(type);
-			image.setHeight(height);
-			image.setWidth(width);
-			image.setSize(size);
-
-			return image;
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		ImageLocalServiceImpl.class);
-
-	private Image _defaultCompanyLogo;
-	private Image _defaultOrganizationLogo;
-	private Image _defaultSpacer;
-	private Image _defaultUserFemalePortrait;
-	private Image _defaultUserMalePortrait;
 
 }

@@ -337,19 +337,19 @@ public class WebServerServlet extends HttpServlet {
 		if (path.startsWith("/company_logo") ||
 			path.startsWith("/layout_set_logo") || path.startsWith("/logo")) {
 
-			return ImageLocalServiceUtil.getDefaultCompanyLogo();
+			return ImageToolUtil.getDefaultCompanyLogo();
 		}
 		else if (path.startsWith("/organization_logo")) {
-			return ImageLocalServiceUtil.getDefaultOrganizationLogo();
+			return ImageToolUtil.getDefaultOrganizationLogo();
 		}
 		else if (path.startsWith("/user_female_portrait")) {
-			return ImageLocalServiceUtil.getDefaultUserFemalePortrait();
+			return ImageToolUtil.getDefaultUserFemalePortrait();
 		}
 		else if (path.startsWith("/user_male_portrait")) {
-			return ImageLocalServiceUtil.getDefaultUserMalePortrait();
+			return ImageToolUtil.getDefaultUserMalePortrait();
 		}
 		else if (path.startsWith("/user_portrait")) {
-			return ImageLocalServiceUtil.getDefaultUserMalePortrait();
+			return ImageToolUtil.getDefaultUserMalePortrait();
 		}
 		else {
 			return null;
@@ -870,7 +870,7 @@ public class WebServerServlet extends HttpServlet {
 
 			InputStream inputStream = fileVersion.getContentStream(true);
 
-			Image image = ImageLocalServiceUtil.getImage(inputStream);
+			Image image = ImageToolUtil.getImage(inputStream);
 
 			writeImage(image, request, response);
 

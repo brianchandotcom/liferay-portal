@@ -46,17 +46,16 @@ public interface LiferayActions {
 
 	public void close(String param1, String param2) throws Exception;
 
-	public void copy(String param1, String param2) throws Exception;
-
 	public void confirm(String param1, String param2) throws Exception;
+
+	public void copy(String param1, String param2) throws Exception;
 
 	public String get(String key) throws Exception;
 
 	public boolean isElementPresent(String param1, String param2)
 		throws Exception;
 
-	public boolean isVisible(String param1, String param2)
-		throws Exception;
+	public boolean isVisible(String param1, String param2) throws Exception;
 
 	public void mouseOver(String param1, String param2) throws Exception;
 

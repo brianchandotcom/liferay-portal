@@ -192,9 +192,7 @@ public class BaseActionsImpl implements LiferayActions {
 		return selenium.isElementPresent(params[0]);
 	}
 
-	public boolean isVisible(String param1, String param2)
-		throws Exception{
-
+	public boolean isVisible(String param1, String param2) throws Exception {
 		String[] params = getParams(param1, param2);
 
 		return selenium.isVisible(params[0]);

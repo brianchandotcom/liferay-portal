@@ -187,11 +187,19 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
 
-		if (page.isInTrash() || page.isInTrashFolder()) {
+		if (page.isInTrash() || page.isInTrashNode()) {
 			return true;
 		}
 
 		return false;
+	}
+
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
+
+		return page.isInTrashNode();
 	}
 
 	public void restoreTrashEntries(long[] classPKs)

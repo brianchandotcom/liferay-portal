@@ -44,7 +44,7 @@ boolean useRichEditor = editorType.equals("rich");
 				for (String curLangType : DDMTemplateConstants.LANG_TYPES) {
 					StringBundler sb = new StringBundler(5);
 
-					sb.append(LanguageUtil.get(pageContext, curLangType));
+					sb.append(LanguageUtil.get(pageContext, curLangType + "[stands-for]"));
 					sb.append(StringPool.SPACE);
 					sb.append(StringPool.OPEN_PARENTHESIS);
 					sb.append(StringPool.PERIOD);
@@ -52,7 +52,7 @@ boolean useRichEditor = editorType.equals("rich");
 					sb.append(StringPool.CLOSE_PARENTHESIS);
 				%>
 
-					<aui:option label='<%= sb.toString() + "[stands-for]" %>' selected="<%= language.equals(curLangType) %>" value="<%= curLangType %>" />
+					<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(curLangType) %>" value="<%= curLangType %>" />
 
 				<%
 				}

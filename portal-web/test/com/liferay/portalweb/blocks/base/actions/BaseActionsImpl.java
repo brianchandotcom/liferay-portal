@@ -27,6 +27,7 @@ import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
 import com.liferay.portalweb.blocks.base.functions.CloseFunctions;
 import com.liferay.portalweb.blocks.base.functions.ConfirmFunctions;
 import com.liferay.portalweb.blocks.base.functions.CopyFunctions;
+import com.liferay.portalweb.blocks.base.functions.DragAndDropFunctions;
 import com.liferay.portalweb.blocks.base.functions.MouseOverFunctions;
 import com.liferay.portalweb.blocks.base.functions.OpenFunctions;
 import com.liferay.portalweb.blocks.base.functions.PasteFunctions;
@@ -176,6 +177,20 @@ public class BaseActionsImpl implements LiferayActions {
 		CopyFunctions copyFunctions = new CopyFunctions(selenium);
 
 		copyFunctions.textCopy(params[0], params[1]);
+	}
+
+	public void dragAndDrop(
+		String path1, String value1, String path2, String value2)
+			throws Exception {
+
+		String[] params1 = getParams(path1, value1);
+		String[] params2 = getParams(path2, value2);
+
+		DragAndDropFunctions dragAndDropFunctions = new DragAndDropFunctions(
+			selenium);
+
+		dragAndDropFunctions.dragAndDrop(
+			params1[0], params1[1], params2[0], params2[1]);
 	}
 
 	public String get(String key) throws Exception {

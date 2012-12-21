@@ -65,6 +65,11 @@
 	/>
 
 	<actiondef
+		name="dragAndDrop"
+		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, drag and drop the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt;."
+	/>
+
+	<actiondef
 		name="mouseOver"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, mouse over the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; which should have a text value of &lt;strong&gt;&quot;${PATH.VALUE}&quot;&lt;/strong&gt;."
 	/>

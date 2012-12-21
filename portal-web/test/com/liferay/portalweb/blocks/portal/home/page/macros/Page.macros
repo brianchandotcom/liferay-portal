@@ -1,14 +1,18 @@
 <macros>
 	<macrodef
 		name="add"
-		params="portlet"
-		description="Add a page called &lt;strong&gt;${portlet} Test Page&lt;/strong&gt; in the &lt;strong&gt;Guest Community&lt;/strong&gt;."
+		description="Add a page called &lt;strong&gt;${portlet} Page&lt;/strong&gt; in the &lt;strong&gt;Guest Community&lt;/strong&gt;."
 	>
-		<action name="Home" command="open" path="URL_GUEST" />
-		<action name="Home" command="mouseOver" path="ADD_LINK" />
-		<action name="Home" command="click" path="ADD_LINK_PAGE" />
-		<action name="Home" command="type" path="NEW_PAGE_FIELD" value="${portlet} Page" />
-		<action name="Home" command="click" path="NEW_PAGE_LINK_SAVE" />
-		<action name="Home" command="type" locator="link=${portlet} Page" value="${portlet} Page" />
+		<params>
+			<param name="portlet" description="Name of the Portlet for the Page" example="Blogs" />
+		</params>
+		<steps>
+			<action name="Home" command="open" path="URL_GUEST" />
+			<action name="Home" command="mouseOver" path="ADD_LINK" />
+			<action name="Home" command="click" path="ADD_LINK_PAGE" />
+			<action name="Home" command="type" path="NEW_PAGE_FIELD" value="${portlet} Page" />
+			<action name="Home" command="click" path="NEW_PAGE_LINK_SAVE" />
+			<action name="Home" command="type" locator="link=${portlet} Page" value="${portlet} Page" />
+		</steps>
 	</macrodef>
 </macros>

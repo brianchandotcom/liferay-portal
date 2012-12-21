@@ -96,7 +96,8 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	public List<AssetTag> getGroupTags(long groupId) throws SystemException {
-		return assetTagFinder.filterFindByGroupId(groupId);
+		return assetTagFinder.filterFindByGroupId(
+			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	public List<AssetTag> getGroupTags(

@@ -317,6 +317,10 @@ public class WebDAVUtil {
 	}
 
 	public static String stripManualCheckInRequiredPath(String pathInfo) {
+		if (Validator.isNull(pathInfo)) {
+			return StringPool.BLANK;
+		}
+
 		int index = pathInfo.indexOf(DLUtil.MANUAL_CHECK_IN_REQUIRED_PATH);
 
 		if (index >= 0) {

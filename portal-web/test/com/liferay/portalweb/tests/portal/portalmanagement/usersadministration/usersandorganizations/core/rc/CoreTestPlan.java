@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.tests.portal.contentmanagement.webcontent.webcontentadministration.rc;
+package com.liferay.portalweb.tests.portal.portalmanagement.usersadministration.usersandorganizations.core.rc;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 
@@ -22,11 +22,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WebcontentadministrationTestPlan extends BaseTestSuite {
+public class CoreTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddWCWebContentCPTest.class);
+		testSuite.addTestSuite(AddUserTest.class);
+		testSuite.addTestSuite(DeleteUserTest.class);
+		testSuite.addTestSuite(SignInUserTest.class);
 
 		return testSuite;
 	}

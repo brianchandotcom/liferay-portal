@@ -772,9 +772,10 @@ public class PortalImpl implements Portal {
 
 				String serverIp = getComputerAddress();
 
+				boolean serverIpIsHostAddress = serverIp.equals(hostAddress);
+
 				for (String ip : allowedIps) {
-					if ((ip.equals("SERVER_IP") &&
-							serverIp.equals(hostAddress)) ||
+					if ((serverIpIsHostAddress && ip.equals("SERVER_IP")) ||
 						ip.equals(hostAddress)) {
 
 						return url;

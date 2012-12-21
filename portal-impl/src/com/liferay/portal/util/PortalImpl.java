@@ -762,25 +762,31 @@ public class PortalImpl implements Portal {
 			else if (securityMode.equals("ip")) {
 				String[] allowedIps = PropsValues.REDIRECT_URL_IPS_ALLOWED;
 
+				if (allowedIps.length == 0) {
+					return url;
+				}
+
 				InetAddress inetAddress = InetAddress.getByName(domain);
 
-				if ((allowedIps.length > 0) &&
-					!ArrayUtil.contains(
-						allowedIps, inetAddress.getHostAddress())) {
+				String hostAddress = inetAddress.getHostAddress();
 
-					String serverIp = getComputerAddress();
+				String serverIp = getComputerAddress();
 
-					if (!serverIp.equals(inetAddress.getHostAddress()) ||
-						!ArrayUtil.contains(allowedIps, "SERVER_IP")) {
+				boolean serverIpIsHostAddress = serverIp.equals(hostAddress);
 
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								"Redirect URL " + url + " is not allowed");
-						}
+				for (String ip : allowedIps) {
+					if ((serverIpIsHostAddress && ip.equals("SERVER_IP")) ||
+						ip.equals(hostAddress)) {
 
-						url = null;
+						return url;
 					}
 				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Redirect URL " + url + " is not allowed");
+				}
+
+				url = null;
 			}
 		}
 		catch (UnknownHostException uhe) {

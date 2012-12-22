@@ -280,15 +280,26 @@ public class MacrosXMLToHTMLBuilder extends SeleniumBuilder {
 
 			StringBundler parameters = new StringBundler();
 
-			if (macroDef.attributeValue("params") != null) {
-				String[] params = macroDef.attributeValue("params").split(",");
+			Element paramsElement = macroDef.element("params");
 
-				for (String param : params) {
-					parameters.append("<li>" + param + "</li>\n");
-				}
+			List<Element> params = paramsElement.elements("param");
+
+			if (params.size() == 0) {
+				parameters.append("n/a");
 			}
 			else {
-				parameters.append("n/a");
+				for (Element param : params) {
+					String name = param.attributeValue("name");
+					String paramDescription = param.attributeValue(
+						"description");
+					String example = param.attributeValue("example");
+
+					parameters.append("<li>");
+					parameters.append(name);
+					parameters.append(" &rarr; <i>");
+					parameters.append(paramDescription + "</i>");
+					parameters.append("</li>");
+				}
 			}
 
 			block = block.replace("${parameters}", parameters.toString());
@@ -377,12 +388,19 @@ public class MacrosXMLToHTMLBuilder extends SeleniumBuilder {
 		sb.append(macroDefName);
 		sb.append("' ");
 
-		if (macroDef.attributeValue("params") != null) {
-			String[] params = macroDef.attributeValue("params").split(",");
+		Element paramsElement = macroDef.element("params");
 
-			for (String param : params) {
-				sb.append(param);
-				sb.append("='[insert sample argument]' ");
+		List<Element> params = paramsElement.elements("param");
+
+		if (params.size() > 0) {
+			for (Element param : params) {
+				String name = param.attributeValue("name");
+				String example = param.attributeValue("example");
+
+				sb.append(name);
+				sb.append("='");
+				sb.append(example);
+				sb.append("' ");
 			}
 		}
 

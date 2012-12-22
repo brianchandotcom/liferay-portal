@@ -336,8 +336,7 @@ public class WebDAVUtil {
 
 		if (index >= 0) {
 			url =
-				url.substring(0, index) +
-					url.substring(index + token.length(), url.length());
+				url.substring(0, index) + url.substring(index + token.length());
 		}
 
 		return url;

@@ -16,7 +16,9 @@ package com.liferay.portlet.amazonrankings.util;
 
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URLEncoder;
 
@@ -26,8 +28,6 @@ import java.util.TreeMap;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-
-import jodd.util.StringPool;
 
 /**
  * @author Barrie Selack
@@ -53,7 +53,7 @@ public class AmazonSignedRequestsUtil {
 		throws Exception {
 
 		if (parameters.isEmpty()) {
-			return StringPool.EMPTY;
+			return StringPool.BLANK;
 		}
 
 		parameters = new TreeMap<String, String>(parameters);
@@ -64,7 +64,7 @@ public class AmazonSignedRequestsUtil {
 
 		for (Map.Entry<String, String> parameter : parametersSet) {
 			sb.append(_rfc3986Encode(parameter.getKey()));
-			sb.append(StringPool.EQUALS);
+			sb.append(StringPool.EQUAL);
 			sb.append(_rfc3986Encode(parameter.getValue()));
 			sb.append(StringPool.AMPERSAND);
 		}
@@ -78,6 +78,10 @@ public class AmazonSignedRequestsUtil {
 		String amazonSecretAccessKey =
 			AmazonRankingsUtil.getAmazonSecretAccessKey();
 
+		if (Validator.isNull(amazonSecretAccessKey)) {
+			return StringPool.BLANK;
+		}
+
 		SecretKeySpec secretKeySpec = new SecretKeySpec(
 			amazonSecretAccessKey.getBytes(), _HMAC_SHA256_ALGORITHM);
 
@@ -90,15 +94,19 @@ public class AmazonSignedRequestsUtil {
 		String signature = Base64.encode(bytes);
 
 		return StringUtil.replace(
-			signature, new String[] {StringPool.EQUALS, StringPool.PLUS},
+			signature, new String[] {StringPool.EQUAL, StringPool.PLUS},
 			new String[] {"%3D", "%2B"});
 	}
 
 	private static String _rfc3986Encode(String string) throws Exception {
-		string = URLEncoder.encode(string, StringPool.UTF_8);
+		if (Validator.isNull(string)) {
+			return StringPool.BLANK;
+		}
+
+		string = URLEncoder.encode(string, StringPool.UTF8);
 
 		string = StringUtil.replace(
-			string, new String[] {StringPool.ASTERISK, StringPool.PLUS, "%7E"},
+			string, new String[] {StringPool.STAR, StringPool.PLUS, "%7E"},
 			new String[] {"%2A", "%2B", "~"});
 
 		return string;

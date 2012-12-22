@@ -211,10 +211,8 @@ public class SeleniumBuilder {
 	protected boolean isCommand(Element element) {
 		String name = element.getName();
 
-		return (name.equals("macro") ||
-				name.equals("action") ||
-				name.equals("function") ||
-				name.equals("while") ||
+		return (name.equals("macro") || name.equals("action") ||
+				name.equals("function") || name.equals("while") ||
 				name.equals("if"));
 	}
 
@@ -343,11 +341,8 @@ public class SeleniumBuilder {
 	}
 
 	protected String basedir;
-
 	protected ClassTypes classType;
-
 	protected String filePath = "";
-
 	protected Set<String> importObjects = new TreeSet<String>();
 	protected Set<String> pageObjectSet;
 

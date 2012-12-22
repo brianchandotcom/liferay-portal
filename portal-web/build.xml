@@ -988,7 +988,7 @@
 
 	<target name="build-selenium-new">
 		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.SeleniumXMLToJavaBuilder"
+			classname="com.liferay.portal.tools.seleniumbuilder.SeleniumBuilder"
 			classpathref="project.classpath"
 			fork="true"
 			maxmemory="1024m"

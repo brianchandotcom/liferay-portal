@@ -1177,6 +1177,15 @@ public class Creole10Parser]]></replacevalue>
 		</if>
 	</target>
 
+	<target name="compile-test-cmd">
+		<ant antfile="../build-common.xml" target="compile-test-cmd" dir="${project.dir}/portal-service">
+			<property name="test.type" value="${test.type}" />
+		</ant>
+		<ant antfile="../build-common.xml" target="compile-test-cmd">
+			<property name="test.type" value="${test.type}" />
+		</ant>
+	</target>
+
 	<target name="compile-tools">
 		<antcall target="compile-dependencies" />
 

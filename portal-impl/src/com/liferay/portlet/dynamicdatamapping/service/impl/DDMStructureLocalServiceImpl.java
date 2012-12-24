@@ -359,7 +359,7 @@ public class DDMStructureLocalServiceImpl
 
 		if (!includeGlobalStructures) {
 			throw new NoSuchStructureException(
-				"No JournalStructure exists with the structure key " +
+				"No Structure exists with the structure key " +
 					structureKey);
 		}
 

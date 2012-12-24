@@ -392,6 +392,34 @@ public class PortalServiceHttp {
 		}
 	}
 
+	public static void testAutoSyncHibernateSessionStateOnTxCreation(
+		HttpPrincipal httpPrincipal)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(PortalServiceUtil.class,
+					"testAutoSyncHibernateSessionStateOnTxCreation",
+					_testAutoSyncHibernateSessionStateOnTxCreationParameterTypes12);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(PortalServiceHttp.class);
 	private static final Class<?>[] _getAutoDeployDirectoryParameterTypes0 = new Class[] {
 			
@@ -425,4 +453,6 @@ public class PortalServiceHttp {
 	private static final Class<?>[] _testHasClassNameParameterTypes11 = new Class[] {
 			
 		};
+	private static final Class<?>[] _testAutoSyncHibernateSessionStateOnTxCreationParameterTypes12 =
+		new Class[] {  };
 }

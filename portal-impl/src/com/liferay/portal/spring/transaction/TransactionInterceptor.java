@@ -17,6 +17,7 @@ package com.liferay.portal.spring.transaction;
 import com.liferay.portal.cache.transactional.TransactionalPortalCacheHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 
 import java.lang.reflect.Method;
 
@@ -59,7 +60,9 @@ public class TransactionInterceptor implements MethodInterceptor {
 		TransactionStatus transactionStatus =
 			_platformTransactionManager.getTransaction(transactionAttribute);
 
-		if (transactionStatus.isNewTransaction()) {
+		boolean newTransaction = transactionStatus.isNewTransaction();
+
+		if (newTransaction) {
 			TransactionalPortalCacheHelper.begin();
 
 			TransactionCommitCallbackUtil.pushCallbackList();
@@ -68,6 +71,10 @@ public class TransactionInterceptor implements MethodInterceptor {
 		Object returnValue = null;
 
 		try {
+			if (newTransaction) {
+				LastSessionRecorderUtil.syncLastSessionState();
+			}
+
 			returnValue = methodInvocation.proceed();
 		}
 		catch (Throwable throwable) {
@@ -77,7 +84,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 
 		_platformTransactionManager.commit(transactionStatus);
 
-		if (transactionStatus.isNewTransaction()) {
+		if (newTransaction) {
 			TransactionalPortalCacheHelper.commit();
 
 			invokeCallbacks();

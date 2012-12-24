@@ -350,6 +350,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
 
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
 
 		int oldStatus = workflowedModel.getStatus();

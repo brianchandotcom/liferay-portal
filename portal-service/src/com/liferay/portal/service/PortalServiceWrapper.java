@@ -108,6 +108,11 @@ public class PortalServiceWrapper implements PortalService,
 		return _portalService.testHasClassName();
 	}
 
+	public void testAutoSyncHibernateSessionStateOnTxCreation()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_portalService.testAutoSyncHibernateSessionStateOnTxCreation();
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

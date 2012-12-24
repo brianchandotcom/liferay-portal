@@ -41,7 +41,7 @@ if (Validator.isNull(redirect)) {
 }
 
 String extension = fileEntry.getExtension();
-String title = fileEntry.getTitle();
+String title = TrashUtil.getOriginalTitle(fileEntry.getTitle());
 
 Folder folder = fileEntry.getFolder();
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
@@ -131,7 +131,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= false %>"
-		title="<%= fileEntry.getTitle() %>"
+		title="<%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>"
 	/>
 </c:if>
 

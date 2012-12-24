@@ -258,6 +258,16 @@
 			<bean class="com.liferay.portal.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.safe.serializer.ItemSerializerRegistryUtil" class="com.liferay.portal.kernel.safe.serializer.ItemSerializerRegistryUtil">
+		<property name="itemSerializerRegistry">
+			<bean class="com.liferay.portal.safe.ItemSerializerRegistryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.safe.PortalSafeUtil" class="com.liferay.portal.kernel.safe.PortalSafeUtil">
+		<property name="portalSafe">
+			<bean class="com.liferay.portal.safe.PortalSafeImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.sanitizer.SanitizerUtil" class="com.liferay.portal.kernel.sanitizer.SanitizerUtil">
 		<property name="sanitizer">
 			<bean class="com.liferay.portal.sanitizer.SanitizerImpl" />

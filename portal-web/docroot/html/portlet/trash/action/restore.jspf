@@ -19,7 +19,26 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getCl
 %>
 
 <c:choose>
-	<c:when test="<%= !trashHandler.isRestorable(entry.getClassPK()) %>">
+	<c:when test="<%= trashHandler.isRestorable(entry.getClassPK()) && !trashHandler.isInTrashContainer(entry.getClassPK()) %>">
+		<portlet:actionURL var="restoreEntryURL">
+			<portlet:param name="struts_action" value="/trash/edit_entry" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+		</portlet:actionURL>
+
+		<%
+		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + entry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
+		%>
+
+		<liferay-ui:icon
+			image="undo"
+			message="restore"
+			onClick="<%= taglibOnClick %>"
+			url="javascript:;"
+		/>
+	</c:when>
+	<c:when test="<%= !trashHandler.isRestorable(entry.getClassPK()) && trashHandler.isMovable() %>">
 		<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/trash/view_container_model" />
 			<portlet:param name="className" value="<%= entry.getClassName() %>" />
@@ -41,23 +60,4 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getCl
 			url="javascript:;"
 		/>
 	</c:when>
-	<c:otherwise>
-		<portlet:actionURL var="restoreEntryURL">
-			<portlet:param name="struts_action" value="/trash/edit_entry" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-		</portlet:actionURL>
-
-		<%
-		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + entry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
-		%>
-
-		<liferay-ui:icon
-			image="undo"
-			message="restore"
-			onClick="<%= taglibOnClick %>"
-			url="javascript:;"
-		/>
-	</c:otherwise>
 </c:choose>

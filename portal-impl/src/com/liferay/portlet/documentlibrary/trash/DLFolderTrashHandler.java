@@ -180,6 +180,14 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		}
 	}
 
+	public boolean isInTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = getDLFolder(classPK);
+
+		return dlFolder.isInTrashFolder();
+	}
+
 	@Override
 	public boolean isRestorable(long classPK)
 		throws PortalException, SystemException {

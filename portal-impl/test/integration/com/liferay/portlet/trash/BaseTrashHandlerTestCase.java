@@ -246,7 +246,7 @@ public abstract class BaseTrashHandlerTestCase {
 		return true;
 	}
 
-	protected boolean isInTrashFolder(ClassedModel classedModel)
+	protected boolean isInTrashContainer(ClassedModel classedModel)
 		throws Exception {
 
 		return false;
@@ -539,7 +539,7 @@ public abstract class BaseTrashHandlerTestCase {
 			initialTrashEntriesCount + 1,
 			getTrashEntriesCount(group.getGroupId()));
 
-		Assert.assertFalse(isInTrashFolder(baseModel));
+		Assert.assertFalse(isInTrashContainer(baseModel));
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
@@ -547,7 +547,7 @@ public abstract class BaseTrashHandlerTestCase {
 			initialTrashEntriesCount + 2,
 			getTrashEntriesCount(group.getGroupId()));
 
-		Assert.assertTrue(isInTrashFolder(baseModel));
+		Assert.assertTrue(isInTrashContainer(baseModel));
 
 		if (isBaseModelMoveableFromTrash()) {
 			if (delete) {

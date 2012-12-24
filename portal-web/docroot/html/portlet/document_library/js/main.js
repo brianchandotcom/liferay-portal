@@ -412,15 +412,10 @@ AUI.add(
 					_openDocument: function(event) {
 						var instance = this;
 
-						var webDavUrl = event.webDavUrl;
-
-						if (webDavUrl && UA.ie) {
-							try {
-								var executor = new WIN.ActiveXObject('SharePoint.OpenDocuments');
-
-								executor.EditDocument(webDavUrl);
-							}
-							catch (exception) {
+						Liferay.Util.openDocument(
+							event.webDavUrl,
+							null,
+							function(exception) {
 								var errorMessage = Lang.sub(
 									Liferay.Language.get('cannot-open-the-requested-document-due-to-the-following-reason'),
 									[exception.message]
@@ -428,7 +423,7 @@ AUI.add(
 
 								instance._appViewFolders.displayMessage(MESSAGE_TYPE_ERROR, errorMessage);
 							}
-						}
+						);
 					},
 
 					_searchFileEntry: function(searchData) {

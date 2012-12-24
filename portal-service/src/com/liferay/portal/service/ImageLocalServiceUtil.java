@@ -252,52 +252,6 @@ public class ImageLocalServiceUtil {
 		return getService().getCompanyLogo(imageId);
 	}
 
-	public static com.liferay.portal.model.Image getDefaultCompanyLogo() {
-		return getService().getDefaultCompanyLogo();
-	}
-
-	public static com.liferay.portal.model.Image getDefaultOrganizationLogo() {
-		return getService().getDefaultOrganizationLogo();
-	}
-
-	public static com.liferay.portal.model.Image getDefaultSpacer() {
-		return getService().getDefaultSpacer();
-	}
-
-	public static com.liferay.portal.model.Image getDefaultUserFemalePortrait() {
-		return getService().getDefaultUserFemalePortrait();
-	}
-
-	public static com.liferay.portal.model.Image getDefaultUserMalePortrait() {
-		return getService().getDefaultUserMalePortrait();
-	}
-
-	public static com.liferay.portal.model.Image getImage(byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getImage(bytes);
-	}
-
-	public static com.liferay.portal.model.Image getImage(java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getImage(file);
-	}
-
-	public static com.liferay.portal.model.Image getImage(
-		java.io.InputStream is)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getImage(is);
-	}
-
-	public static com.liferay.portal.model.Image getImage(
-		java.io.InputStream is, boolean cleanUpStream)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getImage(is, cleanUpStream);
-	}
-
 	public static com.liferay.portal.model.Image getImageOrDefault(long imageId) {
 		return getService().getImageOrDefault(imageId);
 	}
@@ -310,10 +264,6 @@ public class ImageLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.model.Image> getImagesBySize(
 		int size) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getImagesBySize(size);
-	}
-
-	public static boolean isNullOrDefaultSpacer(byte[] bytes) {
-		return getService().isNullOrDefaultSpacer(bytes);
 	}
 
 	public static com.liferay.portal.model.Image updateImage(long imageId,

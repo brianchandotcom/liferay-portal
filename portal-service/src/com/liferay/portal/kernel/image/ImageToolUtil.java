@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.image;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.model.Image;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -119,10 +120,55 @@ public class ImageToolUtil {
 		return getImageTool().getBytes(renderedImage, contentType);
 	}
 
+	public static Image getDefaultCompanyLogo() {
+		return getImageTool().getDefaultCompanyLogo();
+	}
+
+	public static Image getDefaultOrganizationLogo() {
+		return getImageTool().getDefaultOrganizationLogo();
+	}
+
+	public static Image getDefaultSpacer() {
+		return getImageTool().getDefaultSpacer();
+	}
+
+	public static Image getDefaultUserFemalePortrait() {
+		return getImageTool().getDefaultUserFemalePortrait();
+	}
+
+	public static Image getDefaultUserMalePortrait() {
+		return getImageTool().getDefaultUserMalePortrait();
+	}
+
+	public static Image getImage(byte[] bytes) throws IOException {
+
+		return getImageTool().getImage(bytes);
+	}
+
+	public static Image getImage(File file) throws IOException {
+
+		return getImageTool().getImage(file);
+	}
+
+	public static Image getImage(InputStream is) throws IOException {
+
+		return getImageTool().getImage(is);
+	}
+
+	public static Image getImage(InputStream is, boolean cleanUpStream)
+		throws IOException {
+
+		return getImageTool().getImage(is, cleanUpStream);
+	}
+
 	public static ImageTool getImageTool() {
 		PortalRuntimePermission.checkGetBeanProperty(ImageToolUtil.class);
 
 		return _imageTool;
+	}
+
+	public static boolean isNullOrDefaultSpacer(byte[] bytes) {
+		return getImageTool().isNullOrDefaultSpacer(bytes);
 	}
 
 	/**

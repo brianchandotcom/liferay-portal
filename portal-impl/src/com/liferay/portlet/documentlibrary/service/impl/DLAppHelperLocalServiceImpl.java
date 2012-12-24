@@ -979,7 +979,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
-	public void updateStatuses(
+	public void updateChildStatus(
 			User user, List<Object> dlFileEntriesAndDLFolders, int status)
 		throws PortalException, SystemException {
 
@@ -1110,7 +1110,7 @@ public class DLAppHelperLocalServiceImpl
 							dlFolder.getGroupId(), dlFolder.getFolderId(), null,
 							false, queryDefinition);
 
-				updateStatuses(
+				updateChildStatus(
 					user, foldersAndFileEntriesAndFileShortcuts, status);
 			}
 		}

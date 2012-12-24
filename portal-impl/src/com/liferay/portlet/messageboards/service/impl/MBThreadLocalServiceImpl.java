@@ -871,7 +871,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			// Messages
 
-			updateStatus(threadId, status);
+			updateChildStatus(threadId, status);
 
 			if (thread.getCategoryId() !=
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
@@ -933,7 +933,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			}
 		}
 		else {
-			updateStatus(threadId, status);
+			updateChildStatus(threadId, status);
 		}
 
 		return thread;
@@ -986,7 +986,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return messagesMoved;
 	}
 
-	protected void updateStatus(long threadId, int status)
+	protected void updateChildStatus(long threadId, int status)
 		throws PortalException, SystemException {
 
 		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
@@ -997,11 +997,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				continue;
 			}
 
-			updateStatus(message, status);
+			updateChildStatus(message, status);
 		}
 	}
 
-	protected void updateStatus(MBMessage message, int status)
+	protected void updateChildStatus(MBMessage message, int status)
 		throws PortalException, SystemException {
 
 		if (status == WorkflowConstants.STATUS_IN_TRASH) {

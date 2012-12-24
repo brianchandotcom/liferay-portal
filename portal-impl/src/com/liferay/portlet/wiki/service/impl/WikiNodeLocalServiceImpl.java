@@ -433,7 +433,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		// Pages
 
-		updateStatus(node.getNodeId(), status);
+		updateChildStatus(node.getNodeId(), status);
 
 		// Trash
 
@@ -515,17 +515,17 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		return wikiImporter;
 	}
 
-	protected void updateStatus(long nodeId, int status)
+	protected void updateChildStatus(long nodeId, int status)
 		throws PortalException, SystemException {
 
 		List<WikiPage> pages = wikiPagePersistence.findByNodeId(nodeId);
 
 		for (WikiPage page : pages) {
-			updateStatus(page, status);
+			updateChildStatus(page, status);
 		}
 	}
 
-	protected void updateStatus(WikiPage page, int status)
+	protected void updateChildStatus(WikiPage page, int status)
 		throws PortalException, SystemException {
 
 		if (status == WorkflowConstants.STATUS_IN_TRASH) {

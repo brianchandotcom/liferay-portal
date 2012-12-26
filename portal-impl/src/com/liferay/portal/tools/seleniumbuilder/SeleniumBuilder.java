@@ -85,7 +85,7 @@ public class SeleniumBuilder {
 			blockType.equals("macrodef") || blockType.equals("setup") ||
 			blockType.equals("steps") || blockType.equals("teardown")) {
 
-			return block.attributeValue("name");
+			return block.attributeValue("command");
 		}
 		else {
 			return findRootBlockName(block.getParent());
@@ -95,7 +95,7 @@ public class SeleniumBuilder {
 	protected String getActionDefBlock(Element runBlock) throws Exception {
 		StringBundler sb = new StringBundler();
 
-		String actionDefName = runBlock.attributeValue("name");
+		String actionDefCommand = runBlock.attributeValue("command");
 
 		List<Element> commands = runBlock.elements();
 
@@ -115,7 +115,7 @@ public class SeleniumBuilder {
 		}
 
 		sb.append("else {");
-		sb.append(_getCommandDefaultCommand(actionDefName));
+		sb.append(_getCommandDefaultCommand(actionDefCommand));
 		sb.append("}");
 
 		return sb.toString();
@@ -398,17 +398,17 @@ public class SeleniumBuilder {
 	private String _getCommandActions(Element command) {
 		StringBundler sb = new StringBundler();
 
-		String actionDefName = command.attributeValue("command");
+		String actionDefCommand = command.attributeValue("command");
 		String actionObjectName = command.attributeValue("object") + "Actions";
 
 		sb.append(StringUtil.lowerCaseFirstLetter(actionObjectName));
 		sb.append(StringPool.PERIOD);
-		sb.append(actionDefName);
+		sb.append(actionDefCommand);
 		sb.append("(");
 
 		List<String> suffixList = new ArrayList<String>();
 
-		if (actionDefName.equals("dragAndDrop")) {
+		if (actionDefCommand.equals("dragAndDrop")) {
 			suffixList.add("1");
 			suffixList.add("2");
 		}
@@ -666,12 +666,12 @@ public class SeleniumBuilder {
 	private String _getCommandMacros(Element command) {
 		StringBundler sb = new StringBundler();
 
-		String macroDefName = command.attributeValue("command");
+		String macroDefCommand = command.attributeValue("command");
 		String macroObjectName = command.attributeValue("object") + "Macros";
 
 		sb.append(StringUtil.lowerCaseFirstLetter(macroObjectName));
 		sb.append(StringPool.PERIOD);
-		sb.append(macroDefName);
+		sb.append(macroDefCommand);
 		sb.append("(");
 
 		List<Element> macroParams = command.elements("param");

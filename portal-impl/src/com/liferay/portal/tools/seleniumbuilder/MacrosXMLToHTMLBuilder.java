@@ -264,13 +264,13 @@ public class MacrosXMLToHTMLBuilder extends SeleniumBuilder {
 		for (Element macroDef : macroDefs) {
 			String block = template;
 
-			String macroDefName = macroDef.attributeValue("name");
+			String macroDefCommand = macroDef.attributeValue("command");
 
-			_allMacroDefs.add(macroDefName);
+			_allMacroDefs.add(macroDefCommand);
 
 			String description = macroDef.attributeValue("description");
 
-			block = block.replace("${macrodefname}", macroDefName);
+			block = block.replace("${macrodefcommand}", macroDefCommand);
 
 			block = block.replace("${usage}", getUsage(macroDef));
 
@@ -316,10 +316,10 @@ public class MacrosXMLToHTMLBuilder extends SeleniumBuilder {
 		StringBundler sb = new StringBundler();
 
 		for (Element macroDef : macroDefs) {
-			String macroName = macroDef.attributeValue("name");
+			String macroCommand = macroDef.attributeValue("command");
 
 			sb.append("<li>");
-			sb.append(macroName);
+			sb.append(macroCommand);
 
 			Element paramsElement = macroDef.element("params");
 
@@ -391,14 +391,14 @@ public class MacrosXMLToHTMLBuilder extends SeleniumBuilder {
 	}
 
 	protected String getUsage(Element macroDef) {
-		String macroDefName = macroDef.attributeValue("name");
+		String macroDefCommand = macroDef.attributeValue("command");
 
 		StringBundler sb = new StringBundler();
 
 		sb.append("&lt;macro name='");
 		sb.append(_macrosFileName);
 		sb.append("' command='");
-		sb.append(macroDefName);
+		sb.append(macroDefCommand);
 		sb.append("' ");
 
 		Element paramsElement = macroDef.element("params");

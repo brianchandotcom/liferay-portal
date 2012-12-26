@@ -699,6 +699,7 @@ if (Validator.isNotNull(content)) {
 							<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 							<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 							<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
+						    <portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 						</liferay-portlet:renderURL>
 
 						uri: '<%= editTemplateURL %>'

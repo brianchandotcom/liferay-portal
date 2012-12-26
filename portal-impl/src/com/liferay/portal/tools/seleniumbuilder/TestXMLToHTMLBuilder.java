@@ -48,15 +48,13 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 		_macrosMap = _getMacrosMap();
 		_pathsMap = _getPathsMap();
 
-		Set<String> testFileNames = getTestFileNames();
-
-		for (String testFileName : testFileNames) {
-			if (testFileName.length() > 161) {
+		for (String fileName : fileNameSetTests) {
+			if (fileName.length() > 161) {
 				System.out.println(
-					"Exceeds 177 characters: portal-web/test/" + testFileName);
+					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
-			generateTest(testFileName);
+			generateTest(fileName);
 		}
 
 		generateAPIFile();
@@ -764,28 +762,6 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 		}
 
 		return hashMap;
-	}
-
-	private Set<String> getTestFileNames() throws Exception {
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-		directoryScanner.setIncludes(
-			new String[] {
-				"**\\portalweb\\**\\*.test"
-			});
-
-		directoryScanner.scan();
-
-		Set<String> fileNames = new TreeSet<String>();
-
-		for (String fileName : directoryScanner.getIncludedFiles()) {
-			fileName = normalizeFileName(fileName);
-
-			fileNames.add(fileName);
-		}
-
-		return fileNames;
 	}
 
 	private Map<String, String[]> _allTests = new HashMap<String, String[]>();

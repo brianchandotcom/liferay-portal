@@ -28,8 +28,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.tools.ant.DirectoryScanner;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -44,9 +42,7 @@ public class MacrosXMLToHTMLBuilder extends SeleniumBuilder {
 	public MacrosXMLToHTMLBuilder(String[] args) throws Exception {
 		super(args);
 
-		Set<String> fileNames = _getFileNames();
-
-		for (String fileName : fileNames) {
+		for (String fileName : fileNameSetMacros) {
 			if (fileName.length() > 161) {
 				System.out.println(
 					"Exceeds 177 characters: portal-web/test/" + fileName);
@@ -424,28 +420,6 @@ public class MacrosXMLToHTMLBuilder extends SeleniumBuilder {
 		sb.append("/&gt;");
 
 		return sb.toString();
-	}
-
-	private Set<String> _getFileNames() throws Exception {
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-		directoryScanner.setIncludes(
-			new String[] {
-				"**\\portalweb\\blocks\\**\\*.macros"
-			});
-
-		directoryScanner.scan();
-
-		Set<String> fileNames = new TreeSet<String>();
-
-		for (String fileName : directoryScanner.getIncludedFiles()) {
-			fileName = normalizeFileName(fileName);
-
-			fileNames.add(fileName);
-		}
-
-		return fileNames;
 	}
 
 	private List<String> _allMacroDefs = new ArrayList();

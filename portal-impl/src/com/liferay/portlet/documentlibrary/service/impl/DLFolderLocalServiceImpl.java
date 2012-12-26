@@ -639,7 +639,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			getFoldersAndFileEntriesAndFileShortcuts(
 				dlFolder.getGroupId(), folderId, null, false, queryDefinition);
 
-		dlAppHelperLocalService.updateStatuses(
+		dlAppHelperLocalService.updateChildrenStatus(
 			user, foldersAndFileEntriesAndFileShortcuts, status);
 
 		// Trash

@@ -186,7 +186,7 @@ public class SeleniumBuilder {
 
 		String object = rootElement.attributeValue("object");
 
-		if (object == null || !object.equals(fileName.substring(x + 1, y))) {
+		if ((object == null) || !object.equals(fileName.substring(x + 1, y))) {
 			System.out.println(fileName + " has an invalid object name");
 		}
 	}

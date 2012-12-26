@@ -152,6 +152,28 @@ public class DDMStructureLocalServiceImpl
 			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 	}
 
+	public DDMStructure addStructure(
+			long userId, long groupId, String parentStructureKey,
+			long classNameId, String structureKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String xsd, String storageType,
+			int type, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDMStructure parentStructure = fetchStructure(
+			groupId, parentStructureKey);
+
+		long parentStructureId =
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID;
+
+		if (parentStructure != null) {
+			parentStructureId = parentStructure.getStructureId();
+		}
+
+		return addStructure(
+			userId, groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, xsd, storageType, type, serviceContext);
+	}
+
 	public void addStructureResources(
 			DDMStructure structure, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -359,7 +381,7 @@ public class DDMStructureLocalServiceImpl
 
 		if (!includeGlobalStructures) {
 			throw new NoSuchStructureException(
-				"No JournalStructure exists with the structure key " +
+				"No DDMStructure exists with the structure key " +
 					structureKey);
 		}
 

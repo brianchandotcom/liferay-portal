@@ -450,7 +450,6 @@
 
 		<!-- Other fields -->
 
-		<column name="text" type="String" />
 		<column name="type" type="String" />
 		<column name="height" type="int" />
 		<column name="width" type="int" />

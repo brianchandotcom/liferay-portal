@@ -264,9 +264,6 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="text">
-				<column name="TEXT_" />
-			</basic>
 			<basic name="type">
 				<column name="TYPE_" />
 			</basic>

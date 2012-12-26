@@ -345,7 +345,6 @@
 			<generator class="assigned" />
 		</id>
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="text" type="com.liferay.portal.dao.orm.hibernate.StringType" column="text_" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
 		<property name="height" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="width" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />

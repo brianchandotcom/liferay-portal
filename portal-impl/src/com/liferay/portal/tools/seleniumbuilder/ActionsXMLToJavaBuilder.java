@@ -134,7 +134,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		if (actionsXMLFileExists) {
 			Element rootElement = getRootElement(actionsXMLFileName);
 
-			String actionDefs = getActionDefs(rootElement);
+			String actionDefs = _getActionDefs(rootElement);
 			imports.append(getImportStatements());
 
 			sb.append(imports);
@@ -153,7 +153,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		writeFile(actionsFileName, sb.toString(), true);
 	}
 
-	protected String getActionDefs(Element rootElement) throws Exception {
+	private String _getActionDefs(Element rootElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		List<Element> actionDefs = rootElement.elements("actiondef");

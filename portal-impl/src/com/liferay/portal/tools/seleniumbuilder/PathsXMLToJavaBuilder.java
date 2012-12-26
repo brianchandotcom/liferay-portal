@@ -82,14 +82,14 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 
 		Element rootElement = getRootElement(fileName);
 
-		sb.append(getPaths(rootElement));
+		sb.append(_getPaths(rootElement));
 
 		sb.append("}");
 
 		writeFile(pathsFileName, sb.toString(), true);
 	}
 
-	protected String getPaths(Element rootElement) throws Exception {
+	private String _getPaths(Element rootElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		Element bodyElement = rootElement.element("body");

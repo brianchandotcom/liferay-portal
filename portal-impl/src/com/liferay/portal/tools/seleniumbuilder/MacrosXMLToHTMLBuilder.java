@@ -321,11 +321,28 @@ public class MacrosXMLToHTMLBuilder extends SeleniumBuilder {
 
 		for (Element macroDef : macroDefs) {
 			String macroName = macroDef.attributeValue("name");
-			String params = macroDef.attributeValue("params");
 
 			sb.append("<li>");
 			sb.append(macroName);
-			sb.append("(" + params + ")");
+
+			Element paramsElement = macroDef.element("params");
+
+			List<Element> params = paramsElement.elements("param");
+
+			String paramsString = "";
+
+			if (params.size() > 0) {
+				for (Element param : params) {
+					String name = param.attributeValue("name");
+
+					paramsString += name + ",";
+				}
+
+				paramsString = paramsString.substring(
+					0, paramsString.length() - 1);
+			}
+
+			sb.append("(" + paramsString + ")");
 			sb.append("</li>\n");
 		}
 

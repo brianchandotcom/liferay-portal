@@ -407,9 +407,9 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 		</liferay-portlet:actionURL>
 
 		<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="reset_prototype" />
-			<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
-			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
+			<aui:input name="<%= Constants.CMD %>" type="hidden" useNamespace="<%= false %>" value="reset_prototype" />
+			<aui:input name="redirect" type="hidden" useNamespace="<%= false %>" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
+			<aui:input name="groupId" type="hidden" useNamespace="<%= false %>" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
 
 			<aui:button name="submit" type="submit" value="reset" />
 		</aui:form>

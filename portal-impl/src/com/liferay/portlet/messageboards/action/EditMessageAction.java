@@ -324,8 +324,8 @@ public class EditMessageAction extends PortletAction {
 			for (int i = 1; i <= 5; i++) {
 				String fileName = uploadPortletRequest.getFileName(
 					"msgFile" + i);
-				InputStream inputStream =
-					uploadPortletRequest.getFileAsStream("msgFile" + i);
+				InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					"msgFile" + i);
 
 				if ((inputStream == null) || Validator.isNull(fileName)) {
 					continue;

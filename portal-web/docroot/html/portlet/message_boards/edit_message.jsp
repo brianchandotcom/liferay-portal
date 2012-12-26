@@ -303,7 +303,7 @@ if (Validator.isNull(redirect)) {
 							}
 						%>
 
-						<li class="message-attachment">
+							<li class="message-attachment">
 								<span id="<portlet:namespace />existingFile<%= i + 1 %>">
 									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getTitle() %>" />
 
@@ -314,38 +314,38 @@ if (Validator.isNull(redirect)) {
 									/>
 								</span>
 
-							<aui:input cssClass="aui-helper-hidden" label="" name='<%= "msgFile" + (i + 1) %>' size="70" type="file" />
+								<aui:input cssClass="aui-helper-hidden" label="" name='<%= "msgFile" + (i + 1) %>' size="70" type="file" />
 
-							<liferay-ui:icon-delete
-								id='<%= "removeExisting" + (i + 1) %>'
-								label="<%= true %>"
-								message='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "remove" : "delete" %>'
-								method="get"
-								trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
-								url="<%= taglibJavascript %>"
-							/>
+								<liferay-ui:icon-delete
+									id='<%= "removeExisting" + (i + 1) %>'
+									label="<%= true %>"
+									message='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "remove" : "delete" %>'
+									method="get"
+									trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+									url="<%= taglibJavascript %>"
+								/>
 
-							<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
+								<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
 
-								<%
-								StringBundler sb = new StringBundler(7);
+									<%
+									StringBundler sb = new StringBundler(7);
 
-								sb.append("javascript:");
-								sb.append(renderResponse.getNamespace());
-								sb.append("trashAttachment(");
-								sb.append(i + 1);
-								sb.append(", '");
-								sb.append(Constants.RESTORE);
-								sb.append("');");
-								%>
+									sb.append("javascript:");
+									sb.append(renderResponse.getNamespace());
+									sb.append("trashAttachment(");
+									sb.append(i + 1);
+									sb.append(", '");
+									sb.append(Constants.RESTORE);
+									sb.append("');");
+									%>
 
 									<span class="aui-helper-hidden" id="<portlet:namespace />undoFile<%= i + 1 %>">
 										<aui:input id='<%= "undoPath" + (i + 1) %>' name='<%= "undoPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getFileEntryId() %>" />
 
 										<span class="undo">(<liferay-ui:message key="marked-as-removed" />)</span> <a class="trash-undo-link" href="<%= sb.toString() %>" id="<portlet:namespace />undo"><liferay-ui:message key="undo" /></a>
 									</span>
-							</c:if>
-						</li>
+								</c:if>
+							</li>
 
 						<%
 						}
@@ -358,9 +358,9 @@ if (Validator.isNull(redirect)) {
 				for (int i = existingAttachmentsFileEntries.size() + 1; i <= 5; i++) {
 				%>
 
-				<div>
-					<aui:input label="" name='<%= "msgFile" + i %>' size="70" type="file" />
-				</div>
+					<div>
+						<aui:input label="" name='<%= "msgFile" + i %>' size="70" type="file" />
+					</div>
 
 				<%
 				}

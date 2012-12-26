@@ -5797,9 +5797,16 @@ public class PortalImpl implements Portal {
 				primaryKey);
 
 		if (count == 0) {
-			ResourceLocalServiceUtil.addResources(
-				companyId, groupId, 0, name, primaryKey, portletActions, true,
-				!layout.isPrivateLayout());
+			if (layout.isTypeControlPanel()) {
+				ResourceLocalServiceUtil.addResources(
+					companyId, groupId, 0, name, primaryKey, portletActions,
+					true, true);
+			}
+			else {
+				ResourceLocalServiceUtil.addResources(
+					companyId, groupId, 0, name, primaryKey, portletActions,
+					true, !layout.isPrivateLayout());
+			}
 		}
 	}
 

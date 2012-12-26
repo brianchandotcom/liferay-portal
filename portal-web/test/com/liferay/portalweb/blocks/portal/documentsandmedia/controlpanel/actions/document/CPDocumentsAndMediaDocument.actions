@@ -1,4 +1,4 @@
-<actions>
+<actions object="CPDocumentsAndMediaDocument">
 	<actiondef name="assertTextEquals">
 		<conditional elements="COMMENT_MESSAGE_INFO,DOCUMENT_LOCK_MESSAGE">
 			<function name="AssertTextEquals" command="assertPartialText" />

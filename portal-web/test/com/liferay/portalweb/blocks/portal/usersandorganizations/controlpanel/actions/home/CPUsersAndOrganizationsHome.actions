@@ -1,4 +1,4 @@
-<actions>
+<actions object="CPUsersAndOrganizationsHome">
 	<actiondef name="click">
 		<conditional elements="ADD_USER,USERS_SEARCH_ALL,USERS_USER_1_FIRST_NAME">
 			<function name="Click" command="textClickAndWait" />

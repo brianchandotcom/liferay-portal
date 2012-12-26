@@ -1,4 +1,4 @@
-<actions>
+<actions object="CPWebContentAddArticle">
 	<actiondef name="click">
 		<conditional elements="SIDEBAR_PUBLISH">
 			<function name="Click" command="clickAtAndWait" />

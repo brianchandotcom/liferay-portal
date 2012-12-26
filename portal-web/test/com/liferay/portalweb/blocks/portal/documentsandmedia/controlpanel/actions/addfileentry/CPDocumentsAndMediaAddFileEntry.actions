@@ -1,4 +1,4 @@
-<actions>
+<actions object="CPDocumentsAndMediaAddFileEntry">
 	<actiondef name="click">
 		<conditional elements="BUTTON_PUBLISH,BUTTON_CANCEL">
 			<function name="Click" command="valueClickAtAndWait" />

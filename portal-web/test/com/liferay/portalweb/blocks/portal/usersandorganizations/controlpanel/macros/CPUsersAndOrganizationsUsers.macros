@@ -1,4 +1,4 @@
-<macros>
+<macros object="CPUsersAndOrganizationsUsers">
 	<macrodef
 		name="add"
 		description="In the &lt;strong&gt;Control Panel Users and Organizations portlet&lt;/strong&gt;, add a User with Screen Name: &lt;strong&gt;${screenName}&lt;/strong&gt;, Email Address: &lt;strong&gt;${emailAddress}&lt;/strong&gt;, First Name: &lt;strong&gt;${firstName}&lt;/strong&gt;, and Last Name: &lt;strong&gt;${lastName}&lt;/strong&gt;"

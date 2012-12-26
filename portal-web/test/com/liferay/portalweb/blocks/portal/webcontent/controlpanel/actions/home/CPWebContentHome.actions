@@ -1,4 +1,4 @@
-<actions>
+<actions object="CPWebContentHome">
 	<actiondef name="check">
 		<conditional elements="ENTRIES_ARTICLE_1_CHECKBOX">
 			<function name="Check" command="clickAtWCMouseOverArticle" />

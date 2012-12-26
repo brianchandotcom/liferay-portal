@@ -1,4 +1,4 @@
-<macros>
+<macros object="CPBlogsEntry">
 	<macrodef
 		name="add"
 		description="In the &lt;strong&gt;Control Panel Blogs Portlet&lt;/strong&gt;, add a &lt;em&gt;Blogs Entry&lt;/em&gt; with a title of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt; and the content &lt;strong&gt;&quot;${content}&quot;&lt;/strong&gt;."

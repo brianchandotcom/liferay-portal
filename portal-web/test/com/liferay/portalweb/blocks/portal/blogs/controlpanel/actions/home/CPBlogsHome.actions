@@ -1,4 +1,4 @@
-<actions>
+<actions object="CPBlogsHome">
 	<actiondef name="assertTextEquals">
 		<conditional elements="BLOGS_ENTRY_TEXT_RATING_AVERAGE">
 			<function name="AssertTextEquals" command="assertPartialText" />

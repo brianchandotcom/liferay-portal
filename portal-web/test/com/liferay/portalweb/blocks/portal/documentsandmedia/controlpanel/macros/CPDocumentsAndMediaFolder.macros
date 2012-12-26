@@ -1,4 +1,4 @@
-<macros name="CPDocumentsAndMediaFolder">
+<macros object="CPDocumentsAndMediaFolder">
 	<macrodef
 		name="add"
 		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add a &lt;em&gt;Folder&lt;/em&gt; with a name of &lt;strong&gt;&quot;${name}&quot;&lt;/strong&gt;."

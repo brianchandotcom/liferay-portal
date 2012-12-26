@@ -1,4 +1,4 @@
-<macros>
+<macros object="Goto">
 	<macrodef
 		name="controlPanelPortlet"
 		description="Navigate to the &lt;strong&gt;Control Panel ${portlet} Portlet&lt;/strong&gt; in the &lt;strong&gt;Guest Community&lt;/strong&gt;."

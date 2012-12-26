@@ -1,4 +1,4 @@
-<actions>
+<actions object="Home">
 	<actiondef name="click">
 		<conditional elements="ADD_LINK,GOTO_LINK,MANAGE_LINK">
 			<function name="Click" command="textClickAtHomeClickDockbar" />

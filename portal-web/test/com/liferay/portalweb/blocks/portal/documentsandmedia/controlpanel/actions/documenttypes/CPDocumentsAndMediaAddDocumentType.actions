@@ -1,4 +1,4 @@
-<actions>
+<actions object="CPDocumentsAndMediaAddDocumentType">
 	<actiondef name="click">
 		<conditional elements="BUTTON_CANCEL,BUTTON_SAVE">
 			<function name="Click" command="valueClickAt" />

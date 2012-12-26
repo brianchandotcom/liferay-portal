@@ -1,4 +1,4 @@
-<macros>
+<macros object="CPWebContentArticle">
 	<macrodef
 		name="add"
 		description="In the &lt;strong&gt;Control Panel Web Content Portlet&lt;/strong&gt;, add a Web Content Article with title: &lt;strong&gt;${title}&lt;/strong&gt; and content: &lt;strong&gt;${content}&lt;/strong&gt;."

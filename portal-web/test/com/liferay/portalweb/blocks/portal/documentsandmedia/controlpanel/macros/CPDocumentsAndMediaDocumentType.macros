@@ -1,4 +1,4 @@
-<macros name="CPDocumentsAndMediaDocumentType">
+<macros object="CPDocumentsAndMediaDocumentType">
 	<macrodef
 		name="add"
 		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add a &lt;em&gt;Document Type&lt;/em&gt; with a name of &lt;strong&gt;&quot;${name}&quot;&lt;/strong&gt;."

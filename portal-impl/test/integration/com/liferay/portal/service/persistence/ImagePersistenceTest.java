@@ -108,8 +108,6 @@ public class ImagePersistenceTest {
 
 		newImage.setModifiedDate(ServiceTestUtil.nextDate());
 
-		newImage.setText(ServiceTestUtil.randomString());
-
 		newImage.setType(ServiceTestUtil.randomString());
 
 		newImage.setHeight(ServiceTestUtil.nextInt());
@@ -126,7 +124,6 @@ public class ImagePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingImage.getModifiedDate()),
 			Time.getShortTimestamp(newImage.getModifiedDate()));
-		Assert.assertEquals(existingImage.getText(), newImage.getText());
 		Assert.assertEquals(existingImage.getType(), newImage.getType());
 		Assert.assertEquals(existingImage.getHeight(), newImage.getHeight());
 		Assert.assertEquals(existingImage.getWidth(), newImage.getWidth());
@@ -251,8 +248,6 @@ public class ImagePersistenceTest {
 		Image image = _persistence.create(pk);
 
 		image.setModifiedDate(ServiceTestUtil.nextDate());
-
-		image.setText(ServiceTestUtil.randomString());
 
 		image.setType(ServiceTestUtil.randomString());
 

@@ -765,7 +765,6 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 		imageImpl.setImageId(image.getImageId());
 		imageImpl.setModifiedDate(image.getModifiedDate());
-		imageImpl.setText(image.getText());
 		imageImpl.setType(image.getType());
 		imageImpl.setHeight(image.getHeight());
 		imageImpl.setWidth(image.getWidth());

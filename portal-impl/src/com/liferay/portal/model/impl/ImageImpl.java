@@ -71,8 +71,6 @@ public class ImageImpl extends ImageBaseImpl {
 
 	public void setTextObj(byte[] textObj) {
 		_textObj = textObj;
-
-		super.setText(Base64.objectToString(textObj));
 	}
 
 	protected String getFileName() {

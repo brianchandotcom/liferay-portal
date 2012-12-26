@@ -45,7 +45,6 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 
 		attributes.put("imageId", getImageId());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("text", getText());
 		attributes.put("type", getType());
 		attributes.put("height", getHeight());
 		attributes.put("width", getWidth());
@@ -65,12 +64,6 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		String text = (String)attributes.get("text");
-
-		if (text != null) {
-			setText(text);
 		}
 
 		String type = (String)attributes.get("type");
@@ -150,24 +143,6 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	public void setModifiedDate(java.util.Date modifiedDate) {
 		_image.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the text of this image.
-	*
-	* @return the text of this image
-	*/
-	public java.lang.String getText() {
-		return _image.getText();
-	}
-
-	/**
-	* Sets the text of this image.
-	*
-	* @param text the text of this image
-	*/
-	public void setText(java.lang.String text) {
-		_image.setText(text);
 	}
 
 	/**

@@ -208,9 +208,6 @@
 	<model name="com.liferay.portal.model.Image">
 		<field name="imageId" type="long" />
 		<field name="modifiedDate" type="Date" />
-		<field name="text" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 		<field name="type" type="String" />
 		<field name="height" type="int" />
 		<field name="width" type="int" />

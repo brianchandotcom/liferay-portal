@@ -36,14 +36,12 @@ import java.util.Date;
 public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{imageId=");
 		sb.append(imageId);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", text=");
-		sb.append(text);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append(", height=");
@@ -69,13 +67,6 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 			imageImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (text == null) {
-			imageImpl.setText(StringPool.BLANK);
-		}
-		else {
-			imageImpl.setText(text);
-		}
-
 		if (type == null) {
 			imageImpl.setType(StringPool.BLANK);
 		}
@@ -95,7 +86,6 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		imageId = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		text = objectInput.readUTF();
 		type = objectInput.readUTF();
 		height = objectInput.readInt();
 		width = objectInput.readInt();
@@ -106,13 +96,6 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 		throws IOException {
 		objectOutput.writeLong(imageId);
 		objectOutput.writeLong(modifiedDate);
-
-		if (text == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(text);
-		}
 
 		if (type == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -128,7 +111,6 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 
 	public long imageId;
 	public long modifiedDate;
-	public String text;
 	public String type;
 	public int height;
 	public int width;

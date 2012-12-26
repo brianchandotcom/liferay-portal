@@ -63,13 +63,12 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "imageId", Types.BIGINT },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "text_", Types.CLOB },
 			{ "type_", Types.VARCHAR },
 			{ "height", Types.INTEGER },
 			{ "width", Types.INTEGER },
 			{ "size_", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Image (imageId LONG not null primary key,modifiedDate DATE null,text_ TEXT null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table Image (imageId LONG not null primary key,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Image";
 	public static final String ORDER_BY_JPQL = " ORDER BY image.imageId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Image.imageId ASC";
@@ -103,7 +102,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		model.setImageId(soapModel.getImageId());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setText(soapModel.getText());
 		model.setType(soapModel.getType());
 		model.setHeight(soapModel.getHeight());
 		model.setWidth(soapModel.getWidth());
@@ -168,7 +166,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		attributes.put("imageId", getImageId());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("text", getText());
 		attributes.put("type", getType());
 		attributes.put("height", getHeight());
 		attributes.put("width", getWidth());
@@ -189,12 +186,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		String text = (String)attributes.get("text");
-
-		if (text != null) {
-			setText(text);
 		}
 
 		String type = (String)attributes.get("type");
@@ -240,20 +231,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-	}
-
-	@JSON
-	public String getText() {
-		if (_text == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _text;
-		}
-	}
-
-	public void setText(String text) {
-		_text = text;
 	}
 
 	@JSON
@@ -342,7 +319,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		imageImpl.setImageId(getImageId());
 		imageImpl.setModifiedDate(getModifiedDate());
-		imageImpl.setText(getText());
 		imageImpl.setType(getType());
 		imageImpl.setHeight(getHeight());
 		imageImpl.setWidth(getWidth());
@@ -429,14 +405,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 			imageCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		imageCacheModel.text = getText();
-
-		String text = imageCacheModel.text;
-
-		if ((text != null) && (text.length() == 0)) {
-			imageCacheModel.text = null;
-		}
-
 		imageCacheModel.type = getType();
 
 		String type = imageCacheModel.type;
@@ -456,14 +424,12 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{imageId=");
 		sb.append(getImageId());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", text=");
-		sb.append(getText());
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append(", height=");
@@ -478,7 +444,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Image");
@@ -491,10 +457,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>text</column-name><column-value><![CDATA[");
-		sb.append(getText());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>type</column-name><column-value><![CDATA[");
@@ -522,7 +484,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private static Class<?>[] _escapedModelInterfaces = new Class[] { Image.class };
 	private long _imageId;
 	private Date _modifiedDate;
-	private String _text;
 	private String _type;
 	private int _height;
 	private int _width;

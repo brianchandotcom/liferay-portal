@@ -1,4 +1,4 @@
-<actions>
+<actions object="CPDocumentsAndMediaDocumentTypeHome">
 	<actiondef name="click">
 		<conditional elements="SEARCH_BUTTON">
 			<function name="Click" command="valueClickAtAndWait" />

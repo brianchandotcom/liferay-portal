@@ -1,4 +1,4 @@
-<actions>
+<actions object="CPBlogsAddEntry">
 	<actiondef name="assertTextEquals">
 		<conditional elements="CONTENT_TEXT_SAVE_STATUS">
 			<function name="AssertTextEquals" command="assertPartialTextPause" />

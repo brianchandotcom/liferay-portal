@@ -1,4 +1,4 @@
-<actions>
+<actions object="CPUsersAndOrganizationsEditUserPersonalSite">
 	<actiondef name="click">
 		<conditional elements="BUTTONS_CANCEL,BUTTONS_SAVE">
 			<function name="Click" command="valueClickAtAndWait" />

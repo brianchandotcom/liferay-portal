@@ -1,4 +1,4 @@
-<macros>
+<macros object="Portlet">
 	<macrodef
 		name="add"
 		description="Add the &lt;strong&gt;${portlet} Portlet&lt;/strong&gt; to the &lt;strong&gt;${portlet} Page&lt;/strong&gt; in the &lt;strong&gt;Guest Community&lt;/strong&gt;."

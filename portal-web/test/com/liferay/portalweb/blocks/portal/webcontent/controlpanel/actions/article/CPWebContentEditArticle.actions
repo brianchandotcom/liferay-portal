@@ -1,4 +1,4 @@
-<actions>
+<actions object="CPWebContentEditArticle">
 	<actiondef name="assertTextEquals">
 		<conditional elements="ARTICLE_CONTENT">
 			<function name="AssertTextEquals" command="assertTextCPWebContenCKEditor" />

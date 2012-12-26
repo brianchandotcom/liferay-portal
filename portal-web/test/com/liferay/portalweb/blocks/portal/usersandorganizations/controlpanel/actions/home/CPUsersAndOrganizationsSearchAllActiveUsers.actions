@@ -1,4 +1,4 @@
-<actions>
+<actions object="CPUsersAndOrganizationsSearchAllActiveUsers">
 	<actiondef name="click">
 		<conditional elements="BASIC_SEARCH_ADVANCED_LINK,ADVANCED_SEARCH_BASIC_LINK">
 			<function name="Click" command="clickAt" />

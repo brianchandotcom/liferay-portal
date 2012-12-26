@@ -1,4 +1,4 @@
-<macros>
+<macros object="CPRecycleBin">
 	<macrodef
 		name="empty"
 		description="In the &lt;strong&gt;Control Panel Recycle Bin Portlet&lt;/strong&gt;, delete all the &lt;em&gt;Entries&lt;/em&gt;."

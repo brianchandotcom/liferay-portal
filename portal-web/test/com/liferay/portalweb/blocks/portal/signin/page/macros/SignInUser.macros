@@ -1,4 +1,4 @@
-<macros>
+<macros object="SignInUser">
 	<macrodef
 		name="signIn"
 		description="Log into the portal as ${email} with the password ${password}."

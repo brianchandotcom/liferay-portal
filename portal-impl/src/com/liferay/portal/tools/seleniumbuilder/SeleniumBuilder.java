@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -175,6 +176,19 @@ public class SeleniumBuilder {
 		}
 
 		return content;
+	}
+
+	protected void getObject(String fileName) throws Exception {
+		Element rootElement = getRootElement(fileName);
+
+		int x = fileName.lastIndexOf(StringPool.SLASH);
+		int y = fileName.indexOf(CharPool.PERIOD);
+
+		String object = rootElement.attributeValue("object");
+
+		if (object == null || !object.equals(fileName.substring(x + 1, y))) {
+			System.out.println(fileName + " has an invalid object name");
+		}
 	}
 
 	protected String getObjectDeclarations(

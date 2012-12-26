@@ -66,7 +66,10 @@ try {
 		else {
 			assetRenderer = assetRendererFactory.getAssetRenderer(classPK, AssetRendererFactory.TYPE_LATEST_APPROVED);
 		}
+	}
 
+	if (!assetEntry.isVisible()){
+		throw new NoSuchModelException();
 	}
 
 	String title = assetRenderer.getTitle(locale);

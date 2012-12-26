@@ -91,9 +91,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
 
+		String ddmResourceActionId = getDDMResourceActionId(
+			ddmResource, serviceContext);
+
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ActionKeys.ADD_TEMPLATE);
+			ddmResource, ddmResourceActionId);
 
 		return ddmTemplateLocalService.copyTemplate(
 			getUserId(), templateId, nameMap, descriptionMap, serviceContext);
@@ -106,9 +109,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
 
+		String ddmResourceActionId = getDDMResourceActionId(
+			ddmResource, serviceContext);
+
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ActionKeys.ADD_TEMPLATE);
+			ddmResource, ddmResourceActionId);
 
 		return ddmTemplateLocalService.copyTemplates(
 			getUserId(), classNameId, classPK, newClassPK, type,

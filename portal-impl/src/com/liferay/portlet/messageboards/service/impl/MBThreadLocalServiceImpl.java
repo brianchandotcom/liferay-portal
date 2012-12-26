@@ -871,7 +871,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			// Messages
 
-			updateChildStatus(threadId, status);
+			updateChildrenStatus(threadId, status);
 
 			if (thread.getCategoryId() !=
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
@@ -933,7 +933,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			}
 		}
 		else {
-			updateChildStatus(threadId, status);
+			updateChildrenStatus(threadId, status);
 		}
 
 		return thread;
@@ -986,7 +986,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return messagesMoved;
 	}
 
-	protected void updateChildStatus(long threadId, int status)
+	protected void updateChildrenStatus(long threadId, int status)
 		throws PortalException, SystemException {
 
 		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
@@ -997,66 +997,62 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				continue;
 			}
 
-			updateChildStatus(message, status);
-		}
-	}
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
 
-	protected void updateChildStatus(MBMessage message, int status)
-		throws PortalException, SystemException {
+				// Asset
 
-		if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						MBMessage.class.getName(), message.getMessageId(),
+						false);
+				}
 
-			// Asset
+				// Social
 
-			if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				assetEntryLocalService.updateVisible(
-					MBMessage.class.getName(), message.getMessageId(), false);
-			}
-
-			// Social
-
-			socialActivityCounterLocalService.disableActivityCounters(
-				MBMessage.class.getName(), message.getMessageId());
-
-			// Index
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				MBMessage.class);
-
-			indexer.reindex(message);
-
-			// Workflow
-
-			if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
-				message.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-				mbMessagePersistence.update(message);
-
-				workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-					message.getCompanyId(), message.getGroupId(),
+				socialActivityCounterLocalService.disableActivityCounters(
 					MBMessage.class.getName(), message.getMessageId());
+
+				// Index
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBMessage.class);
+
+				indexer.reindex(message);
+
+				// Workflow
+
+				if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
+					message.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+					mbMessagePersistence.update(message);
+
+					workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+						message.getCompanyId(), message.getGroupId(),
+						MBMessage.class.getName(), message.getMessageId());
+				}
 			}
-		}
-		else {
+			else {
 
-			// Asset
+				// Asset
 
-			if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				assetEntryLocalService.updateVisible(
-					MBMessage.class.getName(), message.getMessageId(), true);
+				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						MBMessage.class.getName(), message.getMessageId(),
+						true);
+				}
+
+				// Social
+
+				socialActivityCounterLocalService.enableActivityCounters(
+					MBMessage.class.getName(), message.getMessageId());
+
+				// Index
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBMessage.class);
+
+				indexer.reindex(message);
 			}
-
-			// Social
-
-			socialActivityCounterLocalService.enableActivityCounters(
-				MBMessage.class.getName(), message.getMessageId());
-
-			// Index
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				MBMessage.class);
-
-			indexer.reindex(message);
 		}
 	}
 

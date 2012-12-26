@@ -783,6 +783,143 @@ public class DLAppHelperLocalServiceImpl
 		return assetEntry;
 	}
 
+	public void updateChildrenStatus(
+		User user, List<Object> dlFileEntriesAndDLFolders, int status)
+		throws PortalException, SystemException {
+
+		for (Object object : dlFileEntriesAndDLFolders) {
+			if (object instanceof DLFileEntry) {
+				DLFileEntry dlFileEntry = (DLFileEntry)object;
+
+				List<DLFileVersion> dlFileVersions =
+					dlFileVersionLocalService.getFileVersions(
+						dlFileEntry.getFileEntryId(),
+						WorkflowConstants.STATUS_ANY);
+
+				dlFileVersions = ListUtil.copy(dlFileVersions);
+
+				Collections.sort(
+					dlFileVersions, new FileVersionVersionComparator());
+
+				DLFileVersion latestDlFileVersion = dlFileVersions.get(0);
+
+				if ((status == WorkflowConstants.STATUS_APPROVED) &&
+					(latestDlFileVersion.getStatus() ==
+						WorkflowConstants.STATUS_IN_TRASH)) {
+
+					continue;
+				}
+
+				// File shortcut
+
+				if (status == WorkflowConstants.STATUS_APPROVED) {
+					dlFileShortcutLocalService.enableFileShortcuts(
+						dlFileEntry.getFileEntryId());
+				}
+				else {
+					dlFileShortcutLocalService.disableFileShortcuts(
+						dlFileEntry.getFileEntryId());
+				}
+
+				// Asset
+
+				if (status == WorkflowConstants.STATUS_APPROVED) {
+					if (latestDlFileVersion.isApproved()) {
+						assetEntryLocalService.updateVisible(
+							DLFileEntryConstants.getClassName(),
+							dlFileEntry.getFileEntryId(), true);
+					}
+				}
+				else {
+					assetEntryLocalService.updateVisible(
+						DLFileEntryConstants.getClassName(),
+						dlFileEntry.getFileEntryId(), false);
+				}
+
+				// Social
+
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				extraDataJSONObject.put("title", dlFileEntry.getTitle());
+
+				if (status == WorkflowConstants.STATUS_APPROVED) {
+					socialActivityCounterLocalService.enableActivityCounters(
+						DLFileEntryConstants.getClassName(),
+						dlFileEntry.getFileEntryId());
+
+					socialActivityLocalService.addActivity(
+						user.getUserId(), dlFileEntry.getGroupId(),
+						DLFileEntryConstants.getClassName(),
+						dlFileEntry.getFileEntryId(),
+						SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+						extraDataJSONObject.toString(), 0);
+				}
+				else if (latestDlFileVersion.getStatus() ==
+							WorkflowConstants.STATUS_APPROVED) {
+
+					socialActivityCounterLocalService.disableActivityCounters(
+						DLFileEntryConstants.getClassName(),
+						dlFileEntry.getFileEntryId());
+
+					socialActivityLocalService.addActivity(
+						user.getUserId(), dlFileEntry.getGroupId(),
+						DLFileEntryConstants.getClassName(),
+						dlFileEntry.getFileEntryId(),
+						SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+						extraDataJSONObject.toString(), 0);
+				}
+
+				// Index
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					DLFileEntry.class);
+
+				indexer.reindex(dlFileEntry);
+
+				// Workflow
+
+				if (status != WorkflowConstants.STATUS_APPROVED) {
+					for (DLFileVersion dlFileVersion : dlFileVersions) {
+						if (!dlFileVersion.isPending()) {
+							continue;
+						}
+
+						dlFileVersion.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+						dlFileVersionPersistence.update(dlFileVersion);
+
+						workflowInstanceLinkLocalService.
+							deleteWorkflowInstanceLink(
+								dlFileVersion.getCompanyId(),
+								dlFileVersion.getGroupId(),
+								DLFileEntryConstants.getClassName(),
+								dlFileVersion.getFileVersionId());
+					}
+				}
+			}
+			else if (object instanceof DLFolder) {
+				DLFolder dlFolder = (DLFolder)object;
+
+				if (dlFolder.isInTrash()) {
+					continue;
+				}
+
+				QueryDefinition queryDefinition = new QueryDefinition(
+					WorkflowConstants.STATUS_ANY);
+
+				List<Object> foldersAndFileEntriesAndFileShortcuts =
+					dlFolderLocalService.
+						getFoldersAndFileEntriesAndFileShortcuts(
+							dlFolder.getGroupId(), dlFolder.getFolderId(), null,
+							false, queryDefinition);
+
+				updateChildrenStatus(
+					user, foldersAndFileEntriesAndFileShortcuts, status);
+			}
+		}
+	}
+
 	public void updateFileEntry(
 			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
 			FileVersion destinationFileVersion, long assetClassPk)
@@ -976,143 +1113,6 @@ public class DLAppHelperLocalServiceImpl
 			assetEntryLocalService.updateVisible(
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				visible);
-		}
-	}
-
-	public void updateChildStatus(
-			User user, List<Object> dlFileEntriesAndDLFolders, int status)
-		throws PortalException, SystemException {
-
-		for (Object object : dlFileEntriesAndDLFolders) {
-			if (object instanceof DLFileEntry) {
-				DLFileEntry dlFileEntry = (DLFileEntry)object;
-
-				List<DLFileVersion> dlFileVersions =
-					dlFileVersionLocalService.getFileVersions(
-						dlFileEntry.getFileEntryId(),
-						WorkflowConstants.STATUS_ANY);
-
-				dlFileVersions = ListUtil.copy(dlFileVersions);
-
-				Collections.sort(
-					dlFileVersions, new FileVersionVersionComparator());
-
-				DLFileVersion latestDlFileVersion = dlFileVersions.get(0);
-
-				if ((status == WorkflowConstants.STATUS_APPROVED) &&
-					(latestDlFileVersion.getStatus() ==
-						WorkflowConstants.STATUS_IN_TRASH)) {
-
-					continue;
-				}
-
-				// File shortcut
-
-				if (status == WorkflowConstants.STATUS_APPROVED) {
-					dlFileShortcutLocalService.enableFileShortcuts(
-						dlFileEntry.getFileEntryId());
-				}
-				else {
-					dlFileShortcutLocalService.disableFileShortcuts(
-						dlFileEntry.getFileEntryId());
-				}
-
-				// Asset
-
-				if (status == WorkflowConstants.STATUS_APPROVED) {
-					if (latestDlFileVersion.isApproved()) {
-						assetEntryLocalService.updateVisible(
-							DLFileEntryConstants.getClassName(),
-							dlFileEntry.getFileEntryId(), true);
-					}
-				}
-				else {
-					assetEntryLocalService.updateVisible(
-						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId(), false);
-				}
-
-				// Social
-
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraDataJSONObject.put("title", dlFileEntry.getTitle());
-
-				if (status == WorkflowConstants.STATUS_APPROVED) {
-					socialActivityCounterLocalService.enableActivityCounters(
-						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId());
-
-					socialActivityLocalService.addActivity(
-						user.getUserId(), dlFileEntry.getGroupId(),
-						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId(),
-						SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
-						extraDataJSONObject.toString(), 0);
-				}
-				else if (latestDlFileVersion.getStatus() ==
-							WorkflowConstants.STATUS_APPROVED) {
-
-					socialActivityCounterLocalService.disableActivityCounters(
-						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId());
-
-					socialActivityLocalService.addActivity(
-						user.getUserId(), dlFileEntry.getGroupId(),
-						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId(),
-						SocialActivityConstants.TYPE_MOVE_TO_TRASH,
-						extraDataJSONObject.toString(), 0);
-				}
-
-				// Index
-
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					DLFileEntry.class);
-
-				indexer.reindex(dlFileEntry);
-
-				// Workflow
-
-				if (status != WorkflowConstants.STATUS_APPROVED) {
-					for (DLFileVersion dlFileVersion : dlFileVersions) {
-						if (!dlFileVersion.isPending()) {
-							continue;
-						}
-
-						dlFileVersion.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-						dlFileVersionPersistence.update(dlFileVersion);
-
-						workflowInstanceLinkLocalService.
-							deleteWorkflowInstanceLink(
-								dlFileVersion.getCompanyId(),
-								dlFileVersion.getGroupId(),
-								DLFileEntryConstants.getClassName(),
-								dlFileVersion.getFileVersionId());
-					}
-				}
-			}
-			else if (object instanceof DLFolder) {
-				DLFolder dlFolder = (DLFolder)object;
-
-				if (dlFolder.isInTrash()) {
-					continue;
-				}
-
-				QueryDefinition queryDefinition = new QueryDefinition(
-					WorkflowConstants.STATUS_ANY);
-
-				List<Object> foldersAndFileEntriesAndFileShortcuts =
-					dlFolderLocalService.
-						getFoldersAndFileEntriesAndFileShortcuts(
-							dlFolder.getGroupId(), dlFolder.getFolderId(), null,
-							false, queryDefinition);
-
-				updateChildStatus(
-					user, foldersAndFileEntriesAndFileShortcuts, status);
-			}
 		}
 	}
 

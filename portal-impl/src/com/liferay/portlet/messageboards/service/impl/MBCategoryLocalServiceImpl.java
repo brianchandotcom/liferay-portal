@@ -642,43 +642,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		return category;
 	}
 
-	public MBCategory updateStatus(long userId, long categoryId, int status)
-		throws PortalException, SystemException {
-
-		// Category
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		category.setStatus(status);
-		category.setStatusByUserId(user.getUserId());
-		category.setStatusByUserName(user.getFullName());
-		category.setStatusDate(new Date());
-
-		mbCategoryPersistence.update(category);
-
-		// Categories and threads
-
-		List<Object> categoriesAndThreads = getCategoriesAndThreads(
-			category.getGroupId(), categoryId);
-
-		updateChildStatus(user, categoriesAndThreads, status);
-
-		// Trash
-
-		if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			trashEntryLocalService.addTrashEntry(
-				userId, category.getGroupId(), MBCategory.class.getName(),
-				categoryId, WorkflowConstants.STATUS_APPROVED, null, null);
-		}
-
-		return category;
-	}
-
-	public void updateChildStatus(
-			User user, List<Object> categoriesAndThreads, int status)
+	public void updateChildrenStatus(
+		User user, List<Object> categoriesAndThreads, int status)
 		throws PortalException, SystemException {
 
 		for (Object object : categoriesAndThreads) {
@@ -701,13 +666,48 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 					continue;
 				}
 
-				updateChildStatus(
+				updateChildrenStatus(
 					user,
 					getCategoriesAndThreads(
 						category.getGroupId(), category.getCategoryId()),
 					status);
 			}
 		}
+	}
+
+	public MBCategory updateStatus(long userId, long categoryId, int status)
+		throws PortalException, SystemException {
+
+		// Category
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
+			categoryId);
+
+		category.setStatus(status);
+		category.setStatusByUserId(user.getUserId());
+		category.setStatusByUserName(user.getFullName());
+		category.setStatusDate(new Date());
+
+		mbCategoryPersistence.update(category);
+
+		// Categories and threads
+
+		List<Object> categoriesAndThreads = getCategoriesAndThreads(
+			category.getGroupId(), categoryId);
+
+		updateChildrenStatus(user, categoriesAndThreads, status);
+
+		// Trash
+
+		if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			trashEntryLocalService.addTrashEntry(
+				userId, category.getGroupId(), MBCategory.class.getName(),
+				categoryId, WorkflowConstants.STATUS_APPROVED, null, null);
+		}
+
+		return category;
 	}
 
 	protected long getParentCategoryId(long groupId, long parentCategoryId)

@@ -144,6 +144,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 				</liferay-ui:app-view-toolbar>
 			</c:if>
 
+			<div class="portlet-msg-error aui-helper-hidden" id="<portlet:namespace />openMSOfficeError"></div>
+
 			<c:if test="<%= (fileEntry.getLock() != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 				<c:choose>
 					<c:when test="<%= fileEntry.hasLock() %>">
@@ -811,6 +813,33 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 		},
 		['aui-base', 'selector-css3']
 	);
+
+	<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request) %>">
+		Liferay.provide(
+			window,
+			'<portlet:namespace />openDocument',
+			function(webDavUrl) {
+				var A = AUI();
+
+				Liferay.Util.openDocument(
+					webDavUrl,
+					null,
+					function(exception) {
+						var errorMessage = A.Lang.sub(
+							Liferay.Language.get('cannot-open-the-requested-document-due-to-the-following-reason'),
+							[exception.message]
+						);
+
+						var openMSOfficeError = A.one('#<portlet:namespace />openMSOfficeError');
+
+						openMSOfficeError.html(errorMessage);
+						openMSOfficeError.show();
+					}
+				);
+			},
+			['aui-base']
+		);
+	</c:if>
 </aui:script>
 
 <aui:script use="aui-base,aui-toolbar">
@@ -854,6 +883,26 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>'
 				}
 			);
+
+			<%
+			if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request)) {
+				webDavUrl = DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED);
+			%>
+
+				fileEntryToolbarChildren.push(
+					{
+						handler: function(event) {
+							<portlet:namespace />openDocument('<%= webDavUrl %>');
+						},
+						icon: 'msoffice',
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>'
+					}
+				);
+
+			<%
+			}
+			%>
+
 		</c:if>
 
 		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (!fileEntry.isCheckedOut() || fileEntry.hasLock()) %>">

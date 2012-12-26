@@ -17,22 +17,20 @@
 <c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 
 	<%
-	if (portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request)) {
+	if (DLUtil.isOfficeExtension(fileEntry.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request)) {
 		String webDavUrl = DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED, true);
 
-		if (DLUtil.isOfficeExtension(fileEntry.getExtension())) {
-			String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "openDocument', {webDavUrl: '" + webDavUrl + "'});";
+		String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "openDocument', {webDavUrl: '" + webDavUrl + "'});";
 	%>
 
-			<liferay-ui:icon
-				image="../document_library/msoffice"
-				message="open-in-ms-office"
-				onClick="<%= taglibOnClick %>"
-				url="javascript:;"
-			/>
+		<liferay-ui:icon
+			image="../document_library/msoffice"
+			message="open-in-ms-office"
+			onClick="<%= taglibOnClick %>"
+			url="javascript:;"
+		/>
 
 	<%
-		}
 	}
 	%>
 

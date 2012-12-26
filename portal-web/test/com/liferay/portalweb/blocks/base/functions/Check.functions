@@ -1,5 +1,5 @@
 <functions>
-	<functiondef name="click">
+	<functiondef command="click">
 		<selenium command="waitForVisible" />
 
 		<if command="isNotChecked">
@@ -9,7 +9,7 @@
 		<selenium command="assertChecked" />
 	</functiondef>
 
-	<functiondef name="clickAt" default="true">
+	<functiondef command="clickAt" default="true">
 		<selenium command="waitForVisible" />
 
 		<if command="isNotChecked">
@@ -19,7 +19,7 @@
 		<selenium command="assertChecked" />
 	</functiondef>
 
-	<functiondef name="clickAtWCMouseOverArticle">
+	<functiondef command="clickAtWCMouseOverArticle">
 		<selenium command="waitForVisible" target="xpath=(//a[contains(@data-folder,'false')])[1]" />
 		<selenium command="mouseOver" target="xpath=(//a[contains(@data-folder,'false')])[1]" />
 

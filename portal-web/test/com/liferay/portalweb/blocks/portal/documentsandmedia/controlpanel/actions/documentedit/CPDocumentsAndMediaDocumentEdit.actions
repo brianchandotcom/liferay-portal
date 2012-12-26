@@ -1,5 +1,5 @@
 <actions object="CPDocumentsAndMediaDocumentEdit">
-	<actiondef name="click">
+	<actiondef command="click">
 		<conditional elements="BUTTON_CANCEL,BUTTON_CANCEL_CHECKIN,BUTTON_CHECKOUT,BUTTON_PUBLISH,BUTTON_SAVE,BUTTON_SAVE_AND_CHECKIN">
 			<function object="Click" command="valueClickAtAndWait" />
 		</conditional>

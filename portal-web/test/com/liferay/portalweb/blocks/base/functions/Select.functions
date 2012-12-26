@@ -1,10 +1,10 @@
 <functions>
-	<functiondef name="select" default="true">
+	<functiondef command="select" default="true">
 		<selenium command="waitForVisible" />
 		<selenium command="select" />
 	</functiondef>
 
-	<functiondef name="selectAndWait">
+	<functiondef command="selectAndWait">
 		<selenium command="waitForVisible" />
 		<selenium command="selectAndWait" />
 	</functiondef>

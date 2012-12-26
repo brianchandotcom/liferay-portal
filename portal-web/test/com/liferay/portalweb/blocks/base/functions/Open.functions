@@ -1,11 +1,11 @@
 <functions>
-	<functiondef name="open" default="true">
+	<functiondef command="open" default="true">
 		<selenium command="selectWindow" target="null" />
 		<selenium command="selectFrame" target="relative=top" />
 		<selenium command="open" />
 	</functiondef>
 
-	<functiondef name="openWindow">
+	<functiondef command="openWindow">
 		<selenium command="pause" target="15000" />
 		<selenium command="selectWindow" target="null" />
 		<selenium command="selectFrame" target="relative=top" />

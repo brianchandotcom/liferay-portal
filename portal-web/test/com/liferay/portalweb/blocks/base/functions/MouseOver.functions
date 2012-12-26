@@ -1,30 +1,30 @@
 <functions>
-	<functiondef name="mouseOver">
+	<functiondef command="mouseOver">
 		<selenium command="waitForVisible" />
 		<selenium command="mouseOver" />
 	</functiondef>
 
-	<functiondef name="partialTextMouseOver">
+	<functiondef command="partialTextMouseOver">
 		<selenium command="waitForVisible" />
 		<selenium command="waitForPartialText" />
 		<selenium command="assertPartialText" />
 		<selenium command="mouseOver" />
 	</functiondef>
 
-	<functiondef name="textMouseOver" default="true">
+	<functiondef command="textMouseOver" default="true">
 		<selenium command="waitForVisible" />
 		<selenium command="waitForText" />
 		<selenium command="assertText" />
 		<selenium command="mouseOver" />
 	</functiondef>
 
-	<functiondef name="textMouseOverHomeClickDockbar">
+	<functiondef command="textMouseOverHomeClickDockbar">
 		<selenium command="clickAt" target="//div[@id='dockbar']" value="" />
 		<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
 		<function object="MouseOver" command="textMouseOver" />
 	</functiondef>
 
-	<functiondef name="valueMouseOver">
+	<functiondef command="valueMouseOver">
 		<selenium command="waitForVisible" />
 		<selenium command="waitForValue" />
 		<selenium command="assertValue" />

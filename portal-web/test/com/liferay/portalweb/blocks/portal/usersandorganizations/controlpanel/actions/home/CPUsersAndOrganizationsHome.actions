@@ -1,5 +1,5 @@
 <actions object="CPUsersAndOrganizationsHome">
-	<actiondef name="click">
+	<actiondef command="click">
 		<conditional elements="ADD_USER,USERS_SEARCH_ALL,USERS_USER_1_FIRST_NAME">
 			<function object="Click" command="textClickAndWait" />
 		</conditional>

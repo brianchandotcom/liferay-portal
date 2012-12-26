@@ -1,10 +1,10 @@
 <functions>
-	<functiondef name="paste" default="true">
+	<functiondef command="paste" default="true">
 		<selenium command="waitForVisible" />
 		<selenium command="paste" />
 	</functiondef>
 
-	<functiondef name="pasteCKEditor">
+	<functiondef command="pasteCKEditor">
 		<selenium command="waitForElementPresent" target="//textarea[@id='_161_editor' and @style='display: none;']" />
 
 		<selenium command="waitForVisible" target="//span[.='Source']" />

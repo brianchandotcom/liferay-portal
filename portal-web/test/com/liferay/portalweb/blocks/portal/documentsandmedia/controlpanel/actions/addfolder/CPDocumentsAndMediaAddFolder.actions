@@ -1,5 +1,5 @@
 <actions object="CPDocumentsAndMediaAddFolder">
-	<actiondef name="click">
+	<actiondef command="click">
 		<conditional elements="BUTTON_SAVE,BUTTON_CANCEL">
 			<function object="Click" command="valueClickAtAndWait" />
 		</conditional>

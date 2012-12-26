@@ -1,6 +1,6 @@
 <macros object="Page">
 	<macrodef
-		name="add"
+		command="add"
 		description="Add a page called &lt;strong&gt;${portlet} Page&lt;/strong&gt; in the &lt;strong&gt;Guest Community&lt;/strong&gt;."
 	>
 		<params>

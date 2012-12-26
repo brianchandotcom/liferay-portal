@@ -1,5 +1,5 @@
 <functions>
-	<functiondef name="assertChecked" default="true">
+	<functiondef command="assertChecked" default="true">
 		<selenium command="waitForVisible" />
 		<selenium command="assertChecked" />
 	</functiondef>

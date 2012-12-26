@@ -1,6 +1,6 @@
 <macros object="CPUsersAndOrganizationsUsers">
 	<macrodef
-		name="add"
+		command="add"
 		description="In the &lt;strong&gt;Control Panel Users and Organizations portlet&lt;/strong&gt;, add a User with Screen Name: &lt;strong&gt;${screenName}&lt;/strong&gt;, Email Address: &lt;strong&gt;${emailAddress}&lt;/strong&gt;, First Name: &lt;strong&gt;${firstName}&lt;/strong&gt;, and Last Name: &lt;strong&gt;${lastName}&lt;/strong&gt;"
 	>
 		<params>
@@ -28,7 +28,7 @@
 	</macrodef>
 
 	<macrodef
-		name="changePassword"
+		command="changePassword"
 		description="In the &lt;strong&gt;Control Panel Users and Organizations portlet&lt;/strong&gt;, change the User's with First Name: &lt;strong&gt;${firstName}&lt;/strong&gt; Password to : &lt;strong&gt;${password}&lt;/strong&gt;."
 	>
 		<params>
@@ -61,7 +61,7 @@
 	</macrodef>
 
 	<macrodef
-		name="deactivate"
+		command="deactivate"
 		description="In the &lt;strong&gt;Control Panel Users and Organizations porttlet&lt;/strong&gt;, deactivate the User with First Name:&lt;strong&gt;${firstName}&lt;/strong&gt;."
 	>
 		<params>
@@ -93,7 +93,7 @@
 	</macrodef>
 
 	<macrodef
-		name="delete"
+		command="delete"
 		description="In the &lt;strong&gt;Control Panel Users and Organizations porttlet&lt;/strong&gt;, delete the User with First Name:&lt;strong&gt;${firstName}&lt;/strong&gt;."
 	>
 		<params>
@@ -126,7 +126,7 @@
 	</macrodef>
 
 	<macrodef
-		name="tearDown"
+		command="tearDown"
 		description="In the &lt;strong&gt;Control Panel Users and Organizations portlet&lt;/strong&gt;, delete all users."
 	>
 		<params>

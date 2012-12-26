@@ -1,11 +1,11 @@
 <actions object="CPWebContentHome">
-	<actiondef name="check">
+	<actiondef command="check">
 		<conditional elements="ENTRIES_ARTICLE_1_CHECKBOX">
 			<function object="Check" command="clickAtWCMouseOverArticle" />
 		</conditional>
 	</actiondef>
 
-	<actiondef name="click">
+	<actiondef command="click">
 		<conditional elements="BUTTONS_ACTIONS,BUTTONS_ADD,BUTTONS_MANAGE">
 			<function object="Click" command="textClickAtPause" />
 		</conditional>

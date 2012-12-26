@@ -1,101 +1,101 @@
 <actions>
 	<actiondef
-		name="assertChecked"
+		command="assertChecked"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, assert that the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; is checked."
 	/>
 
 	<actiondef
-		name="assertElementNotPresent"
+		command="assertElementNotPresent"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, assert that the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; is NOT present."
 	/>
 
 	<actiondef
-		name="assertElementPresent"
+		command="assertElementPresent"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, assert that the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; is present."
 	/>
 
 	<actiondef
-		name="assertNotChecked"
+		command="assertNotChecked"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, assert that the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; is NOT checked."
 	/>
 
 	<actiondef
-		name="assertTextEquals"
+		command="assertTextEquals"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, assert that the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; has the text value &lt;strong&gt;&quot;${PATH.VALUE}&quot;&lt;/strong&gt;."
 	/>
 
 	<actiondef
-		name="assertTextNotEquals"
+		command="assertTextNotEquals"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, assert that the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; DOES NOT have the text value &lt;strong&gt;&quot;${PATH.VALUE}&quot;&lt;/strong&gt;."
 	/>
 
 	<actiondef
-		name="assertTextNotPresent"
+		command="assertTextNotPresent"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, assert that the value &lt;strong&gt;&quot;${PATH.VALUE}&quot;&lt;/strong&gt; DOES NOT show up on the page."
 	/>
 
 	<actiondef
-		name="assertTextPresent"
+		command="assertTextPresent"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, assert that the value &lt;strong&gt;&quot;${PATH.VALUE}&quot;&lt;/strong&gt; shows up on the page."
 	/>
 
 	<actiondef
-		name="check"
+		command="check"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, checks off the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt;."
 	/>
 
 	<actiondef
-		name="click"
+		command="click"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, click on the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; which should have a text value of &lt;strong&gt;&quot;${PATH.VALUE}&quot;&lt;/strong&gt;."
 	/>
 
 	<actiondef
-		name="close"
+		command="close"
 		description="While navigating the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, close selected window."
 	/>
 
 	<actiondef
-		name="copy"
+		command="copy"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, copy the text found at the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt;."
 	/>
 
 	<actiondef
-		name="confirm"
+		command="confirm"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, click okay on the confirmation window which should state the following: &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt;."
 	/>
 
 	<actiondef
-		name="dragAndDrop"
+		command="dragAndDrop"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, drag and drop the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt;."
 	/>
 
 	<actiondef
-		name="mouseOver"
+		command="mouseOver"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, mouse over the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; which should have a text value of &lt;strong&gt;&quot;${PATH.VALUE}&quot;&lt;/strong&gt;."
 	/>
 
 	<actiondef
-		name="open"
+		command="open"
 		description="Open a window to &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; (&lt;strong&gt;${PATH.VALUE}&lt;/strong&gt;)."
 	/>
 
 	<actiondef
-		name="paste"
+		command="paste"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, paste the copied text to the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt;."
 	/>
 
 	<actiondef
-		name="select"
+		command="select"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, select &lt;strong&gt;&quot;${PATH.VALUE}&quot;&lt;/strong&gt; from the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt;."
 	/>
 
 	<actiondef
-		name="type"
+		command="type"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, type &lt;strong&gt;&quot;${PATH.VALUE}&quot;&lt;/strong&gt; into the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt;."
 	/>
 
 	<actiondef
-		name="uncheck"
+		command="uncheck"
 		description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, unchecks the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt;."
 	/>
 </actions>

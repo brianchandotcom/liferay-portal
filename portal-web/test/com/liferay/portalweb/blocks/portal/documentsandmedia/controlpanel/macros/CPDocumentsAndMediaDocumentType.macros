@@ -1,6 +1,6 @@
 <macros object="CPDocumentsAndMediaDocumentType">
 	<macrodef
-		name="add"
+		command="add"
 		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add a &lt;em&gt;Document Type&lt;/em&gt; with a name of &lt;strong&gt;&quot;${name}&quot;&lt;/strong&gt;."
 	>
 		<params>
@@ -31,7 +31,7 @@
 	</macrodef>
 
 	<macrodef
-		name="delete"
+		command="delete"
 		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, delete a &lt;em&gt;Document Type&lt;/em&gt; named: &lt;strong&gt;&quot;${name}&quot;&lt;/strong&gt;."
 	>
 		<params>
@@ -58,7 +58,7 @@
 	</macrodef>
 
 	<macrodef
-		name="tearDown"
+		command="tearDown"
 		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, delete all the &lt;em&gt;Document Types&lt;/em&gt;."
 	>
 		<params>

@@ -1,11 +1,11 @@
 <actions object="CPDocumentsAndMediaAddDocumentType">
-	<actiondef name="click">
+	<actiondef command="click">
 		<conditional elements="BUTTON_CANCEL,BUTTON_SAVE">
 			<function object="Click" command="valueClickAt" />
 		</conditional>
 	</actiondef>
 
-	<actiondef name="selectWindow">
+	<actiondef command="selectWindow">
 		<conditional elements="TOP">
 			<function object="SelectWindow" command="selectFrameTop" />
 		</conditional>

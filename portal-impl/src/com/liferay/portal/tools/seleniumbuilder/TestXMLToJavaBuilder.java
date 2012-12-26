@@ -22,10 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
-import java.util.Set;
 import java.util.TreeSet;
-
-import org.apache.tools.ant.DirectoryScanner;
 
 /**
  * @author Brian Wing Shun Chan
@@ -41,9 +38,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 	public TestXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
-		Set<String> fileNames = _getFileNames();
-
-		for (String fileName : fileNames) {
+		for (String fileName : fileNameSetTests) {
 			if (fileName.length() > 161) {
 				System.out.println(
 					"Exceeds 177 characters: portal-web/test/" + fileName);
@@ -154,28 +149,6 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private Set<String> _getFileNames() throws Exception {
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-		directoryScanner.setIncludes(
-			new String[] {
-				"**\\portalweb\\**\\*.test"
-			});
-
-		directoryScanner.scan();
-
-		Set<String> fileNames = new TreeSet<String>();
-
-		for (String fileName : directoryScanner.getIncludedFiles()) {
-			fileName = normalizeFileName(fileName);
-
-			fileNames.add(fileName);
-		}
-
-		return fileNames;
 	}
 
 }

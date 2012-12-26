@@ -66,6 +66,15 @@ public class SeleniumBuilder {
 
 		basedir = (String)cmdLineParser.getOptionValue(basedirOption);
 		pageObjectSet = _getPageObjects();
+
+		fileNameSet = _getFileNameSet();
+
+		fileNameSetActions = _getFileNameSetActions();
+		fileNameSetFunctions = _getFileNameSetFunctions();
+		fileNameSetMacros = _getFileNameSetMacros();
+		fileNameSetPaths = _getFileNameSetPaths();
+		fileNameSetTests = _getFileNameSetTests();
+
 		_getSeleniumMethods();
 	}
 
@@ -356,6 +365,12 @@ public class SeleniumBuilder {
 
 	protected String basedir;
 	protected ClassTypes classType;
+	protected Set<String> fileNameSet;
+	protected Set<String> fileNameSetActions;
+	protected Set<String> fileNameSetFunctions;
+	protected Set<String> fileNameSetMacros;
+	protected Set<String> fileNameSetPaths;
+	protected Set<String> fileNameSetTests;
 	protected String filePath = "";
 	protected Set<String> importObjects = new TreeSet<String>();
 	protected Set<String> pageObjectSet;
@@ -762,6 +777,64 @@ public class SeleniumBuilder {
 		sb.append("selectWindow(\"TOP\", \"\");\n");
 
 		return sb.toString();
+	}
+
+	private Set<String> _getFileNameSet() throws Exception {
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(basedir);
+		directoryScanner.setIncludes(
+			new String[] {
+				"**\\portalweb\\blocks\\**\\*.actions",
+				"**\\portalweb\\blocks\\**\\*.functions",
+				"**\\portalweb\\blocks\\**\\*.macros",
+				"**\\portalweb\\blocks\\**\\*.paths",
+				"**\\portalweb\\blocks\\**\\*.test"
+			});
+
+		directoryScanner.scan();
+
+		Set<String> fileNameSet = new TreeSet<String>();
+
+		for (String fileName : directoryScanner.getIncludedFiles()) {
+			fileName = normalizeFileName(fileName);
+
+			fileNameSet.add(fileName);
+		}
+
+		return fileNameSet;
+	}
+
+	private Set<String> _getFileNameSetActions() throws Exception {
+		return _getFileNameSetType(".actions");
+	}
+
+	private Set<String> _getFileNameSetFunctions() throws Exception {
+		return _getFileNameSetType(".functions");
+	}
+
+	private Set<String> _getFileNameSetMacros() throws Exception {
+		return _getFileNameSetType(".macros");
+	}
+
+	private Set<String> _getFileNameSetPaths() throws Exception {
+		return _getFileNameSetType(".paths");
+	}
+
+	private Set<String> _getFileNameSetTests() throws Exception {
+		return _getFileNameSetType(".test");
+	}
+
+	private Set<String> _getFileNameSetType(String suffix) throws Exception {
+		Set<String> fileNameTypeSet = new TreeSet<String>();
+
+		for (String fileName : fileNameSet) {
+			if (fileName.endsWith(suffix)) {
+				fileNameTypeSet.add(fileName);
+			}
+		}
+
+		return fileNameTypeSet;
 	}
 
 	private String _getImportActions(String object) throws Exception {

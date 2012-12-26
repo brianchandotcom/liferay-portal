@@ -611,7 +611,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				${entity.varName}.setNew(false);
 			}
 			else {
-				session.merge(${entity.varName});
+				<#if entity.hasLazyBlobColumn()>
+					<#-- This is a workaround to Hibernate bug : https://hibernate.onjira.com/browse/HHH-2680 . Please remove this block, and add merge cascade in hbm_xml.ftl, once we upgrade to Hibernate 4.x -->
+					session.evict(${entity.varName});
+					session.saveOrUpdate(${entity.varName});
+				<#else>
+					session.merge(${entity.varName});
+				</#if>
 			}
 
 			<#if entity.hasLazyBlobColumn()>

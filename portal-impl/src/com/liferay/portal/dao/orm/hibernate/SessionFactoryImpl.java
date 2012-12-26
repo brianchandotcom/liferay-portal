@@ -21,11 +21,15 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PreloadClassLoader;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.hibernate.engine.SessionFactoryImplementor;
@@ -98,7 +102,30 @@ public class SessionFactoryImpl implements SessionFactory {
 	public void setSessionFactoryClassLoader(
 		ClassLoader sessionFactoryClassLoader) {
 
-		_sessionFactoryClassLoader = sessionFactoryClassLoader;
+		ClassLoader portalClassLoader =
+			PACLClassLoaderUtil.getPortalClassLoader();
+
+		if (sessionFactoryClassLoader == portalClassLoader) {
+			_sessionFactoryClassLoader = sessionFactoryClassLoader;
+		}
+		else {
+			Map<String, Class<?>> classMap = new HashMap<String, Class<?>>();
+
+			try {
+				for (String className : _PRELOAD_CLASS_NAMES) {
+					Class<?> hibernateProxyClass = portalClassLoader.loadClass(
+						className);
+
+					classMap.put(className, hibernateProxyClass);
+				}
+			}
+			catch (ClassNotFoundException cnfe) {
+				throw new RuntimeException(cnfe);
+			}
+
+			_sessionFactoryClassLoader = new PreloadClassLoader(
+				sessionFactoryClassLoader, classMap);
+		}
 	}
 
 	public void setSessionFactoryImplementor(
@@ -120,6 +147,10 @@ public class SessionFactoryImpl implements SessionFactory {
 
 		return liferaySession;
 	}
+
+	private static final String[] _PRELOAD_CLASS_NAMES = {
+		"org.hibernate.engine.jdbc.WrappedBlob"
+	};
 
 	private static Log _log = LogFactoryUtil.getLog(SessionFactoryImpl.class);
 

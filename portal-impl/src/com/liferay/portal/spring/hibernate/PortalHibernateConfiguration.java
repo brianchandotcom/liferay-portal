@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Converter;
+import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,6 +33,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -59,7 +61,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			new ProxyFactory.ClassLoaderProvider() {
 
 				public ClassLoader get(ProxyFactory proxyFactory) {
-					return PACLClassLoaderUtil.getContextClassLoader();
+					return _createProxyFactoryClassLoader();
 				}
 
 			};
@@ -228,6 +230,42 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 	protected void setDB(Dialect dialect) {
 		DBFactoryUtil.setDB(dialect);
 	}
+
+	private ClassLoader _createProxyFactoryClassLoader() {
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
+		ClassLoader portalClassLoader =
+			PACLClassLoaderUtil.getPortalClassLoader();
+
+		if (contextClassLoader == portalClassLoader) {
+			return contextClassLoader;
+		}
+		else {
+			Map<String, Class<?>> classMap = new HashMap<String, Class<?>>();
+
+			try {
+				for (String className : _PRELOAD_CLASS_NAMES) {
+					Class<?> hibernateProxyClass = portalClassLoader.loadClass(
+						className);
+
+					classMap.put(className, hibernateProxyClass);
+				}
+			}
+			catch (ClassNotFoundException cnfe) {
+				throw new RuntimeException(cnfe);
+			}
+
+			return new PreloadClassLoader(contextClassLoader, classMap);
+		}
+	}
+
+	private static final String[] _PRELOAD_CLASS_NAMES = {
+		"javassist.util.proxy.MethodHandler",
+		"javassist.util.proxy.ProxyObject",
+		"javassist.util.proxy.RuntimeSupport",
+		"org.hibernate.proxy.HibernateProxy",
+		"org.hibernate.proxy.LazyInitializer"
+	};
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalHibernateConfiguration.class);

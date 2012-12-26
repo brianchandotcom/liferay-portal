@@ -339,6 +339,8 @@ update MBCategory set statusDate = modifiedDate;
 
 update MBMessage set status = 2 where status = 9;
 
+alter table MBMessage drop column attachments;
+
 drop table OrgGroupPermission;
 
 drop table Permission_;

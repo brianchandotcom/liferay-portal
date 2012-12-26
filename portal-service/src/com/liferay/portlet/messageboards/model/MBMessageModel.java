@@ -333,27 +333,6 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	public void setFormat(String format);
 
 	/**
-	 * Returns the attachments of this message-boards message.
-	 *
-	 * @return the attachments of this message-boards message
-	 */
-	public boolean getAttachments();
-
-	/**
-	 * Returns <code>true</code> if this message-boards message is attachments.
-	 *
-	 * @return <code>true</code> if this message-boards message is attachments; <code>false</code> otherwise
-	 */
-	public boolean isAttachments();
-
-	/**
-	 * Sets whether this message-boards message is attachments.
-	 *
-	 * @param attachments the attachments of this message-boards message
-	 */
-	public void setAttachments(boolean attachments);
-
-	/**
 	 * Returns the anonymous of this message-boards message.
 	 *
 	 * @return the anonymous of this message-boards message

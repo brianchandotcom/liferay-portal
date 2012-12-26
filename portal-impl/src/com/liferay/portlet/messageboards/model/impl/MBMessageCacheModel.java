@@ -38,7 +38,7 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -74,8 +74,6 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 		sb.append(body);
 		sb.append(", format=");
 		sb.append(format);
-		sb.append(", attachments=");
-		sb.append(attachments);
 		sb.append(", anonymous=");
 		sb.append(anonymous);
 		sb.append(", priority=");
@@ -161,7 +159,6 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 			mbMessageImpl.setFormat(format);
 		}
 
-		mbMessageImpl.setAttachments(attachments);
 		mbMessageImpl.setAnonymous(anonymous);
 		mbMessageImpl.setPriority(priority);
 		mbMessageImpl.setAllowPingbacks(allowPingbacks);
@@ -206,7 +203,6 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 		subject = objectInput.readUTF();
 		body = objectInput.readUTF();
 		format = objectInput.readUTF();
-		attachments = objectInput.readBoolean();
 		anonymous = objectInput.readBoolean();
 		priority = objectInput.readDouble();
 		allowPingbacks = objectInput.readBoolean();
@@ -268,7 +264,6 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 			objectOutput.writeUTF(format);
 		}
 
-		objectOutput.writeBoolean(attachments);
 		objectOutput.writeBoolean(anonymous);
 		objectOutput.writeDouble(priority);
 		objectOutput.writeBoolean(allowPingbacks);
@@ -303,7 +298,6 @@ public class MBMessageCacheModel implements CacheModel<MBMessage>,
 	public String subject;
 	public String body;
 	public String format;
-	public boolean attachments;
 	public boolean anonymous;
 	public double priority;
 	public boolean allowPingbacks;

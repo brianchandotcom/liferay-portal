@@ -143,8 +143,6 @@ public class MBMessagePersistenceTest {
 
 		newMBMessage.setFormat(ServiceTestUtil.randomString());
 
-		newMBMessage.setAttachments(ServiceTestUtil.randomBoolean());
-
 		newMBMessage.setAnonymous(ServiceTestUtil.randomBoolean());
 
 		newMBMessage.setPriority(ServiceTestUtil.nextDouble());
@@ -199,8 +197,6 @@ public class MBMessagePersistenceTest {
 		Assert.assertEquals(existingMBMessage.getBody(), newMBMessage.getBody());
 		Assert.assertEquals(existingMBMessage.getFormat(),
 			newMBMessage.getFormat());
-		Assert.assertEquals(existingMBMessage.getAttachments(),
-			newMBMessage.getAttachments());
 		Assert.assertEquals(existingMBMessage.getAnonymous(),
 			newMBMessage.getAnonymous());
 		AssertUtils.assertEquals(existingMBMessage.getPriority(),
@@ -387,8 +383,6 @@ public class MBMessagePersistenceTest {
 		mbMessage.setBody(ServiceTestUtil.randomString());
 
 		mbMessage.setFormat(ServiceTestUtil.randomString());
-
-		mbMessage.setAttachments(ServiceTestUtil.randomBoolean());
 
 		mbMessage.setAnonymous(ServiceTestUtil.randomBoolean());
 

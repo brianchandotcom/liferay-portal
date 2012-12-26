@@ -19022,7 +19022,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		mbMessageImpl.setSubject(mbMessage.getSubject());
 		mbMessageImpl.setBody(mbMessage.getBody());
 		mbMessageImpl.setFormat(mbMessage.getFormat());
-		mbMessageImpl.setAttachments(mbMessage.isAttachments());
 		mbMessageImpl.setAnonymous(mbMessage.isAnonymous());
 		mbMessageImpl.setPriority(mbMessage.getPriority());
 		mbMessageImpl.setAllowPingbacks(mbMessage.isAllowPingbacks());

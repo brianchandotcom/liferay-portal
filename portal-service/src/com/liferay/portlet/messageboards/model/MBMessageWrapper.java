@@ -62,7 +62,6 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		attributes.put("subject", getSubject());
 		attributes.put("body", getBody());
 		attributes.put("format", getFormat());
-		attributes.put("attachments", getAttachments());
 		attributes.put("anonymous", getAnonymous());
 		attributes.put("priority", getPriority());
 		attributes.put("allowPingbacks", getAllowPingbacks());
@@ -176,12 +175,6 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 
 		if (format != null) {
 			setFormat(format);
-		}
-
-		Boolean attachments = (Boolean)attributes.get("attachments");
-
-		if (attachments != null) {
-			setAttachments(attachments);
 		}
 
 		Boolean anonymous = (Boolean)attributes.get("anonymous");
@@ -588,33 +581,6 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	public void setFormat(java.lang.String format) {
 		_mbMessage.setFormat(format);
-	}
-
-	/**
-	* Returns the attachments of this message-boards message.
-	*
-	* @return the attachments of this message-boards message
-	*/
-	public boolean getAttachments() {
-		return _mbMessage.getAttachments();
-	}
-
-	/**
-	* Returns <code>true</code> if this message-boards message is attachments.
-	*
-	* @return <code>true</code> if this message-boards message is attachments; <code>false</code> otherwise
-	*/
-	public boolean isAttachments() {
-		return _mbMessage.isAttachments();
-	}
-
-	/**
-	* Sets whether this message-boards message is attachments.
-	*
-	* @param attachments the attachments of this message-boards message
-	*/
-	public void setAttachments(boolean attachments) {
-		_mbMessage.setAttachments(attachments);
 	}
 
 	/**

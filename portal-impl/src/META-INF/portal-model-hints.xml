@@ -1961,7 +1961,6 @@
 			<validator name="required" />
 		</field>
 		<field name="format" type="String" />
-		<field name="attachments" type="boolean" />
 		<field name="anonymous" type="boolean" />
 		<field name="priority" type="double" />
 		<field name="allowPingbacks" type="boolean" />

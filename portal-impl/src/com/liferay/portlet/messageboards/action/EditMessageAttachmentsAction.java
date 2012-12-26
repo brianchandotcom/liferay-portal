@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
@@ -133,12 +132,6 @@ public class EditMessageAttachmentsAction extends PortletAction {
 
 		MBMessageServiceUtil.restoreMessageAttachmentFromTrash(
 			messageId, fileName);
-
-		MBMessage message = MBMessageServiceUtil.getMessage(messageId);
-
-		message.setAttachments(true);
-
-		MBMessageLocalServiceUtil.updateMBMessage(message);
 	}
 
 }

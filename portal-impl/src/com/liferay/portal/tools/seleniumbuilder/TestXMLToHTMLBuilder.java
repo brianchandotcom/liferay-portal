@@ -241,7 +241,7 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 	protected String getActionCommand(Element command) {
 		StringBundler sb = new StringBundler();
 
-		String actionFileName = command.attributeValue("name");
+		String actionFileName = command.attributeValue("object");
 		String actionCommand = command.attributeValue("command");
 		String actionPath = command.attributeValue("path");
 		String actionLocator = command.attributeValue("locator");
@@ -376,7 +376,7 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 	protected String getIfCommand(Element command) {
 		StringBundler sb = new StringBundler();
 
-		String fileName = command.attributeValue("name");
+		String fileName = command.attributeValue("object");
 		String elementPathName = command.attributeValue("path");
 
 		String steps = getCommands(command);
@@ -423,7 +423,7 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 		StringBundler sb = new StringBundler();
 
 		String macroCommand = command.attributeValue("command");
-		String macroFileName = command.attributeValue("name");
+		String macroFileName = command.attributeValue("object");
 
 		String steps = "";
 
@@ -589,7 +589,7 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 	protected String getWhileCommand(Element command) {
 		StringBundler sb = new StringBundler();
 
-		String fileName = command.attributeValue("name");
+		String fileName = command.attributeValue("object");
 		String elementPathName = command.attributeValue("path");
 
 		String steps = getCommands(command);

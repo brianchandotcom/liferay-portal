@@ -139,8 +139,8 @@ public class SeleniumBuilder {
 						type = "Functions";
 					}
 
-					if (!(child.attributeValue("name") == null)) {
-						objects.add(child.attributeValue("name") + type);
+					if (!(child.attributeValue("object") == null)) {
+						objects.add(child.attributeValue("object") + type);
 					}
 				}
 
@@ -399,7 +399,7 @@ public class SeleniumBuilder {
 		StringBundler sb = new StringBundler();
 
 		String actionDefName = command.attributeValue("command");
-		String actionObjectName = command.attributeValue("name") + "Actions";
+		String actionObjectName = command.attributeValue("object") + "Actions";
 
 		sb.append(StringUtil.lowerCaseFirstLetter(actionObjectName));
 		sb.append(StringPool.PERIOD);
@@ -453,7 +453,7 @@ public class SeleniumBuilder {
 	private String _getCommandActionsConditional(Element conditional) {
 		StringBundler sb = new StringBundler();
 
-		String conditionalName = conditional.attributeValue("name");
+		String conditionalName = conditional.attributeValue("object");
 		String conditionalCommand = conditional.attributeValue("command");
 
 		if (conditionalCommand.contains("Not")) {
@@ -623,7 +623,7 @@ public class SeleniumBuilder {
 		StringBundler sb = new StringBundler();
 
 		String functionCommandName = command.attributeValue("command");
-		String functionObjectName = command.attributeValue("name");
+		String functionObjectName = command.attributeValue("object");
 
 		if (functionObjectName == null) {
 			sb.append(actionDefName);
@@ -667,7 +667,7 @@ public class SeleniumBuilder {
 		StringBundler sb = new StringBundler();
 
 		String macroDefName = command.attributeValue("command");
-		String macroObjectName = command.attributeValue("name") + "Macros";
+		String macroObjectName = command.attributeValue("object") + "Macros";
 
 		sb.append(StringUtil.lowerCaseFirstLetter(macroObjectName));
 		sb.append(StringPool.PERIOD);
@@ -764,7 +764,7 @@ public class SeleniumBuilder {
 	private String _getCommandWindow(Element command) throws Exception {
 		StringBundler sb = new StringBundler();
 
-		String windowObjectName = command.attributeValue("name") + "Actions";
+		String windowObjectName = command.attributeValue("object") + "Actions";
 
 		sb.append(StringUtil.lowerCaseFirstLetter(windowObjectName));
 		sb.append(StringPool.PERIOD);

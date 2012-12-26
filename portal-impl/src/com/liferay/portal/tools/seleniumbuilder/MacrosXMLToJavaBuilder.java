@@ -91,7 +91,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 
 		List<Element> runBlocks = rootElement.elements();
 
-		String macroDefs = getMacroDefs(rootElement);
+		String macroDefs = _getMacroDefs(rootElement);
 
 		String importStatements = getImportStatements();
 
@@ -114,7 +114,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		writeFile(macrosFileName, sb.toString(), true);
 	}
 
-	protected String getMacroDefs(Element rootElement) throws Exception {
+	private String _getMacroDefs(Element rootElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		List<Element> macroDefs = rootElement.elements("macrodef");
@@ -128,7 +128,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 			sb.append("public void ");
 			sb.append(macroDefName);
 			sb.append("(");
-			sb.append(getParameterList(params));
+			sb.append(_getParameterList(params));
 			sb.append(") throws Exception {");
 
 			sb.append(processBlock(stepsBlock));
@@ -139,7 +139,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
-	protected String getParameterList(Element params) throws Exception {
+	private String _getParameterList(Element params) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		String paramsString = "";

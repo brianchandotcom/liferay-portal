@@ -94,9 +94,9 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		Element stepsBlock = rootElement.element("steps");
 		Element teardownBlock = rootElement.element("teardown");
 
-		String setup = getSetup(setupBlock);
-		String steps = getSteps(stepsBlock);
-		String teardown = getTeardown(teardownBlock);
+		String setup = _getSetup(setupBlock);
+		String steps = _getSteps(stepsBlock);
+		String teardown = _getTeardown(teardownBlock);
 
 		String importStatements = getImportStatements();
 
@@ -111,7 +111,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		writeFile(testFileName, sb.toString(), true);
 	}
 
-	protected String getSetup(Element setupElement) throws Exception {
+	private String _getSetup(Element setupElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		sb.append("@Override\n");
@@ -125,7 +125,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
-	protected String getSteps(Element stepsElement) throws Exception {
+	private String _getSteps(Element stepsElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		sb.append("public void test() throws Exception {");
@@ -137,7 +137,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
-	protected String getTeardown(Element teardownElement) throws Exception {
+	private String _getTeardown(Element teardownElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		sb.append("@Override\n");

@@ -145,6 +145,8 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 			sb.append(imports);
 			sb.append(constructor);
 			sb.append(actionDefs);
+
+			getObject(actionsXMLFileName);
 		}
 		else {
 			sb.append(imports);

@@ -5,13 +5,13 @@
 	<setup>
 	</setup>
 	<steps>
-		<macro name="CPBlogsEntry" command="add">
+		<macro object="CPBlogsEntry" command="add">
 			<param name="title" value="|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15" />
 			<param name="content" value="Blogs Entry Content" />
 		</macro>
 	</steps>
 	<teardown>
-		<macro name="CPBlogsEntry" command="tearDown" />
-		<macro name="CPRecycleBin" command="empty" />
+		<macro object="CPBlogsEntry" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

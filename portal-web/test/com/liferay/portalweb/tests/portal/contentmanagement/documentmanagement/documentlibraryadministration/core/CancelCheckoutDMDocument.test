@@ -3,46 +3,46 @@
 	description="In the Control Panel Documents and Media Portlet, ensure that the cancel the checkout of a Document will remove any changes made while checked out."
 >
 	<setup>
-		<macro name="CPDocumentsAndMediaDocument" command="add">
+		<macro object="CPDocumentsAndMediaDocument" command="add">
 			<param name="title" value="DM Document Title" />
 			<param name="file" value="Document_1.doc" />
 		</macro>
 
-		<macro name="CPDocumentsAndMediaDocument" command="checkout">
+		<macro object="CPDocumentsAndMediaDocument" command="checkout">
 			<param name="title" value="DM Document Title" />
 		</macro>
 
-		<macro name="CPDocumentsAndMediaDocument" command="editCheckout">
+		<macro object="CPDocumentsAndMediaDocument" command="editCheckout">
 			<param name="oldTitle" value="DM Document Title"  />
 			<param name="newTitle" value="DM Document Title Edit"  />
 		</macro>
 	</setup>
 	<steps>
-		<macro name="Goto" command="controlPanelPortlet">
+		<macro object="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Documents and Media" />
 		</macro>
 
-		<action name="CPDocumentsAndMediaHome" command="assertElementPresent" path="DOCUMENT_IMAGE_LOCK" />
-		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="DM Document Title (Draft)" />
+		<action object="CPDocumentsAndMediaHome" command="assertElementPresent" path="DOCUMENT_IMAGE_LOCK" />
+		<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="DM Document Title (Draft)" />
 
-		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
-		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_CANCEL_CHECKOUT" value="Cancel Checkout" />
-		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+		<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
+		<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_CANCEL_CHECKOUT" value="Cancel Checkout" />
+		<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
 
-		<action name="CPDocumentsAndMediaHome" command="assertElementNotPresent" path="DOCUMENT_IMAGE_LOCK" />
-		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="DM Document Title" />
+		<action object="CPDocumentsAndMediaHome" command="assertElementNotPresent" path="DOCUMENT_IMAGE_LOCK" />
+		<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="DM Document Title" />
 
-		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="DM Document Title" />
+		<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="DM Document Title" />
 
-		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_INFO_WORKFLOW_STATUS" value="Status: Approved" />
-		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_VERSION_1" value="1.0" />
-		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_STATUS_1" value="Approved" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_INFO_WORKFLOW_STATUS" value="Status: Approved" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_VERSION_1" value="1.0" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_STATUS_1" value="Approved" />
 
-		<action name="CPDocumentsAndMediaDocument" command="assertElementNotPresent" path="VERSION_HISTORY_VERSION_2" />
-		<action name="CPDocumentsAndMediaDocument" command="assertElementNotPresent" path="VERSION_HISTORY_STATUS_2" />
+		<action object="CPDocumentsAndMediaDocument" command="assertElementNotPresent" path="VERSION_HISTORY_VERSION_2" />
+		<action object="CPDocumentsAndMediaDocument" command="assertElementNotPresent" path="VERSION_HISTORY_STATUS_2" />
 	</steps>
 	<teardown>
-		<macro name="CPDocumentsAndMediaDocument" command="tearDown" />
-		<macro name="CPRecycleBin" command="empty" />
+		<macro object="CPDocumentsAndMediaDocument" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

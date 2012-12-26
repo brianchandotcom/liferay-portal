@@ -3,32 +3,32 @@
 	description="In the Control Panel Blogs Portlet, search for a Blogs Entry by its title."
 >
 	<setup>
-		<macro name="CPBlogsEntry" command="add">
+		<macro object="CPBlogsEntry" command="add">
 			<param name="title" value="Blogs Entry Title" />
 			<param name="content" value="Blogs Entry Content" />
 		</macro>
 	</setup>
 	<steps>
-		`<macro name="Goto" command="controlPanelPortlet">
+		`<macro object="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action name="CPBlogsHome" command="type" path="PORTLET_FIELD_SEARCH" value="Title" />
-		<action name="CPBlogsHome" command="click" path="PORTLET_LINK_SEARCH" value="Search" />
+		<action object="CPBlogsHome" command="type" path="PORTLET_FIELD_SEARCH" value="Title" />
+		<action object="CPBlogsHome" command="click" path="PORTLET_LINK_SEARCH" value="Search" />
 
-		<action name="CPBlogsSearch" command="assertTextEquals" path="TABLE_NUMBER" value="1." />
-		<action name="CPBlogsSearch" command="assertTextEquals" path="TABLE_ENTRY" value="Blogs Entry Title" />
-		<action name="CPBlogsSearch" command="assertTextEquals" path="SEARCH_RESULTS" value="Showing 1 result." />
+		<action object="CPBlogsSearch" command="assertTextEquals" path="TABLE_NUMBER" value="1." />
+		<action object="CPBlogsSearch" command="assertTextEquals" path="TABLE_ENTRY" value="Blogs Entry Title" />
+		<action object="CPBlogsSearch" command="assertTextEquals" path="SEARCH_RESULTS" value="Showing 1 result." />
 
-		<action name="CPBlogsSearch" command="type" path="SEARCH_FIELD" value="Title1" />
-		<action name="CPBlogsSearch" command="click" path="SEARCH_BUTTON" value="Search" />
-		<action name="CPBlogsSearch" command="assertElementNotPresent" path="TABLE_NUMBER" value="1." />
-		<action name="CPBlogsSearch" command="assertElementNotPresent" path="TABLE_ENTRY" value="Blogs Entry Title" />
-		<action name="CPBlogsSearch" command="assertTextNotPresent" value="Blogs Entry Title" />
-		<action name="CPBlogsSearch" command="assertTextEquals" path="PORTLET_INFO" value="No entries were found that matched the keywords: Title1." />
+		<action object="CPBlogsSearch" command="type" path="SEARCH_FIELD" value="Title1" />
+		<action object="CPBlogsSearch" command="click" path="SEARCH_BUTTON" value="Search" />
+		<action object="CPBlogsSearch" command="assertElementNotPresent" path="TABLE_NUMBER" value="1." />
+		<action object="CPBlogsSearch" command="assertElementNotPresent" path="TABLE_ENTRY" value="Blogs Entry Title" />
+		<action object="CPBlogsSearch" command="assertTextNotPresent" value="Blogs Entry Title" />
+		<action object="CPBlogsSearch" command="assertTextEquals" path="PORTLET_INFO" value="No entries were found that matched the keywords: Title1." />
 	</steps>
 	<teardown>
-		<macro name="CPBlogsEntry" command="tearDown" />
-		<macro name="CPRecycleBin" command="empty" />
+		<macro object="CPBlogsEntry" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

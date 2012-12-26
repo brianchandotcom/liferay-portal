@@ -5,17 +5,17 @@
 	<setup>
 	</setup>
 	<steps>
-		<macro name="CPWebContentArticle" command="add">
+		<macro object="CPWebContentArticle" command="add">
 			<param name="title" value="WC Article Title" />
 			<param name="content" value="WC Article Content" />
 		</macro>
 
-		<action name="CPWebContentHome" command="click" path="ENTRIES_ARTICLE_1" value="WC Article Title" />
+		<action object="CPWebContentHome" command="click" path="ENTRIES_ARTICLE_1" value="WC Article Title" />
 
-		<action name="CPWebContentEditArticle" command="assertTextEquals" path="ARTICLE_TITLE" value="WC Article Title" />
-		<action name="CPWebContentEditArticle" command="assertTextEquals" path="ARTICLE_CONTENT" value="WC Article Content" />
+		<action object="CPWebContentEditArticle" command="assertTextEquals" path="ARTICLE_TITLE" value="WC Article Title" />
+		<action object="CPWebContentEditArticle" command="assertTextEquals" path="ARTICLE_CONTENT" value="WC Article Content" />
 	</steps>
 	<teardown>
-		<macro name="CPWebContentArticle" command="tearDown" />
+		<macro object="CPWebContentArticle" command="tearDown" />
 	</teardown>
 </test>

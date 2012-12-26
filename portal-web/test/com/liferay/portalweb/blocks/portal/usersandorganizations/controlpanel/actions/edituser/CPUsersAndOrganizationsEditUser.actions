@@ -1,17 +1,17 @@
 <actions object="CPUsersAndOrganizationsEditUser">
 	<actiondef name="assertTextEquals">
 		<conditional elements="USER_EMAIL_ADDRESS,USER_FIRST_NAME,USER_LAST_NAME,USER_SCREEN_NAME">
-			<function name="AssertTextEquals" command="assertValue" />
+			<function object="AssertTextEquals" command="assertValue" />
 		</conditional>
 	</actiondef>
 
 	<actiondef name="click">
 		<conditional elements="BUTTONS_CANCEL,BUTTONS_SAVE">
-			<function name="Click" command="valueClickAtAndWait" />
+			<function object="Click" command="valueClickAtAndWait" />
 		</conditional>
 
 		<conditional elements="USER_INFORMATION_PASSWORD">
-			<function name="Click" command="partialTextClickAt" />
+			<function object="Click" command="partialTextClickAt" />
 		</conditional>
 	</actiondef>
 </actions>

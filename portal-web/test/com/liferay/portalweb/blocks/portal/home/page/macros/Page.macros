@@ -7,12 +7,12 @@
 			<param name="portlet" description="Name of the Portlet for the Page" example="Blogs" />
 		</params>
 		<steps>
-			<action name="Home" command="open" path="URL_GUEST" />
-			<action name="Home" command="mouseOver" path="ADD_LINK" />
-			<action name="Home" command="click" path="ADD_LINK_PAGE" />
-			<action name="Home" command="type" path="NEW_PAGE_FIELD" value="${portlet} Page" />
-			<action name="Home" command="click" path="NEW_PAGE_LINK_SAVE" />
-			<action name="Home" command="type" locator="link=${portlet} Page" value="${portlet} Page" />
+			<action object="Home" command="open" path="URL_GUEST" />
+			<action object="Home" command="mouseOver" path="ADD_LINK" />
+			<action object="Home" command="click" path="ADD_LINK_PAGE" />
+			<action object="Home" command="type" path="NEW_PAGE_FIELD" value="${portlet} Page" />
+			<action object="Home" command="click" path="NEW_PAGE_LINK_SAVE" />
+			<action object="Home" command="type" locator="link=${portlet} Page" value="${portlet} Page" />
 		</steps>
 	</macrodef>
 </macros>

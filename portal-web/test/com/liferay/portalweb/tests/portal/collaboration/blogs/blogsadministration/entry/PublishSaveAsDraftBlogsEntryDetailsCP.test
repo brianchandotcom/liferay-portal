@@ -3,29 +3,29 @@
 	description="In the Control Panel Blogs Portlet, approve a Blogs Entry draft."
 >
 	<setup>
-		<macro name="CPBlogsEntry" command="saveAsDraft">
+		<macro object="CPBlogsEntry" command="saveAsDraft">
 			<param name="title" value="Blogs Entry Title" />
 			<param name="content" value="Blogs Entry Content" />
 		</macro>
 	</setup>
 	<steps>
-		`<macro name="Goto" command="controlPanelPortlet">
+		`<macro object="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action name="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
-		<action name="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Draft" />
-		<action name="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_ACTIONS" value="Actions" />
-		<action name="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_ACTIONS_EDIT" value="Edit" />
+		<action object="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+		<action object="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Draft" />
+		<action object="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_ACTIONS" value="Actions" />
+		<action object="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_ACTIONS_EDIT" value="Edit" />
 
-		<action name="CPBlogsEntryEdit" command="click" path="CONTENT_LINK_SAVE" value="Publish" />
-		<action name="CPBlogsEntryEdit" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
+		<action object="CPBlogsEntryEdit" command="click" path="CONTENT_LINK_SAVE" value="Publish" />
+		<action object="CPBlogsEntryEdit" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
 
-		<action name="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
-		<action name="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Approved" />
+		<action object="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+		<action object="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Approved" />
 	</steps>
 	<teardown>
-		<macro name="CPBlogsEntry" command="tearDown" />
-		<macro name="CPRecycleBin" command="empty" />
+		<macro object="CPBlogsEntry" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

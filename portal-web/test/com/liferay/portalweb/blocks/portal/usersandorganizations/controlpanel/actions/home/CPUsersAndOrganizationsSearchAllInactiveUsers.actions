@@ -1,7 +1,7 @@
 <actions object="CPUsersAndOrganizationsSearchAllInactiveUsers">
 	<actiondef name="click">
 		<conditional elements="ADVANCED_SEARCH_BUTTON,BASIC_SEARCH_BUTTON,USERS_DELETE,USERS_RESTORE">
-			<function name="Click" command="valueClickAtAndWait" />
+			<function object="Click" command="valueClickAtAndWait" />
 		</conditional>
 	</actiondef>
 </actions>

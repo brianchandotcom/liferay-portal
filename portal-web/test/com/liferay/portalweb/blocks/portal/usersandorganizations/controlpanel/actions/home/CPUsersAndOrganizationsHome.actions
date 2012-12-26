@@ -1,11 +1,11 @@
 <actions object="CPUsersAndOrganizationsHome">
 	<actiondef name="click">
 		<conditional elements="ADD_USER,USERS_SEARCH_ALL,USERS_USER_1_FIRST_NAME">
-			<function name="Click" command="textClickAndWait" />
+			<function object="Click" command="textClickAndWait" />
 		</conditional>
 
 		<conditional elements="SEARCH_BUTTON,USERS_DEACTIVATE">
-			<function name="Click" command="valueClickAtAndWait" />
+			<function object="Click" command="valueClickAtAndWait" />
 		</conditional>
 	</actiondef>
 </actions>

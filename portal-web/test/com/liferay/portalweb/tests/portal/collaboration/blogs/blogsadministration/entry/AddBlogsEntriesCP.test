@@ -5,21 +5,21 @@
 	<setup>
 	</setup>
 	<steps>
-		<macro name="CPBlogsEntry" command="add">
+		<macro object="CPBlogsEntry" command="add">
 			<param name="title" value="Blogs Entry1 Title" />
 			<param name="content" value="Blogs Entry1 Content" />
 		</macro>
-		<macro name="CPBlogsEntry" command="add">
+		<macro object="CPBlogsEntry" command="add">
 			<param name="title" value="Blogs Entry2 Title" />
 			<param name="content" value="Blogs Entry2 Content" />
 		</macro>
-		<macro name="CPBlogsEntry" command="add">
+		<macro object="CPBlogsEntry" command="add">
 			<param name="title" value="Blogs Entry3 Title" />
 			<param name="content" value="Blogs Entry3 Content" />
 		</macro>
 	</steps>
 	<teardown>
-		<macro name="CPBlogsEntry" command="tearDown" />
-		<macro name="CPRecycleBin" command="empty" />
+		<macro object="CPBlogsEntry" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

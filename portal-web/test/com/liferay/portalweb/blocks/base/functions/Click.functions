@@ -78,12 +78,12 @@
 	<functiondef name="textClickAtHomeClickDockbar">
 		<selenium command="clickAt" target="//div[@id='dockbar']" value="" />
 		<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
-		<function name="Click" command="textClickAt" />
+		<function object="Click" command="textClickAt" />
 	</functiondef>
 
 	<functiondef name="textClickAtPause">
 		<selenium command="pause" target="1000" />
-		<function name="Click" command="textClickAt" />
+		<function object="Click" command="textClickAt" />
 	</functiondef>
 
 	<functiondef name="valueClick">
@@ -116,6 +116,6 @@
 
 	<functiondef name="valueClickAtAndWaitCPBlogsCKEditor">
 		<selenium command="waitForElementPresent" target="//textarea[@id='_161_editor' and @style='display: none;']" />
-		<function name="Click" command="valueClickAtAndWait" />
+		<function object="Click" command="valueClickAtAndWait" />
 	</functiondef>
 </functions>

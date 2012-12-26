@@ -3,19 +3,19 @@
 	description="In the Control Panel Documents and Media Portlet, add a Comment to a Document."
 >
 	<setup>
-		<macro name="CPDocumentsAndMediaDocument" command="add">
+		<macro object="CPDocumentsAndMediaDocument" command="add">
 			<param name="title" value="DM Document Title" />
 			<param name="file" value="Document_1.doc" />
 		</macro>
 	</setup>
 	<steps>
-		<macro name="CPDocumentsAndMediaComment" command="add">
+		<macro object="CPDocumentsAndMediaComment" command="add">
 			<param name="document" value="DM Document Title" />
 			<param name="documentComment" value="DM Document Comment" />
 		</macro>
 	</steps>
 	<teardown>
-		<macro name="CPDocumentsAndMediaDocument" command="tearDown" />
-		<macro name="CPRecycleBin" command="empty" />
+		<macro object="CPDocumentsAndMediaDocument" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

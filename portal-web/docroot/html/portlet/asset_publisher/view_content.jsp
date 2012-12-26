@@ -66,10 +66,9 @@ try {
 		else {
 			assetRenderer = assetRendererFactory.getAssetRenderer(classPK, AssetRendererFactory.TYPE_LATEST_APPROVED);
 		}
-
 	}
 
-	if (assetEntry.getVisible() == false){
+	if (!assetEntry.isVisible()){
 		throw new NoSuchModelException();
 	}
 

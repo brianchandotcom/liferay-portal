@@ -66,28 +66,26 @@ type = ParamUtil.getString(request, "type", type);
 		<%
 		String structureId = article.getStructureId();
 
-		JournalStructure structure = null;
+		DDMStructure ddmStructure = null;
 
-		long structureGroupId = groupId;
+		long ddmStructureGroupId = groupId;
 
 		if (Validator.isNotNull(structureId)) {
-			try {
-				structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId, true);
+			ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(groupId, structureId);
 
-				structureGroupId = structure.getGroupId();
-			}
-			catch (NoSuchStructureException nsse) {
-			}
+			List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
 
-			List<JournalTemplate> templates = new ArrayList<JournalTemplate>();
+			if (ddmStructure != null) {
+				ddmStructureGroupId = ddmStructure.getGroupId();
 
-			templates.addAll(JournalTemplateLocalServiceUtil.getStructureTemplates(structureGroupId, structureId));
+				ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(ddmStructureGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
 
-			if (groupId != structureGroupId) {
-				templates.addAll(JournalTemplateLocalServiceUtil.getStructureTemplates(groupId, structureId));
+				if (groupId != ddmStructureGroupId) {
+					ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
+				}
 			}
 
-			if (!templates.isEmpty()) {
+			if (!ddmTemplates.isEmpty()) {
 				if (Validator.isNull(templateId)) {
 					templateId = article.getTemplateId();
 				}
@@ -97,8 +95,8 @@ type = ParamUtil.getString(request, "type", type);
 					<liferay-ui:message key="override-default-template" />
 
 					<liferay-ui:table-iterator
-						list="<%= templates %>"
-						listType="com.liferay.portlet.journal.model.JournalTemplate"
+						list="<%= ddmTemplates %>"
+						listType="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"
 						rowLength="3"
 						rowPadding="30"
 					>
@@ -106,7 +104,7 @@ type = ParamUtil.getString(request, "type", type);
 						<%
 						boolean templateChecked = false;
 
-						if (templateId.equals(tableIteratorObj.getTemplateId())) {
+						if (templateId.equals(tableIteratorObj.getTemplateKey())) {
 							templateChecked = true;
 						}
 
@@ -115,18 +113,18 @@ type = ParamUtil.getString(request, "type", type);
 						}
 						%>
 
-						<liferay-portlet:renderURL portletName="<%= PortletKeys.JOURNAL %>" var="editTemplateURL">
-							<portlet:param name="struts_action" value="/journal/edit_template" />
+						<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL">
+							<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="groupId" value="<%= String.valueOf(tableIteratorObj.getGroupId()) %>" />
-							<portlet:param name="templateId" value="<%= tableIteratorObj.getTemplateId() %>" />
+							<portlet:param name="templateId" value="<%= String.valueOf(tableIteratorObj.getTemplateId()) %>" />
 						</liferay-portlet:renderURL>
 
 						<liferay-util:buffer var="linkContent">
 							<aui:a href="<%= editTemplateURL %>" id="tableIteratorObjName"><%= tableIteratorObj.getName() %></aui:a>
 						</liferay-util:buffer>
 
-						<aui:input checked="<%= templateChecked %>" label="<%= linkContent %>" name="overideTemplateId" onChange='<%= "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "templateId.value = this.value;}" %>' type="radio" value="<%= tableIteratorObj.getTemplateId() %>" />
+						<aui:input checked="<%= templateChecked %>" label="<%= linkContent %>" name="overideTemplateId" onChange='<%= "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "templateId.value = this.value;}" %>' type="radio" value="<%= tableIteratorObj.getTemplateKey() %>" />
 
 						<c:if test="<%= tableIteratorObj.isSmallImage() %>">
 							<br />

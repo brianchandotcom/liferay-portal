@@ -210,6 +210,86 @@ if (Validator.isNull(redirect)) {
 			/>
 		</liferay-ui:custom-attributes-available>
 
+		<c:if test="<%= curParentMessage == null %>">
+
+			<%
+			boolean disabled = false;
+			boolean question = threadAsQuestionByDefault;
+
+			if (message != null) {
+				thread = MBThreadLocalServiceUtil.getThread(threadId);
+
+				if (thread.isQuestion() || message.isAnswer()) {
+					question = true;
+				}
+			}
+			else {
+				MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
+
+				if ((category != null) && category.getDisplayStyle().equals("question")) {
+					disabled = true;
+					question = true;
+				}
+			}
+			%>
+
+			<aui:input disabled="<%= disabled %>" helpMessage="message-boards-message-question-help" label="mark-as-a-question" name="question" type="checkbox" value="<%= question %>" />
+		</c:if>
+
+		<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && allowAnonymousPosting %>">
+			<aui:input helpMessage="message-boards-message-anonymous-help" name="anonymous" type="checkbox" />
+		</c:if>
+
+		<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
+			<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type="checkbox" value="<%= subscribeByDefault %>" />
+		</c:if>
+
+		<c:if test="<%= (priorities.length > 0) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.UPDATE_THREAD_PRIORITY) %>">
+
+			<%
+			double threadPriority = BeanParamUtil.getDouble(message, request, "priority");
+			%>
+
+			<aui:select name="priority">
+				<aui:option value="" />
+
+				<%
+				for (int i = 0; i < priorities.length; i++) {
+					String[] priority = StringUtil.split(priorities[i]);
+
+					try {
+						String priorityName = priority[0];
+						String priorityImage = priority[1];
+						double priorityValue = GetterUtil.getDouble(priority[2]);
+
+						if (priorityValue > 0) {
+				%>
+
+							<aui:option label="<%= priorityName %>" selected="<%= (threadPriority == priorityValue) %>" value="<%= priorityValue %>" />
+
+				<%
+						}
+					}
+					catch (Exception e) {
+					}
+				}
+				%>
+
+			</aui:select>
+		</c:if>
+
+		<c:if test="<%= PropsValues.MESSAGE_BOARDS_PINGBACK_ENABLED %>">
+			<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="allow-pingbacks" name="allowPingbacks" value="<%= allowPingbacks %>" />
+		</c:if>
+
+		<c:if test="<%= message == null %>">
+			<aui:field-wrapper label="permissions">
+				<liferay-ui:input-permissions
+					modelName="<%= MBMessage.class.getName() %>"
+				/>
+			</aui:field-wrapper>
+		</c:if>
+
 		<c:if test="<%= attachments %>">
 			<aui:fieldset cssClass="message-attachments" label="attachments">
 				<c:if test="<%= existingAttachmentsFileEntries.size() > 0 %>">
@@ -290,88 +370,6 @@ if (Validator.isNull(redirect)) {
 				%>
 
 			</aui:fieldset>
-		</c:if>
-
-
-
-		<c:if test="<%= curParentMessage == null %>">
-
-			<%
-			boolean disabled = false;
-			boolean question = threadAsQuestionByDefault;
-
-			if (message != null) {
-				thread = MBThreadLocalServiceUtil.getThread(threadId);
-
-				if (thread.isQuestion() || message.isAnswer()) {
-					question = true;
-				}
-			}
-			else {
-				MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
-
-				if ((category != null) && category.getDisplayStyle().equals("question")) {
-					disabled = true;
-					question = true;
-				}
-			}
-			%>
-
-			<aui:input disabled="<%= disabled %>" helpMessage="message-boards-message-question-help" label="mark-as-a-question" name="question" type="checkbox" value="<%= question %>" />
-		</c:if>
-
-		<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && allowAnonymousPosting %>">
-			<aui:input helpMessage="message-boards-message-anonymous-help" name="anonymous" type="checkbox" />
-		</c:if>
-
-		<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
-			<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type="checkbox" value="<%= subscribeByDefault %>" />
-		</c:if>
-
-		<c:if test="<%= (priorities.length > 0) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.UPDATE_THREAD_PRIORITY) %>">
-
-			<%
-			double threadPriority = BeanParamUtil.getDouble(message, request, "priority");
-			%>
-
-			<aui:select name="priority">
-				<aui:option value="" />
-
-				<%
-				for (int i = 0; i < priorities.length; i++) {
-					String[] priority = StringUtil.split(priorities[i]);
-
-					try {
-						String priorityName = priority[0];
-						String priorityImage = priority[1];
-						double priorityValue = GetterUtil.getDouble(priority[2]);
-
-						if (priorityValue > 0) {
-				%>
-
-							<aui:option label="<%= priorityName %>" selected="<%= (threadPriority == priorityValue) %>" value="<%= priorityValue %>" />
-
-				<%
-						}
-					}
-					catch (Exception e) {
-					}
-				}
-				%>
-
-			</aui:select>
-		</c:if>
-
-		<c:if test="<%= PropsValues.MESSAGE_BOARDS_PINGBACK_ENABLED %>">
-			<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="allow-pingbacks" name="allowPingbacks" value="<%= allowPingbacks %>" />
-		</c:if>
-
-		<c:if test="<%= message == null %>">
-			<aui:field-wrapper label="permissions">
-				<liferay-ui:input-permissions
-					modelName="<%= MBMessage.class.getName() %>"
-				/>
-			</aui:field-wrapper>
 		</c:if>
 
 		<c:if test="<%= (curParentMessage == null) || childrenMessagesTaggable %>">

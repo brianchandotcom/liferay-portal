@@ -36,6 +36,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.WeakHashMap;
 
 import javassist.util.proxy.ProxyFactory;
 
@@ -57,25 +58,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 	@Override
 	public SessionFactory buildSessionFactory() throws Exception {
-		ProxyFactory.classLoaderProvider =
-			new ProxyFactory.ClassLoaderProvider() {
-
-				public ClassLoader get(ProxyFactory proxyFactory) {
-					ClassLoader contextClassLoader =
-						PACLClassLoaderUtil.getContextClassLoader();
-					ClassLoader portalClassLoader =
-						PACLClassLoaderUtil.getPortalClassLoader();
-
-					if (contextClassLoader == portalClassLoader) {
-						return contextClassLoader;
-					}
-
-					return new PreloadClassLoader(
-						contextClassLoader, getPreloadClassLoaderClasses());
-				}
-
-			};
-
 		setBeanClassLoader(getConfigurationClassLoader());
 
 		return super.buildSessionFactory();
@@ -94,21 +76,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		_hibernateConfigurationConverter = hibernateConfigurationConverter;
 	}
 
-	protected Dialect determineDialect() {
-		return DialectDetector.getDialect(getDataSource());
-	}
-
-	protected ClassLoader getConfigurationClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
-	}
-
-	protected String[] getConfigurationResources() {
-		return PropsUtil.getArray(PropsKeys.HIBERNATE_CONFIGS);
-	}
-
-	protected Map<String, Class<?>> getPreloadClassLoaderClasses() {
+	protected static Map<String, Class<?>> getPreloadClassLoaderClasses() {
 		try {
 			Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
 
@@ -126,6 +94,20 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		catch (ClassNotFoundException cnfe) {
 			throw new RuntimeException(cnfe);
 		}
+	}
+
+	protected Dialect determineDialect() {
+		return DialectDetector.getDialect(getDataSource());
+	}
+
+	protected ClassLoader getConfigurationClassLoader() {
+		Class<?> clazz = getClass();
+
+		return clazz.getClassLoader();
+	}
+
+	protected String[] getConfigurationResources() {
+		return PropsUtil.getArray(PropsKeys.HIBERNATE_CONFIGS);
 	}
 
 	@Override
@@ -266,6 +248,43 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalHibernateConfiguration.class);
+
+	private final static Map<ProxyFactory, ClassLoader>
+		_proxyFactoryClassLoaders =
+			new WeakHashMap<ProxyFactory, ClassLoader>();
+
+	static {
+		ProxyFactory.classLoaderProvider =
+			new ProxyFactory.ClassLoaderProvider() {
+
+				public ClassLoader get(ProxyFactory proxyFactory) {
+					synchronized (_proxyFactoryClassLoaders) {
+						ClassLoader classLoader = _proxyFactoryClassLoaders.get(
+							proxyFactory);
+
+						if (classLoader == null) {
+							classLoader =
+								PACLClassLoaderUtil.getPortalClassLoader();
+
+							ClassLoader contextClassLoader =
+								PACLClassLoaderUtil.getContextClassLoader();
+
+							if (classLoader != contextClassLoader) {
+								classLoader = new PreloadClassLoader(
+									contextClassLoader,
+									getPreloadClassLoaderClasses());
+							}
+
+							_proxyFactoryClassLoaders.put(
+								proxyFactory, classLoader);
+						}
+
+						return classLoader;
+					}
+				}
+
+			};
+	}
 
 	private Converter<String> _hibernateConfigurationConverter;
 

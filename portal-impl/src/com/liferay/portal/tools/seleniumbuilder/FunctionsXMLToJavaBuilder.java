@@ -108,12 +108,12 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 		List<Element> functionDefs = rootElement.elements("functiondef");
 
 		for (Element functionDef : functionDefs) {
-			String functionDefName = functionDef.attributeValue("name");
+			String functionDefCommand = functionDef.attributeValue("command");
 
 			sb.append("public void ");
-			sb.append(functionDefName);
+			sb.append(functionDefCommand);
 
-			if (functionDefName.equals("dragAndDrop")) {
+			if (functionDefCommand.equals("dragAndDrop")) {
 				sb.append("(String path1, String value1, String path2, ");
 				sb.append("String value2)");
 			}

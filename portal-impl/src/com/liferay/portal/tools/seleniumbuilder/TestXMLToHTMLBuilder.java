@@ -480,7 +480,7 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 		String steps = "";
 
 		for (Element macro : macros) {
-			if (macro.attributeValue("name").equals(macroCommand)) {
+			if (macro.attributeValue("command").equals(macroCommand)) {
 				steps = getCommands(macro);
 			}
 		}
@@ -643,10 +643,10 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 		List<Element> actionDefs = rootElement.elements("actiondef");
 
 		for (Element actionDef : actionDefs) {
-			String actionName = actionDef.attributeValue("name");
+			String actionCommand = actionDef.attributeValue("command");
 			String actionDescription = actionDef.attributeValue("description");
 
-			hashMap.put(actionName, actionDescription);
+			hashMap.put(actionCommand, actionDescription);
 		}
 
 		return hashMap;
@@ -690,13 +690,13 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 			List<Element> macroDefs = rootElement.elements("macrodef");
 
 			for (Element macroDef : macroDefs) {
-				String name = macroDef.attributeValue("name");
+				String command = macroDef.attributeValue("command");
 				String description = macroDef.attributeValue("description");
 
-				String macroKey = macroFileName + "__" + name;
+				String macroKey = macroFileName + "__" + command;
 
 				String[] macroValue =
-					{ name, description, macroFileName, macroFilePath };
+					{ command, description, macroFileName, macroFilePath };
 
 				hashMap.put(macroKey, macroValue);
 			}

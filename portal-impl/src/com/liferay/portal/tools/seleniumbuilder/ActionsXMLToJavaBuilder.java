@@ -159,10 +159,10 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		List<Element> actionDefs = rootElement.elements("actiondef");
 
 		for (Element actionDef : actionDefs) {
-			String actionDefName = actionDef.attributeValue("name");
+			String actionDefCommand = actionDef.attributeValue("command");
 
 			sb.append("public void ");
-			sb.append(actionDefName);
+			sb.append(actionDefCommand);
 			sb.append("(String param1, String param2) throws Exception {\n");
 
 			sb.append("String[] params = getParams(param1, param2);\n\n");

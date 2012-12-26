@@ -120,13 +120,13 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		List<Element> macroDefs = rootElement.elements("macrodef");
 
 		for (Element macroDef : macroDefs) {
-			String macroDefName = macroDef.attributeValue("name");
+			String macroDefCommand = macroDef.attributeValue("command");
 
 			Element params = macroDef.element("params");
 			Element stepsBlock = macroDef.element("steps");
 
 			sb.append("public void ");
-			sb.append(macroDefName);
+			sb.append(macroDefCommand);
 			sb.append("(");
 			sb.append(_getParameterList(params));
 			sb.append(") throws Exception {");

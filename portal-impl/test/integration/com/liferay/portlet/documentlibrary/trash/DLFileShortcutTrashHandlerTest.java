@@ -59,6 +59,16 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	public void testTrashAssetTagsApproved() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashAssetTagsDraft() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
 	public void testTrashDuplicate() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}

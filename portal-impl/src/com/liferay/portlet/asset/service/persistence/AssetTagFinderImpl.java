@@ -46,6 +46,9 @@ import java.util.List;
 public class AssetTagFinderImpl
 	extends BasePersistenceImpl<AssetTag> implements AssetTagFinder {
 
+	public static final String COUNT_BY_GROUP_ID =
+		AssetTagFinder.class.getName() + ".countByGroupId";
+
 	public static final String COUNT_BY_G_N =
 		AssetTagFinder.class.getName() + ".countByG_N";
 
@@ -57,6 +60,9 @@ public class AssetTagFinderImpl
 
 	public static final String FIND_BY_ENTRY_ID =
 		AssetTagFinder.class.getName() + ".findByEntryId";
+
+	public static final String FIND_BY_GROUP_ID =
+		AssetTagFinder.class.getName() + ".findByGroupId";
 
 	public static final String FIND_BY_G_N =
 		AssetTagFinder.class.getName() + ".findByG_N";
@@ -71,7 +77,11 @@ public class AssetTagFinderImpl
 		AssetTagFinder.class.getName() + ".findByG_N_P";
 
 	public static final String FIND_BY_G_N_S_E =
-			AssetTagFinder.class.getName() + ".findByG_N_S_E";
+		AssetTagFinder.class.getName() + ".findByG_N_S_E";
+
+	public int countByGroupId(long groupId) throws SystemException {
+		return doCountByGroupId(groupId, true);
+	}
 
 	public int countByG_C_N(long groupId, long classNameId, String name)
 		throws SystemException {
@@ -83,6 +93,10 @@ public class AssetTagFinderImpl
 		throws SystemException {
 
 		return doCountByG_N_P(groupId, name, tagProperties, false);
+	}
+
+	public int filterCountByGroupId(long groupId) throws SystemException {
+		return doCountByGroupId(groupId, false);
 	}
 
 	public int filterCountByG_N(long groupId, String name)
@@ -102,6 +116,14 @@ public class AssetTagFinderImpl
 		throws SystemException {
 
 		return doCountByG_N_P(groupId, name, tagProperties, true);
+	}
+
+	public List<AssetTag> filterFindByGroupId(
+			long groupId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return doFindByGroupId(groupId, start, end, orderByComparator, true);
 	}
 
 	public AssetTag filterFindByG_N(long groupId, String name)
@@ -152,6 +174,14 @@ public class AssetTagFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	public List<AssetTag> findByGroupId(
+			long groupId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return doFindByGroupId(groupId, start, end, orderByComparator, false);
 	}
 
 	public AssetTag findByG_N(long groupId, String name)
@@ -252,6 +282,49 @@ public class AssetTagFinderImpl
 			}
 
 			return assetTags;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected int doCountByGroupId(long groupId, boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_GROUP_ID);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, AssetTag.class.getName(), "AssetTag.tagId", groupId);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -396,6 +469,43 @@ public class AssetTagFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<AssetTag> doFindByGroupId(
+			long groupId, int start, int end, OrderByComparator obc,
+			boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_GROUP_ID);
+
+			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, AssetTag.class.getName(), "AssetTag.tagId", groupId);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("AssetTag", AssetTagImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			return (List<AssetTag>)QueryUtil.list(q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

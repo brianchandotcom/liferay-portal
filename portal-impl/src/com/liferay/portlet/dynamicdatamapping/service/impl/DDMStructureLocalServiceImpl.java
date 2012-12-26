@@ -359,7 +359,7 @@ public class DDMStructureLocalServiceImpl
 
 		if (!includeGlobalStructures) {
 			throw new NoSuchStructureException(
-				"No Structure exists with the structure key " +
+				"No DDMStructure exists with the structure key " +
 					structureKey);
 		}
 

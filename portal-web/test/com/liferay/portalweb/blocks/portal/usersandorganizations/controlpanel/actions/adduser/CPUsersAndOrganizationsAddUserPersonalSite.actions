@@ -1,5 +1,5 @@
 <actions object="CPUsersAndOrganizationsAddUserPersonalSite">
-	<actiondef name="click">
+	<actiondef command="click">
 		<conditional elements="BUTTONS_CANCEL,BUTTONS_SAVE">
 			<function object="Click" command="valueClickAtAndWait" />
 		</conditional>

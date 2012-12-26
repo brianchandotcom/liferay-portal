@@ -1,5 +1,5 @@
 <functions>
-	<functiondef name="assertTextNotPresent" default="true">
+	<functiondef command="assertTextNotPresent" default="true">
 		<selenium command="waitForTextNotPresent" />
 		<selenium command="assertTextNotPresent" />
 	</functiondef>

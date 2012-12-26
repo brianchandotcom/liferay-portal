@@ -1,6 +1,6 @@
 <macros object="SignInUser">
 	<macrodef
-		name="signIn"
+		command="signIn"
 		description="Log into the portal as ${email} with the password ${password}."
 	>
 		<params>
@@ -27,8 +27,7 @@
 	</macrodef>
 
 	<macrodef
-		name="signInNewPassword"
-		params="email,password,newPassword"
+		command="signInNewPassword"
 		description="Log into the portal for the first time as ${email} with the password ${password} and reset the password to ${newPassword}."
 	>
 		<params>
@@ -62,7 +61,7 @@
 	</macrodef>
 
 	<macrodef
-		name="signOut"
+		command="signOut"
 		description="Log out of the portal."
 	>
 		<params>

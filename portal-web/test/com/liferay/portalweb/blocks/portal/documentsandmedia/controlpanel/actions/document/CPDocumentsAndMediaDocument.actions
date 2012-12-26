@@ -1,11 +1,11 @@
 <actions object="CPDocumentsAndMediaDocument">
-	<actiondef name="assertTextEquals">
+	<actiondef command="assertTextEquals">
 		<conditional elements="COMMENT_MESSAGE_INFO,DOCUMENT_LOCK_MESSAGE">
 			<function object="AssertTextEquals" command="assertPartialText" />
 		</conditional>
 	</actiondef>
 
-	<actiondef name="click">
+	<actiondef command="click">
 		<conditional elements="COMMENT_BUTTON_CANCEL,COMMENT_BUTTON_REPLY">
 			<function object="Click" command="valueClickAt" />
 		</conditional>

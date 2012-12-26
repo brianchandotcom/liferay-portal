@@ -1,20 +1,20 @@
 <functions>
-	<functiondef name="sendKeys">
+	<functiondef command="sendKeys">
 		<selenium command="waitForVisible" />
 		<selenium command="sendKeys" />
 	</functiondef>
 
-	<functiondef name="sendKeysHomeAddApplication">
+	<functiondef command="sendKeysHomeAddApplication">
 		<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]" />
 		<function object="Type" command="sendKeys" />
 	</functiondef>
 
-	<functiondef name="type" default="true">
+	<functiondef command="type" default="true">
 		<selenium command="waitForVisible" />
 		<selenium command="type" />
 	</functiondef>
 
-	<functiondef name="typeCPBlogsCKEditor">
+	<functiondef command="typeCPBlogsCKEditor">
 		<selenium command="waitForElementPresent" target="//textarea[@id='_161_editor' and @style='display: none;']" />
 
 		<selenium command="waitForVisible" target="//span[.='Source']" />
@@ -39,7 +39,7 @@
 		<selenium command="selectFrame" target="relative=top" />
 	</functiondef>
 
-	<functiondef name="typeCPWebContentCKEditor">
+	<functiondef command="typeCPWebContentCKEditor">
 		<selenium command="waitForElementPresent" target="//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']" />
 
 		<selenium command="waitForVisible" target="//span[.='Source']" />
@@ -64,7 +64,7 @@
 		<selenium command="selectFrame" target="relative=top" />
 	</functiondef>
 
-	<functiondef name="uploadCommonFile">
+	<functiondef command="uploadCommonFile">
 		<selenium command="waitForVisible" />
 		<selenium command="uploadCommonFile" />
 	</functiondef>

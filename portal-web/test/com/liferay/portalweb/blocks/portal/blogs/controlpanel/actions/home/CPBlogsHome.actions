@@ -1,11 +1,11 @@
 <actions object="CPBlogsHome">
-	<actiondef name="assertTextEquals">
+	<actiondef command="assertTextEquals">
 		<conditional elements="BLOGS_ENTRY_TEXT_RATING_AVERAGE">
 			<function object="AssertTextEquals" command="assertPartialText" />
 		</conditional>
 	</actiondef>
 
-	<actiondef name="click">
+	<actiondef command="click">
 		<conditional elements="PORTLET_LINK_DELETE">
 			<function object="Click" command="valueClickAtAndWait" />
 		</conditional>

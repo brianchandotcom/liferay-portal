@@ -1,11 +1,11 @@
 <actions object="CPDocumentsAndMediaDocumentTypeHome">
-	<actiondef name="click">
+	<actiondef command="click">
 		<conditional elements="SEARCH_BUTTON">
 			<function object="Click" command="valueClickAtAndWait" />
 		</conditional>
 	</actiondef>
 
-	<actiondef name="selectWindow">
+	<actiondef command="selectWindow">
 		<conditional elements="TOP">
 			<function object="SelectWindow" command="selectFrameTop" />
 		</conditional>

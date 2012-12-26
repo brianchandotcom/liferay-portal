@@ -1,8 +1,8 @@
 <functions>
-	<functiondef name="close" default="true">
+	<functiondef command="close" default="true">
 	</functiondef>
 
-	<functiondef name="closeWindow">
+	<functiondef command="closeWindow">
 		<selenium command="pause" target="1000" />
 		<selenium command="close" />
 		<selenium command="selectWindow" target="null" />

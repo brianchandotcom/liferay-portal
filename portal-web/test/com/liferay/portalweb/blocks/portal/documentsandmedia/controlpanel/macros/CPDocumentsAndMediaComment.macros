@@ -1,6 +1,6 @@
 <macros object="CPDocumentsAndMediaComment">
 	<macrodef
-		name="add"
+		command="add"
 		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add the first &lt;em&gt;Document Comment&lt;/em&gt; with the value &lt;strong&gt;&quot;${documentComment}&quot;&lt;/strong&gt; to the &lt;em&gt;Document&lt;/em&gt; &lt;strong&gt;&quot;${document}&quot;&lt;/strong&gt;."
 	>
 		<params>
@@ -25,7 +25,7 @@
 	</macrodef>
 
 	<macrodef
-		name="add2"
+		command="add2"
 		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add the second &lt;em&gt;Document Comment&lt;/em&gt; with the value &lt;strong&gt;&quot;${documentComment}&quot;&lt;/strong&gt; to the &lt;em&gt;Document&lt;/em&gt; &lt;strong&gt;&quot;${document}&quot;&lt;/strong&gt;."
 	>
 		<params>
@@ -48,7 +48,7 @@
 	</macrodef>
 
 	<macrodef
-		name="add3"
+		command="add3"
 		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add the third &lt;em&gt;Document Comment&lt;/em&gt; with the value &lt;strong&gt;&quot;${documentComment}&quot;&lt;/strong&gt; to the &lt;em&gt;Document&lt;/em&gt; &lt;strong&gt;&quot;${document}&quot;&lt;/strong&gt;."
 	>
 		<params>

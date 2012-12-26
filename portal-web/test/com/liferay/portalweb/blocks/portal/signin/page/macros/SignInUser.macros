@@ -8,20 +8,20 @@
 			<param name="password" description="User's password" example="test" />
 		</params>
 		<steps>
-			<action name="Home" command="open" path="URL_GUEST" />
+			<action object="Home" command="open" path="URL_GUEST" />
 
-			<action name="PortletSignInHome" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
-			<action name="PortletSignInHome" command="type" path="PASSWORD_FIELD" value="${password}" />
-			<action name="PortletSignInHome" command="check" path="REMEMBER_ME_LINK" />
-			<action name="PortletSignInHome" command="click" path="SIGN_IN_LINK" />
+			<action object="PortletSignInHome" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
+			<action object="PortletSignInHome" command="type" path="PASSWORD_FIELD" value="${password}" />
+			<action object="PortletSignInHome" command="check" path="REMEMBER_ME_LINK" />
+			<action object="PortletSignInHome" command="click" path="SIGN_IN_LINK" />
 
-			<if name="PortletSignInHome" command="isElementPresent" path="I_AGREE_LINK">
-				<action name="PortletSignInHome" command="click" path="I_AGREE_LINK" />
+			<if object="PortletSignInHome" command="isElementPresent" path="I_AGREE_LINK">
+				<action object="PortletSignInHome" command="click" path="I_AGREE_LINK" />
 			</if>
 
-			<if name="PortletSignInHome" command="isElementPresent" path="ANSWER_FIELD">
-				<action name="PortletSignInHome" command="type" path="ANSWER_FIELD" value="test" />
-				<action name="PortletSignInHome" command="click" path="SAVE_LINK" />
+			<if object="PortletSignInHome" command="isElementPresent" path="ANSWER_FIELD">
+				<action object="PortletSignInHome" command="type" path="ANSWER_FIELD" value="test" />
+				<action object="PortletSignInHome" command="click" path="SAVE_LINK" />
 			</if>
 		</steps>
 	</macrodef>
@@ -37,26 +37,26 @@
 			<param name="newPassword" description="User's new password" example="test" />
 		</params>
 		<steps>
-			<action name="Home" command="open" path="URL_GUEST" />
+			<action object="Home" command="open" path="URL_GUEST" />
 
-			<action name="PortletSignInHome" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
-			<action name="PortletSignInHome" command="type" path="PASSWORD_FIELD" value="${password}" />
-			<action name="PortletSignInHome" command="check" path="REMEMBER_ME_LINK" />
-			<action name="PortletSignInHome" command="click" path="SIGN_IN_LINK" />
+			<action object="PortletSignInHome" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
+			<action object="PortletSignInHome" command="type" path="PASSWORD_FIELD" value="${password}" />
+			<action object="PortletSignInHome" command="check" path="REMEMBER_ME_LINK" />
+			<action object="PortletSignInHome" command="click" path="SIGN_IN_LINK" />
 
-			<if name="PortletSignInHome" command="isElementPresent" path="I_AGREE_LINK">
-				<action name="PortletSignInHome" command="click" path="I_AGREE_LINK" />
+			<if object="PortletSignInHome" command="isElementPresent" path="I_AGREE_LINK">
+				<action object="PortletSignInHome" command="click" path="I_AGREE_LINK" />
 			</if>
 
-			<if name="PortletSignInHome" command="isElementPresent" path="NEW_PASSWORD_FIELD">
-				<action name="PortletSignInHome" command="type" path="NEW_PASSWORD_FIELD" value="${newPassword}" />
-				<action name="PortletSignInHome" command="type" path="NEW_PASSWORD_ENTER_AGAIN_FIELD" value="${newPassword}" />
-				<action name="PortletSignInHome" command="click" path="SAVE_LINK" value="Save" />
+			<if object="PortletSignInHome" command="isElementPresent" path="NEW_PASSWORD_FIELD">
+				<action object="PortletSignInHome" command="type" path="NEW_PASSWORD_FIELD" value="${newPassword}" />
+				<action object="PortletSignInHome" command="type" path="NEW_PASSWORD_ENTER_AGAIN_FIELD" value="${newPassword}" />
+				<action object="PortletSignInHome" command="click" path="SAVE_LINK" value="Save" />
 			</if>
 
-			<if name="PortletSignInHome" command="isElementPresent" path="ANSWER_FIELD">
-				<action name="PortletSignInHome" command="type" path="ANSWER_FIELD" value="test" />
-				<action name="PortletSignInHome" command="click" path="SAVE_LINK" />
+			<if object="PortletSignInHome" command="isElementPresent" path="ANSWER_FIELD">
+				<action object="PortletSignInHome" command="type" path="ANSWER_FIELD" value="test" />
+				<action object="PortletSignInHome" command="click" path="SAVE_LINK" />
 			</if>
 		</steps>
 	</macrodef>
@@ -68,9 +68,9 @@
 		<params>
 		</params>
 		<steps>
-			<action name="Home" command="open" path="URL_GUEST" />
+			<action object="Home" command="open" path="URL_GUEST" />
 
-			<action name="PortletSignInHome" command="click" path="SIGN_OUT_LINK" />
+			<action object="PortletSignInHome" command="click" path="SIGN_OUT_LINK" />
 		</steps>
 	</macrodef>
 </macros>

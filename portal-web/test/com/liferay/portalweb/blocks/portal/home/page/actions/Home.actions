@@ -1,31 +1,31 @@
 <actions object="Home">
 	<actiondef name="click">
 		<conditional elements="ADD_LINK,GOTO_LINK,MANAGE_LINK">
-			<function name="Click" command="textClickAtHomeClickDockbar" />
+			<function object="Click" command="textClickAtHomeClickDockbar" />
 		</conditional>
 
 		<conditional elements="ADD_LINK_APPLICATION">
-			<function name="Click" command="partialTextClickAt" />
+			<function object="Click" command="partialTextClickAt" />
 		</conditional>
 
 		<conditional elements="GOTO_LINK_CONTROL_PANEL">
-			<function name="Click" command="textClickAtAndWait" />
+			<function object="Click" command="textClickAtAndWait" />
 		</conditional>
 
 		<conditional startswith="link=">
-			<function name="Click" command="textClickAtAndWait" />
+			<function object="Click" command="textClickAtAndWait" />
 		</conditional>
 	</actiondef>
 
 	<actiondef name="mouseOver">
 		<conditional elements="ADD_LINK,GOTO_LINK,MANAGE_LINK">
-			<function name="MouseOver" command="textMouseOverHomeClickDockbar" />
+			<function object="MouseOver" command="textMouseOverHomeClickDockbar" />
 		</conditional>
 	</actiondef>
 
 	<actiondef name="type">
 		<conditional elements="PORTLET_FIELD_SEARCH">
-			<function name="Type" command="sendKeysHomeAddApplication" />
+			<function object="Type" command="sendKeysHomeAddApplication" />
 		</conditional>
 	</actiondef>
 </actions>

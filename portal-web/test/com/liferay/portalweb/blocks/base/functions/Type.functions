@@ -6,7 +6,7 @@
 
 	<functiondef name="sendKeysHomeAddApplication">
 		<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]" />
-		<function name="Type" command="sendKeys" />
+		<function object="Type" command="sendKeys" />
 	</functiondef>
 
 	<functiondef name="type" default="true">

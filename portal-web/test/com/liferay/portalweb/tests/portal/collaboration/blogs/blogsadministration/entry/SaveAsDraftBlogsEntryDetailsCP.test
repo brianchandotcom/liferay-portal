@@ -5,13 +5,13 @@
 	<setup>
 	</setup>
 	<steps>
-		<macro name="CPBlogsEntry" command="saveAsDraft">
+		<macro object="CPBlogsEntry" command="saveAsDraft">
 			<param name="title" value="Blogs Entry Title" />
 			<param name="content" value="Blogs Entry Content" />
 		</macro>
 	</steps>
 	<teardown>
-		<macro name="CPBlogsEntry" command="tearDown" />
-		<macro name="CPRecycleBin" command="empty" />
+		<macro object="CPBlogsEntry" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

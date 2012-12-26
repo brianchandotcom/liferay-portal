@@ -3,7 +3,7 @@
 	description="In the &lt;strong&gt;Control Panel Users and Organizations Portlet&lt;/strong&gt;, delete a User."
 >
 	<setup>
-		<macro name="CPUsersAndOrganizationsUsers" command="add">
+		<macro object="CPUsersAndOrganizationsUsers" command="add">
 			<param name="screenName" value="usersn" />
 			<param name="emailAddress" value="userea@liferay.com" />
 			<param name="firstName" value="userfn" />
@@ -11,16 +11,16 @@
 		</macro>
 	</setup>
 	<steps>
-		<macro name="CPUsersAndOrganizationsUsers" command="deactivate">
+		<macro object="CPUsersAndOrganizationsUsers" command="deactivate">
 			<param name="firstName" value="userfn" />
 		</macro>
 
-		<macro name="CPUsersAndOrganizationsUsers" command="delete">
+		<macro object="CPUsersAndOrganizationsUsers" command="delete">
 			<param name="firstName" value="userfn" />
 		</macro>
 	</steps>
 	<teardown>
-		<macro name="CPUsersAndOrganizationsUsers" command="tearDown">
+		<macro object="CPUsersAndOrganizationsUsers" command="tearDown">
 		</macro>
 	</teardown>
 </test>

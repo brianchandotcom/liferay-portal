@@ -1,7 +1,7 @@
 <actions object="CPDocumentsAndMediaDocumentEdit">
 	<actiondef name="click">
 		<conditional elements="BUTTON_CANCEL,BUTTON_CANCEL_CHECKIN,BUTTON_CHECKOUT,BUTTON_PUBLISH,BUTTON_SAVE,BUTTON_SAVE_AND_CHECKIN">
-			<function name="Click" command="valueClickAtAndWait" />
+			<function object="Click" command="valueClickAtAndWait" />
 		</conditional>
 	</actiondef>
 </actions>

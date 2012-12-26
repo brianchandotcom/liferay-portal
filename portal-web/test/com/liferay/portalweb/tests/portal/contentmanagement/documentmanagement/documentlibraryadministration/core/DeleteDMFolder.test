@@ -3,17 +3,17 @@
 	description="In the Control Panel Documents and Media Portlet, delete a Folder."
 >
 	<setup>
-		<macro name="CPDocumentsAndMediaFolder" command="add">
+		<macro object="CPDocumentsAndMediaFolder" command="add">
 			<param name="title" value="DM Folder" />
 		</macro>
 	</setup>
 	<steps>
-		<macro name="CPDocumentsAndMediaFolder" command="delete">
+		<macro object="CPDocumentsAndMediaFolder" command="delete">
 			<param name="title" value="DM Folder" />
 		</macro>
 	</steps>
 	<teardown>
-		<macro name="CPDocumentsAndMediaFolder" command="tearDown" />
-		<macro name="CPRecycleBin" command="empty" />
+		<macro object="CPDocumentsAndMediaFolder" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

@@ -3,31 +3,31 @@
 	description="In the Control Panel Documents and Media Portlet, edit a Document title."
 >
 	<setup>
-		<macro name="CPDocumentsAndMediaDocument" command="add">
+		<macro object="CPDocumentsAndMediaDocument" command="add">
 			<param name="title" value="DM Document Title" />
 			<param name="file" value="Document_1.doc" />
 		</macro>
 	</setup>
 	<steps>
-		<macro name="CPDocumentsAndMediaDocument" command="edit">
+		<macro object="CPDocumentsAndMediaDocument" command="edit">
 			<param name="oldTitle" value="DM Document Title"  />
 			<param name="newTitle" value="DM Document Title Edit"  />
 		</macro>
 
-		<macro name="Goto" command="controlPanelPortlet">
+		<macro object="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Documents and Media" />
 		</macro>
 
-		<action name="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="DM Document Title Edit" />
+		<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="DM Document Title Edit" />
 
-		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_INFO_WORKFLOW_STATUS" value="Status: Approved" />
-		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_VERSION_1" value="1.1" />
-		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_VERSION_2" value="1.0" />
-		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_STATUS_1" value="Approved" />
-		<action name="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_STATUS_2" value="Approved" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_INFO_WORKFLOW_STATUS" value="Status: Approved" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_VERSION_1" value="1.1" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_VERSION_2" value="1.0" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_STATUS_1" value="Approved" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_STATUS_2" value="Approved" />
 	</steps>
 	<teardown>
-		<macro name="CPDocumentsAndMediaDocument" command="tearDown" />
-		<macro name="CPRecycleBin" command="empty" />
+		<macro object="CPDocumentsAndMediaDocument" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

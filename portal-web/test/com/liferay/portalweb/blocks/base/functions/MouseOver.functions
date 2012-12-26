@@ -21,7 +21,7 @@
 	<functiondef name="textMouseOverHomeClickDockbar">
 		<selenium command="clickAt" target="//div[@id='dockbar']" value="" />
 		<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
-		<function name="MouseOver" command="textMouseOver" />
+		<function object="MouseOver" command="textMouseOver" />
 	</functiondef>
 
 	<functiondef name="valueMouseOver">

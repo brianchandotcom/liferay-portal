@@ -7,18 +7,18 @@
 			<param name="name" description="Title of the Folder" example="DM Folder" />
 		</params>
 		<steps>
-			<macro name="Goto" command="controlPanelPortlet">
+			<macro object="Goto" command="controlPanelPortlet">
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<action name="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_ADD_BUTTON" value="Add" />
-			<action name="CPDocumentsAndMediaHome" command="click" path="ADD_FOLDER" value="Folder" />
+			<action object="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_ADD_BUTTON" value="Add" />
+			<action object="CPDocumentsAndMediaHome" command="click" path="ADD_FOLDER" value="Folder" />
 
-			<action name="CPDocumentsAndMediaAddFolder" command="type" path="CONTENT_NAME" value="${name}" />
-			<action name="CPDocumentsAndMediaAddFolder" command="click" path="BUTTON_SAVE" value="Save" />
+			<action object="CPDocumentsAndMediaAddFolder" command="type" path="CONTENT_NAME" value="${name}" />
+			<action object="CPDocumentsAndMediaAddFolder" command="click" path="BUTTON_SAVE" value="Save" />
 
-			<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
-			<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="FOLDER_NAME" value="${name}" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="FOLDER_NAME" value="${name}" />
 		</steps>
 	</macrodef>
 
@@ -31,15 +31,15 @@
 			<param name="name" description="Title of the Folder" example="DM Folder" />
 		</params>
 		<steps>
-			<macro name="Goto" command="controlPanelPortlet">
+			<macro object="Goto" command="controlPanelPortlet">
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="FOLDER_NAME" value="${title}" />
-			<action name="CPDocumentsAndMediaHome" command="click" path="FOLDER_ACTIONS" />
-			<action name="CPDocumentsAndMediaHome" command="click" path="FOLDER_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
-			<action name="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE_UNDO" value="The selected item was moved to the Recycle Bin. Undo" />
-			<action name="CPDocumentsAndMediaHome" command="assertTextNotPresent" value="${title}" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="FOLDER_NAME" value="${title}" />
+			<action object="CPDocumentsAndMediaHome" command="click" path="FOLDER_ACTIONS" />
+			<action object="CPDocumentsAndMediaHome" command="click" path="FOLDER_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE_UNDO" value="The selected item was moved to the Recycle Bin. Undo" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextNotPresent" value="${title}" />
 		</steps>
 	</macrodef>
 
@@ -50,14 +50,14 @@
 		<params>
 		</params>
 		<steps>
-			<macro name="Goto" command="controlPanelPortlet">
+			<macro object="Goto" command="controlPanelPortlet">
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<while name="CPDocumentsAndMediaHome" command="isElementPresent" path="FOLDER_NAME">
-				<action name="CPDocumentsAndMediaHome" command="check" path="TOOLBAR_ALL_ROWS" />
-				<action name="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_ACTIONS_BUTTON" value="Actions" />
-				<action name="CPDocumentsAndMediaHome" command="click" path="ALL_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
+			<while object="CPDocumentsAndMediaHome" command="isElementPresent" path="FOLDER_NAME">
+				<action object="CPDocumentsAndMediaHome" command="check" path="TOOLBAR_ALL_ROWS" />
+				<action object="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_ACTIONS_BUTTON" value="Actions" />
+				<action object="CPDocumentsAndMediaHome" command="click" path="ALL_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
 			</while>
 		</steps>
 	</macrodef>

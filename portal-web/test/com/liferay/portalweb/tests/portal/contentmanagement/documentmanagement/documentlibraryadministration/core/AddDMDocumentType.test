@@ -5,19 +5,19 @@
 	<setup>
 	</setup>
 	<steps>
-		<macro name="CPDocumentsAndMediaDocumentType" command="add">
+		<macro object="CPDocumentsAndMediaDocumentType" command="add">
 			<param name="name" value="DM DocumentType Name" />
 		</macro>
 
-		<macro name="Goto" command="controlPanelPortlet">
+		<macro object="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Documents and Media" />
 		</macro>
 
-		<action name="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_ADD_BUTTON" value="Add" />
-		<action name="CPDocumentsAndMediaHome" command="assertTextEquals" locator="//a[contains(.,'DM DocumentType Name') and @role='menuitem']" value="DM DocumentType Name" />
+		<action object="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_ADD_BUTTON" value="Add" />
+		<action object="CPDocumentsAndMediaHome" command="assertTextEquals" locator="//a[contains(.,'DM DocumentType Name') and @role='menuitem']" value="DM DocumentType Name" />
 	</steps>
 	<teardown>
-		<macro name="CPDocumentsAndMediaDocumentType" command="tearDown" />
-		<macro name="CPRecycleBin" command="empty" />
+		<macro object="CPDocumentsAndMediaDocumentType" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
 	</teardown>
 </test>

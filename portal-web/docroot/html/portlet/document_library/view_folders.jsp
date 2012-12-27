@@ -285,6 +285,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 
 							dataView = new HashMap<String, Object>();
 
+							dataView.put("folder", Boolean.TRUE.toString());
 							dataView.put("folder-id", mountFolder.getFolderId());
 							dataView.put("repository-id", mountFolder.getRepositoryId());
 							dataView.put("title", mountFolder.getName());

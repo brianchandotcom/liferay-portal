@@ -75,9 +75,20 @@ public class SeleniumBuilder {
 		fileNameSetPaths = _getFileNameSetPaths();
 		fileNameSetTests = _getFileNameSetTests();
 
-		objectSetAvailable = _getObjectSetAvailable();
+		classNameSetAvailable = _getClassNameSetAvailable();
 
 		seleniumMethodParamMap = _getSeleniumMethods();
+	}
+
+	protected Set<String> addClassName(
+		Set<String> classNameSet, String simpleClassName) throws Exception {
+		for (String className : classNameSetAvailable) {
+			if (className.endsWith("." + simpleClassName)) {
+				classNameSet.add(className);
+			}
+		}
+
+		return classNameSet;
 	}
 
 	protected String findRootBlockName(Element block) throws Exception {
@@ -153,26 +164,16 @@ public class SeleniumBuilder {
 		return objects;
 	}
 
-	protected String getImportStatements() throws Exception {
-		StringBundler sb = new StringBundler();
+	protected Set<String> getClassNameSet(Element element) throws Exception {
+		Set<String> classNameSet = new TreeSet<String>();
 
-		for (String importObject : importObjects) {
-			sb.append("import ");
+		Set<String> objectSet = getAllObjects(element, new TreeSet<String>());
 
-			if (importObject.endsWith("Actions")) {
-				sb.append(_getImportActions(importObject));
-			}
-			else if (importObject.endsWith("Macros")) {
-				sb.append(_getImportMacros(importObject));
-			}
-			else if (importObject.endsWith("Functions")) {
-				sb.append(_getImportFunctions(importObject));
-			}
-
-			sb.append(";\n");
+		for (String object : objectSet) {
+			classNameSet = addClassName(classNameSet, object);
 		}
 
-		return sb.toString();
+		return classNameSet;
 	}
 
 	protected String getNormalizedContent(String fileName) throws Exception {
@@ -202,35 +203,25 @@ public class SeleniumBuilder {
 		}
 	}
 
-	protected String getObjectDeclarations(
-		Set<String> objectNameSet, String runBlockName) throws Exception {
-
-		StringBundler sb = new StringBundler();
-
-		if (runBlockName.equals("setup") || runBlockName.equals("teardown")) {
-			objectNameSet.add("SignInUserMacros");
-		}
-
-		for (String objectName : objectNameSet) {
-			sb.append(objectName);
-			sb.append(" ");
-			sb.append(StringUtil.lowerCaseFirstLetter(objectName));
-			sb.append(" = new ");
-			sb.append(objectName);
-			sb.append("(selenium);\n");
-		}
-
-		sb.append("\n");
-
-		return sb.toString();
-	}
-
 	protected Element getRootElement(String fileName) throws Exception {
 		String content = getNormalizedContent(fileName);
 
 		Document document = SAXReaderUtil.read(content, true);
 
 		return document.getRootElement();
+	}
+
+	protected Set<String> getSimpleClassNameSet(Element element)
+		throws Exception {
+
+		Set<String> objectSet = getAllObjects(element, new TreeSet<String>());
+		Set<String> simpleClassNameSet = new TreeSet<String>();
+
+		for (String object : objectSet) {
+			simpleClassNameSet.add(object);
+		}
+
+		return simpleClassNameSet;
 	}
 
 	protected boolean isCommand(Element element) {
@@ -260,22 +251,6 @@ public class SeleniumBuilder {
 			blockDefName = findRootBlockName(block);
 		}
 
-		Set<String> blockObjects = getAllObjects(block, new TreeSet<String>());
-
-		importObjects.addAll(blockObjects);
-
-		if (blockName.equals("actiondef") || blockName.equals("macrodef") ||
-			blockName.equals("functiondef") || blockName.equals("setup") ||
-			blockName.equals("steps") || blockName.equals("teardown")) {
-
-			sb.append(getObjectDeclarations(blockObjects, blockName));
-		}
-
-		if (blockName.equals("setup")) {
-			sb.append("signInUserMacros.signIn(");
-			sb.append("\"test@liferay.com\", \"test\");");
-		}
-
 		if (blockName.equals("actiondef")) {
 			sb.append(getActionDefBlock(block));
 		}
@@ -286,6 +261,27 @@ public class SeleniumBuilder {
 				sb.append(processCommand(command, blockName, blockDefName));
 			}
 		}
+
+		return sb.toString();
+	}
+
+	protected String processBlockObjectDeclaractions(Element element)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		Set<String> simpleClassNameSet = getSimpleClassNameSet(element);
+
+		for (String simpleClassName : simpleClassNameSet) {
+			sb.append(simpleClassName);
+			sb.append(" ");
+			sb.append(StringUtil.lowerCaseFirstLetter(simpleClassName));
+			sb.append(" = new ");
+			sb.append(simpleClassName);
+			sb.append("(selenium);\n");
+		}
+
+		sb.append("\n");
 
 		return sb.toString();
 	}
@@ -347,6 +343,22 @@ public class SeleniumBuilder {
 		}
 	}
 
+	protected String processRootElementImports(Element rootElement)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		Set<String> classNameImportSet = getClassNameSet(rootElement);
+
+		for (String className : classNameImportSet) {
+			sb.append("import ");
+			sb.append(className);
+			sb.append(";\n");
+		}
+
+		return sb.toString();
+	}
+
 	protected String readFile(String fileName) throws Exception {
 		return FileUtil.read(basedir + "/" + fileName);
 	}
@@ -366,6 +378,7 @@ public class SeleniumBuilder {
 	}
 
 	protected String basedir;
+	protected Set<String> classNameSetAvailable;
 	protected ClassTypes classType;
 	protected Set<String> fileNameSet;
 	protected Set<String> fileNameSetActions;
@@ -374,8 +387,6 @@ public class SeleniumBuilder {
 	protected Set<String> fileNameSetPaths;
 	protected Set<String> fileNameSetTests;
 	protected String filePath = "";
-	protected Set<String> importObjects = new TreeSet<String>();
-	protected Set<String> objectSetAvailable;
 	protected Set<String> pageObjectSet;
 	protected Map<String, Integer> seleniumMethodParamMap;
 
@@ -397,6 +408,46 @@ public class SeleniumBuilder {
 		}
 
 		return sb.toString();
+	}
+
+	private Set<String> _getClassNameSetAvailable() throws Exception {
+		Set<String> classNameSet = new TreeSet<String>();
+
+		for (String fileName : fileNameSet) {
+			if (fileName.endsWith(".functions")) {
+				String className = StringUtil.replace(
+					fileName, ".functions", "Functions");
+
+				className = StringUtil.replace(
+					className, StringPool.SLASH, StringPool.PERIOD);
+
+				classNameSet.add(className);
+			}
+			else if (fileName.endsWith(".macros")) {
+				String className = StringUtil.replace(
+					fileName, ".macros", "Macros");
+
+				className = StringUtil.replace(
+					className, StringPool.SLASH, StringPool.PERIOD);
+
+				classNameSet.add(className);
+
+			}
+			else if (fileName.endsWith(".paths")) {
+				String className = StringUtil.replace(
+					fileName, ".paths", "Actions");
+
+				className = StringUtil.replace(
+					className, StringPool.SLASH, StringPool.PERIOD);
+
+				className = StringUtil.replace(
+					className, ".paths.", ".actions.");
+
+				classNameSet.add(className);
+			}
+		}
+
+		return classNameSet;
 	}
 
 	private String _getCommandActions(Element command) {
@@ -793,20 +844,20 @@ public class SeleniumBuilder {
 				"**\\portalweb\\blocks\\**\\*.functions",
 				"**\\portalweb\\blocks\\**\\*.macros",
 				"**\\portalweb\\blocks\\**\\*.paths",
-				"**\\portalweb\\blocks\\**\\*.test"
+				"**\\portalweb\\tests\\**\\*.test"
 			});
 
 		directoryScanner.scan();
 
-		Set<String> fileNameSet = new TreeSet<String>();
+		Set<String> fileNames = new TreeSet<String>();
 
 		for (String fileName : directoryScanner.getIncludedFiles()) {
 			fileName = normalizeFileName(fileName);
 
-			fileNameSet.add(fileName);
+			fileNames.add(fileName);
 		}
 
-		return fileNameSet;
+		return fileNames;
 	}
 
 	private Set<String> _getFileNameSetActions() throws Exception {
@@ -839,108 +890,6 @@ public class SeleniumBuilder {
 		}
 
 		return fileNameTypeSet;
-	}
-
-	private String _getImportActions(String object) throws Exception {
-		int x = object.length() - 7;
-
-		String actionObjectName = object.substring(0, x);
-
-		String objectPackagePath = "";
-
-		for (String pageObject : pageObjectSet) {
-			if (pageObject.endsWith("/" + actionObjectName + ".paths")) {
-				int y = pageObject.length() - 6;
-
-				objectPackagePath =
-					StringUtil.replace(
-						pageObject.substring(0, y), StringPool.SLASH,
-						StringPool.PERIOD);
-
-				objectPackagePath = StringUtil.replace(
-					objectPackagePath, ".paths.", ".actions.");
-				objectPackagePath = StringUtil.replace(
-					objectPackagePath, actionObjectName,
-					actionObjectName + "Actions");
-
-				break;
-			}
-		}
-
-		return objectPackagePath;
-	}
-
-	private String _getImportFunctions(String object) throws Exception {
-		String functionsBase = "com.liferay.portalweb.blocks.base.functions.";
-
-		return functionsBase + object;
-	}
-
-	private String _getImportMacros(String object) throws Exception {
-		int x = object.length() - 6;
-
-		String macroObjectName = object.substring(0, x);
-
-		String objectPackagePath = "";
-
-		for (String pageObject : pageObjectSet) {
-			if (pageObject.endsWith("/" + macroObjectName + ".macros")) {
-				int y = pageObject.length() - 7;
-
-				objectPackagePath =
-					StringUtil.replace(
-						pageObject.substring(0, y), StringPool.SLASH,
-						StringPool.PERIOD);
-
-				objectPackagePath = StringUtil.replace(
-					objectPackagePath, macroObjectName,
-					macroObjectName + "Macros");
-			}
-		}
-
-		return objectPackagePath;
-	}
-
-	private Set<String> _getObjectSetAvailable() throws Exception {
-		Set<String> objectSet = new TreeSet<String>();
-
-		for (String fileName : fileNameSet) {
-
-			if (fileName.endsWith(".functions")) {
-				String objectName = StringUtil.replace(
-					fileName, ".functions", "Functions");
-
-				objectName = StringUtil.replace(
-					objectName, StringPool.SLASH, StringPool.PERIOD);
-
-				objectSet.add(objectName);
-			}
-			else if (fileName.endsWith(".macros")) {
-				String objectName = StringUtil.replace(
-					fileName, ".macros", "Macros");
-
-				objectName = StringUtil.replace(
-					objectName, StringPool.SLASH, StringPool.PERIOD);
-
-				objectSet.add(objectName);
-
-			}
-			else if (fileName.endsWith(".paths")) {
-				String objectName = StringUtil.replace(
-					fileName, ".paths", "Actions");
-
-				objectName = StringUtil.replace(
-					objectName, StringPool.SLASH, StringPool.PERIOD);
-
-				objectName = StringUtil.replace(
-					objectName, ".paths.", ".actions.");
-
-				objectSet.add(objectName);
-
-			}
-		}
-
-		return objectSet;
 	}
 
 	private Set<String> _getPageObjects() throws Exception {
@@ -1036,6 +985,7 @@ public class SeleniumBuilder {
 
 	private Map<String, Integer> _putSeleniumMethods(
 		Map<String, Integer> paramMap, String file) throws Exception {
+
 		String content = getNormalizedContent(file);
 
 		Pattern pattern = Pattern.compile(

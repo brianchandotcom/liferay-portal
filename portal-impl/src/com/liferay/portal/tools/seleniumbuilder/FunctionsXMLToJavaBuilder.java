@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
 import java.util.List;
-import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,8 +43,6 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 				System.out.println(
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
-
-			importObjects = new TreeSet<String>();
 
 			classType = ClassTypes.FUNCTIONS;
 
@@ -72,6 +69,8 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 			functionsFilePath + "/" + fileName.substring(x + 1, y) +
 				".functions";
 
+		Element rootElement = getRootElement(functionsXMLFileName);
+
 		StringBundler sb = new StringBundler();
 
 		sb.append("package ");
@@ -93,16 +92,14 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 
 		sb.append("}\n");
 
-		Element rootElement = getRootElement(functionsXMLFileName);
-
-		sb.append(_getFunctionDefs(rootElement));
+		sb.append(_processFunctionDefs(rootElement));
 
 		sb.append("}");
 
 		writeFile(functionsFileName, sb.toString(), true);
 	}
 
-	private String _getFunctionDefs(Element rootElement) throws Exception {
+	private String _processFunctionDefs(Element rootElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		List<Element> functionDefs = rootElement.elements("functiondef");
@@ -122,6 +119,8 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 			}
 
 			sb.append(" throws Exception {\n");
+
+			sb.append(processBlockObjectDeclaractions(functionDef));
 
 			sb.append(processBlock(functionDef));
 

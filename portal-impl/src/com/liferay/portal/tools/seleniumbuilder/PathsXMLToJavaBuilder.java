@@ -63,6 +63,8 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 		String pathsPackagePath = StringUtil.replace(
 			pathsFilePath, StringPool.SLASH, StringPool.PERIOD);
 
+		Element rootElement = getRootElement(fileName);
+
 		StringBundler sb = new StringBundler();
 
 		sb.append("package ");
@@ -79,8 +81,6 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("public static Map<String, String[]> getPaths() {");
 		sb.append("return _paths;");
 		sb.append("}");
-
-		Element rootElement = getRootElement(fileName);
 
 		sb.append(_getPaths(rootElement));
 

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
 import java.util.List;
-import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,8 +44,6 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
-			importObjects = new TreeSet<String>();
-
 			classType = ClassTypes.MACROS;
 
 			getObject(fileName);
@@ -67,10 +64,12 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 
 		String macrosFileName = macrosFilePath + "/" + macrosName + ".java";
 
-		filePath = macrosFileName;
-
 		String macrosPackagePath = StringUtil.replace(
 			macrosFilePath, StringPool.SLASH, StringPool.PERIOD);
+
+		filePath = macrosFileName;
+
+		Element rootElement = getRootElement(fileName);
 
 		StringBundler sb = new StringBundler();
 
@@ -87,15 +86,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
 		sb.append("LiferaySeleniumHelper;\n");
 
-		Element rootElement = getRootElement(fileName);
-
-		List<Element> runBlocks = rootElement.elements();
-
-		String macroDefs = _getMacroDefs(rootElement);
-
-		String importStatements = getImportStatements();
-
-		sb.append(importStatements);
+		sb.append(processRootElementImports(rootElement));
 
 		sb.append("public class ");
 		sb.append(macrosName);
@@ -107,14 +98,14 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("super(liferaySelenium);");
 		sb.append("}");
 
-		sb.append(macroDefs);
+		sb.append(_processMacroDefs(rootElement));
 
 		sb.append("}");
 
 		writeFile(macrosFileName, sb.toString(), true);
 	}
 
-	private String _getMacroDefs(Element rootElement) throws Exception {
+	private String _processMacroDefs(Element rootElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		List<Element> macroDefs = rootElement.elements("macrodef");
@@ -128,8 +119,10 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 			sb.append("public void ");
 			sb.append(macroDefCommand);
 			sb.append("(");
-			sb.append(_getParameterList(params));
+			sb.append(_processParameterList(params));
 			sb.append(") throws Exception {");
+
+			sb.append(processBlockObjectDeclaractions(macroDef));
 
 			sb.append(processBlock(stepsBlock));
 
@@ -139,7 +132,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
-	private String _getParameterList(Element params) throws Exception {
+	private String _processParameterList(Element params) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		String paramsString = "";

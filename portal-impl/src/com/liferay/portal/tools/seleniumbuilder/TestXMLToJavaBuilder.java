@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
-import java.util.TreeSet;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,8 +44,6 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
-			importObjects = new TreeSet<String>();
-
 			classType = ClassTypes.TEST;
 
 			generateTest(fileName);
@@ -60,16 +58,19 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
+		String testFilePath = fileName.substring(0, x) + "/rc";
 		String testName = fileName.substring(x + 1, y) + "Test";
 
-		String testFilePath = fileName.substring(0, x) + "/rc";
-
 		String testFileName = testFilePath + "/" + testName + ".java";
-
-		filePath = testFileName;
-
 		String testPackagePath = StringUtil.replace(
 			testFilePath, StringPool.SLASH, StringPool.PERIOD);
+
+		Element rootElement = getRootElement(fileName);
+		Element setupBlock = rootElement.element("setup");
+		Element stepsBlock = rootElement.element("steps");
+		Element teardownBlock = rootElement.element("teardown");
+
+		filePath = testFileName;
 
 		StringBundler sb = new StringBundler();
 
@@ -77,73 +78,113 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append(testPackagePath);
 		sb.append(";\n");
 
-		sb.append("import com.liferay.portalweb.blocks.portal.signin.page.");
-		sb.append("macros.SignInUserMacros;\n");
-
 		sb.append("import com.liferay.portalweb.portal.BaseTestCase;\n");
 		sb.append("import com.liferay.portalweb.portal.util.SeleniumUtil;\n");
-
 		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
 		sb.append("LiferaySeleniumHelper;\n");
 
-		Element rootElement = getRootElement(fileName);
+		sb.append(processRootElementImports(rootElement));
 
-		String header = "public class " + testName + " extends BaseTestCase {";
+		sb.append("public class " + testName + " extends BaseTestCase {");
 
-		Element setupBlock = rootElement.element("setup");
-		Element stepsBlock = rootElement.element("steps");
-		Element teardownBlock = rootElement.element("teardown");
-
-		String setup = _getSetup(setupBlock);
-		String steps = _getSteps(stepsBlock);
-		String teardown = _getTeardown(teardownBlock);
-
-		String importStatements = getImportStatements();
-
-		sb.append(importStatements);
-		sb.append(header);
-		sb.append(setup);
-		sb.append(steps);
-		sb.append(teardown);
+		sb.append(_processSetupBlock(setupBlock));
+		sb.append(_processStepsBlock(stepsBlock));
+		sb.append(_processTeardownBlock(teardownBlock));
 
 		sb.append("}");
 
 		writeFile(testFileName, sb.toString(), true);
 	}
 
-	private String _getSetup(Element setupElement) throws Exception {
+	protected String processBlockObjectDeclaractions(Element element)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		Set<String> simpleClassNameSet = getSimpleClassNameSet(element);
+
+		String elementName = element.getName();
+
+		if (elementName.equals("setup") || elementName.equals("teardown")) {
+			simpleClassNameSet.add("SignInUserMacros");
+		}
+
+		for (String simpleClassName : simpleClassNameSet) {
+			sb.append(simpleClassName);
+			sb.append(" ");
+			sb.append(StringUtil.lowerCaseFirstLetter(simpleClassName));
+			sb.append(" = new ");
+			sb.append(simpleClassName);
+			sb.append("(selenium);\n");
+		}
+
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
+	protected String processRootElementImports(Element rootElement)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		Set<String> classNameImportSet = getClassNameSet(rootElement);
+
+		classNameImportSet = addClassName(
+			classNameImportSet, "SignInUserMacros");
+
+		for (String className : classNameImportSet) {
+			sb.append("import ");
+			sb.append(className);
+			sb.append(";\n");
+		}
+
+		return sb.toString();
+	}
+
+	private String _processSetupBlock(Element setup) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		sb.append("@Override\n");
 		sb.append("public void setUp() throws Exception {");
 		sb.append("selenium = SeleniumUtil.getSelenium();");
 
-		sb.append(processBlock(setupElement));
+		sb.append(processBlockObjectDeclaractions(setup));
+
+		sb.append("signInUserMacros.signIn(");
+		sb.append("\"test@liferay.com\", \"test\");");
+
+		sb.append(processBlock(setup));
 
 		sb.append("}");
 
 		return sb.toString();
 	}
 
-	private String _getSteps(Element stepsElement) throws Exception {
+	private String _processStepsBlock(Element steps) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		sb.append("public void test() throws Exception {");
 
-		sb.append(processBlock(stepsElement));
+		sb.append(processBlockObjectDeclaractions(steps));
+
+		sb.append(processBlock(steps));
 
 		sb.append("}");
 
 		return sb.toString();
 	}
 
-	private String _getTeardown(Element teardownElement) throws Exception {
+	private String _processTeardownBlock(Element teardown) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		sb.append("@Override\n");
 		sb.append("public void tearDown() throws Exception {");
 
-		sb.append(processBlock(teardownElement));
+		sb.append(processBlockObjectDeclaractions(teardown));
+
+		sb.append(processBlock(teardown));
+
 		sb.append("signInUserMacros.signOut();");
 
 		sb.append("}");

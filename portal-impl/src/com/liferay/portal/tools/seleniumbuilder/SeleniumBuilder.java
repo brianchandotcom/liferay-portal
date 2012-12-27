@@ -75,7 +75,9 @@ public class SeleniumBuilder {
 		fileNameSetPaths = _getFileNameSetPaths();
 		fileNameSetTests = _getFileNameSetTests();
 
-		_getSeleniumMethods();
+		objectSetAvailable = _getObjectSetAvailable();
+
+		seleniumMethodParamMap = _getSeleniumMethods();
 	}
 
 	protected String findRootBlockName(Element block) throws Exception {
@@ -373,7 +375,9 @@ public class SeleniumBuilder {
 	protected Set<String> fileNameSetTests;
 	protected String filePath = "";
 	protected Set<String> importObjects = new TreeSet<String>();
+	protected Set<String> objectSetAvailable;
 	protected Set<String> pageObjectSet;
+	protected Map<String, Integer> seleniumMethodParamMap;
 
 	private String _combineConditionals(
 		List<String> conditionalList, String delimiter) {
@@ -699,8 +703,8 @@ public class SeleniumBuilder {
 
 		int numParams = 0;
 
-		if (_seleniumMethods.containsKey(seleniumCommandName)) {
-			numParams = _seleniumMethods.get(seleniumCommandName);
+		if (seleniumMethodParamMap.containsKey(seleniumCommandName)) {
+			numParams = seleniumMethodParamMap.get(seleniumCommandName);
 		}
 
 		sb.append("selenium.");
@@ -897,6 +901,48 @@ public class SeleniumBuilder {
 		return objectPackagePath;
 	}
 
+	private Set<String> _getObjectSetAvailable() throws Exception {
+		Set<String> objectSet = new TreeSet<String>();
+
+		for (String fileName : fileNameSet) {
+
+			if (fileName.endsWith(".functions")) {
+				String objectName = StringUtil.replace(
+					fileName, ".functions", "Functions");
+
+				objectName = StringUtil.replace(
+					objectName, StringPool.SLASH, StringPool.PERIOD);
+
+				objectSet.add(objectName);
+			}
+			else if (fileName.endsWith(".macros")) {
+				String objectName = StringUtil.replace(
+					fileName, ".macros", "Macros");
+
+				objectName = StringUtil.replace(
+					objectName, StringPool.SLASH, StringPool.PERIOD);
+
+				objectSet.add(objectName);
+
+			}
+			else if (fileName.endsWith(".paths")) {
+				String objectName = StringUtil.replace(
+					fileName, ".paths", "Actions");
+
+				objectName = StringUtil.replace(
+					objectName, StringPool.SLASH, StringPool.PERIOD);
+
+				objectName = StringUtil.replace(
+					objectName, ".paths.", ".actions.");
+
+				objectSet.add(objectName);
+
+			}
+		}
+
+		return objectSet;
+	}
+
 	private Set<String> _getPageObjects() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -922,58 +968,20 @@ public class SeleniumBuilder {
 		return fileNames;
 	}
 
-	private void _getSeleniumFileMethods(String file) throws Exception {
-		String content = getNormalizedContent(file);
+	private Map<String, Integer> _getSeleniumMethods() throws Exception {
+		Map<String, Integer> paramMap = new HashMap<String, Integer>();
 
-		Pattern pattern = Pattern.compile(
-			"public (boolean|String|void) [A-Za-z0-9_]*\\(.*?\\)");
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String methodDec = matcher.group();
-
-			int x = methodDec.indexOf("(");
-			int y = methodDec.indexOf(")");
-
-			String name = null;
-
-			if (methodDec.startsWith("public boolean")) {
-				name = methodDec.substring(15, x);
-			}
-			else if (methodDec.startsWith("public String")) {
-				name = methodDec.substring(14, x);
-			}
-			else if (methodDec.startsWith("public void")) {
-				name = methodDec.substring(12, x);
-			}
-
-			String params = methodDec.substring(x + 1, y);
-
-			String[] paramsArray = params.split(",");
-
-			int numParams;
-
-			if (params.equals("")) {
-				numParams = 0;
-			}
-			else {
-				numParams = paramsArray.length;
-			}
-
-			_seleniumMethods.put(name, numParams);
-		}
-
-		_seleniumMethods.put("isNotChecked", 1);
-	}
-
-	private void _getSeleniumMethods() throws Exception {
-		_getSeleniumFileMethods(
-			"com/liferay/portalweb/portal/util/liferayselenium/" +
+		paramMap = _putSeleniumMethods(
+			paramMap, "com/liferay/portalweb/portal/util/liferayselenium/" +
 				"SeleniumWrapper.java");
-		_getSeleniumFileMethods(
-			"com/liferay/portalweb/portal/util/liferayselenium/" +
+
+		paramMap = _putSeleniumMethods(
+			paramMap, "com/liferay/portalweb/portal/util/liferayselenium/" +
 				"LiferaySelenium.java");
+
+		paramMap.put("isNotChecked", 1);
+
+		return paramMap;
 	}
 
 	private boolean _isValidCommand(String command) {
@@ -1026,6 +1034,52 @@ public class SeleniumBuilder {
 		return isValid;
 	}
 
+	private Map<String, Integer> _putSeleniumMethods(
+		Map<String, Integer> paramMap, String file) throws Exception {
+		String content = getNormalizedContent(file);
+
+		Pattern pattern = Pattern.compile(
+			"public (boolean|String|void) [A-Za-z0-9_]*\\(.*?\\)");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String methodDec = matcher.group();
+
+			int x = methodDec.indexOf("(");
+			int y = methodDec.indexOf(")");
+
+			String name = null;
+
+			if (methodDec.startsWith("public boolean")) {
+				name = methodDec.substring(15, x);
+			}
+			else if (methodDec.startsWith("public String")) {
+				name = methodDec.substring(14, x);
+			}
+			else if (methodDec.startsWith("public void")) {
+				name = methodDec.substring(12, x);
+			}
+
+			String params = methodDec.substring(x + 1, y);
+
+			String[] paramsArray = params.split(",");
+
+			int numParams;
+
+			if (params.equals("")) {
+				numParams = 0;
+			}
+			else {
+				numParams = paramsArray.length;
+			}
+
+			paramMap.put(name, numParams);
+		}
+
+		return paramMap;
+	}
+
 	private String _replaceVariables(String text) {
 		if (text.startsWith("\"${") && text.endsWith("}\"")) {
 			return text.substring(3, text.length() - 2);
@@ -1037,8 +1091,5 @@ public class SeleniumBuilder {
 
 		return text;
 	}
-
-	private static Map<String, Integer> _seleniumMethods =
-		new HashMap<String, Integer>();
 
 }

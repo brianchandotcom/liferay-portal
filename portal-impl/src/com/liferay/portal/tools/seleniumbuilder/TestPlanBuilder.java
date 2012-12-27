@@ -99,19 +99,9 @@ public class TestPlanBuilder extends SeleniumBuilder {
 	}
 
 	private Set<String> _getDirectoryNames() throws Exception {
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-		directoryScanner.setIncludes(
-			new String[] {
-				"**\\portalweb\\**\\*.test"
-			});
-
-		directoryScanner.scan();
-
 		Set<String> fileNames = new TreeSet<String>();
 
-		for (String fileName : directoryScanner.getIncludedFiles()) {
+		for (String fileName : fileNameSetTests) {
 			fileName = normalizeFileName(fileName);
 
 			int x = fileName.lastIndexOf("/");

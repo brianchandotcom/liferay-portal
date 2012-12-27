@@ -489,6 +489,8 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 			window,
 			'<portlet:namespace />toggleCustomizedView',
 			function(event) {
+				var A = AUI();
+
 				A.io.request(
 					themeDisplay.getPathMain() + '/portal/update_layout',
 					{

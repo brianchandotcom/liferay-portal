@@ -39,6 +39,8 @@ public class ShardGloballyAdvice implements MethodInterceptor {
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		Object returnValue = null;
 
+		boolean isCompanyPushed = false;
+
 		_shardAdvice.setGlobalCall(new Object());
 
 		try {
@@ -59,7 +61,15 @@ public class ShardGloballyAdvice implements MethodInterceptor {
 
 				shardSessionFactoryTargetSource.setSessionFactory(shardName);
 
+				_shardAdvice.pushCompanyService(shardName);
+
+				isCompanyPushed = true;
+
 				Object value = methodInvocation.proceed();
+
+				_shardAdvice.popCompanyService();
+
+				isCompanyPushed = false;
 
 				if (shardName.equals(ShardUtil.getDefaultShardName())) {
 					returnValue = value;
@@ -68,6 +78,10 @@ public class ShardGloballyAdvice implements MethodInterceptor {
 		}
 		finally {
 			_shardAdvice.setGlobalCall(null);
+
+			if (isCompanyPushed) {
+				_shardAdvice.popCompanyService();
+			}
 		}
 
 		return returnValue;

@@ -199,7 +199,18 @@ int total = 0;
 		%>
 
 	</c:when>
-	<c:when test='<%= Validator.isNotNull(displayTerms.getStructureId()) || Validator.isNotNull(displayTerms.getTemplateId()) || displayTerms.getNavigation().equals("recent") %>'>
+	<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
+
+		<%
+		results = JournalArticleServiceUtil.getArticlesByStructureId(scopeGroupId, displayTerms.getStructureId(), entryStart, entryEnd, searchContainer.getOrderByComparator());
+		total = JournalArticleServiceUtil.getArticlesCountByStructureId(scopeGroupId, searchTerms.getStructureId());
+
+		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
+		%>
+
+	</c:when>
+	<c:when test='<%= Validator.isNotNull(displayTerms.getTemplateId()) || displayTerms.getNavigation().equals("recent") %>'>
 
 		<%
 		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());

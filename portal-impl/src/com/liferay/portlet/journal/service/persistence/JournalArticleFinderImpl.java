@@ -31,6 +31,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -52,8 +53,20 @@ public class JournalArticleFinderImpl
 	public static final String COUNT_BY_G_F =
 		JournalArticleFinder.class.getName() + ".countByG_F";
 
+	public static final String COUNT_BY_G_U_C =
+		JournalArticleFinder.class.getName() + ".countByG_U_C";
+
 	public static final String COUNT_BY_G_F_S =
 		JournalArticleFinder.class.getName() + ".countByG_F_S";
+
+	public static final String COUNT_BY_G_C_S =
+		JournalArticleFinder.class.getName() + ".countByG_C_S";
+
+	public static final String COUNT_BY_G_U_C_S =
+		JournalArticleFinder.class.getName() + ".countByG_U_C_S";
+
+	public static final String COUNT_BY_G_C_S_S =
+		JournalArticleFinder.class.getName() + ".countByG_C_S_S";
 
 	public static final String COUNT_BY_C_G_F_C_A_V_T_D_C_T_S_T_D_S_R =
 		JournalArticleFinder.class.getName() +
@@ -67,6 +80,18 @@ public class JournalArticleFinderImpl
 
 	public static final String FIND_BY_R_D =
 		JournalArticleFinder.class.getName() + ".findByR_D";
+
+	public static final String FIND_BY_G_U_C =
+		JournalArticleFinder.class.getName() + ".findByG_U_C";
+
+	public static final String FIND_BY_G_C_S =
+		JournalArticleFinder.class.getName() + ".findByG_C_S";
+
+	public static final String FIND_BY_G_U_C_S =
+		JournalArticleFinder.class.getName() + ".findByG_U_C_S";
+
+	public static final String FIND_BY_G_C_S_S =
+		JournalArticleFinder.class.getName() + ".findByG_C_S_S";
 
 	public static final String FIND_BY_C_G_F_C_A_V_T_D_C_T_S_T_D_S_R =
 		JournalArticleFinder.class.getName() +
@@ -108,6 +133,21 @@ public class JournalArticleFinderImpl
 		throws SystemException {
 
 		return doCountByG_F_S(groupId, folderIds, status, false);
+	}
+
+	public int countByG_U_C_S(
+			long groupId, long userId, long classNameId, int status)
+		throws SystemException {
+
+		return doCountByG_U_C_S(groupId, userId, classNameId, status, false);
+	}
+
+	public int countByG_C_S_S(
+			long groupId, long classNameId, String structureId, int status)
+		throws SystemException {
+
+		return doCountByG_C_S_S(
+			groupId, classNameId, structureId, status, false);
 	}
 
 	public int countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
@@ -202,6 +242,21 @@ public class JournalArticleFinderImpl
 		return doCountByG_F_S(groupId, folderIds, status, true);
 	}
 
+	public int filterCountByG_U_C_S(
+			long groupId, long userId, long classNameId, int status)
+		throws SystemException {
+
+		return doCountByG_U_C_S(groupId, userId, classNameId, status, true);
+	}
+
+	public int filterCountByG_C_S_S(
+			long groupId, long classNameId, String structureId, int status)
+		throws SystemException {
+
+		return doCountByG_C_S_S(
+			groupId, classNameId, structureId, status, true);
+	}
+
 	public int filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -286,6 +341,26 @@ public class JournalArticleFinderImpl
 			titles, descriptions, contents, type, structureIds, templateIds,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator,
 			start, end, orderByComparator, true);
+	}
+
+	public List<JournalArticle> filterFindByG_U_C_S(
+			long groupId, long userId, long classNameId, int status, int start,
+			int end, OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return doFindByG_U_C_S(
+			groupId, userId, classNameId, status, start, end, orderByComparator,
+			true);
+	}
+
+	public List<JournalArticle> filterFindByG_C_S_S(
+			long groupId, long classNameId, String structureId, int status,
+			int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return doFindByG_C_S_S(
+			groupId, classNameId, structureId, status, start, end,
+			orderByComparator, true);
 	}
 
 	public List<JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
@@ -501,6 +576,26 @@ public class JournalArticleFinderImpl
 		throw new NoSuchArticleException(sb.toString());
 	}
 
+	public List<JournalArticle> findByG_U_C_S(
+			long groupId, long userId, long classNameId, int status, int start,
+			int end, OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return doFindByG_U_C_S(
+			groupId, userId, classNameId, status, start, end, orderByComparator,
+			false);
+	}
+
+	public List<JournalArticle> findByG_C_S_S(
+			long groupId, long classNameId, String structureId, int status,
+			int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return doFindByG_C_S_S(
+			groupId, classNameId, structureId, status, start, end,
+			orderByComparator, false);
+	}
+
 	public List<JournalArticle> findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -609,6 +704,134 @@ public class JournalArticleFinderImpl
 				Long folderId = folderIds.get(i);
 
 				qPos.add(folderId);
+			}
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected int doCountByG_U_C_S(
+			long groupId, long userId, long classNameId, int status,
+			boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = null;
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.get(COUNT_BY_G_U_C);
+			}
+			else {
+				sql = CustomSQLUtil.get(COUNT_BY_G_U_C_S);
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(classNameId);
+			qPos.add(userId);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected int doCountByG_C_S_S(
+			long groupId, long classNameId, String structureId, int status,
+			boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = null;
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.get(COUNT_BY_G_C_S);
+			}
+			else {
+				sql = CustomSQLUtil.get(COUNT_BY_G_C_S_S);
+			}
+
+			if (structureId.equals(
+					String.valueOf(
+						JournalArticleConstants.CLASSNAME_ID_DEFAULT))) {
+
+				sql = StringUtil.replace(
+					sql, "(structureId = ?)",
+					"((structureId = ?) OR (structureId = '') OR" +
+						"(structureId = null))");
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(classNameId);
+			qPos.add(structureId);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
 			}
 
 			Iterator<Long> itr = q.iterate();
@@ -791,6 +1014,122 @@ public class JournalArticleFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<JournalArticle> doFindByG_U_C_S(
+			long groupId, long userId, long classNameId, int status, int start,
+			int end, OrderByComparator orderByComparator,
+			boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = null;
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.get(FIND_BY_G_U_C);
+			}
+			else {
+				sql = CustomSQLUtil.get(FIND_BY_G_U_C_S);
+			}
+
+			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("JournalArticle", JournalArticleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(classNameId);
+			qPos.add(userId);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			return (List<JournalArticle>)QueryUtil.list(
+				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<JournalArticle> doFindByG_C_S_S(
+			long groupId, long classNameId, String structureId, int status,
+			int start, int end, OrderByComparator orderByComparator,
+			boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = null;
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.get(FIND_BY_G_C_S);
+			}
+			else {
+				sql = CustomSQLUtil.get(FIND_BY_G_C_S_S);
+			}
+
+			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+
+			if (structureId.equals(
+					String.valueOf(
+						JournalArticleConstants.CLASSNAME_ID_DEFAULT))) {
+
+				sql = StringUtil.replace(
+					sql, "(structureId = ?)",
+					"((structureId = ?) OR (structureId = '') OR" +
+						"(structureId = null))");
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("JournalArticle", JournalArticleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(classNameId);
+			qPos.add(structureId);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			return (List<JournalArticle>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

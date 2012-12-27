@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -282,12 +283,22 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	public List<JournalArticle> getArticlesByStructureId(
+			long groupId, long classNameId, String structureId, int status,
+			int start, int end, OrderByComparator obc)
+		throws SystemException {
+
+		return journalArticleFinder.filterFindByG_C_S_S(
+			groupId, classNameId, structureId, status, start, end, obc);
+	}
+
+	public List<JournalArticle> getArticlesByStructureId(
 			long groupId, String structureId, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticlePersistence.filterFindByG_S(
-			groupId, structureId, start, end, obc);
+		return getArticlesByStructureId(
+			groupId, JournalArticleConstants.CLASSNAME_ID_DEFAULT, structureId,
+			WorkflowConstants.STATUS_ANY, start, end, obc);
 	}
 
 	public List<JournalArticle> getArticlesByUserId(
@@ -295,8 +306,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticlePersistence.filterFindByG_U_C(
-			groupId, userId, classNameId, start, end, obc);
+		return journalArticleFinder.filterFindByG_U_C_S(
+			groupId, userId, classNameId, WorkflowConstants.STATUS_ANY, start,
+			end, obc);
 	}
 
 	public int getArticlesCount(long groupId, long folderId)
@@ -311,18 +323,28 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return journalArticlePersistence.filterCountByG_A(groupId, articleId);
 	}
 
+	public int getArticlesCountByStructureId(
+			long groupId, long classNameId, String structureId, int status)
+		throws SystemException {
+
+		return journalArticleFinder.filterCountByG_C_S_S(
+			groupId, classNameId, structureId, status);
+	}
+
 	public int getArticlesCountByStructureId(long groupId, String structureId)
 		throws SystemException {
 
-		return journalArticlePersistence.filterCountByG_S(groupId, structureId);
+		return getArticlesCountByStructureId(
+			groupId, JournalArticleConstants.CLASSNAME_ID_DEFAULT, structureId,
+			WorkflowConstants.STATUS_ANY);
 	}
 
 	public int getArticlesCountByUserId(
 			long groupId, long userId, long classNameId)
 		throws SystemException {
 
-		return journalArticlePersistence.filterCountByG_U_C(
-			groupId, userId, classNameId);
+		return journalArticleFinder.filterCountByG_U_C_S(
+			groupId, userId, classNameId, WorkflowConstants.STATUS_ANY);
 	}
 
 	public JournalArticle getDisplayArticleByUrlTitle(

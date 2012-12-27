@@ -141,11 +141,7 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 
 		try {
-			MethodKey methodKey = new MethodKey(
-				getClass(), actionName, ActionRequest.class,
-				ActionResponse.class);
-
-			Method method = methodKey.getMethod();
+			Method method = getActionMethod(actionName);
 
 			method.invoke(this, actionRequest, actionResponse);
 
@@ -275,6 +271,22 @@ public class LiferayPortlet extends GenericPortlet {
 		throw new PortletException("doPrint method not implemented");
 	}
 
+	protected Method getActionMethod(String actionName)
+		throws NoSuchMethodException {
+
+		Class<?> clazz = getClass();
+
+		MethodKey methodKey = new MethodKey(
+			clazz, actionName, _ACTION_METHOD_PARAMETER_TYPES);
+
+		try {
+			return methodKey.getMethod();
+		}
+		catch (NoSuchMethodException nsme) {
+			return clazz.getMethod(actionName, _ACTION_METHOD_PARAMETER_TYPES);
+		}
+	}
+
 	protected String getRedirect(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
@@ -397,6 +409,10 @@ public class LiferayPortlet extends GenericPortlet {
 	}
 
 	protected boolean addProcessActionSuccessMessage;
+
+	private static final Class<?>[] _ACTION_METHOD_PARAMETER_TYPES = {
+		ActionRequest.class, ActionResponse.class
+	};
 
 	private static final boolean _PROCESS_PORTLET_REQUEST = true;
 

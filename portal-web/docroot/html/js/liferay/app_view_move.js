@@ -123,7 +123,7 @@ AUI.add(
 
 						var eventHandles = [
 							Liferay.on(instance._eventEditEntry, instance._editEntry, instance),
-							Liferay.on('liferay-app-view-folders:setEntries', instance._initDropTargets, instance)
+							Liferay.after(instance.ns('dataRetrieveSuccess'), instance._initDropTargets, instance)
 						];
 
 						instance._eventHandles = eventHandles;

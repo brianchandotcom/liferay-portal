@@ -2,6 +2,10 @@
 	.app-view-navigation-entry {
 		margin-top: 2px;
 		position: relative;
+
+		.active-area {
+			background-color: #5AD300;
+		}
 	}
 
 	.body-row {

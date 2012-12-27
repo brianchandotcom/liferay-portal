@@ -45,7 +45,7 @@ String shortTitle = StringUtil.shorten(title, 60);
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 		<div class="app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" data-draggable="<%= showCheckbox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= HtmlUtil.escapeAttribute(shortTitle) %>">
 			<c:if test="<%= showCheckbox %>">
-					<aui:input cssClass="overlay entry-selector" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" type="checkbox" value="<%= rowCheckerId %>" />
+				<aui:input cssClass="overlay entry-selector" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" type="checkbox" value="<%= rowCheckerId %>" />
 			</c:if>
 
 			<%
@@ -154,27 +154,29 @@ String shortTitle = StringUtil.shorten(title, 60);
 		</div>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("list") %>'>
-		<liferay-ui:icon
-			cssClass='<%= showCheckbox ? "app-view-entry-taglib entry-display-style selectable" : "app-view-entry-taglib entry-display-style" %>'
-			data="<%= data %>"
-			image="<%= thumbnailSrc %>"
-			label="<%= true %>"
-			linkCssClass="entry-link"
-			localizeMessage="<%= false %>"
-			message="<%= title %>"
-			method="get"
-			url="<%= url %>"
-		/>
+		<div class="app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= locked ? "locked" : StringPool.BLANK %>">
+			<liferay-ui:icon
+				cssClass='<%= showCheckbox ? "app-view-entry-taglib entry-display-style selectable" : "app-view-entry-taglib entry-display-style" %>'
+				data="<%= data %>"
+				image="<%= thumbnailSrc %>"
+				label="<%= true %>"
+				linkCssClass="entry-link"
+				localizeMessage="<%= false %>"
+				message="<%= title %>"
+				method="get"
+				url="<%= url %>"
+			/>
 
-		<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
+			<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
 
-			<%
-			String statusLabel = WorkflowConstants.toLabel(status);
-			%>
+				<%
+				String statusLabel = WorkflowConstants.toLabel(status);
+				%>
 
-			<span class="workflow-status-<%= statusLabel %>">
-				(<liferay-ui:message key="<%= statusLabel %>" />)
-			</span>
-		</c:if>
+				<span class="workflow-status-<%= statusLabel %>">
+					(<liferay-ui:message key="<%= statusLabel %>" />)
+				</span>
+			</c:if>
+		</div>
 	</c:when>
 </c:choose>

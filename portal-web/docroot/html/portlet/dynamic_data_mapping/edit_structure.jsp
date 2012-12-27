@@ -46,7 +46,12 @@ JSONArray scriptJSONArray = null;
 
 if (Validator.isNotNull(script)) {
 	if (structure != null) {
-		scriptJSONArray = DDMXSDUtil.getJSONArray(structure, script);
+		try {
+			scriptJSONArray = DDMXSDUtil.getJSONArray(structure, script);
+		}
+		catch (Exception e) {
+			scriptJSONArray = DDMXSDUtil.getJSONArray(structure.getDocument());
+		}
 	}
 	else {
 		scriptJSONArray = DDMXSDUtil.getJSONArray(script);
@@ -267,13 +272,11 @@ if (Validator.isNotNull(script)) {
 		window,
 		'<portlet:namespace />saveStructure',
 		function() {
-			if (window.<portlet:namespace />formBuilder) {
-				document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getXSD();
-			}
+			document.<portlet:namespace />fm.<portlet:namespace />xsd.value = window.<portlet:namespace />formBuilder.getContentXSD();
 
 			submitForm(document.<portlet:namespace />fm);
 		},
-		['aui-base']
+		['aui-base', 'liferay-portlet-dynamic-data-mapping']
 	);
 
 	<c:if test="<%= Validator.isNotNull(saveCallback) && (classPK != 0) %>">

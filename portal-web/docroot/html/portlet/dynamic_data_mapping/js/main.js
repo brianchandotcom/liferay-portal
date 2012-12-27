@@ -190,6 +190,12 @@ AUI.add(
 						return field;
 					},
 
+					getContentXSD: function() {
+						var instance = this;
+
+						return window[instance.get('portletNamespace') + 'getContentXSD']();
+					},
+
 					getFieldLocalizedValue: function(field, attribute, locale) {
 						var instance = this;
 

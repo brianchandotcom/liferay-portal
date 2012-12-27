@@ -116,4 +116,13 @@
 		float: left;
 		padding: .2em;
 	}
+
+	.aui-form-builder-source-wrapper {
+		height: 600px;
+		position: relative;
+		
+		.aui-form-builder-source {
+			position: relative;
+		}
+	}
 }

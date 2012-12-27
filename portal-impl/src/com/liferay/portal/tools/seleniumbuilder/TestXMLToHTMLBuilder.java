@@ -28,8 +28,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.tools.ant.DirectoryScanner;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -652,34 +650,10 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 		return hashMap;
 	}
 
-	private Set<String> _getMacroFileNames() throws Exception {
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-		directoryScanner.setIncludes(
-			new String[] {
-				"**\\portalweb\\blocks\\**\\*.macros"
-			});
-
-		directoryScanner.scan();
-
-		Set<String> fileNames = new TreeSet<String>();
-
-		for (String fileName : directoryScanner.getIncludedFiles()) {
-			fileName = normalizeFileName(fileName);
-
-			fileNames.add(fileName);
-		}
-
-		return fileNames;
-	}
-
 	private Map<String, String[]> _getMacrosMap() throws Exception {
 		Map<String, String[]> hashMap = new HashMap<String, String[]>();
 
-		Set<String> macroFilePaths = _getMacroFileNames();
-
-		for (String macroFilePath : macroFilePaths) {
+		for (String macroFilePath : fileNameSetMacros) {
 			int x = macroFilePath.lastIndexOf(StringPool.SLASH);
 			int y = macroFilePath.indexOf(CharPool.PERIOD);
 
@@ -705,34 +679,10 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 		return hashMap;
 	}
 
-	private Set<String> _getPathFileNames() throws Exception {
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-		directoryScanner.setIncludes(
-			new String[] {
-				"**\\portalweb\\**\\*.paths"
-			});
-
-		directoryScanner.scan();
-
-		Set<String> fileNames = new TreeSet<String>();
-
-		for (String fileName : directoryScanner.getIncludedFiles()) {
-			fileName = normalizeFileName(fileName);
-
-			fileNames.add(fileName);
-		}
-
-		return fileNames;
-	}
-
 	private Map<String, String[]> _getPathsMap() throws Exception {
 		Map<String, String[]> hashMap = new HashMap<String, String[]>();
 
-		Set<String> pathFileNames = _getPathFileNames();
-
-		for (String pathFileName : pathFileNames) {
+		for (String pathFileName : fileNameSetPaths) {
 			int x = pathFileName.lastIndexOf(StringPool.SLASH);
 			int y = pathFileName.indexOf(CharPool.PERIOD);
 

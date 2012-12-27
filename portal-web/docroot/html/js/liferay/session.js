@@ -41,7 +41,6 @@ AUI.add(
 						value: 0
 					},
 					timestamp: {
-						lazyAdd: false,
 						getter: '_getTimestamp',
 						setter: '_setTimestamp',
 						value: 0

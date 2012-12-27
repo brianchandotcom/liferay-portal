@@ -34,10 +34,6 @@
 		background-color: #5AD300 !important;
 	}
 
-	.locked-icon {
-		float: right;
-	}
-
 	.overlay.folder-action a, .overlay.entry-action a {
 		display: block;
 		float: right;
@@ -180,6 +176,11 @@
 		&.selected, .selected:hover {
 			background-color: #00A2EA;
 		}
+	}
+
+	&.display-list.locked {
+		background: url(@theme_image_path@/common/lock.png) no-repeat 100% 50%;
+		padding-right: 20px;
 	}
 
 	.categories {

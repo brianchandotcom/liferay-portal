@@ -38,10 +38,11 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("link=Events");
 		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Caedmon's Call Concert!"));
+		assertEquals(RuntimeVariables.replace("Caedmons Call Concert!"),
+			selenium.getText(
+				"//tr[contains(.,'Caedmons Call Concert!')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Edited Test Event"),
 			selenium.getText("//tr[contains(.,'Edited Test Event')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Off to Yosemite!"),

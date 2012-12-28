@@ -62,11 +62,11 @@ public class AddDailyRepeatingEventTest extends BaseTestCase {
 		selenium.clickAt("//input[@name='_8_endDateType' and @value='2']",
 			RuntimeVariables.replace("End by"));
 		selenium.select("//select[@id='_8_endDateMonth']",
-			RuntimeVariables.replace("label=January"));
+			RuntimeVariables.replace("January"));
 		selenium.select("//select[@id='_8_endDateDay']",
-			RuntimeVariables.replace("label=1"));
+			RuntimeVariables.replace("1"));
 		selenium.select("//select[@id='_8_endDateYear']",
-			RuntimeVariables.replace("label=2011"));
+			RuntimeVariables.replace("2011"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -75,40 +75,38 @@ public class AddDailyRepeatingEventTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForPartialText("//select", "2010");
-		selenium.select("//select", RuntimeVariables.replace("2010"));
+		selenium.waitForPartialText("//select[@id='_8_yearSelector']", "2010");
+		selenium.select("//select[@id='_8_yearSelector']",
+			RuntimeVariables.replace("2010"));
 		selenium.waitForVisible(
 			"//a[contains(@href, 'javascript:_8_updateCalendar(0, 1, 2010);')]");
 		selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(0, 1, 2010);')]",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//div[@class='event-title']/a",
-			"Repeating Test Event");
 		assertEquals(RuntimeVariables.replace("Repeating Test Event"),
 			selenium.getText("//div[@class='event-title']/a"));
 		selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForPartialText("//select", "2010");
-		selenium.select("//select", RuntimeVariables.replace("2010"));
+		selenium.waitForPartialText("//select[@id='_8_yearSelector']", "2010");
+		selenium.select("//select[@id='_8_yearSelector']",
+			RuntimeVariables.replace("2010"));
 		selenium.waitForVisible(
 			"//a[contains(@href, 'javascript:_8_updateCalendar(0, 5, 2010);')]");
 		selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(0, 5, 2010);')]",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//div[@class='event-title']/a",
-			"Repeating Test Event");
 		assertEquals(RuntimeVariables.replace("Repeating Test Event"),
 			selenium.getText("//div[@class='event-title']/a"));
 		selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForPartialText("//select", "2011");
-		selenium.select("//select", RuntimeVariables.replace("2011"));
+		selenium.waitForPartialText("//select[@id='_8_yearSelector']", "2011");
+		selenium.select("//select[@id='_8_yearSelector']",
+			RuntimeVariables.replace("2011"));
 		selenium.waitForVisible(
 			"//a[contains(@href, 'javascript:_8_updateCalendar(1, 1, 2011);')]");
 		selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(1, 1, 2011);')]",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForTextNotPresent("//div[@class='event-title']/a");
-		assertFalse(selenium.isTextPresent("//div[@class='event-title']/a"));
+		assertTrue(selenium.isElementNotPresent("//div[@class='event-title']/a"));
 	}
 }

@@ -78,9 +78,9 @@ public class EditEventTest extends BaseTestCase {
 			"This is a test event! This test event has been edited.");
 		selenium.selectFrame("relative=top");
 		selenium.select("//select[@name='_8_startDateHour']",
-			RuntimeVariables.replace("label=5"));
+			RuntimeVariables.replace("5"));
 		selenium.select("//select[@name='_8_startDateAmPm']",
-			RuntimeVariables.replace("label=AM"));
+			RuntimeVariables.replace("AM"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

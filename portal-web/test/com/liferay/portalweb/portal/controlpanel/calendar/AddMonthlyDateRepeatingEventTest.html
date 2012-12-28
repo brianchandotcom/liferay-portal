@@ -101,12 +101,12 @@
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_monthlyPos']</td>
-	<td>label=First</td>
+	<td>First</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_monthlyDay1']</td>
-	<td>label=Thursday</td>
+	<td>Thursday</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -116,17 +116,17 @@
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_endDateMonth']</td>
-	<td>label=January</td>
+	<td>January</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_endDateDay']</td>
-	<td>label=1</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_endDateYear']</td>
-	<td>label=2011</td>
+	<td>2011</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -145,28 +145,23 @@
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>//select</td>
+	<td>//select[@id='_8_yearSelector']</td>
 	<td>2010</td>
 </tr>
 <tr>
 	<td>selectAndWait</td>
-	<td>//select</td>
+	<td>//select[@id='_8_yearSelector']</td>
 	<td>2010</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[3]/div/table/tbody/tr[3]/td[5]/a</td>
+	<td>//a[contains(@href, 'javascript:_8_updateCalendar(1, 4, 2010);')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[3]/div/table/tbody/tr[3]/td[5]/a</td>
+	<td>//a[contains(@href, 'javascript:_8_updateCalendar(1, 4, 2010);')]</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@class='event-title']/a</td>
-	<td>Repeating Test Event</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -180,28 +175,23 @@
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>//select</td>
+	<td>//select[@id='_8_yearSelector']</td>
 	<td>2010</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select</td>
+	<td>//select[@id='_8_yearSelector']</td>
 	<td>2010</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[5]/div/table/tbody/tr[3]/td[5]/a</td>
+	<td>//a[contains(@href, 'javascript:_8_updateCalendar(2, 4, 2010);')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[5]/div/table/tbody/tr[3]/td[5]/a</td>
+	<td>//a[contains(@href, 'javascript:_8_updateCalendar(2, 4, 2010);')]</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@class='event-title']/a</td>
-	<td>Repeating Test Event</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -215,31 +205,26 @@
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>//select</td>
+	<td>//select[@id='_8_yearSelector']</td>
 	<td>2010</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select</td>
+	<td>//select[@id='_8_yearSelector']</td>
 	<td>2010</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[5]/div/table/tbody/tr[4]/td[5]/a/span</td>
+	<td>//a[contains(@href, 'javascript:_8_updateCalendar(2, 11, 2010);')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[5]/div/table/tbody/tr[4]/td[5]/a/span</td>
+	<td>//a[contains(@href, 'javascript:_8_updateCalendar(2, 11, 2010);')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForTextNotPresent</td>
-	<td>//div[@class='event-title']/a</td>
-	<td>Repeating Test Event</td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
+	<td>assertElementNotPresent</td>
 	<td>//div[@class='event-title']/a</td>
 	<td>Repeating Test Event</td>
 </tr>

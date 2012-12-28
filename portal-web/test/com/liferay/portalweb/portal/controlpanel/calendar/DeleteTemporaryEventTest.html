@@ -79,7 +79,7 @@
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
@@ -94,8 +94,8 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>//tr[@class='results-row last portlet-section-alternate-hover']/td[2]/a</td>
+	<td>assertElementNotPresent</td>
+	<td>//tr[contains(.,'Temporary Event')]/td[2]/a</td>
 	<td>Temporary Event</td>
 </tr>
 </tbody></table>

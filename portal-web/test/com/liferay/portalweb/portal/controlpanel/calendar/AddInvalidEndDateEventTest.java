@@ -27,6 +27,8 @@ public class AddInvalidEndDateEventTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -49,9 +51,7 @@ public class AddInvalidEndDateEventTest extends BaseTestCase {
 		selenium.clickAt("//select[@id='_8_endDateMonth']",
 			RuntimeVariables.replace("End Date Month"));
 		selenium.select("//select[@id='_8_endDateMonth']",
-			RuntimeVariables.replace("label=February"));
-		selenium.select("//select[@id='_8_endDateMonth']",
-			RuntimeVariables.replace("label=February"));
-		assertNotEquals("30", selenium.getValue("//select[@id='_8_endDateDay']"));
+			RuntimeVariables.replace("February"));
+		assertFalse(selenium.isPartialText("//select[@id='_8_endDateDay']", "30"));
 	}
 }

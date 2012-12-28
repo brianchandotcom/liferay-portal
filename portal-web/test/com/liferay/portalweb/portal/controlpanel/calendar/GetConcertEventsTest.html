@@ -55,22 +55,22 @@
 </tr>
 <tr>
 	<td>selectAndWait</td>
-	<td>//select</td>
-	<td>label=Concert</td>
+	<td>//select[@id='_8_eventType']</td>
+	<td>Concert</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='event-title']/a</td>
-	<td>Caedmon's Call Concert!</td>
+	<td>//div[@class='event-title']/a[contains(.,'Caedmons Call Concert!')]</td>
+	<td>Caedmons Call Concert!</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>//div[@class='event-title']/a</td>
+	<td>assertElementNotPresent</td>
+	<td>//div[@class='event-title']/a[contains(.,'Off to Yosemite!')]</td>
 	<td>Off to Yosemite!</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>//div[@class='event-title']/a</td>
+	<td>assertElementNotPresent</td>
+	<td>//div[@class='event-title']/a[contains(.,'Test Event')]</td>
 	<td>Test Event</td>
 </tr>
 <tr>
@@ -80,22 +80,22 @@
 </tr>
 <tr>
 	<td>selectAndWait</td>
-	<td>//select</td>
-	<td>label=Concert</td>
+	<td>//select[@id='_8_eventType']</td>
+	<td>Concert</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[@class='portlet-section-alternate results-row alt']/td/a</td>
-	<td>Caedmon's Call Concert!</td>
+	<td>//tr[contains(.,'Caedmons Call Concert!')]/td[1]/a</td>
+	<td>Caedmons Call Concert!</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>//tr[@class='portlet-section-alternate results-row alt']/td/a</td>
+	<td>assertElementNotPresent</td>
+	<td>//tr[contains(.,'Off to Yosemite!')]/td[1]/a</td>
 	<td>Off to Yosemite!</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>//tr[@class='portlet-section-alternate results-row alt']/td/a</td>
+	<td>assertElementNotPresent</td>
+	<td>//tr[contains(.,'Test Event')]/td[1]/a</td>
 	<td>Test Event</td>
 </tr>
 <tr>
@@ -105,22 +105,22 @@
 </tr>
 <tr>
 	<td>selectAndWait</td>
-	<td>//select</td>
-	<td>label=Concert</td>
+	<td>//select[@id='_8_eventType']</td>
+	<td>Concert</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[@class='portlet-section-alternate results-row alt']/td/a</td>
-	<td>Caedmon's Call Concert!</td>
+	<td>//tr[contains(.,'Caedmons Call Concert!')]/td[1]/a</td>
+	<td>Caedmons Call Concert!</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>//tr[@class='portlet-section-alternate results-row alt']/td/a</td>
+	<td>assertElementNotPresent</td>
+	<td>//tr[contains(.,'Off to Yosemite!')]/td[1]/a</td>
 	<td>Off to Yosemite!</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>//tr[@class='portlet-section-alternate results-row alt']/td/a</td>
+	<td>assertElementNotPresent</td>
+	<td>//tr[contains(.,'Test Event')]/td[1]/a</td>
 	<td>Test Event</td>
 </tr>
 <tr>
@@ -129,9 +129,9 @@
 	<td>Events</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Caedmon's Call Concert!</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Caedmons Call Concert!')]/td[3]/a</td>
+	<td>Caedmons Call Concert!</td>
 </tr>
 </tbody></table>
 </body>

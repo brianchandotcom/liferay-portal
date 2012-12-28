@@ -16,7 +16,6 @@ package com.liferay.portalweb.blocks.portal.webcontent.controlpanel.actions.feed
 
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
-import com.liferay.portalweb.blocks.portal.webcontent.controlpanel.paths.feeds.CPWebContentFeedsPaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**

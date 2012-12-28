@@ -17,7 +17,6 @@ package com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.entry;
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
 import com.liferay.portalweb.blocks.base.functions.AssertTextEqualsFunctions;
-import com.liferay.portalweb.blocks.portal.blogs.controlpanel.paths.entry.CPBlogsEntryViewPaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**

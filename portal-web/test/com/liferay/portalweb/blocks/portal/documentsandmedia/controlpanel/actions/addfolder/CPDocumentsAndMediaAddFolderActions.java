@@ -17,7 +17,6 @@ package com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.actio
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
 import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
-import com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.paths.addfolder.CPDocumentsAndMediaAddFolderPaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**

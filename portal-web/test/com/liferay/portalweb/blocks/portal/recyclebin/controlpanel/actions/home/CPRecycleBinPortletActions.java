@@ -16,7 +16,6 @@ package com.liferay.portalweb.blocks.portal.recyclebin.controlpanel.actions.home
 
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
-import com.liferay.portalweb.blocks.portal.recyclebin.controlpanel.paths.home.CPRecycleBinPortletPaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**

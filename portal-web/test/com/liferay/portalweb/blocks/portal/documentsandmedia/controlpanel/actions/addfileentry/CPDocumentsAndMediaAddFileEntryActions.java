@@ -18,7 +18,6 @@ import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
 import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
 import com.liferay.portalweb.blocks.base.functions.TypeFunctions;
-import com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.paths.addfileentry.CPDocumentsAndMediaAddFileEntryPaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**

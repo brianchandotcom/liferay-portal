@@ -13,6 +13,31 @@
 		float: right;
 	}
 
+	.subscription-breadcrumbs {
+		color: #999;
+
+		li {
+			background: url(@theme_image_path@/arrows/10_right.png) no-repeat 100% 50%;
+			display: inline-block;
+			margin-right: 3px;
+			padding-right: 10px;
+
+			&.last {
+				background-image: none;
+				display: block;
+				font-size: 1.4em;
+			}
+
+			a {
+				text-decoration: none;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+
 	.code {
 		background: #fff;
 		border: 1px solid #777;

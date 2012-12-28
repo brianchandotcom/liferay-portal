@@ -14,27 +14,12 @@
  */
 --%>
 
-<liferay-ui:search-container-column-text
-	name="category"
->
+<liferay-ui:search-container-column-text name="category">
 
 <%
 StringBundler sb = new StringBundler();
 
 _buildCategoryBreadcrumb(request, curCategory, sb);
-
-sb.append("<a class=\"col-category-subscription\" href=\"");
-sb.append(rowURL);
-sb.append("\">");
-sb.append("<strong>");
-sb.append(curCategory.getName());
-sb.append("</strong>");
-sb.append("</a>");
-
-if (Validator.isNotNull(curCategory.getDescription())) {
-	sb.append("<br />");
-	sb.append(curCategory.getDescription());
-}
 %>
 
 <%= sb.toString() %>
@@ -69,7 +54,7 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 
 	Collections.reverse(ancestors);
 
-	sb.append("<div class=\"subscription-breadcrumbs\">");
+	sb.append("<ul class=\"lfr-component subscription-breadcrumbs\">");
 
 	for (int i = 0; i < ancestors.size(); i++) {
 		MBCategory ancestor = ancestors.get(i);
@@ -78,17 +63,44 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 		portletURL.setParameter("struts_action", "/message_boards/view");
 		portletURL.setParameter("mbCategoryId", String.valueOf(ancestor.getCategoryId()));
 
+		String cssClass = StringPool.BLANK;
+
+		if (i == 0) {
+			cssClass = "first";
+		}
+
+		sb.append("<li");
+		sb.append(" class=\"" + cssClass + "\">");
 		sb.append("<a href=\"");
 		sb.append(HtmlUtil.escape(portletURL.toString()));
 		sb.append("\">");
 		sb.append(ancestor.getName());
 		sb.append("</a>");
 
-		if ((i == 0) || (i < ancestors.size())) {
-			sb.append(" &raquo; ");
-		}
+		sb.append("</li>");
 	}
 
-	sb.append("</div>");
+	PortletURL portletURL = PortletURLFactoryUtil.create(request, PortletKeys.MESSAGE_BOARDS, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+	portletURL.setParameter("struts_action", "/message_boards/view");
+	portletURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
+
+	sb.append("<li class=\"last\">");
+	sb.append("<strong>");
+	sb.append("<a href=\"");
+	sb.append(HtmlUtil.escape(portletURL.toString()));
+	sb.append("\">");
+	sb.append(category.getName());
+	sb.append("</strong>");
+	sb.append("</a>");
+
+	if (Validator.isNotNull(category.getDescription())) {
+		sb.append("<p>");
+		sb.append(category.getDescription());
+		sb.append("</p>");
+	}
+
+	sb.append("</li>");
+	sb.append("</ul>");
 }
 %>

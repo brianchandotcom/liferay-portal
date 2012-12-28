@@ -16,17 +16,26 @@
 	.subscription-breadcrumbs {
 		color: #999;
 
-		a {
-			text-decoration: none;
+		li {
+			background: url(@theme_image_path@/arrows/10_right.png) no-repeat 100% 50%;
+			display: inline-block;
+			margin-right: 3px;
+			padding-right: 10px;
 
-			&:hover {
-				text-decoration: underline;
+			&.last {
+				background-image: none;
+				display: block;
+				font-size: 1.4em;
+			}
+
+			a {
+				text-decoration: none;
+
+				&:hover {
+					text-decoration: underline;
+				}
 			}
 		}
-	}
-
-	.col-category-subscription {
-		font-size: 1.4em;
 	}
 
 	.code {

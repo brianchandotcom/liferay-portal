@@ -24,7 +24,6 @@
 
 	<macrodef
 		command="delete"
-		params="title"
 		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, delete a &lt;em&gt;Folder&lt;/em&gt; with a name of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt;."
 	>
 		<params>
@@ -35,11 +34,11 @@
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="FOLDER_NAME" value="${title}" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="FOLDER_NAME" value="${name}" />
 			<action object="CPDocumentsAndMediaHome" command="click" path="FOLDER_ACTIONS" />
 			<action object="CPDocumentsAndMediaHome" command="click" path="FOLDER_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
 			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE_UNDO" value="The selected item was moved to the Recycle Bin. Undo" />
-			<action object="CPDocumentsAndMediaHome" command="assertTextNotPresent" value="${title}" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextNotPresent" value="${name}" />
 		</steps>
 	</macrodef>
 

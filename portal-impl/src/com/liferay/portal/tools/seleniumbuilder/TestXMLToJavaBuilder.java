@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,13 +39,17 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 	public TestXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
+		_validCommands = new TreeSet<String>();
+
+		_validCommands.add("action");
+		_validCommands.add("macro");
+		_validCommands.add("window");
+
 		for (String fileName : fileNameSetTests) {
 			if (fileName.length() > 161) {
 				System.out.println(
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
-
-			classType = ClassTypes.TEST;
 
 			generateTest(fileName);
 		}
@@ -83,7 +88,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
 		sb.append("LiferaySeleniumHelper;\n");
 
-		sb.append(processRootElementImports(rootElement));
+		sb.append(processBlocksImports(rootElement));
 
 		sb.append("public class " + testName + " extends BaseTestCase {");
 
@@ -123,7 +128,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
-	protected String processRootElementImports(Element rootElement)
+	protected String processBlocksImports(Element rootElement)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -154,7 +159,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("signInUserMacros.signIn(");
 		sb.append("\"test@liferay.com\", \"test\");");
 
-		sb.append(processBlock(setup));
+		sb.append(processBlockCommands(setup, _validCommands));
 
 		sb.append("}");
 
@@ -168,7 +173,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 
 		sb.append(processBlockObjectDeclaractions(steps));
 
-		sb.append(processBlock(steps));
+		sb.append(processBlockCommands(steps, _validCommands));
 
 		sb.append("}");
 
@@ -183,7 +188,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 
 		sb.append(processBlockObjectDeclaractions(teardown));
 
-		sb.append(processBlock(teardown));
+		sb.append(processBlockCommands(teardown, _validCommands));
 
 		sb.append("signInUserMacros.signOut();");
 
@@ -191,5 +196,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 
 		return sb.toString();
 	}
+
+	private Set<String> _validCommands = new TreeSet<String>();
 
 }

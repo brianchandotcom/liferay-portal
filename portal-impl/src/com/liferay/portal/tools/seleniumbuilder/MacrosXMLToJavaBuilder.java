@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,13 +40,20 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 	public MacrosXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
+		_validCommands = new TreeSet<String>();
+
+		_validCommands.add("action");
+		_validCommands.add("else");
+		_validCommands.add("if");
+		_validCommands.add("macro");
+		_validCommands.add("while");
+		_validCommands.add("window");
+
 		for (String fileName : fileNameSetMacros) {
 			if (fileName.length() > 161) {
 				System.out.println(
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
-
-			classType = ClassTypes.MACROS;
 
 			getObject(fileName);
 			generateMacros(fileName);
@@ -86,7 +95,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
 		sb.append("LiferaySeleniumHelper;\n");
 
-		sb.append(processRootElementImports(rootElement));
+		sb.append(processBlocksImports(rootElement));
 
 		sb.append("public class ");
 		sb.append(macrosName);
@@ -124,7 +133,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 
 			sb.append(processBlockObjectDeclaractions(macroDef));
 
-			sb.append(processBlock(stepsBlock));
+			sb.append(processBlockCommands(stepsBlock, _validCommands));
 
 			sb.append("}");
 		}
@@ -155,5 +164,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 
 		return paramsString;
 	}
+
+	private Set<String> _validCommands = new TreeSet<String>();
 
 }

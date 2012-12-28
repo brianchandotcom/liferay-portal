@@ -494,9 +494,7 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 		Set<String> objects = new TreeSet<String>();
 
 		for (Element section : sections) {
-			Set<String> newSet = new TreeSet<String>();
-
-			objects.addAll(getAllObjects(section, newSet));
+			objects.addAll(getChildObjectSet(section));
 		}
 
 		StringBundler sb = new StringBundler();

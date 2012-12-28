@@ -37,7 +37,6 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
@@ -87,18 +86,6 @@ public abstract class BaseTrashHandlerTestCase {
 	@Transactional
 	public void testTrashAndRestoreDraft() throws Exception {
 		trashBaseModel(false, false);
-	}
-
-	@Test
-	@Transactional
-	public void testTrashAssetTagsApproved() throws Exception {
-		trashAssetTags(true);
-	}
-
-	@Test
-	@Transactional
-	public void testTrashAssetTagsDraft() throws Exception {
-		trashAssetTags(false);
 	}
 
 	@Test
@@ -192,10 +179,6 @@ public abstract class BaseTrashHandlerTestCase {
 	protected abstract int getBaseModelsNotInTrashCount(
 			BaseModel<?> parentBaseModel)
 		throws Exception;
-
-	protected int getGroupTagsCount(long groupId) throws Exception {
-		return AssetTagLocalServiceUtil.getGroupTagsCount(groupId);
-	}
 
 	protected BaseModel<?> getParentBaseModel(
 			Group group, ServiceContext serviceContext)
@@ -312,62 +295,6 @@ public abstract class BaseTrashHandlerTestCase {
 			QueryUtil.ALL_POS, null);
 
 		return results.getLength();
-	}
-
-	protected void trashAssetTags(boolean approved) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		int initialAssetTagsCount = AssetTagLocalServiceUtil.getGroupTagsCount(
-			group.getGroupId());
-
-		String[] assetTagNames = new String[] {
-			"Content", "Enterprise", "Open", "Source", "For", "Life"
-		};
-
-		serviceContext.setAssetTagNames(assetTagNames);
-
-		baseModel = addBaseModel(parentBaseModel, approved, serviceContext);
-
-		Assert.assertEquals(approved, isAssetEntryVisible(baseModel));
-
-		if (approved) {
-			Assert.assertEquals(
-				initialAssetTagsCount + assetTagNames.length,
-				getGroupTagsCount(group.getGroupId()));
-		}
-		else {
-			Assert.assertEquals(
-				initialAssetTagsCount, getGroupTagsCount(group.getGroupId()));
-		}
-
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
-
-		Assert.assertEquals(
-			initialAssetTagsCount, getGroupTagsCount(group.getGroupId()));
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			getBaseModelClassName());
-
-		trashHandler.restoreTrashEntry(getTrashEntryClassPK(baseModel));
-
-		Assert.assertEquals(approved, isAssetEntryVisible(baseModel));
-
-		if (approved) {
-			Assert.assertEquals(
-				initialAssetTagsCount + assetTagNames.length,
-				getGroupTagsCount(group.getGroupId()));
-		}
-		else {
-			Assert.assertEquals(
-				initialAssetTagsCount, getGroupTagsCount(group.getGroupId()));
-		}
 	}
 
 	protected void trashBaseModel(boolean approved, boolean delete)

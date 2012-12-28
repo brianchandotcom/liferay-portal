@@ -55,16 +55,6 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	public void testTrashAssetTagsApproved() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
-	}
-
-	@Override
-	public void testTrashAssetTagsDraft() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
-	}
-
-	@Override
 	public void testTrashVersionAndDelete() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}

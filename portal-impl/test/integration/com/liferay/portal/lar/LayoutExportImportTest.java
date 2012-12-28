@@ -81,13 +81,13 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	@Transactional
-	public void testLSPLinkEnabledwithPageAddition() throws Exception {
+	public void testLSPLinkEnabledWithPageAddition() throws Exception {
 		runLayoutSetPrototype(true, false, true, false, false);
 	}
 
 	@Test
 	@Transactional
-	public void testLSPLinkEnabledwithPageAdditionFromLPLinkDisabled()
+	public void testLSPLinkEnabledWithPageAdditionFromLPLinkDisabled()
 		throws Exception {
 
 		runLayoutSetPrototype(true, false, true, false, true);
@@ -95,7 +95,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	@Transactional
-	public void testLSPLinkEnabledwithPageAdditionFromLPLinkEnabled()
+	public void testLSPLinkEnabledWithPageAdditionFromLPLinkEnabled()
 		throws Exception {
 
 		runLayoutSetPrototype(true, true, true, false, true);
@@ -103,19 +103,19 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	@Transactional
-	public void testLSPLinkEnabledwithPageDeletion() throws Exception {
+	public void testLSPLinkEnabledWithPageDeletion() throws Exception {
 		runLayoutSetPrototype(true, false, true, true, false);
 	}
 
 	@Test
 	@Transactional
-	public void testLSPLinkEnabledwithPageDeletionFromLP() throws Exception {
+	public void testLSPLinkEnabledWithPageDeletionFromLP() throws Exception {
 		runLayoutSetPrototype(true, false, true, true, true);
 	}
 
 	protected void runLayoutSetPrototype(
-		boolean layoutSetLinkEnabled, boolean layoutLinkEnabled,
-		boolean addPage, boolean deletePage, boolean useLayoutPrototype)
+			boolean layoutSetLinkEnabled, boolean layoutLinkEnabled,
+			boolean addPage, boolean deletePage, boolean useLayoutPrototype)
 		throws Exception {
 
 		LayoutSetPrototype layoutSetPrototype =

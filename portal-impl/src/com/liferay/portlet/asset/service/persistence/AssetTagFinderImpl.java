@@ -79,7 +79,7 @@ public class AssetTagFinderImpl
 	public static final String FIND_BY_G_N_S_E =
 		AssetTagFinder.class.getName() + ".findByG_N_S_E";
 
-	public int countByGroupId(long groupId) throws SystemException {
+	public int countByGroupId(long groupId)	throws SystemException {
 		return doCountByGroupId(groupId, true);
 	}
 

@@ -479,7 +479,9 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 
 		for (Element macro : macros) {
 			if (macro.attributeValue("command").equals(macroCommand)) {
-				steps = getCommands(macro);
+				Element stepsBlock = macro.element("steps");
+
+				steps = getCommands(stepsBlock);
 			}
 		}
 

@@ -55,6 +55,40 @@ public class CPUsersAndOrganizationsUsersMacros extends BaseMacros {
 			"Your request completed successfully.");
 	}
 
+	public void advancedSearch() throws Exception {
+		CPUsersAndOrganizationsHomeActions cPUsersAndOrganizationsHomeActions = new CPUsersAndOrganizationsHomeActions(selenium);
+		CPUsersAndOrganizationsSearchAllActiveUsersActions cPUsersAndOrganizationsSearchAllActiveUsersActions =
+			new CPUsersAndOrganizationsSearchAllActiveUsersActions(selenium);
+		GotoMacros gotoMacros = new GotoMacros(selenium);
+
+		gotoMacros.controlPanelPortlet("Users and Organizations");
+		cPUsersAndOrganizationsHomeActions.click("USERS_SEARCH_ALL",
+			"Search All Users");
+
+		if (cPUsersAndOrganizationsSearchAllActiveUsersActions.isVisible(
+					"BASIC_SEARCH_ADVANCED_LINK", "")) {
+			cPUsersAndOrganizationsSearchAllActiveUsersActions.click("BASIC_SEARCH_ADVANCED_LINK",
+				"Advanced Â»");
+		}
+	}
+
+	public void basicSearch() throws Exception {
+		CPUsersAndOrganizationsHomeActions cPUsersAndOrganizationsHomeActions = new CPUsersAndOrganizationsHomeActions(selenium);
+		CPUsersAndOrganizationsSearchAllActiveUsersActions cPUsersAndOrganizationsSearchAllActiveUsersActions =
+			new CPUsersAndOrganizationsSearchAllActiveUsersActions(selenium);
+		GotoMacros gotoMacros = new GotoMacros(selenium);
+
+		gotoMacros.controlPanelPortlet("Users and Organizations");
+		cPUsersAndOrganizationsHomeActions.click("USERS_SEARCH_ALL",
+			"Search All Users");
+
+		if (cPUsersAndOrganizationsSearchAllActiveUsersActions.isVisible(
+					"ADVANCED_SEARCH_BASIC_LINK", "")) {
+			cPUsersAndOrganizationsSearchAllActiveUsersActions.click("ADVANCED_SEARCH_BASIC_LINK",
+				"Â« Basic");
+		}
+	}
+
 	public void changePassword(String firstName, String password)
 		throws Exception {
 		CPUsersAndOrganizationsEditUserActions cPUsersAndOrganizationsEditUserActions =

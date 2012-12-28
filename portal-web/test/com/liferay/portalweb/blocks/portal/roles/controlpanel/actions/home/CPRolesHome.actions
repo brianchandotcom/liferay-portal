@@ -1,0 +1,15 @@
+<actions object="CPRolesHome">
+	<actiondef command="click">
+		<conditional elements="ACTIONS_ASSIGN_MEMBERS">
+			<function object="Click" command="textClickAtAndWait" />
+		</conditional>
+
+		<conditional elements="ADD_REGULAR_ROLE,ADD_SITE_ROLE,ADD_ORGANIZATION_ROLE">
+			<function object="Click" command="textClickAndWait" />
+		</conditional>
+
+		<conditional elements="SEARCH_BUTTON">
+			<function object="Click" command="valueClickAtAndWait" />
+		</conditional>
+	</actiondef>
+</actions>

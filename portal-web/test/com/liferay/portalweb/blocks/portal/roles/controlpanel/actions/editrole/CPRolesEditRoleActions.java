@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.actions.edituser;
+package com.liferay.portalweb.blocks.portal.roles.controlpanel.actions.editrole;
 
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
@@ -23,12 +23,11 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPUsersAndOrganizationsEditUserActions extends BaseActionsImpl
+public class CPRolesEditRoleActions extends BaseActionsImpl
 	implements LiferayActions {
-	public CPUsersAndOrganizationsEditUserActions(
-		LiferaySelenium liferaySelenium) {
+	public CPRolesEditRoleActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
-		paths = CPUsersAndOrganizationsEditUserPaths.getPaths();
+		paths = CPRolesEditRolePaths.getPaths();
 	}
 
 	public void assertTextEquals(String param1, String param2)
@@ -36,32 +35,21 @@ public class CPUsersAndOrganizationsEditUserActions extends BaseActionsImpl
 		String[] params = getParams(param1, param2);
 
 		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
+		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("USER_EMAIL_ADDRESS") ||
-				param1.equals("USER_FIRST_NAME") ||
-				param1.equals("USER_LAST_NAME") ||
-				param1.equals("USER_SCREEN_NAME"))) {
+		if ((param1.equals("ROLE_NAME") || param1.equals("ROLE_TITLE") ||
+				param1.equals("ROLE_DESCRIPTION"))) {
 			assertTextEqualsFunctions.assertValue(params[0], params[1]);
+		}
+		else if ((param1.equals("ROLE_TYPE"))) {
+			assertTextEqualsFunctions.assertPartialText(params[0], params[1]);
+		}
+		else if ((param1.equals("BUTTON_SAVE") ||
+				param1.equals("BUTTON_CANCEL"))) {
+			clickFunctions.valueClickAtAndWait(params[0], params[1]);
 		}
 		else {
 			super.assertTextEquals(params[0], params[1]);
-		}
-	}
-
-	public void click(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
-
-		ClickFunctions clickFunctions = new ClickFunctions(selenium);
-
-		if ((param1.equals("BUTTONS_CANCEL") || param1.equals("BUTTONS_SAVE"))) {
-			clickFunctions.valueClickAtAndWait(params[0], params[1]);
-		}
-		else if ((param1.equals("USER_INFORMATION_PASSWORD") ||
-				param1.equals("USER_INFORMATION_ROLES"))) {
-			clickFunctions.partialTextClickAt(params[0], params[1]);
-		}
-		else {
-			super.click(params[0], params[1]);
 		}
 	}
 }

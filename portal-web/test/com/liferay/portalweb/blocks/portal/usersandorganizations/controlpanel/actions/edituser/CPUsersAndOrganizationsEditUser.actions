@@ -10,7 +10,7 @@
 			<function object="Click" command="valueClickAtAndWait" />
 		</conditional>
 
-		<conditional elements="USER_INFORMATION_PASSWORD">
+		<conditional elements="USER_INFORMATION_PASSWORD,USER_INFORMATION_ROLES">
 			<function object="Click" command="partialTextClickAt" />
 		</conditional>
 	</actiondef>

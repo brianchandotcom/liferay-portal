@@ -1,0 +1,20 @@
+<test
+	name="DeleteSiteRole"
+	description="In the &lt;strong&gt;Control Panel Roles Portlet&lt;/strong&gt;, delete a Site Role."
+>
+	<setup>
+		<macro object="CPRoles" command="addSiteRole">
+			<param name="name" value="Siterole Name " />
+			<param name="title" value="Siterole Title" />
+			<param name="description" value="Siterole Description" />
+		</macro>
+	</setup>
+	<steps>
+		<macro object="CPRoles" command="delete">
+			<param name="title" value="Siterole Title" />
+		</macro>
+	</steps>
+	<teardown>
+		<macro object="CPRoles" command="tearDown" />
+	</teardown>
+</test>

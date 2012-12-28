@@ -18,18 +18,12 @@ package com.liferay.portlet.asset.service.persistence;
  * @author Brian Wing Shun Chan
  */
 public interface AssetTagFinder {
-	public int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public int countByG_C_N(long groupId, long classNameId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public int countByG_N_P(long groupId, java.lang.String name,
 		java.lang.String[] tagProperties)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public int filterCountByGroupId(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public int filterCountByG_N(long groupId, java.lang.String name)
@@ -41,11 +35,6 @@ public interface AssetTagFinder {
 
 	public int filterCountByG_N_P(long groupId, java.lang.String name,
 		java.lang.String[] tagProperties)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public java.util.List<com.liferay.portlet.asset.model.AssetTag> filterFindByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.asset.model.AssetTag filterFindByG_N(
@@ -65,11 +54,6 @@ public interface AssetTagFinder {
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findByEntryId(
 		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.asset.model.AssetTag findByG_N(long groupId,

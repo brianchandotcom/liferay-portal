@@ -39,6 +39,9 @@ public class LayoutFinderImpl
 	public static final String FIND_BY_NULL_FRIENDLY_URL =
 		LayoutFinder.class.getName() + ".findByNullFriendlyURL";
 
+	public static final String FIND_BY_NULL_UUID =
+		LayoutFinder.class.getName() + ".findByNullUuid";
+
 	public static final String FIND_BY_SCOPE_GROUP =
 		LayoutFinder.class.getName() + ".findByScopeGroup";
 
@@ -52,6 +55,28 @@ public class LayoutFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_NULL_FRIENDLY_URL);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("Layout", LayoutImpl.class);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<Layout> findByNullUUID() throws SystemException {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_NULL_UUID);
 
 			SQLQuery q = session.createSQLQuery(sql);
 

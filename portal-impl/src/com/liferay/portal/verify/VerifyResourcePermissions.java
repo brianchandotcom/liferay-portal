@@ -29,6 +29,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ContactLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -63,6 +64,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.List;
+
 /**
  * @author Raymond Augé
  * @author James Lefeu
@@ -86,29 +89,16 @@ public class VerifyResourcePermissions extends VerifyProcess {
 	}
 
 	protected void verifyLayout(Role role) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		List<Layout> layouts = LayoutLocalServiceUtil.getNullUuidLayouts();
 
-			ps = con.prepareStatement(
-				"select * from Layout where companyId = " +
-					role.getCompanyId());
+		for (Layout layout : layouts) {
+			long plid = layout.getPlid();
 
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long plid = rs.getLong("plid");
-
-				verifyModel(
-					role.getCompanyId(), Layout.class.getName(), plid, role, 0);
-			}
+			verifyModel(
+				role.getCompanyId(), Layout.class.getName(), plid, role, 0);
 		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
+
 	}
 
 	protected void verifyModel(

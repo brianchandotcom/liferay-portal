@@ -430,6 +430,16 @@
 				(friendlyURL = '' OR friendlyURL IS NULL)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.LayoutFinder.findByNullUuid">
+		<![CDATA[
+			SELECT
+				{Layout.*}
+			FROM
+				Layout
+			WHERE
+				(Layout.uuid_ = '' OR Layout.uuid_ IS NULL)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.LayoutFinder.findByScopeGroup">
 		<![CDATA[
 			SELECT

@@ -1247,6 +1247,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns all the layouts whose UUIDs are <code>null</code>
+	 *
+	 * @return all the layouts whose UUIDs are <code>null</code>
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Layout> getNullUuidLayouts() throws SystemException {
+		return layoutFinder.findByNullUUID();
+	}
+
+	/**
 	 * Returns all the layouts within scope of the group
 	 *
 	 * @param  groupId the primary key of the group

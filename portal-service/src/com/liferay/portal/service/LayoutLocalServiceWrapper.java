@@ -916,6 +916,17 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	/**
+	* Returns all the layouts whose UUIDs are <code>null</code>
+	*
+	* @return all the layouts whose UUIDs are <code>null</code>
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Layout> getNullUuidLayouts()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.getNullUuidLayouts();
+	}
+
+	/**
 	* Returns all the layouts within scope of the group
 	*
 	* @param groupId the primary key of the group

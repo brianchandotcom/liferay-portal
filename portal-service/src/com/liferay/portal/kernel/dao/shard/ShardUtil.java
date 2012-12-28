@@ -113,6 +113,18 @@ public class ShardUtil {
 		}
 	}
 
+	public static String setTargetSource(String shardName) {
+		String value = null;
+
+		Shard shard = getShard();
+
+		if (shard != null) {
+			value = shard.setTargetSource(shardName);
+		}
+
+		return value;
+	}
+
 	public void setShard(Shard shard) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

@@ -14,8 +14,7 @@
 
 package com.liferay.portal.dao.shard.advice;
 
-import com.liferay.portal.dao.shard.ShardDataSourceTargetSource;
-import com.liferay.portal.dao.shard.ShardSessionFactoryTargetSource;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,49 +38,36 @@ public class ShardGloballyAdvice implements MethodInterceptor {
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		Object returnValue = null;
 
-		boolean isCompanyPushed = false;
-
 		_shardAdvice.setGlobalCall(new Object());
 
 		try {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"All shards invoked for " + methodInvocation.toString());
-			}
-
 			for (String shardName : ShardUtil.getAvailableShardNames()) {
-				ShardDataSourceTargetSource shardDataSourceTargetSource =
-					_shardAdvice.getShardDataSourceTargetSource();
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Invoking shard " + shardName + " for " +
+							methodInvocation.toString());
+				}
 
-				shardDataSourceTargetSource.setDataSource(shardName);
-
-				ShardSessionFactoryTargetSource
-					shardSessionFactoryTargetSource =
-						_shardAdvice.getShardSessionFactoryTargetSource();
-
-				shardSessionFactoryTargetSource.setSessionFactory(shardName);
+				ShardUtil.setTargetSource(shardName);
 
 				_shardAdvice.pushCompanyService(shardName);
 
-				isCompanyPushed = true;
+				try {
+					Object value = methodInvocation.proceed();
 
-				Object value = methodInvocation.proceed();
+					if (shardName.equals(ShardUtil.getDefaultShardName())) {
+						returnValue = value;
+					}
+				}
+				finally {
+					_shardAdvice.popCompanyService();
 
-				_shardAdvice.popCompanyService();
-
-				isCompanyPushed = false;
-
-				if (shardName.equals(ShardUtil.getDefaultShardName())) {
-					returnValue = value;
+					CacheRegistryUtil.clear();
 				}
 			}
 		}
 		finally {
 			_shardAdvice.setGlobalCall(null);
-
-			if (isCompanyPushed) {
-				_shardAdvice.popCompanyService();
-			}
 		}
 
 		return returnValue;

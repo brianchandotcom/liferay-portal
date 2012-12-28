@@ -66,11 +66,7 @@ public class ShardPersistenceAdvice implements MethodInterceptor {
 			target instanceof ShardPersistence ||
 			target instanceof VirtualHostPersistence) {
 
-			String currentShardName = ShardUtil.getCurrentShardName();
-
-			shardDataSourceTargetSource.setDataSource(
-				PropsValues.SHARD_DEFAULT_NAME);
-			shardSessionFactoryTargetSource.setSessionFactory(
+			String currentShardName = ShardUtil.setTargetSource(
 				PropsValues.SHARD_DEFAULT_NAME);
 
 			if (_log.isDebugEnabled()) {
@@ -86,19 +82,14 @@ public class ShardPersistenceAdvice implements MethodInterceptor {
 			finally {
 				_shardAdvice.popCompanyService();
 
-				shardDataSourceTargetSource.setDataSource(currentShardName);
-				shardSessionFactoryTargetSource.setSessionFactory(
-					currentShardName);
+				ShardUtil.setTargetSource(currentShardName);
 			}
 		}
 
 		if (_shardAdvice.getGlobalCall() == null) {
-			_shardAdvice.setShardNameByCompany();
+			String shardName = _shardAdvice.setShardNameByCompany();
 
-			String shardName = _shardAdvice.getShardName();
-
-			shardDataSourceTargetSource.setDataSource(shardName);
-			shardSessionFactoryTargetSource.setSessionFactory(shardName);
+			ShardUtil.setTargetSource(shardName);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

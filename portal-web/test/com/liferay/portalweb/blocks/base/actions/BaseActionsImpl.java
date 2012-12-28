@@ -46,7 +46,7 @@ import java.util.Map;
 public class BaseActionsImpl implements LiferayActions {
 
 	public BaseActionsImpl(LiferaySelenium liferaySelenium) {
-		paths = new HashMap<String, String[]>();
+		paths = new HashMap<String, String>();
 		selenium = liferaySelenium;
 	}
 
@@ -194,7 +194,7 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public String get(String key) throws Exception {
-		return paths.get(key)[0];
+		return paths.get(key);
 	}
 
 	public boolean isElementPresent(String param1, String param2)
@@ -275,14 +275,14 @@ public class BaseActionsImpl implements LiferayActions {
 		String[] params = new String[2];
 
 		if (paths.containsKey(param1)) {
-			params[0] = paths.get(param1)[0];
+			params[0] = paths.get(param1);
 		}
 		else {
 			params[0] = param1;
 		}
 
-		if (paths.containsKey(param1) && (param2 == null)) {
-			params[1] = paths.get(param1)[1];
+		if (param2 == null) {
+			params[1] = "";
 		}
 		else {
 			params[1] = param2;
@@ -291,7 +291,7 @@ public class BaseActionsImpl implements LiferayActions {
 		return params;
 	}
 
-	protected Map<String, String[]> paths;
+	protected Map<String, String> paths;
 
 	protected LiferaySelenium selenium;
 

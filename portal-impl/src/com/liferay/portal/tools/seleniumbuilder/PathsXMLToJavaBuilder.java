@@ -78,7 +78,7 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append(pathsName);
 		sb.append(" {");
 
-		sb.append("public static Map<String, String[]> getPaths() {");
+		sb.append("public static Map<String, String> getPaths() {");
 		sb.append("return _paths;");
 		sb.append("}");
 
@@ -92,6 +92,11 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 	private String _getPaths(Element rootElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
+		sb.append("private static Map<String, String> _paths = ");
+		sb.append("new HashMap<String, String>();");
+
+		sb.append("static {");
+
 		Element bodyElement = rootElement.element("body");
 		Element tableElement = bodyElement.element("table");
 		Element tbodyElement = tableElement.element("tbody");
@@ -103,34 +108,13 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 
 			String key = paramList.get(0).getText();
 			String locator = paramList.get(1).getText();
-			String value = paramList.get(2).getText();
-
-			if (!key.equals("")) {
-				sb.append("private static String[] _");
-				sb.append(key);
-				sb.append(" = {");
-				sb.append("\"" + locator + "\",");
-				sb.append("\"" + value + "\"");
-				sb.append("};");
-			}
-		}
-
-		sb.append("private static Map<String, String[]> _paths = ");
-		sb.append("new HashMap<String, String[]>();");
-
-		sb.append("static {");
-
-		for (Element element : elementList) {
-			List<Element> paramList = element.elements("td");
-
-			String key = paramList.get(0).getText();
 
 			if (!key.equals("")) {
 				sb.append("_paths.put(\"");
 				sb.append(key);
-				sb.append("\", _");
-				sb.append(key);
-				sb.append(");");
+				sb.append("\", \"");
+				sb.append(locator);
+				sb.append("\");");
 			}
 		}
 

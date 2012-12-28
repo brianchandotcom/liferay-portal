@@ -78,9 +78,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				companyId, RoleConstants.OWNER);
 
 			for (String[] model : _MODELS) {
-				verifyModel(
-					role, model[_INDEX_NAME], model[_INDEX_MODEL_NAME],
-					model[_INDEX_PK_COL_NAME]);
+				verifyModel(role, model[0], model[1], model[2]);
 			}
 
 			verifyLayout(role);
@@ -93,22 +91,19 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		ResultSet rs = null;
 
 		try {
-			String[] MODEL = _LAYOUT_MODELS[0];
-			long companyId = role.getCompanyId();
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select * from " + MODEL[_INDEX_MODEL_NAME] +
-						" where companyId = " +
-						companyId);
+				"select * from Layout where companyId = " +
+					role.getCompanyId());
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long primKey = rs.getLong(MODEL[_INDEX_PK_COL_NAME]);
+				long plid = rs.getLong("plid");
 
-				verifyModel(companyId, MODEL[_INDEX_NAME], primKey, role, 0);
-
+				verifyModel(
+					role.getCompanyId(), Layout.class.getName(), plid, role, 0);
 			}
 		}
 		finally {
@@ -205,16 +200,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
-
-	private static final int _INDEX_MODEL_NAME = 1;
-	private static final int _INDEX_NAME = 0;
-	private static final int _INDEX_PK_COL_NAME = 2;
-
-	private static final String[][] _LAYOUT_MODELS = new String[][] {
-		new String[] {
-				Layout.class.getName(), "Layout", "plid"
-			}
-	};
 
 	private static final String[][] _MODELS = new String[][] {
 		new String[] {

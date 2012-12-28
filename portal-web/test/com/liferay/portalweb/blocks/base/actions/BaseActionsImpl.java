@@ -35,9 +35,9 @@ import com.liferay.portalweb.blocks.base.functions.SelectFunctions;
 import com.liferay.portalweb.blocks.base.functions.SelectWindowFunctions;
 import com.liferay.portalweb.blocks.base.functions.TypeFunctions;
 import com.liferay.portalweb.blocks.base.functions.UncheckFunctions;
-import com.liferay.portalweb.blocks.base.paths.BaseActionsPaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -46,7 +46,7 @@ import java.util.Map;
 public class BaseActionsImpl implements LiferayActions {
 
 	public BaseActionsImpl(LiferaySelenium liferaySelenium) {
-		paths = BaseActionsPaths.getPaths();
+		paths = new HashMap<String, String[]>();
 		selenium = liferaySelenium;
 	}
 

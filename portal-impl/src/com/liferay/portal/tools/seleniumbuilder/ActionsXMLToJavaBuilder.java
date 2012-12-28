@@ -63,28 +63,33 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
-		String actionsName = fileName.substring(x + 1, y) + "Actions";
-		String pathsFilePath = fileName.substring(0, x);
-		String pathsName = fileName.substring(x + 1, y) + "Paths";
+		String objectName = fileName.substring(x + 1, y);
+		String objectFilePath = fileName.substring(0, x);
 
-		String pathsPackagePath = StringUtil.replace(
-			pathsFilePath, StringPool.SLASH, StringPool.PERIOD);
-		String actionsFilePath = StringUtil.replace(
-			pathsFilePath, "/paths", "/actions");
+		String actionsSimpleClassName = objectName + "Actions";
+		String actionsXMLFileName =
+			objectFilePath + "/" + objectName + ".actions";
+		String objectPackagePath = StringUtil.replace(
+			objectFilePath, StringPool.SLASH, StringPool.PERIOD);
+		String pathsSimpleClassName = objectName + "Paths";
 
-		String actionsFileName = actionsFilePath + "/" + actionsName + ".java";
+		String actionsFileName =
+			objectFilePath + "/" + actionsSimpleClassName + ".java";
+
+		Element rootElement = null;
+
+		if (FileUtil.exists(basedir + "/" + actionsXMLFileName)) {
+			getObject(actionsXMLFileName);
+
+			rootElement = getRootElement(actionsXMLFileName);
+		}
 
 		filePath = actionsFileName;
-
-		String actionsPackagePath = StringUtil.replace(
-			actionsFilePath, StringPool.SLASH, StringPool.PERIOD);
-		String actionsXMLFileName =
-			actionsFilePath + "/" + fileName.substring(x + 1, y) + ".actions";
 
 		StringBundler sb = new StringBundler();
 
 		sb.append("package ");
-		sb.append(actionsPackagePath);
+		sb.append(objectPackagePath);
 		sb.append(";\n\n");
 
 		sb.append("import com.liferay.portalweb.blocks.base.actions.");
@@ -99,43 +104,28 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("import com.liferay.portalweb.portal.util.");
 		sb.append("liferayselenium.LiferaySeleniumHelper;\n");
 
-		sb.append("import ");
-		sb.append(pathsPackagePath);
-		sb.append(StringPool.PERIOD);
-		sb.append(pathsName);
-		sb.append(";\n");
-
-		boolean actionsXMLFileExists = FileUtil.exists(
-			basedir + "/" + actionsXMLFileName);
-
-		if (actionsXMLFileExists) {
-			getObject(actionsXMLFileName);
-
-			Element rootElement = getRootElement(actionsXMLFileName);
-
+		if (!(rootElement == null)) {
 			sb.append(processBlocksImports(rootElement));
 		}
 
 		sb.append("public class ");
-		sb.append(actionsName);
+		sb.append(actionsSimpleClassName);
 		sb.append(" extends BaseActionsImpl implements");
 		sb.append(" LiferayActions {\n\n");
 
 		sb.append("public ");
-		sb.append(actionsName);
+		sb.append(actionsSimpleClassName);
 		sb.append("(LiferaySelenium liferaySelenium) {\n");
 
 		sb.append("super(liferaySelenium);\n");
 
 		sb.append("paths = ");
-		sb.append(pathsName);
+		sb.append(pathsSimpleClassName);
 		sb.append(".getPaths();\n");
 
 		sb.append("}\n");
 
-		if (actionsXMLFileExists) {
-			Element rootElement = getRootElement(actionsXMLFileName);
-
+		if (!(rootElement == null)) {
 			sb.append(_processActionDefs(rootElement));
 		}
 

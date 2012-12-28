@@ -1,0 +1,31 @@
+<test
+	name="AddOrgRole"
+	description="In the &lt;strong&gt;Control Panel Roles Portlet&lt;/strong&gt;, add an Organization Role."
+>
+	<setup>
+	</setup>
+	<steps>
+		<macro object="CPRoles" command="addOrgRole">
+			<param name="name" value="Orgrole Name " />
+			<param name="title" value="Orgrole Title" />
+			<param name="description" value="Orgrole Description" />
+		</macro>
+
+		<macro object="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Roles" />
+		</macro>
+
+		<action object="CPRolesHome" command="type" path="SEARCH_FILED" value="Orgrole Title" />
+		<action object="CPRolesHome" command="click" path="SEARCH_BUTTON" value="Search" />
+		<action object="CPRolesHome" command="assertTextEquals" path="ROLES_NAME" value="Orgrole Title" />
+		<action object="CPRolesHome" command="click" path="ROLES_NAME" value="Orgrole Title" />
+
+		<action object="CPRolesEditRole" command="assertTextEquals" path="ROLE_TYPE" value="Organization" />
+		<action object="CPRolesEditRole" command="assertTextEquals" path="ROLE_NAME" value="Orgrole Name" />
+		<action object="CPRolesEditRole" command="assertTextEquals" path="ROLE_TITLE" value="Orgrole Title" />
+		<action object="CPRolesEditRole" command="assertTextEquals" path="ROLE_DESCRIPTION" value="Orgrole Description" />
+	</steps>
+	<teardown>
+		<macro object="CPRoles" command="tearDown" />
+	</teardown>
+</test>

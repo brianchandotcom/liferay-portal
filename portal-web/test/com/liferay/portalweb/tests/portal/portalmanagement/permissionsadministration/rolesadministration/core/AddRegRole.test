@@ -1,0 +1,31 @@
+<test
+	name="AddRegRole"
+	description="In the &lt;strong&gt;Control Panel Roles Portlet&lt;/strong&gt;, add a Regular Role."
+>
+	<setup>
+	</setup>
+	<steps>
+		<macro object="CPRoles" command="addRegRole">
+			<param name="name" value="Regrole Name " />
+			<param name="title" value="Regrole Title" />
+			<param name="description" value="Regrole Description" />
+		</macro>
+
+		<macro object="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Roles" />
+		</macro>
+
+		<action object="CPRolesHome" command="type" path="SEARCH_FILED" value="Regrole Title" />
+		<action object="CPRolesHome" command="click" path="SEARCH_BUTTON" value="Search" />
+		<action object="CPRolesHome" command="assertTextEquals" path="ROLES_NAME" value="Regrole Title" />
+		<action object="CPRolesHome" command="click" path="ROLES_NAME" value="Regrole Title" />
+
+		<action object="CPRolesEditRole" command="assertTextEquals" path="ROLE_TYPE" value="Regular" />
+		<action object="CPRolesEditRole" command="assertTextEquals" path="ROLE_NAME" value="Regrole Name" />
+		<action object="CPRolesEditRole" command="assertTextEquals" path="ROLE_TITLE" value="Regrole Title" />
+		<action object="CPRolesEditRole" command="assertTextEquals" path="ROLE_DESCRIPTION" value="Regrole Description" />
+	</steps>
+	<teardown>
+		<macro object="CPRoles" command="tearDown" />
+	</teardown>
+</test>

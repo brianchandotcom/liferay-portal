@@ -1,0 +1,16 @@
+<actions object="CPRolesAssignMembersUsers">
+	<actiondef command="click">
+		<conditional elements="ADVANCED_SEARCH_BUTTON,BASIC_SEARCH_BUTTON,BUTTON_UPDATE_ASSOCIATIONS">
+			<function object="Click" command="valueClickAtAndWait" />
+		</conditional>
+
+		<conditional elements="BASIC_SEARCH_ADVANCED_LINK,ADVANCED_SEARCH_BASIC_LINK">
+			<function object="Click" command="clickAt" />
+		</conditional>
+
+		<conditional elements="STATUS_AVAILABLE">
+			<function object="Click" command="textClickAtAndWait" />
+		</conditional>
+	</actiondef>
+</actions>
+

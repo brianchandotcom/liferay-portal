@@ -21,234 +21,84 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  */
 public class CPBlogsHomePaths {
-	public static Map<String, String[]> getPaths() {
+	public static Map<String, String> getPaths() {
 		return _paths;
 	}
 
-	private static String[] _PAGE_NAME = { "", "Control Panel Blogs Home Page" };
-	private static String[] _BLOGS_ENTRY_LINK_CHECKBOX_ALL = {
-			"//input[@name='_161_allRowIds']",
-			"Select All Blog Entries Checkbox"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_CHECKBOX = {
-			"//tr[contains(.,'Blogs Entry Title')]/td[1]/input[@name='_161_rowIds']",
-			"Blog Entry Select Checkbox"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_CHECKBOX_1 = {
-			"//tr[3]/td[1]/input[@name='_161_rowIds']",
-			"First Blog Entry Select Checkbox"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_CHECKBOX_2 = {
-			"//tr[4]/td[1]/input[@name='_161_rowIds']",
-			"Second Blog Entry Select Checkbox"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_CHECKBOX_3 = {
-			"//tr[5]/td[1]/input[@name='_161_rowIds']",
-			"Third Blog Entry Select Checkbox"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_TITLE = {
-			"//tr[contains(.,'Blogs Entry Title')]/td[2]/a",
-			"Blogs Entry Title Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_TITLE_1 = {
-			"//tr[3]/td[2]/a", "First Blogs Entry Title Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_TITLE_2 = {
-			"//tr[4]/td[2]/a", "Second Blogs Entry Title Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_TITLE_3 = {
-			"//tr[5]/td[2]/a", "Third Blogs Entry Title Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_AUTHOR = {
-			"//tr[contains(.,'Blogs Entry Title')]/td[3]/a",
-			"Blog Entry Author Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_AUTHOR_1 = {
-			"//tr[3]/td[3]/a", "First Blog Entry Author Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_AUTHOR_2 = {
-			"//tr[4]/td[3]/a", "Second Blog Entry Author Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_AUTHOR_3 = {
-			"//tr[5]/td[3]/a", "Third Blog Entry Author Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_CREATED_DATE = {
-			"//tr[contains(.,'Blogs Entry Title')]/td[4]/a",
-			"Blog Entry Created Date Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_CREATED_DATE_1 = {
-			"//tr[3]/td[4]/a", "First Blog Entry Created Date Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_CREATED_DATE_2 = {
-			"//tr[4]/td[4]/a", "Second Blog Entry Created Date Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_CREATED_DATE_3 = {
-			"//tr[5]/td[4]/a", "Third Blog Entry Created Date Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_STATUS = {
-			"//tr[contains(.,'Blogs Entry Title')]/td[5]/a",
-			"Blog Entry Status Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_STATUS_1 = {
-			"//tr[3]/td[5]/a", "First Blog Entry Status Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_STATUS_2 = {
-			"//tr[4]/td[5]/a", "Second Blog Entry Status Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_STATUS_3 = {
-			"//tr[5]/td[5]/a", "Third Blog Entry Status Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_ACTIONS = {
-			"//tr[contains(.,'Blogs Entry Title')]/td/span/ul/li/strong/a/span",
-			"Actions Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_ACTIONS_1 = {
-			"//tr[3]/td/span/ul/li/strong/a/span", "Blog Entry 1 Actions Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_ACTIONS_2 = {
-			"//tr[4]/td/span/ul/li/strong/a/span", "Blog Entry 2 Actions Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_ACTIONS_3 = {
-			"//tr[5]/td/span/ul/li/strong/a/span", "Blog Entry 3 Actions Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_ACTIONS_DELETE = {
-			"//a[@role='menuitem' and contains(.,'Delete')]",
-			"Actions Menu Delete Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_ACTIONS_EDIT = {
-			"//a[@role='menuitem' and contains(.,'Edit')]",
-			"Actions Menu Edit Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_ACTIONS_PERMISSION = {
-			"//a[@role='menuitem' and contains(.,'Permissions')]",
-			"Actions Menu Permissions Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_ACTIONS_VIEW = {
-			"//a[@role='menuitem' and contains(.,'View')]",
-			"Actions Menu View Link"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_CONFIRM_DELETE_ACTIONS = {
-			"",
-			"Are you sure you want to delete this? Entry Delete Confirm Message"
-		};
-	private static String[] _BLOGS_ENTRY_LINK_CONFIRM_DELETE_LIST = {
-			"",
-			"Are you sure you want to delete the selected entries? Delete Multiple Entries Confirm Message"
-		};
-	private static String[] _PORTLET_LINK_BREADCRUMB_1 = {
-			"//nav[@id='breadcrumbs']/ul/li[1]/span/a", "1st Breadcrumb"
-		};
-	private static String[] _PORTLET_LINK_BREADCRUMB_2 = {
-			"//nav[@id='breadcrumbs']/ul/li[2]/span/a", "2nd Breadcrumb"
-		};
-	private static String[] _PORTLET_LINK_BREADCRUMB_3 = {
-			"//nav[@id='breadcrumbs']/ul/li[3]/span/a", "3rd Breadcrumb"
-		};
-	private static String[] _PORTLET_TEXT_TITLE = {
-			"//span[@class='portlet-title-text']", "Portlet Title"
-		};
-	private static String[] _PORTLET_LINK_OPTIONS = {
-			"//span[@title='Options']/ul/li/strong/a",
-			"Portlet Configuration Options Button"
-		};
-	private static String[] _PORTLET_LINK_OPTIONS_EXPORT_IMPORT = {
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]",
-			"Portlet Configuration Options Menu Export / Import Link"
-		};
-	private static String[] _PORTLET_TEXT_DESCRIPTION = {
-			"cpContextPanelTemplate", "Portlet Description"
-		};
-	private static String[] _PORTLET_LINK_ADD = {
-			"//span[contains(@class,'add-button')]/a",
-			"Add New Blog Entry Button"
-		};
-	private static String[] _PORTLET_LINK_VIEW_ALL = {
-			"//span[contains(@class,'view-button')]/a", "Portlet View All Tab"
-		};
-	private static String[] _PORTLET_FIELD_SEARCH = {
-			"//input[@id='_161_keywords']", "Portlet Search Field"
-		};
-	private static String[] _PORTLET_LINK_SEARCH = {
-			"//input[@value='Search']", "Portlet Search Button"
-		};
-	private static String[] _PORTLET_LINK_DELETE = {
-			"//input[@value='Move to the Recycle Bin']", "Recycle Button"
-		};
-	private static String[] _PORTLET_TEXT_RESULTS = {
-			"//div[@class='search-results']", "Portlet Search Results"
-		};
-	private static String[] _PORTLET_TEXT_INFO = {
-			"//div[@class='portlet-msg-info']",
-			"No entries were found. Search Results Message"
-		};
-	private static String[] _PORTLET_TEXT_SUCCESS = {
-			"//div[@class='portlet-msg-success']", "Portlet Success Mesage"
-		};
-	private static String[] _PORTLET_TEXT_SUCCESS_UNDO = {
-			"//form[@id='_161_undoForm']", "Portlet Success Mesage"
-		};
-	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
+	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
-		_paths.put("PAGE_NAME", _PAGE_NAME);
+		_paths.put("PAGE_NAME", "");
 		_paths.put("BLOGS_ENTRY_LINK_CHECKBOX_ALL",
-			_BLOGS_ENTRY_LINK_CHECKBOX_ALL);
-		_paths.put("BLOGS_ENTRY_LINK_CHECKBOX", _BLOGS_ENTRY_LINK_CHECKBOX);
-		_paths.put("BLOGS_ENTRY_LINK_CHECKBOX_1", _BLOGS_ENTRY_LINK_CHECKBOX_1);
-		_paths.put("BLOGS_ENTRY_LINK_CHECKBOX_2", _BLOGS_ENTRY_LINK_CHECKBOX_2);
-		_paths.put("BLOGS_ENTRY_LINK_CHECKBOX_3", _BLOGS_ENTRY_LINK_CHECKBOX_3);
-		_paths.put("BLOGS_ENTRY_LINK_TITLE", _BLOGS_ENTRY_LINK_TITLE);
-		_paths.put("BLOGS_ENTRY_LINK_TITLE_1", _BLOGS_ENTRY_LINK_TITLE_1);
-		_paths.put("BLOGS_ENTRY_LINK_TITLE_2", _BLOGS_ENTRY_LINK_TITLE_2);
-		_paths.put("BLOGS_ENTRY_LINK_TITLE_3", _BLOGS_ENTRY_LINK_TITLE_3);
-		_paths.put("BLOGS_ENTRY_LINK_AUTHOR", _BLOGS_ENTRY_LINK_AUTHOR);
-		_paths.put("BLOGS_ENTRY_LINK_AUTHOR_1", _BLOGS_ENTRY_LINK_AUTHOR_1);
-		_paths.put("BLOGS_ENTRY_LINK_AUTHOR_2", _BLOGS_ENTRY_LINK_AUTHOR_2);
-		_paths.put("BLOGS_ENTRY_LINK_AUTHOR_3", _BLOGS_ENTRY_LINK_AUTHOR_3);
+			"//input[@name='_161_allRowIds']");
+		_paths.put("BLOGS_ENTRY_LINK_CHECKBOX",
+			"//tr[contains(.,'Blogs Entry Title')]/td[1]/input[@name='_161_rowIds']");
+		_paths.put("BLOGS_ENTRY_LINK_CHECKBOX_1",
+			"//tr[3]/td[1]/input[@name='_161_rowIds']");
+		_paths.put("BLOGS_ENTRY_LINK_CHECKBOX_2",
+			"//tr[4]/td[1]/input[@name='_161_rowIds']");
+		_paths.put("BLOGS_ENTRY_LINK_CHECKBOX_3",
+			"//tr[5]/td[1]/input[@name='_161_rowIds']");
+		_paths.put("BLOGS_ENTRY_LINK_TITLE",
+			"//tr[contains(.,'Blogs Entry Title')]/td[2]/a");
+		_paths.put("BLOGS_ENTRY_LINK_TITLE_1", "//tr[3]/td[2]/a");
+		_paths.put("BLOGS_ENTRY_LINK_TITLE_2", "//tr[4]/td[2]/a");
+		_paths.put("BLOGS_ENTRY_LINK_TITLE_3", "//tr[5]/td[2]/a");
+		_paths.put("BLOGS_ENTRY_LINK_AUTHOR",
+			"//tr[contains(.,'Blogs Entry Title')]/td[3]/a");
+		_paths.put("BLOGS_ENTRY_LINK_AUTHOR_1", "//tr[3]/td[3]/a");
+		_paths.put("BLOGS_ENTRY_LINK_AUTHOR_2", "//tr[4]/td[3]/a");
+		_paths.put("BLOGS_ENTRY_LINK_AUTHOR_3", "//tr[5]/td[3]/a");
 		_paths.put("BLOGS_ENTRY_LINK_CREATED_DATE",
-			_BLOGS_ENTRY_LINK_CREATED_DATE);
-		_paths.put("BLOGS_ENTRY_LINK_CREATED_DATE_1",
-			_BLOGS_ENTRY_LINK_CREATED_DATE_1);
-		_paths.put("BLOGS_ENTRY_LINK_CREATED_DATE_2",
-			_BLOGS_ENTRY_LINK_CREATED_DATE_2);
-		_paths.put("BLOGS_ENTRY_LINK_CREATED_DATE_3",
-			_BLOGS_ENTRY_LINK_CREATED_DATE_3);
-		_paths.put("BLOGS_ENTRY_LINK_STATUS", _BLOGS_ENTRY_LINK_STATUS);
-		_paths.put("BLOGS_ENTRY_LINK_STATUS_1", _BLOGS_ENTRY_LINK_STATUS_1);
-		_paths.put("BLOGS_ENTRY_LINK_STATUS_2", _BLOGS_ENTRY_LINK_STATUS_2);
-		_paths.put("BLOGS_ENTRY_LINK_STATUS_3", _BLOGS_ENTRY_LINK_STATUS_3);
-		_paths.put("BLOGS_ENTRY_LINK_ACTIONS", _BLOGS_ENTRY_LINK_ACTIONS);
-		_paths.put("BLOGS_ENTRY_LINK_ACTIONS_1", _BLOGS_ENTRY_LINK_ACTIONS_1);
-		_paths.put("BLOGS_ENTRY_LINK_ACTIONS_2", _BLOGS_ENTRY_LINK_ACTIONS_2);
-		_paths.put("BLOGS_ENTRY_LINK_ACTIONS_3", _BLOGS_ENTRY_LINK_ACTIONS_3);
+			"//tr[contains(.,'Blogs Entry Title')]/td[4]/a");
+		_paths.put("BLOGS_ENTRY_LINK_CREATED_DATE_1", "//tr[3]/td[4]/a");
+		_paths.put("BLOGS_ENTRY_LINK_CREATED_DATE_2", "//tr[4]/td[4]/a");
+		_paths.put("BLOGS_ENTRY_LINK_CREATED_DATE_3", "//tr[5]/td[4]/a");
+		_paths.put("BLOGS_ENTRY_LINK_STATUS",
+			"//tr[contains(.,'Blogs Entry Title')]/td[5]/a");
+		_paths.put("BLOGS_ENTRY_LINK_STATUS_1", "//tr[3]/td[5]/a");
+		_paths.put("BLOGS_ENTRY_LINK_STATUS_2", "//tr[4]/td[5]/a");
+		_paths.put("BLOGS_ENTRY_LINK_STATUS_3", "//tr[5]/td[5]/a");
+		_paths.put("BLOGS_ENTRY_LINK_ACTIONS",
+			"//tr[contains(.,'Blogs Entry Title')]/td/span/ul/li/strong/a/span");
+		_paths.put("BLOGS_ENTRY_LINK_ACTIONS_1",
+			"//tr[3]/td/span/ul/li/strong/a/span");
+		_paths.put("BLOGS_ENTRY_LINK_ACTIONS_2",
+			"//tr[4]/td/span/ul/li/strong/a/span");
+		_paths.put("BLOGS_ENTRY_LINK_ACTIONS_3",
+			"//tr[5]/td/span/ul/li/strong/a/span");
 		_paths.put("BLOGS_ENTRY_LINK_ACTIONS_DELETE",
-			_BLOGS_ENTRY_LINK_ACTIONS_DELETE);
+			"//a[@role='menuitem' and contains(.,'Delete')]");
 		_paths.put("BLOGS_ENTRY_LINK_ACTIONS_EDIT",
-			_BLOGS_ENTRY_LINK_ACTIONS_EDIT);
+			"//a[@role='menuitem' and contains(.,'Edit')]");
 		_paths.put("BLOGS_ENTRY_LINK_ACTIONS_PERMISSION",
-			_BLOGS_ENTRY_LINK_ACTIONS_PERMISSION);
+			"//a[@role='menuitem' and contains(.,'Permissions')]");
 		_paths.put("BLOGS_ENTRY_LINK_ACTIONS_VIEW",
-			_BLOGS_ENTRY_LINK_ACTIONS_VIEW);
-		_paths.put("BLOGS_ENTRY_LINK_CONFIRM_DELETE_ACTIONS",
-			_BLOGS_ENTRY_LINK_CONFIRM_DELETE_ACTIONS);
-		_paths.put("BLOGS_ENTRY_LINK_CONFIRM_DELETE_LIST",
-			_BLOGS_ENTRY_LINK_CONFIRM_DELETE_LIST);
-		_paths.put("PORTLET_LINK_BREADCRUMB_1", _PORTLET_LINK_BREADCRUMB_1);
-		_paths.put("PORTLET_LINK_BREADCRUMB_2", _PORTLET_LINK_BREADCRUMB_2);
-		_paths.put("PORTLET_LINK_BREADCRUMB_3", _PORTLET_LINK_BREADCRUMB_3);
-		_paths.put("PORTLET_TEXT_TITLE", _PORTLET_TEXT_TITLE);
-		_paths.put("PORTLET_LINK_OPTIONS", _PORTLET_LINK_OPTIONS);
+			"//a[@role='menuitem' and contains(.,'View')]");
+		_paths.put("BLOGS_ENTRY_LINK_CONFIRM_DELETE_ACTIONS", "");
+		_paths.put("BLOGS_ENTRY_LINK_CONFIRM_DELETE_LIST", "");
+		_paths.put("PORTLET_LINK_BREADCRUMB_1",
+			"//nav[@id='breadcrumbs']/ul/li[1]/span/a");
+		_paths.put("PORTLET_LINK_BREADCRUMB_2",
+			"//nav[@id='breadcrumbs']/ul/li[2]/span/a");
+		_paths.put("PORTLET_LINK_BREADCRUMB_3",
+			"//nav[@id='breadcrumbs']/ul/li[3]/span/a");
+		_paths.put("PORTLET_TEXT_TITLE", "//span[@class='portlet-title-text']");
+		_paths.put("PORTLET_LINK_OPTIONS",
+			"//span[@title='Options']/ul/li/strong/a");
 		_paths.put("PORTLET_LINK_OPTIONS_EXPORT_IMPORT",
-			_PORTLET_LINK_OPTIONS_EXPORT_IMPORT);
-		_paths.put("PORTLET_TEXT_DESCRIPTION", _PORTLET_TEXT_DESCRIPTION);
-		_paths.put("PORTLET_LINK_ADD", _PORTLET_LINK_ADD);
-		_paths.put("PORTLET_LINK_VIEW_ALL", _PORTLET_LINK_VIEW_ALL);
-		_paths.put("PORTLET_FIELD_SEARCH", _PORTLET_FIELD_SEARCH);
-		_paths.put("PORTLET_LINK_SEARCH", _PORTLET_LINK_SEARCH);
-		_paths.put("PORTLET_LINK_DELETE", _PORTLET_LINK_DELETE);
-		_paths.put("PORTLET_TEXT_RESULTS", _PORTLET_TEXT_RESULTS);
-		_paths.put("PORTLET_TEXT_INFO", _PORTLET_TEXT_INFO);
-		_paths.put("PORTLET_TEXT_SUCCESS", _PORTLET_TEXT_SUCCESS);
-		_paths.put("PORTLET_TEXT_SUCCESS_UNDO", _PORTLET_TEXT_SUCCESS_UNDO);
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]");
+		_paths.put("PORTLET_TEXT_DESCRIPTION", "cpContextPanelTemplate");
+		_paths.put("PORTLET_LINK_ADD", "//span[contains(@class,'add-button')]/a");
+		_paths.put("PORTLET_LINK_VIEW_ALL",
+			"//span[contains(@class,'view-button')]/a");
+		_paths.put("PORTLET_FIELD_SEARCH", "//input[@id='_161_keywords']");
+		_paths.put("PORTLET_LINK_SEARCH", "//input[@value='Search']");
+		_paths.put("PORTLET_LINK_DELETE",
+			"//input[@value='Move to the Recycle Bin']");
+		_paths.put("PORTLET_TEXT_RESULTS", "//div[@class='search-results']");
+		_paths.put("PORTLET_TEXT_INFO", "//div[@class='portlet-msg-info']");
+		_paths.put("PORTLET_TEXT_SUCCESS", "//div[@class='portlet-msg-success']");
+		_paths.put("PORTLET_TEXT_SUCCESS_UNDO", "//form[@id='_161_undoForm']");
 	}
 }

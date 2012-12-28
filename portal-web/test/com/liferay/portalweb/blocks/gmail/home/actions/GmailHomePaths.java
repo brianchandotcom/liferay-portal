@@ -21,35 +21,20 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  */
 public class GmailHomePaths {
-	public static Map<String, String[]> getPaths() {
+	public static Map<String, String> getPaths() {
 		return _paths;
 	}
 
-	private static String[] _PAGE_NAME = { "", "Gmail Home Page" };
-	private static String[] _LOGIN_FIELD_USERNAME = { "//input[@id='Email']", "" };
-	private static String[] _LOGIN_FIELD_PASSWORD = { "//input[@id='Passwd']", "" };
-	private static String[] _EMAIL_LINK_DELETE = {
-			"//div[@aria-label='Delete']/div/div", ""
-		};
-	private static String[] _LOGIN_LINK_SIGN_IN = {
-			"//input[@id='signIn']", "Sign in"
-		};
-	private static String[] _EMAIL_LIST_LINK_NAME = {
-			"//span[@name='Joe Bloggs']", "Joe Bloggs"
-		};
-	private static String[] _EMAIL_LIST_LINK_TITLE_BLOGS_COMMENT = {
-			"//b[contains(.,'New Comments')]", "New Comments by Joe Bloggs"
-		};
-	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
+	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
-		_paths.put("PAGE_NAME", _PAGE_NAME);
-		_paths.put("LOGIN_FIELD_USERNAME", _LOGIN_FIELD_USERNAME);
-		_paths.put("LOGIN_FIELD_PASSWORD", _LOGIN_FIELD_PASSWORD);
-		_paths.put("EMAIL_LINK_DELETE", _EMAIL_LINK_DELETE);
-		_paths.put("LOGIN_LINK_SIGN_IN", _LOGIN_LINK_SIGN_IN);
-		_paths.put("EMAIL_LIST_LINK_NAME", _EMAIL_LIST_LINK_NAME);
+		_paths.put("PAGE_NAME", "");
+		_paths.put("LOGIN_FIELD_USERNAME", "//input[@id='Email']");
+		_paths.put("LOGIN_FIELD_PASSWORD", "//input[@id='Passwd']");
+		_paths.put("EMAIL_LINK_DELETE", "//div[@aria-label='Delete']/div/div");
+		_paths.put("LOGIN_LINK_SIGN_IN", "//input[@id='signIn']");
+		_paths.put("EMAIL_LIST_LINK_NAME", "//span[@name='Joe Bloggs']");
 		_paths.put("EMAIL_LIST_LINK_TITLE_BLOGS_COMMENT",
-			_EMAIL_LIST_LINK_TITLE_BLOGS_COMMENT);
+			"//b[contains(.,'New Comments')]");
 	}
 }

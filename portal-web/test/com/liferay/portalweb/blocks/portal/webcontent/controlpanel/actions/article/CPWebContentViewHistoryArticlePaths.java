@@ -21,16 +21,13 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  */
 public class CPWebContentViewHistoryArticlePaths {
-	public static Map<String, String[]> getPaths() {
+	public static Map<String, String> getPaths() {
 		return _paths;
 	}
 
-	private static String[] _PAGE_NAME = {
-			"", "Control Panel Web Content View History Article Page"
-		};
-	private static Map<String, String[]> _paths = new HashMap<String, String[]>();
+	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
-		_paths.put("PAGE_NAME", _PAGE_NAME);
+		_paths.put("PAGE_NAME", "");
 	}
 }

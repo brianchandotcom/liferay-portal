@@ -13,15 +13,15 @@
 			<action object="PortletSignInHome" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
 			<action object="PortletSignInHome" command="type" path="PASSWORD_FIELD" value="${password}" />
 			<action object="PortletSignInHome" command="check" path="REMEMBER_ME_LINK" />
-			<action object="PortletSignInHome" command="click" path="SIGN_IN_LINK" />
+			<action object="PortletSignInHome" command="click" path="SIGN_IN_LINK" value="Sign In" />
 
 			<if object="PortletSignInHome" command="isElementPresent" path="I_AGREE_LINK">
-				<action object="PortletSignInHome" command="click" path="I_AGREE_LINK" />
+				<action object="PortletSignInHome" command="click" path="I_AGREE_LINK" value="I Agree" />
 			</if>
 
 			<if object="PortletSignInHome" command="isElementPresent" path="ANSWER_FIELD">
 				<action object="PortletSignInHome" command="type" path="ANSWER_FIELD" value="test" />
-				<action object="PortletSignInHome" command="click" path="SAVE_LINK" />
+				<action object="PortletSignInHome" command="click" path="SAVE_LINK" value="Save" />
 			</if>
 		</steps>
 	</macrodef>
@@ -41,10 +41,10 @@
 			<action object="PortletSignInHome" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
 			<action object="PortletSignInHome" command="type" path="PASSWORD_FIELD" value="${password}" />
 			<action object="PortletSignInHome" command="check" path="REMEMBER_ME_LINK" />
-			<action object="PortletSignInHome" command="click" path="SIGN_IN_LINK" />
+			<action object="PortletSignInHome" command="click" path="SIGN_IN_LINK" value="Sign In" />
 
 			<if object="PortletSignInHome" command="isElementPresent" path="I_AGREE_LINK">
-				<action object="PortletSignInHome" command="click" path="I_AGREE_LINK" />
+				<action object="PortletSignInHome" command="click" path="I_AGREE_LINK" value="I Agree" />
 			</if>
 
 			<if object="PortletSignInHome" command="isElementPresent" path="NEW_PASSWORD_FIELD">
@@ -55,7 +55,7 @@
 
 			<if object="PortletSignInHome" command="isElementPresent" path="ANSWER_FIELD">
 				<action object="PortletSignInHome" command="type" path="ANSWER_FIELD" value="test" />
-				<action object="PortletSignInHome" command="click" path="SAVE_LINK" />
+				<action object="PortletSignInHome" command="click" path="SAVE_LINK" value="Save" />
 			</if>
 		</steps>
 	</macrodef>
@@ -69,7 +69,7 @@
 		<steps>
 			<action object="Home" command="open" path="URL_GUEST" />
 
-			<action object="PortletSignInHome" command="click" path="SIGN_OUT_LINK" />
+			<action object="PortletSignInHome" command="click" path="SIGN_OUT_LINK" value="Sign Out" />
 		</steps>
 	</macrodef>
 </macros>

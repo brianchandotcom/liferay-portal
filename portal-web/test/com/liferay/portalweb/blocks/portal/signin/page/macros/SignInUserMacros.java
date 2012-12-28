@@ -35,15 +35,15 @@ public class SignInUserMacros extends BaseMacros {
 		portletSignInHomeActions.type("EMAIL_ADDRESS_FIELD", email);
 		portletSignInHomeActions.type("PASSWORD_FIELD", password);
 		portletSignInHomeActions.check("REMEMBER_ME_LINK", null);
-		portletSignInHomeActions.click("SIGN_IN_LINK", null);
+		portletSignInHomeActions.click("SIGN_IN_LINK", "Sign In");
 
 		if (portletSignInHomeActions.isElementPresent("I_AGREE_LINK", "")) {
-			portletSignInHomeActions.click("I_AGREE_LINK", null);
+			portletSignInHomeActions.click("I_AGREE_LINK", "I Agree");
 		}
 
 		if (portletSignInHomeActions.isElementPresent("ANSWER_FIELD", "")) {
 			portletSignInHomeActions.type("ANSWER_FIELD", "test");
-			portletSignInHomeActions.click("SAVE_LINK", null);
+			portletSignInHomeActions.click("SAVE_LINK", "Save");
 		}
 	}
 
@@ -56,10 +56,10 @@ public class SignInUserMacros extends BaseMacros {
 		portletSignInHomeActions.type("EMAIL_ADDRESS_FIELD", email);
 		portletSignInHomeActions.type("PASSWORD_FIELD", password);
 		portletSignInHomeActions.check("REMEMBER_ME_LINK", null);
-		portletSignInHomeActions.click("SIGN_IN_LINK", null);
+		portletSignInHomeActions.click("SIGN_IN_LINK", "Sign In");
 
 		if (portletSignInHomeActions.isElementPresent("I_AGREE_LINK", "")) {
-			portletSignInHomeActions.click("I_AGREE_LINK", null);
+			portletSignInHomeActions.click("I_AGREE_LINK", "I Agree");
 		}
 
 		if (portletSignInHomeActions.isElementPresent("NEW_PASSWORD_FIELD", "")) {
@@ -71,7 +71,7 @@ public class SignInUserMacros extends BaseMacros {
 
 		if (portletSignInHomeActions.isElementPresent("ANSWER_FIELD", "")) {
 			portletSignInHomeActions.type("ANSWER_FIELD", "test");
-			portletSignInHomeActions.click("SAVE_LINK", null);
+			portletSignInHomeActions.click("SAVE_LINK", "Save");
 		}
 	}
 
@@ -80,6 +80,6 @@ public class SignInUserMacros extends BaseMacros {
 		PortletSignInHomeActions portletSignInHomeActions = new PortletSignInHomeActions(selenium);
 
 		homeActions.open("URL_GUEST", null);
-		portletSignInHomeActions.click("SIGN_OUT_LINK", null);
+		portletSignInHomeActions.click("SIGN_OUT_LINK", "Sign Out");
 	}
 }

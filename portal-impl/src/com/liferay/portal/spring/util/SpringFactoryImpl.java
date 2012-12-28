@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.util;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.spring.util.FactoryBean;
 import com.liferay.portal.kernel.spring.util.SpringFactory;
 import com.liferay.portal.kernel.spring.util.SpringFactoryException;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -79,6 +80,12 @@ public class SpringFactoryImpl implements SpringFactory {
 
 			Object bean = InstanceFactory.newInstance(
 				PACLClassLoaderUtil.getPortalClassLoader(), className);
+
+			if (bean instanceof FactoryBean) {
+				FactoryBean<Object> factoryBean = (FactoryBean<Object>)bean;
+
+				bean = factoryBean.create();
+			}
 
 			if (properties == null) {
 				return bean;

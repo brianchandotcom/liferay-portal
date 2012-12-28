@@ -40,8 +40,14 @@ public class MethodCache {
 		if (method == null) {
 			Class<?> declaringClass = methodKey.getDeclaringClass();
 
-			method = declaringClass.getDeclaredMethod(
-				methodKey.getMethodName(), methodKey.getParameterTypes());
+			try {
+				method = declaringClass.getMethod(
+					methodKey.getMethodName(), methodKey.getParameterTypes());
+			}
+			catch (NoSuchMethodException nsme) {
+				method = declaringClass.getDeclaredMethod(
+					methodKey.getMethodName(), methodKey.getParameterTypes());
+			}
 
 			if (!method.isAccessible()) {
 				method.setAccessible(true);

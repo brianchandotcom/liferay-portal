@@ -315,9 +315,6 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	protected void trashAssetTags(boolean approved) throws Exception {
-		int initialAssetTagsCount = AssetTagLocalServiceUtil.getGroupTagsCount(
-			group.getGroupId());
-
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		serviceContext.setScopeGroupId(group.getGroupId());
@@ -325,7 +322,10 @@ public abstract class BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		String[] assetTagNames = {
+		int initialAssetTagsCount = AssetTagLocalServiceUtil.getGroupTagsCount(
+			group.getGroupId());
+
+		String[] assetTagNames = new String[] {
 			"Content", "Enterprise", "Open", "Source", "For", "Life"
 		};
 

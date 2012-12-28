@@ -48,13 +48,13 @@ public class CPDocumentsAndMediaFolderMacros extends BaseMacros {
 		GotoMacros gotoMacros = new GotoMacros(selenium);
 
 		gotoMacros.controlPanelPortlet("Documents and Media");
-		cPDocumentsAndMediaHomeActions.assertTextEquals("FOLDER_NAME", title);
+		cPDocumentsAndMediaHomeActions.assertTextEquals("FOLDER_NAME", name);
 		cPDocumentsAndMediaHomeActions.click("FOLDER_ACTIONS", null);
 		cPDocumentsAndMediaHomeActions.click("FOLDER_ACTIONS_MOVE_TO_THE_RECYCLE_BIN",
 			"Move to the Recycle Bin");
 		cPDocumentsAndMediaHomeActions.assertTextEquals("HEADER_SUCCESS_MESSAGE_UNDO",
 			"The selected item was moved to the Recycle Bin. Undo");
-		cPDocumentsAndMediaHomeActions.assertTextNotPresent("", title);
+		cPDocumentsAndMediaHomeActions.assertTextNotPresent("", name);
 	}
 
 	public void tearDown() throws Exception {

@@ -17,7 +17,6 @@ package com.liferay.portalweb.blocks.portal.signin.page.actions.home;
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
 import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
-import com.liferay.portalweb.blocks.portal.signin.page.paths.home.PortletSignInHomePaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**

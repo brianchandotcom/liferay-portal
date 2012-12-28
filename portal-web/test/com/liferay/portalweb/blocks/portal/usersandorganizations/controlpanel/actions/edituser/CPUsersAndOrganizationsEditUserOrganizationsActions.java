@@ -16,7 +16,6 @@ package com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.a
 
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
-import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.paths.edituser.CPUsersAndOrganizationsEditUserOrganizationsPaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**

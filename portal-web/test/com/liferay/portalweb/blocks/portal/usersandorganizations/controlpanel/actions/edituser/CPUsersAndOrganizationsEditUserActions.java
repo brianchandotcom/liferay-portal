@@ -18,7 +18,6 @@ import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
 import com.liferay.portalweb.blocks.base.functions.AssertTextEqualsFunctions;
 import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
-import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.paths.edituser.CPUsersAndOrganizationsEditUserPaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**

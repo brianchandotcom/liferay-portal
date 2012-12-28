@@ -16,7 +16,6 @@ package com.liferay.portalweb.blocks.gmail.home.actions;
 
 import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
-import com.liferay.portalweb.blocks.gmail.home.paths.GmailHomePaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**

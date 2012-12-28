@@ -19,7 +19,6 @@ import com.liferay.portalweb.blocks.base.actions.LiferayActions;
 import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
 import com.liferay.portalweb.blocks.base.functions.MouseOverFunctions;
 import com.liferay.portalweb.blocks.base.functions.TypeFunctions;
-import com.liferay.portalweb.blocks.portal.home.page.paths.HomePaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**

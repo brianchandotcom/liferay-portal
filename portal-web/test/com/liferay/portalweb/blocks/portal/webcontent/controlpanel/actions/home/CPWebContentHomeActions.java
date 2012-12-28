@@ -18,7 +18,6 @@ import com.liferay.portalweb.blocks.base.actions.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.LiferayActions;
 import com.liferay.portalweb.blocks.base.functions.CheckFunctions;
 import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
-import com.liferay.portalweb.blocks.portal.webcontent.controlpanel.paths.home.CPWebContentHomePaths;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**

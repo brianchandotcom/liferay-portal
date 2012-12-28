@@ -624,6 +624,18 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		_blogsEntryLocalService.moveEntriesToTrash(groupId, userId);
 	}
 
+	/**
+	* Moves the blogs entry to the recycle bin. Social activity counters for
+	* this entry get disabled.
+	*
+	* @param userId the primary key of the user moving the blogs entry
+	* @param entry the blogs entry to be moved
+	* @return the moved blogs entry
+	* @throws PortalException if a user with the primary key could not be found
+	or if the blogs entry owner's social activity counter could not
+	be updated
+	* @throws SystemException if a system exception occurred
+	*/
 	public com.liferay.portlet.blogs.model.BlogsEntry moveEntryToTrash(
 		long userId, com.liferay.portlet.blogs.model.BlogsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -631,6 +643,17 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		return _blogsEntryLocalService.moveEntryToTrash(userId, entry);
 	}
 
+	/**
+	* Moves the blogs entry with the ID to the recycle bin.
+	*
+	* @param userId the primary key of the user moving the blogs entry
+	* @param entryId the primary key of the blogs entry to be moved
+	* @return the moved blogs entry
+	* @throws PortalException if a user or blogs entry with the primary key
+	could not be found or if the blogs entry owner's social activity
+	counter could not be updated
+	* @throws SystemException if a system exception occurred
+	*/
 	public com.liferay.portlet.blogs.model.BlogsEntry moveEntryToTrash(
 		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -638,6 +661,17 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		return _blogsEntryLocalService.moveEntryToTrash(userId, entryId);
 	}
 
+	/**
+	* Restores the blogs entry with the ID from the recycle bin. Social
+	* activity counters for this entry get activated.
+	*
+	* @param userId the primary key of the user restoring the blogs entry
+	* @param entryId the primary key of the blogs entry to be restored
+	* @throws PortalException if a user or blogs entry with the primary key
+	could not be found or if the blogs entry owner's social activity
+	counter could not be updated
+	* @throws SystemException if a system exception occurred
+	*/
 	public void restoreEntryFromTrash(long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

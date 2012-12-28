@@ -828,7 +828,8 @@ public class PortalImpl implements Portal {
 
 				try {
 					actualURL = getJournalArticleActualURL(
-						groupId, mainPath, friendlyURL, params, requestContext);
+						groupId, mainPath, friendlyURL, params, requestContext,
+						privateLayout);
 				}
 				catch (Exception e) {
 					throw new NoSuchLayoutException(e);
@@ -2231,7 +2232,8 @@ public class PortalImpl implements Portal {
 
 	public String getJournalArticleActualURL(
 			long groupId, String mainPath, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			Map<String, String[]> params, Map<String, Object> requestContext,
+			boolean privateLayout)
 		throws PortalException, SystemException {
 
 		String articleUrlTitle = friendlyURL.substring(
@@ -2242,7 +2244,7 @@ public class PortalImpl implements Portal {
 				groupId, articleUrlTitle);
 
 		Layout layout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-			journalArticle.getLayoutUuid(), groupId);
+			journalArticle.getLayoutUuid(), groupId, privateLayout);
 
 		String layoutActualURL = getLayoutActualURL(layout, mainPath);
 
@@ -3709,7 +3711,8 @@ public class PortalImpl implements Portal {
 
 					Layout liveGroupLayout =
 						LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-							layout.getUuid(), liveGroup.getGroupId());
+								layout.getUuid(), liveGroup.getGroupId(),
+								layout.isPrivateLayout());
 
 					if ((liveGroupLayout != null) &&
 						liveGroupLayout.hasScopeGroup()) {
@@ -3780,7 +3783,8 @@ public class PortalImpl implements Portal {
 
 				Layout scopeLayout =
 					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						scopeLayoutUuid, layout.getGroupId());
+						scopeLayoutUuid, layout.getGroupId(),
+						layout.isPrivateLayout());
 
 				Group scopeGroup = scopeLayout.getScopeGroup();
 

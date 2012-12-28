@@ -181,19 +181,21 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	/**
-	* Returns the layout with the UUID in the group.
+	* Returns the layout with the UUID in the group and isPrivateLayout.
 	*
 	* @param uuid the UUID of layout
 	* @param groupId the group id of the layout
+	* @param isPrivateLayout the isPrivateLayout of the layout
 	* @return the layout
-	* @throws PortalException if a layout with the UUID in the group could not be found
+	* @throws PortalException if a layout with the UUID in the group and isPrivateLayout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Layout getLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		java.lang.String uuid, long groupId, boolean isPrivateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _layoutLocalService.getLayoutByUuidAndGroupId(uuid, groupId);
+		return _layoutLocalService.getLayoutByUuidAndGroupId(uuid, groupId,
+			isPrivateLayout);
 	}
 
 	/**
@@ -618,18 +620,20 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* Returns the layout matching the universally unique identifier and group
-	* ID
+	* ID and privateLayout
 	*
 	* @param uuid the universally unique identifier of the scope layout
 	* @param groupId the primary key of the group
+	* @param privateLayout the private layout status of the group
 	* @return the layout, or <code>null</code> if a matching layout could not
 	be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		java.lang.String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _layoutLocalService.fetchLayoutByUuidAndGroupId(uuid, groupId);
+		return _layoutLocalService.fetchLayoutByUuidAndGroupId(uuid, groupId,
+			privateLayout);
 	}
 
 	/**
@@ -977,13 +981,30 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			includeUserGroups);
 	}
 
+	public boolean hasLayoutSetPrototypeLayout(long layoutSetPrototypeId,
+		java.lang.String layoutUuid, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.hasLayoutSetPrototypeLayout(layoutSetPrototypeId,
+			layoutUuid, privateLayout);
+	}
+
 	public boolean hasLayoutSetPrototypeLayout(
 		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
-		long companyId)
+		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutLocalService.hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
-			layoutUuid, companyId);
+			layoutUuid, privateLayout);
+	}
+
+	public boolean hasLayoutSetPrototypeLayout(
+		java.lang.String layoutSetPrototypeUuid, java.lang.String layoutUuid,
+		long companyId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
+			layoutUuid, companyId, privateLayout);
 	}
 
 	/**

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,13 +40,19 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 	public FunctionsXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
+		_validCommands = new TreeSet<String>();
+
+		_validCommands.add("else");
+		_validCommands.add("function");
+		_validCommands.add("if");
+		_validCommands.add("selenium");
+		_validCommands.add("while");
+
 		for (String fileName : fileNameSetFunctions) {
 			if (fileName.length() > 161) {
 				System.out.println(
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
-
-			classType = ClassTypes.FUNCTIONS;
 
 			generateFunctions(fileName);
 		}
@@ -122,12 +130,14 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 
 			sb.append(processBlockObjectDeclaractions(functionDef));
 
-			sb.append(processBlock(functionDef));
+			sb.append(processBlockCommands(functionDef, _validCommands));
 
 			sb.append("}\n");
 		}
 
 		return sb.toString();
 	}
+
+	private Set<String> _validCommands = new TreeSet<String>();
 
 }

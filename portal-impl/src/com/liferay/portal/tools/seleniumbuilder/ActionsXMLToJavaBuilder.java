@@ -22,7 +22,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,13 +41,15 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 	public ActionsXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
+		_validCommands = new TreeSet<String>();
+
+		_validCommands.add("function");
+
 		for (String fileName : fileNameSetPaths) {
 			if (fileName.length() > 161) {
 				System.out.println(
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
-
-			classType = ClassTypes.ACTIONS;
 
 			generateActions(fileName);
 		}
@@ -108,7 +113,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 
 			Element rootElement = getRootElement(actionsXMLFileName);
 
-			sb.append(processRootElementImports(rootElement));
+			sb.append(processBlocksImports(rootElement));
 		}
 
 		sb.append("public class ");
@@ -139,6 +144,63 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		writeFile(actionsFileName, sb.toString(), true);
 	}
 
+	private String _combineConditionals(
+		List<String> conditionalList, String delimiter) {
+
+		boolean firstConditional = true;
+
+		StringBundler sb = new StringBundler();
+
+		for (String conditional : conditionalList) {
+			if (!firstConditional) {
+				sb.append(" " + delimiter + " ");
+			}
+
+			sb.append(conditional);
+
+			firstConditional = false;
+		}
+
+		return sb.toString();
+	}
+
+	private String _processActionDef(Element actionDef) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		List<Element> conditionals = actionDef.elements("conditional");
+
+		boolean firstConditional = true;
+
+		for (Element conditional : conditionals) {
+			if (firstConditional) {
+				firstConditional = false;
+
+				sb.append("if (");
+			}
+			else {
+				sb.append("else if (");
+			}
+
+			sb.append(_processConditional(conditional));
+
+			sb.append(") {");
+			sb.append(processBlockCommands(conditional, _validCommands));
+			sb.append("}");
+		}
+
+		sb.append("else {");
+
+		String actionDefCommand = actionDef.attributeValue("command");
+
+		sb.append("super.");
+		sb.append(actionDefCommand);
+		sb.append("(params[0], params[1]);\n");
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	private String _processActionDefs(Element rootElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
@@ -155,12 +217,66 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 
 			sb.append(processBlockObjectDeclaractions(actionDef));
 
-			sb.append(processBlock(actionDef));
+			sb.append(_processActionDef(actionDef));
 
 			sb.append("}\n");
 		}
 
 		return sb.toString();
 	}
+
+	private String _processConditional(Element conditional) throws Exception {
+		List<String> clauseList = new ArrayList<String>();
+
+		String elements = conditional.attributeValue("elements");
+
+		if (!(elements == null) && !elements.equals("")) {
+			StringBundler sbConditional = new StringBundler();
+
+			String[] elementArray = elements.split(",");
+
+			List<String> elementList = new ArrayList<String>();
+
+			for (String element : elementArray) {
+				elementList.add("param1.equals(\"" + element + "\")");
+			}
+
+			sbConditional.append("(");
+			sbConditional.append(_combineConditionals(elementList, "||"));
+			sbConditional.append(")");
+
+			clauseList.add(sbConditional.toString());
+		}
+
+		String isselenium = conditional.attributeValue("isselenium");
+
+		if (!(isselenium == null) && isselenium.equals("true")) {
+			StringBundler sbConditional = new StringBundler();
+
+			sbConditional.append("LiferaySeleniumHelper.isSelenium()");
+
+			clauseList.add(sbConditional.toString());
+		}
+
+		String startswith = conditional.attributeValue("startswith");
+
+		if (!(startswith == null) && !startswith.equals("")) {
+			StringBundler sbConditional = new StringBundler();
+
+			sbConditional.append("param1.startsWith(\"");
+			sbConditional.append(startswith);
+			sbConditional.append("\")");
+
+			clauseList.add(sbConditional.toString());
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(_combineConditionals(clauseList, "&&"));
+
+		return sb.toString();
+	}
+
+	private Set<String> _validCommands = new TreeSet<String>();
 
 }

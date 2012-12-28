@@ -353,9 +353,7 @@ public class MacrosXMLToHTMLBuilder extends SeleniumBuilder {
 		Set<String> objects = new TreeSet<String>();
 
 		for (Element macroDef : macroDefs) {
-			Set<String> newSet = new TreeSet<String>();
-
-			objects.addAll(getAllObjects(macroDef, newSet));
+			objects.addAll(getChildObjectSet(macroDef));
 		}
 
 		StringBundler sb = new StringBundler();

@@ -59,6 +59,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.LayoutImpl;
@@ -1237,6 +1238,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns all the layouts without resource permissions
+	 *
+	 * @return all the layouts without resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Layout> getNoPermissionLayouts(Role role)
+		throws SystemException {
+
+		return layoutFinder.findByNoPermissions(role.getRoleId());
+	}
+
+	/**
 	 * Returns all the layouts whose friendly URLs are <code>null</code>
 	 *
 	 * @return all the layouts whose friendly URLs are <code>null</code>
@@ -1244,16 +1257,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	public List<Layout> getNullFriendlyURLLayouts() throws SystemException {
 		return layoutFinder.findByNullFriendlyURL();
-	}
-
-	/**
-	 * Returns all the layouts whose UUIDs are <code>null</code>
-	 *
-	 * @return all the layouts whose UUIDs are <code>null</code>
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Layout> getNullUuidLayouts() throws SystemException {
-		return layoutFinder.findByNullUUID();
 	}
 
 	/**

@@ -827,6 +827,17 @@ public interface LayoutLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the layouts without resource permissions
+	*
+	* @return all the layouts without resource permissions
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Layout> getNoPermissionLayouts(
+		com.liferay.portal.model.Role role)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the layouts whose friendly URLs are <code>null</code>
 	*
 	* @return all the layouts whose friendly URLs are <code>null</code>
@@ -834,16 +845,6 @@ public interface LayoutLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Layout> getNullFriendlyURLLayouts()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns all the layouts whose UUIDs are <code>null</code>
-	*
-	* @return all the layouts whose UUIDs are <code>null</code>
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Layout> getNullUuidLayouts()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

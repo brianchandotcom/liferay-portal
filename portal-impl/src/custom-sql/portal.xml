@@ -430,14 +430,26 @@
 				(friendlyURL = '' OR friendlyURL IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.LayoutFinder.findByNullUuid">
+	<sql id="com.liferay.portal.service.persistence.LayoutFinder.findByNoPermissions">
 		<![CDATA[
 			SELECT
 				{Layout.*}
 			FROM
 				Layout
 			WHERE
-				(Layout.uuid_ = '' OR Layout.uuid_ IS NULL)
+				(plid NOT IN (
+					SELECT
+						Layout.plid
+					FROM
+						Layout
+					INNER JOIN
+						ResourcePermission ON
+							(ResourcePermission.companyId = Layout.companyId) AND
+							(ResourcePermission.name = Layout.name) AND
+							(ResourcePermission.scope = ?) AND
+							(resourcePermission.primKey = CAST_TEXT(Layout.plid)) AND
+							(ResourcePermission.roleId = ?)
+				))
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.LayoutFinder.findByScopeGroup">

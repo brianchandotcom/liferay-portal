@@ -90,7 +90,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	protected void verifyLayout(Role role) throws Exception {
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getNullUuidLayouts();
+		List<Layout> layouts = LayoutLocalServiceUtil.getNoPermissionLayouts(
+			role);
 
 		for (Layout layout : layouts) {
 			long plid = layout.getPlid();

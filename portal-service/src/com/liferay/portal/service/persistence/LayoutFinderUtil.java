@@ -26,9 +26,9 @@ public class LayoutFinderUtil {
 		return getFinder().findByNullFriendlyURL();
 	}
 
-	public static java.util.List<com.liferay.portal.model.Layout> findByNullUUID()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByNullUUID();
+	public static java.util.List<com.liferay.portal.model.Layout> findByNoPermissions(
+		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByNoPermissions(roleId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Layout> findByScopeGroup(

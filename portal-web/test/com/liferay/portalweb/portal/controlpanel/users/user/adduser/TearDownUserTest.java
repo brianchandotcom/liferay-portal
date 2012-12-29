@@ -68,7 +68,7 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(1000);
+				Thread.sleep(5000);
 
 				boolean usersPresent = selenium.isElementPresent(
 						"//input[@name='_125_allRowIds']");
@@ -125,7 +125,7 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(1000);
+				Thread.sleep(5000);
 
 				boolean usersNotDeleted = selenium.isElementPresent(
 						"//input[@name='_125_allRowIds']");

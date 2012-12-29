@@ -26,18 +26,13 @@ public class ViewOrganizationPublicPageTest extends BaseTestCase {
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/organization-name/");
 		assertEquals(RuntimeVariables.replace("Organization Name"),
-			selenium.getText("//h1[@class='site-title']/span"));
+			selenium.getText("//div[@id='heading']/h1/span"));
 		assertEquals(RuntimeVariables.replace("Public Page"),
-			selenium.getText(
-				"//nav[@id='navigation']/ul/li/a/span[contains(.,'Public Page')]"));
-		assertEquals(RuntimeVariables.replace("Liferay"),
-			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Liferay')]"));
+			selenium.getText("//nav[contains(.,'Public Page')]/ul/li/a"));
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Organization Name')]"));
+				"//nav[contains(.,'Organization Name')]/ul/li/span/a"));
 		assertEquals(RuntimeVariables.replace("Public Page"),
-			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Public Page')]"));
+			selenium.getText("//nav[contains(.,'Public Page')]/ul/li[2]/span/a"));
 	}
 }

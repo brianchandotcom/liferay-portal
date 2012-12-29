@@ -50,20 +50,20 @@ public class AddOrganizationPublicPageTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Organization Name"),
 					selenium.getText(
-						"//td[@id='_134_groupsSearchContainer_col-name_row--organization-name']/a"));
+						"//tr[contains(.,'Organization Name')]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace("Private"),
 					selenium.getText(
-						"//td[@id='_134_groupsSearchContainer_col-type_row--organization-name']/a"));
+						"//tr[contains(.,'Organization Name')]/td[3]/a"));
 				assertEquals(RuntimeVariables.replace("1 Organization"),
 					selenium.getText(
-						"//td[@id='_134_groupsSearchContainer_col-members_row--organization-name']"));
+						"//tr[contains(.,'Organization Name')]/td[4]/div"));
 				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"//td[@id='_134_groupsSearchContainer_col-active_row--organization-name']"));
+						"//tr[contains(.,'Organization Name')]/td[5]"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul[@id='_134_groupsSearchContainer_-organization-name_menu']/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul[@id='_134_groupsSearchContainer_-organization-name_menu']/li/strong/a/span",
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]");
@@ -77,9 +77,8 @@ public class AddOrganizationPublicPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Public Pages"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Add Page"),
-					selenium.getText(
-						"//button[@type='button']/span[contains(.,'Add Page')]"));
-				selenium.clickAt("//button[@type='button']/span[contains(.,'Add Page')]",
+					selenium.getText("//span[contains(.,'Add Page')]/button"));
+				selenium.clickAt("//span[contains(.,'Add Page')]/button",
 					RuntimeVariables.replace("Add Page"));
 				selenium.waitForVisible(
 					"//input[@id='_156_addLayoutName_en_US']");

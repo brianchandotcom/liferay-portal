@@ -60,27 +60,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a[2]/strong</td>
+	<td>//tr[contains(.,'Organization Name')]/td[2]/a[2]/strong</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a[2]/strong</td>
+	<td>//tr[contains(.,'Organization Name')]/td[2]/a[2]/strong</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]</td>
+	<td>//div[contains(.,'Edit')]/ul/li/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]</td>
+	<td>//div[contains(.,'Edit')]/ul/li/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]</td>
+	<td>//div[contains(.,'Edit')]/ul/li/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -100,13 +100,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_phoneNumber0']</td>
-	<td>Selenium</td>
+	<td>//input[@id='_125_phoneExtension0']</td>
+	<td>321</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_phoneExtension0']</td>
-	<td>321</td>
+	<td>//input[@id='_125_phoneNumber0']</td>
+	<td>Selenium</td>
 </tr>
 <tr>
 	<td>select</td>

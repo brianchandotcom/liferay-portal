@@ -26,18 +26,14 @@ public class ViewOrganizationPrivatePageTest extends BaseTestCase {
 		selenium.selectFrame("relative=top");
 		selenium.open("/group/organization-name/");
 		assertEquals(RuntimeVariables.replace("Organization Name"),
-			selenium.getText("//h1[@class='site-title']/span"));
+			selenium.getText("//div[@id='heading']/h1/span"));
 		assertEquals(RuntimeVariables.replace("Private Page"),
-			selenium.getText(
-				"//nav[@id='navigation']/ul/li/a/span[contains(.,'Private Page')]"));
-		assertEquals(RuntimeVariables.replace("Liferay"),
-			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Liferay')]"));
+			selenium.getText("//nav[contains(.,'Private Page')]/ul/li/a"));
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Organization Name')]"));
+				"//nav[contains(.,'Organization Name')]/ul/li/span/a"));
 		assertEquals(RuntimeVariables.replace("Private Page"),
 			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Private Page')]"));
+				"//nav[contains(.,'Private Page')]/ul/li[2]/span/a"));
 	}
 }

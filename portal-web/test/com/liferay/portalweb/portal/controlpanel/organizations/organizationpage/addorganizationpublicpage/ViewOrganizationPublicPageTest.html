@@ -15,27 +15,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1[@class='site-title']/span</td>
+	<td>//div[@id='heading']/h1/span</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//nav[@id='navigation']/ul/li/a/span[contains(.,'Public Page')]</td>
+	<td>//nav[contains(.,'Public Page')]/ul/li/a</td>
 	<td>Public Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Liferay')]</td>
-	<td>Liferay</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Organization Name')]</td>
+	<td>//nav[contains(.,'Organization Name')]/ul/li/span/a</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Public Page')]</td>
+	<td>//nav[contains(.,'Public Page')]/ul/li[2]/span/a</td>
 	<td>Public Page</td>
 </tr>
 </tbody></table>

@@ -26,6 +26,13 @@ import org.powermock.api.mockito.PowerMockito;
  */
 public class BaseExportImportTestCase extends PowerMockito {
 
+	protected String getLayoutTemplateId(Layout layout) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		return layoutTypePortlet.getLayoutTemplateId();
+	}
+
 	protected void propagateChanges(Group group) throws Exception {
 		LayoutLocalServiceUtil.getLayouts(
 			group.getGroupId(), false,

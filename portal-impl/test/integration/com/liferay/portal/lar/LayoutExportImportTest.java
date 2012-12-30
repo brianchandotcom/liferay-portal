@@ -21,7 +21,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
-import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -165,9 +164,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 				if (layoutLinkEnabled) {
 					Assert.assertEquals(
-						"2_2_columns",
-						layout.getTypeSettingsProperty(
-							LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+						"2_2_columns", getLayoutTemplateId(layout));
 
 					layout = propagateChanges(layout);
 				}
@@ -205,15 +202,11 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 				if (useLayoutPrototype) {
 					if (layoutLinkEnabled) {
 						Assert.assertEquals(
-							"1_column",
-							layout.getTypeSettingsProperty(
-								LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+							"1_column", getLayoutTemplateId(layout));
 					}
 					else {
 						Assert.assertEquals(
-							"2_2_columns",
-							layout.getTypeSettingsProperty(
-								LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+							"2_2_columns", getLayoutTemplateId(layout));
 					}
 				}
 			}

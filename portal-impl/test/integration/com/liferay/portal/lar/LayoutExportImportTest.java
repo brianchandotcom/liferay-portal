@@ -153,8 +153,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 				updateLayoutTemplateId(layoutPrototypeLayout, "2_2_columns");
 
-				layout = addLayout(
-					group.getGroupId(), ServiceTestUtil.randomString(),
+				layout = ServiceTestUtil.addLayout(
+					group.getGroupId(), ServiceTestUtil.randomString(), false,
 					layoutPrototype, layoutLinkEnabled);
 
 				if (layoutLinkEnabled) {

@@ -14,14 +14,9 @@
 
 package com.liferay.portal.lar;
 
-import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.*;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -30,38 +25,6 @@ import org.powermock.api.mockito.PowerMockito;
  * @author Eduardo Garcia
  */
 public class BaseExportImportTestCase extends PowerMockito {
-
-	protected Layout addLayout(
-			long groupId, String name, LayoutPrototype layoutPrototype,
-			boolean linkEnabled)
-		throws Exception {
-
-		String friendlyURL =
-			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
-
-		Layout layout = null;
-
-		try {
-			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-				groupId, false, friendlyURL);
-
-			return layout;
-		}
-		catch (NoSuchLayoutException nsle) {
-		}
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setAttribute("layoutPrototypeLinkEnabled", linkEnabled);
-		serviceContext.setAttribute(
-			"layoutPrototypeUuid", layoutPrototype.getUuid());
-
-		return LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), groupId, false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null,
-			"This is a test page.", LayoutConstants.TYPE_PORTLET, false,
-			friendlyURL, serviceContext);
-	}
 
 	protected void propagateChanges(Group group) throws Exception {
 		LayoutLocalServiceUtil.getLayouts(

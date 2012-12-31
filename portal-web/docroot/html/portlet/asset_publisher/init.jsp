@@ -148,8 +148,7 @@ String assetTagName = ParamUtil.getString(request, "tag");
 if (Validator.isNotNull(assetTagName)) {
 	allAssetTagNames = new String[] {assetTagName};
 
-	long[] showableScopeGroupIds = {scopeGroupId, themeDisplay.getCompanyGroupId()};
-	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(showableScopeGroupIds, allAssetTagNames);
+	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(groupIds, allAssetTagNames);
 
 	assetEntryQuery.setAnyTagIds(assetTagIds);
 

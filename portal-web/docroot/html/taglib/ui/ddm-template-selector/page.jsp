@@ -32,6 +32,7 @@ String refreshURL = (String)request.getAttribute("liferay-ui:ddm-template-select
 boolean showEmptyOption = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:ddm-template-select:showEmptyOption"));
 
 long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(themeDisplay);
+Group ddmTemplateGroup = GroupServiceUtil.getGroup(ddmTemplateGroupId);
 %>
 
 <aui:select id="displayStyle" label="<%= label %>" name='<%= "preferences--" + preferenceName + "--" %>'>
@@ -93,7 +94,7 @@ long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(theme
 	%>
 
 	<c:if test="<%= (groupPortletDDMTemplates != null) && !groupPortletDDMTemplates.isEmpty() %>">
-		<optgroup label="<%= themeDisplay.getScopeGroupName() %>">
+		<optgroup label="<%= ddmTemplateGroup.getDescriptiveName(locale) %>">
 
 		<%
 		for (DDMTemplate groupPortletDDMTemplate : groupPortletDDMTemplates) {
@@ -112,16 +113,12 @@ long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(theme
 	</c:if>
 </aui:select>
 
-<%
-Group ddmTemplateGroup = GroupServiceUtil.getGroup(ddmTemplateGroupId);
-%>
-
 <liferay-ui:icon
 	cssClass="manage-display-templates"
 	id="selectDDMTemplate"
 	image="<%= icon %>"
 	label="<%= true %>"
-	message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", ddmTemplateGroup.getName(), false) %>'
+	message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", ddmTemplateGroup.getDescriptiveName(locale), false) %>'
 	url="javascript:;"
 />
 

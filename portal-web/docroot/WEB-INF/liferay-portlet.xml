@@ -1972,7 +1972,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>183</portlet-name>
-		<icon>/html/icons/application_display_styles.png</icon>
+		<icon>/html/icons/portlet_display_template.png</icon>
 		<parent-struts-path>dynamic_data_mapping</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.portletdisplaytemplate.lar.PortletDisplayTemplatePortletDataHandlerImpl</portlet-data-handler-class>
@@ -1980,7 +1980,6 @@
 		<control-panel-entry-weight>25.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
-		<scopeable>true</scopeable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<autopropagated-parameters>chooseCallback,ddmResource,ddmResourceActionId,saveCallback,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTitle,scopeTemplateType,showGlobalScope,showManageTemplates,showToolbar,templateHeaderTitle</autopropagated-parameters>

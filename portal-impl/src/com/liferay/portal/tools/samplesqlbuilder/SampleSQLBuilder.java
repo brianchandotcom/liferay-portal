@@ -337,24 +337,6 @@ public class SampleSQLBuilder {
 		processTemplate(_tplGroup, context);
 	}
 
-	public void insertJournalArticle(
-			long groupId, List<Layout> journalArticleLayouts)
-		throws Exception {
-
-		if ((journalArticleLayouts == null) ||
-			journalArticleLayouts.isEmpty()) {
-
-			return;
-		}
-
-		Map<String, Object> context = getContext();
-
-		put(context, "groupId", groupId);
-		put(context, "journalArticleLayouts", journalArticleLayouts);
-
-		processTemplate(_tplJournalArticle, context);
-	}
-
 	public void insertMBCategory(MBCategory mbCategory) throws Exception {
 		Map<String, Object> context = getContext();
 
@@ -754,7 +736,6 @@ public class SampleSQLBuilder {
 	private String _tplDLFolder = _TPL_ROOT + "dl_folder.ftl";
 	private String _tplDLFolders = _TPL_ROOT + "dl_folders.ftl";
 	private String _tplGroup = _TPL_ROOT + "group.ftl";
-	private String _tplJournalArticle = _TPL_ROOT + "journal_article.ftl";
 	private String _tplMBCategory = _TPL_ROOT + "mb_category.ftl";
 	private String _tplMBMessage = _TPL_ROOT + "mb_message.ftl";;
 	private String _tplResourcePermission =

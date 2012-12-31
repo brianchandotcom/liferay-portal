@@ -64,7 +64,6 @@ if (Validator.isNotNull(target)) {
 					<%@ include file="/html/portlet/users_admin/organization_search_results_database.jspf" %>
 				</c:otherwise>
 			</c:choose>
-
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row

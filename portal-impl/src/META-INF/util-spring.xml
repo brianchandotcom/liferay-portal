@@ -310,7 +310,8 @@
 				<entry key="com.liferay.portal.spring.context.PortletBeanFactoryPostProcessor" value="" />
 				<entry key="com.liferay.portal.spring.hibernate.PortletHibernateConfiguration" value="dataSource" />
 				<entry key="com.liferay.portal.spring.transaction.AnnotationTransactionAttributeSource" value="" />
-				<entry key="com.liferay.portal.spring.transaction.TransactionInterceptor" value="liferayTransactionManager,platformTransactionManager,transactionAttributeSource" />
+				<entry key="com.liferay.portal.spring.transaction.TransactionInterceptor" value="platformTransactionManager,transactionAttributeSource" />
+				<entry key="com.liferay.portal.spring.transaction.TransactionInterceptorFactoryBean" value="platformTransactionManager,transactionAttributeSource" />
 			</map>
 		</property>
 	</bean>

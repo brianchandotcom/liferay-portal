@@ -243,18 +243,17 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	public List<AssetTag> getGroupTags(long groupId) throws SystemException {
-		return assetTagFinder.findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return assetTagPersistence.findByGroupId(groupId);
 	}
 
 	public List<AssetTag> getGroupTags(long groupId, int start, int end)
 		throws SystemException {
 
-		return assetTagFinder.findByGroupId(groupId, start, end, null);
+		return assetTagPersistence.findByGroupId(groupId, start, end);
 	}
 
 	public int getGroupTagsCount(long groupId) throws SystemException {
-		return assetTagFinder.countByGroupId(groupId);
+		return assetTagPersistence.countByGroupId(groupId);
 	}
 
 	public List<AssetTag> getSocialActivityCounterOffsetTags(

@@ -53,11 +53,6 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	public void testTrashAssetTagsDraft() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
-	}
-
-	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)

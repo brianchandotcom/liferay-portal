@@ -206,27 +206,6 @@
 				(AssetEntry.visible = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.countByGroupId">
-		<![CDATA[
-			SELECT
-				COUNT(*) AS COUNT_VALUE
-			FROM
-				AssetTag
-			INNER JOIN
-				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
-			WHERE
-				(AssetEntries_AssetTags.entryId IN (
-					SELECT
-						entryId
-					FROM
-						AssetEntry
-					WHERE
-						(AssetEntry.groupId = ?) AND
-						(AssetEntry.visible = [$TRUE$])
-				))
-		]]>
-	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.countByG_N">
 		<![CDATA[
 			SELECT
@@ -294,29 +273,6 @@
 				AssetEntries_AssetTags ON
 					(AssetEntries_AssetTags.tagId = AssetTag.tagId) AND
 					(AssetEntries_AssetTags.entryId = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByGroupId">
-		<![CDATA[
-			SELECT
-				DISTINCT {AssetTag.*}
-			FROM
-				AssetTag
-			INNER JOIN
-				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
-			WHERE
-				AssetEntries_AssetTags.entryId IN (
-					SELECT
-						entryId
-					FROM
-						AssetEntry
-					WHERE
-						(AssetEntry.groupId = ?) AND
-						(AssetEntry.visible = [$TRUE$])
-				)
-			ORDER BY
-				AssetTag.name ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_N">

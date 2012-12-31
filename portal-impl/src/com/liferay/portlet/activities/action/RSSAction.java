@@ -190,8 +190,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		double version = ParamUtil.getDouble(
 			resourceRequest, "version", RSSUtil.VERSION_DEFAULT);
 		String displayStyle = ParamUtil.getString(
-			resourceRequest, "displayStyle",
-			RSSUtil.DISPLAY_STYLE_FULL_CONTENT);
+			resourceRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
 		String rss = exportToRSS(
 			resourceRequest, feedTitle, null, format, version, displayStyle,

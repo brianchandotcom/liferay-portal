@@ -40,6 +40,12 @@ import javax.portlet.PortletPreferences;
  */
 public class BlogsUtil {
 
+	public static final String DISPLAY_STYLE_ABSTRACT = "abstract";
+
+	public static final String DISPLAY_STYLE_FULL_CONTENT = "full-content";
+
+	public static final String DISPLAY_STYLE_TITLE = "title";
+
 	public static Map<Locale, String> getEmailEntryAddedBodyMap(
 		PortletPreferences preferences) {
 

@@ -40,9 +40,9 @@
 
 		List<String> displayStyles = new ArrayList<String>();
 
-		displayStyles.add(RSSUtil.DISPLAY_STYLE_ABSTRACT);
-		displayStyles.add(RSSUtil.DISPLAY_STYLE_FULL_CONTENT);
-		displayStyles.add(RSSUtil.DISPLAY_STYLE_TITLE);
+		displayStyles.add(BlogsUtil.DISPLAY_STYLE_ABSTRACT);
+		displayStyles.add(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT);
+		displayStyles.add(BlogsUtil.DISPLAY_STYLE_TITLE);
 		%>
 
 		<liferay-ui:ddm-template-selector

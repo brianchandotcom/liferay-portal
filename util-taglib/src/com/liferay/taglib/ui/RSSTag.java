@@ -61,7 +61,7 @@ public class RSSTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_delta = SearchContainer.DEFAULT_DELTA;
-		_displayStyle = RSSUtil.DISPLAY_STYLE_ABSTRACT;
+		_displayStyle = RSSUtil.DISPLAY_STYLE_DEFAULT;
 		_feedType = RSSUtil.FEED_TYPE_DEFAULT;
 		_message = "RSS";
 		_name = null;
@@ -94,7 +94,7 @@ public class RSSTag extends IncludeTag {
 			}
 
 			if (Validator.isNotNull(_displayStyle) &&
-				!_displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
+				!_displayStyle.equals(RSSUtil.DISPLAY_STYLE_DEFAULT)) {
 
 				_resourceURL.setParameter("displayStyle", _displayStyle);
 			}
@@ -121,7 +121,7 @@ public class RSSTag extends IncludeTag {
 			}
 
 			if (Validator.isNotNull(_displayStyle) &&
-				!_displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
+				!_displayStyle.equals(RSSUtil.DISPLAY_STYLE_DEFAULT)) {
 
 				_url = HttpUtil.addParameter(
 					_url, "displayStyle", _displayStyle);
@@ -152,7 +152,7 @@ public class RSSTag extends IncludeTag {
 	private static final String _PAGE = "/html/taglib/ui/rss/page.jsp";
 
 	private int _delta = SearchContainer.DEFAULT_DELTA;
-	private String _displayStyle = RSSUtil.DISPLAY_STYLE_ABSTRACT;
+	private String _displayStyle = RSSUtil.DISPLAY_STYLE_DEFAULT;
 	private String _feedType = RSSUtil.FEED_TYPE_DEFAULT;
 	private String _message = "rss";
 	private String _name;

@@ -57,9 +57,17 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 			</aui:select>
 
 			<aui:select label="display-style" name="preferences--rssDisplayStyle--">
-				<aui:option label="<%= RSSUtil.DISPLAY_STYLE_ABSTRACT %>" selected="<%= displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT) %>" />
-				<aui:option label="<%= RSSUtil.DISPLAY_STYLE_FULL_CONTENT%>" selected="<%= displayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT) %>" />
-				<aui:option label="<%= RSSUtil.DISPLAY_STYLE_TITLE %>" selected="<%= displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE) %>" />
+
+				<%
+				for (String curDisplayStyle : RSSUtil.DISPLAY_STYLES) {
+				%>
+
+					<aui:option label="<%= curDisplayStyle %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
+
+				<%
+				}
+				%>
+
 			</aui:select>
 
 			<aui:select label="format" name="preferences--rssFeedType--">

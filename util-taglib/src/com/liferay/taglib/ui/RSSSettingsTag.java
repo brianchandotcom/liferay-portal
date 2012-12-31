@@ -52,7 +52,7 @@ public class RSSSettingsTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_delta = SearchContainer.DEFAULT_DELTA;
-		_displayStyle = RSSUtil.DISPLAY_STYLE_ABSTRACT;
+		_displayStyle = RSSUtil.DISPLAY_STYLE_DEFAULT;
 		_enabled = false;
 		_feedType = RSSUtil.FEED_TYPE_DEFAULT;
 		_name = null;
@@ -89,7 +89,7 @@ public class RSSSettingsTag extends IncludeTag {
 	private static final String _PAGE = "/html/taglib/ui/rss_settings/page.jsp";
 
 	private int _delta = SearchContainer.DEFAULT_DELTA;
-	private String _displayStyle = RSSUtil.DISPLAY_STYLE_ABSTRACT;
+	private String _displayStyle = RSSUtil.DISPLAY_STYLE_DEFAULT;
 	private boolean _enabled;
 	private String _feedType = RSSUtil.FEED_TYPE_DEFAULT;
 	private String _name;

@@ -49,28 +49,6 @@ public class LayoutFinderImpl
 	public static final String FIND_BY_C_P_P =
 		LayoutFinder.class.getName() + ".findByC_P_P";
 
-	public List<Layout> findByNullFriendlyURL() throws SystemException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_NULL_FRIENDLY_URL);
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addEntity("Layout", LayoutImpl.class);
-
-			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	public List<Layout> findByNoPermissions(long roleId)
 		throws SystemException {
 
@@ -89,6 +67,28 @@ public class LayoutFinderImpl
 
 			qPos.add(ResourceConstants.SCOPE_INDIVIDUAL);
 			qPos.add(roleId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<Layout> findByNullFriendlyURL() throws SystemException {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_NULL_FRIENDLY_URL);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("Layout", LayoutImpl.class);
 
 			return q.list(true);
 		}

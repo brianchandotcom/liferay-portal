@@ -768,7 +768,12 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				value = StringPool.BLANK;
 			}
 			else {
-				value = BBCodeTranslatorUtil.getHTML(message.getBody());
+				if (message.isFormatBBCode()) {
+					value = BBCodeTranslatorUtil.getHTML(message.getBody());
+				}
+				else {
+					value = message.getBody();
+				}
 
 				value = MBUtil.replaceMessageBodyPaths(themeDisplay, value);
 			}

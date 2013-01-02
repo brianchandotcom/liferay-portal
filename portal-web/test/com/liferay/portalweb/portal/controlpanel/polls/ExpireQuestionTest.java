@@ -50,16 +50,19 @@ public class ExpireQuestionTest extends BaseTestCase {
 					RuntimeVariables.replace("Edited Test Question 2"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isVisible(
-						"//div[2]/div/span[1]/span/span/input"));
+						"//span[1]/span/span/input[@type='radio']"));
 				assertEquals(RuntimeVariables.replace("a. Test Choice A"),
 					selenium.getText("//span[1]/span/label"));
-				assertTrue(selenium.isVisible("//span[2]/span/span/input"));
+				assertTrue(selenium.isVisible(
+						"//span[2]/span/span/input[@type='radio']"));
 				assertEquals(RuntimeVariables.replace("b. Test Choice B"),
 					selenium.getText("//span[2]/span/label"));
-				assertTrue(selenium.isVisible("//span[3]/span/span/input"));
+				assertTrue(selenium.isVisible(
+						"//span[3]/span/span/input[@type='radio']"));
 				assertEquals(RuntimeVariables.replace("c. Test Choice C"),
 					selenium.getText("//span[3]/span/label"));
-				assertTrue(selenium.isVisible("//span[4]/span/span/input"));
+				assertTrue(selenium.isVisible(
+						"//span[4]/span/span/input[@type='radio']"));
 				assertEquals(RuntimeVariables.replace("d. NEW Test Choice D"),
 					selenium.getText("//span[4]/span/label"));
 				selenium.clickAt("//input[@value='Cancel']",
@@ -97,17 +100,17 @@ public class ExpireQuestionTest extends BaseTestCase {
 				selenium.waitForVisible(
 					"//select[@id='_25_expirationDateMonth']");
 				selenium.select("//select[@id='_25_expirationDateYear']",
-					RuntimeVariables.replace("label=2008"));
+					RuntimeVariables.replace("2008"));
 				selenium.select("//select[@id='_25_expirationDateMonth']",
-					RuntimeVariables.replace("label=January"));
+					RuntimeVariables.replace("January"));
 				selenium.select("//select[@id='_25_expirationDateDay']",
-					RuntimeVariables.replace("label=1"));
+					RuntimeVariables.replace("1"));
 				selenium.select("//select[@name='_25_expirationDateHour']",
-					RuntimeVariables.replace("label=12"));
+					RuntimeVariables.replace("12"));
 				selenium.select("//select[@name='_25_expirationDateMinute']",
-					RuntimeVariables.replace("label=:00"));
+					RuntimeVariables.replace(":00"));
 				selenium.select("//select[@name='_25_expirationDateAmPm']",
-					RuntimeVariables.replace("label=AM"));
+					RuntimeVariables.replace("AM"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");

@@ -98,9 +98,9 @@ public class ViewSiteRoleUserTest extends BaseTestCase {
 						"//div[@class='lfr-portlet-toolbar']/span[contains(.,'View Users')]/a"));
 				assertEquals(RuntimeVariables.replace("Add"),
 					selenium.getText("//span[@title='Add']/ul/li/strong/a"));
-				assertEquals(RuntimeVariables.replace("Export All Users"),
+				assertEquals(RuntimeVariables.replace("Export Users"),
 					selenium.getText(
-						"//div[@class='lfr-portlet-toolbar']/span[contains(.,'Export All Users')]/a"));
+						"//div[@class='lfr-portlet-toolbar']/span[contains(.,'Export Users')]/a"));
 				assertEquals(RuntimeVariables.replace("userfn userln"),
 					selenium.getText("//h1[@class='header-title']/span"));
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),
@@ -170,7 +170,7 @@ public class ViewSiteRoleUserTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Remove"),
 					selenium.getText("//tr[contains(.,'Power User')]/td[2]"));
 				assertEquals(RuntimeVariables.replace("Select"),
-					selenium.getText("//div[6]/span/a/span"));
+					selenium.getText("//div[6]/span[1]/a/span"));
 				assertEquals(RuntimeVariables.replace("Inherited Roles"),
 					selenium.getText(
 						"//div[@id='_125_roles']/h3[contains(.,'Inherited Roles')]"));

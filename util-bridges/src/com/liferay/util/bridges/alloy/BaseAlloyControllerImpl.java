@@ -44,11 +44,15 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -106,6 +110,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		initServletVariables();
 		initPortletVariables();
 		initThemeDisplayVariables();
+		initExecuteActionMethod();
 		initMethods();
 		initPaths();
 		initIndexer();
@@ -122,7 +127,9 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		}
 
 		if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-			executeAction(method);
+			ServiceBeanMethodInvocationFactoryUtil.proceed(
+				this, BaseAlloyControllerImpl.class, executeActionMethod,
+				new Object[] {method});
 		}
 		else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 			executeRender(method);
@@ -202,6 +209,10 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		return null;
 	}
 
+	@Transactional(
+		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,
+		rollbackFor = {Exception.class}
+	)
 	protected void executeAction(Method method) throws Exception {
 		if (method != null) {
 			method.invoke(this);
@@ -327,6 +338,17 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected void initClass() {
 		clazz = getClass();
 		classLoader = clazz.getClassLoader();
+		superClazz = clazz.getSuperclass();
+	}
+
+	protected void initExecuteActionMethod() {
+		try {
+			executeActionMethod = superClazz.getDeclaredMethod(
+				"executeAction", new Class<?>[] {Method.class});
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 	protected void initIndexer() {
@@ -776,6 +798,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected String controllerPath;
 	protected EventRequest eventRequest;
 	protected EventResponse eventResponse;
+	protected Method executeActionMethod;
 	protected Indexer indexer;
 	protected String indexerClassName;
 	protected String lifecycle;
@@ -800,6 +823,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected MessageListener schedulerMessageListener;
 	protected ServletConfig servletConfig;
 	protected ServletContext servletContext;
+	protected Class<?> superClazz;
 	protected ThemeDisplay themeDisplay;
 	protected User user;
 	protected String viewPath;

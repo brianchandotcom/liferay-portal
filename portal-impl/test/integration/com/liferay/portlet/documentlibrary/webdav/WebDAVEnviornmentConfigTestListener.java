@@ -17,13 +17,9 @@ package com.liferay.portlet.documentlibrary.webdav;
 import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.webdav.WebDAVServlet;
 import com.liferay.portal.webdav.methods.Method;
 
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 
 import org.junit.Assert;
 
@@ -43,10 +39,6 @@ public class WebDAVEnviornmentConfigTestListener
 	@Override
 	public void runBeforeClass(TestContext testContext) {
 		super.runBeforeClass(testContext);
-
-		Logger logger = Logger.getLogger(WebDAVServlet.class);
-
-		logger.setLevel(Level.toLevel(Level.INFO_INT));
 
 		Tuple tuple = _baseWebDAVTestCase.service(Method.MKCOL, "", null, null);
 

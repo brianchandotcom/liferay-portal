@@ -605,6 +605,16 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolderPersistence.update(dlFolder);
 	}
 
+	public void updateModifiedDate(long folderId, Date modifiedDate)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
+
+		dlFolder.setModifiedDate(modifiedDate);
+
+		dlFolderPersistence.update(dlFolder);
+	}
+
 	public DLFolder updateStatus(
 			long userId, long folderId, int status,
 			Map<String, Serializable> workflowContext,

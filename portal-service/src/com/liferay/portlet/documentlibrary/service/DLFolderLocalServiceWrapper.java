@@ -573,6 +573,12 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		_dlFolderLocalService.updateLastPostDate(folderId, lastPostDate);
 	}
 
+	public void updateModifiedDate(long folderId, java.util.Date modifiedDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.updateModifiedDate(folderId, modifiedDate);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateStatus(
 		long userId, long folderId, int status,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,

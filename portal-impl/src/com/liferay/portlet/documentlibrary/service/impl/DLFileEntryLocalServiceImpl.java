@@ -207,6 +207,8 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.getFolderId(), dlFileEntry.getModifiedDate());
 		}
 
+		dlFolderLocalService.updateModifiedDate(dlFileEntry.getFolderId(), now);
+
 		// File
 
 		if (file != null) {
@@ -2237,6 +2239,11 @@ public class DLFileEntryLocalServiceImpl
 				description, changeLog, extraSettings, fileEntryTypeId,
 				fieldsMap, version, size, dlFileVersion.getStatus(),
 				serviceContext.getModifiedDate(now), serviceContext);
+
+			// Folder
+
+			dlFolderLocalService.updateModifiedDate(
+				dlFileEntry.getFolderId(), now);
 
 			// App helper
 

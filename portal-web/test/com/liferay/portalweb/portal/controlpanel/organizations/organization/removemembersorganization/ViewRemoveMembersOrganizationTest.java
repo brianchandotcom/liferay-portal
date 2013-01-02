@@ -55,16 +55,19 @@ public class ViewRemoveMembersOrganizationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Users and Organizations"),
 			selenium.getText("//h1[@class='portlet-title']/span"));
 		assertEquals(RuntimeVariables.replace("Browse"),
-			selenium.getText("//div[@class='lfr-portlet-toolbar']/span/a"));
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Browse')]"));
 		assertEquals(RuntimeVariables.replace("View Organizations"),
-			selenium.getText("//div[@class='lfr-portlet-toolbar']/span[2]/a"));
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View Organizations')]"));
 		assertEquals(RuntimeVariables.replace("View Users"),
-			selenium.getText("//div[@class='lfr-portlet-toolbar']/span[3]/a"));
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View Users')]"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		assertEquals(RuntimeVariables.replace("Export Users"),
 			selenium.getText(
-				"//span[@class='lfr-toolbar-button export-button']/a[contains(.,'Export Users')]"));
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Export Users')]"));
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
@@ -82,18 +85,25 @@ public class ViewRemoveMembersOrganizationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText("//div[@class='lfr-asset-summary']/div/h4"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//div[contains(.,'Edit')]/ul/li"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]"));
 		assertEquals(RuntimeVariables.replace("Assign Organization Roles"),
-			selenium.getText("//div[contains(.,'Edit')]/ul/li[2]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Organization Roles')]"));
 		assertEquals(RuntimeVariables.replace("Assign Users"),
-			selenium.getText("//div[contains(.,'Edit')]/ul/li[3]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]"));
 		assertEquals(RuntimeVariables.replace("Add User"),
-			selenium.getText("//div[contains(.,'Edit')]/ul/li[4]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add User')]"));
 		assertEquals(RuntimeVariables.replace("Add Regular Organization"),
-			selenium.getText("//div[contains(.,'Edit')]/ul/li[5]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Regular Organization')]"));
 		assertEquals(RuntimeVariables.replace("Add Location"),
-			selenium.getText("//div[contains(.,'Edit')]/ul/li[6]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Location')]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//div[contains(.,'Edit')]/ul/li[7]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]"));
 	}
 }

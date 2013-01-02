@@ -30,9 +30,9 @@ public class OrganizationPhoneNumberTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		//testSuite.addTest(AddOrganizationPhoneNumberTests.suite());
+		testSuite.addTest(AddOrganizationPhoneNumberTests.suite());
 		testSuite.addTest(AddOrganizationPhoneNumberInvalidTests.suite());
-		//testSuite.addTest(AddOrganizationPhoneNumbersTests.suite());
+		testSuite.addTest(AddOrganizationPhoneNumbersTests.suite());
 
 		return testSuite;
 	}

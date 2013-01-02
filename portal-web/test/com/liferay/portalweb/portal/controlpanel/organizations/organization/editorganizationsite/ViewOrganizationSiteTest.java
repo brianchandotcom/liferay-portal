@@ -88,9 +88,11 @@ public class ViewOrganizationSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//h1[@class='portlet-title']/span"));
 		assertEquals(RuntimeVariables.replace("Browse"),
-			selenium.getText("//div[@class='lfr-portlet-toolbar']/span/a"));
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Browse')]"));
 		assertEquals(RuntimeVariables.replace("View All"),
-			selenium.getText("//div[@class='lfr-portlet-toolbar']/span[2]/a"));
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View All')]"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		assertEquals(RuntimeVariables.replace("Organization Name"),
@@ -98,9 +100,9 @@ public class ViewOrganizationSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("\u00ab Back to Sites Home"),
 			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace("Members:"),
-			selenium.getText("//div[@class='membership-info']/dl/dt"));
+			selenium.getText("//div[@class='membership-info']/dl/dt[1]"));
 		assertEquals(RuntimeVariables.replace("1 Organization"),
-			selenium.getText("//div[@class='membership-info']/dl/dd"));
+			selenium.getText("//div[@class='membership-info']/dl/dd[1]"));
 		assertEquals(RuntimeVariables.replace("Membership Type:"),
 			selenium.getText("//div[@class='membership-info']/dl/dt[2]"));
 		assertEquals(RuntimeVariables.replace("Private"),
@@ -109,20 +111,28 @@ public class ViewOrganizationSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText("//div[@class='lfr-asset-summary']/div/h4"));
 		assertEquals(RuntimeVariables.replace("Edit Settings"),
-			selenium.getText("//div[contains(.,'Edit Settings')]/ul/li"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit Settings')]"));
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
-			selenium.getText("//div[contains(.,'Edit Settings')]/ul/li[2]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Manage Pages')]"));
 		assertEquals(RuntimeVariables.replace("Manage Memberships"),
-			selenium.getText("//div[contains(.,'Edit Settings')]/ul/li[3]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Manage Memberships')]"));
 		assertEquals(RuntimeVariables.replace("Deactivate"),
-			selenium.getText("//div[contains(.,'Edit Settings')]/ul/li[4]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Deactivate')]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//div[contains(.,'Edit Settings')]/ul/li[5]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]"));
 		assertEquals(RuntimeVariables.replace("Add Blank Site"),
-			selenium.getText("//div[contains(.,'Edit Settings')]/ul/li[6]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Blank Site')]"));
 		assertEquals(RuntimeVariables.replace("Add Community Site"),
-			selenium.getText("//div[contains(.,'Edit Settings')]/ul/li[7]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Community Site')]"));
 		assertEquals(RuntimeVariables.replace("Add Intranet Site"),
-			selenium.getText("//div[contains(.,'Edit Settings')]/ul/li[8]"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Intranet Site')]"));
 	}
 }

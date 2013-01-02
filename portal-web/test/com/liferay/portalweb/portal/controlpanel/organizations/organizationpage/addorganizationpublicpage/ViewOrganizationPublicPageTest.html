@@ -15,22 +15,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='heading']/h1/span</td>
+	<td>//h1[@class='site-title']/span</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//nav[contains(.,'Public Page')]/ul/li/a</td>
+	<td>link=Public Page</td>
 	<td>Public Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//nav[contains(.,'Organization Name')]/ul/li/span/a</td>
+	<td>//nav[@id='breadcrumbs']/ul/li/span/a[contains(.,'Organization Name')]</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//nav[contains(.,'Public Page')]/ul/li[2]/span/a</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[2]/span/a[contains(.,'Public Page')]</td>
 	<td>Public Page</td>
 </tr>
 </tbody></table>

@@ -26,13 +26,14 @@ public class ViewOrganizationPublicPageTest extends BaseTestCase {
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/organization-name/");
 		assertEquals(RuntimeVariables.replace("Organization Name"),
-			selenium.getText("//div[@id='heading']/h1/span"));
+			selenium.getText("//h1[@class='site-title']/span"));
 		assertEquals(RuntimeVariables.replace("Public Page"),
-			selenium.getText("//nav[contains(.,'Public Page')]/ul/li/a"));
+			selenium.getText("link=Public Page"));
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText(
-				"//nav[contains(.,'Organization Name')]/ul/li/span/a"));
+				"//nav[@id='breadcrumbs']/ul/li/span/a[contains(.,'Organization Name')]"));
 		assertEquals(RuntimeVariables.replace("Public Page"),
-			selenium.getText("//nav[contains(.,'Public Page')]/ul/li[2]/span/a"));
+			selenium.getText(
+				"//nav[@id='breadcrumbs']/ul/li[2]/span/a[contains(.,'Public Page')]"));
 	}
 }

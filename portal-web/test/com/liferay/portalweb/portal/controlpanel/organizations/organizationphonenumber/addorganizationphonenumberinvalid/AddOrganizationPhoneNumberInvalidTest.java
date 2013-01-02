@@ -51,20 +51,22 @@ public class AddOrganizationPhoneNumberInvalidTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Organization Name')]/td[2]/a[2]/strong",
 			RuntimeVariables.replace("Organization Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[contains(.,'Edit')]/ul/li/a");
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//div[contains(.,'Edit')]/ul/li/a"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[contains(.,'Edit')]/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//a[@id='_125_phoneNumbersLink']");
 		selenium.clickAt("//a[@id='_125_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
 		selenium.waitForVisible("//input[@id='_125_phoneNumber0']");
-		selenium.type("//input[@id='_125_phoneExtension0']",
-			RuntimeVariables.replace("321"));
 		selenium.type("//input[@id='_125_phoneNumber0']",
 			RuntimeVariables.replace("Selenium"));
+		selenium.type("//input[@id='_125_phoneExtension0']",
+			RuntimeVariables.replace("321"));
 		selenium.select("//select[@id='_125_phoneTypeId0']",
 			RuntimeVariables.replace("label=Toll Free"));
 		selenium.clickAt("//input[@id='_125_phonePrimary0']",

@@ -15,6 +15,8 @@
 package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.cache.transactional.TransactionalPortalCacheHelper;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
@@ -82,13 +84,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 				throwable, transactionAttribute, transactionStatus);
 		}
 
-		_platformTransactionManager.commit(transactionStatus);
-
-		if (newTransaction) {
-			TransactionalPortalCacheHelper.commit();
-
-			invokeCallbacks();
-		}
+		processCommit(transactionStatus);
 
 		return returnValue;
 	}
@@ -129,6 +125,54 @@ public class TransactionInterceptor implements MethodInterceptor {
 		}
 	}
 
+	protected void processCommit(TransactionStatus transactionStatus) {
+		boolean hasError = false;
+
+		try {
+			_platformTransactionManager.commit(transactionStatus);
+		}
+		catch (TransactionSystemException tse) {
+			_log.error(
+				"Application exception overridden by commit exception", tse);
+
+			hasError = true;
+
+			throw tse;
+		}
+		catch (RuntimeException re) {
+			_log.error(
+				"Application exception overridden by commit exception", re);
+
+			hasError = true;
+
+			throw re;
+		}
+		catch (Error e) {
+			_log.error("Application exception overridden by commit error", e);
+
+			hasError = true;
+
+			throw e;
+		}
+		finally {
+			if (transactionStatus.isNewTransaction()) {
+				if (hasError) {
+					TransactionalPortalCacheHelper.rollback();
+
+					TransactionCommitCallbackUtil.popCallbackList();
+
+					EntityCacheUtil.clearLocalCache();
+					FinderCacheUtil.clearLocalCache();
+				}
+				else {
+					TransactionalPortalCacheHelper.commit();
+
+					invokeCallbacks();
+				}
+			}
+		}
+	}
+
 	protected void processThrowable(
 			Throwable throwable, TransactionAttribute transactionAttribute,
 			TransactionStatus transactionStatus)
@@ -163,54 +207,14 @@ public class TransactionInterceptor implements MethodInterceptor {
 					TransactionalPortalCacheHelper.rollback();
 
 					TransactionCommitCallbackUtil.popCallbackList();
+
+					EntityCacheUtil.clearLocalCache();
+					FinderCacheUtil.clearLocalCache();
 				}
 			}
 		}
 		else {
-			boolean hasError = false;
-
-			try {
-				_platformTransactionManager.commit(transactionStatus);
-			}
-			catch (TransactionSystemException tse) {
-				_log.error(
-					"Application exception overridden by commit exception",
-					tse);
-
-				hasError = true;
-
-				throw tse;
-			}
-			catch (RuntimeException re) {
-				_log.error(
-					"Application exception overridden by commit exception", re);
-
-				hasError = true;
-
-				throw re;
-			}
-			catch (Error e) {
-				_log.error(
-					"Application exception overridden by commit error", e);
-
-				hasError = true;
-
-				throw e;
-			}
-			finally {
-				if (transactionStatus.isNewTransaction()) {
-					if (hasError) {
-						TransactionalPortalCacheHelper.rollback();
-
-						TransactionCommitCallbackUtil.popCallbackList();
-					}
-					else {
-						TransactionalPortalCacheHelper.commit();
-
-						invokeCallbacks();
-					}
-				}
-			}
+			processCommit(transactionStatus);
 		}
 
 		throw throwable;

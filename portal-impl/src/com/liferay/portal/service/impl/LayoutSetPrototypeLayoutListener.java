@@ -25,6 +25,7 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutSetPrototypeUtil;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.Date;
 
@@ -72,7 +73,7 @@ public class LayoutSetPrototypeLayoutListener
 			UnicodeProperties settingsProperties =
 				layoutSet.getSettingsProperties();
 
-			settingsProperties.remove("merge-fail-count");
+			settingsProperties.remove(SitesUtil.MERGE_FAIL_COUNT);
 
 			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}

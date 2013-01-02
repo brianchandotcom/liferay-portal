@@ -21,7 +21,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
-import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -48,6 +47,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 		TransactionalCallbackAwareExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
 public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Before
@@ -56,66 +56,79 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testLSPLinkDisabled() throws Exception {
-		runLayoutSetPrototype(false, false, false, false, false);
+		runLayoutSetPrototype(false, false, false, false, false, false);
 	}
 
 	@Test
-	@Transactional
 	public void testLSPLinkDisabledWithPageAddition() throws Exception {
-		runLayoutSetPrototype(false, false, true, false, false);
+		runLayoutSetPrototype(false, false, true, false, false, false);
 	}
 
 	@Test
-	@Transactional
 	public void testLSPLinkDisabledWithPageDeletion() throws Exception {
-		runLayoutSetPrototype(false, false, true, true, false);
+		runLayoutSetPrototype(false, false, true, true, false, false);
 	}
 
 	@Test
-	@Transactional
 	public void testLSPLinkEnabled() throws Exception {
-		runLayoutSetPrototype(true, false, false, false, false);
+		runLayoutSetPrototype(true, false, false, false, false, false);
 	}
 
 	@Test
-	@Transactional
-	public void testLSPLinkEnabledwithPageAddition() throws Exception {
-		runLayoutSetPrototype(true, false, true, false, false);
+	public void testLSPLinkEnabledWithPageAddition() throws Exception {
+		runLayoutSetPrototype(true, false, true, false, false, false);
 	}
 
 	@Test
-	@Transactional
-	public void testLSPLinkEnabledwithPageAdditionFromLPLinkDisabled()
+	public void testLSPLinkEnabledWithPageAdditionFromLPLinkDisabled()
 		throws Exception {
 
-		runLayoutSetPrototype(true, false, true, false, true);
+		runLayoutSetPrototype(true, false, true, false, true, false);
 	}
 
 	@Test
-	@Transactional
-	public void testLSPLinkEnabledwithPageAdditionFromLPLinkEnabled()
+	public void testLSPLinkEnabledWithPageAdditionFromLPLinkEnabled()
 		throws Exception {
 
-		runLayoutSetPrototype(true, true, true, false, true);
+		runLayoutSetPrototype(true, true, true, false, true, false);
 	}
 
 	@Test
-	@Transactional
-	public void testLSPLinkEnabledwithPageDeletion() throws Exception {
-		runLayoutSetPrototype(true, false, true, true, false);
+	public void testLSPLinkEnabledWithPageAdditionFromLPToLSPLinkDisabled()
+		throws Exception {
+
+		runLayoutSetPrototype(true, false, true, false, true, true);
 	}
 
 	@Test
-	@Transactional
-	public void testLSPLinkEnabledwithPageDeletionFromLP() throws Exception {
-		runLayoutSetPrototype(true, false, true, true, true);
+	public void testLSPLinkEnabledWithPageAdditionFromLPToLSPLinkEnabled()
+		throws Exception {
+
+		runLayoutSetPrototype(true, true, true, false, true, true);
+	}
+
+	@Test
+	public void testLSPLinkEnabledWithPageDeletion() throws Exception {
+		runLayoutSetPrototype(true, false, true, true, false, false);
+	}
+
+	@Test
+	public void testLSPLinkEnabledWithPageDeletionFromLP() throws Exception {
+		runLayoutSetPrototype(true, false, true, true, true, false);
+	}
+
+	@Test
+	public void testLSPLinkEnabledWithPageDeletionFromLPToLSP()
+		throws Exception {
+
+		runLayoutSetPrototype(true, false, true, true, true, true);
 	}
 
 	protected void runLayoutSetPrototype(
-		boolean layoutSetLinkEnabled, boolean layoutLinkEnabled,
-		boolean addPage, boolean deletePage, boolean useLayoutPrototype)
+			boolean layoutSetLinkEnabled, boolean layoutLinkEnabled,
+			boolean addPage, boolean deletePage, boolean useLayoutPrototype,
+			boolean layoutPrototypeToLayoutSetPrototype)
 		throws Exception {
 
 		LayoutSetPrototype layoutSetPrototype =
@@ -150,6 +163,15 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			groupLayoutsCount, layoutSetPrototypeLayoutsCount + 2);
 
 		if (addPage) {
+			if (!useLayoutPrototype || layoutPrototypeToLayoutSetPrototype) {
+
+				// Database will store Date values without milliseconds. Wait
+				// for more than one second to ensure that later queries can
+				// correctly compare the Date values.
+
+				Thread.sleep(2000);
+			}
+
 			Layout layout = null;
 
 			if (useLayoutPrototype) {
@@ -161,9 +183,23 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 				updateLayoutTemplateId(layoutPrototypeLayout, "2_2_columns");
 
-				layout = addLayout(
-					group.getGroupId(), ServiceTestUtil.randomString(),
-					layoutPrototype, layoutLinkEnabled);
+				if (layoutPrototypeToLayoutSetPrototype) {
+					Layout layoutSetPrototypeLayout = ServiceTestUtil.addLayout(
+						layoutSetPrototypeGroup.getGroupId(),
+						ServiceTestUtil.randomString(), true, layoutPrototype,
+						layoutLinkEnabled);
+
+					propagateChanges(group);
+
+					layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+						group.getGroupId(), false,
+						layoutSetPrototypeLayout.getFriendlyURL());
+				}
+				else {
+					layout = ServiceTestUtil.addLayout(
+						group.getGroupId(), ServiceTestUtil.randomString(),
+						false, layoutPrototype, layoutLinkEnabled);
+				}
 
 				if (layoutLinkEnabled) {
 					layout = propagateChanges(layout);
@@ -173,21 +209,12 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 				if (layoutLinkEnabled) {
 					Assert.assertEquals(
-						"2_2_columns",
-						layout.getTypeSettingsProperty(
-							LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+						"2_2_columns", getLayoutTemplateId(layout));
 
 					layout = propagateChanges(layout);
 				}
 			}
 			else {
-
-				// Database will store Date values without milliseconds. Wait
-				// for more than one second to ensure that later queries can
-				// correctly compare the Date values.
-
-				Thread.sleep(2000);
-
 				layout = ServiceTestUtil.addLayout(
 					layoutSetPrototypeGroup.getGroupId(),
 					ServiceTestUtil.randomString(), true);
@@ -213,15 +240,11 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 				if (useLayoutPrototype) {
 					if (layoutLinkEnabled) {
 						Assert.assertEquals(
-							"1_column",
-							layout.getTypeSettingsProperty(
-								LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+							"1_column", getLayoutTemplateId(layout));
 					}
 					else {
 						Assert.assertEquals(
-							"2_2_columns",
-							layout.getTypeSettingsProperty(
-								LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+							"2_2_columns", getLayoutTemplateId(layout));
 					}
 				}
 			}

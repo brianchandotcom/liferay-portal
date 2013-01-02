@@ -45,7 +45,7 @@ try {
 catch (NoSuchMailingListException nsmle) {
 }
 
-if (mailingList == null) {
+if ((category == null) && (mailingList == null)) {
 	try {
 		if (parentCategoryId > 0) {
 			mailingList = MBMailingListLocalServiceUtil.getCategoryMailingList(scopeGroupId, parentCategoryId);

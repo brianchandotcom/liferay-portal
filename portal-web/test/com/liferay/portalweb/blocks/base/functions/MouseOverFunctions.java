@@ -50,6 +50,7 @@ public class MouseOverFunctions extends BaseFunctions {
 		throws Exception {
 		MouseOverFunctions mouseOverFunctions = new MouseOverFunctions(selenium);
 
+		selenium.pause("1000");
 		selenium.clickAt("//div[@id='dockbar']", "");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]");

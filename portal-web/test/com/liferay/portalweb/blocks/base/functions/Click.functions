@@ -76,6 +76,7 @@
 	</functiondef>
 
 	<functiondef command="textClickAtHomeClickDockbar">
+		<selenium command="pause" target="1000" />
 		<selenium command="clickAt" target="//div[@id='dockbar']" value="" />
 		<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
 		<function object="Click" command="textClickAt" />

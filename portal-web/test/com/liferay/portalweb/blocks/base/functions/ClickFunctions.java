@@ -114,6 +114,7 @@ public class ClickFunctions extends BaseFunctions {
 		throws Exception {
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
+		selenium.pause("1000");
 		selenium.clickAt("//div[@id='dockbar']", "");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]");

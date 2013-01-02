@@ -714,9 +714,9 @@ public class PortalImpl implements Portal {
 
 		String domain = HttpUtil.getDomain(url);
 
-		int pos = -1;
+		int pos = domain.indexOf(CharPool.COLON);
 
-		if ((pos = domain.indexOf(CharPool.COLON)) != -1) {
+		if (pos != -1) {
 			domain = domain.substring(0, pos);
 		}
 

@@ -43,9 +43,6 @@ public class LayoutFinderImpl
 	public static final String FIND_BY_NULL_FRIENDLY_URL =
 		LayoutFinder.class.getName() + ".findByNullFriendlyURL";
 
-	public static final String FIND_BY_NULL_UUID =
-		LayoutFinder.class.getName() + ".findByNullUuid";
-
 	public static final String FIND_BY_SCOPE_GROUP =
 		LayoutFinder.class.getName() + ".findByScopeGroup";
 

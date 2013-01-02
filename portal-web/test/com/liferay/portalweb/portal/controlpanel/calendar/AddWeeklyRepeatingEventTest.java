@@ -30,6 +30,10 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -49,11 +53,11 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 				assertEquals(RuntimeVariables.replace("Edit"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a",
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
 					RuntimeVariables.replace("Edit"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("//div/div/span[3]/span/span/input",
@@ -160,11 +164,11 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 
 			case 8:
 				selenium.select("//select[@id='_8_endDateMonth']",
-					RuntimeVariables.replace("label=January"));
+					RuntimeVariables.replace("January"));
 				selenium.select("//select[@id='_8_endDateDay']",
-					RuntimeVariables.replace("label=1"));
+					RuntimeVariables.replace("1"));
 				selenium.select("//select[@id='_8_endDateYear']",
-					RuntimeVariables.replace("label=2011"));
+					RuntimeVariables.replace("2011"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
@@ -173,38 +177,43 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForPartialText("//select", "2010");
-				selenium.select("//select", RuntimeVariables.replace("2010"));
+				selenium.waitForPartialText("//select[@id='_8_yearSelector']",
+					"2010");
+				selenium.select("//select[@id='_8_yearSelector']",
+					RuntimeVariables.replace("2010"));
 				selenium.waitForVisible(
 					"//a[contains(@href, 'javascript:_8_updateCalendar(0, 7, 2010);')]");
 				selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(0, 7, 2010);')]",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible("link=Repeating Test Event");
-				assertTrue(selenium.isVisible("link=Repeating Test Event"));
+				assertEquals(RuntimeVariables.replace("Repeating Test Event"),
+					selenium.getText("//div[@class='event-title']/a"));
 				selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForPartialText("//select", "2010");
-				selenium.select("//select", RuntimeVariables.replace("2010"));
+				selenium.waitForPartialText("//select[@id='_8_yearSelector']",
+					"2010");
+				selenium.select("//select[@id='_8_yearSelector']",
+					RuntimeVariables.replace("2010"));
 				selenium.waitForVisible(
 					"//a[contains(@href, 'javascript:_8_updateCalendar(0, 14, 2010);')]");
 				selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(0, 14, 2010);')]",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible("link=Repeating Test Event");
-				assertTrue(selenium.isVisible("link=Repeating Test Event"));
+				assertEquals(RuntimeVariables.replace("Repeating Test Event"),
+					selenium.getText("//div[@class='event-title']/a"));
 				selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForPartialText("//select", "2010");
-				selenium.select("//select", RuntimeVariables.replace("2010"));
+				selenium.waitForPartialText("//select[@id='_8_yearSelector']",
+					"2010");
+				selenium.select("//select[@id='_8_yearSelector']",
+					RuntimeVariables.replace("2010"));
 				selenium.waitForVisible(
 					"//a[contains(@href, 'javascript:_8_updateCalendar(0, 15, 2010);')]");
 				selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(0, 15, 2010);')]",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForElementNotPresent("link=Repeating Test Event");
 				assertTrue(selenium.isElementNotPresent(
-						"link=Repeating Test Event"));
+						"//div[@class='event-title']/a"));
 
 			case 100:
 				label = -1;

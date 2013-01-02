@@ -25,6 +25,10 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -34,11 +38,14 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("link=Events");
 		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Caedmon's Call Concert!"));
-		assertTrue(selenium.isElementPresent("link=Edited Test Event"));
-		assertTrue(selenium.isElementPresent("link=Off to Yosemite!"));
+		assertEquals(RuntimeVariables.replace("Caedmons Call Concert!"),
+			selenium.getText(
+				"//tr[contains(.,'Caedmons Call Concert!')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Edited Test Event"),
+			selenium.getText("//tr[contains(.,'Edited Test Event')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Off to Yosemite!"),
+			selenium.getText("//tr[contains(.,'Off to Yosemite!')]/td[3]/a"));
 	}
 }

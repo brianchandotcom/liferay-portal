@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,9 +49,9 @@
 	<td>Calendar</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Test Event</td>
-	<td>Edited Test Event</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Test Event')]/td[2]/a</td>
+	<td>Test Event</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -55,17 +65,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -141,12 +151,12 @@
 <tr>
 	<td>select</td>
 	<td>//select[@name='_8_startDateHour']</td>
-	<td>label=5</td>
+	<td>5</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@name='_8_startDateAmPm']</td>
-	<td>label=AM</td>
+	<td>AM</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -159,8 +169,8 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Edited Test Event</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Edited Test Event')]/td[2]/a</td>
 	<td>Edited Test Event</td>
 </tr>
 </tbody></table>

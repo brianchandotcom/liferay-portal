@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -46,7 +56,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_8_title']</td>
-	<td>Caedmon's Call Concert!</td>
+	<td>Caedmons Call Concert!</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -121,7 +131,7 @@
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_type']</td>
-	<td>label=Concert</td>
+	<td>Concert</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -134,9 +144,9 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>Link=Caedmon's Call Concert!</td>
-	<td>Caedmon's Call Concert!</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Caedmons Call Concert!')]/td[2]/a</td>
+	<td>Caedmons Call Concert!</td>
 </tr>
 </tbody></table>
 </body>

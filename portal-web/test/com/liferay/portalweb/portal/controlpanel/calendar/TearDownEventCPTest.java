@@ -30,6 +30,10 @@ public class TearDownEventCPTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -59,15 +63,15 @@ public class TearDownEventCPTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 
 			case 2:
 
@@ -86,15 +90,15 @@ public class TearDownEventCPTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 
 			case 3:
 
@@ -113,15 +117,15 @@ public class TearDownEventCPTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 
 			case 4:
 
@@ -140,15 +144,15 @@ public class TearDownEventCPTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 
 			case 5:
 
@@ -167,15 +171,15 @@ public class TearDownEventCPTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 
 			case 6:
 			case 100:

@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -61,22 +71,22 @@
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_startDateMonth']</td>
-	<td>label=January</td>
+	<td>January</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_startDateDay']</td>
-	<td>label=1</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_startDateYear']</td>
-	<td>label=2010</td>
+	<td>2010</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_type']</td>
-	<td>label=Event</td>
+	<td>Event</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -94,13 +104,8 @@
 	<td>Events</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Repeating Test Event</td>
-	<td>Repeating Test Event</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>link=Repeating Test Event</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Repeating Test Event')]/td[3]/a</td>
 	<td>Repeating Test Event</td>
 </tr>
 </tbody></table>

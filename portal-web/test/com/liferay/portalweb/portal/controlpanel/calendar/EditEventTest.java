@@ -25,6 +25,10 @@ public class EditEventTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -34,19 +38,20 @@ public class EditEventTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Test Event"));
+		assertEquals(RuntimeVariables.replace("Test Event"),
+			selenium.getText("//tr[contains(.,'Test Event')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[3]"));
 		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[3]",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Edited Test Event"));
@@ -73,15 +78,16 @@ public class EditEventTest extends BaseTestCase {
 			"This is a test event! This test event has been edited.");
 		selenium.selectFrame("relative=top");
 		selenium.select("//select[@name='_8_startDateHour']",
-			RuntimeVariables.replace("label=5"));
+			RuntimeVariables.replace("5"));
 		selenium.select("//select[@name='_8_startDateAmPm']",
-			RuntimeVariables.replace("label=AM"));
+			RuntimeVariables.replace("AM"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isElementPresent("link=Edited Test Event"));
+		assertEquals(RuntimeVariables.replace("Edited Test Event"),
+			selenium.getText("//tr[contains(.,'Edited Test Event')]/td[2]/a"));
 	}
 }

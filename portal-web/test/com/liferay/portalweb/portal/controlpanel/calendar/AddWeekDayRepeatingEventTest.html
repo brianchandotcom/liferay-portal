@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -55,17 +65,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -86,17 +96,17 @@
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_endDateMonth']</td>
-	<td>label=January</td>
+	<td>January</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_endDateDay']</td>
-	<td>label=1</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_endDateYear']</td>
-	<td>label=2011</td>
+	<td>2011</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -115,12 +125,12 @@
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>//select</td>
+	<td>//select[@id='_8_yearSelector']</td>
 	<td>2010</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select</td>
+	<td>//select[@id='_8_yearSelector']</td>
 	<td>2010</td>
 </tr>
 <tr>
@@ -134,13 +144,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Repeating Test Event</td>
-	<td>Repeating Test Event</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>link=Repeating Test Event</td>
+	<td>assertText</td>
+	<td>//div[@class='event-title']/a</td>
 	<td>Repeating Test Event</td>
 </tr>
 <tr>
@@ -150,12 +155,12 @@
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>//select</td>
+	<td>//select[@id='_8_yearSelector']</td>
 	<td>2010</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select</td>
+	<td>//select[@id='_8_yearSelector']</td>
 	<td>2010</td>
 </tr>
 <tr>
@@ -169,13 +174,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Repeating Test Event</td>
-	<td>Repeating Test Event</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>link=Repeating Test Event</td>
+	<td>assertText</td>
+	<td>//div[@class='event-title']/a</td>
 	<td>Repeating Test Event</td>
 </tr>
 <tr>
@@ -185,12 +185,12 @@
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>//select</td>
+	<td>//select[@id='_8_yearSelector']</td>
 	<td>2010</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select</td>
+	<td>//select[@id='_8_yearSelector']</td>
 	<td>2010</td>
 </tr>
 <tr>
@@ -202,15 +202,10 @@
 	<td>clickAtAndWait</td>
 	<td>//a[contains(@href, 'javascript:_8_updateCalendar(1, 6, 2010);')]</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForElementNotPresent</td>
-	<td>link=Repeating Test Event</td>
-	<td>Repeating Test Event</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>link=Repeating Test Event</td>
+	<td>//div[@class='event-title']/a</td>
 	<td>Repeating Test Event</td>
 </tr>
 </tbody></table>

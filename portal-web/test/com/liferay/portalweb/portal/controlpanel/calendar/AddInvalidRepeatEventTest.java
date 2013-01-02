@@ -25,6 +25,10 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -43,11 +47,11 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Invalid Repeat Test Event"));
 		selenium.select("//select[@id='_8_startDateMonth']",
-			RuntimeVariables.replace("label=February"));
+			RuntimeVariables.replace("February"));
 		selenium.select("//select[@id='_8_startDateDay']",
-			RuntimeVariables.replace("label=25"));
+			RuntimeVariables.replace("25"));
 		selenium.select("//select[@id='_8_startDateYear']",
-			RuntimeVariables.replace("label=2009"));
+			RuntimeVariables.replace("2009"));
 		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='3']",
 			RuntimeVariables.replace("Repeat Daily"));
 		selenium.waitForVisible("//input[@id='_8_dailyInterval']");
@@ -56,11 +60,11 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 		selenium.clickAt("//input[@name='_8_endDateType' and @value='2']",
 			RuntimeVariables.replace("End by"));
 		selenium.select("//select[@id='_8_endDateMonth']",
-			RuntimeVariables.replace("label=February"));
+			RuntimeVariables.replace("February"));
 		selenium.select("//select[@id='_8_endDateDay']",
-			RuntimeVariables.replace("label=23"));
+			RuntimeVariables.replace("23"));
 		selenium.select("//select[@id='_8_endDateYear']",
-			RuntimeVariables.replace("label=2009"));
+			RuntimeVariables.replace("2009"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

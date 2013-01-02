@@ -25,6 +25,10 @@ public class AddRepeatingEventTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -44,13 +48,13 @@ public class AddRepeatingEventTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_8_timeZoneSensitiveCheckbox']",
 			RuntimeVariables.replace(""));
 		selenium.select("//select[@id='_8_startDateMonth']",
-			RuntimeVariables.replace("label=January"));
+			RuntimeVariables.replace("January"));
 		selenium.select("//select[@id='_8_startDateDay']",
-			RuntimeVariables.replace("label=1"));
+			RuntimeVariables.replace("1"));
 		selenium.select("//select[@id='_8_startDateYear']",
-			RuntimeVariables.replace("label=2010"));
+			RuntimeVariables.replace("2010"));
 		selenium.select("//select[@id='_8_type']",
-			RuntimeVariables.replace("label=Event"));
+			RuntimeVariables.replace("Event"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -59,7 +63,7 @@ public class AddRepeatingEventTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("link=Repeating Test Event");
-		assertTrue(selenium.isVisible("link=Repeating Test Event"));
+		assertEquals(RuntimeVariables.replace("Repeating Test Event"),
+			selenium.getText("//tr[contains(.,'Repeating Test Event')]/td[3]/a"));
 	}
 }

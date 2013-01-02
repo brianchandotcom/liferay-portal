@@ -25,6 +25,10 @@ public class SetTimezoneTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -41,7 +45,7 @@ public class SetTimezoneTest extends BaseTestCase {
 			RuntimeVariables.replace("Display Settings"));
 		selenium.waitForVisible("//select[@name='_2_timeZoneId']");
 		selenium.select("//select[@name='_2_timeZoneId']",
-			RuntimeVariables.replace("label=(UTC -08:00) Pacific Standard Time"));
+			RuntimeVariables.replace("(UTC -08:00) Pacific Standard Time"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

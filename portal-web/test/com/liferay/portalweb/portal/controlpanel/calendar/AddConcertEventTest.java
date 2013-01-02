@@ -25,6 +25,10 @@ public class AddConcertEventTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -38,7 +42,7 @@ public class AddConcertEventTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Event"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_8_title']",
-			RuntimeVariables.replace("Caedmon's Call Concert!"));
+			RuntimeVariables.replace("Caedmons Call Concert!"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_8_editor' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
@@ -64,13 +68,15 @@ public class AddConcertEventTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_8_timeZoneSensitiveCheckbox']",
 			RuntimeVariables.replace("Time Zone Sensitive Checkbox"));
 		selenium.select("//select[@id='_8_type']",
-			RuntimeVariables.replace("label=Concert"));
+			RuntimeVariables.replace("Concert"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isElementPresent("Link=Caedmon's Call Concert!"));
+		assertEquals(RuntimeVariables.replace("Caedmons Call Concert!"),
+			selenium.getText(
+				"//tr[contains(.,'Caedmons Call Concert!')]/td[2]/a"));
 	}
 }

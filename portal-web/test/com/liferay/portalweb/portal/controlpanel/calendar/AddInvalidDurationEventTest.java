@@ -25,6 +25,10 @@ public class AddInvalidDurationEventTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -38,9 +42,9 @@ public class AddInvalidDurationEventTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Event"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_8_durationHour']",
-			RuntimeVariables.replace("label=0"));
+			RuntimeVariables.replace("0"));
 		selenium.select("//select[@id='_8_durationMinute']",
-			RuntimeVariables.replace("label=:00"));
+			RuntimeVariables.replace(":00"));
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Invalid Duration Test Event"));
 		selenium.clickAt("//input[@value='Save']",

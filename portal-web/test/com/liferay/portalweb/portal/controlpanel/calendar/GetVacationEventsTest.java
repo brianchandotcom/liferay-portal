@@ -25,6 +25,10 @@ public class GetVacationEventsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -36,27 +40,41 @@ public class GetVacationEventsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Day", RuntimeVariables.replace("Day"));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("//select", RuntimeVariables.replace("label=Vacation"));
+		selenium.select("//select[@id='_8_eventType']",
+			RuntimeVariables.replace("Vacation"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Off to Yosemite!"));
-		assertTrue(selenium.isElementNotPresent("link=Test Event"));
-		assertTrue(selenium.isElementNotPresent("link=Caedmon's Call Concert!"));
+		assertEquals(RuntimeVariables.replace("Off to Yosemite!"),
+			selenium.getText(
+				"//div[@class='event-title']/a[contains(.,'Off to Yosemite!')]"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='event-title']/a[contains(.,'Test Event')]"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='event-title']/a[contains(.,'Caedmons Call Concert!')]"));
 		selenium.clickAt("link=Week", RuntimeVariables.replace("Week"));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("//select", RuntimeVariables.replace("label=Vacation"));
+		selenium.select("//select[@id='_8_eventType']",
+			RuntimeVariables.replace("Vacation"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Off to Yosemite!"));
-		assertTrue(selenium.isElementNotPresent("link=Test Event"));
-		assertTrue(selenium.isElementNotPresent("link=Caedmon's Call Concert!"));
+		assertEquals(RuntimeVariables.replace("Off to Yosemite!"),
+			selenium.getText("//tr[contains(.,'Off to Yosemite!')]/td[1]/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//tr[contains(.,'Test Event')]/td[1]/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//tr[contains(.,'Caedmons Call Concert!')]/td[1]/a"));
 		selenium.clickAt("link=Month", RuntimeVariables.replace("Month"));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("//select", RuntimeVariables.replace("label=Vacation"));
+		selenium.select("//select[@id='_8_eventType']",
+			RuntimeVariables.replace("Vacation"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Off to Yosemite!"));
-		assertTrue(selenium.isElementNotPresent("link=Test Event"));
-		assertTrue(selenium.isElementNotPresent("link=Caedmon's Call Concert!"));
+		assertEquals(RuntimeVariables.replace("Off to Yosemite!"),
+			selenium.getText("//tr[contains(.,'Off to Yosemite!')]/td[1]/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//tr[contains(.,'Test Event')]/td[1]/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//tr[contains(.,'Caedmons Call Concert!')]/td[1]/a"));
 		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Off to Yosemite!"));
+		assertEquals(RuntimeVariables.replace("Off to Yosemite!"),
+			selenium.getText("//tr[contains(.,'Off to Yosemite!')]/td[3]/a"));
 	}
 }

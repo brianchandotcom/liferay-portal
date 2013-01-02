@@ -25,6 +25,10 @@ public class AddAppointmentEventTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -62,13 +66,14 @@ public class AddAppointmentEventTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_8_timeZoneSensitiveCheckbox']",
 			RuntimeVariables.replace("Time Zone Sensitive Checkbox"));
 		selenium.select("//select[@id='_8_type']",
-			RuntimeVariables.replace("label=Appointment"));
+			RuntimeVariables.replace("Appointment"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isElementPresent("Link=Test Event"));
+		assertEquals(RuntimeVariables.replace("Test Event"),
+			selenium.getText("//tr[contains(.,'Test Event')]/td[2]/a"));
 	}
 }

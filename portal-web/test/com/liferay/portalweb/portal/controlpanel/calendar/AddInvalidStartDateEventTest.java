@@ -25,6 +25,10 @@ public class AddInvalidStartDateEventTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]	");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -43,9 +47,7 @@ public class AddInvalidStartDateEventTest extends BaseTestCase {
 			RuntimeVariables.replace("Start Date"));
 		selenium.waitForVisible("//select[@id='_8_startDateMonth']");
 		selenium.select("//select[@id='_8_startDateMonth']",
-			RuntimeVariables.replace("label=February"));
-		selenium.select("//select[@id='_8_startDateMonth']",
-			RuntimeVariables.replace("label=February"));
+			RuntimeVariables.replace("February"));
 		assertFalse(selenium.isPartialText("//select[@id='_8_startDateDay']",
 				"30"));
 	}

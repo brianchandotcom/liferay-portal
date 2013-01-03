@@ -26,6 +26,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.util.JournalConverterUtil;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -106,6 +107,9 @@ public class UpgradeJournal extends UpgradeProcess {
 			String storageType = PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE;
 			int type_ = DDMStructureConstants.TYPE_DEFAULT;
 
+			String convertedXSD =
+				JournalConverterUtil.journalStructureToDDMStructure(xsd);
+
 			ps.setString(1, uuid_);
 			ps.setLong(2, newStructureId);
 			ps.setLong(3, groupId);
@@ -119,7 +123,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			ps.setString(11, structureKey);
 			ps.setString(12, name);
 			ps.setString(13, description);
-			ps.setString(14, xsd);
+			ps.setString(14, convertedXSD);
 			ps.setString(15, storageType);
 			ps.setInt(16, type_);
 

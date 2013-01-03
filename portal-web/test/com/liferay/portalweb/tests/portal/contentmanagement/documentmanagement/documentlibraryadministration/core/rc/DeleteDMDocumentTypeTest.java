@@ -14,11 +14,11 @@
 
 package com.liferay.portalweb.tests.portal.contentmanagement.documentmanagement.documentlibraryadministration.core.rc;
 
-import com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.actions.home.CPDocumentsAndMediaHomeActions;
-import com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.macros.CPDocumentsAndMediaDocumentTypeMacros;
-import com.liferay.portalweb.blocks.portal.home.page.macros.GotoMacros;
-import com.liferay.portalweb.blocks.portal.recyclebin.controlpanel.macros.CPRecycleBinMacros;
-import com.liferay.portalweb.blocks.portal.signin.page.macros.SignInUserMacros;
+import com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.actions.home.rc.CPDocumentsAndMediaHomeActions;
+import com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.macros.rc.CPDocumentsAndMediaDocumentTypeMacros;
+import com.liferay.portalweb.blocks.portal.home.page.macros.rc.GotoMacros;
+import com.liferay.portalweb.blocks.portal.recyclebin.controlpanel.macros.rc.CPRecycleBinMacros;
+import com.liferay.portalweb.blocks.portal.signin.page.macros.rc.SignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 

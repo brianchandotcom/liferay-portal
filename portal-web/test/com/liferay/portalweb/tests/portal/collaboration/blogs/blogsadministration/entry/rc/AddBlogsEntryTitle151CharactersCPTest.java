@@ -14,13 +14,13 @@
 
 package com.liferay.portalweb.tests.portal.collaboration.blogs.blogsadministration.entry.rc;
 
-import com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.addentry.CPBlogsAddEntryActions;
-import com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.entry.CPBlogsEntryViewActions;
-import com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.home.CPBlogsHomeActions;
-import com.liferay.portalweb.blocks.portal.blogs.controlpanel.macros.CPBlogsEntryMacros;
-import com.liferay.portalweb.blocks.portal.home.page.macros.GotoMacros;
-import com.liferay.portalweb.blocks.portal.recyclebin.controlpanel.macros.CPRecycleBinMacros;
-import com.liferay.portalweb.blocks.portal.signin.page.macros.SignInUserMacros;
+import com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.addentry.rc.CPBlogsAddEntryActions;
+import com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.entry.rc.CPBlogsEntryViewActions;
+import com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.home.rc.CPBlogsHomeActions;
+import com.liferay.portalweb.blocks.portal.blogs.controlpanel.macros.rc.CPBlogsEntryMacros;
+import com.liferay.portalweb.blocks.portal.home.page.macros.rc.GotoMacros;
+import com.liferay.portalweb.blocks.portal.recyclebin.controlpanel.macros.rc.CPRecycleBinMacros;
+import com.liferay.portalweb.blocks.portal.signin.page.macros.rc.SignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 

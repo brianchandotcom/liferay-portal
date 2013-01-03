@@ -14,8 +14,8 @@
 
 package com.liferay.portalweb.tests.portal.portalmanagement.permissionsadministration.rolesadministration.core.rc;
 
-import com.liferay.portalweb.blocks.portal.roles.controlpanel.macros.CPRolesMacros;
-import com.liferay.portalweb.blocks.portal.signin.page.macros.SignInUserMacros;
+import com.liferay.portalweb.blocks.portal.roles.controlpanel.macros.rc.CPRolesMacros;
+import com.liferay.portalweb.blocks.portal.signin.page.macros.rc.SignInUserMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 

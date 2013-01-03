@@ -64,11 +64,12 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		int y = fileName.indexOf(CharPool.PERIOD);
 
 		String objectName = fileName.substring(x + 1, y);
-		String objectFilePath = fileName.substring(0, x);
+		String objectXMLFilePath = fileName.substring(0, x);
+		String objectFilePath = fileName.substring(0, x) + "/rc";
 
 		String actionsSimpleClassName = objectName + "Actions";
 		String actionsXMLFileName =
-			objectFilePath + "/" + objectName + ".actions";
+			objectXMLFilePath + "/" + objectName + ".actions";
 		String objectPackagePath = StringUtil.replace(
 			objectFilePath, StringPool.SLASH, StringPool.PERIOD);
 		String pathsSimpleClassName = objectName + "Paths";
@@ -92,10 +93,10 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append(objectPackagePath);
 		sb.append(";\n\n");
 
-		sb.append("import com.liferay.portalweb.blocks.base.actions.");
+		sb.append("import com.liferay.portalweb.blocks.base.actions.rc.");
 		sb.append("BaseActionsImpl;\n");
 
-		sb.append("import com.liferay.portalweb.blocks.base.actions.");
+		sb.append("import com.liferay.portalweb.blocks.base.actions.rc.");
 		sb.append("LiferayActions;\n");
 
 		sb.append("import com.liferay.portalweb.portal.util.");

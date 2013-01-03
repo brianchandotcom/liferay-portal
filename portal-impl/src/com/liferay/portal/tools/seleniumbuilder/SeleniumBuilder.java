@@ -84,6 +84,10 @@ public class SeleniumBuilder {
 
 		for (String className : classNameSetAvailable) {
 			if (className.endsWith("." + simpleClassName)) {
+				String[] classPath = className.split(simpleClassName);
+
+				className = classPath[0] + "rc." + simpleClassName;
+
 				classNameSet.add(className);
 			}
 		}

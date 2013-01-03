@@ -68,10 +68,11 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
-		String macrosFilePath = fileName.substring(0, x);
-		String macrosName = fileName.substring(x + 1, y) + "Macros";
+		String macrosFilePath = fileName.substring(0, x) + "/rc";
+		String macrosSimpleClassName = fileName.substring(x + 1, y) + "Macros";
 
-		String macrosFileName = macrosFilePath + "/" + macrosName + ".java";
+		String macrosFileName =
+			macrosFilePath + "/" + macrosSimpleClassName + ".java";
 
 		String macrosPackagePath = StringUtil.replace(
 			macrosFilePath, StringPool.SLASH, StringPool.PERIOD);
@@ -86,7 +87,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append(macrosPackagePath);
 		sb.append(";\n");
 
-		sb.append("import com.liferay.portalweb.blocks.base.macros.");
+		sb.append("import com.liferay.portalweb.blocks.base.macros.rc.");
 		sb.append("BaseMacros;\n");
 
 		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
@@ -98,11 +99,11 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append(processBlocksImports(rootElement));
 
 		sb.append("public class ");
-		sb.append(macrosName);
+		sb.append(macrosSimpleClassName);
 		sb.append(" extends BaseMacros {");
 
 		sb.append("public ");
-		sb.append(macrosName);
+		sb.append(macrosSimpleClassName);
 		sb.append("(LiferaySelenium liferaySelenium) {");
 		sb.append("super(liferaySelenium);");
 		sb.append("}");

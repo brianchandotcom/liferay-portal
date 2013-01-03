@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.blocks.base.actions;
+package com.liferay.portalweb.blocks.base.actions.rc;
 
 /**
  * @author Brian Wing Shun Chan

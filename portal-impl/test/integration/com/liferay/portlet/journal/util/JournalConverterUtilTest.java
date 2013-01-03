@@ -53,6 +53,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
+ * @author Bruno Basto
  * @author Marcellus Tavares
  */
 @ExecutionTestListeners(
@@ -412,6 +413,28 @@ public class JournalConverterUtilTest {
 		String actualXML = JournalConverterUtil.getXML(_ddmStructure, fields);
 
 		assertEquals(expectedXML, actualXML);
+	}
+
+	@Test
+	public void testJournalStructureToDDMStructure() throws Exception {
+		String expectedDDMXSD = readText("sample-ddm-structure-all-fields.xml");
+
+		DDMStructure expectedDDMStructure = new DDMStructureImpl();
+
+		expectedDDMStructure.setXsd(expectedDDMXSD);
+
+		String journalXSD = readText("sample-journal-structure-all-fields.xml");
+
+		String actualDDMXSD =
+			JournalConverterUtil.journalStructureToDDMStructure(journalXSD);
+
+		DDMStructure actualDDMStructure = new DDMStructureImpl();
+
+		actualDDMStructure.setXsd(actualDDMXSD);
+
+		Assert.assertEquals(
+			expectedDDMStructure.getFieldsMap(),
+			actualDDMStructure.getFieldsMap());
 	}
 
 	protected void assertEquals(Fields expectedFields, Fields actualFields) {

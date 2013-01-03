@@ -49,6 +49,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * @author Bruno Basto
  * @author Marcellus Tavares
  */
 public class JournalConverterUtil {
@@ -117,7 +118,9 @@ public class JournalConverterUtil {
 		return DDMXMLUtil.formatXML(document.asXML());
 	}
 
-	public static String journalStructureToDDMStructure(String xsd) {
+	public static String journalStructureToDDMStructure(String xsd)
+		throws SystemException {
+
 		Document document = null;
 
 		try {
@@ -142,12 +145,7 @@ public class JournalConverterUtil {
 			journalStructureFieldToDDMStructureField(element);
 		}
 
-		try {
-			return DDMXMLUtil.formatXML(document);
-		}
-		catch (SystemException e) {
-			return StringPool.BLANK;
-		}
+		return DDMXMLUtil.formatXML(document);
 	}
 
 	protected static void addDDMFields(
@@ -619,7 +617,7 @@ public class JournalConverterUtil {
 		_ddmDataTypes.put("text", "string");
 		_ddmDataTypes.put("text_box", "string");
 		_ddmDataTypes.put("text_area", "html");
-		_ddmDataTypes.put("image", "document-library");
+		_ddmDataTypes.put("image", "file-upload");
 		_ddmDataTypes.put("document_library", "document-library");
 		_ddmDataTypes.put("boolean", "boolean");
 		_ddmDataTypes.put("list", "string");
@@ -644,7 +642,7 @@ public class JournalConverterUtil {
 		_journalToDDMTypes.put("text", "text");
 		_journalToDDMTypes.put("text_box", "textarea");
 		_journalToDDMTypes.put("text_area", "ddm-text-html");
-		_journalToDDMTypes.put("image", "ddm-documentlibrary");
+		_journalToDDMTypes.put("image", "ddm-fileupload");
 		_journalToDDMTypes.put("document_library", "ddm-documentlibrary");
 		_journalToDDMTypes.put("boolean", "checkbox");
 		_journalToDDMTypes.put("list", "select");

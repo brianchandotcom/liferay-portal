@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.dao.db.PostgreSQLDB;
+import com.liferay.portal.dao.db.SybaseDB;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ORMException;
@@ -24,6 +24,8 @@ import com.liferay.portal.model.Lock;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
+import java.sql.BatchUpdateException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -31,9 +33,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.exception.GenericJDBCException;
 import org.hibernate.exception.LockAcquisitionException;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,6 +48,11 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class LockLocalServiceTest {
 
+	@Before
+	public void setUp() throws SystemException {
+		LockLocalServiceUtil.unlock("className", "key");
+	}
+
 	@Test
 	public void testMutualExcludeLockingParallel() throws Exception {
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
@@ -52,7 +61,7 @@ public class LockLocalServiceTest {
 
 		for (int i = 0; i < 10; i++) {
 			LockingJob lockingJob = new LockingJob(
-				"className", "key", "owner", 10);
+				"className", "key", "owner-" + i, 10);
 
 			lockingJobs.add(lockingJob);
 
@@ -71,6 +80,8 @@ public class LockLocalServiceTest {
 				Assert.fail(systemException.getMessage());
 			}
 		}
+
+		Assert.assertFalse(LockLocalServiceUtil.isLocked("className", "key"));
 	}
 
 	@Test
@@ -101,6 +112,40 @@ public class LockLocalServiceTest {
 		LockLocalServiceUtil.unlock(className, key, owner2, false);
 	}
 
+	private boolean isExpectedException(SystemException se) {
+		Throwable cause = se.getCause();
+
+		if (cause instanceof ORMException) {
+			cause = cause.getCause();
+
+			if (cause instanceof LockAcquisitionException) {
+				return true;
+			}
+
+			if (cause instanceof ConstraintViolationException) {
+				return true;
+			}
+
+			DB db =DBFactoryUtil.getDB();
+
+			if ((db instanceof SybaseDB) &&
+				(cause instanceof GenericJDBCException)) {
+
+				cause = cause.getCause();
+
+				if ((cause instanceof BatchUpdateException) &&
+					cause.getMessage().equals(
+						"Attempt to insert duplicate key row in object " +
+							"'Lock_' with unique index 'IX_228562AD'\n")) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private class LockingJob implements Runnable {
 
 		public LockingJob(
@@ -120,41 +165,44 @@ public class LockLocalServiceTest {
 		public void run() {
 			int count = 0;
 
+			Iteration:
 			while (true) {
 				try {
 					Lock lock = LockLocalServiceUtil.lock(
 						_className, _key, _owner, false);
 
 					if (lock.isNew()) {
-						LockLocalServiceUtil.unlock(_className, _key);
 
-						if (++count >= _requiredSuccessCount) {
-							break;
+						// Lock creator is responsible to unlock it. Try
+						// multi-time in case some DBMS(like SQL Server)
+						// randomly pick up victim to rollback.
+
+						while (true) {
+							try {
+								LockLocalServiceUtil.unlock(
+									_className, _key, _owner, false);
+
+								if (++count >= _requiredSuccessCount) {
+									break Iteration;
+								}
+
+								break;
+							}
+							catch (SystemException se) {
+								if (isExpectedException(se)) {
+									continue;
+								}
+
+								_systemException = se;
+
+								break;
+							}
 						}
 					}
 				}
 				catch (SystemException se) {
-					Throwable cause = se.getCause();
-
-					if (cause instanceof ORMException) {
-						cause = cause.getCause();
-
-						if (cause instanceof LockAcquisitionException) {
-							continue;
-						}
-
-						// PostgreSQL fails to do row or table level locking.
-						// A unique index is required to enforce mutual exclude
-						// locking, but it may do so by violating a unique index
-						// constraint.
-
-						DB db = DBFactoryUtil.getDB();
-
-						if ((db instanceof PostgreSQLDB) &&
-							(cause instanceof ConstraintViolationException)) {
-
-							continue;
-						}
+					if (isExpectedException(se)) {
+						continue;
 					}
 
 					_systemException = se;

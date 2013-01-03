@@ -67,6 +67,11 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public String getContainerModelClassName() {
+		return MBCategory.class.getName();
+	}
+
+	@Override
 	public List<ContainerModel> getContainerModels(
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException, SystemException {

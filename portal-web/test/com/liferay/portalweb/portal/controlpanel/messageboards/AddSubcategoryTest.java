@@ -58,6 +58,8 @@ public class AddSubcategoryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isTextPresent("T\u00e9st Subcat\u00e9gory"));
+		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')]/td[2]/a/strong"));
 	}
 }

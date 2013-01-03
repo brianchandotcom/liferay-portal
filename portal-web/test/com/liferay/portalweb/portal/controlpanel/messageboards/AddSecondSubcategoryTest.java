@@ -65,7 +65,9 @@ public class AddSecondSubcategoryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isTextPresent(
-				"S\u00e9cond T\u00e9st Subcat\u00e9gory"));
+		assertEquals(RuntimeVariables.replace(
+				"S\u00e9cond T\u00e9st Subcat\u00e9gory"),
+			selenium.getText(
+				"//tr[contains(.,'S\u00e9cond T\u00e9st Subcat\u00e9gory')]/td[2]/a/strong"));
 	}
 }

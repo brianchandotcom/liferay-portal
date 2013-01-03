@@ -108,7 +108,7 @@ public class AddAnswerThreadTest extends BaseTestCase {
 			"//tr[contains(.,'RE: Favorite Color Test Question')]/td[2]/div/div/div[@class='answer']");
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'RE: Favorite Color Test Question')]/td[2]/div/div/div[@class='answer']"));
-		selenium.clickAt("link=T\u00e9st Cat\u00e9gory Edit\u00e9d",
+		selenium.clickAt("//div[@id='breadcrumbs']/ul/li[3]/span/a",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);

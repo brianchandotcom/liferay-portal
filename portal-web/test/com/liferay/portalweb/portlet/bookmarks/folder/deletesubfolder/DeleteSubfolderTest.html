@@ -20,23 +20,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a/strong</td>
-	<td>Test Subfolder</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//td[1]/a</td>
-	<td>This is a test subfolder.</td>
+	<td>//tr[contains(.,'Bookmark Subfolder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Subfolder Name</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -79,13 +74,13 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Test Subfolder</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no bookmarks in this folder.</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>This is a test subfolder.</td>
+	<td>Bookmark Subfolder Name</td>
 	<td></td>
 </tr>
 </tbody></table>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.bookmarks.folder.addfoldermultiple;
+package com.liferay.portalweb.portlet.bookmarks.folder.addfolder;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -35,18 +35,15 @@ public class AddFolder3Test extends BaseTestCase {
 			RuntimeVariables.replace("Add Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",
-			RuntimeVariables.replace("Test3 Folder3"));
-		selenium.type("//textarea[@id='_28_description']",
-			RuntimeVariables.replace("This is a test3 folder3."));
+			RuntimeVariables.replace("Bookmark Folder3 Name"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
-		assertEquals(RuntimeVariables.replace("Test3 Folder3"),
-			selenium.getText("//tr[5]/td[1]/a/strong"));
-		assertTrue(selenium.isPartialText("//tr[5]/td[1]/a",
-				"This is a test3 folder3."));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder3 Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Folder3 Name')]/td[1]/a/strong"));
 	}
 }

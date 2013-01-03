@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddFolder2Test</title>
+<title>AddFolder1Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddFolder2Test</td></tr>
+<tr><td rowspan="1" colspan="3">AddFolder1Test</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -31,12 +31,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_28_name']</td>
-	<td>Test2 Folder2</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//textarea[@id='_28_description']</td>
-	<td>This is a test2 folder2.</td>
+	<td>Bookmark Folder1 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -50,13 +45,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a/strong</td>
-	<td>Test2 Folder2</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//tr[4]/td[1]/a</td>
-	<td>This is a test2 folder2.</td>
+	<td>//tr[contains(.,'Bookmark Folder1 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder1 Name</td>
 </tr>
 </tbody></table>
 </body>

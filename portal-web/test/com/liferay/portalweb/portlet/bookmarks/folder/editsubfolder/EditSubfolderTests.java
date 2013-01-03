@@ -36,6 +36,7 @@ public class EditSubfolderTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddSubfolderTest.class);
 		testSuite.addTestSuite(EditSubfolderTest.class);
+		testSuite.addTestSuite(ViewEditSubfolderTest.class);
 		testSuite.addTestSuite(TearDownBookmarksFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

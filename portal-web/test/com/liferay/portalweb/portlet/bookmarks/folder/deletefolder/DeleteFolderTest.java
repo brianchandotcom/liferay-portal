@@ -28,9 +28,9 @@ public class DeleteFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Folder"),
-			selenium.getText("//td[1]/a/strong"));
-		assertTrue(selenium.isPartialText("//td[1]/a", "This is a test folder."));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
@@ -49,7 +49,9 @@ public class DeleteFolderTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isTextPresent("Test Folder"));
-		assertFalse(selenium.isTextPresent("This is a test folder."));
+		assertEquals(RuntimeVariables.replace(
+				"There are no bookmarks in this folder."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertFalse(selenium.isTextPresent("Bookmark Folder Name"));
 	}
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.bookmarks.folder.addfoldermultiple;
+package com.liferay.portalweb.portlet.bookmarks.folder.editfolder;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddFolder1Test extends BaseTestCase {
-	public void testAddFolder1() throws Exception {
+public class AddFolderTest extends BaseTestCase {
+	public void testAddFolder() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -35,18 +35,15 @@ public class AddFolder1Test extends BaseTestCase {
 			RuntimeVariables.replace("Add Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",
-			RuntimeVariables.replace("Test1 Folder1"));
-		selenium.type("//textarea[@id='_28_description']",
-			RuntimeVariables.replace("This is a test1 folder1."));
+			RuntimeVariables.replace("Bookmark Folder Name"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
-			selenium.getText("//td[1]/a/strong"));
-		assertTrue(selenium.isPartialText("//td[1]/a",
-				"This is a test1 folder1."));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong"));
 	}
 }

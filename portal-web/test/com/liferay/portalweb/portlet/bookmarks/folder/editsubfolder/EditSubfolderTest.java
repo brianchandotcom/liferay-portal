@@ -28,14 +28,15 @@ public class EditSubfolderTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Folder"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong",
+			RuntimeVariables.replace("Bookmark Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Subfolder"),
-			selenium.getText("//td[1]/a/strong"));
-		assertTrue(selenium.isPartialText("//td[1]/a",
-				"This is a test subfolder."));
+		assertEquals(RuntimeVariables.replace("Bookmark Subfolder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Subfolder Name')]/td[1]/a/strong"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
@@ -50,18 +51,15 @@ public class EditSubfolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",
-			RuntimeVariables.replace("Test Subfolder Edited"));
-		selenium.type("//textarea[@id='_28_description']",
-			RuntimeVariables.replace("This is a test subfolder. Edited."));
+			RuntimeVariables.replace("Bookmark Subfolder Name Edit"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Test Subfolder Edited"),
-			selenium.getText("//td[1]/a/strong"));
-		assertTrue(selenium.isPartialText("//td[1]/a",
-				"This is a test subfolder. Edited."));
+		assertEquals(RuntimeVariables.replace("Bookmark Subfolder Name Edit"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Subfolder Name')]/td[1]/a/strong"));
 	}
 }

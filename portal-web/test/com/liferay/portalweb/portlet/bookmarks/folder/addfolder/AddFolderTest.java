@@ -35,17 +35,15 @@ public class AddFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",
-			RuntimeVariables.replace("Test Folder"));
-		selenium.type("//textarea[@id='_28_description']",
-			RuntimeVariables.replace("This is a test folder."));
+			RuntimeVariables.replace("Bookmark Folder Name"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Test Folder"),
-			selenium.getText("//td[1]/a/strong"));
-		assertTrue(selenium.isPartialText("//td[1]/a", "This is a test folder."));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong"));
 	}
 }

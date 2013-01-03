@@ -140,6 +140,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		throws PortalException, SystemException {
 
 		String portletId = PortletKeys.WIKI;
+		String strutsAction = "/wiki/view";
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
 
@@ -150,6 +151,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 			plid = PortalUtil.getControlPanelPlid(portletRequest);
 
 			portletId = PortletKeys.WIKI_ADMIN;
+			strutsAction = "/wiki_admin/view";
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -157,7 +159,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 		WikiNode node = page.getNode();
 
-		portletURL.setParameter("struts_action", "/wiki/view");
+		portletURL.setParameter("struts_action", strutsAction);
 		portletURL.setParameter("nodeName", node.getName());
 		portletURL.setParameter("title", HtmlUtil.unescape(page.getTitle()));
 

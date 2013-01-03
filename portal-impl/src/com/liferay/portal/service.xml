@@ -930,11 +930,6 @@
 			<finder-column name="className" />
 			<finder-column name="key" />
 		</finder>
-		<finder name="C_K_O" return-type="Lock" unique="true">
-			<finder-column name="className" />
-			<finder-column name="key" />
-			<finder-column name="owner" />
-		</finder>
 	</entity>
 	<entity name="MembershipRequest" local-service="true" remote-service="true">
 

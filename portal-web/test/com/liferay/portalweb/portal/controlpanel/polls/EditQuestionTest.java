@@ -41,9 +41,8 @@ public class EditQuestionTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Test Poll Question 2"),
 			selenium.getText("//tr[contains(.,'Test Poll Question 2')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText(
-				"//tr[contains(.,'Test Poll Question 2')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//tr[contains(.,'Test Poll Question 2')]/td[5]/span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");

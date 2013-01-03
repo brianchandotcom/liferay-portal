@@ -31,7 +31,11 @@ import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.*;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

@@ -63,6 +63,8 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 			return;
 		}
 
+		getObject(fileName);
+
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
@@ -106,26 +108,44 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 		writeFile(functionsFileName, sb.toString(), true);
 	}
 
-	private String _processFunctionDefs(Element rootElement) throws Exception {
+	private String _processFunctionDefs(Element functions) throws Exception {
 		StringBundler sb = new StringBundler();
 
-		List<Element> functionDefs = rootElement.elements("functiondef");
+		List<Element> functionDefs = functions.elements("functiondef");
+
+		String functionsObject = functions.attributeValue("object");
+		String functionsReturn = functions.attributeValue("return");
 
 		for (Element functionDef : functionDefs) {
 			String functionDefCommand = functionDef.attributeValue("command");
 
-			sb.append("public void ");
-			sb.append(functionDefCommand);
+			sb.append("public ");
 
-			if (functionDefCommand.equals("dragAndDrop")) {
-				sb.append("(String path1, String value1, String path2, ");
-				sb.append("String value2)");
+			if (!(functionsReturn == null)) {
+				sb.append(functionsReturn);
+				sb.append(" ");
 			}
 			else {
-				sb.append("(String param1, String param2)");
+				sb.append("void ");
 			}
 
-			sb.append(" throws Exception {\n");
+			sb.append(functionDefCommand);
+
+			List<String> paramSuffixList = functionMethodParamListMap.get(
+				functionsObject);
+
+			String paramList = "";
+
+			for (String paramSuffix : paramSuffixList) {
+				paramList += "String target" + paramSuffix + ", ";
+				paramList += "String value" + paramSuffix + ", ";
+			}
+
+			paramList = paramList.substring(0, paramList.length() - 2);
+
+			sb.append("(");
+			sb.append(paramList);
+			sb.append(") throws Exception {\n");
 
 			sb.append(processBlockObjectDeclaractions(functionDef));
 

@@ -16,6 +16,7 @@ package com.liferay.portal.tools.seleniumbuilder;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -76,6 +77,7 @@ public class SeleniumBuilder {
 
 		classNameSetAvailable = _getClassNameSetAvailable();
 
+		functionMethodParamListMap = _getFunctionMethodParamListMap();
 		seleniumMethodParamMap = _getSeleniumMethodParamMap();
 	}
 
@@ -254,6 +256,7 @@ public class SeleniumBuilder {
 	protected Set<String> fileNameSetPaths;
 	protected Set<String> fileNameSetTests;
 	protected String filePath = "";
+	protected Map<String, List<String>> functionMethodParamListMap;
 	protected Map<String, Integer> seleniumMethodParamMap;
 
 	private String _getActionsConditional(Element conditional) {
@@ -476,6 +479,36 @@ public class SeleniumBuilder {
 		return fileNameTypeSet;
 	}
 
+	private Map<String, List<String>> _getFunctionMethodParamListMap()
+		throws Exception {
+
+		Map<String, List<String>> hashMap = new HashMap<String, List<String>>();
+
+		for (String fileName : fileNameSetFunctions) {
+			Element functions = getRootElement(fileName);
+
+			String functionsObject = functions.attributeValue("object");
+			String functionsParams = functions.attributeValue("params");
+
+			List<String> arrayList = new ArrayList<String>();
+
+			if (!(functionsParams == null)) {
+				int functionsParamsInt = GetterUtil.getInteger(functionsParams);
+
+				for (int i = 1; i <= functionsParamsInt; i++) {
+					arrayList.add(String.valueOf(i));
+				}
+			}
+			else {
+				arrayList.add("");
+			}
+
+			hashMap.put(functionsObject, arrayList);
+		}
+
+		return hashMap;
+	}
+
 	private Map<String, Integer> _getSeleniumMethodParamMap() throws Exception {
 		Map<String, Integer> hashMap = new HashMap<String, Integer>();
 
@@ -663,13 +696,18 @@ public class SeleniumBuilder {
 		return sb.toString();
 	}
 
-	private String _processCommandFunctions(Element function) {
+	private String _processCommandFunctions(Element function) throws Exception {
 		String functionCommandName = function.attributeValue("command");
 		String functionObjectName = function.attributeValue("object");
+		String functionReturn = function.attributeValue("return");
 
 		String functionClassName = functionObjectName + "Functions";
 
 		StringBundler sb = new StringBundler();
+
+		if (!(functionReturn == null)) {
+			sb.append("return ");
+		}
 
 		sb.append(StringUtil.lowerCaseFirstLetter(functionClassName));
 		sb.append(StringPool.PERIOD);
@@ -679,12 +717,39 @@ public class SeleniumBuilder {
 
 		String parentElementName = parentElement.getName();
 
+		List<String> paramSuffixList = functionMethodParamListMap.get(
+			functionObjectName);
+
+		String paramList = "";
+
 		if (parentElementName.equals("conditional")) {
-			sb.append("(params[0], params[1]);\n");
+			for (String paramSuffix : paramSuffixList) {
+				paramList += "params";
+				paramList += paramSuffix;
+
+				paramList += "[0], params";
+				paramList += paramSuffix;
+
+				paramList += "[1], ";
+			}
 		}
 		else {
-			sb.append("(param1, param2);\n");
+			for (String paramSuffix : paramSuffixList) {
+				paramList += "target";
+				paramList += paramSuffix;
+
+				paramList += ", value";
+				paramList += paramSuffix;
+
+				paramList += ", ";
+			}
 		}
+
+		paramList = paramList.substring(0, paramList.length() - 2);
+
+		sb.append("(");
+		sb.append(paramList);
+		sb.append(");\n");
 
 		return sb.toString();
 	}
@@ -736,6 +801,7 @@ public class SeleniumBuilder {
 
 	private String _processCommandSelenium(Element command) {
 		String seleniumCommandName = command.attributeValue("command");
+		String seleniumCommandReturn = command.attributeValue("return");
 
 		int numParams = 0;
 
@@ -744,6 +810,10 @@ public class SeleniumBuilder {
 		}
 
 		StringBundler sb = new StringBundler();
+
+		if (!(seleniumCommandReturn == null)) {
+			sb.append("return ");
+		}
 
 		sb.append("selenium.");
 		sb.append(seleniumCommandName);
@@ -763,10 +833,10 @@ public class SeleniumBuilder {
 				 seleniumCommandName.equals("waitForTextNotPresent") ||
 				 seleniumCommandName.equals("waitForTextPresent")) {
 
-			sb.append("param2");
+			sb.append("value");
 		}
 		else if (numParams > 0) {
-			sb.append("param1");
+			sb.append("target");
 		}
 
 		String seleniumValueName = command.attributeValue("value");
@@ -778,7 +848,7 @@ public class SeleniumBuilder {
 				sb.append("\"");
 			}
 			else if (numParams > 1) {
-				sb.append(", param2");
+				sb.append(", value");
 			}
 		}
 

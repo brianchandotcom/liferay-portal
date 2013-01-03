@@ -55,18 +55,18 @@ public class ViewAssignMembersOrganizationUserTest extends BaseTestCase {
 			selenium.getText("//h1[@class='portlet-title']/span"));
 		assertEquals(RuntimeVariables.replace("Browse"),
 			selenium.getText(
-				"//span[@class='lfr-toolbar-button view-button current']/a[contains(.,'Browse')]"));
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Browse')]"));
 		assertEquals(RuntimeVariables.replace("View Organizations"),
 			selenium.getText(
-				"//span[@class='lfr-toolbar-button view-button ']/a[contains(.,'View Organizations')]"));
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View Organizations')]"));
 		assertEquals(RuntimeVariables.replace("View Users"),
 			selenium.getText(
-				"//span[@class='lfr-toolbar-button view-button ']/a[contains(.,'View Users')]"));
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View Users')]"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
-		assertEquals(RuntimeVariables.replace("Export All Users"),
+		assertEquals(RuntimeVariables.replace("Export Users"),
 			selenium.getText(
-				"//span[@class='lfr-toolbar-button export-button']/a[contains(.,'Export All Users')]"));
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Export Users')]"));
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(

@@ -89,10 +89,10 @@ public class ViewOrganizationSiteTest extends BaseTestCase {
 			selenium.getText("//h1[@class='portlet-title']/span"));
 		assertEquals(RuntimeVariables.replace("Browse"),
 			selenium.getText(
-				"//span[@class='lfr-toolbar-button view-button current']/a[contains(.,'Browse')]"));
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Browse')]"));
 		assertEquals(RuntimeVariables.replace("View All"),
 			selenium.getText(
-				"//span[@class='lfr-toolbar-button view-button ']/a[contains(.,'View All')]"));
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View All')]"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		assertEquals(RuntimeVariables.replace("Organization Name"),
@@ -100,13 +100,13 @@ public class ViewOrganizationSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("\u00ab Back to Sites Home"),
 			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace("Members:"),
-			selenium.getText("//dt[@class='first']"));
-		assertEquals(RuntimeVariables.replace("None"),
-			selenium.getText("//dd[@class='members-info']"));
+			selenium.getText("//div[@class='membership-info']/dl/dt[1]"));
+		assertEquals(RuntimeVariables.replace("1 Organization"),
+			selenium.getText("//div[@class='membership-info']/dl/dd[1]"));
 		assertEquals(RuntimeVariables.replace("Membership Type:"),
-			selenium.getText("//span[contains(.,'Membership Type:')]"));
+			selenium.getText("//div[@class='membership-info']/dl/dt[2]"));
 		assertEquals(RuntimeVariables.replace("Private"),
-			selenium.getText("//dd[@class='last']"));
+			selenium.getText("//div[@class='membership-info']/dl/dd[2]"));
 		assertTrue(selenium.isVisible("//div[@class='lfr-asset-summary']/img"));
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText("//div[@class='lfr-asset-summary']/div/h4"));

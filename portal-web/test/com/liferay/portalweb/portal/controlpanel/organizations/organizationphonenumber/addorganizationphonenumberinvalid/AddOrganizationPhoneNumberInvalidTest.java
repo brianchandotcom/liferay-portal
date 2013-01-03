@@ -47,8 +47,8 @@ public class AddOrganizationPhoneNumberInvalidTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText(
-				"//tr[@class='portlet-section-body results-row last']/td[2]/a[2]/strong"));
-		selenium.clickAt("//tr[@class='portlet-section-body results-row last']/td[2]/a[2]/strong",
+				"//tr[contains(.,'Organization Name')]/td[2]/a[2]/strong"));
+		selenium.clickAt("//tr[contains(.,'Organization Name')]/td[2]/a[2]/strong",
 			RuntimeVariables.replace("Organization Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(

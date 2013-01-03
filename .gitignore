@@ -38,6 +38,8 @@ _sass_cache_*.css
 
 /classes/Test.class
 
+/intellij
+
 /lib/development/db2jcc.jar
 /lib/development/db2jcc_license_cu.jar
 /lib/development/ojdbc14.jar

@@ -14,14 +14,14 @@
 
 package com.liferay.portalweb.tests.portal.portalmanagement.permissionsadministration.rolesadministration.core.rc;
 
-import com.liferay.portalweb.blocks.portal.home.page.macros.GotoMacros;
-import com.liferay.portalweb.blocks.portal.roles.controlpanel.macros.CPRolesMacros;
-import com.liferay.portalweb.blocks.portal.signin.page.macros.SignInUserMacros;
-import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.actions.edituser.CPUsersAndOrganizationsEditUserActions;
-import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.actions.edituser.CPUsersAndOrganizationsEditUserRolesActions;
-import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.actions.home.CPUsersAndOrganizationsHomeActions;
-import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.actions.home.CPUsersAndOrganizationsSearchAllActiveUsersActions;
-import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.macros.CPUsersAndOrganizationsUsersMacros;
+import com.liferay.portalweb.blocks.portal.home.page.macros.rc.GotoMacros;
+import com.liferay.portalweb.blocks.portal.roles.controlpanel.macros.rc.CPRolesMacros;
+import com.liferay.portalweb.blocks.portal.signin.page.macros.rc.SignInUserMacros;
+import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.actions.edituser.rc.CPUsersAndOrganizationsEditUserActions;
+import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.actions.edituser.rc.CPUsersAndOrganizationsEditUserRolesActions;
+import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.actions.home.rc.CPUsersAndOrganizationsHomeActions;
+import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.actions.home.rc.CPUsersAndOrganizationsSearchAllActiveUsersActions;
+import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.macros.rc.CPUsersAndOrganizationsUsersMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 

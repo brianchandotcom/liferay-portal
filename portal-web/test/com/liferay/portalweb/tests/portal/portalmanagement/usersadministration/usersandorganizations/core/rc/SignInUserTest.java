@@ -14,8 +14,8 @@
 
 package com.liferay.portalweb.tests.portal.portalmanagement.usersadministration.usersandorganizations.core.rc;
 
-import com.liferay.portalweb.blocks.portal.signin.page.macros.SignInUserMacros;
-import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.macros.CPUsersAndOrganizationsUsersMacros;
+import com.liferay.portalweb.blocks.portal.signin.page.macros.rc.SignInUserMacros;
+import com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.macros.rc.CPUsersAndOrganizationsUsersMacros;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 

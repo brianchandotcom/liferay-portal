@@ -1,12 +1,12 @@
-<html>
+e<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddSubfolder1Test</title>
+<title>AddFolder2Subfolder2Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddSubfolder1Test</td></tr>
+<tr><td rowspan="1" colspan="3">AddFolder2Subfolder2Test</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -20,33 +20,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
+	<td>//tr[contains(.,'Bookmark Folder2 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
+	<td>//tr[contains(.,'Bookmark Folder2 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/ul/li[4]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Subfolder')]</td>
 	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[4]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Subfolder')]</td>
 	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_28_name']</td>
-	<td>Test1 Subfolder1</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//textarea[@id='_28_description']</td>
-	<td>This is a test1 subfolder1.</td>
+	<td>Bookmark Folder2 Subfolder2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -60,13 +55,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a/strong</td>
-	<td>Test1 Subfolder1</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//td[1]/a</td>
-	<td>This is a test1 subfolder1.</td>
+	<td>//tr[contains(.,'Bookmark Folder2 Subfolder2 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder2 Subfolder2 Name</td>
 </tr>
 </tbody></table>
 </body>

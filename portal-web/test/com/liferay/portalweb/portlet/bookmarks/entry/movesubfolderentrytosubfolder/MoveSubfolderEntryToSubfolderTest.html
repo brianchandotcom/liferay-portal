@@ -20,32 +20,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
+	<td>//tr[contains(.,'Bookmark Folder1 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder1 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
+	<td>//tr[contains(.,'Bookmark Folder1 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test1 Subfolder1</td>
+	<td>//tr[contains(.,'Bookmark Folder1 Subfolder1 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder1 Subfolder1 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test1 Subfolder1</td>
+	<td>//tr[contains(.,'Bookmark Folder1 Subfolder1 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder1 Subfolder1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Test Subfolder Entry</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[1]/a</td>
+	<td>Bookmark Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[2]/a</td>
 	<td>http://www.liferay.com</td>
 </tr>
 <tr>
@@ -104,9 +104,14 @@
 	<td>Home</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Folder2 Name')]/td[1]/a</td>
+	<td>Bookmark Folder2 Name</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Test2 Folder2</td>
-	<td>Test2 Folder2</td>
+	<td>//tr[contains(.,'Bookmark Folder2 Name')]/td[1]/a</td>
+	<td>Bookmark Folder2 Name</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -121,7 +126,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//a[@id='_28_folderName']</td>
-	<td>Test2 Subfolder2</td>
+	<td>Bookmark Folder2 Subfolder2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -134,48 +139,13 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Test Subfolder Entry</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>http://www.liferay.com</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/web/guest/home/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Bookmarks Test Page</td>
-	<td>Bookmarks Test Page</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test1 Subfolder1</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test1 Subfolder1</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no bookmarks in this folder.</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Test Subfolder Entry</td>
+	<td>Bookmark Name</td>
 	<td></td>
 </tr>
 <tr>
@@ -195,32 +165,77 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a/strong</td>
-	<td>Test2 Folder2</td>
+	<td>//tr[contains(.,'Bookmark Folder1 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder1 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a/strong</td>
-	<td>Test2 Folder2</td>
+	<td>//tr[contains(.,'Bookmark Folder1 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test2 Subfolder2</td>
+	<td>//tr[contains(.,'Bookmark Folder1 Subfolder1 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder1 Subfolder1 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test2 Subfolder2</td>
+	<td>//tr[contains(.,'Bookmark Folder1 Subfolder1 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder1 Subfolder1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Test Subfolder Entry</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no bookmarks in this folder.</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Bookmark Name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>http://www.liferay.com</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Bookmarks Test Page</td>
+	<td>Bookmarks Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Bookmark Folder2 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder2 Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[contains(.,'Bookmark Folder2 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder2 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Folder2 Subfolder2 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder2 Subfolder2 Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[contains(.,'Bookmark Folder2 Subfolder2 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder2 Subfolder2 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[1]/a</td>
+	<td>Bookmark Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[2]/a</td>
 	<td>http://www.liferay.com</td>
 </tr>
 </tbody></table>

@@ -1202,7 +1202,7 @@
 	</library>
 	<library>
 		<file-name>portal/bobo-browse.jar</file-name>
-		<version>2.5.0 RC1</version>
+		<version>3.1.0</version>
 		<project-name>Bob Browse</project-name>
 		<project-url>http://code.google.com/p/bobo-browse</project-url>
 		<licenses>
@@ -2521,6 +2521,17 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>portal/lucene-grouping.jar</file-name>
+		<version>3.5.0</version>
+		<project-name>Lucene Grouping</project-name>
+		<project-url>http://lucene.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>portal/lucene-highlighter.jar</file-name>
 		<version>3.5.0</version>
 		<project-name>Lucene Highlighter</project-name>
@@ -2532,9 +2543,75 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>portal/lucene-icu.jar</file-name>
+		<version>3.5.0</version>
+		<project-name>Lucene ICU</project-name>
+		<project-url>http://lucene.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/lucene-join.jar</file-name>
+		<version>3.5.0</version>
+		<project-name>Lucene Join</project-name>
+		<project-url>http://lucene.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>portal/lucene-memory.jar</file-name>
 		<version>3.5.0</version>
 		<project-name>Lucene Memory</project-name>
+		<project-url>http://lucene.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/lucene-misc.jar</file-name>
+		<version>3.5.0</version>
+		<project-name>Lucene Misc</project-name>
+		<project-url>http://lucene.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/lucene-queries.jar</file-name>
+		<version>3.5.0</version>
+		<project-name>Lucene Queries</project-name>
+		<project-url>http://lucene.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/lucene-queryparser.jar</file-name>
+		<version>3.5.0</version>
+		<project-name>Lucene Query Parser</project-name>
+		<project-url>http://lucene.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/lucene-spellchecker.jar</file-name>
+		<version>3.5.0</version>
+		<project-name>Lucene Spellchecker</project-name>
 		<project-url>http://lucene.apache.org</project-url>
 		<licenses>
 			<license>

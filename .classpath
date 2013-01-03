@@ -229,8 +229,15 @@
 	<classpathentry kind="lib" path="lib/portal/log4j-over-slf4j.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-analyzers.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-core.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-grouping.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-highlighter.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-icu.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-join.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-memory.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-misc.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-queries.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-queryparser.jar"/>
+	<classpathentry kind="lib" path="lib/portal/lucene-spellchecker.jar"/>
 	<classpathentry kind="lib" path="lib/portal/memcached.jar"/>
 	<classpathentry kind="lib" path="lib/portal/metadata-extractor.jar"/>
 	<classpathentry kind="lib" path="lib/portal/mimepull.jar"/>

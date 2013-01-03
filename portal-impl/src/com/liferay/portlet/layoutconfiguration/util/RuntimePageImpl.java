@@ -237,11 +237,15 @@ public class RuntimePageImpl implements RuntimePage {
 		LayoutTemplate layoutTemplate = getLayoutTemplate(
 			templateResource.getTemplateId());
 
-		String pluginServletContextName = GetterUtil.getString(
-			layoutTemplate.getServletContextName());
+		ServletContext pluginServletContext = null;
 
-		ServletContext pluginServletContext = ServletContextPool.get(
-			pluginServletContextName);
+		if (layoutTemplate != null) {
+			String pluginServletContextName = GetterUtil.getString(
+				layoutTemplate.getServletContextName());
+
+			pluginServletContext = ServletContextPool.get(
+				pluginServletContextName);
+		}
 
 		ClassLoader pluginClassLoader = null;
 

@@ -23,6 +23,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
 
@@ -31,12 +32,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Juan Fernández
+ * @author Bruno Basto
  */
 public class UpgradeJournal extends UpgradeProcess {
 
@@ -234,6 +237,14 @@ public class UpgradeJournal extends UpgradeProcess {
 						modifiedDate, structureKey, parentStructureId, name,
 						description, xsd);
 
+					String oldClassName =
+						"com.liferay.portlet.journal.model.JournalStructure";
+					String newClassName = DDMStructure.class.getName();
+
+					updateModelPermissions(
+						companyId, oldClassName, newClassName, id_,
+						newStructureId);
+
 					structureKeyStructureIdMap.put(
 						structureKey, newStructureId);
 				}
@@ -271,7 +282,7 @@ public class UpgradeJournal extends UpgradeProcess {
 				String userName = rs.getString("userName");
 				Date createDate = rs.getDate("createDate");
 				Date modifiedDate = rs.getDate("modifiedDate");
-				String ddmStructureKey = rs.getString("structureId");
+				String structureKey = rs.getString("structureId");
 				String parentStructureId = rs.getString("parentStructureId");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
@@ -279,10 +290,17 @@ public class UpgradeJournal extends UpgradeProcess {
 
 				long newStructureId = addDDMStructure(
 					uuid_, groupId, companyId, userId, userName, createDate,
-					modifiedDate, ddmStructureKey, parentStructureId, name,
+					modifiedDate, structureKey, parentStructureId, name,
 					description, xsd);
 
-				structureKeyStructureIdMap.put(ddmStructureKey, newStructureId);
+				String oldClassName =
+					"com.liferay.portlet.journal.model.JournalStructure";
+				String newClassName = DDMStructure.class.getName();
+
+				updateModelPermissions(
+					companyId, oldClassName, newClassName, id_, newStructureId);
+
+				structureKeyStructureIdMap.put(structureKey, newStructureId);
 			}
 		}
 		finally {
@@ -333,14 +351,48 @@ public class UpgradeJournal extends UpgradeProcess {
 					modifiedDate, classPK, templateKey, name, description,
 					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 					DDMTemplateConstants.TEMPLATE_MODE_CREATE, language, script,
-					cacheable, smallImage, smallImageId,
-					smallImageURL);
+					cacheable, smallImage, smallImageId, smallImageURL);
+
+				String oldClassName =
+					"com.liferay.portlet.journal.model.JournalTemplate";
+				String newClassName = DDMTemplate.class.getName();
+
+				updateModelPermissions(
+					companyId, oldClassName, newClassName, id_, newTemplateId);
 
 				templateIdsMap.put(id_, newTemplateId);
 			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	private void updateModelPermissions(
+			long companyId, String oldClassName, String newClassName,
+			long oldPrimKey, long newPrimKey)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update ResourcePermission set name = ?, primKey = ?" +
+					" where companyId = ? and name = ? and primKey = ?;");
+
+			ps.setString(1, newClassName);
+			ps.setLong(2, newPrimKey);
+			ps.setLong(3, companyId);
+			ps.setString(4, oldClassName);
+			ps.setLong(5, oldPrimKey);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
 		}
 	}
 

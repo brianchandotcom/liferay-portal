@@ -56,14 +56,15 @@ public class TearDownMBCategoryCPTest extends BaseTestCase {
 
 				selenium.clickAt("//input[@name='_162_allRowIds']",
 					RuntimeVariables.replace("Checkbox"));
-				selenium.clickAt("//input[@value='Delete']",
-					RuntimeVariables.replace("Delete"));
+				selenium.clickAt("//input[@value='Move to the Recycle Bin']",
+					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to move the selected entries to the Recycle Bin?");
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+						"2 items were moved to the Recycle Bin. Undo"),
+					selenium.getText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']"));
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(

@@ -40,8 +40,9 @@ public class AddSubcategoryTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
-			selenium.getText("//td[2]/a/strong"));
-		selenium.clickAt("//td[2]/a/strong",
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[2]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[2]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Subcategory']",

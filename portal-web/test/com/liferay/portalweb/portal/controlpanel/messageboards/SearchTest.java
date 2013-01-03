@@ -45,21 +45,29 @@ public class SearchTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//tr[3]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[3]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//tr[4]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')][2]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[4]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')][2]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//tr[5]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')][3]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[5]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')][3]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//tr[5]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')][4]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[5]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')][4]/td[3]/a"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -76,8 +84,9 @@ public class SearchTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
-			selenium.getText("//td[2]/a/strong"));
-		selenium.clickAt("//td[2]/a/strong",
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[2]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[2]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_162_keywords1']",
@@ -86,21 +95,29 @@ public class SearchTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//tr[3]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[3]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//tr[4]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')][2]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[4]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')][2]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//tr[5]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')][3]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[5]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')][3]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//tr[5]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')][4]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[5]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')][4]/td[3]/a"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -117,13 +134,15 @@ public class SearchTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
-			selenium.getText("//td[2]/a/strong"));
-		selenium.clickAt("//td[2]/a/strong",
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[2]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[2]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//td[2]/a/strong"));
-		selenium.clickAt("//td[2]/a/strong",
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')]/td[2]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'T\u00e9st Subcat\u00e9gory')]/td[2]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_162_keywords1']",
@@ -132,20 +151,28 @@ public class SearchTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//tr[3]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[3]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//tr[4]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')][2]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[4]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')][2]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//tr[5]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')][3]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[5]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')][3]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//tr[5]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')][4]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[5]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')][4]/td[3]/a"));
 	}
 }

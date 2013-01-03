@@ -44,20 +44,23 @@ public class RecentPostsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"),
-			selenium.getText("//tr[3]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Null Test Entry"),
-			selenium.getText("//tr[4]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'Null Test Entry')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[5]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')][2]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//tr[6]/td[2]/a"));
-		selenium.clickAt("//tr[3]/td[2]/a",
+			selenium.getText(
+				"//tr[contains(.,'RE: T\u00e9st M\u00e9ssag\u00e9')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d')]/td[2]/a",
 			RuntimeVariables.replace(
 				"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"),
-			selenium.getText("//h1[@class='header-title']"));
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"),
 			selenium.getText("//div[@class='subject']/a/strong"));

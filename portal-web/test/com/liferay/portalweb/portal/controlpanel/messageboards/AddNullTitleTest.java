@@ -40,8 +40,9 @@ public class AddNullTitleTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
-			selenium.getText("//td[2]/a/strong"));
-		selenium.clickAt("//td[2]/a/strong",
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[2]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[2]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Post New Thread']",
@@ -71,8 +72,8 @@ public class AddNullTitleTest extends BaseTestCase {
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
-		selenium.waitForText("//label/div", "This field is required.");
+		selenium.waitForText("//div[@role='alert']", "This field is required.");
 		assertEquals(RuntimeVariables.replace("This field is required."),
-			selenium.getText("//label/div"));
+			selenium.getText("//div[@role='alert']"));
 	}
 }

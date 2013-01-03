@@ -50,32 +50,42 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a/strong</td>
+	<td>//tr[contains(.,'Tést Catégory')]/td[2]/a/strong</td>
 	<td>Tést Catégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[2]/a/strong</td>
+	<td>//tr[contains(.,'Tést Catégory')]/td[2]/a/strong</td>
 	<td>Tést Catégory</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a/strong</td>
+	<td>//tr[contains(.,'Tést Subcatégory')]/td[2]/a/strong</td>
 	<td>Tést Subcatégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[2]/a/strong</td>
+	<td>//tr[contains(.,'Tést Subcatégory')]/td[2]/a/strong</td>
 	<td>Tést Subcatégory</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Tést Méssagé</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Tést Méssagé')]/td[2]/a</td>
 	<td>Tést Méssagé</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Reply</td>
+	<td>//tr[contains(.,'Tést Méssagé')]/td[2]/a</td>
+	<td>Tést Méssagé</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='edit-controls lfr-component']/li[2]/span/a/span</td>
+	<td>Reply</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//ul[@class='edit-controls lfr-component']/li[2]/span/a/span</td>
 	<td>Reply</td>
 </tr>
 <tr>

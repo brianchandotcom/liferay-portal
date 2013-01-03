@@ -40,13 +40,15 @@ public class DeleteMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Sujr"),
-			selenium.getText("//td[2]/a/strong"));
-		selenium.clickAt("//td[2]/a/strong", RuntimeVariables.replace("Sujr"));
+			selenium.getText("//tr[contains(.,'Sujr')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'Sujr')]/td[2]/a",
+			RuntimeVariables.replace("Sujr"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"),
-			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a",
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d')]/td[2]/a",
 			RuntimeVariables.replace(
 				"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"));
 		selenium.waitForPageToLoad("30000");
@@ -77,15 +79,17 @@ public class DeleteMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Sujr"),
-			selenium.getText("//td[2]/a/strong"));
-		selenium.clickAt("//td[2]/a/strong", RuntimeVariables.replace("Sujr"));
+			selenium.getText("//tr[contains(.,'Sujr')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'Sujr')]/td[2]/a",
+			RuntimeVariables.replace("Sujr"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Moved to Sujr"),
-			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Moved to Sujr"));
+			selenium.getText("//tr[contains(.,'Moved to Sujr')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'Moved to Sujr')]/td[2]/a",
+			RuntimeVariables.replace("Moved to Sujr"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Moved to Sujr"),
-			selenium.getText("//h1[@class='header-title']"));
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Moved to Sujr"),
 			selenium.getText("//div[@class='subject']/a/strong"));
 		assertEquals(RuntimeVariables.replace(

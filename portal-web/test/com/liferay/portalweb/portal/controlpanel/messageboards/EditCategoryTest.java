@@ -41,8 +41,8 @@ public class EditCategoryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[6]/span[@title='Actions']/ul/li/strong/a",
+				"//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[6]/span/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[6]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");

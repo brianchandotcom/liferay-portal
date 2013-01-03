@@ -66,18 +66,17 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
-		String functionsFilePath = fileName.substring(0, x);
-		String functionsName = fileName.substring(x + 1, y) + "Functions";
+		String functionsXMLFilePath = fileName.substring(0, x);
+		String functionsFilePath = fileName.substring(0, x) + "/rc";
+		String functionsSimpleClassName =
+			fileName.substring(x + 1, y) + "Functions";
 
 		String functionsFileName =
-			functionsFilePath + "/" + functionsName + ".java";
+			functionsFilePath + "/" + functionsSimpleClassName + ".java";
 		String functionsPackagePath = StringUtil.replace(
 			functionsFilePath, StringPool.SLASH, StringPool.PERIOD);
-		String functionsXMLFileName =
-			functionsFilePath + "/" + fileName.substring(x + 1, y) +
-				".functions";
 
-		Element rootElement = getRootElement(functionsXMLFileName);
+		Element rootElement = getRootElement(fileName);
 
 		StringBundler sb = new StringBundler();
 
@@ -89,11 +88,11 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("LiferaySelenium;\n");
 
 		sb.append("public class ");
-		sb.append(functionsName);
+		sb.append(functionsSimpleClassName);
 		sb.append(" extends BaseFunctions {\n\n");
 
 		sb.append("public ");
-		sb.append(functionsName);
+		sb.append(functionsSimpleClassName);
 		sb.append("(LiferaySelenium liferaySelenium) {\n");
 
 		sb.append("super(liferaySelenium);\n");

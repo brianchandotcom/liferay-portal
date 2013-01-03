@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.portalweb.blocks.base.actions;
+package com.liferay.portalweb.blocks.base.actions.rc;
 
-import com.liferay.portalweb.blocks.base.functions.AssertCheckedFunctions;
-import com.liferay.portalweb.blocks.base.functions.AssertElementNotPresentFunctions;
-import com.liferay.portalweb.blocks.base.functions.AssertElementPresentFunctions;
-import com.liferay.portalweb.blocks.base.functions.AssertNotCheckedFunctions;
-import com.liferay.portalweb.blocks.base.functions.AssertTextEqualsFunctions;
-import com.liferay.portalweb.blocks.base.functions.AssertTextNotEqualsFunctions;
-import com.liferay.portalweb.blocks.base.functions.AssertTextNotPresentFunctions;
-import com.liferay.portalweb.blocks.base.functions.AssertTextPresentFunctions;
-import com.liferay.portalweb.blocks.base.functions.CheckFunctions;
-import com.liferay.portalweb.blocks.base.functions.ClickFunctions;
-import com.liferay.portalweb.blocks.base.functions.CloseFunctions;
-import com.liferay.portalweb.blocks.base.functions.ConfirmFunctions;
-import com.liferay.portalweb.blocks.base.functions.CopyFunctions;
-import com.liferay.portalweb.blocks.base.functions.DragAndDropFunctions;
-import com.liferay.portalweb.blocks.base.functions.MouseOverFunctions;
-import com.liferay.portalweb.blocks.base.functions.OpenFunctions;
-import com.liferay.portalweb.blocks.base.functions.PasteFunctions;
-import com.liferay.portalweb.blocks.base.functions.SelectFunctions;
-import com.liferay.portalweb.blocks.base.functions.SelectWindowFunctions;
-import com.liferay.portalweb.blocks.base.functions.TypeFunctions;
-import com.liferay.portalweb.blocks.base.functions.UncheckFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.AssertCheckedFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.AssertElementNotPresentFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.AssertElementPresentFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.AssertNotCheckedFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.AssertTextEqualsFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.AssertTextNotEqualsFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.AssertTextNotPresentFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.AssertTextPresentFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.CheckFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.CloseFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.ConfirmFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.CopyFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.DragAndDropFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.MouseOverFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.OpenFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.PasteFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.SelectFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.SelectWindowFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.TypeFunctions;
+import com.liferay.portalweb.blocks.base.functions.rc.UncheckFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 import java.util.HashMap;

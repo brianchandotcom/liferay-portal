@@ -56,10 +56,11 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
-		String pathsFilePath = fileName.substring(0, x);
-		String pathsName = fileName.substring(x + 1, y) + "Paths";
+		String pathsFilePath = fileName.substring(0, x) + "/rc";
+		String pathsSimpleClassName = fileName.substring(x + 1, y) + "Paths";
 
-		String pathsFileName = pathsFilePath + "/" + pathsName + ".java";
+		String pathsFileName =
+			pathsFilePath + "/" + pathsSimpleClassName + ".java";
 		String pathsPackagePath = StringUtil.replace(
 			pathsFilePath, StringPool.SLASH, StringPool.PERIOD);
 
@@ -75,7 +76,7 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("import java.util.Map;\n");
 
 		sb.append("public class ");
-		sb.append(pathsName);
+		sb.append(pathsSimpleClassName);
 		sb.append(" {");
 
 		sb.append("public static Map<String, String> getPaths() {");

@@ -12,18 +12,19 @@
  * details.
  */
 
-package com.liferay.portalweb.blocks.base.macros;
+package com.liferay.portalweb.blocks.base.functions.rc;
 
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class BaseMacros {
+public class BaseFunctions {
 
-	public BaseMacros(LiferaySelenium liferaySelenium) {
+	public BaseFunctions(LiferaySelenium liferaySelenium) {
 		selenium = liferaySelenium;
 	}
 
 	protected LiferaySelenium selenium;
+
 }

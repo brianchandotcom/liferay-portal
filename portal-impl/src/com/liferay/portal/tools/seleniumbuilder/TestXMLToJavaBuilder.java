@@ -64,9 +64,10 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		int y = fileName.indexOf(CharPool.PERIOD);
 
 		String testFilePath = fileName.substring(0, x) + "/rc";
-		String testName = fileName.substring(x + 1, y) + "Test";
+		String testSimpleClassName = fileName.substring(x + 1, y) + "Test";
 
-		String testFileName = testFilePath + "/" + testName + ".java";
+		String testFileName =
+			testFilePath + "/" + testSimpleClassName + ".java";
 		String testPackagePath = StringUtil.replace(
 			testFilePath, StringPool.SLASH, StringPool.PERIOD);
 
@@ -90,7 +91,8 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 
 		sb.append(processBlocksImports(rootElement));
 
-		sb.append("public class " + testName + " extends BaseTestCase {");
+		sb.append(
+			"public class " + testSimpleClassName + " extends BaseTestCase {");
 
 		sb.append(_processSetupBlock(setupBlock));
 		sb.append(_processStepsBlock(stepsBlock));

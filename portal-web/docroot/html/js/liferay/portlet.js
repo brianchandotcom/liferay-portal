@@ -159,6 +159,12 @@
 				currentColumnId = Util.getColumnId(column.attr('id'));
 			}
 
+			var pvlsgid = 0;
+
+			if (themeDisplay.isVirtualLayout()) {
+				pvlsgid = themeDisplay.getScopeGroupId();
+			}
+
 			var url = themeDisplay.getPathMain() + '/portal/update_layout';
 
 			var data = {
@@ -172,7 +178,8 @@
 				p_p_id: portletId,
 				p_p_i_id: portletItemId,
 				p_p_isolated: true,
-				p_v_g_id: themeDisplay.getParentGroupId()
+				p_v_g_id: themeDisplay.getParentGroupId(),
+				p_v_l_s_g_id: pvlsgid
 			};
 
 			var firstPortlet = container.one('.portlet-boundary');

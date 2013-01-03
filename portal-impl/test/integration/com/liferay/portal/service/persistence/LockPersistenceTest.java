@@ -279,14 +279,6 @@ public class LockPersistenceTest {
 				existingLockModelImpl.getOriginalClassName()));
 		Assert.assertTrue(Validator.equals(existingLockModelImpl.getKey(),
 				existingLockModelImpl.getOriginalKey()));
-
-		Assert.assertTrue(Validator.equals(
-				existingLockModelImpl.getClassName(),
-				existingLockModelImpl.getOriginalClassName()));
-		Assert.assertTrue(Validator.equals(existingLockModelImpl.getKey(),
-				existingLockModelImpl.getOriginalKey()));
-		Assert.assertTrue(Validator.equals(existingLockModelImpl.getOwner(),
-				existingLockModelImpl.getOriginalOwner()));
 	}
 
 	protected Lock addLock() throws Exception {

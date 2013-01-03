@@ -23,8 +23,11 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.journal.model.JournalTemplate;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -39,6 +42,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  * @author Juan Fernández
+ * @author Bruno Basto
  */
 public class UpgradeJournal extends RenameUpgradePortletPreferences {
 
@@ -208,6 +212,34 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 		return _preferenceNamesMap;
 	}
 
+	protected void updateModelPermissions(
+			long companyId, String oldClassName, String newClassName,
+			long oldPrimKey, long newPrimKey)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update ResourcePermission set name = ?, primKey = ?" +
+					" where companyId = ? and name = ? and primKey = ?;");
+
+			ps.setString(1, newClassName);
+			ps.setLong(2, newPrimKey);
+			ps.setLong(3, companyId);
+			ps.setString(4, oldClassName);
+			ps.setLong(5, oldPrimKey);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
 	protected long updateStructure(String structureId) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -224,6 +256,7 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 
 			if (rs.next()) {
 				String uuid_ = rs.getString("uuid_");
+				long id_ = rs.getLong("id_");
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
 				long userId = rs.getLong("userId");
@@ -248,6 +281,12 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 					uuid_, ddmStructureId, groupId, companyId, userId, userName,
 					createDate, modifiedDate, parentStructureId, structureId,
 					name, description, xsd);
+
+				String oldClassName = JournalStructure.class.getName();
+				String newClassName = DDMStructure.class.getName();
+
+				updateModelPermissions(
+					companyId, oldClassName, newClassName, id_, ddmStructureId);
 
 				_ddmStructureIds.put(
 					groupId + "#" + structureId, ddmStructureId);
@@ -274,6 +313,7 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 
 			while (rs.next()) {
 				String uuid_ = rs.getString("uuid_");
+				long id_ = rs.getLong("id_");
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
 				long userId = rs.getLong("userId");
@@ -292,6 +332,12 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 					uuid_, ddmStructureId, groupId, companyId, userId, userName,
 					createDate, modifiedDate, parentStructureId, structureId,
 					name, description, xsd);
+
+				String oldClassName = JournalStructure.class.getName();
+				String newClassName = DDMStructure.class.getName();
+
+				updateModelPermissions(
+					companyId, oldClassName, newClassName, id_, ddmStructureId);
 
 				_ddmStructureIds.put(
 					groupId + "#" + structureId, ddmStructureId);
@@ -318,6 +364,7 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 
 			while (rs.next()) {
 				String uuid_ = rs.getString("uuid_");
+				long id_ = rs.getLong("id_");
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
 				long userId = rs.getLong("userId");
@@ -344,13 +391,19 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 					classPK = _ddmStructureIds.get(structureId);
 				}
 
-				addDDMTemplate(
+				long newTemplateId = addDDMTemplate(
 					uuid_, increment(), groupId, companyId, userId, userName,
 					createDate, modifiedDate, classNameId, classPK, templateId,
 					name, description,
 					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 					DDMTemplateConstants.TEMPLATE_MODE_CREATE, language, script,
 					cacheable, smallImage, smallImageId, smallImageURL);
+
+				String oldClassName = JournalTemplate.class.getName();
+				String newClassName = DDMTemplate.class.getName();
+
+				updateModelPermissions(
+					companyId, oldClassName, newClassName, id_, newTemplateId);
 			}
 		}
 		finally {

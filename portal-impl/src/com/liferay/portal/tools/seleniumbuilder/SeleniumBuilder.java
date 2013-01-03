@@ -78,6 +78,7 @@ public class SeleniumBuilder {
 		classNameSetAvailable = _getClassNameSetAvailable();
 
 		functionMethodParamListMap = _getFunctionMethodParamListMap();
+		functionMethodReturnTypeMap = _getFunctionMethodReturnTypeMap();
 		seleniumMethodParamMap = _getSeleniumMethodParamMap();
 	}
 
@@ -257,6 +258,7 @@ public class SeleniumBuilder {
 	protected Set<String> fileNameSetTests;
 	protected String filePath = "";
 	protected Map<String, List<String>> functionMethodParamListMap;
+	protected Map<String, String> functionMethodReturnTypeMap;
 	protected Map<String, Integer> seleniumMethodParamMap;
 
 	private String _getActionsConditional(Element conditional) {
@@ -509,6 +511,30 @@ public class SeleniumBuilder {
 		return hashMap;
 	}
 
+	private Map<String, String> _getFunctionMethodReturnTypeMap()
+		throws Exception {
+
+		Map<String, String> hashMap = new HashMap<String, String>();
+
+		for (String fileName : fileNameSetFunctions) {
+			Element functions = getRootElement(fileName);
+
+			String functionsObject = functions.attributeValue("object");
+			String functionsReturn = functions.attributeValue("return");
+
+			List<String> arrayList = new ArrayList<String>();
+
+			if (functionsReturn == null) {
+				hashMap.put(functionsObject, "void");
+			}
+			else {
+				hashMap.put(functionsObject, functionsReturn);
+			}
+		}
+
+		return hashMap;
+	}
+
 	private Map<String, Integer> _getSeleniumMethodParamMap() throws Exception {
 		Map<String, Integer> hashMap = new HashMap<String, Integer>();
 
@@ -636,21 +662,18 @@ public class SeleniumBuilder {
 		sb.append(actionCommandName);
 		sb.append("(");
 
-		List<String> suffixList = new ArrayList<String>();
+		String functionObjectName = StringUtil.upperCaseFirstLetter(
+			actionCommandName);
 
-		if (actionCommandName.equals("dragAndDrop")) {
-			suffixList.add("1");
-			suffixList.add("2");
-		}
-		else {
-			suffixList.add("");
-		}
+		List<String> paramSuffixList = functionMethodParamListMap.get(
+			functionObjectName);
 
 		String parameters = "";
 
-		for (String suffix : suffixList) {
-			String actionLocator = action.attributeValue("locator" + suffix);
-			String actionPath = action.attributeValue("path" + suffix);
+		for (String paramSuffix : paramSuffixList) {
+			String actionLocator = action.attributeValue(
+				"locator" + paramSuffix);
+			String actionPath = action.attributeValue("path" + paramSuffix);
 
 			if (!(actionLocator == null)) {
 				parameters += _replaceVariables("\"" + actionLocator + "\"");
@@ -662,11 +685,11 @@ public class SeleniumBuilder {
 				parameters += "\"\"";
 			}
 
-			String actionValue = action.attributeValue("value" + suffix);
+			String actionValue = action.attributeValue("value" + paramSuffix);
 
 			if (!(actionValue == null)) {
 				parameters += ", ";
-				parameters += _getElementValue(action, "value" + suffix);
+				parameters += _getElementValue(action, "value" + paramSuffix);
 			}
 			else {
 				parameters += ", null";
@@ -699,13 +722,15 @@ public class SeleniumBuilder {
 	private String _processCommandFunctions(Element function) throws Exception {
 		String functionCommandName = function.attributeValue("command");
 		String functionObjectName = function.attributeValue("object");
-		String functionReturn = function.attributeValue("return");
 
 		String functionClassName = functionObjectName + "Functions";
 
 		StringBundler sb = new StringBundler();
 
-		if (!(functionReturn == null)) {
+		String functionReturnType = functionMethodReturnTypeMap.get(
+			functionObjectName);
+
+		if (!functionReturnType.equals("void")) {
 			sb.append("return ");
 		}
 
@@ -724,24 +749,24 @@ public class SeleniumBuilder {
 
 		if (parentElementName.equals("conditional")) {
 			for (String paramSuffix : paramSuffixList) {
-				paramList += "params";
-				paramList += paramSuffix;
+				String paramPair = "params[0], params[1], ";
 
-				paramList += "[0], params";
-				paramList += paramSuffix;
+				paramPair = StringUtil.replace(
+					paramPair, "params", "params" + paramSuffix);
 
-				paramList += "[1], ";
+				paramList += paramPair;
 			}
 		}
 		else {
 			for (String paramSuffix : paramSuffixList) {
-				paramList += "target";
-				paramList += paramSuffix;
+				String paramPair = "target, value, ";
 
-				paramList += ", value";
-				paramList += paramSuffix;
+				paramPair = StringUtil.replace(
+					paramPair, "target", "target" + paramSuffix);
+				paramPair = StringUtil.replace(
+					paramPair, "value", "value" + paramSuffix);
 
-				paramList += ", ";
+				paramList += paramPair;
 			}
 		}
 

@@ -114,20 +114,16 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 		List<Element> functionDefs = functions.elements("functiondef");
 
 		String functionsObject = functions.attributeValue("object");
-		String functionsReturn = functions.attributeValue("return");
+
+		String functionReturnType = functionMethodReturnTypeMap.get(
+			functionsObject);
 
 		for (Element functionDef : functionDefs) {
 			String functionDefCommand = functionDef.attributeValue("command");
 
 			sb.append("public ");
-
-			if (!(functionsReturn == null)) {
-				sb.append(functionsReturn);
-				sb.append(" ");
-			}
-			else {
-				sb.append("void ");
-			}
+			sb.append(functionReturnType);
+			sb.append(" ");
 
 			sb.append(functionDefCommand);
 
@@ -137,8 +133,14 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 			String paramList = "";
 
 			for (String paramSuffix : paramSuffixList) {
-				paramList += "String target" + paramSuffix + ", ";
-				paramList += "String value" + paramSuffix + ", ";
+				String paramPair = "String target, String value, ";
+
+				paramPair = StringUtil.replace(
+					paramPair, "target", "target" + paramSuffix);
+				paramPair = StringUtil.replace(
+					paramPair, "value", "value" + paramSuffix);
+
+				paramList += paramPair;
 			}
 
 			paramList = paramList.substring(0, paramList.length() - 2);

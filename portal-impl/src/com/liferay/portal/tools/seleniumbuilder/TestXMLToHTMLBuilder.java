@@ -36,6 +36,8 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();
 
+		new MacrosXMLToHTMLBuilder(args);
+		new PathsXMLToHTMLBuilder(args);
 		new TestXMLToHTMLBuilder(args);
 	}
 

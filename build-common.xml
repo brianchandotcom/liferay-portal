@@ -500,7 +500,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	</target>
 
 	<target name="format-javadoc">
-		<echo message="Run &quot;ant compile-test&quot; in portal-impl before using format-javadoc to generate @Override tags." />
+		<echo message="Run &quot;ant compile compile-test compile-test-integration compile-test-unit&quot; before using format-javadoc to generate @Override tags." />
 
 		<java
 			classname="com.liferay.portal.tools.JavadocFormatter"

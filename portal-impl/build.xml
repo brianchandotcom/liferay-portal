@@ -386,6 +386,10 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../portal-web" target="build-selenium-paths" />
 	</target>
 
+	<target name="build-selenium-paths-html">
+		<ant dir="../portal-web" target="build-selenium-paths-html" />
+	</target>
+
 	<target name="build-selenium-server">
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />

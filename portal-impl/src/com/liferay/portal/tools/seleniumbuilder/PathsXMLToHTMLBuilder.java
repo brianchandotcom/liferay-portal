@@ -32,7 +32,7 @@ import org.apache.tools.ant.DirectoryScanner;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PathsXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
+public class PathsXMLToHTMLBuilder extends SeleniumBuilder {
 
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();

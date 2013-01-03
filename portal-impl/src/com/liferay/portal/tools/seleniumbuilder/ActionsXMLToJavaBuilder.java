@@ -97,10 +97,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("ActionsUtil;\n");
 
 		sb.append("import com.liferay.portalweb.blocks.base.actions.rc.");
-		sb.append("BaseActionsImpl;\n");
-
-		sb.append("import com.liferay.portalweb.blocks.base.actions.rc.");
-		sb.append("LiferayActions;\n");
+		sb.append("BaseLiferayActions;\n");
 
 		sb.append("import com.liferay.portalweb.portal.util.");
 		sb.append("liferayselenium.LiferaySelenium;\n");
@@ -114,8 +111,13 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 
 		sb.append("public class ");
 		sb.append(actionsSimpleClassName);
-		sb.append(" extends BaseActionsImpl implements");
-		sb.append(" LiferayActions {\n\n");
+
+		if (objectName.equals("BaseLiferay")) {
+			sb.append(" extends BaseActions {\n\n");
+		}
+		else {
+			sb.append(" extends BaseLiferayActions {\n\n");
+		}
 
 		sb.append("public ");
 		sb.append(actionsSimpleClassName);
@@ -141,18 +143,18 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 	private String _combineConditionals(
 		List<String> conditionalList, String delimiter) {
 
-		boolean firstConditional = true;
+		boolean isFirstConditional = true;
 
 		StringBundler sb = new StringBundler();
 
 		for (String conditional : conditionalList) {
-			if (!firstConditional) {
+			if (!isFirstConditional) {
 				sb.append(" " + delimiter + " ");
 			}
 
 			sb.append(conditional);
 
-			firstConditional = false;
+			isFirstConditional = false;
 		}
 
 		return sb.toString();
@@ -163,34 +165,74 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 
 		List<Element> conditionals = actionDef.elements("conditional");
 
-		boolean firstConditional = true;
+		Element firstConditional = conditionals.get(0);
 
-		for (Element conditional : conditionals) {
-			if (firstConditional) {
-				firstConditional = false;
+		String conditionalDefault = firstConditional.attributeValue("default");
 
-				sb.append("if (");
+		if (!(conditionalDefault == null) &&
+			conditionalDefault.equals("true")) {
+
+			sb.append(processBlockCommands(firstConditional, _validCommands));
+		}
+		else {
+			boolean isFirstConditional = true;
+
+			for (Element conditional : conditionals) {
+				if (isFirstConditional) {
+					isFirstConditional = false;
+
+					sb.append("if (");
+				}
+				else {
+					sb.append("else if (");
+				}
+
+				sb.append(_processConditional(conditional));
+
+				sb.append(") {");
+				sb.append(processBlockCommands(conditional, _validCommands));
+				sb.append("}");
 			}
-			else {
-				sb.append("else if (");
+
+			sb.append("else {");
+
+			String actionDefCommand = actionDef.attributeValue("command");
+
+			String functionObjectName = StringUtil.upperCaseFirstLetter(
+				actionDefCommand);
+
+			String functionReturnType = functionMethodReturnTypeMap.get(
+				functionObjectName);
+
+			if (!functionReturnType.equals("void")) {
+				sb.append("return ");
 			}
 
-			sb.append(_processConditional(conditional));
+			sb.append("super.");
+			sb.append(actionDefCommand);
 
-			sb.append(") {");
-			sb.append(processBlockCommands(conditional, _validCommands));
+			List<String> paramSuffixList = functionMethodParamListMap.get(
+				functionObjectName);
+
+			String paramList = "";
+
+			for (String paramSuffix : paramSuffixList) {
+				String paramPair = "params[0], params[1], ";
+
+				paramPair = StringUtil.replace(
+					paramPair, "params", "params" + paramSuffix);
+
+				paramList += paramPair;
+			}
+
+			paramList = paramList.substring(0, paramList.length() - 2);
+
+			sb.append("(");
+			sb.append(paramList);
+			sb.append(");\n");
+
 			sb.append("}");
 		}
-
-		sb.append("else {");
-
-		String actionDefCommand = actionDef.attributeValue("command");
-
-		sb.append("super.");
-		sb.append(actionDefCommand);
-		sb.append("(params[0], params[1]);\n");
-
-		sb.append("}");
 
 		return sb.toString();
 	}
@@ -203,12 +245,55 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		for (Element actionDef : actionDefs) {
 			String actionDefCommand = actionDef.attributeValue("command");
 
-			sb.append("public void ");
-			sb.append(actionDefCommand);
-			sb.append("(String param1, String param2) throws Exception {\n");
+			String functionObjectName = StringUtil.upperCaseFirstLetter(
+				actionDefCommand);
 
-			sb.append("String[] params = ");
-			sb.append("ActionsUtil.getParams(paths, param1, param2);\n\n");
+			String functionReturnType = functionMethodReturnTypeMap.get(
+				functionObjectName);
+
+			sb.append("public ");
+			sb.append(functionReturnType);
+			sb.append(" ");
+			sb.append(actionDefCommand);
+
+			List<String> paramSuffixList = functionMethodParamListMap.get(
+				functionObjectName);
+
+			String paramList = "";
+
+			for (String paramSuffix : paramSuffixList) {
+				String paramPair = "String target, String value, ";
+
+				paramPair = StringUtil.replace(
+					paramPair, "target", "target" + paramSuffix);
+				paramPair = StringUtil.replace(
+					paramPair, "value", "value" + paramSuffix);
+
+				paramList += paramPair;
+			}
+
+			paramList = paramList.substring(0, paramList.length() - 2);
+
+			sb.append("(");
+			sb.append(paramList);
+			sb.append(") throws Exception {\n");
+
+			for (String paramSuffix : paramSuffixList) {
+				String paramsDeclaration =
+					"String[] params = ActionsUtil.getParams(paths, target, " +
+						"value);\n";
+
+				paramsDeclaration = StringUtil.replace(
+					paramsDeclaration, "params", "params" + paramSuffix);
+				paramsDeclaration = StringUtil.replace(
+					paramsDeclaration, "target", "target" + paramSuffix);
+				paramsDeclaration = StringUtil.replace(
+					paramsDeclaration, "value", "value" + paramSuffix);
+
+				sb.append(paramsDeclaration);
+			}
+
+			sb.append("\n");
 
 			sb.append(processBlockObjectDeclaractions(actionDef));
 
@@ -233,7 +318,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 			List<String> elementList = new ArrayList<String>();
 
 			for (String element : elementArray) {
-				elementList.add("param1.equals(\"" + element + "\")");
+				elementList.add("target.equals(\"" + element + "\")");
 			}
 
 			sbConditional.append("(");
@@ -258,7 +343,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		if (!(startswith == null) && !startswith.equals("")) {
 			StringBundler sbConditional = new StringBundler();
 
-			sbConditional.append("param1.startsWith(\"");
+			sbConditional.append("target.startsWith(\"");
 			sbConditional.append(startswith);
 			sbConditional.append("\")");
 

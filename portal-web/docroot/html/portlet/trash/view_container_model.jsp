@@ -46,7 +46,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerM
 %>
 
 <div class="portlet-msg-alert">
-	<liferay-ui:message arguments="<%= trashRenderer.getTitle(locale) %>" key="the-original-folder-does-not-exist-anymore" />
+	<liferay-ui:message arguments="<%= new Object[] {trashHandler.getContainerModelName(), trashRenderer.getTitle(locale)} %>" key="the-original-x-does-not-exist-anymore" />
 </div>
 
 <aui:form method="post" name="fm">

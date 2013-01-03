@@ -463,7 +463,7 @@ create index IX_D9FFCA84 on LayoutSetPrototype (uuid_, companyId);
 
 create index IX_2932DD37 on ListType (type_);
 
-create index IX_228562AD on Lock_ (className, key_);
+create unique index IX_228562AD on Lock_ (className, key_);
 create index IX_E3F1286B on Lock_ (expirationDate);
 create index IX_13C5CD3A on Lock_ (uuid_);
 create index IX_2C418EAE on Lock_ (uuid_, companyId);

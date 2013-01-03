@@ -109,6 +109,10 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 
 	public boolean isLocked() {
 		try {
+			if (isInTrash() || isInTrashContainer()) {
+				return true;
+			}
+
 			return LockLocalServiceUtil.isLocked(
 				MBThread.class.getName(), getThreadId());
 		}

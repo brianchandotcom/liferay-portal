@@ -768,11 +768,23 @@ public class JavadocFormatter {
 		int pos = fileName.indexOf("src/");
 
 		if (pos == -1) {
-			pos = fileName.indexOf("test/");
+			pos = fileName.indexOf("test/integration/");
+
+			if (pos != -1) {
+				pos = fileName.indexOf("integration/", pos);
+			}
 		}
 
 		if (pos == -1) {
-			pos = fileName.indexOf("service/");
+			pos = fileName.indexOf("test/unit/");
+
+			if (pos != -1) {
+				pos = fileName.indexOf("unit/", pos);
+			}
+		}
+
+		if (pos == -1) {
+			pos = fileName.indexOf("test/");
 		}
 
 		if (pos == -1) {

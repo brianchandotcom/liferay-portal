@@ -34,6 +34,67 @@ import java.util.List;
  */
 public class VerifyMessageBoards extends VerifyProcess {
 
+	public static void verifyStatisticsForCategories() throws Exception {
+		List<MBCategory> categories =
+			MBCategoryLocalServiceUtil.getMBCategories(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + categories.size() +
+					" categories for statistics accuracy");
+		}
+
+		for (MBCategory category : categories) {
+			int threadCount = MBThreadLocalServiceUtil.getCategoryThreadsCount(
+				category.getGroupId(), category.getCategoryId(),
+				WorkflowConstants.STATUS_APPROVED);
+			int messageCount =
+				MBMessageLocalServiceUtil.getCategoryMessagesCount(
+					category.getGroupId(), category.getCategoryId(),
+					WorkflowConstants.STATUS_APPROVED);
+
+			if ((category.getThreadCount() != threadCount) ||
+				(category.getMessageCount() != messageCount)) {
+
+				category.setThreadCount(threadCount);
+				category.setMessageCount(messageCount);
+
+				MBCategoryLocalServiceUtil.updateMBCategory(category);
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Statistics verified for categories");
+		}
+	}
+
+	public static void verifyStatisticsForThreads() throws Exception {
+		List<MBThread> threads = MBThreadLocalServiceUtil.getMBThreads(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + threads.size() +
+					" threads for statistics accuracy");
+		}
+
+		for (MBThread thread : threads) {
+			int messageCount = MBMessageLocalServiceUtil.getThreadMessagesCount(
+				thread.getThreadId(), WorkflowConstants.STATUS_APPROVED);
+
+			if (thread.getMessageCount() != messageCount) {
+				thread.setMessageCount(messageCount);
+
+				MBThreadLocalServiceUtil.updateMBThread(thread);
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Statistics verified for threads");
+		}
+	}
+
 	@Override
 	protected void doVerify() throws Exception {
 		verifyStatisticsForCategories();
@@ -114,67 +175,6 @@ public class VerifyMessageBoards extends VerifyProcess {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Assets verified for threads");
-		}
-	}
-
-	protected void verifyStatisticsForCategories() throws Exception {
-		List<MBCategory> categories =
-			MBCategoryLocalServiceUtil.getMBCategories(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + categories.size() +
-					" categories for statistics accuracy");
-		}
-
-		for (MBCategory category : categories) {
-			int threadCount = MBThreadLocalServiceUtil.getCategoryThreadsCount(
-				category.getGroupId(), category.getCategoryId(),
-				WorkflowConstants.STATUS_APPROVED);
-			int messageCount =
-				MBMessageLocalServiceUtil.getCategoryMessagesCount(
-					category.getGroupId(), category.getCategoryId(),
-					WorkflowConstants.STATUS_APPROVED);
-
-			if ((category.getThreadCount() != threadCount) ||
-				(category.getMessageCount() != messageCount)) {
-
-				category.setThreadCount(threadCount);
-				category.setMessageCount(messageCount);
-
-				MBCategoryLocalServiceUtil.updateMBCategory(category);
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Statistics verified for categories");
-		}
-	}
-
-	protected void verifyStatisticsForThreads() throws Exception {
-		List<MBThread> threads = MBThreadLocalServiceUtil.getMBThreads(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + threads.size() +
-					" threads for statistics accuracy");
-		}
-
-		for (MBThread thread : threads) {
-			int messageCount = MBMessageLocalServiceUtil.getThreadMessagesCount(
-				thread.getThreadId(), WorkflowConstants.STATUS_APPROVED);
-
-			if (thread.getMessageCount() != messageCount) {
-				thread.setMessageCount(messageCount);
-
-				MBThreadLocalServiceUtil.updateMBThread(thread);
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Statistics verified for threads");
 		}
 	}
 

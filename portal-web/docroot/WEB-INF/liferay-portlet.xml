@@ -193,6 +193,15 @@
 				</simple>
 			</trigger>
 		</scheduler-entry>
+		<scheduler-entry>
+			<scheduler-event-listener-class>com.liferay.portlet.messageboards.messaging.VerifyMBStatisticsListener</scheduler-event-listener-class>
+			<trigger>
+				<simple>
+					<property-key>message.boards.verify.statistics.interval</property-key>
+					<time-unit>second</time-unit>
+				</simple>
+			</trigger>
+		</scheduler-entry>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>message_boards</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/messageboards/message-boards-friendly-url-routes.xml</friendly-url-routes>

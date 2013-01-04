@@ -54,6 +54,10 @@
 
 .lfr-ddm-container .aui-field-wrapper {
 	position: relative;
+	
+	.aui-field-wrapper {
+		margin-left: 20px;
+	}
 
 	.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button {
 		display: block;

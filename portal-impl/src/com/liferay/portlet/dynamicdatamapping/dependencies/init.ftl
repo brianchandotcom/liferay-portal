@@ -16,13 +16,9 @@
 	<#assign repeatable = true>
 </#if>
 
-<#assign repeatableIndex = "">
-
-<#if fieldStructure.repeatableIndex?? && (fieldStructure.repeatableIndex != "0")>
-	<#assign repeatableIndex = "__" + fieldStructure.repeatableIndex>
-</#if>
-
 <#-- Field name -->
+
+<#assign fieldNamespace = "_INSTANCE_" + fieldStructure.fieldNamespace>
 
 <#assign fieldName = fieldStructure.name>
 
@@ -37,7 +33,7 @@
 
 <#assign namespace = namespace!"">
 
-<#assign namespacedFieldName = "${namespace}${fieldName}${repeatableIndex}">
+<#assign namespacedFieldName = "${namespace}${fieldName}${fieldNamespace}">
 
 <#assign namespacedParentName = "${namespace}${parentName}">
 
@@ -45,8 +41,8 @@
 
 <#assign data = {
 	"fieldName": fieldStructure.name,
-	"repeatable": repeatable?string,
-	"repeatableIndex": repeatableIndex
+	"fieldNamespace": fieldNamespace,
+	"repeatable": repeatable?string
 }>
 
 <#-- Predefined value -->
@@ -65,7 +61,7 @@
 <#if fields?? && fields.get(fieldName)??>
 	<#assign field = fields.get(fieldName)>
 
-	<#assign valueIndex = getterUtil.getInteger(repeatableIndex)>
+	<#assign valueIndex = getterUtil.getInteger(fieldStructure.valueIndex)>
 
 	<#assign fieldValue = field.getRenderedValue(requestedLocale, valueIndex)>
 	<#assign fieldRawValue = field.getValue(requestedLocale, valueIndex)>

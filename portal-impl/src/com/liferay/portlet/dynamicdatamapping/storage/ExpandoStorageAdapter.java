@@ -322,7 +322,8 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 						field.setDDMStructureId(ddmStructureId);
 						field.setName(fieldName);
 
-						String fieldType = ddmStructure.getFieldType(fieldName);
+						String fieldType = ddmStructure.getFieldDataType(
+							fieldName);
 
 						Map<Locale, List<Serializable>> valuesMap =
 							_getValuesMap(
@@ -525,7 +526,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 			ExpandoTable expandoTable, long classPK, Fields fields)
 		throws PortalException, SystemException {
 
-		Iterator<Field> itr = fields.iterator();
+		Iterator<Field> itr = fields.iterator(true);
 
 		while (itr.hasNext()) {
 			Field field = itr.next();

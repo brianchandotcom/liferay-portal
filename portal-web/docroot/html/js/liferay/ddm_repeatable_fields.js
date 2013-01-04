@@ -3,8 +3,6 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var owns = A.Object.owns;
-
 		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button';
 
 		var TPL_ADD_REPEATABLE = '<a class="lfr-ddm-repeatable-add-button" href="javascript:;"></a>';
@@ -21,18 +19,14 @@ AUI.add(
 					},
 
 					container: {
-						setter: A.one,
-						validator: A.Lang.isNode,
-						value: null
+						setter: A.one
 					},
 
-					namespace: {
+					fieldsDisplayInput: {
+						setter: A.one
 					},
 
-					fieldsMapInput: {
-						setter: A.one,
-						validator: A.Lang.isNode,
-						value: null
+					portletNamespace: {
 					}
 				},
 
@@ -44,29 +38,8 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						var fieldsCountMap = {};
-						var fieldsMap = {};
-
-						instance.fieldsCountMap = fieldsCountMap;
-						instance.fieldsMap = fieldsMap;
-
-						instance.getFieldsList().each(
-							function(item, index, collection) {
-								var fieldName = item.attr('data-fieldName');
-
-								if (!owns(fieldsCountMap, fieldName)) {
-									fieldsCountMap[fieldName] = 0;
-								}
-								else {
-									fieldsCountMap[fieldName]++;
-								}
-
-								instance.makeFieldRepeatable(item);
-								instance.syncFieldsMap(fieldName);
-							}
-						);
-
 						instance.bindUI();
+						instance.syncUI();
 					},
 
 					bindUI: function() {
@@ -81,42 +54,30 @@ AUI.add(
 						container.delegate('hover', hoverHandler, hoverHandler, SELECTOR_REPEAT_BUTTONS, instance);
 					},
 
-					addField: function(fieldName, repeatableIndex) {
+					syncUI: function() {
 						var instance = this;
 
-						var fieldsList = instance.getFieldsList(fieldName);
+						instance.syncFieldsTreeUI();
+					},
 
-						var fieldWrapper = fieldsList.item(repeatableIndex);
+					createFieldTree: function(fieldNode) {
+						var instance = this;
 
-						var fieldCount = (++instance.fieldsCountMap[fieldName]);
+						var fieldName = fieldNode.getData('fieldName');
+						var fieldNamespace = fieldNode.getData('fieldNamespace');
 
-						instance.getField(
-							fieldName,
-							fieldCount,
-							function(fieldHTML) {
-								fieldWrapper.insert(fieldHTML, 'after');
+						var tree = [fieldName + fieldNamespace];
 
-								fieldsList.refresh();
-
-								var nextField = fieldsList.item(repeatableIndex + 1);
-
-								instance.makeFieldRepeatable(nextField);
-								instance.syncFieldsMap(fieldName);
+						instance.getFieldsList(null, fieldNode).each(
+							function(item, index, collection) {
+								tree = tree.concat(instance.createFieldTree(item));
 							}
 						);
+
+						return tree;
 					},
 
-					deleteField: function(fieldName, repeatableIndex) {
-						var instance = this;
-
-						var fieldsList = instance.getFieldsList(fieldName);
-
-						fieldsList.item(repeatableIndex).remove();
-
-						instance.syncFieldsMap(fieldName);
-					},
-
-					getField: function(fieldName, repeatableIndex, callback) {
+					getField: function(fieldName, callback) {
 						var instance = this;
 
 						A.io.request(
@@ -126,10 +87,9 @@ AUI.add(
 									classNameId: instance.get('classNameId'),
 									classPK: instance.get('classPK'),
 									fieldName: fieldName,
-									namespace: instance.get('namespace'),
 									p_p_isolated: true,
-									readOnly: instance.get('readOnly'),
-									repeatableIndex: repeatableIndex
+									portletNamespace: instance.get('portletNamespace'),
+									readOnly: instance.get('readOnly')
 								},
 								on: {
 									success: function(event, id, xhr) {
@@ -142,64 +102,116 @@ AUI.add(
 						);
 					},
 
-					getFieldsList: function(fieldName) {
+					getFieldsList: function(fieldName, parentNode) {
 						var instance = this;
 
-						var container = instance.get('container');
+						var container;
 
-						var query = '.aui-field-wrapper';
+						if (parentNode) {
+							container = parentNode;
+						}
+						else {
+							container = instance.get('container');
+						}
+
+						var selector = ['>'];
+
+						if (container.hasClass('aui-field-wrapper')) {
+							selector.push(' .aui-field-wrapper-content >');
+						}
+
+						selector.push(' .aui-field-wrapper');
 
 						if (fieldName) {
-							query += '[data-fieldName="' + fieldName + '"]';
+							selector.push('[data-fieldName="' + fieldName + '"]');
 						}
 
-						query += '[data-repeatable="true"]';
-
-						return container.all(query);
+						return container.all(selector.join(''));
 					},
 
-					makeFieldRepeatable: function(fieldWrapper) {
+					getFieldParentNode: function(fieldNode) {
 						var instance = this;
 
-						var fieldName = fieldWrapper.attr('data-fieldName');
+						var parentNode = fieldNode.ancestor('.aui-field-wrapper');
 
-						var fieldsList = instance.getFieldsList(fieldName);
-
-						var html = TPL_ADD_REPEATABLE;
-
-						if (fieldsList.indexOf(fieldWrapper) > 0) {
-							html += TPL_DELETE_REPEATABLE;
+						if (!parentNode) {
+							parentNode = instance.get('container');
 						}
 
-						fieldWrapper.append(html);
-
-						fieldWrapper.plug(A.Plugin.ParseContent);
+						return parentNode;
 					},
 
-					syncFieldsMap: function(fieldName) {
+					insertField: function(fieldNode) {
 						var instance = this;
 
-						var fieldsMapInput = instance.get('fieldsMapInput');
+						var fieldName = fieldNode.getData('fieldName');
 
-						var fieldsList = instance.getFieldsList(fieldName);
+						instance.getField(
+							fieldName,
+							function(newFieldHTML) {
+								fieldNode.insert(newFieldHTML, 'after');
 
-						var fieldsMap = instance.fieldsMap;
+								instance.syncFieldsTreeUI();
+							}
+						);
+					},
 
-						var fieldMap = [];
+					removeField: function(fieldNode) {
+						var instance = this;
 
-						fieldsList.each(
-							function(item, index, collection) {
-								var repeatableIndex = item.attr('data-repeatableIndex');
+						fieldNode.remove();
 
-								if (repeatableIndex) {
-									fieldMap.push(repeatableIndex);
+						instance.syncFieldsTreeUI();
+					},
+
+					renderRepeatableUI: function(fieldNode) {
+						var instance = this;
+
+						if (fieldNode.getData('repeatable') === 'true') {
+							if (!fieldNode.getData('rendered-toolbar')) {
+								var fieldName = fieldNode.getData('fieldName');
+
+								var parentNode = instance.getFieldParentNode(fieldNode);
+
+								var fieldsList = instance.getFieldsList(fieldName, parentNode);
+
+								var html = TPL_ADD_REPEATABLE;
+
+								if (fieldsList.indexOf(fieldNode) > 0) {
+									html += TPL_DELETE_REPEATABLE;
 								}
+
+								fieldNode.append(html);
+
+								fieldNode.plug(A.Plugin.ParseContent);
+
+								fieldNode.setData('rendered-toolbar', true);
+							}
+
+							instance.getFieldsList(null, fieldNode).each(
+								function(item, index, collection) {
+									instance.renderRepeatableUI(item);
+								}
+							);
+						}
+					},
+
+					syncFieldsTreeUI: function() {
+						var instance = this;
+
+						var fieldsDisplay = [];
+
+						var fieldsDisplayInput = instance.get('fieldsDisplayInput');
+
+						instance.getFieldsList().each(
+							function(item, index, collection) {
+								instance.renderRepeatableUI(item);
+
+								fieldsDisplay = fieldsDisplay.concat(instance.createFieldTree(item));
 							}
 						);
 
-						fieldsMap[fieldName] = fieldMap;
-
-						fieldsMapInput.val(A.JSON.stringify(fieldsMap));
+						fieldsDisplayInput.val(fieldsDisplay.join());
 					},
 
 					_onClickRepeatableButton: function(event) {
@@ -207,26 +219,22 @@ AUI.add(
 
 						var currentTarget = event.currentTarget;
 
-						var fieldWrapper = currentTarget.ancestor('.aui-field-wrapper');
-
-						var fieldName = fieldWrapper.attr('data-fieldName');
-
-						var repeatableIndex = instance.getFieldsList(fieldName).indexOf(fieldWrapper);
+						var fieldNode = currentTarget.ancestor('.aui-field-wrapper');
 
 						if (currentTarget.hasClass('lfr-ddm-repeatable-add-button')) {
-							instance.addField(fieldName, repeatableIndex);
+							instance.insertField(fieldNode);
 						}
 						else if (currentTarget.hasClass('lfr-ddm-repeatable-delete-button')) {
-							instance.deleteField(fieldName, repeatableIndex);
+							instance.removeField(fieldNode);
 						}
 					},
 
 					_onHoverRepeatableButton: function(event) {
 						var instance = this;
 
-						var fieldWrapper = event.currentTarget.ancestor('.aui-field-wrapper');
+						var fieldNode = event.currentTarget.ancestor('.aui-field-wrapper');
 
-						fieldWrapper.toggleClass('lfr-ddm-repeatable-active', (event.phase === 'over'));
+						fieldNode.toggleClass('lfr-ddm-repeatable-active', (event.phase === 'over'));
 					}
 
 				}

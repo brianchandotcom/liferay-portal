@@ -15,11 +15,11 @@
 <#else>
 	<#assign parentFieldRepeatableIndex = "">
 
-	<#if parentFieldStructure.repeatableIndex??>
-		<#assign parentFieldRepeatableIndex = parentFieldStructure.repeatableIndex>
+	<#if parentFieldStructure.fieldNamespace??>
+		<#assign parentFieldNamespace = parentFieldStructure.fieldNamespace>
 	</#if>
 
-	<@aui.input checked=selected cssClass=cssClass label=escape(fieldStructure.label) name="${namespacedParentName}${parentFieldRepeatableIndex}" type="radio" value=fieldStructure.value>
+	<@aui.input checked=selected cssClass=cssClass label=escape(fieldStructure.label) name="${namespacedParentName}${parentFieldNamespace}" type="radio" value=fieldStructure.value>
 		<#if parentFieldStructure.required?? && (parentFieldStructure.required == "true")>
 			<@aui.validator name="required" />
 		</#if>

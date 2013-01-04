@@ -40,8 +40,8 @@ public interface DDMXSD {
 
 	public String getFieldHTMLByName(
 			PageContext pageContext, long classNameId, long classPK,
-			String fieldName, int repeatableIndex, Fields fields,
-			String namespace, String mode, boolean readOnly, Locale locale)
+			String fieldName, Fields fields, String namespace, String mode,
+			boolean readOnly, Locale locale)
 		throws Exception;
 
 	public String getHTML(

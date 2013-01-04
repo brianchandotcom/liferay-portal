@@ -58,15 +58,13 @@ public class RenderStructureFieldAction extends Action {
 			long classPK = ParamUtil.getLong(request, "classPK");
 			String fieldName = ParamUtil.getString(request, "fieldName");
 			String namespace = ParamUtil.getString(request, "namespace");
-			int repeatableIndex = ParamUtil.getInteger(
-				request, "repeatableIndex");
 			boolean readOnly = ParamUtil.getBoolean(request, "readOnly");
 
 			request.setAttribute("aui:form:namespace", namespace);
 
 			String fieldHTML = DDMXSDUtil.getFieldHTMLByName(
-				pageContext, classNameId, classPK, fieldName, repeatableIndex,
-				null, null, null, readOnly, themeDisplay.getLocale());
+				pageContext, classNameId, classPK, fieldName, null, null, null,
+				readOnly, themeDisplay.getLocale());
 
 			response.setContentType(ContentTypes.TEXT_HTML);
 

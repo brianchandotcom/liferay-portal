@@ -1,6 +1,6 @@
 <#include "../init.ftl">
 
-<#assign skipEditorLoading = repeatableIndex != "">
+<#assign skipEditorLoading = paramUtil.getBoolean(request, "p_p_isolated")>
 
 <@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
 	<@liferay_ui["input-editor"] initMethod="${namespacedFieldName}InitEditor" name="${namespacedFieldName}Editor" skipEditorLoading=skipEditorLoading />

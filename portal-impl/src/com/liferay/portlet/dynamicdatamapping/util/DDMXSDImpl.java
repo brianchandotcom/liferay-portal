@@ -54,6 +54,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.util.PwdGenerator;
 import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
 
 import freemarker.ext.servlet.HttpRequestHashModel;
@@ -63,7 +64,6 @@ import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.io.Writer;
 
 import java.net.URL;
@@ -130,27 +130,44 @@ public class DDMXSDImpl implements DDMXSD {
 		Map<String, Object> fieldStructure =
 			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
 
-		int valuesSize = 1;
+		int fieldRepetition = 1;
+
+		FieldsCounter fieldsCounter = getFieldsCounter(
+			pageContext, fields, portletNamespace, namespace);
 
 		if (fields != null) {
 			freeMarkerContext.put("fields", fields);
 
-			String name = element.attributeValue("name");
+			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
-			Field field = fields.get(name);
+			if (fieldsDisplayField != null) {
+				String[] fieldsDisplayValues = StringUtil.split(
+					(String)fieldsDisplayField.getValue());
 
-			if (field != null) {
-				List<Serializable> values = field.getValues(
-					themeDisplay.getLocale());
+				Map<String, Object> parentFieldStructure =
+					(Map<String, Object>)freeMarkerContext.get(
+						"parentFieldStructure");
 
-				valuesSize = values.size();
+				String parentFieldName = (String)parentFieldStructure.get(
+					"name");
+
+				int offset = fieldsCounter.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+				fieldRepetition = countFieldRepetition(
+					fieldsDisplayValues, parentFieldName, offset);
 			}
 		}
 
-		StringBuffer sb = new StringBuffer(valuesSize);
+		String name = element.attributeValue("name");
 
-		for (int i = 0; i < valuesSize; i++) {
-			fieldStructure.put("repeatableIndex", String.valueOf(i));
+		StringBuffer sb = new StringBuffer(fieldRepetition);
+
+		while (fieldRepetition > 0) {
+			fieldStructure.put("fieldNamespace", PwdGenerator.getPassword(4));
+			fieldStructure.put("valueIndex", fieldsCounter.get(name));
+
+			fieldsCounter.incrementKey(name);
+			fieldsCounter.incrementKey(DDMImpl.FIELDS_DISPLAY_NAME);
 
 			String childrenHTML = getHTML(
 				pageContext, element, fields, namespace, mode, readOnly,
@@ -161,6 +178,8 @@ public class DDMXSDImpl implements DDMXSD {
 			sb.append(
 				processFTL(
 					pageContext, element, mode, readOnly, freeMarkerContext));
+
+			fieldRepetition--;
 		}
 
 		return sb.toString();
@@ -168,8 +187,8 @@ public class DDMXSDImpl implements DDMXSD {
 
 	public String getFieldHTMLByName(
 			PageContext pageContext, long classNameId, long classPK,
-			String fieldName, int repeatableIndex, Fields fields,
-			String namespace, String mode, boolean readOnly, Locale locale)
+			String fieldName, Fields fields, String namespace, String mode,
+			boolean readOnly, Locale locale)
 		throws Exception {
 
 		String xsd = getXSD(classNameId, classPK);
@@ -185,11 +204,6 @@ public class DDMXSDImpl implements DDMXSD {
 		Node node = xPathSelector.selectSingleNode(document.getRootElement());
 
 		Element element = (Element)node.asXPathResult(node.getParent());
-
-		if (repeatableIndex > 0) {
-			element.addAttribute(
-				"repeatableIndex", String.valueOf(repeatableIndex));
-		}
 
 		return getFieldHTML(
 			pageContext, element, fields, namespace, mode, readOnly, locale);
@@ -458,6 +472,30 @@ public class DDMXSDImpl implements DDMXSD {
 		return jsonArray;
 	}
 
+	protected int countFieldRepetition(
+		String[] fieldsDisplayValues, String parentFieldName, int offset) {
+
+		int total = 0;
+
+		String fieldName = StringUtil.extractFirst(
+			fieldsDisplayValues[offset], DDMImpl.INSTANCE_SEPARATOR);
+
+		for (; offset < fieldsDisplayValues.length; offset++) {
+			String fieldNameValue = StringUtil.extractFirst(
+				fieldsDisplayValues[offset], DDMImpl.INSTANCE_SEPARATOR);
+
+			if (fieldNameValue.equals(fieldName)) {
+				total++;
+			}
+
+			if (fieldNameValue.equals(parentFieldName)) {
+				break;
+			}
+		}
+
+		return total;
+	}
+
 	protected Map<String, Object> getFieldContext(
 		Element dynamicElementElement, Locale locale) {
 
@@ -494,6 +532,24 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 
 		return field;
+	}
+
+	protected FieldsCounter getFieldsCounter(
+		PageContext pageContext, Fields fields, String portletNamespace,
+		String namespace) {
+
+		String fieldsCounterKey = portletNamespace + namespace + "fieldsCount";
+
+		FieldsCounter fieldsCounter = (FieldsCounter)pageContext.getAttribute(
+			fieldsCounterKey);
+
+		if (fieldsCounter == null) {
+			fieldsCounter = new FieldsCounter();
+
+			pageContext.setAttribute(fieldsCounterKey, fieldsCounter);
+		}
+
+		return fieldsCounter;
 	}
 
 	protected Map<String, Object> getFreeMarkerContext(
@@ -712,5 +768,26 @@ public class DDMXSDImpl implements DDMXSD {
 
 	private TemplateResource _defaultReadOnlyTemplateResource;
 	private TemplateResource _defaultTemplateResource;
+
+	private class FieldsCounter extends HashMap<Object, Integer> {
+
+		@Override
+		public Integer get(Object key) {
+			if (!containsKey(key)) {
+				put(key, 0);
+			}
+
+			return super.get(key);
+		}
+
+		public int incrementKey(Object key) {
+			int value = get(key);
+
+			put(key, value++);
+
+			return value;
+		}
+
+	}
 
 }

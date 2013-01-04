@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.CacheField;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -277,6 +281,12 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return hasField;
 	}
 
+	public boolean isFieldPrivate(String fieldName)
+		throws PortalException, SystemException {
+
+		return GetterUtil.getBoolean(getFieldProperty(fieldName, "private"));
+	}
+
 	public boolean isFieldRepeatable(String fieldName)
 		throws PortalException, SystemException {
 
@@ -384,6 +394,26 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			StringPool.UNDERLINE);
 	}
 
+	private Map<String, String> _getPrivateField(String privateFieldName) {
+		Map<String, String> privateField = new HashMap<String, String>();
+
+		privateField.put("private", "true");
+
+		String dataType = PropsUtil.get(
+			PropsKeys.DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_DATATYPE,
+			new Filter(privateFieldName));
+
+		privateField.put("dataType", dataType);
+
+		String repeatable = PropsUtil.get(
+			PropsKeys.DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_REPEATABLE,
+			new Filter(privateFieldName));
+
+		privateField.put("repeatable", repeatable);
+
+		return privateField;
+	}
+
 	private void _indexFieldsMap(String locale)
 		throws PortalException, SystemException {
 
@@ -425,6 +455,16 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			else {
 				transientFieldsMap.put(name, _getField(element, locale));
 			}
+		}
+
+		String[] privateFieldNames =
+			PropsValues.DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_NAMES;
+
+		for (String privateFieldName : privateFieldNames) {
+			Map<String, String> privateField = _getPrivateField(
+				privateFieldName);
+
+			fieldsMap.put(privateFieldName, privateField);
 		}
 
 		_localizedFieldsMap.put(locale, fieldsMap);

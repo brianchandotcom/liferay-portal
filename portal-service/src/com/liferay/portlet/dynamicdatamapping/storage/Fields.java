@@ -90,13 +90,31 @@ public class Fields implements Serializable {
 	}
 
 	public Iterator<Field> iterator() {
-		return iterator(null);
+		return iterator(false);
 	}
 
-	public Iterator<Field> iterator(Comparator<Field> comparator) {
+	public Iterator<Field> iterator(boolean includePrivateFields) {
+		return iterator(null, includePrivateFields);
+	}
+
+	public Iterator<Field> iterator(
+		Comparator<Field> comparator, boolean includePrivateFields) {
+
 		Collection<Field> fieldsCollection = _fieldsMap.values();
 
-		List<Field> fieldsList = new ArrayList<Field>(fieldsCollection);
+		List<Field> fieldsList = new ArrayList<Field>();
+
+		Iterator<Field> itr = fieldsCollection.iterator();
+
+		while (itr.hasNext()) {
+			Field field = itr.next();
+
+			if (!includePrivateFields && field.isPrivate()) {
+				continue;
+			}
+
+			fieldsList.add(field);
+		}
 
 		if (comparator != null) {
 			Collections.sort(fieldsList, comparator);

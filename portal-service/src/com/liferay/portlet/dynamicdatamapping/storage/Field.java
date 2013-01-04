@@ -173,7 +173,7 @@ public class Field implements Serializable {
 			boolean repeatable = isRepeatable();
 
 			if (repeatable) {
-				return FieldConstants.getSerializable(getType(), values);
+				return FieldConstants.getSerializable(getDataType(), values);
 			}
 
 			return values.get(0);
@@ -197,6 +197,17 @@ public class Field implements Serializable {
 
 	public Map<Locale, List<Serializable>> getValuesMap() {
 		return _valuesMap;
+	}
+
+	public boolean isPrivate() {
+		try {
+			DDMStructure ddmStructure = getDDMStructure();
+
+			return ddmStructure.isFieldPrivate(_name);
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	public boolean isRepeatable() throws PortalException, SystemException {

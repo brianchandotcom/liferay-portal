@@ -51,13 +51,13 @@ public class DDMXSDUtil {
 
 	public static String getFieldHTMLByName(
 			PageContext pageContext, long classNameId, long classPK,
-			String fieldName, int repeatableIndex, Fields fields,
-			String namespace, String mode, boolean readOnly, Locale locale)
+			String fieldName, Fields fields, String namespace, String mode,
+			boolean readOnly, Locale locale)
 		throws Exception {
 
 		return getDDMXSD().getFieldHTMLByName(
-			pageContext, classNameId, classPK, fieldName, repeatableIndex,
-			fields, namespace, mode, readOnly, locale);
+			pageContext, classNameId, classPK, fieldName, fields, namespace,
+			mode, readOnly, locale);
 	}
 
 	public static String getHTML(

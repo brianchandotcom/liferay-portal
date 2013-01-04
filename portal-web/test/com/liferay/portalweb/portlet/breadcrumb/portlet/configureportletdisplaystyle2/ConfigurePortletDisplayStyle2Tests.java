@@ -31,7 +31,7 @@ public class ConfigurePortletDisplayStyle2Tests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageBreadcrumbTest.class);
 		testSuite.addTestSuite(AddPortletBreadcrumbTest.class);
 		testSuite.addTestSuite(ConfigurePortletDisplayStyle2Test.class);
-		testSuite.addTestSuite(AssertConfigurePortletDisplayStyle2Test.class);
+		testSuite.addTestSuite(ViewPortletDisplayStyle2Test.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

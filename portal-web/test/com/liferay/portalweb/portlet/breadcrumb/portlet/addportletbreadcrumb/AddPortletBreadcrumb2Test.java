@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.breadcrumb.portlet.addportletmultiple;
+package com.liferay.portalweb.portlet.breadcrumb.portlet.addportletbreadcrumb;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletBreadcrumb3Test extends BaseTestCase {
-	public void testAddPortletBreadcrumb3() throws Exception {
+public class AddPortletBreadcrumb2Test extends BaseTestCase {
+	public void testAddPortletBreadcrumb2() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -52,7 +52,5 @@ public class AddPortletBreadcrumb3Test extends BaseTestCase {
 		assertTrue(selenium.isVisible("//div[1]/section"));
 		selenium.waitForVisible("//div[2]/section");
 		assertTrue(selenium.isVisible("//div[2]/section"));
-		selenium.waitForVisible("//div[3]/section");
-		assertTrue(selenium.isVisible("//div[3]/section"));
 	}
 }

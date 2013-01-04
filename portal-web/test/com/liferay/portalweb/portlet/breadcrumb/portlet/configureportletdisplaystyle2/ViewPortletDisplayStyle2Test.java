@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.breadcrumb.portlet.configureportletdisplaystyle1;
+package com.liferay.portalweb.portlet.breadcrumb.portlet.configureportletdisplaystyle2;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssertConfigurePortletDisplayStyle1Test extends BaseTestCase {
-	public void testAssertConfigurePortletDisplayStyle1()
-		throws Exception {
+public class ViewPortletDisplayStyle2Test extends BaseTestCase {
+	public void testViewPortletDisplayStyle2() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -30,9 +29,11 @@ public class AssertConfigurePortletDisplayStyle1Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText(
-				"//div[@class='portlet-body']/ul/li[@class='first']/span/a"));
+				"//div[@class='portlet-body']/ul[contains(@class,'breadcrumbs-vertical')]/li[@class='first']/span/a"));
 		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
 			selenium.getText(
-				"//div[@class='portlet-body']/ul/li[@class='last']/span/a"));
+				"//div[@class='portlet-body']/ul[contains(@class,'breadcrumbs-vertical')]/li[@class='last']/span/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='portlet-body']/ul[contains(@class,'breadcrumbs-horizontal')]"));
 	}
 }

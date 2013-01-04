@@ -54,6 +54,10 @@
 	</actiondef>
 
 	<actiondef command="click" description="In the &lt;strong&gt;${PATH.PAGE_NAME}&lt;/strong&gt;, click on the &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; which should have a text value of &lt;strong&gt;&quot;${PATH.VALUE}&quot;&lt;/strong&gt;.">
+		<conditional contains="/input">
+			<function object="Click" command="valueClickAtAndWait" />
+		</conditional>
+
 		<conditional default="true">
 			<function object="Click" command="textClickAt" />
 		</conditional>
@@ -120,6 +124,14 @@
 	</actiondef>
 
 	<actiondef command="selectWindow" description="Select the window to &lt;strong&gt;${PATH.DESCRIPTION}&lt;/strong&gt; (&lt;strong&gt;${PATH.VALUE}&lt;/strong&gt;).">
+		<conditional contains="/iframe">
+			<function object="SelectWindow" command="selectFrame" />
+		</conditional>
+
+		<conditional elements="TOP">
+			<function object="SelectWindow" command="selectFrameTop" />
+		</conditional>
+
 		<conditional default="true">
 			<function object="SelectWindow" command="selectWindow" />
 		</conditional>

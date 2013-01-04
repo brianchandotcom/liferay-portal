@@ -104,6 +104,8 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 
 		List<Element> elementList = tbodyElement.elements("tr");
 
+		sb.append("_paths.put(\"TOP\", \"relative=top\");");
+
 		for (Element element : elementList) {
 			List<Element> paramList = element.elements("td");
 

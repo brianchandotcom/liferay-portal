@@ -160,77 +160,60 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
+	private boolean _isDefaultConditional(Element conditional) {
+		String defaultConditional = conditional.attributeValue("default");
+
+		return (!(defaultConditional == null) &&
+				defaultConditional.equals("true"));
+	}
+
 	private String _processActionDef(Element actionDef) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		List<Element> conditionals = actionDef.elements("conditional");
 
-		Element firstConditional = conditionals.get(0);
+		boolean isFirstConditional = true;
+		boolean hasDefaultConditional = false;
 
-		String conditionalDefault = firstConditional.attributeValue("default");
+		for (Element conditional : conditionals) {
+			boolean isDefaultConditional = _isDefaultConditional(conditional);
 
-		if (!(conditionalDefault == null) &&
-			conditionalDefault.equals("true")) {
+			if (isFirstConditional && isDefaultConditional) {
+				hasDefaultConditional = true;
+				isFirstConditional = false;
 
-			sb.append(processBlockCommands(firstConditional, _validCommands));
-		}
-		else {
-			boolean isFirstConditional = true;
+				sb.append(processBlockCommands(conditional, _validCommands));
 
-			for (Element conditional : conditionals) {
-				if (isFirstConditional) {
-					isFirstConditional = false;
+				break;
+			}
+			else if (isDefaultConditional) {
+				hasDefaultConditional = true;
 
-					sb.append("if (");
-				}
-				else {
-					sb.append("else if (");
-				}
+				sb.append("else {");
+				sb.append(processBlockCommands(conditional, _validCommands));
+				sb.append("}");
+			}
+			else if (isFirstConditional) {
+				isFirstConditional = false;
 
+				sb.append("if (");
 				sb.append(_processConditional(conditional));
-
 				sb.append(") {");
 				sb.append(processBlockCommands(conditional, _validCommands));
 				sb.append("}");
 			}
+			else {
+				sb.append("else if (");
+				sb.append(_processConditional(conditional));
+				sb.append(") {");
+				sb.append(processBlockCommands(conditional, _validCommands));
+				sb.append("}");
+			}
+		}
 
+		if (!hasDefaultConditional) {
 			sb.append("else {");
-
-			String actionDefCommand = actionDef.attributeValue("command");
-
-			String functionObjectName = StringUtil.upperCaseFirstLetter(
-				actionDefCommand);
-
-			String functionReturnType = functionMethodReturnTypeMap.get(
-				functionObjectName);
-
-			if (!functionReturnType.equals("void")) {
-				sb.append("return ");
-			}
-
-			sb.append("super.");
-			sb.append(actionDefCommand);
-
-			List<String> paramSuffixList = functionMethodParamListMap.get(
-				functionObjectName);
-
-			String paramList = "";
-
-			for (String paramSuffix : paramSuffixList) {
-				String paramPair = "params[0], params[1], ";
-
-				paramPair = StringUtil.replace(
-					paramPair, "params", "params" + paramSuffix);
-
-				paramList += paramPair;
-			}
-
-			paramList = paramList.substring(0, paramList.length() - 2);
-
-			sb.append("(");
-			sb.append(paramList);
-			sb.append(");\n");
-
+			sb.append(_processCommandSuper(actionDef));
 			sb.append("}");
 		}
 
@@ -305,8 +288,61 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
+	private String _processCommandSuper(Element actionDef) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		String actionDefCommand = actionDef.attributeValue("command");
+
+		String functionObjectName = StringUtil.upperCaseFirstLetter(
+			actionDefCommand);
+
+		String functionReturnType = functionMethodReturnTypeMap.get(
+			functionObjectName);
+
+		if (!functionReturnType.equals("void")) {
+			sb.append("return ");
+		}
+
+		sb.append("super.");
+		sb.append(actionDefCommand);
+
+		List<String> paramSuffixList = functionMethodParamListMap.get(
+			functionObjectName);
+
+		String paramList = "";
+
+		for (String paramSuffix : paramSuffixList) {
+			String paramPair = "params[0], params[1], ";
+
+			paramPair = StringUtil.replace(
+				paramPair, "params", "params" + paramSuffix);
+
+			paramList += paramPair;
+		}
+
+		paramList = paramList.substring(0, paramList.length() - 2);
+
+		sb.append("(");
+		sb.append(paramList);
+		sb.append(");\n");
+
+		return sb.toString();
+	}
+
 	private String _processConditional(Element conditional) throws Exception {
 		List<String> clauseList = new ArrayList<String>();
+
+		String contains = conditional.attributeValue("contains");
+
+		if (!(contains == null) && !contains.equals("")) {
+			StringBundler sbConditional = new StringBundler();
+
+			sbConditional.append("params[0].contains(\"");
+			sbConditional.append(contains);
+			sbConditional.append("\")");
+
+			clauseList.add(sbConditional.toString());
+		}
 
 		String elements = conditional.attributeValue("elements");
 
@@ -343,7 +379,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		if (!(startswith == null) && !startswith.equals("")) {
 			StringBundler sbConditional = new StringBundler();
 
-			sbConditional.append("target.startsWith(\"");
+			sbConditional.append("params[0].startsWith(\"");
 			sbConditional.append(startswith);
 			sbConditional.append("\")");
 

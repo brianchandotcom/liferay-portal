@@ -894,7 +894,7 @@ public class SitesUtil {
 	}
 
 	public static void mergeLayoutSetPrototypeLayouts(
-		Group group, LayoutSet layoutSet)
+			Group group, LayoutSet layoutSet)
 		throws Exception {
 
 		if (!layoutSet.isLayoutSetPrototypeLinkActive() ||

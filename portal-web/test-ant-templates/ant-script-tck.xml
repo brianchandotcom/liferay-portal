@@ -4,6 +4,8 @@
 	<import file="../../build-test-tck.xml" />
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-firefox">
+		<antcall target="print-scm-revision" />
+
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="run-${test.ant.script.command}-tomcat" />

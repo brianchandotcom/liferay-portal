@@ -4,6 +4,8 @@
 	<import file="../../build-test.xml" />
 
 	<target name="test-${test.ant.script.command}-tomcat-db2-firefox">
+		<antcall target="print-scm-revision" />
+
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-vm-server">
@@ -23,6 +25,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-firefox">
+		<antcall target="print-scm-revision" />
+
 		<antcall target="clean-up-test-properties" />
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test">
@@ -31,6 +35,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-oracle-10-firefox">
+		<antcall target="print-scm-revision" />
+
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-vm-server">
@@ -50,6 +56,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-oracle-11-firefox">
+		<antcall target="print-scm-revision" />
+
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-vm-server">
@@ -69,6 +77,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-postgresql-8.4-firefox">
+		<antcall target="print-scm-revision" />
+
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-vm-server">
@@ -88,6 +98,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-postgresql-9.0-firefox">
+		<antcall target="print-scm-revision" />
+
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-vm-server">
@@ -107,6 +119,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-sql-server-2005-firefox">
+		<antcall target="print-scm-revision" />
+
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-vm-server">
@@ -126,6 +140,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-sql-server-2008-firefox">
+		<antcall target="print-scm-revision" />
+
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-vm-server">
@@ -145,6 +161,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-sybase-firefox">
+		<antcall target="print-scm-revision" />
+
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-vm-server">

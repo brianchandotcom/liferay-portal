@@ -43,9 +43,10 @@ public class DeleteTagTest extends BaseTestCase {
 			selenium.getText("xPath=(//span[@class='tag-item']/a)[2]"));
 		selenium.clickAt("xPath=(//span[@class='tag-item']/a)[2]",
 			RuntimeVariables.replace("selenium2 liferay2"));
-		selenium.waitForText("//div/h1/span", "selenium2 liferay2");
+		selenium.waitForText("//div[@class='view-tag']/div/h1/span",
+			"selenium2 liferay2");
 		assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
-			selenium.getText("//div/h1/span"));
+			selenium.getText("//div[@class='view-tag']/div/h1/span"));
 		selenium.clickAt("//input[@value='Delete']",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForConfirmation(

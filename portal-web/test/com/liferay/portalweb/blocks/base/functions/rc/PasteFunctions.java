@@ -24,12 +24,12 @@ public class PasteFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void paste(String param1, String param2) throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.paste(param1);
+	public void paste(String target, String value) throws Exception {
+		selenium.waitForVisible(target);
+		selenium.paste(target);
 	}
 
-	public void pasteCKEditor(String param1, String param2)
+	public void pasteCKEditor(String target, String value)
 		throws Exception {
 		selenium.waitForElementPresent(
 			"//textarea[@id='_161_editor' and @style='display: none;']");
@@ -46,8 +46,8 @@ public class PasteFunctions extends BaseFunctions {
 			"//textarea[@id='_161_editor' and @style='display: none;']");
 		selenium.waitForVisible("//td[@id='cke_contents__161_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__161_editor']/iframe");
-		selenium.waitForText("//body", param2);
-		selenium.assertText("//body", param2);
+		selenium.waitForText("//body", value);
+		selenium.assertText("//body", value);
 		selenium.selectFrame("relative=top");
 	}
 }

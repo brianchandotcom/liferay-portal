@@ -24,93 +24,93 @@ public class ClickFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void click(String param1, String param2) throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.click(param1);
+	public void click(String target, String value) throws Exception {
+		selenium.waitForVisible(target);
+		selenium.click(target);
 	}
 
-	public void clickAndWait(String param1, String param2)
+	public void clickAndWait(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.clickAndWait(param1);
+		selenium.waitForVisible(target);
+		selenium.clickAndWait(target);
 	}
 
-	public void clickAt(String param1, String param2) throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.clickAt(param1, param2);
+	public void clickAt(String target, String value) throws Exception {
+		selenium.waitForVisible(target);
+		selenium.clickAt(target, value);
 	}
 
-	public void clickAtAndWait(String param1, String param2)
+	public void clickAtAndWait(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.clickAtAndWait(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.clickAtAndWait(target, value);
 	}
 
-	public void partialTextClick(String param1, String param2)
+	public void partialTextClick(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForPartialText(param1, param2);
-		selenium.assertPartialText(param1, param2);
-		selenium.click(param1);
+		selenium.waitForVisible(target);
+		selenium.waitForPartialText(target, value);
+		selenium.assertPartialText(target, value);
+		selenium.click(target);
 	}
 
-	public void partialTextClickAndWait(String param1, String param2)
+	public void partialTextClickAndWait(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForPartialText(param1, param2);
-		selenium.assertPartialText(param1, param2);
-		selenium.clickAndWait(param1);
+		selenium.waitForVisible(target);
+		selenium.waitForPartialText(target, value);
+		selenium.assertPartialText(target, value);
+		selenium.clickAndWait(target);
 	}
 
-	public void partialTextClickAt(String param1, String param2)
+	public void partialTextClickAt(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForPartialText(param1, param2);
-		selenium.assertPartialText(param1, param2);
-		selenium.clickAt(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.waitForPartialText(target, value);
+		selenium.assertPartialText(target, value);
+		selenium.clickAt(target, value);
 	}
 
-	public void partialTextClickAtAndWait(String param1, String param2)
+	public void partialTextClickAtAndWait(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForPartialText(param1, param2);
-		selenium.assertPartialText(param1, param2);
-		selenium.clickAtAndWait(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.waitForPartialText(target, value);
+		selenium.assertPartialText(target, value);
+		selenium.clickAtAndWait(target, value);
 	}
 
-	public void textClick(String param1, String param2)
+	public void textClick(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForText(param1, param2);
-		selenium.assertText(param1, param2);
-		selenium.click(param1);
+		selenium.waitForVisible(target);
+		selenium.waitForText(target, value);
+		selenium.assertText(target, value);
+		selenium.click(target);
 	}
 
-	public void textClickAndWait(String param1, String param2)
+	public void textClickAndWait(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForText(param1, param2);
-		selenium.assertText(param1, param2);
-		selenium.clickAndWait(param1);
+		selenium.waitForVisible(target);
+		selenium.waitForText(target, value);
+		selenium.assertText(target, value);
+		selenium.clickAndWait(target);
 	}
 
-	public void textClickAt(String param1, String param2)
+	public void textClickAt(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForText(param1, param2);
-		selenium.assertText(param1, param2);
-		selenium.clickAt(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.waitForText(target, value);
+		selenium.assertText(target, value);
+		selenium.clickAt(target, value);
 	}
 
-	public void textClickAtAndWait(String param1, String param2)
+	public void textClickAtAndWait(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForText(param1, param2);
-		selenium.assertText(param1, param2);
-		selenium.clickAtAndWait(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.waitForText(target, value);
+		selenium.assertText(target, value);
+		selenium.clickAtAndWait(target, value);
 	}
 
-	public void textClickAtHomeClickDockbar(String param1, String param2)
+	public void textClickAtHomeClickDockbar(String target, String value)
 		throws Exception {
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
@@ -118,55 +118,55 @@ public class ClickFunctions extends BaseFunctions {
 		selenium.clickAt("//div[@id='dockbar']", "");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]");
-		clickFunctions.textClickAt(param1, param2);
+		clickFunctions.textClickAt(target, value);
 	}
 
-	public void textClickAtPause(String param1, String param2)
+	public void textClickAtPause(String target, String value)
 		throws Exception {
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
 		selenium.pause("1000");
-		clickFunctions.textClickAt(param1, param2);
+		clickFunctions.textClickAt(target, value);
 	}
 
-	public void valueClick(String param1, String param2)
+	public void valueClick(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForValue(param1, param2);
-		selenium.assertValue(param1, param2);
-		selenium.click(param1);
+		selenium.waitForVisible(target);
+		selenium.waitForValue(target, value);
+		selenium.assertValue(target, value);
+		selenium.click(target);
 	}
 
-	public void valueClickAndWait(String param1, String param2)
+	public void valueClickAndWait(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForValue(param1, param2);
-		selenium.assertValue(param1, param2);
-		selenium.clickAndWait(param1);
+		selenium.waitForVisible(target);
+		selenium.waitForValue(target, value);
+		selenium.assertValue(target, value);
+		selenium.clickAndWait(target);
 	}
 
-	public void valueClickAt(String param1, String param2)
+	public void valueClickAt(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForValue(param1, param2);
-		selenium.assertValue(param1, param2);
-		selenium.clickAt(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.waitForValue(target, value);
+		selenium.assertValue(target, value);
+		selenium.clickAt(target, value);
 	}
 
-	public void valueClickAtAndWait(String param1, String param2)
+	public void valueClickAtAndWait(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForValue(param1, param2);
-		selenium.assertValue(param1, param2);
-		selenium.clickAtAndWait(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.waitForValue(target, value);
+		selenium.assertValue(target, value);
+		selenium.clickAtAndWait(target, value);
 	}
 
-	public void valueClickAtAndWaitCPBlogsCKEditor(String param1, String param2)
+	public void valueClickAtAndWaitCPBlogsCKEditor(String target, String value)
 		throws Exception {
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
 		selenium.waitForElementPresent(
 			"//textarea[@id='_161_editor' and @style='display: none;']");
-		clickFunctions.valueClickAtAndWait(param1, param2);
+		clickFunctions.valueClickAtAndWait(target, value);
 	}
 }

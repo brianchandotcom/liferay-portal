@@ -24,15 +24,14 @@ public class CopyFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void textCopy(String param1, String param2)
-		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.copyText(param1);
+	public void textCopy(String target, String value) throws Exception {
+		selenium.waitForVisible(target);
+		selenium.copyText(target);
 	}
 
-	public void valueCopy(String param1, String param2)
+	public void valueCopy(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.copyValue(param1);
+		selenium.waitForVisible(target);
+		selenium.copyValue(target);
 	}
 }

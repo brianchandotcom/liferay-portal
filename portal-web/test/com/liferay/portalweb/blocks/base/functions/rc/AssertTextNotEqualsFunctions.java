@@ -24,10 +24,10 @@ public class AssertTextNotEqualsFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void assertNotText(String param1, String param2)
+	public void assertNotText(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForNotText(param1, param2);
-		selenium.assertNotText(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.waitForNotText(target, value);
+		selenium.assertNotText(target, value);
 	}
 }

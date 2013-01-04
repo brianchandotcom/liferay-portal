@@ -19,28 +19,15 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UncheckFunctions extends BaseFunctions {
-	public UncheckFunctions(LiferaySelenium liferaySelenium) {
+public class IsVisibleFunctions extends BaseFunctions {
+	public IsVisibleFunctions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 	}
 
-	public void click(String target, String value) throws Exception {
-		selenium.waitForVisible(target);
+	public boolean isVisible(String target, String value)
+		throws Exception {
+		selenium.pause("1000");
 
-		if (selenium.isChecked(target)) {
-			selenium.click(target);
-		}
-
-		selenium.assertNotChecked(target);
-	}
-
-	public void clickAt(String target, String value) throws Exception {
-		selenium.waitForVisible(target);
-
-		if (selenium.isChecked(target)) {
-			selenium.clickAt(target, value);
-		}
-
-		selenium.assertNotChecked(target);
+		return selenium.isVisible(target);
 	}
 }

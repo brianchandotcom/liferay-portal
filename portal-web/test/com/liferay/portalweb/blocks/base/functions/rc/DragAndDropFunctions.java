@@ -24,11 +24,11 @@ public class DragAndDropFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void dragAndDrop(String path1, String value1, String path2,
+	public void dragAndDrop(String target1, String value1, String target2,
 		String value2) throws Exception {
-		selenium.waitForVisible("" + path1 + "");
-		selenium.waitForText("" + path1 + "", "" + value1 + "");
-		selenium.waitForVisible("" + path2 + "");
-		selenium.dragAndDropToObject("" + path1 + "", "" + path2 + "");
+		selenium.waitForVisible("" + target1 + "");
+		selenium.waitForText("" + target1 + "", "" + value1 + "");
+		selenium.waitForVisible("" + target2 + "");
+		selenium.dragAndDropToObject("" + target1 + "", "" + target2 + "");
 	}
 }

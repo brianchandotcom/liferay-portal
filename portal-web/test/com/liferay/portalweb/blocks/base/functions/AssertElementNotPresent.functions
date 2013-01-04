@@ -1,4 +1,4 @@
-<functions>
+<functions object="AssertElementNotPresent">
 	<functiondef command="assertElementNotPresent" default="true">
 		<if command="isElementPresent">
 			<selenium command="waitForNotVisible" />

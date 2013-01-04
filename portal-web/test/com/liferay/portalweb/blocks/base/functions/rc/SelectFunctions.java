@@ -24,14 +24,14 @@ public class SelectFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void select(String param1, String param2) throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.select(param1, param2);
+	public void select(String target, String value) throws Exception {
+		selenium.waitForVisible(target);
+		selenium.select(target, value);
 	}
 
-	public void selectAndWait(String param1, String param2)
+	public void selectAndWait(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.selectAndWait(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.selectAndWait(target, value);
 	}
 }

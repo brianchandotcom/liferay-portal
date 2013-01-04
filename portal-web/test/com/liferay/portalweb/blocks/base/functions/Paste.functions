@@ -1,4 +1,4 @@
-<functions>
+<functions object="Paste">
 	<functiondef command="paste" default="true">
 		<selenium command="waitForVisible" />
 		<selenium command="paste" />

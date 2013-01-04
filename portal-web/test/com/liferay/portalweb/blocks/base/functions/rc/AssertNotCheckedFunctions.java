@@ -24,9 +24,9 @@ public class AssertNotCheckedFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void assertNotChecked(String param1, String param2)
+	public void assertNotChecked(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.assertNotChecked(param1);
+		selenium.waitForVisible(target);
+		selenium.assertNotChecked(target);
 	}
 }

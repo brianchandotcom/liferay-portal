@@ -24,24 +24,24 @@ public class SelectWindowFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void selectFrame(String param1, String param2)
+	public void selectFrame(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.selectFrame(param1);
+		selenium.waitForVisible(target);
+		selenium.selectFrame(target);
 	}
 
-	public void selectFrameTop(String param1, String param2)
+	public void selectFrameTop(String target, String value)
 		throws Exception {
 		selenium.selectFrame("relative=top");
 	}
 
-	public void selectWindow(String param1, String param2)
+	public void selectWindow(String target, String value)
 		throws Exception {
 		selenium.pause("5000");
-		selenium.selectWindow(param1);
+		selenium.selectWindow(target);
 	}
 
-	public void selectWindowTop(String param1, String param2)
+	public void selectWindowTop(String target, String value)
 		throws Exception {
 		selenium.pause("5000");
 		selenium.selectWindow("null");

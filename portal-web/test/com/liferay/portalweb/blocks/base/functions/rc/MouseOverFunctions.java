@@ -24,29 +24,29 @@ public class MouseOverFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void mouseOver(String param1, String param2)
+	public void mouseOver(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.mouseOver(param1);
+		selenium.waitForVisible(target);
+		selenium.mouseOver(target);
 	}
 
-	public void partialTextMouseOver(String param1, String param2)
+	public void partialTextMouseOver(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForPartialText(param1, param2);
-		selenium.assertPartialText(param1, param2);
-		selenium.mouseOver(param1);
+		selenium.waitForVisible(target);
+		selenium.waitForPartialText(target, value);
+		selenium.assertPartialText(target, value);
+		selenium.mouseOver(target);
 	}
 
-	public void textMouseOver(String param1, String param2)
+	public void textMouseOver(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForText(param1, param2);
-		selenium.assertText(param1, param2);
-		selenium.mouseOver(param1);
+		selenium.waitForVisible(target);
+		selenium.waitForText(target, value);
+		selenium.assertText(target, value);
+		selenium.mouseOver(target);
 	}
 
-	public void textMouseOverHomeClickDockbar(String param1, String param2)
+	public void textMouseOverHomeClickDockbar(String target, String value)
 		throws Exception {
 		MouseOverFunctions mouseOverFunctions = new MouseOverFunctions(selenium);
 
@@ -54,14 +54,14 @@ public class MouseOverFunctions extends BaseFunctions {
 		selenium.clickAt("//div[@id='dockbar']", "");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]");
-		mouseOverFunctions.textMouseOver(param1, param2);
+		mouseOverFunctions.textMouseOver(target, value);
 	}
 
-	public void valueMouseOver(String param1, String param2)
+	public void valueMouseOver(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForValue(param1, param2);
-		selenium.assertValue(param1, param2);
-		selenium.mouseOver(param1);
+		selenium.waitForVisible(target);
+		selenium.waitForValue(target, value);
+		selenium.assertValue(target, value);
+		selenium.mouseOver(target);
 	}
 }

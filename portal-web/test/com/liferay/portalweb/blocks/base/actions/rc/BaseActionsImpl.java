@@ -51,7 +51,7 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public void assertChecked(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		AssertCheckedFunctions assertCheckedFunctions =
 			new AssertCheckedFunctions(selenium);
@@ -62,7 +62,7 @@ public class BaseActionsImpl implements LiferayActions {
 	public void assertElementNotPresent(String param1, String param2)
 		throws Exception {
 
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		AssertElementNotPresentFunctions assertElementNotPresentFunctions =
 			new AssertElementNotPresentFunctions(selenium);
@@ -74,7 +74,7 @@ public class BaseActionsImpl implements LiferayActions {
 	public void assertElementPresent(String param1, String param2)
 		throws Exception {
 
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		AssertElementPresentFunctions assertElementPresentFunctions =
 			new AssertElementPresentFunctions(selenium);
@@ -86,7 +86,7 @@ public class BaseActionsImpl implements LiferayActions {
 	public void assertNotChecked(String param1, String param2)
 		throws Exception {
 
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		AssertNotCheckedFunctions assertNotCheckedFunctions =
 			new AssertNotCheckedFunctions(selenium);
@@ -97,7 +97,7 @@ public class BaseActionsImpl implements LiferayActions {
 	public void assertTextEquals(String param1, String param2)
 		throws Exception {
 
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		AssertTextEqualsFunctions assertTextEqualsFunctions =
 			new AssertTextEqualsFunctions(selenium);
@@ -108,7 +108,7 @@ public class BaseActionsImpl implements LiferayActions {
 	public void assertTextNotEquals(String param1, String param2)
 		throws Exception {
 
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		AssertTextNotEqualsFunctions assertTextNotEqualsFunctions =
 			new AssertTextNotEqualsFunctions(selenium);
@@ -119,7 +119,7 @@ public class BaseActionsImpl implements LiferayActions {
 	public void assertTextNotPresent(String param1, String param2)
 		throws Exception {
 
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		AssertTextNotPresentFunctions assertTextNotPresentFunctions =
 			new AssertTextNotPresentFunctions(selenium);
@@ -131,7 +131,7 @@ public class BaseActionsImpl implements LiferayActions {
 	public void assertTextPresent(String param1, String param2)
 		throws Exception {
 
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		AssertTextPresentFunctions assertTextPresentFunctions =
 			new AssertTextPresentFunctions(selenium);
@@ -140,7 +140,7 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public void check(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		CheckFunctions checkFunctions = new CheckFunctions(selenium);
 
@@ -148,7 +148,7 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public void click(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
@@ -156,7 +156,7 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public void close(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		CloseFunctions closeFunctions = new CloseFunctions(selenium);
 
@@ -164,7 +164,7 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public void confirm(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		ConfirmFunctions confirmFunctions = new ConfirmFunctions(selenium);
 
@@ -172,7 +172,7 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public void copy(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		CopyFunctions copyFunctions = new CopyFunctions(selenium);
 
@@ -183,8 +183,8 @@ public class BaseActionsImpl implements LiferayActions {
 		String path1, String value1, String path2, String value2)
 			throws Exception {
 
-		String[] params1 = getParams(path1, value1);
-		String[] params2 = getParams(path2, value2);
+		String[] params1 = ActionsUtil.getParams(paths, path1, value1);
+		String[] params2 = ActionsUtil.getParams(paths, path2, value2);
 
 		DragAndDropFunctions dragAndDropFunctions = new DragAndDropFunctions(
 			selenium);
@@ -193,14 +193,10 @@ public class BaseActionsImpl implements LiferayActions {
 			params1[0], params1[1], params2[0], params2[1]);
 	}
 
-	public String get(String key) throws Exception {
-		return paths.get(key);
-	}
-
 	public boolean isElementPresent(String param1, String param2)
 		throws Exception {
 
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		selenium.pause("1000");
 
@@ -208,13 +204,13 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public boolean isVisible(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		return selenium.isVisible(params[0]);
 	}
 
 	public void mouseOver(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		MouseOverFunctions mouseOverFunctions = new MouseOverFunctions(
 			selenium);
@@ -223,7 +219,7 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public void open(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		OpenFunctions openFunctions = new OpenFunctions(selenium);
 
@@ -231,7 +227,7 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public void paste(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		PasteFunctions pasteFunctions = new PasteFunctions(selenium);
 
@@ -239,7 +235,7 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public void select(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		SelectFunctions selectFunctions = new SelectFunctions(selenium);
 
@@ -247,7 +243,7 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public void selectWindow(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		SelectWindowFunctions selectWindowFunctions = new SelectWindowFunctions(
 			selenium);
@@ -256,7 +252,7 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public void type(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
@@ -264,31 +260,11 @@ public class BaseActionsImpl implements LiferayActions {
 	}
 
 	public void uncheck(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		UncheckFunctions uncheckFunctions = new UncheckFunctions(selenium);
 
 		uncheckFunctions.clickAt(params[0], params[1]);
-	}
-
-	protected String[] getParams(String param1, String param2) {
-		String[] params = new String[2];
-
-		if (paths.containsKey(param1)) {
-			params[0] = paths.get(param1);
-		}
-		else {
-			params[0] = param1;
-		}
-
-		if (param2 == null) {
-			params[1] = "";
-		}
-		else {
-			params[1] = param2;
-		}
-
-		return params;
 	}
 
 	protected Map<String, String> paths;

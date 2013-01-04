@@ -94,6 +94,9 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append(";\n\n");
 
 		sb.append("import com.liferay.portalweb.blocks.base.actions.rc.");
+		sb.append("ActionsUtil;\n");
+
+		sb.append("import com.liferay.portalweb.blocks.base.actions.rc.");
 		sb.append("BaseActionsImpl;\n");
 
 		sb.append("import com.liferay.portalweb.blocks.base.actions.rc.");
@@ -204,7 +207,8 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 			sb.append(actionDefCommand);
 			sb.append("(String param1, String param2) throws Exception {\n");
 
-			sb.append("String[] params = getParams(param1, param2);\n\n");
+			sb.append("String[] params = ");
+			sb.append("ActionsUtil.getParams(paths, param1, param2);\n\n");
 
 			sb.append(processBlockObjectDeclaractions(actionDef));
 

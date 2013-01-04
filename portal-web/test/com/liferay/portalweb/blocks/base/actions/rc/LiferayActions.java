@@ -50,8 +50,6 @@ public interface LiferayActions {
 
 	public void copy(String param1, String param2) throws Exception;
 
-	public String get(String key) throws Exception;
-
 	public boolean isElementPresent(String param1, String param2)
 		throws Exception;
 

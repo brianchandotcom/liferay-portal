@@ -555,8 +555,8 @@ public class SitesUtil {
 			Group group = layoutSetPrototype.getGroup();
 
 			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-					layout.getSourcePrototypeLayoutUuid(), group.getGroupId(),
-					layout.isPrivateLayout());
+				layout.getSourcePrototypeLayoutUuid(), group.getGroupId(),
+				layout.isPrivateLayout());
 		}
 		catch (Exception e) {
 			_log.error(

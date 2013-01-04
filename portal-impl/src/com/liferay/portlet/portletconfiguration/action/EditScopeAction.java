@@ -216,8 +216,8 @@ public class EditScopeAction extends EditConfigurationAction {
 				preferences.getValue("lfrScopeLayoutUuid", null));
 
 			try {
-				Layout scopeLayout = LayoutLocalServiceUtil.
-					getLayoutByUuidAndGroupId(
+				Layout scopeLayout =
+					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 						scopeLayoutUuid, layout.getGroupId(),
 						layout.isPrivateLayout());
 

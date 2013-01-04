@@ -32,8 +32,7 @@ String layoutBreadcrumb = StringPool.BLANK;
 
 if (Validator.isNotNull(layoutUuid)) {
 	try {
-		selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getParentGroupId(),
-			privateLayout);
+		selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getParentGroupId(), privateLayout);
 
 		layoutBreadcrumb = _getLayoutBreadcrumb(selLayout, locale);
 	}

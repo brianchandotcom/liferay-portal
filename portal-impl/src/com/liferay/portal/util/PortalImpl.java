@@ -2243,9 +2243,8 @@ public class PortalImpl implements Portal {
 			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
 				groupId, articleUrlTitle);
 
-		Layout layout =
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-				journalArticle.getLayoutUuid(), groupId, privateLayout);
+		Layout layout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+			journalArticle.getLayoutUuid(), groupId, privateLayout);
 
 		String layoutActualURL = getLayoutActualURL(layout, mainPath);
 
@@ -3782,8 +3781,8 @@ public class PortalImpl implements Portal {
 				String scopeLayoutUuid = GetterUtil.getString(
 					portletSetup.getValue("lfrScopeLayoutUuid", null));
 
-				Layout scopeLayout = LayoutLocalServiceUtil.
-					getLayoutByUuidAndGroupId(
+				Layout scopeLayout =
+					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 						scopeLayoutUuid, layout.getGroupId(),
 						layout.isPrivateLayout());
 

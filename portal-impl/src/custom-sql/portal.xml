@@ -172,17 +172,6 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByNullFriendlyURL">
-		<![CDATA[
-			SELECT
-				{Group_.*}
-			FROM
-				Group_
-			WHERE
-				(Group_.type_ != 4 OR Group_.type_ IS NULL) AND
-				(friendlyURL = '' OR friendlyURL IS NULL OR friendlyURL = '/null')
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByNoLayouts">
 		<![CDATA[
 			SELECT
@@ -197,6 +186,17 @@
 				(Group_.type_ != 4) AND
 				(LayoutSet.privateLayout = ?) AND
 				(LayoutSet.pageCount = 0)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByNullFriendlyURL">
+		<![CDATA[
+			SELECT
+				{Group_.*}
+			FROM
+				Group_
+			WHERE
+				(Group_.type_ != 4 OR Group_.type_ IS NULL) AND
+				(friendlyURL = '' OR friendlyURL IS NULL OR friendlyURL = '/null')
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findBySystem">

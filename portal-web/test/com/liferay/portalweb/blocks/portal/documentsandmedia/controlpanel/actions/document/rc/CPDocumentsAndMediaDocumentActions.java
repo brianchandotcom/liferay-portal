@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.actions.document.rc;
 
+import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
 import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
 import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.AssertTextEqualsFunctions;
@@ -32,7 +33,7 @@ public class CPDocumentsAndMediaDocumentActions extends BaseActionsImpl
 
 	public void assertTextEquals(String param1, String param2)
 		throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 
@@ -46,7 +47,7 @@ public class CPDocumentsAndMediaDocumentActions extends BaseActionsImpl
 	}
 
 	public void click(String param1, String param2) throws Exception {
-		String[] params = getParams(param1, param2);
+		String[] params = ActionsUtil.getParams(paths, param1, param2);
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 

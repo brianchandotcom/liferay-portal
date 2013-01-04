@@ -16,16 +16,16 @@
 			<param name="portlet" value="Users and Organizations" />
 		</macro>
 
-		<action object="CPUsersAndOrganizationsHome" command="click" path="USERS_SEARCH_ALL" value="Search All Users" />
+		<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
 
-		<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" path="BASIC_SEARCH_FIELD" value="userfn" />
-		<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="BASIC_SEARCH_BUTTON" value="Search" />
-		<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="USERS_USER_1_FIRST_NAME" value="userfn" />
+		<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" target="BASIC_SEARCH_FIELD" value="userfn" />
+		<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_BUTTON" value="Search" />
+		<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="USERS_USER_1_FIRST_NAME" value="userfn" />
 
-		<action object="CPUsersAndOrganizationsEditUser" command="assertTextEquals" path="USER_SCREEN_NAME" value="usersn" />
-		<action object="CPUsersAndOrganizationsEditUser" command="assertTextEquals" path="USER_EMAIL_ADDRESS" value="userea@liferay.com" />
-		<action object="CPUsersAndOrganizationsEditUser" command="assertTextEquals" path="USER_FIRST_NAME" value="userfn" />
-		<action object="CPUsersAndOrganizationsEditUser" command="assertTextEquals" path="USER_LAST_NAME" value="userln" />
+		<action object="CPUsersAndOrganizationsEditUser" command="assertTextEquals" target="USER_SCREEN_NAME" value="usersn" />
+		<action object="CPUsersAndOrganizationsEditUser" command="assertTextEquals" target="USER_EMAIL_ADDRESS" value="userea@liferay.com" />
+		<action object="CPUsersAndOrganizationsEditUser" command="assertTextEquals" target="USER_FIRST_NAME" value="userfn" />
+		<action object="CPUsersAndOrganizationsEditUser" command="assertTextEquals" target="USER_LAST_NAME" value="userln" />
 	</steps>
 	<teardown>
 		<macro object="CPUsersAndOrganizationsUsers" command="tearDown">

@@ -37,6 +37,9 @@ public class PortletSignInHomeActions extends BaseLiferayActions {
 				target.equals("SAVE_LINK") || target.equals("SIGN_IN_LINK"))) {
 			clickFunctions.valueClickAtAndWait(params[0], params[1]);
 		}
+		else if ((target.equals("SIGN_OUT_LINK"))) {
+			clickFunctions.textClickAtAndWait(params[0], params[1]);
+		}
 		else {
 			super.click(params[0], params[1]);
 		}

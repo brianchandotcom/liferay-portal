@@ -13,15 +13,15 @@
 				<param name="portlet" value="Roles" />
 			</macro>
 
-			<action object="CPRolesHome" command="click" path="TOOLBAR_ADD_BUTTON" value="Add" />
-			<action object="CPRolesHome" command="click" path="ADD_ORGANIZATION_ROLE" value="Organization Role" />
+			<action object="CPRolesHome" command="click" target="TOOLBAR_ADD_BUTTON" value="Add" />
+			<action object="CPRolesHome" command="click" target="ADD_ORGANIZATION_ROLE" value="Organization Role" />
 
-			<action object="CPRolesAddRole" command="type" path="ROLE_NAME" value="${name}" />
-			<action object="CPRolesAddRole" command="type" path="ROLE_TITLE" value="${title}" />
-			<action object="CPRolesAddRole" command="type" path="ROLE_DESCRIPTION" value="${description}" />
-			<action object="CPRolesAddRole" command="click" path="BUTTON_SAVE" value="Save" />
+			<action object="CPRolesAddRole" command="type" target="ROLE_NAME" value="${name}" />
+			<action object="CPRolesAddRole" command="type" target="ROLE_TITLE" value="${title}" />
+			<action object="CPRolesAddRole" command="type" target="ROLE_DESCRIPTION" value="${description}" />
+			<action object="CPRolesAddRole" command="click" target="BUTTON_SAVE" value="Save" />
 
-			<action object="CPRolesHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+			<action object="CPRolesHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
 		</steps>
 	</macrodef>
 
@@ -39,15 +39,15 @@
 				<param name="portlet" value="Roles" />
 			</macro>
 
-			<action object="CPRolesHome" command="click" path="TOOLBAR_ADD_BUTTON" value="Add" />
-			<action object="CPRolesHome" command="click" path="ADD_REGULAR_ROLE" value="Regular Role" />
+			<action object="CPRolesHome" command="click" target="TOOLBAR_ADD_BUTTON" value="Add" />
+			<action object="CPRolesHome" command="click" target="ADD_REGULAR_ROLE" value="Regular Role" />
 
-			<action object="CPRolesAddRole" command="type" path="ROLE_NAME" value="${name}" />
-			<action object="CPRolesAddRole" command="type" path="ROLE_TITLE" value="${title}" />
-			<action object="CPRolesAddRole" command="type" path="ROLE_DESCRIPTION" value="${description}" />
-			<action object="CPRolesAddRole" command="click" path="BUTTON_SAVE" value="Save" />
+			<action object="CPRolesAddRole" command="type" target="ROLE_NAME" value="${name}" />
+			<action object="CPRolesAddRole" command="type" target="ROLE_TITLE" value="${title}" />
+			<action object="CPRolesAddRole" command="type" target="ROLE_DESCRIPTION" value="${description}" />
+			<action object="CPRolesAddRole" command="click" target="BUTTON_SAVE" value="Save" />
 
-			<action object="CPRolesHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+			<action object="CPRolesHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
 		</steps>
 	</macrodef>
 
@@ -65,15 +65,15 @@
 				<param name="portlet" value="Roles" />
 			</macro>
 
-			<action object="CPRolesHome" command="click" path="TOOLBAR_ADD_BUTTON" value="Add" />
-			<action object="CPRolesHome" command="click" path="ADD_SITE_ROLE" value="Site Role" />
+			<action object="CPRolesHome" command="click" target="TOOLBAR_ADD_BUTTON" value="Add" />
+			<action object="CPRolesHome" command="click" target="ADD_SITE_ROLE" value="Site Role" />
 
-			<action object="CPRolesAddRole" command="type" path="ROLE_NAME" value="${name}" />
-			<action object="CPRolesAddRole" command="type" path="ROLE_TITLE" value="${title}" />
-			<action object="CPRolesAddRole" command="type" path="ROLE_DESCRIPTION" value="${description}" />
-			<action object="CPRolesAddRole" command="click" path="BUTTON_SAVE" value="Save" />
+			<action object="CPRolesAddRole" command="type" target="ROLE_NAME" value="${name}" />
+			<action object="CPRolesAddRole" command="type" target="ROLE_TITLE" value="${title}" />
+			<action object="CPRolesAddRole" command="type" target="ROLE_DESCRIPTION" value="${description}" />
+			<action object="CPRolesAddRole" command="click" target="BUTTON_SAVE" value="Save" />
 
-			<action object="CPRolesHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+			<action object="CPRolesHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
 		</steps>
 	</macrodef>
 
@@ -88,14 +88,14 @@
 			<param name="portlet" value="Roles" />
 		</macro>
 
-		<action object="CPRolesHome" command="type" path="SEARCH_FILED" value="Administrator" />
-		<action object="CPRolesHome" command="click" path="SEARCH_BUTTON" value="Search" />
+		<action object="CPRolesHome" command="type" target="SEARCH_FILED" value="Administrator" />
+		<action object="CPRolesHome" command="click" target="SEARCH_BUTTON" value="Search" />
 
-		<action object="CPRolesHome" command="click" path="ROLES_ACTIONS" value="Actions" />
-		<action object="CPRolesHome" command="click" path="ACTIONS_ASSIGN_MEMBERS" value="Assign Members" />
+		<action object="CPRolesHome" command="click" target="ROLES_ACTIONS" value="Actions" />
+		<action object="CPRolesHome" command="click" target="ACTIONS_ASSIGN_MEMBERS" value="Assign Members" />
 
-		<if object="CPRolesAssignMembersUsers" command="isVisible" path="BASIC_SEARCH_ADVANCED_LINK" >
-			<action object="CPRolesAssignMembersUsers" command="click" path="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
+		<if object="CPRolesAssignMembersUsers" command="isVisible" target="BASIC_SEARCH_ADVANCED_LINK" >
+			<action object="CPRolesAssignMembersUsers" command="click" target="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
 		</if>
 		</steps>
 	</macrodef>
@@ -115,21 +115,21 @@
 				<param name="portlet" value="Roles" />
 			</macro>
 
-			<action object="CPRolesHome" command="type" path="SEARCH_FILED" value="${role}" />
-			<action object="CPRolesHome" command="click" path="SEARCH_BUTTON" value="Search" />
+			<action object="CPRolesHome" command="type" target="SEARCH_FILED" value="${role}" />
+			<action object="CPRolesHome" command="click" target="SEARCH_BUTTON" value="Search" />
 
-			<action object="CPRolesHome" command="click" path="ROLES_ACTIONS" value="Actions" />
-			<action object="CPRolesHome" command="click" path="ACTIONS_ASSIGN_MEMBERS" value="Assign Members" />
+			<action object="CPRolesHome" command="click" target="ROLES_ACTIONS" value="Actions" />
+			<action object="CPRolesHome" command="click" target="ACTIONS_ASSIGN_MEMBERS" value="Assign Members" />
 
-			<action object="CPRolesAssignMembersUsers" command="click" path="STATUS_AVAILABLE" value="Available" />
+			<action object="CPRolesAssignMembersUsers" command="click" target="STATUS_AVAILABLE" value="Available" />
 
-			<action object="CPRolesAssignMembersUsers" command="type" path="BASIC_SEARCH_FIELD" value="${firstName}" />
-			<action object="CPRolesAssignMembersUsers" command="click" path="BASIC_SEARCH_BUTTON" value="Search" />
+			<action object="CPRolesAssignMembersUsers" command="type" target="BASIC_SEARCH_FIELD" value="${firstName}" />
+			<action object="CPRolesAssignMembersUsers" command="click" target="BASIC_SEARCH_BUTTON" value="Search" />
 
-			<action object="CPRolesAssignMembersUsers" command="check" path="USERS_USER_1_CHECK" />
-			<action object="CPRolesAssignMembersUsers" command="click" path="BUTTON_UPDATE_ASSOCIATIONS" value="Update Associations" />
+			<action object="CPRolesAssignMembersUsers" command="check" target="USERS_USER_1_CHECK" />
+			<action object="CPRolesAssignMembersUsers" command="click" target="BUTTON_UPDATE_ASSOCIATIONS" value="Update Associations" />
 
-			<action object="CPRolesHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+			<action object="CPRolesHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
 		</steps>
 	</macrodef>
 
@@ -144,14 +144,14 @@
 			<param name="portlet" value="Roles" />
 		</macro>
 
-		<action object="CPRolesHome" command="type" path="SEARCH_FILED" value="Administrator" />
-		<action object="CPRolesHome" command="click" path="SEARCH_BUTTON" value="Search" />
+		<action object="CPRolesHome" command="type" target="SEARCH_FILED" value="Administrator" />
+		<action object="CPRolesHome" command="click" target="SEARCH_BUTTON" value="Search" />
 
-		<action object="CPRolesHome" command="click" path="ROLES_ACTIONS" value="Actions" />
-		<action object="CPRolesHome" command="click" path="ACTIONS_ASSIGN_MEMBERS" value="Assign Members" />
+		<action object="CPRolesHome" command="click" target="ROLES_ACTIONS" value="Actions" />
+		<action object="CPRolesHome" command="click" target="ACTIONS_ASSIGN_MEMBERS" value="Assign Members" />
 
-		<if object="CPRolesAssignMembersUsers" command="isVisible" path="ADVANCED_SEARCH_BASIC_LINK" >
-			<action object="CPRolesAssignMembersUsers" command="click" path="ADVANCED_SEARCH_BASIC_LINK" value="« Basic" />
+		<if object="CPRolesAssignMembersUsers" command="isVisible" target="ADVANCED_SEARCH_BASIC_LINK" >
+			<action object="CPRolesAssignMembersUsers" command="click" target="ADVANCED_SEARCH_BASIC_LINK" value="« Basic" />
 		</if>
 		</steps>
 	</macrodef>
@@ -168,16 +168,16 @@
 				<param name="portlet" value="Roles" />
 			</macro>
 
-			<action object="CPRolesHome" command="type" path="SEARCH_FILED" value="${title}*" />
-			<action object="CPRolesHome" command="click" path="SEARCH_BUTTON" value="Search" />
+			<action object="CPRolesHome" command="type" target="SEARCH_FILED" value="${title}*" />
+			<action object="CPRolesHome" command="click" target="SEARCH_BUTTON" value="Search" />
 
-			<while object="CPRolesHome" command="isElementPresent" path="ROLES_NAME">
-				<action object="CPRolesHome" command="click" path="ROLES_ACTIONS" value="Actions" />
-				<action object="CPRolesHome" command="click" path="ACTIONS_DELETE" value="Delete" />
-				<action object="CPRolesHome" command="confirm" path="HEADER_CONFIRMATION" value="Are you sure you want to delete this? It will be deleted immediately." />
+			<while object="CPRolesHome" command="isElementPresent" target="ROLES_NAME">
+				<action object="CPRolesHome" command="click" target="ROLES_ACTIONS" value="Actions" />
+				<action object="CPRolesHome" command="click" target="ACTIONS_DELETE" value="Delete" />
+				<action object="CPRolesHome" command="confirm" target="HEADER_CONFIRMATION" value="Are you sure you want to delete this? It will be deleted immediately." />
 			</while>
 
-			<action object="CPRolesHome" command="assertTextEquals" path="ROLES_MESSAGE" value="No roles were found." />
+			<action object="CPRolesHome" command="assertTextEquals" target="ROLES_MESSAGE" value="No roles were found." />
 		</steps>
 	</macrodef>
 

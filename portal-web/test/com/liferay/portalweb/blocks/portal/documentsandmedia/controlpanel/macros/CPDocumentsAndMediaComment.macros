@@ -12,14 +12,14 @@
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="${document}" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_NAME" value="${document}" />
 
-			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_MESSAGE_INFO" value="No comments yet." />
-			<action object="CPDocumentsAndMediaDocument" command="click" path="COMMENT_LINK_ADD" value="Be the first." />
-			<action object="CPDocumentsAndMediaDocument" command="type" path="COMMENT_TEXTAREA" value="${documentComment}" />
-			<action object="CPDocumentsAndMediaDocument" command="click" path="COMMENT_BUTTON_REPLY" value="Reply" />
-			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_MESSAGE_SUCCESS" value="Your request processed successfully." />
-			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_VIEW_MESSAGE_1" value="${documentComment}" />
+			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="COMMENT_MESSAGE_INFO" value="No comments yet." />
+			<action object="CPDocumentsAndMediaDocument" command="click" target="COMMENT_LINK_ADD" value="Be the first." />
+			<action object="CPDocumentsAndMediaDocument" command="type" target="COMMENT_TEXTAREA" value="${documentComment}" />
+			<action object="CPDocumentsAndMediaDocument" command="click" target="COMMENT_BUTTON_REPLY" value="Reply" />
+			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="COMMENT_MESSAGE_SUCCESS" value="Your request processed successfully." />
+			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="COMMENT_VIEW_MESSAGE_1" value="${documentComment}" />
 			<action object="CPDocumentsAndMediaDocument" command="assertTextNotPresent" value="No comments yet." />
 		</steps>
 	</macrodef>
@@ -37,13 +37,13 @@
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="${document}" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_NAME" value="${document}" />
 
-			<action object="CPDocumentsAndMediaDocument" command="click" path="COMMENT_LINK_ADD" value="Add Comment" />
-			<action object="CPDocumentsAndMediaDocument" command="type" path="COMMENT_TEXTAREA" value="${documentComment}" />
-			<action object="CPDocumentsAndMediaDocument" command="click" path="COMMENT_BUTTON_REPLY" value="Reply" />
-			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_MESSAGE_SUCCESS" value="Your request processed successfully." />
-			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_VIEW_MESSAGE_2" value="${documentComment}" />
+			<action object="CPDocumentsAndMediaDocument" command="click" target="COMMENT_LINK_ADD" value="Add Comment" />
+			<action object="CPDocumentsAndMediaDocument" command="type" target="COMMENT_TEXTAREA" value="${documentComment}" />
+			<action object="CPDocumentsAndMediaDocument" command="click" target="COMMENT_BUTTON_REPLY" value="Reply" />
+			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="COMMENT_MESSAGE_SUCCESS" value="Your request processed successfully." />
+			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="COMMENT_VIEW_MESSAGE_2" value="${documentComment}" />
 		</steps>
 	</macrodef>
 
@@ -60,13 +60,13 @@
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="${document}" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_NAME" value="${document}" />
 
-			<action object="CPDocumentsAndMediaDocument" command="click" path="COMMENT_LINK_ADD" value="Add Comment" />
-			<action object="CPDocumentsAndMediaDocument" command="type" path="COMMENT_TEXTAREA" value="${documentComment}" />
-			<action object="CPDocumentsAndMediaDocument" command="click" path="COMMENT_BUTTON_REPLY" value="Reply" />
-			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_MESSAGE_SUCCESS" value="Your request processed successfully." />
-			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="COMMENT_VIEW_MESSAGE_2" value="${documentComment}" />
+			<action object="CPDocumentsAndMediaDocument" command="click" target="COMMENT_LINK_ADD" value="Add Comment" />
+			<action object="CPDocumentsAndMediaDocument" command="type" target="COMMENT_TEXTAREA" value="${documentComment}" />
+			<action object="CPDocumentsAndMediaDocument" command="click" target="COMMENT_BUTTON_REPLY" value="Reply" />
+			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="COMMENT_MESSAGE_SUCCESS" value="Your request processed successfully." />
+			<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="COMMENT_VIEW_MESSAGE_2" value="${documentComment}" />
 		</steps>
 	</macrodef>
 </macros>

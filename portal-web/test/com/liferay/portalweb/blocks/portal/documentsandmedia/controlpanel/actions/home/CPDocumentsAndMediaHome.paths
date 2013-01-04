@@ -198,42 +198,42 @@
 <!--FOLDER-->
 <tr>
 	<td>FOLDER_NAME</td>
-	<td>//a[@data-folder='true']/span[@class='entry-title']</td>
+	<td>//div[@id='_20_entriesContainer']//a[@data-folder='true']/span[@class='entry-title']</td>
 	<td>Folder Name's Link</td>
 </tr>
 <tr>
 	<td>FOLDER_NAME_1</td>
-	<td>xpath=(//a[@data-folder='true']/span[@class='entry-title'])[1]</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/span[@class='entry-title'])[1]</td>
 	<td>1st Folder Name's Link</td>
 </tr>
 <tr>
 	<td>FOLDER_NAME_2</td>
-	<td>xpath=(//a[@data-folder='true']/span[@class='entry-title'])[2]</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/span[@class='entry-title'])[2]</td>
 	<td>2nd Folder Name's Link</td>
 </tr>
 <tr>
 	<td>FOLDER_NAME_3</td>
-	<td>xpath=(//a[@data-folder='true']/span[@class='entry-title'])[3]</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/span[@class='entry-title'])[3]</td>
 	<td>3rd Folder Name's Link</td>
 </tr>
 <tr>
 	<td>FOLDER_ACTIONS</td>
-	<td>//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a</td>
+	<td>//div[@id='_20_entriesContainer']//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a</td>
 	<td>Folder Actions Button</td>
 </tr>
 <tr>
 	<td>FOLDER_ACTIONS_1</td>
-	<td>xpath=(//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[1]</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[1]</td>
 	<td>1st Folder Actions Button</td>
 </tr>
 <tr>
 	<td>FOLDER_ACTIONS_2</td>
-	<td>xpath=(//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[2]</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[2]</td>
 	<td>2nd Folder Actions Button</td>
 </tr>
 <tr>
 	<td>FOLDER_ACTIONS_3</td>
-	<td>xpath=(//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[3]</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[3]</td>
 	<td>3rd Folder Actions Button</td>
 </tr>
 <tr>
@@ -280,47 +280,47 @@
 <!--DOCUMENT-->
 <tr>
 	<td>DOCUMENT_ACTIONS</td>
-	<td>//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a</td>
+	<td>//div[@id='_20_entriesContainer']//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a</td>
 	<td>Document Actions Button</td>
 </tr>
 <tr>
 	<td>DOCUMENT_ACTIONS_1</td>
-	<td>xpath=(//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[1]</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[1]</td>
 	<td>1st Document Actions Button</td>
 </tr>
 <tr>
 	<td>DOCUMENT_ACTIONS_2</td>
-	<td>xpath=(//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[2]</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[2]</td>
 	<td>2nd Document Actions Button</td>
 </tr>
 <tr>
 	<td>DOCUMENT_ACTIONS_3</td>
-	<td>xpath=(//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[3]</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[3]</td>
 	<td>3rd Document Actions Button</td>
 </tr>
 <tr>
 	<td>DOCUMENT_IMAGE_LOCK</td>
-	<td>//a[@data-folder='false']/div/img[@alt='Locked']</td>
+	<td>//div[@id='_20_entriesContainer']//a[@data-folder='false']/div/img[@alt='Locked']</td>
 	<td>Document Lock Image</td>
 </tr>
 <tr>
 	<td>DOCUMENT_NAME</td>
-	<td>//a[@data-folder='false']/span[@class='entry-title']</td>
+	<td>//div[@id='_20_entriesContainer']//a[@data-folder='false']/span[@class='entry-title']</td>
 	<td>Document Name's Link</td>
 </tr>
 <tr>
 	<td>DOCUMENT_NAME_1</td>
-	<td>xpath=(//a[@data-folder='false']/span[@class='entry-title'])[1]</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/span[@class='entry-title'])[1]</td>
 	<td>1st Document Name's Link</td>
 </tr>
 <tr>
 	<td>DOCUMENT_NAME_2</td>
-	<td>xpath=(//a[@data-folder='false']/span[@class='entry-title'])[2]</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/span[@class='entry-title'])[2]</td>
 	<td>2nd Document Name's Link</td>
 </tr>
 <tr>
 	<td>DOCUMENT_NAME_3</td>
-	<td>xpath=(//a[@data-folder='false']/span[@class='entry-title'])[3]</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/span[@class='entry-title'])[3]</td>
 	<td>3rd Document Name's Link</td>
 </tr>
 <tr>

@@ -45,7 +45,7 @@ public class HomeActions extends BaseLiferayActions {
 		else if ((target.equals("GOTO_LINK_CONTROL_PANEL"))) {
 			clickFunctions.textClickAtAndWait(params[0], params[1]);
 		}
-		else if (target.startsWith("link=")) {
+		else if (params[0].startsWith("link=")) {
 			clickFunctions.textClickAtAndWait(params[0], params[1]);
 		}
 		else {

@@ -12,14 +12,14 @@
 				<param name="portlet" value="Blogs" />
 			</macro>
 
-			<action object="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="${blogsEntry}" />
+			<action object="CPBlogsHome" command="click" target="BLOGS_ENTRY_LINK_TITLE" value="${blogsEntry}" />
 
-			<action object="CPBlogsEntryView" command="assertTextEquals" path="PORTLET_TEXT_COMMENT_MESSAGE" value="No comments yet." />
-			<action object="CPBlogsEntryView" command="click" path="BLOGS_ENTRY_LINK_ADD_COMMENT_1" />
-			<action object="CPBlogsEntryView" command="type" path="BLOGS_COMMENT_ADD_FIELD_BODY" value="${blogsEntryComment}" />
-			<action object="CPBlogsEntryView" command="click" path="BLOGS_COMMENT_ADD_LINK_SAVE" />
-			<action object="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_COMMENT_ADD_TEXT_SUCCESS" />
-			<action object="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_COMMENT_TEXT_BODY" value="${blogsEntryComment}" />
+			<action object="CPBlogsEntryView" command="assertTextEquals" target="PORTLET_TEXT_COMMENT_MESSAGE" value="No comments yet." />
+			<action object="CPBlogsEntryView" command="click" target="BLOGS_ENTRY_LINK_ADD_COMMENT_1" />
+			<action object="CPBlogsEntryView" command="type" target="BLOGS_COMMENT_ADD_FIELD_BODY" value="${blogsEntryComment}" />
+			<action object="CPBlogsEntryView" command="click" target="BLOGS_COMMENT_ADD_LINK_SAVE" />
+			<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_COMMENT_ADD_TEXT_SUCCESS" />
+			<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_COMMENT_TEXT_BODY" value="${blogsEntryComment}" />
 			<action object="CPBlogsEntryView" command="assertTextNotPresent" value="No comments yet." />
 		</steps>
 	</macrodef>
@@ -37,13 +37,13 @@
 				<param name="portlet" value="Blogs" />
 			</macro>
 
-			<action object="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="${blogsEntry}" />
+			<action object="CPBlogsHome" command="click" target="BLOGS_ENTRY_LINK_TITLE" value="${blogsEntry}" />
 
-			<action object="CPBlogsEntryView" command="click" path="BLOGS_ENTRY_LINK_ADD_COMMENT_2" />
-			<action object="CPBlogsEntryView" command="type" path="BLOGS_COMMENT_ADD_FIELD_BODY" value="${blogsEntryComment}" />
-			<action object="CPBlogsEntryView" command="click" path="BLOGS_COMMENT_ADD_LINK_SAVE" />
-			<action object="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_COMMENT_ADD_TEXT_SUCCESS" />
-			<action object="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_COMMENT_TEXT_BODY" value="${blogsEntryComment}" />
+			<action object="CPBlogsEntryView" command="click" target="BLOGS_ENTRY_LINK_ADD_COMMENT_2" />
+			<action object="CPBlogsEntryView" command="type" target="BLOGS_COMMENT_ADD_FIELD_BODY" value="${blogsEntryComment}" />
+			<action object="CPBlogsEntryView" command="click" target="BLOGS_COMMENT_ADD_LINK_SAVE" />
+			<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_COMMENT_ADD_TEXT_SUCCESS" />
+			<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_COMMENT_TEXT_BODY" value="${blogsEntryComment}" />
 			<action object="CPBlogsEntryView" command="assertTextNotPresent" value="No comments yet." />
 		</steps>
 	</macrodef>

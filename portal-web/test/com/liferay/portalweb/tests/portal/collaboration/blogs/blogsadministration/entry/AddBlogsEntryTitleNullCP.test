@@ -9,13 +9,13 @@
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action object="CPBlogsHome" command="click" path="PORTLET_LINK_ADD" value="Add" />
+		<action object="CPBlogsHome" command="click" target="PORTLET_LINK_ADD" value="Add" />
 
-		<action object="CPBlogsAddEntry" command="type" path="CONTENT_FIELD_TITLE" value="" />
-		<action object="CPBlogsAddEntry" command="type" path="CONTENT_FIELD_CONTENT" value="Blogs Entry Content" />
-		<action object="CPBlogsAddEntry" command="click" path="CONTENT_LINK_SAVE" value="Publish" />
-		<action object="CPBlogsAddEntry" command="assertTextEquals" path="CONTENT_TEXT_ERROR_MESSAGE_1" value="Your request failed to complete." />
-		<action object="CPBlogsAddEntry" command="assertTextEquals" path="CONTENT_TEXT_ERROR_MESSAGE_2" value="Please enter a valid title." />
+		<action object="CPBlogsAddEntry" command="type" target="CONTENT_FIELD_TITLE" value="" />
+		<action object="CPBlogsAddEntry" command="type" target="CONTENT_FIELD_CONTENT" value="Blogs Entry Content" />
+		<action object="CPBlogsAddEntry" command="click" target="CONTENT_LINK_SAVE" value="Publish" />
+		<action object="CPBlogsAddEntry" command="assertTextEquals" target="CONTENT_TEXT_ERROR_MESSAGE_1" value="Your request failed to complete." />
+		<action object="CPBlogsAddEntry" command="assertTextEquals" target="CONTENT_TEXT_ERROR_MESSAGE_2" value="Please enter a valid title." />
 
 		`<macro object="Goto" command="controlPanelPortlet">
 			<param name="portlet" value="Blogs" />

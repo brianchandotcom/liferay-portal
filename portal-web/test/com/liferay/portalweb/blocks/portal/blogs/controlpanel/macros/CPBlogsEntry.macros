@@ -12,17 +12,17 @@
 				<param name="portlet" value="Blogs" />
 			</macro>
 
-			<action object="CPBlogsHome" command="click" path="PORTLET_LINK_ADD" value="Add" />
+			<action object="CPBlogsHome" command="click" target="PORTLET_LINK_ADD" value="Add" />
 
-			<action object="CPBlogsAddEntry" command="type" path="CONTENT_FIELD_TITLE" value="${title}" />
-			<action object="CPBlogsAddEntry" command="type" path="CONTENT_FIELD_CONTENT" value="${content}" />
-			<action object="CPBlogsAddEntry" command="click" path="CONTENT_LINK_SAVE" value="Publish" />
-			<action object="CPBlogsAddEntry" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
+			<action object="CPBlogsAddEntry" command="type" target="CONTENT_FIELD_TITLE" value="${title}" />
+			<action object="CPBlogsAddEntry" command="type" target="CONTENT_FIELD_CONTENT" value="${content}" />
+			<action object="CPBlogsAddEntry" command="click" target="CONTENT_LINK_SAVE" value="Publish" />
+			<action object="CPBlogsAddEntry" command="assertTextEquals" target="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
 
-			<action object="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_TITLE_1" value="${title}" />
+			<action object="CPBlogsHome" command="click" target="BLOGS_ENTRY_LINK_TITLE_1" value="${title}" />
 
-			<action object="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_TITLE" value="${title}" />
-			<action object="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_CONTENT" value="${content}" />
+			<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_TITLE" value="${title}" />
+			<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_CONTENT" value="${content}" />
 		</steps>
 	</macrodef>
 
@@ -39,26 +39,26 @@
 				<param name="portlet" value="Blogs" />
 			</macro>
 
-			<action object="CPBlogsHome" command="click" path="PORTLET_LINK_ADD" value="Add" />
+			<action object="CPBlogsHome" command="click" target="PORTLET_LINK_ADD" value="Add" />
 
-			<action object="CPBlogsAddEntry" command="type" path="CONTENT_FIELD_TITLE" value="${title}" />
-			<action object="CPBlogsAddEntry" command="type" path="CONTENT_FIELD_CONTENT" value="${content}" />
-			<action object="CPBlogsAddEntry" command="click" path="CONTENT_LINK_DRAFT" value="Save as Draft" />
-			<action object="CPBlogsAddEntry" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
+			<action object="CPBlogsAddEntry" command="type" target="CONTENT_FIELD_TITLE" value="${title}" />
+			<action object="CPBlogsAddEntry" command="type" target="CONTENT_FIELD_CONTENT" value="${content}" />
+			<action object="CPBlogsAddEntry" command="click" target="CONTENT_LINK_DRAFT" value="Save as Draft" />
+			<action object="CPBlogsAddEntry" command="assertTextEquals" target="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
 
-			<action object="CPBlogsEntryEdit" command="assertTextEquals" path="CONTENT_TEXT_STATUS" value="Draft" />
+			<action object="CPBlogsEntryEdit" command="assertTextEquals" target="CONTENT_TEXT_STATUS" value="Draft" />
 
 			<macro object="Goto" command="controlPanelPortlet">
 				<param name="portlet" value="Blogs" />
 			</macro>
 
-			<action object="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="${title}" />
-			<action object="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Draft" />
-			<action object="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="${title}" />
+			<action object="CPBlogsHome" command="assertTextEquals" target="BLOGS_ENTRY_LINK_TITLE" value="${title}" />
+			<action object="CPBlogsHome" command="assertTextEquals" target="BLOGS_ENTRY_LINK_STATUS" value="Draft" />
+			<action object="CPBlogsHome" command="click" target="BLOGS_ENTRY_LINK_TITLE" value="${title}" />
 
-			<action object="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_DRAFT" value="Draft" />
-			<action object="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_TITLE" value="${title}" />
-			<action object="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_CONTENT" value="${content}" />
+			<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_DRAFT" value="Draft" />
+			<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_TITLE" value="${title}" />
+			<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_CONTENT" value="${content}" />
 		</steps>
 	</macrodef>
 
@@ -73,9 +73,9 @@
 				<param name="portlet" value="Blogs" />
 			</macro>
 
-			<while object="CPBlogsHome" command="isElementPresent" path="BLOGS_ENTRY_LINK_CHECKBOX_1">
-				<action object="CPBlogsHome" command="check" path="BLOGS_ENTRY_LINK_CHECKBOX_ALL" />
-				<action object="CPBlogsHome" command="click" path="PORTLET_LINK_DELETE" value="Move to the Recycle Bin" />
+			<while object="CPBlogsHome" command="isElementPresent" target="BLOGS_ENTRY_LINK_CHECKBOX_1">
+				<action object="CPBlogsHome" command="check" target="BLOGS_ENTRY_LINK_CHECKBOX_ALL" />
+				<action object="CPBlogsHome" command="click" target="PORTLET_LINK_DELETE" value="Move to the Recycle Bin" />
 			</while>
 		</steps>
 	</macrodef>

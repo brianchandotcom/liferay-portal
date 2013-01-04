@@ -15,15 +15,15 @@
 			<param name="portlet" value="Roles" />
 		</macro>
 
-		<action object="CPRolesHome" command="type" path="SEARCH_FILED" value="Regrole Title" />
-		<action object="CPRolesHome" command="click" path="SEARCH_BUTTON" value="Search" />
-		<action object="CPRolesHome" command="assertTextEquals" path="ROLES_NAME" value="Regrole Title" />
-		<action object="CPRolesHome" command="click" path="ROLES_NAME" value="Regrole Title" />
+		<action object="CPRolesHome" command="type" target="SEARCH_FILED" value="Regrole Title" />
+		<action object="CPRolesHome" command="click" target="SEARCH_BUTTON" value="Search" />
+		<action object="CPRolesHome" command="assertTextEquals" target="ROLES_NAME" value="Regrole Title" />
+		<action object="CPRolesHome" command="click" target="ROLES_NAME" value="Regrole Title" />
 
-		<action object="CPRolesEditRole" command="assertTextEquals" path="ROLE_TYPE" value="Regular" />
-		<action object="CPRolesEditRole" command="assertTextEquals" path="ROLE_NAME" value="Regrole Name" />
-		<action object="CPRolesEditRole" command="assertTextEquals" path="ROLE_TITLE" value="Regrole Title" />
-		<action object="CPRolesEditRole" command="assertTextEquals" path="ROLE_DESCRIPTION" value="Regrole Description" />
+		<action object="CPRolesEditRole" command="assertTextEquals" target="ROLE_TYPE" value="Regular" />
+		<action object="CPRolesEditRole" command="assertTextEquals" target="ROLE_NAME" value="Regrole Name" />
+		<action object="CPRolesEditRole" command="assertTextEquals" target="ROLE_TITLE" value="Regrole Title" />
+		<action object="CPRolesEditRole" command="assertTextEquals" target="ROLE_DESCRIPTION" value="Regrole Description" />
 	</steps>
 	<teardown>
 		<macro object="CPRoles" command="tearDown" />

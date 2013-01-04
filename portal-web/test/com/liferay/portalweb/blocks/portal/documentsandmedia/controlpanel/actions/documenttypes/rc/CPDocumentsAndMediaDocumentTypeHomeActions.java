@@ -17,7 +17,6 @@ package com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.actio
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
 import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
-import com.liferay.portalweb.blocks.base.functions.rc.SelectWindowFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
@@ -41,20 +40,6 @@ public class CPDocumentsAndMediaDocumentTypeHomeActions
 		}
 		else {
 			super.click(params[0], params[1]);
-		}
-	}
-
-	public void selectWindow(String target, String value)
-		throws Exception {
-		String[] params = ActionsUtil.getParams(paths, target, value);
-
-		SelectWindowFunctions selectWindowFunctions = new SelectWindowFunctions(selenium);
-
-		if ((target.equals("TOP"))) {
-			selectWindowFunctions.selectFrameTop(params[0], params[1]);
-		}
-		else {
-			super.selectWindow(params[0], params[1]);
 		}
 	}
 }

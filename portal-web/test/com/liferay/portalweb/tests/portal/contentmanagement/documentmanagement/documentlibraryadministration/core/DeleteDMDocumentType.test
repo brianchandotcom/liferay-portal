@@ -16,7 +16,7 @@
 			<param name="portlet" value="Documents and Media" />
 		</macro>
 
-		<action object="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_ADD_BUTTON" value="Add" />
+		<action object="CPDocumentsAndMediaHome" command="click" target="TOOLBAR_ADD_BUTTON" value="Add" />
 		<action object="CPDocumentsAndMediaHome" command="assertTextNotPresent" value="DM DocumentType Name" />
 	</steps>
 	<teardown>

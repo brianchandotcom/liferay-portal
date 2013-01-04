@@ -4,10 +4,4 @@
 			<function object="Click" command="valueClickAtAndWait" />
 		</conditional>
 	</actiondef>
-
-	<actiondef command="selectWindow">
-		<conditional elements="TOP">
-			<function object="SelectWindow" command="selectFrameTop" />
-		</conditional>
-	</actiondef>
 </actions>

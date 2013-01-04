@@ -13,16 +13,16 @@
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action object="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
-		<action object="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Draft" />
-		<action object="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_ACTIONS" value="Actions" />
-		<action object="CPBlogsHome" command="click" path="BLOGS_ENTRY_LINK_ACTIONS_EDIT" value="Edit" />
+		<action object="CPBlogsHome" command="assertTextEquals" target="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+		<action object="CPBlogsHome" command="assertTextEquals" target="BLOGS_ENTRY_LINK_STATUS" value="Draft" />
+		<action object="CPBlogsHome" command="click" target="BLOGS_ENTRY_LINK_ACTIONS" value="Actions" />
+		<action object="CPBlogsHome" command="click" target="BLOGS_ENTRY_LINK_ACTIONS_EDIT" value="Edit" />
 
-		<action object="CPBlogsEntryEdit" command="click" path="CONTENT_LINK_SAVE" value="Publish" />
-		<action object="CPBlogsEntryEdit" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
+		<action object="CPBlogsEntryEdit" command="click" target="CONTENT_LINK_SAVE" value="Publish" />
+		<action object="CPBlogsEntryEdit" command="assertTextEquals" target="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
 
-		<action object="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
-		<action object="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Approved" />
+		<action object="CPBlogsHome" command="assertTextEquals" target="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+		<action object="CPBlogsHome" command="assertTextEquals" target="BLOGS_ENTRY_LINK_STATUS" value="Approved" />
 	</steps>
 	<teardown>
 		<macro object="CPBlogsEntry" command="tearDown" />

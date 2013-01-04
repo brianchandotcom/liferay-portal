@@ -528,10 +528,6 @@
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 		</action>
 
-		<action path="/document_library/restore_entry" type="com.liferay.portlet.trash.action.EditEntryAction">
-			<forward name="portlet.document_library.view" path="portlet.document_library.view" />
-		</action>
-
 		<action path="/document_library/search" type="com.liferay.portlet.documentlibrary.action.SearchAction">
 			<forward name="portlet.document_library.view" path="portlet.document_library.view" />
 		</action>
@@ -2137,14 +2133,6 @@
 
 		<action path="/wiki/restore_entry" forward="portlet.trash.restore_entry" />
 
-		<action path="/wiki/restore_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
-			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
-		</action>
-
-		<action path="/wiki/restore_page" type="com.liferay.portlet.wiki.action.EditPageAction">
-			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
-		</action>
-
 		<action path="/wiki/restore_page_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
 			<forward name="portlet.trash.view" path="portlet.wiki.view_page_attachments" />
 		</action>
@@ -2289,14 +2277,6 @@
 
 		<action path="/wiki_admin/restore_entry" forward="portlet.trash.restore_entry" />
 
-		<action path="/wiki_admin/restore_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
-			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
-		</action>
-
-		<action path="/wiki_admin/restore_page" type="com.liferay.portlet.wiki.action.EditPageAction">
-			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
-		</action>
-
 		<action path="/wiki_admin/restore_page_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
 			<forward name="portlet.trash.view" path="portlet.wiki.view_page_attachments" />
 		</action>
@@ -2418,14 +2398,6 @@
 		</action>
 
 		<action path="/wiki_display/restore_entry" forward="portlet.trash.restore_entry" />
-
-		<action path="/wiki_display/restore_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
-			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
-		</action>
-
-		<action path="/wiki_display/restore_page" type="com.liferay.portlet.wiki.action.EditPageAction">
-			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
-		</action>
 
 		<action path="/wiki_display/restore_page_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
 			<forward name="portlet.trash.view" path="portlet.wiki.view_page_attachments" />

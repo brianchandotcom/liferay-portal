@@ -28,14 +28,16 @@ public class MoveFolderEntryToFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test1 Folder1"));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder1 Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Folder1 Name')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Bookmark Folder1 Name')]/td[1]/a/strong",
+			RuntimeVariables.replace("Bookmark Folder1 Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Folder Entry"),
-			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Bookmark Name"),
+			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[2]/a"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
@@ -57,9 +59,10 @@ public class MoveFolderEntryToFolderTest extends BaseTestCase {
 		selenium.waitForVisible("link=Home");
 		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.click("//tr[4]/td[4]/input");
+		selenium.click(
+			"//tr[contains(.,'Bookmark Folder2 Name')]/td[4]/input[@value='Choose']");
 		selenium.selectWindow("null");
-		assertEquals(RuntimeVariables.replace("Test2 Folder2"),
+		assertEquals(RuntimeVariables.replace("Bookmark Folder2 Name"),
 			selenium.getText("//a[@id='_28_folderName']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -67,20 +70,24 @@ public class MoveFolderEntryToFolderTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isTextPresent("Test Folder Entry"));
+		assertEquals(RuntimeVariables.replace(
+				"There are no bookmarks in this folder."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertFalse(selenium.isTextPresent("Bookmark Name"));
 		assertFalse(selenium.isTextPresent("http://www.liferay.com"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test2 Folder2"),
-			selenium.getText("//tr[4]/td[1]/a/strong"));
-		selenium.clickAt("//tr[4]/td[1]/a/strong",
-			RuntimeVariables.replace("Test2 Folder2"));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder2 Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Folder2 Name')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Bookmark Folder2 Name')]/td[1]/a/strong",
+			RuntimeVariables.replace("Bookmark Folder2 Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Folder Entry"),
-			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Bookmark Name"),
+			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[2]/a"));
 	}
 }

@@ -20,13 +20,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a/strong</td>
-	<td>Test Folder</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//td[1]/a</td>
-	<td>This is a test folder.</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -35,12 +30,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -61,12 +56,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_28_name']</td>
-	<td>Test Folder Edited</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//textarea[@id='_28_description']</td>
-	<td>This is a test folder. Edited.</td>
+	<td>Bookmark Folder Name Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -80,13 +70,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a/strong</td>
-	<td>Test Folder Edited</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//td[1]/a</td>
-	<td>This is a test folder. Edited.</td>
+	<td>//tr[contains(.,'Bookmark Folder Name Edit')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name Edit</td>
 </tr>
 </tbody></table>
 </body>

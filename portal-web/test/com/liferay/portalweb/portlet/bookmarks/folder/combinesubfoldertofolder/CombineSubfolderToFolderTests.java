@@ -39,6 +39,7 @@ public class CombineSubfolderToFolderTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddSubfolderTest.class);
 		testSuite.addTestSuite(AddSubfolderEntryTest.class);
 		testSuite.addTestSuite(CombineSubfolderToFolderTest.class);
+		testSuite.addTestSuite(ViewCombinedSubfolderToFolderTest.class);
 		testSuite.addTestSuite(TearDownBookmarksFolderTest.class);
 		testSuite.addTestSuite(TearDownBookmarksEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

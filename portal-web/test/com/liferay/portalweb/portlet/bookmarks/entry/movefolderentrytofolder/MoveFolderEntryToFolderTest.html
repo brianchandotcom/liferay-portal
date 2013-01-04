@@ -20,22 +20,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
+	<td>//tr[contains(.,'Bookmark Folder1 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder1 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test1 Folder1</td>
+	<td>//tr[contains(.,'Bookmark Folder1 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Test Folder Entry</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[1]/a</td>
+	<td>Bookmark Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[2]/a</td>
 	<td>http://www.liferay.com</td>
 </tr>
 <tr>
@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//tr[4]/td[4]/input</td>
+	<td>//tr[contains(.,'Bookmark Folder2 Name')]/td[4]/input[@value='Choose']</td>
 	<td>Choose</td>
 </tr>
 <tr>
@@ -106,7 +106,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//a[@id='_28_folderName']</td>
-	<td>Test2 Folder2</td>
+	<td>Bookmark Folder2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -119,8 +119,13 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no bookmarks in this folder.</td>
+</tr>
+<tr>
 	<td>assertTextNotPresent</td>
-	<td>Test Folder Entry</td>
+	<td>Bookmark Name</td>
 	<td></td>
 </tr>
 <tr>
@@ -140,22 +145,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a/strong</td>
-	<td>Test2 Folder2</td>
+	<td>//tr[contains(.,'Bookmark Folder2 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a/strong</td>
-	<td>Test2 Folder2</td>
+	<td>//tr[contains(.,'Bookmark Folder2 Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Test Folder Entry</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[1]/a</td>
+	<td>Bookmark Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[2]/a</td>
 	<td>http://www.liferay.com</td>
 </tr>
 </tbody></table>

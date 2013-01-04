@@ -31,6 +31,7 @@ public class AddFolderTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageBookmarksTest.class);
 		testSuite.addTestSuite(AddPortletBookmarksTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
+		testSuite.addTestSuite(ViewFolderTest.class);
 		testSuite.addTestSuite(TearDownBookmarksFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

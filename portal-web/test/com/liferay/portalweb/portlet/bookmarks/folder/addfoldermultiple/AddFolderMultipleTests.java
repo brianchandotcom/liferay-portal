@@ -16,6 +16,9 @@ package com.liferay.portalweb.portlet.bookmarks.folder.addfoldermultiple;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.bookmarks.folder.addfolder.AddFolder1Test;
+import com.liferay.portalweb.portlet.bookmarks.folder.addfolder.AddFolder2Test;
+import com.liferay.portalweb.portlet.bookmarks.folder.addfolder.AddFolder3Test;
 import com.liferay.portalweb.portlet.bookmarks.folder.addfolder.TearDownBookmarksFolderTest;
 import com.liferay.portalweb.portlet.bookmarks.portlet.addportletbookmarks.AddPageBookmarksTest;
 import com.liferay.portalweb.portlet.bookmarks.portlet.addportletbookmarks.AddPortletBookmarksTest;
@@ -34,6 +37,7 @@ public class AddFolderMultipleTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddFolder1Test.class);
 		testSuite.addTestSuite(AddFolder2Test.class);
 		testSuite.addTestSuite(AddFolder3Test.class);
+		testSuite.addTestSuite(ViewFolderMultipleTest.class);
 		testSuite.addTestSuite(TearDownBookmarksFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

@@ -20,33 +20,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/ul/li[4]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Subfolder')]</td>
 	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[4]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Subfolder')]</td>
 	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_28_name']</td>
-	<td>Test Subfolder</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//textarea[@id='_28_description']</td>
-	<td>This is a test subfolder.</td>
+	<td>Bookmark Subfolder Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -60,13 +55,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a/strong</td>
-	<td>Test Subfolder</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//td[1]/a</td>
-	<td>This is a test subfolder.</td>
+	<td>//tr[contains(.,'Bookmark Subfolder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Subfolder Name</td>
 </tr>
 </tbody></table>
 </body>

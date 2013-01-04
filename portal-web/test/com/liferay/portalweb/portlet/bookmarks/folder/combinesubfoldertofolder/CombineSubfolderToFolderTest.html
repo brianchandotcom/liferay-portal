@@ -20,22 +20,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test Subfolder</td>
+	<td>//tr[contains(.,'Bookmark Subfolder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Subfolder Name</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Test Subfolder Entry</td>
+	<td>Bookmark Name</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,12 +45,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -69,14 +69,24 @@
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_28_mergeWithParentFolderCheckbox']</td>
-	<td>Merge with Parent Folder</td>
+	<td>mergeParentFolderChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${mergeParentFolderChecked}</td>
+	<td>MergeParentFolderChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_28_mergeWithParentFolderCheckbox']</td>
 	<td>Merge with Parent Folder</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>MergeParentFolderChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -95,18 +105,23 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Test Subfolder Entry</td>
+	<td>//div[@class='lfr-asset-icon lfr-asset-subfolders']</td>
+	<td>0 Subfolders</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[1]/a</td>
+	<td>Bookmark Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[2]/a</td>
 	<td>http://www.liferay.com</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>//a/strong</td>
-	<td>Test Subfolder</td>
+	<td>assertTextNotPresent</td>
+	<td>Bookmark Subfolder Name</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

@@ -34,6 +34,7 @@ public class EditFolderTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletBookmarksTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(EditFolderTest.class);
+		testSuite.addTestSuite(ViewEditFolderTest.class);
 		testSuite.addTestSuite(TearDownBookmarksFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

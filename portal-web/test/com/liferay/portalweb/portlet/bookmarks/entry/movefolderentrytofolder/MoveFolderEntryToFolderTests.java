@@ -17,9 +17,9 @@ package com.liferay.portalweb.portlet.bookmarks.entry.movefolderentrytofolder;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.bookmarks.entry.addfolderentry.TearDownBookmarksEntryTest;
+import com.liferay.portalweb.portlet.bookmarks.folder.addfolder.AddFolder1Test;
+import com.liferay.portalweb.portlet.bookmarks.folder.addfolder.AddFolder2Test;
 import com.liferay.portalweb.portlet.bookmarks.folder.addfolder.TearDownBookmarksFolderTest;
-import com.liferay.portalweb.portlet.bookmarks.folder.addfoldermultiple.AddFolder1Test;
-import com.liferay.portalweb.portlet.bookmarks.folder.addfoldermultiple.AddFolder2Test;
 import com.liferay.portalweb.portlet.bookmarks.portlet.addportletbookmarks.AddPageBookmarksTest;
 import com.liferay.portalweb.portlet.bookmarks.portlet.addportletbookmarks.AddPortletBookmarksTest;
 

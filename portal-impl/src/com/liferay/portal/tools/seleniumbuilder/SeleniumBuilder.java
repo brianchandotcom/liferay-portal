@@ -292,15 +292,15 @@ public class SeleniumBuilder {
 			sb.append(actionCommand);
 
 			String actionLocator = conditional.attributeValue("locator");
-			String actionPath = conditional.attributeValue("path");
+			String actionTarget = conditional.attributeValue("target");
 
 			if (!(actionLocator == null)) {
 				sb.append("(");
 				sb.append(_replaceVariables("\"" + actionLocator + "\""));
 			}
-			else if (!(actionPath == null)) {
+			else if (!(actionTarget == null)) {
 				sb.append("(");
-				sb.append(_replaceVariables("\"" + actionPath + "\""));
+				sb.append(_replaceVariables("\"" + actionTarget + "\""));
 			}
 			else {
 				sb.append("(\"\"");
@@ -673,13 +673,13 @@ public class SeleniumBuilder {
 		for (String paramSuffix : paramSuffixList) {
 			String actionLocator = action.attributeValue(
 				"locator" + paramSuffix);
-			String actionPath = action.attributeValue("path" + paramSuffix);
+			String actionTarget = action.attributeValue("target" + paramSuffix);
 
 			if (!(actionLocator == null)) {
 				parameters += _replaceVariables("\"" + actionLocator + "\"");
 			}
-			else if (!(actionPath == null)) {
-				parameters += _replaceVariables("\"" + actionPath + "\"");
+			else if (!(actionTarget == null)) {
+				parameters += _replaceVariables("\"" + actionTarget + "\"");
 			}
 			else {
 				parameters += "\"\"";

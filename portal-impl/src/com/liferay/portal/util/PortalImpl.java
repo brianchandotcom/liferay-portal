@@ -828,8 +828,8 @@ public class PortalImpl implements Portal {
 
 				try {
 					actualURL = getJournalArticleActualURL(
-						groupId, mainPath, friendlyURL, params, requestContext,
-						privateLayout);
+						groupId, privateLayout, mainPath, friendlyURL, params,
+						requestContext);
 				}
 				catch (Exception e) {
 					throw new NoSuchLayoutException(e);
@@ -2231,9 +2231,9 @@ public class PortalImpl implements Portal {
 	}
 
 	public String getJournalArticleActualURL(
-			long groupId, String mainPath, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext,
-			boolean privateLayout)
+			long groupId, boolean privateLayout, String mainPath,
+			String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
 		throws PortalException, SystemException {
 
 		String articleUrlTitle = friendlyURL.substring(

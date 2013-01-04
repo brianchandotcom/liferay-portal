@@ -91,8 +91,9 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 
 		sb.append(processBlocksImports(rootElement));
 
-		sb.append(
-			"public class " + testSimpleClassName + " extends BaseTestCase {");
+		sb.append("public class ");
+		sb.append(testSimpleClassName);
+		sb.append(" extends BaseTestCase {");
 
 		sb.append(_processSetupBlock(setupBlock));
 		sb.append(_processStepsBlock(stepsBlock));

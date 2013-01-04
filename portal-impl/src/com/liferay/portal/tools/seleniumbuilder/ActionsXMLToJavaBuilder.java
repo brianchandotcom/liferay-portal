@@ -63,9 +63,9 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
+		String objectFilePath = fileName.substring(0, x) + "/rc";
 		String objectName = fileName.substring(x + 1, y);
 		String objectXMLFilePath = fileName.substring(0, x);
-		String objectFilePath = fileName.substring(0, x) + "/rc";
 
 		String actionsSimpleClassName = objectName + "Actions";
 		String actionsXMLFileName =

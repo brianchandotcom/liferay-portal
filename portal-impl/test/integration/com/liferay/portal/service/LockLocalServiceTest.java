@@ -131,6 +131,7 @@ public class LockLocalServiceTest {
 		public void run() {
 			int count = 0;
 
+			Iteration:
 			while (true) {
 				try {
 					Lock lock = LockLocalServiceUtil.lock(
@@ -142,34 +143,43 @@ public class LockLocalServiceTest {
 						// to unlock many times because some databases like SQL
 						// Server may randomly choke and rollback an unlock.
 
-						boolean reacquireLock = false;
-
 						while (true) {
 							try {
 								LockLocalServiceUtil.unlock(
 									_className, _key, _owner, false);
 
 								if (++count >= _requiredSuccessCount) {
-									reacquireLock = true;
 
-									break;
+									// The test is done, quit this test thread
+
+									break Iteration;
 								}
+								else {
 
-								break;
+									// Need more iteration to finish the test
+
+									continue Iteration;
+								}
 							}
 							catch (SystemException se) {
 								if (_isExpectedException(se)) {
+
+									// Failed to unlock by expected exception,
+									// retry
+
 									continue;
 								}
+								else {
 
-								_systemException = se;
+									// Failed to unlock by unexpected exception,
+									// record the exception and quit this test
+									// thread.
 
-								break;
+									_systemException = se;
+
+									break Iteration;
+								}
 							}
-						}
-
-						if (reacquireLock) {
-							continue;
 						}
 					}
 				}

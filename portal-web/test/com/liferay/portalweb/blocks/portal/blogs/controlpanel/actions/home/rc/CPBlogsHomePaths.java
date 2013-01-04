@@ -28,6 +28,7 @@ public class CPBlogsHomePaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
+		_paths.put("TOP", "relative=top");
 		_paths.put("PAGE_NAME", "");
 		_paths.put("BLOGS_ENTRY_LINK_CHECKBOX_ALL",
 			"//input[@name='_161_allRowIds']");

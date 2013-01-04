@@ -28,8 +28,8 @@ public class CPDocumentsAndMediaDocumentTypeHomePaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
-		_paths.put("PAGE_NAME", "//iframe[@id='_20_openFileEntryTypeView']");
 		_paths.put("TOP", "relative=top");
+		_paths.put("PAGE_NAME", "//iframe[@id='_20_openFileEntryTypeView']");
 		_paths.put("HEADER_SUCCESS_MESSAGE",
 			"//div[@class='portlet-msg-success']");
 		_paths.put("BUTTON_VIEW_ALL", "//span[contains(@class,'view-button')]/a");

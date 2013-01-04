@@ -28,6 +28,7 @@ public class CPDocumentsAndMediaHomePaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
+		_paths.put("TOP", "relative=top");
 		_paths.put("PAGE_NAME", "");
 		_paths.put("BREADCRUMB_1", "//div[@id='breadcrumbs']/ul/li[1]/span/a");
 		_paths.put("BREADCRUMB_2", "//div[@id='breadcrumbs']/ul/li[2]/span/a");
@@ -77,21 +78,21 @@ public class CPDocumentsAndMediaHomePaths {
 		_paths.put("MANAGE_METADATA_SET",
 			"//a[contains(.,'Metadata Set') and @role='menuitem']");
 		_paths.put("FOLDER_NAME",
-			"//a[@data-folder='true']/span[@class='entry-title']");
+			"//div[@id='_20_entriesContainer']//a[@data-folder='true']/span[@class='entry-title']");
 		_paths.put("FOLDER_NAME_1",
-			"xpath=(//a[@data-folder='true']/span[@class='entry-title'])[1]");
+			"xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/span[@class='entry-title'])[1]");
 		_paths.put("FOLDER_NAME_2",
-			"xpath=(//a[@data-folder='true']/span[@class='entry-title'])[2]");
+			"xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/span[@class='entry-title'])[2]");
 		_paths.put("FOLDER_NAME_3",
-			"xpath=(//a[@data-folder='true']/span[@class='entry-title'])[3]");
+			"xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/span[@class='entry-title'])[3]");
 		_paths.put("FOLDER_ACTIONS",
-			"//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a");
+			"//div[@id='_20_entriesContainer']//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a");
 		_paths.put("FOLDER_ACTIONS_1",
-			"xpath=(//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[1]");
+			"xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[1]");
 		_paths.put("FOLDER_ACTIONS_2",
-			"xpath=(//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[2]");
+			"xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[2]");
 		_paths.put("FOLDER_ACTIONS_3",
-			"xpath=(//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[3]");
+			"xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[3]");
 		_paths.put("FOLDER_ACTIONS_EDIT",
 			"//a[contains(.,'Edit') and @role='menuitem']");
 		_paths.put("FOLDER_ACTIONS_MOVE",
@@ -105,23 +106,23 @@ public class CPDocumentsAndMediaHomePaths {
 		_paths.put("FOLDER_ACTIONS_ACCESS_FROM_DESKTOP",
 			"//a[contains(.,'Access from Desktop') and @role='menuitem']");
 		_paths.put("DOCUMENT_ACTIONS",
-			"//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a");
+			"//div[@id='_20_entriesContainer']//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a");
 		_paths.put("DOCUMENT_ACTIONS_1",
-			"xpath=(//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[1]");
+			"xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[1]");
 		_paths.put("DOCUMENT_ACTIONS_2",
-			"xpath=(//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[2]");
+			"xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[2]");
 		_paths.put("DOCUMENT_ACTIONS_3",
-			"xpath=(//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[3]");
+			"xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[3]");
 		_paths.put("DOCUMENT_IMAGE_LOCK",
-			"//a[@data-folder='false']/div/img[@alt='Locked']");
+			"//div[@id='_20_entriesContainer']//a[@data-folder='false']/div/img[@alt='Locked']");
 		_paths.put("DOCUMENT_NAME",
-			"//a[@data-folder='false']/span[@class='entry-title']");
+			"//div[@id='_20_entriesContainer']//a[@data-folder='false']/span[@class='entry-title']");
 		_paths.put("DOCUMENT_NAME_1",
-			"xpath=(//a[@data-folder='false']/span[@class='entry-title'])[1]");
+			"xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/span[@class='entry-title'])[1]");
 		_paths.put("DOCUMENT_NAME_2",
-			"xpath=(//a[@data-folder='false']/span[@class='entry-title'])[2]");
+			"xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/span[@class='entry-title'])[2]");
 		_paths.put("DOCUMENT_NAME_3",
-			"xpath=(//a[@data-folder='false']/span[@class='entry-title'])[3]");
+			"xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/span[@class='entry-title'])[3]");
 		_paths.put("DOCUMENT_ACTIONS_DOWNLOAD",
 			"//a[contains(.,'Download') and @role='menuitem']");
 		_paths.put("DOCUMENT_ACTIONS_EDIT",

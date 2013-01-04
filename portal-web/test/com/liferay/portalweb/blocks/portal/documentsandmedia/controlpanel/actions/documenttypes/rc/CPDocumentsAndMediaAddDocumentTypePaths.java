@@ -28,8 +28,8 @@ public class CPDocumentsAndMediaAddDocumentTypePaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
-		_paths.put("PAGE_NAME", "//iframe[@id='_20_openFileEntryTypeView']");
 		_paths.put("TOP", "relative=top");
+		_paths.put("PAGE_NAME", "//iframe[@id='_20_openFileEntryTypeView']");
 		_paths.put("HEADER_PAGE_TITLE", "//h1[@class='header-title']/span");
 		_paths.put("HEADER_BACK_BUTTON", "//a[@id='_20_TabsBack']");
 		_paths.put("CONTENT_NAME", "//input[@id='_20_name']");

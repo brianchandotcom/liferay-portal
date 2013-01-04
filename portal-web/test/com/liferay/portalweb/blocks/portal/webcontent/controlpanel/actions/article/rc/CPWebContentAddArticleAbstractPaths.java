@@ -28,6 +28,7 @@ public class CPWebContentAddArticleAbstractPaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
+		_paths.put("TOP", "relative=top");
 		_paths.put("PAGE_NAME", "");
 		_paths.put("ABSTRACT_SUMMARY", "//textarea[@id='_15_description_en_US']");
 		_paths.put("ABSTRACT_SMALL_IMAGE_CHECKBOX",

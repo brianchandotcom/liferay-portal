@@ -28,6 +28,7 @@ public class GmailHomePaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
+		_paths.put("TOP", "relative=top");
 		_paths.put("PAGE_NAME", "");
 		_paths.put("LOGIN_FIELD_USERNAME", "//input[@id='Email']");
 		_paths.put("LOGIN_FIELD_PASSWORD", "//input[@id='Passwd']");

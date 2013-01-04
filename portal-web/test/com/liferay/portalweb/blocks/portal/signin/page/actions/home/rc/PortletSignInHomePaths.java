@@ -28,6 +28,7 @@ public class PortletSignInHomePaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
+		_paths.put("TOP", "relative=top");
 		_paths.put("PAGE_NAME", "");
 		_paths.put("ANSWER_FIELD", "//input[@id='reminderQueryAnswer']");
 		_paths.put("ANSWER_TEXT", "//label[@for='reminderQueryAnswer']");

@@ -28,6 +28,7 @@ public class CPWebContentFolderPaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
+		_paths.put("TOP", "relative=top");
 		_paths.put("PAGE_NAME", "");
 		_paths.put("FOLDER_NAME", "//input[@id='_15_name']");
 		_paths.put("FOLDER_DESCRIPTION", "//textarea[@id='_15_description']");

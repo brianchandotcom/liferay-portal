@@ -4,6 +4,7 @@
 *.ipr
 *.iws
 *.swp
+.ant-targets-build.xml
 .ant_targets
 .sass-cache/
 .sass_cache_*.css

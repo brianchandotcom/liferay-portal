@@ -14,15 +14,13 @@
 
 package com.liferay.portalweb.blocks.portal.webcontent.controlpanel.actions.article.rc;
 
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPWebContentViewHistoryArticleActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPWebContentViewHistoryArticleActions extends BaseLiferayActions {
 	public CPWebContentViewHistoryArticleActions(
 		LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);

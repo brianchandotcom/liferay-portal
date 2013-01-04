@@ -14,15 +14,13 @@
 
 package com.liferay.portalweb.blocks.portal.webcontent.controlpanel.actions.folderpermissions.rc;
 
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPWebContentFolderPermissionsActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPWebContentFolderPermissionsActions extends BaseLiferayActions {
 	public CPWebContentFolderPermissionsActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPWebContentFolderPermissionsPaths.getPaths();

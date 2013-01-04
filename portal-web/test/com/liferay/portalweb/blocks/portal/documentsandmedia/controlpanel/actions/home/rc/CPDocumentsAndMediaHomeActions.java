@@ -15,31 +15,29 @@
 package com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.actions.home.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPDocumentsAndMediaHomeActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPDocumentsAndMediaHomeActions extends BaseLiferayActions {
 	public CPDocumentsAndMediaHomeActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPDocumentsAndMediaHomePaths.getPaths();
 	}
 
-	public void click(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void click(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("ALL_ACTIONS_MOVE_TO_THE_RECYCLE_BIN"))) {
+		if ((target.equals("ALL_ACTIONS_MOVE_TO_THE_RECYCLE_BIN"))) {
 			clickFunctions.textClickAtAndWait(params[0], params[1]);
 		}
-		else if ((param1.equals("DOCUMENT_ACTIONS") ||
-				param1.equals("FOLDER_ACTIONS"))) {
+		else if ((target.equals("DOCUMENT_ACTIONS") ||
+				target.equals("FOLDER_ACTIONS"))) {
 			clickFunctions.clickAt(params[0], params[1]);
 		}
 		else {

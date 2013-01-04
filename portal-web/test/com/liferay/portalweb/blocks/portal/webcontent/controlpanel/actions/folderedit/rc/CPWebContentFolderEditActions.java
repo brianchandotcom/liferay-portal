@@ -14,15 +14,13 @@
 
 package com.liferay.portalweb.blocks.portal.webcontent.controlpanel.actions.folderedit.rc;
 
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPWebContentFolderEditActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPWebContentFolderEditActions extends BaseLiferayActions {
 	public CPWebContentFolderEditActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPWebContentFolderEditPaths.getPaths();

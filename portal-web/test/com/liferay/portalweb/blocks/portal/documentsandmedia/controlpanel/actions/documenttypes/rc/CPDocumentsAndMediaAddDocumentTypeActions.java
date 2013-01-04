@@ -15,8 +15,7 @@
 package com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.actions.documenttypes.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.blocks.base.functions.rc.SelectWindowFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
@@ -24,20 +23,20 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPDocumentsAndMediaAddDocumentTypeActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPDocumentsAndMediaAddDocumentTypeActions
+	extends BaseLiferayActions {
 	public CPDocumentsAndMediaAddDocumentTypeActions(
 		LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPDocumentsAndMediaAddDocumentTypePaths.getPaths();
 	}
 
-	public void click(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void click(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("BUTTON_CANCEL") || param1.equals("BUTTON_SAVE"))) {
+		if ((target.equals("BUTTON_CANCEL") || target.equals("BUTTON_SAVE"))) {
 			clickFunctions.valueClickAt(params[0], params[1]);
 		}
 		else {
@@ -45,13 +44,13 @@ public class CPDocumentsAndMediaAddDocumentTypeActions extends BaseActionsImpl
 		}
 	}
 
-	public void selectWindow(String param1, String param2)
+	public void selectWindow(String target, String value)
 		throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		SelectWindowFunctions selectWindowFunctions = new SelectWindowFunctions(selenium);
 
-		if ((param1.equals("TOP"))) {
+		if ((target.equals("TOP"))) {
 			selectWindowFunctions.selectFrameTop(params[0], params[1]);
 		}
 		else {

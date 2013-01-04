@@ -15,28 +15,26 @@
 package com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.entry.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.AssertTextEqualsFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPBlogsEntryViewActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPBlogsEntryViewActions extends BaseLiferayActions {
 	public CPBlogsEntryViewActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPBlogsEntryViewPaths.getPaths();
 	}
 
-	public void assertTextEquals(String param1, String param2)
+	public void assertTextEquals(String target, String value)
 		throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 
-		if ((param1.equals("BLOGS_ENTRY_TEXT_RATING_AVERAGE"))) {
+		if ((target.equals("BLOGS_ENTRY_TEXT_RATING_AVERAGE"))) {
 			assertTextEqualsFunctions.assertPartialText(params[0], params[1]);
 		}
 		else {

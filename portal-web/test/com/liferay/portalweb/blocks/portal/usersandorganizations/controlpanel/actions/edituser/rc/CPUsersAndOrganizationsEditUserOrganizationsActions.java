@@ -14,15 +14,14 @@
 
 package com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.actions.edituser.rc;
 
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class CPUsersAndOrganizationsEditUserOrganizationsActions
-	extends BaseActionsImpl implements LiferayActions {
+	extends BaseLiferayActions {
 	public CPUsersAndOrganizationsEditUserOrganizationsActions(
 		LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);

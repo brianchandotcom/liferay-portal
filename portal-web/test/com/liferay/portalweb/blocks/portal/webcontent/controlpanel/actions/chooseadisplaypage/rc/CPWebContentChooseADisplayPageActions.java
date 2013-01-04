@@ -14,15 +14,13 @@
 
 package com.liferay.portalweb.blocks.portal.webcontent.controlpanel.actions.chooseadisplaypage.rc;
 
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPWebContentChooseADisplayPageActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPWebContentChooseADisplayPageActions extends BaseLiferayActions {
 	public CPWebContentChooseADisplayPageActions(
 		LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);

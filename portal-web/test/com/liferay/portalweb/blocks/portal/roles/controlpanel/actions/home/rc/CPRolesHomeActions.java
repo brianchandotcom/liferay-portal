@@ -15,35 +15,33 @@
 package com.liferay.portalweb.blocks.portal.roles.controlpanel.actions.home.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPRolesHomeActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPRolesHomeActions extends BaseLiferayActions {
 	public CPRolesHomeActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPRolesHomePaths.getPaths();
 	}
 
-	public void click(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void click(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("ACTIONS_ASSIGN_MEMBERS"))) {
+		if ((target.equals("ACTIONS_ASSIGN_MEMBERS"))) {
 			clickFunctions.textClickAtAndWait(params[0], params[1]);
 		}
-		else if ((param1.equals("ADD_REGULAR_ROLE") ||
-				param1.equals("ADD_SITE_ROLE") ||
-				param1.equals("ADD_ORGANIZATION_ROLE"))) {
+		else if ((target.equals("ADD_REGULAR_ROLE") ||
+				target.equals("ADD_SITE_ROLE") ||
+				target.equals("ADD_ORGANIZATION_ROLE"))) {
 			clickFunctions.textClickAndWait(params[0], params[1]);
 		}
-		else if ((param1.equals("SEARCH_BUTTON"))) {
+		else if ((target.equals("SEARCH_BUTTON"))) {
 			clickFunctions.valueClickAtAndWait(params[0], params[1]);
 		}
 		else {

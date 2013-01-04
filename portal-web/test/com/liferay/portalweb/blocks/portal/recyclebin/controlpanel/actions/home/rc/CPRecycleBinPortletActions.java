@@ -14,15 +14,13 @@
 
 package com.liferay.portalweb.blocks.portal.recyclebin.controlpanel.actions.home.rc;
 
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPRecycleBinPortletActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPRecycleBinPortletActions extends BaseLiferayActions {
 	public CPRecycleBinPortletActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPRecycleBinPortletPaths.getPaths();

@@ -15,8 +15,7 @@
 package com.liferay.portalweb.blocks.portal.home.page.actions.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.blocks.base.functions.rc.MouseOverFunctions;
 import com.liferay.portalweb.blocks.base.functions.rc.TypeFunctions;
@@ -25,28 +24,28 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 /**
  * @author Brian Wing Shun Chan
  */
-public class HomeActions extends BaseActionsImpl implements LiferayActions {
+public class HomeActions extends BaseLiferayActions {
 	public HomeActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = HomePaths.getPaths();
 	}
 
-	public void click(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void click(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("ADD_LINK") || param1.equals("GOTO_LINK") ||
-				param1.equals("MANAGE_LINK"))) {
+		if ((target.equals("ADD_LINK") || target.equals("GOTO_LINK") ||
+				target.equals("MANAGE_LINK"))) {
 			clickFunctions.textClickAtHomeClickDockbar(params[0], params[1]);
 		}
-		else if ((param1.equals("ADD_LINK_APPLICATION"))) {
+		else if ((target.equals("ADD_LINK_APPLICATION"))) {
 			clickFunctions.partialTextClickAt(params[0], params[1]);
 		}
-		else if ((param1.equals("GOTO_LINK_CONTROL_PANEL"))) {
+		else if ((target.equals("GOTO_LINK_CONTROL_PANEL"))) {
 			clickFunctions.textClickAtAndWait(params[0], params[1]);
 		}
-		else if (param1.startsWith("link=")) {
+		else if (target.startsWith("link=")) {
 			clickFunctions.textClickAtAndWait(params[0], params[1]);
 		}
 		else {
@@ -54,14 +53,14 @@ public class HomeActions extends BaseActionsImpl implements LiferayActions {
 		}
 	}
 
-	public void mouseOver(String param1, String param2)
+	public void mouseOver(String target, String value)
 		throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		MouseOverFunctions mouseOverFunctions = new MouseOverFunctions(selenium);
 
-		if ((param1.equals("ADD_LINK") || param1.equals("GOTO_LINK") ||
-				param1.equals("MANAGE_LINK"))) {
+		if ((target.equals("ADD_LINK") || target.equals("GOTO_LINK") ||
+				target.equals("MANAGE_LINK"))) {
 			mouseOverFunctions.textMouseOverHomeClickDockbar(params[0],
 				params[1]);
 		}
@@ -70,12 +69,12 @@ public class HomeActions extends BaseActionsImpl implements LiferayActions {
 		}
 	}
 
-	public void type(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void type(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
-		if ((param1.equals("PORTLET_FIELD_SEARCH"))) {
+		if ((target.equals("PORTLET_FIELD_SEARCH"))) {
 			typeFunctions.sendKeysHomeAddApplication(params[0], params[1]);
 		}
 		else {

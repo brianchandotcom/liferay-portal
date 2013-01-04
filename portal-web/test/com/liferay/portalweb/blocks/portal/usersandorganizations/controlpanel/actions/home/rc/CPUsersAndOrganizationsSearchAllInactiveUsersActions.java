@@ -15,8 +15,7 @@
 package com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.actions.home.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
@@ -24,22 +23,22 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
  * @author Brian Wing Shun Chan
  */
 public class CPUsersAndOrganizationsSearchAllInactiveUsersActions
-	extends BaseActionsImpl implements LiferayActions {
+	extends BaseLiferayActions {
 	public CPUsersAndOrganizationsSearchAllInactiveUsersActions(
 		LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPUsersAndOrganizationsSearchAllInactiveUsersPaths.getPaths();
 	}
 
-	public void click(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void click(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("ADVANCED_SEARCH_BUTTON") ||
-				param1.equals("BASIC_SEARCH_BUTTON") ||
-				param1.equals("USERS_DELETE") ||
-				param1.equals("USERS_RESTORE"))) {
+		if ((target.equals("ADVANCED_SEARCH_BUTTON") ||
+				target.equals("BASIC_SEARCH_BUTTON") ||
+				target.equals("USERS_DELETE") ||
+				target.equals("USERS_RESTORE"))) {
 			clickFunctions.valueClickAtAndWait(params[0], params[1]);
 		}
 		else {

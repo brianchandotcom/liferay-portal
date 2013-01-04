@@ -15,8 +15,7 @@
 package com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.actions.addfileentry.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.blocks.base.functions.rc.TypeFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
@@ -24,20 +23,19 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPDocumentsAndMediaAddFileEntryActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPDocumentsAndMediaAddFileEntryActions extends BaseLiferayActions {
 	public CPDocumentsAndMediaAddFileEntryActions(
 		LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPDocumentsAndMediaAddFileEntryPaths.getPaths();
 	}
 
-	public void click(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void click(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("BUTTON_PUBLISH") || param1.equals("BUTTON_CANCEL"))) {
+		if ((target.equals("BUTTON_PUBLISH") || target.equals("BUTTON_CANCEL"))) {
 			clickFunctions.valueClickAtAndWait(params[0], params[1]);
 		}
 		else {
@@ -45,12 +43,12 @@ public class CPDocumentsAndMediaAddFileEntryActions extends BaseActionsImpl
 		}
 	}
 
-	public void type(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void type(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
-		if ((param1.equals("CONTENT_FILE"))) {
+		if ((target.equals("CONTENT_FILE"))) {
 			typeFunctions.uploadCommonFile(params[0], params[1]);
 		}
 		else {

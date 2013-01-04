@@ -14,15 +14,13 @@
 
 package com.liferay.portalweb.blocks.portal.roles.controlpanel.actions.definepermissions.rc;
 
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPRolesDefinePermissionsActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPRolesDefinePermissionsActions extends BaseLiferayActions {
 	public CPRolesDefinePermissionsActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPRolesDefinePermissionsPaths.getPaths();

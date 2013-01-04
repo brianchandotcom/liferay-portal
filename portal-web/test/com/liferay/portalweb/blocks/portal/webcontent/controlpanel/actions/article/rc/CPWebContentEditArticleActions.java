@@ -15,32 +15,30 @@
 package com.liferay.portalweb.blocks.portal.webcontent.controlpanel.actions.article.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.AssertTextEqualsFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPWebContentEditArticleActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPWebContentEditArticleActions extends BaseLiferayActions {
 	public CPWebContentEditArticleActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPWebContentEditArticlePaths.getPaths();
 	}
 
-	public void assertTextEquals(String param1, String param2)
+	public void assertTextEquals(String target, String value)
 		throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 
-		if ((param1.equals("ARTICLE_CONTENT"))) {
+		if ((target.equals("ARTICLE_CONTENT"))) {
 			assertTextEqualsFunctions.assertTextCPWebContenCKEditor(params[0],
 				params[1]);
 		}
-		else if ((param1.equals("ARTICLE_TITLE"))) {
+		else if ((target.equals("ARTICLE_TITLE"))) {
 			assertTextEqualsFunctions.assertValue(params[0], params[1]);
 		}
 		else {

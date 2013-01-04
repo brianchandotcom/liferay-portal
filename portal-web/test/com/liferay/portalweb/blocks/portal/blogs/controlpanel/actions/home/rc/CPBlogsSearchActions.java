@@ -14,15 +14,13 @@
 
 package com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.home.rc;
 
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPBlogsSearchActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPBlogsSearchActions extends BaseLiferayActions {
 	public CPBlogsSearchActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPBlogsSearchPaths.getPaths();

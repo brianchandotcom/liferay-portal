@@ -15,8 +15,7 @@
 package com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.actions.document.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.AssertTextEqualsFunctions;
 import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
@@ -24,21 +23,20 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPDocumentsAndMediaDocumentActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPDocumentsAndMediaDocumentActions extends BaseLiferayActions {
 	public CPDocumentsAndMediaDocumentActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPDocumentsAndMediaDocumentPaths.getPaths();
 	}
 
-	public void assertTextEquals(String param1, String param2)
+	public void assertTextEquals(String target, String value)
 		throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 
-		if ((param1.equals("COMMENT_MESSAGE_INFO") ||
-				param1.equals("DOCUMENT_LOCK_MESSAGE"))) {
+		if ((target.equals("COMMENT_MESSAGE_INFO") ||
+				target.equals("DOCUMENT_LOCK_MESSAGE"))) {
 			assertTextEqualsFunctions.assertPartialText(params[0], params[1]);
 		}
 		else {
@@ -46,13 +44,13 @@ public class CPDocumentsAndMediaDocumentActions extends BaseActionsImpl
 		}
 	}
 
-	public void click(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void click(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("COMMENT_BUTTON_CANCEL") ||
-				param1.equals("COMMENT_BUTTON_REPLY"))) {
+		if ((target.equals("COMMENT_BUTTON_CANCEL") ||
+				target.equals("COMMENT_BUTTON_REPLY"))) {
 			clickFunctions.valueClickAt(params[0], params[1]);
 		}
 		else {

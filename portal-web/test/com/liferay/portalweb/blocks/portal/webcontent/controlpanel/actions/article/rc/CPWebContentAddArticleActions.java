@@ -15,8 +15,7 @@
 package com.liferay.portalweb.blocks.portal.webcontent.controlpanel.actions.article.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.blocks.base.functions.rc.TypeFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
@@ -24,19 +23,18 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPWebContentAddArticleActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPWebContentAddArticleActions extends BaseLiferayActions {
 	public CPWebContentAddArticleActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPWebContentAddArticlePaths.getPaths();
 	}
 
-	public void click(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void click(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("SIDEBAR_PUBLISH"))) {
+		if ((target.equals("SIDEBAR_PUBLISH"))) {
 			clickFunctions.clickAtAndWait(params[0], params[1]);
 		}
 		else {
@@ -44,12 +42,12 @@ public class CPWebContentAddArticleActions extends BaseActionsImpl
 		}
 	}
 
-	public void type(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void type(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
-		if ((param1.equals("ARTICLE_CONTENT"))) {
+		if ((target.equals("ARTICLE_CONTENT"))) {
 			typeFunctions.typeCPWebContentCKEditor(params[0], params[1]);
 		}
 		else {

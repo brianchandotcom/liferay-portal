@@ -15,33 +15,31 @@
 package com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.actions.documentedit.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPDocumentsAndMediaDocumentEditActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPDocumentsAndMediaDocumentEditActions extends BaseLiferayActions {
 	public CPDocumentsAndMediaDocumentEditActions(
 		LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPDocumentsAndMediaDocumentEditPaths.getPaths();
 	}
 
-	public void click(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void click(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("BUTTON_CANCEL") ||
-				param1.equals("BUTTON_CANCEL_CHECKIN") ||
-				param1.equals("BUTTON_CHECKOUT") ||
-				param1.equals("BUTTON_PUBLISH") ||
-				param1.equals("BUTTON_SAVE") ||
-				param1.equals("BUTTON_SAVE_AND_CHECKIN"))) {
+		if ((target.equals("BUTTON_CANCEL") ||
+				target.equals("BUTTON_CANCEL_CHECKIN") ||
+				target.equals("BUTTON_CHECKOUT") ||
+				target.equals("BUTTON_PUBLISH") ||
+				target.equals("BUTTON_SAVE") ||
+				target.equals("BUTTON_SAVE_AND_CHECKIN"))) {
 			clickFunctions.valueClickAtAndWait(params[0], params[1]);
 		}
 		else {

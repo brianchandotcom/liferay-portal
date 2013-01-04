@@ -59,6 +59,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.LayoutImpl;
@@ -1234,6 +1235,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		return nextLayoutId;
+	}
+
+	/**
+	 * Returns all the layouts without resource permissions
+	 *
+	 * @return all the layouts without resource permissions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Layout> getNoPermissionLayouts(Role role)
+		throws SystemException {
+
+		return layoutFinder.findByNoPermissions(role.getRoleId());
 	}
 
 	/**

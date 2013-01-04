@@ -905,6 +905,18 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	/**
+	* Returns all the layouts without resource permissions
+	*
+	* @return all the layouts without resource permissions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Layout> getNoPermissionLayouts(
+		com.liferay.portal.model.Role role)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.getNoPermissionLayouts(role);
+	}
+
+	/**
 	* Returns all the layouts whose friendly URLs are <code>null</code>
 	*
 	* @return all the layouts whose friendly URLs are <code>null</code>

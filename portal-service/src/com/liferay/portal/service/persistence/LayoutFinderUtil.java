@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class LayoutFinderUtil {
+	public static java.util.List<com.liferay.portal.model.Layout> findByNoPermissions(
+		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByNoPermissions(roleId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Layout> findByNullFriendlyURL()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByNullFriendlyURL();

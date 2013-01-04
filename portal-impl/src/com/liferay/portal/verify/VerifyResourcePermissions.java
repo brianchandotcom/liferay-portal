@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.ResourceConstants;
@@ -28,6 +29,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ContactLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -62,8 +64,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.List;
+
 /**
  * @author Raymond Augé
+ * @author James Lefeu
  */
 public class VerifyResourcePermissions extends VerifyProcess {
 
@@ -78,6 +83,19 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			for (String[] model : _MODELS) {
 				verifyModel(role, model[0], model[1], model[2]);
 			}
+
+			verifyLayout(role);
+		}
+	}
+
+	protected void verifyLayout(Role role) throws Exception {
+		List<Layout> layouts = LayoutLocalServiceUtil.getNoPermissionLayouts(
+			role);
+
+		for (Layout layout : layouts) {
+			verifyModel(
+				role.getCompanyId(), Layout.class.getName(), layout.getPlid(),
+				role, 0);
 		}
 	}
 

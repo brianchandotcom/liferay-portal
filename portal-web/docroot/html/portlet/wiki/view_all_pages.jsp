@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <portlet:actionURL var="undoTrashURL">
-	<portlet:param name="struts_action" value="/wiki/restore_page" />
+	<portlet:param name="struts_action" value="/wiki/edit_page" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 

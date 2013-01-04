@@ -14,15 +14,13 @@
 
 package com.liferay.portalweb.blocks.portal.webcontent.controlpanel.actions.feeds.rc;
 
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPWebContentFeedsActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPWebContentFeedsActions extends BaseLiferayActions {
 	public CPWebContentFeedsActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPWebContentFeedsPaths.getPaths();

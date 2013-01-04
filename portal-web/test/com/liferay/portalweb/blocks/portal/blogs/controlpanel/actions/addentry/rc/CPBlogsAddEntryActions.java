@@ -15,8 +15,7 @@
 package com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.addentry.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.AssertTextEqualsFunctions;
 import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.blocks.base.functions.rc.TypeFunctions;
@@ -25,20 +24,19 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPBlogsAddEntryActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPBlogsAddEntryActions extends BaseLiferayActions {
 	public CPBlogsAddEntryActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPBlogsAddEntryPaths.getPaths();
 	}
 
-	public void assertTextEquals(String param1, String param2)
+	public void assertTextEquals(String target, String value)
 		throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 
-		if ((param1.equals("CONTENT_TEXT_SAVE_STATUS"))) {
+		if ((target.equals("CONTENT_TEXT_SAVE_STATUS"))) {
 			assertTextEqualsFunctions.assertPartialTextPause(params[0],
 				params[1]);
 		}
@@ -47,15 +45,15 @@ public class CPBlogsAddEntryActions extends BaseActionsImpl
 		}
 	}
 
-	public void click(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void click(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("CONTENT_LINK_DRAFT") ||
-				param1.equals("CONTENT_LINK_PREVIEW") ||
-				param1.equals("CONTENT_LINK_SAVE") ||
-				param1.equals("CONTENT_LINK_CANCEL"))) {
+		if ((target.equals("CONTENT_LINK_DRAFT") ||
+				target.equals("CONTENT_LINK_PREVIEW") ||
+				target.equals("CONTENT_LINK_SAVE") ||
+				target.equals("CONTENT_LINK_CANCEL"))) {
 			clickFunctions.valueClickAtAndWaitCPBlogsCKEditor(params[0],
 				params[1]);
 		}
@@ -64,12 +62,12 @@ public class CPBlogsAddEntryActions extends BaseActionsImpl
 		}
 	}
 
-	public void type(String param1, String param2) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+	public void type(String target, String value) throws Exception {
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
-		if ((param1.equals("CONTENT_FIELD_CONTENT"))) {
+		if ((target.equals("CONTENT_FIELD_CONTENT"))) {
 			typeFunctions.typeCPBlogsCKEditor(params[0], params[1]);
 		}
 		else {

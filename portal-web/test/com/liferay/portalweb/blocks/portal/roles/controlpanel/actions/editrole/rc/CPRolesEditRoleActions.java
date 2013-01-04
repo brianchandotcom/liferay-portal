@@ -15,8 +15,7 @@
 package com.liferay.portalweb.blocks.portal.roles.controlpanel.actions.editrole.rc;
 
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.AssertTextEqualsFunctions;
 import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
@@ -24,29 +23,28 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPRolesEditRoleActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPRolesEditRoleActions extends BaseLiferayActions {
 	public CPRolesEditRoleActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPRolesEditRolePaths.getPaths();
 	}
 
-	public void assertTextEquals(String param1, String param2)
+	public void assertTextEquals(String target, String value)
 		throws Exception {
-		String[] params = ActionsUtil.getParams(paths, param1, param2);
+		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((param1.equals("ROLE_NAME") || param1.equals("ROLE_TITLE") ||
-				param1.equals("ROLE_DESCRIPTION"))) {
+		if ((target.equals("ROLE_NAME") || target.equals("ROLE_TITLE") ||
+				target.equals("ROLE_DESCRIPTION"))) {
 			assertTextEqualsFunctions.assertValue(params[0], params[1]);
 		}
-		else if ((param1.equals("ROLE_TYPE"))) {
+		else if ((target.equals("ROLE_TYPE"))) {
 			assertTextEqualsFunctions.assertPartialText(params[0], params[1]);
 		}
-		else if ((param1.equals("BUTTON_SAVE") ||
-				param1.equals("BUTTON_CANCEL"))) {
+		else if ((target.equals("BUTTON_SAVE") ||
+				target.equals("BUTTON_CANCEL"))) {
 			clickFunctions.valueClickAtAndWait(params[0], params[1]);
 		}
 		else {

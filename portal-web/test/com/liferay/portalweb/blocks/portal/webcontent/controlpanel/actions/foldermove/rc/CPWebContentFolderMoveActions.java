@@ -14,15 +14,13 @@
 
 package com.liferay.portalweb.blocks.portal.webcontent.controlpanel.actions.foldermove.rc;
 
-import com.liferay.portalweb.blocks.base.actions.rc.BaseActionsImpl;
-import com.liferay.portalweb.blocks.base.actions.rc.LiferayActions;
+import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CPWebContentFolderMoveActions extends BaseActionsImpl
-	implements LiferayActions {
+public class CPWebContentFolderMoveActions extends BaseLiferayActions {
 	public CPWebContentFolderMoveActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPWebContentFolderMovePaths.getPaths();

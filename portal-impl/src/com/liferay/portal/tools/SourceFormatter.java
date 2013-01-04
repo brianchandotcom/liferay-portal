@@ -1449,6 +1449,11 @@ public class SourceFormatter {
 			}
 
 			if (line.startsWith("import ")) {
+				if (line.endsWith(".*;")) {
+					_sourceFormatterHelper.printError(
+						fileName, "import: " + fileName + " " + lineCount);
+				}
+
 				int pos = line.lastIndexOf(StringPool.PERIOD);
 
 				if (pos != -1) {

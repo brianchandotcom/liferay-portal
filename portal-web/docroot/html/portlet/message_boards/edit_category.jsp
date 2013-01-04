@@ -44,6 +44,16 @@ try {
 }
 catch (NoSuchMailingListException nsmle) {
 }
+
+if ((category == null) && (mailingList == null)) {
+	try {
+		if (parentCategoryId > 0) {
+			mailingList = MBMailingListLocalServiceUtil.getCategoryMailingList(scopeGroupId, parentCategoryId);
+		}
+	}
+	catch (NoSuchMailingListException nsmle) {
+	}
+}
 %>
 
 <liferay-ui:header

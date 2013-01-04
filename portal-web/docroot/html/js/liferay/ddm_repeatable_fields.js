@@ -54,24 +54,6 @@ AUI.add(
 						container.delegate('hover', hoverHandler, hoverHandler, SELECTOR_REPEAT_BUTTONS, instance);
 					},
 
-					syncFieldsTreeUI: function() {
-						var instance = this;
-
-						var fieldsDisplay = [];
-
-						var fieldsDisplayInput = instance.get('fieldsDisplayInput');
-
-						instance.getFieldsList().each(
-							function(item, index, collection) {
-								instance.renderRepeatableUI(item);
-
-								fieldsDisplay = fieldsDisplay.concat(instance.createFieldTree(item));
-							}
-						);
-
-						fieldsDisplayInput.val(fieldsDisplay.join());
-					},
-
 					syncUI: function() {
 						var instance = this;
 
@@ -134,7 +116,7 @@ AUI.add(
 
 						var selector = ['>'];
 
-						if (container.test('.aui-field-wrapper')) {
+						if (container.hasClass('aui-field-wrapper')) {
 							selector.push(' .aui-field-wrapper-content >');
 						}
 
@@ -212,6 +194,24 @@ AUI.add(
 								}
 							);
 						}
+					},
+
+					syncFieldsTreeUI: function() {
+						var instance = this;
+
+						var fieldsDisplay = [];
+
+						var fieldsDisplayInput = instance.get('fieldsDisplayInput');
+
+						instance.getFieldsList().each(
+							function(item, index, collection) {
+								instance.renderRepeatableUI(item);
+
+								fieldsDisplay = fieldsDisplay.concat(instance.createFieldTree(item));
+							}
+						);
+
+						fieldsDisplayInput.val(fieldsDisplay.join());
 					},
 
 					_onClickRepeatableButton: function(event) {

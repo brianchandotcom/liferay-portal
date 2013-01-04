@@ -197,19 +197,18 @@ if (Validator.isNotNull(historyKey)) {
 </aui:script>
 
 <aui:script use="aui-base">
-	var modifyLinks = A.all('.modify-link');
+	var portlet = A.one('#p_p_id_<%= portletDisplay.getRootPortletId() %>_');
 
-	if (modifyLinks) {
-		modifyLinks.on(
-			'click',
-			function() {
-				A.fire(
-					'formNavigator:trackChanges',
-					A.one('.selected .modify-link')
-				);
-			}
-		);
-	}
+	portlet.delegate(
+		'click',
+		function() {
+			A.fire(
+				'formNavigator:trackChanges',
+				A.one('.selected .modify-link')
+			);
+		},
+		'.modify-link'
+	);
 </aui:script>
 
 <%!

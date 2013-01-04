@@ -28,6 +28,7 @@ public class CPBlogsSearchPaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
+		_paths.put("TOP", "relative=top");
 		_paths.put("PAGE_NAME", "");
 		_paths.put("PORTLET_TITLE", "//span[@class='portlet-title-text']");
 		_paths.put("PORTLET_DESCRIPTION", "//div[@id='cpContextPanelTemplate']");

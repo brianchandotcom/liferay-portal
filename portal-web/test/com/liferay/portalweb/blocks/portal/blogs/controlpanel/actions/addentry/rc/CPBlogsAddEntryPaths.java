@@ -28,6 +28,7 @@ public class CPBlogsAddEntryPaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
+		_paths.put("TOP", "relative=top");
 		_paths.put("PAGE_NAME", "");
 		_paths.put("ABSTRACT_FIELD_DESCRIPTION", "_161_description");
 		_paths.put("ABSTRACT_FIELD_SMALL_IMAGE_CHECKBOX",

@@ -28,6 +28,7 @@ public class CPWebContentCopyArticlePaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
+		_paths.put("TOP", "relative=top");
 		_paths.put("PAGE_NAME", "");
 	}
 }

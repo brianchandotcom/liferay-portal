@@ -28,6 +28,7 @@ public class CPWebContentAddArticlePaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
+		_paths.put("TOP", "relative=top");
 		_paths.put("PAGE_NAME", "");
 		_paths.put("HEADER_STRUCTURE", "//span[@id='_15_structureNameLabel']");
 		_paths.put("HEADER_EDIT_STRUCTURE", "//a[@id='_15_editStructureLink']");

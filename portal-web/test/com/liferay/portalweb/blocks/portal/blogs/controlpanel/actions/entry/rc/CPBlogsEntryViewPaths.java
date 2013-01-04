@@ -28,6 +28,7 @@ public class CPBlogsEntryViewPaths {
 	private static Map<String, String> _paths = new HashMap<String, String>();
 
 	static {
+		_paths.put("TOP", "relative=top");
 		_paths.put("PAGE_NAME", "");
 		_paths.put("BLOGS_COMMENT_LINK_AUTHOR_1",
 			"xpath=(//span[@class='user-name'])[1]");

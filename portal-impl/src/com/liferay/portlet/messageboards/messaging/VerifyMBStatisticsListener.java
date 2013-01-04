@@ -27,8 +27,8 @@ public class VerifyMBStatisticsListener extends BaseMessageListener {
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		if (PropsValues.MESSAGE_BAORDS_VERIFY_STATISTICS) {
-			VerifyMessageBoards.verifyStatisticsForThreads();
 			VerifyMessageBoards.verifyStatisticsForCategories();
+			VerifyMessageBoards.verifyStatisticsForThreads();
 		}
 	}
 

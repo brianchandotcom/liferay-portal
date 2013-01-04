@@ -2451,8 +2451,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			String friendlyURL = matcher.group(4);
 
 			try {
-				Layout layout = LayoutUtil.fetchByUUID_G(
-					layoutUuid, portletDataContext.getScopeGroupId());
+				Layout layout = LayoutUtil.fetchByUUID_G_P(
+					layoutUuid, portletDataContext.getScopeGroupId(),
+					privateLayout);
 
 				if (layout == null) {
 					layout = LayoutUtil.fetchByG_P_F(

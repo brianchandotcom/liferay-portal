@@ -1,4 +1,4 @@
-<functions>
+<functions object="AssertTextEquals">
 	<functiondef command="assertPartialText">
 		<selenium command="waitForVisible" />
 		<selenium command="waitForPartialText" />

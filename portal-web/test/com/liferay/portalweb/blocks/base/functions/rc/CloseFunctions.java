@@ -24,10 +24,10 @@ public class CloseFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void close(String param1, String param2) throws Exception {
+	public void close(String target, String value) throws Exception {
 	}
 
-	public void closeWindow(String param1, String param2)
+	public void closeWindow(String target, String value)
 		throws Exception {
 		selenium.pause("1000");
 		selenium.close();

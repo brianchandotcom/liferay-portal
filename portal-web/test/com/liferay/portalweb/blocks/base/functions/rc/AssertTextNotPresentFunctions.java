@@ -24,9 +24,9 @@ public class AssertTextNotPresentFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void assertTextNotPresent(String param1, String param2)
+	public void assertTextNotPresent(String target, String value)
 		throws Exception {
-		selenium.waitForTextNotPresent(param2);
-		selenium.assertTextNotPresent(param2);
+		selenium.waitForTextNotPresent(value);
+		selenium.assertTextNotPresent(value);
 	}
 }

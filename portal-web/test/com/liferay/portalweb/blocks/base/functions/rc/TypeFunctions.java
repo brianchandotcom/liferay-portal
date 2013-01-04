@@ -24,27 +24,26 @@ public class TypeFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void sendKeys(String param1, String param2)
-		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.sendKeys(param1, param2);
+	public void sendKeys(String target, String value) throws Exception {
+		selenium.waitForVisible(target);
+		selenium.sendKeys(target, value);
 	}
 
-	public void sendKeysHomeAddApplication(String param1, String param2)
+	public void sendKeysHomeAddApplication(String target, String value)
 		throws Exception {
 		TypeFunctions typeFunctions = new TypeFunctions(selenium);
 
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-		typeFunctions.sendKeys(param1, param2);
+		typeFunctions.sendKeys(target, value);
 	}
 
-	public void type(String param1, String param2) throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.type(param1, param2);
+	public void type(String target, String value) throws Exception {
+		selenium.waitForVisible(target);
+		selenium.type(target, value);
 	}
 
-	public void typeCPBlogsCKEditor(String param1, String param2)
+	public void typeCPBlogsCKEditor(String target, String value)
 		throws Exception {
 		selenium.waitForElementPresent(
 			"//textarea[@id='_161_editor' and @style='display: none;']");
@@ -53,7 +52,7 @@ public class TypeFunctions extends BaseFunctions {
 		selenium.click("//span[.='Source']");
 		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible("//td[@id='cke_contents__161_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__161_editor']/textarea", param2);
+		selenium.type("//td[@id='cke_contents__161_editor']/textarea", value);
 		selenium.waitForVisible("//span[.='Source']");
 		selenium.assertText("//span[.='Source']", "Source");
 		selenium.click("//span[.='Source']");
@@ -61,40 +60,40 @@ public class TypeFunctions extends BaseFunctions {
 			"//textarea[@id='_161_editor' and @style='display: none;']");
 		selenium.waitForVisible("//td[@id='cke_contents__161_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__161_editor']/iframe");
-		selenium.waitForText("//body", param2);
-		selenium.assertText("//body", param2);
+		selenium.waitForText("//body", value);
+		selenium.assertText("//body", value);
 		selenium.selectFrame("relative=top");
 	}
 
-	public void typeCPWebContentCKEditor(String param1, String param2)
+	public void typeCPWebContentCKEditor(String target, String value)
 		throws Exception {
 		selenium.waitForElementPresent(
 			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
 		selenium.waitForVisible("//span[.='Source']");
 		selenium.assertText("//span[.='Source']", "Source");
-		selenium.clickAt("//span[.='Source']", param2);
+		selenium.clickAt("//span[.='Source']", value);
 		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea");
 		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
-			param2);
+			value);
 		selenium.waitForVisible("//span[.='Source']");
 		selenium.assertText("//span[.='Source']", "Source");
-		selenium.clickAt("//span[.='Source']", param2);
+		selenium.clickAt("//span[.='Source']", value);
 		selenium.waitForElementPresent(
 			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
 		selenium.waitForVisible(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.selectFrame(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.waitForText("//body", param2);
-		selenium.assertText("//body", param2);
+		selenium.waitForText("//body", value);
+		selenium.assertText("//body", value);
 		selenium.selectFrame("relative=top");
 	}
 
-	public void uploadCommonFile(String param1, String param2)
+	public void uploadCommonFile(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.uploadCommonFile(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.uploadCommonFile(target, value);
 	}
 }

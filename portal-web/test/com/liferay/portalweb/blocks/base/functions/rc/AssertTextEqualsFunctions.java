@@ -24,29 +24,29 @@ public class AssertTextEqualsFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void assertPartialText(String param1, String param2)
+	public void assertPartialText(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForPartialText(param1, param2);
-		selenium.assertPartialText(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.waitForPartialText(target, value);
+		selenium.assertPartialText(target, value);
 	}
 
-	public void assertPartialTextPause(String param1, String param2)
+	public void assertPartialTextPause(String target, String value)
 		throws Exception {
 		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
 
 		selenium.pause("25000");
-		assertTextEqualsFunctions.assertPartialText(param1, param2);
+		assertTextEqualsFunctions.assertPartialText(target, value);
 	}
 
-	public void assertText(String param1, String param2)
+	public void assertText(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForText(param1, param2);
-		selenium.assertText(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.waitForText(target, value);
+		selenium.assertText(target, value);
 	}
 
-	public void assertTextCPWebContenCKEditor(String param1, String param2)
+	public void assertTextCPWebContenCKEditor(String target, String value)
 		throws Exception {
 		selenium.waitForElementPresent(
 			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
@@ -54,15 +54,15 @@ public class AssertTextEqualsFunctions extends BaseFunctions {
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.selectFrame(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.waitForText("//body", param2);
-		selenium.assertText("//body", param2);
+		selenium.waitForText("//body", value);
+		selenium.assertText("//body", value);
 		selenium.selectFrame("relative=top");
 	}
 
-	public void assertValue(String param1, String param2)
+	public void assertValue(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.waitForValue(param1, param2);
-		selenium.assertValue(param1, param2);
+		selenium.waitForVisible(target);
+		selenium.waitForValue(target, value);
+		selenium.assertValue(target, value);
 	}
 }

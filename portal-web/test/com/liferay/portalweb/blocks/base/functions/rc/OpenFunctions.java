@@ -24,18 +24,18 @@ public class OpenFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void open(String param1, String param2) throws Exception {
+	public void open(String target, String value) throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open(param1);
+		selenium.open(target);
 	}
 
-	public void openWindow(String param1, String param2)
+	public void openWindow(String target, String value)
 		throws Exception {
 		selenium.pause("15000");
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.openWindow(param1, "windowName");
+		selenium.openWindow(target, "windowName");
 		selenium.waitForPopUp("windowName", "windowName");
 		selenium.selectWindow("windowName");
 	}

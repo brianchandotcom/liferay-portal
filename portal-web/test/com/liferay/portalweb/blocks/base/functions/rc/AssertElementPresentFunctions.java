@@ -24,9 +24,9 @@ public class AssertElementPresentFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void assertElementPresent(String param1, String param2)
+	public void assertElementPresent(String target, String value)
 		throws Exception {
-		selenium.waitForVisible(param1);
-		selenium.assertVisible(param1);
+		selenium.waitForVisible(target);
+		selenium.assertVisible(target);
 	}
 }

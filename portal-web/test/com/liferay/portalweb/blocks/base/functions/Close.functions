@@ -1,4 +1,4 @@
-<functions>
+<functions object="Close">
 	<functiondef command="close" default="true">
 	</functiondef>
 

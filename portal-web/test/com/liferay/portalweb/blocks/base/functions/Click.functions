@@ -1,4 +1,4 @@
-<functions>
+<functions object="Click">
 	<functiondef command="click">
 		<selenium command="waitForVisible" />
 		<selenium command="click" />

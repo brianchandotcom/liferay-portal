@@ -24,33 +24,33 @@ public class CheckFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void click(String param1, String param2) throws Exception {
-		selenium.waitForVisible(param1);
+	public void click(String target, String value) throws Exception {
+		selenium.waitForVisible(target);
 
-		if (!selenium.isChecked(param1)) {
-			selenium.click(param1);
+		if (!selenium.isChecked(target)) {
+			selenium.click(target);
 		}
 
-		selenium.assertChecked(param1);
+		selenium.assertChecked(target);
 	}
 
-	public void clickAt(String param1, String param2) throws Exception {
-		selenium.waitForVisible(param1);
+	public void clickAt(String target, String value) throws Exception {
+		selenium.waitForVisible(target);
 
-		if (!selenium.isChecked(param1)) {
-			selenium.clickAt(param1, param2);
+		if (!selenium.isChecked(target)) {
+			selenium.clickAt(target, value);
 		}
 
-		selenium.assertChecked(param1);
+		selenium.assertChecked(target);
 	}
 
-	public void clickAtWCMouseOverArticle(String param1, String param2)
+	public void clickAtWCMouseOverArticle(String target, String value)
 		throws Exception {
 		CheckFunctions checkFunctions = new CheckFunctions(selenium);
 
 		selenium.waitForVisible(
 			"xpath=(//a[contains(@data-folder,'false')])[1]");
 		selenium.mouseOver("xpath=(//a[contains(@data-folder,'false')])[1]");
-		checkFunctions.clickAt(param1, param2);
+		checkFunctions.clickAt(target, value);
 	}
 }

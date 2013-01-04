@@ -24,15 +24,15 @@ public class AssertElementNotPresentFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void assertElementNotPresent(String param1, String param2)
+	public void assertElementNotPresent(String target, String value)
 		throws Exception {
-		if (selenium.isElementPresent(param1)) {
-			selenium.waitForNotVisible(param1);
-			selenium.assertNotVisible(param1);
+		if (selenium.isElementPresent(target)) {
+			selenium.waitForNotVisible(target);
+			selenium.assertNotVisible(target);
 		}
 		else {
-			selenium.waitForElementNotPresent(param1);
-			selenium.assertElementNotPresent(param1);
+			selenium.waitForElementNotPresent(target);
+			selenium.assertElementNotPresent(target);
 		}
 	}
 }

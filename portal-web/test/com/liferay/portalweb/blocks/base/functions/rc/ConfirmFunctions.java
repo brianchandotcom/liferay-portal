@@ -24,8 +24,8 @@ public class ConfirmFunctions extends BaseFunctions {
 		super(liferaySelenium);
 	}
 
-	public void confirm(String param1, String param2) throws Exception {
-		selenium.waitForConfirmation(param2);
+	public void confirm(String target, String value) throws Exception {
+		selenium.waitForConfirmation(value);
 		selenium.pause("1000");
 	}
 }

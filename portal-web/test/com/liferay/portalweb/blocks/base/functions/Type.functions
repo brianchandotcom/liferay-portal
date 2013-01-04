@@ -1,4 +1,4 @@
-<functions>
+<functions object="Type">
 	<functiondef command="sendKeys">
 		<selenium command="waitForVisible" />
 		<selenium command="sendKeys" />

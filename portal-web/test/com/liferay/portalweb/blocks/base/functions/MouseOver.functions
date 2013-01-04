@@ -1,4 +1,4 @@
-<functions>
+<functions object="MouseOver">
 	<functiondef command="mouseOver">
 		<selenium command="waitForVisible" />
 		<selenium command="mouseOver" />

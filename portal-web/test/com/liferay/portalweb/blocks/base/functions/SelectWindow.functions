@@ -1,4 +1,4 @@
-<functions>
+<functions object="SelectWindow">
 	<functiondef command="selectFrame">
 		<selenium command="waitForVisible" />
 		<selenium command="selectFrame" />
@@ -13,7 +13,7 @@
 		<selenium command="selectWindow" />
 	</functiondef>
 
-	<functiondef command="selectWindowTop" default="true">
+	<functiondef command="selectWindowTop">
 		<selenium command="pause" target="5000" />
 		<selenium command="selectWindow" target="null" />
 	</functiondef>

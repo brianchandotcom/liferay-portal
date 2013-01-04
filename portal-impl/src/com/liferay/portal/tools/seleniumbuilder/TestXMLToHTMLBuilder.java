@@ -243,7 +243,7 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 
 		String actionFileName = command.attributeValue("object");
 		String actionCommand = command.attributeValue("command");
-		String actionPath = command.attributeValue("path");
+		String actionTarget = command.attributeValue("target");
 		String actionLocator = command.attributeValue("locator");
 		String actionValue = command.attributeValue("value");
 
@@ -253,7 +253,7 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 		String pageName = _pathsMap.get(pageNameKey)[2];
 
 		if (actionLocator == null) {
-			String pathKey = actionFileName + "__" + actionPath;
+			String pathKey = actionFileName + "__" + actionTarget;
 
 			if (_pathsMap.containsKey(pathKey)) {
 				String[] actionArray = _pathsMap.get(pathKey);
@@ -377,11 +377,11 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 		StringBundler sb = new StringBundler();
 
 		String fileName = command.attributeValue("object");
-		String elementPathName = command.attributeValue("path");
+		String targetIdentifier = command.attributeValue("target");
 
 		String steps = getCommands(command);
 
-		String pathKey = fileName + "__" + elementPathName;
+		String pathKey = fileName + "__" + targetIdentifier;
 		String pageNameKey = fileName + "__PAGE_NAME";
 
 		String pageName = _pathsMap.get(pageNameKey)[2];
@@ -590,11 +590,11 @@ public class TestXMLToHTMLBuilder extends SeleniumBuilder {
 		StringBundler sb = new StringBundler();
 
 		String fileName = command.attributeValue("object");
-		String elementPathName = command.attributeValue("path");
+		String targetIdentifier = command.attributeValue("target");
 
 		String steps = getCommands(command);
 
-		String pathKey = fileName + "__" + elementPathName;
+		String pathKey = fileName + "__" + targetIdentifier;
 		String pageNameKey = fileName + "__PAGE_NAME";
 
 		String pageName = _pathsMap.get(pageNameKey)[2];

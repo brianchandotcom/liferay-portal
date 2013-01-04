@@ -12,15 +12,15 @@
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<action object="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_ADD_BUTTON" value="Add" />
-			<action object="CPDocumentsAndMediaHome" command="click" path="ADD_BASIC_DOCUMENT" value="Basic Document" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="TOOLBAR_ADD_BUTTON" value="Add" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="ADD_BASIC_DOCUMENT" value="Basic Document" />
 
-			<action object="CPDocumentsAndMediaAddFileEntry" command="type" path="CONTENT_FILE" value="${file}" />
-			<action object="CPDocumentsAndMediaAddFileEntry" command="type" path="CONTENT_TITLE" value="${title}" />
-			<action object="CPDocumentsAndMediaAddFileEntry" command="click" path="BUTTON_PUBLISH" value="Publish" />
+			<action object="CPDocumentsAndMediaAddFileEntry" command="type" target="CONTENT_FILE" value="${file}" />
+			<action object="CPDocumentsAndMediaAddFileEntry" command="type" target="CONTENT_TITLE" value="${title}" />
+			<action object="CPDocumentsAndMediaAddFileEntry" command="click" target="BUTTON_PUBLISH" value="Publish" />
 
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${title}" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${title}" />
 		</steps>
 	</macrodef>
 
@@ -37,12 +37,12 @@
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${oldTitle} (Draft)" />
-			<action object="CPDocumentsAndMediaHome" command="assertElementPresent" path="DOCUMENT_IMAGE_LOCK" />
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_CHECKIN" value="Checkin" />
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${newTitle}" />
-			<action object="CPDocumentsAndMediaHome" command="assertElementNotPresent" path="DOCUMENT_IMAGE_LOCK" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${oldTitle} (Draft)" />
+			<action object="CPDocumentsAndMediaHome" command="assertElementPresent" target="DOCUMENT_IMAGE_LOCK" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS_CHECKIN" value="Checkin" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${newTitle}" />
+			<action object="CPDocumentsAndMediaHome" command="assertElementNotPresent" target="DOCUMENT_IMAGE_LOCK" />
 		</steps>
 	</macrodef>
 
@@ -58,12 +58,12 @@
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${title}" />
-			<action object="CPDocumentsAndMediaHome" command="assertElementNotPresent" path="DOCUMENT_IMAGE_LOCK" />
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_CHECKOUT" value="Checkout" />
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${title} (Draft)" />
-			<action object="CPDocumentsAndMediaHome" command="assertElementPresent" path="DOCUMENT_IMAGE_LOCK" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${title}" />
+			<action object="CPDocumentsAndMediaHome" command="assertElementNotPresent" target="DOCUMENT_IMAGE_LOCK" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS_CHECKOUT" value="Checkout" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${title} (Draft)" />
+			<action object="CPDocumentsAndMediaHome" command="assertElementPresent" target="DOCUMENT_IMAGE_LOCK" />
 		</steps>
 	</macrodef>
 
@@ -79,10 +79,10 @@
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${title}" />
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE_UNDO" value="The selected item was moved to the Recycle Bin. Undo" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${title}" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE_UNDO" value="The selected item was moved to the Recycle Bin. Undo" />
 			<action object="CPDocumentsAndMediaHome" command="assertTextNotPresent" value="${title}" />
 		</steps>
 	</macrodef>
@@ -100,15 +100,15 @@
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${oldTitle}" />
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_EDIT" value="Edit" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${oldTitle}" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS_EDIT" value="Edit" />
 
-			<action object="CPDocumentsAndMediaDocumentEdit" command="type" path="CONTENT_TITLE" value="${newTitle}" />
-			<action object="CPDocumentsAndMediaDocumentEdit" command="click" path="BUTTON_PUBLISH" value="Publish" />
+			<action object="CPDocumentsAndMediaDocumentEdit" command="type" target="CONTENT_TITLE" value="${newTitle}" />
+			<action object="CPDocumentsAndMediaDocumentEdit" command="click" target="BUTTON_PUBLISH" value="Publish" />
 
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${newTitle}" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${newTitle}" />
 		</steps>
 	</macrodef>
 
@@ -125,15 +125,15 @@
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${oldTitle} (Draft)" />
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
-			<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_EDIT" value="Edit" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${oldTitle} (Draft)" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS_EDIT" value="Edit" />
 
-			<action object="CPDocumentsAndMediaDocumentEdit" command="type" path="CONTENT_TITLE" value="${newTitle}" />
-			<action object="CPDocumentsAndMediaDocumentEdit" command="click" path="BUTTON_SAVE" value="Save" />
+			<action object="CPDocumentsAndMediaDocumentEdit" command="type" target="CONTENT_TITLE" value="${newTitle}" />
+			<action object="CPDocumentsAndMediaDocumentEdit" command="click" target="BUTTON_SAVE" value="Save" />
 
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
-			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="${oldTitle} (Draft)" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${oldTitle} (Draft)" />
 		</steps>
 	</macrodef>
 
@@ -148,10 +148,10 @@
 				<param name="portlet" value="Documents and Media" />
 			</macro>
 
-			<while object="CPDocumentsAndMediaHome" command="isElementPresent" path="DOCUMENT_NAME">
-				<action object="CPDocumentsAndMediaHome" command="check" path="TOOLBAR_ALL_ROWS" />
-				<action object="CPDocumentsAndMediaHome" command="click" path="TOOLBAR_ACTIONS_BUTTON" value="Actions" />
-				<action object="CPDocumentsAndMediaHome" command="click" path="ALL_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
+			<while object="CPDocumentsAndMediaHome" command="isElementPresent" target="DOCUMENT_NAME">
+				<action object="CPDocumentsAndMediaHome" command="check" target="TOOLBAR_ALL_ROWS" />
+				<action object="CPDocumentsAndMediaHome" command="click" target="TOOLBAR_ACTIONS_BUTTON" value="Actions" />
+				<action object="CPDocumentsAndMediaHome" command="click" target="ALL_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
 			</while>
 		</steps>
 	</macrodef>

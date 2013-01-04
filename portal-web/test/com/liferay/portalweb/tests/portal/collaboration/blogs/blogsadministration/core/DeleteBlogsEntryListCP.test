@@ -13,12 +13,12 @@
 			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action object="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
-		<action object="CPBlogsHome" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Approved" />
-		<action object="CPBlogsHome" command="check" path="BLOGS_ENTRY_LINK_CHECKBOX" value="" />
-		<action object="CPBlogsHome" command="click" path="PORTLET_LINK_DELETE" value="Move to the Recycle Bin" />
-		<action object="CPBlogsHome" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS_UNDO" value="The selected item was moved to the Recycle Bin. Undo" />
-		<action object="CPBlogsHome" command="assertTextEquals" path="PORTLET_TEXT_INFO" value="No entries were found." />
+		<action object="CPBlogsHome" command="assertTextEquals" target="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+		<action object="CPBlogsHome" command="assertTextEquals" target="BLOGS_ENTRY_LINK_STATUS" value="Approved" />
+		<action object="CPBlogsHome" command="check" target="BLOGS_ENTRY_LINK_CHECKBOX" value="" />
+		<action object="CPBlogsHome" command="click" target="PORTLET_LINK_DELETE" value="Move to the Recycle Bin" />
+		<action object="CPBlogsHome" command="assertTextEquals" target="PORTLET_TEXT_SUCCESS_UNDO" value="The selected item was moved to the Recycle Bin. Undo" />
+		<action object="CPBlogsHome" command="assertTextEquals" target="PORTLET_TEXT_INFO" value="No entries were found." />
 		<action object="CPBlogsHome" command="assertTextNotPresent" value="Blogs Entry Title" />
 		<action object="CPBlogsHome" command="assertTextNotPresent" value="Blogs Entry Content" />
 	</steps>

@@ -22,24 +22,24 @@
 			<param name="portlet" value="Documents and Media" />
 		</macro>
 
-		<action object="CPDocumentsAndMediaHome" command="assertElementPresent" path="DOCUMENT_IMAGE_LOCK" />
-		<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="DM Document Title (Draft)" />
+		<action object="CPDocumentsAndMediaHome" command="assertElementPresent" target="DOCUMENT_IMAGE_LOCK" />
+		<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="DM Document Title (Draft)" />
 
-		<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS" />
-		<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_ACTIONS_CANCEL_CHECKOUT" value="Cancel Checkout" />
-		<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+		<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS" />
+		<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS_CANCEL_CHECKOUT" value="Cancel Checkout" />
+		<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
 
-		<action object="CPDocumentsAndMediaHome" command="assertElementNotPresent" path="DOCUMENT_IMAGE_LOCK" />
-		<action object="CPDocumentsAndMediaHome" command="assertTextEquals" path="DOCUMENT_NAME" value="DM Document Title" />
+		<action object="CPDocumentsAndMediaHome" command="assertElementNotPresent" target="DOCUMENT_IMAGE_LOCK" />
+		<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="DM Document Title" />
 
-		<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="DM Document Title" />
+		<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_NAME" value="DM Document Title" />
 
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_INFO_WORKFLOW_STATUS" value="Status: Approved" />
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_VERSION_1" value="1.0" />
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_STATUS_1" value="Approved" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_INFO_WORKFLOW_STATUS" value="Status: Approved" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_HISTORY_VERSION_1" value="1.0" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_HISTORY_STATUS_1" value="Approved" />
 
-		<action object="CPDocumentsAndMediaDocument" command="assertElementNotPresent" path="VERSION_HISTORY_VERSION_2" />
-		<action object="CPDocumentsAndMediaDocument" command="assertElementNotPresent" path="VERSION_HISTORY_STATUS_2" />
+		<action object="CPDocumentsAndMediaDocument" command="assertElementNotPresent" target="VERSION_HISTORY_VERSION_2" />
+		<action object="CPDocumentsAndMediaDocument" command="assertElementNotPresent" target="VERSION_HISTORY_STATUS_2" />
 	</steps>
 	<teardown>
 		<macro object="CPDocumentsAndMediaDocument" command="tearDown" />

@@ -14,16 +14,16 @@
 				<param name="portlet" value="Users and Organizations" />
 			</macro>
 
-			<action object="CPUsersAndOrganizationsHome" command="click" path="TOOLBAR_ADD" value="Add" />
-			<action object="CPUsersAndOrganizationsHome" command="click" path="ADD_USER" value="User" />
+			<action object="CPUsersAndOrganizationsHome" command="click" target="TOOLBAR_ADD" value="Add" />
+			<action object="CPUsersAndOrganizationsHome" command="click" target="ADD_USER" value="User" />
 
-			<action object="CPUsersAndOrganizationsAddUser" command="type" path="USER_SCREEN_NAME" value="${screenName}" />
-			<action object="CPUsersAndOrganizationsAddUser" command="type" path="USER_EMAIL_ADDRESS" value="${emailAddress}" />
-			<action object="CPUsersAndOrganizationsAddUser" command="type" path="USER_FIRST_NAME" value="${firstName}" />
-			<action object="CPUsersAndOrganizationsAddUser" command="type" path="USER_LAST_NAME" value="${lastName}" />
-			<action object="CPUsersAndOrganizationsAddUser" command="click" path="BUTTONS_SAVE" value="Save" />
+			<action object="CPUsersAndOrganizationsAddUser" command="type" target="USER_SCREEN_NAME" value="${screenName}" />
+			<action object="CPUsersAndOrganizationsAddUser" command="type" target="USER_EMAIL_ADDRESS" value="${emailAddress}" />
+			<action object="CPUsersAndOrganizationsAddUser" command="type" target="USER_FIRST_NAME" value="${firstName}" />
+			<action object="CPUsersAndOrganizationsAddUser" command="type" target="USER_LAST_NAME" value="${lastName}" />
+			<action object="CPUsersAndOrganizationsAddUser" command="click" target="BUTTONS_SAVE" value="Save" />
 
-			<action object="CPUsersAndOrganizationsEditUser" command="assertTextEquals" path="HEADER_PORTLET_SUCCESS" value="Your request completed successfully." />
+			<action object="CPUsersAndOrganizationsEditUser" command="assertTextEquals" target="HEADER_PORTLET_SUCCESS" value="Your request completed successfully." />
 		</steps>
 	</macrodef>
 
@@ -38,10 +38,10 @@
 			<param name="portlet" value="Users and Organizations" />
 		</macro>
 
-		<action object="CPUsersAndOrganizationsHome" command="click" path="USERS_SEARCH_ALL" value="Search All Users" />
+		<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
 
-		<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" path="BASIC_SEARCH_ADVANCED_LINK" >
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
+		<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="BASIC_SEARCH_ADVANCED_LINK" >
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
 		</if>
 		</steps>
 	</macrodef>
@@ -57,10 +57,10 @@
 			<param name="portlet" value="Users and Organizations" />
 		</macro>
 
-		<action object="CPUsersAndOrganizationsHome" command="click" path="USERS_SEARCH_ALL" value="Search All Users" />
+		<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
 
-		<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" path="ADVANCED_SEARCH_BASIC_LINK" >
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="ADVANCED_SEARCH_BASIC_LINK" value="« Basic" />
+		<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="ADVANCED_SEARCH_BASIC_LINK" >
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="ADVANCED_SEARCH_BASIC_LINK" value="« Basic" />
 		</if>
 		</steps>
 	</macrodef>
@@ -78,23 +78,23 @@
 				<param name="portlet" value="Users and Organizations" />
 			</macro>
 
-			<action object="CPUsersAndOrganizationsHome" command="click" path="USERS_SEARCH_ALL" value="Search All Users" />
+			<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
 
-			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" path="ADVANCED_SEARCH_BASIC_LINK" >
-				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="ADVANCED_SEARCH_BASIC_LINK" value="« Basic" />
+			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="ADVANCED_SEARCH_BASIC_LINK" >
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="ADVANCED_SEARCH_BASIC_LINK" value="« Basic" />
 			</if>
 
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" path="BASIC_SEARCH_FIELD" value="${firstName}" />
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="BASIC_SEARCH_BUTTON" value="Search" />
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="USERS_USER_1_FIRST_NAME" value="userfn" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" target="BASIC_SEARCH_FIELD" value="${firstName}" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_BUTTON" value="Search" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="USERS_USER_1_FIRST_NAME" value="userfn" />
 
-			<action object="CPUsersAndOrganizationsEditUser" command="click" path="USER_INFORMATION_PASSWORD" value="Password" />
+			<action object="CPUsersAndOrganizationsEditUser" command="click" target="USER_INFORMATION_PASSWORD" value="Password" />
 
-			<action object="CPUsersAndOrganizationsEditUserPassword" command="type" path="PASSWORD_NEW_PASSWORD" value="${password}" />
-			<action object="CPUsersAndOrganizationsEditUserPassword" command="type" path="PASSWORD_ENTER_AGAIN" value="${password}" />
-			<action object="CPUsersAndOrganizationsEditUserPassword" command="click" path="BUTTONS_SAVE" value="Save" />
+			<action object="CPUsersAndOrganizationsEditUserPassword" command="type" target="PASSWORD_NEW_PASSWORD" value="${password}" />
+			<action object="CPUsersAndOrganizationsEditUserPassword" command="type" target="PASSWORD_ENTER_AGAIN" value="${password}" />
+			<action object="CPUsersAndOrganizationsEditUserPassword" command="click" target="BUTTONS_SAVE" value="Save" />
 
-			<action object="CPUsersAndOrganizationsEditUserPassword" command="assertTextEquals" path="HEADER_PORTLET_SUCCESS" value="Your request completed successfully." />
+			<action object="CPUsersAndOrganizationsEditUserPassword" command="assertTextEquals" target="HEADER_PORTLET_SUCCESS" value="Your request completed successfully." />
 		</steps>
 	</macrodef>
 
@@ -110,23 +110,23 @@
 				<param name="portlet" value="Users and Organizations" />
 			</macro>
 
-			<action object="CPUsersAndOrganizationsHome" command="click" path="USERS_SEARCH_ALL" value="Search All Users" />
+			<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
 
-			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" path="BASIC_SEARCH_ADVANCED_LINK" >
-				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
+			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="BASIC_SEARCH_ADVANCED_LINK" >
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
 			</if>
 
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" path="ADVANCED_SEARCH_FIRST_NAME" value="${firstName}" />
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="select" path="ADVANCED_SEARCH_STATUS" value="Active" />
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="ADVANCED_SEARCH_BUTTON" value="Search" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" target="ADVANCED_SEARCH_FIRST_NAME" value="${firstName}" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="select" target="ADVANCED_SEARCH_STATUS" value="Active" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="ADVANCED_SEARCH_BUTTON" value="Search" />
 
-			<while object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isElementPresent" path="USERS_USER_1_CHECK">
-				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="check" path="USERS_USER_1_CHECK" value="Flag First User" />
-				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="USERS_DEACTIVATE" value="Deactivate" />
-				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="confirm" path="HEADER_CONFIRMATION" value="Are you sure you want to deactivate the selected users?" />
+			<while object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isElementPresent" target="USERS_USER_1_CHECK">
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="check" target="USERS_USER_1_CHECK" value="Flag First User" />
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="USERS_DEACTIVATE" value="Deactivate" />
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="confirm" target="HEADER_CONFIRMATION" value="Are you sure you want to deactivate the selected users?" />
 			</while>
 
-		<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="assertTextEquals" path="USERS_MESSAGE" value="No users were found." />
+		<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="assertTextEquals" target="USERS_MESSAGE" value="No users were found." />
 		</steps>
 	</macrodef>
 
@@ -142,24 +142,24 @@
 				<param name="portlet" value="Users and Organizations" />
 			</macro>
 
-			<action object="CPUsersAndOrganizationsHome" command="click" path="USERS_SEARCH_ALL" value="Search All Users" />
+			<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
 
-			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" path="BASIC_SEARCH_ADVANCED_LINK" >
-				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
+			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="BASIC_SEARCH_ADVANCED_LINK" >
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
 			</if>
 
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" path="ADVANCED_SEARCH_FIRST_NAME" value="${firstName}" />
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="select" path="ADVANCED_SEARCH_STATUS" value="Inactive" />
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" path="ADVANCED_SEARCH_BUTTON" value="Search" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" target="ADVANCED_SEARCH_FIRST_NAME" value="${firstName}" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="select" target="ADVANCED_SEARCH_STATUS" value="Inactive" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="ADVANCED_SEARCH_BUTTON" value="Search" />
 
-			<while object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="isElementPresent" path="USERS_USER_1_CHECK">
-				<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="check" path="USERS_USER_1_CHECK" value="Flag First User" />
-				<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="click" path="USERS_DELETE" value="Delete" />
-				<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="confirm" path="HEADER_CONFIRMATION" value="Are you sure you want to permanently delete the selected users?" />
+			<while object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="isElementPresent" target="USERS_USER_1_CHECK">
+				<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="check" target="USERS_USER_1_CHECK" value="Flag First User" />
+				<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="click" target="USERS_DELETE" value="Delete" />
+				<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="confirm" target="HEADER_CONFIRMATION" value="Are you sure you want to permanently delete the selected users?" />
 			</while>
 
-			<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="assertTextEquals" path="USERS_MESSAGE" value="No users were found." />
-			<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="assertElementNotPresent" path="USERS_USER_1_FIRST_NAME" value="${firstName}" />
+			<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="assertTextEquals" target="USERS_MESSAGE" value="No users were found." />
+			<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="assertElementNotPresent" target="USERS_USER_1_FIRST_NAME" value="${firstName}" />
 		</steps>
 	</macrodef>
 

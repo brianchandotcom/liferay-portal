@@ -46,7 +46,7 @@ public class CPDocumentsAndMediaDocumentTypeMacros extends BaseMacros {
 		cPDocumentsAndMediaDocumentTypeHomeActions.click("BUTTON_ADD", "Add");
 		cPDocumentsAndMediaAddDocumentTypeActions.type("CONTENT_NAME", name);
 		cPDocumentsAndMediaAddDocumentTypeActions.dragAndDrop("METADATA_FIELD_TEXT",
-			"Text", "METADATA_CANVAS_BUILDER", "");
+			"Text", "METADATA_CANVAS_BUILDER", null);
 		cPDocumentsAndMediaAddDocumentTypeActions.click("BUTTON_SAVE", "Save");
 		cPDocumentsAndMediaDocumentTypeHomeActions.assertTextEquals("HEADER_SUCCESS_MESSAGE",
 			"Your request completed successfully.");

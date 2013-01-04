@@ -17,18 +17,18 @@
 			<param name="portlet" value="Documents and Media" />
 		</macro>
 
-		<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="DM Document Title (Draft)" />
+		<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_NAME" value="DM Document Title (Draft)" />
 
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="DOCUMENT_LOCK_MESSAGE" value="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="DOCUMENT_LOCK_MESSAGE" value="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="TOOLBAR_CANCEL_CHECKOUT" value="Cancel Checkout" />
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="TOOLBAR_CHECKIN" value="Checkin" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="TOOLBAR_CANCEL_CHECKOUT" value="Cancel Checkout" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="TOOLBAR_CHECKIN" value="Checkin" />
 
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_INFO_WORKFLOW_STATUS" value="Status: Draft" />
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_VERSION_1" value="PWC" />
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_VERSION_2" value="1.0" />
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_STATUS_1" value="Draft" />
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_STATUS_2" value="Approved" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_INFO_WORKFLOW_STATUS" value="Status: Draft" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_HISTORY_VERSION_1" value="PWC" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_HISTORY_VERSION_2" value="1.0" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_HISTORY_STATUS_1" value="Draft" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_HISTORY_STATUS_2" value="Approved" />
 	</steps>
 	<teardown>
 		<macro object="CPDocumentsAndMediaDocument" command="tearDown" />

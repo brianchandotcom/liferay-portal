@@ -17,7 +17,7 @@
 			<param name="portlet" value="Documents and Media" />
 		</macro>
 
-		<action object="CPDocumentsAndMediaHome" command="assertElementNotPresent" path="DOCUMENT_NAME" />
+		<action object="CPDocumentsAndMediaHome" command="assertElementNotPresent" target="DOCUMENT_NAME" />
 		<action object="CPDocumentsAndMediaHome" command="assertTextNotPresent" value="DM Document Title" />
 	</steps>
 	<teardown>

@@ -12,14 +12,14 @@
 				<param name="portlet" value="Web Content" />
 			</macro>
 
-			<action object="CPWebContentHome" command="click" path="BUTTONS_ADD" value="Add" />
-			<action object="CPWebContentHome" command="click" path="ADD_BASIC_WEB_CONTENT" value="Basic Web Content" />
+			<action object="CPWebContentHome" command="click" target="BUTTONS_ADD" value="Add" />
+			<action object="CPWebContentHome" command="click" target="ADD_BASIC_WEB_CONTENT" value="Basic Web Content" />
 
-			<action object="CPWebContentAddArticle" command="type" path="ARTICLE_TITLE" value="${title}" />
-			<action object="CPWebContentAddArticle" command="type" path="ARTICLE_CONTENT" value="${content}" />
-			<action object="CPWebContentAddArticle" command="click" path="SIDEBAR_PUBLISH" value="Publish" />
+			<action object="CPWebContentAddArticle" command="type" target="ARTICLE_TITLE" value="${title}" />
+			<action object="CPWebContentAddArticle" command="type" target="ARTICLE_CONTENT" value="${content}" />
+			<action object="CPWebContentAddArticle" command="click" target="SIDEBAR_PUBLISH" value="Publish" />
 
-			<action object="CPWebContentHome" command="assertTextEquals" path="HEADER_PORTLET_SUCCESS" value="Your request completed successfully." />
+			<action object="CPWebContentHome" command="assertTextEquals" target="HEADER_PORTLET_SUCCESS" value="Your request completed successfully." />
 		</steps>
 	</macrodef>
 
@@ -34,10 +34,10 @@
 				<param name="portlet" value="Web Content" />
 			</macro>
 
-			<while object="CPWebContentHome" command="isElementPresent" path="ENTRIES_ARTICLE_1">
-				<action object="CPWebContentHome" command="check" path="ENTRIES_ARTICLE_1_CHECKBOX" />
-				<action object="CPWebContentHome" command="click" path="BUTTONS_ACTIONS" value="Actions" />
-				<action object="CPWebContentHome" command="click" path="ACTIONS_DELETE" value="Delete" />
+			<while object="CPWebContentHome" command="isElementPresent" target="ENTRIES_ARTICLE_1">
+				<action object="CPWebContentHome" command="check" target="ENTRIES_ARTICLE_1_CHECKBOX" />
+				<action object="CPWebContentHome" command="click" target="BUTTONS_ACTIONS" value="Actions" />
+				<action object="CPWebContentHome" command="click" target="ACTIONS_DELETE" value="Delete" />
 			</while>
 		</steps>
 	</macrodef>

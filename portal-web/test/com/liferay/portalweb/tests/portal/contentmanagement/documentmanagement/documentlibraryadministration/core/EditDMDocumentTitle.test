@@ -18,13 +18,13 @@
 			<param name="portlet" value="Documents and Media" />
 		</macro>
 
-		<action object="CPDocumentsAndMediaHome" command="click" path="DOCUMENT_NAME" value="DM Document Title Edit" />
+		<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_NAME" value="DM Document Title Edit" />
 
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_INFO_WORKFLOW_STATUS" value="Status: Approved" />
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_VERSION_1" value="1.1" />
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_VERSION_2" value="1.0" />
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_STATUS_1" value="Approved" />
-		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" path="VERSION_HISTORY_STATUS_2" value="Approved" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_INFO_WORKFLOW_STATUS" value="Status: Approved" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_HISTORY_VERSION_1" value="1.1" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_HISTORY_VERSION_2" value="1.0" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_HISTORY_STATUS_1" value="Approved" />
+		<action object="CPDocumentsAndMediaDocument" command="assertTextEquals" target="VERSION_HISTORY_STATUS_2" value="Approved" />
 	</steps>
 	<teardown>
 		<macro object="CPDocumentsAndMediaDocument" command="tearDown" />

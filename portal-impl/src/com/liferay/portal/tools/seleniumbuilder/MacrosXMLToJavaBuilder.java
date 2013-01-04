@@ -73,7 +73,6 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 
 		String macrosFileName =
 			macrosFilePath + "/" + macrosSimpleClassName + ".java";
-
 		String macrosPackagePath = StringUtil.replace(
 			macrosFilePath, StringPool.SLASH, StringPool.PERIOD);
 

@@ -135,7 +135,12 @@ public class BaseLiferayActions extends BaseActions {
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		clickFunctions.textClickAt(params[0], params[1]);
+		if (params[0].contains("/input")) {
+			clickFunctions.valueClickAtAndWait(params[0], params[1]);
+		}
+		else {
+			clickFunctions.textClickAt(params[0], params[1]);
+		}
 	}
 
 	public void close(String target, String value) throws Exception {
@@ -230,7 +235,15 @@ public class BaseLiferayActions extends BaseActions {
 
 		SelectWindowFunctions selectWindowFunctions = new SelectWindowFunctions(selenium);
 
-		selectWindowFunctions.selectWindow(params[0], params[1]);
+		if (params[0].contains("/iframe")) {
+			selectWindowFunctions.selectFrame(params[0], params[1]);
+		}
+		else if ((target.equals("TOP"))) {
+			selectWindowFunctions.selectFrameTop(params[0], params[1]);
+		}
+		else {
+			selectWindowFunctions.selectWindow(params[0], params[1]);
+		}
 	}
 
 	public void type(String target, String value) throws Exception {

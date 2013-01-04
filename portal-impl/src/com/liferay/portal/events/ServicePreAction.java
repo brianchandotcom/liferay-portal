@@ -1331,6 +1331,9 @@ public class ServicePreAction extends Action {
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_SETUP,
 			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.THEME_REFERENCE,
+			new String[] {Boolean.TRUE.toString()});
 
 		LayoutLocalServiceUtil.importLayouts(
 			userId, groupId, privateLayout, parameterMap, larFile);

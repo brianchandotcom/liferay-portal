@@ -45,33 +45,37 @@ public class MoveThreadTest extends BaseTestCase {
 					RuntimeVariables.replace("Message Boards"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
-					selenium.getText("//tr[4]/td[2]/a/strong"));
-				selenium.clickAt("//tr[4]/td[2]/a/strong",
+					selenium.getText(
+						"//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[2]/a/strong"));
+				selenium.clickAt("//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[2]/a/strong",
 					RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"T\u00e9st Subcat\u00e9gory"),
-					selenium.getText("//td[2]/a/strong"));
-				selenium.clickAt("//td[2]/a/strong",
+					selenium.getText(
+						"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')]/td[2]/a/strong"));
+				selenium.clickAt("//tr[contains(.,'T\u00e9st Subcat\u00e9gory')]/td[2]/a/strong",
 					RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"S\u00e9cond T\u00e9st Subcat\u00e9gory"),
-					selenium.getText("//td[2]/a/strong"));
-				selenium.clickAt("//td[2]/a/strong",
+					selenium.getText(
+						"//tr[contains(.,'S\u00e9cond T\u00e9st Subcat\u00e9gory')]/td[2]/a/strong"));
+				selenium.clickAt("//tr[contains(.,'S\u00e9cond T\u00e9st Subcat\u00e9gory')]/td[2]/a/strong",
 					RuntimeVariables.replace(
 						"S\u00e9cond T\u00e9st Subcat\u00e9gory"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"),
-					selenium.getText("//tr[3]/td[2]/a"));
-				selenium.clickAt("//tr[3]/td[2]/a",
+					selenium.getText(
+						"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d')]/td[2]/a"));
+				selenium.clickAt("//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d')]/td[2]/a",
 					RuntimeVariables.replace(
 						"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"),
-					selenium.getText("//h1[@class='header-title']"));
+					selenium.getText("//h1[@class='header-title']/span"));
 				assertEquals(RuntimeVariables.replace(
 						"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"),
 					selenium.getText("//div[@class='subject']/a/strong"));
@@ -80,8 +84,8 @@ public class MoveThreadTest extends BaseTestCase {
 					selenium.getText("//div[@class='thread-body']"));
 				assertEquals(RuntimeVariables.replace("Move Thread"),
 					selenium.getText(
-						"//div[@class='thread-actions']/table/tbody/tr/td/span/a[contains(.,'Move Thread')]"));
-				selenium.clickAt("//div[@class='thread-actions']/table/tbody/tr/td/span/a[contains(.,'Move Thread')]",
+						"//div[contains(.,'Move Thread')]/ul/li[5]/a/span"));
+				selenium.clickAt("//div[contains(.,'Move Thread')]/ul/li[5]/a/span",
 					RuntimeVariables.replace("Move Thread"));
 				selenium.waitForPageToLoad("30000");
 
@@ -132,17 +136,15 @@ public class MoveThreadTest extends BaseTestCase {
 				Thread.sleep(5000);
 				selenium.selectWindow("title=Message Boards");
 				selenium.waitForVisible(
-					"//ul[contains(@class,'breadcrumbs')]/li/span/a");
+					"//ul[contains(.,'Categories')]/li/span/a");
 				assertEquals(RuntimeVariables.replace("Categories"),
-					selenium.getText(
-						"//ul[contains(@class,'breadcrumbs')]/li/span/a"));
-				selenium.clickAt("//ul[contains(@class,'breadcrumbs')]/li/span/a",
+					selenium.getText("//ul[contains(.,'Categories')]/li/span/a"));
+				selenium.clickAt("//ul[contains(.,'Categories')]/li/span/a",
 					RuntimeVariables.replace("Categories"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Sujr"),
 					selenium.getText("//tr[contains(.,'Sujr')]/td[1]/a"));
-				selenium.click(
-					"//tr[contains(.,'Sujr')]/td[5]/input[@value='Choose']");
+				selenium.click("//tr[contains(.,'Sujr')]/td[5]/input");
 				selenium.selectWindow("null");
 				selenium.clickAt("//input[@value='Move Thread']",
 					RuntimeVariables.replace("Move Thread"));

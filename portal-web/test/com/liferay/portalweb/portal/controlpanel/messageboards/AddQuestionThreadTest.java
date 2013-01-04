@@ -103,7 +103,7 @@ public class AddQuestionThreadTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				selenium.clickAt("link=T\u00e9st Cat\u00e9gory Edit\u00e9d",
+				selenium.clickAt("//div[@id='breadcrumbs']/ul/li[3]/span/a",
 					RuntimeVariables.replace(
 						"T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 				selenium.waitForPageToLoad("30000");

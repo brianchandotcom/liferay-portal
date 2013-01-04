@@ -45,29 +45,71 @@ public class TearDownMBCategoryCPTest extends BaseTestCase {
 					RuntimeVariables.replace("Message Boards"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean categoryPresent = selenium.isElementPresent(
-						"//input[@name='_162_allRowIds']");
+				boolean allRowIdsPresent = selenium.isVisible(
+						"//input[contains(@name,'allRowIds')]");
 
-				if (!categoryPresent) {
+				if (!allRowIdsPresent) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_162_allRowIds']",
-					RuntimeVariables.replace("Checkbox"));
-				selenium.clickAt("//input[@value='Delete']",
-					RuntimeVariables.replace("Delete"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+				selenium.clickAt("//input[contains(@name,'allRowIds')]",
+					RuntimeVariables.replace("allRowIdsPresent"));
+				selenium.clickAt("//input[@value='Move to the Recycle Bin']",
+					RuntimeVariables.replace("Move to the Recycle Bin"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to move the selected entries to the Recycle Bin?");
+				selenium.waitForVisible(
+					"//div[@class='portlet-msg-success taglib-trash-undo']/form");
+				assertTrue(selenium.isPartialText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']",
+						"moved to the Recycle Bin. Undo"));
+				assertTrue(selenium.isVisible("//a[@class='trash-undo-link']"));
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(
 						"There are no threads in this category."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Recycle Bin",
+					RuntimeVariables.replace("Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean recycleBinNotEmpty = selenium.isElementPresent(
+						"//a[@class='trash-empty-link']");
+
+				if (!recycleBinNotEmpty) {
+					label = 3;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
+					selenium.getText("//a[@class='trash-empty-link']"));
+				selenium.clickAt("//a[@class='trash-empty-link']",
+					RuntimeVariables.replace("Empty the Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
+				selenium.waitForConfirmation(
+					"Are you sure you want to empty the Recycle Bin?");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+
+			case 3:
+				assertEquals(RuntimeVariables.replace(
+						"The Recycle Bin is empty."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 
 			case 100:

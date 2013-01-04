@@ -55,8 +55,9 @@ public class AssertImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//td[2]/a/strong"));
-		selenium.clickAt("//td[2]/a/strong",
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Subcat\u00e9gory')]/td[2]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'T\u00e9st Subcat\u00e9gory')]/td[2]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -90,12 +91,13 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards",
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//td[2]/a/strong", "Sujr");
+		selenium.waitForText("//tr[contains(.,'Sujr')]/td[2]/a/strong", "Sujr");
 		assertEquals(RuntimeVariables.replace("Sujr"),
-			selenium.getText("//td[2]/a/strong"));
-		selenium.clickAt("//td[2]/a/strong", RuntimeVariables.replace("Sujr"));
+			selenium.getText("//tr[contains(.,'Sujr')]/td[2]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Sujr')]/td[2]/a/strong",
+			RuntimeVariables.replace("Sujr"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Moved to Sujr"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Moved to Sujr')]/td[2]/a"));
 	}
 }

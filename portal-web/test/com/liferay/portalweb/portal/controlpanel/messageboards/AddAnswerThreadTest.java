@@ -54,9 +54,9 @@ public class AddAnswerThreadTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Reply"),
 			selenium.getText(
-				"//tr[contains(.,'Favorite Color Test Question')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Reply')]"));
+				"//tr[contains(.,'Reply')]/td[2]/div/ul/li[2]/span/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//tr[contains(.,'Favorite Color Test Question')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Reply')]"));
+				"//tr[contains(.,'Reply')]/td[2]/div/ul/li[2]/span/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
 			"//textarea[@id='_162_editor' and @style='display: none;']");
@@ -101,14 +101,14 @@ public class AddAnswerThreadTest extends BaseTestCase {
 			selenium.getText("xpath=(//div[@class='thread-body'])[2]"));
 		assertEquals(RuntimeVariables.replace("Mark as an Answer"),
 			selenium.getText(
-				"//tr[contains(.,'RE: Favorite Color Test Question')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Mark as an Answer')]"));
-		selenium.clickAt("//tr[contains(.,'RE: Favorite Color Test Question')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Mark as an Answer')]",
+				"//tr[contains(.,'RE: Favorite Color Test Question')]/td[2]/div/ul/li/span/a[contains(.,'Mark as an Answer')]"));
+		selenium.clickAt("//tr[contains(.,'RE: Favorite Color Test Question')]/td[2]/div/ul/li/span/a[contains(.,'Mark as an Answer')]",
 			RuntimeVariables.replace("Mark as an Answer"));
 		selenium.waitForVisible(
 			"//tr[contains(.,'RE: Favorite Color Test Question')]/td[2]/div/div/div[@class='answer']");
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'RE: Favorite Color Test Question')]/td[2]/div/div/div[@class='answer']"));
-		selenium.clickAt("link=T\u00e9st Cat\u00e9gory Edit\u00e9d",
+		selenium.clickAt("//div[@id='breadcrumbs']/ul/li[3]/span/a",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);

@@ -41,8 +41,8 @@ public class EditCategoryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[6]/span[@title='Actions']/ul/li/strong/a",
+				"xPath=(//span[@title='Actions']/ul/li/strong/a)[2]"));
+		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
@@ -63,8 +63,12 @@ public class EditCategoryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isTextPresent("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
-		assertTrue(selenium.isTextPresent(
+		assertEquals(RuntimeVariables.replace(
+				"T\u00e9st Cat\u00e9gory Edit\u00e9d"),
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Cat\u00e9gory Edit\u00e9d')]/td[2]/a/strong"));
+		assertTrue(selenium.isPartialText(
+				"//tr[contains(.,'T\u00e9st Cat\u00e9gory Edit\u00e9d')]/td[2]/a",
 				"This is a t\u00e9st cat\u00e9gory edited!"));
 	}
 }

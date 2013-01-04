@@ -51,6 +51,6 @@ public class AddMoveCategoryTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Sujr"),
-			selenium.getText("//tr[3]/td[2]/a/strong"));
+			selenium.getText("//tr[contains(.,'Sujr')]/td[2]/a"));
 	}
 }

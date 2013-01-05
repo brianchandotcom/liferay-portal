@@ -121,13 +121,13 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 			"com.liferay.portlet.documentlibrary",
 			portletDataContext.getScopeGroupId());
 
-		long rootFolderId = GetterUtil.getLong(
-			portletPreferences.getValue("rootFolderId", null));
-
 		Document document = SAXReaderUtil.createDocument();
 
 		Element rootElement = document.addElement(
 			"documentlibrary-display-data");
+
+		rootElement.addAttribute(
+			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		Element fileEntryTypesElement = rootElement.addElement(
 			"file-entry-types");
@@ -138,6 +138,9 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 		Element repositoriesElement = rootElement.addElement("repositories");
 		Element repositoryEntriesElement = rootElement.addElement(
 			"repository-entries");
+
+		long rootFolderId = GetterUtil.getLong(
+			portletPreferences.getValue("rootFolderId", null));
 
 		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			List<Folder> folders = FolderUtil.findByRepositoryId(

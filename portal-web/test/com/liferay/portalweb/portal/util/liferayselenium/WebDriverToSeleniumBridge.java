@@ -861,17 +861,38 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void open(String url) {
+		String targetURL = "";
+
 		if (url.startsWith("/")) {
-			get(TestPropsValues.PORTAL_URL + url);
+			targetURL = TestPropsValues.PORTAL_URL + url;
 		}
 		else {
-			get(url);
+			targetURL = url;
 		}
 
-		if (TestPropsValues.BROWSER_TYPE.equals("*iehta") ||
-			TestPropsValues.BROWSER_TYPE.equals("*iexplore")) {
+		for (int second = 0;; second++) {
+			if (second >= TestPropsValues.TIMEOUT_IMPLICIT_WAIT) {
+				BaseTestCase.fail(
+					"Timeout: unable to open url \"" + targetURL + "\"");
+			}
 
-			refresh();
+			try {
+				get(targetURL);
+
+				if (TestPropsValues.BROWSER_TYPE.equals("*iehta") ||
+					TestPropsValues.BROWSER_TYPE.equals("*iexplore")) {
+
+					refresh();
+				}
+
+				if (getLocation().equals(targetURL)) {
+					break;
+				}
+
+				Thread.sleep(1000);
+			}
+			catch (Exception e) {
+			}
 		}
 	}
 

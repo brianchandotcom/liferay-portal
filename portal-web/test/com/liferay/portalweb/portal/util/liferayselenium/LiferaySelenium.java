@@ -95,6 +95,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isPartialText(String locator, String value);
 
+	public boolean isText(String locator, String value);
+
 	public void keyDownAndWait(String locator, String keySequence);
 
 	public void keyPressAndWait(String locator, String keySequence);

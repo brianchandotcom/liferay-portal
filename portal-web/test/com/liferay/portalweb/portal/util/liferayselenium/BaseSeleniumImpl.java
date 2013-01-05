@@ -198,6 +198,10 @@ public abstract class BaseSeleniumImpl
 			"isPartialText", new String[] {locator, value,});
 	}
 
+	public boolean isText(String locator, String value) {
+		return LiferaySeleniumHelper.isText(this, locator, value);
+	}
+
 	public void keyDownAndWait(String locator, String keySequence) {
 		super.keyDown(locator, keySequence);
 		super.waitForPageToLoad("30000");

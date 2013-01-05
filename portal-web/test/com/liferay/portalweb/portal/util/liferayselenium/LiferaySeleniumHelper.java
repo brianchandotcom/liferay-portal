@@ -199,6 +199,12 @@ public class LiferaySeleniumHelper {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
 	}
 
+	public static boolean isText(
+		LiferaySelenium liferaySelenium, String locator, String value) {
+
+		return value.equals(liferaySelenium.getText(locator));
+	}
+
 	public static void pause(String waitTime) throws Exception {
 		Thread.sleep(GetterUtil.getInteger(waitTime));
 	}

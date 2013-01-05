@@ -20,10 +20,6 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [], [dataFactory.addLayou
 		dataFactory.addLayout(5, "Wiki", "/wiki", "", "36,")
 	]>
 
-	<#include "journal_article.ftl">
-
-	${sampleSQLBuilder.insertGroup(group, privateLayouts, publicLayouts)}
-
 	<#include "users.ftl">
 
 	<#include "blogs.ftl">
@@ -32,7 +28,11 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [], [dataFactory.addLayou
 
 	<#include "dl.ftl">
 
+	<#include "journal_article.ftl">
+
 	<#include "mb.ftl">
 
 	<#include "wiki.ftl">
+
+	${sampleSQLBuilder.insertGroup(group, privateLayouts, publicLayouts)}
 </#list>

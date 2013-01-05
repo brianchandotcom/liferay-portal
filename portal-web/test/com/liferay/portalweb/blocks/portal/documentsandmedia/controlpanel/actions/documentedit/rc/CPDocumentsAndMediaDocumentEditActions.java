@@ -14,9 +14,7 @@
 
 package com.liferay.portalweb.blocks.portal.documentsandmedia.controlpanel.actions.documentedit.rc;
 
-import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
 import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
-import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
@@ -27,23 +25,5 @@ public class CPDocumentsAndMediaDocumentEditActions extends BaseLiferayActions {
 		LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPDocumentsAndMediaDocumentEditPaths.getPaths();
-	}
-
-	public void click(String target, String value) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, target, value);
-
-		ClickFunctions clickFunctions = new ClickFunctions(selenium);
-
-		if ((target.equals("BUTTON_CANCEL") ||
-				target.equals("BUTTON_CANCEL_CHECKIN") ||
-				target.equals("BUTTON_CHECKOUT") ||
-				target.equals("BUTTON_PUBLISH") ||
-				target.equals("BUTTON_SAVE") ||
-				target.equals("BUTTON_SAVE_AND_CHECKIN"))) {
-			clickFunctions.valueClickAtAndWait(params[0], params[1]);
-		}
-		else {
-			super.click(params[0], params[1]);
-		}
 	}
 }

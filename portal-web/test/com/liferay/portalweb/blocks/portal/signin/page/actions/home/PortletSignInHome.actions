@@ -1,9 +1,5 @@
 <actions object="PortletSignInHome">
 	<actiondef command="click">
-		<conditional elements="I_AGREE_LINK,I_DISAGREE_LINK,SAVE_LINK,SIGN_IN_LINK">
-			<function object="Click" command="valueClickAtAndWait" />
-		</conditional>
-
 		<conditional elements="SIGN_OUT_LINK">
 			<function object="Click" command="textClickAtAndWait" />
 		</conditional>

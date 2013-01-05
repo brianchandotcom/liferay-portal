@@ -17,7 +17,6 @@ package com.liferay.portalweb.blocks.portal.roles.controlpanel.actions.editrole.
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
 import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.AssertTextEqualsFunctions;
-import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
@@ -34,7 +33,6 @@ public class CPRolesEditRoleActions extends BaseLiferayActions {
 		String[] params = ActionsUtil.getParams(paths, target, value);
 
 		AssertTextEqualsFunctions assertTextEqualsFunctions = new AssertTextEqualsFunctions(selenium);
-		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
 		if ((target.equals("ROLE_NAME") || target.equals("ROLE_TITLE") ||
 				target.equals("ROLE_DESCRIPTION"))) {
@@ -42,10 +40,6 @@ public class CPRolesEditRoleActions extends BaseLiferayActions {
 		}
 		else if ((target.equals("ROLE_TYPE"))) {
 			assertTextEqualsFunctions.assertPartialText(params[0], params[1]);
-		}
-		else if ((target.equals("BUTTON_SAVE") ||
-				target.equals("BUTTON_CANCEL"))) {
-			clickFunctions.valueClickAtAndWait(params[0], params[1]);
 		}
 		else {
 			super.assertTextEquals(params[0], params[1]);

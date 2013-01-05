@@ -14,9 +14,7 @@
 
 package com.liferay.portalweb.blocks.portal.usersandorganizations.controlpanel.actions.home.rc;
 
-import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
 import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
-import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
@@ -26,23 +24,5 @@ public class CPUsersAndOrganizationsHomeActions extends BaseLiferayActions {
 	public CPUsersAndOrganizationsHomeActions(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 		paths = CPUsersAndOrganizationsHomePaths.getPaths();
-	}
-
-	public void click(String target, String value) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, target, value);
-
-		ClickFunctions clickFunctions = new ClickFunctions(selenium);
-
-		if ((target.equals("ADD_USER") || target.equals("USERS_SEARCH_ALL") ||
-				target.equals("USERS_USER_1_FIRST_NAME"))) {
-			clickFunctions.textClickAndWait(params[0], params[1]);
-		}
-		else if ((target.equals("SEARCH_BUTTON") ||
-				target.equals("USERS_DEACTIVATE"))) {
-			clickFunctions.valueClickAtAndWait(params[0], params[1]);
-		}
-		else {
-			super.click(params[0], params[1]);
-		}
 	}
 }

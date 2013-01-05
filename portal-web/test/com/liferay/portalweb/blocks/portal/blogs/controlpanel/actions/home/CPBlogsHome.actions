@@ -4,10 +4,4 @@
 			<function object="AssertTextEquals" command="assertPartialText" />
 		</conditional>
 	</actiondef>
-
-	<actiondef command="click">
-		<conditional elements="PORTLET_LINK_DELETE">
-			<function object="Click" command="valueClickAtAndWait" />
-		</conditional>
-	</actiondef>
 </actions>

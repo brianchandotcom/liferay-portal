@@ -7,9 +7,5 @@
 		<conditional elements="ROLE_TYPE">
 			<function object="AssertTextEquals" command="assertPartialText" />
 		</conditional>
-
-		<conditional elements="BUTTON_SAVE,BUTTON_CANCEL">
-			<function object="Click" command="valueClickAtAndWait" />
-		</conditional>
 	</actiondef>
 </actions>

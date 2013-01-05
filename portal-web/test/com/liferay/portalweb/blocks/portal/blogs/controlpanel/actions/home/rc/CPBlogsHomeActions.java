@@ -17,7 +17,6 @@ package com.liferay.portalweb.blocks.portal.blogs.controlpanel.actions.home.rc;
 import com.liferay.portalweb.blocks.base.actions.rc.ActionsUtil;
 import com.liferay.portalweb.blocks.base.actions.rc.BaseLiferayActions;
 import com.liferay.portalweb.blocks.base.functions.rc.AssertTextEqualsFunctions;
-import com.liferay.portalweb.blocks.base.functions.rc.ClickFunctions;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 /**
@@ -40,19 +39,6 @@ public class CPBlogsHomeActions extends BaseLiferayActions {
 		}
 		else {
 			super.assertTextEquals(params[0], params[1]);
-		}
-	}
-
-	public void click(String target, String value) throws Exception {
-		String[] params = ActionsUtil.getParams(paths, target, value);
-
-		ClickFunctions clickFunctions = new ClickFunctions(selenium);
-
-		if ((target.equals("PORTLET_LINK_DELETE"))) {
-			clickFunctions.valueClickAtAndWait(params[0], params[1]);
-		}
-		else {
-			super.click(params[0], params[1]);
 		}
 	}
 }

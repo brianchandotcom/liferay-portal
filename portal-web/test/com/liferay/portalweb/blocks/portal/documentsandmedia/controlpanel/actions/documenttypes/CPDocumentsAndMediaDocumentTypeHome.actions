@@ -1,7 +1,0 @@
-<actions object="CPDocumentsAndMediaDocumentTypeHome">
-	<actiondef command="click">
-		<conditional elements="SEARCH_BUTTON">
-			<function object="Click" command="valueClickAtAndWait" />
-		</conditional>
-	</actiondef>
-</actions>

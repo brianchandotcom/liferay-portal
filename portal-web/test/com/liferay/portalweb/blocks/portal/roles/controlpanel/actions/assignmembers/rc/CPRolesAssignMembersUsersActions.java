@@ -33,12 +33,7 @@ public class CPRolesAssignMembersUsersActions extends BaseLiferayActions {
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((target.equals("ADVANCED_SEARCH_BUTTON") ||
-				target.equals("BASIC_SEARCH_BUTTON") ||
-				target.equals("BUTTON_UPDATE_ASSOCIATIONS"))) {
-			clickFunctions.valueClickAtAndWait(params[0], params[1]);
-		}
-		else if ((target.equals("BASIC_SEARCH_ADVANCED_LINK") ||
+		if ((target.equals("BASIC_SEARCH_ADVANCED_LINK") ||
 				target.equals("ADVANCED_SEARCH_BASIC_LINK"))) {
 			clickFunctions.clickAt(params[0], params[1]);
 		}

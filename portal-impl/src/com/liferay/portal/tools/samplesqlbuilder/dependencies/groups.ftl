@@ -3,10 +3,9 @@
 <#assign mbMessageCounter = dataFactory.newInteger()>
 <#assign wikiPageCounter = dataFactory.newInteger()>
 
-<#assign privateLayouts = []>
-<#assign publicLayouts = [dataFactory.addLayout(1, "Welcome", "/welcome", "58,", "47,")]>
+${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [], [dataFactory.addLayout(1, "Welcome", "/welcome", "58,", "47,")])}
 
-${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, privateLayouts, publicLayouts)}
+<#assign privateLayouts = []>
 
 <#list 1..maxGroupCount as groupCount>
 	<#assign groupId = groupCount>

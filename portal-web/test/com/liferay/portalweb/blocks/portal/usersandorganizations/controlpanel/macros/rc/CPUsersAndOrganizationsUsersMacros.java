@@ -56,14 +56,8 @@ public class CPUsersAndOrganizationsUsersMacros extends BaseMacros {
 	}
 
 	public void advancedSearch() throws Exception {
-		CPUsersAndOrganizationsHomeActions cPUsersAndOrganizationsHomeActions = new CPUsersAndOrganizationsHomeActions(selenium);
 		CPUsersAndOrganizationsSearchAllActiveUsersActions cPUsersAndOrganizationsSearchAllActiveUsersActions =
 			new CPUsersAndOrganizationsSearchAllActiveUsersActions(selenium);
-		GotoMacros gotoMacros = new GotoMacros(selenium);
-
-		gotoMacros.controlPanelPortlet("Users and Organizations");
-		cPUsersAndOrganizationsHomeActions.click("USERS_SEARCH_ALL",
-			"Search All Users");
 
 		if (cPUsersAndOrganizationsSearchAllActiveUsersActions.isVisible(
 					"BASIC_SEARCH_ADVANCED_LINK", "")) {
@@ -73,14 +67,8 @@ public class CPUsersAndOrganizationsUsersMacros extends BaseMacros {
 	}
 
 	public void basicSearch() throws Exception {
-		CPUsersAndOrganizationsHomeActions cPUsersAndOrganizationsHomeActions = new CPUsersAndOrganizationsHomeActions(selenium);
 		CPUsersAndOrganizationsSearchAllActiveUsersActions cPUsersAndOrganizationsSearchAllActiveUsersActions =
 			new CPUsersAndOrganizationsSearchAllActiveUsersActions(selenium);
-		GotoMacros gotoMacros = new GotoMacros(selenium);
-
-		gotoMacros.controlPanelPortlet("Users and Organizations");
-		cPUsersAndOrganizationsHomeActions.click("USERS_SEARCH_ALL",
-			"Search All Users");
 
 		if (cPUsersAndOrganizationsSearchAllActiveUsersActions.isVisible(
 					"ADVANCED_SEARCH_BASIC_LINK", "")) {
@@ -98,18 +86,13 @@ public class CPUsersAndOrganizationsUsersMacros extends BaseMacros {
 		CPUsersAndOrganizationsHomeActions cPUsersAndOrganizationsHomeActions = new CPUsersAndOrganizationsHomeActions(selenium);
 		CPUsersAndOrganizationsSearchAllActiveUsersActions cPUsersAndOrganizationsSearchAllActiveUsersActions =
 			new CPUsersAndOrganizationsSearchAllActiveUsersActions(selenium);
+		CPUsersAndOrganizationsUsersMacros cPUsersAndOrganizationsUsersMacros = new CPUsersAndOrganizationsUsersMacros(selenium);
 		GotoMacros gotoMacros = new GotoMacros(selenium);
 
 		gotoMacros.controlPanelPortlet("Users and Organizations");
 		cPUsersAndOrganizationsHomeActions.click("USERS_SEARCH_ALL",
 			"Search All Users");
-
-		if (cPUsersAndOrganizationsSearchAllActiveUsersActions.isVisible(
-					"ADVANCED_SEARCH_BASIC_LINK", "")) {
-			cPUsersAndOrganizationsSearchAllActiveUsersActions.click("ADVANCED_SEARCH_BASIC_LINK",
-				"Â« Basic");
-		}
-
+		cPUsersAndOrganizationsUsersMacros.basicSearch();
 		cPUsersAndOrganizationsSearchAllActiveUsersActions.type("BASIC_SEARCH_FIELD",
 			firstName);
 		cPUsersAndOrganizationsSearchAllActiveUsersActions.click("BASIC_SEARCH_BUTTON",
@@ -134,18 +117,13 @@ public class CPUsersAndOrganizationsUsersMacros extends BaseMacros {
 			new CPUsersAndOrganizationsSearchAllActiveUsersActions(selenium);
 		CPUsersAndOrganizationsSearchAllInactiveUsersActions cPUsersAndOrganizationsSearchAllInactiveUsersActions =
 			new CPUsersAndOrganizationsSearchAllInactiveUsersActions(selenium);
+		CPUsersAndOrganizationsUsersMacros cPUsersAndOrganizationsUsersMacros = new CPUsersAndOrganizationsUsersMacros(selenium);
 		GotoMacros gotoMacros = new GotoMacros(selenium);
 
 		gotoMacros.controlPanelPortlet("Users and Organizations");
 		cPUsersAndOrganizationsHomeActions.click("USERS_SEARCH_ALL",
 			"Search All Users");
-
-		if (cPUsersAndOrganizationsSearchAllActiveUsersActions.isVisible(
-					"BASIC_SEARCH_ADVANCED_LINK", "")) {
-			cPUsersAndOrganizationsSearchAllActiveUsersActions.click("BASIC_SEARCH_ADVANCED_LINK",
-				"Advanced Â»");
-		}
-
+		cPUsersAndOrganizationsUsersMacros.advancedSearch();
 		cPUsersAndOrganizationsSearchAllActiveUsersActions.type("ADVANCED_SEARCH_FIRST_NAME",
 			firstName);
 		cPUsersAndOrganizationsSearchAllActiveUsersActions.select("ADVANCED_SEARCH_STATUS",
@@ -173,18 +151,13 @@ public class CPUsersAndOrganizationsUsersMacros extends BaseMacros {
 			new CPUsersAndOrganizationsSearchAllActiveUsersActions(selenium);
 		CPUsersAndOrganizationsSearchAllInactiveUsersActions cPUsersAndOrganizationsSearchAllInactiveUsersActions =
 			new CPUsersAndOrganizationsSearchAllInactiveUsersActions(selenium);
+		CPUsersAndOrganizationsUsersMacros cPUsersAndOrganizationsUsersMacros = new CPUsersAndOrganizationsUsersMacros(selenium);
 		GotoMacros gotoMacros = new GotoMacros(selenium);
 
 		gotoMacros.controlPanelPortlet("Users and Organizations");
 		cPUsersAndOrganizationsHomeActions.click("USERS_SEARCH_ALL",
 			"Search All Users");
-
-		if (cPUsersAndOrganizationsSearchAllActiveUsersActions.isVisible(
-					"BASIC_SEARCH_ADVANCED_LINK", "")) {
-			cPUsersAndOrganizationsSearchAllActiveUsersActions.click("BASIC_SEARCH_ADVANCED_LINK",
-				"Advanced Â»");
-		}
-
+		cPUsersAndOrganizationsUsersMacros.basicSearch();
 		cPUsersAndOrganizationsSearchAllActiveUsersActions.type("ADVANCED_SEARCH_FIRST_NAME",
 			firstName);
 		cPUsersAndOrganizationsSearchAllActiveUsersActions.select("ADVANCED_SEARCH_STATUS",

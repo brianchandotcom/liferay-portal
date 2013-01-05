@@ -39,11 +39,6 @@ public class CPUsersAndOrganizationsSearchAllActiveUsersActions
 				target.equals("ADVANCED_SEARCH_BASIC_LINK"))) {
 			clickFunctions.clickAt(params[0], params[1]);
 		}
-		else if ((target.equals("ADVANCED_SEARCH_BUTTON") ||
-				target.equals("BASIC_SEARCH_BUTTON") ||
-				target.equals("USERS_DEACTIVATE"))) {
-			clickFunctions.valueClickAtAndWait(params[0], params[1]);
-		}
 		else if ((target.equals("USERS_USER_1_FIRST_NAME"))) {
 			clickFunctions.textClickAndWait(params[0], params[1]);
 		}

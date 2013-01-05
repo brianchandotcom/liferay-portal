@@ -52,10 +52,7 @@ public class CPUsersAndOrganizationsEditUserActions extends BaseLiferayActions {
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((target.equals("BUTTONS_CANCEL") || target.equals("BUTTONS_SAVE"))) {
-			clickFunctions.valueClickAtAndWait(params[0], params[1]);
-		}
-		else if ((target.equals("USER_INFORMATION_PASSWORD") ||
+		if ((target.equals("USER_INFORMATION_PASSWORD") ||
 				target.equals("USER_INFORMATION_ROLES"))) {
 			clickFunctions.partialTextClickAt(params[0], params[1]);
 		}

@@ -50,6 +50,7 @@ public class AddUserTest extends BaseTestCase {
 		gotoMacros.controlPanelPortlet("Users and Organizations");
 		cPUsersAndOrganizationsHomeActions.click("USERS_SEARCH_ALL",
 			"Search All Users");
+		cPUsersAndOrganizationsUsersMacros.basicSearch();
 		cPUsersAndOrganizationsSearchAllActiveUsersActions.type("BASIC_SEARCH_FIELD",
 			"userfn");
 		cPUsersAndOrganizationsSearchAllActiveUsersActions.click("BASIC_SEARCH_BUTTON",

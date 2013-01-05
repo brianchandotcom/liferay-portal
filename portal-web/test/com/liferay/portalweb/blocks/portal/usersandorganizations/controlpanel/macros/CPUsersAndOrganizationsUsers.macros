@@ -34,15 +34,9 @@
 		<params>
 		</params>
 		<steps>
-		<macro object="Goto" command="controlPanelPortlet">
-			<param name="portlet" value="Users and Organizations" />
-		</macro>
-
-		<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
-
-		<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="BASIC_SEARCH_ADVANCED_LINK" >
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
-		</if>
+			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="BASIC_SEARCH_ADVANCED_LINK" >
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
+			</if>
 		</steps>
 	</macrodef>
 
@@ -53,15 +47,9 @@
 		<params>
 		</params>
 		<steps>
-		<macro object="Goto" command="controlPanelPortlet">
-			<param name="portlet" value="Users and Organizations" />
-		</macro>
-
-		<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
-
-		<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="ADVANCED_SEARCH_BASIC_LINK" >
-			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="ADVANCED_SEARCH_BASIC_LINK" value="« Basic" />
-		</if>
+			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="ADVANCED_SEARCH_BASIC_LINK" >
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="ADVANCED_SEARCH_BASIC_LINK" value="« Basic" />
+			</if>
 		</steps>
 	</macrodef>
 
@@ -80,9 +68,7 @@
 
 			<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
 
-			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="ADVANCED_SEARCH_BASIC_LINK" >
-				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="ADVANCED_SEARCH_BASIC_LINK" value="« Basic" />
-			</if>
+			<macro object="CPUsersAndOrganizationsUsers" command="basicSearch" />
 
 			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" target="BASIC_SEARCH_FIELD" value="${firstName}" />
 			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_BUTTON" value="Search" />
@@ -112,9 +98,7 @@
 
 			<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
 
-			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="BASIC_SEARCH_ADVANCED_LINK" >
-				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
-			</if>
+			<macro object="CPUsersAndOrganizationsUsers" command="advancedSearch" />
 
 			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" target="ADVANCED_SEARCH_FIRST_NAME" value="${firstName}" />
 			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="select" target="ADVANCED_SEARCH_STATUS" value="Active" />
@@ -144,9 +128,7 @@
 
 			<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
 
-			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="BASIC_SEARCH_ADVANCED_LINK" >
-				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
-			</if>
+			<macro object="CPUsersAndOrganizationsUsers" command="basicSearch" />
 
 			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" target="ADVANCED_SEARCH_FIRST_NAME" value="${firstName}" />
 			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="select" target="ADVANCED_SEARCH_STATUS" value="Inactive" />

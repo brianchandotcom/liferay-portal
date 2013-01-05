@@ -33,11 +33,7 @@ public class PortletSignInHomeActions extends BaseLiferayActions {
 
 		ClickFunctions clickFunctions = new ClickFunctions(selenium);
 
-		if ((target.equals("I_AGREE_LINK") || target.equals("I_DISAGREE_LINK") ||
-				target.equals("SAVE_LINK") || target.equals("SIGN_IN_LINK"))) {
-			clickFunctions.valueClickAtAndWait(params[0], params[1]);
-		}
-		else if ((target.equals("SIGN_OUT_LINK"))) {
+		if ((target.equals("SIGN_OUT_LINK"))) {
 			clickFunctions.textClickAtAndWait(params[0], params[1]);
 		}
 		else {

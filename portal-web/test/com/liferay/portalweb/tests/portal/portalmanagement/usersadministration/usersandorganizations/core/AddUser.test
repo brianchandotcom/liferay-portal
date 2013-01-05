@@ -18,6 +18,8 @@
 
 		<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
 
+		<macro object="CPUsersAndOrganizationsUsers" command="basicSearch" />
+
 		<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" target="BASIC_SEARCH_FIELD" value="userfn" />
 		<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_BUTTON" value="Search" />
 		<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="USERS_USER_1_FIRST_NAME" value="userfn" />

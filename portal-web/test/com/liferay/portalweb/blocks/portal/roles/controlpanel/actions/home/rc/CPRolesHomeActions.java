@@ -41,9 +41,6 @@ public class CPRolesHomeActions extends BaseLiferayActions {
 				target.equals("ADD_ORGANIZATION_ROLE"))) {
 			clickFunctions.textClickAndWait(params[0], params[1]);
 		}
-		else if ((target.equals("SEARCH_BUTTON"))) {
-			clickFunctions.valueClickAtAndWait(params[0], params[1]);
-		}
 		else {
 			super.click(params[0], params[1]);
 		}

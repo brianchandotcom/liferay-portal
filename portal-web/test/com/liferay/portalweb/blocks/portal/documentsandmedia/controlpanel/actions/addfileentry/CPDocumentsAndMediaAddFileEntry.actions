@@ -1,10 +1,4 @@
 <actions object="CPDocumentsAndMediaAddFileEntry">
-	<actiondef command="click">
-		<conditional elements="BUTTON_PUBLISH,BUTTON_CANCEL">
-			<function object="Click" command="valueClickAtAndWait" />
-		</conditional>
-	</actiondef>
-
 	<actiondef command="type">
 		<conditional elements="CONTENT_FILE">
 			<function object="Type" command="uploadCommonFile" />

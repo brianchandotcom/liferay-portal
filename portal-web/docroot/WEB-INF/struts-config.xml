@@ -655,7 +655,7 @@
 			<forward name="portlet.dynamic_data_mapping.error" path="portlet.dynamic_data_mapping.error" />
 		</action>
 
-		<action path="/dynamic_data_mapping/edit_template_xsl" forward="portlet.dynamicdatamapping.edit_template_xsl" />
+		<action path="/dynamic_data_mapping/edit_template_display" forward="portlet.dynamicdatamapping.edit_template_display" />
 
 		<action path="/dynamic_data_mapping/get_structure" type="com.liferay.portlet.dynamicdatamapping.action.GetStructureAction" />
 

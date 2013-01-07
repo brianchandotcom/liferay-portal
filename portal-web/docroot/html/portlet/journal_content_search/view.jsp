@@ -16,4 +16,8 @@
 
 <%@ include file="/html/portlet/journal_content_search/init.jsp" %>
 
-<liferay-ui:journal-content-search />
+<liferay-ui:journal-content-search
+	showListed="<%= showListed %>"
+	targetPortletId="<%= targetPortletId %>"
+	type="<%= type %>"
+/>

@@ -2030,6 +2030,21 @@
 		<name>journal-content-search</name>
 		<tag-class>com.liferay.taglib.ui.JournalContentSearchTag</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<name>showListed</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>targetPortletId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>language</name>

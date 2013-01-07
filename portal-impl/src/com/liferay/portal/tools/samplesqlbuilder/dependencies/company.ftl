@@ -10,20 +10,19 @@ insert into VirtualHost values (${counter.get()}, ${companyId}, 0, 'localhost');
 <#assign contact = dataFactory.addContact("", "")>
 <#assign user = dataFactory.addUser(true, "")>
 
-${sampleSQLBuilder.insertUser(contact, null, null, null, null, null, null, user)}
+${sampleSQLBuilder.insertUser(contact, null, null, null, user)}
 
-<#assign contact = dataFactory.addContact("Test", "Test")>
 <#assign user = dataFactory.addUser(false, "test")>
+<#assign contact = dataFactory.addContact("Test", "Test")>
+<#assign groupIds = [dataFactory.guestGroup.groupId]>
+<#assign organizationIds = []>
+<#assign roleIds = [dataFactory.administratorRole.roleId]>
 
 <#assign userGroup = dataFactory.addGroup(counter.get(), dataFactory.userClassName.classNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
 
-<#assign groupIds = [dataFactory.guestGroup.groupId]>
-<#assign organizationIds = []>
-<#assign privateLayouts = []>
-<#assign publicLayouts = []>
-<#assign roleIds = [dataFactory.administratorRole.roleId]>
+${sampleSQLBuilder.insertGroup(userGroup, [], [])}
 
-${sampleSQLBuilder.insertUser(contact, userGroup, groupIds, organizationIds, privateLayouts, publicLayouts, roleIds, user)}
+${sampleSQLBuilder.insertUser(contact, groupIds, organizationIds, roleIds, user)}
 
 <#assign mbSystemCategory = dataFactory.addMBCategory(0, 0, 0, 0, "", "", 0, 0)>
 

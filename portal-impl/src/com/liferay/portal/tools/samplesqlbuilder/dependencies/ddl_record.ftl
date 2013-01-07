@@ -4,7 +4,7 @@
 
 <#assign ddmContent = dataFactory.addDDMContent(ddlRecord.groupId, ddlRecord.companyId, ddlRecord.userId)>
 
-insert into DDMContent values ('${portalUUIDUtil.generate()}', ${ddmContent.contentId}, ${ddmContent.groupId}, ${ddmContent.companyId}, ${ddmContent.userId}, '', '${createDate}', '${createDate}', 'com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink', '', '<?xml version="1.0"?><root><dynamic-element name="text2102"><dynamic-content><![CDATA[Value]]></dynamic-content></dynamic-element></root>');
+insert into DDMContent values ('${portalUUIDUtil.generate()}', ${ddmContent.contentId}, ${ddmContent.groupId}, ${ddmContent.companyId}, ${ddmContent.userId}, '', '${createDate}', '${createDate}', 'com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink', '', '<?xml version="1.0"?><root><dynamic-element name="text2102"><dynamic-content><![CDATA[Test Record ${ddlRecordCount}]]></dynamic-content></dynamic-element></root>');
 
 insert into DDLRecord values ('${portalUUIDUtil.generate()}', ${ddlRecord.recordId}, ${ddlRecord.groupId}, ${ddlRecord.companyId}, ${ddlRecord.userId}, '', ${ddlRecord.userId}, '', '${createDate}', '${createDate}', ${ddmContent.contentId}, ${ddlRecord.recordSetId}, '1.0', 0);
 

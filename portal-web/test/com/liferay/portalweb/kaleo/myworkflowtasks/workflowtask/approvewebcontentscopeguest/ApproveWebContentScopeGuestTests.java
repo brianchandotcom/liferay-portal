@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.approvewebcontentscopeguest;
 
+import com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.assigntomewebcontentscopeguest.AddWebContentScopeGuestTest;
+import com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.assigntomewebcontentscopeguest.AssignToMeWebContentScopeGuestActionsTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;

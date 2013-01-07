@@ -27,7 +27,14 @@ public class ViewWebContentAssignedToMyRolesDueDateDetailsTest
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -39,9 +46,14 @@ public class ViewWebContentAssignedToMyRolesDueDateDetailsTest
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Due Date 12/31/15 12:00 AM - (Change)"),
-			selenium.getText("//div/div[2]/div/div[2]/div/div"));
+		assertEquals(RuntimeVariables.replace("Due Date"),
+			selenium.getText("//div[@class='lfr-asset-due-date']/div/div/label"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-asset-due-date']/div/div",
+				"12/31/15 12:00 AM"));
+		assertEquals(RuntimeVariables.replace("Change"),
+			selenium.getText(
+				"//span[@class='workflow-task task-due-date-link']/a"));
 		selenium.clickAt("link=My Submissions",
 			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");

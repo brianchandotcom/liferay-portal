@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.approvewebcontentscopeglobal;
 
+import com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.assigntomewebcontentscopeglobal.AddWebContentScopeGlobalTest;
+import com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.assigntomewebcontentscopeglobal.AssignToMeWebContentScopeGlobalActionsTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;

@@ -30,7 +30,14 @@ public class AddUserTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Control Panel");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -102,20 +109,18 @@ public class AddUserTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Sign Out");
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("//input[@id='_58_login']");
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("test01@selenium.com"));
 				selenium.type("//input[@id='_58_password']",
 					RuntimeVariables.replace("password"));
 
 				boolean rememberMeCheckboxChecked1 = selenium.isChecked(
-						"_58_rememberMeCheckbox");
+						"//input[@id='_58_rememberMeCheckbox']");
 
 				if (rememberMeCheckboxChecked1) {
 					label = 2;
@@ -123,16 +128,20 @@ public class AddUserTest extends BaseTestCase {
 					continue;
 				}
 
+				assertFalse(selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']"));
 				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 					RuntimeVariables.replace("Remember Me Checkbox"));
 
 			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']"));
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean iAgreeVisible1 = selenium.isElementPresent(
-						"//span/input");
+						"//input[@value='I Agree']");
 
 				if (!iAgreeVisible1) {
 					label = 3;
@@ -147,7 +156,7 @@ public class AddUserTest extends BaseTestCase {
 			case 3:
 
 				boolean newPasswordVisible1 = selenium.isElementPresent(
-						"//span/input");
+						"//input[@id='password1']");
 
 				if (!newPasswordVisible1) {
 					label = 4;
@@ -155,8 +164,10 @@ public class AddUserTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.type("password1", RuntimeVariables.replace("test"));
-				selenium.type("password2", RuntimeVariables.replace("test"));
+				selenium.type("//input[@id='password1']",
+					RuntimeVariables.replace("test"));
+				selenium.type("//input[@id='password2']",
+					RuntimeVariables.replace("test"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
@@ -164,7 +175,7 @@ public class AddUserTest extends BaseTestCase {
 			case 4:
 
 				boolean passwordReminderVisible1 = selenium.isElementPresent(
-						"reminderQueryAnswer");
+						"//input[@id='reminderQueryAnswer']");
 
 				if (!passwordReminderVisible1) {
 					label = 5;
@@ -174,8 +185,8 @@ public class AddUserTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace(
 						"Please choose a reminder query."),
-					selenium.getText("//form/div[1]"));
-				selenium.type("reminderQueryAnswer",
+					selenium.getText("//div[@class='portlet-msg-info']"));
+				selenium.type("//input[@id='reminderQueryAnswer']",
 					RuntimeVariables.replace("test"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
@@ -183,7 +194,6 @@ public class AddUserTest extends BaseTestCase {
 
 			case 5:
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Sign Out");
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
@@ -196,7 +206,7 @@ public class AddUserTest extends BaseTestCase {
 					RuntimeVariables.replace("test"));
 
 				boolean rememberMeCheckboxChecked2 = selenium.isChecked(
-						"_58_rememberMeCheckbox");
+						"//input[@id='_58_rememberMeCheckbox']");
 
 				if (rememberMeCheckboxChecked2) {
 					label = 6;
@@ -204,10 +214,14 @@ public class AddUserTest extends BaseTestCase {
 					continue;
 				}
 
+				assertFalse(selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']"));
 				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 					RuntimeVariables.replace("Remember Me Checkbox"));
 
 			case 6:
+				assertTrue(selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']"));
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");

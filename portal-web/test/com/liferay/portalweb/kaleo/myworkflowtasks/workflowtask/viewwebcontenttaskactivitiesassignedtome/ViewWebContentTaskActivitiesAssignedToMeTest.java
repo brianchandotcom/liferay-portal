@@ -26,7 +26,14 @@ public class ViewWebContentTaskActivitiesAssignedToMeTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -38,8 +45,10 @@ public class ViewWebContentTaskActivitiesAssignedToMeTest extends BaseTestCase {
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[2]/div[2]/div[1]/div/span",
+		selenium.clickAt("//span[contains(.,'Activities')]",
 			RuntimeVariables.replace("Activities"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-panel lfr-collapsible lfr-extended']/div/div/span[contains(.,'Activities')]");
 		assertEquals(RuntimeVariables.replace(
 				"Task initially assigned to the Administrator role."),
 			selenium.getText("//div[2]/div[2]/div[1]/div[2]"));
@@ -49,7 +58,14 @@ public class ViewWebContentTaskActivitiesAssignedToMeTest extends BaseTestCase {
 				"Joe Bloggs assigned the task to himself."),
 			selenium.getText("//div[2]/div[2]/div[2]/div[2]/div[2]"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -61,8 +77,10 @@ public class ViewWebContentTaskActivitiesAssignedToMeTest extends BaseTestCase {
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[2]/div[3]/div[1]/div",
+		selenium.clickAt("//span[contains(.,'Activities')]",
 			RuntimeVariables.replace("Activities"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-panel lfr-collapsible lfr-extended']/div/div/span[contains(.,'Activities')]");
 		assertEquals(RuntimeVariables.replace(
 				"Task initially assigned to the Administrator role."),
 			selenium.getText("//div[3]/div[2]/div[1]/div[2]"));
@@ -72,7 +90,14 @@ public class ViewWebContentTaskActivitiesAssignedToMeTest extends BaseTestCase {
 				"Joe Bloggs assigned the task to himself."),
 			selenium.getText("//div[3]/div[2]/div[2]/div[2]"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -86,8 +111,10 @@ public class ViewWebContentTaskActivitiesAssignedToMeTest extends BaseTestCase {
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[2]/div[3]/div[1]/div",
+		selenium.clickAt("//span[contains(.,'Activities')]",
 			RuntimeVariables.replace("Activities"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-panel lfr-collapsible lfr-extended']/div/div/span[contains(.,'Activities')]");
 		assertEquals(RuntimeVariables.replace(
 				"Task initially assigned to the Administrator role."),
 			selenium.getText("//div[3]/div[2]/div[1]/div[2]"));

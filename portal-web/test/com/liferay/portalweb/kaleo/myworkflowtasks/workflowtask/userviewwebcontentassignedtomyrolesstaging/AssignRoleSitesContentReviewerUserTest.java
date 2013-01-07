@@ -26,7 +26,14 @@ public class AssignRoleSitesContentReviewerUserTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -50,7 +57,7 @@ public class AssignRoleSitesContentReviewerUserTest extends BaseTestCase {
 		selenium.clickAt("//div[6]/span[2]/a/span",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
-		selenium.selectWindow("name=role");
+		selenium.selectWindow("title=Users and Organizations");
 		selenium.waitForVisible("//tr[4]/td/a");
 		assertEquals(RuntimeVariables.replace("Site Content Reviewer"),
 			selenium.getText("//tr[4]/td/a"));

@@ -14,7 +14,9 @@
 
 package com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.approvewebcontentscopeorganization;
 
+import com.liferay.portalweb.kaleo.myworkflowtasks.workflowtask.assigntomewebcontentscopeorganization.AddWebContentScopeOrganizationTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownOrganizationTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

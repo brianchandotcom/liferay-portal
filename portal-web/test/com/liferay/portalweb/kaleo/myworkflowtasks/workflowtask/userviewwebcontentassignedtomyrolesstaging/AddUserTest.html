@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -156,7 +176,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_125_password1']</td>
-	<td></td>
+	<td>New Password</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -189,11 +209,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Sign Out</td>
-	<td>Sign Out</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Sign Out</td>
 	<td>Sign Out</td>
@@ -209,11 +224,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//input[@id='_58_login']</td>
-	<td>email address</td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>//input[@id='_58_login']</td>
 	<td>test01@selenium.com</td>
@@ -224,14 +234,19 @@
 	<td>password</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_58_rememberMeCheckbox'))</td>
+	<td>storeChecked</td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
 	<td>rememberMeCheckboxChecked1</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
 	<td>${rememberMeCheckboxChecked1}</td>
 	<td>RememberMeCheckboxChecked1</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td>Remember Me Checkbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -244,13 +259,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td>Remember Me Checkbox</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Sign In']</td>
 	<td>Sign In</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//span/input'))</td>
+	<td>storeElementPresent</td>
+	<td>//input[@value='I Agree']</td>
 	<td>iAgreeVisible1</td>
 </tr>
 <tr>
@@ -269,8 +289,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//span/input'))</td>
+	<td>storeElementPresent</td>
+	<td>//input[@id='password1']</td>
 	<td>newPasswordVisible1</td>
 </tr>
 <tr>
@@ -280,12 +300,12 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>password1</td>
+	<td>//input[@id='password1']</td>
 	<td>test</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>password2</td>
+	<td>//input[@id='password2']</td>
 	<td>test</td>
 </tr>
 <tr>
@@ -299,8 +319,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('reminderQueryAnswer'))</td>
+	<td>storeElementPresent</td>
+	<td>//input[@id='reminderQueryAnswer']</td>
 	<td>passwordReminderVisible1</td>
 </tr>
 <tr>
@@ -310,12 +330,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div[1]</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>Please choose a reminder query.</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>reminderQueryAnswer</td>
+	<td>//input[@id='reminderQueryAnswer']</td>
 	<td>test</td>
 </tr>
 <tr>
@@ -332,11 +352,6 @@
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Sign Out</td>
-	<td>Sign Out</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -369,14 +384,19 @@
 	<td>test</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_58_rememberMeCheckbox'))</td>
+	<td>storeChecked</td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
 	<td>rememberMeCheckboxChecked2</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
 	<td>${rememberMeCheckboxChecked2}</td>
 	<td>RememberMeCheckboxChecked2</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td>Remember Me Checkbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -389,11 +409,15 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td>Remember Me Checkbox</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Sign In']</td>
 	<td>Sign In</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

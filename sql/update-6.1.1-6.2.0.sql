@@ -346,6 +346,9 @@ alter table MBMessage drop column attachments;
 
 drop table OrgGroupPermission;
 
+drop index IX_C3A17327 on PasswordPolicyRel;
+drop index IX_ED7CF243 on PasswordPolicyRel;
+
 drop table Permission_;
 
 alter table RepositoryEntry add manualCheckInRequired BOOLEAN;

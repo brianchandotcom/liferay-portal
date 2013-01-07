@@ -258,13 +258,6 @@ public class PasswordPolicyRelPersistenceTest {
 			existingPasswordPolicyRelModelImpl.getOriginalClassNameId());
 		Assert.assertEquals(existingPasswordPolicyRelModelImpl.getClassPK(),
 			existingPasswordPolicyRelModelImpl.getOriginalClassPK());
-
-		Assert.assertEquals(existingPasswordPolicyRelModelImpl.getPasswordPolicyId(),
-			existingPasswordPolicyRelModelImpl.getOriginalPasswordPolicyId());
-		Assert.assertEquals(existingPasswordPolicyRelModelImpl.getClassNameId(),
-			existingPasswordPolicyRelModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingPasswordPolicyRelModelImpl.getClassPK(),
-			existingPasswordPolicyRelModelImpl.getOriginalClassPK());
 	}
 
 	protected PasswordPolicyRel addPasswordPolicyRel()

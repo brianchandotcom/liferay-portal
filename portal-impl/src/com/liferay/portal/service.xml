@@ -1164,12 +1164,7 @@
 		<finder name="PasswordPolicyId" return-type="Collection">
 			<finder-column name="passwordPolicyId" />
 		</finder>
-		<finder name="C_C" return-type="PasswordPolicyRel">
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
-		<finder name="P_C_C" return-type="PasswordPolicyRel">
-			<finder-column name="passwordPolicyId" />
+		<finder name="C_C" return-type="PasswordPolicyRel" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>

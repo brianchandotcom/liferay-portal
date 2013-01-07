@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
@@ -318,12 +319,23 @@ public class ResourceBlockLocalServiceTest {
 		}
 
 		public Void call() throws Exception {
-			ResourceBlockLocalServiceUtil.updateResourceBlockId(
-				_COMPANY_ID, _GROUP_ID, _MODEL_NAME, _permissionedModel,
-				_permissionsHash, _resourceBlockPermissionsContainer);
+			while (true) {
+				try {
+					ResourceBlockLocalServiceUtil.updateResourceBlockId(
+						_COMPANY_ID, _GROUP_ID, _MODEL_NAME, _permissionedModel,
+						_permissionsHash, _resourceBlockPermissionsContainer);
 
-			if (_semaphore != null) {
-				_semaphore.release();
+					if (_semaphore != null) {
+						_semaphore.release();
+					}
+
+					break;
+				}
+				catch (SystemException se) {
+
+					// Retry
+
+				}
 			}
 
 			return null;

@@ -255,13 +255,41 @@ public class PortalServiceHttp {
 		}
 	}
 
+	public static void testAutoSyncHibernateSessionStateOnTxCreation(
+		HttpPrincipal httpPrincipal)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(PortalServiceUtil.class,
+					"testAutoSyncHibernateSessionStateOnTxCreation",
+					_testAutoSyncHibernateSessionStateOnTxCreationParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void testCounterIncrement_Rollback(
 		HttpPrincipal httpPrincipal)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(PortalServiceUtil.class,
 					"testCounterIncrement_Rollback",
-					_testCounterIncrement_RollbackParameterTypes7);
+					_testCounterIncrement_RollbackParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -288,7 +316,7 @@ public class PortalServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(PortalServiceUtil.class,
-					"testDeleteClassName", _testDeleteClassNameParameterTypes8);
+					"testDeleteClassName", _testDeleteClassNameParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -318,7 +346,7 @@ public class PortalServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(PortalServiceUtil.class,
-					"testGetBuildNumber", _testGetBuildNumberParameterTypes9);
+					"testGetBuildNumber", _testGetBuildNumberParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -344,7 +372,7 @@ public class PortalServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(PortalServiceUtil.class,
-					"testGetUserId", _testGetUserIdParameterTypes10);
+					"testGetUserId", _testGetUserIdParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -366,7 +394,7 @@ public class PortalServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(PortalServiceUtil.class,
-					"testHasClassName", _testHasClassNameParameterTypes11);
+					"testHasClassName", _testHasClassNameParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -384,34 +412,6 @@ public class PortalServiceHttp {
 			}
 
 			return ((Boolean)returnObj).booleanValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static void testAutoSyncHibernateSessionStateOnTxCreation(
-		HttpPrincipal httpPrincipal)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(PortalServiceUtil.class,
-					"testAutoSyncHibernateSessionStateOnTxCreation",
-					_testAutoSyncHibernateSessionStateOnTxCreationParameterTypes12);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -439,20 +439,20 @@ public class PortalServiceHttp {
 		new Class[] { java.lang.String.class };
 	private static final Class<?>[] _testAddClassNameAndTestTransactionPortletBar_SuccessParameterTypes6 =
 		new Class[] { java.lang.String.class };
-	private static final Class<?>[] _testCounterIncrement_RollbackParameterTypes7 =
+	private static final Class<?>[] _testAutoSyncHibernateSessionStateOnTxCreationParameterTypes7 =
 		new Class[] {  };
-	private static final Class<?>[] _testDeleteClassNameParameterTypes8 = new Class[] {
-			
-		};
-	private static final Class<?>[] _testGetBuildNumberParameterTypes9 = new Class[] {
-			
-		};
-	private static final Class<?>[] _testGetUserIdParameterTypes10 = new Class[] {
-			
-		};
-	private static final Class<?>[] _testHasClassNameParameterTypes11 = new Class[] {
-			
-		};
-	private static final Class<?>[] _testAutoSyncHibernateSessionStateOnTxCreationParameterTypes12 =
+	private static final Class<?>[] _testCounterIncrement_RollbackParameterTypes8 =
 		new Class[] {  };
+	private static final Class<?>[] _testDeleteClassNameParameterTypes9 = new Class[] {
+			
+		};
+	private static final Class<?>[] _testGetBuildNumberParameterTypes10 = new Class[] {
+			
+		};
+	private static final Class<?>[] _testGetUserIdParameterTypes11 = new Class[] {
+			
+		};
+	private static final Class<?>[] _testHasClassNameParameterTypes12 = new Class[] {
+			
+		};
 }

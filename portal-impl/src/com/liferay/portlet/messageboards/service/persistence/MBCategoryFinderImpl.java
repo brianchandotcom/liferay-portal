@@ -79,7 +79,7 @@ public class MBCategoryFinderImpl
 
 	public List<MBCategory> findByS_G_U_P(
 			long groupId, long userId, long[] parentCategoryIds, int start,
-		int end)
+			int end)
 		throws SystemException {
 
 		return doFindByS_G_U_P(

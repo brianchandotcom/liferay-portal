@@ -76,7 +76,7 @@ public interface SchedulerEngineHelper {
 	public Date getFinalFireTime(SchedulerResponse schedulerResponse);
 
 	public Date getFinalFireTime(
-		String jobName, String groupName, StorageType storageType)
+			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
 	public ObjectValuePair<Exception, Date>[] getJobExceptions(

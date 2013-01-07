@@ -102,7 +102,7 @@ public class PhoneNumberConverter implements Converter, StateHolder {
 	}
 
 	public String getAsString(
-		FacesContext facesContext, UIComponent uiComponent, Object value)
+			FacesContext facesContext, UIComponent uiComponent, Object value)
 		throws ConverterException {
 
 		// ICE-1537

@@ -968,7 +968,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 */
 	public int getFileEntriesAndFileShortcutsCount(
 			long repositoryId, long folderId, int status, String[] mimeTypes)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		Repository repository = getRepository(repositoryId);
 

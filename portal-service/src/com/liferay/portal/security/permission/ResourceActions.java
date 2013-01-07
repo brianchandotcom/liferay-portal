@@ -105,7 +105,7 @@ public interface ResourceActions {
 	 */
 	public List<Role> getRoles(
 			long companyId, Group group, String modelResource)
-			throws SystemException;
+		throws SystemException;
 
 	public List<Role> getRoles(
 			long companyId, Group group, String modelResource, int[] roleTypes)

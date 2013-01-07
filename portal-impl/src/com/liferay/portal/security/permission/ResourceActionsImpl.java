@@ -504,7 +504,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	 */
 	public List<Role> getRoles(
 			long companyId, Group group, String modelResource)
-			throws SystemException {
+		throws SystemException {
 
 		return getRoles(companyId, group, modelResource, null);
 	}

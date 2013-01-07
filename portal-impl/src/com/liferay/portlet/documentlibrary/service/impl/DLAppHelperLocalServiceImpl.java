@@ -784,7 +784,7 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	public void updateDependentStatus(
-		User user, List<Object> dlFileEntriesAndDLFolders, int status)
+			User user, List<Object> dlFileEntriesAndDLFolders, int status)
 		throws PortalException, SystemException {
 
 		for (Object object : dlFileEntriesAndDLFolders) {

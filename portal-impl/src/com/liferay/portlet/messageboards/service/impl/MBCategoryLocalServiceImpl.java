@@ -643,7 +643,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	}
 
 	public void updateDependentStatus(
-		User user, List<Object> categoriesAndThreads, int status)
+			User user, List<Object> categoriesAndThreads, int status)
 		throws PortalException, SystemException {
 
 		for (Object object : categoriesAndThreads) {

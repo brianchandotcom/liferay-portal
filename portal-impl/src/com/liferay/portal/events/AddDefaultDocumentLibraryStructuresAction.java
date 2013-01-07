@@ -159,7 +159,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 	}
 
 	protected void addDLRawMetadataStructures(
-		long userId, long groupId, ServiceContext serviceContext)
+			long userId, long groupId, ServiceContext serviceContext)
 		throws Exception {
 
 		String xsd = buildDLRawMetadataXML(

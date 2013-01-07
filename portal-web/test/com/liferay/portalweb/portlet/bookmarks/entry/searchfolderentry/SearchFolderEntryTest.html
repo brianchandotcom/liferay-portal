@@ -21,7 +21,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_28_keywords']</td>
-	<td>Test</td>
+	<td>Bookmark1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -31,12 +31,77 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
-	<td>Test Folder</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[3]/a</td>
-	<td>Test Folder Entry</td>
+	<td>Bookmark1 Search Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 - 1.</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Bookmarks Test Page</td>
+	<td>Bookmarks Test Page</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_28_keywords']</td>
+	<td>Bookmark2</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Bookmark Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>Bookmark2 Search Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 - 1.</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Bookmarks Test Page</td>
+	<td>Bookmarks Test Page</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_28_keywords']</td>
+	<td>Bookmark</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No entries were found that matched the keywords: Bookmark.</td>
 </tr>
 </tbody></table>
 </body>

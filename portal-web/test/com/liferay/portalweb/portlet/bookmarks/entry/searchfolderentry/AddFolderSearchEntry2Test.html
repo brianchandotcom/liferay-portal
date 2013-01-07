@@ -1,12 +1,12 @@
-<html>
+e<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddFolderEntry3Test</title>
+<title>AddFolderSearchEntry2Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddFolderEntry3Test</td></tr>
+<tr><td rowspan="1" colspan="3">AddFolderSearchEntry2Test</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -20,38 +20,33 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/ul/li[5]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Bookmark')]</td>
 	<td>Add Bookmark</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[5]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Bookmark')]</td>
 	<td>Add Bookmark</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_28_name']</td>
-	<td>Test3 Folder3 Entry3</td>
+	<td>Bookmark2 Search Name</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_28_url']</td>
-	<td>http://www.narutofan.com</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//textarea[@id='_28_description']</td>
-	<td>This is a test3 folder3 entry3.</td>
+	<td>http://www.liferay.com</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -65,33 +60,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]/a</td>
-	<td>Test1 Folder1 Entry1</td>
+	<td>//tr[contains(.,'Bookmark2 Search Name')]/td[1]/a</td>
+	<td>Bookmark2 Search Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>//tr[contains(.,'Bookmark2 Search Name')]/td[2]/a</td>
 	<td>http://www.liferay.com</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
-	<td>Test2 Folder2 Entry2</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[4]/td[2]/a</td>
-	<td>http://www.openqa.org</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[5]/td[1]/a</td>
-	<td>Test3 Folder3 Entry3</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[5]/td[2]/a</td>
-	<td>http://www.narutofan.com</td>
 </tr>
 </tbody></table>
 </body>

@@ -38,6 +38,7 @@ public class MoveFolderEntryToFolderTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddFolder2Test.class);
 		testSuite.addTestSuite(AddFolder1EntryTest.class);
 		testSuite.addTestSuite(MoveFolderEntryToFolderTest.class);
+		testSuite.addTestSuite(ViewFolder2EntryTest.class);
 		testSuite.addTestSuite(TearDownBookmarksFolderTest.class);
 		testSuite.addTestSuite(TearDownBookmarksEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

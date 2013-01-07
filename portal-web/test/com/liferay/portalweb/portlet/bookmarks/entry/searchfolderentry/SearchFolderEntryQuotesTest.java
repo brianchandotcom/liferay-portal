@@ -29,27 +29,37 @@ public class SearchFolderEntryQuotesTest extends BaseTestCase {
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_28_keywords']",
-			RuntimeVariables.replace("\"Test Folder Entry\""));
+			RuntimeVariables.replace("\"Search Name\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Folder"),
-			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Test Folder Entry"),
-			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark1 Search Name')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Bookmark1 Search Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark1 Search Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark2 Search Name')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Bookmark2 Search Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark2 Search Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Showing 1 - 2."),
+			selenium.getText("//div[@class='search-results']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_28_keywords']",
-			RuntimeVariables.replace("\"Test Entry\""));
+			RuntimeVariables.replace("\"Bookmark1 Name\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"No entries were found that matched the keywords: \"Test Entry\"."),
+				"No entries were found that matched the keywords: \"Bookmark1 Name\"."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isTextPresent("Test Folder"));
-		assertFalse(selenium.isTextPresent("Test Folder Entry"));
+		assertFalse(selenium.isTextPresent("Bookmark Folder Name"));
+		assertFalse(selenium.isTextPresent("Bookmark1 Search Name"));
 	}
 }

@@ -37,6 +37,7 @@ public class EditFolderEntryTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddFolderEntryTest.class);
 		testSuite.addTestSuite(EditFolderEntryTest.class);
+		testSuite.addTestSuite(ViewEditFolderEntryTest.class);
 		testSuite.addTestSuite(TearDownBookmarksFolderTest.class);
 		testSuite.addTestSuite(TearDownBookmarksEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

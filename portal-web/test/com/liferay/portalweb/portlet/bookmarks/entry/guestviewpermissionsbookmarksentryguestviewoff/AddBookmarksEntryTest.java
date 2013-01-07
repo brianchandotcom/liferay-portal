@@ -25,29 +25,28 @@ public class AddBookmarksEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Bookmark"),
-			selenium.getText("//div[2]/ul/li[3]/a"));
-		selenium.clickAt("//div[2]/ul/li[3]/a",
+			selenium.getText(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Bookmark')]"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Bookmark')]",
 			RuntimeVariables.replace("Add Bookmark"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",
-			RuntimeVariables.replace("Bookmarks Entry Name"));
+			RuntimeVariables.replace("Bookmark Name"));
 		selenium.type("//input[@id='_28_url']",
 			RuntimeVariables.replace("http://www.liferay.com"));
-		selenium.type("//textarea[@id='_28_description']",
-			RuntimeVariables.replace("Bookmarks Entry Description"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Bookmarks Entry Name"),
-			selenium.getText("//td[1]/a"));
-		assertTrue(selenium.isPartialText("//td[2]/a", "http://www.liferay.com"));
+		assertEquals(RuntimeVariables.replace("Bookmark Name"),
+			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
+			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[2]/a"));
 	}
 }

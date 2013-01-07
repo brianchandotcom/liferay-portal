@@ -16,7 +16,6 @@ package com.liferay.portalweb.portlet.bookmarks.entry.searchfolderentry;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.bookmarks.entry.addfolderentry.AddFolderEntryTest;
 import com.liferay.portalweb.portlet.bookmarks.entry.addfolderentry.TearDownBookmarksEntryTest;
 import com.liferay.portalweb.portlet.bookmarks.folder.addfolder.AddFolderTest;
 import com.liferay.portalweb.portlet.bookmarks.folder.addfolder.TearDownBookmarksFolderTest;
@@ -35,7 +34,8 @@ public class SearchFolderEntryTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageBookmarksTest.class);
 		testSuite.addTestSuite(AddPortletBookmarksTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
-		testSuite.addTestSuite(AddFolderEntryTest.class);
+		testSuite.addTestSuite(AddFolderSearchEntry1Test.class);
+		testSuite.addTestSuite(AddFolderSearchEntry2Test.class);
 		testSuite.addTestSuite(SearchFolderEntryTest.class);
 		testSuite.addTestSuite(SearchFolderEntryQuotesTest.class);
 		testSuite.addTestSuite(SearchNullFolderEntryTest.class);

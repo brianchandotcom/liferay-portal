@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.bookmarks.entry.addfolderentrymultiple;
+package com.liferay.portalweb.portlet.bookmarks.entry.addfolderentry;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -28,30 +28,31 @@ public class AddFolderEntry1Test extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Folder"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong",
+			RuntimeVariables.replace("Bookmark Folder Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Bookmark"),
-			selenium.getText("//div[2]/ul/li[5]/a"));
-		selenium.clickAt("//div[2]/ul/li[5]/a",
+			selenium.getText(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Bookmark')]"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Bookmark')]",
 			RuntimeVariables.replace("Add Bookmark"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",
-			RuntimeVariables.replace("Test1 Folder1 Entry1"));
+			RuntimeVariables.replace("Bookmark1 Name"));
 		selenium.type("//input[@id='_28_url']",
 			RuntimeVariables.replace("http://www.liferay.com"));
-		selenium.type("//textarea[@id='_28_description']",
-			RuntimeVariables.replace("This is a test1 folder1 entry1."));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Test1 Folder1 Entry1"),
-			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Bookmark1 Name"),
+			selenium.getText("//tr[contains(.,'Bookmark1 Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Bookmark1 Name')]/td[2]/a"));
 	}
 }

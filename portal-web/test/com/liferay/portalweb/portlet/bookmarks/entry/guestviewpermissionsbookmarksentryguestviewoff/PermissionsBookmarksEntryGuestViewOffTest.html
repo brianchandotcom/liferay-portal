@@ -20,33 +20,43 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Bookmarks Entry Name</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[1]/a</td>
+	<td>Bookmark Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
-	<td>Bookmarks Entry Name</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[1]/a</td>
+	<td>Bookmark Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/ul/li[2]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[2]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
+	<td>storeChecked</td>
+	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>guestViewChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${guestViewChecked}</td>
+	<td>GuestViewNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@name='16_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
-	<td>Guest View</td>
+	<td>label</td>
+	<td>GuestViewNotChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>

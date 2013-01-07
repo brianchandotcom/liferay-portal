@@ -28,12 +28,16 @@ public class MoveFolderEntryToSubfolderTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Folder"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong",
+			RuntimeVariables.replace("Bookmark Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible("link=Test Folder Entry"));
-		assertTrue(selenium.isVisible("link=http://www.liferay.com"));
+		assertEquals(RuntimeVariables.replace("Bookmark Name"),
+			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
+			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[2]/a"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
@@ -52,10 +56,14 @@ public class MoveFolderEntryToSubfolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Bookmarks");
-		selenium.waitForVisible("//input[@value='Choose']");
+		selenium.waitForVisible(
+			"//tr[contains(.,'Bookmark Subfolder Name')]/td[1]/a");
+		assertEquals(RuntimeVariables.replace("Bookmark Subfolder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Subfolder Name')]/td[1]/a"));
 		selenium.click("//input[@value='Choose']");
 		selenium.selectWindow("null");
-		assertEquals(RuntimeVariables.replace("Test Subfolder"),
+		assertEquals(RuntimeVariables.replace("Bookmark Subfolder Name"),
 			selenium.getText("//a[@id='_28_folderName']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -63,24 +71,30 @@ public class MoveFolderEntryToSubfolderTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isTextPresent("Test Folder Entry"));
+		assertEquals(RuntimeVariables.replace(
+				"There are no bookmarks in this folder."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertFalse(selenium.isTextPresent("Bookmark Name"));
 		assertFalse(selenium.isTextPresent("http://www.liferay.com"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Folder"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong",
+			RuntimeVariables.replace("Bookmark Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Subfolder"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong",
-			RuntimeVariables.replace("Test Subfolder"));
+		assertEquals(RuntimeVariables.replace("Bookmark Subfolder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Subfolder Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Bookmark Subfolder Name')]/td[1]/a",
+			RuntimeVariables.replace("Bookmark Subfolder Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Folder Entry"),
-			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Bookmark Name"),
+			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[2]/a"));
 	}
 }

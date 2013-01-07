@@ -20,22 +20,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Test Folder Entry</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[1]/a</td>
+	<td>Bookmark Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[2]/a</td>
 	<td>http://www.liferay.com</td>
 </tr>
 <tr>
@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Test Folder Entry</td>
+	<td>Bookmark Name</td>
 	<td></td>
 </tr>
 <tr>

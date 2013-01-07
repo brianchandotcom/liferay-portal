@@ -28,14 +28,16 @@ public class EditFolderEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Folder"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong",
+			RuntimeVariables.replace("Bookmark Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Folder Entry"),
-			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Bookmark Name"),
+			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[2]/a"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
@@ -51,20 +53,18 @@ public class EditFolderEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",
-			RuntimeVariables.replace("Test Folder Entry Edited"));
+			RuntimeVariables.replace("Bookmark Name Edit"));
 		selenium.type("//input[@id='_28_url']",
 			RuntimeVariables.replace("http://www.alloyui.com"));
-		selenium.type("//textarea[@id='_28_description']",
-			RuntimeVariables.replace("This is a test folder entry. Edited."));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Test Folder Entry Edited"),
-			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Bookmark Name Edit"),
+			selenium.getText("//tr[contains(.,'Bookmark Name Edit')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("http://www.alloyui.com"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Bookmark Name Edit')]/td[2]/a"));
 	}
 }

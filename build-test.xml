@@ -3997,23 +3997,21 @@ file.
 				</waitfor>
 
 				<if>
-					<and>
-						<contains string="${hook.plugins.includes}" substring="sevencogs-hook" />
-						<contains string="${hook.plugins.includes}" substring="so-hook" />
-					</and>
+					<or>
+						<contains string="${simple.server.dir}" substring="glassfish" />
+						<contains string="${simple.server.dir}" substring="jonas" />
+						<isset property="plugins.deployed" />
+					</or>
 					<then>
-						<sleep seconds="120" />
+						<sleep seconds="60" />
 					</then>
-					<elseif>
-						<or>
-							<contains string="${simple.server.dir}" substring="glassfish" />
-							<contains string="${simple.server.dir}" substring="jonas" />
-							<isset property="plugins.deployed" />
-						</or>
-						<then>
-							<sleep seconds="60" />
-						</then>
-					</elseif>
+				</if>
+
+				<if>
+					<contains string="${hook.plugins.includes}" substring="so-hook" />
+					<then>
+						<echo file="${app.server.portal.dir}/html/portlet/dockbar/license_warning.jsp" />
+					</then>
 				</if>
 
 				<if>

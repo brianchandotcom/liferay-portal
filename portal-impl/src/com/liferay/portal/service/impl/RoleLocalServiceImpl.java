@@ -1284,7 +1284,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(role.getCompanyId()), role.getRoleId());
 
-			if(!resourcePermissions.isEmpty()) {
+			if (!resourcePermissions.isEmpty()) {
 				continue;
 			}
 

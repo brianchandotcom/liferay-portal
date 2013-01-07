@@ -30,7 +30,7 @@ public class MyPagesControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override
 	protected boolean hasAccessPermissionDenied(
-		PermissionChecker permissionChecker, Group group, Portlet portlet)
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
 		if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED &&

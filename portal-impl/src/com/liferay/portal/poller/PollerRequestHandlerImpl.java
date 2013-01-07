@@ -358,7 +358,7 @@ public class PollerRequestHandlerImpl
 	}
 
 	protected Map<String, String> parseData(
-		Map<String, Object> pollerRequestChunk)
+			Map<String, Object> pollerRequestChunk)
 		throws Exception {
 
 		Map<String, Object> oldParameterMap =

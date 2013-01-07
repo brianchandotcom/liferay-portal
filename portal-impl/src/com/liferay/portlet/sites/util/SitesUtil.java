@@ -298,7 +298,7 @@ public class SitesUtil {
 	}
 
 	public static void copyPortletPermissions(
-		Layout targetLayout, Layout sourceLayout)
+			Layout targetLayout, Layout sourceLayout)
 		throws Exception {
 
 		long companyId = targetLayout.getCompanyId();

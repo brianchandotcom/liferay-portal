@@ -1884,6 +1884,13 @@ public class SourceFormatter {
 							}
 						}
 
+						if (trimmedLine.startsWith("throws ") &&
+							(lineTabCount == previousLineTabCount)) {
+
+							_sourceFormatterHelper.printError(
+								fileName, "tab: " + fileName + " " + lineCount);
+						}
+
 						combinedLines = _getCombinedLines(
 							trimmedLine, previousLine, lineTabCount,
 							previousLineTabCount);

@@ -1144,8 +1144,8 @@ public class StagingImpl implements Staging {
 	}
 
 	public void setRecentLayoutBranchId(
-		HttpServletRequest request, long layoutSetBranchId, long plid,
-		long layoutBranchId)
+			HttpServletRequest request, long layoutSetBranchId, long plid,
+			long layoutBranchId)
 		throws SystemException {
 
 		PortalPreferences portalPreferences =
@@ -1156,7 +1156,7 @@ public class StagingImpl implements Staging {
 	}
 
 	public void setRecentLayoutBranchId(
-		User user, long layoutSetBranchId, long plid, long layoutBranchId)
+			User user, long layoutSetBranchId, long plid, long layoutBranchId)
 		throws SystemException {
 
 		PortalPreferences portalPreferences = getPortalPreferences(user);

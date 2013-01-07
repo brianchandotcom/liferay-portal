@@ -1405,7 +1405,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	}
 
 	protected net.fortuna.ical4j.model.Calendar toICalCalendar(
-		long userId, List<CalEvent> events)
+			long userId, List<CalEvent> events)
 		throws PortalException, SystemException {
 
 		net.fortuna.ical4j.model.Calendar iCal =

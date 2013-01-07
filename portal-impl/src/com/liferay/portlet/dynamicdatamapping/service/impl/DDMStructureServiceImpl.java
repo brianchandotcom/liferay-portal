@@ -146,7 +146,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public DDMStructure getStructure(
-		long groupId, String structureKey, boolean includeGlobalStructures)
+			long groupId, String structureKey, boolean includeGlobalStructures)
 		throws PortalException, SystemException {
 
 		DDMStructurePermission.check(

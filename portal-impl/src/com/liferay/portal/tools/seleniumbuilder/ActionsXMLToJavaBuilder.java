@@ -92,10 +92,9 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append(objectPackagePath);
 		sb.append(";\n\n");
 
-		sb.append("import com.liferay.portalweb.blocks.base.actions.");
-		sb.append("ActionsUtil;\n");
+		sb.append("import com.liferay.portalweb.base.actions.ActionsUtil;\n");
 
-		sb.append("import com.liferay.portalweb.blocks.base.actions.");
+		sb.append("import com.liferay.portalweb.base.actions.");
 		sb.append("BaseLiferayActions;\n");
 
 		sb.append("import com.liferay.portalweb.portal.util.");

@@ -426,11 +426,11 @@ public class SeleniumBuilder {
 		directoryScanner.setBasedir(basedir);
 		directoryScanner.setIncludes(
 			new String[] {
-				"**\\portalweb\\blocks\\**\\*.actions",
-				"**\\portalweb\\blocks\\**\\*.functions",
-				"**\\portalweb\\blocks\\**\\*.macros",
-				"**\\portalweb\\blocks\\**\\*.paths",
-				"**\\portalweb\\tests\\**\\*.test"
+				"**\\portalweb\\**\\*.actions",
+				"**\\portalweb\\**\\*.functions",
+				"**\\portalweb\\**\\*.macros",
+				"**\\portalweb\\**\\*.paths",
+				"**\\portalweb\\**\\*.test"
 			});
 
 		directoryScanner.scan();

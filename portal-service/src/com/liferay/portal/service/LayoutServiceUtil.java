@@ -396,6 +396,7 @@ public class LayoutServiceUtil {
 	*
 	* @param uuid the layout's UUID
 	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
 	* @return the matching layout
 	* @throws PortalException if a matching layout could not be found, if the
 	user did not have permission to view the layout, or if some other
@@ -403,10 +404,11 @@ public class LayoutServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Layout getLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
+		java.lang.String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getLayoutByUuidAndGroupId(uuid, groupId);
+		return getService()
+				   .getLayoutByUuidAndGroupId(uuid, groupId, privateLayout);
 	}
 
 	/**

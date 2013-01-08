@@ -598,7 +598,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "layout.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layout.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G_P = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_P",
 			new String[] {
@@ -713,10 +713,12 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				query.append(_FINDER_COLUMN_UUID_G_P_UUID_1);
 			}
 			else if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_G_P_UUID_3);
 			}
 			else {
 				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_G_P_UUID_2);
 			}
 
 			query.append(_FINDER_COLUMN_UUID_G_P_GROUPID_2);
@@ -828,12 +830,12 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				query.append(_FINDER_COLUMN_UUID_G_P_UUID_1);
 			}
 			else if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_G_P_UUID_3);
 			}
 			else {
 				bindUuid = true;
 
-				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_G_P_UUID_2);
 			}
 
 			query.append(_FINDER_COLUMN_UUID_G_P_GROUPID_2);
@@ -876,10 +878,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "layout.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "layout.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "layout.groupId = ?";
+	private static final String _FINDER_COLUMN_UUID_G_P_UUID_1 = "layout.uuid IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_P_UUID_2 = "layout.uuid = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_P_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_P_GROUPID_2 = "layout.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_P_PRIVATELAYOUT_2 = "layout.privateLayout = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -7781,8 +7784,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		EntityCacheUtil.putResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutImpl.class, layout.getPrimaryKey(), layout);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { layout.getUuid(), layout.getGroupId() }, layout);
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G_P,
+			new Object[] {
+				layout.getUuid(), layout.getGroupId(), layout.getPrivateLayout()
+			}, layout);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ICONIMAGEID,
 			new Object[] { layout.getIconImageId() }, layout);
@@ -7879,7 +7884,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 	protected void cacheUniqueFindersCache(Layout layout) {
 		if (layout.isNew()) {
-			Object[] args = new Object[] { layout.getUuid(), layout.getGroupId() };
+			Object[] args = new Object[] {
+					layout.getUuid(), layout.getGroupId(),
+					layout.getPrivateLayout()
+				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G_P, args,
 				Long.valueOf(1));
@@ -7927,7 +7935,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if ((layoutModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						layout.getUuid(), layout.getGroupId()
+						layout.getUuid(), layout.getGroupId(),
+						layout.getPrivateLayout()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G_P, args,
@@ -7990,7 +7999,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	protected void clearUniqueFindersCache(Layout layout) {
 		LayoutModelImpl layoutModelImpl = (LayoutModelImpl)layout;
 
-		Object[] args = new Object[] { layout.getUuid(), layout.getGroupId() };
+		Object[] args = new Object[] {
+				layout.getUuid(), layout.getGroupId(), layout.getPrivateLayout()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G_P, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G_P, args);
@@ -7999,7 +8010,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				FINDER_PATH_FETCH_BY_UUID_G_P.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					layoutModelImpl.getOriginalUuid(),
-					layoutModelImpl.getOriginalGroupId()
+					layoutModelImpl.getOriginalGroupId(),
+					layoutModelImpl.getOriginalPrivateLayout()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G_P, args);

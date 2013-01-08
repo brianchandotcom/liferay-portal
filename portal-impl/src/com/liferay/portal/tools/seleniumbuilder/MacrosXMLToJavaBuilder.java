@@ -40,6 +40,8 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 	public MacrosXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
+		_basedir = getBasedir();
+
 		_validCommands = new TreeSet<String>();
 
 		_validCommands.add("action");
@@ -48,6 +50,8 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		_validCommands.add("macro");
 		_validCommands.add("while");
 		_validCommands.add("window");
+
+		Set<String> fileNameSetMacros = getFileNameSetMacros();
 
 		for (String fileName : fileNameSetMacros) {
 			if (fileName.length() > 161) {
@@ -60,7 +64,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 	}
 
 	protected void generateMacros(String fileName) throws Exception {
-		if (!FileUtil.exists(basedir + "/" + fileName)) {
+		if (!FileUtil.exists(_basedir + "/" + fileName)) {
 			return;
 		}
 
@@ -163,6 +167,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		return paramsString;
 	}
 
+	private String _basedir;
 	private Set<String> _validCommands = new TreeSet<String>();
 
 }

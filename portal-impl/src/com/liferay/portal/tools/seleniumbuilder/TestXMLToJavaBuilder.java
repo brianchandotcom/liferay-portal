@@ -39,11 +39,15 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 	public TestXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
+		_basedir = getBasedir();
+
 		_validCommands = new TreeSet<String>();
 
 		_validCommands.add("action");
 		_validCommands.add("macro");
 		_validCommands.add("window");
+
+		Set<String> fileNameSetTests = getFileNameSetTests();
 
 		for (String fileName : fileNameSetTests) {
 			if (fileName.length() > 161) {
@@ -56,7 +60,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 	}
 
 	protected void generateTest(String fileName) throws Exception {
-		if (!FileUtil.exists(basedir + "/" + fileName)) {
+		if (!FileUtil.exists(_basedir + "/" + fileName)) {
 			return;
 		}
 
@@ -200,6 +204,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
+	private String _basedir;
 	private Set<String> _validCommands = new TreeSet<String>();
 
 }

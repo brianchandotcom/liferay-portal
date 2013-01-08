@@ -38,6 +38,8 @@ public class TestPlanBuilder extends SeleniumBuilder {
 	public TestPlanBuilder(String[] args) throws Exception {
 		super(args);
 
+		_basedir = getBasedir();
+
 		Set<String> directoryNames = _getDirectoryNames();
 
 		for (String directoryName : directoryNames) {
@@ -46,7 +48,7 @@ public class TestPlanBuilder extends SeleniumBuilder {
 	}
 
 	protected void generateTestPlan(String directoryName) throws Exception {
-		if (!FileUtil.exists(basedir + "/" + directoryName)) {
+		if (!FileUtil.exists(_basedir + "/" + directoryName)) {
 			return;
 		}
 
@@ -98,6 +100,8 @@ public class TestPlanBuilder extends SeleniumBuilder {
 	private Set<String> _getDirectoryNames() throws Exception {
 		Set<String> treeSet = new TreeSet<String>();
 
+		Set<String> fileNameSetTests = getFileNameSetTests();
+
 		for (String fileName : fileNameSetTests) {
 			int x = fileName.lastIndexOf("/");
 
@@ -111,6 +115,8 @@ public class TestPlanBuilder extends SeleniumBuilder {
 		throws Exception {
 
 		Set<String> treeSet = new TreeSet<String>();
+
+		Set<String> fileNameSetTests = getFileNameSetTests();
 
 		for (String fileName : fileNameSetTests) {
 			if (fileName.startsWith(directoryName)) {
@@ -126,5 +132,7 @@ public class TestPlanBuilder extends SeleniumBuilder {
 
 		return treeSet;
 	}
+
+	private String _basedir;
 
 }

@@ -1,5 +1,5 @@
 <test
-	name="AddDMDocument"
+	name="AddDMFolder"
 	description="In the Control Panel Documents and Media Portlet, add a Folder."
 >
 	<setup>

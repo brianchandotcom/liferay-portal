@@ -1,5 +1,5 @@
 <test
-	name="DeleteSiteRole"
+	name="DeleteOrgRole"
 	description="In the &lt;strong&gt;Control Panel Roles Portlet&lt;/strong&gt;, delete an Organization Role."
 >
 	<setup>

@@ -1,5 +1,5 @@
 <test
-	name="SearchBlogsEntryTitle"
+	name="SearchBlogsEntryTitleCP"
 	description="In the Control Panel Blogs Portlet, search for a Blogs Entry by its title."
 >
 	<setup>

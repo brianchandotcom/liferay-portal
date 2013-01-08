@@ -1,5 +1,5 @@
 <test
-	name="EditBlogsEntryContentActionsCP"
+	name="EditBlogsEntryTitleActionsCP"
 	description="In the Control Panel Blogs Portlet, edit a Blogs Entry's title."
 >
 	<setup>

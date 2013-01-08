@@ -1,5 +1,5 @@
 <test
-	name="DeleteSiteRole"
+	name="DeleteRegRole"
 	description="In the &lt;strong&gt;Control Panel Roles Portlet&lt;/strong&gt;, delete a Regular Role."
 >
 	<setup>

@@ -1,5 +1,5 @@
 <test
-	name="AddBlogsEntryTitleEscapeCharactersCP"
+	name="AddBlogsEntryTitleEscapeCharacterCP"
 	description="In the Control Panel Blogs Portlet, add a Blogs Entry with a title with escape characters."
 >
 	<setup>

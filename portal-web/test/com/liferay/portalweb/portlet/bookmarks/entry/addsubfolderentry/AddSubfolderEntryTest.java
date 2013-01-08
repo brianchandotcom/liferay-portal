@@ -50,8 +50,6 @@ public class AddSubfolderEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Bookmark Name"));
 		selenium.type("//input[@id='_28_url']",
 			RuntimeVariables.replace("http://www.liferay.com"));
-		selenium.type("//textarea[@id='_28_description']",
-			RuntimeVariables.replace("This is a test subfolder entry."));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

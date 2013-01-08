@@ -20,22 +20,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Test Folder Entry</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[1]/a</td>
+	<td>Bookmark Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[2]/a</td>
 	<td>http://www.liferay.com</td>
 </tr>
 <tr>
@@ -71,17 +71,12 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_28_name']</td>
-	<td>Test Folder Entry Edited</td>
+	<td>Bookmark Name Edit</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_28_url']</td>
 	<td>http://www.alloyui.com</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//textarea[@id='_28_description']</td>
-	<td>This is a test folder entry. Edited.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -95,12 +90,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Test Folder Entry Edited</td>
+	<td>//tr[contains(.,'Bookmark Name Edit')]/td[1]/a</td>
+	<td>Bookmark Name Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Bookmark Name Edit')]/td[2]/a</td>
 	<td>http://www.alloyui.com</td>
 </tr>
 </tbody></table>

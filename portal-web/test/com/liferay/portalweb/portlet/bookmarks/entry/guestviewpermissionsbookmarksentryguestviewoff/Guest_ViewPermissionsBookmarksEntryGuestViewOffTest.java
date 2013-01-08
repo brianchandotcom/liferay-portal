@@ -33,6 +33,7 @@ public class Guest_ViewPermissionsBookmarksEntryGuestViewOffTest
 		assertEquals(RuntimeVariables.replace(
 				"There are no bookmarks in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isTextPresent("Bookmarks Entry Name"));
+		assertFalse(selenium.isTextPresent("Bookmark Name"));
+		assertFalse(selenium.isTextPresent("http://www.liferay.com"));
 	}
 }

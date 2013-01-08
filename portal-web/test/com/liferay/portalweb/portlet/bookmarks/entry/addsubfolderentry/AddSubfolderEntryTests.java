@@ -37,6 +37,7 @@ public class AddSubfolderEntryTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddSubfolderTest.class);
 		testSuite.addTestSuite(AddSubfolderEntryTest.class);
+		testSuite.addTestSuite(ViewSubfolderEntryTest.class);
 		testSuite.addTestSuite(TearDownBookmarksFolderTest.class);
 		testSuite.addTestSuite(TearDownBookmarksEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

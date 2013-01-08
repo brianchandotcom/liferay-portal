@@ -35,6 +35,7 @@ public class AddFolderEntryNameNullTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletBookmarksTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddFolderEntryNameNullTest.class);
+		testSuite.addTestSuite(ViewFolderEntryNameNullTest.class);
 		testSuite.addTestSuite(TearDownBookmarksFolderTest.class);
 		testSuite.addTestSuite(TearDownBookmarksEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

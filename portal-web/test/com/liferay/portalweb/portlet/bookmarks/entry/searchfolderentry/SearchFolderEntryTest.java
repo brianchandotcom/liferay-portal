@@ -29,13 +29,42 @@ public class SearchFolderEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_28_keywords']",
-			RuntimeVariables.replace("Test"));
+			RuntimeVariables.replace("Bookmark1"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Folder"),
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Test Folder Entry"),
+		assertEquals(RuntimeVariables.replace("Bookmark1 Search Name"),
 			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Showing 1 - 1."),
+			selenium.getText("//div[@class='search-results']"));
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Bookmarks Test Page",
+			RuntimeVariables.replace("Bookmarks Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.type("//input[@name='_28_keywords']",
+			RuntimeVariables.replace("Bookmark2"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Bookmark2 Search Name"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Showing 1 - 1."),
+			selenium.getText("//div[@class='search-results']"));
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Bookmarks Test Page",
+			RuntimeVariables.replace("Bookmarks Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.type("//input[@name='_28_keywords']",
+			RuntimeVariables.replace("Bookmark"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"No entries were found that matched the keywords: Bookmark."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

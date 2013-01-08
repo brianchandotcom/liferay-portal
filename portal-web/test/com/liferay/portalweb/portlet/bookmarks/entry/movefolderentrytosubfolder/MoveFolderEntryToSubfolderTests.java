@@ -18,6 +18,7 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.bookmarks.entry.addfolderentry.AddFolderEntryTest;
 import com.liferay.portalweb.portlet.bookmarks.entry.addfolderentry.TearDownBookmarksEntryTest;
+import com.liferay.portalweb.portlet.bookmarks.entry.addsubfolderentry.ViewSubfolderEntryTest;
 import com.liferay.portalweb.portlet.bookmarks.folder.addfolder.AddFolderTest;
 import com.liferay.portalweb.portlet.bookmarks.folder.addfolder.TearDownBookmarksFolderTest;
 import com.liferay.portalweb.portlet.bookmarks.folder.addsubfolder.AddSubfolderTest;
@@ -39,6 +40,7 @@ public class MoveFolderEntryToSubfolderTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddFolderEntryTest.class);
 		testSuite.addTestSuite(AddSubfolderTest.class);
 		testSuite.addTestSuite(MoveFolderEntryToSubfolderTest.class);
+		testSuite.addTestSuite(ViewSubfolderEntryTest.class);
 		testSuite.addTestSuite(TearDownBookmarksFolderTest.class);
 		testSuite.addTestSuite(TearDownBookmarksEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

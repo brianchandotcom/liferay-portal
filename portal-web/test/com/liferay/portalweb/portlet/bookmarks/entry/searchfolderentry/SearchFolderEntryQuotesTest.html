@@ -21,7 +21,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_28_keywords']</td>
-	<td>"Test Folder Entry"</td>
+	<td>"Search Name"</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -30,13 +30,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>Test Folder</td>
+	<td>//tr[contains(.,'Bookmark1 Search Name')]/td[2]/a</td>
+	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>Test Folder Entry</td>
+	<td>//tr[contains(.,'Bookmark1 Search Name')]/td[3]/a</td>
+	<td>Bookmark1 Search Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark2 Search Name')]/td[2]/a</td>
+	<td>Bookmark Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark2 Search Name')]/td[3]/a</td>
+	<td>Bookmark2 Search Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 - 2.</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -51,7 +66,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_28_keywords']</td>
-	<td>"Test Entry"</td>
+	<td>"Bookmark1 Name"</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -61,16 +76,16 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-info']</td>
-	<td>No entries were found that matched the keywords: "Test Entry".</td>
+	<td>No entries were found that matched the keywords: "Bookmark1 Name".</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Test Folder</td>
+	<td>Bookmark Folder Name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Test Folder Entry</td>
+	<td>Bookmark1 Search Name</td>
 	<td></td>
 </tr>
 </tbody></table>

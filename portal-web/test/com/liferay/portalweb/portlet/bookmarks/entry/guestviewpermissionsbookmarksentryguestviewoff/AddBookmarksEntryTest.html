@@ -14,39 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Bookmarks Test Page</td>
-	<td>Bookmarks Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks Test Page</td>
 	<td>Bookmarks Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/ul/li[3]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Bookmark')]</td>
 	<td>Add Bookmark</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[3]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Bookmark')]</td>
 	<td>Add Bookmark</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_28_name']</td>
-	<td>Bookmarks Entry Name</td>
+	<td>Bookmark Name</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_28_url']</td>
 	<td>http://www.liferay.com</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//textarea[@id='_28_description']</td>
-	<td>Bookmarks Entry Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -60,15 +50,14 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Bookmarks Entry Name</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[1]/a</td>
+	<td>Bookmark Name</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//td[2]/a</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[2]/a</td>
 	<td>http://www.liferay.com</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

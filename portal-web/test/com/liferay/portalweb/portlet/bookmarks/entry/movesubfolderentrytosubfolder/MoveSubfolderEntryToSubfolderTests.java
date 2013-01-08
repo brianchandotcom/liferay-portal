@@ -40,6 +40,7 @@ public class MoveSubfolderEntryToSubfolderTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddFolder2Subfolder2Test.class);
 		testSuite.addTestSuite(AddFolder1Subfolder1EntryTest.class);
 		testSuite.addTestSuite(MoveSubfolderEntryToSubfolderTest.class);
+		testSuite.addTestSuite(ViewSubfolder2EntryTest.class);
 		testSuite.addTestSuite(TearDownBookmarksFolderTest.class);
 		testSuite.addTestSuite(TearDownBookmarksEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

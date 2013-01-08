@@ -255,6 +255,15 @@
 		disableFormButtons: function(inputs, form) {
 			inputs.set('disabled', true);
 			inputs.setStyle('opacity', 0.5);
+
+			if (A.UA.gecko) {
+				A.getWin().on(
+					'unload',
+					function(event) {
+						inputs.set('disabled', false);
+					}
+				);
+			}
 		},
 
 		enableFormButtons: function(inputs, form) {

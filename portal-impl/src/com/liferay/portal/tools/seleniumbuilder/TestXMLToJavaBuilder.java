@@ -76,7 +76,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		Element stepsBlock = rootElement.element("steps");
 		Element teardownBlock = rootElement.element("teardown");
 
-		filePath = testFileName;
+		isValidName(fileName);
 
 		StringBundler sb = new StringBundler();
 

@@ -124,19 +124,6 @@ public class SeleniumBuilder {
 		return content;
 	}
 
-	protected void getObject(String fileName) throws Exception {
-		Element rootElement = getRootElement(fileName);
-
-		int x = fileName.lastIndexOf(StringPool.SLASH);
-		int y = fileName.indexOf(CharPool.PERIOD);
-
-		String object = rootElement.attributeValue("object");
-
-		if ((object == null) || !object.equals(fileName.substring(x + 1, y))) {
-			System.out.println(fileName + " has an invalid object name");
-		}
-	}
-
 	protected Element getParentElementByName(
 		Element element, String parentElementName) throws Exception {
 
@@ -159,6 +146,17 @@ public class SeleniumBuilder {
 		return document.getRootElement();
 	}
 
+	protected Element getRootElementByElement(Element element)
+		throws Exception {
+
+		if (element.isRootElement()) {
+			return element;
+		}
+		else {
+			return getRootElementByElement(element.getParent());
+		}
+	}
+
 	protected Set<String> getSimpleClassNameSet(Element element)
 		throws Exception {
 
@@ -170,6 +168,27 @@ public class SeleniumBuilder {
 		}
 
 		return simpleClassNameSet;
+	}
+
+	protected void isValidName(String fileName) throws Exception {
+		Element rootElement = getRootElement(fileName);
+
+		int x = fileName.lastIndexOf(StringPool.SLASH);
+		int y = fileName.indexOf(CharPool.PERIOD);
+
+		String objectName = "";
+		String objectFileName = fileName.substring(x + 1, y);
+
+		if (fileName.endsWith(".test")) {
+			objectName = rootElement.attributeValue("name");
+		}
+		else {
+			objectName = rootElement.attributeValue("object");
+		}
+
+		if ((objectName == null) || !objectName.equals(objectFileName)) {
+			System.out.println(fileName + " has an invalid name");
+		}
 	}
 
 	protected String normalizeFileName(String fileName) {
@@ -253,7 +272,6 @@ public class SeleniumBuilder {
 	protected Set<String> fileNameSetMacros;
 	protected Set<String> fileNameSetPaths;
 	protected Set<String> fileNameSetTests;
-	protected String filePath = "";
 	protected Map<String, List<String>> functionMethodParamListMap;
 	protected Map<String, String> functionMethodReturnTypeMap;
 	protected Map<String, Integer> seleniumMethodParamMap;
@@ -417,7 +435,30 @@ public class SeleniumBuilder {
 		}
 
 		return sb.toString();
+	}
 
+	private String _getFileNameByElement(Element command) throws Exception {
+		Element rootElement = getRootElementByElement(command);
+
+		String objectFileType = rootElement.getName();
+		String objectName = "";
+
+		if (objectFileType.equals("test")) {
+			objectName = rootElement.attributeValue("name");
+		}
+		else {
+			objectName = rootElement.attributeValue("object");
+		}
+
+		String simpleObjectName = objectName + "." + objectFileType;
+
+		for (String fileName : fileNameSet) {
+			if (fileName.endsWith("/" + simpleObjectName)) {
+				return fileName;
+			}
+		}
+
+		return "";
 	}
 
 	private Set<String> _getFileNameSet() throws Exception {
@@ -427,10 +468,8 @@ public class SeleniumBuilder {
 		directoryScanner.setIncludes(
 			new String[] {
 				"**\\portalweb\\**\\*.actions",
-				"**\\portalweb\\**\\*.functions",
-				"**\\portalweb\\**\\*.macros",
-				"**\\portalweb\\**\\*.paths",
-				"**\\portalweb\\**\\*.test"
+				"**\\portalweb\\**\\*.functions", "**\\portalweb\\**\\*.macros",
+				"**\\portalweb\\**\\*.paths", "**\\portalweb\\**\\*.test"
 			});
 
 		directoryScanner.scan();
@@ -600,6 +639,7 @@ public class SeleniumBuilder {
 		throws Exception {
 
 		String commandName = command.getName();
+		String fileName = _getFileNameByElement(command);
 
 		if (validCommands.contains(commandName)) {
 			if (commandName.equals("action")) {
@@ -630,7 +670,7 @@ public class SeleniumBuilder {
 				StringBundler message = new StringBundler();
 
 				message.append("Command '" + commandName + "'");
-				message.append(" used in " + filePath);
+				message.append(" used in " + fileName);
 				message.append(" does not exist in vocabulary");
 
 				throw new Exception(message.toString());
@@ -640,7 +680,7 @@ public class SeleniumBuilder {
 			StringBundler message = new StringBundler();
 
 			message.append("Invalid command '" + commandName + "'");
-			message.append(" used in " + filePath);
+			message.append(" used in " + fileName);
 
 			throw new Exception(message.toString());
 		}

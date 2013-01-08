@@ -79,12 +79,10 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		Element rootElement = null;
 
 		if (FileUtil.exists(basedir + "/" + actionsXMLFileName)) {
-			getObject(actionsXMLFileName);
+			isValidName(actionsXMLFileName);
 
 			rootElement = getRootElement(actionsXMLFileName);
 		}
-
-		filePath = actionsFileName;
 
 		StringBundler sb = new StringBundler();
 

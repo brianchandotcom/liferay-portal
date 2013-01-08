@@ -354,7 +354,10 @@ public class PortletImporter {
 				if (!ArrayUtil.contains(
 						targetAvailableLocales, sourceAvailableLocale)) {
 
-					LocaleException le = new LocaleException();
+					LocaleException le = new LocaleException("Locale '" +
+						sourceAvailableLocale + "' is available in the" +
+						"imported LAR file, but is not available in portal " +
+						"with companyId " + layout.getCompanyId());
 
 					le.setSourceAvailableLocales(sourceAvailableLocales);
 					le.setTargetAvailableLocales(targetAvailableLocales);

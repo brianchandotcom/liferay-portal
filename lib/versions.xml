@@ -2484,19 +2484,6 @@
 			</license>
 		</licenses>
 	</library>
-	<library>
-		<file-name>portal/log4j-over-slf4j.jar</file-name>
-		<version>1.6.4</version>
-		<project-name>SLF4J</project-name>
-		<project-url>http://www.slf4j.org</project-url>
-		<project-description>SLF4J</project-description>
-		<licenses>
-			<license>
-				<license-name>MIT License</license-name>
-				<copyright-notice>Copyright (c) 2004-2007 QOS.ch</copyright-notice>
-			</license>
-		</licenses>
-	</library>
 
 	<library>
 		<file-name>portal/lucene-analyzers.jar</file-name>

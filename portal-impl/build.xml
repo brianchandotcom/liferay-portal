@@ -374,20 +374,12 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../portal-web" target="build-selenium-macros" />
 	</target>
 
-	<target name="build-selenium-macros-html">
-		<ant dir="../portal-web" target="build-selenium-macros-html" />
-	</target>
-
 	<target name="build-selenium-new">
 		<ant dir="../portal-web" target="build-selenium-new" />
 	</target>
 
 	<target name="build-selenium-paths">
 		<ant dir="../portal-web" target="build-selenium-paths" />
-	</target>
-
-	<target name="build-selenium-paths-html">
-		<ant dir="../portal-web" target="build-selenium-paths-html" />
 	</target>
 
 	<target name="build-selenium-server">
@@ -541,10 +533,6 @@ public class Creole10Parser]]></replacevalue>
 		<zip basedir="${tstamp.value}" destfile="${project.dir}/lib/development/selenium-server.jar.new" />
 
 		<delete dir="${tstamp.value}" />
-	</target>
-
-	<target name="build-selenium-test-html">
-		<ant dir="../portal-web" target="build-selenium-test-html" />
 	</target>
 
 	<target name="build-selenium-test-plans">

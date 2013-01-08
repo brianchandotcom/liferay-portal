@@ -32,7 +32,7 @@ public class ConfigurePortletRootLayoutTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageSMTest.class);
 		testSuite.addTestSuite(AddPortletSMTest.class);
 		testSuite.addTestSuite(AddChildPageTest.class);
-		testSuite.addTestSuite(ConfigurePortletRootLayoutTest.class);
+		testSuite.addTestSuite(ConfigurePortletSMRootLayoutTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RemovePortletTest extends BaseTestCase {
-	public void testRemovePortlet() throws Exception {
+public class RemovePortletSMTest extends BaseTestCase {
+	public void testRemovePortletSM() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");

@@ -32,7 +32,7 @@ public class ViewPortletSiteMapTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageSMTest.class);
 		testSuite.addTestSuite(AddPortletSMTest.class);
 		testSuite.addTestSuite(AddChildPageTest.class);
-		testSuite.addTestSuite(ViewPortletSiteMapTest.class);
+		testSuite.addTestSuite(ViewPortletSMTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

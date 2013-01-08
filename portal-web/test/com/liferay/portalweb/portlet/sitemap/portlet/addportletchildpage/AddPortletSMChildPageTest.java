@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletChildPageTest extends BaseTestCase {
-	public void testAddPortletChildPage() throws Exception {
+public class AddPortletSMChildPageTest extends BaseTestCase {
+	public void testAddPortletSMChildPage() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -30,6 +30,9 @@ public class AddPortletChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=Site Map Test Child Page",
 			RuntimeVariables.replace("Site Map Test Child Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Site Map Test Child Page"),
+			selenium.getText(
+				"//nav[@id='breadcrumbs']/ul/li[@class='last']/span/a"));
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 		selenium.waitForElementPresent(

@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewPortletSiteMapTest extends BaseTestCase {
-	public void testViewPortletSiteMap() throws Exception {
+public class ViewPortletSMTest extends BaseTestCase {
+	public void testViewPortletSM() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -35,9 +35,9 @@ public class ViewPortletSiteMapTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Sign In"),
 			selenium.getText("xPath=(//h1[@class='portlet-title'])[1]"));
+		assertTrue(selenium.isVisible("xPath=(//section[@class='portlet'])[1]"));
 		assertEquals(RuntimeVariables.replace("Hello World"),
 			selenium.getText("xPath=(//h1[@class='portlet-title'])[2]"));
-		assertTrue(selenium.isVisible("xPath=(//section[@class='portlet'])[1]"));
 		assertTrue(selenium.isVisible("xPath=(//section[@class='portlet'])[2]"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Site Map Test Page",

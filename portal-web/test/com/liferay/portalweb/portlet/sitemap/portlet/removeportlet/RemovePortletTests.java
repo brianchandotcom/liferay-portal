@@ -30,7 +30,7 @@ public class RemovePortletTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageSMTest.class);
 		testSuite.addTestSuite(AddPortletSMTest.class);
-		testSuite.addTestSuite(RemovePortletTest.class);
+		testSuite.addTestSuite(RemovePortletSMTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

@@ -48,6 +48,7 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 	public void afterPropertiesSet() {
 		initClassLoaderReferenceIds();
+		initEnvironmentVariables();
 	}
 
 	public void checkPermission(Permission permission) {
@@ -357,6 +358,12 @@ public class RuntimeChecker extends BaseReflectChecker {
 	}
 
 	protected boolean hasGetEnv(String name) {
+		if (_environmentVariables.contains(name) ||
+			_environmentVariables.contains(StringPool.STAR)) {
+
+			return true;
+		}
+
 		Class<?> callerClass7 = Reflection.getCallerClass(7);
 
 		if (callerClass7 == AbstractApplicationContext.class) {
@@ -463,6 +470,22 @@ public class RuntimeChecker extends BaseReflectChecker {
 				_log.debug(
 					"Allowing access to class loader for reference " +
 						referenceId);
+			}
+		}
+	}
+
+	protected void initEnvironmentVariables() {
+		_environmentVariables = getPropertySet(
+			"security-manager-get-environment-variable");
+
+		if (_log.isDebugEnabled()) {
+			Set<String> environmentVariables = new TreeSet<String>(
+				_environmentVariables);
+
+			for (String environmentVariable : environmentVariables) {
+				_log.debug(
+					"Allowing access to environment variable " +
+						environmentVariable);
 			}
 		}
 	}
@@ -751,5 +774,6 @@ public class RuntimeChecker extends BaseReflectChecker {
 	private static Log _log = LogFactoryUtil.getLog(RuntimeChecker.class);
 
 	private Set<String> _classLoaderReferenceIds;
+	private Set<String> _environmentVariables;
 
 }

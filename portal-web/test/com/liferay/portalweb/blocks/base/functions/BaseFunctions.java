@@ -12,24 +12,19 @@
  * details.
  */
 
-package com.liferay.portalweb.blocks.base.actions.rc;
+package com.liferay.portalweb.blocks.base.functions;
 
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class BaseActions {
+public class BaseFunctions {
 
-	public BaseActions(LiferaySelenium liferaySelenium) {
-		paths = new HashMap<String, String>();
+	public BaseFunctions(LiferaySelenium liferaySelenium) {
 		selenium = liferaySelenium;
 	}
 
-	protected Map<String, String> paths;
 	protected LiferaySelenium selenium;
 
 }

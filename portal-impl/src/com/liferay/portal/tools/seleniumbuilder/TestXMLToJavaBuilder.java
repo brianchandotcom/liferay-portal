@@ -63,7 +63,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
-		String testFilePath = fileName.substring(0, x) + "/rc";
+		String testFilePath = fileName.substring(0, x);
 		String testSimpleClassName = fileName.substring(x + 1, y) + "Test";
 
 		String testFileName =

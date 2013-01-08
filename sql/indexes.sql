@@ -426,7 +426,7 @@ create index IX_B529BFD3 on Layout (layoutPrototypeUuid);
 create index IX_39A18ECC on Layout (sourcePrototypeLayoutUuid);
 create index IX_D0822724 on Layout (uuid_);
 create index IX_2CE4BE84 on Layout (uuid_, companyId);
-create unique index IX_CED31606 on Layout (uuid_, groupId);
+create unique index IX_E118C537 on Layout (uuid_, groupId, privateLayout);
 
 create index IX_6C226433 on LayoutBranch (layoutSetBranchId);
 create index IX_2C42603E on LayoutBranch (layoutSetBranchId, plid);

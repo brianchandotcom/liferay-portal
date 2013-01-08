@@ -134,6 +134,8 @@ public interface Constants {
 
 	public static final String UPDATE_AND_CHECKIN = "update_and_checkin";
 
+	public static final String UPDATE_CONTENT = "update_content";
+
 	public static final String VIEW = "view";
 
 	public static final String VOTE = "vote";

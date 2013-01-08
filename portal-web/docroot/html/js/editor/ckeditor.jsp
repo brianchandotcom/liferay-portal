@@ -262,7 +262,7 @@ if (!inlineEdit) {
 										}
 									},
 									data: {
-										entryData: window['<%= name %>'].getHTML()
+										content: window['<%= name %>'].getHTML()
 									}
 								}
 							);

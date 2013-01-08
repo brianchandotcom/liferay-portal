@@ -185,7 +185,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*
 	* @param uuid the UUID of layout
 	* @param groupId the group id of the layout
-	* @param privateLayout the privateLayout of the layout
+	* @param privateLayout whether the layout is private to the group
 	* @return the layout
 	* @throws PortalException if a layout with the UUID in the group and privateLayout could not be found
 	* @throws SystemException if a system exception occurred
@@ -619,12 +619,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	/**
-	* Returns the layout matching the universally unique identifier and group
-	* ID and privateLayout
+	* Returns the layout matching the universally unique identifier, group ID,
+	* and privateLayout
 	*
 	* @param uuid the universally unique identifier of the scope layout
 	* @param groupId the primary key of the group
-	* @param privateLayout the private layout status of the group
+	* @param privateLayout whether the layout is private to the group
 	* @return the layout, or <code>null</code> if a matching layout could not
 	be found
 	* @throws SystemException if a system exception occurred

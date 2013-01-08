@@ -2286,7 +2286,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			FileEntry fileEntry =
 				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-					fileEntryUUID, portletDataContext.getGroupId());
+					fileEntryUUID, portletDataContext.getScopeGroupId());
 
 			if (fileEntry == null) {
 				continue;

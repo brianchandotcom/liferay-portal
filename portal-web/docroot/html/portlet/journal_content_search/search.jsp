@@ -150,7 +150,11 @@
 		</c:if>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:journal-content-search />
+		<liferay-ui:journal-content-search
+			showListed="<%= showListed %>"
+			targetPortletId="<%= targetPortletId %>"
+			type="<%= type %>"
+		/>
 	</c:otherwise>
 </c:choose>
 

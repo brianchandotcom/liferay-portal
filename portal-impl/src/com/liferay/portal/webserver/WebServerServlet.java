@@ -638,10 +638,10 @@ public class WebServerServlet extends HttpServlet {
 			if (imageId == dlFileEntry.getSmallImageId()) {
 				queryString = "&imageThumbnail=1";
 			}
-			else if (imageId == dlFileEntry.getSmallImageId()) {
+			else if (imageId == dlFileEntry.getCustom1ImageId()) {
 				queryString = "&imageThumbnail=2";
 			}
-			else if (imageId == dlFileEntry.getSmallImageId()) {
+			else if (imageId == dlFileEntry.getCustom2ImageId()) {
 				queryString = "&imageThumbnail=3";
 			}
 

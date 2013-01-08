@@ -185,16 +185,16 @@ public class VerifyJournal extends VerifyProcess {
 
 			StringBundler sb = new StringBundler(10);
 
-			sb.append("select TEMP_TABLE_1.groupId, preferences from (select ");
-			sb.append("groupId, portletId, preferences from ");
+			sb.append("select TEMP_TABLE_1.groupId, preferences from ");
+			sb.append("(select groupId, portletId, preferences from ");
 			sb.append("PortletPreferences inner join Layout on ");
 			sb.append("PortletPreferences.plid = Layout.plid) as TEMP_TABLE_1");
 			sb.append(" inner join (select groupId, portletId from ");
 			sb.append("JournalContentSearch group by groupId, portletId ");
 			sb.append("having count(groupId) > 1 and count(portletId) > 1) ");
-			sb.append("as TEMP_TABLE_2 on TEMP_TABLE_1.groupId = ");
-			sb.append("TEMP_TABLE_2.groupId and TEMP_TABLE_1.portletId = ");
-			sb.append("TEMP_TABLE_2.portletId");
+			sb.append("as TEMP_TABLE_2 on ");
+			sb.append("TEMP_TABLE_1.groupId = TEMP_TABLE_2.groupId and ");
+			sb.append("TEMP_TABLE_1.portletId = TEMP_TABLE_2.portletId");
 
 			ps = con.prepareStatement(sb.toString());
 
@@ -211,8 +211,8 @@ public class VerifyJournal extends VerifyProcess {
 					"articleId", null);
 
 				List<JournalContentSearch> contentSearches =
-					JournalContentSearchLocalServiceUtil
-						.getArticleContentSearches(groupId, articleId);
+					JournalContentSearchLocalServiceUtil.
+						getArticleContentSearches(groupId, articleId);
 
 				JournalContentSearch contentSearch = contentSearches.get(0);
 

@@ -286,7 +286,7 @@ import javax.sql.DataSource;
 				 *
 				 * @param uuid the UUID of ${entity.humanName}
 				 * @param groupId the group id of the ${entity.humanName}
-				 * @param privateLayout the privateLayout of the ${entity.humanName}
+				 * @param privateLayout whether the ${entity.humanName} is private to the group
 				 * @return the ${entity.humanName}
 				<#list serviceBaseExceptions as exception>
 				<#if exception == "PortalException">

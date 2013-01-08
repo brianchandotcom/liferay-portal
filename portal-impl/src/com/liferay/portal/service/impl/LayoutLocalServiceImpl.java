@@ -830,12 +830,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the layout matching the universally unique identifier and group
-	 * ID and privateLayout
+	 * Returns the layout matching the universally unique identifier, group ID,
+	 * and privateLayout
 	 *
 	 * @param  uuid the universally unique identifier of the scope layout
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout the private layout status of the group
+	 * @param  privateLayout whether the layout is private to the group
 	 * @return the layout, or <code>null</code> if a matching layout could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred

@@ -159,6 +159,10 @@ public class SearchContext implements Serializable {
 		return _userId;
 	}
 
+	public boolean hasOverridenKeywords() {
+		return Validator.isNull(_originalKeywords);
+	}
+
 	public boolean isAndSearch() {
 		return _andSearch;
 	}
@@ -173,6 +177,12 @@ public class SearchContext implements Serializable {
 
 	public boolean isScopeStrict() {
 		return _scopeStrict;
+	}
+
+	public void overrideKeywords(String keywords) {
+		_originalKeywords = _keywords;
+
+		_keywords = keywords;
 	}
 
 	public void setAndSearch(boolean andSearch) {
@@ -315,6 +325,7 @@ public class SearchContext implements Serializable {
 	private String _keywords;
 	private Locale _locale = LocaleUtil.getMostRelevantLocale();
 	private long[] _nodeIds;
+	private String _originalKeywords;
 	private long _ownerUserId;
 	private String[] _portletIds;
 	private QueryConfig _queryConfig;

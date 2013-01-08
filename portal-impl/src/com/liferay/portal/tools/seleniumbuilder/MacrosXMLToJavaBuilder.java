@@ -55,7 +55,6 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
-			getObject(fileName);
 			generateMacros(fileName);
 		}
 	}
@@ -76,7 +75,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		String macrosPackagePath = StringUtil.replace(
 			macrosFilePath, StringPool.SLASH, StringPool.PERIOD);
 
-		filePath = macrosFileName;
+		isValidName(fileName);
 
 		Element rootElement = getRootElement(fileName);
 

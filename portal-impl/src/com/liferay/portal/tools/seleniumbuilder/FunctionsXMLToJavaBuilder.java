@@ -63,8 +63,6 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 			return;
 		}
 
-		getObject(fileName);
-
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
@@ -76,6 +74,8 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 			functionsFilePath + "/" + functionsSimpleClassName + ".java";
 		String functionsPackagePath = StringUtil.replace(
 			functionsFilePath, StringPool.SLASH, StringPool.PERIOD);
+
+		isValidName(fileName);
 
 		Element rootElement = getRootElement(fileName);
 

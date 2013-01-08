@@ -21,6 +21,7 @@
 <%
 String cssPath = ParamUtil.getString(request, "cssPath");
 String cssClasses = ParamUtil.getString(request, "cssClasses");
+String inlineEdit = ParamUtil.getString(request, "inlineEdit");
 String languageId = ParamUtil.getString(request, "languageId");
 
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);

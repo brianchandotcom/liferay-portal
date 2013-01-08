@@ -145,18 +145,20 @@ public class ShardAdvice {
 		_shardDataSourceTargetSource = shardDataSourceTargetSource;
 	}
 
-	public void setShardNameByCompany() throws Throwable {
+	public String setShardNameByCompany() throws Throwable {
 		Stack<String> companyServiceStack = _getCompanyServiceStack();
 
 		if (companyServiceStack.isEmpty()) {
 			long companyId = CompanyThreadLocal.getCompanyId();
 
-			_setShardNameByCompanyId(companyId);
+			return _setShardNameByCompanyId(companyId);
 		}
 		else {
 			String shardName = companyServiceStack.peek();
 
 			_setShardName(shardName);
+
+			return shardName;
 		}
 	}
 
@@ -182,20 +184,21 @@ public class ShardAdvice {
 		_shardName.set(shardName);
 	}
 
-	private void _setShardNameByCompanyId(long companyId)
+	private String _setShardNameByCompanyId(long companyId)
 		throws PortalException, SystemException {
 
-		if (companyId == 0) {
-			_setShardName(PropsValues.SHARD_DEFAULT_NAME);
-		}
-		else {
+		String shardName = PropsValues.SHARD_DEFAULT_NAME;
+
+		if (companyId != 0) {
 			Shard shard = ShardLocalServiceUtil.getShard(
 				Company.class.getName(), companyId);
 
-			String shardName = shard.getName();
-
-			_setShardName(shardName);
+			shardName = shard.getName();
 		}
+
+		_setShardName(shardName);
+
+		return shardName;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ShardAdvice.class);

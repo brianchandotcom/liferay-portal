@@ -85,6 +85,26 @@ public class ShardImpl implements Shard {
 		_shardAdvice = shardAdvice;
 	}
 
+	public String setTargetSource(String shardName) {
+		if (_shardAdvice == null) {
+			return null;
+		}
+
+		String currentShardName = getCurrentShardName();
+
+		ShardDataSourceTargetSource shardDataSourceTargetSource =
+			_shardAdvice.getShardDataSourceTargetSource();
+
+		shardDataSourceTargetSource.setDataSource(shardName);
+
+		ShardSessionFactoryTargetSource shardSessionFactoryTargetSource =
+			_shardAdvice.getShardSessionFactoryTargetSource();
+
+		shardSessionFactoryTargetSource.setSessionFactory(shardName);
+
+		return currentShardName;
+	}
+
 	private static ShardAdvice _shardAdvice;
 
 }

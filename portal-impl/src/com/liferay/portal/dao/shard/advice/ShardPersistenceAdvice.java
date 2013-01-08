@@ -18,6 +18,7 @@ import com.liferay.counter.service.persistence.CounterFinder;
 import com.liferay.counter.service.persistence.CounterPersistence;
 import com.liferay.portal.dao.shard.ShardDataSourceTargetSource;
 import com.liferay.portal.dao.shard.ShardSessionFactoryTargetSource;
+import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
@@ -65,9 +66,7 @@ public class ShardPersistenceAdvice implements MethodInterceptor {
 			target instanceof ShardPersistence ||
 			target instanceof VirtualHostPersistence) {
 
-			shardDataSourceTargetSource.setDataSource(
-				PropsValues.SHARD_DEFAULT_NAME);
-			shardSessionFactoryTargetSource.setSessionFactory(
+			String currentShardName = ShardUtil.setTargetSource(
 				PropsValues.SHARD_DEFAULT_NAME);
 
 			if (_log.isDebugEnabled()) {
@@ -82,16 +81,15 @@ public class ShardPersistenceAdvice implements MethodInterceptor {
 			}
 			finally {
 				_shardAdvice.popCompanyService();
+
+				ShardUtil.setTargetSource(currentShardName);
 			}
 		}
 
 		if (_shardAdvice.getGlobalCall() == null) {
-			_shardAdvice.setShardNameByCompany();
+			String shardName = _shardAdvice.setShardNameByCompany();
 
-			String shardName = _shardAdvice.getShardName();
-
-			shardDataSourceTargetSource.setDataSource(shardName);
-			shardSessionFactoryTargetSource.setSessionFactory(shardName);
+			ShardUtil.setTargetSource(shardName);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

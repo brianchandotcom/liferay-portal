@@ -37,4 +37,6 @@ public interface Shard {
 
 	public void pushCompanyService(String shardName);
 
+	public String setTargetSource(String shardName);
+
 }

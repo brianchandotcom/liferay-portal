@@ -48,17 +48,17 @@ public class SearchKBAArticleKBSrTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Knowledge Base Admin Article Title"),
 			selenium.getText(
-				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[1]"));
+				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText(
-				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[2]"));
+				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[2]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[3]"));
+				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[3]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[4]"));
+				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("0 Views"),
 			selenium.getText(
-				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[5]"));
+				"//tr[contains(.,'Knowledge Base Admin Article Title')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 	}

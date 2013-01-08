@@ -69,9 +69,9 @@ public class ViewKBAArticleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("View"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a"));
-		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a");
-		selenium.waitForVisible("//div[@class='kb-title']");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a",
+			RuntimeVariables.replace("View"));
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Knowledge Base Admin Article Title"),
 			selenium.getText("//div[@class='kb-title']"));

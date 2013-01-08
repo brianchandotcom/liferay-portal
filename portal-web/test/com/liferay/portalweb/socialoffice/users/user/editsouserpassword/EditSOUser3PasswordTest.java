@@ -64,7 +64,7 @@ public class EditSOUser3PasswordTest extends BaseTestCase {
 				selenium.waitForVisible(
 					"//input[@id='_125_toggle_id_users_admin_user_searchkeywords']");
 				selenium.type("//input[@id='_125_toggle_id_users_admin_user_searchkeywords']",
-					RuntimeVariables.replace("socialoffice03@liferay.com"));
+					RuntimeVariables.replace("socialoffice03"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");

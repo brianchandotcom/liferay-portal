@@ -59,11 +59,9 @@ CKEDITOR.config.removePlugins = [
 	'flash',
 	'font',
 	'forms',
-	'indent',
 	'justify',
 	'keystrokes',
 	'link',
-	'menu',
 	'maximize',
 	'newpage',
 	'pagebreak',
@@ -80,10 +78,12 @@ CKEDITOR.config.removePlugins = [
 
 CKEDITOR.config.resize_enabled = '<%= resizable %>';
 
+CKEDITOR.config.skin = 'kama';
+
 CKEDITOR.config.toolbar_creole = [
 	['Cut','Copy','Paste','PasteText','PasteFromWord'],
 	['Undo','Redo'],
-	['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent' ],
+	['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
 	['Format'],
 	<%= linkButtonBar %>,
 	['Table', '-', 'HorizontalRule', 'SpecialChar' ],

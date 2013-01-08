@@ -24,9 +24,17 @@ import java.math.RoundingMode;
  */
 public class BigDecimalUtil {
 
-	public static double add(double x, double y) {
-		BigDecimal xBigDecimal = new BigDecimal(String.valueOf(x));
-		BigDecimal yBigDecimal = new BigDecimal(String.valueOf(y));
+	public static double add(Number x, Number y) {
+		if (x == null) {
+			x = 0;
+		}
+
+		if (y == null) {
+			y = 0;
+		}
+
+		BigDecimal xBigDecimal = new BigDecimal(x.toString());
+		BigDecimal yBigDecimal = new BigDecimal(y.toString());
 
 		BigDecimal resultBigDecimal = xBigDecimal.add(yBigDecimal);
 
@@ -34,22 +42,18 @@ public class BigDecimalUtil {
 	}
 
 	public static double divide(
-		double x, double y, int scale, RoundingMode roundingMode) {
+		Number x, Number y, int scale, RoundingMode roundingMode) {
 
-		BigDecimal xBigDecimal = new BigDecimal(String.valueOf(x));
-		BigDecimal yBigDecimal = new BigDecimal(String.valueOf(y));
+		if (x == null) {
+			x = 0;
+		}
 
-		BigDecimal resultBigDecimal = xBigDecimal.divide(
-			yBigDecimal, scale, roundingMode);
+		if (y == null) {
+			y = 0;
+		}
 
-		return resultBigDecimal.doubleValue();
-	}
-
-	public static double divide(
-		int x, int y, int scale, RoundingMode roundingMode) {
-
-		BigDecimal xBigDecimal = new BigDecimal(String.valueOf(x));
-		BigDecimal yBigDecimal = new BigDecimal(String.valueOf(y));
+		BigDecimal xBigDecimal = new BigDecimal(x.toString());
+		BigDecimal yBigDecimal = new BigDecimal(y.toString());
 
 		BigDecimal resultBigDecimal = xBigDecimal.divide(
 			yBigDecimal, scale, roundingMode);
@@ -57,26 +61,46 @@ public class BigDecimalUtil {
 		return resultBigDecimal.doubleValue();
 	}
 
-	public static double multiply(double x, double y) {
-		BigDecimal xBigDecimal = new BigDecimal(String.valueOf(x));
-		BigDecimal yBigDecimal = new BigDecimal(String.valueOf(y));
+	public static double multiply(Number x, Number y) {
+		if (x == null) {
+			x = 0;
+		}
+
+		if (y == null) {
+			y = 0;
+		}
+
+		BigDecimal xBigDecimal = new BigDecimal(x.toString());
+		BigDecimal yBigDecimal = new BigDecimal(y.toString());
 
 		BigDecimal resultBigDecimal = xBigDecimal.multiply(yBigDecimal);
 
 		return resultBigDecimal.doubleValue();
 	}
 
-	public static double scale(double x, int scale, RoundingMode roundingMode) {
-		BigDecimal xBigDecimal = new BigDecimal(String.valueOf(x));
+	public static double scale(Number x, int scale, RoundingMode roundingMode) {
+		if (x == null) {
+			x = 0;
+		}
+
+		BigDecimal xBigDecimal = new BigDecimal(x.toString());
 
 		xBigDecimal = xBigDecimal.setScale(scale, roundingMode);
 
 		return xBigDecimal.doubleValue();
 	}
 
-	public static double subtract(double x, double y) {
-		BigDecimal xBigDecimal = new BigDecimal(String.valueOf(x));
-		BigDecimal yBigDecimal = new BigDecimal(String.valueOf(y));
+	public static double subtract(Number x, Number y) {
+		if (x == null) {
+			x = 0;
+		}
+
+		if (y == null) {
+			y = 0;
+		}
+
+		BigDecimal xBigDecimal = new BigDecimal(x.toString());
+		BigDecimal yBigDecimal = new BigDecimal(y.toString());
 
 		BigDecimal resultBigDecimal = xBigDecimal.subtract(yBigDecimal);
 

@@ -25,7 +25,6 @@ public class AddPortletTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Gospel For Asia Test Page");
 		selenium.clickAt("link=Gospel For Asia Test Page",
 			RuntimeVariables.replace("Gospel For Asia Test Page"));
 		selenium.waitForPageToLoad("30000");

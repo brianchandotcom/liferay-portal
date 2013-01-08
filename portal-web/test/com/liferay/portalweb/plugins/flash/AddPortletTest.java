@@ -25,7 +25,6 @@ public class AddPortletTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Flash Test Page");
 		selenium.clickAt("link=Flash Test Page",
 			RuntimeVariables.replace("Flash Test Page"));
 		selenium.waitForPageToLoad("30000");

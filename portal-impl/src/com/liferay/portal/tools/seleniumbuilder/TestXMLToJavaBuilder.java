@@ -109,7 +109,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 
 		StringBundler sb = new StringBundler();
 
-		Set<String> simpleClassNameSet = getSimpleClassNameSet(element);
+		Set<String> simpleClassNameSet = getChildSimpleClassNameSet(element);
 
 		String elementName = element.getName();
 
@@ -136,7 +136,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 
 		StringBundler sb = new StringBundler();
 
-		Set<String> classNameImportSet = getClassNameSet(rootElement);
+		Set<String> classNameImportSet = getChildClassNameSet(rootElement);
 
 		classNameImportSet = addClassName(
 			classNameImportSet, "SignInUserMacros");

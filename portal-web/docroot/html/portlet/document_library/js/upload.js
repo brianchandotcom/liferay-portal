@@ -38,6 +38,10 @@ AUI.add(
 
 		var CSS_UPLOAD_SUCCESS = 'upload-success';
 
+		var CSS_UPLOAD_WARNING = 'upload-warning';
+
+		var ERROR_RESULTS_MIXED = 1;
+
 		var PATH_THEME_IMAGES = themeDisplay.getPathThemeImages();
 
 		var REGEX_AUDIO = /\.(aac|auif|bwf|flac|mp3|mp4|m4a|wav|wma)$/i;
@@ -67,6 +71,8 @@ AUI.add(
 		var SELECTOR_ENTRY_THUMBNAIL = '.entry-thumbnail';
 
 		var SELECTOR_ENTRY_TITLE = '.entry-title';
+
+		var SELECTOR_ENTRY_TITLE_TEXT = '.entry-title-text';
 
 		var SELECTOR_HEADER_ROW = '.lfr-header-row';
 
@@ -130,8 +136,10 @@ AUI.add(
 		'</span>';
 
 		var TPL_ERROR_FOLDER = new A.Template(
+			'<span class="portlet-msg-success-label">{validFilesLength}</span>',
+			'<span class="portlet-msg-error-label">{invalidFilesLength}</span>',
 			'<ul class="lfr-component">',
-				'<tpl for=".">',
+				'<tpl for="invalidFiles">',
 					'<li><b>{name}</b>: {errorMessage}</li>',
 				'</tpl>',
 			'</ul>'
@@ -381,7 +389,7 @@ AUI.add(
 
 					var entryLink = entryNode.one(SELECTOR_ENTRY_LINK);
 
-					var entryTitle = entryLink.one(SELECTOR_ENTRY_TITLE);
+					var entryTitle = entryLink.one(SELECTOR_ENTRY_TITLE_TEXT);
 
 					entriesContainer = instance._entriesContainer;
 
@@ -399,7 +407,7 @@ AUI.add(
 
 				entriesContainer.append(entryNode);
 
-				entryNode.show();
+				entryNode.show().scrollIntoView();
 
 				return entryNode;
 			},
@@ -516,34 +524,24 @@ AUI.add(
 					imageIcon.attr('src', PATH_THEME_IMAGES + '/common/close.png');
 				}
 				else {
-					node.one(SELECTOR_ENTRY_THUMBNAIL).addClass(CSS_UPLOAD_ERROR);
+					node.addClass(CSS_UPLOAD_ERROR);
 				}
 
-				new A.Tooltip(
-					{
-						constrain: true,
-						bodyContent: message,
-						trigger: node
-					}
-				).render();
+				instance._displayError(node, message);
 			},
 
-			_displayFolderError: function(folderEntry, invalidFiles) {
+			_displayError: function(node, message) {
 				var instance = this;
 
-				var bodyContent = TPL_ERROR_FOLDER.parse(invalidFiles);
-
-				var errorNode = folderEntry.errorNode;
+				var errorNode = node.errorNode;
 
 				if (!errorNode) {
-					errorNode = A.Node.create('<span class="folder-error-icon"></span>');
+					errorNode = node.one(SELECTOR_ENTRY_TITLE_TEXT);
 
-					folderEntry.one(SELECTOR_ENTRY_TITLE).prepend(errorNode);
-
-					folderEntry.errorNode = errorNode;
+					node.errorNode = errorNode;
 				}
 
-				var tooltip = folderEntry.tooltip;
+				var tooltip = node.tooltip;
 
 				if (!tooltip) {
 					tooltip = new A.Tooltip(
@@ -552,19 +550,43 @@ AUI.add(
 								points: ['bc', 'tc']
 							},
 							constrain: true,
-							cssClass: 'portlet-document-library-folder-error',
-							bodyContent: bodyContent,
+							cssClass: 'portlet-document-library-entry-error',
 							showArrow: false,
 							trigger: errorNode
 						}
 					).render();
 
-					folderEntry.tooltip = tooltip;
+					node.tooltip = tooltip;
 				}
 
-				tooltip.set('bodyContent', bodyContent);
+				tooltip.set('bodyContent', message);
 
 				tooltip.show();
+
+				return node;
+			},
+
+			_displayResult: function(node, displayStyle, error) {
+				var instance = this;
+
+				var resultsNode = node;
+
+				if (resultsNode) {
+					var uploadResultClass = CSS_UPLOAD_SUCCESS;
+
+					if (error) {
+						resultsNode.removeClass(CSS_UPLOAD_ERROR).removeClass(CSS_UPLOAD_WARNING);
+
+						if (error === true) {
+							uploadResultClass = CSS_UPLOAD_ERROR;
+						}
+						else if (error === ERROR_RESULTS_MIXED) {
+							uploadResultClass = CSS_UPLOAD_WARNING;
+						}
+					}
+
+					resultsNode.addClass(uploadResultClass);
+				}
 			},
 
 			_formatStorageSize: function(size) {
@@ -973,7 +995,7 @@ AUI.add(
 				var unmergedData = dataSet.item(String(folderId));
 
 				if (unmergedData) {
-					instance._updateDataSetEntry(unmergedData, validFiles, folderId);;
+					instance._updateDataSetEntry(unmergedData, validFiles, folderId);
 				}
 				else {
 					dataSet.add(
@@ -1025,7 +1047,9 @@ AUI.add(
 				var response = instance._getUploadResponse(event.data);
 
 				if (response) {
-					if (response.error) {
+					var hasErrors = !!response.error;
+
+					if (hasErrors) {
 						instance._displayEntryError(entryNode, response.message, displayStyle);
 					}
 					else {
@@ -1035,12 +1059,12 @@ AUI.add(
 							instance._updateThumbnail(entryNode, file.name);
 						}
 
-						var responseFileEntryId = response.message;
-
-						var fileEntryId = instance.ns('fileEntryId=') + responseFileEntryId;
+						var fileEntryId = instance.ns('fileEntryId=') + response.message;
 
 						instance._updateEntryLink(entryNode, fileEntryId, displayStyleList);
 					}
+
+					instance._displayResult(entryNode, displayStyle, hasErrors);
 				}
 
 				file.overlay.hide();
@@ -1082,33 +1106,27 @@ AUI.add(
 
 				var invalidFiles = uploadData.invalidFiles;
 
-				var selector = SELECTOR_ENTRY_THUMBNAIL;
+				var invalidFilesLength = invalidFiles.length;
+				var totalFilesLength = uploadData.fileList.length;
 
-				if (displayStyle === STR_LIST) {
-					selector = SELECTOR_TAGLIB_ICON;
+				var hasErrors = (invalidFilesLength !== 0);
+
+				if (hasErrors && invalidFilesLength !== totalFilesLength) {
+					hasErrors = ERROR_RESULTS_MIXED;
 				}
 
-				var resultsNode = folderEntry.one(selector);
+				instance._displayResult(folderEntry.ancestor(), displayStyle, hasErrors);
 
-				if (resultsNode) {
-					var uploadResultClass;
-
-					if (invalidFiles.length) {
-						uploadResultClass = CSS_UPLOAD_ERROR;
-
-						instance._displayFolderError(folderEntry, invalidFiles);
-					}
-					else {
-						uploadResultClass = CSS_UPLOAD_SUCCESS;
-					}
-
-					resultsNode.addClass(uploadResultClass);
-
-					setTimeout(
-						function() {
-							resultsNode.removeClass(uploadResultClass);
-						},
-						5000
+				if (hasErrors) {
+					instance._displayError(
+						folderEntry,
+						TPL_ERROR_FOLDER.parse(
+							{
+								invalidFiles: invalidFiles,
+								invalidFilesLength: invalidFilesLength,
+								validFilesLength: totalFilesLength - invalidFilesLength
+							}
+						)
 					);
 				}
 

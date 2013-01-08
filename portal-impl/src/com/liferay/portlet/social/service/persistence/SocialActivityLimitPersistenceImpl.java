@@ -1234,16 +1234,17 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 
 			query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYTYPE_2);
 
+			boolean bindActivityCounterName = false;
+
 			if (activityCounterName == null) {
 				query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_1);
 			}
+			else if (activityCounterName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_3);
+			}
 			else {
-				if (activityCounterName.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_2);
-				}
+				bindActivityCounterName = true;
+				query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_2);
 			}
 
 			String sql = query.toString();
@@ -1267,7 +1268,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 
 				qPos.add(activityType);
 
-				if (activityCounterName != null) {
+				if (bindActivityCounterName) {
 					qPos.add(activityCounterName);
 				}
 
@@ -1378,16 +1379,17 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 
 			query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYTYPE_2);
 
+			boolean bindActivityCounterName = false;
+
 			if (activityCounterName == null) {
 				query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_1);
 			}
+			else if (activityCounterName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_3);
+			}
 			else {
-				if (activityCounterName.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_2);
-				}
+				bindActivityCounterName = true;
+				query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_2);
 			}
 
 			String sql = query.toString();
@@ -1411,7 +1413,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 
 				qPos.add(activityType);
 
-				if (activityCounterName != null) {
+				if (bindActivityCounterName) {
 					qPos.add(activityCounterName);
 				}
 
@@ -1442,7 +1444,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	private static final String _FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_2 =
 		"socialActivityLimit.activityCounterName = ?";
 	private static final String _FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_3 =
-		"(socialActivityLimit.activityCounterName IS NULL OR socialActivityLimit.activityCounterName = ?)";
+		"(socialActivityLimit.activityCounterName IS NULL OR socialActivityLimit.activityCounterName = '')";
 
 	/**
 	 * Caches the social activity limit in the entity cache if it is enabled.

@@ -673,28 +673,30 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 			query.append(_FINDER_COLUMN_C_I_T_COMPANYID_2);
 
+			boolean bindPluginId = false;
+
 			if (pluginId == null) {
 				query.append(_FINDER_COLUMN_C_I_T_PLUGINID_1);
 			}
-			else {
-				if (pluginId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_I_T_PLUGINID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_I_T_PLUGINID_2);
-				}
+			else if (pluginId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_I_T_PLUGINID_3);
 			}
+			else {
+				bindPluginId = true;
+				query.append(_FINDER_COLUMN_C_I_T_PLUGINID_2);
+			}
+
+			boolean bindPluginType = false;
 
 			if (pluginType == null) {
 				query.append(_FINDER_COLUMN_C_I_T_PLUGINTYPE_1);
 			}
+			else if (pluginType.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_I_T_PLUGINTYPE_3);
+			}
 			else {
-				if (pluginType.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_I_T_PLUGINTYPE_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_I_T_PLUGINTYPE_2);
-				}
+				bindPluginType = true;
+				query.append(_FINDER_COLUMN_C_I_T_PLUGINTYPE_2);
 			}
 
 			String sql = query.toString();
@@ -710,11 +712,11 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 				qPos.add(companyId);
 
-				if (pluginId != null) {
+				if (bindPluginId) {
 					qPos.add(pluginId);
 				}
 
-				if (pluginType != null) {
+				if (bindPluginType) {
 					qPos.add(pluginType);
 				}
 
@@ -802,28 +804,30 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 			query.append(_FINDER_COLUMN_C_I_T_COMPANYID_2);
 
+			boolean bindPluginId = false;
+
 			if (pluginId == null) {
 				query.append(_FINDER_COLUMN_C_I_T_PLUGINID_1);
 			}
-			else {
-				if (pluginId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_I_T_PLUGINID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_I_T_PLUGINID_2);
-				}
+			else if (pluginId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_I_T_PLUGINID_3);
 			}
+			else {
+				bindPluginId = true;
+				query.append(_FINDER_COLUMN_C_I_T_PLUGINID_2);
+			}
+
+			boolean bindPluginType = false;
 
 			if (pluginType == null) {
 				query.append(_FINDER_COLUMN_C_I_T_PLUGINTYPE_1);
 			}
+			else if (pluginType.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_I_T_PLUGINTYPE_3);
+			}
 			else {
-				if (pluginType.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_I_T_PLUGINTYPE_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_I_T_PLUGINTYPE_2);
-				}
+				bindPluginType = true;
+				query.append(_FINDER_COLUMN_C_I_T_PLUGINTYPE_2);
 			}
 
 			String sql = query.toString();
@@ -839,11 +843,11 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 				qPos.add(companyId);
 
-				if (pluginId != null) {
+				if (bindPluginId) {
 					qPos.add(pluginId);
 				}
 
-				if (pluginType != null) {
+				if (bindPluginType) {
 					qPos.add(pluginType);
 				}
 
@@ -867,10 +871,10 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	private static final String _FINDER_COLUMN_C_I_T_COMPANYID_2 = "pluginSetting.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_I_T_PLUGINID_1 = "pluginSetting.pluginId IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_I_T_PLUGINID_2 = "pluginSetting.pluginId = ? AND ";
-	private static final String _FINDER_COLUMN_C_I_T_PLUGINID_3 = "(pluginSetting.pluginId IS NULL OR pluginSetting.pluginId = ?) AND ";
+	private static final String _FINDER_COLUMN_C_I_T_PLUGINID_3 = "(pluginSetting.pluginId IS NULL OR pluginSetting.pluginId = '') AND ";
 	private static final String _FINDER_COLUMN_C_I_T_PLUGINTYPE_1 = "pluginSetting.pluginType IS NULL";
 	private static final String _FINDER_COLUMN_C_I_T_PLUGINTYPE_2 = "pluginSetting.pluginType = ?";
-	private static final String _FINDER_COLUMN_C_I_T_PLUGINTYPE_3 = "(pluginSetting.pluginType IS NULL OR pluginSetting.pluginType = ?)";
+	private static final String _FINDER_COLUMN_C_I_T_PLUGINTYPE_3 = "(pluginSetting.pluginType IS NULL OR pluginSetting.pluginType = '')";
 
 	/**
 	 * Caches the plugin setting in the entity cache if it is enabled.

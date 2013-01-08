@@ -673,16 +673,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
 
+			boolean bindPortletId = false;
+
 			if (portletId == null) {
 				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_1);
 			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
+			}
 			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
-				}
+				bindPortletId = true;
+				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -705,7 +706,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (portletId != null) {
+				if (bindPortletId) {
 					qPos.add(portletId);
 				}
 
@@ -899,16 +900,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
 
+		boolean bindPortletId = false;
+
 		if (portletId == null) {
 			query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_1);
 		}
+		else if (portletId.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
+		}
 		else {
-			if (portletId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
-			}
+			bindPortletId = true;
+			query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -979,7 +981,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (portletId != null) {
+		if (bindPortletId) {
 			qPos.add(portletId);
 		}
 
@@ -1034,16 +1036,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
 
+			boolean bindPortletId = false;
+
 			if (portletId == null) {
 				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_1);
 			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
+			}
 			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
-				}
+				bindPortletId = true;
+				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
 			}
 
 			String sql = query.toString();
@@ -1057,7 +1060,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (portletId != null) {
+				if (bindPortletId) {
 					qPos.add(portletId);
 				}
 
@@ -1080,7 +1083,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_1 = "portletPreferences.portletId IS NULL";
 	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_2 = "portletPreferences.portletId = ?";
-	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = ?)";
+	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
 			PortletPreferencesImpl.class,
@@ -1203,16 +1206,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 			query.append(_FINDER_COLUMN_P_P_PLID_2);
 
+			boolean bindPortletId = false;
+
 			if (portletId == null) {
 				query.append(_FINDER_COLUMN_P_P_PORTLETID_1);
 			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_P_P_PORTLETID_3);
+			}
 			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_P_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_P_P_PORTLETID_2);
-				}
+				bindPortletId = true;
+				query.append(_FINDER_COLUMN_P_P_PORTLETID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -1237,7 +1241,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 				qPos.add(plid);
 
-				if (portletId != null) {
+				if (bindPortletId) {
 					qPos.add(portletId);
 				}
 
@@ -1444,16 +1448,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 		query.append(_FINDER_COLUMN_P_P_PLID_2);
 
+		boolean bindPortletId = false;
+
 		if (portletId == null) {
 			query.append(_FINDER_COLUMN_P_P_PORTLETID_1);
 		}
+		else if (portletId.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_P_P_PORTLETID_3);
+		}
 		else {
-			if (portletId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_P_P_PORTLETID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_P_P_PORTLETID_2);
-			}
+			bindPortletId = true;
+			query.append(_FINDER_COLUMN_P_P_PORTLETID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -1526,7 +1531,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 		qPos.add(plid);
 
-		if (portletId != null) {
+		if (bindPortletId) {
 			qPos.add(portletId);
 		}
 
@@ -1587,16 +1592,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 			query.append(_FINDER_COLUMN_P_P_PLID_2);
 
+			boolean bindPortletId = false;
+
 			if (portletId == null) {
 				query.append(_FINDER_COLUMN_P_P_PORTLETID_1);
 			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_P_P_PORTLETID_3);
+			}
 			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_P_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_P_P_PORTLETID_2);
-				}
+				bindPortletId = true;
+				query.append(_FINDER_COLUMN_P_P_PORTLETID_2);
 			}
 
 			String sql = query.toString();
@@ -1612,7 +1618,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 				qPos.add(plid);
 
-				if (portletId != null) {
+				if (bindPortletId) {
 					qPos.add(portletId);
 				}
 
@@ -1636,7 +1642,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	private static final String _FINDER_COLUMN_P_P_PLID_2 = "portletPreferences.plid = ? AND ";
 	private static final String _FINDER_COLUMN_P_P_PORTLETID_1 = "portletPreferences.portletId IS NULL";
 	private static final String _FINDER_COLUMN_P_P_PORTLETID_2 = "portletPreferences.portletId = ?";
-	private static final String _FINDER_COLUMN_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = ?)";
+	private static final String _FINDER_COLUMN_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_O_O_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
 			PortletPreferencesImpl.class,
@@ -2330,16 +2336,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 			query.append(_FINDER_COLUMN_O_P_P_PLID_2);
 
+			boolean bindPortletId = false;
+
 			if (portletId == null) {
 				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_1);
 			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_3);
+			}
 			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_O_P_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_O_P_P_PORTLETID_2);
-				}
+				bindPortletId = true;
+				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -2366,7 +2373,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 				qPos.add(plid);
 
-				if (portletId != null) {
+				if (bindPortletId) {
 					qPos.add(portletId);
 				}
 
@@ -2588,16 +2595,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 		query.append(_FINDER_COLUMN_O_P_P_PLID_2);
 
+		boolean bindPortletId = false;
+
 		if (portletId == null) {
 			query.append(_FINDER_COLUMN_O_P_P_PORTLETID_1);
 		}
+		else if (portletId.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_O_P_P_PORTLETID_3);
+		}
 		else {
-			if (portletId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_2);
-			}
+			bindPortletId = true;
+			query.append(_FINDER_COLUMN_O_P_P_PORTLETID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -2672,7 +2680,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 		qPos.add(plid);
 
-		if (portletId != null) {
+		if (bindPortletId) {
 			qPos.add(portletId);
 		}
 
@@ -2737,16 +2745,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 			query.append(_FINDER_COLUMN_O_P_P_PLID_2);
 
+			boolean bindPortletId = false;
+
 			if (portletId == null) {
 				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_1);
 			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_3);
+			}
 			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_O_P_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_O_P_P_PORTLETID_2);
-				}
+				bindPortletId = true;
+				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_2);
 			}
 
 			String sql = query.toString();
@@ -2764,7 +2773,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 				qPos.add(plid);
 
-				if (portletId != null) {
+				if (bindPortletId) {
 					qPos.add(portletId);
 				}
 
@@ -2789,7 +2798,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	private static final String _FINDER_COLUMN_O_P_P_PLID_2 = "portletPreferences.plid = ? AND ";
 	private static final String _FINDER_COLUMN_O_P_P_PORTLETID_1 = "portletPreferences.portletId IS NULL";
 	private static final String _FINDER_COLUMN_O_P_P_PORTLETID_2 = "portletPreferences.portletId = ?";
-	private static final String _FINDER_COLUMN_O_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = ?)";
+	private static final String _FINDER_COLUMN_O_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_O_O_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
 			PortletPreferencesImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -2917,16 +2926,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 			query.append(_FINDER_COLUMN_O_O_P_P_PLID_2);
 
+			boolean bindPortletId = false;
+
 			if (portletId == null) {
 				query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_1);
 			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_3);
+			}
 			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_2);
-				}
+				bindPortletId = true;
+				query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_2);
 			}
 
 			String sql = query.toString();
@@ -2946,7 +2956,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 				qPos.add(plid);
 
-				if (portletId != null) {
+				if (bindPortletId) {
 					qPos.add(portletId);
 				}
 
@@ -3041,16 +3051,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 			query.append(_FINDER_COLUMN_O_O_P_P_PLID_2);
 
+			boolean bindPortletId = false;
+
 			if (portletId == null) {
 				query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_1);
 			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_3);
+			}
 			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_2);
-				}
+				bindPortletId = true;
+				query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_2);
 			}
 
 			String sql = query.toString();
@@ -3070,7 +3081,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 				qPos.add(plid);
 
-				if (portletId != null) {
+				if (bindPortletId) {
 					qPos.add(portletId);
 				}
 
@@ -3096,7 +3107,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	private static final String _FINDER_COLUMN_O_O_P_P_PLID_2 = "portletPreferences.plid = ? AND ";
 	private static final String _FINDER_COLUMN_O_O_P_P_PORTLETID_1 = "portletPreferences.portletId IS NULL";
 	private static final String _FINDER_COLUMN_O_O_P_P_PORTLETID_2 = "portletPreferences.portletId = ?";
-	private static final String _FINDER_COLUMN_O_O_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = ?)";
+	private static final String _FINDER_COLUMN_O_O_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = '')";
 
 	/**
 	 * Caches the portlet preferences in the entity cache if it is enabled.

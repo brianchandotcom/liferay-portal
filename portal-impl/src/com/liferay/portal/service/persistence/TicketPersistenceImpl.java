@@ -166,16 +166,17 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 			query.append(_SQL_SELECT_TICKET_WHERE);
 
+			boolean bindKey = false;
+
 			if (key == null) {
 				query.append(_FINDER_COLUMN_KEY_KEY_1);
 			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_KEY_KEY_3);
+			}
 			else {
-				if (key.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_KEY_KEY_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_KEY_KEY_2);
-				}
+				bindKey = true;
+				query.append(_FINDER_COLUMN_KEY_KEY_2);
 			}
 
 			String sql = query.toString();
@@ -189,7 +190,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (key != null) {
+				if (bindKey) {
 					qPos.add(key);
 				}
 
@@ -273,16 +274,17 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 			query.append(_SQL_COUNT_TICKET_WHERE);
 
+			boolean bindKey = false;
+
 			if (key == null) {
 				query.append(_FINDER_COLUMN_KEY_KEY_1);
 			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_KEY_KEY_3);
+			}
 			else {
-				if (key.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_KEY_KEY_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_KEY_KEY_2);
-				}
+				bindKey = true;
+				query.append(_FINDER_COLUMN_KEY_KEY_2);
 			}
 
 			String sql = query.toString();
@@ -296,7 +298,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (key != null) {
+				if (bindKey) {
 					qPos.add(key);
 				}
 
@@ -319,7 +321,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 	private static final String _FINDER_COLUMN_KEY_KEY_1 = "ticket.key IS NULL";
 	private static final String _FINDER_COLUMN_KEY_KEY_2 = "ticket.key = ?";
-	private static final String _FINDER_COLUMN_KEY_KEY_3 = "(ticket.key IS NULL OR ticket.key = ?)";
+	private static final String _FINDER_COLUMN_KEY_KEY_3 = "(ticket.key IS NULL OR ticket.key = '')";
 
 	/**
 	 * Caches the ticket in the entity cache if it is enabled.

@@ -674,16 +674,17 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 
 			query.append(_SQL_SELECT_LAYOUTSET_WHERE);
 
+			boolean bindLayoutSetPrototypeUuid = false;
+
 			if (layoutSetPrototypeUuid == null) {
 				query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_1);
 			}
+			else if (layoutSetPrototypeUuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3);
+			}
 			else {
-				if (layoutSetPrototypeUuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2);
-				}
+				bindLayoutSetPrototypeUuid = true;
+				query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -706,7 +707,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (layoutSetPrototypeUuid != null) {
+				if (bindLayoutSetPrototypeUuid) {
 					qPos.add(layoutSetPrototypeUuid);
 				}
 
@@ -902,16 +903,17 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 
 		query.append(_SQL_SELECT_LAYOUTSET_WHERE);
 
+		boolean bindLayoutSetPrototypeUuid = false;
+
 		if (layoutSetPrototypeUuid == null) {
 			query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_1);
 		}
+		else if (layoutSetPrototypeUuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3);
+		}
 		else {
-			if (layoutSetPrototypeUuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2);
-			}
+			bindLayoutSetPrototypeUuid = true;
+			query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -982,7 +984,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (layoutSetPrototypeUuid != null) {
+		if (bindLayoutSetPrototypeUuid) {
 			qPos.add(layoutSetPrototypeUuid);
 		}
 
@@ -1040,16 +1042,17 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 
 			query.append(_SQL_COUNT_LAYOUTSET_WHERE);
 
+			boolean bindLayoutSetPrototypeUuid = false;
+
 			if (layoutSetPrototypeUuid == null) {
 				query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_1);
 			}
+			else if (layoutSetPrototypeUuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3);
+			}
 			else {
-				if (layoutSetPrototypeUuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2);
-				}
+				bindLayoutSetPrototypeUuid = true;
+				query.append(_FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2);
 			}
 
 			String sql = query.toString();
@@ -1063,7 +1066,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (layoutSetPrototypeUuid != null) {
+				if (bindLayoutSetPrototypeUuid) {
 					qPos.add(layoutSetPrototypeUuid);
 				}
 
@@ -1089,7 +1092,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	private static final String _FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_2 =
 		"layoutSet.layoutSetPrototypeUuid = ?";
 	private static final String _FINDER_COLUMN_LAYOUTSETPROTOTYPEUUID_LAYOUTSETPROTOTYPEUUID_3 =
-		"(layoutSet.layoutSetPrototypeUuid IS NULL OR layoutSet.layoutSetPrototypeUuid = ?)";
+		"(layoutSet.layoutSetPrototypeUuid IS NULL OR layoutSet.layoutSetPrototypeUuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_P = new FinderPath(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P",

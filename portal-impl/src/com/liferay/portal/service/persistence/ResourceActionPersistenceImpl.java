@@ -192,16 +192,17 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			query.append(_SQL_SELECT_RESOURCEACTION_WHERE);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_NAME_NAME_1);
 			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAME_NAME_3);
+			}
 			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_NAME_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_NAME_NAME_2);
-				}
+				bindName = true;
+				query.append(_FINDER_COLUMN_NAME_NAME_2);
 			}
 
 			if (orderByComparator != null) {
@@ -224,7 +225,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -415,16 +416,17 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 		query.append(_SQL_SELECT_RESOURCEACTION_WHERE);
 
+		boolean bindName = false;
+
 		if (name == null) {
 			query.append(_FINDER_COLUMN_NAME_NAME_1);
 		}
+		else if (name.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_NAME_NAME_3);
+		}
 		else {
-			if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_NAME_NAME_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_NAME_NAME_2);
-			}
+			bindName = true;
+			query.append(_FINDER_COLUMN_NAME_NAME_2);
 		}
 
 		if (orderByComparator != null) {
@@ -495,7 +497,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (name != null) {
+		if (bindName) {
 			qPos.add(name);
 		}
 
@@ -550,16 +552,17 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			query.append(_SQL_COUNT_RESOURCEACTION_WHERE);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_NAME_NAME_1);
 			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAME_NAME_3);
+			}
 			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_NAME_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_NAME_NAME_2);
-				}
+				bindName = true;
+				query.append(_FINDER_COLUMN_NAME_NAME_2);
 			}
 
 			String sql = query.toString();
@@ -573,7 +576,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -596,7 +599,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 	private static final String _FINDER_COLUMN_NAME_NAME_1 = "resourceAction.name IS NULL";
 	private static final String _FINDER_COLUMN_NAME_NAME_2 = "resourceAction.name = ?";
-	private static final String _FINDER_COLUMN_NAME_NAME_3 = "(resourceAction.name IS NULL OR resourceAction.name = ?)";
+	private static final String _FINDER_COLUMN_NAME_NAME_3 = "(resourceAction.name IS NULL OR resourceAction.name = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_N_A = new FinderPath(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceActionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceActionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByN_A",
@@ -691,28 +694,30 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			query.append(_SQL_SELECT_RESOURCEACTION_WHERE);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_N_A_NAME_1);
 			}
-			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_N_A_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_N_A_NAME_2);
-				}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_N_A_NAME_3);
 			}
+			else {
+				bindName = true;
+				query.append(_FINDER_COLUMN_N_A_NAME_2);
+			}
+
+			boolean bindActionId = false;
 
 			if (actionId == null) {
 				query.append(_FINDER_COLUMN_N_A_ACTIONID_1);
 			}
+			else if (actionId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_N_A_ACTIONID_3);
+			}
 			else {
-				if (actionId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_N_A_ACTIONID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_N_A_ACTIONID_2);
-				}
+				bindActionId = true;
+				query.append(_FINDER_COLUMN_N_A_ACTIONID_2);
 			}
 
 			String sql = query.toString();
@@ -726,11 +731,11 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
-				if (actionId != null) {
+				if (bindActionId) {
 					qPos.add(actionId);
 				}
 
@@ -812,28 +817,30 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			query.append(_SQL_COUNT_RESOURCEACTION_WHERE);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_N_A_NAME_1);
 			}
-			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_N_A_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_N_A_NAME_2);
-				}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_N_A_NAME_3);
 			}
+			else {
+				bindName = true;
+				query.append(_FINDER_COLUMN_N_A_NAME_2);
+			}
+
+			boolean bindActionId = false;
 
 			if (actionId == null) {
 				query.append(_FINDER_COLUMN_N_A_ACTIONID_1);
 			}
+			else if (actionId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_N_A_ACTIONID_3);
+			}
 			else {
-				if (actionId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_N_A_ACTIONID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_N_A_ACTIONID_2);
-				}
+				bindActionId = true;
+				query.append(_FINDER_COLUMN_N_A_ACTIONID_2);
 			}
 
 			String sql = query.toString();
@@ -847,11 +854,11 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
-				if (actionId != null) {
+				if (bindActionId) {
 					qPos.add(actionId);
 				}
 
@@ -874,10 +881,10 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 	private static final String _FINDER_COLUMN_N_A_NAME_1 = "resourceAction.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_N_A_NAME_2 = "lower(resourceAction.name) = lower(CAST_TEXT(?)) AND ";
-	private static final String _FINDER_COLUMN_N_A_NAME_3 = "(resourceAction.name IS NULL OR lower(resourceAction.name) = lower(CAST_TEXT(?))) AND ";
+	private static final String _FINDER_COLUMN_N_A_NAME_3 = "(resourceAction.name IS NULL OR resourceAction.name = '') AND ";
 	private static final String _FINDER_COLUMN_N_A_ACTIONID_1 = "resourceAction.actionId IS NULL";
 	private static final String _FINDER_COLUMN_N_A_ACTIONID_2 = "resourceAction.actionId = ?";
-	private static final String _FINDER_COLUMN_N_A_ACTIONID_3 = "(resourceAction.actionId IS NULL OR resourceAction.actionId = ?)";
+	private static final String _FINDER_COLUMN_N_A_ACTIONID_3 = "(resourceAction.actionId IS NULL OR resourceAction.actionId = '')";
 
 	/**
 	 * Caches the resource action in the entity cache if it is enabled.

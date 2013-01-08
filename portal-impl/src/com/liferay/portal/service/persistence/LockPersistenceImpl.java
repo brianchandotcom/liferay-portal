@@ -189,16 +189,17 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			query.append(_SQL_SELECT_LOCK_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_UUID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -221,7 +222,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -408,16 +409,17 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		query.append(_SQL_SELECT_LOCK_WHERE);
 
+		boolean bindUuid = false;
+
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_UUID_3);
+		}
 		else {
-			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
+			bindUuid = true;
+			query.append(_FINDER_COLUMN_UUID_UUID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -488,7 +490,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (uuid != null) {
+		if (bindUuid) {
 			qPos.add(uuid);
 		}
 
@@ -543,16 +545,17 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			query.append(_SQL_COUNT_LOCK_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_UUID_2);
 			}
 
 			String sql = query.toString();
@@ -566,7 +569,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -589,7 +592,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "lock.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "lock.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(lock.uuid IS NULL OR lock.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(lock.uuid IS NULL OR lock.uuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockModelImpl.FINDER_CACHE_ENABLED, LockImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -707,16 +710,17 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			query.append(_SQL_SELECT_LOCK_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 			}
 
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -741,7 +745,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -944,16 +948,17 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		query.append(_SQL_SELECT_LOCK_WHERE);
 
+		boolean bindUuid = false;
+
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+		}
 		else {
-			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
+			bindUuid = true;
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 		}
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1026,7 +1031,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (uuid != null) {
+		if (bindUuid) {
 			qPos.add(uuid);
 		}
 
@@ -1087,16 +1092,17 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			query.append(_SQL_COUNT_LOCK_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 			}
 
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1112,7 +1118,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -1137,7 +1143,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "lock.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "lock.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(lock.uuid IS NULL OR lock.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(lock.uuid IS NULL OR lock.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "lock.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LTEXPIRATIONDATE =
 		new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
@@ -1235,10 +1241,13 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			query.append(_SQL_SELECT_LOCK_WHERE);
 
+			boolean bindExpirationDate = false;
+
 			if (expirationDate == null) {
 				query.append(_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_1);
 			}
 			else {
+				bindExpirationDate = true;
 				query.append(_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_2);
 			}
 
@@ -1262,7 +1271,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (expirationDate != null) {
+				if (bindExpirationDate) {
 					qPos.add(CalendarUtil.getTimestamp(expirationDate));
 				}
 
@@ -1455,10 +1464,13 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		query.append(_SQL_SELECT_LOCK_WHERE);
 
+		boolean bindExpirationDate = false;
+
 		if (expirationDate == null) {
 			query.append(_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_1);
 		}
 		else {
+			bindExpirationDate = true;
 			query.append(_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_2);
 		}
 
@@ -1530,7 +1542,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (expirationDate != null) {
+		if (bindExpirationDate) {
 			qPos.add(CalendarUtil.getTimestamp(expirationDate));
 		}
 
@@ -1587,10 +1599,13 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			query.append(_SQL_COUNT_LOCK_WHERE);
 
+			boolean bindExpirationDate = false;
+
 			if (expirationDate == null) {
 				query.append(_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_1);
 			}
 			else {
+				bindExpirationDate = true;
 				query.append(_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_2);
 			}
 
@@ -1605,7 +1620,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (expirationDate != null) {
+				if (bindExpirationDate) {
 					qPos.add(CalendarUtil.getTimestamp(expirationDate));
 				}
 
@@ -1724,28 +1739,30 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			query.append(_SQL_SELECT_LOCK_WHERE);
 
+			boolean bindClassName = false;
+
 			if (className == null) {
 				query.append(_FINDER_COLUMN_C_K_CLASSNAME_1);
 			}
-			else {
-				if (className.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_K_CLASSNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_K_CLASSNAME_2);
-				}
+			else if (className.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_K_CLASSNAME_3);
 			}
+			else {
+				bindClassName = true;
+				query.append(_FINDER_COLUMN_C_K_CLASSNAME_2);
+			}
+
+			boolean bindKey = false;
 
 			if (key == null) {
 				query.append(_FINDER_COLUMN_C_K_KEY_1);
 			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
 			else {
-				if (key.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_K_KEY_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_K_KEY_2);
-				}
+				bindKey = true;
+				query.append(_FINDER_COLUMN_C_K_KEY_2);
 			}
 
 			String sql = query.toString();
@@ -1759,11 +1776,11 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (className != null) {
+				if (bindClassName) {
 					qPos.add(className);
 				}
 
-				if (key != null) {
+				if (bindKey) {
 					qPos.add(key);
 				}
 
@@ -1845,28 +1862,30 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			query.append(_SQL_COUNT_LOCK_WHERE);
 
+			boolean bindClassName = false;
+
 			if (className == null) {
 				query.append(_FINDER_COLUMN_C_K_CLASSNAME_1);
 			}
-			else {
-				if (className.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_K_CLASSNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_K_CLASSNAME_2);
-				}
+			else if (className.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_K_CLASSNAME_3);
 			}
+			else {
+				bindClassName = true;
+				query.append(_FINDER_COLUMN_C_K_CLASSNAME_2);
+			}
+
+			boolean bindKey = false;
 
 			if (key == null) {
 				query.append(_FINDER_COLUMN_C_K_KEY_1);
 			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
 			else {
-				if (key.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_K_KEY_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_K_KEY_2);
-				}
+				bindKey = true;
+				query.append(_FINDER_COLUMN_C_K_KEY_2);
 			}
 
 			String sql = query.toString();
@@ -1880,11 +1899,11 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (className != null) {
+				if (bindClassName) {
 					qPos.add(className);
 				}
 
-				if (key != null) {
+				if (bindKey) {
 					qPos.add(key);
 				}
 
@@ -1907,10 +1926,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 	private static final String _FINDER_COLUMN_C_K_CLASSNAME_1 = "lock.className IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_K_CLASSNAME_2 = "lock.className = ? AND ";
-	private static final String _FINDER_COLUMN_C_K_CLASSNAME_3 = "(lock.className IS NULL OR lock.className = ?) AND ";
+	private static final String _FINDER_COLUMN_C_K_CLASSNAME_3 = "(lock.className IS NULL OR lock.className = '') AND ";
 	private static final String _FINDER_COLUMN_C_K_KEY_1 = "lock.key IS NULL";
 	private static final String _FINDER_COLUMN_C_K_KEY_2 = "lock.key = ?";
-	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(lock.key IS NULL OR lock.key = ?)";
+	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(lock.key IS NULL OR lock.key = '')";
 
 	/**
 	 * Caches the lock in the entity cache if it is enabled.

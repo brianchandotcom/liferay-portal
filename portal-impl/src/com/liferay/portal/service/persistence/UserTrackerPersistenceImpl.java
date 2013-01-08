@@ -1141,16 +1141,17 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 			query.append(_SQL_SELECT_USERTRACKER_WHERE);
 
+			boolean bindSessionId = false;
+
 			if (sessionId == null) {
 				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_1);
 			}
+			else if (sessionId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
+			}
 			else {
-				if (sessionId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_2);
-				}
+				bindSessionId = true;
+				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -1173,7 +1174,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (sessionId != null) {
+				if (bindSessionId) {
 					qPos.add(sessionId);
 				}
 
@@ -1366,16 +1367,17 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 		query.append(_SQL_SELECT_USERTRACKER_WHERE);
 
+		boolean bindSessionId = false;
+
 		if (sessionId == null) {
 			query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_1);
 		}
+		else if (sessionId.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
+		}
 		else {
-			if (sessionId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_2);
-			}
+			bindSessionId = true;
+			query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -1446,7 +1448,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (sessionId != null) {
+		if (bindSessionId) {
 			qPos.add(sessionId);
 		}
 
@@ -1501,16 +1503,17 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 			query.append(_SQL_COUNT_USERTRACKER_WHERE);
 
+			boolean bindSessionId = false;
+
 			if (sessionId == null) {
 				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_1);
 			}
+			else if (sessionId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
+			}
 			else {
-				if (sessionId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_2);
-				}
+				bindSessionId = true;
+				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_2);
 			}
 
 			String sql = query.toString();
@@ -1524,7 +1527,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (sessionId != null) {
+				if (bindSessionId) {
 					qPos.add(sessionId);
 				}
 
@@ -1547,7 +1550,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_1 = "userTracker.sessionId IS NULL";
 	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_2 = "userTracker.sessionId = ?";
-	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_3 = "(userTracker.sessionId IS NULL OR userTracker.sessionId = ?)";
+	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_3 = "(userTracker.sessionId IS NULL OR userTracker.sessionId = '')";
 
 	/**
 	 * Caches the user tracker in the entity cache if it is enabled.

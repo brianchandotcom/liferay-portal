@@ -2394,10 +2394,13 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 			query.append(_FINDER_COLUMN_U_L_USERID_2);
 
+			boolean bindLastPostDate = false;
+
 			if (lastPostDate == null) {
 				query.append(_FINDER_COLUMN_U_L_LASTPOSTDATE_1);
 			}
 			else {
+				bindLastPostDate = true;
 				query.append(_FINDER_COLUMN_U_L_LASTPOSTDATE_2);
 			}
 
@@ -2423,7 +2426,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 				qPos.add(userId);
 
-				if (lastPostDate != null) {
+				if (bindLastPostDate) {
 					qPos.add(CalendarUtil.getTimestamp(lastPostDate));
 				}
 
@@ -2629,10 +2632,13 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 		query.append(_FINDER_COLUMN_U_L_USERID_2);
 
+		boolean bindLastPostDate = false;
+
 		if (lastPostDate == null) {
 			query.append(_FINDER_COLUMN_U_L_LASTPOSTDATE_1);
 		}
 		else {
+			bindLastPostDate = true;
 			query.append(_FINDER_COLUMN_U_L_LASTPOSTDATE_2);
 		}
 
@@ -2706,7 +2712,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 		qPos.add(userId);
 
-		if (lastPostDate != null) {
+		if (bindLastPostDate) {
 			qPos.add(CalendarUtil.getTimestamp(lastPostDate));
 		}
 
@@ -2767,10 +2773,13 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 			query.append(_FINDER_COLUMN_U_L_USERID_2);
 
+			boolean bindLastPostDate = false;
+
 			if (lastPostDate == null) {
 				query.append(_FINDER_COLUMN_U_L_LASTPOSTDATE_1);
 			}
 			else {
+				bindLastPostDate = true;
 				query.append(_FINDER_COLUMN_U_L_LASTPOSTDATE_2);
 			}
 
@@ -2787,7 +2796,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 				qPos.add(userId);
 
-				if (lastPostDate != null) {
+				if (bindLastPostDate) {
 					qPos.add(CalendarUtil.getTimestamp(lastPostDate));
 				}
 

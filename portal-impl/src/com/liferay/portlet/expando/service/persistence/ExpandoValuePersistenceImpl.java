@@ -4181,16 +4181,17 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 			query.append(_FINDER_COLUMN_T_C_D_COLUMNID_2);
 
+			boolean bindData = false;
+
 			if (data == null) {
 				query.append(_FINDER_COLUMN_T_C_D_DATA_1);
 			}
+			else if (data.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_T_C_D_DATA_3);
+			}
 			else {
-				if (data.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_T_C_D_DATA_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_T_C_D_DATA_2);
-				}
+				bindData = true;
+				query.append(_FINDER_COLUMN_T_C_D_DATA_2);
 			}
 
 			if (orderByComparator != null) {
@@ -4217,7 +4218,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 				qPos.add(columnId);
 
-				if (data != null) {
+				if (bindData) {
 					qPos.add(data);
 				}
 
@@ -4438,16 +4439,17 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 		query.append(_FINDER_COLUMN_T_C_D_COLUMNID_2);
 
+		boolean bindData = false;
+
 		if (data == null) {
 			query.append(_FINDER_COLUMN_T_C_D_DATA_1);
 		}
+		else if (data.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_T_C_D_DATA_3);
+		}
 		else {
-			if (data.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_T_C_D_DATA_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_T_C_D_DATA_2);
-			}
+			bindData = true;
+			query.append(_FINDER_COLUMN_T_C_D_DATA_2);
 		}
 
 		if (orderByComparator != null) {
@@ -4522,7 +4524,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 		qPos.add(columnId);
 
-		if (data != null) {
+		if (bindData) {
 			qPos.add(data);
 		}
 
@@ -4587,16 +4589,17 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 			query.append(_FINDER_COLUMN_T_C_D_COLUMNID_2);
 
+			boolean bindData = false;
+
 			if (data == null) {
 				query.append(_FINDER_COLUMN_T_C_D_DATA_1);
 			}
+			else if (data.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_T_C_D_DATA_3);
+			}
 			else {
-				if (data.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_T_C_D_DATA_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_T_C_D_DATA_2);
-				}
+				bindData = true;
+				query.append(_FINDER_COLUMN_T_C_D_DATA_2);
 			}
 
 			String sql = query.toString();
@@ -4614,7 +4617,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 				qPos.add(columnId);
 
-				if (data != null) {
+				if (bindData) {
 					qPos.add(data);
 				}
 
@@ -4639,7 +4642,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	private static final String _FINDER_COLUMN_T_C_D_COLUMNID_2 = "expandoValue.columnId = ? AND ";
 	private static final String _FINDER_COLUMN_T_C_D_DATA_1 = "expandoValue.data IS NULL";
 	private static final String _FINDER_COLUMN_T_C_D_DATA_2 = "expandoValue.data = ?";
-	private static final String _FINDER_COLUMN_T_C_D_DATA_3 = "(expandoValue.data IS NULL OR expandoValue.data = ?)";
+	private static final String _FINDER_COLUMN_T_C_D_DATA_3 = "(expandoValue.data IS NULL OR expandoValue.data = '')";
 
 	/**
 	 * Caches the expando value in the entity cache if it is enabled.

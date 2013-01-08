@@ -194,16 +194,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			query.append(_SQL_SELECT_DLFILEVERSION_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_UUID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -226,7 +227,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -416,16 +417,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 		query.append(_SQL_SELECT_DLFILEVERSION_WHERE);
 
+		boolean bindUuid = false;
+
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_UUID_3);
+		}
 		else {
-			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
+			bindUuid = true;
+			query.append(_FINDER_COLUMN_UUID_UUID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -496,7 +498,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (uuid != null) {
+		if (bindUuid) {
 			qPos.add(uuid);
 		}
 
@@ -551,16 +553,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			query.append(_SQL_COUNT_DLFILEVERSION_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_UUID_2);
 			}
 
 			String sql = query.toString();
@@ -574,7 +577,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -597,7 +600,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "dlFileVersion.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "dlFileVersion.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(dlFileVersion.uuid IS NULL OR dlFileVersion.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(dlFileVersion.uuid IS NULL OR dlFileVersion.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileVersionModelImpl.FINDER_CACHE_ENABLED,
 			DLFileVersionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -692,16 +695,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			query.append(_SQL_SELECT_DLFILEVERSION_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
 			}
 
 			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
@@ -717,7 +721,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -800,16 +804,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			query.append(_SQL_COUNT_DLFILEVERSION_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
 			}
 
 			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
@@ -825,7 +830,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -850,7 +855,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "dlFileVersion.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "dlFileVersion.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(dlFileVersion.uuid IS NULL OR dlFileVersion.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(dlFileVersion.uuid IS NULL OR dlFileVersion.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "dlFileVersion.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileVersionModelImpl.FINDER_CACHE_ENABLED,
@@ -974,16 +979,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			query.append(_SQL_SELECT_DLFILEVERSION_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 			}
 
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1008,7 +1014,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -1214,16 +1220,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 		query.append(_SQL_SELECT_DLFILEVERSION_WHERE);
 
+		boolean bindUuid = false;
+
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+		}
 		else {
-			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
+			bindUuid = true;
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 		}
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1296,7 +1303,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (uuid != null) {
+		if (bindUuid) {
 			qPos.add(uuid);
 		}
 
@@ -1357,16 +1364,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			query.append(_SQL_COUNT_DLFILEVERSION_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 			}
 
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1382,7 +1390,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -1407,7 +1415,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "dlFileVersion.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "dlFileVersion.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(dlFileVersion.uuid IS NULL OR dlFileVersion.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(dlFileVersion.uuid IS NULL OR dlFileVersion.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "dlFileVersion.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_FILEENTRYID =
 		new FinderPath(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
@@ -2000,16 +2008,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			query.append(_SQL_SELECT_DLFILEVERSION_WHERE);
 
+			boolean bindMimeType = false;
+
 			if (mimeType == null) {
 				query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_1);
 			}
+			else if (mimeType.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_3);
+			}
 			else {
-				if (mimeType.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_2);
-				}
+				bindMimeType = true;
+				query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_2);
 			}
 
 			if (orderByComparator != null) {
@@ -2032,7 +2041,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (mimeType != null) {
+				if (bindMimeType) {
 					qPos.add(mimeType);
 				}
 
@@ -2225,16 +2234,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 		query.append(_SQL_SELECT_DLFILEVERSION_WHERE);
 
+		boolean bindMimeType = false;
+
 		if (mimeType == null) {
 			query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_1);
 		}
+		else if (mimeType.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_3);
+		}
 		else {
-			if (mimeType.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_2);
-			}
+			bindMimeType = true;
+			query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_2);
 		}
 
 		if (orderByComparator != null) {
@@ -2305,7 +2315,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (mimeType != null) {
+		if (bindMimeType) {
 			qPos.add(mimeType);
 		}
 
@@ -2360,16 +2370,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			query.append(_SQL_COUNT_DLFILEVERSION_WHERE);
 
+			boolean bindMimeType = false;
+
 			if (mimeType == null) {
 				query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_1);
 			}
+			else if (mimeType.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_3);
+			}
 			else {
-				if (mimeType.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_2);
-				}
+				bindMimeType = true;
+				query.append(_FINDER_COLUMN_MIMETYPE_MIMETYPE_2);
 			}
 
 			String sql = query.toString();
@@ -2383,7 +2394,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (mimeType != null) {
+				if (bindMimeType) {
 					qPos.add(mimeType);
 				}
 
@@ -2406,7 +2417,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 	private static final String _FINDER_COLUMN_MIMETYPE_MIMETYPE_1 = "dlFileVersion.mimeType IS NULL";
 	private static final String _FINDER_COLUMN_MIMETYPE_MIMETYPE_2 = "dlFileVersion.mimeType = ?";
-	private static final String _FINDER_COLUMN_MIMETYPE_MIMETYPE_3 = "(dlFileVersion.mimeType IS NULL OR dlFileVersion.mimeType = ?)";
+	private static final String _FINDER_COLUMN_MIMETYPE_MIMETYPE_3 = "(dlFileVersion.mimeType IS NULL OR dlFileVersion.mimeType = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_F_V = new FinderPath(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileVersionModelImpl.FINDER_CACHE_ENABLED,
 			DLFileVersionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByF_V",
@@ -2503,16 +2514,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			query.append(_FINDER_COLUMN_F_V_FILEENTRYID_2);
 
+			boolean bindVersion = false;
+
 			if (version == null) {
 				query.append(_FINDER_COLUMN_F_V_VERSION_1);
 			}
+			else if (version.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_V_VERSION_3);
+			}
 			else {
-				if (version.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_F_V_VERSION_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_F_V_VERSION_2);
-				}
+				bindVersion = true;
+				query.append(_FINDER_COLUMN_F_V_VERSION_2);
 			}
 
 			String sql = query.toString();
@@ -2528,7 +2540,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				qPos.add(fileEntryId);
 
-				if (version != null) {
+				if (bindVersion) {
 					qPos.add(version);
 				}
 
@@ -2611,16 +2623,17 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			query.append(_FINDER_COLUMN_F_V_FILEENTRYID_2);
 
+			boolean bindVersion = false;
+
 			if (version == null) {
 				query.append(_FINDER_COLUMN_F_V_VERSION_1);
 			}
+			else if (version.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_F_V_VERSION_3);
+			}
 			else {
-				if (version.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_F_V_VERSION_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_F_V_VERSION_2);
-				}
+				bindVersion = true;
+				query.append(_FINDER_COLUMN_F_V_VERSION_2);
 			}
 
 			String sql = query.toString();
@@ -2636,7 +2649,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				qPos.add(fileEntryId);
 
-				if (version != null) {
+				if (bindVersion) {
 					qPos.add(version);
 				}
 
@@ -2660,7 +2673,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	private static final String _FINDER_COLUMN_F_V_FILEENTRYID_2 = "dlFileVersion.fileEntryId = ? AND ";
 	private static final String _FINDER_COLUMN_F_V_VERSION_1 = "dlFileVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_F_V_VERSION_2 = "dlFileVersion.version = ?";
-	private static final String _FINDER_COLUMN_F_V_VERSION_3 = "(dlFileVersion.version IS NULL OR dlFileVersion.version = ?)";
+	private static final String _FINDER_COLUMN_F_V_VERSION_3 = "(dlFileVersion.version IS NULL OR dlFileVersion.version = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_F_S = new FinderPath(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileVersionModelImpl.FINDER_CACHE_ENABLED,
 			DLFileVersionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -3881,28 +3894,30 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			query.append(_FINDER_COLUMN_G_F_T_V_FOLDERID_2);
 
+			boolean bindTitle = false;
+
 			if (title == null) {
 				query.append(_FINDER_COLUMN_G_F_T_V_TITLE_1);
 			}
-			else {
-				if (title.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_F_T_V_TITLE_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_F_T_V_TITLE_2);
-				}
+			else if (title.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_F_T_V_TITLE_3);
 			}
+			else {
+				bindTitle = true;
+				query.append(_FINDER_COLUMN_G_F_T_V_TITLE_2);
+			}
+
+			boolean bindVersion = false;
 
 			if (version == null) {
 				query.append(_FINDER_COLUMN_G_F_T_V_VERSION_1);
 			}
+			else if (version.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_F_T_V_VERSION_3);
+			}
 			else {
-				if (version.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_F_T_V_VERSION_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_F_T_V_VERSION_2);
-				}
+				bindVersion = true;
+				query.append(_FINDER_COLUMN_G_F_T_V_VERSION_2);
 			}
 
 			if (orderByComparator != null) {
@@ -3929,11 +3944,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				qPos.add(folderId);
 
-				if (title != null) {
+				if (bindTitle) {
 					qPos.add(title);
 				}
 
-				if (version != null) {
+				if (bindVersion) {
 					qPos.add(version);
 				}
 
@@ -4166,28 +4181,30 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 		query.append(_FINDER_COLUMN_G_F_T_V_FOLDERID_2);
 
+		boolean bindTitle = false;
+
 		if (title == null) {
 			query.append(_FINDER_COLUMN_G_F_T_V_TITLE_1);
 		}
-		else {
-			if (title.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_F_T_V_TITLE_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_G_F_T_V_TITLE_2);
-			}
+		else if (title.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_F_T_V_TITLE_3);
 		}
+		else {
+			bindTitle = true;
+			query.append(_FINDER_COLUMN_G_F_T_V_TITLE_2);
+		}
+
+		boolean bindVersion = false;
 
 		if (version == null) {
 			query.append(_FINDER_COLUMN_G_F_T_V_VERSION_1);
 		}
+		else if (version.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_F_T_V_VERSION_3);
+		}
 		else {
-			if (version.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_F_T_V_VERSION_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_G_F_T_V_VERSION_2);
-			}
+			bindVersion = true;
+			query.append(_FINDER_COLUMN_G_F_T_V_VERSION_2);
 		}
 
 		if (orderByComparator != null) {
@@ -4262,11 +4279,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 		qPos.add(folderId);
 
-		if (title != null) {
+		if (bindTitle) {
 			qPos.add(title);
 		}
 
-		if (version != null) {
+		if (bindVersion) {
 			qPos.add(version);
 		}
 
@@ -4333,28 +4350,30 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			query.append(_FINDER_COLUMN_G_F_T_V_FOLDERID_2);
 
+			boolean bindTitle = false;
+
 			if (title == null) {
 				query.append(_FINDER_COLUMN_G_F_T_V_TITLE_1);
 			}
-			else {
-				if (title.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_F_T_V_TITLE_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_F_T_V_TITLE_2);
-				}
+			else if (title.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_F_T_V_TITLE_3);
 			}
+			else {
+				bindTitle = true;
+				query.append(_FINDER_COLUMN_G_F_T_V_TITLE_2);
+			}
+
+			boolean bindVersion = false;
 
 			if (version == null) {
 				query.append(_FINDER_COLUMN_G_F_T_V_VERSION_1);
 			}
+			else if (version.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_F_T_V_VERSION_3);
+			}
 			else {
-				if (version.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_F_T_V_VERSION_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_F_T_V_VERSION_2);
-				}
+				bindVersion = true;
+				query.append(_FINDER_COLUMN_G_F_T_V_VERSION_2);
 			}
 
 			String sql = query.toString();
@@ -4372,11 +4391,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				qPos.add(folderId);
 
-				if (title != null) {
+				if (bindTitle) {
 					qPos.add(title);
 				}
 
-				if (version != null) {
+				if (bindVersion) {
 					qPos.add(version);
 				}
 
@@ -4401,10 +4420,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	private static final String _FINDER_COLUMN_G_F_T_V_FOLDERID_2 = "dlFileVersion.folderId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_T_V_TITLE_1 = "dlFileVersion.title IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_F_T_V_TITLE_2 = "dlFileVersion.title = ? AND ";
-	private static final String _FINDER_COLUMN_G_F_T_V_TITLE_3 = "(dlFileVersion.title IS NULL OR dlFileVersion.title = ?) AND ";
+	private static final String _FINDER_COLUMN_G_F_T_V_TITLE_3 = "(dlFileVersion.title IS NULL OR dlFileVersion.title = '') AND ";
 	private static final String _FINDER_COLUMN_G_F_T_V_VERSION_1 = "dlFileVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_G_F_T_V_VERSION_2 = "dlFileVersion.version = ?";
-	private static final String _FINDER_COLUMN_G_F_T_V_VERSION_3 = "(dlFileVersion.version IS NULL OR dlFileVersion.version = ?)";
+	private static final String _FINDER_COLUMN_G_F_T_V_VERSION_3 = "(dlFileVersion.version IS NULL OR dlFileVersion.version = '')";
 
 	/**
 	 * Caches the document library file version in the entity cache if it is enabled.

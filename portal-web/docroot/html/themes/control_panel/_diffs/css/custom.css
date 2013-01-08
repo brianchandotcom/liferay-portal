@@ -4,7 +4,7 @@
 /* ---------- Base styles ---------- */
 
 body {
-	background: #EEF0F2;
+	background: #EEF0F2 url(../images/custom/sidebar_bg.png) repeat-y 0 0;
 	color: #1A1A1A;
 	font-size: 12px;
 }
@@ -22,35 +22,15 @@ select {
 	padding: 4px;
 }
 
-.display-panel-columns:after, .display-panel-columns:before {
-	position: fixed;
-	content: '';
-	display: block;
-	bottom: 0;
-	top: 0;
-	width: 238px;
-	z-index: -1;
-}
-
-.display-panel-columns:after {
-	margin-left: 1px;
-	border-right: 1px solid #FFF;
-}
-
-.ie8 .display-panel-columns:after {
-	position: relative;
-}
-
-.display-panel-columns:before {
-	background-color: #CAD2DD;
-	border-right: 1px solid #B0B1B3;
-}
-
 body.portal-popup:after, body.portal-popup:before {
-	display: none;
+	background-image: none;
 }
 
-.panels-minimized.display-panel-columns:before, .panels-minimized.display-panel-columns:after, .panels-minimized .panel-page-menu {
+.panels-minimized.display-panel-columns {
+	background-position: -198px 0;
+}
+
+.panels-minimized .panel-page-menu {
 	left: -198px;
 }
 

@@ -162,8 +162,7 @@ public class IncludeTag extends AttributesTagSupport {
 
 		_calledSetAttributes = true;
 
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
+		HttpServletRequest request = getOriginalServletRequest();
 
 		if (isCleanUpSetAttributes()) {
 			_trackedRequest = new TrackedServletRequest(request);
@@ -269,6 +268,10 @@ public class IncludeTag extends AttributesTagSupport {
 
 	protected String getEndPage() {
 		return null;
+	}
+
+	protected HttpServletRequest getOriginalServletRequest() {
+		return (HttpServletRequest)pageContext.getRequest();
 	}
 
 	protected String getPage() {

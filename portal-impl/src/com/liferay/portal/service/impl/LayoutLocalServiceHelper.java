@@ -147,13 +147,14 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 	}
 
 	public boolean hasLayoutSetPrototypeLayout(
-			LayoutSetPrototype layoutSetPrototype, String layoutUuid)
+			LayoutSetPrototype layoutSetPrototype, String layoutUuid,
+			boolean privateLayout)
 		throws PortalException, SystemException {
 
 		Group group = layoutSetPrototype.getGroup();
 
-		Layout layout = layoutPersistence.fetchByUUID_G(
-			layoutUuid, group.getGroupId());
+		Layout layout = layoutPersistence.fetchByUUID_G_P(
+			layoutUuid, group.getGroupId(), privateLayout);
 
 		if (layout != null) {
 			return true;

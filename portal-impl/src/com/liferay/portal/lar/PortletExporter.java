@@ -1526,10 +1526,14 @@ public class PortletExporter {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
+		String layoutId = "Layout_" + layout.getLayoutId();
+
 		Company company = CompanyLocalServiceUtil.getCompany(
 			layout.getCompanyId());
 
 		Group companyGroup = company.getGroup();
+
+		String companyGroupId = "Group_" + companyGroup.getGroupId();
 
 		String[] newValues = new String[oldValues.length];
 
@@ -1537,11 +1541,8 @@ public class PortletExporter {
 			String oldValue = oldValues[i];
 
 			newValues[i] = StringUtil.replace(
-				oldValue, "Group_" + companyGroup.getGroupId(),
-				"Group_Company");
-
-			newValues[i] = StringUtil.replace(
-				oldValue, "Layout_" + layout.getLayoutId(), "Layout_LayoutId");
+				oldValue, new String[] {companyGroupId, layoutId},
+				new String[] {"Group_Company", "Layout_LayoutId"});
 		}
 
 		jxPreferences.setValues(key, newValues);

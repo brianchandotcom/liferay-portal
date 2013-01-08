@@ -1856,10 +1856,8 @@ public class PortletImporter {
 			String oldValue = oldValues[i];
 
 			newValues[i] = StringUtil.replace(
-				oldValue, "Group_Company", newGroupId);
-
-			newValues[i] = StringUtil.replace(
-				oldValue, "Layout_LayoutId", newLayoutId);
+				oldValue, new String[] {"Group_Company", "Layout_LayoutId"},
+				new String[] {newGroupId, newLayoutId});
 		}
 
 		jxPreferences.setValues(key, newValues);

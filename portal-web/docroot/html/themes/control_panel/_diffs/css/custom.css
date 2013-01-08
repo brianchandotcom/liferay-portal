@@ -4,7 +4,7 @@
 /* ---------- Base styles ---------- */
 
 body {
-	background: #EEF0F2;
+	background: #EEF0F2 url(../images/custom/sidebar_bg.png) repeat-y 0 0;
 	color: #1A1A1A;
 	font-size: 12px;
 }
@@ -22,29 +22,15 @@ select {
 	padding: 4px;
 }
 
-.display-panel-columns {
-	&:after, &:before {
-		bottom: 0;
-		content: '';
-		display: block;
-		position: absolute;
-		top: 0;
-		width: 239px;
-		z-index: -1;
-	}
-
-	&:before {
-		background-color: #CAD2DD;
-		border-right: 1px solid #B0B1B3;
-		outline: 1px solid #FFF;
-	}
-}
-
 body.portal-popup:after, body.portal-popup:before {
-	display: none;
+	background-image: none;
 }
 
-.panels-minimized.display-panel-columns:before, .panels-minimized.display-panel-columns:after, .panels-minimized .panel-page-menu {
+.panels-minimized.display-panel-columns {
+	background-position: -198px 0;
+}
+
+.panels-minimized .panel-page-menu {
 	left: -198px;
 }
 
@@ -151,38 +137,12 @@ body.portal-popup:after, body.portal-popup:before {
 	position: relative;
 }
 
-.lfr-ctrl-panel {
-	display: table;
+.lfr-ctrl-panel .aui-tree-node-selected {
+	background: transparent;
+}
 
-	.lfr-ctrl-panel-content {
-		display: table-row;
-
-		.panel-page-menu {
-			background-color: #CAD2DD;
-			border-right: 1px solid #B0B1B3;
-			display: table-cell;
-			float: none;
-			height: 100%;
-			min-width: 239px;
-			vertical-align: top;
-			z-index: 1;
-		}
-
-		.panel-page-body {
-			border-left: 1px solid #FFF;
-			display: table-cell;
-			height: 100%;
-			width: auto;
-		}
-	}
-
-	.aui-tree-node-selected {
-		background: transparent;
-
-		a {
-			color: #333;
-		}
-	}
+.lfr-ctrl-panel .aui-tree-node-selected a {
+	color: #333;
 }
 
 .panel-page-application .lfr-panel.lfr-extended {
@@ -235,17 +195,12 @@ body.portal-popup:after, body.portal-popup:before {
 
 #wrapper div.panel-page-body {
 	float: none;
-	padding: 15px 20px 0 15px;
+	padding: 15px 20px 0 260px;
 	width: auto;
 }
 
 .panels-minimized #wrapper div.panel-page-body {
-	display: block;
-	margin-left: 42px;
-}
-
-.chrome .panels-minimized #wrapper div.panel-page-body {
-	margin-left: 41px;
+	padding-left: 60px;
 }
 
 .aui-tagselector-content {
@@ -359,7 +314,7 @@ body.portal-popup:after, body.portal-popup:before {
 	padding: 3px 6px;
 }
 
-.panel-page-menu #panel-manage-content .lfr-panel-titlebar .lfr-panel-title-single, .panels-minimized .panel-page-menu #panel-manage-content .lfr-panel-titlebar  {
+.panel-page-menu #panel-manage-content .lfr-panel-titlebar .lfr-panel-title-single {
 	padding: 7px 6px 6px;
 }
 
@@ -735,26 +690,6 @@ body.portal-popup:after, body.portal-popup:before {
 
 .taglib-page-iterator .search-pages .page-links {
 	padding: 5px 0 0;
-}
-
-.ie .display-panel-columns {
-	bottom: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-}
-
-.ie7 .lfr-ctrl-panel .lfr-ctrl-panel-content, .ie6 .lfr-ctrl-panel .lfr-ctrl-panel-content  {
-	.panel-page-menu {
-		background-color: transparent;
-		float: left;
-		height: auto;
-	}
-
-	.panel-page-body {
-		border-left-width: 0;
-		margin-left: 0;
-	}
 }
 
 /*----- Extras -----*/

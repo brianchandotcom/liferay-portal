@@ -26,6 +26,7 @@ public class SelectTimeZonePacificStandardTimeTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(SelectTimeZonePacificStandardTimeTest.class);
+		testSuite.addTestSuite(ViewTimeZonePacificStandardTimeTest.class);
 		testSuite.addTestSuite(TearDownTimeZoneTest.class);
 
 		return testSuite;

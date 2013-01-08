@@ -29,6 +29,8 @@ public class SelectTimeZonePacificStandardTimeTest extends BaseTestCase {
 		selenium.clickAt("link=Joe Bloggs",
 			RuntimeVariables.replace("Joe Bloggs"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isPartialText("//a[@id='_2_displaySettingsLink']",
+				"Display Settings"));
 		selenium.clickAt("//a[@id='_2_displaySettingsLink']",
 			RuntimeVariables.replace("Display Settings"));
 		selenium.waitForVisible("//select[@name='_2_timeZoneId']");

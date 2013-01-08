@@ -28,7 +28,8 @@ public class SelectBirthdayTest extends BaseTestCase {
 		selenium.clickAt("link=Joe Bloggs",
 			RuntimeVariables.replace("Joe Bloggs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.click("//select[@id='_2_birthdayMonth']");
+		selenium.clickAt("//select[@id='_2_birthdayMonth']",
+			RuntimeVariables.replace("March"));
 		selenium.select("//select[@id='_2_birthdayMonth']",
 			RuntimeVariables.replace("March"));
 		selenium.waitForSelectedLabel("//select[@id='_2_birthdayMonth']",
@@ -56,6 +57,9 @@ public class SelectBirthdayTest extends BaseTestCase {
 			selenium.getText("//div[contains(@class,'calendar-header')]/div"));
 		selenium.waitForVisible(
 			"//table[@aria-label='May 1986']/tbody/tr[5]/td[9]");
+		assertEquals(RuntimeVariables.replace("31"),
+			selenium.getText(
+				"//table[@aria-label='May 1986']/tbody/tr[5]/td[9]"));
 		selenium.clickAt("//table[@aria-label='May 1986']/tbody/tr[5]/td[9]",
 			RuntimeVariables.replace("31"));
 		selenium.waitForNotVisible(

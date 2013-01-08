@@ -28,7 +28,8 @@ public class TearDownBirthdayTest extends BaseTestCase {
 		selenium.clickAt("link=Joe Bloggs",
 			RuntimeVariables.replace("Joe Bloggs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.click("//select[@id='_2_birthdayMonth']");
+		selenium.clickAt("//select[@id='_2_birthdayMonth']",
+			RuntimeVariables.replace("January"));
 		selenium.select("//select[@id='_2_birthdayMonth']",
 			RuntimeVariables.replace("January"));
 		selenium.select("//select[@id='_2_birthdayDay']",

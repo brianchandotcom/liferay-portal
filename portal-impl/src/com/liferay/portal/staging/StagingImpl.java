@@ -285,8 +285,8 @@ public class StagingImpl implements Staging {
 					layouts.add(layout);
 				}
 
-				List<Layout> parentLayouts = getMissingParentLayouts(
-					layout, sourceGroupId);
+				List<Layout> parentLayouts = getRemoteMissingParentLayouts(
+					httpPrincipal, layout, remoteGroupId);
 
 				for (Layout parentLayout : parentLayouts) {
 					if (!layouts.contains(parentLayout)) {
@@ -637,6 +637,36 @@ public class StagingImpl implements Staging {
 		}
 
 		return missingParentLayouts;
+	}
+
+	protected List<Layout> getRemoteMissingParentLayouts(
+			HttpPrincipal httpPrincipal, Layout layout, long remoteGroupId)
+		throws Exception {
+
+		List<Layout> missingRemoteParentLayouts = new ArrayList<Layout>();
+
+		long parentLayoutId = layout.getParentLayoutId();
+
+		while (parentLayoutId > 0) {
+			Layout parentLayout = LayoutLocalServiceUtil.getLayout(
+				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
+
+			try {
+				LayoutServiceHttp.getLayoutByUuidAndGroupId(httpPrincipal,
+					parentLayout.getUuid(), remoteGroupId);
+
+				// If one parent is found all others are assumed to exist
+
+				break;
+			}
+			catch (NoSuchLayoutException nsle) {
+				missingRemoteParentLayouts.add(parentLayout);
+
+				parentLayoutId = parentLayout.getParentLayoutId();
+			}
+		}
+
+		return missingRemoteParentLayouts;
 	}
 
 	public long getRecentLayoutRevisionId(

@@ -392,6 +392,25 @@ public class LayoutServiceUtil {
 	}
 
 	/**
+	* Returns the layout matching the universally unique identifier and group
+	* ID
+	*
+	* @param uuid the universally unique identifier of the scope layout
+	* @param groupId the primary key of the group
+	* @return the layout
+	* @throws PortalException if a matching layout could not be found, if the
+	user did not have permission to view the layout, or if some other
+	portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Layout getLayoutByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLayoutByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns the name of the layout.
 	*
 	* @param groupId the primary key of the group

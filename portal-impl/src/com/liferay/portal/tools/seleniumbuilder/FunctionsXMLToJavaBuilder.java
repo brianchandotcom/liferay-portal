@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -40,6 +41,8 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 	public FunctionsXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
+		_basedir = getBasedir();
+
 		_validCommands = new TreeSet<String>();
 
 		_validCommands.add("else");
@@ -47,6 +50,11 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 		_validCommands.add("if");
 		_validCommands.add("selenium");
 		_validCommands.add("while");
+
+		_functionMethodParamListMap = getFunctionMethodParamListMap();
+		_functionMethodReturnTypeMap = getFunctionMethodReturnTypeMap();
+
+		Set<String> fileNameSetFunctions = getFileNameSetFunctions();
 
 		for (String fileName : fileNameSetFunctions) {
 			if (fileName.length() > 161) {
@@ -59,7 +67,7 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 	}
 
 	protected void generateFunctions(String fileName) throws Exception {
-		if (!FileUtil.exists(basedir + "/" + fileName)) {
+		if (!FileUtil.exists(_basedir + "/" + fileName)) {
 			return;
 		}
 
@@ -114,7 +122,7 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 
 		String functionsObject = functions.attributeValue("object");
 
-		String functionReturnType = functionMethodReturnTypeMap.get(
+		String functionReturnType = _functionMethodReturnTypeMap.get(
 			functionsObject);
 
 		for (Element functionDef : functionDefs) {
@@ -126,7 +134,7 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 
 			sb.append(functionDefCommand);
 
-			List<String> paramSuffixList = functionMethodParamListMap.get(
+			List<String> paramSuffixList = _functionMethodParamListMap.get(
 				functionsObject);
 
 			String paramList = "";
@@ -158,6 +166,9 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
+	private String _basedir;
+	private Map<String, List<String>> _functionMethodParamListMap;
+	private Map<String, String> _functionMethodReturnTypeMap;
 	private Set<String> _validCommands = new TreeSet<String>();
 
 }

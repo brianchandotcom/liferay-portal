@@ -65,27 +65,75 @@ public class SeleniumBuilder {
 
 		cmdLineParser.parse(args);
 
-		basedir = (String)cmdLineParser.getOptionValue(basedirOption);
+		_basedir = (String)cmdLineParser.getOptionValue(basedirOption);
 
-		fileNameSet = _initfileNameSet();
+		_fileNameSet = _initFileNameSet();
 
-		fileNameSetActions = _initfileNameSetActions();
-		fileNameSetFunctions = _initfileNameSetFunctions();
-		fileNameSetMacros = _initfileNameSetMacros();
-		fileNameSetPaths = _initfileNameSetPaths();
-		fileNameSetTests = _initfileNameSetTests();
+		_fileNameSetActions = _initFileNameSetActions();
+		_fileNameSetFunctions = _initFileNameSetFunctions();
+		_fileNameSetMacros = _initFileNameSetMacros();
+		_fileNameSetPaths = _initFileNameSetPaths();
+		_fileNameSetTests = _initFileNameSetTests();
 
-		classNameSetAvailable = _initClassNameSetAvailable();
+		_classNameSetAvailable = _initClassNameSetAvailable();
 
-		functionMethodParamListMap = _initFunctionMethodParamListMap();
-		functionMethodReturnTypeMap = _initFunctionMethodReturnTypeMap();
-		seleniumMethodParamMap = _initSeleniumMethodParamMap();
+		_functionMethodParamListMap = _initFunctionMethodParamListMap();
+		_functionMethodReturnTypeMap = _initFunctionMethodReturnTypeMap();
+		_seleniumMethodParamMap = _initSeleniumMethodParamMap();
+	}
+
+	public String getBasedir() throws Exception {
+		return _basedir;
+	}
+
+	public Set<String> getClassNameSetAvailable() throws Exception {
+		return _classNameSetAvailable;
+	}
+
+	public Set<String> getFileNameSet() throws Exception {
+		return _fileNameSet;
+	}
+
+	public Set<String> getFileNameSetActions() throws Exception {
+		return _fileNameSetActions;
+	}
+
+	public Set<String> getFileNameSetFunctions() throws Exception {
+		return _fileNameSetFunctions;
+	}
+
+	public Set<String> getFileNameSetMacros() throws Exception {
+		return _fileNameSetMacros;
+	}
+
+	public Set<String> getFileNameSetPaths() throws Exception {
+		return _fileNameSetPaths;
+	}
+
+	public Set<String> getFileNameSetTests() throws Exception {
+		return _fileNameSetTests;
+	}
+
+	public Map<String, List<String>> getFunctionMethodParamListMap()
+		throws Exception {
+
+		return _functionMethodParamListMap;
+	}
+
+	public Map<String, String> getFunctionMethodReturnTypeMap()
+		throws Exception {
+
+		return _functionMethodReturnTypeMap;
+	}
+
+	public Map<String, Integer> getSeleniumMethodParamMap() throws Exception {
+		return _seleniumMethodParamMap;
 	}
 
 	protected Set<String> addClassName(
 		Set<String> classNameSet, String simpleClassName) throws Exception {
 
-		for (String className : classNameSetAvailable) {
+		for (String className : _classNameSetAvailable) {
 			if (className.endsWith("." + simpleClassName)) {
 				classNameSet.add(className);
 			}
@@ -219,13 +267,13 @@ public class SeleniumBuilder {
 	}
 
 	protected String readFile(String fileName) throws Exception {
-		return FileUtil.read(basedir + "/" + fileName);
+		return FileUtil.read(_basedir + "/" + fileName);
 	}
 
 	protected void writeFile(String fileName, String content, boolean format)
 		throws Exception {
 
-		File file = new File(basedir + "-generate/" + fileName);
+		File file = new File(_basedir + "-generate/" + fileName);
 
 		if (format) {
 			ServiceBuilder.writeFile(file, content);
@@ -236,18 +284,6 @@ public class SeleniumBuilder {
 			FileUtil.write(file, content);
 		}
 	}
-
-	protected String basedir;
-	protected Set<String> classNameSetAvailable;
-	protected Set<String> fileNameSet;
-	protected Set<String> fileNameSetActions;
-	protected Set<String> fileNameSetFunctions;
-	protected Set<String> fileNameSetMacros;
-	protected Set<String> fileNameSetPaths;
-	protected Set<String> fileNameSetTests;
-	protected Map<String, List<String>> functionMethodParamListMap;
-	protected Map<String, String> functionMethodReturnTypeMap;
-	protected Map<String, Integer> seleniumMethodParamMap;
 
 	private Set<String> _getChildSimpleClassNameSet(
 		Element element, Set<String> simpleClassNameSet) {
@@ -327,7 +363,7 @@ public class SeleniumBuilder {
 
 		String simpleFileName = objectName + "." + rootElementName;
 
-		for (String fileName : fileNameSet) {
+		for (String fileName : _fileNameSet) {
 			if (fileName.endsWith("/" + simpleFileName)) {
 				return fileName;
 			}
@@ -339,7 +375,7 @@ public class SeleniumBuilder {
 	private Set<String> _initClassNameSetAvailable() throws Exception {
 		Set<String> classNameSet = new TreeSet<String>();
 
-		for (String fileName : fileNameSet) {
+		for (String fileName : _fileNameSet) {
 			if (fileName.endsWith(".functions")) {
 				String className = StringUtil.replace(
 					fileName, ".functions", "Functions");
@@ -376,10 +412,10 @@ public class SeleniumBuilder {
 		return classNameSet;
 	}
 
-	private Set<String> _initfileNameSet() throws Exception {
+	private Set<String> _initFileNameSet() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
-		directoryScanner.setBasedir(basedir);
+		directoryScanner.setBasedir(_basedir);
 		directoryScanner.setIncludes(
 			new String[] {
 				"**\\portalweb\\**\\*.actions",
@@ -400,30 +436,30 @@ public class SeleniumBuilder {
 		return fileNames;
 	}
 
-	private Set<String> _initfileNameSetActions() throws Exception {
-		return _initfileNameSetType(".actions");
+	private Set<String> _initFileNameSetActions() throws Exception {
+		return _initFileNameSetType(".actions");
 	}
 
-	private Set<String> _initfileNameSetFunctions() throws Exception {
-		return _initfileNameSetType(".functions");
+	private Set<String> _initFileNameSetFunctions() throws Exception {
+		return _initFileNameSetType(".functions");
 	}
 
-	private Set<String> _initfileNameSetMacros() throws Exception {
-		return _initfileNameSetType(".macros");
+	private Set<String> _initFileNameSetMacros() throws Exception {
+		return _initFileNameSetType(".macros");
 	}
 
-	private Set<String> _initfileNameSetPaths() throws Exception {
-		return _initfileNameSetType(".paths");
+	private Set<String> _initFileNameSetPaths() throws Exception {
+		return _initFileNameSetType(".paths");
 	}
 
-	private Set<String> _initfileNameSetTests() throws Exception {
-		return _initfileNameSetType(".test");
+	private Set<String> _initFileNameSetTests() throws Exception {
+		return _initFileNameSetType(".test");
 	}
 
-	private Set<String> _initfileNameSetType(String suffix) throws Exception {
+	private Set<String> _initFileNameSetType(String suffix) throws Exception {
 		Set<String> fileNameTypeSet = new TreeSet<String>();
 
-		for (String fileName : fileNameSet) {
+		for (String fileName : _fileNameSet) {
 			if (fileName.endsWith(suffix)) {
 				fileNameTypeSet.add(fileName);
 			}
@@ -437,7 +473,7 @@ public class SeleniumBuilder {
 
 		Map<String, List<String>> hashMap = new HashMap<String, List<String>>();
 
-		for (String fileName : fileNameSetFunctions) {
+		for (String fileName : _fileNameSetFunctions) {
 			Element functions = getRootElement(fileName);
 
 			String functionsObject = functions.attributeValue("object");
@@ -468,7 +504,7 @@ public class SeleniumBuilder {
 
 		Map<String, String> hashMap = new HashMap<String, String>();
 
-		for (String fileName : fileNameSetFunctions) {
+		for (String fileName : _fileNameSetFunctions) {
 			Element functions = getRootElement(fileName);
 
 			String functionsObject = functions.attributeValue("object");
@@ -578,7 +614,7 @@ public class SeleniumBuilder {
 		String functionObjectName = StringUtil.upperCaseFirstLetter(
 			actionCommandName);
 
-		List<String> paramSuffixList = functionMethodParamListMap.get(
+		List<String> paramSuffixList = _functionMethodParamListMap.get(
 			functionObjectName);
 
 		String parameters = "";
@@ -706,7 +742,7 @@ public class SeleniumBuilder {
 
 		StringBundler sb = new StringBundler();
 
-		String functionReturnType = functionMethodReturnTypeMap.get(
+		String functionReturnType = _functionMethodReturnTypeMap.get(
 			functionObjectName);
 
 		if (!functionReturnType.equals("void")) {
@@ -721,7 +757,7 @@ public class SeleniumBuilder {
 
 		String parentElementName = parentElement.getName();
 
-		List<String> paramSuffixList = functionMethodParamListMap.get(
+		List<String> paramSuffixList = _functionMethodParamListMap.get(
 			functionObjectName);
 
 		String paramList = "";
@@ -809,8 +845,8 @@ public class SeleniumBuilder {
 
 		int numParams = 0;
 
-		if (seleniumMethodParamMap.containsKey(seleniumCommandName)) {
-			numParams = seleniumMethodParamMap.get(seleniumCommandName);
+		if (_seleniumMethodParamMap.containsKey(seleniumCommandName)) {
+			numParams = _seleniumMethodParamMap.get(seleniumCommandName);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -953,5 +989,17 @@ public class SeleniumBuilder {
 
 		return text;
 	}
+
+	private String _basedir;
+	private Set<String> _classNameSetAvailable;
+	private Set<String> _fileNameSet;
+	private Set<String> _fileNameSetActions;
+	private Set<String> _fileNameSetFunctions;
+	private Set<String> _fileNameSetMacros;
+	private Set<String> _fileNameSetPaths;
+	private Set<String> _fileNameSetTests;
+	private Map<String, List<String>> _functionMethodParamListMap;
+	private Map<String, String> _functionMethodReturnTypeMap;
+	private Map<String, Integer> _seleniumMethodParamMap;
 
 }

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.InitUtil;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,6 +39,10 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 	public PathsXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
+		_basedir = getBasedir();
+
+		Set<String> fileNameSetPaths = getFileNameSetPaths();
+
 		for (String fileName : fileNameSetPaths) {
 			if (fileName.length() > 161) {
 				System.out.println(
@@ -49,7 +54,7 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 	}
 
 	protected void generatePaths(String fileName) throws Exception {
-		if (!FileUtil.exists(basedir + "/" + fileName)) {
+		if (!FileUtil.exists(_basedir + "/" + fileName)) {
 			return;
 		}
 
@@ -128,5 +133,7 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 
 		return sb.toString();
 	}
+
+	private String _basedir;
 
 }

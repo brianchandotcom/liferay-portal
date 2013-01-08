@@ -24,6 +24,7 @@ import com.liferay.portal.util.InitUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -41,9 +42,16 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 	public ActionsXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
+		_basedir = getBasedir();
+
 		_validCommands = new TreeSet<String>();
 
 		_validCommands.add("function");
+
+		_functionMethodParamListMap = getFunctionMethodParamListMap();
+		_functionMethodReturnTypeMap = getFunctionMethodReturnTypeMap();
+
+		Set<String> fileNameSetPaths = getFileNameSetPaths();
 
 		for (String fileName : fileNameSetPaths) {
 			if (fileName.length() > 161) {
@@ -56,7 +64,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 	}
 
 	protected void generateActions(String fileName) throws Exception {
-		if (!FileUtil.exists(basedir + "/" + fileName)) {
+		if (!FileUtil.exists(_basedir + "/" + fileName)) {
 			return;
 		}
 
@@ -78,7 +86,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 
 		Element rootElement = null;
 
-		if (FileUtil.exists(basedir + "/" + actionsXMLFileName)) {
+		if (FileUtil.exists(_basedir + "/" + actionsXMLFileName)) {
 			isValidName(actionsXMLFileName);
 
 			rootElement = getRootElement(actionsXMLFileName);
@@ -227,7 +235,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 			String functionObjectName = StringUtil.upperCaseFirstLetter(
 				actionDefCommand);
 
-			String functionReturnType = functionMethodReturnTypeMap.get(
+			String functionReturnType = _functionMethodReturnTypeMap.get(
 				functionObjectName);
 
 			sb.append("public ");
@@ -235,7 +243,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 			sb.append(" ");
 			sb.append(actionDefCommand);
 
-			List<String> paramSuffixList = functionMethodParamListMap.get(
+			List<String> paramSuffixList = _functionMethodParamListMap.get(
 				functionObjectName);
 
 			String paramList = "";
@@ -292,7 +300,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		String functionObjectName = StringUtil.upperCaseFirstLetter(
 			actionDefCommand);
 
-		String functionReturnType = functionMethodReturnTypeMap.get(
+		String functionReturnType = _functionMethodReturnTypeMap.get(
 			functionObjectName);
 
 		if (!functionReturnType.equals("void")) {
@@ -302,7 +310,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("super.");
 		sb.append(actionDefCommand);
 
-		List<String> paramSuffixList = functionMethodParamListMap.get(
+		List<String> paramSuffixList = _functionMethodParamListMap.get(
 			functionObjectName);
 
 		String paramList = "";
@@ -389,6 +397,9 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
+	private String _basedir;
+	private Map<String, List<String>> _functionMethodParamListMap;
+	private Map<String, String> _functionMethodReturnTypeMap;
 	private Set<String> _validCommands = new TreeSet<String>();
 
 }

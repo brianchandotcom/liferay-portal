@@ -86,8 +86,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append(macrosPackagePath);
 		sb.append(";\n");
 
-		sb.append("import com.liferay.portalweb.blocks.base.macros.");
-		sb.append("BaseMacros;\n");
+		sb.append("import com.liferay.portalweb.base.macros.BaseMacros;\n");
 
 		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
 		sb.append("LiferaySelenium;\n");

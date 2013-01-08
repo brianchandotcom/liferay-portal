@@ -1,6 +1,0 @@
-<functions object="IsElementPresent" return="boolean">
-	<functiondef command="isElementPresent" default="true">
-		<selenium command="pause" target="1000" />
-		<selenium command="isElementPresent" return="boolean" />
-	</functiondef>
-</functions>

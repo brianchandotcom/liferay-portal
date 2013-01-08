@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
@@ -42,9 +43,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
@@ -177,29 +176,6 @@ public class VerifyJournal extends VerifyProcess {
 	}
 
 	protected void verifyContentSearch() throws Exception {
-		List<JournalContentSearch> contentSearches =
-			JournalContentSearchLocalServiceUtil.getArticleContentSearches();
-
-		Set<String> portletIds = new HashSet<String>();
-
-		for (JournalContentSearch contentSearch : contentSearches) {
-			portletIds.add(contentSearch.getPortletId());
-		}
-
-		for (String portletId : portletIds) {
-			verifyContentSearch(portletId);
-		}
-	}
-
-	protected void verifyContentSearch(String portletId) throws Exception {
-		List<JournalContentSearch> contentSearches =
-			JournalContentSearchLocalServiceUtil.getPortletContentSearches(
-				portletId);
-
-		if (contentSearches.size() <= 1) {
-			return;
-		}
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -207,15 +183,25 @@ public class VerifyJournal extends VerifyProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(
-				"select preferences from PortletPreferences where portletId " +
-					"= ?");
+			StringBundler sb = new StringBundler(10);
 
-			ps.setString(1, portletId);
+			sb.append("select TEMP_TABLE_1.groupId, preferences from (select ");
+			sb.append("groupId, portletId, preferences from ");
+			sb.append("PortletPreferences inner join Layout on ");
+			sb.append("PortletPreferences.plid = Layout.plid) as TEMP_TABLE_1");
+			sb.append(" inner join (select groupId, portletId from ");
+			sb.append("JournalContentSearch group by groupId, portletId ");
+			sb.append("having count(groupId) > 1 and count(portletId) > 1) ");
+			sb.append("as TEMP_TABLE_2 on TEMP_TABLE_1.groupId = ");
+			sb.append("TEMP_TABLE_2.groupId and TEMP_TABLE_1.portletId = ");
+			sb.append("TEMP_TABLE_2.portletId");
+
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
 				String xml = rs.getString("preferences");
 
 				PortletPreferences portletPreferences =
@@ -224,7 +210,11 @@ public class VerifyJournal extends VerifyProcess {
 				String articleId = portletPreferences.getValue(
 					"articleId", null);
 
-				JournalContentSearch contentSearch = contentSearches.get(1);
+				List<JournalContentSearch> contentSearches =
+					JournalContentSearchLocalServiceUtil
+						.getArticleContentSearches(groupId, articleId);
+
+				JournalContentSearch contentSearch = contentSearches.get(0);
 
 				JournalContentSearchLocalServiceUtil.updateContentSearch(
 					contentSearch.getGroupId(), contentSearch.isPrivateLayout(),

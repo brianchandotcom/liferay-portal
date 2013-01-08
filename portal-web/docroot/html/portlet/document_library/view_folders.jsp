@@ -307,6 +307,9 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 					<%
 						}
 						catch (Exception e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn("Error trying to access repository", e);
+							}
 					%>
 
 							<li class="app-view-navigation-entry folder error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
@@ -441,3 +444,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 		);
 	</aui:script>
 </liferay-ui:app-view-navigation>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.view_folders_jsp");
+%>

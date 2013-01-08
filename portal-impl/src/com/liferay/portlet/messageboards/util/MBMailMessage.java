@@ -18,12 +18,15 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Jorge Ferrer
@@ -81,8 +84,73 @@ public class MBMailMessage {
 	}
 
 	public void setPlainBody(String plainBody) {
-		_plainBody = plainBody;
+		if (PropsValues.MESSAGE_BOARDS_EMAIL_REMOVE_ORIGINAL_MESSAGE) {
+			Matcher matcher = _QUOTE_TEXT_BEGINNING.matcher(plainBody);
+
+			if (matcher.find()) {
+				_plainBody = plainBody.substring(0, matcher.start());
+				_plainBody = _plainBody.trim();
+			}
+			else {
+				_plainBody = plainBody;
+			}
+		}
+		else {
+			_plainBody = plainBody;
+		}
 	}
+
+	private static final String _BASE_SPACER_REGEX = "[\\s,/\\.\\-]";
+
+	private static final String _DT_DAY_OF_MONTH_REGEX =
+		"[0-3]?[0-9]" + _BASE_SPACER_REGEX +
+			"*(?:(?:th)|(?:st)|(?:nd)|(?:rd))?";
+
+	private static final String _DT_DAY_OF_WEEK_REGEX =
+		"(?:(?:Mon(?:day)?)|(?:Tue(?:sday)?)|(?:Wed(?:nesday)?)|" +
+			"(?:Thu(?:rsday)?)|(?:Fri(?:day)?)|(?:Sat(?:urday)?)|" +
+				"(?:Sun(?:day)?))";
+
+	private static final String _DT_MONTH_REGEX =
+		"(?:(?:Jan(?:uary)?)|(?:Feb(?:uary)?)|(?:Mar(?:ch)?)|(?:Apr(?:il)?)|" +
+			"(?:May)|(?:Jun(?:e)?)|(?:Jul(?:y)?)|(?:Aug(?:ust)?)|" +
+				"(?:Sep(?:tember)?)|(?:Oct(?:ober)?)|(?:Nov(?:ember)?)|" +
+					"(?:Dec(?:ember)?)|(?:[0-1]?[0-9]))";
+
+	private static final String _DT_TIME_REGEX =
+		"(?:[0-2])?[0-9]:[0-5][0-9](?::[0-5][0-9])?(?:(?:\\s)?[AP]M)?";
+
+	private static final String _DT_YEAR_REGEX = "(?:[1-2]?[0-9])[0-9][0-9]";
+
+	private static final String _FORMATTED_DATE_REGEX =
+		"(?:" + _DT_DAY_OF_WEEK_REGEX + _BASE_SPACER_REGEX + "+)?(?:(?:" +
+			_DT_DAY_OF_MONTH_REGEX + _BASE_SPACER_REGEX + "+" +
+				_DT_MONTH_REGEX + ")|(?:" + _DT_MONTH_REGEX +
+					_BASE_SPACER_REGEX + "+" + _DT_DAY_OF_MONTH_REGEX + "))" +
+						_BASE_SPACER_REGEX + "+" + _DT_YEAR_REGEX;
+
+	private static final String _FORMATTED_DATE_TIME_REGEX =
+		"(?:" + _FORMATTED_DATE_REGEX + "[\\s,]*(?:(?:at)|(?:@))?\\s*" +
+			_DT_TIME_REGEX + ")|(?:" + _DT_TIME_REGEX + "[\\s,]*(?:on)?\\s*" +
+				_FORMATTED_DATE_REGEX + ")";
+
+	private static final String _HEADER_DATE_TIME_REGEX =
+		"(?:(?:date)|(?:sent)|(?:time)):\\s*("+ _FORMATTED_DATE_TIME_REGEX +
+			").*\r\n";
+
+	private static final String _HEADER_SUBJECT_ADDRESS_REGEX =
+		"((?:from)|(?:subject)|(?:b?cc)|(?:to)):.*\r\n";
+
+	private static final String _QUOTE_GMAIL_REGEX =
+		"(On\\s+" + _FORMATTED_DATE_TIME_REGEX + ".*wrote:\n)";
+
+	private static final String _QUOTE_LINE_REGEX =
+		"[-,_]+\\s*(?:Original(?:\\sMessage)?)?\\s*[-,_]+\r\n\\s*";
+
+	private static final Pattern _QUOTE_TEXT_BEGINNING =
+		Pattern.compile("(?i)(?:(?:" + _QUOTE_LINE_REGEX + ")?(?:(?:" +
+			_HEADER_SUBJECT_ADDRESS_REGEX + ")|(?:" + _HEADER_DATE_TIME_REGEX +
+				")){2,6})|(?:" + _QUOTE_GMAIL_REGEX + ")");
 
 	private List<ObjectValuePair<String, byte[]>> _bytesOVPs =
 		new ArrayList<ObjectValuePair<String, byte[]>>();

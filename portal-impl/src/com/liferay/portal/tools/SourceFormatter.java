@@ -1589,7 +1589,7 @@ public class SourceFormatter {
 								}
 
 								if (excluded == null) {
-									excluded = 
+									excluded =
 										_javaTermSortExclusions.getProperty(
 											fileNameWithForwardSlashes);
 								}
@@ -3971,13 +3971,9 @@ public class SourceFormatter {
 			"**\\portal-service\\**\\model\\*Soap.java",
 			"**\\portal-service\\**\\model\\*Wrapper.java",
 			"**\\portal-web\\classes\\**\\*.java",
-			"**\\portal-web\\test\\**\\*Actions.java",
-			"**\\portal-web\\test\\**\\*Functions.java",
-			"**\\portal-web\\test\\**\\*Macros.java",
-			"**\\portal-web\\test\\**\\*Paths.java",
 			"**\\portal-web\\test\\**\\*Test.java",
 			"**\\portal-web\\test\\**\\*Tests.java",
-			"**\\portal-web\\test\\**\\portalweb\\tests\\**\\*TestPlan.java",
+			"**\\portal-web\\test-generate\\**\\*.java",
 			"**\\portlet\\**\\service\\**", "**\\tmp\\**", "**\\tools\\tck\\**"
 		};
 

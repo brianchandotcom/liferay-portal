@@ -68,10 +68,9 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
-		String functionsFilePath = fileName.substring(0, x) + "/rc";
+		String functionsFilePath = fileName.substring(0, x);
 		String functionsSimpleClassName =
 			fileName.substring(x + 1, y) + "Functions";
-		String functionsXMLFilePath = fileName.substring(0, x);
 
 		String functionsFileName =
 			functionsFilePath + "/" + functionsSimpleClassName + ".java";

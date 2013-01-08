@@ -12,41 +12,24 @@
  * details.
  */
 
-package com.liferay.portalweb.blocks.base.actions.rc;
+package com.liferay.portalweb.blocks.base.actions;
 
+import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ActionsUtil {
+public class BaseActions {
 
-	public static String getLocator(
-		Map<String, String> pathMap, String key) throws Exception {
-
-		return pathMap.get(key);
+	public BaseActions(LiferaySelenium liferaySelenium) {
+		paths = new HashMap<String, String>();
+		selenium = liferaySelenium;
 	}
 
-	public static String[] getParams(
-		Map<String, String> pathMap, String param1, String param2) {
-
-		String[] params = new String[2];
-
-		if (pathMap.containsKey(param1)) {
-			params[0] = pathMap.get(param1);
-		}
-		else {
-			params[0] = param1;
-		}
-
-		if (param2 == null) {
-			params[1] = "";
-		}
-		else {
-			params[1] = param2;
-		}
-
-		return params;
-	}
+	protected Map<String, String> paths;
+	protected LiferaySelenium selenium;
 
 }

@@ -466,6 +466,16 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<fileset dir="test/${test.type}" includes="**/*.properties,**/dependencies/**,META-INF/*.xml" />
 				</copy>
 
+				<if>
+					<equals arg1="${test.type}" arg2="" />
+					<then>
+						<property name="srcdir" value="test:test-generate" />
+					</then>
+					<else>
+						<property name="srcdir" value="test/${test.type}" />
+					</else>
+				</if>
+
 				<javac
 					classpathref="project.classpath"
 					compiler="${javac.compiler}"
@@ -475,7 +485,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					encoding="${javac.encoding}"
 					includeAntRuntime="false"
 					nowarn="${javac.nowarn}"
-					srcdir="test/${test.type}"
+					srcdir="${srcdir}"
 				/>
 			</then>
 		</if>

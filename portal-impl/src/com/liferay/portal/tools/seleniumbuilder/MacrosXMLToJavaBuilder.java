@@ -68,7 +68,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
-		String macrosFilePath = fileName.substring(0, x) + "/rc";
+		String macrosFilePath = fileName.substring(0, x);
 		String macrosSimpleClassName = fileName.substring(x + 1, y) + "Macros";
 
 		String macrosFileName =
@@ -86,7 +86,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append(macrosPackagePath);
 		sb.append(";\n");
 
-		sb.append("import com.liferay.portalweb.blocks.base.macros.rc.");
+		sb.append("import com.liferay.portalweb.blocks.base.macros.");
 		sb.append("BaseMacros;\n");
 
 		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");

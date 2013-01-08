@@ -53,7 +53,7 @@ public class TestPlanBuilder extends SeleniumBuilder {
 
 		int x = directoryName.lastIndexOf(StringPool.SLASH);
 
-		String testPlanFilePath = directoryName + "/rc";
+		String testPlanFilePath = directoryName;
 		String testPlanName = StringUtil.upperCaseFirstLetter(
 			directoryName.substring(x + 1)) + "TestPlan";
 

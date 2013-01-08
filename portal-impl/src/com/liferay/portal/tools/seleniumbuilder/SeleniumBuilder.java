@@ -87,10 +87,6 @@ public class SeleniumBuilder {
 
 		for (String className : classNameSetAvailable) {
 			if (className.endsWith("." + simpleClassName)) {
-				String[] classPath = className.split(simpleClassName);
-
-				className = classPath[0] + "rc." + simpleClassName;
-
 				classNameSet.add(className);
 			}
 		}
@@ -236,7 +232,8 @@ public class SeleniumBuilder {
 
 	protected void writeFile(String fileName, String content, boolean format)
 		throws Exception {
-		File file = new File(basedir + "/" + fileName);
+
+		File file = new File(basedir + "-generate/" + fileName);
 
 		if (format) {
 			ServiceBuilder.writeFile(file, content);

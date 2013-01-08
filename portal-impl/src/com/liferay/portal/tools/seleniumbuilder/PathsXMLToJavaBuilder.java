@@ -56,7 +56,7 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
-		String pathsFilePath = fileName.substring(0, x) + "/rc";
+		String pathsFilePath = fileName.substring(0, x);
 		String pathsSimpleClassName = fileName.substring(x + 1, y) + "Paths";
 
 		String pathsFileName =

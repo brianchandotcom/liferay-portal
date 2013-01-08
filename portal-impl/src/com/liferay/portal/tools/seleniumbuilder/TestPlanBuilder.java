@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -22,8 +23,6 @@ import com.liferay.portal.util.InitUtil;
 
 import java.util.Set;
 import java.util.TreeSet;
-
-import org.apache.tools.ant.DirectoryScanner;
 
 /**
  * @author Brian Wing Shun Chan
@@ -79,14 +78,12 @@ public class TestPlanBuilder extends SeleniumBuilder {
 		sb.append("public static Test suite() {\n");
 		sb.append("TestSuite testSuite = new TestSuite();\n\n");
 
-		Set<String> testFileNames = _getTestFileNames(directoryName);
+		Set<String> testSimpleClassNameSet = _getTestSimpleClassNames(
+			directoryName);
 
-		for (String testFileName : testFileNames) {
-			String testFileNameJava = StringUtil.replace(
-				testFileName, ".test", "Test");
-
+		for (String testSimpleClassName : testSimpleClassNameSet) {
 			sb.append("testSuite.addTestSuite(");
-			sb.append(testFileNameJava);
+			sb.append(testSimpleClassName);
 			sb.append(".class);");
 		}
 
@@ -99,41 +96,35 @@ public class TestPlanBuilder extends SeleniumBuilder {
 	}
 
 	private Set<String> _getDirectoryNames() throws Exception {
-		Set<String> fileNames = new TreeSet<String>();
+		Set<String> treeSet = new TreeSet<String>();
 
 		for (String fileName : fileNameSetTests) {
-			fileName = normalizeFileName(fileName);
-
 			int x = fileName.lastIndexOf("/");
 
-			fileNames.add(fileName.substring(0, x));
+			treeSet.add(fileName.substring(0, x));
 		}
 
-		return fileNames;
+		return treeSet;
 	}
 
-	private Set<String> _getTestFileNames(String directoryName)
+	private Set<String> _getTestSimpleClassNames(String directoryName)
 		throws Exception {
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
+		Set<String> treeSet = new TreeSet<String>();
 
-		directoryScanner.setBasedir(basedir + "/" + directoryName);
-		directoryScanner.setIncludes(
-			new String[] {
-				"*.test"
-			});
+		for (String fileName : fileNameSetTests) {
+			if (fileName.startsWith(directoryName)) {
+				int x = fileName.lastIndexOf(StringPool.SLASH);
+				int y = fileName.indexOf(CharPool.PERIOD);
 
-		directoryScanner.scan();
+				String testSimpleClassName =
+					fileName.substring(x + 1, y) + "Test";
 
-		Set<String> fileNames = new TreeSet<String>();
-
-		for (String fileName : directoryScanner.getIncludedFiles()) {
-			fileName = normalizeFileName(fileName);
-
-			fileNames.add(fileName);
+				treeSet.add(testSimpleClassName);
+			}
 		}
 
-		return fileNames;
+		return treeSet;
 	}
 
 }

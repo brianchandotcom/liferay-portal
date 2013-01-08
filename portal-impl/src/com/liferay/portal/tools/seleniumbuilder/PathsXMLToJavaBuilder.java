@@ -83,45 +83,48 @@ public class PathsXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append("return _paths;");
 		sb.append("}");
 
-		sb.append(_getPaths(rootElement));
+		sb.append("private static Map<String, String> _paths = ");
+		sb.append("new HashMap<String, String>();");
+
+		sb.append("static {");
+
+		sb.append(_processTargets(rootElement));
+
+		sb.append("}");
 
 		sb.append("}");
 
 		writeFile(pathsFileName, sb.toString(), true);
 	}
 
-	private String _getPaths(Element rootElement) throws Exception {
+	private String _processTargets(Element rootElement) throws Exception {
 		StringBundler sb = new StringBundler();
-
-		sb.append("private static Map<String, String> _paths = ");
-		sb.append("new HashMap<String, String>();");
-
-		sb.append("static {");
 
 		Element bodyElement = rootElement.element("body");
 		Element tableElement = bodyElement.element("table");
 		Element tbodyElement = tableElement.element("tbody");
 
-		List<Element> elementList = tbodyElement.elements("tr");
+		List<Element> targetList = tbodyElement.elements("tr");
 
 		sb.append("_paths.put(\"TOP\", \"relative=top\");");
 
-		for (Element element : elementList) {
-			List<Element> paramList = element.elements("td");
+		for (Element target : targetList) {
+			List<Element> paramList = target.elements("td");
 
-			String key = paramList.get(0).getText();
-			String locator = paramList.get(1).getText();
+			Element key = paramList.get(0);
+			Element locator = paramList.get(1);
 
-			if (!key.equals("")) {
+			String keyString = key.getText();
+			String locatorString = locator.getText();
+
+			if (!keyString.equals("")) {
 				sb.append("_paths.put(\"");
-				sb.append(key);
+				sb.append(keyString);
 				sb.append("\", \"");
-				sb.append(locator);
+				sb.append(locatorString);
 				sb.append("\");");
 			}
 		}
-
-		sb.append("}");
 
 		return sb.toString();
 	}

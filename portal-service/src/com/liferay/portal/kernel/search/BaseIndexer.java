@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
+import com.liferay.portal.kernel.search.postprocess.HitsPostProcessor;
+import com.liferay.portal.kernel.search.postprocess.HitsPostProcessorRegistry;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -419,6 +421,8 @@ public abstract class BaseIndexer implements Indexer {
 			if (isFilterSearch() && (permissionChecker != null)) {
 				hits = filterSearch(hits, permissionChecker, searchContext);
 			}
+
+			doHitsPostProcess(searchContext, hits);
 
 			return hits;
 		}
@@ -1009,6 +1013,17 @@ public abstract class BaseIndexer implements Indexer {
 			Document document, Locale locale, String snippet,
 			PortletURL portletURL)
 		throws Exception;
+
+	protected void doHitsPostProcess(SearchContext searchContext, Hits hits)
+		throws SearchException {
+
+		HitsPostProcessor hitsPostProcessor =
+			HitsPostProcessorRegistry.getDefaultHitsPostProcessor();
+
+		if (hitsPostProcessor != null) {
+			hitsPostProcessor.postProcess(searchContext, hits);
+		}
+	}
 
 	protected abstract void doReindex(Object obj) throws Exception;
 

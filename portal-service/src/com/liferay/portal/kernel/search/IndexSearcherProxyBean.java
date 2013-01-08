@@ -17,6 +17,9 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.messaging.proxy.BaseMultiDestinationProxyBean;
 import com.liferay.portal.kernel.messaging.proxy.ProxyRequest;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Bruno Farache
  * @author Tina Tian
@@ -50,6 +53,25 @@ public class IndexSearcherProxyBean
 	public Hits search(
 		String searchEngineId, long companyId, Query query, Sort[] sort,
 		int start, int end) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public String spellCheckKeywords(SearchContext searchContext)
+		throws SearchException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public Map<String, List<String>> spellCheckKeywords(
+			SearchContext searchContext, int max)
+		throws SearchException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public String[] suggestKeywordQueries(SearchContext searchContext, int max)
+		throws SearchException {
 
 		throw new UnsupportedOperationException();
 	}

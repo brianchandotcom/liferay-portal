@@ -216,6 +216,21 @@
 		<constructor-arg value="LUCENE_35" />
 	</bean>
 
+    <!-- Hits Post Processors -->
+
+    <bean id="com.liferay.portal.kernel.search.postprocess.HitsPostProcessorRegistry" class="com.liferay.portal.kernel.search.postprocess.HitsPostProcessorRegistry">
+        <property name="globalHitsPostProcessor">
+            <bean class="com.liferay.portal.kernel.search.postprocess.CompositeHitsPostProcessor">
+                <property name="hitsPostProcessors">
+                    <util:list>
+                        <bean class="com.liferay.portal.kernel.search.postprocess.CollatedSpellCheckHitsPostProcessor" />
+                        <bean class="com.liferay.portal.kernel.search.postprocess.QuerySuggestionHitsPostProcessor" />
+                    </util:list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
 	<!-- Configurator -->
 
 	<bean id="searchEngineConfigurator.core" class="com.liferay.portal.kernel.search.DefaultSearchEngineConfigurator">

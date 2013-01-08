@@ -12,25 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.kernel.search.postprocess;
 
-import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
-import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
-import com.liferay.portal.kernel.search.suggest.QuerySuggester;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 
 /**
- * @author Bruno Farache
- * @author Raymond Augé
+ * @author Michael C. Han
  */
-@MessagingProxy(mode = ProxyMode.SYNC)
-public interface IndexSearcher extends QuerySuggester {
+public interface HitsPostProcessor {
 
-	public Hits search(SearchContext searchContext, Query query)
-		throws SearchException;
-
-	public Hits search(
-			String searchEngineId, long companyId, Query query, Sort[] sort,
-			int start, int end)
+	public boolean postProcess(SearchContext searchContext, Hits hits)
 		throws SearchException;
 
 }

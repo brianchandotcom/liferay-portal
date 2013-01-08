@@ -505,6 +505,54 @@ public class SearchEngineUtil {
 		_searchEngines.put(searchEngineId, searchEngine);
 	}
 
+	public static String spellCheckKeywords(SearchContext searchContext)
+		throws SearchException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Spell checking " + searchContext.getKeywords());
+		}
+
+		SearchEngine searchEngine = getSearchEngine(
+			searchContext.getSearchEngineId());
+
+		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
+
+		return indexSearcher.spellCheckKeywords(searchContext);
+	}
+
+	public static Map<String, List<String>> spellCheckKeywords(
+			SearchContext searchContext, int max)
+		throws SearchException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Spell checking " + searchContext.getKeywords());
+		}
+
+		SearchEngine searchEngine = getSearchEngine(
+			searchContext.getSearchEngineId());
+
+		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
+
+		return indexSearcher.spellCheckKeywords(searchContext, max);
+	}
+
+	public static String[] suggestKeywordQueries(
+			SearchContext searchContext, int max)
+		throws SearchException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Suggesting keyword queries" + searchContext.getKeywords());
+		}
+
+		SearchEngine searchEngine = getSearchEngine(
+			searchContext.getSearchEngineId());
+
+		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
+
+		return indexSearcher.suggestKeywordQueries(searchContext, max);
+	}
+
 	/**
 	 * @deprecated {@link #updateDocument(String, long, Document)}
 	 */

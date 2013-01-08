@@ -1,6 +1,6 @@
 <#list finderColsList as finderCol>
 	<#if !finderCol.isPrimitiveType()>
-		if (${finderCol.name} != null) {
+		if (bind${finderCol.methodName}) {
 	</#if>
 
 	qPos.add(

@@ -597,7 +597,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated
-	 *
 	 */
 	public void updateLastPostDate(long folderId, Date lastPostDate)
 		throws PortalException, SystemException {

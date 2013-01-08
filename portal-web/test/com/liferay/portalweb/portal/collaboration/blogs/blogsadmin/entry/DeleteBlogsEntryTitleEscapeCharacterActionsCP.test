@@ -1,5 +1,5 @@
 <test
-	name="DeleteBlogsEntry150CharactersActionsCP"
+	name="DeleteBlogsEntryTitleEscapeCharacterActionsCP"
 	description="In the Control Panel Blogs Portlet, delete a Blogs Entry with a title of escape characters."
 >
 	<setup>

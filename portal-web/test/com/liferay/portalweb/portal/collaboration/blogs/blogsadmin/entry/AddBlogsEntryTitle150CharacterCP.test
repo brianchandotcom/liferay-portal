@@ -1,5 +1,5 @@
 <test
-	name="AddBlogsEntryTitle150CharactersCP"
+	name="AddBlogsEntryTitle150CharacterCP"
 	description="In the Control Panel Blogs Portlet, add a Blogs Entry with a title of 150 characters."
 >
 	<setup>

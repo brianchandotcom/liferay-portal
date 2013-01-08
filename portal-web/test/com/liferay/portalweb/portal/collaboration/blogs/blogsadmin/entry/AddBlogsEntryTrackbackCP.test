@@ -1,5 +1,5 @@
 <test
-	name="AddBlogsEntryTitleTrackbackCP"
+	name="AddBlogsEntryTrackbackCP"
 	description="In the Control Panel Blogs Portlet, add a Blogs Entry with a title with a Trackback URL."
 >
 	<setup>

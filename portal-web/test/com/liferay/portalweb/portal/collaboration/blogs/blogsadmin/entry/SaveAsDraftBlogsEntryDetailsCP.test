@@ -1,5 +1,5 @@
 <test
-	name="AddBlogsEntryAutoDraftCP"
+	name="SaveAsDraftBlogsEntryDetailsCP"
 	description="In the Control Panel Blogs Portlet, add a Blogs Entry draft."
 >
 	<setup>

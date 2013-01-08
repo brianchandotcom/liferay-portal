@@ -1467,37 +1467,6 @@ public class PortletExporter {
 		jxPreferences.setValues(key, newValues);
 	}
 
-	protected void updateAssetPublisherGlobalScopeId(
-			javax.portlet.PortletPreferences jxPreferences, String key,
-			long plid)
-		throws Exception {
-
-		String[] oldValues = jxPreferences.getValues(key, null);
-
-		if (oldValues == null) {
-			return;
-		}
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			layout.getCompanyId());
-
-		Group companyGroup = company.getGroup();
-
-		String[] newValues = new String[oldValues.length];
-
-		for (int i = 0; i < oldValues.length; i++) {
-			String oldValue = oldValues[i];
-
-			newValues[i] = StringUtil.replace(
-				oldValue, "Group_" + companyGroup.getGroupId(),
-				"Group_Company");
-		}
-
-		jxPreferences.setValues(key, newValues);
-	}
-
 	protected String updateAssetPublisherPortletPreferences(
 			String xml, long plid)
 		throws Exception {
@@ -1528,7 +1497,7 @@ public class PortletExporter {
 				updateAssetPublisherClassNameIds(jxPreferences, name);
 			}
 			else if (name.equals("defaultScope") || name.equals("scopeIds")) {
-				updateAssetPublisherGlobalScopeId(jxPreferences, name, plid);
+				updateAssetPublisherScopeIds(jxPreferences, name, plid);
 			}
 			else if (name.startsWith("queryName") &&
 					 value.equalsIgnoreCase("assetCategories")) {
@@ -1542,6 +1511,40 @@ public class PortletExporter {
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
+	}
+
+	protected void updateAssetPublisherScopeIds(
+			javax.portlet.PortletPreferences jxPreferences, String key,
+			long plid)
+		throws Exception {
+
+		String[] oldValues = jxPreferences.getValues(key, null);
+
+		if (oldValues == null) {
+			return;
+		}
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			layout.getCompanyId());
+
+		Group companyGroup = company.getGroup();
+
+		String[] newValues = new String[oldValues.length];
+
+		for (int i = 0; i < oldValues.length; i++) {
+			String oldValue = oldValues[i];
+
+			newValues[i] = StringUtil.replace(
+				oldValue, "Group_" + companyGroup.getGroupId(),
+				"Group_Company");
+
+			newValues[i] = StringUtil.replace(
+				oldValue, "Layout_" + layout.getLayoutId(), "Layout_LayoutId");
+		}
+
+		jxPreferences.setValues(key, newValues);
 	}
 
 	protected void updatePreferencesClassPKs(

@@ -925,7 +925,7 @@ public class DLImpl implements DL {
 		}
 
 		String[] genericNames = PropsUtil.getArray(
-				PropsKeys.DL_FILE_GENERIC_NAMES);
+			PropsKeys.DL_FILE_GENERIC_NAMES);
 
 		for (String genericName : genericNames) {
 			_populateGenericNamesMap(genericName);

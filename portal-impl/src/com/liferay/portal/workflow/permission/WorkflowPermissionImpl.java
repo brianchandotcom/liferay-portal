@@ -71,7 +71,7 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 
 			WorkflowInstanceLink workflowInstanceLink =
 				WorkflowInstanceLinkLocalServiceUtil.getWorkflowInstanceLink(
-						companyId, groupId, className, classPK);
+					companyId, groupId, className, classPK);
 
 			WorkflowInstance workflowInstance =
 				WorkflowInstanceManagerUtil.getWorkflowInstance(

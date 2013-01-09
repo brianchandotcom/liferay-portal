@@ -90,17 +90,17 @@ public class SocialActivitySettingLocalServiceTest
 
 		Assert.assertFalse(
 			SocialActivitySettingLocalServiceUtil.isEnabled(
-			_group.getGroupId(), classNameId));
+				_group.getGroupId(), classNameId));
 		Assert.assertTrue(
 			SocialActivitySettingLocalServiceUtil.isEnabled(
-			_group.getGroupId(), classNameId, 1));
+				_group.getGroupId(), classNameId, 1));
 
 		SocialActivitySettingLocalServiceUtil.updateActivitySetting(
 			_group.getGroupId(), TEST_MODEL, 1, false);
 
 		Assert.assertFalse(
 			SocialActivitySettingLocalServiceUtil.isEnabled(
-			_group.getGroupId(), classNameId, 1));
+				_group.getGroupId(), classNameId, 1));
 	}
 
 }

@@ -66,7 +66,7 @@ public class ScriptPostProcess {
 
 		try {
 			doProcessPage(
-			startTag, endTag, ref, actionURL, actionParameterName);
+				startTag, endTag, ref, actionURL, actionParameterName);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

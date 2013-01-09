@@ -76,9 +76,9 @@ public class TLDFormatter {
 
 			Document document = SAXReaderUtil.read(
 				new UnsyncStringReader(
-				StringUtil.replace(
-					content, "xml/ns/j2ee/web-jsptaglibrary_2_0.xsd",
-					"dtd/web-jsptaglibrary_1_2.dtd")));
+					StringUtil.replace(
+						content, "xml/ns/j2ee/web-jsptaglibrary_2_0.xsd",
+						"dtd/web-jsptaglibrary_1_2.dtd")));
 
 			Element root = document.getRootElement();
 

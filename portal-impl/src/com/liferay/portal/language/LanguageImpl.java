@@ -609,7 +609,7 @@ public class LanguageImpl implements Language {
 		for (int i = 0; i < localesArray.length; i++) {
 			String languageId = localesArray[i];
 
-			Locale locale = LocaleUtil.fromLanguageId(languageId);
+			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
 
 			_charEncodings.put(locale.toString(), StringPool.UTF8);
 
@@ -639,7 +639,7 @@ public class LanguageImpl implements Language {
 		_localesBetaSet = new HashSet<Locale>(localesBetaArray.length);
 
 		for (String languageId : localesBetaArray) {
-			Locale locale = LocaleUtil.fromLanguageId(languageId);
+			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
 
 			_localesBetaSet.add(locale);
 		}

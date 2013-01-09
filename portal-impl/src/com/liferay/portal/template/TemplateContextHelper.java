@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletModeFactory_IW;
 import com.liferay.portal.kernel.portlet.WindowStateFactory_IW;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
 import com.liferay.portal.kernel.util.DateUtil_IW;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil_IW;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -48,6 +50,10 @@ import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.service.permission.AccountPermissionUtil;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -80,9 +86,11 @@ import java.lang.reflect.Method;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -99,8 +107,237 @@ import org.apache.struts.tiles.ComponentContext;
  */
 public class TemplateContextHelper {
 
-	public Map<String, Object> getHelperUtilities() {
-		Map<String, Object> variables = new HashMap<String, Object>();
+	public Map<String, Object> getHelperUtilities(
+		TemplateContextType templateContextType) {
+
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
+		ClassLoader portalClassLoader =
+			PACLClassLoaderUtil.getPortalClassLoader();
+
+		if (contextClassLoader == portalClassLoader) {
+			return doGetHelperUtilities(
+				contextClassLoader, templateContextType);
+		}
+
+		PACLPolicy threadLocalPACLPolicy =
+			PortalSecurityManagerThreadLocal.getPACLPolicy();
+
+		PACLPolicy contextClassLoaderPACLPolicy =
+			PACLPolicyManager.getPACLPolicy(contextClassLoader);
+
+		try {
+			PortalSecurityManagerThreadLocal.setPACLPolicy(
+				contextClassLoaderPACLPolicy);
+
+			return doGetHelperUtilities(
+				contextClassLoader, templateContextType);
+		}
+		finally {
+			PortalSecurityManagerThreadLocal.setPACLPolicy(
+				threadLocalPACLPolicy);
+		}
+	}
+
+	public Set<String> getRestrictedVariables() {
+		return Collections.emptySet();
+	}
+
+	public void prepare(
+		TemplateContext templateContext, HttpServletRequest request) {
+
+		// Request
+
+		templateContext.put("request", request);
+
+		// Portlet config
+
+		PortletConfigImpl portletConfigImpl =
+			(PortletConfigImpl)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		if (portletConfigImpl != null) {
+			templateContext.put("portletConfig", portletConfigImpl);
+		}
+
+		// Render request
+
+		final PortletRequest portletRequest =
+			(PortletRequest)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		if (portletRequest != null) {
+			if (portletRequest instanceof RenderRequest) {
+				templateContext.put("renderRequest", portletRequest);
+			}
+		}
+
+		// Render response
+
+		final PortletResponse portletResponse =
+			(PortletResponse)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		if (portletResponse != null) {
+			if (portletResponse instanceof RenderResponse) {
+				templateContext.put("renderResponse", portletResponse);
+			}
+		}
+
+		// XML request
+
+		if ((portletRequest != null) && (portletResponse != null)) {
+			templateContext.put(
+				"xmlRequest",
+				new Object() {
+
+					@Override
+					public String toString() {
+						return PortletRequestUtil.toXML(
+							portletRequest, portletResponse);
+					}
+
+				}
+			);
+		}
+
+		// Theme display
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			Layout layout = themeDisplay.getLayout();
+			List<Layout> layouts = themeDisplay.getLayouts();
+
+			templateContext.put("themeDisplay", themeDisplay);
+			templateContext.put("company", themeDisplay.getCompany());
+			templateContext.put("user", themeDisplay.getUser());
+			templateContext.put("realUser", themeDisplay.getRealUser());
+			templateContext.put("layout", layout);
+			templateContext.put("layouts", layouts);
+			templateContext.put("plid", String.valueOf(themeDisplay.getPlid()));
+			templateContext.put(
+				"layoutTypePortlet", themeDisplay.getLayoutTypePortlet());
+			templateContext.put(
+				"scopeGroupId", new Long(themeDisplay.getScopeGroupId()));
+			templateContext.put(
+				"permissionChecker", themeDisplay.getPermissionChecker());
+			templateContext.put("locale", themeDisplay.getLocale());
+			templateContext.put("timeZone", themeDisplay.getTimeZone());
+			templateContext.put("colorScheme", themeDisplay.getColorScheme());
+			templateContext.put(
+				"portletDisplay", themeDisplay.getPortletDisplay());
+
+			// Navigation items
+
+			if (layout != null) {
+				List<NavItem> navItems = NavItem.fromLayouts(
+					request, layouts, templateContext);
+
+				templateContext.put("navItems", navItems);
+			}
+
+			// Deprecated
+
+			templateContext.put(
+				"portletGroupId", new Long(themeDisplay.getScopeGroupId()));
+		}
+
+		// Theme
+
+		Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
+
+		if ((theme == null) && (themeDisplay != null)) {
+			theme = themeDisplay.getTheme();
+		}
+
+		if (theme != null) {
+			templateContext.put("theme", theme);
+		}
+
+		// Tiles attributes
+
+		prepareTiles(templateContext, request);
+
+		// Page title and subtitle
+
+		ListMergeable<String> pageTitleListMergeable =
+			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_TITLE);
+
+		if (pageTitleListMergeable != null) {
+			String pageTitle = pageTitleListMergeable.mergeToString(
+				StringPool.SPACE);
+
+			templateContext.put("pageTitle", pageTitle);
+		}
+
+		ListMergeable<String> pageSubtitleListMergeable =
+			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_SUBTITLE);
+
+		if (pageSubtitleListMergeable != null) {
+			String pageSubtitle = pageSubtitleListMergeable.mergeToString(
+				StringPool.SPACE);
+
+			templateContext.put("pageSubtitle", pageSubtitle);
+		}
+	}
+
+	public void removeAllHelperUtilities() {
+		_helperUtilitiesCache.clear();
+	}
+
+	public void removeHelperUtilities(ClassLoader classLoader) {
+		Iterator<ObjectValuePair<ClassLoader, TemplateContextType>> itr =
+			_helperUtilitiesCache.keySet().iterator();
+
+		while (itr.hasNext()) {
+			ObjectValuePair<ClassLoader, TemplateContextType> objectValuePair =
+				itr.next();
+
+			if (objectValuePair.getKey().equals(classLoader)) {
+				itr.remove();
+			}
+		}
+	}
+
+	protected Map<String, Object> doGetHelperUtilities(
+		ClassLoader contextClassLoader,
+		TemplateContextType templateContextType) {
+
+		ObjectValuePair<ClassLoader, TemplateContextType> cacheKey =
+			new ObjectValuePair<ClassLoader, TemplateContextType>(
+				contextClassLoader, templateContextType);
+
+		Map<String, Object> helperUtilities = _helperUtilitiesCache.get(
+			cacheKey);
+
+		if (helperUtilities != null) {
+			return helperUtilities;
+		}
+
+		helperUtilities = new HashMap<String, Object>();
+
+		populateCommonHelperUtilities(helperUtilities);
+		populateExtraHelperUtilities(helperUtilities);
+
+		if (templateContextType.equals(TemplateContextType.RESTRICTED)) {
+			Set<String> restrictedVariables = getRestrictedVariables();
+
+			for (String restrictedVariable : restrictedVariables) {
+				helperUtilities.remove(restrictedVariable);
+			}
+		}
+
+		helperUtilities = Collections.unmodifiableMap(helperUtilities);
+
+		_helperUtilitiesCache.put(cacheKey, helperUtilities);
+
+		return helperUtilities;
+	}
+
+	protected void populateCommonHelperUtilities(
+		Map<String, Object> variables) {
 
 		// Array util
 
@@ -545,164 +782,9 @@ public class TemplateContextHelper {
 		catch (SecurityException se) {
 			_log.error(se, se);
 		}
-
-		return variables;
 	}
 
-	public Map<String, Object> getRestrictedHelperUtilities() {
-		Map<String, Object> helperUtilities = getHelperUtilities();
-
-		Set<String> restrictedVariables = getRestrictedVariables();
-
-		for (String restrictedVariable : restrictedVariables) {
-			helperUtilities.remove(restrictedVariable);
-		}
-
-		return helperUtilities;
-	}
-
-	public Set<String> getRestrictedVariables() {
-		return Collections.emptySet();
-	}
-
-	public void prepare(
-		TemplateContext templateContext, HttpServletRequest request) {
-
-		// Request
-
-		templateContext.put("request", request);
-
-		// Portlet config
-
-		PortletConfigImpl portletConfigImpl =
-			(PortletConfigImpl)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		if (portletConfigImpl != null) {
-			templateContext.put("portletConfig", portletConfigImpl);
-		}
-
-		// Render request
-
-		final PortletRequest portletRequest =
-			(PortletRequest)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		if (portletRequest != null) {
-			if (portletRequest instanceof RenderRequest) {
-				templateContext.put("renderRequest", portletRequest);
-			}
-		}
-
-		// Render response
-
-		final PortletResponse portletResponse =
-			(PortletResponse)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		if (portletResponse != null) {
-			if (portletResponse instanceof RenderResponse) {
-				templateContext.put("renderResponse", portletResponse);
-			}
-		}
-
-		// XML request
-
-		if ((portletRequest != null) && (portletResponse != null)) {
-			templateContext.put(
-				"xmlRequest",
-				new Object() {
-
-					@Override
-					public String toString() {
-						return PortletRequestUtil.toXML(
-							portletRequest, portletResponse);
-					}
-
-				}
-			);
-		}
-
-		// Theme display
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay != null) {
-			Layout layout = themeDisplay.getLayout();
-			List<Layout> layouts = themeDisplay.getLayouts();
-
-			templateContext.put("themeDisplay", themeDisplay);
-			templateContext.put("company", themeDisplay.getCompany());
-			templateContext.put("user", themeDisplay.getUser());
-			templateContext.put("realUser", themeDisplay.getRealUser());
-			templateContext.put("layout", layout);
-			templateContext.put("layouts", layouts);
-			templateContext.put("plid", String.valueOf(themeDisplay.getPlid()));
-			templateContext.put(
-				"layoutTypePortlet", themeDisplay.getLayoutTypePortlet());
-			templateContext.put(
-				"scopeGroupId", new Long(themeDisplay.getScopeGroupId()));
-			templateContext.put(
-				"permissionChecker", themeDisplay.getPermissionChecker());
-			templateContext.put("locale", themeDisplay.getLocale());
-			templateContext.put("timeZone", themeDisplay.getTimeZone());
-			templateContext.put("colorScheme", themeDisplay.getColorScheme());
-			templateContext.put(
-				"portletDisplay", themeDisplay.getPortletDisplay());
-
-			// Navigation items
-
-			if (layout != null) {
-				List<NavItem> navItems = NavItem.fromLayouts(
-					request, layouts, templateContext);
-
-				templateContext.put("navItems", navItems);
-			}
-
-			// Deprecated
-
-			templateContext.put(
-				"portletGroupId", new Long(themeDisplay.getScopeGroupId()));
-		}
-
-		// Theme
-
-		Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
-
-		if ((theme == null) && (themeDisplay != null)) {
-			theme = themeDisplay.getTheme();
-		}
-
-		if (theme != null) {
-			templateContext.put("theme", theme);
-		}
-
-		// Tiles attributes
-
-		prepareTiles(templateContext, request);
-
-		// Page title and subtitle
-
-		ListMergeable<String> pageTitleListMergeable =
-			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_TITLE);
-
-		if (pageTitleListMergeable != null) {
-			String pageTitle = pageTitleListMergeable.mergeToString(
-				StringPool.SPACE);
-
-			templateContext.put("pageTitle", pageTitle);
-		}
-
-		ListMergeable<String> pageSubtitleListMergeable =
-			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_SUBTITLE);
-
-		if (pageSubtitleListMergeable != null) {
-			String pageSubtitle = pageSubtitleListMergeable.mergeToString(
-				StringPool.SPACE);
-
-			templateContext.put("pageSubtitle", pageSubtitle);
-		}
+	protected void populateExtraHelperUtilities(Map<String, Object> variables) {
 	}
 
 	protected void prepareTiles(
@@ -741,5 +823,12 @@ public class TemplateContextHelper {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		TemplateContextHelper.class);
+
+	private Map<
+		ObjectValuePair<ClassLoader, TemplateContextType>, Map<String, Object>>
+		_helperUtilitiesCache =
+			new ConcurrentHashMap<
+				ObjectValuePair<ClassLoader, TemplateContextType>,
+				Map<String, Object>>();
 
 }

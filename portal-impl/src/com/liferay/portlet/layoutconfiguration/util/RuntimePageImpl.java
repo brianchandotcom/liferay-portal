@@ -257,25 +257,21 @@ public class RuntimePageImpl implements RuntimePage {
 			PACLClassLoaderUtil.getContextClassLoader();
 
 		try {
-			TemplateContextType templateContextType =
-				TemplateContextType.STANDARD;
-
 			if ((pluginClassLoader != null) &&
 				(pluginClassLoader != contextClassLoader)) {
 
 				PACLClassLoaderUtil.setContextClassLoader(pluginClassLoader);
-
-				templateContextType = TemplateContextType.CLASS_LOADER;
 			}
 
 			if (processTemplate) {
 				return doProcessTemplate(
 					pageContext, portletId, templateResource,
-					templateContextType);
+					TemplateContextType.STANDARD);
 			}
 			else {
 				doProcessCustomizationSettings(
-					pageContext, templateResource, templateContextType);
+					pageContext, templateResource,
+					TemplateContextType.STANDARD);
 
 				return null;
 			}

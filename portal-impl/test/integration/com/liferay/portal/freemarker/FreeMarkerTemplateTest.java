@@ -17,6 +17,7 @@ package com.liferay.portal.freemarker;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
@@ -304,12 +305,9 @@ public class FreeMarkerTemplateTest {
 	private class MockTemplateContextHelper extends TemplateContextHelper {
 
 		@Override
-		public Map<String, Object> getHelperUtilities() {
-			return Collections.emptyMap();
-		}
+		public Map<String, Object> getHelperUtilities(
+			TemplateContextType templateContextType) {
 
-		@Override
-		public Map<String, Object> getRestrictedHelperUtilities() {
 			return Collections.emptyMap();
 		}
 

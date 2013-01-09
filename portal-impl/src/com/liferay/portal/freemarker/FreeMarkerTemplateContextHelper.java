@@ -41,32 +41,6 @@ import javax.servlet.http.HttpServletRequest;
 public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 
 	@Override
-	public Map<String, Object> getHelperUtilities() {
-		Map<String, Object> helperUtilities = super.getHelperUtilities();
-
-		// Enum util
-
-		helperUtilities.put(
-			"enumUtil", BeansWrapper.getDefaultInstance().getEnumModels());
-
-		// Object util
-
-		helperUtilities.put("objectUtil", new LiferayObjectConstructor());
-
-		// Portlet preferences
-
-		helperUtilities.put(
-			"freeMarkerPortletPreferences", new TemplatePortletPreferences());
-
-		// Static class util
-
-		helperUtilities.put(
-			"staticUtil", BeansWrapper.getDefaultInstance().getStaticModels());
-
-		return helperUtilities;
-	}
-
-	@Override
 	public Set<String> getRestrictedVariables() {
 		return SetUtil.fromArray(
 			PropsValues.JOURNAL_TEMPLATE_FREEMARKER_RESTRICTED_VARIABLES);
@@ -126,6 +100,30 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 				}
 			}
 		}
+	}
+
+	@Override
+	protected void populateExtraHelperUtilities(
+		Map<String, Object> helperUtilities) {
+
+		// Enum util
+
+		helperUtilities.put(
+			"enumUtil", BeansWrapper.getDefaultInstance().getEnumModels());
+
+		// Object util
+
+		helperUtilities.put("objectUtil", new LiferayObjectConstructor());
+
+		// Portlet preferences
+
+		helperUtilities.put(
+			"freeMarkerPortletPreferences", new TemplatePortletPreferences());
+
+		// Static class util
+
+		helperUtilities.put(
+			"staticUtil", BeansWrapper.getDefaultInstance().getStaticModels());
 	}
 
 }

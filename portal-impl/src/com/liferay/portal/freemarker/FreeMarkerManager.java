@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
-import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.template.PACLTemplateWrapper;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.util.PropsValues;
@@ -36,7 +33,6 @@ import freemarker.template.Configuration;
 import java.lang.reflect.Field;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Mika Koivisto
@@ -49,29 +45,19 @@ public class FreeMarkerManager implements TemplateManager {
 			return;
 		}
 
-		_classLoaderHelperUtilities.clear();
-
-		_classLoaderHelperUtilities = null;
-
 		_configuration.clearEncodingMap();
 		_configuration.clearSharedVariables();
 		_configuration.clearTemplateCache();
 
 		_configuration = null;
 
-		_restrictedHelperUtilities.clear();
-
-		_restrictedHelperUtilities = null;
-
-		_standardHelperUtilities.clear();
-
-		_standardHelperUtilities = null;
+		_templateContextHelper.removeAllHelperUtilities();
 
 		_templateContextHelper = null;
 	}
 
 	public void destroy(ClassLoader classLoader) {
-		_classLoaderHelperUtilities.remove(classLoader);
+		_templateContextHelper.removeHelperUtilities(classLoader);
 	}
 
 	public String getName() {
@@ -90,66 +76,30 @@ public class FreeMarkerManager implements TemplateManager {
 		TemplateResource errorTemplateResource,
 		TemplateContextType templateContextType) {
 
-		if (templateContextType.equals(TemplateContextType.CLASS_LOADER)) {
+		Template template = null;
 
-			// This template will have all of its utilities initialized within
-			// the class loader of the current thread
+		Map<String, Object> context = _templateContextHelper.getHelperUtilities(
+			templateContextType);
 
-			ClassLoader contextClassLoader =
-				PACLClassLoaderUtil.getContextClassLoader();
-
-			PACLPolicy threadLocalPACLPolicy =
-				PortalSecurityManagerThreadLocal.getPACLPolicy();
-
-			PACLPolicy contextClassLoaderPACLPolicy =
-				PACLPolicyManager.getPACLPolicy(contextClassLoader);
-
-			try {
-				PortalSecurityManagerThreadLocal.setPACLPolicy(
-					contextClassLoaderPACLPolicy);
-
-				Map<String, Object> helperUtilities =
-					_classLoaderHelperUtilities.get(contextClassLoader);
-
-				if (helperUtilities == null) {
-					helperUtilities =
-						_templateContextHelper.getHelperUtilities();
-
-					_classLoaderHelperUtilities.put(
-						contextClassLoader, helperUtilities);
-				}
-
-				return new PACLFreeMarkerTemplate(
-					templateResource, errorTemplateResource, helperUtilities,
-					_configuration, _templateContextHelper,
-					contextClassLoaderPACLPolicy);
-			}
-			finally {
-				PortalSecurityManagerThreadLocal.setPACLPolicy(
-					threadLocalPACLPolicy);
-			}
-		}
-		else if (templateContextType.equals(TemplateContextType.EMPTY)) {
-			return new FreeMarkerTemplate(
+		if (templateContextType.equals(TemplateContextType.EMPTY)) {
+			template = new FreeMarkerTemplate(
 				templateResource, errorTemplateResource, null, _configuration,
 				_templateContextHelper);
 		}
 		else if (templateContextType.equals(TemplateContextType.RESTRICTED)) {
-			return new RestrictedTemplate(
+			template = new RestrictedTemplate(
 				new FreeMarkerTemplate(
-					templateResource, errorTemplateResource,
-					_restrictedHelperUtilities, _configuration,
-					_templateContextHelper),
+					templateResource, errorTemplateResource, context,
+					_configuration, _templateContextHelper),
 				_templateContextHelper.getRestrictedVariables());
 		}
 		else if (templateContextType.equals(TemplateContextType.STANDARD)) {
-			return new FreeMarkerTemplate(
-				templateResource, errorTemplateResource,
-				_standardHelperUtilities, _configuration,
-				_templateContextHelper);
+			template = new FreeMarkerTemplate(
+				templateResource, errorTemplateResource, context,
+				_configuration, _templateContextHelper);
 		}
 
-		return null;
+		return PACLTemplateWrapper.getTemplate(template);
 	}
 
 	public void init() throws TemplateException {
@@ -190,10 +140,6 @@ public class FreeMarkerManager implements TemplateManager {
 		catch (Exception e) {
 			throw new TemplateException("Unable to init freemarker manager", e);
 		}
-
-		_standardHelperUtilities = _templateContextHelper.getHelperUtilities();
-		_restrictedHelperUtilities =
-			_templateContextHelper.getRestrictedHelperUtilities();
 	}
 
 	public void setTemplateContextHelper(
@@ -202,11 +148,7 @@ public class FreeMarkerManager implements TemplateManager {
 		_templateContextHelper = templateContextHelper;
 	}
 
-	private Map<ClassLoader, Map<String, Object>> _classLoaderHelperUtilities =
-		new ConcurrentHashMap<ClassLoader, Map<String, Object>>();
 	private Configuration _configuration;
-	private Map<String, Object> _restrictedHelperUtilities;
-	private Map<String, Object> _standardHelperUtilities;
 	private TemplateContextHelper _templateContextHelper;
 
 }

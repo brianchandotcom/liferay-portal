@@ -49,56 +49,6 @@ import org.apache.velocity.tools.generic.SortTool;
 public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 	@Override
-	public Map<String, Object> getHelperUtilities() {
-		Map<String, Object> velocityContext = super.getHelperUtilities();
-
-		// Date tool
-
-		velocityContext.put("dateTool", new DateTool());
-
-		// Escape tool
-
-		velocityContext.put("escapeTool", new EscapeTool());
-
-		// Iterator tool
-
-		velocityContext.put("iteratorTool", new IteratorTool());
-
-		// List tool
-
-		velocityContext.put("listTool", new ListTool());
-
-		// Math tool
-
-		velocityContext.put("mathTool", new MathTool());
-
-		// Number tool
-
-		velocityContext.put("numberTool", new NumberTool());
-
-		// Portlet preferences
-
-		velocityContext.put(
-			"velocityPortletPreferences", new TemplatePortletPreferences());
-
-		// Sort tool
-
-		velocityContext.put("sortTool", new SortTool());
-
-		// Permissions
-
-		try {
-			velocityContext.put(
-				"rolePermission", RolePermissionUtil.getRolePermission());
-		}
-		catch (SecurityException se) {
-			_log.error(se, se);
-		}
-
-		return velocityContext;
-	}
-
-	@Override
 	public Set<String> getRestrictedVariables() {
 		return SetUtil.fromArray(
 			PropsValues.JOURNAL_TEMPLATE_VELOCITY_RESTRICTED_VARIABLES);
@@ -166,6 +116,54 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 					templateContext.put(key, value);
 				}
 			}
+		}
+	}
+
+	@Override
+	protected void populateExtraHelperUtilities(
+		Map<String, Object> velocityContext) {
+
+		// Date tool
+
+		velocityContext.put("dateTool", new DateTool());
+
+		// Escape tool
+
+		velocityContext.put("escapeTool", new EscapeTool());
+
+		// Iterator tool
+
+		velocityContext.put("iteratorTool", new IteratorTool());
+
+		// List tool
+
+		velocityContext.put("listTool", new ListTool());
+
+		// Math tool
+
+		velocityContext.put("mathTool", new MathTool());
+
+		// Number tool
+
+		velocityContext.put("numberTool", new NumberTool());
+
+		// Portlet preferences
+
+		velocityContext.put(
+			"velocityPortletPreferences", new TemplatePortletPreferences());
+
+		// Sort tool
+
+		velocityContext.put("sortTool", new SortTool());
+
+		// Permissions
+
+		try {
+			velocityContext.put(
+				"rolePermission", RolePermissionUtil.getRolePermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
 		}
 	}
 

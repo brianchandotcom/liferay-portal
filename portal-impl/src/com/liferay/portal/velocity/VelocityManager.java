@@ -21,17 +21,13 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
-import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.template.PACLTemplateWrapper;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.VelocityContext;
@@ -49,17 +45,15 @@ public class VelocityManager implements TemplateManager {
 			return;
 		}
 
-		_classLoaderVelocityContexts.clear();
-
-		_classLoaderVelocityContexts = null;
-		_restrictedVelocityContext = null;
-		_standardVelocityContext = null;
 		_velocityEngine = null;
+
+		_templateContextHelper.removeAllHelperUtilities();
+
 		_templateContextHelper = null;
 	}
 
 	public void destroy(ClassLoader classLoader) {
-		_classLoaderVelocityContexts.remove(classLoader);
+		_templateContextHelper.removeHelperUtilities(classLoader);
 	}
 
 	public String getName() {
@@ -78,74 +72,30 @@ public class VelocityManager implements TemplateManager {
 		TemplateResource errorTemplateResource,
 		TemplateContextType templateContextType) {
 
-		if (templateContextType.equals(TemplateContextType.CLASS_LOADER)) {
+		Template template = null;
 
-			// This template will have all of its utilities initialized within
-			// the class loader of the current thread
+		VelocityContext velocityContext = _getVelocityContext(
+			templateContextType);
 
-			ClassLoader contextClassLoader =
-				PACLClassLoaderUtil.getContextClassLoader();
-
-			PACLPolicy threadLocalPACLPolicy =
-				PortalSecurityManagerThreadLocal.getPACLPolicy();
-
-			PACLPolicy contextClassLoaderPACLPolicy =
-				PACLPolicyManager.getPACLPolicy(contextClassLoader);
-
-			try {
-				PortalSecurityManagerThreadLocal.setPACLPolicy(
-					contextClassLoaderPACLPolicy);
-
-				VelocityContext velocityContext =
-					_classLoaderVelocityContexts.get(contextClassLoader);
-
-				if (velocityContext == null) {
-					velocityContext = new VelocityContext();
-
-					Map<String, Object> helperUtilities =
-						_templateContextHelper.getHelperUtilities();
-
-					for (Map.Entry<String, Object> entry :
-							helperUtilities.entrySet()) {
-
-						velocityContext.put(entry.getKey(), entry.getValue());
-					}
-
-					_classLoaderVelocityContexts.put(
-						contextClassLoader, velocityContext);
-				}
-
-				return new PACLVelocityTemplate(
-					templateResource, errorTemplateResource, velocityContext,
-					_velocityEngine, _templateContextHelper,
-					contextClassLoaderPACLPolicy);
-			}
-			finally {
-				PortalSecurityManagerThreadLocal.setPACLPolicy(
-					threadLocalPACLPolicy);
-			}
-		}
-		else if (templateContextType.equals(TemplateContextType.EMPTY)) {
-			return new VelocityTemplate(
+		if (templateContextType.equals(TemplateContextType.EMPTY)) {
+			template = new VelocityTemplate(
 				templateResource, errorTemplateResource, null, _velocityEngine,
 				_templateContextHelper);
 		}
 		else if (templateContextType.equals(TemplateContextType.RESTRICTED)) {
-			return new RestrictedTemplate(
+			template = new RestrictedTemplate(
 				new VelocityTemplate(
-					templateResource, errorTemplateResource,
-					_restrictedVelocityContext, _velocityEngine,
-					_templateContextHelper),
+					templateResource, errorTemplateResource, velocityContext,
+					_velocityEngine, _templateContextHelper),
 				_templateContextHelper.getRestrictedVariables());
 		}
 		else if (templateContextType.equals(TemplateContextType.STANDARD)) {
-			return new VelocityTemplate(
-				templateResource, errorTemplateResource,
-				_standardVelocityContext, _velocityEngine,
-				_templateContextHelper);
+			template = new VelocityTemplate(
+				templateResource, errorTemplateResource, velocityContext,
+				_velocityEngine, _templateContextHelper);
 		}
 
-		return null;
+		return PACLTemplateWrapper.getTemplate(template);
 	}
 
 	public void init() throws TemplateException {
@@ -223,23 +173,6 @@ public class VelocityManager implements TemplateManager {
 		catch (Exception e) {
 			throw new TemplateException(e);
 		}
-
-		_restrictedVelocityContext = new VelocityContext();
-
-		Map<String, Object> helperUtilities =
-			_templateContextHelper.getRestrictedHelperUtilities();
-
-		for (Map.Entry<String, Object> entry : helperUtilities.entrySet()) {
-			_restrictedVelocityContext.put(entry.getKey(), entry.getValue());
-		}
-
-		_standardVelocityContext = new VelocityContext();
-
-		helperUtilities = _templateContextHelper.getHelperUtilities();
-
-		for (Map.Entry<String, Object> entry : helperUtilities.entrySet()) {
-			_standardVelocityContext.put(entry.getKey(), entry.getValue());
-		}
 	}
 
 	public void setTemplateContextHelper(
@@ -248,10 +181,21 @@ public class VelocityManager implements TemplateManager {
 		_templateContextHelper = templateContextHelper;
 	}
 
-	private Map<ClassLoader, VelocityContext> _classLoaderVelocityContexts =
-		new ConcurrentHashMap<ClassLoader, VelocityContext>();
-	private VelocityContext _restrictedVelocityContext;
-	private VelocityContext _standardVelocityContext;
+	private VelocityContext _getVelocityContext(
+		TemplateContextType templateContextType) {
+
+		VelocityContext velocityContext = new VelocityContext();
+
+		Map<String, Object> helperUtilities =
+			_templateContextHelper.getHelperUtilities(templateContextType);
+
+		for (Map.Entry<String, Object> entry : helperUtilities.entrySet()) {
+			velocityContext.put(entry.getKey(), entry.getValue());
+		}
+
+		return velocityContext;
+	}
+
 	private TemplateContextHelper _templateContextHelper;
 	private VelocityEngine _velocityEngine;
 

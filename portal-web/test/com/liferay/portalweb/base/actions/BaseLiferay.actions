@@ -93,6 +93,12 @@
 		</conditional>
 	</actiondef>
 
+	<actiondef command="isText">
+		<conditional default="true">
+			<function object="IsText" command="isText" />
+		</conditional>
+	</actiondef>
+
 	<actiondef command="isVisible">
 		<conditional default="true">
 			<function object="IsVisible" command="isVisible" />

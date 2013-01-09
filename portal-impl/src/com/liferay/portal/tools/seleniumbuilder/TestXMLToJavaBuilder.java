@@ -117,7 +117,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 
 		String elementName = element.getName();
 
-		if (elementName.equals("setup") || elementName.equals("teardown")) {
+		if (elementName.equals("setup")) {
 			simpleClassNameSet.add("SignInUserMacros");
 		}
 
@@ -163,8 +163,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 
 		sb.append(processBlockObjectDeclaractions(setup));
 
-		sb.append("signInUserMacros.signIn(");
-		sb.append("\"test@liferay.com\", \"test\");");
+		sb.append("signInUserMacros.signInSAUser();");
 
 		sb.append(processBlockCommands(setup, _validCommands));
 
@@ -196,8 +195,6 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append(processBlockObjectDeclaractions(teardown));
 
 		sb.append(processBlockCommands(teardown, _validCommands));
-
-		sb.append("signInUserMacros.signOut();");
 
 		sb.append("}");
 

@@ -98,12 +98,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         normalized when accessed see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
-	 * @param  serviceContext the service context. Must set the universally
-	 *         unique identifier (UUID) for the layout. Can set the creation
-	 *         date, modification date and the expando bridge attributes for the
-	 *         layout. For layouts that belong to a layout set prototype, an
-	 *         attribute named 'layoutUpdateable' can be used to specify whether
-	 *         site administrators can modify this page within their site.
+	 * @param  serviceContext the service context. Must set the UUID for the
+	 *         layout. Can set the creation date, modification date and the
+	 *         expando bridge attributes for the layout. For layouts that belong
+	 *         to a layout set prototype, an attribute named 'layoutUpdateable'
+	 *         can be used to specify whether site administrators can modify
+	 *         this page within their site.
 	 * @return the layout
 	 * @throws PortalException if a group with the primary key could not be
 	 *         found, if the group did not have permission to manage the layouts
@@ -173,12 +173,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         normalized when accessed see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
-	 * @param  serviceContext the service context. Must set the universally
-	 *         unique identifier (UUID) for the layout. Can specify the creation
-	 *         date, modification date and the expando bridge attributes for the
-	 *         layout. For layouts that belong to a layout set prototype, an
-	 *         attribute named 'layoutUpdateable' can be used to specify whether
-	 *         site administrators can modify this page within their site.
+	 * @param  serviceContext the service context. Must set the UUID for the
+	 *         layout. Can specify the creation date, modification date and the
+	 *         expando bridge attributes for the layout. For layouts that belong
+	 *         to a layout set prototype, an attribute named 'layoutUpdateable'
+	 *         can be used to specify whether site administrators can modify
+	 *         this page within their site.
 	 * @return the layout
 	 * @throws PortalException if a group with the primary key could not be
 	 *         found, if the group did not have permission to manage the layouts
@@ -519,6 +519,17 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return LayoutConstants.DEFAULT_PLID;
 	}
 
+	/**
+	 * Returns the layout matching the UUID and group.
+	 *
+	 * @param  uuid the layout's UUID
+	 * @param  groupId the primary key of the group
+	 * @return the matching layout
+	 * @throws PortalException if a matching layout could not be found, if the
+	 *         user did not have permission to view the layout, or if some other
+	 *         portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public Layout getLayoutByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException, SystemException {
 

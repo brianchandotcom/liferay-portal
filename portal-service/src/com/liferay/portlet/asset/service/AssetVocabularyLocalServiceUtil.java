@@ -297,6 +297,14 @@ public class AssetVocabularyLocalServiceUtil {
 			settings, serviceContext);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
+		long userId, java.lang.String title,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addVocabulary(userId, title, serviceContext);
+	}
+
 	public static void addVocabularyResources(
 		com.liferay.portlet.asset.model.AssetVocabulary vocabulary,
 		boolean addGroupPermissions, boolean addGuestPermissions)

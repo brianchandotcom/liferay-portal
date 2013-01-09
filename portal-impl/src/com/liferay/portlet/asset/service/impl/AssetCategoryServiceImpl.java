@@ -28,6 +28,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.base.AssetCategoryServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
@@ -63,6 +64,19 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		return assetCategoryLocalService.addCategory(
 			getUserId(), parentCategoryId, titleMap, descriptionMap,
 			vocabularyId, categoryProperties, serviceContext);
+	}
+
+	public AssetCategory addCategory(
+			String title, long vocabularyId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		AssetCategoryPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			ActionKeys.ADD_CATEGORY);
+
+		return assetCategoryLocalService.addCategory(
+			getUserId(), title, vocabularyId, serviceContext);
 	}
 
 	public void deleteCategories(long[] categoryIds)

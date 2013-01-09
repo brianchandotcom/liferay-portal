@@ -73,6 +73,18 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			serviceContext);
 	}
 
+	public AssetVocabulary addVocabulary(
+			String title, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		AssetPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.ADD_VOCABULARY);
+
+		return assetVocabularyLocalService.addVocabulary(
+			getUserId(), title, serviceContext);
+	}
+
 	public void deleteVocabularies(long[] vocabularyIds)
 		throws PortalException, SystemException {
 

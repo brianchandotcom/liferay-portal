@@ -1163,18 +1163,16 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 			query.append(_FINDER_COLUMN_C_K_COMPANYID_2);
 
-			boolean bindKey = false;
-
 			if (key == null) {
 				query.append(_FINDER_COLUMN_C_K_KEY_1);
 			}
-			else if (key.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_K_KEY_3);
-			}
 			else {
-				bindKey = true;
-
-				query.append(_FINDER_COLUMN_C_K_KEY_2);
+				if (key.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_K_KEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_K_KEY_2);
+				}
 			}
 
 			if (orderByComparator != null) {
@@ -1199,7 +1197,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 				qPos.add(companyId);
 
-				if (bindKey) {
+				if (key != null) {
 					qPos.add(key);
 				}
 
@@ -1405,18 +1403,16 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 		query.append(_FINDER_COLUMN_C_K_COMPANYID_2);
 
-		boolean bindKey = false;
-
 		if (key == null) {
 			query.append(_FINDER_COLUMN_C_K_KEY_1);
 		}
-		else if (key.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_C_K_KEY_3);
-		}
 		else {
-			bindKey = true;
-
-			query.append(_FINDER_COLUMN_C_K_KEY_2);
+			if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_C_K_KEY_2);
+			}
 		}
 
 		if (orderByComparator != null) {
@@ -1489,7 +1485,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 		qPos.add(companyId);
 
-		if (bindKey) {
+		if (key != null) {
 			qPos.add(key);
 		}
 
@@ -1549,18 +1545,16 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 			query.append(_FINDER_COLUMN_C_K_COMPANYID_2);
 
-			boolean bindKey = false;
-
 			if (key == null) {
 				query.append(_FINDER_COLUMN_C_K_KEY_1);
 			}
-			else if (key.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_K_KEY_3);
-			}
 			else {
-				bindKey = true;
-
-				query.append(_FINDER_COLUMN_C_K_KEY_2);
+				if (key.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_K_KEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_K_KEY_2);
+				}
 			}
 
 			String sql = query.toString();
@@ -1576,7 +1570,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 				qPos.add(companyId);
 
-				if (bindKey) {
+				if (key != null) {
 					qPos.add(key);
 				}
 
@@ -1600,7 +1594,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	private static final String _FINDER_COLUMN_C_K_COMPANYID_2 = "assetTagProperty.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_K_KEY_1 = "assetTagProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_C_K_KEY_2 = "assetTagProperty.key = ?";
-	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(assetTagProperty.key IS NULL OR assetTagProperty.key = '')";
+	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(assetTagProperty.key IS NULL OR assetTagProperty.key = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_T_K = new FinderPath(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
 			AssetTagPropertyModelImpl.FINDER_CACHE_ENABLED,
 			AssetTagPropertyImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByT_K",
@@ -1697,18 +1691,16 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 			query.append(_FINDER_COLUMN_T_K_TAGID_2);
 
-			boolean bindKey = false;
-
 			if (key == null) {
 				query.append(_FINDER_COLUMN_T_K_KEY_1);
 			}
-			else if (key.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_T_K_KEY_3);
-			}
 			else {
-				bindKey = true;
-
-				query.append(_FINDER_COLUMN_T_K_KEY_2);
+				if (key.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_T_K_KEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_T_K_KEY_2);
+				}
 			}
 
 			String sql = query.toString();
@@ -1724,7 +1716,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 				qPos.add(tagId);
 
-				if (bindKey) {
+				if (key != null) {
 					qPos.add(key);
 				}
 
@@ -1806,18 +1798,16 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 			query.append(_FINDER_COLUMN_T_K_TAGID_2);
 
-			boolean bindKey = false;
-
 			if (key == null) {
 				query.append(_FINDER_COLUMN_T_K_KEY_1);
 			}
-			else if (key.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_T_K_KEY_3);
-			}
 			else {
-				bindKey = true;
-
-				query.append(_FINDER_COLUMN_T_K_KEY_2);
+				if (key.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_T_K_KEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_T_K_KEY_2);
+				}
 			}
 
 			String sql = query.toString();
@@ -1833,7 +1823,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 				qPos.add(tagId);
 
-				if (bindKey) {
+				if (key != null) {
 					qPos.add(key);
 				}
 
@@ -1857,7 +1847,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	private static final String _FINDER_COLUMN_T_K_TAGID_2 = "assetTagProperty.tagId = ? AND ";
 	private static final String _FINDER_COLUMN_T_K_KEY_1 = "assetTagProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_T_K_KEY_2 = "assetTagProperty.key = ?";
-	private static final String _FINDER_COLUMN_T_K_KEY_3 = "(assetTagProperty.key IS NULL OR assetTagProperty.key = '')";
+	private static final String _FINDER_COLUMN_T_K_KEY_3 = "(assetTagProperty.key IS NULL OR assetTagProperty.key = ?)";
 
 	/**
 	 * Caches the asset tag property in the entity cache if it is enabled.

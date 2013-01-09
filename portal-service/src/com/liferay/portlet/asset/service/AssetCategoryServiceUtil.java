@@ -68,6 +68,14 @@ public class AssetCategoryServiceUtil {
 			vocabularyId, categoryProperties, serviceContext);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetCategory addCategory(
+		java.lang.String title, long vocabularyId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addCategory(title, vocabularyId, serviceContext);
+	}
+
 	public static void deleteCategories(long[] categoryIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

@@ -121,6 +121,23 @@ public class AssetVocabularyServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.asset.model.AssetVocabularySoap addVocabulary(
+		java.lang.String title,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.asset.model.AssetVocabulary returnValue = AssetVocabularyServiceUtil.addVocabulary(title,
+					serviceContext);
+
+			return com.liferay.portlet.asset.model.AssetVocabularySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteVocabularies(long[] vocabularyIds)
 		throws RemoteException {
 		try {

@@ -69,7 +69,7 @@ public class JournalTestUtil {
 		throws Exception {
 
 		JournalFolder folder = JournalFolderLocalServiceUtil.fetchFolder(
-				groupId, name);
+			groupId, name);
 
 		if (folder != null) {
 			return folder;

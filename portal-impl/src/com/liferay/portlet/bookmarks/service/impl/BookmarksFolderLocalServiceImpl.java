@@ -310,7 +310,7 @@ public class BookmarksFolderLocalServiceImpl
 		throws PortalException, SystemException {
 
 		List<BookmarksFolder> folders = bookmarksFolderPersistence.findByG_P(
-				fromFolder.getGroupId(), fromFolder.getFolderId());
+			fromFolder.getGroupId(), fromFolder.getFolderId());
 
 		for (BookmarksFolder folder : folders) {
 			mergeFolders(folder, toFolderId);

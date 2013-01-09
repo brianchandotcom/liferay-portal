@@ -802,7 +802,7 @@ public class JCRStore extends BaseStore {
 			Version version = versionManager.checkin(contentNode.getPath());
 
 			VersionHistory versionHistory = versionManager.getVersionHistory(
-					contentNode.getPath());
+				contentNode.getPath());
 
 			versionHistory.addVersionLabel(
 				version.getName(), versionLabel,

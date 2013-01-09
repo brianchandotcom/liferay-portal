@@ -212,7 +212,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		for (MBThread thread : threads) {
 			TrashHandler trashHandler =
 				TrashHandlerRegistryUtil.getTrashHandler(
-						MBThread.class.getName());
+					MBThread.class.getName());
 
 			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
 				thread.getPrimaryKey());
@@ -372,7 +372,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
 		return MBCategoryPermission.contains(
-				permissionChecker, category, actionId);
+			permissionChecker, category, actionId);
 	}
 
 }

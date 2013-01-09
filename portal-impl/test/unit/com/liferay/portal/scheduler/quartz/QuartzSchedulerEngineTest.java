@@ -452,7 +452,7 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER, schedulerResponses.size());
 
 		IntervalTrigger intervalTrigger = new IntervalTrigger(
-		_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, 0);
+			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, 0);
 
 		_quartzSchedulerEngine.schedule(
 			intervalTrigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null);

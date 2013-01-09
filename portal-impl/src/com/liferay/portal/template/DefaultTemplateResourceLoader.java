@@ -197,7 +197,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 					if ((_modificationCheckInterval != 0) &&
 						(!_name.equals(TemplateManager.VELOCITY) ||
 						 !templateId.contains(
-								SandboxHandler.SANDBOX_MARKER))) {
+							 SandboxHandler.SANDBOX_MARKER))) {
 
 						templateResource = new CacheTemplateResource(
 							templateResource);

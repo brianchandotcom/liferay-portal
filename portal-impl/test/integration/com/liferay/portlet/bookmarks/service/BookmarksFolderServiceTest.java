@@ -111,7 +111,7 @@ public class BookmarksFolderServiceTest {
 				companyId, GetterUtil.getLong(doc.get(Field.COMPANY_ID)));
 
 			Assert.assertEquals(
-					groupId, GetterUtil.getLong(doc.get(Field.GROUP_ID)));
+				groupId, GetterUtil.getLong(doc.get(Field.GROUP_ID)));
 
 			AssertUtils.assertEqualsIgnoreCase(
 				entry.getName(), doc.get(Field.TITLE));

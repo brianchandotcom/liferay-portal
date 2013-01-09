@@ -996,8 +996,8 @@ public class HttpImpl implements Http {
 
 		org.apache.commons.httpclient.Cookie commonsCookie =
 			new org.apache.commons.httpclient.Cookie(
-			cookie.getDomain(), cookie.getName(), cookie.getValue(),
-			cookie.getPath(), cookie.getMaxAge(), cookie.getSecure());
+				cookie.getDomain(), cookie.getName(), cookie.getValue(),
+				cookie.getPath(), cookie.getMaxAge(), cookie.getSecure());
 
 		commonsCookie.setVersion(cookie.getVersion());
 

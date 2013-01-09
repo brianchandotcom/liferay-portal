@@ -341,8 +341,8 @@ public class JournalTemplateFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-						sql, JournalTemplate.class.getName(),
-						"JournalTemplate.id_", groupIds);
+					sql, JournalTemplate.class.getName(), "JournalTemplate.id_",
+					groupIds);
 
 				sql = StringUtil.replace(
 					sql, "(companyId", "(JournalTemplate.companyId");

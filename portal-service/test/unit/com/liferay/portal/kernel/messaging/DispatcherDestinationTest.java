@@ -56,7 +56,7 @@ public class DispatcherDestinationTest extends TestCase {
 
 		DestinationRegistrationTask registerTask =
 			new DestinationRegistrationTask(
-					_destination, _listeners, TASK_ITERATION_COUNT, true);
+				_destination, _listeners, TASK_ITERATION_COUNT, true);
 
 		for (int i = 0; i < REGISTER_TASK_COUNT; i++) {
 			_tasks.add(registerTask);
@@ -64,7 +64,7 @@ public class DispatcherDestinationTest extends TestCase {
 
 		DestinationRegistrationTask unregisterTask =
 			new DestinationRegistrationTask(
-					_destination, _listeners, TASK_ITERATION_COUNT, false);
+				_destination, _listeners, TASK_ITERATION_COUNT, false);
 
 		for (int i = 0; i < UNREGISTER_TASK_COUNT; i++) {
 			_tasks.add(unregisterTask);

@@ -33,7 +33,7 @@ public class PortalClassLoaderUtil {
 		if (securityManager != null) {
 			Permission permission = new RuntimePermission(
 				PACLConstants.RUNTIME_PERMISSION_GET_CLASSLOADER.concat(
-				StringPool.PERIOD).concat("portal"));
+					StringPool.PERIOD).concat("portal"));
 
 			securityManager.checkPermission(permission);
 		}

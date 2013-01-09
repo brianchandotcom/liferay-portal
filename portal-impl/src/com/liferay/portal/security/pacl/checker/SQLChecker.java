@@ -16,6 +16,7 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.StringReader;
 
@@ -44,6 +45,7 @@ import net.sf.jsqlparser.test.tablesfinder.TablesNamesFinder;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class SQLChecker extends BaseChecker {
 
@@ -53,6 +55,83 @@ public class SQLChecker extends BaseChecker {
 
 	public void checkPermission(Permission permission) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String[] generateRuleFromCondition(Object... conditions) {
+		String[] rule = new String[2];
+
+		if ((conditions != null) && (conditions.length == 1) &&
+			(conditions[0] instanceof String)) {
+
+			String sql = (String)conditions[0];
+
+			Statement statement = null;
+
+			try {
+				statement = _jSqlParser.parse(new StringReader(sql));
+			}
+			catch (Exception e) {
+				_log.error("Unable to parse SQL " + sql);
+			}
+
+			if (statement instanceof CreateTable) {
+				CreateTable createTable = (CreateTable)statement;
+
+				rule[0] = "security-manager-sql-tables-create";
+				rule[1] = createTable.getTable().getName();
+			}
+			else if (statement instanceof Delete) {
+				Delete delete = (Delete)statement;
+
+				rule[0] = "security-manager-sql-tables-delete";
+				rule[1] = delete.getTable().getName();
+			}
+			else if (statement instanceof Drop) {
+				Drop drop = (Drop)statement;
+
+				rule[0] = "security-manager-sql-tables-drop";
+				rule[1] = drop.getName();
+			}
+			else if (statement instanceof Insert) {
+				Insert insert = (Insert)statement;
+
+				rule[0] = "security-manager-sql-tables-insert";
+				rule[1] = insert.getTable().getName();
+			}
+			else if (statement instanceof Replace) {
+				Replace replace = (Replace)statement;
+
+				rule[0] = "security-manager-sql-tables-replace";
+				rule[1] = replace.getTable().getName();
+			}
+			else if (statement instanceof Select) {
+				Select select = (Select)statement;
+
+				rule[0] = "security-manager-sql-tables-select";
+
+				TableNamesFinder tableNamesFinder = new TableNamesFinder();
+
+				List<String> tableNames = tableNamesFinder.getTableNames(
+					select);
+
+				rule[1] = StringUtil.merge(tableNames);
+			}
+			else if (statement instanceof Truncate) {
+				Truncate truncate = (Truncate)statement;
+
+				rule[0] = "security-manager-sql-tables-truncate";
+				rule[1] = truncate.getTable().getName();
+			}
+			else if (statement instanceof Update) {
+				Update update = (Update)statement;
+
+				rule[0] = "security-manager-sql-tables-update";
+				rule[1] = update.getTable().getName();
+			}
+		}
+
+		return rule;
 	}
 
 	public boolean hasSQL(String sql) {

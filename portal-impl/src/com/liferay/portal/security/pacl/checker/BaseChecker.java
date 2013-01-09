@@ -45,6 +45,10 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 		_systemClassLoader = ClassLoader.getSystemClassLoader();
 	}
 
+	public String[] generateRuleFromCondition(Object... args) {
+		return null;
+	}
+
 	public ClassLoader getClassLoader() {
 		return _paclPolicy.getClassLoader();
 	}

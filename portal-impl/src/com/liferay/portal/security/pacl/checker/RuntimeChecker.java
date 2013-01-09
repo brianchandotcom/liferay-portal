@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLClassUtil;
@@ -134,6 +135,38 @@ public class RuntimeChecker extends BaseReflectChecker {
 				"Attempted to " + permission.getName() + " on " +
 					permission.getActions());
 		}
+	}
+
+	public String[] generateRuleFromCondition(Object... conditions) {
+		String[] rule = new String[2];
+
+		if ((conditions != null) && (conditions.length == 1) &&
+			(conditions[0] instanceof Permission)) {
+
+			Permission permission = (Permission)conditions[0];
+
+			String name = permission.getName();
+
+			if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+				rule[0] = "security-manager-class-loader-reference-ids";
+
+				if (Validator.isNull(name)) {
+					name = "portal";
+				}
+
+				rule[1] = name;
+			}
+			else if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
+				int pos = name.indexOf(StringPool.PERIOD);
+
+				String envName = name.substring(pos + 1);
+
+				rule[0] = "security-manager-get-environment-variable";
+				rule[1] = envName;
+			}
+		}
+
+		return rule;
 	}
 
 	protected boolean hasAccessClassInPackage(String pkg) {

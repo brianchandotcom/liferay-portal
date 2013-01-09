@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class JNDIChecker extends BaseChecker {
 
@@ -45,6 +46,20 @@ public class JNDIChecker extends BaseChecker {
 		}
 
 		return false;
+	}
+
+	@Override
+	public String[] generateRuleFromCondition(Object... args) {
+		String[] rule = new String[2];
+
+		if ((args != null) && (args.length == 1) &&
+			(args[0] instanceof String)) {
+
+			rule[0] = "security-manager-jndi-names";
+			rule[1] = (String)args[0];
+		}
+
+		return rule;
 	}
 
 	protected void initNames() {

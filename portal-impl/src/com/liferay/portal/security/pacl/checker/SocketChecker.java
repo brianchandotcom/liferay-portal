@@ -32,6 +32,7 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class SocketChecker extends BaseChecker {
 
@@ -88,6 +89,43 @@ public class SocketChecker extends BaseChecker {
 					_log, "Attempted to listen on port " + port);
 			}
 		}
+	}
+
+	@Override
+	public String[] generateRuleFromCondition(Object... conditions) {
+		String[] rule = new String[2];
+
+		if ((conditions != null) && (conditions.length == 1) &&
+			(conditions[0] instanceof Permission)) {
+
+			Permission permission = (Permission)conditions[0];
+
+			String actions = permission.getActions();
+
+			String name = permission.getName();
+
+			int pos = name.indexOf(StringPool.COLON);
+			int port = GetterUtil.getInteger(name.substring(pos + 1));
+
+			// resolve
+
+			if (port == -1) {
+			}
+			else if (actions.contains(SOCKET_PERMISSION_ACCEPT)) {
+				rule[0] = "security-manager-sockets-accept";
+				rule[1] = name;
+			}
+			else if (actions.contains(SOCKET_PERMISSION_CONNECT)) {
+				rule[0] = "security-manager-sockets-connect";
+				rule[1] = name;
+			}
+			else if (actions.contains(SOCKET_PERMISSION_LISTEN)) {
+				rule[0] = "security-manager-sockets-listen";
+				rule[1] = String.valueOf(port);
+			}
+		}
+
+		return rule;
 	}
 
 	protected boolean hasAccept(String host, int port) {

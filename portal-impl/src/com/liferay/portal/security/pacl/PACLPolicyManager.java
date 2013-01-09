@@ -30,20 +30,40 @@ import java.util.Properties;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PACLPolicyManager {
+
+	public enum State {
+		disabled, enabled, generate;
+
+		public static State read(Object state) {
+			if ("generate".equals(state)) {
+				return generate;
+			}
+			else if (GetterUtil.getBoolean(state) == true) {
+				return enabled;
+			}
+
+			return disabled;
+		}
+	}
 
 	public static PACLPolicy buildPACLPolicy(
 		String servletContextName, ClassLoader classLoader,
 		Properties properties) {
 
-		boolean active = GetterUtil.getBoolean(
+		State state = State.read(
 			properties.get("security-manager-enabled"));
 
 		PACLPolicy paclPolicy = null;
 
-		if (active) {
+		if (state == State.enabled) {
 			paclPolicy = new ActivePACLPolicy(
+				servletContextName, classLoader, properties);
+		}
+		else if (state == State.generate) {
+			paclPolicy = new GeneratingPACLPolicy(
 				servletContextName, classLoader, properties);
 		}
 		else {

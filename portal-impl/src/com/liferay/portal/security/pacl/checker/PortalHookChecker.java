@@ -26,6 +26,7 @@ import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PortalHookChecker extends BaseChecker {
 
@@ -104,6 +105,64 @@ public class PortalHookChecker extends BaseChecker {
 					"Attempted to use struts action path " + strutsActionPath);
 			}
 		}
+	}
+
+	@Override
+	public String[] generateRuleFromCondition(Object... args) {
+		String[] rule = new String[2];
+
+		if ((args != null) && (args.length == 1) &&
+			(args[0] instanceof Permission)) {
+
+			PortalHookPermission portalHookPermission =
+				(PortalHookPermission)args[0];
+
+			String name = portalHookPermission.getName();
+			Object subject = portalHookPermission.getSubject();
+
+			if (name.equals(PORTAL_HOOK_PERMISSION_CUSTOM_JSP_DIR)) {
+				rule[0] = "security-manager-hook-custom-jsp-dir-enabled";
+				rule[1] = "true";
+			}
+			else if (name.equals(PORTAL_HOOK_PERMISSION_INDEXER)) {
+				String indexerClassName = (String)subject;
+
+				rule[0] = "security-manager-hook-indexers";
+				rule[1] = indexerClassName;
+			}
+			else if (name.equals(
+						PORTAL_HOOK_PERMISSION_LANGUAGE_PROPERTIES_LOCALE)) {
+
+				Locale locale = (Locale)subject;
+
+				rule[0] = "security-manager-hook-language-properties-locales";
+				rule[1] = locale.toString();
+			}
+			else if (name.equals(PORTAL_HOOK_PERMISSION_PORTAL_PROPERTIES_KEY)) {
+				String key = (String)subject;
+
+				rule[0] = "security-manager-hook-portal-properties-keys";
+				rule[1] = key;
+			}
+			else if (name.equals(PORTAL_HOOK_PERMISSION_SERVICE)) {
+				String serviceType = (String)subject;
+
+				rule[0] = "security-manager-hook-services";
+				rule[1] = serviceType;
+			}
+			else if (name.equals(PORTAL_HOOK_PERMISSION_SERVLET_FILTERS)) {
+				rule[0] = "security-manager-hook-servlet-filters-enabled";
+				rule[1] = "true";
+			}
+			else if (name.equals(PORTAL_HOOK_PERMISSION_STRUTS_ACTION_PATH)) {
+				String strutsActionPath = (String)subject;
+
+				rule[0] = "security-manager-hook-struts-action-paths";
+				rule[1] = strutsActionPath;
+			}
+		}
+
+		return rule;
 	}
 
 	protected void initCustomJspDir() {

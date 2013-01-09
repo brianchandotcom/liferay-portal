@@ -8131,10 +8131,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	private static final String _FINDER_COLUMN_U_C_USERID_2 = "mbMessage.userId = ? AND ";
 	private static final String _FINDER_COLUMN_U_C_USERID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_U_C_USERID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_U_C_USERID_2) + ")";
 	private static final String _FINDER_COLUMN_U_C_CLASSNAMEID_2 = "mbMessage.classNameId = ?";
 	private static final String _FINDER_COLUMN_U_C_CLASSNAMEID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_U_C_CLASSNAMEID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_U_C_CLASSNAMEID_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
@@ -14964,13 +14964,13 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	private static final String _FINDER_COLUMN_U_C_S_USERID_2 = "mbMessage.userId = ? AND ";
 	private static final String _FINDER_COLUMN_U_C_S_USERID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_U_C_S_USERID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_U_C_S_USERID_2) + ")";
 	private static final String _FINDER_COLUMN_U_C_S_CLASSNAMEID_2 = "mbMessage.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_U_C_S_CLASSNAMEID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_U_C_S_CLASSNAMEID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_U_C_S_CLASSNAMEID_2) + ")";
 	private static final String _FINDER_COLUMN_U_C_S_STATUS_2 = "mbMessage.status = ?";
 	private static final String _FINDER_COLUMN_U_C_S_STATUS_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_U_C_S_STATUS_2) + ")";
+		removeConjunction(_FINDER_COLUMN_U_C_S_STATUS_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_S = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_S",
@@ -19352,17 +19352,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	private static final String _SQL_SELECT_MBMESSAGE_WHERE = "SELECT mbMessage FROM MBMessage mbMessage WHERE ";
 	private static final String _SQL_COUNT_MBMESSAGE = "SELECT COUNT(mbMessage) FROM MBMessage mbMessage";
 	private static final String _SQL_COUNT_MBMESSAGE_WHERE = "SELECT COUNT(mbMessage) FROM MBMessage mbMessage WHERE ";
-
-	private static String _removeConjunction(String sql) {
-		int pos = sql.indexOf(" AND ");
-
-		if (pos != -1) {
-			sql = sql.substring(0, pos);
-		}
-
-		return sql;
-	}
-
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "mbMessage.rootMessageId";
 	private static final String _FILTER_SQL_SELECT_MBMESSAGE_WHERE = "SELECT DISTINCT {mbMessage.*} FROM MBMessage mbMessage WHERE ";
 	private static final String _FILTER_SQL_SELECT_MBMESSAGE_NO_INLINE_DISTINCT_WHERE_1 =

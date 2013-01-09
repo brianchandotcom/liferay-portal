@@ -4142,10 +4142,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	private static final String _FINDER_COLUMN_G_P_GROUPID_2 = "mbCategory.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_P_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_P_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_P_PARENTCATEGORYID_2 = "mbCategory.parentCategoryId = ?";
 	private static final String _FINDER_COLUMN_G_P_PARENTCATEGORYID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_P_PARENTCATEGORYID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_P_PARENTCATEGORYID_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_S = new FinderPath(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			MBCategoryModelImpl.FINDER_CACHE_ENABLED, MBCategoryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
@@ -7070,13 +7070,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	private static final String _FINDER_COLUMN_G_P_S_GROUPID_2 = "mbCategory.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_S_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_P_S_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_P_S_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_P_S_PARENTCATEGORYID_2 = "mbCategory.parentCategoryId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_S_PARENTCATEGORYID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_P_S_PARENTCATEGORYID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_P_S_PARENTCATEGORYID_2) + ")";
 	private static final String _FINDER_COLUMN_G_P_S_STATUS_2 = "mbCategory.status = ?";
 	private static final String _FINDER_COLUMN_G_P_S_STATUS_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_P_S_STATUS_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_P_S_STATUS_2) + ")";
 
 	/**
 	 * Caches the message boards category in the entity cache if it is enabled.
@@ -7874,17 +7874,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	private static final String _SQL_SELECT_MBCATEGORY_WHERE = "SELECT mbCategory FROM MBCategory mbCategory WHERE ";
 	private static final String _SQL_COUNT_MBCATEGORY = "SELECT COUNT(mbCategory) FROM MBCategory mbCategory";
 	private static final String _SQL_COUNT_MBCATEGORY_WHERE = "SELECT COUNT(mbCategory) FROM MBCategory mbCategory WHERE ";
-
-	private static String _removeConjunction(String sql) {
-		int pos = sql.indexOf(" AND ");
-
-		if (pos != -1) {
-			sql = sql.substring(0, pos);
-		}
-
-		return sql;
-	}
-
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "mbCategory.categoryId";
 	private static final String _FILTER_SQL_SELECT_MBCATEGORY_WHERE = "SELECT DISTINCT {mbCategory.*} FROM MBCategory mbCategory WHERE ";
 	private static final String _FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_1 =

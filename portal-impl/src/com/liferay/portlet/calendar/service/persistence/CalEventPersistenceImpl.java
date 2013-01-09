@@ -4714,16 +4714,16 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 	private static final String _FINDER_COLUMN_G_T_GROUPID_2 = "calEvent.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_T_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_T_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_T_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_T_TYPE_1 = "calEvent.type IS NULL";
 	private static final String _FINDER_COLUMN_G_T_TYPE_2 = "calEvent.type = ?";
 	private static final String _FINDER_COLUMN_G_T_TYPE_3 = "(calEvent.type IS NULL OR calEvent.type = '')";
 	private static final String _FINDER_COLUMN_G_T_TYPE_4 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_T_TYPE_1) + ")";
+		removeConjunction(_FINDER_COLUMN_G_T_TYPE_1) + ")";
 	private static final String _FINDER_COLUMN_G_T_TYPE_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_T_TYPE_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_T_TYPE_2) + ")";
 	private static final String _FINDER_COLUMN_G_T_TYPE_6 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_T_TYPE_3) + ")";
+		removeConjunction(_FINDER_COLUMN_G_T_TYPE_3) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_R = new FinderPath(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 			CalEventModelImpl.FINDER_CACHE_ENABLED, CalEventImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_R",
@@ -7255,19 +7255,19 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 	private static final String _FINDER_COLUMN_G_T_R_GROUPID_2 = "calEvent.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_T_R_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_T_R_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_T_R_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_T_R_TYPE_1 = "calEvent.type IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_T_R_TYPE_2 = "calEvent.type = ? AND ";
 	private static final String _FINDER_COLUMN_G_T_R_TYPE_3 = "(calEvent.type IS NULL OR calEvent.type = '') AND ";
 	private static final String _FINDER_COLUMN_G_T_R_TYPE_4 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_T_R_TYPE_1) + ")";
+		removeConjunction(_FINDER_COLUMN_G_T_R_TYPE_1) + ")";
 	private static final String _FINDER_COLUMN_G_T_R_TYPE_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_T_R_TYPE_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_T_R_TYPE_2) + ")";
 	private static final String _FINDER_COLUMN_G_T_R_TYPE_6 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_T_R_TYPE_3) + ")";
+		removeConjunction(_FINDER_COLUMN_G_T_R_TYPE_3) + ")";
 	private static final String _FINDER_COLUMN_G_T_R_REPEATING_2 = "calEvent.repeating = ?";
 	private static final String _FINDER_COLUMN_G_T_R_REPEATING_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_T_R_REPEATING_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_T_R_REPEATING_2) + ")";
 
 	/**
 	 * Caches the cal event in the entity cache if it is enabled.
@@ -8074,17 +8074,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	private static final String _SQL_SELECT_CALEVENT_WHERE = "SELECT calEvent FROM CalEvent calEvent WHERE ";
 	private static final String _SQL_COUNT_CALEVENT = "SELECT COUNT(calEvent) FROM CalEvent calEvent";
 	private static final String _SQL_COUNT_CALEVENT_WHERE = "SELECT COUNT(calEvent) FROM CalEvent calEvent WHERE ";
-
-	private static String _removeConjunction(String sql) {
-		int pos = sql.indexOf(" AND ");
-
-		if (pos != -1) {
-			sql = sql.substring(0, pos);
-		}
-
-		return sql;
-	}
-
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "calEvent.eventId";
 	private static final String _FILTER_SQL_SELECT_CALEVENT_WHERE = "SELECT DISTINCT {calEvent.*} FROM CalEvent calEvent WHERE ";
 	private static final String _FILTER_SQL_SELECT_CALEVENT_NO_INLINE_DISTINCT_WHERE_1 =

@@ -1659,16 +1659,16 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 	private static final String _FINDER_COLUMN_T_N_TABLEID_2 = "expandoColumn.tableId = ? AND ";
 	private static final String _FINDER_COLUMN_T_N_TABLEID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_T_N_TABLEID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_T_N_TABLEID_2) + ")";
 	private static final String _FINDER_COLUMN_T_N_NAME_1 = "expandoColumn.name IS NULL";
 	private static final String _FINDER_COLUMN_T_N_NAME_2 = "expandoColumn.name = ?";
 	private static final String _FINDER_COLUMN_T_N_NAME_3 = "(expandoColumn.name IS NULL OR expandoColumn.name = '')";
 	private static final String _FINDER_COLUMN_T_N_NAME_4 = "(" +
-		_removeConjunction(_FINDER_COLUMN_T_N_NAME_1) + ")";
+		removeConjunction(_FINDER_COLUMN_T_N_NAME_1) + ")";
 	private static final String _FINDER_COLUMN_T_N_NAME_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_T_N_NAME_2) + ")";
+		removeConjunction(_FINDER_COLUMN_T_N_NAME_2) + ")";
 	private static final String _FINDER_COLUMN_T_N_NAME_6 = "(" +
-		_removeConjunction(_FINDER_COLUMN_T_N_NAME_3) + ")";
+		removeConjunction(_FINDER_COLUMN_T_N_NAME_3) + ")";
 
 	/**
 	 * Caches the expando column in the entity cache if it is enabled.
@@ -2332,17 +2332,6 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	private static final String _SQL_SELECT_EXPANDOCOLUMN_WHERE = "SELECT expandoColumn FROM ExpandoColumn expandoColumn WHERE ";
 	private static final String _SQL_COUNT_EXPANDOCOLUMN = "SELECT COUNT(expandoColumn) FROM ExpandoColumn expandoColumn";
 	private static final String _SQL_COUNT_EXPANDOCOLUMN_WHERE = "SELECT COUNT(expandoColumn) FROM ExpandoColumn expandoColumn WHERE ";
-
-	private static String _removeConjunction(String sql) {
-		int pos = sql.indexOf(" AND ");
-
-		if (pos != -1) {
-			sql = sql.substring(0, pos);
-		}
-
-		return sql;
-	}
-
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "expandoColumn.columnId";
 	private static final String _FILTER_SQL_SELECT_EXPANDOCOLUMN_WHERE = "SELECT DISTINCT {expandoColumn.*} FROM ExpandoColumn expandoColumn WHERE ";
 	private static final String _FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_1 =

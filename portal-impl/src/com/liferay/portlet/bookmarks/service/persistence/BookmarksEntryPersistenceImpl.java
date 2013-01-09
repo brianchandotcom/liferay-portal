@@ -4849,10 +4849,10 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 	private static final String _FINDER_COLUMN_G_F_GROUPID_2 = "bookmarksEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_F_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_F_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_F_FOLDERID_2 = "bookmarksEntry.folderId = ?";
 	private static final String _FINDER_COLUMN_G_F_FOLDERID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_F_FOLDERID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_F_FOLDERID_2) + ")";
 
 	/**
 	 * Caches the bookmarks entry in the entity cache if it is enabled.
@@ -5607,17 +5607,6 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	private static final String _SQL_SELECT_BOOKMARKSENTRY_WHERE = "SELECT bookmarksEntry FROM BookmarksEntry bookmarksEntry WHERE ";
 	private static final String _SQL_COUNT_BOOKMARKSENTRY = "SELECT COUNT(bookmarksEntry) FROM BookmarksEntry bookmarksEntry";
 	private static final String _SQL_COUNT_BOOKMARKSENTRY_WHERE = "SELECT COUNT(bookmarksEntry) FROM BookmarksEntry bookmarksEntry WHERE ";
-
-	private static String _removeConjunction(String sql) {
-		int pos = sql.indexOf(" AND ");
-
-		if (pos != -1) {
-			sql = sql.substring(0, pos);
-		}
-
-		return sql;
-	}
-
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "bookmarksEntry.entryId";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN = "bookmarksEntry.userId";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "bookmarksEntry.";

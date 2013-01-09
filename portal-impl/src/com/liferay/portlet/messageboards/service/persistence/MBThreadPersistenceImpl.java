@@ -2536,10 +2536,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "mbThread.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_C_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_C_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_C_CATEGORYID_2 = "mbThread.categoryId = ?";
 	private static final String _FINDER_COLUMN_G_C_CATEGORYID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_C_CATEGORYID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_C_CATEGORYID_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NOTC = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC",
@@ -7901,13 +7901,13 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 	private static final String _FINDER_COLUMN_G_C_S_GROUPID_2 = "mbThread.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_S_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_C_S_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_C_S_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_C_S_CATEGORYID_2 = "mbThread.categoryId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_S_CATEGORYID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_C_S_CATEGORYID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_C_S_CATEGORYID_2) + ")";
 	private static final String _FINDER_COLUMN_G_C_S_STATUS_2 = "mbThread.status = ?";
 	private static final String _FINDER_COLUMN_G_C_S_STATUS_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_C_S_STATUS_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_C_S_STATUS_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_NOTS = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_NotS",
@@ -9402,13 +9402,13 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 	private static final String _FINDER_COLUMN_G_C_NOTS_GROUPID_2 = "mbThread.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_NOTS_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_C_NOTS_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_C_NOTS_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_C_NOTS_CATEGORYID_2 = "mbThread.categoryId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_NOTS_CATEGORYID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_C_NOTS_CATEGORYID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_C_NOTS_CATEGORYID_2) + ")";
 	private static final String _FINDER_COLUMN_G_C_NOTS_STATUS_2 = "mbThread.status != ?";
 	private static final String _FINDER_COLUMN_G_C_NOTS_STATUS_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_C_NOTS_STATUS_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_C_NOTS_STATUS_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NOTC_S = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC_S",
@@ -12042,17 +12042,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	private static final String _SQL_SELECT_MBTHREAD_WHERE = "SELECT mbThread FROM MBThread mbThread WHERE ";
 	private static final String _SQL_COUNT_MBTHREAD = "SELECT COUNT(mbThread) FROM MBThread mbThread";
 	private static final String _SQL_COUNT_MBTHREAD_WHERE = "SELECT COUNT(mbThread) FROM MBThread mbThread WHERE ";
-
-	private static String _removeConjunction(String sql) {
-		int pos = sql.indexOf(" AND ");
-
-		if (pos != -1) {
-			sql = sql.substring(0, pos);
-		}
-
-		return sql;
-	}
-
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "mbThread.threadId";
 	private static final String _FILTER_SQL_SELECT_MBTHREAD_WHERE = "SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ";
 	private static final String _FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1 =

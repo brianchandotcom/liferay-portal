@@ -6105,10 +6105,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	private static final String _FINDER_COLUMN_G_F_GROUPID_2 = "dlFileEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_F_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_F_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_F_FOLDERID_2 = "dlFileEntry.folderId = ?";
 	private static final String _FINDER_COLUMN_G_F_FOLDERID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_F_FOLDERID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_F_FOLDERID_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_F = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_F",
@@ -7621,13 +7621,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	private static final String _FINDER_COLUMN_G_U_F_GROUPID_2 = "dlFileEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_F_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_U_F_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_U_F_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_U_F_USERID_2 = "dlFileEntry.userId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_F_USERID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_U_F_USERID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_U_F_USERID_2) + ")";
 	private static final String _FINDER_COLUMN_G_U_F_FOLDERID_2 = "dlFileEntry.folderId = ?";
 	private static final String _FINDER_COLUMN_G_U_F_FOLDERID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_U_F_FOLDERID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_U_F_FOLDERID_2) + ")";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_F_N = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_F_N",
@@ -9712,13 +9712,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	private static final String _FINDER_COLUMN_G_F_F_GROUPID_2 = "dlFileEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_F_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_F_F_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_F_F_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_F_F_FOLDERID_2 = "dlFileEntry.folderId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_F_FOLDERID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_F_F_FOLDERID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_F_F_FOLDERID_2) + ")";
 	private static final String _FINDER_COLUMN_G_F_F_FILEENTRYTYPEID_2 = "dlFileEntry.fileEntryTypeId = ?";
 	private static final String _FINDER_COLUMN_G_F_F_FILEENTRYTYPEID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_F_F_FILEENTRYTYPEID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_F_F_FILEENTRYTYPEID_2) + ")";
 
 	/**
 	 * Caches the document library file entry in the entity cache if it is enabled.
@@ -10683,17 +10683,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	private static final String _SQL_SELECT_DLFILEENTRY_WHERE = "SELECT dlFileEntry FROM DLFileEntry dlFileEntry WHERE ";
 	private static final String _SQL_COUNT_DLFILEENTRY = "SELECT COUNT(dlFileEntry) FROM DLFileEntry dlFileEntry";
 	private static final String _SQL_COUNT_DLFILEENTRY_WHERE = "SELECT COUNT(dlFileEntry) FROM DLFileEntry dlFileEntry WHERE ";
-
-	private static String _removeConjunction(String sql) {
-		int pos = sql.indexOf(" AND ");
-
-		if (pos != -1) {
-			sql = sql.substring(0, pos);
-		}
-
-		return sql;
-	}
-
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "dlFileEntry.fileEntryId";
 	private static final String _FILTER_SQL_SELECT_DLFILEENTRY_WHERE = "SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ";
 	private static final String _FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_1 =

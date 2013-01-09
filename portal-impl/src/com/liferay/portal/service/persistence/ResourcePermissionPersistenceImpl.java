@@ -807,7 +807,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 	private static final String _FINDER_COLUMN_SCOPE_SCOPE_2 = "resourcePermission.scope = ?";
 	private static final String _FINDER_COLUMN_SCOPE_SCOPE_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_SCOPE_SCOPE_2) + ")";
+		removeConjunction(_FINDER_COLUMN_SCOPE_SCOPE_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ROLEID = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED,
 			ResourcePermissionImpl.class,
@@ -4234,31 +4234,31 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 	private static final String _FINDER_COLUMN_C_N_S_P_R_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_COMPANYID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_COMPANYID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_C_N_S_P_R_COMPANYID_2) + ")";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_1 = "resourcePermission.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_2 = "resourcePermission.name = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_3 = "(resourcePermission.name IS NULL OR resourcePermission.name = '') AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_4 = "(" +
-		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_NAME_1) + ")";
+		removeConjunction(_FINDER_COLUMN_C_N_S_P_R_NAME_1) + ")";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_NAME_2) + ")";
+		removeConjunction(_FINDER_COLUMN_C_N_S_P_R_NAME_2) + ")";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_NAME_6 = "(" +
-		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_NAME_3) + ")";
+		removeConjunction(_FINDER_COLUMN_C_N_S_P_R_NAME_3) + ")";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_SCOPE_2 = "resourcePermission.scope = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_SCOPE_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_SCOPE_2) + ")";
+		removeConjunction(_FINDER_COLUMN_C_N_S_P_R_SCOPE_2) + ")";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_1 = "resourcePermission.primKey IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2 = "resourcePermission.primKey = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_3 = "(resourcePermission.primKey IS NULL OR resourcePermission.primKey = '') AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_4 = "(" +
-		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_1) + ")";
+		removeConjunction(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_1) + ")";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2) + ")";
+		removeConjunction(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2) + ")";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_6 = "(" +
-		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_3) + ")";
+		removeConjunction(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_3) + ")";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_ROLEID_2 = "resourcePermission.roleId = ?";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_ROLEID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_C_N_S_P_R_ROLEID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_C_N_S_P_R_ROLEID_2) + ")";
 
 	/**
 	 * Caches the resource permission in the entity cache if it is enabled.
@@ -4939,17 +4939,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	private static final String _SQL_SELECT_RESOURCEPERMISSION_WHERE = "SELECT resourcePermission FROM ResourcePermission resourcePermission WHERE ";
 	private static final String _SQL_COUNT_RESOURCEPERMISSION = "SELECT COUNT(resourcePermission) FROM ResourcePermission resourcePermission";
 	private static final String _SQL_COUNT_RESOURCEPERMISSION_WHERE = "SELECT COUNT(resourcePermission) FROM ResourcePermission resourcePermission WHERE ";
-
-	private static String _removeConjunction(String sql) {
-		int pos = sql.indexOf(" AND ");
-
-		if (pos != -1) {
-			sql = sql.substring(0, pos);
-		}
-
-		return sql;
-	}
-
 	private static final String _ORDER_BY_ENTITY_ALIAS = "resourcePermission.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ResourcePermission exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourcePermission exists with the key {";

@@ -45,7 +45,7 @@ boolean splitThread = false;
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		title="message"
+		title="move-thread"
 	/>
 
 	<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />

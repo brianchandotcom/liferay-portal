@@ -128,7 +128,14 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/message_boards_admin/view");
+		if (portletId.equals(PortletKeys.MESSAGE_BOARDS)) {
+			portletURL.setParameter("struts_action", "/message_boards/view");
+		}
+		else {
+			portletURL.setParameter(
+				"struts_action", "/message_boards_admin/view");
+		}
+
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(thread.getCategoryId()));
 

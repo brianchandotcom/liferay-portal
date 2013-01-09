@@ -433,8 +433,6 @@ public class MainServlet extends ActionServlet {
 			_log.debug("Handle non-serializable request");
 		}
 
-		request = handleNonSerializableRequest(request);
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Encrypt request");
 		}
@@ -744,16 +742,6 @@ public class MainServlet extends ActionServlet {
 
 	protected long getUserId(HttpServletRequest request) {
 		return PortalUtil.getUserId(request);
-	}
-
-	protected HttpServletRequest handleNonSerializableRequest(
-		HttpServletRequest request) {
-
-		if (ServerDetector.isWebLogic()) {
-			request = new NonSerializableObjectRequestWrapper(request);
-		}
-
-		return request;
 	}
 
 	protected boolean hasAbsoluteRedirect(HttpServletRequest request) {

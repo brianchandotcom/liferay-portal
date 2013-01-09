@@ -2156,18 +2156,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#if>
 	</#list>
 
-	<#if entity.hasArrayableOperator()>
-		private static String _removeConjunction(String sql) {
-			int pos = sql.indexOf(" AND ");
-
-			if (pos != -1) {
-				sql = sql.substring(0, pos);
-			}
-
-			return sql;
-		}
-	</#if>
-
 	<#if entity.isPermissionCheckEnabled()>
 		private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "${entity.alias}.${entity.filterPKColumn.DBName}";
 

@@ -357,6 +357,16 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 	}
 
+	protected static String removeConjunction(String sql) {
+		int pos = sql.indexOf(" AND ");
+
+		if (pos != -1) {
+			sql = sql.substring(0, pos);
+		}
+
+		return sql;
+	}
+
 	protected void appendOrderByComparator(
 		StringBundler query, String entityAlias,
 		OrderByComparator orderByComparator) {

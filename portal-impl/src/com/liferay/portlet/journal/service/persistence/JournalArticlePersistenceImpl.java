@@ -8127,10 +8127,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 	private static final String _FINDER_COLUMN_G_F_GROUPID_2 = "journalArticle.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_F_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_F_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_F_FOLDERID_2 = "journalArticle.folderId = ?";
 	private static final String _FINDER_COLUMN_G_F_FOLDERID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_F_FOLDERID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_F_FOLDERID_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -16493,13 +16493,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 	private static final String _FINDER_COLUMN_G_F_ST_GROUPID_2 = "journalArticle.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_ST_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_F_ST_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_F_ST_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_F_ST_FOLDERID_2 = "journalArticle.folderId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_ST_FOLDERID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_F_ST_FOLDERID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_F_ST_FOLDERID_2) + ")";
 	private static final String _FINDER_COLUMN_G_F_ST_STATUS_2 = "journalArticle.status = ?";
 	private static final String _FINDER_COLUMN_G_F_ST_STATUS_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_F_ST_STATUS_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_F_ST_STATUS_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -22720,19 +22720,19 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 	private static final String _FINDER_COLUMN_G_A_ST_GROUPID_2 = "journalArticle.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_A_ST_GROUPID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_A_ST_GROUPID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_A_ST_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_A_ST_ARTICLEID_1 = "journalArticle.articleId IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_A_ST_ARTICLEID_2 = "journalArticle.articleId = ? AND ";
 	private static final String _FINDER_COLUMN_G_A_ST_ARTICLEID_3 = "(journalArticle.articleId IS NULL OR journalArticle.articleId = '') AND ";
 	private static final String _FINDER_COLUMN_G_A_ST_ARTICLEID_4 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_A_ST_ARTICLEID_1) + ")";
+		removeConjunction(_FINDER_COLUMN_G_A_ST_ARTICLEID_1) + ")";
 	private static final String _FINDER_COLUMN_G_A_ST_ARTICLEID_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_A_ST_ARTICLEID_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_A_ST_ARTICLEID_2) + ")";
 	private static final String _FINDER_COLUMN_G_A_ST_ARTICLEID_6 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_A_ST_ARTICLEID_3) + ")";
+		removeConjunction(_FINDER_COLUMN_G_A_ST_ARTICLEID_3) + ")";
 	private static final String _FINDER_COLUMN_G_A_ST_STATUS_2 = "journalArticle.status = ?";
 	private static final String _FINDER_COLUMN_G_A_ST_STATUS_5 = "(" +
-		_removeConjunction(_FINDER_COLUMN_G_A_ST_STATUS_2) + ")";
+		removeConjunction(_FINDER_COLUMN_G_A_ST_STATUS_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_UT_ST = new FinderPath(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -25711,17 +25711,6 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	private static final String _SQL_SELECT_JOURNALARTICLE_WHERE = "SELECT journalArticle FROM JournalArticle journalArticle WHERE ";
 	private static final String _SQL_COUNT_JOURNALARTICLE = "SELECT COUNT(journalArticle) FROM JournalArticle journalArticle";
 	private static final String _SQL_COUNT_JOURNALARTICLE_WHERE = "SELECT COUNT(journalArticle) FROM JournalArticle journalArticle WHERE ";
-
-	private static String _removeConjunction(String sql) {
-		int pos = sql.indexOf(" AND ");
-
-		if (pos != -1) {
-			sql = sql.substring(0, pos);
-		}
-
-		return sql;
-	}
-
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "journalArticle.resourcePrimKey";
 	private static final String _FILTER_SQL_SELECT_JOURNALARTICLE_WHERE = "SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ";
 	private static final String _FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1 =

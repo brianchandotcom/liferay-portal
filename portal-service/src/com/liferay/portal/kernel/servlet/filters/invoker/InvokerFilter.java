@@ -61,9 +61,9 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		String uri = getURI(request);
 
-		request.setAttribute(WebKeys.INVOKER_FILTER_URI, uri);
-
 		request = handleNonSerializableRequest(request);
+
+		request.setAttribute(WebKeys.INVOKER_FILTER_URI, uri);
 
 		try {
 			InvokerFilterChain invokerFilterChain = getInvokerFilterChain(
@@ -76,7 +76,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 			invokerFilterChain.setContextClassLoader(contextClassLoader);
 
-			invokerFilterChain.doFilter(servletRequest, servletResponse);
+			invokerFilterChain.doFilter(request, servletResponse);
 		}
 		finally {
 			request.removeAttribute(WebKeys.INVOKER_FILTER_URI);

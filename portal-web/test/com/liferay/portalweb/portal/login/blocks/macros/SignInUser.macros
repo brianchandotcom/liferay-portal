@@ -61,6 +61,34 @@
 	</macrodef>
 
 	<macrodef
+		command="signInSAUser"
+		description="Log into the portal as SA user test@liferay.com with the password test. Log out first if already signed in as another user, or do nothing if already signed in as the default user."
+	>
+		<params>
+		</params>
+		<steps>
+			<action object="Home" command="open" target="URL_GUEST" />
+
+			<if object="PortletSignInHome" command="isElementPresent" target="USER_NAME">
+				<if object="PortletSignInHome" command="isNotText" target="USER_NAME" value="Test Test">
+					<macro object="SignInUser" command="signOut" />
+
+					<macro object="SignInUser" command="signIn">
+						<param name="email" value="test@liferay.com" />
+						<param name="password" value="test" />
+					</macro>
+				</if>
+			</if>
+			<else>
+				<macro object="SignInUser" command="signIn">
+					<param name="email" value="test@liferay.com" />
+					<param name="password" value="test" />
+				</macro>
+			</else>
+		</steps>
+	</macrodef>
+
+	<macrodef
 		command="signOut"
 		description="Log out of the portal."
 	>

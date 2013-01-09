@@ -103,6 +103,11 @@
 	<td>//span[@class='sign-out']/a</td>
 	<td>Sign Out</td>
 </tr>
+<tr>
+	<td>USER_NAME</td>
+	<td>//span[@class='user-full-name']</td>
+	<td>Sign In</td>
+</tr>
 </tbody></table>
 </body>
 </html>

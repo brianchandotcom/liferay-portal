@@ -1,0 +1,6 @@
+<functions object="IsText" return="boolean">
+	<functiondef command="isText" default="true">
+		<selenium command="pause" target="1000" />
+		<selenium command="isText" return="boolean" />
+	</functiondef>
+</functions>

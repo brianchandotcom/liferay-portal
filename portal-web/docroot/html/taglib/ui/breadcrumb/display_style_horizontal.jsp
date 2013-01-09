@@ -38,13 +38,16 @@ if (showPortletBreadcrumb) {
 String breadcrumbString = sb.toString();
 
 if (Validator.isNotNull(breadcrumbString)) {
-	int pos = breadcrumbString.indexOf("<li");
+	int pos_first = breadcrumbString.indexOf("<li");
 
-	breadcrumbString = StringUtil.insert(breadcrumbString, " class=\"first\"", pos + 3);
+	int pos_last = breadcrumbString.lastIndexOf("<li");
 
-	pos = breadcrumbString.lastIndexOf("<li");
+	if (pos_last > pos_first) {
+		breadcrumbString = StringUtil.insert(breadcrumbString, " class=\"first\"", pos_first + 3);
+		pos_last += 14;
+	}
 
-	breadcrumbString = StringUtil.insert(breadcrumbString, " class=\"last\"", pos + 3);
+	breadcrumbString = StringUtil.insert(breadcrumbString, " class=\"last\"", pos_last + 3);
 }
 %>
 

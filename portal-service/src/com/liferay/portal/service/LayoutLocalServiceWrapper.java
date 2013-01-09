@@ -617,10 +617,10 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	/**
-	* Returns the layout matching the universally unique identifier and group
-	* ID
+	* Returns the layout matching the universally unique identifier (UUID) and
+	* group.
 	*
-	* @param uuid the universally unique identifier of the scope layout
+	* @param uuid the layout's universally unique identifier (UUID)
 	* @param groupId the primary key of the group
 	* @return the layout, or <code>null</code> if a matching layout could not
 	be found
@@ -1459,12 +1459,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* Updates the names of the portlets within scope of the group, the scope of
-	* the layout's universally unique identifier, and the privacy.
+	* the layout's universally unique identifier (UUID), and the privacy.
 	*
 	* @param groupId the primary key of the group
 	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout whose universally unique
-	identifier to match
+	identifier (UUID) to match
 	* @param name the new name for the portlets
 	* @param languageId the primary key of the language
 	* @throws PortalException if a matching layout could not be found

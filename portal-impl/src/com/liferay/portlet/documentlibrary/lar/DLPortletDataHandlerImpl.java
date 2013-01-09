@@ -883,7 +883,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			Element repositoryEntriesElement, Folder folder, boolean recurse)
 		throws Exception {
 
-		if (!portletDataContext.isWithinDateRange(folder.getModifiedDate())) {
+		if (!portletDataContext.isWithinDateRange(folder.getLastPostDate())) {
 			return;
 		}
 

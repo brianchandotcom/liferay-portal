@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -3239,13 +3238,24 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 *
 	 * @param primaryKey the primary key of the asset link
 	 * @return the asset link
-	 * @throws com.liferay.portal.NoSuchModelException if a asset link with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchLinkException if a asset link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchLinkException, SystemException {
+		AssetLink assetLink = fetchByPrimaryKey(primaryKey);
+
+		if (assetLink == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return assetLink;
 	}
 
 	/**
@@ -3258,18 +3268,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public AssetLink findByPrimaryKey(long linkId)
 		throws NoSuchLinkException, SystemException {
-		AssetLink assetLink = fetchByPrimaryKey(linkId);
-
-		if (assetLink == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + linkId);
-			}
-
-			throw new NoSuchLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				linkId);
-		}
-
-		return assetLink;
+		return findByPrimaryKey((Serializable)linkId);
 	}
 
 	/**
@@ -3282,19 +3281,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	@Override
 	public AssetLink fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the asset link with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param linkId the primary key of the asset link
-	 * @return the asset link, or <code>null</code> if a asset link with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetLink fetchByPrimaryKey(long linkId) throws SystemException {
 		AssetLink assetLink = (AssetLink)EntityCacheUtil.getResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-				AssetLinkImpl.class, linkId);
+				AssetLinkImpl.class, primaryKey);
 
 		if (assetLink == _nullAssetLink) {
 			return null;
@@ -3307,19 +3295,19 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 				session = openSession();
 
 				assetLink = (AssetLink)session.get(AssetLinkImpl.class,
-						Long.valueOf(linkId));
+						primaryKey);
 
 				if (assetLink != null) {
 					cacheResult(assetLink);
 				}
 				else {
 					EntityCacheUtil.putResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-						AssetLinkImpl.class, linkId, _nullAssetLink);
+						AssetLinkImpl.class, primaryKey, _nullAssetLink);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-					AssetLinkImpl.class, linkId);
+					AssetLinkImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3329,6 +3317,17 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		}
 
 		return assetLink;
+	}
+
+	/**
+	 * Returns the asset link with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param linkId the primary key of the asset link
+	 * @return the asset link, or <code>null</code> if a asset link with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetLink fetchByPrimaryKey(long linkId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)linkId);
 	}
 
 	/**

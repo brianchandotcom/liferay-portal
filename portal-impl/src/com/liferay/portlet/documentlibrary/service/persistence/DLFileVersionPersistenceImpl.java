@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -4992,13 +4991,24 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 *
 	 * @param primaryKey the primary key of the document library file version
 	 * @return the document library file version
-	 * @throws com.liferay.portal.NoSuchModelException if a document library file version with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByPrimaryKey(primaryKey);
+
+		if (dlFileVersion == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchFileVersionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return dlFileVersion;
 	}
 
 	/**
@@ -5011,18 +5021,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 */
 	public DLFileVersion findByPrimaryKey(long fileVersionId)
 		throws NoSuchFileVersionException, SystemException {
-		DLFileVersion dlFileVersion = fetchByPrimaryKey(fileVersionId);
-
-		if (dlFileVersion == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + fileVersionId);
-			}
-
-			throw new NoSuchFileVersionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				fileVersionId);
-		}
-
-		return dlFileVersion;
+		return findByPrimaryKey((Serializable)fileVersionId);
 	}
 
 	/**
@@ -5035,20 +5034,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	@Override
 	public DLFileVersion fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the document library file version with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param fileVersionId the primary key of the document library file version
-	 * @return the document library file version, or <code>null</code> if a document library file version with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFileVersion fetchByPrimaryKey(long fileVersionId)
-		throws SystemException {
 		DLFileVersion dlFileVersion = (DLFileVersion)EntityCacheUtil.getResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileVersionImpl.class, fileVersionId);
+				DLFileVersionImpl.class, primaryKey);
 
 		if (dlFileVersion == _nullDLFileVersion) {
 			return null;
@@ -5061,20 +5048,19 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 				session = openSession();
 
 				dlFileVersion = (DLFileVersion)session.get(DLFileVersionImpl.class,
-						Long.valueOf(fileVersionId));
+						primaryKey);
 
 				if (dlFileVersion != null) {
 					cacheResult(dlFileVersion);
 				}
 				else {
 					EntityCacheUtil.putResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileVersionImpl.class, fileVersionId,
-						_nullDLFileVersion);
+						DLFileVersionImpl.class, primaryKey, _nullDLFileVersion);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileVersionImpl.class, fileVersionId);
+					DLFileVersionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -5084,6 +5070,18 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		}
 
 		return dlFileVersion;
+	}
+
+	/**
+	 * Returns the document library file version with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param fileVersionId the primary key of the document library file version
+	 * @return the document library file version, or <code>null</code> if a document library file version with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByPrimaryKey(long fileVersionId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)fileVersionId);
 	}
 
 	/**

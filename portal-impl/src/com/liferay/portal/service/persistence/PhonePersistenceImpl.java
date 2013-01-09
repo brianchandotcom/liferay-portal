@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchPhoneException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -3040,13 +3039,24 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 *
 	 * @param primaryKey the primary key of the phone
 	 * @return the phone
-	 * @throws com.liferay.portal.NoSuchModelException if a phone with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPhoneException if a phone with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Phone findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchPhoneException, SystemException {
+		Phone phone = fetchByPrimaryKey(primaryKey);
+
+		if (phone == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchPhoneException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return phone;
 	}
 
 	/**
@@ -3059,18 +3069,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	public Phone findByPrimaryKey(long phoneId)
 		throws NoSuchPhoneException, SystemException {
-		Phone phone = fetchByPrimaryKey(phoneId);
-
-		if (phone == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + phoneId);
-			}
-
-			throw new NoSuchPhoneException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				phoneId);
-		}
-
-		return phone;
+		return findByPrimaryKey((Serializable)phoneId);
 	}
 
 	/**
@@ -3083,19 +3082,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	@Override
 	public Phone fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the phone with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param phoneId the primary key of the phone
-	 * @return the phone, or <code>null</code> if a phone with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Phone fetchByPrimaryKey(long phoneId) throws SystemException {
 		Phone phone = (Phone)EntityCacheUtil.getResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-				PhoneImpl.class, phoneId);
+				PhoneImpl.class, primaryKey);
 
 		if (phone == _nullPhone) {
 			return null;
@@ -3107,20 +3095,19 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 			try {
 				session = openSession();
 
-				phone = (Phone)session.get(PhoneImpl.class,
-						Long.valueOf(phoneId));
+				phone = (Phone)session.get(PhoneImpl.class, primaryKey);
 
 				if (phone != null) {
 					cacheResult(phone);
 				}
 				else {
 					EntityCacheUtil.putResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-						PhoneImpl.class, phoneId, _nullPhone);
+						PhoneImpl.class, primaryKey, _nullPhone);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-					PhoneImpl.class, phoneId);
+					PhoneImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3130,6 +3117,17 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		}
 
 		return phone;
+	}
+
+	/**
+	 * Returns the phone with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param phoneId the primary key of the phone
+	 * @return the phone, or <code>null</code> if a phone with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Phone fetchByPrimaryKey(long phoneId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)phoneId);
 	}
 
 	/**

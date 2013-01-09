@@ -19,7 +19,6 @@ import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.impl.CounterImpl;
 import com.liferay.counter.model.impl.CounterModelImpl;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -318,13 +317,24 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 *
 	 * @param primaryKey the primary key of the counter
 	 * @return the counter
-	 * @throws com.liferay.portal.NoSuchModelException if a counter with the primary key could not be found
+	 * @throws com.liferay.counter.NoSuchCounterException if a counter with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Counter findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey((String)primaryKey);
+		throws NoSuchCounterException, SystemException {
+		Counter counter = fetchByPrimaryKey(primaryKey);
+
+		if (counter == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchCounterException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return counter;
 	}
 
 	/**
@@ -337,18 +347,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 */
 	public Counter findByPrimaryKey(String name)
 		throws NoSuchCounterException, SystemException {
-		Counter counter = fetchByPrimaryKey(name);
-
-		if (counter == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + name);
-			}
-
-			throw new NoSuchCounterException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				name);
-		}
-
-		return counter;
+		return findByPrimaryKey((Serializable)name);
 	}
 
 	/**
@@ -361,19 +360,8 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	@Override
 	public Counter fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey((String)primaryKey);
-	}
-
-	/**
-	 * Returns the counter with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param name the primary key of the counter
-	 * @return the counter, or <code>null</code> if a counter with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Counter fetchByPrimaryKey(String name) throws SystemException {
 		Counter counter = (Counter)EntityCacheUtil.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
-				CounterImpl.class, name);
+				CounterImpl.class, primaryKey);
 
 		if (counter == _nullCounter) {
 			return null;
@@ -385,19 +373,19 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 			try {
 				session = openSession();
 
-				counter = (Counter)session.get(CounterImpl.class, name);
+				counter = (Counter)session.get(CounterImpl.class, primaryKey);
 
 				if (counter != null) {
 					cacheResult(counter);
 				}
 				else {
 					EntityCacheUtil.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
-						CounterImpl.class, name, _nullCounter);
+						CounterImpl.class, primaryKey, _nullCounter);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
-					CounterImpl.class, name);
+					CounterImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -407,6 +395,17 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		}
 
 		return counter;
+	}
+
+	/**
+	 * Returns the counter with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param name the primary key of the counter
+	 * @return the counter, or <code>null</code> if a counter with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Counter fetchByPrimaryKey(String name) throws SystemException {
+		return fetchByPrimaryKey((Serializable)name);
 	}
 
 	/**

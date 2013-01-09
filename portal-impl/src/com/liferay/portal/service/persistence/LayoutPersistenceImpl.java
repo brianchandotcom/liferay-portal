@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -8473,13 +8472,24 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 *
 	 * @param primaryKey the primary key of the layout
 	 * @return the layout
-	 * @throws com.liferay.portal.NoSuchModelException if a layout with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchLayoutException if a layout with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Layout findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchLayoutException, SystemException {
+		Layout layout = fetchByPrimaryKey(primaryKey);
+
+		if (layout == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchLayoutException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return layout;
 	}
 
 	/**
@@ -8492,18 +8502,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	public Layout findByPrimaryKey(long plid)
 		throws NoSuchLayoutException, SystemException {
-		Layout layout = fetchByPrimaryKey(plid);
-
-		if (layout == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + plid);
-			}
-
-			throw new NoSuchLayoutException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				plid);
-		}
-
-		return layout;
+		return findByPrimaryKey((Serializable)plid);
 	}
 
 	/**
@@ -8516,19 +8515,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public Layout fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the layout with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param plid the primary key of the layout
-	 * @return the layout, or <code>null</code> if a layout with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Layout fetchByPrimaryKey(long plid) throws SystemException {
 		Layout layout = (Layout)EntityCacheUtil.getResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutImpl.class, plid);
+				LayoutImpl.class, primaryKey);
 
 		if (layout == _nullLayout) {
 			return null;
@@ -8540,20 +8528,19 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			try {
 				session = openSession();
 
-				layout = (Layout)session.get(LayoutImpl.class,
-						Long.valueOf(plid));
+				layout = (Layout)session.get(LayoutImpl.class, primaryKey);
 
 				if (layout != null) {
 					cacheResult(layout);
 				}
 				else {
 					EntityCacheUtil.putResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutImpl.class, plid, _nullLayout);
+						LayoutImpl.class, primaryKey, _nullLayout);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutImpl.class, plid);
+					LayoutImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -8563,6 +8550,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		return layout;
+	}
+
+	/**
+	 * Returns the layout with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param plid the primary key of the layout
+	 * @return the layout, or <code>null</code> if a layout with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Layout fetchByPrimaryKey(long plid) throws SystemException {
+		return fetchByPrimaryKey((Serializable)plid);
 	}
 
 	/**

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.mobiledevicerules.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2636,13 +2635,24 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 *
 	 * @param primaryKey the primary key of the m d r rule group
 	 * @return the m d r rule group
-	 * @throws com.liferay.portal.NoSuchModelException if a m d r rule group with the primary key could not be found
+	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchRuleGroupException, SystemException {
+		MDRRuleGroup mdrRuleGroup = fetchByPrimaryKey(primaryKey);
+
+		if (mdrRuleGroup == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchRuleGroupException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return mdrRuleGroup;
 	}
 
 	/**
@@ -2655,18 +2665,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 */
 	public MDRRuleGroup findByPrimaryKey(long ruleGroupId)
 		throws NoSuchRuleGroupException, SystemException {
-		MDRRuleGroup mdrRuleGroup = fetchByPrimaryKey(ruleGroupId);
-
-		if (mdrRuleGroup == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + ruleGroupId);
-			}
-
-			throw new NoSuchRuleGroupException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				ruleGroupId);
-		}
-
-		return mdrRuleGroup;
+		return findByPrimaryKey((Serializable)ruleGroupId);
 	}
 
 	/**
@@ -2679,20 +2678,8 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	@Override
 	public MDRRuleGroup fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the m d r rule group with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param ruleGroupId the primary key of the m d r rule group
-	 * @return the m d r rule group, or <code>null</code> if a m d r rule group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MDRRuleGroup fetchByPrimaryKey(long ruleGroupId)
-		throws SystemException {
 		MDRRuleGroup mdrRuleGroup = (MDRRuleGroup)EntityCacheUtil.getResult(MDRRuleGroupModelImpl.ENTITY_CACHE_ENABLED,
-				MDRRuleGroupImpl.class, ruleGroupId);
+				MDRRuleGroupImpl.class, primaryKey);
 
 		if (mdrRuleGroup == _nullMDRRuleGroup) {
 			return null;
@@ -2705,19 +2692,19 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 				session = openSession();
 
 				mdrRuleGroup = (MDRRuleGroup)session.get(MDRRuleGroupImpl.class,
-						Long.valueOf(ruleGroupId));
+						primaryKey);
 
 				if (mdrRuleGroup != null) {
 					cacheResult(mdrRuleGroup);
 				}
 				else {
 					EntityCacheUtil.putResult(MDRRuleGroupModelImpl.ENTITY_CACHE_ENABLED,
-						MDRRuleGroupImpl.class, ruleGroupId, _nullMDRRuleGroup);
+						MDRRuleGroupImpl.class, primaryKey, _nullMDRRuleGroup);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(MDRRuleGroupModelImpl.ENTITY_CACHE_ENABLED,
-					MDRRuleGroupImpl.class, ruleGroupId);
+					MDRRuleGroupImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2727,6 +2714,18 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		}
 
 		return mdrRuleGroup;
+	}
+
+	/**
+	 * Returns the m d r rule group with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param ruleGroupId the primary key of the m d r rule group
+	 * @return the m d r rule group, or <code>null</code> if a m d r rule group with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MDRRuleGroup fetchByPrimaryKey(long ruleGroupId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)ruleGroupId);
 	}
 
 	/**

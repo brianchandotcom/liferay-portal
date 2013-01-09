@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -2652,13 +2651,24 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	 *
 	 * @param primaryKey the primary key of the repository
 	 * @return the repository
-	 * @throws com.liferay.portal.NoSuchModelException if a repository with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchRepositoryException if a repository with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Repository findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchRepositoryException, SystemException {
+		Repository repository = fetchByPrimaryKey(primaryKey);
+
+		if (repository == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchRepositoryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return repository;
 	}
 
 	/**
@@ -2671,18 +2681,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	 */
 	public Repository findByPrimaryKey(long repositoryId)
 		throws NoSuchRepositoryException, SystemException {
-		Repository repository = fetchByPrimaryKey(repositoryId);
-
-		if (repository == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + repositoryId);
-			}
-
-			throw new NoSuchRepositoryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				repositoryId);
-		}
-
-		return repository;
+		return findByPrimaryKey((Serializable)repositoryId);
 	}
 
 	/**
@@ -2695,20 +2694,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	@Override
 	public Repository fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the repository with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param repositoryId the primary key of the repository
-	 * @return the repository, or <code>null</code> if a repository with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Repository fetchByPrimaryKey(long repositoryId)
-		throws SystemException {
 		Repository repository = (Repository)EntityCacheUtil.getResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
-				RepositoryImpl.class, repositoryId);
+				RepositoryImpl.class, primaryKey);
 
 		if (repository == _nullRepository) {
 			return null;
@@ -2721,19 +2708,19 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 				session = openSession();
 
 				repository = (Repository)session.get(RepositoryImpl.class,
-						Long.valueOf(repositoryId));
+						primaryKey);
 
 				if (repository != null) {
 					cacheResult(repository);
 				}
 				else {
 					EntityCacheUtil.putResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
-						RepositoryImpl.class, repositoryId, _nullRepository);
+						RepositoryImpl.class, primaryKey, _nullRepository);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
-					RepositoryImpl.class, repositoryId);
+					RepositoryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2743,6 +2730,18 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		}
 
 		return repository;
+	}
+
+	/**
+	 * Returns the repository with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param repositoryId the primary key of the repository
+	 * @return the repository, or <code>null</code> if a repository with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Repository fetchByPrimaryKey(long repositoryId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)repositoryId);
 	}
 
 	/**

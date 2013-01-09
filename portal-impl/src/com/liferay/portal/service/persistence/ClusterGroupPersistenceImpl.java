@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchClusterGroupException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -322,13 +321,24 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	 *
 	 * @param primaryKey the primary key of the cluster group
 	 * @return the cluster group
-	 * @throws com.liferay.portal.NoSuchModelException if a cluster group with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchClusterGroupException if a cluster group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ClusterGroup findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchClusterGroupException, SystemException {
+		ClusterGroup clusterGroup = fetchByPrimaryKey(primaryKey);
+
+		if (clusterGroup == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchClusterGroupException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return clusterGroup;
 	}
 
 	/**
@@ -341,18 +351,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	 */
 	public ClusterGroup findByPrimaryKey(long clusterGroupId)
 		throws NoSuchClusterGroupException, SystemException {
-		ClusterGroup clusterGroup = fetchByPrimaryKey(clusterGroupId);
-
-		if (clusterGroup == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + clusterGroupId);
-			}
-
-			throw new NoSuchClusterGroupException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				clusterGroupId);
-		}
-
-		return clusterGroup;
+		return findByPrimaryKey((Serializable)clusterGroupId);
 	}
 
 	/**
@@ -365,20 +364,8 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	@Override
 	public ClusterGroup fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the cluster group with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param clusterGroupId the primary key of the cluster group
-	 * @return the cluster group, or <code>null</code> if a cluster group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ClusterGroup fetchByPrimaryKey(long clusterGroupId)
-		throws SystemException {
 		ClusterGroup clusterGroup = (ClusterGroup)EntityCacheUtil.getResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
-				ClusterGroupImpl.class, clusterGroupId);
+				ClusterGroupImpl.class, primaryKey);
 
 		if (clusterGroup == _nullClusterGroup) {
 			return null;
@@ -391,20 +378,19 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 				session = openSession();
 
 				clusterGroup = (ClusterGroup)session.get(ClusterGroupImpl.class,
-						Long.valueOf(clusterGroupId));
+						primaryKey);
 
 				if (clusterGroup != null) {
 					cacheResult(clusterGroup);
 				}
 				else {
 					EntityCacheUtil.putResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
-						ClusterGroupImpl.class, clusterGroupId,
-						_nullClusterGroup);
+						ClusterGroupImpl.class, primaryKey, _nullClusterGroup);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
-					ClusterGroupImpl.class, clusterGroupId);
+					ClusterGroupImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -414,6 +400,18 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 		}
 
 		return clusterGroup;
+	}
+
+	/**
+	 * Returns the cluster group with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param clusterGroupId the primary key of the cluster group
+	 * @return the cluster group, or <code>null</code> if a cluster group with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ClusterGroup fetchByPrimaryKey(long clusterGroupId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)clusterGroupId);
 	}
 
 	/**

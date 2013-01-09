@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchWorkflowInstanceLinkException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -967,13 +966,24 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	 *
 	 * @param primaryKey the primary key of the workflow instance link
 	 * @return the workflow instance link
-	 * @throws com.liferay.portal.NoSuchModelException if a workflow instance link with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public WorkflowInstanceLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchWorkflowInstanceLinkException, SystemException {
+		WorkflowInstanceLink workflowInstanceLink = fetchByPrimaryKey(primaryKey);
+
+		if (workflowInstanceLink == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchWorkflowInstanceLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return workflowInstanceLink;
 	}
 
 	/**
@@ -986,19 +996,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	 */
 	public WorkflowInstanceLink findByPrimaryKey(long workflowInstanceLinkId)
 		throws NoSuchWorkflowInstanceLinkException, SystemException {
-		WorkflowInstanceLink workflowInstanceLink = fetchByPrimaryKey(workflowInstanceLinkId);
-
-		if (workflowInstanceLink == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					workflowInstanceLinkId);
-			}
-
-			throw new NoSuchWorkflowInstanceLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				workflowInstanceLinkId);
-		}
-
-		return workflowInstanceLink;
+		return findByPrimaryKey((Serializable)workflowInstanceLinkId);
 	}
 
 	/**
@@ -1011,20 +1009,8 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@Override
 	public WorkflowInstanceLink fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the workflow instance link with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param workflowInstanceLinkId the primary key of the workflow instance link
-	 * @return the workflow instance link, or <code>null</code> if a workflow instance link with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public WorkflowInstanceLink fetchByPrimaryKey(long workflowInstanceLinkId)
-		throws SystemException {
 		WorkflowInstanceLink workflowInstanceLink = (WorkflowInstanceLink)EntityCacheUtil.getResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowInstanceLinkImpl.class, workflowInstanceLinkId);
+				WorkflowInstanceLinkImpl.class, primaryKey);
 
 		if (workflowInstanceLink == _nullWorkflowInstanceLink) {
 			return null;
@@ -1037,20 +1023,20 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 				session = openSession();
 
 				workflowInstanceLink = (WorkflowInstanceLink)session.get(WorkflowInstanceLinkImpl.class,
-						Long.valueOf(workflowInstanceLinkId));
+						primaryKey);
 
 				if (workflowInstanceLink != null) {
 					cacheResult(workflowInstanceLink);
 				}
 				else {
 					EntityCacheUtil.putResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-						WorkflowInstanceLinkImpl.class, workflowInstanceLinkId,
+						WorkflowInstanceLinkImpl.class, primaryKey,
 						_nullWorkflowInstanceLink);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-					WorkflowInstanceLinkImpl.class, workflowInstanceLinkId);
+					WorkflowInstanceLinkImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1060,6 +1046,18 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		}
 
 		return workflowInstanceLink;
+	}
+
+	/**
+	 * Returns the workflow instance link with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param workflowInstanceLinkId the primary key of the workflow instance link
+	 * @return the workflow instance link, or <code>null</code> if a workflow instance link with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WorkflowInstanceLink fetchByPrimaryKey(long workflowInstanceLinkId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)workflowInstanceLinkId);
 	}
 
 	/**

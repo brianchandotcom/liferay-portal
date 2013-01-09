@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -5918,13 +5917,24 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param primaryKey the primary key of the social relation
 	 * @return the social relation
-	 * @throws com.liferay.portal.NoSuchModelException if a social relation with the primary key could not be found
+	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchRelationException, SystemException {
+		SocialRelation socialRelation = fetchByPrimaryKey(primaryKey);
+
+		if (socialRelation == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchRelationException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return socialRelation;
 	}
 
 	/**
@@ -5937,18 +5947,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public SocialRelation findByPrimaryKey(long relationId)
 		throws NoSuchRelationException, SystemException {
-		SocialRelation socialRelation = fetchByPrimaryKey(relationId);
-
-		if (socialRelation == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + relationId);
-			}
-
-			throw new NoSuchRelationException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				relationId);
-		}
-
-		return socialRelation;
+		return findByPrimaryKey((Serializable)relationId);
 	}
 
 	/**
@@ -5961,20 +5960,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	@Override
 	public SocialRelation fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the social relation with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param relationId the primary key of the social relation
-	 * @return the social relation, or <code>null</code> if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialRelation fetchByPrimaryKey(long relationId)
-		throws SystemException {
 		SocialRelation socialRelation = (SocialRelation)EntityCacheUtil.getResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRelationImpl.class, relationId);
+				SocialRelationImpl.class, primaryKey);
 
 		if (socialRelation == _nullSocialRelation) {
 			return null;
@@ -5987,20 +5974,20 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 				session = openSession();
 
 				socialRelation = (SocialRelation)session.get(SocialRelationImpl.class,
-						Long.valueOf(relationId));
+						primaryKey);
 
 				if (socialRelation != null) {
 					cacheResult(socialRelation);
 				}
 				else {
 					EntityCacheUtil.putResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
-						SocialRelationImpl.class, relationId,
+						SocialRelationImpl.class, primaryKey,
 						_nullSocialRelation);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
-					SocialRelationImpl.class, relationId);
+					SocialRelationImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -6010,6 +5997,18 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		}
 
 		return socialRelation;
+	}
+
+	/**
+	 * Returns the social relation with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param relationId the primary key of the social relation
+	 * @return the social relation, or <code>null</code> if a social relation with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialRelation fetchByPrimaryKey(long relationId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)relationId);
 	}
 
 	/**

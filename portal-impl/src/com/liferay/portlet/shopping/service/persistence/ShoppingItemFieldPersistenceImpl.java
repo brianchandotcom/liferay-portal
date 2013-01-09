@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.shopping.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -834,13 +833,24 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 *
 	 * @param primaryKey the primary key of the shopping item field
 	 * @return the shopping item field
-	 * @throws com.liferay.portal.NoSuchModelException if a shopping item field with the primary key could not be found
+	 * @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItemField findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchItemFieldException, SystemException {
+		ShoppingItemField shoppingItemField = fetchByPrimaryKey(primaryKey);
+
+		if (shoppingItemField == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchItemFieldException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return shoppingItemField;
 	}
 
 	/**
@@ -853,18 +863,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	public ShoppingItemField findByPrimaryKey(long itemFieldId)
 		throws NoSuchItemFieldException, SystemException {
-		ShoppingItemField shoppingItemField = fetchByPrimaryKey(itemFieldId);
-
-		if (shoppingItemField == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + itemFieldId);
-			}
-
-			throw new NoSuchItemFieldException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				itemFieldId);
-		}
-
-		return shoppingItemField;
+		return findByPrimaryKey((Serializable)itemFieldId);
 	}
 
 	/**
@@ -877,20 +876,8 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	@Override
 	public ShoppingItemField fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the shopping item field with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param itemFieldId the primary key of the shopping item field
-	 * @return the shopping item field, or <code>null</code> if a shopping item field with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ShoppingItemField fetchByPrimaryKey(long itemFieldId)
-		throws SystemException {
 		ShoppingItemField shoppingItemField = (ShoppingItemField)EntityCacheUtil.getResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
-				ShoppingItemFieldImpl.class, itemFieldId);
+				ShoppingItemFieldImpl.class, primaryKey);
 
 		if (shoppingItemField == _nullShoppingItemField) {
 			return null;
@@ -903,20 +890,20 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 				session = openSession();
 
 				shoppingItemField = (ShoppingItemField)session.get(ShoppingItemFieldImpl.class,
-						Long.valueOf(itemFieldId));
+						primaryKey);
 
 				if (shoppingItemField != null) {
 					cacheResult(shoppingItemField);
 				}
 				else {
 					EntityCacheUtil.putResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
-						ShoppingItemFieldImpl.class, itemFieldId,
+						ShoppingItemFieldImpl.class, primaryKey,
 						_nullShoppingItemField);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
-					ShoppingItemFieldImpl.class, itemFieldId);
+					ShoppingItemFieldImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -926,6 +913,18 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 		}
 
 		return shoppingItemField;
+	}
+
+	/**
+	 * Returns the shopping item field with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param itemFieldId the primary key of the shopping item field
+	 * @return the shopping item field, or <code>null</code> if a shopping item field with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ShoppingItemField fetchByPrimaryKey(long itemFieldId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)itemFieldId);
 	}
 
 	/**

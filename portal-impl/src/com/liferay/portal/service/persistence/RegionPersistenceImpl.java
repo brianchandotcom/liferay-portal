@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -2169,13 +2168,24 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 *
 	 * @param primaryKey the primary key of the region
 	 * @return the region
-	 * @throws com.liferay.portal.NoSuchModelException if a region with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Region findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchRegionException, SystemException {
+		Region region = fetchByPrimaryKey(primaryKey);
+
+		if (region == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchRegionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return region;
 	}
 
 	/**
@@ -2188,18 +2198,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	public Region findByPrimaryKey(long regionId)
 		throws NoSuchRegionException, SystemException {
-		Region region = fetchByPrimaryKey(regionId);
-
-		if (region == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + regionId);
-			}
-
-			throw new NoSuchRegionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				regionId);
-		}
-
-		return region;
+		return findByPrimaryKey((Serializable)regionId);
 	}
 
 	/**
@@ -2212,19 +2211,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	@Override
 	public Region fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the region with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param regionId the primary key of the region
-	 * @return the region, or <code>null</code> if a region with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Region fetchByPrimaryKey(long regionId) throws SystemException {
 		Region region = (Region)EntityCacheUtil.getResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
-				RegionImpl.class, regionId);
+				RegionImpl.class, primaryKey);
 
 		if (region == _nullRegion) {
 			return null;
@@ -2236,20 +2224,19 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			try {
 				session = openSession();
 
-				region = (Region)session.get(RegionImpl.class,
-						Long.valueOf(regionId));
+				region = (Region)session.get(RegionImpl.class, primaryKey);
 
 				if (region != null) {
 					cacheResult(region);
 				}
 				else {
 					EntityCacheUtil.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
-						RegionImpl.class, regionId, _nullRegion);
+						RegionImpl.class, primaryKey, _nullRegion);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
-					RegionImpl.class, regionId);
+					RegionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2259,6 +2246,17 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		}
 
 		return region;
+	}
+
+	/**
+	 * Returns the region with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param regionId the primary key of the region
+	 * @return the region, or <code>null</code> if a region with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Region fetchByPrimaryKey(long regionId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)regionId);
 	}
 
 	/**

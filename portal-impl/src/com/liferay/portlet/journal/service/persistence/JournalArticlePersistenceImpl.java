@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -25415,13 +25414,24 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 *
 	 * @param primaryKey the primary key of the journal article
 	 * @return the journal article
-	 * @throws com.liferay.portal.NoSuchModelException if a journal article with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalArticle findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchArticleException, SystemException {
+		JournalArticle journalArticle = fetchByPrimaryKey(primaryKey);
+
+		if (journalArticle == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchArticleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return journalArticle;
 	}
 
 	/**
@@ -25434,18 +25444,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	public JournalArticle findByPrimaryKey(long id)
 		throws NoSuchArticleException, SystemException {
-		JournalArticle journalArticle = fetchByPrimaryKey(id);
-
-		if (journalArticle == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + id);
-			}
-
-			throw new NoSuchArticleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				id);
-		}
-
-		return journalArticle;
+		return findByPrimaryKey((Serializable)id);
 	}
 
 	/**
@@ -25458,19 +25457,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public JournalArticle fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the journal article with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param id the primary key of the journal article
-	 * @return the journal article, or <code>null</code> if a journal article with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticle fetchByPrimaryKey(long id) throws SystemException {
 		JournalArticle journalArticle = (JournalArticle)EntityCacheUtil.getResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-				JournalArticleImpl.class, id);
+				JournalArticleImpl.class, primaryKey);
 
 		if (journalArticle == _nullJournalArticle) {
 			return null;
@@ -25483,19 +25471,20 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				session = openSession();
 
 				journalArticle = (JournalArticle)session.get(JournalArticleImpl.class,
-						Long.valueOf(id));
+						primaryKey);
 
 				if (journalArticle != null) {
 					cacheResult(journalArticle);
 				}
 				else {
 					EntityCacheUtil.putResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-						JournalArticleImpl.class, id, _nullJournalArticle);
+						JournalArticleImpl.class, primaryKey,
+						_nullJournalArticle);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleImpl.class, id);
+					JournalArticleImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -25505,6 +25494,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		}
 
 		return journalArticle;
+	}
+
+	/**
+	 * Returns the journal article with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param id the primary key of the journal article
+	 * @return the journal article, or <code>null</code> if a journal article with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticle fetchByPrimaryKey(long id) throws SystemException {
+		return fetchByPrimaryKey((Serializable)id);
 	}
 
 	/**

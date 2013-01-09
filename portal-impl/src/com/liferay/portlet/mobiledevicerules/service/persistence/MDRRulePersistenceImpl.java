@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.mobiledevicerules.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2270,13 +2269,24 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 *
 	 * @param primaryKey the primary key of the m d r rule
 	 * @return the m d r rule
-	 * @throws com.liferay.portal.NoSuchModelException if a m d r rule with the primary key could not be found
+	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a m d r rule with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRule findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchRuleException, SystemException {
+		MDRRule mdrRule = fetchByPrimaryKey(primaryKey);
+
+		if (mdrRule == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchRuleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return mdrRule;
 	}
 
 	/**
@@ -2289,18 +2299,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	 */
 	public MDRRule findByPrimaryKey(long ruleId)
 		throws NoSuchRuleException, SystemException {
-		MDRRule mdrRule = fetchByPrimaryKey(ruleId);
-
-		if (mdrRule == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + ruleId);
-			}
-
-			throw new NoSuchRuleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				ruleId);
-		}
-
-		return mdrRule;
+		return findByPrimaryKey((Serializable)ruleId);
 	}
 
 	/**
@@ -2313,19 +2312,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	@Override
 	public MDRRule fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the m d r rule with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param ruleId the primary key of the m d r rule
-	 * @return the m d r rule, or <code>null</code> if a m d r rule with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MDRRule fetchByPrimaryKey(long ruleId) throws SystemException {
 		MDRRule mdrRule = (MDRRule)EntityCacheUtil.getResult(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
-				MDRRuleImpl.class, ruleId);
+				MDRRuleImpl.class, primaryKey);
 
 		if (mdrRule == _nullMDRRule) {
 			return null;
@@ -2337,20 +2325,19 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 			try {
 				session = openSession();
 
-				mdrRule = (MDRRule)session.get(MDRRuleImpl.class,
-						Long.valueOf(ruleId));
+				mdrRule = (MDRRule)session.get(MDRRuleImpl.class, primaryKey);
 
 				if (mdrRule != null) {
 					cacheResult(mdrRule);
 				}
 				else {
 					EntityCacheUtil.putResult(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
-						MDRRuleImpl.class, ruleId, _nullMDRRule);
+						MDRRuleImpl.class, primaryKey, _nullMDRRule);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
-					MDRRuleImpl.class, ruleId);
+					MDRRuleImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2360,6 +2347,17 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		}
 
 		return mdrRule;
+	}
+
+	/**
+	 * Returns the m d r rule with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param ruleId the primary key of the m d r rule
+	 * @return the m d r rule, or <code>null</code> if a m d r rule with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MDRRule fetchByPrimaryKey(long ruleId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)ruleId);
 	}
 
 	/**

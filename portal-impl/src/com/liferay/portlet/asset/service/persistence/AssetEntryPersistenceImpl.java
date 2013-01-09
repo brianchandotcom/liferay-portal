@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
@@ -3595,13 +3594,24 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 *
 	 * @param primaryKey the primary key of the asset entry
 	 * @return the asset entry
-	 * @throws com.liferay.portal.NoSuchModelException if a asset entry with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchEntryException if a asset entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchEntryException, SystemException {
+		AssetEntry assetEntry = fetchByPrimaryKey(primaryKey);
+
+		if (assetEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return assetEntry;
 	}
 
 	/**
@@ -3614,18 +3624,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	public AssetEntry findByPrimaryKey(long entryId)
 		throws NoSuchEntryException, SystemException {
-		AssetEntry assetEntry = fetchByPrimaryKey(entryId);
-
-		if (assetEntry == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + entryId);
-			}
-
-			throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				entryId);
-		}
-
-		return assetEntry;
+		return findByPrimaryKey((Serializable)entryId);
 	}
 
 	/**
@@ -3638,19 +3637,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	@Override
 	public AssetEntry fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the asset entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param entryId the primary key of the asset entry
-	 * @return the asset entry, or <code>null</code> if a asset entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetEntry fetchByPrimaryKey(long entryId) throws SystemException {
 		AssetEntry assetEntry = (AssetEntry)EntityCacheUtil.getResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetEntryImpl.class, entryId);
+				AssetEntryImpl.class, primaryKey);
 
 		if (assetEntry == _nullAssetEntry) {
 			return null;
@@ -3663,19 +3651,19 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				session = openSession();
 
 				assetEntry = (AssetEntry)session.get(AssetEntryImpl.class,
-						Long.valueOf(entryId));
+						primaryKey);
 
 				if (assetEntry != null) {
 					cacheResult(assetEntry);
 				}
 				else {
 					EntityCacheUtil.putResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-						AssetEntryImpl.class, entryId, _nullAssetEntry);
+						AssetEntryImpl.class, primaryKey, _nullAssetEntry);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AssetEntryImpl.class, entryId);
+					AssetEntryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3685,6 +3673,17 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		}
 
 		return assetEntry;
+	}
+
+	/**
+	 * Returns the asset entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param entryId the primary key of the asset entry
+	 * @return the asset entry, or <code>null</code> if a asset entry with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetEntry fetchByPrimaryKey(long entryId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)entryId);
 	}
 
 	/**

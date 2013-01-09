@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2394,13 +2393,24 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	 *
 	 * @param primaryKey the primary key of the social activity counter
 	 * @return the social activity counter
-	 * @throws com.liferay.portal.NoSuchModelException if a social activity counter with the primary key could not be found
+	 * @throws com.liferay.portlet.social.NoSuchActivityCounterException if a social activity counter with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialActivityCounter findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchActivityCounterException, SystemException {
+		SocialActivityCounter socialActivityCounter = fetchByPrimaryKey(primaryKey);
+
+		if (socialActivityCounter == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchActivityCounterException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return socialActivityCounter;
 	}
 
 	/**
@@ -2413,18 +2423,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	 */
 	public SocialActivityCounter findByPrimaryKey(long activityCounterId)
 		throws NoSuchActivityCounterException, SystemException {
-		SocialActivityCounter socialActivityCounter = fetchByPrimaryKey(activityCounterId);
-
-		if (socialActivityCounter == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + activityCounterId);
-			}
-
-			throw new NoSuchActivityCounterException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				activityCounterId);
-		}
-
-		return socialActivityCounter;
+		return findByPrimaryKey((Serializable)activityCounterId);
 	}
 
 	/**
@@ -2437,20 +2436,8 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	@Override
 	public SocialActivityCounter fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the social activity counter with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param activityCounterId the primary key of the social activity counter
-	 * @return the social activity counter, or <code>null</code> if a social activity counter with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityCounter fetchByPrimaryKey(long activityCounterId)
-		throws SystemException {
 		SocialActivityCounter socialActivityCounter = (SocialActivityCounter)EntityCacheUtil.getResult(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
-				SocialActivityCounterImpl.class, activityCounterId);
+				SocialActivityCounterImpl.class, primaryKey);
 
 		if (socialActivityCounter == _nullSocialActivityCounter) {
 			return null;
@@ -2463,20 +2450,20 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 				session = openSession();
 
 				socialActivityCounter = (SocialActivityCounter)session.get(SocialActivityCounterImpl.class,
-						Long.valueOf(activityCounterId));
+						primaryKey);
 
 				if (socialActivityCounter != null) {
 					cacheResult(socialActivityCounter);
 				}
 				else {
 					EntityCacheUtil.putResult(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
-						SocialActivityCounterImpl.class, activityCounterId,
+						SocialActivityCounterImpl.class, primaryKey,
 						_nullSocialActivityCounter);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivityCounterImpl.class, activityCounterId);
+					SocialActivityCounterImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2486,6 +2473,18 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		}
 
 		return socialActivityCounter;
+	}
+
+	/**
+	 * Returns the social activity counter with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param activityCounterId the primary key of the social activity counter
+	 * @return the social activity counter, or <code>null</code> if a social activity counter with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityCounter fetchByPrimaryKey(long activityCounterId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)activityCounterId);
 	}
 
 	/**

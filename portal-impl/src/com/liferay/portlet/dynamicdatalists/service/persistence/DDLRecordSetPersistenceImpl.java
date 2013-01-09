@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatalists.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2952,13 +2951,24 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 *
 	 * @param primaryKey the primary key of the d d l record set
 	 * @return the d d l record set
-	 * @throws com.liferay.portal.NoSuchModelException if a d d l record set with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a d d l record set with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDLRecordSet findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchRecordSetException, SystemException {
+		DDLRecordSet ddlRecordSet = fetchByPrimaryKey(primaryKey);
+
+		if (ddlRecordSet == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchRecordSetException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return ddlRecordSet;
 	}
 
 	/**
@@ -2971,18 +2981,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	public DDLRecordSet findByPrimaryKey(long recordSetId)
 		throws NoSuchRecordSetException, SystemException {
-		DDLRecordSet ddlRecordSet = fetchByPrimaryKey(recordSetId);
-
-		if (ddlRecordSet == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + recordSetId);
-			}
-
-			throw new NoSuchRecordSetException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				recordSetId);
-		}
-
-		return ddlRecordSet;
+		return findByPrimaryKey((Serializable)recordSetId);
 	}
 
 	/**
@@ -2995,20 +2994,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	@Override
 	public DDLRecordSet fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the d d l record set with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param recordSetId the primary key of the d d l record set
-	 * @return the d d l record set, or <code>null</code> if a d d l record set with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDLRecordSet fetchByPrimaryKey(long recordSetId)
-		throws SystemException {
 		DDLRecordSet ddlRecordSet = (DDLRecordSet)EntityCacheUtil.getResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-				DDLRecordSetImpl.class, recordSetId);
+				DDLRecordSetImpl.class, primaryKey);
 
 		if (ddlRecordSet == _nullDDLRecordSet) {
 			return null;
@@ -3021,19 +3008,19 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 				session = openSession();
 
 				ddlRecordSet = (DDLRecordSet)session.get(DDLRecordSetImpl.class,
-						Long.valueOf(recordSetId));
+						primaryKey);
 
 				if (ddlRecordSet != null) {
 					cacheResult(ddlRecordSet);
 				}
 				else {
 					EntityCacheUtil.putResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-						DDLRecordSetImpl.class, recordSetId, _nullDDLRecordSet);
+						DDLRecordSetImpl.class, primaryKey, _nullDDLRecordSet);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordSetImpl.class, recordSetId);
+					DDLRecordSetImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3043,6 +3030,18 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		}
 
 		return ddlRecordSet;
+	}
+
+	/**
+	 * Returns the d d l record set with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param recordSetId the primary key of the d d l record set
+	 * @return the d d l record set, or <code>null</code> if a d d l record set with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDLRecordSet fetchByPrimaryKey(long recordSetId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)recordSetId);
 	}
 
 	/**

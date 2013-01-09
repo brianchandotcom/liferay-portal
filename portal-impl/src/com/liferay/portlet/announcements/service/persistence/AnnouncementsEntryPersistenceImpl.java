@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.announcements.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -5061,13 +5060,24 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param primaryKey the primary key of the announcements entry
 	 * @return the announcements entry
-	 * @throws com.liferay.portal.NoSuchModelException if a announcements entry with the primary key could not be found
+	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchEntryException, SystemException {
+		AnnouncementsEntry announcementsEntry = fetchByPrimaryKey(primaryKey);
+
+		if (announcementsEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return announcementsEntry;
 	}
 
 	/**
@@ -5080,18 +5090,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	public AnnouncementsEntry findByPrimaryKey(long entryId)
 		throws NoSuchEntryException, SystemException {
-		AnnouncementsEntry announcementsEntry = fetchByPrimaryKey(entryId);
-
-		if (announcementsEntry == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + entryId);
-			}
-
-			throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				entryId);
-		}
-
-		return announcementsEntry;
+		return findByPrimaryKey((Serializable)entryId);
 	}
 
 	/**
@@ -5104,20 +5103,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	@Override
 	public AnnouncementsEntry fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the announcements entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param entryId the primary key of the announcements entry
-	 * @return the announcements entry, or <code>null</code> if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AnnouncementsEntry fetchByPrimaryKey(long entryId)
-		throws SystemException {
 		AnnouncementsEntry announcementsEntry = (AnnouncementsEntry)EntityCacheUtil.getResult(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsEntryImpl.class, entryId);
+				AnnouncementsEntryImpl.class, primaryKey);
 
 		if (announcementsEntry == _nullAnnouncementsEntry) {
 			return null;
@@ -5130,20 +5117,20 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 				session = openSession();
 
 				announcementsEntry = (AnnouncementsEntry)session.get(AnnouncementsEntryImpl.class,
-						Long.valueOf(entryId));
+						primaryKey);
 
 				if (announcementsEntry != null) {
 					cacheResult(announcementsEntry);
 				}
 				else {
 					EntityCacheUtil.putResult(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
-						AnnouncementsEntryImpl.class, entryId,
+						AnnouncementsEntryImpl.class, primaryKey,
 						_nullAnnouncementsEntry);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AnnouncementsEntryImpl.class, entryId);
+					AnnouncementsEntryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -5153,6 +5140,18 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		}
 
 		return announcementsEntry;
+	}
+
+	/**
+	 * Returns the announcements entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param entryId the primary key of the announcements entry
+	 * @return the announcements entry, or <code>null</code> if a announcements entry with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AnnouncementsEntry fetchByPrimaryKey(long entryId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)entryId);
 	}
 
 	/**

@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchClassNameException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -609,13 +608,24 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 *
 	 * @param primaryKey the primary key of the class name
 	 * @return the class name
-	 * @throws com.liferay.portal.NoSuchModelException if a class name with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchClassNameException if a class name with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ClassName findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchClassNameException, SystemException {
+		ClassName className = fetchByPrimaryKey(primaryKey);
+
+		if (className == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchClassNameException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return className;
 	}
 
 	/**
@@ -628,18 +638,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 */
 	public ClassName findByPrimaryKey(long classNameId)
 		throws NoSuchClassNameException, SystemException {
-		ClassName className = fetchByPrimaryKey(classNameId);
-
-		if (className == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + classNameId);
-			}
-
-			throw new NoSuchClassNameException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				classNameId);
-		}
-
-		return className;
+		return findByPrimaryKey((Serializable)classNameId);
 	}
 
 	/**
@@ -652,20 +651,8 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	@Override
 	public ClassName fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the class name with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param classNameId the primary key of the class name
-	 * @return the class name, or <code>null</code> if a class name with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ClassName fetchByPrimaryKey(long classNameId)
-		throws SystemException {
 		ClassName className = (ClassName)EntityCacheUtil.getResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-				ClassNameImpl.class, classNameId);
+				ClassNameImpl.class, primaryKey);
 
 		if (className == _nullClassName) {
 			return null;
@@ -678,19 +665,19 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 				session = openSession();
 
 				className = (ClassName)session.get(ClassNameImpl.class,
-						Long.valueOf(classNameId));
+						primaryKey);
 
 				if (className != null) {
 					cacheResult(className);
 				}
 				else {
 					EntityCacheUtil.putResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-						ClassNameImpl.class, classNameId, _nullClassName);
+						ClassNameImpl.class, primaryKey, _nullClassName);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-					ClassNameImpl.class, classNameId);
+					ClassNameImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -700,6 +687,18 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		}
 
 		return className;
+	}
+
+	/**
+	 * Returns the class name with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param classNameId the primary key of the class name
+	 * @return the class name, or <code>null</code> if a class name with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ClassName fetchByPrimaryKey(long classNameId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)classNameId);
 	}
 
 	/**

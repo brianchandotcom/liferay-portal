@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatalists.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -3314,13 +3313,24 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	 *
 	 * @param primaryKey the primary key of the d d l record
 	 * @return the d d l record
-	 * @throws com.liferay.portal.NoSuchModelException if a d d l record with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException if a d d l record with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDLRecord findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchRecordException, SystemException {
+		DDLRecord ddlRecord = fetchByPrimaryKey(primaryKey);
+
+		if (ddlRecord == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchRecordException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return ddlRecord;
 	}
 
 	/**
@@ -3333,18 +3343,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	 */
 	public DDLRecord findByPrimaryKey(long recordId)
 		throws NoSuchRecordException, SystemException {
-		DDLRecord ddlRecord = fetchByPrimaryKey(recordId);
-
-		if (ddlRecord == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + recordId);
-			}
-
-			throw new NoSuchRecordException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				recordId);
-		}
-
-		return ddlRecord;
+		return findByPrimaryKey((Serializable)recordId);
 	}
 
 	/**
@@ -3357,19 +3356,8 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	@Override
 	public DDLRecord fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the d d l record with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param recordId the primary key of the d d l record
-	 * @return the d d l record, or <code>null</code> if a d d l record with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDLRecord fetchByPrimaryKey(long recordId) throws SystemException {
 		DDLRecord ddlRecord = (DDLRecord)EntityCacheUtil.getResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
-				DDLRecordImpl.class, recordId);
+				DDLRecordImpl.class, primaryKey);
 
 		if (ddlRecord == _nullDDLRecord) {
 			return null;
@@ -3382,19 +3370,19 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 				session = openSession();
 
 				ddlRecord = (DDLRecord)session.get(DDLRecordImpl.class,
-						Long.valueOf(recordId));
+						primaryKey);
 
 				if (ddlRecord != null) {
 					cacheResult(ddlRecord);
 				}
 				else {
 					EntityCacheUtil.putResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
-						DDLRecordImpl.class, recordId, _nullDDLRecord);
+						DDLRecordImpl.class, primaryKey, _nullDDLRecord);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordImpl.class, recordId);
+					DDLRecordImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3404,6 +3392,17 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		}
 
 		return ddlRecord;
+	}
+
+	/**
+	 * Returns the d d l record with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param recordId the primary key of the d d l record
+	 * @return the d d l record, or <code>null</code> if a d d l record with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDLRecord fetchByPrimaryKey(long recordId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)recordId);
 	}
 
 	/**

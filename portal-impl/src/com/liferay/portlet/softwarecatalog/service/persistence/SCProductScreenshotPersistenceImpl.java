@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.softwarecatalog.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1665,13 +1664,24 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 *
 	 * @param primaryKey the primary key of the s c product screenshot
 	 * @return the s c product screenshot
-	 * @throws com.liferay.portal.NoSuchModelException if a s c product screenshot with the primary key could not be found
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a s c product screenshot with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SCProductScreenshot findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchProductScreenshotException, SystemException {
+		SCProductScreenshot scProductScreenshot = fetchByPrimaryKey(primaryKey);
+
+		if (scProductScreenshot == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchProductScreenshotException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return scProductScreenshot;
 	}
 
 	/**
@@ -1684,19 +1694,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 */
 	public SCProductScreenshot findByPrimaryKey(long productScreenshotId)
 		throws NoSuchProductScreenshotException, SystemException {
-		SCProductScreenshot scProductScreenshot = fetchByPrimaryKey(productScreenshotId);
-
-		if (scProductScreenshot == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					productScreenshotId);
-			}
-
-			throw new NoSuchProductScreenshotException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				productScreenshotId);
-		}
-
-		return scProductScreenshot;
+		return findByPrimaryKey((Serializable)productScreenshotId);
 	}
 
 	/**
@@ -1709,20 +1707,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	@Override
 	public SCProductScreenshot fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the s c product screenshot with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param productScreenshotId the primary key of the s c product screenshot
-	 * @return the s c product screenshot, or <code>null</code> if a s c product screenshot with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot fetchByPrimaryKey(long productScreenshotId)
-		throws SystemException {
 		SCProductScreenshot scProductScreenshot = (SCProductScreenshot)EntityCacheUtil.getResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-				SCProductScreenshotImpl.class, productScreenshotId);
+				SCProductScreenshotImpl.class, primaryKey);
 
 		if (scProductScreenshot == _nullSCProductScreenshot) {
 			return null;
@@ -1735,20 +1721,20 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 				session = openSession();
 
 				scProductScreenshot = (SCProductScreenshot)session.get(SCProductScreenshotImpl.class,
-						Long.valueOf(productScreenshotId));
+						primaryKey);
 
 				if (scProductScreenshot != null) {
 					cacheResult(scProductScreenshot);
 				}
 				else {
 					EntityCacheUtil.putResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-						SCProductScreenshotImpl.class, productScreenshotId,
+						SCProductScreenshotImpl.class, primaryKey,
 						_nullSCProductScreenshot);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-					SCProductScreenshotImpl.class, productScreenshotId);
+					SCProductScreenshotImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1758,6 +1744,18 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		}
 
 		return scProductScreenshot;
+	}
+
+	/**
+	 * Returns the s c product screenshot with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param productScreenshotId the primary key of the s c product screenshot
+	 * @return the s c product screenshot, or <code>null</code> if a s c product screenshot with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot fetchByPrimaryKey(long productScreenshotId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)productScreenshotId);
 	}
 
 	/**

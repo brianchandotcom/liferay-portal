@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
@@ -8424,13 +8423,24 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param primaryKey the primary key of the document library folder
 	 * @return the document library folder
-	 * @throws com.liferay.portal.NoSuchModelException if a document library folder with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFolder findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchFolderException, SystemException {
+		DLFolder dlFolder = fetchByPrimaryKey(primaryKey);
+
+		if (dlFolder == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchFolderException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return dlFolder;
 	}
 
 	/**
@@ -8443,18 +8453,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	public DLFolder findByPrimaryKey(long folderId)
 		throws NoSuchFolderException, SystemException {
-		DLFolder dlFolder = fetchByPrimaryKey(folderId);
-
-		if (dlFolder == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + folderId);
-			}
-
-			throw new NoSuchFolderException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				folderId);
-		}
-
-		return dlFolder;
+		return findByPrimaryKey((Serializable)folderId);
 	}
 
 	/**
@@ -8467,19 +8466,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public DLFolder fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the document library folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param folderId the primary key of the document library folder
-	 * @return the document library folder, or <code>null</code> if a document library folder with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFolder fetchByPrimaryKey(long folderId) throws SystemException {
 		DLFolder dlFolder = (DLFolder)EntityCacheUtil.getResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-				DLFolderImpl.class, folderId);
+				DLFolderImpl.class, primaryKey);
 
 		if (dlFolder == _nullDLFolder) {
 			return null;
@@ -8491,20 +8479,19 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			try {
 				session = openSession();
 
-				dlFolder = (DLFolder)session.get(DLFolderImpl.class,
-						Long.valueOf(folderId));
+				dlFolder = (DLFolder)session.get(DLFolderImpl.class, primaryKey);
 
 				if (dlFolder != null) {
 					cacheResult(dlFolder);
 				}
 				else {
 					EntityCacheUtil.putResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-						DLFolderImpl.class, folderId, _nullDLFolder);
+						DLFolderImpl.class, primaryKey, _nullDLFolder);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-					DLFolderImpl.class, folderId);
+					DLFolderImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -8514,6 +8501,17 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 
 		return dlFolder;
+	}
+
+	/**
+	 * Returns the document library folder with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param folderId the primary key of the document library folder
+	 * @return the document library folder, or <code>null</code> if a document library folder with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFolder fetchByPrimaryKey(long folderId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)folderId);
 	}
 
 	/**

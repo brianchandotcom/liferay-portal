@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -3334,13 +3333,24 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param primaryKey the primary key of the organization
 	 * @return the organization
-	 * @throws com.liferay.portal.NoSuchModelException if a organization with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchOrganizationException, SystemException {
+		Organization organization = fetchByPrimaryKey(primaryKey);
+
+		if (organization == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchOrganizationException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return organization;
 	}
 
 	/**
@@ -3353,18 +3363,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	public Organization findByPrimaryKey(long organizationId)
 		throws NoSuchOrganizationException, SystemException {
-		Organization organization = fetchByPrimaryKey(organizationId);
-
-		if (organization == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + organizationId);
-			}
-
-			throw new NoSuchOrganizationException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				organizationId);
-		}
-
-		return organization;
+		return findByPrimaryKey((Serializable)organizationId);
 	}
 
 	/**
@@ -3377,20 +3376,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public Organization fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the organization with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param organizationId the primary key of the organization
-	 * @return the organization, or <code>null</code> if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Organization fetchByPrimaryKey(long organizationId)
-		throws SystemException {
 		Organization organization = (Organization)EntityCacheUtil.getResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-				OrganizationImpl.class, organizationId);
+				OrganizationImpl.class, primaryKey);
 
 		if (organization == _nullOrganization) {
 			return null;
@@ -3403,20 +3390,19 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 				session = openSession();
 
 				organization = (Organization)session.get(OrganizationImpl.class,
-						Long.valueOf(organizationId));
+						primaryKey);
 
 				if (organization != null) {
 					cacheResult(organization);
 				}
 				else {
 					EntityCacheUtil.putResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-						OrganizationImpl.class, organizationId,
-						_nullOrganization);
+						OrganizationImpl.class, primaryKey, _nullOrganization);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-					OrganizationImpl.class, organizationId);
+					OrganizationImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3426,6 +3412,18 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		return organization;
+	}
+
+	/**
+	 * Returns the organization with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param organizationId the primary key of the organization
+	 * @return the organization, or <code>null</code> if a organization with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Organization fetchByPrimaryKey(long organizationId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)organizationId);
 	}
 
 	/**

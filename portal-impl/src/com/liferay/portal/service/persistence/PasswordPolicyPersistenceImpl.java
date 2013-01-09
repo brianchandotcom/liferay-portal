@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchPasswordPolicyException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -968,13 +967,24 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 *
 	 * @param primaryKey the primary key of the password policy
 	 * @return the password policy
-	 * @throws com.liferay.portal.NoSuchModelException if a password policy with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPasswordPolicyException if a password policy with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicy findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchPasswordPolicyException, SystemException {
+		PasswordPolicy passwordPolicy = fetchByPrimaryKey(primaryKey);
+
+		if (passwordPolicy == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchPasswordPolicyException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return passwordPolicy;
 	}
 
 	/**
@@ -987,18 +997,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	public PasswordPolicy findByPrimaryKey(long passwordPolicyId)
 		throws NoSuchPasswordPolicyException, SystemException {
-		PasswordPolicy passwordPolicy = fetchByPrimaryKey(passwordPolicyId);
-
-		if (passwordPolicy == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + passwordPolicyId);
-			}
-
-			throw new NoSuchPasswordPolicyException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				passwordPolicyId);
-		}
-
-		return passwordPolicy;
+		return findByPrimaryKey((Serializable)passwordPolicyId);
 	}
 
 	/**
@@ -1011,20 +1010,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	@Override
 	public PasswordPolicy fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the password policy with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param passwordPolicyId the primary key of the password policy
-	 * @return the password policy, or <code>null</code> if a password policy with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PasswordPolicy fetchByPrimaryKey(long passwordPolicyId)
-		throws SystemException {
 		PasswordPolicy passwordPolicy = (PasswordPolicy)EntityCacheUtil.getResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
-				PasswordPolicyImpl.class, passwordPolicyId);
+				PasswordPolicyImpl.class, primaryKey);
 
 		if (passwordPolicy == _nullPasswordPolicy) {
 			return null;
@@ -1037,20 +1024,20 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 				session = openSession();
 
 				passwordPolicy = (PasswordPolicy)session.get(PasswordPolicyImpl.class,
-						Long.valueOf(passwordPolicyId));
+						primaryKey);
 
 				if (passwordPolicy != null) {
 					cacheResult(passwordPolicy);
 				}
 				else {
 					EntityCacheUtil.putResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
-						PasswordPolicyImpl.class, passwordPolicyId,
+						PasswordPolicyImpl.class, primaryKey,
 						_nullPasswordPolicy);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
-					PasswordPolicyImpl.class, passwordPolicyId);
+					PasswordPolicyImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1060,6 +1047,18 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		}
 
 		return passwordPolicy;
+	}
+
+	/**
+	 * Returns the password policy with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param passwordPolicyId the primary key of the password policy
+	 * @return the password policy, or <code>null</code> if a password policy with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PasswordPolicy fetchByPrimaryKey(long passwordPolicyId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)passwordPolicyId);
 	}
 
 	/**

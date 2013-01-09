@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -5236,13 +5235,24 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	 *
 	 * @param primaryKey the primary key of the document library file shortcut
 	 * @return the document library file shortcut
-	 * @throws com.liferay.portal.NoSuchModelException if a document library file shortcut with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileShortcut findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchFileShortcutException, SystemException {
+		DLFileShortcut dlFileShortcut = fetchByPrimaryKey(primaryKey);
+
+		if (dlFileShortcut == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchFileShortcutException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return dlFileShortcut;
 	}
 
 	/**
@@ -5255,18 +5265,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	 */
 	public DLFileShortcut findByPrimaryKey(long fileShortcutId)
 		throws NoSuchFileShortcutException, SystemException {
-		DLFileShortcut dlFileShortcut = fetchByPrimaryKey(fileShortcutId);
-
-		if (dlFileShortcut == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + fileShortcutId);
-			}
-
-			throw new NoSuchFileShortcutException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				fileShortcutId);
-		}
-
-		return dlFileShortcut;
+		return findByPrimaryKey((Serializable)fileShortcutId);
 	}
 
 	/**
@@ -5279,20 +5278,8 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	@Override
 	public DLFileShortcut fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the document library file shortcut with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param fileShortcutId the primary key of the document library file shortcut
-	 * @return the document library file shortcut, or <code>null</code> if a document library file shortcut with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFileShortcut fetchByPrimaryKey(long fileShortcutId)
-		throws SystemException {
 		DLFileShortcut dlFileShortcut = (DLFileShortcut)EntityCacheUtil.getResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileShortcutImpl.class, fileShortcutId);
+				DLFileShortcutImpl.class, primaryKey);
 
 		if (dlFileShortcut == _nullDLFileShortcut) {
 			return null;
@@ -5305,20 +5292,20 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 				session = openSession();
 
 				dlFileShortcut = (DLFileShortcut)session.get(DLFileShortcutImpl.class,
-						Long.valueOf(fileShortcutId));
+						primaryKey);
 
 				if (dlFileShortcut != null) {
 					cacheResult(dlFileShortcut);
 				}
 				else {
 					EntityCacheUtil.putResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileShortcutImpl.class, fileShortcutId,
+						DLFileShortcutImpl.class, primaryKey,
 						_nullDLFileShortcut);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileShortcutImpl.class, fileShortcutId);
+					DLFileShortcutImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -5328,6 +5315,18 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		}
 
 		return dlFileShortcut;
+	}
+
+	/**
+	 * Returns the document library file shortcut with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param fileShortcutId the primary key of the document library file shortcut
+	 * @return the document library file shortcut, or <code>null</code> if a document library file shortcut with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileShortcut fetchByPrimaryKey(long fileShortcutId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)fileShortcutId);
 	}
 
 	/**

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -19055,13 +19054,24 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 *
 	 * @param primaryKey the primary key of the message-boards message
 	 * @return the message-boards message
-	 * @throws com.liferay.portal.NoSuchModelException if a message-boards message with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBMessage findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchMessageException, SystemException {
+		MBMessage mbMessage = fetchByPrimaryKey(primaryKey);
+
+		if (mbMessage == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchMessageException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return mbMessage;
 	}
 
 	/**
@@ -19074,18 +19084,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	public MBMessage findByPrimaryKey(long messageId)
 		throws NoSuchMessageException, SystemException {
-		MBMessage mbMessage = fetchByPrimaryKey(messageId);
-
-		if (mbMessage == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + messageId);
-			}
-
-			throw new NoSuchMessageException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				messageId);
-		}
-
-		return mbMessage;
+		return findByPrimaryKey((Serializable)messageId);
 	}
 
 	/**
@@ -19098,20 +19097,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public MBMessage fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the message-boards message with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param messageId the primary key of the message-boards message
-	 * @return the message-boards message, or <code>null</code> if a message-boards message with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBMessage fetchByPrimaryKey(long messageId)
-		throws SystemException {
 		MBMessage mbMessage = (MBMessage)EntityCacheUtil.getResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
-				MBMessageImpl.class, messageId);
+				MBMessageImpl.class, primaryKey);
 
 		if (mbMessage == _nullMBMessage) {
 			return null;
@@ -19124,19 +19111,19 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				session = openSession();
 
 				mbMessage = (MBMessage)session.get(MBMessageImpl.class,
-						Long.valueOf(messageId));
+						primaryKey);
 
 				if (mbMessage != null) {
 					cacheResult(mbMessage);
 				}
 				else {
 					EntityCacheUtil.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
-						MBMessageImpl.class, messageId, _nullMBMessage);
+						MBMessageImpl.class, primaryKey, _nullMBMessage);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
-					MBMessageImpl.class, messageId);
+					MBMessageImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -19146,6 +19133,18 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		}
 
 		return mbMessage;
+	}
+
+	/**
+	 * Returns the message-boards message with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param messageId the primary key of the message-boards message
+	 * @return the message-boards message, or <code>null</code> if a message-boards message with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMessage fetchByPrimaryKey(long messageId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)messageId);
 	}
 
 	/**

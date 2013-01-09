@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.shopping.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1133,13 +1132,24 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 *
 	 * @param primaryKey the primary key of the shopping coupon
 	 * @return the shopping coupon
-	 * @throws com.liferay.portal.NoSuchModelException if a shopping coupon with the primary key could not be found
+	 * @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCoupon findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchCouponException, SystemException {
+		ShoppingCoupon shoppingCoupon = fetchByPrimaryKey(primaryKey);
+
+		if (shoppingCoupon == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchCouponException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return shoppingCoupon;
 	}
 
 	/**
@@ -1152,18 +1162,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	public ShoppingCoupon findByPrimaryKey(long couponId)
 		throws NoSuchCouponException, SystemException {
-		ShoppingCoupon shoppingCoupon = fetchByPrimaryKey(couponId);
-
-		if (shoppingCoupon == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + couponId);
-			}
-
-			throw new NoSuchCouponException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				couponId);
-		}
-
-		return shoppingCoupon;
+		return findByPrimaryKey((Serializable)couponId);
 	}
 
 	/**
@@ -1176,20 +1175,8 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	@Override
 	public ShoppingCoupon fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the shopping coupon with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param couponId the primary key of the shopping coupon
-	 * @return the shopping coupon, or <code>null</code> if a shopping coupon with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ShoppingCoupon fetchByPrimaryKey(long couponId)
-		throws SystemException {
 		ShoppingCoupon shoppingCoupon = (ShoppingCoupon)EntityCacheUtil.getResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
-				ShoppingCouponImpl.class, couponId);
+				ShoppingCouponImpl.class, primaryKey);
 
 		if (shoppingCoupon == _nullShoppingCoupon) {
 			return null;
@@ -1202,19 +1189,20 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 				session = openSession();
 
 				shoppingCoupon = (ShoppingCoupon)session.get(ShoppingCouponImpl.class,
-						Long.valueOf(couponId));
+						primaryKey);
 
 				if (shoppingCoupon != null) {
 					cacheResult(shoppingCoupon);
 				}
 				else {
 					EntityCacheUtil.putResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
-						ShoppingCouponImpl.class, couponId, _nullShoppingCoupon);
+						ShoppingCouponImpl.class, primaryKey,
+						_nullShoppingCoupon);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
-					ShoppingCouponImpl.class, couponId);
+					ShoppingCouponImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1224,6 +1212,18 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		}
 
 		return shoppingCoupon;
+	}
+
+	/**
+	 * Returns the shopping coupon with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param couponId the primary key of the shopping coupon
+	 * @return the shopping coupon, or <code>null</code> if a shopping coupon with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ShoppingCoupon fetchByPrimaryKey(long couponId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)couponId);
 	}
 
 	/**

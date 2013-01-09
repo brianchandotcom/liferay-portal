@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.softwarecatalog.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
@@ -3013,13 +3012,24 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	 *
 	 * @param primaryKey the primary key of the s c product entry
 	 * @return the s c product entry
-	 * @throws com.liferay.portal.NoSuchModelException if a s c product entry with the primary key could not be found
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a s c product entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SCProductEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchProductEntryException, SystemException {
+		SCProductEntry scProductEntry = fetchByPrimaryKey(primaryKey);
+
+		if (scProductEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchProductEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return scProductEntry;
 	}
 
 	/**
@@ -3032,18 +3042,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	 */
 	public SCProductEntry findByPrimaryKey(long productEntryId)
 		throws NoSuchProductEntryException, SystemException {
-		SCProductEntry scProductEntry = fetchByPrimaryKey(productEntryId);
-
-		if (scProductEntry == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + productEntryId);
-			}
-
-			throw new NoSuchProductEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				productEntryId);
-		}
-
-		return scProductEntry;
+		return findByPrimaryKey((Serializable)productEntryId);
 	}
 
 	/**
@@ -3056,20 +3055,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	@Override
 	public SCProductEntry fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the s c product entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param productEntryId the primary key of the s c product entry
-	 * @return the s c product entry, or <code>null</code> if a s c product entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductEntry fetchByPrimaryKey(long productEntryId)
-		throws SystemException {
 		SCProductEntry scProductEntry = (SCProductEntry)EntityCacheUtil.getResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
-				SCProductEntryImpl.class, productEntryId);
+				SCProductEntryImpl.class, primaryKey);
 
 		if (scProductEntry == _nullSCProductEntry) {
 			return null;
@@ -3082,20 +3069,20 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 				session = openSession();
 
 				scProductEntry = (SCProductEntry)session.get(SCProductEntryImpl.class,
-						Long.valueOf(productEntryId));
+						primaryKey);
 
 				if (scProductEntry != null) {
 					cacheResult(scProductEntry);
 				}
 				else {
 					EntityCacheUtil.putResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
-						SCProductEntryImpl.class, productEntryId,
+						SCProductEntryImpl.class, primaryKey,
 						_nullSCProductEntry);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
-					SCProductEntryImpl.class, productEntryId);
+					SCProductEntryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3105,6 +3092,18 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		}
 
 		return scProductEntry;
+	}
+
+	/**
+	 * Returns the s c product entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param productEntryId the primary key of the s c product entry
+	 * @return the s c product entry, or <code>null</code> if a s c product entry with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductEntry fetchByPrimaryKey(long productEntryId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)productEntryId);
 	}
 
 	/**

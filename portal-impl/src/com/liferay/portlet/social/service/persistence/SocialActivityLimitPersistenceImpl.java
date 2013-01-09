@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1838,13 +1837,24 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	 *
 	 * @param primaryKey the primary key of the social activity limit
 	 * @return the social activity limit
-	 * @throws com.liferay.portal.NoSuchModelException if a social activity limit with the primary key could not be found
+	 * @throws com.liferay.portlet.social.NoSuchActivityLimitException if a social activity limit with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialActivityLimit findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchActivityLimitException, SystemException {
+		SocialActivityLimit socialActivityLimit = fetchByPrimaryKey(primaryKey);
+
+		if (socialActivityLimit == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchActivityLimitException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return socialActivityLimit;
 	}
 
 	/**
@@ -1857,18 +1867,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	 */
 	public SocialActivityLimit findByPrimaryKey(long activityLimitId)
 		throws NoSuchActivityLimitException, SystemException {
-		SocialActivityLimit socialActivityLimit = fetchByPrimaryKey(activityLimitId);
-
-		if (socialActivityLimit == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + activityLimitId);
-			}
-
-			throw new NoSuchActivityLimitException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				activityLimitId);
-		}
-
-		return socialActivityLimit;
+		return findByPrimaryKey((Serializable)activityLimitId);
 	}
 
 	/**
@@ -1881,20 +1880,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	@Override
 	public SocialActivityLimit fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the social activity limit with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param activityLimitId the primary key of the social activity limit
-	 * @return the social activity limit, or <code>null</code> if a social activity limit with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityLimit fetchByPrimaryKey(long activityLimitId)
-		throws SystemException {
 		SocialActivityLimit socialActivityLimit = (SocialActivityLimit)EntityCacheUtil.getResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
-				SocialActivityLimitImpl.class, activityLimitId);
+				SocialActivityLimitImpl.class, primaryKey);
 
 		if (socialActivityLimit == _nullSocialActivityLimit) {
 			return null;
@@ -1907,20 +1894,20 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 				session = openSession();
 
 				socialActivityLimit = (SocialActivityLimit)session.get(SocialActivityLimitImpl.class,
-						Long.valueOf(activityLimitId));
+						primaryKey);
 
 				if (socialActivityLimit != null) {
 					cacheResult(socialActivityLimit);
 				}
 				else {
 					EntityCacheUtil.putResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
-						SocialActivityLimitImpl.class, activityLimitId,
+						SocialActivityLimitImpl.class, primaryKey,
 						_nullSocialActivityLimit);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivityLimitImpl.class, activityLimitId);
+					SocialActivityLimitImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1930,6 +1917,18 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		}
 
 		return socialActivityLimit;
+	}
+
+	/**
+	 * Returns the social activity limit with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param activityLimitId the primary key of the social activity limit
+	 * @return the social activity limit, or <code>null</code> if a social activity limit with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityLimit fetchByPrimaryKey(long activityLimitId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)activityLimitId);
 	}
 
 	/**

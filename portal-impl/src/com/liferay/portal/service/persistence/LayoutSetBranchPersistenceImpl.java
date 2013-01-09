@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchLayoutSetBranchException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2493,13 +2492,24 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	 *
 	 * @param primaryKey the primary key of the layout set branch
 	 * @return the layout set branch
-	 * @throws com.liferay.portal.NoSuchModelException if a layout set branch with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutSetBranch findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchLayoutSetBranchException, SystemException {
+		LayoutSetBranch layoutSetBranch = fetchByPrimaryKey(primaryKey);
+
+		if (layoutSetBranch == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchLayoutSetBranchException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return layoutSetBranch;
 	}
 
 	/**
@@ -2512,18 +2522,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	 */
 	public LayoutSetBranch findByPrimaryKey(long layoutSetBranchId)
 		throws NoSuchLayoutSetBranchException, SystemException {
-		LayoutSetBranch layoutSetBranch = fetchByPrimaryKey(layoutSetBranchId);
-
-		if (layoutSetBranch == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + layoutSetBranchId);
-			}
-
-			throw new NoSuchLayoutSetBranchException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				layoutSetBranchId);
-		}
-
-		return layoutSetBranch;
+		return findByPrimaryKey((Serializable)layoutSetBranchId);
 	}
 
 	/**
@@ -2536,20 +2535,8 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	@Override
 	public LayoutSetBranch fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the layout set branch with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param layoutSetBranchId the primary key of the layout set branch
-	 * @return the layout set branch, or <code>null</code> if a layout set branch with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public LayoutSetBranch fetchByPrimaryKey(long layoutSetBranchId)
-		throws SystemException {
 		LayoutSetBranch layoutSetBranch = (LayoutSetBranch)EntityCacheUtil.getResult(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutSetBranchImpl.class, layoutSetBranchId);
+				LayoutSetBranchImpl.class, primaryKey);
 
 		if (layoutSetBranch == _nullLayoutSetBranch) {
 			return null;
@@ -2562,20 +2549,20 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 				session = openSession();
 
 				layoutSetBranch = (LayoutSetBranch)session.get(LayoutSetBranchImpl.class,
-						Long.valueOf(layoutSetBranchId));
+						primaryKey);
 
 				if (layoutSetBranch != null) {
 					cacheResult(layoutSetBranch);
 				}
 				else {
 					EntityCacheUtil.putResult(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutSetBranchImpl.class, layoutSetBranchId,
+						LayoutSetBranchImpl.class, primaryKey,
 						_nullLayoutSetBranch);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutSetBranchImpl.class, layoutSetBranchId);
+					LayoutSetBranchImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2585,6 +2572,18 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		}
 
 		return layoutSetBranch;
+	}
+
+	/**
+	 * Returns the layout set branch with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param layoutSetBranchId the primary key of the layout set branch
+	 * @return the layout set branch, or <code>null</code> if a layout set branch with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public LayoutSetBranch fetchByPrimaryKey(long layoutSetBranchId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)layoutSetBranchId);
 	}
 
 	/**

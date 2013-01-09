@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -8271,13 +8270,24 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param primaryKey the primary key of the d d m template
 	 * @return the d d m template
-	 * @throws com.liferay.portal.NoSuchModelException if a d d m template with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchTemplateException, SystemException {
+		DDMTemplate ddmTemplate = fetchByPrimaryKey(primaryKey);
+
+		if (ddmTemplate == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchTemplateException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return ddmTemplate;
 	}
 
 	/**
@@ -8290,18 +8300,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 */
 	public DDMTemplate findByPrimaryKey(long templateId)
 		throws NoSuchTemplateException, SystemException {
-		DDMTemplate ddmTemplate = fetchByPrimaryKey(templateId);
-
-		if (ddmTemplate == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + templateId);
-			}
-
-			throw new NoSuchTemplateException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				templateId);
-		}
-
-		return ddmTemplate;
+		return findByPrimaryKey((Serializable)templateId);
 	}
 
 	/**
@@ -8314,20 +8313,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	@Override
 	public DDMTemplate fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the d d m template with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param templateId the primary key of the d d m template
-	 * @return the d d m template, or <code>null</code> if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMTemplate fetchByPrimaryKey(long templateId)
-		throws SystemException {
 		DDMTemplate ddmTemplate = (DDMTemplate)EntityCacheUtil.getResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-				DDMTemplateImpl.class, templateId);
+				DDMTemplateImpl.class, primaryKey);
 
 		if (ddmTemplate == _nullDDMTemplate) {
 			return null;
@@ -8340,19 +8327,19 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				session = openSession();
 
 				ddmTemplate = (DDMTemplate)session.get(DDMTemplateImpl.class,
-						Long.valueOf(templateId));
+						primaryKey);
 
 				if (ddmTemplate != null) {
 					cacheResult(ddmTemplate);
 				}
 				else {
 					EntityCacheUtil.putResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-						DDMTemplateImpl.class, templateId, _nullDDMTemplate);
+						DDMTemplateImpl.class, primaryKey, _nullDDMTemplate);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-					DDMTemplateImpl.class, templateId);
+					DDMTemplateImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -8362,6 +8349,18 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		}
 
 		return ddmTemplate;
+	}
+
+	/**
+	 * Returns the d d m template with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param templateId the primary key of the d d m template
+	 * @return the d d m template, or <code>null</code> if a d d m template with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMTemplate fetchByPrimaryKey(long templateId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)templateId);
 	}
 
 	/**

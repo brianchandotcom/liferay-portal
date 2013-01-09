@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.wiki.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -4871,13 +4870,24 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 *
 	 * @param primaryKey the primary key of the wiki node
 	 * @return the wiki node
-	 * @throws com.liferay.portal.NoSuchModelException if a wiki node with the primary key could not be found
+	 * @throws com.liferay.portlet.wiki.NoSuchNodeException if a wiki node with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public WikiNode findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchNodeException, SystemException {
+		WikiNode wikiNode = fetchByPrimaryKey(primaryKey);
+
+		if (wikiNode == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchNodeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return wikiNode;
 	}
 
 	/**
@@ -4890,18 +4900,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 */
 	public WikiNode findByPrimaryKey(long nodeId)
 		throws NoSuchNodeException, SystemException {
-		WikiNode wikiNode = fetchByPrimaryKey(nodeId);
-
-		if (wikiNode == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + nodeId);
-			}
-
-			throw new NoSuchNodeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				nodeId);
-		}
-
-		return wikiNode;
+		return findByPrimaryKey((Serializable)nodeId);
 	}
 
 	/**
@@ -4914,19 +4913,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	@Override
 	public WikiNode fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the wiki node with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param nodeId the primary key of the wiki node
-	 * @return the wiki node, or <code>null</code> if a wiki node with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public WikiNode fetchByPrimaryKey(long nodeId) throws SystemException {
 		WikiNode wikiNode = (WikiNode)EntityCacheUtil.getResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-				WikiNodeImpl.class, nodeId);
+				WikiNodeImpl.class, primaryKey);
 
 		if (wikiNode == _nullWikiNode) {
 			return null;
@@ -4938,20 +4926,19 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			try {
 				session = openSession();
 
-				wikiNode = (WikiNode)session.get(WikiNodeImpl.class,
-						Long.valueOf(nodeId));
+				wikiNode = (WikiNode)session.get(WikiNodeImpl.class, primaryKey);
 
 				if (wikiNode != null) {
 					cacheResult(wikiNode);
 				}
 				else {
 					EntityCacheUtil.putResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-						WikiNodeImpl.class, nodeId, _nullWikiNode);
+						WikiNodeImpl.class, primaryKey, _nullWikiNode);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-					WikiNodeImpl.class, nodeId);
+					WikiNodeImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -4961,6 +4948,17 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		}
 
 		return wikiNode;
+	}
+
+	/**
+	 * Returns the wiki node with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param nodeId the primary key of the wiki node
+	 * @return the wiki node, or <code>null</code> if a wiki node with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiNode fetchByPrimaryKey(long nodeId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)nodeId);
 	}
 
 	/**

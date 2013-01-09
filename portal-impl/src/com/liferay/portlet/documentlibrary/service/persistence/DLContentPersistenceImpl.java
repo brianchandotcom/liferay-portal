@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2513,13 +2512,24 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	 *
 	 * @param primaryKey the primary key of the document library content
 	 * @return the document library content
-	 * @throws com.liferay.portal.NoSuchModelException if a document library content with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a document library content with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLContent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchContentException, SystemException {
+		DLContent dlContent = fetchByPrimaryKey(primaryKey);
+
+		if (dlContent == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchContentException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return dlContent;
 	}
 
 	/**
@@ -2532,18 +2542,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	 */
 	public DLContent findByPrimaryKey(long contentId)
 		throws NoSuchContentException, SystemException {
-		DLContent dlContent = fetchByPrimaryKey(contentId);
-
-		if (dlContent == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + contentId);
-			}
-
-			throw new NoSuchContentException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				contentId);
-		}
-
-		return dlContent;
+		return findByPrimaryKey((Serializable)contentId);
 	}
 
 	/**
@@ -2556,20 +2555,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	@Override
 	public DLContent fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the document library content with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param contentId the primary key of the document library content
-	 * @return the document library content, or <code>null</code> if a document library content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLContent fetchByPrimaryKey(long contentId)
-		throws SystemException {
 		DLContent dlContent = (DLContent)EntityCacheUtil.getResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-				DLContentImpl.class, contentId);
+				DLContentImpl.class, primaryKey);
 
 		if (dlContent == _nullDLContent) {
 			return null;
@@ -2582,19 +2569,19 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 				session = openSession();
 
 				dlContent = (DLContent)session.get(DLContentImpl.class,
-						Long.valueOf(contentId));
+						primaryKey);
 
 				if (dlContent != null) {
 					cacheResult(dlContent);
 				}
 				else {
 					EntityCacheUtil.putResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-						DLContentImpl.class, contentId, _nullDLContent);
+						DLContentImpl.class, primaryKey, _nullDLContent);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-					DLContentImpl.class, contentId);
+					DLContentImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2604,6 +2591,18 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		}
 
 		return dlContent;
+	}
+
+	/**
+	 * Returns the document library content with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param contentId the primary key of the document library content
+	 * @return the document library content, or <code>null</code> if a document library content with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLContent fetchByPrimaryKey(long contentId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)contentId);
 	}
 
 	/**

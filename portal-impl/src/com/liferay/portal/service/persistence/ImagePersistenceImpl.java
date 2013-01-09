@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchImageException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -778,13 +777,24 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 *
 	 * @param primaryKey the primary key of the image
 	 * @return the image
-	 * @throws com.liferay.portal.NoSuchModelException if a image with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchImageException if a image with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Image findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchImageException, SystemException {
+		Image image = fetchByPrimaryKey(primaryKey);
+
+		if (image == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchImageException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return image;
 	}
 
 	/**
@@ -797,18 +807,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	public Image findByPrimaryKey(long imageId)
 		throws NoSuchImageException, SystemException {
-		Image image = fetchByPrimaryKey(imageId);
-
-		if (image == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + imageId);
-			}
-
-			throw new NoSuchImageException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				imageId);
-		}
-
-		return image;
+		return findByPrimaryKey((Serializable)imageId);
 	}
 
 	/**
@@ -821,19 +820,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	@Override
 	public Image fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the image with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param imageId the primary key of the image
-	 * @return the image, or <code>null</code> if a image with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Image fetchByPrimaryKey(long imageId) throws SystemException {
 		Image image = (Image)EntityCacheUtil.getResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
-				ImageImpl.class, imageId);
+				ImageImpl.class, primaryKey);
 
 		if (image == _nullImage) {
 			return null;
@@ -845,20 +833,19 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 			try {
 				session = openSession();
 
-				image = (Image)session.get(ImageImpl.class,
-						Long.valueOf(imageId));
+				image = (Image)session.get(ImageImpl.class, primaryKey);
 
 				if (image != null) {
 					cacheResult(image);
 				}
 				else {
 					EntityCacheUtil.putResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
-						ImageImpl.class, imageId, _nullImage);
+						ImageImpl.class, primaryKey, _nullImage);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
-					ImageImpl.class, imageId);
+					ImageImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -868,6 +855,17 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		}
 
 		return image;
+	}
+
+	/**
+	 * Returns the image with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param imageId the primary key of the image
+	 * @return the image, or <code>null</code> if a image with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Image fetchByPrimaryKey(long imageId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)imageId);
 	}
 
 	/**

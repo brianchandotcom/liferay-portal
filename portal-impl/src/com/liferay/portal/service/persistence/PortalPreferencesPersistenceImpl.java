@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchPreferencesException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -631,13 +630,24 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	 *
 	 * @param primaryKey the primary key of the portal preferences
 	 * @return the portal preferences
-	 * @throws com.liferay.portal.NoSuchModelException if a portal preferences with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPreferencesException if a portal preferences with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PortalPreferences findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchPreferencesException, SystemException {
+		PortalPreferences portalPreferences = fetchByPrimaryKey(primaryKey);
+
+		if (portalPreferences == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchPreferencesException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return portalPreferences;
 	}
 
 	/**
@@ -650,19 +660,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	 */
 	public PortalPreferences findByPrimaryKey(long portalPreferencesId)
 		throws NoSuchPreferencesException, SystemException {
-		PortalPreferences portalPreferences = fetchByPrimaryKey(portalPreferencesId);
-
-		if (portalPreferences == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					portalPreferencesId);
-			}
-
-			throw new NoSuchPreferencesException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				portalPreferencesId);
-		}
-
-		return portalPreferences;
+		return findByPrimaryKey((Serializable)portalPreferencesId);
 	}
 
 	/**
@@ -675,20 +673,8 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	@Override
 	public PortalPreferences fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the portal preferences with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param portalPreferencesId the primary key of the portal preferences
-	 * @return the portal preferences, or <code>null</code> if a portal preferences with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortalPreferences fetchByPrimaryKey(long portalPreferencesId)
-		throws SystemException {
 		PortalPreferences portalPreferences = (PortalPreferences)EntityCacheUtil.getResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-				PortalPreferencesImpl.class, portalPreferencesId);
+				PortalPreferencesImpl.class, primaryKey);
 
 		if (portalPreferences == _nullPortalPreferences) {
 			return null;
@@ -701,20 +687,20 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 				session = openSession();
 
 				portalPreferences = (PortalPreferences)session.get(PortalPreferencesImpl.class,
-						Long.valueOf(portalPreferencesId));
+						primaryKey);
 
 				if (portalPreferences != null) {
 					cacheResult(portalPreferences);
 				}
 				else {
 					EntityCacheUtil.putResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-						PortalPreferencesImpl.class, portalPreferencesId,
+						PortalPreferencesImpl.class, primaryKey,
 						_nullPortalPreferences);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-					PortalPreferencesImpl.class, portalPreferencesId);
+					PortalPreferencesImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -724,6 +710,18 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		}
 
 		return portalPreferences;
+	}
+
+	/**
+	 * Returns the portal preferences with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param portalPreferencesId the primary key of the portal preferences
+	 * @return the portal preferences, or <code>null</code> if a portal preferences with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortalPreferences fetchByPrimaryKey(long portalPreferencesId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)portalPreferencesId);
 	}
 
 	/**

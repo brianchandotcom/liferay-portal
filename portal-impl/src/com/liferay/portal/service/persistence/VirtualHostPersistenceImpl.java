@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -888,13 +887,24 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 *
 	 * @param primaryKey the primary key of the virtual host
 	 * @return the virtual host
-	 * @throws com.liferay.portal.NoSuchModelException if a virtual host with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchVirtualHostException if a virtual host with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public VirtualHost findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchVirtualHostException, SystemException {
+		VirtualHost virtualHost = fetchByPrimaryKey(primaryKey);
+
+		if (virtualHost == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchVirtualHostException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return virtualHost;
 	}
 
 	/**
@@ -907,18 +917,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 */
 	public VirtualHost findByPrimaryKey(long virtualHostId)
 		throws NoSuchVirtualHostException, SystemException {
-		VirtualHost virtualHost = fetchByPrimaryKey(virtualHostId);
-
-		if (virtualHost == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + virtualHostId);
-			}
-
-			throw new NoSuchVirtualHostException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				virtualHostId);
-		}
-
-		return virtualHost;
+		return findByPrimaryKey((Serializable)virtualHostId);
 	}
 
 	/**
@@ -931,20 +930,8 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	@Override
 	public VirtualHost fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the virtual host with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param virtualHostId the primary key of the virtual host
-	 * @return the virtual host, or <code>null</code> if a virtual host with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public VirtualHost fetchByPrimaryKey(long virtualHostId)
-		throws SystemException {
 		VirtualHost virtualHost = (VirtualHost)EntityCacheUtil.getResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-				VirtualHostImpl.class, virtualHostId);
+				VirtualHostImpl.class, primaryKey);
 
 		if (virtualHost == _nullVirtualHost) {
 			return null;
@@ -957,19 +944,19 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 				session = openSession();
 
 				virtualHost = (VirtualHost)session.get(VirtualHostImpl.class,
-						Long.valueOf(virtualHostId));
+						primaryKey);
 
 				if (virtualHost != null) {
 					cacheResult(virtualHost);
 				}
 				else {
 					EntityCacheUtil.putResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-						VirtualHostImpl.class, virtualHostId, _nullVirtualHost);
+						VirtualHostImpl.class, primaryKey, _nullVirtualHost);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-					VirtualHostImpl.class, virtualHostId);
+					VirtualHostImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -979,6 +966,18 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		}
 
 		return virtualHost;
+	}
+
+	/**
+	 * Returns the virtual host with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param virtualHostId the primary key of the virtual host
+	 * @return the virtual host, or <code>null</code> if a virtual host with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public VirtualHost fetchByPrimaryKey(long virtualHostId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)virtualHostId);
 	}
 
 	/**

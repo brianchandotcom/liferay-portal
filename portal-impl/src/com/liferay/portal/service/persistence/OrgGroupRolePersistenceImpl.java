@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchOrgGroupRoleException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -1316,13 +1315,24 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 *
 	 * @param primaryKey the primary key of the org group role
 	 * @return the org group role
-	 * @throws com.liferay.portal.NoSuchModelException if a org group role with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchOrgGroupRoleException if a org group role with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public OrgGroupRole findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey((OrgGroupRolePK)primaryKey);
+		throws NoSuchOrgGroupRoleException, SystemException {
+		OrgGroupRole orgGroupRole = fetchByPrimaryKey(primaryKey);
+
+		if (orgGroupRole == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchOrgGroupRoleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return orgGroupRole;
 	}
 
 	/**
@@ -1335,18 +1345,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	public OrgGroupRole findByPrimaryKey(OrgGroupRolePK orgGroupRolePK)
 		throws NoSuchOrgGroupRoleException, SystemException {
-		OrgGroupRole orgGroupRole = fetchByPrimaryKey(orgGroupRolePK);
-
-		if (orgGroupRole == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + orgGroupRolePK);
-			}
-
-			throw new NoSuchOrgGroupRoleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				orgGroupRolePK);
-		}
-
-		return orgGroupRole;
+		return findByPrimaryKey((Serializable)orgGroupRolePK);
 	}
 
 	/**
@@ -1359,20 +1358,8 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	@Override
 	public OrgGroupRole fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey((OrgGroupRolePK)primaryKey);
-	}
-
-	/**
-	 * Returns the org group role with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param orgGroupRolePK the primary key of the org group role
-	 * @return the org group role, or <code>null</code> if a org group role with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public OrgGroupRole fetchByPrimaryKey(OrgGroupRolePK orgGroupRolePK)
-		throws SystemException {
 		OrgGroupRole orgGroupRole = (OrgGroupRole)EntityCacheUtil.getResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-				OrgGroupRoleImpl.class, orgGroupRolePK);
+				OrgGroupRoleImpl.class, primaryKey);
 
 		if (orgGroupRole == _nullOrgGroupRole) {
 			return null;
@@ -1385,20 +1372,19 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 				session = openSession();
 
 				orgGroupRole = (OrgGroupRole)session.get(OrgGroupRoleImpl.class,
-						orgGroupRolePK);
+						primaryKey);
 
 				if (orgGroupRole != null) {
 					cacheResult(orgGroupRole);
 				}
 				else {
 					EntityCacheUtil.putResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-						OrgGroupRoleImpl.class, orgGroupRolePK,
-						_nullOrgGroupRole);
+						OrgGroupRoleImpl.class, primaryKey, _nullOrgGroupRole);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-					OrgGroupRoleImpl.class, orgGroupRolePK);
+					OrgGroupRoleImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1408,6 +1394,18 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		}
 
 		return orgGroupRole;
+	}
+
+	/**
+	 * Returns the org group role with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param orgGroupRolePK the primary key of the org group role
+	 * @return the org group role, or <code>null</code> if a org group role with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public OrgGroupRole fetchByPrimaryKey(OrgGroupRolePK orgGroupRolePK)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)orgGroupRolePK);
 	}
 
 	/**

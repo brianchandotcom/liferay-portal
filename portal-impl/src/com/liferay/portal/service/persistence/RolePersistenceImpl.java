@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -4667,13 +4666,24 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 *
 	 * @param primaryKey the primary key of the role
 	 * @return the role
-	 * @throws com.liferay.portal.NoSuchModelException if a role with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchRoleException if a role with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Role findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchRoleException, SystemException {
+		Role role = fetchByPrimaryKey(primaryKey);
+
+		if (role == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchRoleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return role;
 	}
 
 	/**
@@ -4686,18 +4696,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	public Role findByPrimaryKey(long roleId)
 		throws NoSuchRoleException, SystemException {
-		Role role = fetchByPrimaryKey(roleId);
-
-		if (role == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + roleId);
-			}
-
-			throw new NoSuchRoleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				roleId);
-		}
-
-		return role;
+		return findByPrimaryKey((Serializable)roleId);
 	}
 
 	/**
@@ -4710,19 +4709,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Role fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the role with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param roleId the primary key of the role
-	 * @return the role, or <code>null</code> if a role with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Role fetchByPrimaryKey(long roleId) throws SystemException {
 		Role role = (Role)EntityCacheUtil.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-				RoleImpl.class, roleId);
+				RoleImpl.class, primaryKey);
 
 		if (role == _nullRole) {
 			return null;
@@ -4734,19 +4722,19 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			try {
 				session = openSession();
 
-				role = (Role)session.get(RoleImpl.class, Long.valueOf(roleId));
+				role = (Role)session.get(RoleImpl.class, primaryKey);
 
 				if (role != null) {
 					cacheResult(role);
 				}
 				else {
 					EntityCacheUtil.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-						RoleImpl.class, roleId, _nullRole);
+						RoleImpl.class, primaryKey, _nullRole);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-					RoleImpl.class, roleId);
+					RoleImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -4756,6 +4744,17 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		return role;
+	}
+
+	/**
+	 * Returns the role with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param roleId the primary key of the role
+	 * @return the role, or <code>null</code> if a role with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Role fetchByPrimaryKey(long roleId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)roleId);
 	}
 
 	/**

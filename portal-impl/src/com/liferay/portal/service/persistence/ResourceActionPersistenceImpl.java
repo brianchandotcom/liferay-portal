@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchResourceActionException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -1227,13 +1226,24 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 *
 	 * @param primaryKey the primary key of the resource action
 	 * @return the resource action
-	 * @throws com.liferay.portal.NoSuchModelException if a resource action with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchResourceActionException if a resource action with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceAction findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchResourceActionException, SystemException {
+		ResourceAction resourceAction = fetchByPrimaryKey(primaryKey);
+
+		if (resourceAction == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchResourceActionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return resourceAction;
 	}
 
 	/**
@@ -1246,18 +1256,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	public ResourceAction findByPrimaryKey(long resourceActionId)
 		throws NoSuchResourceActionException, SystemException {
-		ResourceAction resourceAction = fetchByPrimaryKey(resourceActionId);
-
-		if (resourceAction == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + resourceActionId);
-			}
-
-			throw new NoSuchResourceActionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				resourceActionId);
-		}
-
-		return resourceAction;
+		return findByPrimaryKey((Serializable)resourceActionId);
 	}
 
 	/**
@@ -1270,20 +1269,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	@Override
 	public ResourceAction fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the resource action with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param resourceActionId the primary key of the resource action
-	 * @return the resource action, or <code>null</code> if a resource action with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourceAction fetchByPrimaryKey(long resourceActionId)
-		throws SystemException {
 		ResourceAction resourceAction = (ResourceAction)EntityCacheUtil.getResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-				ResourceActionImpl.class, resourceActionId);
+				ResourceActionImpl.class, primaryKey);
 
 		if (resourceAction == _nullResourceAction) {
 			return null;
@@ -1296,20 +1283,20 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 				session = openSession();
 
 				resourceAction = (ResourceAction)session.get(ResourceActionImpl.class,
-						Long.valueOf(resourceActionId));
+						primaryKey);
 
 				if (resourceAction != null) {
 					cacheResult(resourceAction);
 				}
 				else {
 					EntityCacheUtil.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceActionImpl.class, resourceActionId,
+						ResourceActionImpl.class, primaryKey,
 						_nullResourceAction);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceActionImpl.class, resourceActionId);
+					ResourceActionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1319,6 +1306,18 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		}
 
 		return resourceAction;
+	}
+
+	/**
+	 * Returns the resource action with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param resourceActionId the primary key of the resource action
+	 * @return the resource action, or <code>null</code> if a resource action with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourceAction fetchByPrimaryKey(long resourceActionId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)resourceActionId);
 	}
 
 	/**

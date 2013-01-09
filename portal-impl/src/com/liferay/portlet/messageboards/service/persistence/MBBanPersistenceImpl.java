@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2088,13 +2087,24 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 *
 	 * @param primaryKey the primary key of the message boards ban
 	 * @return the message boards ban
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards ban with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchBanException if a message boards ban with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBBan findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchBanException, SystemException {
+		MBBan mbBan = fetchByPrimaryKey(primaryKey);
+
+		if (mbBan == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchBanException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return mbBan;
 	}
 
 	/**
@@ -2107,18 +2117,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 */
 	public MBBan findByPrimaryKey(long banId)
 		throws NoSuchBanException, SystemException {
-		MBBan mbBan = fetchByPrimaryKey(banId);
-
-		if (mbBan == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + banId);
-			}
-
-			throw new NoSuchBanException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				banId);
-		}
-
-		return mbBan;
+		return findByPrimaryKey((Serializable)banId);
 	}
 
 	/**
@@ -2131,19 +2130,8 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	@Override
 	public MBBan fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the message boards ban with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param banId the primary key of the message boards ban
-	 * @return the message boards ban, or <code>null</code> if a message boards ban with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBBan fetchByPrimaryKey(long banId) throws SystemException {
 		MBBan mbBan = (MBBan)EntityCacheUtil.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-				MBBanImpl.class, banId);
+				MBBanImpl.class, primaryKey);
 
 		if (mbBan == _nullMBBan) {
 			return null;
@@ -2155,19 +2143,19 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			try {
 				session = openSession();
 
-				mbBan = (MBBan)session.get(MBBanImpl.class, Long.valueOf(banId));
+				mbBan = (MBBan)session.get(MBBanImpl.class, primaryKey);
 
 				if (mbBan != null) {
 					cacheResult(mbBan);
 				}
 				else {
 					EntityCacheUtil.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-						MBBanImpl.class, banId, _nullMBBan);
+						MBBanImpl.class, primaryKey, _nullMBBan);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-					MBBanImpl.class, banId);
+					MBBanImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2177,6 +2165,17 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		}
 
 		return mbBan;
+	}
+
+	/**
+	 * Returns the message boards ban with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param banId the primary key of the message boards ban
+	 * @return the message boards ban, or <code>null</code> if a message boards ban with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBBan fetchByPrimaryKey(long banId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)banId);
 	}
 
 	/**

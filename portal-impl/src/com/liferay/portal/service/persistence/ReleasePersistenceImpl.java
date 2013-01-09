@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchReleaseException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -625,13 +624,24 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 *
 	 * @param primaryKey the primary key of the release
 	 * @return the release
-	 * @throws com.liferay.portal.NoSuchModelException if a release with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchReleaseException if a release with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Release findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchReleaseException, SystemException {
+		Release release = fetchByPrimaryKey(primaryKey);
+
+		if (release == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchReleaseException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return release;
 	}
 
 	/**
@@ -644,18 +654,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 */
 	public Release findByPrimaryKey(long releaseId)
 		throws NoSuchReleaseException, SystemException {
-		Release release = fetchByPrimaryKey(releaseId);
-
-		if (release == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + releaseId);
-			}
-
-			throw new NoSuchReleaseException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				releaseId);
-		}
-
-		return release;
+		return findByPrimaryKey((Serializable)releaseId);
 	}
 
 	/**
@@ -668,19 +667,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	@Override
 	public Release fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the release with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param releaseId the primary key of the release
-	 * @return the release, or <code>null</code> if a release with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Release fetchByPrimaryKey(long releaseId) throws SystemException {
 		Release release = (Release)EntityCacheUtil.getResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
-				ReleaseImpl.class, releaseId);
+				ReleaseImpl.class, primaryKey);
 
 		if (release == _nullRelease) {
 			return null;
@@ -692,20 +680,19 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 			try {
 				session = openSession();
 
-				release = (Release)session.get(ReleaseImpl.class,
-						Long.valueOf(releaseId));
+				release = (Release)session.get(ReleaseImpl.class, primaryKey);
 
 				if (release != null) {
 					cacheResult(release);
 				}
 				else {
 					EntityCacheUtil.putResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
-						ReleaseImpl.class, releaseId, _nullRelease);
+						ReleaseImpl.class, primaryKey, _nullRelease);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
-					ReleaseImpl.class, releaseId);
+					ReleaseImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -715,6 +702,17 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		}
 
 		return release;
+	}
+
+	/**
+	 * Returns the release with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param releaseId the primary key of the release
+	 * @return the release, or <code>null</code> if a release with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Release fetchByPrimaryKey(long releaseId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)releaseId);
 	}
 
 	/**

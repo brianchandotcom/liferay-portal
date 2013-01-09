@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2960,13 +2959,24 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 *
 	 * @param primaryKey the primary key of the journal feed
 	 * @return the journal feed
-	 * @throws com.liferay.portal.NoSuchModelException if a journal feed with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchFeedException if a journal feed with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalFeed findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchFeedException, SystemException {
+		JournalFeed journalFeed = fetchByPrimaryKey(primaryKey);
+
+		if (journalFeed == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchFeedException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return journalFeed;
 	}
 
 	/**
@@ -2979,18 +2989,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 */
 	public JournalFeed findByPrimaryKey(long id)
 		throws NoSuchFeedException, SystemException {
-		JournalFeed journalFeed = fetchByPrimaryKey(id);
-
-		if (journalFeed == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + id);
-			}
-
-			throw new NoSuchFeedException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				id);
-		}
-
-		return journalFeed;
+		return findByPrimaryKey((Serializable)id);
 	}
 
 	/**
@@ -3003,19 +3002,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	@Override
 	public JournalFeed fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the journal feed with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param id the primary key of the journal feed
-	 * @return the journal feed, or <code>null</code> if a journal feed with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalFeed fetchByPrimaryKey(long id) throws SystemException {
 		JournalFeed journalFeed = (JournalFeed)EntityCacheUtil.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-				JournalFeedImpl.class, id);
+				JournalFeedImpl.class, primaryKey);
 
 		if (journalFeed == _nullJournalFeed) {
 			return null;
@@ -3028,19 +3016,19 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				session = openSession();
 
 				journalFeed = (JournalFeed)session.get(JournalFeedImpl.class,
-						Long.valueOf(id));
+						primaryKey);
 
 				if (journalFeed != null) {
 					cacheResult(journalFeed);
 				}
 				else {
 					EntityCacheUtil.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-						JournalFeedImpl.class, id, _nullJournalFeed);
+						JournalFeedImpl.class, primaryKey, _nullJournalFeed);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-					JournalFeedImpl.class, id);
+					JournalFeedImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3050,6 +3038,17 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		}
 
 		return journalFeed;
+	}
+
+	/**
+	 * Returns the journal feed with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param id the primary key of the journal feed
+	 * @return the journal feed, or <code>null</code> if a journal feed with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalFeed fetchByPrimaryKey(long id) throws SystemException {
+		return fetchByPrimaryKey((Serializable)id);
 	}
 
 	/**

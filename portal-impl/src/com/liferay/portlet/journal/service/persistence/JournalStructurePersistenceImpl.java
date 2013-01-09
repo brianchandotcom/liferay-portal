@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -5550,13 +5549,24 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	 *
 	 * @param primaryKey the primary key of the journal structure
 	 * @return the journal structure
-	 * @throws com.liferay.portal.NoSuchModelException if a journal structure with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchStructureException if a journal structure with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalStructure findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchStructureException, SystemException {
+		JournalStructure journalStructure = fetchByPrimaryKey(primaryKey);
+
+		if (journalStructure == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchStructureException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return journalStructure;
 	}
 
 	/**
@@ -5569,18 +5579,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	 */
 	public JournalStructure findByPrimaryKey(long id)
 		throws NoSuchStructureException, SystemException {
-		JournalStructure journalStructure = fetchByPrimaryKey(id);
-
-		if (journalStructure == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + id);
-			}
-
-			throw new NoSuchStructureException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				id);
-		}
-
-		return journalStructure;
+		return findByPrimaryKey((Serializable)id);
 	}
 
 	/**
@@ -5593,20 +5592,8 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	@Override
 	public JournalStructure fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the journal structure with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param id the primary key of the journal structure
-	 * @return the journal structure, or <code>null</code> if a journal structure with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalStructure fetchByPrimaryKey(long id)
-		throws SystemException {
 		JournalStructure journalStructure = (JournalStructure)EntityCacheUtil.getResult(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
-				JournalStructureImpl.class, id);
+				JournalStructureImpl.class, primaryKey);
 
 		if (journalStructure == _nullJournalStructure) {
 			return null;
@@ -5619,19 +5606,20 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 				session = openSession();
 
 				journalStructure = (JournalStructure)session.get(JournalStructureImpl.class,
-						Long.valueOf(id));
+						primaryKey);
 
 				if (journalStructure != null) {
 					cacheResult(journalStructure);
 				}
 				else {
 					EntityCacheUtil.putResult(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
-						JournalStructureImpl.class, id, _nullJournalStructure);
+						JournalStructureImpl.class, primaryKey,
+						_nullJournalStructure);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
-					JournalStructureImpl.class, id);
+					JournalStructureImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -5641,6 +5629,18 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 		}
 
 		return journalStructure;
+	}
+
+	/**
+	 * Returns the journal structure with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param id the primary key of the journal structure
+	 * @return the journal structure, or <code>null</code> if a journal structure with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalStructure fetchByPrimaryKey(long id)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)id);
 	}
 
 	/**

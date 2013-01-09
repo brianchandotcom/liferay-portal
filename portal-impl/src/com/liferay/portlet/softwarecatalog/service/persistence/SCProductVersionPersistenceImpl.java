@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.softwarecatalog.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
@@ -1185,13 +1184,24 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 *
 	 * @param primaryKey the primary key of the s c product version
 	 * @return the s c product version
-	 * @throws com.liferay.portal.NoSuchModelException if a s c product version with the primary key could not be found
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException if a s c product version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SCProductVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchProductVersionException, SystemException {
+		SCProductVersion scProductVersion = fetchByPrimaryKey(primaryKey);
+
+		if (scProductVersion == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchProductVersionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return scProductVersion;
 	}
 
 	/**
@@ -1204,18 +1214,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 */
 	public SCProductVersion findByPrimaryKey(long productVersionId)
 		throws NoSuchProductVersionException, SystemException {
-		SCProductVersion scProductVersion = fetchByPrimaryKey(productVersionId);
-
-		if (scProductVersion == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + productVersionId);
-			}
-
-			throw new NoSuchProductVersionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				productVersionId);
-		}
-
-		return scProductVersion;
+		return findByPrimaryKey((Serializable)productVersionId);
 	}
 
 	/**
@@ -1228,20 +1227,8 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	@Override
 	public SCProductVersion fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the s c product version with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param productVersionId the primary key of the s c product version
-	 * @return the s c product version, or <code>null</code> if a s c product version with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductVersion fetchByPrimaryKey(long productVersionId)
-		throws SystemException {
 		SCProductVersion scProductVersion = (SCProductVersion)EntityCacheUtil.getResult(SCProductVersionModelImpl.ENTITY_CACHE_ENABLED,
-				SCProductVersionImpl.class, productVersionId);
+				SCProductVersionImpl.class, primaryKey);
 
 		if (scProductVersion == _nullSCProductVersion) {
 			return null;
@@ -1254,20 +1241,20 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 				session = openSession();
 
 				scProductVersion = (SCProductVersion)session.get(SCProductVersionImpl.class,
-						Long.valueOf(productVersionId));
+						primaryKey);
 
 				if (scProductVersion != null) {
 					cacheResult(scProductVersion);
 				}
 				else {
 					EntityCacheUtil.putResult(SCProductVersionModelImpl.ENTITY_CACHE_ENABLED,
-						SCProductVersionImpl.class, productVersionId,
+						SCProductVersionImpl.class, primaryKey,
 						_nullSCProductVersion);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(SCProductVersionModelImpl.ENTITY_CACHE_ENABLED,
-					SCProductVersionImpl.class, productVersionId);
+					SCProductVersionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1277,6 +1264,18 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		}
 
 		return scProductVersion;
+	}
+
+	/**
+	 * Returns the s c product version with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param productVersionId the primary key of the s c product version
+	 * @return the s c product version, or <code>null</code> if a s c product version with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductVersion fetchByPrimaryKey(long productVersionId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)productVersionId);
 	}
 
 	/**

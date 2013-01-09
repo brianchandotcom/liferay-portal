@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.shopping.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1615,13 +1614,24 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 *
 	 * @param primaryKey the primary key of the shopping cart
 	 * @return the shopping cart
-	 * @throws com.liferay.portal.NoSuchModelException if a shopping cart with the primary key could not be found
+	 * @throws com.liferay.portlet.shopping.NoSuchCartException if a shopping cart with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCart findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchCartException, SystemException {
+		ShoppingCart shoppingCart = fetchByPrimaryKey(primaryKey);
+
+		if (shoppingCart == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchCartException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return shoppingCart;
 	}
 
 	/**
@@ -1634,18 +1644,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	public ShoppingCart findByPrimaryKey(long cartId)
 		throws NoSuchCartException, SystemException {
-		ShoppingCart shoppingCart = fetchByPrimaryKey(cartId);
-
-		if (shoppingCart == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + cartId);
-			}
-
-			throw new NoSuchCartException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				cartId);
-		}
-
-		return shoppingCart;
+		return findByPrimaryKey((Serializable)cartId);
 	}
 
 	/**
@@ -1658,20 +1657,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	@Override
 	public ShoppingCart fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the shopping cart with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param cartId the primary key of the shopping cart
-	 * @return the shopping cart, or <code>null</code> if a shopping cart with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ShoppingCart fetchByPrimaryKey(long cartId)
-		throws SystemException {
 		ShoppingCart shoppingCart = (ShoppingCart)EntityCacheUtil.getResult(ShoppingCartModelImpl.ENTITY_CACHE_ENABLED,
-				ShoppingCartImpl.class, cartId);
+				ShoppingCartImpl.class, primaryKey);
 
 		if (shoppingCart == _nullShoppingCart) {
 			return null;
@@ -1684,19 +1671,19 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 				session = openSession();
 
 				shoppingCart = (ShoppingCart)session.get(ShoppingCartImpl.class,
-						Long.valueOf(cartId));
+						primaryKey);
 
 				if (shoppingCart != null) {
 					cacheResult(shoppingCart);
 				}
 				else {
 					EntityCacheUtil.putResult(ShoppingCartModelImpl.ENTITY_CACHE_ENABLED,
-						ShoppingCartImpl.class, cartId, _nullShoppingCart);
+						ShoppingCartImpl.class, primaryKey, _nullShoppingCart);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ShoppingCartModelImpl.ENTITY_CACHE_ENABLED,
-					ShoppingCartImpl.class, cartId);
+					ShoppingCartImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1706,6 +1693,18 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		}
 
 		return shoppingCart;
+	}
+
+	/**
+	 * Returns the shopping cart with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param cartId the primary key of the shopping cart
+	 * @return the shopping cart, or <code>null</code> if a shopping cart with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ShoppingCart fetchByPrimaryKey(long cartId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)cartId);
 	}
 
 	/**

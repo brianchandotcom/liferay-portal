@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.mobiledevicerules.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2293,13 +2292,24 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 *
 	 * @param primaryKey the primary key of the m d r action
 	 * @return the m d r action
-	 * @throws com.liferay.portal.NoSuchModelException if a m d r action with the primary key could not be found
+	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRAction findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchActionException, SystemException {
+		MDRAction mdrAction = fetchByPrimaryKey(primaryKey);
+
+		if (mdrAction == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchActionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return mdrAction;
 	}
 
 	/**
@@ -2312,18 +2322,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	public MDRAction findByPrimaryKey(long actionId)
 		throws NoSuchActionException, SystemException {
-		MDRAction mdrAction = fetchByPrimaryKey(actionId);
-
-		if (mdrAction == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + actionId);
-			}
-
-			throw new NoSuchActionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				actionId);
-		}
-
-		return mdrAction;
+		return findByPrimaryKey((Serializable)actionId);
 	}
 
 	/**
@@ -2336,19 +2335,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	@Override
 	public MDRAction fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the m d r action with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param actionId the primary key of the m d r action
-	 * @return the m d r action, or <code>null</code> if a m d r action with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MDRAction fetchByPrimaryKey(long actionId) throws SystemException {
 		MDRAction mdrAction = (MDRAction)EntityCacheUtil.getResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
-				MDRActionImpl.class, actionId);
+				MDRActionImpl.class, primaryKey);
 
 		if (mdrAction == _nullMDRAction) {
 			return null;
@@ -2361,19 +2349,19 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 				session = openSession();
 
 				mdrAction = (MDRAction)session.get(MDRActionImpl.class,
-						Long.valueOf(actionId));
+						primaryKey);
 
 				if (mdrAction != null) {
 					cacheResult(mdrAction);
 				}
 				else {
 					EntityCacheUtil.putResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
-						MDRActionImpl.class, actionId, _nullMDRAction);
+						MDRActionImpl.class, primaryKey, _nullMDRAction);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
-					MDRActionImpl.class, actionId);
+					MDRActionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2383,6 +2371,17 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		}
 
 		return mdrAction;
+	}
+
+	/**
+	 * Returns the m d r action with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param actionId the primary key of the m d r action
+	 * @return the m d r action, or <code>null</code> if a m d r action with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MDRAction fetchByPrimaryKey(long actionId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)actionId);
 	}
 
 	/**

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchShardException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -893,13 +892,24 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 *
 	 * @param primaryKey the primary key of the shard
 	 * @return the shard
-	 * @throws com.liferay.portal.NoSuchModelException if a shard with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchShardException if a shard with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Shard findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchShardException, SystemException {
+		Shard shard = fetchByPrimaryKey(primaryKey);
+
+		if (shard == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchShardException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return shard;
 	}
 
 	/**
@@ -912,18 +922,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 */
 	public Shard findByPrimaryKey(long shardId)
 		throws NoSuchShardException, SystemException {
-		Shard shard = fetchByPrimaryKey(shardId);
-
-		if (shard == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + shardId);
-			}
-
-			throw new NoSuchShardException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				shardId);
-		}
-
-		return shard;
+		return findByPrimaryKey((Serializable)shardId);
 	}
 
 	/**
@@ -936,19 +935,8 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	@Override
 	public Shard fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the shard with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param shardId the primary key of the shard
-	 * @return the shard, or <code>null</code> if a shard with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Shard fetchByPrimaryKey(long shardId) throws SystemException {
 		Shard shard = (Shard)EntityCacheUtil.getResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
-				ShardImpl.class, shardId);
+				ShardImpl.class, primaryKey);
 
 		if (shard == _nullShard) {
 			return null;
@@ -960,20 +948,19 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			try {
 				session = openSession();
 
-				shard = (Shard)session.get(ShardImpl.class,
-						Long.valueOf(shardId));
+				shard = (Shard)session.get(ShardImpl.class, primaryKey);
 
 				if (shard != null) {
 					cacheResult(shard);
 				}
 				else {
 					EntityCacheUtil.putResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
-						ShardImpl.class, shardId, _nullShard);
+						ShardImpl.class, primaryKey, _nullShard);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
-					ShardImpl.class, shardId);
+					ShardImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -983,6 +970,17 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		}
 
 		return shard;
+	}
+
+	/**
+	 * Returns the shard with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param shardId the primary key of the shard
+	 * @return the shard, or <code>null</code> if a shard with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Shard fetchByPrimaryKey(long shardId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)shardId);
 	}
 
 	/**

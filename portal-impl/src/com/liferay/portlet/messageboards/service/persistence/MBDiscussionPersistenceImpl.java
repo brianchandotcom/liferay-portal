@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1367,13 +1366,24 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	 *
 	 * @param primaryKey the primary key of the message boards discussion
 	 * @return the message boards discussion
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards discussion with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBDiscussion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchDiscussionException, SystemException {
+		MBDiscussion mbDiscussion = fetchByPrimaryKey(primaryKey);
+
+		if (mbDiscussion == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchDiscussionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return mbDiscussion;
 	}
 
 	/**
@@ -1386,18 +1396,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	 */
 	public MBDiscussion findByPrimaryKey(long discussionId)
 		throws NoSuchDiscussionException, SystemException {
-		MBDiscussion mbDiscussion = fetchByPrimaryKey(discussionId);
-
-		if (mbDiscussion == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + discussionId);
-			}
-
-			throw new NoSuchDiscussionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				discussionId);
-		}
-
-		return mbDiscussion;
+		return findByPrimaryKey((Serializable)discussionId);
 	}
 
 	/**
@@ -1410,20 +1409,8 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	@Override
 	public MBDiscussion fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the message boards discussion with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param discussionId the primary key of the message boards discussion
-	 * @return the message boards discussion, or <code>null</code> if a message boards discussion with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBDiscussion fetchByPrimaryKey(long discussionId)
-		throws SystemException {
 		MBDiscussion mbDiscussion = (MBDiscussion)EntityCacheUtil.getResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-				MBDiscussionImpl.class, discussionId);
+				MBDiscussionImpl.class, primaryKey);
 
 		if (mbDiscussion == _nullMBDiscussion) {
 			return null;
@@ -1436,19 +1423,19 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 				session = openSession();
 
 				mbDiscussion = (MBDiscussion)session.get(MBDiscussionImpl.class,
-						Long.valueOf(discussionId));
+						primaryKey);
 
 				if (mbDiscussion != null) {
 					cacheResult(mbDiscussion);
 				}
 				else {
 					EntityCacheUtil.putResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-						MBDiscussionImpl.class, discussionId, _nullMBDiscussion);
+						MBDiscussionImpl.class, primaryKey, _nullMBDiscussion);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-					MBDiscussionImpl.class, discussionId);
+					MBDiscussionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1458,6 +1445,18 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		}
 
 		return mbDiscussion;
+	}
+
+	/**
+	 * Returns the message boards discussion with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param discussionId the primary key of the message boards discussion
+	 * @return the message boards discussion, or <code>null</code> if a message boards discussion with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBDiscussion fetchByPrimaryKey(long discussionId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)discussionId);
 	}
 
 	/**

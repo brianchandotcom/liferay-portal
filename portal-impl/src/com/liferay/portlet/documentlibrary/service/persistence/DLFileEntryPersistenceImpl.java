@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -10386,13 +10385,24 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param primaryKey the primary key of the document library file entry
 	 * @return the document library file entry
-	 * @throws com.liferay.portal.NoSuchModelException if a document library file entry with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchFileEntryException, SystemException {
+		DLFileEntry dlFileEntry = fetchByPrimaryKey(primaryKey);
+
+		if (dlFileEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchFileEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return dlFileEntry;
 	}
 
 	/**
@@ -10405,18 +10415,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	public DLFileEntry findByPrimaryKey(long fileEntryId)
 		throws NoSuchFileEntryException, SystemException {
-		DLFileEntry dlFileEntry = fetchByPrimaryKey(fileEntryId);
-
-		if (dlFileEntry == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + fileEntryId);
-			}
-
-			throw new NoSuchFileEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				fileEntryId);
-		}
-
-		return dlFileEntry;
+		return findByPrimaryKey((Serializable)fileEntryId);
 	}
 
 	/**
@@ -10429,20 +10428,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public DLFileEntry fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the document library file entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param fileEntryId the primary key of the document library file entry
-	 * @return the document library file entry, or <code>null</code> if a document library file entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFileEntry fetchByPrimaryKey(long fileEntryId)
-		throws SystemException {
 		DLFileEntry dlFileEntry = (DLFileEntry)EntityCacheUtil.getResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileEntryImpl.class, fileEntryId);
+				DLFileEntryImpl.class, primaryKey);
 
 		if (dlFileEntry == _nullDLFileEntry) {
 			return null;
@@ -10455,19 +10442,19 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				session = openSession();
 
 				dlFileEntry = (DLFileEntry)session.get(DLFileEntryImpl.class,
-						Long.valueOf(fileEntryId));
+						primaryKey);
 
 				if (dlFileEntry != null) {
 					cacheResult(dlFileEntry);
 				}
 				else {
 					EntityCacheUtil.putResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileEntryImpl.class, fileEntryId, _nullDLFileEntry);
+						DLFileEntryImpl.class, primaryKey, _nullDLFileEntry);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileEntryImpl.class, fileEntryId);
+					DLFileEntryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -10477,6 +10464,18 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		}
 
 		return dlFileEntry;
+	}
+
+	/**
+	 * Returns the document library file entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param fileEntryId the primary key of the document library file entry
+	 * @return the document library file entry, or <code>null</code> if a document library file entry with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntry fetchByPrimaryKey(long fileEntryId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)fileEntryId);
 	}
 
 	/**

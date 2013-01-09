@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
@@ -3452,13 +3451,24 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 *
 	 * @param primaryKey the primary key of the document library file entry type
 	 * @return the document library file entry type
-	 * @throws com.liferay.portal.NoSuchModelException if a document library file entry type with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileEntryType findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchFileEntryTypeException, SystemException {
+		DLFileEntryType dlFileEntryType = fetchByPrimaryKey(primaryKey);
+
+		if (dlFileEntryType == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchFileEntryTypeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return dlFileEntryType;
 	}
 
 	/**
@@ -3471,18 +3481,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	public DLFileEntryType findByPrimaryKey(long fileEntryTypeId)
 		throws NoSuchFileEntryTypeException, SystemException {
-		DLFileEntryType dlFileEntryType = fetchByPrimaryKey(fileEntryTypeId);
-
-		if (dlFileEntryType == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + fileEntryTypeId);
-			}
-
-			throw new NoSuchFileEntryTypeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				fileEntryTypeId);
-		}
-
-		return dlFileEntryType;
+		return findByPrimaryKey((Serializable)fileEntryTypeId);
 	}
 
 	/**
@@ -3495,20 +3494,8 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	@Override
 	public DLFileEntryType fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the document library file entry type with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param fileEntryTypeId the primary key of the document library file entry type
-	 * @return the document library file entry type, or <code>null</code> if a document library file entry type with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFileEntryType fetchByPrimaryKey(long fileEntryTypeId)
-		throws SystemException {
 		DLFileEntryType dlFileEntryType = (DLFileEntryType)EntityCacheUtil.getResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileEntryTypeImpl.class, fileEntryTypeId);
+				DLFileEntryTypeImpl.class, primaryKey);
 
 		if (dlFileEntryType == _nullDLFileEntryType) {
 			return null;
@@ -3521,20 +3508,20 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				session = openSession();
 
 				dlFileEntryType = (DLFileEntryType)session.get(DLFileEntryTypeImpl.class,
-						Long.valueOf(fileEntryTypeId));
+						primaryKey);
 
 				if (dlFileEntryType != null) {
 					cacheResult(dlFileEntryType);
 				}
 				else {
 					EntityCacheUtil.putResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileEntryTypeImpl.class, fileEntryTypeId,
+						DLFileEntryTypeImpl.class, primaryKey,
 						_nullDLFileEntryType);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileEntryTypeImpl.class, fileEntryTypeId);
+					DLFileEntryTypeImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3544,6 +3531,18 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		}
 
 		return dlFileEntryType;
+	}
+
+	/**
+	 * Returns the document library file entry type with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param fileEntryTypeId the primary key of the document library file entry type
+	 * @return the document library file entry type, or <code>null</code> if a document library file entry type with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryType fetchByPrimaryKey(long fileEntryTypeId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)fileEntryTypeId);
 	}
 
 	/**

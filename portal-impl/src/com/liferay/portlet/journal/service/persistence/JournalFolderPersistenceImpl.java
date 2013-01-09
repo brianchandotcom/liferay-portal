@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -4733,13 +4732,24 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 *
 	 * @param primaryKey the primary key of the journal folder
 	 * @return the journal folder
-	 * @throws com.liferay.portal.NoSuchModelException if a journal folder with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalFolder findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchFolderException, SystemException {
+		JournalFolder journalFolder = fetchByPrimaryKey(primaryKey);
+
+		if (journalFolder == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchFolderException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return journalFolder;
 	}
 
 	/**
@@ -4752,18 +4762,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	public JournalFolder findByPrimaryKey(long folderId)
 		throws NoSuchFolderException, SystemException {
-		JournalFolder journalFolder = fetchByPrimaryKey(folderId);
-
-		if (journalFolder == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + folderId);
-			}
-
-			throw new NoSuchFolderException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				folderId);
-		}
-
-		return journalFolder;
+		return findByPrimaryKey((Serializable)folderId);
 	}
 
 	/**
@@ -4776,20 +4775,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	@Override
 	public JournalFolder fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the journal folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param folderId the primary key of the journal folder
-	 * @return the journal folder, or <code>null</code> if a journal folder with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalFolder fetchByPrimaryKey(long folderId)
-		throws SystemException {
 		JournalFolder journalFolder = (JournalFolder)EntityCacheUtil.getResult(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,
-				JournalFolderImpl.class, folderId);
+				JournalFolderImpl.class, primaryKey);
 
 		if (journalFolder == _nullJournalFolder) {
 			return null;
@@ -4802,19 +4789,19 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 				session = openSession();
 
 				journalFolder = (JournalFolder)session.get(JournalFolderImpl.class,
-						Long.valueOf(folderId));
+						primaryKey);
 
 				if (journalFolder != null) {
 					cacheResult(journalFolder);
 				}
 				else {
 					EntityCacheUtil.putResult(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,
-						JournalFolderImpl.class, folderId, _nullJournalFolder);
+						JournalFolderImpl.class, primaryKey, _nullJournalFolder);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,
-					JournalFolderImpl.class, folderId);
+					JournalFolderImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -4824,6 +4811,18 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		}
 
 		return journalFolder;
+	}
+
+	/**
+	 * Returns the journal folder with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param folderId the primary key of the journal folder
+	 * @return the journal folder, or <code>null</code> if a journal folder with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalFolder fetchByPrimaryKey(long folderId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)folderId);
 	}
 
 	/**

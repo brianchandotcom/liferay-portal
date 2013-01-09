@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchEmailAddressException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -3061,13 +3060,24 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 *
 	 * @param primaryKey the primary key of the email address
 	 * @return the email address
-	 * @throws com.liferay.portal.NoSuchModelException if a email address with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchEmailAddressException if a email address with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public EmailAddress findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchEmailAddressException, SystemException {
+		EmailAddress emailAddress = fetchByPrimaryKey(primaryKey);
+
+		if (emailAddress == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchEmailAddressException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return emailAddress;
 	}
 
 	/**
@@ -3080,18 +3090,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	public EmailAddress findByPrimaryKey(long emailAddressId)
 		throws NoSuchEmailAddressException, SystemException {
-		EmailAddress emailAddress = fetchByPrimaryKey(emailAddressId);
-
-		if (emailAddress == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + emailAddressId);
-			}
-
-			throw new NoSuchEmailAddressException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				emailAddressId);
-		}
-
-		return emailAddress;
+		return findByPrimaryKey((Serializable)emailAddressId);
 	}
 
 	/**
@@ -3104,20 +3103,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	@Override
 	public EmailAddress fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the email address with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param emailAddressId the primary key of the email address
-	 * @return the email address, or <code>null</code> if a email address with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public EmailAddress fetchByPrimaryKey(long emailAddressId)
-		throws SystemException {
 		EmailAddress emailAddress = (EmailAddress)EntityCacheUtil.getResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-				EmailAddressImpl.class, emailAddressId);
+				EmailAddressImpl.class, primaryKey);
 
 		if (emailAddress == _nullEmailAddress) {
 			return null;
@@ -3130,20 +3117,19 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 				session = openSession();
 
 				emailAddress = (EmailAddress)session.get(EmailAddressImpl.class,
-						Long.valueOf(emailAddressId));
+						primaryKey);
 
 				if (emailAddress != null) {
 					cacheResult(emailAddress);
 				}
 				else {
 					EntityCacheUtil.putResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-						EmailAddressImpl.class, emailAddressId,
-						_nullEmailAddress);
+						EmailAddressImpl.class, primaryKey, _nullEmailAddress);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-					EmailAddressImpl.class, emailAddressId);
+					EmailAddressImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3153,6 +3139,18 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		}
 
 		return emailAddress;
+	}
+
+	/**
+	 * Returns the email address with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param emailAddressId the primary key of the email address
+	 * @return the email address, or <code>null</code> if a email address with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public EmailAddress fetchByPrimaryKey(long emailAddressId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)emailAddressId);
 	}
 
 	/**

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.polls.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1618,13 +1617,24 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 *
 	 * @param primaryKey the primary key of the polls vote
 	 * @return the polls vote
-	 * @throws com.liferay.portal.NoSuchModelException if a polls vote with the primary key could not be found
+	 * @throws com.liferay.portlet.polls.NoSuchVoteException if a polls vote with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsVote findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchVoteException, SystemException {
+		PollsVote pollsVote = fetchByPrimaryKey(primaryKey);
+
+		if (pollsVote == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchVoteException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return pollsVote;
 	}
 
 	/**
@@ -1637,18 +1647,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 */
 	public PollsVote findByPrimaryKey(long voteId)
 		throws NoSuchVoteException, SystemException {
-		PollsVote pollsVote = fetchByPrimaryKey(voteId);
-
-		if (pollsVote == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + voteId);
-			}
-
-			throw new NoSuchVoteException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				voteId);
-		}
-
-		return pollsVote;
+		return findByPrimaryKey((Serializable)voteId);
 	}
 
 	/**
@@ -1661,19 +1660,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	@Override
 	public PollsVote fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the polls vote with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param voteId the primary key of the polls vote
-	 * @return the polls vote, or <code>null</code> if a polls vote with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PollsVote fetchByPrimaryKey(long voteId) throws SystemException {
 		PollsVote pollsVote = (PollsVote)EntityCacheUtil.getResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-				PollsVoteImpl.class, voteId);
+				PollsVoteImpl.class, primaryKey);
 
 		if (pollsVote == _nullPollsVote) {
 			return null;
@@ -1686,19 +1674,19 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 				session = openSession();
 
 				pollsVote = (PollsVote)session.get(PollsVoteImpl.class,
-						Long.valueOf(voteId));
+						primaryKey);
 
 				if (pollsVote != null) {
 					cacheResult(pollsVote);
 				}
 				else {
 					EntityCacheUtil.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-						PollsVoteImpl.class, voteId, _nullPollsVote);
+						PollsVoteImpl.class, primaryKey, _nullPollsVote);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
-					PollsVoteImpl.class, voteId);
+					PollsVoteImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1708,6 +1696,17 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		}
 
 		return pollsVote;
+	}
+
+	/**
+	 * Returns the polls vote with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param voteId the primary key of the polls vote
+	 * @return the polls vote, or <code>null</code> if a polls vote with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PollsVote fetchByPrimaryKey(long voteId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)voteId);
 	}
 
 	/**

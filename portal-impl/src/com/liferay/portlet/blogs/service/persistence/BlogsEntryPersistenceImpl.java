@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.blogs.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -18155,13 +18154,24 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 *
 	 * @param primaryKey the primary key of the blogs entry
 	 * @return the blogs entry
-	 * @throws com.liferay.portal.NoSuchModelException if a blogs entry with the primary key could not be found
+	 * @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BlogsEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchEntryException, SystemException {
+		BlogsEntry blogsEntry = fetchByPrimaryKey(primaryKey);
+
+		if (blogsEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return blogsEntry;
 	}
 
 	/**
@@ -18174,18 +18184,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	public BlogsEntry findByPrimaryKey(long entryId)
 		throws NoSuchEntryException, SystemException {
-		BlogsEntry blogsEntry = fetchByPrimaryKey(entryId);
-
-		if (blogsEntry == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + entryId);
-			}
-
-			throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				entryId);
-		}
-
-		return blogsEntry;
+		return findByPrimaryKey((Serializable)entryId);
 	}
 
 	/**
@@ -18198,19 +18197,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	@Override
 	public BlogsEntry fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the blogs entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param entryId the primary key of the blogs entry
-	 * @return the blogs entry, or <code>null</code> if a blogs entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public BlogsEntry fetchByPrimaryKey(long entryId) throws SystemException {
 		BlogsEntry blogsEntry = (BlogsEntry)EntityCacheUtil.getResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsEntryImpl.class, entryId);
+				BlogsEntryImpl.class, primaryKey);
 
 		if (blogsEntry == _nullBlogsEntry) {
 			return null;
@@ -18223,19 +18211,19 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				session = openSession();
 
 				blogsEntry = (BlogsEntry)session.get(BlogsEntryImpl.class,
-						Long.valueOf(entryId));
+						primaryKey);
 
 				if (blogsEntry != null) {
 					cacheResult(blogsEntry);
 				}
 				else {
 					EntityCacheUtil.putResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
-						BlogsEntryImpl.class, entryId, _nullBlogsEntry);
+						BlogsEntryImpl.class, primaryKey, _nullBlogsEntry);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
-					BlogsEntryImpl.class, entryId);
+					BlogsEntryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -18245,6 +18233,17 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		}
 
 		return blogsEntry;
+	}
+
+	/**
+	 * Returns the blogs entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param entryId the primary key of the blogs entry
+	 * @return the blogs entry, or <code>null</code> if a blogs entry with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BlogsEntry fetchByPrimaryKey(long entryId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)entryId);
 	}
 
 	/**

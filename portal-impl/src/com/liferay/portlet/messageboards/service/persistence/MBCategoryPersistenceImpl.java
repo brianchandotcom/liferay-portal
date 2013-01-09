@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -7577,13 +7576,24 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 *
 	 * @param primaryKey the primary key of the message boards category
 	 * @return the message boards category
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards category with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchCategoryException if a message boards category with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBCategory findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchCategoryException, SystemException {
+		MBCategory mbCategory = fetchByPrimaryKey(primaryKey);
+
+		if (mbCategory == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchCategoryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return mbCategory;
 	}
 
 	/**
@@ -7596,18 +7606,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	public MBCategory findByPrimaryKey(long categoryId)
 		throws NoSuchCategoryException, SystemException {
-		MBCategory mbCategory = fetchByPrimaryKey(categoryId);
-
-		if (mbCategory == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + categoryId);
-			}
-
-			throw new NoSuchCategoryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				categoryId);
-		}
-
-		return mbCategory;
+		return findByPrimaryKey((Serializable)categoryId);
 	}
 
 	/**
@@ -7620,20 +7619,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public MBCategory fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the message boards category with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param categoryId the primary key of the message boards category
-	 * @return the message boards category, or <code>null</code> if a message boards category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBCategory fetchByPrimaryKey(long categoryId)
-		throws SystemException {
 		MBCategory mbCategory = (MBCategory)EntityCacheUtil.getResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-				MBCategoryImpl.class, categoryId);
+				MBCategoryImpl.class, primaryKey);
 
 		if (mbCategory == _nullMBCategory) {
 			return null;
@@ -7646,19 +7633,19 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				session = openSession();
 
 				mbCategory = (MBCategory)session.get(MBCategoryImpl.class,
-						Long.valueOf(categoryId));
+						primaryKey);
 
 				if (mbCategory != null) {
 					cacheResult(mbCategory);
 				}
 				else {
 					EntityCacheUtil.putResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-						MBCategoryImpl.class, categoryId, _nullMBCategory);
+						MBCategoryImpl.class, primaryKey, _nullMBCategory);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-					MBCategoryImpl.class, categoryId);
+					MBCategoryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -7668,6 +7655,18 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		}
 
 		return mbCategory;
+	}
+
+	/**
+	 * Returns the message boards category with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param categoryId the primary key of the message boards category
+	 * @return the message boards category, or <code>null</code> if a message boards category with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBCategory fetchByPrimaryKey(long categoryId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)categoryId);
 	}
 
 	/**

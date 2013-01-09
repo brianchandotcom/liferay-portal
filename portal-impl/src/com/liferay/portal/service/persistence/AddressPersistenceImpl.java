@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchAddressException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -3669,13 +3668,24 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 *
 	 * @param primaryKey the primary key of the address
 	 * @return the address
-	 * @throws com.liferay.portal.NoSuchModelException if a address with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Address findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchAddressException, SystemException {
+		Address address = fetchByPrimaryKey(primaryKey);
+
+		if (address == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchAddressException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return address;
 	}
 
 	/**
@@ -3688,18 +3698,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	public Address findByPrimaryKey(long addressId)
 		throws NoSuchAddressException, SystemException {
-		Address address = fetchByPrimaryKey(addressId);
-
-		if (address == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + addressId);
-			}
-
-			throw new NoSuchAddressException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				addressId);
-		}
-
-		return address;
+		return findByPrimaryKey((Serializable)addressId);
 	}
 
 	/**
@@ -3712,19 +3711,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public Address fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the address with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param addressId the primary key of the address
-	 * @return the address, or <code>null</code> if a address with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Address fetchByPrimaryKey(long addressId) throws SystemException {
 		Address address = (Address)EntityCacheUtil.getResult(AddressModelImpl.ENTITY_CACHE_ENABLED,
-				AddressImpl.class, addressId);
+				AddressImpl.class, primaryKey);
 
 		if (address == _nullAddress) {
 			return null;
@@ -3736,20 +3724,19 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			try {
 				session = openSession();
 
-				address = (Address)session.get(AddressImpl.class,
-						Long.valueOf(addressId));
+				address = (Address)session.get(AddressImpl.class, primaryKey);
 
 				if (address != null) {
 					cacheResult(address);
 				}
 				else {
 					EntityCacheUtil.putResult(AddressModelImpl.ENTITY_CACHE_ENABLED,
-						AddressImpl.class, addressId, _nullAddress);
+						AddressImpl.class, primaryKey, _nullAddress);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(AddressModelImpl.ENTITY_CACHE_ENABLED,
-					AddressImpl.class, addressId);
+					AddressImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3759,6 +3746,17 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		}
 
 		return address;
+	}
+
+	/**
+	 * Returns the address with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param addressId the primary key of the address
+	 * @return the address, or <code>null</code> if a address with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Address fetchByPrimaryKey(long addressId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)addressId);
 	}
 
 	/**

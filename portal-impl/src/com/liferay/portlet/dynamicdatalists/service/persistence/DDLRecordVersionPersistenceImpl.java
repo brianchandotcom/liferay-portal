@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatalists.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1710,13 +1709,24 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 *
 	 * @param primaryKey the primary key of the d d l record version
 	 * @return the d d l record version
-	 * @throws com.liferay.portal.NoSuchModelException if a d d l record version with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDLRecordVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchRecordVersionException, SystemException {
+		DDLRecordVersion ddlRecordVersion = fetchByPrimaryKey(primaryKey);
+
+		if (ddlRecordVersion == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchRecordVersionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return ddlRecordVersion;
 	}
 
 	/**
@@ -1729,18 +1739,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	public DDLRecordVersion findByPrimaryKey(long recordVersionId)
 		throws NoSuchRecordVersionException, SystemException {
-		DDLRecordVersion ddlRecordVersion = fetchByPrimaryKey(recordVersionId);
-
-		if (ddlRecordVersion == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + recordVersionId);
-			}
-
-			throw new NoSuchRecordVersionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				recordVersionId);
-		}
-
-		return ddlRecordVersion;
+		return findByPrimaryKey((Serializable)recordVersionId);
 	}
 
 	/**
@@ -1753,20 +1752,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	@Override
 	public DDLRecordVersion fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the d d l record version with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param recordVersionId the primary key of the d d l record version
-	 * @return the d d l record version, or <code>null</code> if a d d l record version with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDLRecordVersion fetchByPrimaryKey(long recordVersionId)
-		throws SystemException {
 		DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)EntityCacheUtil.getResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-				DDLRecordVersionImpl.class, recordVersionId);
+				DDLRecordVersionImpl.class, primaryKey);
 
 		if (ddlRecordVersion == _nullDDLRecordVersion) {
 			return null;
@@ -1779,20 +1766,20 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 				session = openSession();
 
 				ddlRecordVersion = (DDLRecordVersion)session.get(DDLRecordVersionImpl.class,
-						Long.valueOf(recordVersionId));
+						primaryKey);
 
 				if (ddlRecordVersion != null) {
 					cacheResult(ddlRecordVersion);
 				}
 				else {
 					EntityCacheUtil.putResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-						DDLRecordVersionImpl.class, recordVersionId,
+						DDLRecordVersionImpl.class, primaryKey,
 						_nullDDLRecordVersion);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordVersionImpl.class, recordVersionId);
+					DDLRecordVersionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1802,6 +1789,18 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		}
 
 		return ddlRecordVersion;
+	}
+
+	/**
+	 * Returns the d d l record version with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param recordVersionId the primary key of the d d l record version
+	 * @return the d d l record version, or <code>null</code> if a d d l record version with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDLRecordVersion fetchByPrimaryKey(long recordVersionId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)recordVersionId);
 	}
 
 	/**

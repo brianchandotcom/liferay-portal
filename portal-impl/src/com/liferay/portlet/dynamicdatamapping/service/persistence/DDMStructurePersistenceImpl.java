@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -7062,13 +7061,24 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param primaryKey the primary key of the d d m structure
 	 * @return the d d m structure
-	 * @throws com.liferay.portal.NoSuchModelException if a d d m structure with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a d d m structure with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMStructure findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchStructureException, SystemException {
+		DDMStructure ddmStructure = fetchByPrimaryKey(primaryKey);
+
+		if (ddmStructure == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchStructureException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return ddmStructure;
 	}
 
 	/**
@@ -7081,18 +7091,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	public DDMStructure findByPrimaryKey(long structureId)
 		throws NoSuchStructureException, SystemException {
-		DDMStructure ddmStructure = fetchByPrimaryKey(structureId);
-
-		if (ddmStructure == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + structureId);
-			}
-
-			throw new NoSuchStructureException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				structureId);
-		}
-
-		return ddmStructure;
+		return findByPrimaryKey((Serializable)structureId);
 	}
 
 	/**
@@ -7105,20 +7104,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public DDMStructure fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the d d m structure with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param structureId the primary key of the d d m structure
-	 * @return the d d m structure, or <code>null</code> if a d d m structure with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMStructure fetchByPrimaryKey(long structureId)
-		throws SystemException {
 		DDMStructure ddmStructure = (DDMStructure)EntityCacheUtil.getResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
-				DDMStructureImpl.class, structureId);
+				DDMStructureImpl.class, primaryKey);
 
 		if (ddmStructure == _nullDDMStructure) {
 			return null;
@@ -7131,19 +7118,19 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				session = openSession();
 
 				ddmStructure = (DDMStructure)session.get(DDMStructureImpl.class,
-						Long.valueOf(structureId));
+						primaryKey);
 
 				if (ddmStructure != null) {
 					cacheResult(ddmStructure);
 				}
 				else {
 					EntityCacheUtil.putResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
-						DDMStructureImpl.class, structureId, _nullDDMStructure);
+						DDMStructureImpl.class, primaryKey, _nullDDMStructure);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStructureImpl.class, structureId);
+					DDMStructureImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -7153,6 +7140,18 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		}
 
 		return ddmStructure;
+	}
+
+	/**
+	 * Returns the d d m structure with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param structureId the primary key of the d d m structure
+	 * @return the d d m structure, or <code>null</code> if a d d m structure with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMStructure fetchByPrimaryKey(long structureId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)structureId);
 	}
 
 	/**

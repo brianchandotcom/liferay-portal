@@ -30,6 +30,7 @@ import sun.reflect.Reflection;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PortalRuntimeChecker extends BaseChecker {
 
@@ -108,6 +109,65 @@ public class PortalRuntimeChecker extends BaseChecker {
 						threadPoolExecutorName);
 			}
 		}
+	}
+
+	@Override
+	public String[] generateRuleFromCondition(Object... args) {
+		String[] rule = new String[2];
+
+		if ((args != null) && (args.length == 1) &&
+			(args[0] instanceof Permission)) {
+
+			PortalRuntimePermission portalRuntimePermission =
+				(PortalRuntimePermission)args[0];
+
+			String name = portalRuntimePermission.getName();
+			Object subject = portalRuntimePermission.getSubject();
+			String property = GetterUtil.getString(
+				portalRuntimePermission.getProperty());
+
+			if (name.equals(PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE)) {
+				String className = (String)subject;
+
+				rule[0] = "security-manager-expando-bridge";
+				rule[1] = className;
+			}
+			else if (name.equals(PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY)) {
+				Class<?> clazz = (Class<?>)subject;
+
+				rule[0] = "security-manager-get-bean-property";
+				rule[1] = clazz.getName();
+
+				if (Validator.isNotNull(property)) {
+					rule[1] += StringPool.POUND.concat(property);
+				}
+			}
+			else if (name.equals(PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE)) {
+				String searchEngineId = (String)subject;
+
+				rule[0] = "security-manager-search-engine-ids";
+				rule[1] = searchEngineId;
+			}
+			else if (name.equals(PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY)) {
+				Class<?> clazz = (Class<?>)subject;
+
+				rule[0] = "security-manager-set-bean-property";
+				rule[1] = clazz.getName();
+
+				if (Validator.isNotNull(property)) {
+					rule[1] += StringPool.POUND.concat(property);
+				}
+			}
+			else if (name.equals(
+						PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR)) {
+				String threadPoolExecutorName = (String)subject;
+
+				rule[0] = "security-manager-thread-pool-executor-names";
+				rule[1] = threadPoolExecutorName;
+			}
+		}
+
+		return rule;
 	}
 
 	protected boolean hasGetBeanProperty(Class<?> clazz, String property) {

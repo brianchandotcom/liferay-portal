@@ -179,6 +179,37 @@ public class FileChecker extends BaseChecker {
 		}
 	}
 
+	@Override
+	public String[] generateRuleFromCondition(Object... args) {
+		String[] rule = new String[2];
+
+		if ((args != null) && (args.length == 1) &&
+			(args[0] instanceof Permission)) {
+
+			Permission permission = (Permission)args[0];
+
+			String path = permission.getName();
+			String actions = permission.getActions();
+
+			if (actions.equals(FILE_PERMISSION_ACTION_DELETE)) {
+				rule[0] = "security-manager-files-delete";
+			}
+			else if (actions.equals(FILE_PERMISSION_ACTION_EXECUTE)) {
+				rule[0] = "security-manager-files-execute";
+			}
+			else if (actions.equals(FILE_PERMISSION_ACTION_READ)) {
+				rule[0] = "security-manager-files-read";
+			}
+			else if (actions.equals(FILE_PERMISSION_ACTION_WRITE)) {
+				rule[0] = "security-manager-files-write";
+			}
+
+			rule[1] = path;
+		}
+
+		return rule;
+	}
+
 	protected void addCanonicalPath(List<String> paths, String path) {
 		Iterator<String> itr = paths.iterator();
 

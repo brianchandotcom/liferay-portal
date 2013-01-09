@@ -38,6 +38,7 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PortalServiceChecker extends BaseChecker {
 
@@ -107,6 +108,55 @@ public class PortalServiceChecker extends BaseChecker {
 		}
 
 		return false;
+	}
+
+	@Override
+	public String[] generateRuleFromCondition(Object... args) {
+		String[] rule = new String[2];
+
+		if ((args != null) && (args.length == 3) &&
+			(args[1] instanceof Method)) {
+
+			Object object = args[0];
+			Method method = (Method)args[1];
+			Object[] arguments = (Object[])args[2];
+
+			Class<?> clazz = object.getClass();
+
+			if (ProxyUtil.isProxyClass(clazz)) {
+				Class<?>[] interfaces = clazz.getInterfaces();
+
+				if (interfaces.length != 0) {
+					clazz = interfaces[0];
+				}
+			}
+
+			ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
+
+			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+				classLoader);
+
+			String filter = "[portal]";
+
+			if (paclPolicy != null) {
+				filter = StringPool.OPEN_BRACKET.concat(
+					paclPolicy.getServletContextName()).concat(
+						StringPool.CLOSE_BRACKET);
+			}
+
+			String className = getInterfaceName(clazz.getName());
+
+			String methodName = method.getName();
+
+			if (methodName.equals("invokeMethod")) {
+				methodName = (String)arguments[0];
+			}
+
+			rule[0] = "security-manager-services".concat(filter);
+			rule[1] = className.concat(StringPool.POUND).concat(methodName);
+		}
+
+		return rule;
 	}
 
 	protected String getInterfaceName(String className) {

@@ -23,6 +23,7 @@ import org.osgi.framework.launch.Framework;
 
 /**
  * @author Raymond Augé
+ * @author Miguel Pastor
  */
 public class ModuleFrameworkUtil {
 
@@ -32,6 +33,7 @@ public class ModuleFrameworkUtil {
 
 	public static Object addBundle(String location, InputStream inputStream)
 		throws PortalException {
+
 		return getModuleFramework().addBundle(location, inputStream);
 	}
 
@@ -61,6 +63,7 @@ public class ModuleFrameworkUtil {
 
 	public static void setBundleStartLevel(long bundleId, int startLevel)
 		throws PortalException {
+
 		getModuleFramework().setBundleStartLevel(bundleId, startLevel);
 	}
 

@@ -71,6 +71,7 @@ import org.springframework.context.ApplicationContext;
 
 /**
  * @author Raymond Augé
+ * @author Miguel Pastor
  */
 public class ModuleFrameworkImpl
 	implements ModuleFramework, ModuleFrameworkConstants {
@@ -82,11 +83,11 @@ public class ModuleFrameworkImpl
 	public Object addBundle(String location, InputStream inputStream)
 		throws PortalException {
 
-		_checkPermission();
-
 		if (_framework == null) {
 			return null;
 		}
+
+		_checkPermission();
 
 		BundleContext bundleContext = _framework.getBundleContext();
 
@@ -139,13 +140,18 @@ public class ModuleFrameworkImpl
 					String javaPackage = entry.getKey();
 					Map<String, String> javaPackageMap = entry.getValue();
 
-					StringBundler sb = new StringBundler(4);
+					StringBundler sb = new StringBundler(6);
 
 					sb.append(javaPackage);
-					sb.append(";version=\"");
+					sb.append(";");
+					sb.append(Constants.VERSION_ATTRIBUTE);
+					sb.append("=\"");
 
-					if (javaPackageMap.containsKey("version")) {
-						String version = javaPackageMap.get("version");
+					if (javaPackageMap.containsKey(
+							Constants.VERSION_ATTRIBUTE)) {
+
+						String version = javaPackageMap.get(
+							Constants.VERSION_ATTRIBUTE);
 
 						sb.append(version);
 					}
@@ -243,27 +249,10 @@ public class ModuleFrameworkImpl
 	}
 
 	public void startBundle(long bundleId) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.start();
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new ModuleFrameworkException(be);
-		}
+		startBundle(bundleId, 0);
 	}
 
-	public void startBundle(long bundleId, int options)
-		throws PortalException {
-
+	public void startBundle(long bundleId, int options) throws PortalException {
 		_checkPermission();
 
 		Bundle bundle = _getBundle(bundleId);
@@ -317,27 +306,10 @@ public class ModuleFrameworkImpl
 	}
 
 	public void stopBundle(long bundleId) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.stop();
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new ModuleFrameworkException(be);
-		}
+		stopBundle(bundleId, 0);
 	}
 
-	public void stopBundle(long bundleId, int options)
-		throws PortalException {
-
+	public void stopBundle(long bundleId, int options) throws PortalException {
 		_checkPermission();
 
 		Bundle bundle = _getBundle(bundleId);
@@ -401,22 +373,7 @@ public class ModuleFrameworkImpl
 	}
 
 	public void updateBundle(long bundleId) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.update();
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new ModuleFrameworkException(be);
-		}
+		updateBundle(bundleId, null);
 	}
 
 	public void updateBundle(long bundleId, InputStream inputStream)
@@ -548,14 +505,14 @@ public class ModuleFrameworkImpl
 
 		Set<Class<?>> interfaces = _getInterfaces(bean);
 
-		List<String> names = new ArrayList<String>();
+		if (interfaces.isEmpty()) {
+			return;
+		}
+
+		List<String> names = new ArrayList<String>(interfaces.size());
 
 		for (Class<?> interfaceClass : interfaces) {
 			names.add(interfaceClass.getName());
-		}
-
-		if (names.isEmpty()) {
-			return;
 		}
 
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();

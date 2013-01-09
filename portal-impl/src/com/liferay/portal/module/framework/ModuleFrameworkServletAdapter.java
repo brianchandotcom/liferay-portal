@@ -14,8 +14,6 @@
 
 package com.liferay.portal.module.framework;
 
-
-
 import java.io.IOException;
 
 import javax.servlet.ServletConfig;

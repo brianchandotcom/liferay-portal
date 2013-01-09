@@ -123,7 +123,7 @@ public class ModuleFrameworkAdapterHelper {
 		return method;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
+	private static Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkAdapterHelper.class);
 
 	private static ClassLoader _classLoader;

@@ -34,6 +34,7 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 		// boostrap classloader
 
 		// _system = getSystemClassLoader();
+
 	}
 
 	@Override
@@ -108,7 +109,9 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 					clazz = _system.loadClass(name);
 				}
 				catch (ClassNotFoundException classNotFoundException) {
+
 					// Ignore it!
+
 				}
 			}
 

@@ -21,7 +21,11 @@ import java.io.InputStream;
 import org.osgi.framework.launch.Framework;
 
 /**
+ * This interface (and its implementations) are intended for internal
+ * use only.
+ *
  * @author Raymond Augé
+ * @author Miguel Pastor
  */
 public interface ModuleFramework {
 

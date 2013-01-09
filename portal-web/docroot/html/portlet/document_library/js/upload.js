@@ -9,6 +9,7 @@ AUI.add(
 		var UA = A.UA;
 
 		var LString = Lang.String;
+		var sub = Lang.sub;
 
 		var CSS_ACTIVE_AREA = 'active-area';
 
@@ -161,7 +162,7 @@ AUI.add(
 				}
 
 				if (instance._navigationOverlays) {
-					instance._navigationOverlays.destroy();
+					AArray.invoke(instance._navigationOverlays, 'destroy');
 				}
 
 				if (instance._overlayManager) {
@@ -173,12 +174,18 @@ AUI.add(
 				}
 
 				instance._detachSubscriptions();
+
+				if (instance._tooltips.length) {
+					instance._deallocateTooltips();
+				}
 			},
 
 			_addFilesToQueueBottom: function(files) {
 				var instance = this;
 
-				var queue = instance._getQueue();
+				var uploader = instance._getUploader();
+
+				var queue = uploader.queue;
 
 				AArray.each(
 					files,
@@ -186,31 +193,6 @@ AUI.add(
 						queue.addToQueueBottom(item);
 					}
 				);
-			},
-
-			_attachSubscriptions: function(data) {
-				var instance = this;
-
-				var displayStyle = instance._getDisplayStyle();
-
-				var handles = instance._handles;
-				var uploader = instance._getUploader();
-
-				if (data.folder) {
-					handles.push(
-						uploader.on('uploadcomplete', instance._detectFolderUploadError, instance, data),
-						uploader.on('uploadstart', instance._showFolderUploadStarting, instance, data),
-						uploader.on('totaluploadprogress', instance._showFolderUploadProgress, instance, data),
-						uploader.on('alluploadscomplete', instance._showFolderUploadComplete, instance, data, displayStyle)
-					);
-				}
-				else {
-					handles.push(
-						uploader.on('uploadprogress', instance._showEntryUploadProgress, instance),
-						uploader.on('uploadcomplete', instance._showEntryUploadComplete, instance, displayStyle),
-						uploader.after('fileuploadstart', instance._showEntryUploadStarting, instance)
-					);
-				}
 			},
 
 			_attachEventHandlers: function() {
@@ -224,15 +206,7 @@ AUI.add(
 
 				A.getWin().on('beforeunload', instance._onBeforeUnload, instance);
 
-				Liferay.on(
-					instance.ns('dataRequest'),
-					function(event) {
-						if (instance._isUploading()) {
-							event.halt();
-						}
-					},
-					instance
-				);
+				Liferay.on(instance.ns('dataRequest'), instance._onDataRequest, instance);
 
 				Liferay.after(
 					'liferay-app-view-folders:dataRequest',
@@ -278,16 +252,12 @@ AUI.add(
 				docElement.delegate(
 					'drop',
 					function(event) {
-						var originalEvent = event._event;
-
-						var dataTransfer = originalEvent.dataTransfer;
+						var dataTransfer = event._event.dataTransfer;
 
 						var dragDropFiles = dataTransfer && AArray(dataTransfer.files);
 
 						if (AArray.indexOf(dataTransfer.types, 'Files') > -1) {
 							event.halt();
-
-							instance._getNavigationOverlays();
 
 							event.fileList = AArray.map(
 								dragDropFiles,
@@ -295,6 +265,8 @@ AUI.add(
 									return new A.FileHTML5(item);
 								}
 							);
+
+							instance._getNavigationOverlays();
 
 							var uploader = instance._getUploader();
 
@@ -315,6 +287,32 @@ AUI.add(
 				);
 			},
 
+			_attachSubscriptions: function(data) {
+				var instance = this;
+
+				var displayStyle = instance._getDisplayStyle();
+
+				var handles = instance._handles;
+
+				var uploader = instance._getUploader();
+
+				if (data.folder) {
+					handles.push(
+						uploader.on('uploadstart', instance._showFolderUploadStarting, instance, data),
+						uploader.on('totaluploadprogress', instance._showFolderUploadProgress, instance, data),
+						uploader.on('uploadcomplete', instance._detectFolderUploadError, instance, data),
+						uploader.on('alluploadscomplete', instance._showFolderUploadComplete, instance, data, displayStyle)
+					);
+				}
+				else {
+					handles.push(
+						uploader.after('fileuploadstart', instance._showFileUploadStarting, instance),
+						uploader.on('uploadprogress', instance._showFileUploadProgress, instance),
+						uploader.on('uploadcomplete', instance._showFileUploadComplete, instance, displayStyle)
+					);
+				}
+			},
+
 			_combineFileLists: function(fileList, queuedFiles) {
 				var instance = this;
 
@@ -326,57 +324,63 @@ AUI.add(
 				);
 			},
 
-			_createEntries: function(files) {
+			_consumeFilesSelected: function(target, files) {
 				var instance = this;
 
-				var displayStyle = instance._getDisplayStyle();
+				var validFiles = files.valid;
 
-				var overlayManager = instance._getOverlayManager();
+				var key = instance._getFolderId(target);
 
-				var addEntry = function(file) {
-					var title = file.name;
+				var keyData = instance._getUploadContext(key);
 
-					var entryNode = instance._createEntryNode(displayStyle, file);
+				if (keyData) {
+					instance._updateDataSetEntry(key, keyData, validFiles);
+				}
+				else {
+					var dataSet = instance._getDataSet();
 
-					var errorMessage = file.errorMessage;
+					var folderNode = null;
 
-					if (errorMessage) {
-						instance._displayEntryError(entryNode, errorMessage, displayStyle);
-					}
-					else {
-						var overlay = instance._createOverlay(entryNode);
-						var progressBar = instance._createProgressBar();
-
-						overlayManager.register(overlay);
-
-						overlay.show();
-
-						file.overlay = overlay;
-						file.progressBar = progressBar;
+					if (key != instance._folderId) {
+						folderNode = instance._getFolderEntryNode(target);
 					}
 
-					file.entryNode = entryNode;
-				};
+					dataSet.add(
+						key,
+						{
+							fileList: validFiles,
+							target: folderNode,
+							folder: (key != instance._folderId),
+							folderId: key,
+							invalidFiles: files.invalid
+						}
+					);
+				}
 
-				AArray.each(files.validFiles, addEntry);
-				AArray.each(files.invalidFiles, addEntry);
+				if (!instance._isUploading()) {
+					var emptyMessage = instance._getEmptyMessage();
+
+					if (emptyMessage) {
+						emptyMessage.hide();
+					}
+
+					instance._startUpload();
+				}
 			},
 
-			_createEntryNode: function(displayStyle, file) {
+			_createEntryNode: function(name, size, displayStyle) {
 				var instance = this;
 
 				var entryNode;
 
 				var entriesContainer;
 
-				var title = file.name;
-
 				if (displayStyle == STR_LIST) {
 					var searchContainer = instance._entriesContainer.one(SELECTOR_SEARCH_CONTAINER);
 
 					entriesContainer = searchContainer.one('tbody');
 
-					entryNode = instance._createEntryRow(file);
+					entryNode = instance._createEntryRow(name, size);
 				}
 				else {
 					var invisibleEntry = instance._invisibleDescriptiveEntry;
@@ -393,14 +397,14 @@ AUI.add(
 
 					entriesContainer = instance._entriesContainer;
 
-					entryLink.attr('title', title);
+					entryLink.attr('title', name);
 
-					entryTitle.setContent(title);
+					entryTitle.setContent(name);
 				}
 
 				entryNode.attr(
 					{
-						'data-title': title,
+						'data-title': name,
 						id: A.guid()
 					}
 				);
@@ -412,10 +416,10 @@ AUI.add(
 				return entryNode;
 			},
 
-			_createEntryRow: function(file) {
+			_createEntryRow: function(name, size) {
 				var instance = this;
 
-				var fileSize = instance._formatStorageSize(file.size);
+				var storageSize = instance._formatStorageSize(size);
 
 				var searchContainerNode = instance._entriesContainer.one(SELECTOR_SEARCH_CONTAINER);
 
@@ -427,10 +431,10 @@ AUI.add(
 						var value = '';
 
 						if (item == 'name') {
-							value = Lang.sub(TPL_ENTRY_ROW_TITLE, [file.name]);
+							value = sub(TPL_ENTRY_ROW_TITLE, [name]);
 						}
 						else if (item == 'size') {
-							value = fileSize;
+							value = storageSize;
 						}
 						else if (item == 'downloads') {
 							value = '0';
@@ -465,6 +469,8 @@ AUI.add(
 					}
 				).render();
 
+				overlay.get(STR_BOUNDING_BOX).addClass('upload-mask');
+
 				return overlay;
 			},
 
@@ -493,12 +499,62 @@ AUI.add(
 				);
 			},
 
+			/* centralize logic for creating an "Upload Context" which is
+				* an overlay
+				* a progress bar
+				* a target (required only for single file upload contexts)
+			*/
+			_createUploadContext: function(target, file) {
+				var instance = this;
+
+				var overlay = instance._createOverlay(target);
+
+				var progressBar = instance._createProgressBar();
+
+				overlay.show();
+
+				if (file) {
+					file.overlay = overlay;
+					file.progressBar = progressBar;
+					file.target = target;
+				}
+				else {
+					target.overlay = overlay;
+					target.progressBar = progressBar;
+				}
+			},
+
+			_dellocateEntry: function() {
+				var instance = this;
+
+				var currentUploadData = instance._getCurrentUploadData();
+
+				if (!currentUploadData.folder) {
+					var fileList = currentUploadData.fileList;
+
+					AArray.each(
+						fileList,
+						function(item, index, collection) {
+							item.overlay.destroy();
+
+							item.progressBar.destroy();
+						}
+					);
+				}
+
+				AArray.invoke(fileList, 'destroy');
+			},
+
+			_deallocateTooltips: function() {
+				var instance = this;
+
+				AArray.invoke(instance._tooltips, 'destroy');
+			},
+
 			_detachSubscriptions: function() {
 				var instance = this;
 
-				var handles = instance._handles;
-
-				AArray.invoke(handles, 'detach');
+				AArray.invoke(instance._handles, 'detach');
 			},
 
 			_detectFolderUploadError: function(event, data) {
@@ -557,6 +613,10 @@ AUI.add(
 					).render();
 
 					node.tooltip = tooltip;
+
+					// since we can produce an infinite amount of these guys...
+					// lets keep them in a structure that we can flush out later
+					instance._tooltips.push(tooltip);
 				}
 
 				tooltip.set('bodyContent', message);
@@ -627,7 +687,7 @@ AUI.add(
 				return currentUploadData;
 			},
 
-			_getDataSet: function () {
+			_getDataSet: function() {
 				var instance = this;
 
 				var dataSet = instance._dataSet;
@@ -655,47 +715,85 @@ AUI.add(
 				return displayStyle;
 			},
 
-			_getFolderEntry: function(target) {
+			_getEmptyMessage: function() {
 				var instance = this;
 
-				var overlayBoundingBox = target.ancestor(SELECTOR_OVERLAY_MASK);
+				var emptyMessage = instance._emptyMessage;
 
-				var folderEntry = overlayBoundingBox && overlayBoundingBox.folderEntry;
+				if (!emptyMessage) {
+					emptyMessage = instance._entriesContainer.one(SELECTOR_ENTRIES_EMPTY);
+				}
 
-				if (!folderEntry) {
+				instance._emptyMessage = emptyMessage;
+
+				return emptyMessage;
+			},
+
+			/*
+				The Jist: I give you any target, you return to me null or the
+				.app-view-entry (folder target) node
+
+				There are multiple targets that should result in a folder entry
+				upload
+
+				acceptable targets are:
+
+				* app-view-entry node
+				* any child of app-view-entry node
+				* an overlay indicating upload in progress
+				* the progressbar itself if you have very good aim :)
+			*/
+			_getFolderEntryNode: function(target) {
+				var instance = this;
+
+				var folderEntry;
+
+				var overlayContentBox = target.hasClass('aui-overlay-content');
+
+				if (overlayContentBox) {
+					/*
+						We got a target of progressbar or overlay content box
+						Refer to the target from his original config
+					*/
+					var overlay = A.Widget.getByNode(target);
+
+					folderEntry = overlay._originalConfig.target;
+				}
+
+				else {
+					// target was app-view-entry node && was a Folder!
 					if (target.attr('data-folder') == 'true') {
 						folderEntry = target;
 					}
 
+					// check if target is a child of app-view-entry node
 					if (!folderEntry) {
 						folderEntry = target.ancestor(SELECTOR_ENTRY_LINK + SELECTOR_DATA_FOLDER);
 					}
 
+					// necessary for list view
 					if (!folderEntry) {
 						folderEntry = target.ancestor(SELECTOR_DATA_FOLDER_DATA_TITLE);
 					}
 
-					if (folderEntry) {
-						var displayIcon = target.ancestor(SELECTOR_ENTRY_DISPLAY_STYLE);
-
-						var overlay = folderEntry.overlay;
-
-						if (!overlay) {
-							overlay = instance._createOverlay(displayIcon);
-
-							overlay.get(STR_BOUNDING_BOX).folderEntry = folderEntry;
-
-							folderEntry.overlay = overlay;
-							folderEntry.progressBar = instance._createProgressBar();
-						}
-
-						displayIcon.removeClass(CSS_ACTIVE_AREA);
-
-						overlay.show();
-					}
+					folderEntry = folderEntry && folderEntry.ancestor();
 				}
 
 				return folderEntry;
+			},
+
+			/*
+				given any target, return to me his folder id as an Integer
+			*/
+			_getFolderId: function(target) {
+				var instance = this;
+
+				var folderEntry = instance._getFolderEntryNode(target);
+
+				var dataFolder = folderEntry && folderEntry.one('[data-folder-id]');
+
+				// yes, i need these paren: (dataFolder && ...)
+				return (dataFolder && A.Lang.toInt(dataFolder.attr('data-folder-id')) || instance._folderId);
 			},
 
 			_getMediaThumbnail: function(fileName) {
@@ -704,7 +802,7 @@ AUI.add(
 				var thumbnailName = STR_THUMBNAIL_DEFAULT;
 
 				if (REGEX_IMAGE.test(fileName)) {
-					thumbnailName = Lang.sub(TPL_IMAGE_THUMBNAIL, [instance._folderId, fileName]);
+					thumbnailName = sub(TPL_IMAGE_THUMBNAIL, [instance._folderId, fileName]);
 				}
 				else {
 					if (LString.endsWith(fileName.toLowerCase(), STR_EXTENSION_PDF)) {
@@ -750,56 +848,10 @@ AUI.add(
 
 					navigationOverlays = [documentEntriesPaginatorOverlay, headerRowOverlay, navigationPaneOverlay];
 
-					var uploader = instance._getUploader();
-
-					uploader.on(
-						'uploadstart',
-						function(event) {
-							AArray.invoke(navigationOverlays, 'show');
-						}
-					);
-
-					uploader.after(
-						'alluploadscomplete',
-						function(event) {
-							AArray.invoke(navigationOverlays, 'hide');
-						}
-					);
-
 					instance._navigationOverlays = navigationOverlays;
 				}
 
 				return navigationOverlays;
-			},
-
-			_getOverlayManager: function() {
-				var instance = this;
-
-				var overlayManager = instance._overlayManager;
-
-				if (!overlayManager) {
-					overlayManager = new A.OverlayManager();
-
-					instance._overlayManager = overlayManager;
-				}
-
-				return overlayManager;
-			},
-
-			_getQueue: function() {
-				var instance = this;
-
-				var queue = instance._queue;
-
-				if (!queue) {
-					var uploader = instance._getUploader();
-
-					queue = uploader.queue;
-
-					instance._queue = queue;
-				}
-
-				return queue;
 			},
 
 			_getUploadResponse: function(responseData) {
@@ -830,6 +882,50 @@ AUI.add(
 				};
 			},
 
+			_getUploader: function() {
+				var instance = this;
+
+				var uploader = instance._uploader;
+
+				if (!uploader) {
+					uploader = new A.Uploader(
+						{
+							appendNewFiles: false,
+							fileFieldName: 'file',
+							multipleFiles: true,
+							simLimit: 1
+						}
+					);
+
+					var navigationOverlays = instance._getNavigationOverlays();
+
+					uploader.on(
+						'uploadstart',
+						function(event) {
+							AArray.invoke(navigationOverlays, 'show');
+						}
+					);
+
+					uploader.after(
+						'alluploadscomplete',
+						function(event) {
+							AArray.invoke(navigationOverlays, 'hide');
+						}
+					);
+
+					uploader.get('boundingBox').hide();
+
+					uploader.render();
+
+					uploader.after('alluploadscomplete', instance._startNextUpload, instance);
+					uploader.after('fileselect', instance._onFileSelect, instance);
+
+					instance._uploader = uploader;
+				}
+
+				return uploader;
+			},
+
 			_getUploadURL: function(folderId) {
 				var instance = this;
 
@@ -851,40 +947,12 @@ AUI.add(
 					);
 				}
 
-				return Lang.sub(
+				return sub(
 					uploadURL,
 					{
 						folderId: folderId
 					}
 				);
-			},
-
-			_getUploader: function() {
-				var instance = this;
-
-				var uploader = instance._uploader;
-
-				if (!uploader) {
-					uploader = new A.Uploader(
-						{
-							appendNewFiles: false,
-							fileFieldName: 'file',
-							multipleFiles: true,
-							simLimit: 1
-						}
-					);
-
-					uploader.get('boundingBox').hide();
-
-					uploader.render();
-
-					uploader.after('alluploadscomplete', instance._startNextUpload, instance);
-					uploader.after('fileselect', instance._onFileSelect, instance);
-
-					instance._uploader = uploader;
-				}
-
-				return uploader;
 			},
 
 			_initDLUpload: function() {
@@ -912,6 +980,8 @@ AUI.add(
 
 					instance._handles = [];
 
+					instance._tooltips = [];
+
 					var appViewEntryTemplates = instance.byId('appViewEntryTemplates');
 
 					instance._invisibleDescriptiveEntry = appViewEntryTemplates.one(SELECTOR_ENTRY_DISPLAY_STYLE + SELECTOR_DISPLAY_DESCRIPTIVE);
@@ -930,7 +1000,7 @@ AUI.add(
 						'490': Liferay.Language.get('please-enter-a-unique-document-name'),
 						'491': Liferay.Language.get('document-names-must-end-with-one-of-the-following-extensions') + instance._allowedFileTypes,
 						'492': Liferay.Language.get('please-enter-a-file-with-a-valid-file-name'),
-						'493': Lang.sub(instance._invalidFileSizeText, [Math.floor(maxFileSize / SIZE_DENOMINATOR)])
+						'493': sub(instance._invalidFileSizeText, [Math.floor(maxFileSize / SIZE_DENOMINATOR)])
 					};
 				}
 			},
@@ -938,7 +1008,9 @@ AUI.add(
 			_isUploading: function() {
 				var instance = this;
 
-				var queue = instance._getQueue();
+				var uploader = instance._getUploader();
+
+				var queue = uploader.queue;
 
 				return !!(queue && (queue.queuedFiles.length > 0 || queue.numberOfUploads > 0 || !A.Object.isEmpty(queue.currentFiles)) && queue._currentState === UploaderQueue.UPLOADING);
 			},
@@ -949,148 +1021,47 @@ AUI.add(
 				if (instance._isUploading()) {
 					event.preventDefault();
 				}
+				else {
+					instance.destructor();
+				}
+			},
+
+			_onDataRequest: function(event) {
+				var instance = this;
+
+				if (instance._isUploading()) {
+					event.halt();
+				}
+				else {
+					instance._deallocateTooltips();
+				}
+			},
+
+			_getUploadContext: function(key) {
+				var instance = this;
+
+				var dataSet = instance._getDataSet();
+
+				return dataSet.item(String(key));
 			},
 
 			_onFileSelect: function(event) {
 				var instance = this;
 
-				var folderId;
-				var overlay;
-				var progressBar;
+				var target = event.details[0].target;
 
-				var originalEvent = event.details[0];
+				var files = instance._validateFiles(event.fileList);
 
-				var fileList = event.fileList;
+				instance._updateUI(target, files);
 
-				var files = instance._validateFiles(fileList);
-
-				var folderEntry = instance._getFolderEntry(originalEvent.target);
-
-				var invalidFiles = files.invalidFiles;
-				var validFiles = files.validFiles;
-
-				var folder = (folderEntry !== null);
-
-				if (folder) {
-					folderId = folderEntry.attr(STR_DATA_FOLDER_ID);
-
-					overlay = folderEntry.overlay;
-
-					progressBar = folderEntry.progressBar;
-
-					var currentUploadData = instance._getCurrentUploadData();
-
-					if (currentUploadData && invalidFiles.length > 0) {
-						currentUploadData.invalidFiles = currentUploadData.invalidFiles.concat(invalidFiles);
-					}
-				}
-				else {
-					instance._createEntries(files);
-
-					folderId = instance._folderId;
-				}
-
-				var dataSet = instance._getDataSet();
-
-				var unmergedData = dataSet.item(String(folderId));
-
-				if (unmergedData) {
-					instance._updateDataSetEntry(unmergedData, validFiles, folderId);
-				}
-				else {
-					dataSet.add(
-						folderId,
-						{
-							fileList: validFiles,
-							folderEntry: folderEntry,
-							folder: folder,
-							folderId: folderId,
-							invalidFiles: invalidFiles,
-							overlay: overlay,
-							progressBar: progressBar
-						}
-					);
-				}
-
-				if (!instance._isUploading()) {
-					var emptyMessage = instance._getEmptyMessage();
-
-					if (emptyMessage) {
-						emptyMessage.hide();
-					}
-
-					instance._startUpload();
-				}
+				instance._consumeFilesSelected(target, files);
 			},
 
-			_getEmptyMessage: function () {
+			_positionProgressBar: function(overlay, progressBar) {
 				var instance = this;
 
-				var emptyMessage = instance._emptyMessage;
-
-				if (!emptyMessage) {
-					emptyMessage = instance._entriesContainer.one(SELECTOR_ENTRIES_EMPTY);
-				}
-
-				instance._emptyMessage = emptyMessage;
-
-				return emptyMessage;
-			},
-
-			_showEntryUploadComplete: function(event, displayStyle) {
-				var instance = this;
-
-				var file = event.file;
-
-				var entryNode = file.entryNode;
-
-				var response = instance._getUploadResponse(event.data);
-
-				if (response) {
-					var hasErrors = !!response.error;
-
-					if (hasErrors) {
-						instance._displayEntryError(entryNode, response.message, displayStyle);
-					}
-					else {
-						var displayStyleList = (displayStyle === STR_LIST);
-
-						if (!displayStyleList) {
-							instance._updateThumbnail(entryNode, file.name);
-						}
-
-						var fileEntryId = instance.ns('fileEntryId=') + response.message;
-
-						instance._updateEntryLink(entryNode, fileEntryId, displayStyleList);
-					}
-
-					instance._displayResult(entryNode, displayStyle, hasErrors);
-				}
-
-				file.overlay.hide();
-			},
-
-			_showEntryUploadProgress: function(event) {
-				var instance = this;
-
-				var file = event.file;
-				var percentLoaded = event.percentLoaded;
-
-				var progressBar = file.progressBar;
-
-				progressBar.set('value', percentLoaded);
-			},
-
-			_showEntryUploadStarting: function(event) {
-				var instance = this;
-
-				var file = event.file;
-
-				var overlay = file.overlay;
-				var progressBar = file.progressBar;
-
-				var overlayContentBox = overlay.get(STR_CONTENT_BOX);
 				var overlayBoundingBox = overlay.get(STR_BOUNDING_BOX);
+				var overlayContentBox = overlay.get(STR_CONTENT_BOX);
 
 				var progressBarBoundingBox = progressBar.get(STR_BOUNDING_BOX);
 
@@ -1099,10 +1070,57 @@ AUI.add(
 				progressBarBoundingBox.center(overlayContentBox);
 			},
 
+			_showFileUploadComplete: function(event, displayStyle) {
+				var instance = this;
+
+				var file = event.file;
+
+				var fileNode = file.target;
+
+				var response = instance._getUploadResponse(event.data);
+
+				if (response) {
+					var hasErrors = !!response.error;
+
+					if (hasErrors) {
+						instance._displayEntryError(fileNode, response.message, displayStyle);
+					}
+					else {
+						var displayStyleList = (displayStyle === STR_LIST);
+
+						if (!displayStyleList) {
+							instance._updateThumbnail(fileNode, file.name);
+						}
+
+						var fileEntryId = instance.ns('fileEntryId=') + response.message;
+
+						instance._updateFileLink(fileNode, fileEntryId, displayStyleList);
+					}
+
+					instance._displayResult(fileNode, displayStyle, hasErrors);
+				}
+
+				file.overlay.hide();
+			},
+
+			_showFileUploadProgress: function(event) {
+				var instance = this;
+
+				instance._updateProgress(event.file.progressBar, event.percentLoaded);
+			},
+
+			_showFileUploadStarting: function(event) {
+				var instance = this;
+
+				var file = event.file;
+
+				instance._positionProgressBar(file.overlay, file.progressBar);
+			},
+
 			_showFolderUploadComplete: function(event, uploadData, displayStyle) {
 				var instance = this;
 
-				var folderEntry = uploadData.folderEntry;
+				var folderEntry = uploadData.target;
 
 				var invalidFiles = uploadData.invalidFiles;
 
@@ -1115,7 +1133,7 @@ AUI.add(
 					hasErrors = ERROR_RESULTS_MIXED;
 				}
 
-				instance._displayResult(folderEntry.ancestor(), displayStyle, hasErrors);
+				instance._displayResult(folderEntry, displayStyle, hasErrors);
 
 				if (hasErrors) {
 					instance._displayError(
@@ -1136,49 +1154,15 @@ AUI.add(
 			_showFolderUploadProgress: function(event, uploadData) {
 				var instance = this;
 
-				var percentLoaded = Math.ceil(event.percentLoaded);
-
-				var progressBar = uploadData.progressBar;
-
-				progressBar.set('value', percentLoaded);
+				instance._updateProgress(uploadData.target.progressBar, event.percentLoaded);
 			},
 
 			_showFolderUploadStarting: function(event, uploadData) {
 				var instance = this;
 
-				var overlay = uploadData.overlay;
+				var target = uploadData.target;
 
-				var overlayBoundingBox = overlay.get(STR_BOUNDING_BOX);
-				var overlayContentBox = overlay.get(STR_CONTENT_BOX);
-
-				var progressBar = uploadData.progressBar;
-
-				var progressBarBoundingBox = progressBar.get(STR_BOUNDING_BOX);
-
-				progressBar.render(overlayBoundingBox);
-
-				progressBarBoundingBox.center(overlayContentBox);
-			},
-
-			_dellocateEntry: function() {
-				var instance = this;
-
-				var currentUploadData = instance._getCurrentUploadData();
-
-				if (!currentUploadData.folder) {
-					var fileList = currentUploadData.fileList;
-
-					AArray.each(
-						fileList,
-						function (item, index, collection) {
-							item.overlay.destroy();
-
-							item.progressBar.destroy();
-						}
-					);
-				}
-
-				A.Array.invoke(currentUploadData.fileList, 'destroy');
+				instance._positionProgressBar(target.overlay, target.progressBar);
 			},
 
 			_startNextUpload: function(event) {
@@ -1192,12 +1176,12 @@ AUI.add(
 
 				dataSet.removeAt(0);
 
-				if (dataSet.length > 0) {
+				if (dataSet.length) {
 					instance._startUpload();
 				}
 			},
 
-			_startUpload: function() {
+			_startUpload: function(data) {
 				var instance = this;
 
 				var uploadData = instance._getCurrentUploadData();
@@ -1206,10 +1190,10 @@ AUI.add(
 
 				var uploader = instance._getUploader();
 
-				instance._attachSubscriptions(uploadData);
-
-				if (fileList.length > 0) {
+				if (fileList.length) {
 					var uploadURL = instance._getUploadURL(uploadData.folderId);
+
+					instance._attachSubscriptions(uploadData);
 
 					uploader.uploadThese(fileList, uploadURL);
 				}
@@ -1218,24 +1202,24 @@ AUI.add(
 				}
 			},
 
-			_updateDataSetEntry: function(data, unmergedFiles, folderId) {
+			_updateDataSetEntry: function(key, data, unmergedData) {
 				var instance = this;
 
 				var currentUploadData = instance._getCurrentUploadData();
 
-				if (currentUploadData.folderId == folderId) {
-					instance._addFilesToQueueBottom(unmergedFiles);
+				if (currentUploadData.folderId == key) {
+					instance._addFilesToQueueBottom(unmergedData);
 				}
 				else {
-					instance._combineFileLists(data.fileList, unmergedFiles);
+					instance._combineFileLists(data.fileList, unmergedData);
 
 					var dataSet = instance._getDataSet();
 
-					dataSet.replace(folderId, data);
+					dataSet.replace(key, data);
 				}
 			},
 
-			_updateEntryLink: function(node, id, displayStyleList) {
+			_updateFileLink: function(node, id, displayStyleList) {
 				var instance = this;
 
 				var selector = SELECTOR_ENTRY_LINK;
@@ -1251,6 +1235,17 @@ AUI.add(
 				}
 			},
 
+			/* centralize logic for updating progress for an "Upload Context"
+				applies to
+					* Folder-target uploads
+					* non-Folder-target uploads
+			*/
+			_updateProgress: function(progressBar, value) {
+				var instance = this;
+
+				progressBar.set('value', Math.ceil(value));
+			},
+
 			_updateThumbnail: function(node, fileName) {
 				var instance = this;
 
@@ -1259,6 +1254,73 @@ AUI.add(
 				var thumbnailPath = instance._getMediaThumbnail(fileName);
 
 				imageNode.attr('src', thumbnailPath);
+			},
+
+			/* looking for a better name */
+			_updateUI: function(target, files) {
+				var instance = this;
+
+				instance._uploadContextUtility(target, files);
+			},
+
+			_uploadContextUtility: function(target, files) {
+				var instance = this;
+
+				var folderId = instance._getFolderId(target);
+				/*
+					A folder target will only need to create one upload context
+					that is attached to an already existing document library
+					entry for the folder.
+
+					A non-folder target needs to generate a newDocLibEntry
+					and then attach a new upload context to that new entry.
+					this will be done for each item in fileList
+
+					One easy way of checking if we are uploading to a folder is
+					if the folderId of the target is anything other than the
+					value of `instance._folderId`
+				*/
+				var folder = (folderId !== instance._folderId);
+
+				if (folder) {
+					var folderEntryNode = instance._getFolderEntryNode(target);
+
+					var folderEntryNodeOverlay = folderEntryNode.overlay;
+
+					if (folderEntryNodeOverlay) {
+						/*
+							if an upload context already exists for this target
+							which means we can just .show() his overlay
+						*/
+						folderEntryNodeOverlay.show();
+
+						instance._updateProgress(folderEntryNode.progressBar, 0);
+					}
+					else {
+						instance._createUploadContext(folderEntryNode);
+					}
+
+					folderEntryNode.removeClass(CSS_ACTIVE_AREA);
+				}
+				else {
+					var displayStyle = instance._getDisplayStyle();
+
+					AArray.map(
+						files.valid,
+						function(file) {
+							var entryNode = instance._createEntryNode(file.name, file.size, displayStyle);
+
+							instance._createUploadContext(entryNode, file);
+						}
+					);
+
+					AArray.map(
+						files.invalid,
+						function(file) {
+							instance._createEntryNode(file.name, file.size, displayStyle);
+						}
+					);
+				}
 			},
 
 			_validateFiles: function(data) {
@@ -1301,8 +1363,8 @@ AUI.add(
 				);
 
 				return {
-					validFiles: validFiles,
-					invalidFiles: invalidFiles
+					valid: validFiles,
+					invalid: invalidFiles
 				};
 			}
 		};

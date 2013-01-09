@@ -1,6 +1,98 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.countBE_ByG_F">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				BookmarksEntry
+			WHERE
+				(BookmarksEntry.groupId = ?) AND
+				(BookmarksEntry.folderId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.countBF_ByG_P">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				BookmarksFolder
+			WHERE
+				(BookmarksFolder.groupId = ?) AND
+				(BookmarksFolder.parentFolderId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.countBE_ByG_F_S">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				BookmarksEntry
+			WHERE
+				(BookmarksEntry.groupId = ?) AND
+				(BookmarksEntry.folderId = ?) AND
+				(BookmarksEntry.status = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.countBF_ByG_P_S">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				BookmarksFolder
+			WHERE
+				(BookmarksFolder.groupId = ?) AND
+				(BookmarksFolder.parentFolderId = ?) AND
+				(BookmarksFolder.status = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.findBE_ByG_F">
+		<![CDATA[
+			SELECT
+				BookmarksEntry.entryId AS modelId, BookmarksEntry.name AS modelName, 1 AS modelFolder
+			FROM
+				BookmarksEntry
+			WHERE
+				(BookmarksEntry.groupId = ?) AND
+				(BookmarksEntry.folderId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.findBF_ByG_P">
+		<![CDATA[
+			SELECT
+				BookmarksFolder.folderId AS modelId, BookmarksFolder.name AS modelName, 0 AS modelFolder
+			FROM
+				BookmarksFolder
+			WHERE
+				(BookmarksFolder.groupId = ?) AND
+				(BookmarksFolder.parentFolderId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.findBE_ByG_F_S">
+		<![CDATA[
+			SELECT
+				BookmarksEntry.entryId AS modelId, BookmarksEntry.name AS modelName, 1 AS modelFolder
+			FROM
+				BookmarksEntry
+			WHERE
+				(BookmarksEntry.groupId = ?) AND
+				(BookmarksEntry.folderId = ?) AND
+				(BookmarksEntry.status = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.findBF_ByG_P_S">
+		<![CDATA[
+			SELECT
+				BookmarksFolder.folderId AS modelId, BookmarksFolder.name AS modelName, 0 AS modelFolder
+			FROM
+				BookmarksFolder
+			WHERE
+				(BookmarksFolder.groupId = ?) AND
+				(BookmarksFolder.parentFolderId = ?) AND
+				(BookmarksFolder.status = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryFinder.findByNoAssets">
 		<![CDATA[
 			SELECT

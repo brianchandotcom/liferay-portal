@@ -1,5 +1,29 @@
 update BlogsEntry set status = 2 where status = 9;
 
+alter table BookmarksEntry add status INTEGER;
+alter table BookmarksEntry add statusByUserId LONG;
+alter table BookmarksEntry add statusByUserName VARCHAR(75) null;
+alter table BookmarksEntry add statusDate DATE null;
+
+COMMIT_TRANSACTION;
+
+update BookmarksEntry set status = 0;
+update BookmarksEntry set statusByUserId = userId;
+update BookmarksEntry set statusByUserName = userName;
+update BookmarksEntry set statusDate = modifiedDate;
+
+alter table BookmarksFolder add status INTEGER;
+alter table BookmarksFolder add statusByUserId LONG;
+alter table BookmarksFolder add statusByUserName VARCHAR(75) null;
+alter table BookmarksFolder add statusDate DATE null;
+
+COMMIT_TRANSACTION;
+
+update BookmarksFolder set status = 0;
+update BookmarksFolder set statusByUserId = userId;
+update BookmarksFolder set statusByUserName = userName;
+update BookmarksFolder set statusDate = modifiedDate;
+
 alter table Contact_ add classNameId LONG;
 alter table Contact_ add classPK LONG;
 alter table Contact_ add emailAddress VARCHAR(75) null;

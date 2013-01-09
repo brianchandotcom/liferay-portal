@@ -59,6 +59,41 @@ public class BookmarksFolderImpl extends BookmarksFolderBaseImpl {
 		return BookmarksFolderLocalServiceUtil.getFolder(getParentFolderId());
 	}
 
+	public BookmarksFolder getTrashContainer() {
+		BookmarksFolder folder = null;
+
+		try {
+			folder = getParentFolder();
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		while (folder != null) {
+			if (folder.isInTrash()) {
+				return folder;
+			}
+
+			try {
+				folder = folder.getParentFolder();
+			}
+			catch (Exception e) {
+				return null;
+			}
+		}
+
+		return null;
+	}
+
+	public boolean isInTrashContainer() {
+		if (getTrashContainer() != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public boolean isRoot() {
 		if (getParentFolderId() ==
 				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {

@@ -138,6 +138,14 @@ public class BookmarksEntryPersistenceTest {
 
 		newBookmarksEntry.setPriority(ServiceTestUtil.nextInt());
 
+		newBookmarksEntry.setStatus(ServiceTestUtil.nextInt());
+
+		newBookmarksEntry.setStatusByUserId(ServiceTestUtil.nextLong());
+
+		newBookmarksEntry.setStatusByUserName(ServiceTestUtil.randomString());
+
+		newBookmarksEntry.setStatusDate(ServiceTestUtil.nextDate());
+
 		_persistence.update(newBookmarksEntry);
 
 		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(newBookmarksEntry.getPrimaryKey());
@@ -174,6 +182,15 @@ public class BookmarksEntryPersistenceTest {
 			newBookmarksEntry.getVisits());
 		Assert.assertEquals(existingBookmarksEntry.getPriority(),
 			newBookmarksEntry.getPriority());
+		Assert.assertEquals(existingBookmarksEntry.getStatus(),
+			newBookmarksEntry.getStatus());
+		Assert.assertEquals(existingBookmarksEntry.getStatusByUserId(),
+			newBookmarksEntry.getStatusByUserId());
+		Assert.assertEquals(existingBookmarksEntry.getStatusByUserName(),
+			newBookmarksEntry.getStatusByUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingBookmarksEntry.getStatusDate()),
+			Time.getShortTimestamp(newBookmarksEntry.getStatusDate()));
 	}
 
 	@Test
@@ -339,6 +356,14 @@ public class BookmarksEntryPersistenceTest {
 		bookmarksEntry.setVisits(ServiceTestUtil.nextInt());
 
 		bookmarksEntry.setPriority(ServiceTestUtil.nextInt());
+
+		bookmarksEntry.setStatus(ServiceTestUtil.nextInt());
+
+		bookmarksEntry.setStatusByUserId(ServiceTestUtil.nextLong());
+
+		bookmarksEntry.setStatusByUserName(ServiceTestUtil.randomString());
+
+		bookmarksEntry.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(bookmarksEntry);
 

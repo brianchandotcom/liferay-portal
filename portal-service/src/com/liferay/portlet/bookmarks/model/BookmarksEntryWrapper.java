@@ -61,6 +61,10 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 		attributes.put("description", getDescription());
 		attributes.put("visits", getVisits());
 		attributes.put("priority", getPriority());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -154,6 +158,30 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -465,6 +493,186 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 		_bookmarksEntry.setPriority(priority);
 	}
 
+	/**
+	* Returns the status of this bookmarks entry.
+	*
+	* @return the status of this bookmarks entry
+	*/
+	public int getStatus() {
+		return _bookmarksEntry.getStatus();
+	}
+
+	/**
+	* Sets the status of this bookmarks entry.
+	*
+	* @param status the status of this bookmarks entry
+	*/
+	public void setStatus(int status) {
+		_bookmarksEntry.setStatus(status);
+	}
+
+	/**
+	* Returns the status by user ID of this bookmarks entry.
+	*
+	* @return the status by user ID of this bookmarks entry
+	*/
+	public long getStatusByUserId() {
+		return _bookmarksEntry.getStatusByUserId();
+	}
+
+	/**
+	* Sets the status by user ID of this bookmarks entry.
+	*
+	* @param statusByUserId the status by user ID of this bookmarks entry
+	*/
+	public void setStatusByUserId(long statusByUserId) {
+		_bookmarksEntry.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Returns the status by user uuid of this bookmarks entry.
+	*
+	* @return the status by user uuid of this bookmarks entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getStatusByUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksEntry.getStatusByUserUuid();
+	}
+
+	/**
+	* Sets the status by user uuid of this bookmarks entry.
+	*
+	* @param statusByUserUuid the status by user uuid of this bookmarks entry
+	*/
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_bookmarksEntry.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Returns the status by user name of this bookmarks entry.
+	*
+	* @return the status by user name of this bookmarks entry
+	*/
+	public java.lang.String getStatusByUserName() {
+		return _bookmarksEntry.getStatusByUserName();
+	}
+
+	/**
+	* Sets the status by user name of this bookmarks entry.
+	*
+	* @param statusByUserName the status by user name of this bookmarks entry
+	*/
+	public void setStatusByUserName(java.lang.String statusByUserName) {
+		_bookmarksEntry.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Returns the status date of this bookmarks entry.
+	*
+	* @return the status date of this bookmarks entry
+	*/
+	public java.util.Date getStatusDate() {
+		return _bookmarksEntry.getStatusDate();
+	}
+
+	/**
+	* Sets the status date of this bookmarks entry.
+	*
+	* @param statusDate the status date of this bookmarks entry
+	*/
+	public void setStatusDate(java.util.Date statusDate) {
+		_bookmarksEntry.setStatusDate(statusDate);
+	}
+
+	/**
+	* @deprecated Renamed to {@link #isApproved()}
+	*/
+	public boolean getApproved() {
+		return _bookmarksEntry.getApproved();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks entry is approved.
+	*
+	* @return <code>true</code> if this bookmarks entry is approved; <code>false</code> otherwise
+	*/
+	public boolean isApproved() {
+		return _bookmarksEntry.isApproved();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks entry is denied.
+	*
+	* @return <code>true</code> if this bookmarks entry is denied; <code>false</code> otherwise
+	*/
+	public boolean isDenied() {
+		return _bookmarksEntry.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks entry is a draft.
+	*
+	* @return <code>true</code> if this bookmarks entry is a draft; <code>false</code> otherwise
+	*/
+	public boolean isDraft() {
+		return _bookmarksEntry.isDraft();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks entry is expired.
+	*
+	* @return <code>true</code> if this bookmarks entry is expired; <code>false</code> otherwise
+	*/
+	public boolean isExpired() {
+		return _bookmarksEntry.isExpired();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks entry is inactive.
+	*
+	* @return <code>true</code> if this bookmarks entry is inactive; <code>false</code> otherwise
+	*/
+	public boolean isInactive() {
+		return _bookmarksEntry.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks entry is incomplete.
+	*
+	* @return <code>true</code> if this bookmarks entry is incomplete; <code>false</code> otherwise
+	*/
+	public boolean isIncomplete() {
+		return _bookmarksEntry.isIncomplete();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks entry is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this bookmarks entry is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	public boolean isInTrash() {
+		return _bookmarksEntry.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks entry is pending.
+	*
+	* @return <code>true</code> if this bookmarks entry is pending; <code>false</code> otherwise
+	*/
+	public boolean isPending() {
+		return _bookmarksEntry.isPending();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks entry is scheduled.
+	*
+	* @return <code>true</code> if this bookmarks entry is scheduled; <code>false</code> otherwise
+	*/
+	public boolean isScheduled() {
+		return _bookmarksEntry.isScheduled();
+	}
+
 	public boolean isNew() {
 		return _bookmarksEntry.isNew();
 	}
@@ -545,6 +753,14 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder getFolder() {
 		return _bookmarksEntry.getFolder();
+	}
+
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder getTrashContainer() {
+		return _bookmarksEntry.getTrashContainer();
+	}
+
+	public boolean isInTrashContainer() {
+		return _bookmarksEntry.isInTrashContainer();
 	}
 
 	/**

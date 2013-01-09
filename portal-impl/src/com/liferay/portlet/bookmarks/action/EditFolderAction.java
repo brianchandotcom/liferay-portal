@@ -14,9 +14,15 @@
 
 package com.liferay.portlet.bookmarks.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -29,6 +35,9 @@ import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,7 +67,15 @@ public class EditFolderAction extends PortletAction {
 				updateFolder(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFolder(actionRequest);
+				deleteFolders(
+					(LiferayPortletConfig)portletConfig, actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteFolders(
+					(LiferayPortletConfig)portletConfig, actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				restoreFolderFromTrash(actionRequest);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribeFolder(actionRequest);
@@ -112,13 +129,62 @@ public class EditFolderAction extends PortletAction {
 			getForward(renderRequest, "portlet.bookmarks.edit_folder"));
 	}
 
-	protected void deleteFolder(ActionRequest actionRequest) throws Exception {
+	protected void deleteFolders(
+			LiferayPortletConfig liferayPortletConfig,
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
+		long[] deleteFolderIds = null;
+
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
-		BookmarksFolderServiceUtil.deleteFolder(folderId);
+		if (folderId > 0) {
+			deleteFolderIds = new long[] {folderId};
+		}
+		else {
+			deleteFolderIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "folderIds"), 0L);
+		}
 
-		AssetPublisherUtil.removeRecentFolderId(
-			actionRequest, BookmarksEntry.class.getName(), folderId);
+		for (long deleteFolderId : deleteFolderIds) {
+			if (moveToTrash) {
+				BookmarksFolderServiceUtil.moveFolderToTrash(deleteFolderId);
+			}
+			else {
+				BookmarksFolderServiceUtil.deleteFolder(deleteFolderId);
+			}
+
+			AssetPublisherUtil.removeRecentFolderId(
+				actionRequest, BookmarksEntry.class.getName(), deleteFolderId);
+		}
+
+		if (moveToTrash && (deleteFolderIds.length > 0)) {
+			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(
+				"restoreFolderIds", ArrayUtil.toStringArray(deleteFolderIds));
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+		}
+	}
+
+	protected void restoreFolderFromTrash(ActionRequest actionRequest)
+		throws PortalException, SystemException {
+
+		long[] restoreEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreFolderIds"), 0L);
+
+		for (long restoreEntryId : restoreEntryIds) {
+			BookmarksFolderServiceUtil.restoreFolderFromTrash(restoreEntryId);
+		}
 	}
 
 	protected void subscribeFolder(ActionRequest actionRequest)

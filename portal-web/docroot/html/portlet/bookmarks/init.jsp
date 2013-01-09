@@ -38,7 +38,8 @@ page import="com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUt
 page import="com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil" %><%@
 page import="com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission" %><%@
 page import="com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission" %><%@
-page import="com.liferay.portlet.bookmarks.util.BookmarksUtil" %>
+page import="com.liferay.portlet.bookmarks.util.BookmarksUtil" %><%@
+page import="com.liferay.portlet.trash.util.TrashUtil" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);

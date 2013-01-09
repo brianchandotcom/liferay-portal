@@ -32,4 +32,8 @@ public interface BookmarksEntry extends BookmarksEntryModel, PermissionedModel {
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.bookmarks.model.impl.BookmarksEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder getFolder();
+
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder getTrashContainer();
+
+	public boolean isInTrashContainer();
 }

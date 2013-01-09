@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.trash;
+package com.liferay.portlet.bookmarks.trash;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
@@ -25,24 +25,21 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
- * @author Alexander Chow
  * @author Eudaldo Alonso
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	public void testTrashAndDeleteDraft() throws Exception {
@@ -51,6 +48,11 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	public void testTrashAndRestoreDraft() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashDuplicate() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
@@ -70,47 +72,41 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		DLFolder parentDLFolder = (DLFolder)parentBaseModel;
+		BookmarksFolder parentFolder = (BookmarksFolder)parentBaseModel;
 
 		String name = getSearchKeywords();
 
-		name += ServiceTestUtil.randomString(
-			_FOLDER_NAME_MAX_LENGTH - name.length());
-
-		DLFolder dlFolder = DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), parentDLFolder.getGroupId(),
-			parentDLFolder.getGroupId(), false, parentDLFolder.getFolderId(),
-			name, StringPool.BLANK, false, serviceContext);
-
-		return dlFolder;
+		return BookmarksFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), parentFolder.getFolderId(), name,
+			StringPool.BLANK, serviceContext);
 	}
 
 	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
-		return DLFolderLocalServiceUtil.getFolder(primaryKey);
+		return BookmarksFolderLocalServiceUtil.getFolder(primaryKey);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return DLFolder.class;
+		return BookmarksFolder.class;
 	}
 
 	@Override
 	protected String getBaseModelName(ClassedModel classedModel) {
-		DLFolder dlFolder = (DLFolder)classedModel;
+		BookmarksFolder folder = (BookmarksFolder)classedModel;
 
-		return dlFolder.getName();
+		return folder.getName();
 	}
 
 	@Override
 	protected int getBaseModelsNotInTrashCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
-		DLFolder parentDLFolder = (DLFolder)parentBaseModel;
+		BookmarksFolder parentDLFolder = (BookmarksFolder)parentBaseModel;
 
-		return DLFolderServiceUtil.getFoldersCount(
+		return BookmarksFolderLocalServiceUtil.getFoldersCount(
 			parentDLFolder.getGroupId(), parentDLFolder.getFolderId(),
-			WorkflowConstants.STATUS_APPROVED, false);
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
@@ -118,11 +114,10 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		return DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
-			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString(), StringPool.BLANK, false,
-			serviceContext);
+		return BookmarksFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -132,11 +127,7 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
-		DLFolder dlFolder = (DLFolder)baseModel;
-
-		String name = dlFolder.getName();
-
-		return TrashUtil.getOriginalTitle(name);
+		return null;
 	}
 
 	@Override
@@ -153,9 +144,9 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	protected boolean isInTrashContainer(ClassedModel classedModel)
 		throws Exception {
 
-		DLFolder dLFolder = (DLFolder)classedModel;
+		BookmarksFolder folder = (BookmarksFolder)classedModel;
 
-		return dLFolder.isInTrashContainer();
+		return folder.isInTrashContainer();
 	}
 
 	@Override
@@ -167,25 +158,23 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		DLAppServiceUtil.moveFolderFromTrash(
+		BookmarksFolderServiceUtil.moveFolderFromTrash(
 			(Long)classedModel.getPrimaryKeyObj(),
-			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
+			(Long)parentBaseModel.getPrimaryKeyObj());
 
 		return parentBaseModel;
 	}
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		DLAppServiceUtil.moveFolderToTrash(primaryKey);
+		BookmarksFolderServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
 	@Override
 	protected void moveParentBaseModelToTrash(long primaryKey)
 		throws Exception {
 
-		DLAppServiceUtil.moveFolderToTrash(primaryKey);
+		BookmarksFolderServiceUtil.moveFolderToTrash(primaryKey);
 	}
-
-	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 
 }

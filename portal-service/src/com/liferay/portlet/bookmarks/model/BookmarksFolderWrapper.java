@@ -58,6 +58,10 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		attributes.put("parentFolderId", getParentFolderId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -133,6 +137,30 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -390,6 +418,231 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		_bookmarksFolder.setDescription(description);
 	}
 
+	/**
+	* Returns the status of this bookmarks folder.
+	*
+	* @return the status of this bookmarks folder
+	*/
+	public int getStatus() {
+		return _bookmarksFolder.getStatus();
+	}
+
+	/**
+	* Sets the status of this bookmarks folder.
+	*
+	* @param status the status of this bookmarks folder
+	*/
+	public void setStatus(int status) {
+		_bookmarksFolder.setStatus(status);
+	}
+
+	/**
+	* Returns the status by user ID of this bookmarks folder.
+	*
+	* @return the status by user ID of this bookmarks folder
+	*/
+	public long getStatusByUserId() {
+		return _bookmarksFolder.getStatusByUserId();
+	}
+
+	/**
+	* Sets the status by user ID of this bookmarks folder.
+	*
+	* @param statusByUserId the status by user ID of this bookmarks folder
+	*/
+	public void setStatusByUserId(long statusByUserId) {
+		_bookmarksFolder.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Returns the status by user uuid of this bookmarks folder.
+	*
+	* @return the status by user uuid of this bookmarks folder
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getStatusByUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolder.getStatusByUserUuid();
+	}
+
+	/**
+	* Sets the status by user uuid of this bookmarks folder.
+	*
+	* @param statusByUserUuid the status by user uuid of this bookmarks folder
+	*/
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_bookmarksFolder.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Returns the status by user name of this bookmarks folder.
+	*
+	* @return the status by user name of this bookmarks folder
+	*/
+	public java.lang.String getStatusByUserName() {
+		return _bookmarksFolder.getStatusByUserName();
+	}
+
+	/**
+	* Sets the status by user name of this bookmarks folder.
+	*
+	* @param statusByUserName the status by user name of this bookmarks folder
+	*/
+	public void setStatusByUserName(java.lang.String statusByUserName) {
+		_bookmarksFolder.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Returns the status date of this bookmarks folder.
+	*
+	* @return the status date of this bookmarks folder
+	*/
+	public java.util.Date getStatusDate() {
+		return _bookmarksFolder.getStatusDate();
+	}
+
+	/**
+	* Sets the status date of this bookmarks folder.
+	*
+	* @param statusDate the status date of this bookmarks folder
+	*/
+	public void setStatusDate(java.util.Date statusDate) {
+		_bookmarksFolder.setStatusDate(statusDate);
+	}
+
+	/**
+	* @deprecated Renamed to {@link #isApproved()}
+	*/
+	public boolean getApproved() {
+		return _bookmarksFolder.getApproved();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is approved.
+	*
+	* @return <code>true</code> if this bookmarks folder is approved; <code>false</code> otherwise
+	*/
+	public boolean isApproved() {
+		return _bookmarksFolder.isApproved();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is denied.
+	*
+	* @return <code>true</code> if this bookmarks folder is denied; <code>false</code> otherwise
+	*/
+	public boolean isDenied() {
+		return _bookmarksFolder.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is a draft.
+	*
+	* @return <code>true</code> if this bookmarks folder is a draft; <code>false</code> otherwise
+	*/
+	public boolean isDraft() {
+		return _bookmarksFolder.isDraft();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is expired.
+	*
+	* @return <code>true</code> if this bookmarks folder is expired; <code>false</code> otherwise
+	*/
+	public boolean isExpired() {
+		return _bookmarksFolder.isExpired();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is inactive.
+	*
+	* @return <code>true</code> if this bookmarks folder is inactive; <code>false</code> otherwise
+	*/
+	public boolean isInactive() {
+		return _bookmarksFolder.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is incomplete.
+	*
+	* @return <code>true</code> if this bookmarks folder is incomplete; <code>false</code> otherwise
+	*/
+	public boolean isIncomplete() {
+		return _bookmarksFolder.isIncomplete();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this bookmarks folder is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	public boolean isInTrash() {
+		return _bookmarksFolder.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is pending.
+	*
+	* @return <code>true</code> if this bookmarks folder is pending; <code>false</code> otherwise
+	*/
+	public boolean isPending() {
+		return _bookmarksFolder.isPending();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks folder is scheduled.
+	*
+	* @return <code>true</code> if this bookmarks folder is scheduled; <code>false</code> otherwise
+	*/
+	public boolean isScheduled() {
+		return _bookmarksFolder.isScheduled();
+	}
+
+	/**
+	* Returns the container model ID of this bookmarks folder.
+	*
+	* @return the container model ID of this bookmarks folder
+	*/
+	public long getContainerModelId() {
+		return _bookmarksFolder.getContainerModelId();
+	}
+
+	/**
+	* Sets the container model ID of this bookmarks folder.
+	*
+	* @param container model ID of this bookmarks folder
+	*/
+	public void setContainerModelId(long containerModelId) {
+		_bookmarksFolder.setContainerModelId(containerModelId);
+	}
+
+	/**
+	* Returns the container name of this bookmarks folder.
+	*
+	* @return the container name of this bookmarks folder
+	*/
+	public java.lang.String getContainerModelName() {
+		return _bookmarksFolder.getContainerModelName();
+	}
+
+	/**
+	* Returns the parent container model ID of this bookmarks folder.
+	*
+	* @return the parent container model ID of this bookmarks folder
+	*/
+	public long getParentContainerModelId() {
+		return _bookmarksFolder.getParentContainerModelId();
+	}
+
+	/**
+	* Sets the parent container model ID of this bookmarks folder.
+	*
+	* @param parent container model ID of this bookmarks folder
+	*/
+	public void setParentContainerModelId(long parentContainerModelId) {
+		_bookmarksFolder.setParentContainerModelId(parentContainerModelId);
+	}
+
 	public boolean isNew() {
 		return _bookmarksFolder.isNew();
 	}
@@ -478,6 +731,14 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _bookmarksFolder.getParentFolder();
+	}
+
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder getTrashContainer() {
+		return _bookmarksFolder.getTrashContainer();
+	}
+
+	public boolean isInTrashContainer() {
+		return _bookmarksFolder.isInTrashContainer();
 	}
 
 	public boolean isRoot() {

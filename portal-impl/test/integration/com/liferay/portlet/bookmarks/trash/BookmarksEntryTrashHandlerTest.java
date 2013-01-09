@@ -12,37 +12,37 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.trash;
+package com.liferay.portlet.bookmarks.trash;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
+import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
- * @author Alexander Chow
  * @author Eudaldo Alonso
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	public void testTrashAndDeleteDraft() throws Exception {
@@ -51,6 +51,11 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	public void testTrashAndRestoreDraft() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashDuplicate() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
@@ -70,47 +75,44 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		DLFolder parentDLFolder = (DLFolder)parentBaseModel;
+		BookmarksFolder folder = (BookmarksFolder)parentBaseModel;
 
 		String name = getSearchKeywords();
 
-		name += ServiceTestUtil.randomString(
-			_FOLDER_NAME_MAX_LENGTH - name.length());
+		String url = "http://www.liferay.com";
 
-		DLFolder dlFolder = DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), parentDLFolder.getGroupId(),
-			parentDLFolder.getGroupId(), false, parentDLFolder.getFolderId(),
-			name, StringPool.BLANK, false, serviceContext);
+		String description = "Content: Enterprise. Open Source.";
 
-		return dlFolder;
+		return BookmarksEntryLocalServiceUtil.addEntry(
+			folder.getUserId(), folder.getGroupId(), folder.getFolderId(), name,
+			url, description, serviceContext);
 	}
 
 	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
-		return DLFolderLocalServiceUtil.getFolder(primaryKey);
+		return BookmarksEntryLocalServiceUtil.getEntry(primaryKey);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return DLFolder.class;
+		return BookmarksEntry.class;
 	}
 
 	@Override
 	protected String getBaseModelName(ClassedModel classedModel) {
-		DLFolder dlFolder = (DLFolder)classedModel;
+		BookmarksEntry entry = (BookmarksEntry)classedModel;
 
-		return dlFolder.getName();
+		return entry.getName();
 	}
 
 	@Override
 	protected int getBaseModelsNotInTrashCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
-		DLFolder parentDLFolder = (DLFolder)parentBaseModel;
+		BookmarksFolder folder = (BookmarksFolder)parentBaseModel;
 
-		return DLFolderServiceUtil.getFoldersCount(
-			parentDLFolder.getGroupId(), parentDLFolder.getFolderId(),
-			WorkflowConstants.STATUS_APPROVED, false);
+		return BookmarksEntryServiceUtil.getEntriesCount(
+			folder.getGroupId(), folder.getFolderId());
 	}
 
 	@Override
@@ -118,11 +120,15 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		return DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
-			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString(), StringPool.BLANK, false,
-			serviceContext);
+		return BookmarksFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
+	}
+
+	@Override
+	protected Class<?> getParentBaseModelClass() {
+		return BookmarksFolder.class;
 	}
 
 	@Override
@@ -132,30 +138,25 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
-		DLFolder dlFolder = (DLFolder)baseModel;
-
-		String name = dlFolder.getName();
-
-		return TrashUtil.getOriginalTitle(name);
+		return null;
 	}
 
 	@Override
-	protected boolean isAssetableModel() {
-		return false;
-	}
+	protected WorkflowedModel getWorkflowedModel(ClassedModel baseModel)
+		throws Exception {
 
-	@Override
-	protected boolean isIndexableBaseModel() {
-		return false;
+		BookmarksEntry entry = (BookmarksEntry)baseModel;
+
+		return entry;
 	}
 
 	@Override
 	protected boolean isInTrashContainer(ClassedModel classedModel)
 		throws Exception {
 
-		DLFolder dLFolder = (DLFolder)classedModel;
+		BookmarksEntry entry = (BookmarksEntry)baseModel;
 
-		return dLFolder.isInTrashContainer();
+		return entry.isInTrashContainer();
 	}
 
 	@Override
@@ -167,25 +168,39 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		DLAppServiceUtil.moveFolderFromTrash(
-			(Long)classedModel.getPrimaryKeyObj(),
-			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
+		BookmarksEntryServiceUtil.moveEntryFromTrash(
+			(Long) classedModel.getPrimaryKeyObj(),
+			(Long) parentBaseModel.getPrimaryKeyObj());
 
 		return parentBaseModel;
 	}
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		DLAppServiceUtil.moveFolderToTrash(primaryKey);
+		BookmarksEntryServiceUtil.moveEntryToTrash(primaryKey);
 	}
 
 	@Override
 	protected void moveParentBaseModelToTrash(long primaryKey)
 		throws Exception {
 
-		DLAppServiceUtil.moveFolderToTrash(primaryKey);
+		BookmarksFolderServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
-	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
+			primaryKey);
+
+		String description = "Content: Enterprise. Open Source. For Life.";
+
+		return BookmarksEntryLocalServiceUtil.updateEntry(
+			entry.getUserId(), primaryKey, entry.getGroupId(),
+			entry.getFolderId(), entry.getName(), entry.getUrl(), description,
+			serviceContext);
+	}
 
 }

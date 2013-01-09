@@ -30,9 +30,11 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.bookmarks.asset.BookmarksEntryAssetRendererFactory;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
@@ -100,6 +102,14 @@ public class BookmarksIndexer extends BaseIndexer {
 
 			contextQuery.add(folderIdsQuery, BooleanClauseOccur.MUST);
 		}
+
+		int status = GetterUtil.getInteger(
+			searchContext.getAttribute(Field.STATUS),
+			WorkflowConstants.STATUS_APPROVED);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			contextQuery.addRequiredTerm(Field.STATUS, status);
+		}
 	}
 
 	@Override
@@ -119,6 +129,22 @@ public class BookmarksIndexer extends BaseIndexer {
 		document.addKeyword(Field.FOLDER_ID, entry.getFolderId());
 		document.addText(Field.TITLE, entry.getName());
 		document.addText(Field.URL, entry.getUrl());
+
+		if (!entry.isInTrash() && entry.isInTrashContainer()) {
+			BookmarksFolder trashedFolder = entry.getTrashContainer();
+
+			addTrashFields(
+				document, BookmarksFolder.class.getName(),
+				trashedFolder.getFolderId(), null, null,
+				BookmarksEntryAssetRendererFactory.TYPE);
+
+			document.addKeyword(
+				Field.ROOT_ENTRY_CLASS_NAME, BookmarksFolder.class.getName());
+			document.addKeyword(
+				Field.ROOT_ENTRY_CLASS_PK, trashedFolder.getFolderId());
+			document.addKeyword(
+				Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
+		}
 
 		return document;
 	}
@@ -184,6 +210,15 @@ public class BookmarksIndexer extends BaseIndexer {
 				Property property = PropertyFactoryUtil.forName("folderId");
 
 				dynamicQuery.add(property.eq(folderId));
+
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				Integer[] statuses = {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH
+				};
+
+				dynamicQuery.add(statusProperty.in(statuses));
 			}
 
 			@Override

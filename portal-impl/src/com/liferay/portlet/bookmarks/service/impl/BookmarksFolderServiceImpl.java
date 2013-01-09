@@ -16,6 +16,7 @@ package com.liferay.portlet.bookmarks.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
@@ -54,6 +55,19 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		bookmarksFolderLocalService.deleteFolder(folderId);
 	}
 
+	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws PortalException, SystemException {
+
+		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
+			folderId);
+
+		BookmarksFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.DELETE);
+
+		bookmarksFolderLocalService.deleteFolder(
+			folderId, includeTrashedEntries);
+	}
+
 	public BookmarksFolder getFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -75,23 +89,51 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public List<BookmarksFolder> getFolders(long groupId, long parentFolderId)
 		throws SystemException {
 
-		return bookmarksFolderPersistence.filterFindByG_P(
-			groupId, parentFolderId);
+		return bookmarksFolderPersistence.filterFindByG_P_S(
+			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	public List<BookmarksFolder> getFolders(
 			long groupId, long parentFolderId, int start, int end)
 		throws SystemException {
 
-		return bookmarksFolderPersistence.filterFindByG_P(
-			groupId, parentFolderId, start, end);
+		return getFolders(
+			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED, start,
+			end);
+	}
+
+	public List<BookmarksFolder> getFolders(
+			long groupId, long parentFolderId, int status, int start, int end)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return bookmarksFolderPersistence.filterFindByG_P(
+				groupId, parentFolderId, start, end);
+		}
+		else {
+			return bookmarksFolderPersistence.filterFindByG_P_S(
+				groupId, parentFolderId, status, start, end);
+		}
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws SystemException {
 
-		return bookmarksFolderPersistence.filterCountByG_P(
-			groupId, parentFolderId);
+		return getFoldersCount(
+			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	public int getFoldersCount(long groupId, long parentFolderId, int status)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return bookmarksFolderPersistence.filterCountByG_P(
+				groupId, parentFolderId);
+		}
+		else {
+			return bookmarksFolderPersistence.filterCountByG_P_S(
+				groupId, parentFolderId, status);
+		}
 	}
 
 	public void getSubfolderIds(
@@ -99,7 +141,8 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		throws SystemException {
 
 		List<BookmarksFolder> folders =
-			bookmarksFolderPersistence.filterFindByG_P(groupId, folderId);
+			bookmarksFolderPersistence.filterFindByG_P_S(
+				groupId, folderId, WorkflowConstants.STATUS_APPROVED);
 
 		for (BookmarksFolder folder : folders) {
 			folderIds.add(folder.getFolderId());
@@ -107,6 +150,57 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			getSubfolderIds(
 				folderIds, folder.getGroupId(), folder.getFolderId());
 		}
+	}
+
+	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
+		throws PortalException, SystemException {
+
+		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
+			folderId);
+
+		BookmarksFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.UPDATE);
+
+		return bookmarksFolderLocalService.moveFolder(folderId, parentFolderId);
+	}
+
+	public BookmarksFolder moveFolderFromTrash(
+			long folderId, long parentFolderId)
+		throws PortalException, SystemException {
+
+		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
+			folderId);
+
+		BookmarksFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.UPDATE);
+
+		return bookmarksFolderLocalService.moveFolderFromTrash(
+			getUserId(), folderId, parentFolderId);
+	}
+
+	public void moveFolderToTrash(long folderId)
+		throws PortalException, SystemException {
+
+		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
+			folderId);
+
+		BookmarksFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.DELETE);
+
+		bookmarksFolderLocalService.moveFolderToTrash(getUserId(), folderId);
+	}
+
+	public void restoreFolderFromTrash(long folderId)
+		throws PortalException, SystemException {
+
+		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
+			folderId);
+
+		BookmarksFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.UPDATE);
+
+		bookmarksFolderLocalService.restoreFolderFromTrash(
+				getUserId(), folderId);
 	}
 
 	public void subscribeFolder(long groupId, long folderId)

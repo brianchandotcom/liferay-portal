@@ -132,6 +132,14 @@ public class BookmarksFolderPersistenceTest {
 
 		newBookmarksFolder.setDescription(ServiceTestUtil.randomString());
 
+		newBookmarksFolder.setStatus(ServiceTestUtil.nextInt());
+
+		newBookmarksFolder.setStatusByUserId(ServiceTestUtil.nextLong());
+
+		newBookmarksFolder.setStatusByUserName(ServiceTestUtil.randomString());
+
+		newBookmarksFolder.setStatusDate(ServiceTestUtil.nextDate());
+
 		_persistence.update(newBookmarksFolder);
 
 		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(newBookmarksFolder.getPrimaryKey());
@@ -162,6 +170,15 @@ public class BookmarksFolderPersistenceTest {
 			newBookmarksFolder.getName());
 		Assert.assertEquals(existingBookmarksFolder.getDescription(),
 			newBookmarksFolder.getDescription());
+		Assert.assertEquals(existingBookmarksFolder.getStatus(),
+			newBookmarksFolder.getStatus());
+		Assert.assertEquals(existingBookmarksFolder.getStatusByUserId(),
+			newBookmarksFolder.getStatusByUserId());
+		Assert.assertEquals(existingBookmarksFolder.getStatusByUserName(),
+			newBookmarksFolder.getStatusByUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingBookmarksFolder.getStatusDate()),
+			Time.getShortTimestamp(newBookmarksFolder.getStatusDate()));
 	}
 
 	@Test
@@ -321,6 +338,14 @@ public class BookmarksFolderPersistenceTest {
 		bookmarksFolder.setName(ServiceTestUtil.randomString());
 
 		bookmarksFolder.setDescription(ServiceTestUtil.randomString());
+
+		bookmarksFolder.setStatus(ServiceTestUtil.nextInt());
+
+		bookmarksFolder.setStatusByUserId(ServiceTestUtil.nextLong());
+
+		bookmarksFolder.setStatusByUserName(ServiceTestUtil.randomString());
+
+		bookmarksFolder.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(bookmarksFolder);
 

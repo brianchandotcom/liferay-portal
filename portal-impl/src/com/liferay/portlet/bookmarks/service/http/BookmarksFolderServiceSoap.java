@@ -94,6 +94,19 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
+	public static void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws RemoteException {
+		try {
+			BookmarksFolderServiceUtil.deleteFolder(folderId,
+				includeTrashedEntries);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolderSoap getFolder(
 		long folderId) throws RemoteException {
 		try {
@@ -155,6 +168,23 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.bookmarks.model.BookmarksFolderSoap[] getFolders(
+		long groupId, long parentFolderId, int status, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> returnValue =
+				BookmarksFolderServiceUtil.getFolders(groupId, parentFolderId,
+					status, start, end);
+
+			return com.liferay.portlet.bookmarks.model.BookmarksFolderSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getFoldersCount(long groupId, long parentFolderId)
 		throws RemoteException {
 		try {
@@ -170,11 +200,80 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
+	public static int getFoldersCount(long groupId, long parentFolderId,
+		int status) throws RemoteException {
+		try {
+			int returnValue = BookmarksFolderServiceUtil.getFoldersCount(groupId,
+					parentFolderId, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void getSubfolderIds(Long[] folderIds, long groupId,
 		long folderId) throws RemoteException {
 		try {
 			BookmarksFolderServiceUtil.getSubfolderIds(ListUtil.toList(
 					folderIds), groupId, folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.bookmarks.model.BookmarksFolderSoap moveFolder(
+		long folderId, long parentFolderId) throws RemoteException {
+		try {
+			com.liferay.portlet.bookmarks.model.BookmarksFolder returnValue = BookmarksFolderServiceUtil.moveFolder(folderId,
+					parentFolderId);
+
+			return com.liferay.portlet.bookmarks.model.BookmarksFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.bookmarks.model.BookmarksFolderSoap moveFolderFromTrash(
+		long folderId, long parentFolderId) throws RemoteException {
+		try {
+			com.liferay.portlet.bookmarks.model.BookmarksFolder returnValue = BookmarksFolderServiceUtil.moveFolderFromTrash(folderId,
+					parentFolderId);
+
+			return com.liferay.portlet.bookmarks.model.BookmarksFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void moveFolderToTrash(long folderId)
+		throws RemoteException {
+		try {
+			BookmarksFolderServiceUtil.moveFolderToTrash(folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void restoreFolderFromTrash(long folderId)
+		throws RemoteException {
+		try {
+			BookmarksFolderServiceUtil.restoreFolderFromTrash(folderId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

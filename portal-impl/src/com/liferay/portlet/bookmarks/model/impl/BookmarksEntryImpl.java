@@ -48,6 +48,25 @@ public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 		return folder;
 	}
 
+	public BookmarksFolder getTrashContainer() {
+		BookmarksFolder folder = getFolder();
+
+		if (folder.isInTrash()) {
+			return folder;
+		}
+
+		return folder.getTrashContainer();
+	}
+
+	public boolean isInTrashContainer() {
+		if (getTrashContainer() != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(BookmarksEntryImpl.class);
 
 }

@@ -258,7 +258,11 @@ create table BookmarksEntry (
 	url STRING null,
 	description STRING null,
 	visits INTEGER,
-	priority INTEGER
+	priority INTEGER,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 create table BookmarksFolder (
@@ -273,7 +277,11 @@ create table BookmarksFolder (
 	resourceBlockId LONG,
 	parentFolderId LONG,
 	name VARCHAR(75) null,
-	description STRING null
+	description STRING null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 create table BrowserTracker (

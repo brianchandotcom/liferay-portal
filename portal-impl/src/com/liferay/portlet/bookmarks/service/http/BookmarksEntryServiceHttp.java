@@ -420,13 +420,119 @@ public class BookmarksEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.portlet.bookmarks.model.BookmarksEntry moveEntry(
+		HttpPrincipal httpPrincipal, long entryId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
+					"moveEntry", _moveEntryParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
+					parentFolderId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.bookmarks.model.BookmarksEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portlet.bookmarks.model.BookmarksEntry moveEntryFromTrash(
+		HttpPrincipal httpPrincipal, long entryId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
+					"moveEntryFromTrash", _moveEntryFromTrashParameterTypes12);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
+					parentFolderId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.bookmarks.model.BookmarksEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void moveEntryToTrash(HttpPrincipal httpPrincipal,
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
+					"moveEntryToTrash", _moveEntryToTrashParameterTypes13);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry openEntry(
 		HttpPrincipal httpPrincipal, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
-					"openEntry", _openEntryParameterTypes11);
+					"openEntry", _openEntryParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -456,12 +562,45 @@ public class BookmarksEntryServiceHttp {
 		}
 	}
 
+	public static void restoreEntryFromTrash(HttpPrincipal httpPrincipal,
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
+					"restoreEntryFromTrash",
+					_restoreEntryFromTrashParameterTypes15);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void subscribeEntry(HttpPrincipal httpPrincipal, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
-					"subscribeEntry", _subscribeEntryParameterTypes12);
+					"subscribeEntry", _subscribeEntryParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -493,7 +632,7 @@ public class BookmarksEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
-					"unsubscribeEntry", _unsubscribeEntryParameterTypes13);
+					"unsubscribeEntry", _unsubscribeEntryParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -528,7 +667,7 @@ public class BookmarksEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
-					"updateEntry", _updateEntryParameterTypes14);
+					"updateEntry", _updateEntryParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
 					groupId, folderId, name, url, description, serviceContext);
@@ -596,16 +735,28 @@ public class BookmarksEntryServiceHttp {
 	private static final Class<?>[] _getGroupEntriesCountParameterTypes10 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _openEntryParameterTypes11 = new Class[] {
+	private static final Class<?>[] _moveEntryParameterTypes11 = new Class[] {
+			long.class, long.class
+		};
+	private static final Class<?>[] _moveEntryFromTrashParameterTypes12 = new Class[] {
+			long.class, long.class
+		};
+	private static final Class<?>[] _moveEntryToTrashParameterTypes13 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _subscribeEntryParameterTypes12 = new Class[] {
+	private static final Class<?>[] _openEntryParameterTypes14 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _unsubscribeEntryParameterTypes13 = new Class[] {
+	private static final Class<?>[] _restoreEntryFromTrashParameterTypes15 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateEntryParameterTypes14 = new Class[] {
+	private static final Class<?>[] _subscribeEntryParameterTypes16 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _unsubscribeEntryParameterTypes17 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _updateEntryParameterTypes18 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class

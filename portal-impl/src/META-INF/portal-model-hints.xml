@@ -1244,6 +1244,10 @@
 		<field name="priority" type="int">
 			<hint name="display-width">20</hint>
 		</field>
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.bookmarks.model.BookmarksFolder">
 		<field name="uuid" type="String" />
@@ -1262,6 +1266,10 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.calendar.model.CalEvent">
 		<field name="uuid" type="String" />

@@ -1,64 +1,26 @@
 AUI.add(
-	'ckeditor-inline',
+	'inline-editor-ckeditor',
 	function(A) {
-		var Lang = A.Lang,
-			PositionAlign = A.WidgetPositionAlign,
+		var PositionAlign = A.WidgetPositionAlign,
 
-			WIN = A.config.win,
-
-			SELECTOR_NOTICE_INLINE_EDIT_TEXT = '.lfr-notice-inline-edit-text',
-
-			TPL_NOTICE =
-				'<div id={id} class="lfr-notice-inline-edit">' +
-					'<span class="lfr-notice-inline-edit-text"></span>' +
-					'<span class="lfr-notice-inline-edit-close" tab-index="0">{close}</span>' +
-				'</div>',
+			CKCONFIG = CKEDITOR.config,
 
 			ALIGN = 'align',
 			BODY_SCROLL_LISTENER = 'bodyScrollListener',
 			BOUNDING_BOX = 'boundingBox',
-			CKEDITOR_PREFIX = 'ckeditorPrefix',
-			CKEDITOR_SUFFIX = 'ckeditorSuffix',
 			EDITOR = 'editor',
 			EDITOR_NAME = 'editorName',
-			NOTICE_INSTANCE = 'noticeInstance',
-			RESPONSE_DATA = 'responseData',
+			EDITOR_PREFIX = 'editorPrefix',
+			EDITOR_SUFFIX = 'editorSuffix',
 			VISIBLE = 'visible';
 
 		var CKEditorInline = A.Component.create(
 			{
-				ATTRS: {
-					ckeditorPrefix: {
-						validator: Lang.isString,
-						value: '#cke_'
-					},
-
-					ckeditorSuffix: {
-						validator: Lang.isString,
-						value: '_original'
-					},
-
-					editor: {
-						validator: Lang.isObject
-					},
-
-					editorName: {
-						validator: Lang.isString
-					},
-
-					toolbarTopOffset: {
-						validator: Lang.isNumber,
-						value: 30
-					},
-
-					saveURL: {
-						validator: Lang.isString
-					}
-				},
+				AUGMENTS: [Liferay.InlineEditorBase],
 
 				EXTENDS: A.Base,
 
-				NAME: 'ckeditor-inline',
+				NAME: 'inline-editor-ckeditor',
 
 				prototype: {
 					initializer: function(config) {
@@ -68,93 +30,37 @@ AUI.add(
 
 						instance._eventHandles = [
 							editor.on('blur', A.bind(instance._onEditorBlur, instance)),
-
 							editor.on('focus', A.bind(instance._onEditorFocus, instance)),
-
-							editor.on('saveContent', A.bind(instance._saveContent, instance, false)),
-
-							editor.on('restoreContent', A.bind(instance._restoreContent, instance))
+							editor.on('restoreContent', A.bind(instance._restoreContent, instance)),
+							editor.on('saveContent', A.bind(instance.saveContent, instance, false))
 						];
+
+						instance.after('destroy', instance._destructor, instance);
+
+						instance.after(['saveContentFailure', 'saveContentSuccess'], instance._updateNoticePosition, instance);
 					},
 
-					destructor: function() {
+					isContentDirty: function() {
 						var instance = this;
 
-						A.Array.invoke(instance._eventHandles, 'detach');
-
-						A.one('body').unplug(A.Plugin.ScrollInfo);
-
-						if (instance._scrollListener) {
-							instance._scrollListener.detach();
-						}
-
-						instance._getEditNotice().destroy();
-
-						WIN.clearTimeout(instance._closeTimer);
-
-						WIN.clearInterval(instance._saveInterval);
+						return instance.get(EDITOR).checkDirty();
 					},
 
-					_afterSaveContentFailure: function(responseData, autosaved) {
+					resetDirty: function() {
 						var instance = this;
 
 						instance.get(EDITOR).resetDirty();
-
-						var notice = instance._getEditNotice();
-
-						var boundingBox = notice.get(BOUNDING_BOX);
-
-						A.one('#' + instance._inlineEditNoticeId).replaceClass('lfr-notice-inline-edit', 'lfr-notice-inline-edit-error');
-
-						boundingBox.one(SELECTOR_NOTICE_INLINE_EDIT_TEXT).html(Liferay.Language.get('the-draft-was-not-saved-successfully'));
-
-						notice.show();
-
-						instance._updateNoticePosition();
-
-						instance._addCloseNoticeListener();
-					},
-
-					_afterSaveContentSuccess: function(responseData, autosaved) {
-						var instance = this;
-
-						instance.get(EDITOR).resetDirty();
-
-						var notice = instance._getEditNotice();
-						
-						A.one('#' + instance._inlineEditNoticeId).replaceClass('lfr-notice-inline-edit-error', 'lfr-notice-inline-edit');
-
-						var message = Liferay.Language.get('the-draft-was-saved-successfully-at-x');
-
-						if (autosaved) {
-							message = Liferay.Language.get('the-draft-was-autosaved-successfully-at-x');
-						}
-
-						message = Lang.sub(
-							message,
-							[
-								new Date().toLocaleTimeString()
-							]
-						);
-
-						notice.get(BOUNDING_BOX).one(SELECTOR_NOTICE_INLINE_EDIT_TEXT).html(message);
-
-						notice.show();
-
-						instance._updateNoticePosition();
-
-						instance._addCloseNoticeListener();
 					},
 
 					_attachScrollListener: function() {
 						var instance = this;
 
-						var notice = instance._getEditNotice();
+						var notice = instance.getEditNotice();
 
 						var noticeNode = notice.get(BOUNDING_BOX);
 
 						if (!noticeNode.getData(BODY_SCROLL_LISTENER)) {
-							var body = A.one('body');
+							var body = A.getBody();
 
 							body.plug(A.Plugin.ScrollInfo);
 
@@ -164,84 +70,48 @@ AUI.add(
 						}
 					},
 
-					_attachCloseListener: function() {
+					_destructor: function() {
 						var instance = this;
 
-						var notice = instance._getEditNotice();
+						debugger;
 
-						var boundingBox = notice.get(BOUNDING_BOX);
+						A.Array.invoke(instance._eventHandles, 'detach');
 
-						boundingBox.one('.lfr-notice-inline-edit-close').on('click', A.bind(notice.hide, notice));
+						A.getBody().unplug(A.Plugin.ScrollInfo);
+
+						if (instance._scrollListener) {
+							instance._scrollListener.detach();
+						}
 					},
 
-					_addCloseNoticeListener: function() {
-						var instance = this;
-
-						WIN.clearTimeout(instance._closeTimer);
-
-						instance._closeTimer = WIN.setTimeout(
-							function() {
-								var notice = instance._getEditNotice();
-
-								notice.hide();
-							},
-							CKEDITOR.config.closeNoticeTimeout
-						);
+					_getAutoSaveTimeout: function() {
+						return CKCONFIG.autoSaveTimeout;
 					},
 
-					_getEditNotice: function() {
-						var instance = this;
-
-						var triggerNode = A.one(instance.get(CKEDITOR_PREFIX) + instance.get(EDITOR_NAME));
-
-						var editNotice;
-
-						if (!instance._inlineEditNoticeId) {
-							instance._inlineEditNoticeId = A.guid();
-
-							editNotice = new A.Overlay(
-								{
-									bodyContent: Lang.sub(
-										TPL_NOTICE,
-										{
-											close: Liferay.Language.get('close'),
-											id: instance._inlineEditNoticeId
-										}
-									),
-									visible: false,
-									zIndex: triggerNode.getStyle('zIndex') + 2
-								}
-							).render();
-
-							A.one('#' + instance._inlineEditNoticeId).setData(NOTICE_INSTANCE, editNotice);
-
-							instance._attachCloseListener();
-						}
-						else {
-							editNotice = A.one('#' + instance._inlineEditNoticeId).getData(NOTICE_INSTANCE);
-						}
-
-						return editNotice;
+					_getCloseNoticeTimeout: function() {
+						return CKCONFIG.closeNoticeTimeout;
 					},
 
 					_onEditorBlur: function() {
 						var instance = this;
 
-						WIN.clearInterval(instance._saveInterval);
+						instance._saveContentTask.cancel();
 
-						instance._saveContent();
+						if (instance.isContentDirty()) {
+							instance.saveContent();
+						}
 					},
 
 					_onEditorFocus: function() {
 						var instance = this;
 
-						var originalContentNode = A.one('#' + instance.get(EDITOR_NAME) + instance.get(CKEDITOR_SUFFIX));
+						var originalContentNode = A.one('#' + instance.get(EDITOR_NAME) + instance.get(EDITOR_SUFFIX));
 
 						if (!originalContentNode.text()) {
 							originalContentNode.text(this.get(EDITOR).getData());
 						}
 
-						var notice = instance._getEditNotice();
+						var notice = instance.getEditNotice();
 
 						var noticeNode = notice.get(BOUNDING_BOX);
 
@@ -257,86 +127,44 @@ AUI.add(
 
 						instance._setNoticeEditor();
 
-						instance._setSaveTimer();
+						instance.startSaveContentTask();
 
 						instance._attachScrollListener();
 
-						instance.get(EDITOR).resetDirty();
+						instance.resetDirty();
 					},
 
 					_restoreContent: function() {
 						var instance = this;
 
-						var originalContentNode = A.one('#' + instance.get(EDITOR_NAME) + instance.get(CKEDITOR_SUFFIX));
+						var originalContentNode = A.one('#' + instance.get(EDITOR_NAME) + instance.get(EDITOR_SUFFIX));
 
 						var originalContent = originalContentNode.text();
 
 						instance.get(EDITOR).setData(originalContent);
 
-						instance._saveContent();
-					},
-
-					_saveContent: function(autosaved) {
-						var instance = this;
-
-						if (instance.get(EDITOR).checkDirty()) {
-							A.io.request(
-								instance.get('saveURL'),
-								{
-									after: {
-										failure: function() {
-											var responseData = this.get(RESPONSE_DATA);
-
-											instance._afterSaveContentFailure(responseData, autosaved);
-										},
-										success: function() {
-											var responseData = this.get(RESPONSE_DATA);
-
-											if (responseData.success) {
-												instance._afterSaveContentSuccess(responseData, autosaved);
-											}
-											else {
-												instance._afterSaveContentFailure(responseData, autosaved);
-											}
-										}
-									},
-									data: {
-										content: instance.get(EDITOR).getData()
-									},
-									dataType: 'json'
-								}
-							);
+						if (instance.isContentDirty()) {
+							instance.saveContent();
 						}
 					},
 
 					_setNoticeEditor: function() {
 						var instance = this;
 
-						var notice = instance._getEditNotice();
+						var notice = instance.getEditNotice();
 
 						var noticeNode = notice.get(BOUNDING_BOX);
 
 						noticeNode.setData(EDITOR, instance.get(EDITOR_NAME));
 					},
 
-					_setSaveTimer: function() {
-						var instance = this;
-
-						WIN.clearInterval(instance._saveInterval);
-
-						instance._saveInterval = WIN.setInterval(
-							A.bind(instance._saveContent, instance, true),
-							CKEDITOR.config.autoSaveTimeout
-						);
-					},
-
 					_updateNoticePosition: function() {
 						var instance = this;
 
-						var notice = instance._getEditNotice();
+						var notice = instance.getEditNotice();
 
 						if (notice.get(VISIBLE)) {
-							var editorToolbarNode = A.one(instance.get(CKEDITOR_PREFIX) + instance.get(EDITOR_NAME));
+							var editorToolbarNode = A.one(instance.get(EDITOR_PREFIX) + instance.get(EDITOR_NAME));
 
 							var editorToolbarVisible = editorToolbarNode.getStyle('display') !== 'none';
 
@@ -375,6 +203,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'overlay', 'node-scroll-info']
+		requires: ['array-invoke', 'yui-later', 'overlay', 'node-scroll-info', 'liferay-inline-editor-base']
 	}
 );

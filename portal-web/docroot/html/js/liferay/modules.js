@@ -62,6 +62,7 @@
 			'history-manager': ['liferay-history'],
 			'hudcrumbs': ['aui-base', 'plugin'],
 			'icon': ['aui-base'],
+			'inline-editor-base': ['aui-base', 'overlay'],
 			'input-move-boxes': ['aui-base', 'aui-toolbar'],
 			'layout': [],
 			'layout-column': ['aui-portal-layout', 'dd'],

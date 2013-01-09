@@ -177,7 +177,7 @@ if (!inlineEdit) {
 <%
 	textareaName = name + "_original";
 
-	modules = "ckeditor-inline";
+	modules = "inline-editor-ckeditor";
 %>
 </c:if>
 

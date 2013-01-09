@@ -191,16 +191,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_SQL_SELECT_LAYOUT_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_UUID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -223,7 +224,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -411,16 +412,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_SQL_SELECT_LAYOUT_WHERE);
 
+		boolean bindUuid = false;
+
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_UUID_3);
+		}
 		else {
-			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
+			bindUuid = true;
+			query.append(_FINDER_COLUMN_UUID_UUID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -491,7 +493,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (uuid != null) {
+		if (bindUuid) {
 			qPos.add(uuid);
 		}
 
@@ -546,16 +548,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_SQL_COUNT_LAYOUT_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_UUID_2);
 			}
 
 			String sql = query.toString();
@@ -569,7 +572,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -592,7 +595,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "layout.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layout.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -687,16 +690,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_SQL_SELECT_LAYOUT_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
 			}
 
 			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
@@ -712,7 +716,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -795,16 +799,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_SQL_COUNT_LAYOUT_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
 			}
 
 			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
@@ -820,7 +825,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -845,7 +850,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "layout.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "layout.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "layout.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
@@ -966,16 +971,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_SQL_SELECT_LAYOUT_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 			}
 
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1000,7 +1006,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -1204,16 +1210,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_SQL_SELECT_LAYOUT_WHERE);
 
+		boolean bindUuid = false;
+
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+		}
 		else {
-			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
+			bindUuid = true;
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 		}
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1286,7 +1293,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (uuid != null) {
+		if (bindUuid) {
 			qPos.add(uuid);
 		}
 
@@ -1347,16 +1354,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_SQL_COUNT_LAYOUT_WHERE);
 
+			boolean bindUuid = false;
+
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			}
 			else {
-				if (uuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
+				bindUuid = true;
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
 			}
 
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1372,7 +1380,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (uuid != null) {
+				if (bindUuid) {
 					qPos.add(uuid);
 				}
 
@@ -1397,7 +1405,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "layout.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "layout.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "layout.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
@@ -3038,16 +3046,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_SQL_SELECT_LAYOUT_WHERE);
 
+			boolean bindLayoutPrototypeUuid = false;
+
 			if (layoutPrototypeUuid == null) {
 				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
 			}
+			else if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
+			}
 			else {
-				if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2);
-				}
+				bindLayoutPrototypeUuid = true;
+				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -3070,7 +3079,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (layoutPrototypeUuid != null) {
+				if (bindLayoutPrototypeUuid) {
 					qPos.add(layoutPrototypeUuid);
 				}
 
@@ -3263,16 +3272,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_SQL_SELECT_LAYOUT_WHERE);
 
+		boolean bindLayoutPrototypeUuid = false;
+
 		if (layoutPrototypeUuid == null) {
 			query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
 		}
+		else if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
+		}
 		else {
-			if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2);
-			}
+			bindLayoutPrototypeUuid = true;
+			query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -3343,7 +3353,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (layoutPrototypeUuid != null) {
+		if (bindLayoutPrototypeUuid) {
 			qPos.add(layoutPrototypeUuid);
 		}
 
@@ -3400,16 +3410,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_SQL_COUNT_LAYOUT_WHERE);
 
+			boolean bindLayoutPrototypeUuid = false;
+
 			if (layoutPrototypeUuid == null) {
 				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
 			}
+			else if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
+			}
 			else {
-				if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2);
-				}
+				bindLayoutPrototypeUuid = true;
+				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2);
 			}
 
 			String sql = query.toString();
@@ -3423,7 +3434,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (layoutPrototypeUuid != null) {
+				if (bindLayoutPrototypeUuid) {
 					qPos.add(layoutPrototypeUuid);
 				}
 
@@ -3449,7 +3460,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_2 =
 		"layout.layoutPrototypeUuid = ?";
 	private static final String _FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3 =
-		"(layout.layoutPrototypeUuid IS NULL OR layout.layoutPrototypeUuid = ?)";
+		"(layout.layoutPrototypeUuid IS NULL OR layout.layoutPrototypeUuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_SOURCEPROTOTYPELAYOUTUUID =
 		new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
@@ -3573,16 +3584,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_SQL_SELECT_LAYOUT_WHERE);
 
+			boolean bindSourcePrototypeLayoutUuid = false;
+
 			if (sourcePrototypeLayoutUuid == null) {
 				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_1);
 			}
+			else if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
+			}
 			else {
-				if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_2);
-				}
+				bindSourcePrototypeLayoutUuid = true;
+				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -3605,7 +3617,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (sourcePrototypeLayoutUuid != null) {
+				if (bindSourcePrototypeLayoutUuid) {
 					qPos.add(sourcePrototypeLayoutUuid);
 				}
 
@@ -3800,16 +3812,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_SQL_SELECT_LAYOUT_WHERE);
 
+		boolean bindSourcePrototypeLayoutUuid = false;
+
 		if (sourcePrototypeLayoutUuid == null) {
 			query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_1);
 		}
+		else if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
+		}
 		else {
-			if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_2);
-			}
+			bindSourcePrototypeLayoutUuid = true;
+			query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -3880,7 +3893,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (sourcePrototypeLayoutUuid != null) {
+		if (bindSourcePrototypeLayoutUuid) {
 			qPos.add(sourcePrototypeLayoutUuid);
 		}
 
@@ -3938,16 +3951,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_SQL_COUNT_LAYOUT_WHERE);
 
+			boolean bindSourcePrototypeLayoutUuid = false;
+
 			if (sourcePrototypeLayoutUuid == null) {
 				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_1);
 			}
+			else if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
+			}
 			else {
-				if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_2);
-				}
+				bindSourcePrototypeLayoutUuid = true;
+				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_2);
 			}
 
 			String sql = query.toString();
@@ -3961,7 +3975,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (sourcePrototypeLayoutUuid != null) {
+				if (bindSourcePrototypeLayoutUuid) {
 					qPos.add(sourcePrototypeLayoutUuid);
 				}
 
@@ -3987,7 +4001,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_2 =
 		"layout.sourcePrototypeLayoutUuid = ?";
 	private static final String _FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3 =
-		"(layout.sourcePrototypeLayoutUuid IS NULL OR layout.sourcePrototypeLayoutUuid = ?)";
+		"(layout.sourcePrototypeLayoutUuid IS NULL OR layout.sourcePrototypeLayoutUuid = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
@@ -6205,16 +6219,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
 
+			boolean bindFriendlyURL = false;
+
 			if (friendlyURL == null) {
 				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_1);
 			}
+			else if (friendlyURL.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
+			}
 			else {
-				if (friendlyURL.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
-				}
+				bindFriendlyURL = true;
+				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
 			}
 
 			String sql = query.toString();
@@ -6232,7 +6247,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				qPos.add(privateLayout);
 
-				if (friendlyURL != null) {
+				if (bindFriendlyURL) {
 					qPos.add(friendlyURL);
 				}
 
@@ -6320,16 +6335,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
 
+			boolean bindFriendlyURL = false;
+
 			if (friendlyURL == null) {
 				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_1);
 			}
+			else if (friendlyURL.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
+			}
 			else {
-				if (friendlyURL.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
-				}
+				bindFriendlyURL = true;
+				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
 			}
 
 			String sql = query.toString();
@@ -6347,7 +6363,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				qPos.add(privateLayout);
 
-				if (friendlyURL != null) {
+				if (bindFriendlyURL) {
 					qPos.add(friendlyURL);
 				}
 
@@ -6372,7 +6388,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2 = "layout.privateLayout = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_1 = "layout.friendlyURL IS NULL";
 	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_2 = "layout.friendlyURL = ?";
-	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_3 = "(layout.friendlyURL IS NULL OR layout.friendlyURL = ?)";
+	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_3 = "(layout.friendlyURL IS NULL OR layout.friendlyURL = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_T = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_T",
@@ -6508,16 +6524,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
+			boolean bindType = false;
+
 			if (type == null) {
 				query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
 			}
+			else if (type.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
+			}
 			else {
-				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
-				}
+				bindType = true;
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
 			}
 
 			if (orderByComparator != null) {
@@ -6544,7 +6561,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				qPos.add(privateLayout);
 
-				if (type != null) {
+				if (bindType) {
 					qPos.add(type);
 				}
 
@@ -6765,16 +6782,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
+		boolean bindType = false;
+
 		if (type == null) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
 		}
+		else if (type.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
+		}
 		else {
-			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
-			}
+			bindType = true;
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
 		}
 
 		if (orderByComparator != null) {
@@ -6849,7 +6867,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		qPos.add(privateLayout);
 
-		if (type != null) {
+		if (bindType) {
 			qPos.add(type);
 		}
 
@@ -6951,16 +6969,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
+		boolean bindType = false;
+
 		if (type == null) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
 		}
+		else if (type.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
+		}
 		else {
-			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
-			}
+			bindType = true;
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -7010,7 +7029,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			qPos.add(privateLayout);
 
-			if (type != null) {
+			if (bindType) {
 				qPos.add(type);
 			}
 
@@ -7095,16 +7114,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
+		boolean bindType = false;
+
 		if (type == null) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
 		}
+		else if (type.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
+		}
 		else {
-			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
-			}
+			bindType = true;
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -7209,7 +7229,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		qPos.add(privateLayout);
 
-		if (type != null) {
+		if (bindType) {
 			qPos.add(type);
 		}
 
@@ -7274,16 +7294,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
+			boolean bindType = false;
+
 			if (type == null) {
 				query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
 			}
+			else if (type.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
+			}
 			else {
-				if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
-				}
+				bindType = true;
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
 			}
 
 			String sql = query.toString();
@@ -7301,7 +7322,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				qPos.add(privateLayout);
 
-				if (type != null) {
+				if (bindType) {
 					qPos.add(type);
 				}
 
@@ -7345,16 +7366,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
+		boolean bindType = false;
+
 		if (type == null) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
 		}
+		else if (type.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
+		}
 		else {
-			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
-			}
+			bindType = true;
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
@@ -7377,7 +7399,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			qPos.add(privateLayout);
 
-			if (type != null) {
+			if (bindType) {
 				qPos.add(type);
 			}
 
@@ -7397,7 +7419,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2 = "layout.privateLayout = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_1 = "layout.type IS NULL";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_2 = "layout.type = ?";
-	private static final String _FINDER_COLUMN_G_P_T_TYPE_3 = "(layout.type IS NULL OR layout.type = ?)";
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_3 = "(layout.type IS NULL OR layout.type = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_P_SPLU = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_SPLU",
@@ -7517,16 +7539,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
 
+			boolean bindSourcePrototypeLayoutUuid = false;
+
 			if (sourcePrototypeLayoutUuid == null) {
 				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_1);
 			}
+			else if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
+			}
 			else {
-				if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
-				}
+				bindSourcePrototypeLayoutUuid = true;
+				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
 			}
 
 			String sql = query.toString();
@@ -7544,7 +7567,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				qPos.add(privateLayout);
 
-				if (sourcePrototypeLayoutUuid != null) {
+				if (bindSourcePrototypeLayoutUuid) {
 					qPos.add(sourcePrototypeLayoutUuid);
 				}
 
@@ -7644,16 +7667,17 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			query.append(_FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2);
 
+			boolean bindSourcePrototypeLayoutUuid = false;
+
 			if (sourcePrototypeLayoutUuid == null) {
 				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_1);
 			}
+			else if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
+			}
 			else {
-				if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
-				}
+				bindSourcePrototypeLayoutUuid = true;
+				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2);
 			}
 
 			String sql = query.toString();
@@ -7671,7 +7695,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				qPos.add(privateLayout);
 
-				if (sourcePrototypeLayoutUuid != null) {
+				if (bindSourcePrototypeLayoutUuid) {
 					qPos.add(sourcePrototypeLayoutUuid);
 				}
 
@@ -7699,7 +7723,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_2 =
 		"layout.sourcePrototypeLayoutUuid = ?";
 	private static final String _FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3 =
-		"(layout.sourcePrototypeLayoutUuid IS NULL OR layout.sourcePrototypeLayoutUuid = ?)";
+		"(layout.sourcePrototypeLayoutUuid IS NULL OR layout.sourcePrototypeLayoutUuid = '')";
 
 	/**
 	 * Caches the layout in the entity cache if it is enabled.

@@ -166,16 +166,17 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 
 			query.append(_SQL_SELECT_SHARD_WHERE);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_NAME_NAME_1);
 			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAME_NAME_3);
+			}
 			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_NAME_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_NAME_NAME_2);
-				}
+				bindName = true;
+				query.append(_FINDER_COLUMN_NAME_NAME_2);
 			}
 
 			String sql = query.toString();
@@ -189,7 +190,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -273,16 +274,17 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 
 			query.append(_SQL_COUNT_SHARD_WHERE);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_NAME_NAME_1);
 			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAME_NAME_3);
+			}
 			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_NAME_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_NAME_NAME_2);
-				}
+				bindName = true;
+				query.append(_FINDER_COLUMN_NAME_NAME_2);
 			}
 
 			String sql = query.toString();
@@ -296,7 +298,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -319,7 +321,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 
 	private static final String _FINDER_COLUMN_NAME_NAME_1 = "shard.name IS NULL";
 	private static final String _FINDER_COLUMN_NAME_NAME_2 = "shard.name = ?";
-	private static final String _FINDER_COLUMN_NAME_NAME_3 = "(shard.name IS NULL OR shard.name = ?)";
+	private static final String _FINDER_COLUMN_NAME_NAME_3 = "(shard.name IS NULL OR shard.name = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C = new FinderPath(ShardModelImpl.ENTITY_CACHE_ENABLED,
 			ShardModelImpl.FINDER_CACHE_ENABLED, ShardImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",

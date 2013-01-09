@@ -707,16 +707,17 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 			query.append(_FINDER_COLUMN_C_W_W_COMPANYID_2);
 
+			boolean bindWorkflowDefinitionName = false;
+
 			if (workflowDefinitionName == null) {
 				query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_1);
 			}
+			else if (workflowDefinitionName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
+			}
 			else {
-				if (workflowDefinitionName.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_2);
-				}
+				bindWorkflowDefinitionName = true;
+				query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_2);
 			}
 
 			query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONVERSION_2);
@@ -743,7 +744,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 				qPos.add(companyId);
 
-				if (workflowDefinitionName != null) {
+				if (bindWorkflowDefinitionName) {
 					qPos.add(workflowDefinitionName);
 				}
 
@@ -976,16 +977,17 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 		query.append(_FINDER_COLUMN_C_W_W_COMPANYID_2);
 
+		boolean bindWorkflowDefinitionName = false;
+
 		if (workflowDefinitionName == null) {
 			query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_1);
 		}
+		else if (workflowDefinitionName.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
+		}
 		else {
-			if (workflowDefinitionName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_2);
-			}
+			bindWorkflowDefinitionName = true;
+			query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_2);
 		}
 
 		query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONVERSION_2);
@@ -1060,7 +1062,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 		qPos.add(companyId);
 
-		if (workflowDefinitionName != null) {
+		if (bindWorkflowDefinitionName) {
 			qPos.add(workflowDefinitionName);
 		}
 
@@ -1128,16 +1130,17 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 			query.append(_FINDER_COLUMN_C_W_W_COMPANYID_2);
 
+			boolean bindWorkflowDefinitionName = false;
+
 			if (workflowDefinitionName == null) {
 				query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_1);
 			}
+			else if (workflowDefinitionName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
+			}
 			else {
-				if (workflowDefinitionName.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_2);
-				}
+				bindWorkflowDefinitionName = true;
+				query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_2);
 			}
 
 			query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONVERSION_2);
@@ -1155,7 +1158,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 				qPos.add(companyId);
 
-				if (workflowDefinitionName != null) {
+				if (bindWorkflowDefinitionName) {
 					qPos.add(workflowDefinitionName);
 				}
 
@@ -1181,7 +1184,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	private static final String _FINDER_COLUMN_C_W_W_COMPANYID_2 = "workflowDefinitionLink.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_1 = "workflowDefinitionLink.workflowDefinitionName IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_2 = "workflowDefinitionLink.workflowDefinitionName = ? AND ";
-	private static final String _FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3 = "(workflowDefinitionLink.workflowDefinitionName IS NULL OR workflowDefinitionLink.workflowDefinitionName = ?) AND ";
+	private static final String _FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3 = "(workflowDefinitionLink.workflowDefinitionName IS NULL OR workflowDefinitionLink.workflowDefinitionName = '') AND ";
 	private static final String _FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONVERSION_2 =
 		"workflowDefinitionLink.workflowDefinitionVersion = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_C_T = new FinderPath(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,

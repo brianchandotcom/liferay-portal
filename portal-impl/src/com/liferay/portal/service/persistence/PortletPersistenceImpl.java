@@ -652,16 +652,17 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 
 			query.append(_FINDER_COLUMN_C_P_COMPANYID_2);
 
+			boolean bindPortletId = false;
+
 			if (portletId == null) {
 				query.append(_FINDER_COLUMN_C_P_PORTLETID_1);
 			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_P_PORTLETID_3);
+			}
 			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_P_PORTLETID_2);
-				}
+				bindPortletId = true;
+				query.append(_FINDER_COLUMN_C_P_PORTLETID_2);
 			}
 
 			String sql = query.toString();
@@ -677,7 +678,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 
 				qPos.add(companyId);
 
-				if (portletId != null) {
+				if (bindPortletId) {
 					qPos.add(portletId);
 				}
 
@@ -760,16 +761,17 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 
 			query.append(_FINDER_COLUMN_C_P_COMPANYID_2);
 
+			boolean bindPortletId = false;
+
 			if (portletId == null) {
 				query.append(_FINDER_COLUMN_C_P_PORTLETID_1);
 			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_P_PORTLETID_3);
+			}
 			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_P_PORTLETID_2);
-				}
+				bindPortletId = true;
+				query.append(_FINDER_COLUMN_C_P_PORTLETID_2);
 			}
 
 			String sql = query.toString();
@@ -785,7 +787,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 
 				qPos.add(companyId);
 
-				if (portletId != null) {
+				if (bindPortletId) {
 					qPos.add(portletId);
 				}
 
@@ -809,7 +811,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	private static final String _FINDER_COLUMN_C_P_COMPANYID_2 = "portlet.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_P_PORTLETID_1 = "portlet.portletId IS NULL";
 	private static final String _FINDER_COLUMN_C_P_PORTLETID_2 = "portlet.portletId = ?";
-	private static final String _FINDER_COLUMN_C_P_PORTLETID_3 = "(portlet.portletId IS NULL OR portlet.portletId = ?)";
+	private static final String _FINDER_COLUMN_C_P_PORTLETID_3 = "(portlet.portletId IS NULL OR portlet.portletId = '')";
 
 	/**
 	 * Caches the portlet in the entity cache if it is enabled.

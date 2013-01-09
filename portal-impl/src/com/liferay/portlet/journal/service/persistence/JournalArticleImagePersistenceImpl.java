@@ -1179,16 +1179,17 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 			query.append(_FINDER_COLUMN_G_A_V_GROUPID_2);
 
+			boolean bindArticleId = false;
+
 			if (articleId == null) {
 				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_1);
 			}
+			else if (articleId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
+			}
 			else {
-				if (articleId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
-				}
+				bindArticleId = true;
+				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
 			}
 
 			query.append(_FINDER_COLUMN_G_A_V_VERSION_2);
@@ -1215,7 +1216,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 				qPos.add(groupId);
 
-				if (articleId != null) {
+				if (bindArticleId) {
 					qPos.add(articleId);
 				}
 
@@ -1438,16 +1439,17 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 		query.append(_FINDER_COLUMN_G_A_V_GROUPID_2);
 
+		boolean bindArticleId = false;
+
 		if (articleId == null) {
 			query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_1);
 		}
+		else if (articleId.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
+		}
 		else {
-			if (articleId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
-			}
+			bindArticleId = true;
+			query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
 		}
 
 		query.append(_FINDER_COLUMN_G_A_V_VERSION_2);
@@ -1522,7 +1524,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 		qPos.add(groupId);
 
-		if (articleId != null) {
+		if (bindArticleId) {
 			qPos.add(articleId);
 		}
 
@@ -1587,16 +1589,17 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 			query.append(_FINDER_COLUMN_G_A_V_GROUPID_2);
 
+			boolean bindArticleId = false;
+
 			if (articleId == null) {
 				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_1);
 			}
+			else if (articleId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
+			}
 			else {
-				if (articleId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
-				}
+				bindArticleId = true;
+				query.append(_FINDER_COLUMN_G_A_V_ARTICLEID_2);
 			}
 
 			query.append(_FINDER_COLUMN_G_A_V_VERSION_2);
@@ -1614,7 +1617,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 				qPos.add(groupId);
 
-				if (articleId != null) {
+				if (bindArticleId) {
 					qPos.add(articleId);
 				}
 
@@ -1640,7 +1643,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	private static final String _FINDER_COLUMN_G_A_V_GROUPID_2 = "journalArticleImage.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_A_V_ARTICLEID_1 = "journalArticleImage.articleId IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_A_V_ARTICLEID_2 = "journalArticleImage.articleId = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_V_ARTICLEID_3 = "(journalArticleImage.articleId IS NULL OR journalArticleImage.articleId = ?) AND ";
+	private static final String _FINDER_COLUMN_G_A_V_ARTICLEID_3 = "(journalArticleImage.articleId IS NULL OR journalArticleImage.articleId = '') AND ";
 	private static final String _FINDER_COLUMN_G_A_V_VERSION_2 = "journalArticleImage.version = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_A_V_E_E_L = new FinderPath(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED,
@@ -1789,54 +1792,58 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 			query.append(_FINDER_COLUMN_G_A_V_E_E_L_GROUPID_2);
 
+			boolean bindArticleId = false;
+
 			if (articleId == null) {
 				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_1);
 			}
+			else if (articleId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3);
+			}
 			else {
-				if (articleId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_2);
-				}
+				bindArticleId = true;
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_2);
 			}
 
 			query.append(_FINDER_COLUMN_G_A_V_E_E_L_VERSION_2);
 
+			boolean bindElInstanceId = false;
+
 			if (elInstanceId == null) {
 				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_1);
 			}
-			else {
-				if (elInstanceId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_2);
-				}
+			else if (elInstanceId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3);
 			}
+			else {
+				bindElInstanceId = true;
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_2);
+			}
+
+			boolean bindElName = false;
 
 			if (elName == null) {
 				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_1);
 			}
-			else {
-				if (elName.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_2);
-				}
+			else if (elName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3);
 			}
+			else {
+				bindElName = true;
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_2);
+			}
+
+			boolean bindLanguageId = false;
 
 			if (languageId == null) {
 				query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_1);
 			}
+			else if (languageId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3);
+			}
 			else {
-				if (languageId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_2);
-				}
+				bindLanguageId = true;
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_2);
 			}
 
 			String sql = query.toString();
@@ -1852,21 +1859,21 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 				qPos.add(groupId);
 
-				if (articleId != null) {
+				if (bindArticleId) {
 					qPos.add(articleId);
 				}
 
 				qPos.add(version);
 
-				if (elInstanceId != null) {
+				if (bindElInstanceId) {
 					qPos.add(elInstanceId);
 				}
 
-				if (elName != null) {
+				if (bindElName) {
 					qPos.add(elName);
 				}
 
-				if (languageId != null) {
+				if (bindLanguageId) {
 					qPos.add(languageId);
 				}
 
@@ -1971,54 +1978,58 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 			query.append(_FINDER_COLUMN_G_A_V_E_E_L_GROUPID_2);
 
+			boolean bindArticleId = false;
+
 			if (articleId == null) {
 				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_1);
 			}
+			else if (articleId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3);
+			}
 			else {
-				if (articleId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_2);
-				}
+				bindArticleId = true;
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_2);
 			}
 
 			query.append(_FINDER_COLUMN_G_A_V_E_E_L_VERSION_2);
 
+			boolean bindElInstanceId = false;
+
 			if (elInstanceId == null) {
 				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_1);
 			}
-			else {
-				if (elInstanceId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_2);
-				}
+			else if (elInstanceId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3);
 			}
+			else {
+				bindElInstanceId = true;
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_2);
+			}
+
+			boolean bindElName = false;
 
 			if (elName == null) {
 				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_1);
 			}
-			else {
-				if (elName.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_2);
-				}
+			else if (elName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3);
 			}
+			else {
+				bindElName = true;
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_2);
+			}
+
+			boolean bindLanguageId = false;
 
 			if (languageId == null) {
 				query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_1);
 			}
+			else if (languageId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3);
+			}
 			else {
-				if (languageId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_2);
-				}
+				bindLanguageId = true;
+				query.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_2);
 			}
 
 			String sql = query.toString();
@@ -2034,21 +2045,21 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 				qPos.add(groupId);
 
-				if (articleId != null) {
+				if (bindArticleId) {
 					qPos.add(articleId);
 				}
 
 				qPos.add(version);
 
-				if (elInstanceId != null) {
+				if (bindElInstanceId) {
 					qPos.add(elInstanceId);
 				}
 
-				if (elName != null) {
+				if (bindElName) {
 					qPos.add(elName);
 				}
 
-				if (languageId != null) {
+				if (bindLanguageId) {
 					qPos.add(languageId);
 				}
 
@@ -2072,17 +2083,17 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	private static final String _FINDER_COLUMN_G_A_V_E_E_L_GROUPID_2 = "journalArticleImage.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_1 = "journalArticleImage.articleId IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_2 = "journalArticleImage.articleId = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3 = "(journalArticleImage.articleId IS NULL OR journalArticleImage.articleId = ?) AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3 = "(journalArticleImage.articleId IS NULL OR journalArticleImage.articleId = '') AND ";
 	private static final String _FINDER_COLUMN_G_A_V_E_E_L_VERSION_2 = "journalArticleImage.version = ? AND ";
 	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_1 = "journalArticleImage.elInstanceId IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_2 = "journalArticleImage.elInstanceId = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3 = "(journalArticleImage.elInstanceId IS NULL OR journalArticleImage.elInstanceId = ?) AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3 = "(journalArticleImage.elInstanceId IS NULL OR journalArticleImage.elInstanceId = '') AND ";
 	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELNAME_1 = "journalArticleImage.elName IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELNAME_2 = "journalArticleImage.elName = ? AND ";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3 = "(journalArticleImage.elName IS NULL OR journalArticleImage.elName = ?) AND ";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3 = "(journalArticleImage.elName IS NULL OR journalArticleImage.elName = '') AND ";
 	private static final String _FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_1 = "journalArticleImage.languageId IS NULL";
 	private static final String _FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_2 = "journalArticleImage.languageId = ?";
-	private static final String _FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3 = "(journalArticleImage.languageId IS NULL OR journalArticleImage.languageId = ?)";
+	private static final String _FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3 = "(journalArticleImage.languageId IS NULL OR journalArticleImage.languageId = '')";
 
 	/**
 	 * Caches the journal article image in the entity cache if it is enabled.

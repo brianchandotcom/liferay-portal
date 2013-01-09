@@ -2405,28 +2405,30 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 			query.append(_SQL_SELECT_SCPRODUCTENTRY_WHERE);
 
+			boolean bindRepoGroupId = false;
+
 			if (repoGroupId == null) {
 				query.append(_FINDER_COLUMN_RG_RA_REPOGROUPID_1);
 			}
-			else {
-				if (repoGroupId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_RG_RA_REPOGROUPID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_RG_RA_REPOGROUPID_2);
-				}
+			else if (repoGroupId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_RG_RA_REPOGROUPID_3);
 			}
+			else {
+				bindRepoGroupId = true;
+				query.append(_FINDER_COLUMN_RG_RA_REPOGROUPID_2);
+			}
+
+			boolean bindRepoArtifactId = false;
 
 			if (repoArtifactId == null) {
 				query.append(_FINDER_COLUMN_RG_RA_REPOARTIFACTID_1);
 			}
+			else if (repoArtifactId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_RG_RA_REPOARTIFACTID_3);
+			}
 			else {
-				if (repoArtifactId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_RG_RA_REPOARTIFACTID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_RG_RA_REPOARTIFACTID_2);
-				}
+				bindRepoArtifactId = true;
+				query.append(_FINDER_COLUMN_RG_RA_REPOARTIFACTID_2);
 			}
 
 			String sql = query.toString();
@@ -2440,11 +2442,11 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (repoGroupId != null) {
+				if (bindRepoGroupId) {
 					qPos.add(repoGroupId);
 				}
 
-				if (repoArtifactId != null) {
+				if (bindRepoArtifactId) {
 					qPos.add(repoArtifactId);
 				}
 
@@ -2535,28 +2537,30 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 			query.append(_SQL_COUNT_SCPRODUCTENTRY_WHERE);
 
+			boolean bindRepoGroupId = false;
+
 			if (repoGroupId == null) {
 				query.append(_FINDER_COLUMN_RG_RA_REPOGROUPID_1);
 			}
-			else {
-				if (repoGroupId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_RG_RA_REPOGROUPID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_RG_RA_REPOGROUPID_2);
-				}
+			else if (repoGroupId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_RG_RA_REPOGROUPID_3);
 			}
+			else {
+				bindRepoGroupId = true;
+				query.append(_FINDER_COLUMN_RG_RA_REPOGROUPID_2);
+			}
+
+			boolean bindRepoArtifactId = false;
 
 			if (repoArtifactId == null) {
 				query.append(_FINDER_COLUMN_RG_RA_REPOARTIFACTID_1);
 			}
+			else if (repoArtifactId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_RG_RA_REPOARTIFACTID_3);
+			}
 			else {
-				if (repoArtifactId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_RG_RA_REPOARTIFACTID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_RG_RA_REPOARTIFACTID_2);
-				}
+				bindRepoArtifactId = true;
+				query.append(_FINDER_COLUMN_RG_RA_REPOARTIFACTID_2);
 			}
 
 			String sql = query.toString();
@@ -2570,11 +2574,11 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (repoGroupId != null) {
+				if (bindRepoGroupId) {
 					qPos.add(repoGroupId);
 				}
 
-				if (repoArtifactId != null) {
+				if (bindRepoArtifactId) {
 					qPos.add(repoArtifactId);
 				}
 
@@ -2597,10 +2601,10 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 	private static final String _FINDER_COLUMN_RG_RA_REPOGROUPID_1 = "scProductEntry.repoGroupId IS NULL AND ";
 	private static final String _FINDER_COLUMN_RG_RA_REPOGROUPID_2 = "lower(scProductEntry.repoGroupId) = lower(CAST_TEXT(?)) AND ";
-	private static final String _FINDER_COLUMN_RG_RA_REPOGROUPID_3 = "(scProductEntry.repoGroupId IS NULL OR lower(scProductEntry.repoGroupId) = lower(CAST_TEXT(?))) AND ";
+	private static final String _FINDER_COLUMN_RG_RA_REPOGROUPID_3 = "(scProductEntry.repoGroupId IS NULL OR scProductEntry.repoGroupId = '') AND ";
 	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_1 = "scProductEntry.repoArtifactId IS NULL";
 	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_2 = "lower(scProductEntry.repoArtifactId) = lower(CAST_TEXT(?))";
-	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_3 = "(scProductEntry.repoArtifactId IS NULL OR lower(scProductEntry.repoArtifactId) = lower(CAST_TEXT(?)))";
+	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_3 = "(scProductEntry.repoArtifactId IS NULL OR scProductEntry.repoArtifactId = '')";
 
 	/**
 	 * Caches the s c product entry in the entity cache if it is enabled.

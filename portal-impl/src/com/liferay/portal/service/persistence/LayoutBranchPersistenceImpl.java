@@ -1194,16 +1194,17 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 			query.append(_FINDER_COLUMN_L_P_N_PLID_2);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_L_P_N_NAME_1);
 			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_L_P_N_NAME_3);
+			}
 			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_L_P_N_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_L_P_N_NAME_2);
-				}
+				bindName = true;
+				query.append(_FINDER_COLUMN_L_P_N_NAME_2);
 			}
 
 			String sql = query.toString();
@@ -1221,7 +1222,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 				qPos.add(plid);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -1309,16 +1310,17 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 			query.append(_FINDER_COLUMN_L_P_N_PLID_2);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_L_P_N_NAME_1);
 			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_L_P_N_NAME_3);
+			}
 			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_L_P_N_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_L_P_N_NAME_2);
-				}
+				bindName = true;
+				query.append(_FINDER_COLUMN_L_P_N_NAME_2);
 			}
 
 			String sql = query.toString();
@@ -1336,7 +1338,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 				qPos.add(plid);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -1361,7 +1363,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	private static final String _FINDER_COLUMN_L_P_N_PLID_2 = "layoutBranch.plid = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_N_NAME_1 = "layoutBranch.name IS NULL";
 	private static final String _FINDER_COLUMN_L_P_N_NAME_2 = "layoutBranch.name = ?";
-	private static final String _FINDER_COLUMN_L_P_N_NAME_3 = "(layoutBranch.name IS NULL OR layoutBranch.name = ?)";
+	private static final String _FINDER_COLUMN_L_P_N_NAME_3 = "(layoutBranch.name IS NULL OR layoutBranch.name = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_L_P_M = new FinderPath(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutBranchModelImpl.FINDER_CACHE_ENABLED, LayoutBranchImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByL_P_M",

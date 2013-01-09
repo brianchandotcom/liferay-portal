@@ -167,16 +167,17 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 			query.append(_SQL_SELECT_VIRTUALHOST_WHERE);
 
+			boolean bindHostname = false;
+
 			if (hostname == null) {
 				query.append(_FINDER_COLUMN_HOSTNAME_HOSTNAME_1);
 			}
+			else if (hostname.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_HOSTNAME_HOSTNAME_3);
+			}
 			else {
-				if (hostname.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_HOSTNAME_HOSTNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_HOSTNAME_HOSTNAME_2);
-				}
+				bindHostname = true;
+				query.append(_FINDER_COLUMN_HOSTNAME_HOSTNAME_2);
 			}
 
 			String sql = query.toString();
@@ -190,7 +191,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (hostname != null) {
+				if (bindHostname) {
 					qPos.add(hostname);
 				}
 
@@ -267,16 +268,17 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 			query.append(_SQL_COUNT_VIRTUALHOST_WHERE);
 
+			boolean bindHostname = false;
+
 			if (hostname == null) {
 				query.append(_FINDER_COLUMN_HOSTNAME_HOSTNAME_1);
 			}
+			else if (hostname.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_HOSTNAME_HOSTNAME_3);
+			}
 			else {
-				if (hostname.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_HOSTNAME_HOSTNAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_HOSTNAME_HOSTNAME_2);
-				}
+				bindHostname = true;
+				query.append(_FINDER_COLUMN_HOSTNAME_HOSTNAME_2);
 			}
 
 			String sql = query.toString();
@@ -290,7 +292,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (hostname != null) {
+				if (bindHostname) {
 					qPos.add(hostname);
 				}
 
@@ -313,7 +315,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 	private static final String _FINDER_COLUMN_HOSTNAME_HOSTNAME_1 = "virtualHost.hostname IS NULL";
 	private static final String _FINDER_COLUMN_HOSTNAME_HOSTNAME_2 = "virtualHost.hostname = ?";
-	private static final String _FINDER_COLUMN_HOSTNAME_HOSTNAME_3 = "(virtualHost.hostname IS NULL OR virtualHost.hostname = ?)";
+	private static final String _FINDER_COLUMN_HOSTNAME_HOSTNAME_3 = "(virtualHost.hostname IS NULL OR virtualHost.hostname = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_L = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_L",

@@ -659,16 +659,17 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 			query.append(_FINDER_COLUMN_R_V_RECORDID_2);
 
+			boolean bindVersion = false;
+
 			if (version == null) {
 				query.append(_FINDER_COLUMN_R_V_VERSION_1);
 			}
+			else if (version.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_V_VERSION_3);
+			}
 			else {
-				if (version.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_R_V_VERSION_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_R_V_VERSION_2);
-				}
+				bindVersion = true;
+				query.append(_FINDER_COLUMN_R_V_VERSION_2);
 			}
 
 			String sql = query.toString();
@@ -684,7 +685,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 				qPos.add(recordId);
 
-				if (version != null) {
+				if (bindVersion) {
 					qPos.add(version);
 				}
 
@@ -767,16 +768,17 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 			query.append(_FINDER_COLUMN_R_V_RECORDID_2);
 
+			boolean bindVersion = false;
+
 			if (version == null) {
 				query.append(_FINDER_COLUMN_R_V_VERSION_1);
 			}
+			else if (version.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_V_VERSION_3);
+			}
 			else {
-				if (version.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_R_V_VERSION_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_R_V_VERSION_2);
-				}
+				bindVersion = true;
+				query.append(_FINDER_COLUMN_R_V_VERSION_2);
 			}
 
 			String sql = query.toString();
@@ -792,7 +794,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 				qPos.add(recordId);
 
-				if (version != null) {
+				if (bindVersion) {
 					qPos.add(version);
 				}
 
@@ -816,7 +818,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	private static final String _FINDER_COLUMN_R_V_RECORDID_2 = "ddlRecordVersion.recordId = ? AND ";
 	private static final String _FINDER_COLUMN_R_V_VERSION_1 = "ddlRecordVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_R_V_VERSION_2 = "ddlRecordVersion.version = ?";
-	private static final String _FINDER_COLUMN_R_V_VERSION_3 = "(ddlRecordVersion.version IS NULL OR ddlRecordVersion.version = ?)";
+	private static final String _FINDER_COLUMN_R_V_VERSION_3 = "(ddlRecordVersion.version IS NULL OR ddlRecordVersion.version = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_S = new FinderPath(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DDLRecordVersionModelImpl.FINDER_CACHE_ENABLED,
 			DDLRecordVersionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,

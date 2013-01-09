@@ -1351,16 +1351,17 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 			query.append(_FINDER_COLUMN_G_C_C_N_O_S_CLASSPK_2);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_1);
 			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_3);
+			}
 			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_2);
-				}
+				bindName = true;
+				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_2);
 			}
 
 			query.append(_FINDER_COLUMN_G_C_C_N_O_S_OWNERTYPE_2);
@@ -1384,7 +1385,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 				qPos.add(classPK);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -1491,16 +1492,17 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 			query.append(_FINDER_COLUMN_G_C_C_N_O_S_CLASSPK_2);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_1);
 			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_3);
+			}
 			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_2);
-				}
+				bindName = true;
+				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_2);
 			}
 
 			query.append(_FINDER_COLUMN_G_C_C_N_O_S_OWNERTYPE_2);
@@ -1524,7 +1526,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 				qPos.add(classPK);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -1554,7 +1556,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	private static final String _FINDER_COLUMN_G_C_C_N_O_S_CLASSPK_2 = "socialActivityCounter.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_N_O_S_NAME_1 = "socialActivityCounter.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_C_C_N_O_S_NAME_2 = "socialActivityCounter.name = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_NAME_3 = "(socialActivityCounter.name IS NULL OR socialActivityCounter.name = ?) AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_S_NAME_3 = "(socialActivityCounter.name IS NULL OR socialActivityCounter.name = '') AND ";
 	private static final String _FINDER_COLUMN_G_C_C_N_O_S_OWNERTYPE_2 = "socialActivityCounter.ownerType = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_N_O_S_STARTPERIOD_2 = "socialActivityCounter.startPeriod = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_N_O_E = new FinderPath(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
@@ -1705,16 +1707,17 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 			query.append(_FINDER_COLUMN_G_C_C_N_O_E_CLASSPK_2);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_1);
 			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_3);
+			}
 			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_2);
-				}
+				bindName = true;
+				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_2);
 			}
 
 			query.append(_FINDER_COLUMN_G_C_C_N_O_E_OWNERTYPE_2);
@@ -1738,7 +1741,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 				qPos.add(classPK);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -1845,16 +1848,17 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 			query.append(_FINDER_COLUMN_G_C_C_N_O_E_CLASSPK_2);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_1);
 			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_3);
+			}
 			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_2);
-				}
+				bindName = true;
+				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_2);
 			}
 
 			query.append(_FINDER_COLUMN_G_C_C_N_O_E_OWNERTYPE_2);
@@ -1878,7 +1882,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 				qPos.add(classPK);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -1908,7 +1912,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	private static final String _FINDER_COLUMN_G_C_C_N_O_E_CLASSPK_2 = "socialActivityCounter.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_N_O_E_NAME_1 = "socialActivityCounter.name IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_C_C_N_O_E_NAME_2 = "socialActivityCounter.name = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_NAME_3 = "(socialActivityCounter.name IS NULL OR socialActivityCounter.name = ?) AND ";
+	private static final String _FINDER_COLUMN_G_C_C_N_O_E_NAME_3 = "(socialActivityCounter.name IS NULL OR socialActivityCounter.name = '') AND ";
 	private static final String _FINDER_COLUMN_G_C_C_N_O_E_OWNERTYPE_2 = "socialActivityCounter.ownerType = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_N_O_E_ENDPERIOD_2 = "socialActivityCounter.endPeriod = ?";
 

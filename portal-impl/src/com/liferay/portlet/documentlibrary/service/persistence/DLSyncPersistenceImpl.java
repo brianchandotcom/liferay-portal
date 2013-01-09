@@ -401,10 +401,13 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 			query.append(_FINDER_COLUMN_C_M_R_COMPANYID_2);
 
+			boolean bindModifiedDate = false;
+
 			if (modifiedDate == null) {
 				query.append(_FINDER_COLUMN_C_M_R_MODIFIEDDATE_1);
 			}
 			else {
+				bindModifiedDate = true;
 				query.append(_FINDER_COLUMN_C_M_R_MODIFIEDDATE_2);
 			}
 
@@ -432,7 +435,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 				qPos.add(companyId);
 
-				if (modifiedDate != null) {
+				if (bindModifiedDate) {
 					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
 				}
 
@@ -654,10 +657,13 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 		query.append(_FINDER_COLUMN_C_M_R_COMPANYID_2);
 
+		boolean bindModifiedDate = false;
+
 		if (modifiedDate == null) {
 			query.append(_FINDER_COLUMN_C_M_R_MODIFIEDDATE_1);
 		}
 		else {
+			bindModifiedDate = true;
 			query.append(_FINDER_COLUMN_C_M_R_MODIFIEDDATE_2);
 		}
 
@@ -733,7 +739,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 		qPos.add(companyId);
 
-		if (modifiedDate != null) {
+		if (bindModifiedDate) {
 			qPos.add(CalendarUtil.getTimestamp(modifiedDate));
 		}
 
@@ -798,10 +804,13 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 			query.append(_FINDER_COLUMN_C_M_R_COMPANYID_2);
 
+			boolean bindModifiedDate = false;
+
 			if (modifiedDate == null) {
 				query.append(_FINDER_COLUMN_C_M_R_MODIFIEDDATE_1);
 			}
 			else {
+				bindModifiedDate = true;
 				query.append(_FINDER_COLUMN_C_M_R_MODIFIEDDATE_2);
 			}
 
@@ -820,7 +829,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 				qPos.add(companyId);
 
-				if (modifiedDate != null) {
+				if (bindModifiedDate) {
 					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
 				}
 

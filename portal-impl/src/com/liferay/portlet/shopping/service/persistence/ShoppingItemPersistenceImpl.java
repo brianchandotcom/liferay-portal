@@ -1716,16 +1716,17 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
 
+			boolean bindSku = false;
+
 			if (sku == null) {
 				query.append(_FINDER_COLUMN_C_S_SKU_1);
 			}
+			else if (sku.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_S_SKU_3);
+			}
 			else {
-				if (sku.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_S_SKU_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_S_SKU_2);
-				}
+				bindSku = true;
+				query.append(_FINDER_COLUMN_C_S_SKU_2);
 			}
 
 			String sql = query.toString();
@@ -1741,7 +1742,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 				qPos.add(companyId);
 
-				if (sku != null) {
+				if (bindSku) {
 					qPos.add(sku);
 				}
 
@@ -1823,16 +1824,17 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
 
+			boolean bindSku = false;
+
 			if (sku == null) {
 				query.append(_FINDER_COLUMN_C_S_SKU_1);
 			}
+			else if (sku.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_S_SKU_3);
+			}
 			else {
-				if (sku.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_S_SKU_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_S_SKU_2);
-				}
+				bindSku = true;
+				query.append(_FINDER_COLUMN_C_S_SKU_2);
 			}
 
 			String sql = query.toString();
@@ -1848,7 +1850,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 				qPos.add(companyId);
 
-				if (sku != null) {
+				if (bindSku) {
 					qPos.add(sku);
 				}
 
@@ -1872,7 +1874,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "shoppingItem.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_S_SKU_1 = "shoppingItem.sku IS NULL";
 	private static final String _FINDER_COLUMN_C_S_SKU_2 = "shoppingItem.sku = ?";
-	private static final String _FINDER_COLUMN_C_S_SKU_3 = "(shoppingItem.sku IS NULL OR shoppingItem.sku = ?)";
+	private static final String _FINDER_COLUMN_C_S_SKU_3 = "(shoppingItem.sku IS NULL OR shoppingItem.sku = '')";
 
 	/**
 	 * Caches the shopping item in the entity cache if it is enabled.

@@ -1124,16 +1124,17 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 			query.append(_FINDER_COLUMN_C_R_COUNTRYID_2);
 
+			boolean bindRegionCode = false;
+
 			if (regionCode == null) {
 				query.append(_FINDER_COLUMN_C_R_REGIONCODE_1);
 			}
+			else if (regionCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
+			}
 			else {
-				if (regionCode.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_R_REGIONCODE_2);
-				}
+				bindRegionCode = true;
+				query.append(_FINDER_COLUMN_C_R_REGIONCODE_2);
 			}
 
 			String sql = query.toString();
@@ -1149,7 +1150,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 				qPos.add(countryId);
 
-				if (regionCode != null) {
+				if (bindRegionCode) {
 					qPos.add(regionCode);
 				}
 
@@ -1232,16 +1233,17 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 			query.append(_FINDER_COLUMN_C_R_COUNTRYID_2);
 
+			boolean bindRegionCode = false;
+
 			if (regionCode == null) {
 				query.append(_FINDER_COLUMN_C_R_REGIONCODE_1);
 			}
+			else if (regionCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
+			}
 			else {
-				if (regionCode.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_R_REGIONCODE_2);
-				}
+				bindRegionCode = true;
+				query.append(_FINDER_COLUMN_C_R_REGIONCODE_2);
 			}
 
 			String sql = query.toString();
@@ -1257,7 +1259,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 				qPos.add(countryId);
 
-				if (regionCode != null) {
+				if (bindRegionCode) {
 					qPos.add(regionCode);
 				}
 
@@ -1281,7 +1283,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	private static final String _FINDER_COLUMN_C_R_COUNTRYID_2 = "region.countryId = ? AND ";
 	private static final String _FINDER_COLUMN_C_R_REGIONCODE_1 = "region.regionCode IS NULL";
 	private static final String _FINDER_COLUMN_C_R_REGIONCODE_2 = "region.regionCode = ?";
-	private static final String _FINDER_COLUMN_C_R_REGIONCODE_3 = "(region.regionCode IS NULL OR region.regionCode = ?)";
+	private static final String _FINDER_COLUMN_C_R_REGIONCODE_3 = "(region.regionCode IS NULL OR region.regionCode = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_A = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",

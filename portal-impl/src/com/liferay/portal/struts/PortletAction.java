@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -327,6 +329,15 @@ public class PortletAction extends Action {
 			String redirect)
 		throws IOException, SystemException {
 
+		sendRedirect(null, actionRequest, actionResponse, redirect, null);
+	}
+
+	protected void sendRedirect(
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse, String redirect,
+			String closeRedirect)
+		throws IOException, SystemException {
+
 		if (isDisplaySuccessMessage(actionRequest)) {
 			addSuccessMessage(actionRequest, actionResponse);
 		}
@@ -337,6 +348,22 @@ public class PortletAction extends Action {
 
 		if (Validator.isNull(redirect)) {
 			redirect = ParamUtil.getString(actionRequest, "redirect");
+		}
+
+		if (Validator.isNotNull(redirect) &&
+			Validator.isNotNull(closeRedirect) && (portletConfig != null)) {
+
+			redirect = HttpUtil.setParameter(
+				redirect, "closeRedirect", closeRedirect);
+
+			LiferayPortletConfig liferayPortletConfig =
+				(LiferayPortletConfig)portletConfig;
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT,
+				closeRedirect);
 		}
 
 		if (Validator.isNotNull(redirect)) {

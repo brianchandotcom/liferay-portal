@@ -73,6 +73,8 @@ public class SQLChecker extends BaseChecker {
 			}
 			catch (Exception e) {
 				_log.error("Unable to parse SQL " + sql);
+
+				return rule;
 			}
 
 			if (statement instanceof CreateTable) {

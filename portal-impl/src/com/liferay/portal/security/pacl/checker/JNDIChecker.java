@@ -36,18 +36,6 @@ public class JNDIChecker extends BaseChecker {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean hasJNDI(String name) {
-		for (Pattern pattern : _patterns) {
-			Matcher matcher = pattern.matcher(name);
-
-			if (matcher.matches()) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	@Override
 	public String[] generateRuleFromCondition(Object... args) {
 		String[] rule = new String[2];
@@ -60,6 +48,18 @@ public class JNDIChecker extends BaseChecker {
 		}
 
 		return rule;
+	}
+
+	public boolean hasJNDI(String name) {
+		for (Pattern pattern : _patterns) {
+			Matcher matcher = pattern.matcher(name);
+
+			if (matcher.matches()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected void initNames() {

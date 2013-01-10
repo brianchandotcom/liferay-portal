@@ -504,6 +504,13 @@ public interface TrashHandler {
 	 */
 	public boolean isContainerModel();
 
+	/**
+	 * Returns <code>true</code> if the entity can be deleted from the Recycle
+	 * Bin.
+	 *
+	 * @return <code>true</code> if the entity can be deleted from the Recycle
+	 *         Bin.
+	 */
 	public boolean isDeletable();
 
 	/**

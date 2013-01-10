@@ -62,6 +62,23 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 		</c:choose>
 
 		<liferay-util:buffer var="selectScope">
+			<aui:select label="" name="preferences--defaultScope--" onChange='<%= renderResponse.getNamespace() + "selectScope();" %>'>
+				<aui:option label='<%= LanguageUtil.get(pageContext,"select-more-than-one") + "..." %>' selected="<%= groupIds.length > 1 %>" value="<%= false %>" />
+
+				<optgroup label="<liferay-ui:message key="scopes" />">
+
+					<%
+					for (Group group : groups) {
+					%>
+
+						<aui:option label="<%= _getName(group, locale) %>" selected="<%= (groupIds.length == 1) && (group.getGroupId() == groupIds[0]) %>" value="<%= _getScopeId(group, scopeGroupId) %>" />
+
+					<%
+					}
+					%>
+
+				</optgroup>
+			</aui:select>
 
 			<%
 			Set<Group> groups = new HashSet<Group>();
@@ -99,24 +116,6 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 
 			scopesRightList = ListUtil.sort(scopesRightList, new KeyValuePairComparator(false, true));
 			%>
-
-			<aui:select label="" name="preferences--defaultScope--" onChange='<%= renderResponse.getNamespace() + "selectScope();" %>'>
-				<aui:option label='<%= LanguageUtil.get(pageContext,"select-more-than-one") + "..." %>' selected="<%= groupIds.length > 1 %>" value="<%= false %>" />
-
-				<optgroup label="<liferay-ui:message key="scopes" />">
-
-					<%
-					for (Group group : groups) {
-					%>
-
-						<aui:option label="<%= _getName(group, locale) %>" selected="<%= (groupIds.length == 1) && (group.getGroupId() == groupIds[0]) %>" value="<%= _getScopeId(group, scopeGroupId) %>" />
-
-					<%
-					}
-					%>
-
-				</optgroup>
-			</aui:select>
 
 			<aui:input name="preferences--scopeIds--" type="hidden" />
 

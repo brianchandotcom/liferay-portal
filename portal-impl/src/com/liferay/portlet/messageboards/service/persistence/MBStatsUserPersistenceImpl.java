@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2148,13 +2147,24 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 *
 	 * @param primaryKey the primary key of the message boards stats user
 	 * @return the message boards stats user
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards stats user with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchStatsUserException if a message boards stats user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBStatsUser findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchStatsUserException, SystemException {
+		MBStatsUser mbStatsUser = fetchByPrimaryKey(primaryKey);
+
+		if (mbStatsUser == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchStatsUserException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return mbStatsUser;
 	}
 
 	/**
@@ -2167,18 +2177,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	public MBStatsUser findByPrimaryKey(long statsUserId)
 		throws NoSuchStatsUserException, SystemException {
-		MBStatsUser mbStatsUser = fetchByPrimaryKey(statsUserId);
-
-		if (mbStatsUser == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + statsUserId);
-			}
-
-			throw new NoSuchStatsUserException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				statsUserId);
-		}
-
-		return mbStatsUser;
+		return findByPrimaryKey((Serializable)statsUserId);
 	}
 
 	/**
@@ -2191,20 +2190,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	@Override
 	public MBStatsUser fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the message boards stats user with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param statsUserId the primary key of the message boards stats user
-	 * @return the message boards stats user, or <code>null</code> if a message boards stats user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBStatsUser fetchByPrimaryKey(long statsUserId)
-		throws SystemException {
 		MBStatsUser mbStatsUser = (MBStatsUser)EntityCacheUtil.getResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				MBStatsUserImpl.class, statsUserId);
+				MBStatsUserImpl.class, primaryKey);
 
 		if (mbStatsUser == _nullMBStatsUser) {
 			return null;
@@ -2217,19 +2204,19 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 				session = openSession();
 
 				mbStatsUser = (MBStatsUser)session.get(MBStatsUserImpl.class,
-						Long.valueOf(statsUserId));
+						primaryKey);
 
 				if (mbStatsUser != null) {
 					cacheResult(mbStatsUser);
 				}
 				else {
 					EntityCacheUtil.putResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-						MBStatsUserImpl.class, statsUserId, _nullMBStatsUser);
+						MBStatsUserImpl.class, primaryKey, _nullMBStatsUser);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-					MBStatsUserImpl.class, statsUserId);
+					MBStatsUserImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2239,6 +2226,18 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		}
 
 		return mbStatsUser;
+	}
+
+	/**
+	 * Returns the message boards stats user with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param statsUserId the primary key of the message boards stats user
+	 * @return the message boards stats user, or <code>null</code> if a message boards stats user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBStatsUser fetchByPrimaryKey(long statsUserId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)statsUserId);
 	}
 
 	/**

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.polls.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2653,13 +2652,24 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 *
 	 * @param primaryKey the primary key of the polls question
 	 * @return the polls question
-	 * @throws com.liferay.portal.NoSuchModelException if a polls question with the primary key could not be found
+	 * @throws com.liferay.portlet.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsQuestion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchQuestionException, SystemException {
+		PollsQuestion pollsQuestion = fetchByPrimaryKey(primaryKey);
+
+		if (pollsQuestion == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchQuestionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return pollsQuestion;
 	}
 
 	/**
@@ -2672,18 +2682,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	 */
 	public PollsQuestion findByPrimaryKey(long questionId)
 		throws NoSuchQuestionException, SystemException {
-		PollsQuestion pollsQuestion = fetchByPrimaryKey(questionId);
-
-		if (pollsQuestion == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + questionId);
-			}
-
-			throw new NoSuchQuestionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				questionId);
-		}
-
-		return pollsQuestion;
+		return findByPrimaryKey((Serializable)questionId);
 	}
 
 	/**
@@ -2696,20 +2695,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	@Override
 	public PollsQuestion fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the polls question with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param questionId the primary key of the polls question
-	 * @return the polls question, or <code>null</code> if a polls question with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PollsQuestion fetchByPrimaryKey(long questionId)
-		throws SystemException {
 		PollsQuestion pollsQuestion = (PollsQuestion)EntityCacheUtil.getResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
-				PollsQuestionImpl.class, questionId);
+				PollsQuestionImpl.class, primaryKey);
 
 		if (pollsQuestion == _nullPollsQuestion) {
 			return null;
@@ -2722,19 +2709,19 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 				session = openSession();
 
 				pollsQuestion = (PollsQuestion)session.get(PollsQuestionImpl.class,
-						Long.valueOf(questionId));
+						primaryKey);
 
 				if (pollsQuestion != null) {
 					cacheResult(pollsQuestion);
 				}
 				else {
 					EntityCacheUtil.putResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
-						PollsQuestionImpl.class, questionId, _nullPollsQuestion);
+						PollsQuestionImpl.class, primaryKey, _nullPollsQuestion);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
-					PollsQuestionImpl.class, questionId);
+					PollsQuestionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2744,6 +2731,18 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		}
 
 		return pollsQuestion;
+	}
+
+	/**
+	 * Returns the polls question with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param questionId the primary key of the polls question
+	 * @return the polls question, or <code>null</code> if a polls question with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PollsQuestion fetchByPrimaryKey(long questionId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)questionId);
 	}
 
 	/**

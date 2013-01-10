@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchPortletItemException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -1927,13 +1926,24 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 *
 	 * @param primaryKey the primary key of the portlet item
 	 * @return the portlet item
-	 * @throws com.liferay.portal.NoSuchModelException if a portlet item with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPortletItemException if a portlet item with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PortletItem findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchPortletItemException, SystemException {
+		PortletItem portletItem = fetchByPrimaryKey(primaryKey);
+
+		if (portletItem == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchPortletItemException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return portletItem;
 	}
 
 	/**
@@ -1946,18 +1956,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	public PortletItem findByPrimaryKey(long portletItemId)
 		throws NoSuchPortletItemException, SystemException {
-		PortletItem portletItem = fetchByPrimaryKey(portletItemId);
-
-		if (portletItem == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + portletItemId);
-			}
-
-			throw new NoSuchPortletItemException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				portletItemId);
-		}
-
-		return portletItem;
+		return findByPrimaryKey((Serializable)portletItemId);
 	}
 
 	/**
@@ -1970,20 +1969,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	@Override
 	public PortletItem fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the portlet item with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param portletItemId the primary key of the portlet item
-	 * @return the portlet item, or <code>null</code> if a portlet item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletItem fetchByPrimaryKey(long portletItemId)
-		throws SystemException {
 		PortletItem portletItem = (PortletItem)EntityCacheUtil.getResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-				PortletItemImpl.class, portletItemId);
+				PortletItemImpl.class, primaryKey);
 
 		if (portletItem == _nullPortletItem) {
 			return null;
@@ -1996,19 +1983,19 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 				session = openSession();
 
 				portletItem = (PortletItem)session.get(PortletItemImpl.class,
-						Long.valueOf(portletItemId));
+						primaryKey);
 
 				if (portletItem != null) {
 					cacheResult(portletItem);
 				}
 				else {
 					EntityCacheUtil.putResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-						PortletItemImpl.class, portletItemId, _nullPortletItem);
+						PortletItemImpl.class, primaryKey, _nullPortletItem);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-					PortletItemImpl.class, portletItemId);
+					PortletItemImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2018,6 +2005,18 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		}
 
 		return portletItem;
+	}
+
+	/**
+	 * Returns the portlet item with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param portletItemId the primary key of the portlet item
+	 * @return the portlet item, or <code>null</code> if a portlet item with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletItem fetchByPrimaryKey(long portletItemId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)portletItemId);
 	}
 
 	/**

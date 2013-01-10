@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchLayoutPrototypeException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -4069,13 +4068,24 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	 *
 	 * @param primaryKey the primary key of the layout prototype
 	 * @return the layout prototype
-	 * @throws com.liferay.portal.NoSuchModelException if a layout prototype with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutPrototype findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchLayoutPrototypeException, SystemException {
+		LayoutPrototype layoutPrototype = fetchByPrimaryKey(primaryKey);
+
+		if (layoutPrototype == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchLayoutPrototypeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return layoutPrototype;
 	}
 
 	/**
@@ -4088,18 +4098,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	 */
 	public LayoutPrototype findByPrimaryKey(long layoutPrototypeId)
 		throws NoSuchLayoutPrototypeException, SystemException {
-		LayoutPrototype layoutPrototype = fetchByPrimaryKey(layoutPrototypeId);
-
-		if (layoutPrototype == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + layoutPrototypeId);
-			}
-
-			throw new NoSuchLayoutPrototypeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				layoutPrototypeId);
-		}
-
-		return layoutPrototype;
+		return findByPrimaryKey((Serializable)layoutPrototypeId);
 	}
 
 	/**
@@ -4112,20 +4111,8 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	@Override
 	public LayoutPrototype fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the layout prototype with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param layoutPrototypeId the primary key of the layout prototype
-	 * @return the layout prototype, or <code>null</code> if a layout prototype with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public LayoutPrototype fetchByPrimaryKey(long layoutPrototypeId)
-		throws SystemException {
 		LayoutPrototype layoutPrototype = (LayoutPrototype)EntityCacheUtil.getResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutPrototypeImpl.class, layoutPrototypeId);
+				LayoutPrototypeImpl.class, primaryKey);
 
 		if (layoutPrototype == _nullLayoutPrototype) {
 			return null;
@@ -4138,20 +4125,20 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 				session = openSession();
 
 				layoutPrototype = (LayoutPrototype)session.get(LayoutPrototypeImpl.class,
-						Long.valueOf(layoutPrototypeId));
+						primaryKey);
 
 				if (layoutPrototype != null) {
 					cacheResult(layoutPrototype);
 				}
 				else {
 					EntityCacheUtil.putResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutPrototypeImpl.class, layoutPrototypeId,
+						LayoutPrototypeImpl.class, primaryKey,
 						_nullLayoutPrototype);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutPrototypeImpl.class, layoutPrototypeId);
+					LayoutPrototypeImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -4161,6 +4148,18 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		}
 
 		return layoutPrototype;
+	}
+
+	/**
+	 * Returns the layout prototype with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param layoutPrototypeId the primary key of the layout prototype
+	 * @return the layout prototype, or <code>null</code> if a layout prototype with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public LayoutPrototype fetchByPrimaryKey(long layoutPrototypeId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)layoutPrototypeId);
 	}
 
 	/**

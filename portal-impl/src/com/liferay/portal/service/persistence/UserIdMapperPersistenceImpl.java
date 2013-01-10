@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchUserIdMapperException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -1495,13 +1494,24 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 *
 	 * @param primaryKey the primary key of the user ID mapper
 	 * @return the user ID mapper
-	 * @throws com.liferay.portal.NoSuchModelException if a user ID mapper with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchUserIdMapperException, SystemException {
+		UserIdMapper userIdMapper = fetchByPrimaryKey(primaryKey);
+
+		if (userIdMapper == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchUserIdMapperException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return userIdMapper;
 	}
 
 	/**
@@ -1514,18 +1524,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 */
 	public UserIdMapper findByPrimaryKey(long userIdMapperId)
 		throws NoSuchUserIdMapperException, SystemException {
-		UserIdMapper userIdMapper = fetchByPrimaryKey(userIdMapperId);
-
-		if (userIdMapper == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + userIdMapperId);
-			}
-
-			throw new NoSuchUserIdMapperException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				userIdMapperId);
-		}
-
-		return userIdMapper;
+		return findByPrimaryKey((Serializable)userIdMapperId);
 	}
 
 	/**
@@ -1538,20 +1537,8 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	@Override
 	public UserIdMapper fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the user ID mapper with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param userIdMapperId the primary key of the user ID mapper
-	 * @return the user ID mapper, or <code>null</code> if a user ID mapper with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserIdMapper fetchByPrimaryKey(long userIdMapperId)
-		throws SystemException {
 		UserIdMapper userIdMapper = (UserIdMapper)EntityCacheUtil.getResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-				UserIdMapperImpl.class, userIdMapperId);
+				UserIdMapperImpl.class, primaryKey);
 
 		if (userIdMapper == _nullUserIdMapper) {
 			return null;
@@ -1564,20 +1551,19 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 				session = openSession();
 
 				userIdMapper = (UserIdMapper)session.get(UserIdMapperImpl.class,
-						Long.valueOf(userIdMapperId));
+						primaryKey);
 
 				if (userIdMapper != null) {
 					cacheResult(userIdMapper);
 				}
 				else {
 					EntityCacheUtil.putResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-						UserIdMapperImpl.class, userIdMapperId,
-						_nullUserIdMapper);
+						UserIdMapperImpl.class, primaryKey, _nullUserIdMapper);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-					UserIdMapperImpl.class, userIdMapperId);
+					UserIdMapperImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1587,6 +1573,18 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		}
 
 		return userIdMapper;
+	}
+
+	/**
+	 * Returns the user ID mapper with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param userIdMapperId the primary key of the user ID mapper
+	 * @return the user ID mapper, or <code>null</code> if a user ID mapper with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserIdMapper fetchByPrimaryKey(long userIdMapperId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)userIdMapperId);
 	}
 
 	/**

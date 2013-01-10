@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchContactException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1880,13 +1879,24 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 *
 	 * @param primaryKey the primary key of the contact
 	 * @return the contact
-	 * @throws com.liferay.portal.NoSuchModelException if a contact with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchContactException if a contact with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Contact findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchContactException, SystemException {
+		Contact contact = fetchByPrimaryKey(primaryKey);
+
+		if (contact == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchContactException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return contact;
 	}
 
 	/**
@@ -1899,18 +1909,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 */
 	public Contact findByPrimaryKey(long contactId)
 		throws NoSuchContactException, SystemException {
-		Contact contact = fetchByPrimaryKey(contactId);
-
-		if (contact == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + contactId);
-			}
-
-			throw new NoSuchContactException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				contactId);
-		}
-
-		return contact;
+		return findByPrimaryKey((Serializable)contactId);
 	}
 
 	/**
@@ -1923,19 +1922,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	@Override
 	public Contact fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the contact with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param contactId the primary key of the contact
-	 * @return the contact, or <code>null</code> if a contact with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Contact fetchByPrimaryKey(long contactId) throws SystemException {
 		Contact contact = (Contact)EntityCacheUtil.getResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
-				ContactImpl.class, contactId);
+				ContactImpl.class, primaryKey);
 
 		if (contact == _nullContact) {
 			return null;
@@ -1947,20 +1935,19 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			try {
 				session = openSession();
 
-				contact = (Contact)session.get(ContactImpl.class,
-						Long.valueOf(contactId));
+				contact = (Contact)session.get(ContactImpl.class, primaryKey);
 
 				if (contact != null) {
 					cacheResult(contact);
 				}
 				else {
 					EntityCacheUtil.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
-						ContactImpl.class, contactId, _nullContact);
+						ContactImpl.class, primaryKey, _nullContact);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
-					ContactImpl.class, contactId);
+					ContactImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1970,6 +1957,17 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		}
 
 		return contact;
+	}
+
+	/**
+	 * Returns the contact with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param contactId the primary key of the contact
+	 * @return the contact, or <code>null</code> if a contact with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Contact fetchByPrimaryKey(long contactId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)contactId);
 	}
 
 	/**

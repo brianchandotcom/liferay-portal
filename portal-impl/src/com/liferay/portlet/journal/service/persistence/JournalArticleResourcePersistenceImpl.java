@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2031,13 +2030,24 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 *
 	 * @param primaryKey the primary key of the journal article resource
 	 * @return the journal article resource
-	 * @throws com.liferay.portal.NoSuchModelException if a journal article resource with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalArticleResource findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchArticleResourceException, SystemException {
+		JournalArticleResource journalArticleResource = fetchByPrimaryKey(primaryKey);
+
+		if (journalArticleResource == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchArticleResourceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return journalArticleResource;
 	}
 
 	/**
@@ -2050,18 +2060,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 */
 	public JournalArticleResource findByPrimaryKey(long resourcePrimKey)
 		throws NoSuchArticleResourceException, SystemException {
-		JournalArticleResource journalArticleResource = fetchByPrimaryKey(resourcePrimKey);
-
-		if (journalArticleResource == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + resourcePrimKey);
-			}
-
-			throw new NoSuchArticleResourceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				resourcePrimKey);
-		}
-
-		return journalArticleResource;
+		return findByPrimaryKey((Serializable)resourcePrimKey);
 	}
 
 	/**
@@ -2074,20 +2073,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	@Override
 	public JournalArticleResource fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the journal article resource with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param resourcePrimKey the primary key of the journal article resource
-	 * @return the journal article resource, or <code>null</code> if a journal article resource with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleResource fetchByPrimaryKey(long resourcePrimKey)
-		throws SystemException {
 		JournalArticleResource journalArticleResource = (JournalArticleResource)EntityCacheUtil.getResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-				JournalArticleResourceImpl.class, resourcePrimKey);
+				JournalArticleResourceImpl.class, primaryKey);
 
 		if (journalArticleResource == _nullJournalArticleResource) {
 			return null;
@@ -2100,20 +2087,20 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 				session = openSession();
 
 				journalArticleResource = (JournalArticleResource)session.get(JournalArticleResourceImpl.class,
-						Long.valueOf(resourcePrimKey));
+						primaryKey);
 
 				if (journalArticleResource != null) {
 					cacheResult(journalArticleResource);
 				}
 				else {
 					EntityCacheUtil.putResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-						JournalArticleResourceImpl.class, resourcePrimKey,
+						JournalArticleResourceImpl.class, primaryKey,
 						_nullJournalArticleResource);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleResourceImpl.class, resourcePrimKey);
+					JournalArticleResourceImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2123,6 +2110,18 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		}
 
 		return journalArticleResource;
+	}
+
+	/**
+	 * Returns the journal article resource with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param resourcePrimKey the primary key of the journal article resource
+	 * @return the journal article resource, or <code>null</code> if a journal article resource with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleResource fetchByPrimaryKey(long resourcePrimKey)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)resourcePrimKey);
 	}
 
 	/**

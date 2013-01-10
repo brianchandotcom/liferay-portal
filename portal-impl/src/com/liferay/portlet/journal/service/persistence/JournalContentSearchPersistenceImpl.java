@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -4915,13 +4914,24 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	 *
 	 * @param primaryKey the primary key of the journal content search
 	 * @return the journal content search
-	 * @throws com.liferay.portal.NoSuchModelException if a journal content search with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchContentSearchException if a journal content search with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalContentSearch findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = fetchByPrimaryKey(primaryKey);
+
+		if (journalContentSearch == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchContentSearchException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return journalContentSearch;
 	}
 
 	/**
@@ -4934,18 +4944,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	 */
 	public JournalContentSearch findByPrimaryKey(long contentSearchId)
 		throws NoSuchContentSearchException, SystemException {
-		JournalContentSearch journalContentSearch = fetchByPrimaryKey(contentSearchId);
-
-		if (journalContentSearch == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + contentSearchId);
-			}
-
-			throw new NoSuchContentSearchException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				contentSearchId);
-		}
-
-		return journalContentSearch;
+		return findByPrimaryKey((Serializable)contentSearchId);
 	}
 
 	/**
@@ -4958,20 +4957,8 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	@Override
 	public JournalContentSearch fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the journal content search with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param contentSearchId the primary key of the journal content search
-	 * @return the journal content search, or <code>null</code> if a journal content search with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalContentSearch fetchByPrimaryKey(long contentSearchId)
-		throws SystemException {
 		JournalContentSearch journalContentSearch = (JournalContentSearch)EntityCacheUtil.getResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-				JournalContentSearchImpl.class, contentSearchId);
+				JournalContentSearchImpl.class, primaryKey);
 
 		if (journalContentSearch == _nullJournalContentSearch) {
 			return null;
@@ -4984,20 +4971,20 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				session = openSession();
 
 				journalContentSearch = (JournalContentSearch)session.get(JournalContentSearchImpl.class,
-						Long.valueOf(contentSearchId));
+						primaryKey);
 
 				if (journalContentSearch != null) {
 					cacheResult(journalContentSearch);
 				}
 				else {
 					EntityCacheUtil.putResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-						JournalContentSearchImpl.class, contentSearchId,
+						JournalContentSearchImpl.class, primaryKey,
 						_nullJournalContentSearch);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-					JournalContentSearchImpl.class, contentSearchId);
+					JournalContentSearchImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -5007,6 +4994,18 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		}
 
 		return journalContentSearch;
+	}
+
+	/**
+	 * Returns the journal content search with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param contentSearchId the primary key of the journal content search
+	 * @return the journal content search, or <code>null</code> if a journal content search with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch fetchByPrimaryKey(long contentSearchId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)contentSearchId);
 	}
 
 	/**

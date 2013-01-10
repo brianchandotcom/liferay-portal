@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -5380,13 +5379,24 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	 *
 	 * @param primaryKey the primary key of the social activity
 	 * @return the social activity
-	 * @throws com.liferay.portal.NoSuchModelException if a social activity with the primary key could not be found
+	 * @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialActivity findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchActivityException, SystemException {
+		SocialActivity socialActivity = fetchByPrimaryKey(primaryKey);
+
+		if (socialActivity == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchActivityException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return socialActivity;
 	}
 
 	/**
@@ -5399,18 +5409,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	 */
 	public SocialActivity findByPrimaryKey(long activityId)
 		throws NoSuchActivityException, SystemException {
-		SocialActivity socialActivity = fetchByPrimaryKey(activityId);
-
-		if (socialActivity == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + activityId);
-			}
-
-			throw new NoSuchActivityException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				activityId);
-		}
-
-		return socialActivity;
+		return findByPrimaryKey((Serializable)activityId);
 	}
 
 	/**
@@ -5423,20 +5422,8 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	@Override
 	public SocialActivity fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the social activity with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param activityId the primary key of the social activity
-	 * @return the social activity, or <code>null</code> if a social activity with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivity fetchByPrimaryKey(long activityId)
-		throws SystemException {
 		SocialActivity socialActivity = (SocialActivity)EntityCacheUtil.getResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-				SocialActivityImpl.class, activityId);
+				SocialActivityImpl.class, primaryKey);
 
 		if (socialActivity == _nullSocialActivity) {
 			return null;
@@ -5449,20 +5436,20 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				session = openSession();
 
 				socialActivity = (SocialActivity)session.get(SocialActivityImpl.class,
-						Long.valueOf(activityId));
+						primaryKey);
 
 				if (socialActivity != null) {
 					cacheResult(socialActivity);
 				}
 				else {
 					EntityCacheUtil.putResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-						SocialActivityImpl.class, activityId,
+						SocialActivityImpl.class, primaryKey,
 						_nullSocialActivity);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivityImpl.class, activityId);
+					SocialActivityImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -5472,6 +5459,18 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		}
 
 		return socialActivity;
+	}
+
+	/**
+	 * Returns the social activity with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param activityId the primary key of the social activity
+	 * @return the social activity, or <code>null</code> if a social activity with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivity fetchByPrimaryKey(long activityId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)activityId);
 	}
 
 	/**

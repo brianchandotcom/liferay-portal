@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2577,13 +2576,24 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 *
 	 * @param primaryKey the primary key of the message boards mailing list
 	 * @return the message boards mailing list
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards mailing list with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBMailingList findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchMailingListException, SystemException {
+		MBMailingList mbMailingList = fetchByPrimaryKey(primaryKey);
+
+		if (mbMailingList == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchMailingListException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return mbMailingList;
 	}
 
 	/**
@@ -2596,18 +2606,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	public MBMailingList findByPrimaryKey(long mailingListId)
 		throws NoSuchMailingListException, SystemException {
-		MBMailingList mbMailingList = fetchByPrimaryKey(mailingListId);
-
-		if (mbMailingList == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + mailingListId);
-			}
-
-			throw new NoSuchMailingListException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				mailingListId);
-		}
-
-		return mbMailingList;
+		return findByPrimaryKey((Serializable)mailingListId);
 	}
 
 	/**
@@ -2620,20 +2619,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	@Override
 	public MBMailingList fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the message boards mailing list with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param mailingListId the primary key of the message boards mailing list
-	 * @return the message boards mailing list, or <code>null</code> if a message boards mailing list with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBMailingList fetchByPrimaryKey(long mailingListId)
-		throws SystemException {
 		MBMailingList mbMailingList = (MBMailingList)EntityCacheUtil.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-				MBMailingListImpl.class, mailingListId);
+				MBMailingListImpl.class, primaryKey);
 
 		if (mbMailingList == _nullMBMailingList) {
 			return null;
@@ -2646,20 +2633,19 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				session = openSession();
 
 				mbMailingList = (MBMailingList)session.get(MBMailingListImpl.class,
-						Long.valueOf(mailingListId));
+						primaryKey);
 
 				if (mbMailingList != null) {
 					cacheResult(mbMailingList);
 				}
 				else {
 					EntityCacheUtil.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-						MBMailingListImpl.class, mailingListId,
-						_nullMBMailingList);
+						MBMailingListImpl.class, primaryKey, _nullMBMailingList);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-					MBMailingListImpl.class, mailingListId);
+					MBMailingListImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2669,6 +2655,18 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		}
 
 		return mbMailingList;
+	}
+
+	/**
+	 * Returns the message boards mailing list with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param mailingListId the primary key of the message boards mailing list
+	 * @return the message boards mailing list, or <code>null</code> if a message boards mailing list with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBMailingList fetchByPrimaryKey(long mailingListId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)mailingListId);
 	}
 
 	/**

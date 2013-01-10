@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchUserNotificationEventException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -2518,13 +2517,24 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 *
 	 * @param primaryKey the primary key of the user notification event
 	 * @return the user notification event
-	 * @throws com.liferay.portal.NoSuchModelException if a user notification event with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationEvent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchUserNotificationEventException, SystemException {
+		UserNotificationEvent userNotificationEvent = fetchByPrimaryKey(primaryKey);
+
+		if (userNotificationEvent == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchUserNotificationEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return userNotificationEvent;
 	}
 
 	/**
@@ -2537,19 +2547,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	public UserNotificationEvent findByPrimaryKey(long userNotificationEventId)
 		throws NoSuchUserNotificationEventException, SystemException {
-		UserNotificationEvent userNotificationEvent = fetchByPrimaryKey(userNotificationEventId);
-
-		if (userNotificationEvent == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					userNotificationEventId);
-			}
-
-			throw new NoSuchUserNotificationEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				userNotificationEventId);
-		}
-
-		return userNotificationEvent;
+		return findByPrimaryKey((Serializable)userNotificationEventId);
 	}
 
 	/**
@@ -2562,20 +2560,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public UserNotificationEvent fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the user notification event with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param userNotificationEventId the primary key of the user notification event
-	 * @return the user notification event, or <code>null</code> if a user notification event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserNotificationEvent fetchByPrimaryKey(long userNotificationEventId)
-		throws SystemException {
 		UserNotificationEvent userNotificationEvent = (UserNotificationEvent)EntityCacheUtil.getResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
-				UserNotificationEventImpl.class, userNotificationEventId);
+				UserNotificationEventImpl.class, primaryKey);
 
 		if (userNotificationEvent == _nullUserNotificationEvent) {
 			return null;
@@ -2588,20 +2574,20 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 				session = openSession();
 
 				userNotificationEvent = (UserNotificationEvent)session.get(UserNotificationEventImpl.class,
-						Long.valueOf(userNotificationEventId));
+						primaryKey);
 
 				if (userNotificationEvent != null) {
 					cacheResult(userNotificationEvent);
 				}
 				else {
 					EntityCacheUtil.putResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
-						UserNotificationEventImpl.class,
-						userNotificationEventId, _nullUserNotificationEvent);
+						UserNotificationEventImpl.class, primaryKey,
+						_nullUserNotificationEvent);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
-					UserNotificationEventImpl.class, userNotificationEventId);
+					UserNotificationEventImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2611,6 +2597,18 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		}
 
 		return userNotificationEvent;
+	}
+
+	/**
+	 * Returns the user notification event with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param userNotificationEventId the primary key of the user notification event
+	 * @return the user notification event, or <code>null</code> if a user notification event with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserNotificationEvent fetchByPrimaryKey(long userNotificationEventId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)userNotificationEventId);
 	}
 
 	/**

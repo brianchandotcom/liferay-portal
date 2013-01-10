@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2758,13 +2757,24 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	 *
 	 * @param primaryKey the primary key of the document library file rank
 	 * @return the document library file rank
-	 * @throws com.liferay.portal.NoSuchModelException if a document library file rank with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a document library file rank with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileRank findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchFileRankException, SystemException {
+		DLFileRank dlFileRank = fetchByPrimaryKey(primaryKey);
+
+		if (dlFileRank == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchFileRankException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return dlFileRank;
 	}
 
 	/**
@@ -2777,18 +2787,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	 */
 	public DLFileRank findByPrimaryKey(long fileRankId)
 		throws NoSuchFileRankException, SystemException {
-		DLFileRank dlFileRank = fetchByPrimaryKey(fileRankId);
-
-		if (dlFileRank == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + fileRankId);
-			}
-
-			throw new NoSuchFileRankException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				fileRankId);
-		}
-
-		return dlFileRank;
+		return findByPrimaryKey((Serializable)fileRankId);
 	}
 
 	/**
@@ -2801,20 +2800,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	@Override
 	public DLFileRank fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the document library file rank with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param fileRankId the primary key of the document library file rank
-	 * @return the document library file rank, or <code>null</code> if a document library file rank with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFileRank fetchByPrimaryKey(long fileRankId)
-		throws SystemException {
 		DLFileRank dlFileRank = (DLFileRank)EntityCacheUtil.getResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileRankImpl.class, fileRankId);
+				DLFileRankImpl.class, primaryKey);
 
 		if (dlFileRank == _nullDLFileRank) {
 			return null;
@@ -2827,19 +2814,19 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 				session = openSession();
 
 				dlFileRank = (DLFileRank)session.get(DLFileRankImpl.class,
-						Long.valueOf(fileRankId));
+						primaryKey);
 
 				if (dlFileRank != null) {
 					cacheResult(dlFileRank);
 				}
 				else {
 					EntityCacheUtil.putResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileRankImpl.class, fileRankId, _nullDLFileRank);
+						DLFileRankImpl.class, primaryKey, _nullDLFileRank);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileRankImpl.class, fileRankId);
+					DLFileRankImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2849,6 +2836,18 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		}
 
 		return dlFileRank;
+	}
+
+	/**
+	 * Returns the document library file rank with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param fileRankId the primary key of the document library file rank
+	 * @return the document library file rank, or <code>null</code> if a document library file rank with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileRank fetchByPrimaryKey(long fileRankId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)fileRankId);
 	}
 
 	/**

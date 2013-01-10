@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
@@ -1528,13 +1527,24 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 *
 	 * @param primaryKey the primary key of the asset tag
 	 * @return the asset tag
-	 * @throws com.liferay.portal.NoSuchModelException if a asset tag with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchTagException if a asset tag with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTag findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchTagException, SystemException {
+		AssetTag assetTag = fetchByPrimaryKey(primaryKey);
+
+		if (assetTag == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchTagException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return assetTag;
 	}
 
 	/**
@@ -1547,18 +1557,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	public AssetTag findByPrimaryKey(long tagId)
 		throws NoSuchTagException, SystemException {
-		AssetTag assetTag = fetchByPrimaryKey(tagId);
-
-		if (assetTag == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + tagId);
-			}
-
-			throw new NoSuchTagException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				tagId);
-		}
-
-		return assetTag;
+		return findByPrimaryKey((Serializable)tagId);
 	}
 
 	/**
@@ -1571,19 +1570,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	@Override
 	public AssetTag fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the asset tag with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param tagId the primary key of the asset tag
-	 * @return the asset tag, or <code>null</code> if a asset tag with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetTag fetchByPrimaryKey(long tagId) throws SystemException {
 		AssetTag assetTag = (AssetTag)EntityCacheUtil.getResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-				AssetTagImpl.class, tagId);
+				AssetTagImpl.class, primaryKey);
 
 		if (assetTag == _nullAssetTag) {
 			return null;
@@ -1595,20 +1583,19 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 			try {
 				session = openSession();
 
-				assetTag = (AssetTag)session.get(AssetTagImpl.class,
-						Long.valueOf(tagId));
+				assetTag = (AssetTag)session.get(AssetTagImpl.class, primaryKey);
 
 				if (assetTag != null) {
 					cacheResult(assetTag);
 				}
 				else {
 					EntityCacheUtil.putResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-						AssetTagImpl.class, tagId, _nullAssetTag);
+						AssetTagImpl.class, primaryKey, _nullAssetTag);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-					AssetTagImpl.class, tagId);
+					AssetTagImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1618,6 +1605,17 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		}
 
 		return assetTag;
+	}
+
+	/**
+	 * Returns the asset tag with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param tagId the primary key of the asset tag
+	 * @return the asset tag, or <code>null</code> if a asset tag with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetTag fetchByPrimaryKey(long tagId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)tagId);
 	}
 
 	/**

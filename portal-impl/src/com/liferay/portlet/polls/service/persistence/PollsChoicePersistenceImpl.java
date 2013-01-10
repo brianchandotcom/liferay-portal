@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.polls.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1705,13 +1704,24 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 *
 	 * @param primaryKey the primary key of the polls choice
 	 * @return the polls choice
-	 * @throws com.liferay.portal.NoSuchModelException if a polls choice with the primary key could not be found
+	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchChoiceException, SystemException {
+		PollsChoice pollsChoice = fetchByPrimaryKey(primaryKey);
+
+		if (pollsChoice == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchChoiceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return pollsChoice;
 	}
 
 	/**
@@ -1724,18 +1734,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	public PollsChoice findByPrimaryKey(long choiceId)
 		throws NoSuchChoiceException, SystemException {
-		PollsChoice pollsChoice = fetchByPrimaryKey(choiceId);
-
-		if (pollsChoice == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + choiceId);
-			}
-
-			throw new NoSuchChoiceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				choiceId);
-		}
-
-		return pollsChoice;
+		return findByPrimaryKey((Serializable)choiceId);
 	}
 
 	/**
@@ -1748,20 +1747,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	@Override
 	public PollsChoice fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the polls choice with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param choiceId the primary key of the polls choice
-	 * @return the polls choice, or <code>null</code> if a polls choice with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PollsChoice fetchByPrimaryKey(long choiceId)
-		throws SystemException {
 		PollsChoice pollsChoice = (PollsChoice)EntityCacheUtil.getResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-				PollsChoiceImpl.class, choiceId);
+				PollsChoiceImpl.class, primaryKey);
 
 		if (pollsChoice == _nullPollsChoice) {
 			return null;
@@ -1774,19 +1761,19 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 				session = openSession();
 
 				pollsChoice = (PollsChoice)session.get(PollsChoiceImpl.class,
-						Long.valueOf(choiceId));
+						primaryKey);
 
 				if (pollsChoice != null) {
 					cacheResult(pollsChoice);
 				}
 				else {
 					EntityCacheUtil.putResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-						PollsChoiceImpl.class, choiceId, _nullPollsChoice);
+						PollsChoiceImpl.class, primaryKey, _nullPollsChoice);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-					PollsChoiceImpl.class, choiceId);
+					PollsChoiceImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1796,6 +1783,18 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		}
 
 		return pollsChoice;
+	}
+
+	/**
+	 * Returns the polls choice with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param choiceId the primary key of the polls choice
+	 * @return the polls choice, or <code>null</code> if a polls choice with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PollsChoice fetchByPrimaryKey(long choiceId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)choiceId);
 	}
 
 	/**

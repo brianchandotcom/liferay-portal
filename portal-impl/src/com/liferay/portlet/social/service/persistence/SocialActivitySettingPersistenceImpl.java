@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2906,13 +2905,24 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	 *
 	 * @param primaryKey the primary key of the social activity setting
 	 * @return the social activity setting
-	 * @throws com.liferay.portal.NoSuchModelException if a social activity setting with the primary key could not be found
+	 * @throws com.liferay.portlet.social.NoSuchActivitySettingException if a social activity setting with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialActivitySetting findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchActivitySettingException, SystemException {
+		SocialActivitySetting socialActivitySetting = fetchByPrimaryKey(primaryKey);
+
+		if (socialActivitySetting == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchActivitySettingException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return socialActivitySetting;
 	}
 
 	/**
@@ -2925,18 +2935,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	 */
 	public SocialActivitySetting findByPrimaryKey(long activitySettingId)
 		throws NoSuchActivitySettingException, SystemException {
-		SocialActivitySetting socialActivitySetting = fetchByPrimaryKey(activitySettingId);
-
-		if (socialActivitySetting == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + activitySettingId);
-			}
-
-			throw new NoSuchActivitySettingException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				activitySettingId);
-		}
-
-		return socialActivitySetting;
+		return findByPrimaryKey((Serializable)activitySettingId);
 	}
 
 	/**
@@ -2949,20 +2948,8 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	@Override
 	public SocialActivitySetting fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the social activity setting with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param activitySettingId the primary key of the social activity setting
-	 * @return the social activity setting, or <code>null</code> if a social activity setting with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivitySetting fetchByPrimaryKey(long activitySettingId)
-		throws SystemException {
 		SocialActivitySetting socialActivitySetting = (SocialActivitySetting)EntityCacheUtil.getResult(SocialActivitySettingModelImpl.ENTITY_CACHE_ENABLED,
-				SocialActivitySettingImpl.class, activitySettingId);
+				SocialActivitySettingImpl.class, primaryKey);
 
 		if (socialActivitySetting == _nullSocialActivitySetting) {
 			return null;
@@ -2975,20 +2962,20 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 				session = openSession();
 
 				socialActivitySetting = (SocialActivitySetting)session.get(SocialActivitySettingImpl.class,
-						Long.valueOf(activitySettingId));
+						primaryKey);
 
 				if (socialActivitySetting != null) {
 					cacheResult(socialActivitySetting);
 				}
 				else {
 					EntityCacheUtil.putResult(SocialActivitySettingModelImpl.ENTITY_CACHE_ENABLED,
-						SocialActivitySettingImpl.class, activitySettingId,
+						SocialActivitySettingImpl.class, primaryKey,
 						_nullSocialActivitySetting);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(SocialActivitySettingModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivitySettingImpl.class, activitySettingId);
+					SocialActivitySettingImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2998,6 +2985,18 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		}
 
 		return socialActivitySetting;
+	}
+
+	/**
+	 * Returns the social activity setting with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param activitySettingId the primary key of the social activity setting
+	 * @return the social activity setting, or <code>null</code> if a social activity setting with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivitySetting fetchByPrimaryKey(long activitySettingId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)activitySettingId);
 	}
 
 	/**

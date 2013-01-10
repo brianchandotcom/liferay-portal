@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.expando.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -5183,13 +5182,24 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 *
 	 * @param primaryKey the primary key of the expando value
 	 * @return the expando value
-	 * @throws com.liferay.portal.NoSuchModelException if a expando value with the primary key could not be found
+	 * @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ExpandoValue findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchValueException, SystemException {
+		ExpandoValue expandoValue = fetchByPrimaryKey(primaryKey);
+
+		if (expandoValue == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchValueException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return expandoValue;
 	}
 
 	/**
@@ -5202,18 +5212,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	public ExpandoValue findByPrimaryKey(long valueId)
 		throws NoSuchValueException, SystemException {
-		ExpandoValue expandoValue = fetchByPrimaryKey(valueId);
-
-		if (expandoValue == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + valueId);
-			}
-
-			throw new NoSuchValueException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				valueId);
-		}
-
-		return expandoValue;
+		return findByPrimaryKey((Serializable)valueId);
 	}
 
 	/**
@@ -5226,20 +5225,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	@Override
 	public ExpandoValue fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the expando value with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param valueId the primary key of the expando value
-	 * @return the expando value, or <code>null</code> if a expando value with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ExpandoValue fetchByPrimaryKey(long valueId)
-		throws SystemException {
 		ExpandoValue expandoValue = (ExpandoValue)EntityCacheUtil.getResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoValueImpl.class, valueId);
+				ExpandoValueImpl.class, primaryKey);
 
 		if (expandoValue == _nullExpandoValue) {
 			return null;
@@ -5252,19 +5239,19 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 				session = openSession();
 
 				expandoValue = (ExpandoValue)session.get(ExpandoValueImpl.class,
-						Long.valueOf(valueId));
+						primaryKey);
 
 				if (expandoValue != null) {
 					cacheResult(expandoValue);
 				}
 				else {
 					EntityCacheUtil.putResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
-						ExpandoValueImpl.class, valueId, _nullExpandoValue);
+						ExpandoValueImpl.class, primaryKey, _nullExpandoValue);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
-					ExpandoValueImpl.class, valueId);
+					ExpandoValueImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -5274,6 +5261,18 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		}
 
 		return expandoValue;
+	}
+
+	/**
+	 * Returns the expando value with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param valueId the primary key of the expando value
+	 * @return the expando value, or <code>null</code> if a expando value with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ExpandoValue fetchByPrimaryKey(long valueId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)valueId);
 	}
 
 	/**

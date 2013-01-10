@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.calendar.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -7779,13 +7778,24 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 *
 	 * @param primaryKey the primary key of the cal event
 	 * @return the cal event
-	 * @throws com.liferay.portal.NoSuchModelException if a cal event with the primary key could not be found
+	 * @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CalEvent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchEventException, SystemException {
+		CalEvent calEvent = fetchByPrimaryKey(primaryKey);
+
+		if (calEvent == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return calEvent;
 	}
 
 	/**
@@ -7798,18 +7808,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	public CalEvent findByPrimaryKey(long eventId)
 		throws NoSuchEventException, SystemException {
-		CalEvent calEvent = fetchByPrimaryKey(eventId);
-
-		if (calEvent == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + eventId);
-			}
-
-			throw new NoSuchEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				eventId);
-		}
-
-		return calEvent;
+		return findByPrimaryKey((Serializable)eventId);
 	}
 
 	/**
@@ -7822,19 +7821,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public CalEvent fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the cal event with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param eventId the primary key of the cal event
-	 * @return the cal event, or <code>null</code> if a cal event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public CalEvent fetchByPrimaryKey(long eventId) throws SystemException {
 		CalEvent calEvent = (CalEvent)EntityCacheUtil.getResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
-				CalEventImpl.class, eventId);
+				CalEventImpl.class, primaryKey);
 
 		if (calEvent == _nullCalEvent) {
 			return null;
@@ -7846,20 +7834,19 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			try {
 				session = openSession();
 
-				calEvent = (CalEvent)session.get(CalEventImpl.class,
-						Long.valueOf(eventId));
+				calEvent = (CalEvent)session.get(CalEventImpl.class, primaryKey);
 
 				if (calEvent != null) {
 					cacheResult(calEvent);
 				}
 				else {
 					EntityCacheUtil.putResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
-						CalEventImpl.class, eventId, _nullCalEvent);
+						CalEventImpl.class, primaryKey, _nullCalEvent);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
-					CalEventImpl.class, eventId);
+					CalEventImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -7869,6 +7856,17 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		return calEvent;
+	}
+
+	/**
+	 * Returns the cal event with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param eventId the primary key of the cal event
+	 * @return the cal event, or <code>null</code> if a cal event with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public CalEvent fetchByPrimaryKey(long eventId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)eventId);
 	}
 
 	/**

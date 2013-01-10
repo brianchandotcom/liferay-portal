@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -4640,13 +4639,24 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 *
 	 * @param primaryKey the primary key of the resource permission
 	 * @return the resource permission
-	 * @throws com.liferay.portal.NoSuchModelException if a resource permission with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourcePermission findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchResourcePermissionException, SystemException {
+		ResourcePermission resourcePermission = fetchByPrimaryKey(primaryKey);
+
+		if (resourcePermission == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchResourcePermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return resourcePermission;
 	}
 
 	/**
@@ -4659,19 +4669,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 */
 	public ResourcePermission findByPrimaryKey(long resourcePermissionId)
 		throws NoSuchResourcePermissionException, SystemException {
-		ResourcePermission resourcePermission = fetchByPrimaryKey(resourcePermissionId);
-
-		if (resourcePermission == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourcePermissionId);
-			}
-
-			throw new NoSuchResourcePermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				resourcePermissionId);
-		}
-
-		return resourcePermission;
+		return findByPrimaryKey((Serializable)resourcePermissionId);
 	}
 
 	/**
@@ -4684,20 +4682,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	@Override
 	public ResourcePermission fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the resource permission with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param resourcePermissionId the primary key of the resource permission
-	 * @return the resource permission, or <code>null</code> if a resource permission with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourcePermission fetchByPrimaryKey(long resourcePermissionId)
-		throws SystemException {
 		ResourcePermission resourcePermission = (ResourcePermission)EntityCacheUtil.getResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
-				ResourcePermissionImpl.class, resourcePermissionId);
+				ResourcePermissionImpl.class, primaryKey);
 
 		if (resourcePermission == _nullResourcePermission) {
 			return null;
@@ -4710,20 +4696,20 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				session = openSession();
 
 				resourcePermission = (ResourcePermission)session.get(ResourcePermissionImpl.class,
-						Long.valueOf(resourcePermissionId));
+						primaryKey);
 
 				if (resourcePermission != null) {
 					cacheResult(resourcePermission);
 				}
 				else {
 					EntityCacheUtil.putResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
-						ResourcePermissionImpl.class, resourcePermissionId,
+						ResourcePermissionImpl.class, primaryKey,
 						_nullResourcePermission);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourcePermissionImpl.class, resourcePermissionId);
+					ResourcePermissionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -4733,6 +4719,18 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		}
 
 		return resourcePermission;
+	}
+
+	/**
+	 * Returns the resource permission with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param resourcePermissionId the primary key of the resource permission
+	 * @return the resource permission, or <code>null</code> if a resource permission with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourcePermission fetchByPrimaryKey(long resourcePermissionId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)resourcePermissionId);
 	}
 
 	/**

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.trash.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
@@ -2162,13 +2161,24 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	 *
 	 * @param primaryKey the primary key of the trash entry
 	 * @return the trash entry
-	 * @throws com.liferay.portal.NoSuchModelException if a trash entry with the primary key could not be found
+	 * @throws com.liferay.portlet.trash.NoSuchEntryException if a trash entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public TrashEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchEntryException, SystemException {
+		TrashEntry trashEntry = fetchByPrimaryKey(primaryKey);
+
+		if (trashEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return trashEntry;
 	}
 
 	/**
@@ -2181,18 +2191,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	 */
 	public TrashEntry findByPrimaryKey(long entryId)
 		throws NoSuchEntryException, SystemException {
-		TrashEntry trashEntry = fetchByPrimaryKey(entryId);
-
-		if (trashEntry == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + entryId);
-			}
-
-			throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				entryId);
-		}
-
-		return trashEntry;
+		return findByPrimaryKey((Serializable)entryId);
 	}
 
 	/**
@@ -2205,19 +2204,8 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	@Override
 	public TrashEntry fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the trash entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param entryId the primary key of the trash entry
-	 * @return the trash entry, or <code>null</code> if a trash entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public TrashEntry fetchByPrimaryKey(long entryId) throws SystemException {
 		TrashEntry trashEntry = (TrashEntry)EntityCacheUtil.getResult(TrashEntryModelImpl.ENTITY_CACHE_ENABLED,
-				TrashEntryImpl.class, entryId);
+				TrashEntryImpl.class, primaryKey);
 
 		if (trashEntry == _nullTrashEntry) {
 			return null;
@@ -2230,19 +2218,19 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 				session = openSession();
 
 				trashEntry = (TrashEntry)session.get(TrashEntryImpl.class,
-						Long.valueOf(entryId));
+						primaryKey);
 
 				if (trashEntry != null) {
 					cacheResult(trashEntry);
 				}
 				else {
 					EntityCacheUtil.putResult(TrashEntryModelImpl.ENTITY_CACHE_ENABLED,
-						TrashEntryImpl.class, entryId, _nullTrashEntry);
+						TrashEntryImpl.class, primaryKey, _nullTrashEntry);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(TrashEntryModelImpl.ENTITY_CACHE_ENABLED,
-					TrashEntryImpl.class, entryId);
+					TrashEntryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2252,6 +2240,17 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		}
 
 		return trashEntry;
+	}
+
+	/**
+	 * Returns the trash entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param entryId the primary key of the trash entry
+	 * @return the trash entry, or <code>null</code> if a trash entry with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public TrashEntry fetchByPrimaryKey(long entryId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)entryId);
 	}
 
 	/**

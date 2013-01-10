@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1647,13 +1646,24 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 *
 	 * @param primaryKey the primary key of the d d m storage link
 	 * @return the d d m storage link
-	 * @throws com.liferay.portal.NoSuchModelException if a d d m storage link with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMStorageLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchStorageLinkException, SystemException {
+		DDMStorageLink ddmStorageLink = fetchByPrimaryKey(primaryKey);
+
+		if (ddmStorageLink == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchStorageLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return ddmStorageLink;
 	}
 
 	/**
@@ -1666,18 +1676,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	public DDMStorageLink findByPrimaryKey(long storageLinkId)
 		throws NoSuchStorageLinkException, SystemException {
-		DDMStorageLink ddmStorageLink = fetchByPrimaryKey(storageLinkId);
-
-		if (ddmStorageLink == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + storageLinkId);
-			}
-
-			throw new NoSuchStorageLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				storageLinkId);
-		}
-
-		return ddmStorageLink;
+		return findByPrimaryKey((Serializable)storageLinkId);
 	}
 
 	/**
@@ -1690,20 +1689,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	@Override
 	public DDMStorageLink fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the d d m storage link with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param storageLinkId the primary key of the d d m storage link
-	 * @return the d d m storage link, or <code>null</code> if a d d m storage link with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMStorageLink fetchByPrimaryKey(long storageLinkId)
-		throws SystemException {
 		DDMStorageLink ddmStorageLink = (DDMStorageLink)EntityCacheUtil.getResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-				DDMStorageLinkImpl.class, storageLinkId);
+				DDMStorageLinkImpl.class, primaryKey);
 
 		if (ddmStorageLink == _nullDDMStorageLink) {
 			return null;
@@ -1716,20 +1703,20 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 				session = openSession();
 
 				ddmStorageLink = (DDMStorageLink)session.get(DDMStorageLinkImpl.class,
-						Long.valueOf(storageLinkId));
+						primaryKey);
 
 				if (ddmStorageLink != null) {
 					cacheResult(ddmStorageLink);
 				}
 				else {
 					EntityCacheUtil.putResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-						DDMStorageLinkImpl.class, storageLinkId,
+						DDMStorageLinkImpl.class, primaryKey,
 						_nullDDMStorageLink);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStorageLinkImpl.class, storageLinkId);
+					DDMStorageLinkImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1739,6 +1726,18 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		}
 
 		return ddmStorageLink;
+	}
+
+	/**
+	 * Returns the d d m storage link with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param storageLinkId the primary key of the d d m storage link
+	 * @return the d d m storage link, or <code>null</code> if a d d m storage link with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMStorageLink fetchByPrimaryKey(long storageLinkId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)storageLinkId);
 	}
 
 	/**

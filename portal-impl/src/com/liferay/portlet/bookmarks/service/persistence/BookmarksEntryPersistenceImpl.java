@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.bookmarks.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -6897,13 +6896,24 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	 *
 	 * @param primaryKey the primary key of the bookmarks entry
 	 * @return the bookmarks entry
-	 * @throws com.liferay.portal.NoSuchModelException if a bookmarks entry with the primary key could not be found
+	 * @throws com.liferay.portlet.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BookmarksEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchEntryException, SystemException {
+		BookmarksEntry bookmarksEntry = fetchByPrimaryKey(primaryKey);
+
+		if (bookmarksEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return bookmarksEntry;
 	}
 
 	/**
@@ -6916,18 +6926,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	 */
 	public BookmarksEntry findByPrimaryKey(long entryId)
 		throws NoSuchEntryException, SystemException {
-		BookmarksEntry bookmarksEntry = fetchByPrimaryKey(entryId);
-
-		if (bookmarksEntry == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + entryId);
-			}
-
-			throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				entryId);
-		}
-
-		return bookmarksEntry;
+		return findByPrimaryKey((Serializable)entryId);
 	}
 
 	/**
@@ -6940,20 +6939,8 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	@Override
 	public BookmarksEntry fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the bookmarks entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param entryId the primary key of the bookmarks entry
-	 * @return the bookmarks entry, or <code>null</code> if a bookmarks entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public BookmarksEntry fetchByPrimaryKey(long entryId)
-		throws SystemException {
 		BookmarksEntry bookmarksEntry = (BookmarksEntry)EntityCacheUtil.getResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
-				BookmarksEntryImpl.class, entryId);
+				BookmarksEntryImpl.class, primaryKey);
 
 		if (bookmarksEntry == _nullBookmarksEntry) {
 			return null;
@@ -6966,19 +6953,20 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 				session = openSession();
 
 				bookmarksEntry = (BookmarksEntry)session.get(BookmarksEntryImpl.class,
-						Long.valueOf(entryId));
+						primaryKey);
 
 				if (bookmarksEntry != null) {
 					cacheResult(bookmarksEntry);
 				}
 				else {
 					EntityCacheUtil.putResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
-						BookmarksEntryImpl.class, entryId, _nullBookmarksEntry);
+						BookmarksEntryImpl.class, primaryKey,
+						_nullBookmarksEntry);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
-					BookmarksEntryImpl.class, entryId);
+					BookmarksEntryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -6988,6 +6976,18 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		}
 
 		return bookmarksEntry;
+	}
+
+	/**
+	 * Returns the bookmarks entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param entryId the primary key of the bookmarks entry
+	 * @return the bookmarks entry, or <code>null</code> if a bookmarks entry with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BookmarksEntry fetchByPrimaryKey(long entryId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)entryId);
 	}
 
 	/**

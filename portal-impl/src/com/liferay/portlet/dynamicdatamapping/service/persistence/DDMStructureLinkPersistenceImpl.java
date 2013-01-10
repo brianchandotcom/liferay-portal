@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1605,13 +1604,24 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 *
 	 * @param primaryKey the primary key of the d d m structure link
 	 * @return the d d m structure link
-	 * @throws com.liferay.portal.NoSuchModelException if a d d m structure link with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMStructureLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchStructureLinkException, SystemException {
+		DDMStructureLink ddmStructureLink = fetchByPrimaryKey(primaryKey);
+
+		if (ddmStructureLink == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchStructureLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return ddmStructureLink;
 	}
 
 	/**
@@ -1624,18 +1634,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	public DDMStructureLink findByPrimaryKey(long structureLinkId)
 		throws NoSuchStructureLinkException, SystemException {
-		DDMStructureLink ddmStructureLink = fetchByPrimaryKey(structureLinkId);
-
-		if (ddmStructureLink == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + structureLinkId);
-			}
-
-			throw new NoSuchStructureLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				structureLinkId);
-		}
-
-		return ddmStructureLink;
+		return findByPrimaryKey((Serializable)structureLinkId);
 	}
 
 	/**
@@ -1648,20 +1647,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	@Override
 	public DDMStructureLink fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the d d m structure link with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param structureLinkId the primary key of the d d m structure link
-	 * @return the d d m structure link, or <code>null</code> if a d d m structure link with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMStructureLink fetchByPrimaryKey(long structureLinkId)
-		throws SystemException {
 		DDMStructureLink ddmStructureLink = (DDMStructureLink)EntityCacheUtil.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-				DDMStructureLinkImpl.class, structureLinkId);
+				DDMStructureLinkImpl.class, primaryKey);
 
 		if (ddmStructureLink == _nullDDMStructureLink) {
 			return null;
@@ -1674,20 +1661,20 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 				session = openSession();
 
 				ddmStructureLink = (DDMStructureLink)session.get(DDMStructureLinkImpl.class,
-						Long.valueOf(structureLinkId));
+						primaryKey);
 
 				if (ddmStructureLink != null) {
 					cacheResult(ddmStructureLink);
 				}
 				else {
 					EntityCacheUtil.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-						DDMStructureLinkImpl.class, structureLinkId,
+						DDMStructureLinkImpl.class, primaryKey,
 						_nullDDMStructureLink);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStructureLinkImpl.class, structureLinkId);
+					DDMStructureLinkImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1697,6 +1684,18 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		}
 
 		return ddmStructureLink;
+	}
+
+	/**
+	 * Returns the d d m structure link with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param structureLinkId the primary key of the d d m structure link
+	 * @return the d d m structure link, or <code>null</code> if a d d m structure link with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMStructureLink fetchByPrimaryKey(long structureLinkId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)structureLinkId);
 	}
 
 	/**

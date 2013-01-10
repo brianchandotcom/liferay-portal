@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.expando.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1225,13 +1224,24 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 *
 	 * @param primaryKey the primary key of the expando table
 	 * @return the expando table
-	 * @throws com.liferay.portal.NoSuchModelException if a expando table with the primary key could not be found
+	 * @throws com.liferay.portlet.expando.NoSuchTableException if a expando table with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ExpandoTable findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchTableException, SystemException {
+		ExpandoTable expandoTable = fetchByPrimaryKey(primaryKey);
+
+		if (expandoTable == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchTableException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return expandoTable;
 	}
 
 	/**
@@ -1244,18 +1254,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	public ExpandoTable findByPrimaryKey(long tableId)
 		throws NoSuchTableException, SystemException {
-		ExpandoTable expandoTable = fetchByPrimaryKey(tableId);
-
-		if (expandoTable == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + tableId);
-			}
-
-			throw new NoSuchTableException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				tableId);
-		}
-
-		return expandoTable;
+		return findByPrimaryKey((Serializable)tableId);
 	}
 
 	/**
@@ -1268,20 +1267,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	@Override
 	public ExpandoTable fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the expando table with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param tableId the primary key of the expando table
-	 * @return the expando table, or <code>null</code> if a expando table with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ExpandoTable fetchByPrimaryKey(long tableId)
-		throws SystemException {
 		ExpandoTable expandoTable = (ExpandoTable)EntityCacheUtil.getResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoTableImpl.class, tableId);
+				ExpandoTableImpl.class, primaryKey);
 
 		if (expandoTable == _nullExpandoTable) {
 			return null;
@@ -1294,19 +1281,19 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 				session = openSession();
 
 				expandoTable = (ExpandoTable)session.get(ExpandoTableImpl.class,
-						Long.valueOf(tableId));
+						primaryKey);
 
 				if (expandoTable != null) {
 					cacheResult(expandoTable);
 				}
 				else {
 					EntityCacheUtil.putResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-						ExpandoTableImpl.class, tableId, _nullExpandoTable);
+						ExpandoTableImpl.class, primaryKey, _nullExpandoTable);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-					ExpandoTableImpl.class, tableId);
+					ExpandoTableImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1316,6 +1303,18 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		}
 
 		return expandoTable;
+	}
+
+	/**
+	 * Returns the expando table with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param tableId the primary key of the expando table
+	 * @return the expando table, or <code>null</code> if a expando table with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ExpandoTable fetchByPrimaryKey(long tableId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)tableId);
 	}
 
 	/**

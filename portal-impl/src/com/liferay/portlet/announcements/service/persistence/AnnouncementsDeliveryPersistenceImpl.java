@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.announcements.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1169,13 +1168,24 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 *
 	 * @param primaryKey the primary key of the announcements delivery
 	 * @return the announcements delivery
-	 * @throws com.liferay.portal.NoSuchModelException if a announcements delivery with the primary key could not be found
+	 * @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsDelivery findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchDeliveryException, SystemException {
+		AnnouncementsDelivery announcementsDelivery = fetchByPrimaryKey(primaryKey);
+
+		if (announcementsDelivery == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchDeliveryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return announcementsDelivery;
 	}
 
 	/**
@@ -1188,18 +1198,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	public AnnouncementsDelivery findByPrimaryKey(long deliveryId)
 		throws NoSuchDeliveryException, SystemException {
-		AnnouncementsDelivery announcementsDelivery = fetchByPrimaryKey(deliveryId);
-
-		if (announcementsDelivery == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + deliveryId);
-			}
-
-			throw new NoSuchDeliveryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				deliveryId);
-		}
-
-		return announcementsDelivery;
+		return findByPrimaryKey((Serializable)deliveryId);
 	}
 
 	/**
@@ -1212,20 +1211,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	public AnnouncementsDelivery fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the announcements delivery with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param deliveryId the primary key of the announcements delivery
-	 * @return the announcements delivery, or <code>null</code> if a announcements delivery with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AnnouncementsDelivery fetchByPrimaryKey(long deliveryId)
-		throws SystemException {
 		AnnouncementsDelivery announcementsDelivery = (AnnouncementsDelivery)EntityCacheUtil.getResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsDeliveryImpl.class, deliveryId);
+				AnnouncementsDeliveryImpl.class, primaryKey);
 
 		if (announcementsDelivery == _nullAnnouncementsDelivery) {
 			return null;
@@ -1238,20 +1225,20 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 				session = openSession();
 
 				announcementsDelivery = (AnnouncementsDelivery)session.get(AnnouncementsDeliveryImpl.class,
-						Long.valueOf(deliveryId));
+						primaryKey);
 
 				if (announcementsDelivery != null) {
 					cacheResult(announcementsDelivery);
 				}
 				else {
 					EntityCacheUtil.putResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-						AnnouncementsDeliveryImpl.class, deliveryId,
+						AnnouncementsDeliveryImpl.class, primaryKey,
 						_nullAnnouncementsDelivery);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-					AnnouncementsDeliveryImpl.class, deliveryId);
+					AnnouncementsDeliveryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1261,6 +1248,18 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		}
 
 		return announcementsDelivery;
+	}
+
+	/**
+	 * Returns the announcements delivery with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param deliveryId the primary key of the announcements delivery
+	 * @return the announcements delivery, or <code>null</code> if a announcements delivery with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AnnouncementsDelivery fetchByPrimaryKey(long deliveryId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)deliveryId);
 	}
 
 	/**

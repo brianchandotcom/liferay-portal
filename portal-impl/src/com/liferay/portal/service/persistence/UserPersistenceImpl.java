@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -7146,13 +7145,24 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param primaryKey the primary key of the user
 	 * @return the user
-	 * @throws com.liferay.portal.NoSuchModelException if a user with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchUserException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public User findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchUserException, SystemException {
+		User user = fetchByPrimaryKey(primaryKey);
+
+		if (user == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchUserException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return user;
 	}
 
 	/**
@@ -7165,18 +7175,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	public User findByPrimaryKey(long userId)
 		throws NoSuchUserException, SystemException {
-		User user = fetchByPrimaryKey(userId);
-
-		if (user == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + userId);
-			}
-
-			throw new NoSuchUserException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				userId);
-		}
-
-		return user;
+		return findByPrimaryKey((Serializable)userId);
 	}
 
 	/**
@@ -7189,19 +7188,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the user with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param userId the primary key of the user
-	 * @return the user, or <code>null</code> if a user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public User fetchByPrimaryKey(long userId) throws SystemException {
 		User user = (User)EntityCacheUtil.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserImpl.class, userId);
+				UserImpl.class, primaryKey);
 
 		if (user == _nullUser) {
 			return null;
@@ -7213,19 +7201,19 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			try {
 				session = openSession();
 
-				user = (User)session.get(UserImpl.class, Long.valueOf(userId));
+				user = (User)session.get(UserImpl.class, primaryKey);
 
 				if (user != null) {
 					cacheResult(user);
 				}
 				else {
 					EntityCacheUtil.putResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-						UserImpl.class, userId, _nullUser);
+						UserImpl.class, primaryKey, _nullUser);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-					UserImpl.class, userId);
+					UserImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -7235,6 +7223,17 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		return user;
+	}
+
+	/**
+	 * Returns the user with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param userId the primary key of the user
+	 * @return the user, or <code>null</code> if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User fetchByPrimaryKey(long userId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)userId);
 	}
 
 	/**

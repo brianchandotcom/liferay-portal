@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1621,13 +1620,24 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 *
 	 * @param primaryKey the primary key of the asset tag stats
 	 * @return the asset tag stats
-	 * @throws com.liferay.portal.NoSuchModelException if a asset tag stats with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchTagStatsException if a asset tag stats with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagStats findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchTagStatsException, SystemException {
+		AssetTagStats assetTagStats = fetchByPrimaryKey(primaryKey);
+
+		if (assetTagStats == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchTagStatsException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return assetTagStats;
 	}
 
 	/**
@@ -1640,18 +1650,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	public AssetTagStats findByPrimaryKey(long tagStatsId)
 		throws NoSuchTagStatsException, SystemException {
-		AssetTagStats assetTagStats = fetchByPrimaryKey(tagStatsId);
-
-		if (assetTagStats == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + tagStatsId);
-			}
-
-			throw new NoSuchTagStatsException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				tagStatsId);
-		}
-
-		return assetTagStats;
+		return findByPrimaryKey((Serializable)tagStatsId);
 	}
 
 	/**
@@ -1664,20 +1663,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	@Override
 	public AssetTagStats fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the asset tag stats with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param tagStatsId the primary key of the asset tag stats
-	 * @return the asset tag stats, or <code>null</code> if a asset tag stats with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetTagStats fetchByPrimaryKey(long tagStatsId)
-		throws SystemException {
 		AssetTagStats assetTagStats = (AssetTagStats)EntityCacheUtil.getResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-				AssetTagStatsImpl.class, tagStatsId);
+				AssetTagStatsImpl.class, primaryKey);
 
 		if (assetTagStats == _nullAssetTagStats) {
 			return null;
@@ -1690,19 +1677,19 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 				session = openSession();
 
 				assetTagStats = (AssetTagStats)session.get(AssetTagStatsImpl.class,
-						Long.valueOf(tagStatsId));
+						primaryKey);
 
 				if (assetTagStats != null) {
 					cacheResult(assetTagStats);
 				}
 				else {
 					EntityCacheUtil.putResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-						AssetTagStatsImpl.class, tagStatsId, _nullAssetTagStats);
+						AssetTagStatsImpl.class, primaryKey, _nullAssetTagStats);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
-					AssetTagStatsImpl.class, tagStatsId);
+					AssetTagStatsImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1712,6 +1699,18 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		}
 
 		return assetTagStats;
+	}
+
+	/**
+	 * Returns the asset tag stats with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param tagStatsId the primary key of the asset tag stats
+	 * @return the asset tag stats, or <code>null</code> if a asset tag stats with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetTagStats fetchByPrimaryKey(long tagStatsId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)tagStatsId);
 	}
 
 	/**

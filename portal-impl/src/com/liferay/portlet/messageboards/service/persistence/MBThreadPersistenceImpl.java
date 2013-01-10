@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -11747,13 +11746,24 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 *
 	 * @param primaryKey the primary key of the message boards thread
 	 * @return the message boards thread
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards thread with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBThread findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchThreadException, SystemException {
+		MBThread mbThread = fetchByPrimaryKey(primaryKey);
+
+		if (mbThread == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchThreadException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return mbThread;
 	}
 
 	/**
@@ -11766,18 +11776,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	public MBThread findByPrimaryKey(long threadId)
 		throws NoSuchThreadException, SystemException {
-		MBThread mbThread = fetchByPrimaryKey(threadId);
-
-		if (mbThread == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + threadId);
-			}
-
-			throw new NoSuchThreadException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				threadId);
-		}
-
-		return mbThread;
+		return findByPrimaryKey((Serializable)threadId);
 	}
 
 	/**
@@ -11790,19 +11789,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public MBThread fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the message boards thread with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param threadId the primary key of the message boards thread
-	 * @return the message boards thread, or <code>null</code> if a message boards thread with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBThread fetchByPrimaryKey(long threadId) throws SystemException {
 		MBThread mbThread = (MBThread)EntityCacheUtil.getResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
-				MBThreadImpl.class, threadId);
+				MBThreadImpl.class, primaryKey);
 
 		if (mbThread == _nullMBThread) {
 			return null;
@@ -11814,20 +11802,19 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			try {
 				session = openSession();
 
-				mbThread = (MBThread)session.get(MBThreadImpl.class,
-						Long.valueOf(threadId));
+				mbThread = (MBThread)session.get(MBThreadImpl.class, primaryKey);
 
 				if (mbThread != null) {
 					cacheResult(mbThread);
 				}
 				else {
 					EntityCacheUtil.putResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
-						MBThreadImpl.class, threadId, _nullMBThread);
+						MBThreadImpl.class, primaryKey, _nullMBThread);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
-					MBThreadImpl.class, threadId);
+					MBThreadImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -11837,6 +11824,17 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		}
 
 		return mbThread;
+	}
+
+	/**
+	 * Returns the message boards thread with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param threadId the primary key of the message boards thread
+	 * @return the message boards thread, or <code>null</code> if a message boards thread with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread fetchByPrimaryKey(long threadId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)threadId);
 	}
 
 	/**

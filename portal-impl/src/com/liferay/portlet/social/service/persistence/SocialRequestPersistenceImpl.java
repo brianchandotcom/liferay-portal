@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -6058,13 +6057,24 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 *
 	 * @param primaryKey the primary key of the social request
 	 * @return the social request
-	 * @throws com.liferay.portal.NoSuchModelException if a social request with the primary key could not be found
+	 * @throws com.liferay.portlet.social.NoSuchRequestException if a social request with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRequest findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchRequestException, SystemException {
+		SocialRequest socialRequest = fetchByPrimaryKey(primaryKey);
+
+		if (socialRequest == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchRequestException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return socialRequest;
 	}
 
 	/**
@@ -6077,18 +6087,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	public SocialRequest findByPrimaryKey(long requestId)
 		throws NoSuchRequestException, SystemException {
-		SocialRequest socialRequest = fetchByPrimaryKey(requestId);
-
-		if (socialRequest == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + requestId);
-			}
-
-			throw new NoSuchRequestException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				requestId);
-		}
-
-		return socialRequest;
+		return findByPrimaryKey((Serializable)requestId);
 	}
 
 	/**
@@ -6101,20 +6100,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public SocialRequest fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the social request with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param requestId the primary key of the social request
-	 * @return the social request, or <code>null</code> if a social request with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialRequest fetchByPrimaryKey(long requestId)
-		throws SystemException {
 		SocialRequest socialRequest = (SocialRequest)EntityCacheUtil.getResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestImpl.class, requestId);
+				SocialRequestImpl.class, primaryKey);
 
 		if (socialRequest == _nullSocialRequest) {
 			return null;
@@ -6127,19 +6114,19 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				session = openSession();
 
 				socialRequest = (SocialRequest)session.get(SocialRequestImpl.class,
-						Long.valueOf(requestId));
+						primaryKey);
 
 				if (socialRequest != null) {
 					cacheResult(socialRequest);
 				}
 				else {
 					EntityCacheUtil.putResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-						SocialRequestImpl.class, requestId, _nullSocialRequest);
+						SocialRequestImpl.class, primaryKey, _nullSocialRequest);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-					SocialRequestImpl.class, requestId);
+					SocialRequestImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -6149,6 +6136,18 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 
 		return socialRequest;
+	}
+
+	/**
+	 * Returns the social request with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param requestId the primary key of the social request
+	 * @return the social request, or <code>null</code> if a social request with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialRequest fetchByPrimaryKey(long requestId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)requestId);
 	}
 
 	/**

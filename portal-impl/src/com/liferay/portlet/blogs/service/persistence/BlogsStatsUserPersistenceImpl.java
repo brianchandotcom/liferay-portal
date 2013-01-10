@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.blogs.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -3205,13 +3204,24 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	 *
 	 * @param primaryKey the primary key of the blogs stats user
 	 * @return the blogs stats user
-	 * @throws com.liferay.portal.NoSuchModelException if a blogs stats user with the primary key could not be found
+	 * @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a blogs stats user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BlogsStatsUser findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchStatsUserException, SystemException {
+		BlogsStatsUser blogsStatsUser = fetchByPrimaryKey(primaryKey);
+
+		if (blogsStatsUser == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchStatsUserException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return blogsStatsUser;
 	}
 
 	/**
@@ -3224,18 +3234,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	 */
 	public BlogsStatsUser findByPrimaryKey(long statsUserId)
 		throws NoSuchStatsUserException, SystemException {
-		BlogsStatsUser blogsStatsUser = fetchByPrimaryKey(statsUserId);
-
-		if (blogsStatsUser == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + statsUserId);
-			}
-
-			throw new NoSuchStatsUserException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				statsUserId);
-		}
-
-		return blogsStatsUser;
+		return findByPrimaryKey((Serializable)statsUserId);
 	}
 
 	/**
@@ -3248,20 +3247,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	@Override
 	public BlogsStatsUser fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the blogs stats user with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param statsUserId the primary key of the blogs stats user
-	 * @return the blogs stats user, or <code>null</code> if a blogs stats user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public BlogsStatsUser fetchByPrimaryKey(long statsUserId)
-		throws SystemException {
 		BlogsStatsUser blogsStatsUser = (BlogsStatsUser)EntityCacheUtil.getResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-				BlogsStatsUserImpl.class, statsUserId);
+				BlogsStatsUserImpl.class, primaryKey);
 
 		if (blogsStatsUser == _nullBlogsStatsUser) {
 			return null;
@@ -3274,20 +3261,20 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 				session = openSession();
 
 				blogsStatsUser = (BlogsStatsUser)session.get(BlogsStatsUserImpl.class,
-						Long.valueOf(statsUserId));
+						primaryKey);
 
 				if (blogsStatsUser != null) {
 					cacheResult(blogsStatsUser);
 				}
 				else {
 					EntityCacheUtil.putResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-						BlogsStatsUserImpl.class, statsUserId,
+						BlogsStatsUserImpl.class, primaryKey,
 						_nullBlogsStatsUser);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-					BlogsStatsUserImpl.class, statsUserId);
+					BlogsStatsUserImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3297,6 +3284,18 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		}
 
 		return blogsStatsUser;
+	}
+
+	/**
+	 * Returns the blogs stats user with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param statsUserId the primary key of the blogs stats user
+	 * @return the blogs stats user, or <code>null</code> if a blogs stats user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BlogsStatsUser fetchByPrimaryKey(long statsUserId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)statsUserId);
 	}
 
 	/**

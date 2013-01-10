@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -3565,13 +3564,24 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 *
 	 * @param primaryKey the primary key of the portlet preferences
 	 * @return the portlet preferences
-	 * @throws com.liferay.portal.NoSuchModelException if a portlet preferences with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PortletPreferences findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByPrimaryKey(primaryKey);
+
+		if (portletPreferences == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchPortletPreferencesException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return portletPreferences;
 	}
 
 	/**
@@ -3584,19 +3594,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	public PortletPreferences findByPrimaryKey(long portletPreferencesId)
 		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = fetchByPrimaryKey(portletPreferencesId);
-
-		if (portletPreferences == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					portletPreferencesId);
-			}
-
-			throw new NoSuchPortletPreferencesException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				portletPreferencesId);
-		}
-
-		return portletPreferences;
+		return findByPrimaryKey((Serializable)portletPreferencesId);
 	}
 
 	/**
@@ -3609,20 +3607,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	public PortletPreferences fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the portlet preferences with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param portletPreferencesId the primary key of the portlet preferences
-	 * @return the portlet preferences, or <code>null</code> if a portlet preferences with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByPrimaryKey(long portletPreferencesId)
-		throws SystemException {
 		PortletPreferences portletPreferences = (PortletPreferences)EntityCacheUtil.getResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-				PortletPreferencesImpl.class, portletPreferencesId);
+				PortletPreferencesImpl.class, primaryKey);
 
 		if (portletPreferences == _nullPortletPreferences) {
 			return null;
@@ -3635,20 +3621,20 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				session = openSession();
 
 				portletPreferences = (PortletPreferences)session.get(PortletPreferencesImpl.class,
-						Long.valueOf(portletPreferencesId));
+						primaryKey);
 
 				if (portletPreferences != null) {
 					cacheResult(portletPreferences);
 				}
 				else {
 					EntityCacheUtil.putResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-						PortletPreferencesImpl.class, portletPreferencesId,
+						PortletPreferencesImpl.class, primaryKey,
 						_nullPortletPreferences);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-					PortletPreferencesImpl.class, portletPreferencesId);
+					PortletPreferencesImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3658,6 +3644,18 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		}
 
 		return portletPreferences;
+	}
+
+	/**
+	 * Returns the portlet preferences with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param portletPreferencesId the primary key of the portlet preferences
+	 * @return the portlet preferences, or <code>null</code> if a portlet preferences with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByPrimaryKey(long portletPreferencesId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)portletPreferencesId);
 	}
 
 	/**

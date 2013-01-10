@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchUserTrackerException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -1865,13 +1864,24 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 *
 	 * @param primaryKey the primary key of the user tracker
 	 * @return the user tracker
-	 * @throws com.liferay.portal.NoSuchModelException if a user tracker with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserTracker findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchByPrimaryKey(primaryKey);
+
+		if (userTracker == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchUserTrackerException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return userTracker;
 	}
 
 	/**
@@ -1884,18 +1894,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	public UserTracker findByPrimaryKey(long userTrackerId)
 		throws NoSuchUserTrackerException, SystemException {
-		UserTracker userTracker = fetchByPrimaryKey(userTrackerId);
-
-		if (userTracker == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + userTrackerId);
-			}
-
-			throw new NoSuchUserTrackerException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				userTrackerId);
-		}
-
-		return userTracker;
+		return findByPrimaryKey((Serializable)userTrackerId);
 	}
 
 	/**
@@ -1908,20 +1907,8 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	@Override
 	public UserTracker fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the user tracker with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param userTrackerId the primary key of the user tracker
-	 * @return the user tracker, or <code>null</code> if a user tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker fetchByPrimaryKey(long userTrackerId)
-		throws SystemException {
 		UserTracker userTracker = (UserTracker)EntityCacheUtil.getResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-				UserTrackerImpl.class, userTrackerId);
+				UserTrackerImpl.class, primaryKey);
 
 		if (userTracker == _nullUserTracker) {
 			return null;
@@ -1934,19 +1921,19 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 				session = openSession();
 
 				userTracker = (UserTracker)session.get(UserTrackerImpl.class,
-						Long.valueOf(userTrackerId));
+						primaryKey);
 
 				if (userTracker != null) {
 					cacheResult(userTracker);
 				}
 				else {
 					EntityCacheUtil.putResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-						UserTrackerImpl.class, userTrackerId, _nullUserTracker);
+						UserTrackerImpl.class, primaryKey, _nullUserTracker);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-					UserTrackerImpl.class, userTrackerId);
+					UserTrackerImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1956,6 +1943,18 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		}
 
 		return userTracker;
+	}
+
+	/**
+	 * Returns the user tracker with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param userTrackerId the primary key of the user tracker
+	 * @return the user tracker, or <code>null</code> if a user tracker with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByPrimaryKey(long userTrackerId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)userTrackerId);
 	}
 
 	/**

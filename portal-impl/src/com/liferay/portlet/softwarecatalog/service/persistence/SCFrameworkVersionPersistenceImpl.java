@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.softwarecatalog.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
@@ -2642,13 +2641,24 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 *
 	 * @param primaryKey the primary key of the s c framework version
 	 * @return the s c framework version
-	 * @throws com.liferay.portal.NoSuchModelException if a s c framework version with the primary key could not be found
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SCFrameworkVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchFrameworkVersionException, SystemException {
+		SCFrameworkVersion scFrameworkVersion = fetchByPrimaryKey(primaryKey);
+
+		if (scFrameworkVersion == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchFrameworkVersionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return scFrameworkVersion;
 	}
 
 	/**
@@ -2661,19 +2671,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	public SCFrameworkVersion findByPrimaryKey(long frameworkVersionId)
 		throws NoSuchFrameworkVersionException, SystemException {
-		SCFrameworkVersion scFrameworkVersion = fetchByPrimaryKey(frameworkVersionId);
-
-		if (scFrameworkVersion == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					frameworkVersionId);
-			}
-
-			throw new NoSuchFrameworkVersionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				frameworkVersionId);
-		}
-
-		return scFrameworkVersion;
+		return findByPrimaryKey((Serializable)frameworkVersionId);
 	}
 
 	/**
@@ -2686,20 +2684,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	@Override
 	public SCFrameworkVersion fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the s c framework version with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param frameworkVersionId the primary key of the s c framework version
-	 * @return the s c framework version, or <code>null</code> if a s c framework version with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCFrameworkVersion fetchByPrimaryKey(long frameworkVersionId)
-		throws SystemException {
 		SCFrameworkVersion scFrameworkVersion = (SCFrameworkVersion)EntityCacheUtil.getResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
-				SCFrameworkVersionImpl.class, frameworkVersionId);
+				SCFrameworkVersionImpl.class, primaryKey);
 
 		if (scFrameworkVersion == _nullSCFrameworkVersion) {
 			return null;
@@ -2712,20 +2698,20 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 				session = openSession();
 
 				scFrameworkVersion = (SCFrameworkVersion)session.get(SCFrameworkVersionImpl.class,
-						Long.valueOf(frameworkVersionId));
+						primaryKey);
 
 				if (scFrameworkVersion != null) {
 					cacheResult(scFrameworkVersion);
 				}
 				else {
 					EntityCacheUtil.putResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
-						SCFrameworkVersionImpl.class, frameworkVersionId,
+						SCFrameworkVersionImpl.class, primaryKey,
 						_nullSCFrameworkVersion);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
-					SCFrameworkVersionImpl.class, frameworkVersionId);
+					SCFrameworkVersionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2735,6 +2721,18 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		}
 
 		return scFrameworkVersion;
+	}
+
+	/**
+	 * Returns the s c framework version with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param frameworkVersionId the primary key of the s c framework version
+	 * @return the s c framework version, or <code>null</code> if a s c framework version with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCFrameworkVersion fetchByPrimaryKey(long frameworkVersionId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)frameworkVersionId);
 	}
 
 	/**

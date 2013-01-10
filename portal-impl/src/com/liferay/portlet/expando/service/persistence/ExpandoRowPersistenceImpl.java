@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.expando.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1113,13 +1112,24 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 *
 	 * @param primaryKey the primary key of the expando row
 	 * @return the expando row
-	 * @throws com.liferay.portal.NoSuchModelException if a expando row with the primary key could not be found
+	 * @throws com.liferay.portlet.expando.NoSuchRowException if a expando row with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ExpandoRow findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchRowException, SystemException {
+		ExpandoRow expandoRow = fetchByPrimaryKey(primaryKey);
+
+		if (expandoRow == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchRowException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return expandoRow;
 	}
 
 	/**
@@ -1132,18 +1142,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	public ExpandoRow findByPrimaryKey(long rowId)
 		throws NoSuchRowException, SystemException {
-		ExpandoRow expandoRow = fetchByPrimaryKey(rowId);
-
-		if (expandoRow == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + rowId);
-			}
-
-			throw new NoSuchRowException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				rowId);
-		}
-
-		return expandoRow;
+		return findByPrimaryKey((Serializable)rowId);
 	}
 
 	/**
@@ -1156,19 +1155,8 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	@Override
 	public ExpandoRow fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the expando row with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param rowId the primary key of the expando row
-	 * @return the expando row, or <code>null</code> if a expando row with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ExpandoRow fetchByPrimaryKey(long rowId) throws SystemException {
 		ExpandoRow expandoRow = (ExpandoRow)EntityCacheUtil.getResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoRowImpl.class, rowId);
+				ExpandoRowImpl.class, primaryKey);
 
 		if (expandoRow == _nullExpandoRow) {
 			return null;
@@ -1181,19 +1169,19 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 				session = openSession();
 
 				expandoRow = (ExpandoRow)session.get(ExpandoRowImpl.class,
-						Long.valueOf(rowId));
+						primaryKey);
 
 				if (expandoRow != null) {
 					cacheResult(expandoRow);
 				}
 				else {
 					EntityCacheUtil.putResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
-						ExpandoRowImpl.class, rowId, _nullExpandoRow);
+						ExpandoRowImpl.class, primaryKey, _nullExpandoRow);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
-					ExpandoRowImpl.class, rowId);
+					ExpandoRowImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1203,6 +1191,17 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		}
 
 		return expandoRow;
+	}
+
+	/**
+	 * Returns the expando row with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param rowId the primary key of the expando row
+	 * @return the expando row, or <code>null</code> if a expando row with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ExpandoRow fetchByPrimaryKey(long rowId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)rowId);
 	}
 
 	/**

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.shopping.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -840,13 +839,24 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 *
 	 * @param primaryKey the primary key of the shopping order item
 	 * @return the shopping order item
-	 * @throws com.liferay.portal.NoSuchModelException if a shopping order item with the primary key could not be found
+	 * @throws com.liferay.portlet.shopping.NoSuchOrderItemException if a shopping order item with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingOrderItem findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchOrderItemException, SystemException {
+		ShoppingOrderItem shoppingOrderItem = fetchByPrimaryKey(primaryKey);
+
+		if (shoppingOrderItem == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchOrderItemException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return shoppingOrderItem;
 	}
 
 	/**
@@ -859,18 +869,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	public ShoppingOrderItem findByPrimaryKey(long orderItemId)
 		throws NoSuchOrderItemException, SystemException {
-		ShoppingOrderItem shoppingOrderItem = fetchByPrimaryKey(orderItemId);
-
-		if (shoppingOrderItem == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + orderItemId);
-			}
-
-			throw new NoSuchOrderItemException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				orderItemId);
-		}
-
-		return shoppingOrderItem;
+		return findByPrimaryKey((Serializable)orderItemId);
 	}
 
 	/**
@@ -883,20 +882,8 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	@Override
 	public ShoppingOrderItem fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the shopping order item with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param orderItemId the primary key of the shopping order item
-	 * @return the shopping order item, or <code>null</code> if a shopping order item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ShoppingOrderItem fetchByPrimaryKey(long orderItemId)
-		throws SystemException {
 		ShoppingOrderItem shoppingOrderItem = (ShoppingOrderItem)EntityCacheUtil.getResult(ShoppingOrderItemModelImpl.ENTITY_CACHE_ENABLED,
-				ShoppingOrderItemImpl.class, orderItemId);
+				ShoppingOrderItemImpl.class, primaryKey);
 
 		if (shoppingOrderItem == _nullShoppingOrderItem) {
 			return null;
@@ -909,20 +896,20 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 				session = openSession();
 
 				shoppingOrderItem = (ShoppingOrderItem)session.get(ShoppingOrderItemImpl.class,
-						Long.valueOf(orderItemId));
+						primaryKey);
 
 				if (shoppingOrderItem != null) {
 					cacheResult(shoppingOrderItem);
 				}
 				else {
 					EntityCacheUtil.putResult(ShoppingOrderItemModelImpl.ENTITY_CACHE_ENABLED,
-						ShoppingOrderItemImpl.class, orderItemId,
+						ShoppingOrderItemImpl.class, primaryKey,
 						_nullShoppingOrderItem);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ShoppingOrderItemModelImpl.ENTITY_CACHE_ENABLED,
-					ShoppingOrderItemImpl.class, orderItemId);
+					ShoppingOrderItemImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -932,6 +919,18 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 		}
 
 		return shoppingOrderItem;
+	}
+
+	/**
+	 * Returns the shopping order item with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param orderItemId the primary key of the shopping order item
+	 * @return the shopping order item, or <code>null</code> if a shopping order item with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ShoppingOrderItem fetchByPrimaryKey(long orderItemId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)orderItemId);
 	}
 
 	/**

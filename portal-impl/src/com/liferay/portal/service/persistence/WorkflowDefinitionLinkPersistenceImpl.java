@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -1895,13 +1894,24 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 *
 	 * @param primaryKey the primary key of the workflow definition link
 	 * @return the workflow definition link
-	 * @throws com.liferay.portal.NoSuchModelException if a workflow definition link with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException if a workflow definition link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public WorkflowDefinitionLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchWorkflowDefinitionLinkException, SystemException {
+		WorkflowDefinitionLink workflowDefinitionLink = fetchByPrimaryKey(primaryKey);
+
+		if (workflowDefinitionLink == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchWorkflowDefinitionLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return workflowDefinitionLink;
 	}
 
 	/**
@@ -1915,19 +1925,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	public WorkflowDefinitionLink findByPrimaryKey(
 		long workflowDefinitionLinkId)
 		throws NoSuchWorkflowDefinitionLinkException, SystemException {
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByPrimaryKey(workflowDefinitionLinkId);
-
-		if (workflowDefinitionLink == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					workflowDefinitionLinkId);
-			}
-
-			throw new NoSuchWorkflowDefinitionLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				workflowDefinitionLinkId);
-		}
-
-		return workflowDefinitionLink;
+		return findByPrimaryKey((Serializable)workflowDefinitionLinkId);
 	}
 
 	/**
@@ -1940,20 +1938,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public WorkflowDefinitionLink fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the workflow definition link with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param workflowDefinitionLinkId the primary key of the workflow definition link
-	 * @return the workflow definition link, or <code>null</code> if a workflow definition link with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public WorkflowDefinitionLink fetchByPrimaryKey(
-		long workflowDefinitionLinkId) throws SystemException {
 		WorkflowDefinitionLink workflowDefinitionLink = (WorkflowDefinitionLink)EntityCacheUtil.getResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowDefinitionLinkImpl.class, workflowDefinitionLinkId);
+				WorkflowDefinitionLinkImpl.class, primaryKey);
 
 		if (workflowDefinitionLink == _nullWorkflowDefinitionLink) {
 			return null;
@@ -1966,20 +1952,20 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 				session = openSession();
 
 				workflowDefinitionLink = (WorkflowDefinitionLink)session.get(WorkflowDefinitionLinkImpl.class,
-						Long.valueOf(workflowDefinitionLinkId));
+						primaryKey);
 
 				if (workflowDefinitionLink != null) {
 					cacheResult(workflowDefinitionLink);
 				}
 				else {
 					EntityCacheUtil.putResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
-						WorkflowDefinitionLinkImpl.class,
-						workflowDefinitionLinkId, _nullWorkflowDefinitionLink);
+						WorkflowDefinitionLinkImpl.class, primaryKey,
+						_nullWorkflowDefinitionLink);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
-					WorkflowDefinitionLinkImpl.class, workflowDefinitionLinkId);
+					WorkflowDefinitionLinkImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1989,6 +1975,18 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		}
 
 		return workflowDefinitionLink;
+	}
+
+	/**
+	 * Returns the workflow definition link with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param workflowDefinitionLinkId the primary key of the workflow definition link
+	 * @return the workflow definition link, or <code>null</code> if a workflow definition link with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WorkflowDefinitionLink fetchByPrimaryKey(
+		long workflowDefinitionLinkId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)workflowDefinitionLinkId);
 	}
 
 	/**

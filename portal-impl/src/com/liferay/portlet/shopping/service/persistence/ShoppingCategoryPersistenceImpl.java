@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.shopping.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2120,13 +2119,24 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 *
 	 * @param primaryKey the primary key of the shopping category
 	 * @return the shopping category
-	 * @throws com.liferay.portal.NoSuchModelException if a shopping category with the primary key could not be found
+	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchCategoryException, SystemException {
+		ShoppingCategory shoppingCategory = fetchByPrimaryKey(primaryKey);
+
+		if (shoppingCategory == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchCategoryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return shoppingCategory;
 	}
 
 	/**
@@ -2139,18 +2149,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	public ShoppingCategory findByPrimaryKey(long categoryId)
 		throws NoSuchCategoryException, SystemException {
-		ShoppingCategory shoppingCategory = fetchByPrimaryKey(categoryId);
-
-		if (shoppingCategory == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + categoryId);
-			}
-
-			throw new NoSuchCategoryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				categoryId);
-		}
-
-		return shoppingCategory;
+		return findByPrimaryKey((Serializable)categoryId);
 	}
 
 	/**
@@ -2163,20 +2162,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	@Override
 	public ShoppingCategory fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the shopping category with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param categoryId the primary key of the shopping category
-	 * @return the shopping category, or <code>null</code> if a shopping category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ShoppingCategory fetchByPrimaryKey(long categoryId)
-		throws SystemException {
 		ShoppingCategory shoppingCategory = (ShoppingCategory)EntityCacheUtil.getResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
-				ShoppingCategoryImpl.class, categoryId);
+				ShoppingCategoryImpl.class, primaryKey);
 
 		if (shoppingCategory == _nullShoppingCategory) {
 			return null;
@@ -2189,20 +2176,20 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 				session = openSession();
 
 				shoppingCategory = (ShoppingCategory)session.get(ShoppingCategoryImpl.class,
-						Long.valueOf(categoryId));
+						primaryKey);
 
 				if (shoppingCategory != null) {
 					cacheResult(shoppingCategory);
 				}
 				else {
 					EntityCacheUtil.putResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
-						ShoppingCategoryImpl.class, categoryId,
+						ShoppingCategoryImpl.class, primaryKey,
 						_nullShoppingCategory);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
-					ShoppingCategoryImpl.class, categoryId);
+					ShoppingCategoryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2212,6 +2199,18 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		}
 
 		return shoppingCategory;
+	}
+
+	/**
+	 * Returns the shopping category with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param categoryId the primary key of the shopping category
+	 * @return the shopping category, or <code>null</code> if a shopping category with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ShoppingCategory fetchByPrimaryKey(long categoryId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)categoryId);
 	}
 
 	/**

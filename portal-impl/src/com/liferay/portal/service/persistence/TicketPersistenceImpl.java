@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchTicketException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -619,13 +618,24 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 *
 	 * @param primaryKey the primary key of the ticket
 	 * @return the ticket
-	 * @throws com.liferay.portal.NoSuchModelException if a ticket with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchTicketException if a ticket with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Ticket findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchTicketException, SystemException {
+		Ticket ticket = fetchByPrimaryKey(primaryKey);
+
+		if (ticket == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchTicketException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return ticket;
 	}
 
 	/**
@@ -638,18 +648,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 */
 	public Ticket findByPrimaryKey(long ticketId)
 		throws NoSuchTicketException, SystemException {
-		Ticket ticket = fetchByPrimaryKey(ticketId);
-
-		if (ticket == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + ticketId);
-			}
-
-			throw new NoSuchTicketException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				ticketId);
-		}
-
-		return ticket;
+		return findByPrimaryKey((Serializable)ticketId);
 	}
 
 	/**
@@ -662,19 +661,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	@Override
 	public Ticket fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the ticket with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param ticketId the primary key of the ticket
-	 * @return the ticket, or <code>null</code> if a ticket with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Ticket fetchByPrimaryKey(long ticketId) throws SystemException {
 		Ticket ticket = (Ticket)EntityCacheUtil.getResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
-				TicketImpl.class, ticketId);
+				TicketImpl.class, primaryKey);
 
 		if (ticket == _nullTicket) {
 			return null;
@@ -686,20 +674,19 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 			try {
 				session = openSession();
 
-				ticket = (Ticket)session.get(TicketImpl.class,
-						Long.valueOf(ticketId));
+				ticket = (Ticket)session.get(TicketImpl.class, primaryKey);
 
 				if (ticket != null) {
 					cacheResult(ticket);
 				}
 				else {
 					EntityCacheUtil.putResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
-						TicketImpl.class, ticketId, _nullTicket);
+						TicketImpl.class, primaryKey, _nullTicket);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
-					TicketImpl.class, ticketId);
+					TicketImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -709,6 +696,17 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		}
 
 		return ticket;
+	}
+
+	/**
+	 * Returns the ticket with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param ticketId the primary key of the ticket
+	 * @return the ticket, or <code>null</code> if a ticket with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Ticket fetchByPrimaryKey(long ticketId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)ticketId);
 	}
 
 	/**

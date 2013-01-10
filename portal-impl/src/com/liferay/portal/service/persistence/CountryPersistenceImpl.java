@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchCountryException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1639,13 +1638,24 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 *
 	 * @param primaryKey the primary key of the country
 	 * @return the country
-	 * @throws com.liferay.portal.NoSuchModelException if a country with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchCountryException if a country with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Country findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchCountryException, SystemException {
+		Country country = fetchByPrimaryKey(primaryKey);
+
+		if (country == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchCountryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return country;
 	}
 
 	/**
@@ -1658,18 +1668,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	public Country findByPrimaryKey(long countryId)
 		throws NoSuchCountryException, SystemException {
-		Country country = fetchByPrimaryKey(countryId);
-
-		if (country == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + countryId);
-			}
-
-			throw new NoSuchCountryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				countryId);
-		}
-
-		return country;
+		return findByPrimaryKey((Serializable)countryId);
 	}
 
 	/**
@@ -1682,19 +1681,8 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	@Override
 	public Country fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the country with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param countryId the primary key of the country
-	 * @return the country, or <code>null</code> if a country with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Country fetchByPrimaryKey(long countryId) throws SystemException {
 		Country country = (Country)EntityCacheUtil.getResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
-				CountryImpl.class, countryId);
+				CountryImpl.class, primaryKey);
 
 		if (country == _nullCountry) {
 			return null;
@@ -1706,20 +1694,19 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 			try {
 				session = openSession();
 
-				country = (Country)session.get(CountryImpl.class,
-						Long.valueOf(countryId));
+				country = (Country)session.get(CountryImpl.class, primaryKey);
 
 				if (country != null) {
 					cacheResult(country);
 				}
 				else {
 					EntityCacheUtil.putResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
-						CountryImpl.class, countryId, _nullCountry);
+						CountryImpl.class, primaryKey, _nullCountry);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
-					CountryImpl.class, countryId);
+					CountryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1729,6 +1716,17 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		}
 
 		return country;
+	}
+
+	/**
+	 * Returns the country with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param countryId the primary key of the country
+	 * @return the country, or <code>null</code> if a country with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Country fetchByPrimaryKey(long countryId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)countryId);
 	}
 
 	/**

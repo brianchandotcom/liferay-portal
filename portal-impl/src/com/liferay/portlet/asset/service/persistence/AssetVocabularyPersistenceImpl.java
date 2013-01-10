@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -3451,13 +3450,24 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 *
 	 * @param primaryKey the primary key of the asset vocabulary
 	 * @return the asset vocabulary
-	 * @throws com.liferay.portal.NoSuchModelException if a asset vocabulary with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetVocabulary findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchVocabularyException, SystemException {
+		AssetVocabulary assetVocabulary = fetchByPrimaryKey(primaryKey);
+
+		if (assetVocabulary == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchVocabularyException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return assetVocabulary;
 	}
 
 	/**
@@ -3470,18 +3480,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	public AssetVocabulary findByPrimaryKey(long vocabularyId)
 		throws NoSuchVocabularyException, SystemException {
-		AssetVocabulary assetVocabulary = fetchByPrimaryKey(vocabularyId);
-
-		if (assetVocabulary == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + vocabularyId);
-			}
-
-			throw new NoSuchVocabularyException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				vocabularyId);
-		}
-
-		return assetVocabulary;
+		return findByPrimaryKey((Serializable)vocabularyId);
 	}
 
 	/**
@@ -3494,20 +3493,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	@Override
 	public AssetVocabulary fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the asset vocabulary with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param vocabularyId the primary key of the asset vocabulary
-	 * @return the asset vocabulary, or <code>null</code> if a asset vocabulary with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetVocabulary fetchByPrimaryKey(long vocabularyId)
-		throws SystemException {
 		AssetVocabulary assetVocabulary = (AssetVocabulary)EntityCacheUtil.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-				AssetVocabularyImpl.class, vocabularyId);
+				AssetVocabularyImpl.class, primaryKey);
 
 		if (assetVocabulary == _nullAssetVocabulary) {
 			return null;
@@ -3520,20 +3507,20 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 				session = openSession();
 
 				assetVocabulary = (AssetVocabulary)session.get(AssetVocabularyImpl.class,
-						Long.valueOf(vocabularyId));
+						primaryKey);
 
 				if (assetVocabulary != null) {
 					cacheResult(assetVocabulary);
 				}
 				else {
 					EntityCacheUtil.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-						AssetVocabularyImpl.class, vocabularyId,
+						AssetVocabularyImpl.class, primaryKey,
 						_nullAssetVocabulary);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-					AssetVocabularyImpl.class, vocabularyId);
+					AssetVocabularyImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3543,6 +3530,18 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		}
 
 		return assetVocabulary;
+	}
+
+	/**
+	 * Returns the asset vocabulary with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param vocabularyId the primary key of the asset vocabulary
+	 * @return the asset vocabulary, or <code>null</code> if a asset vocabulary with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetVocabulary fetchByPrimaryKey(long vocabularyId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)vocabularyId);
 	}
 
 	/**

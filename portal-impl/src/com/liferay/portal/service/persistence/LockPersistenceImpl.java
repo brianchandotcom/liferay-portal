@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchLockException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2291,13 +2290,24 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 *
 	 * @param primaryKey the primary key of the lock
 	 * @return the lock
-	 * @throws com.liferay.portal.NoSuchModelException if a lock with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Lock findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchLockException, SystemException {
+		Lock lock = fetchByPrimaryKey(primaryKey);
+
+		if (lock == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchLockException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return lock;
 	}
 
 	/**
@@ -2310,18 +2320,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	public Lock findByPrimaryKey(long lockId)
 		throws NoSuchLockException, SystemException {
-		Lock lock = fetchByPrimaryKey(lockId);
-
-		if (lock == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + lockId);
-			}
-
-			throw new NoSuchLockException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				lockId);
-		}
-
-		return lock;
+		return findByPrimaryKey((Serializable)lockId);
 	}
 
 	/**
@@ -2334,19 +2333,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	@Override
 	public Lock fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the lock with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param lockId the primary key of the lock
-	 * @return the lock, or <code>null</code> if a lock with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Lock fetchByPrimaryKey(long lockId) throws SystemException {
 		Lock lock = (Lock)EntityCacheUtil.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-				LockImpl.class, lockId);
+				LockImpl.class, primaryKey);
 
 		if (lock == _nullLock) {
 			return null;
@@ -2358,19 +2346,19 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			try {
 				session = openSession();
 
-				lock = (Lock)session.get(LockImpl.class, Long.valueOf(lockId));
+				lock = (Lock)session.get(LockImpl.class, primaryKey);
 
 				if (lock != null) {
 					cacheResult(lock);
 				}
 				else {
 					EntityCacheUtil.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-						LockImpl.class, lockId, _nullLock);
+						LockImpl.class, primaryKey, _nullLock);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-					LockImpl.class, lockId);
+					LockImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2380,6 +2368,17 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		}
 
 		return lock;
+	}
+
+	/**
+	 * Returns the lock with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param lockId the primary key of the lock
+	 * @return the lock, or <code>null</code> if a lock with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Lock fetchByPrimaryKey(long lockId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)lockId);
 	}
 
 	/**

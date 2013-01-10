@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.expando.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2035,13 +2034,24 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 *
 	 * @param primaryKey the primary key of the expando column
 	 * @return the expando column
-	 * @throws com.liferay.portal.NoSuchModelException if a expando column with the primary key could not be found
+	 * @throws com.liferay.portlet.expando.NoSuchColumnException if a expando column with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ExpandoColumn findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchColumnException, SystemException {
+		ExpandoColumn expandoColumn = fetchByPrimaryKey(primaryKey);
+
+		if (expandoColumn == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchColumnException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return expandoColumn;
 	}
 
 	/**
@@ -2054,18 +2064,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	public ExpandoColumn findByPrimaryKey(long columnId)
 		throws NoSuchColumnException, SystemException {
-		ExpandoColumn expandoColumn = fetchByPrimaryKey(columnId);
-
-		if (expandoColumn == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + columnId);
-			}
-
-			throw new NoSuchColumnException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				columnId);
-		}
-
-		return expandoColumn;
+		return findByPrimaryKey((Serializable)columnId);
 	}
 
 	/**
@@ -2078,20 +2077,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	@Override
 	public ExpandoColumn fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the expando column with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param columnId the primary key of the expando column
-	 * @return the expando column, or <code>null</code> if a expando column with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ExpandoColumn fetchByPrimaryKey(long columnId)
-		throws SystemException {
 		ExpandoColumn expandoColumn = (ExpandoColumn)EntityCacheUtil.getResult(ExpandoColumnModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoColumnImpl.class, columnId);
+				ExpandoColumnImpl.class, primaryKey);
 
 		if (expandoColumn == _nullExpandoColumn) {
 			return null;
@@ -2104,19 +2091,19 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 				session = openSession();
 
 				expandoColumn = (ExpandoColumn)session.get(ExpandoColumnImpl.class,
-						Long.valueOf(columnId));
+						primaryKey);
 
 				if (expandoColumn != null) {
 					cacheResult(expandoColumn);
 				}
 				else {
 					EntityCacheUtil.putResult(ExpandoColumnModelImpl.ENTITY_CACHE_ENABLED,
-						ExpandoColumnImpl.class, columnId, _nullExpandoColumn);
+						ExpandoColumnImpl.class, primaryKey, _nullExpandoColumn);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ExpandoColumnModelImpl.ENTITY_CACHE_ENABLED,
-					ExpandoColumnImpl.class, columnId);
+					ExpandoColumnImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2126,6 +2113,18 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		}
 
 		return expandoColumn;
+	}
+
+	/**
+	 * Returns the expando column with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param columnId the primary key of the expando column
+	 * @return the expando column, or <code>null</code> if a expando column with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ExpandoColumn fetchByPrimaryKey(long columnId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)columnId);
 	}
 
 	/**

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchPluginSettingException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -1233,13 +1232,24 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 *
 	 * @param primaryKey the primary key of the plugin setting
 	 * @return the plugin setting
-	 * @throws com.liferay.portal.NoSuchModelException if a plugin setting with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPluginSettingException if a plugin setting with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PluginSetting findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchPluginSettingException, SystemException {
+		PluginSetting pluginSetting = fetchByPrimaryKey(primaryKey);
+
+		if (pluginSetting == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchPluginSettingException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return pluginSetting;
 	}
 
 	/**
@@ -1252,18 +1262,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	public PluginSetting findByPrimaryKey(long pluginSettingId)
 		throws NoSuchPluginSettingException, SystemException {
-		PluginSetting pluginSetting = fetchByPrimaryKey(pluginSettingId);
-
-		if (pluginSetting == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + pluginSettingId);
-			}
-
-			throw new NoSuchPluginSettingException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				pluginSettingId);
-		}
-
-		return pluginSetting;
+		return findByPrimaryKey((Serializable)pluginSettingId);
 	}
 
 	/**
@@ -1276,20 +1275,8 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	@Override
 	public PluginSetting fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the plugin setting with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param pluginSettingId the primary key of the plugin setting
-	 * @return the plugin setting, or <code>null</code> if a plugin setting with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PluginSetting fetchByPrimaryKey(long pluginSettingId)
-		throws SystemException {
 		PluginSetting pluginSetting = (PluginSetting)EntityCacheUtil.getResult(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
-				PluginSettingImpl.class, pluginSettingId);
+				PluginSettingImpl.class, primaryKey);
 
 		if (pluginSetting == _nullPluginSetting) {
 			return null;
@@ -1302,20 +1289,19 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 				session = openSession();
 
 				pluginSetting = (PluginSetting)session.get(PluginSettingImpl.class,
-						Long.valueOf(pluginSettingId));
+						primaryKey);
 
 				if (pluginSetting != null) {
 					cacheResult(pluginSetting);
 				}
 				else {
 					EntityCacheUtil.putResult(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
-						PluginSettingImpl.class, pluginSettingId,
-						_nullPluginSetting);
+						PluginSettingImpl.class, primaryKey, _nullPluginSetting);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
-					PluginSettingImpl.class, pluginSettingId);
+					PluginSettingImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1325,6 +1311,18 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		}
 
 		return pluginSetting;
+	}
+
+	/**
+	 * Returns the plugin setting with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param pluginSettingId the primary key of the plugin setting
+	 * @return the plugin setting, or <code>null</code> if a plugin setting with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PluginSetting fetchByPrimaryKey(long pluginSettingId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)pluginSettingId);
 	}
 
 	/**

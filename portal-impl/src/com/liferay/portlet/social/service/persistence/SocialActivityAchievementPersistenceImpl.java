@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -3467,13 +3466,24 @@ public class SocialActivityAchievementPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the social activity achievement
 	 * @return the social activity achievement
-	 * @throws com.liferay.portal.NoSuchModelException if a social activity achievement with the primary key could not be found
+	 * @throws com.liferay.portlet.social.NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialActivityAchievement findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchActivityAchievementException, SystemException {
+		SocialActivityAchievement socialActivityAchievement = fetchByPrimaryKey(primaryKey);
+
+		if (socialActivityAchievement == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchActivityAchievementException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return socialActivityAchievement;
 	}
 
 	/**
@@ -3487,19 +3497,7 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement findByPrimaryKey(
 		long activityAchievementId)
 		throws NoSuchActivityAchievementException, SystemException {
-		SocialActivityAchievement socialActivityAchievement = fetchByPrimaryKey(activityAchievementId);
-
-		if (socialActivityAchievement == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					activityAchievementId);
-			}
-
-			throw new NoSuchActivityAchievementException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				activityAchievementId);
-		}
-
-		return socialActivityAchievement;
+		return findByPrimaryKey((Serializable)activityAchievementId);
 	}
 
 	/**
@@ -3512,20 +3510,8 @@ public class SocialActivityAchievementPersistenceImpl
 	@Override
 	public SocialActivityAchievement fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the social activity achievement with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param activityAchievementId the primary key of the social activity achievement
-	 * @return the social activity achievement, or <code>null</code> if a social activity achievement with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityAchievement fetchByPrimaryKey(
-		long activityAchievementId) throws SystemException {
 		SocialActivityAchievement socialActivityAchievement = (SocialActivityAchievement)EntityCacheUtil.getResult(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED,
-				SocialActivityAchievementImpl.class, activityAchievementId);
+				SocialActivityAchievementImpl.class, primaryKey);
 
 		if (socialActivityAchievement == _nullSocialActivityAchievement) {
 			return null;
@@ -3538,20 +3524,20 @@ public class SocialActivityAchievementPersistenceImpl
 				session = openSession();
 
 				socialActivityAchievement = (SocialActivityAchievement)session.get(SocialActivityAchievementImpl.class,
-						Long.valueOf(activityAchievementId));
+						primaryKey);
 
 				if (socialActivityAchievement != null) {
 					cacheResult(socialActivityAchievement);
 				}
 				else {
 					EntityCacheUtil.putResult(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED,
-						SocialActivityAchievementImpl.class,
-						activityAchievementId, _nullSocialActivityAchievement);
+						SocialActivityAchievementImpl.class, primaryKey,
+						_nullSocialActivityAchievement);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivityAchievementImpl.class, activityAchievementId);
+					SocialActivityAchievementImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -3561,6 +3547,18 @@ public class SocialActivityAchievementPersistenceImpl
 		}
 
 		return socialActivityAchievement;
+	}
+
+	/**
+	 * Returns the social activity achievement with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param activityAchievementId the primary key of the social activity achievement
+	 * @return the social activity achievement, or <code>null</code> if a social activity achievement with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SocialActivityAchievement fetchByPrimaryKey(
+		long activityAchievementId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)activityAchievementId);
 	}
 
 	/**

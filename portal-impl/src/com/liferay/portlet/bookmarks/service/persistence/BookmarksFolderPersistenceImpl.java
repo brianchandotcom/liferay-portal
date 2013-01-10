@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.bookmarks.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -6279,13 +6278,24 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 *
 	 * @param primaryKey the primary key of the bookmarks folder
 	 * @return the bookmarks folder
-	 * @throws com.liferay.portal.NoSuchModelException if a bookmarks folder with the primary key could not be found
+	 * @throws com.liferay.portlet.bookmarks.NoSuchFolderException if a bookmarks folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BookmarksFolder findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchFolderException, SystemException {
+		BookmarksFolder bookmarksFolder = fetchByPrimaryKey(primaryKey);
+
+		if (bookmarksFolder == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchFolderException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return bookmarksFolder;
 	}
 
 	/**
@@ -6298,18 +6308,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	public BookmarksFolder findByPrimaryKey(long folderId)
 		throws NoSuchFolderException, SystemException {
-		BookmarksFolder bookmarksFolder = fetchByPrimaryKey(folderId);
-
-		if (bookmarksFolder == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + folderId);
-			}
-
-			throw new NoSuchFolderException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				folderId);
-		}
-
-		return bookmarksFolder;
+		return findByPrimaryKey((Serializable)folderId);
 	}
 
 	/**
@@ -6322,20 +6321,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public BookmarksFolder fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the bookmarks folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param folderId the primary key of the bookmarks folder
-	 * @return the bookmarks folder, or <code>null</code> if a bookmarks folder with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public BookmarksFolder fetchByPrimaryKey(long folderId)
-		throws SystemException {
 		BookmarksFolder bookmarksFolder = (BookmarksFolder)EntityCacheUtil.getResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
-				BookmarksFolderImpl.class, folderId);
+				BookmarksFolderImpl.class, primaryKey);
 
 		if (bookmarksFolder == _nullBookmarksFolder) {
 			return null;
@@ -6348,20 +6335,20 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 				session = openSession();
 
 				bookmarksFolder = (BookmarksFolder)session.get(BookmarksFolderImpl.class,
-						Long.valueOf(folderId));
+						primaryKey);
 
 				if (bookmarksFolder != null) {
 					cacheResult(bookmarksFolder);
 				}
 				else {
 					EntityCacheUtil.putResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
-						BookmarksFolderImpl.class, folderId,
+						BookmarksFolderImpl.class, primaryKey,
 						_nullBookmarksFolder);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
-					BookmarksFolderImpl.class, folderId);
+					BookmarksFolderImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -6371,6 +6358,18 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		}
 
 		return bookmarksFolder;
+	}
+
+	/**
+	 * Returns the bookmarks folder with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param folderId the primary key of the bookmarks folder
+	 * @return the bookmarks folder, or <code>null</code> if a bookmarks folder with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BookmarksFolder fetchByPrimaryKey(long folderId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)folderId);
 	}
 
 	/**

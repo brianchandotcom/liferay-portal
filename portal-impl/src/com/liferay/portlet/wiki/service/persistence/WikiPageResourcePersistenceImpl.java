@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.wiki.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1212,13 +1211,24 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 *
 	 * @param primaryKey the primary key of the wiki page resource
 	 * @return the wiki page resource
-	 * @throws com.liferay.portal.NoSuchModelException if a wiki page resource with the primary key could not be found
+	 * @throws com.liferay.portlet.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public WikiPageResource findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchPageResourceException, SystemException {
+		WikiPageResource wikiPageResource = fetchByPrimaryKey(primaryKey);
+
+		if (wikiPageResource == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchPageResourceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return wikiPageResource;
 	}
 
 	/**
@@ -1231,18 +1241,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	public WikiPageResource findByPrimaryKey(long resourcePrimKey)
 		throws NoSuchPageResourceException, SystemException {
-		WikiPageResource wikiPageResource = fetchByPrimaryKey(resourcePrimKey);
-
-		if (wikiPageResource == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + resourcePrimKey);
-			}
-
-			throw new NoSuchPageResourceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				resourcePrimKey);
-		}
-
-		return wikiPageResource;
+		return findByPrimaryKey((Serializable)resourcePrimKey);
 	}
 
 	/**
@@ -1255,20 +1254,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	@Override
 	public WikiPageResource fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the wiki page resource with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param resourcePrimKey the primary key of the wiki page resource
-	 * @return the wiki page resource, or <code>null</code> if a wiki page resource with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public WikiPageResource fetchByPrimaryKey(long resourcePrimKey)
-		throws SystemException {
 		WikiPageResource wikiPageResource = (WikiPageResource)EntityCacheUtil.getResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
-				WikiPageResourceImpl.class, resourcePrimKey);
+				WikiPageResourceImpl.class, primaryKey);
 
 		if (wikiPageResource == _nullWikiPageResource) {
 			return null;
@@ -1281,20 +1268,20 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 				session = openSession();
 
 				wikiPageResource = (WikiPageResource)session.get(WikiPageResourceImpl.class,
-						Long.valueOf(resourcePrimKey));
+						primaryKey);
 
 				if (wikiPageResource != null) {
 					cacheResult(wikiPageResource);
 				}
 				else {
 					EntityCacheUtil.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
-						WikiPageResourceImpl.class, resourcePrimKey,
+						WikiPageResourceImpl.class, primaryKey,
 						_nullWikiPageResource);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
-					WikiPageResourceImpl.class, resourcePrimKey);
+					WikiPageResourceImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1304,6 +1291,18 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		}
 
 		return wikiPageResource;
+	}
+
+	/**
+	 * Returns the wiki page resource with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param resourcePrimKey the primary key of the wiki page resource
+	 * @return the wiki page resource, or <code>null</code> if a wiki page resource with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WikiPageResource fetchByPrimaryKey(long resourcePrimKey)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)resourcePrimKey);
 	}
 
 	/**

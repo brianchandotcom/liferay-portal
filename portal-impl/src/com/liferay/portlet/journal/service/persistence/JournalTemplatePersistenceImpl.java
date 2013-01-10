@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -5323,13 +5322,24 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 *
 	 * @param primaryKey the primary key of the journal template
 	 * @return the journal template
-	 * @throws com.liferay.portal.NoSuchModelException if a journal template with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchTemplateException if a journal template with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalTemplate findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchTemplateException, SystemException {
+		JournalTemplate journalTemplate = fetchByPrimaryKey(primaryKey);
+
+		if (journalTemplate == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchTemplateException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return journalTemplate;
 	}
 
 	/**
@@ -5342,18 +5352,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 */
 	public JournalTemplate findByPrimaryKey(long id)
 		throws NoSuchTemplateException, SystemException {
-		JournalTemplate journalTemplate = fetchByPrimaryKey(id);
-
-		if (journalTemplate == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + id);
-			}
-
-			throw new NoSuchTemplateException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				id);
-		}
-
-		return journalTemplate;
+		return findByPrimaryKey((Serializable)id);
 	}
 
 	/**
@@ -5366,19 +5365,8 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	@Override
 	public JournalTemplate fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the journal template with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param id the primary key of the journal template
-	 * @return the journal template, or <code>null</code> if a journal template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalTemplate fetchByPrimaryKey(long id) throws SystemException {
 		JournalTemplate journalTemplate = (JournalTemplate)EntityCacheUtil.getResult(JournalTemplateModelImpl.ENTITY_CACHE_ENABLED,
-				JournalTemplateImpl.class, id);
+				JournalTemplateImpl.class, primaryKey);
 
 		if (journalTemplate == _nullJournalTemplate) {
 			return null;
@@ -5391,19 +5379,20 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 				session = openSession();
 
 				journalTemplate = (JournalTemplate)session.get(JournalTemplateImpl.class,
-						Long.valueOf(id));
+						primaryKey);
 
 				if (journalTemplate != null) {
 					cacheResult(journalTemplate);
 				}
 				else {
 					EntityCacheUtil.putResult(JournalTemplateModelImpl.ENTITY_CACHE_ENABLED,
-						JournalTemplateImpl.class, id, _nullJournalTemplate);
+						JournalTemplateImpl.class, primaryKey,
+						_nullJournalTemplate);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(JournalTemplateModelImpl.ENTITY_CACHE_ENABLED,
-					JournalTemplateImpl.class, id);
+					JournalTemplateImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -5413,6 +5402,17 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		}
 
 		return journalTemplate;
+	}
+
+	/**
+	 * Returns the journal template with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param id the primary key of the journal template
+	 * @return the journal template, or <code>null</code> if a journal template with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalTemplate fetchByPrimaryKey(long id) throws SystemException {
+		return fetchByPrimaryKey((Serializable)id);
 	}
 
 	/**

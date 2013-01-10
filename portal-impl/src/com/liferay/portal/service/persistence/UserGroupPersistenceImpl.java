@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -2464,13 +2463,24 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param primaryKey the primary key of the user group
 	 * @return the user group
-	 * @throws com.liferay.portal.NoSuchModelException if a user group with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchUserGroupException, SystemException {
+		UserGroup userGroup = fetchByPrimaryKey(primaryKey);
+
+		if (userGroup == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchUserGroupException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return userGroup;
 	}
 
 	/**
@@ -2483,18 +2493,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	public UserGroup findByPrimaryKey(long userGroupId)
 		throws NoSuchUserGroupException, SystemException {
-		UserGroup userGroup = fetchByPrimaryKey(userGroupId);
-
-		if (userGroup == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + userGroupId);
-			}
-
-			throw new NoSuchUserGroupException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				userGroupId);
-		}
-
-		return userGroup;
+		return findByPrimaryKey((Serializable)userGroupId);
 	}
 
 	/**
@@ -2507,20 +2506,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public UserGroup fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the user group with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param userGroupId the primary key of the user group
-	 * @return the user group, or <code>null</code> if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserGroup fetchByPrimaryKey(long userGroupId)
-		throws SystemException {
 		UserGroup userGroup = (UserGroup)EntityCacheUtil.getResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-				UserGroupImpl.class, userGroupId);
+				UserGroupImpl.class, primaryKey);
 
 		if (userGroup == _nullUserGroup) {
 			return null;
@@ -2533,19 +2520,19 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 				session = openSession();
 
 				userGroup = (UserGroup)session.get(UserGroupImpl.class,
-						Long.valueOf(userGroupId));
+						primaryKey);
 
 				if (userGroup != null) {
 					cacheResult(userGroup);
 				}
 				else {
 					EntityCacheUtil.putResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-						UserGroupImpl.class, userGroupId, _nullUserGroup);
+						UserGroupImpl.class, primaryKey, _nullUserGroup);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-					UserGroupImpl.class, userGroupId);
+					UserGroupImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2555,6 +2542,18 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		}
 
 		return userGroup;
+	}
+
+	/**
+	 * Returns the user group with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param userGroupId the primary key of the user group
+	 * @return the user group, or <code>null</code> if a user group with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserGroup fetchByPrimaryKey(long userGroupId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)userGroupId);
 	}
 
 	/**

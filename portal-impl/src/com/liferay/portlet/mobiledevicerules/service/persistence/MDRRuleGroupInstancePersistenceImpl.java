@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.mobiledevicerules.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -4998,13 +4997,24 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 *
 	 * @param primaryKey the primary key of the m d r rule group instance
 	 * @return the m d r rule group instance
-	 * @throws com.liferay.portal.NoSuchModelException if a m d r rule group instance with the primary key could not be found
+	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException if a m d r rule group instance with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroupInstance findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchRuleGroupInstanceException, SystemException {
+		MDRRuleGroupInstance mdrRuleGroupInstance = fetchByPrimaryKey(primaryKey);
+
+		if (mdrRuleGroupInstance == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchRuleGroupInstanceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return mdrRuleGroupInstance;
 	}
 
 	/**
@@ -5017,19 +5027,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 */
 	public MDRRuleGroupInstance findByPrimaryKey(long ruleGroupInstanceId)
 		throws NoSuchRuleGroupInstanceException, SystemException {
-		MDRRuleGroupInstance mdrRuleGroupInstance = fetchByPrimaryKey(ruleGroupInstanceId);
-
-		if (mdrRuleGroupInstance == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					ruleGroupInstanceId);
-			}
-
-			throw new NoSuchRuleGroupInstanceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				ruleGroupInstanceId);
-		}
-
-		return mdrRuleGroupInstance;
+		return findByPrimaryKey((Serializable)ruleGroupInstanceId);
 	}
 
 	/**
@@ -5042,20 +5040,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	@Override
 	public MDRRuleGroupInstance fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the m d r rule group instance with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param ruleGroupInstanceId the primary key of the m d r rule group instance
-	 * @return the m d r rule group instance, or <code>null</code> if a m d r rule group instance with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MDRRuleGroupInstance fetchByPrimaryKey(long ruleGroupInstanceId)
-		throws SystemException {
 		MDRRuleGroupInstance mdrRuleGroupInstance = (MDRRuleGroupInstance)EntityCacheUtil.getResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
-				MDRRuleGroupInstanceImpl.class, ruleGroupInstanceId);
+				MDRRuleGroupInstanceImpl.class, primaryKey);
 
 		if (mdrRuleGroupInstance == _nullMDRRuleGroupInstance) {
 			return null;
@@ -5068,20 +5054,20 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				session = openSession();
 
 				mdrRuleGroupInstance = (MDRRuleGroupInstance)session.get(MDRRuleGroupInstanceImpl.class,
-						Long.valueOf(ruleGroupInstanceId));
+						primaryKey);
 
 				if (mdrRuleGroupInstance != null) {
 					cacheResult(mdrRuleGroupInstance);
 				}
 				else {
 					EntityCacheUtil.putResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
-						MDRRuleGroupInstanceImpl.class, ruleGroupInstanceId,
+						MDRRuleGroupInstanceImpl.class, primaryKey,
 						_nullMDRRuleGroupInstance);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					MDRRuleGroupInstanceImpl.class, ruleGroupInstanceId);
+					MDRRuleGroupInstanceImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -5091,6 +5077,18 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		}
 
 		return mdrRuleGroupInstance;
+	}
+
+	/**
+	 * Returns the m d r rule group instance with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param ruleGroupInstanceId the primary key of the m d r rule group instance
+	 * @return the m d r rule group instance, or <code>null</code> if a m d r rule group instance with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MDRRuleGroupInstance fetchByPrimaryKey(long ruleGroupInstanceId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)ruleGroupInstanceId);
 	}
 
 	/**

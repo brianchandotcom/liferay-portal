@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2718,13 +2717,24 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	 *
 	 * @param primaryKey the primary key of the document library file entry metadata
 	 * @return the document library file entry metadata
-	 * @throws com.liferay.portal.NoSuchModelException if a document library file entry metadata with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileEntryMetadata findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchFileEntryMetadataException, SystemException {
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByPrimaryKey(primaryKey);
+
+		if (dlFileEntryMetadata == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchFileEntryMetadataException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return dlFileEntryMetadata;
 	}
 
 	/**
@@ -2737,19 +2747,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	 */
 	public DLFileEntryMetadata findByPrimaryKey(long fileEntryMetadataId)
 		throws NoSuchFileEntryMetadataException, SystemException {
-		DLFileEntryMetadata dlFileEntryMetadata = fetchByPrimaryKey(fileEntryMetadataId);
-
-		if (dlFileEntryMetadata == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					fileEntryMetadataId);
-			}
-
-			throw new NoSuchFileEntryMetadataException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				fileEntryMetadataId);
-		}
-
-		return dlFileEntryMetadata;
+		return findByPrimaryKey((Serializable)fileEntryMetadataId);
 	}
 
 	/**
@@ -2762,20 +2760,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	@Override
 	public DLFileEntryMetadata fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the document library file entry metadata with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param fileEntryMetadataId the primary key of the document library file entry metadata
-	 * @return the document library file entry metadata, or <code>null</code> if a document library file entry metadata with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFileEntryMetadata fetchByPrimaryKey(long fileEntryMetadataId)
-		throws SystemException {
 		DLFileEntryMetadata dlFileEntryMetadata = (DLFileEntryMetadata)EntityCacheUtil.getResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileEntryMetadataImpl.class, fileEntryMetadataId);
+				DLFileEntryMetadataImpl.class, primaryKey);
 
 		if (dlFileEntryMetadata == _nullDLFileEntryMetadata) {
 			return null;
@@ -2788,20 +2774,20 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 				session = openSession();
 
 				dlFileEntryMetadata = (DLFileEntryMetadata)session.get(DLFileEntryMetadataImpl.class,
-						Long.valueOf(fileEntryMetadataId));
+						primaryKey);
 
 				if (dlFileEntryMetadata != null) {
 					cacheResult(dlFileEntryMetadata);
 				}
 				else {
 					EntityCacheUtil.putResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileEntryMetadataImpl.class, fileEntryMetadataId,
+						DLFileEntryMetadataImpl.class, primaryKey,
 						_nullDLFileEntryMetadata);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileEntryMetadataImpl.class, fileEntryMetadataId);
+					DLFileEntryMetadataImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2811,6 +2797,18 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		}
 
 		return dlFileEntryMetadata;
+	}
+
+	/**
+	 * Returns the document library file entry metadata with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param fileEntryMetadataId the primary key of the document library file entry metadata
+	 * @return the document library file entry metadata, or <code>null</code> if a document library file entry metadata with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileEntryMetadata fetchByPrimaryKey(long fileEntryMetadataId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)fileEntryMetadataId);
 	}
 
 	/**

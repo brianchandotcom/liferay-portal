@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2239,13 +2238,24 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 *
 	 * @param primaryKey the primary key of the asset tag property
 	 * @return the asset tag property
-	 * @throws com.liferay.portal.NoSuchModelException if a asset tag property with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a asset tag property with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchTagPropertyException, SystemException {
+		AssetTagProperty assetTagProperty = fetchByPrimaryKey(primaryKey);
+
+		if (assetTagProperty == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchTagPropertyException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return assetTagProperty;
 	}
 
 	/**
@@ -2258,18 +2268,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 */
 	public AssetTagProperty findByPrimaryKey(long tagPropertyId)
 		throws NoSuchTagPropertyException, SystemException {
-		AssetTagProperty assetTagProperty = fetchByPrimaryKey(tagPropertyId);
-
-		if (assetTagProperty == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + tagPropertyId);
-			}
-
-			throw new NoSuchTagPropertyException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				tagPropertyId);
-		}
-
-		return assetTagProperty;
+		return findByPrimaryKey((Serializable)tagPropertyId);
 	}
 
 	/**
@@ -2282,20 +2281,8 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	@Override
 	public AssetTagProperty fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the asset tag property with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param tagPropertyId the primary key of the asset tag property
-	 * @return the asset tag property, or <code>null</code> if a asset tag property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetTagProperty fetchByPrimaryKey(long tagPropertyId)
-		throws SystemException {
 		AssetTagProperty assetTagProperty = (AssetTagProperty)EntityCacheUtil.getResult(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
-				AssetTagPropertyImpl.class, tagPropertyId);
+				AssetTagPropertyImpl.class, primaryKey);
 
 		if (assetTagProperty == _nullAssetTagProperty) {
 			return null;
@@ -2308,20 +2295,20 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 				session = openSession();
 
 				assetTagProperty = (AssetTagProperty)session.get(AssetTagPropertyImpl.class,
-						Long.valueOf(tagPropertyId));
+						primaryKey);
 
 				if (assetTagProperty != null) {
 					cacheResult(assetTagProperty);
 				}
 				else {
 					EntityCacheUtil.putResult(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
-						AssetTagPropertyImpl.class, tagPropertyId,
+						AssetTagPropertyImpl.class, primaryKey,
 						_nullAssetTagProperty);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
-					AssetTagPropertyImpl.class, tagPropertyId);
+					AssetTagPropertyImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2331,6 +2318,18 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 		}
 
 		return assetTagProperty;
+	}
+
+	/**
+	 * Returns the asset tag property with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param tagPropertyId the primary key of the asset tag property
+	 * @return the asset tag property, or <code>null</code> if a asset tag property with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetTagProperty fetchByPrimaryKey(long tagPropertyId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)tagPropertyId);
 	}
 
 	/**

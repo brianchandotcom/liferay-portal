@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchResourceTypePermissionException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -1860,13 +1859,24 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	 *
 	 * @param primaryKey the primary key of the resource type permission
 	 * @return the resource type permission
-	 * @throws com.liferay.portal.NoSuchModelException if a resource type permission with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceTypePermission findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchResourceTypePermissionException, SystemException {
+		ResourceTypePermission resourceTypePermission = fetchByPrimaryKey(primaryKey);
+
+		if (resourceTypePermission == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchResourceTypePermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return resourceTypePermission;
 	}
 
 	/**
@@ -1880,19 +1890,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	public ResourceTypePermission findByPrimaryKey(
 		long resourceTypePermissionId)
 		throws NoSuchResourceTypePermissionException, SystemException {
-		ResourceTypePermission resourceTypePermission = fetchByPrimaryKey(resourceTypePermissionId);
-
-		if (resourceTypePermission == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourceTypePermissionId);
-			}
-
-			throw new NoSuchResourceTypePermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				resourceTypePermissionId);
-		}
-
-		return resourceTypePermission;
+		return findByPrimaryKey((Serializable)resourceTypePermissionId);
 	}
 
 	/**
@@ -1905,20 +1903,8 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	@Override
 	public ResourceTypePermission fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the resource type permission with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param resourceTypePermissionId the primary key of the resource type permission
-	 * @return the resource type permission, or <code>null</code> if a resource type permission with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourceTypePermission fetchByPrimaryKey(
-		long resourceTypePermissionId) throws SystemException {
 		ResourceTypePermission resourceTypePermission = (ResourceTypePermission)EntityCacheUtil.getResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
-				ResourceTypePermissionImpl.class, resourceTypePermissionId);
+				ResourceTypePermissionImpl.class, primaryKey);
 
 		if (resourceTypePermission == _nullResourceTypePermission) {
 			return null;
@@ -1931,20 +1917,20 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 				session = openSession();
 
 				resourceTypePermission = (ResourceTypePermission)session.get(ResourceTypePermissionImpl.class,
-						Long.valueOf(resourceTypePermissionId));
+						primaryKey);
 
 				if (resourceTypePermission != null) {
 					cacheResult(resourceTypePermission);
 				}
 				else {
 					EntityCacheUtil.putResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceTypePermissionImpl.class,
-						resourceTypePermissionId, _nullResourceTypePermission);
+						ResourceTypePermissionImpl.class, primaryKey,
+						_nullResourceTypePermission);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceTypePermissionImpl.class, resourceTypePermissionId);
+					ResourceTypePermissionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1954,6 +1940,18 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		}
 
 		return resourceTypePermission;
+	}
+
+	/**
+	 * Returns the resource type permission with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param resourceTypePermissionId the primary key of the resource type permission
+	 * @return the resource type permission, or <code>null</code> if a resource type permission with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourceTypePermission fetchByPrimaryKey(
+		long resourceTypePermissionId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)resourceTypePermissionId);
 	}
 
 	/**

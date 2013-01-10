@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchServiceComponentException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -1223,13 +1222,24 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 *
 	 * @param primaryKey the primary key of the service component
 	 * @return the service component
-	 * @throws com.liferay.portal.NoSuchModelException if a service component with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ServiceComponent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchServiceComponentException, SystemException {
+		ServiceComponent serviceComponent = fetchByPrimaryKey(primaryKey);
+
+		if (serviceComponent == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchServiceComponentException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return serviceComponent;
 	}
 
 	/**
@@ -1242,19 +1252,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 */
 	public ServiceComponent findByPrimaryKey(long serviceComponentId)
 		throws NoSuchServiceComponentException, SystemException {
-		ServiceComponent serviceComponent = fetchByPrimaryKey(serviceComponentId);
-
-		if (serviceComponent == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					serviceComponentId);
-			}
-
-			throw new NoSuchServiceComponentException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				serviceComponentId);
-		}
-
-		return serviceComponent;
+		return findByPrimaryKey((Serializable)serviceComponentId);
 	}
 
 	/**
@@ -1267,20 +1265,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	@Override
 	public ServiceComponent fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the service component with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param serviceComponentId the primary key of the service component
-	 * @return the service component, or <code>null</code> if a service component with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ServiceComponent fetchByPrimaryKey(long serviceComponentId)
-		throws SystemException {
 		ServiceComponent serviceComponent = (ServiceComponent)EntityCacheUtil.getResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-				ServiceComponentImpl.class, serviceComponentId);
+				ServiceComponentImpl.class, primaryKey);
 
 		if (serviceComponent == _nullServiceComponent) {
 			return null;
@@ -1293,20 +1279,20 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 				session = openSession();
 
 				serviceComponent = (ServiceComponent)session.get(ServiceComponentImpl.class,
-						Long.valueOf(serviceComponentId));
+						primaryKey);
 
 				if (serviceComponent != null) {
 					cacheResult(serviceComponent);
 				}
 				else {
 					EntityCacheUtil.putResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-						ServiceComponentImpl.class, serviceComponentId,
+						ServiceComponentImpl.class, primaryKey,
 						_nullServiceComponent);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-					ServiceComponentImpl.class, serviceComponentId);
+					ServiceComponentImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1316,6 +1302,18 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		}
 
 		return serviceComponent;
+	}
+
+	/**
+	 * Returns the service component with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param serviceComponentId the primary key of the service component
+	 * @return the service component, or <code>null</code> if a service component with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ServiceComponent fetchByPrimaryKey(long serviceComponentId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)serviceComponentId);
 	}
 
 	/**

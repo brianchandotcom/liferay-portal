@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchLayoutRevisionException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -6096,13 +6095,24 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 *
 	 * @param primaryKey the primary key of the layout revision
 	 * @return the layout revision
-	 * @throws com.liferay.portal.NoSuchModelException if a layout revision with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutRevision findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchLayoutRevisionException, SystemException {
+		LayoutRevision layoutRevision = fetchByPrimaryKey(primaryKey);
+
+		if (layoutRevision == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchLayoutRevisionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return layoutRevision;
 	}
 
 	/**
@@ -6115,18 +6125,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 */
 	public LayoutRevision findByPrimaryKey(long layoutRevisionId)
 		throws NoSuchLayoutRevisionException, SystemException {
-		LayoutRevision layoutRevision = fetchByPrimaryKey(layoutRevisionId);
-
-		if (layoutRevision == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + layoutRevisionId);
-			}
-
-			throw new NoSuchLayoutRevisionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				layoutRevisionId);
-		}
-
-		return layoutRevision;
+		return findByPrimaryKey((Serializable)layoutRevisionId);
 	}
 
 	/**
@@ -6139,20 +6138,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	@Override
 	public LayoutRevision fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the layout revision with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param layoutRevisionId the primary key of the layout revision
-	 * @return the layout revision, or <code>null</code> if a layout revision with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public LayoutRevision fetchByPrimaryKey(long layoutRevisionId)
-		throws SystemException {
 		LayoutRevision layoutRevision = (LayoutRevision)EntityCacheUtil.getResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutRevisionImpl.class, layoutRevisionId);
+				LayoutRevisionImpl.class, primaryKey);
 
 		if (layoutRevision == _nullLayoutRevision) {
 			return null;
@@ -6165,20 +6152,20 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				session = openSession();
 
 				layoutRevision = (LayoutRevision)session.get(LayoutRevisionImpl.class,
-						Long.valueOf(layoutRevisionId));
+						primaryKey);
 
 				if (layoutRevision != null) {
 					cacheResult(layoutRevision);
 				}
 				else {
 					EntityCacheUtil.putResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutRevisionImpl.class, layoutRevisionId,
+						LayoutRevisionImpl.class, primaryKey,
 						_nullLayoutRevision);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutRevisionImpl.class, layoutRevisionId);
+					LayoutRevisionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -6188,6 +6175,18 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		}
 
 		return layoutRevision;
+	}
+
+	/**
+	 * Returns the layout revision with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param layoutRevisionId the primary key of the layout revision
+	 * @return the layout revision, or <code>null</code> if a layout revision with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public LayoutRevision fetchByPrimaryKey(long layoutRevisionId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)layoutRevisionId);
 	}
 
 	/**

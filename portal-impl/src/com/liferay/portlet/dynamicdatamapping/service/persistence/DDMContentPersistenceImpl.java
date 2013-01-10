@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2772,13 +2771,24 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 *
 	 * @param primaryKey the primary key of the d d m content
 	 * @return the d d m content
-	 * @throws com.liferay.portal.NoSuchModelException if a d d m content with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMContent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchContentException, SystemException {
+		DDMContent ddmContent = fetchByPrimaryKey(primaryKey);
+
+		if (ddmContent == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchContentException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return ddmContent;
 	}
 
 	/**
@@ -2791,18 +2801,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	public DDMContent findByPrimaryKey(long contentId)
 		throws NoSuchContentException, SystemException {
-		DDMContent ddmContent = fetchByPrimaryKey(contentId);
-
-		if (ddmContent == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + contentId);
-			}
-
-			throw new NoSuchContentException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				contentId);
-		}
-
-		return ddmContent;
+		return findByPrimaryKey((Serializable)contentId);
 	}
 
 	/**
@@ -2815,20 +2814,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	@Override
 	public DDMContent fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the d d m content with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param contentId the primary key of the d d m content
-	 * @return the d d m content, or <code>null</code> if a d d m content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMContent fetchByPrimaryKey(long contentId)
-		throws SystemException {
 		DDMContent ddmContent = (DDMContent)EntityCacheUtil.getResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
-				DDMContentImpl.class, contentId);
+				DDMContentImpl.class, primaryKey);
 
 		if (ddmContent == _nullDDMContent) {
 			return null;
@@ -2841,19 +2828,19 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 				session = openSession();
 
 				ddmContent = (DDMContent)session.get(DDMContentImpl.class,
-						Long.valueOf(contentId));
+						primaryKey);
 
 				if (ddmContent != null) {
 					cacheResult(ddmContent);
 				}
 				else {
 					EntityCacheUtil.putResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
-						DDMContentImpl.class, contentId, _nullDDMContent);
+						DDMContentImpl.class, primaryKey, _nullDDMContent);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
-					DDMContentImpl.class, contentId);
+					DDMContentImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2863,6 +2850,18 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		}
 
 		return ddmContent;
+	}
+
+	/**
+	 * Returns the d d m content with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param contentId the primary key of the d d m content
+	 * @return the d d m content, or <code>null</code> if a d d m content with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMContent fetchByPrimaryKey(long contentId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)contentId);
 	}
 
 	/**

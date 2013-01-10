@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchResourceBlockPermissionException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -1152,13 +1151,24 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 *
 	 * @param primaryKey the primary key of the resource block permission
 	 * @return the resource block permission
-	 * @throws com.liferay.portal.NoSuchModelException if a resource block permission with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a resource block permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlockPermission findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchResourceBlockPermissionException, SystemException {
+		ResourceBlockPermission resourceBlockPermission = fetchByPrimaryKey(primaryKey);
+
+		if (resourceBlockPermission == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchResourceBlockPermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return resourceBlockPermission;
 	}
 
 	/**
@@ -1172,19 +1182,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	public ResourceBlockPermission findByPrimaryKey(
 		long resourceBlockPermissionId)
 		throws NoSuchResourceBlockPermissionException, SystemException {
-		ResourceBlockPermission resourceBlockPermission = fetchByPrimaryKey(resourceBlockPermissionId);
-
-		if (resourceBlockPermission == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourceBlockPermissionId);
-			}
-
-			throw new NoSuchResourceBlockPermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				resourceBlockPermissionId);
-		}
-
-		return resourceBlockPermission;
+		return findByPrimaryKey((Serializable)resourceBlockPermissionId);
 	}
 
 	/**
@@ -1197,20 +1195,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public ResourceBlockPermission fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the resource block permission with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param resourceBlockPermissionId the primary key of the resource block permission
-	 * @return the resource block permission, or <code>null</code> if a resource block permission with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourceBlockPermission fetchByPrimaryKey(
-		long resourceBlockPermissionId) throws SystemException {
 		ResourceBlockPermission resourceBlockPermission = (ResourceBlockPermission)EntityCacheUtil.getResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-				ResourceBlockPermissionImpl.class, resourceBlockPermissionId);
+				ResourceBlockPermissionImpl.class, primaryKey);
 
 		if (resourceBlockPermission == _nullResourceBlockPermission) {
 			return null;
@@ -1223,20 +1209,20 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 				session = openSession();
 
 				resourceBlockPermission = (ResourceBlockPermission)session.get(ResourceBlockPermissionImpl.class,
-						Long.valueOf(resourceBlockPermissionId));
+						primaryKey);
 
 				if (resourceBlockPermission != null) {
 					cacheResult(resourceBlockPermission);
 				}
 				else {
 					EntityCacheUtil.putResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceBlockPermissionImpl.class,
-						resourceBlockPermissionId, _nullResourceBlockPermission);
+						ResourceBlockPermissionImpl.class, primaryKey,
+						_nullResourceBlockPermission);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceBlockPermissionImpl.class, resourceBlockPermissionId);
+					ResourceBlockPermissionImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1246,6 +1232,18 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		}
 
 		return resourceBlockPermission;
+	}
+
+	/**
+	 * Returns the resource block permission with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param resourceBlockPermissionId the primary key of the resource block permission
+	 * @return the resource block permission, or <code>null</code> if a resource block permission with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public ResourceBlockPermission fetchByPrimaryKey(
+		long resourceBlockPermissionId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)resourceBlockPermissionId);
 	}
 
 	/**

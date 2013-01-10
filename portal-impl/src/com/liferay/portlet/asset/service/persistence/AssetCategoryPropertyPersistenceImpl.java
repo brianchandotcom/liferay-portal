@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2257,13 +2256,24 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 *
 	 * @param primaryKey the primary key of the asset category property
 	 * @return the asset category property
-	 * @throws com.liferay.portal.NoSuchModelException if a asset category property with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetCategoryProperty findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchCategoryPropertyException, SystemException {
+		AssetCategoryProperty assetCategoryProperty = fetchByPrimaryKey(primaryKey);
+
+		if (assetCategoryProperty == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchCategoryPropertyException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return assetCategoryProperty;
 	}
 
 	/**
@@ -2276,19 +2286,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	public AssetCategoryProperty findByPrimaryKey(long categoryPropertyId)
 		throws NoSuchCategoryPropertyException, SystemException {
-		AssetCategoryProperty assetCategoryProperty = fetchByPrimaryKey(categoryPropertyId);
-
-		if (assetCategoryProperty == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					categoryPropertyId);
-			}
-
-			throw new NoSuchCategoryPropertyException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				categoryPropertyId);
-		}
-
-		return assetCategoryProperty;
+		return findByPrimaryKey((Serializable)categoryPropertyId);
 	}
 
 	/**
@@ -2301,20 +2299,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	@Override
 	public AssetCategoryProperty fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the asset category property with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param categoryPropertyId the primary key of the asset category property
-	 * @return the asset category property, or <code>null</code> if a asset category property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetCategoryProperty fetchByPrimaryKey(long categoryPropertyId)
-		throws SystemException {
 		AssetCategoryProperty assetCategoryProperty = (AssetCategoryProperty)EntityCacheUtil.getResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
-				AssetCategoryPropertyImpl.class, categoryPropertyId);
+				AssetCategoryPropertyImpl.class, primaryKey);
 
 		if (assetCategoryProperty == _nullAssetCategoryProperty) {
 			return null;
@@ -2327,20 +2313,20 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 				session = openSession();
 
 				assetCategoryProperty = (AssetCategoryProperty)session.get(AssetCategoryPropertyImpl.class,
-						Long.valueOf(categoryPropertyId));
+						primaryKey);
 
 				if (assetCategoryProperty != null) {
 					cacheResult(assetCategoryProperty);
 				}
 				else {
 					EntityCacheUtil.putResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
-						AssetCategoryPropertyImpl.class, categoryPropertyId,
+						AssetCategoryPropertyImpl.class, primaryKey,
 						_nullAssetCategoryProperty);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
-					AssetCategoryPropertyImpl.class, categoryPropertyId);
+					AssetCategoryPropertyImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2350,6 +2336,18 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		}
 
 		return assetCategoryProperty;
+	}
+
+	/**
+	 * Returns the asset category property with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param categoryPropertyId the primary key of the asset category property
+	 * @return the asset category property, or <code>null</code> if a asset category property with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetCategoryProperty fetchByPrimaryKey(long categoryPropertyId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)categoryPropertyId);
 	}
 
 	/**

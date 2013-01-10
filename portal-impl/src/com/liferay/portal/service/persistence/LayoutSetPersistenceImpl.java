@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchLayoutSetException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -1688,13 +1687,24 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 *
 	 * @param primaryKey the primary key of the layout set
 	 * @return the layout set
-	 * @throws com.liferay.portal.NoSuchModelException if a layout set with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutSet findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchLayoutSetException, SystemException {
+		LayoutSet layoutSet = fetchByPrimaryKey(primaryKey);
+
+		if (layoutSet == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchLayoutSetException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return layoutSet;
 	}
 
 	/**
@@ -1707,18 +1717,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	public LayoutSet findByPrimaryKey(long layoutSetId)
 		throws NoSuchLayoutSetException, SystemException {
-		LayoutSet layoutSet = fetchByPrimaryKey(layoutSetId);
-
-		if (layoutSet == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + layoutSetId);
-			}
-
-			throw new NoSuchLayoutSetException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				layoutSetId);
-		}
-
-		return layoutSet;
+		return findByPrimaryKey((Serializable)layoutSetId);
 	}
 
 	/**
@@ -1731,20 +1730,8 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	@Override
 	public LayoutSet fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the layout set with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param layoutSetId the primary key of the layout set
-	 * @return the layout set, or <code>null</code> if a layout set with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public LayoutSet fetchByPrimaryKey(long layoutSetId)
-		throws SystemException {
 		LayoutSet layoutSet = (LayoutSet)EntityCacheUtil.getResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-				LayoutSetImpl.class, layoutSetId);
+				LayoutSetImpl.class, primaryKey);
 
 		if (layoutSet == _nullLayoutSet) {
 			return null;
@@ -1757,19 +1744,19 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 				session = openSession();
 
 				layoutSet = (LayoutSet)session.get(LayoutSetImpl.class,
-						Long.valueOf(layoutSetId));
+						primaryKey);
 
 				if (layoutSet != null) {
 					cacheResult(layoutSet);
 				}
 				else {
 					EntityCacheUtil.putResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutSetImpl.class, layoutSetId, _nullLayoutSet);
+						LayoutSetImpl.class, primaryKey, _nullLayoutSet);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutSetImpl.class, layoutSetId);
+					LayoutSetImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1779,6 +1766,18 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		}
 
 		return layoutSet;
+	}
+
+	/**
+	 * Returns the layout set with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param layoutSetId the primary key of the layout set
+	 * @return the layout set, or <code>null</code> if a layout set with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public LayoutSet fetchByPrimaryKey(long layoutSetId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)layoutSetId);
 	}
 
 	/**

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchPasswordPolicyRelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -1142,13 +1141,24 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 *
 	 * @param primaryKey the primary key of the password policy rel
 	 * @return the password policy rel
-	 * @throws com.liferay.portal.NoSuchModelException if a password policy rel with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchPasswordPolicyRelException, SystemException {
+		PasswordPolicyRel passwordPolicyRel = fetchByPrimaryKey(primaryKey);
+
+		if (passwordPolicyRel == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchPasswordPolicyRelException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return passwordPolicyRel;
 	}
 
 	/**
@@ -1161,19 +1171,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 */
 	public PasswordPolicyRel findByPrimaryKey(long passwordPolicyRelId)
 		throws NoSuchPasswordPolicyRelException, SystemException {
-		PasswordPolicyRel passwordPolicyRel = fetchByPrimaryKey(passwordPolicyRelId);
-
-		if (passwordPolicyRel == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					passwordPolicyRelId);
-			}
-
-			throw new NoSuchPasswordPolicyRelException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				passwordPolicyRelId);
-		}
-
-		return passwordPolicyRel;
+		return findByPrimaryKey((Serializable)passwordPolicyRelId);
 	}
 
 	/**
@@ -1186,20 +1184,8 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	@Override
 	public PasswordPolicyRel fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the password policy rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param passwordPolicyRelId the primary key of the password policy rel
-	 * @return the password policy rel, or <code>null</code> if a password policy rel with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PasswordPolicyRel fetchByPrimaryKey(long passwordPolicyRelId)
-		throws SystemException {
 		PasswordPolicyRel passwordPolicyRel = (PasswordPolicyRel)EntityCacheUtil.getResult(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
-				PasswordPolicyRelImpl.class, passwordPolicyRelId);
+				PasswordPolicyRelImpl.class, primaryKey);
 
 		if (passwordPolicyRel == _nullPasswordPolicyRel) {
 			return null;
@@ -1212,20 +1198,20 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 				session = openSession();
 
 				passwordPolicyRel = (PasswordPolicyRel)session.get(PasswordPolicyRelImpl.class,
-						Long.valueOf(passwordPolicyRelId));
+						primaryKey);
 
 				if (passwordPolicyRel != null) {
 					cacheResult(passwordPolicyRel);
 				}
 				else {
 					EntityCacheUtil.putResult(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
-						PasswordPolicyRelImpl.class, passwordPolicyRelId,
+						PasswordPolicyRelImpl.class, primaryKey,
 						_nullPasswordPolicyRel);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
-					PasswordPolicyRelImpl.class, passwordPolicyRelId);
+					PasswordPolicyRelImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -1235,6 +1221,18 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		}
 
 		return passwordPolicyRel;
+	}
+
+	/**
+	 * Returns the password policy rel with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param passwordPolicyRelId the primary key of the password policy rel
+	 * @return the password policy rel, or <code>null</code> if a password policy rel with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PasswordPolicyRel fetchByPrimaryKey(long passwordPolicyRelId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)passwordPolicyRelId);
 	}
 
 	/**

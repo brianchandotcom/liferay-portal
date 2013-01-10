@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.NoSuchBrowserTrackerException;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -590,13 +589,24 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 *
 	 * @param primaryKey the primary key of the browser tracker
 	 * @return the browser tracker
-	 * @throws com.liferay.portal.NoSuchModelException if a browser tracker with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BrowserTracker findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchBrowserTrackerException, SystemException {
+		BrowserTracker browserTracker = fetchByPrimaryKey(primaryKey);
+
+		if (browserTracker == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchBrowserTrackerException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return browserTracker;
 	}
 
 	/**
@@ -609,18 +619,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 */
 	public BrowserTracker findByPrimaryKey(long browserTrackerId)
 		throws NoSuchBrowserTrackerException, SystemException {
-		BrowserTracker browserTracker = fetchByPrimaryKey(browserTrackerId);
-
-		if (browserTracker == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + browserTrackerId);
-			}
-
-			throw new NoSuchBrowserTrackerException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				browserTrackerId);
-		}
-
-		return browserTracker;
+		return findByPrimaryKey((Serializable)browserTrackerId);
 	}
 
 	/**
@@ -633,20 +632,8 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	@Override
 	public BrowserTracker fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the browser tracker with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param browserTrackerId the primary key of the browser tracker
-	 * @return the browser tracker, or <code>null</code> if a browser tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public BrowserTracker fetchByPrimaryKey(long browserTrackerId)
-		throws SystemException {
 		BrowserTracker browserTracker = (BrowserTracker)EntityCacheUtil.getResult(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-				BrowserTrackerImpl.class, browserTrackerId);
+				BrowserTrackerImpl.class, primaryKey);
 
 		if (browserTracker == _nullBrowserTracker) {
 			return null;
@@ -659,20 +646,20 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 				session = openSession();
 
 				browserTracker = (BrowserTracker)session.get(BrowserTrackerImpl.class,
-						Long.valueOf(browserTrackerId));
+						primaryKey);
 
 				if (browserTracker != null) {
 					cacheResult(browserTracker);
 				}
 				else {
 					EntityCacheUtil.putResult(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-						BrowserTrackerImpl.class, browserTrackerId,
+						BrowserTrackerImpl.class, primaryKey,
 						_nullBrowserTracker);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-					BrowserTrackerImpl.class, browserTrackerId);
+					BrowserTrackerImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -682,6 +669,18 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		}
 
 		return browserTracker;
+	}
+
+	/**
+	 * Returns the browser tracker with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param browserTrackerId the primary key of the browser tracker
+	 * @return the browser tracker, or <code>null</code> if a browser tracker with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public BrowserTracker fetchByPrimaryKey(long browserTrackerId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)browserTrackerId);
 	}
 
 	/**

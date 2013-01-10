@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -2535,13 +2534,24 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	 *
 	 * @param primaryKey the primary key of the journal article image
 	 * @return the journal article image
-	 * @throws com.liferay.portal.NoSuchModelException if a journal article image with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalArticleImage findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return findByPrimaryKey(((Long)primaryKey).longValue());
+		throws NoSuchArticleImageException, SystemException {
+		JournalArticleImage journalArticleImage = fetchByPrimaryKey(primaryKey);
+
+		if (journalArticleImage == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchArticleImageException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				primaryKey);
+		}
+
+		return journalArticleImage;
 	}
 
 	/**
@@ -2554,18 +2564,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	 */
 	public JournalArticleImage findByPrimaryKey(long articleImageId)
 		throws NoSuchArticleImageException, SystemException {
-		JournalArticleImage journalArticleImage = fetchByPrimaryKey(articleImageId);
-
-		if (journalArticleImage == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + articleImageId);
-			}
-
-			throw new NoSuchArticleImageException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				articleImageId);
-		}
-
-		return journalArticleImage;
+		return findByPrimaryKey((Serializable)articleImageId);
 	}
 
 	/**
@@ -2578,20 +2577,8 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	@Override
 	public JournalArticleImage fetchByPrimaryKey(Serializable primaryKey)
 		throws SystemException {
-		return fetchByPrimaryKey(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Returns the journal article image with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param articleImageId the primary key of the journal article image
-	 * @return the journal article image, or <code>null</code> if a journal article image with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage fetchByPrimaryKey(long articleImageId)
-		throws SystemException {
 		JournalArticleImage journalArticleImage = (JournalArticleImage)EntityCacheUtil.getResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
-				JournalArticleImageImpl.class, articleImageId);
+				JournalArticleImageImpl.class, primaryKey);
 
 		if (journalArticleImage == _nullJournalArticleImage) {
 			return null;
@@ -2604,20 +2591,20 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 				session = openSession();
 
 				journalArticleImage = (JournalArticleImage)session.get(JournalArticleImageImpl.class,
-						Long.valueOf(articleImageId));
+						primaryKey);
 
 				if (journalArticleImage != null) {
 					cacheResult(journalArticleImage);
 				}
 				else {
 					EntityCacheUtil.putResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
-						JournalArticleImageImpl.class, articleImageId,
+						JournalArticleImageImpl.class, primaryKey,
 						_nullJournalArticleImage);
 				}
 			}
 			catch (Exception e) {
 				EntityCacheUtil.removeResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleImageImpl.class, articleImageId);
+					JournalArticleImageImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2627,6 +2614,18 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		}
 
 		return journalArticleImage;
+	}
+
+	/**
+	 * Returns the journal article image with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param articleImageId the primary key of the journal article image
+	 * @return the journal article image, or <code>null</code> if a journal article image with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalArticleImage fetchByPrimaryKey(long articleImageId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)articleImageId);
 	}
 
 	/**

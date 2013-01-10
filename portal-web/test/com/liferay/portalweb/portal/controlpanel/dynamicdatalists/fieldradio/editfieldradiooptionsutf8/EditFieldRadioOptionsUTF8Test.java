@@ -24,8 +24,11 @@ public class EditFieldRadioOptionsUTF8Test extends BaseTestCase {
 	public void testEditFieldRadioOptionsUTF8() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -43,8 +46,9 @@ public class EditFieldRadioOptionsUTF8Test extends BaseTestCase {
 		selenium.selectFrame("//iframe");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
@@ -59,12 +63,13 @@ public class EditFieldRadioOptionsUTF8Test extends BaseTestCase {
 				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label"));
 		selenium.doubleClickAt("//div[@class='aui-diagram-builder-drop-container']/div[8]",
 			RuntimeVariables.replace("Radio"));
-		selenium.waitForVisible(
-			"//div[@class='yui3-datatable-scrollable aui-property-list-content']");
+		selenium.waitForVisible("//div[@class='yui3-datatable-x-scroller']");
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//tr[8]/td[1]/div"));
-		selenium.doubleClickAt("//tr[8]/td[1]/div",
-			RuntimeVariables.replace("Options"));
+			selenium.getText("//tr[10]/td[1]"));
+		assertEquals(RuntimeVariables.replace("option 1, option 2, option 3"),
+			selenium.getText("//tr[10]/td[2]"));
+		selenium.doubleClickAt("//tr[10]/td[2]",
+			RuntimeVariables.replace("option 1, option 2, option 3"));
 		selenium.waitForVisible("//div[@class='aui-celleditor-edit-label']");
 		assertEquals(RuntimeVariables.replace("Edit option(s)"),
 			selenium.getText("//div[@class='aui-celleditor-edit-label']"));
@@ -78,7 +83,7 @@ public class EditFieldRadioOptionsUTF8Test extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace(
 				"\u308a\u3093\u3054, \u30d0\u30ca\u30ca, \u30af\u30e9\u30f3\u30d9\u30ea\u30fc"),
-			selenium.getText("//tr[8]/td[2]/div"));
+			selenium.getText("//tr[10]/td[2]"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

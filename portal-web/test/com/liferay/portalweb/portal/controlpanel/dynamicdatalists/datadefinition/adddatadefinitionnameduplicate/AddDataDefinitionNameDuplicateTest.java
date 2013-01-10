@@ -24,8 +24,11 @@ public class AddDataDefinitionNameDuplicateTest extends BaseTestCase {
 	public void testAddDataDefinitionNameDuplicate() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -43,9 +46,9 @@ public class AddDataDefinitionNameDuplicateTest extends BaseTestCase {
 			RuntimeVariables.replace("Manage Data Definitions"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-		selenium.waitForVisible("//tr[3]/td[2]");
+		selenium.waitForVisible("//tr[contains(.,'Data Definition')]/td[3]");
 		assertEquals(RuntimeVariables.replace("Data Definition"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText("//tr[contains(.,'Data Definition')]/td[3]"));
 		selenium.waitForVisible("link=Add");
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");

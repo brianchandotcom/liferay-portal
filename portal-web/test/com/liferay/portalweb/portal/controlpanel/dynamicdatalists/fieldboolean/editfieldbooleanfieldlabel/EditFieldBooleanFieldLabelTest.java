@@ -24,8 +24,11 @@ public class EditFieldBooleanFieldLabelTest extends BaseTestCase {
 	public void testEditFieldBooleanFieldLabel() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -43,8 +46,9 @@ public class EditFieldBooleanFieldLabelTest extends BaseTestCase {
 		selenium.selectFrame("//iframe");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
@@ -60,13 +64,12 @@ public class EditFieldBooleanFieldLabelTest extends BaseTestCase {
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
 		selenium.doubleClickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
 			RuntimeVariables.replace("Boolean"));
-		selenium.waitForVisible(
-			"//div[@class='yui3-datatable-scrollable aui-property-list-content']");
+		selenium.waitForVisible("//div[@class='yui3-datatable-x-scroller']");
 		assertEquals(RuntimeVariables.replace("Field Label"),
-			selenium.getText("//tr[2]/td[1]/div"));
+			selenium.getText("//tr[2]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Boolean"),
-			selenium.getText("//tr[2]/td[2]/div"));
-		selenium.doubleClickAt("//tr[2]/td[2]/div",
+			selenium.getText("//tr[2]/td[2]"));
+		selenium.doubleClickAt("//tr[2]/td[2]",
 			RuntimeVariables.replace("Boolean"));
 		selenium.waitForVisible("//input[@class='aui-celleditor-element']");
 		selenium.type("//input[@class='aui-celleditor-element']",
@@ -74,7 +77,7 @@ public class EditFieldBooleanFieldLabelTest extends BaseTestCase {
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Boolean Field Label Edited"),
-			selenium.getText("//tr[2]/td[2]/div"));
+			selenium.getText("//tr[2]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Boolean Field Label Edited"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));

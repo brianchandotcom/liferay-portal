@@ -24,8 +24,11 @@ public class EditFieldBooleanPredefinedValueTest extends BaseTestCase {
 	public void testEditFieldBooleanPredefinedValue() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -43,8 +46,9 @@ public class EditFieldBooleanPredefinedValueTest extends BaseTestCase {
 		selenium.selectFrame("//iframe");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
@@ -62,21 +66,19 @@ public class EditFieldBooleanPredefinedValueTest extends BaseTestCase {
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/input"));
 		selenium.doubleClickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
 			RuntimeVariables.replace("Boolean"));
-		selenium.waitForVisible(
-			"//div[@class='yui3-datatable-scrollable aui-property-list-content']");
+		selenium.waitForVisible("//div[@class='yui3-datatable-x-scroller']");
 		assertEquals(RuntimeVariables.replace("Predefined Value"),
-			selenium.getText("//tr[5]/td[1]/div"));
+			selenium.getText("//tr[5]/td[1]"));
 		assertEquals(RuntimeVariables.replace("No"),
-			selenium.getText("//tr[5]/td[2]/div"));
-		selenium.doubleClickAt("//tr[5]/td[2]/div",
-			RuntimeVariables.replace("No"));
+			selenium.getText("//tr[5]/td[2]"));
+		selenium.doubleClickAt("//tr[5]/td[2]", RuntimeVariables.replace("No"));
 		selenium.waitForVisible("//div[@class='aui-celleditor-element']");
 		selenium.clickAt("//div[@class='aui-celleditor-element']/label[1]/input",
 			RuntimeVariables.replace("cell editor"));
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Yes"),
-			selenium.getText("//tr[5]/td[2]/div"));
+			selenium.getText("//tr[5]/td[2]"));
 		assertTrue(selenium.isChecked(
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/input"));
 		selenium.clickAt("//input[@value='Save']",

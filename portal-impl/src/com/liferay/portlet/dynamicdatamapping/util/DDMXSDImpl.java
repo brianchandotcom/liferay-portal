@@ -117,10 +117,7 @@ public class DDMXSDImpl implements DDMXSD {
 		String portletNamespace = PortalUtil.getPortletNamespace(portletId);
 
 		Map<String, Object> freeMarkerContext = getFreeMarkerContext(
-			element, locale);
-
-		freeMarkerContext.put("portletNamespace", portletNamespace);
-		freeMarkerContext.put("namespace", namespace);
+			pageContext, portletNamespace, namespace, element, locale);
 
 		Map<String, Object> fieldStructure =
 			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
@@ -130,12 +127,14 @@ public class DDMXSDImpl implements DDMXSD {
 		DDMFieldsCounter ddmFieldsCounter = getFieldsCounter(
 			pageContext, fields, portletNamespace, namespace);
 
+		String name = element.attributeValue("name");
+
 		if (fields != null) {
 			freeMarkerContext.put("fields", fields);
 
 			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
-			if (fieldsDisplayField != null) {
+			if ((fieldsDisplayField != null) && fields.contains(name)) {
 				String[] fieldsDisplayValues = StringUtil.split(
 					(String)fieldsDisplayField.getValue());
 
@@ -153,16 +152,16 @@ public class DDMXSDImpl implements DDMXSD {
 			}
 		}
 
-		String name = element.attributeValue("name");
-
 		StringBundler sb = new StringBundler(fieldRepetition);
 
 		while (fieldRepetition > 0) {
 			fieldStructure.put("fieldNamespace", PwdGenerator.getPassword(4));
 			fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
 
-			ddmFieldsCounter.incrementKey(name);
-			ddmFieldsCounter.incrementKey(DDMImpl.FIELDS_DISPLAY_NAME);
+			if ((fields != null) && fields.contains(name)) {
+				ddmFieldsCounter.incrementKey(name);
+				ddmFieldsCounter.incrementKey(DDMImpl.FIELDS_DISPLAY_NAME);
+			}
 
 			String childrenHTML = getHTML(
 				pageContext, element, fields, namespace, mode, readOnly,
@@ -492,7 +491,19 @@ public class DDMXSDImpl implements DDMXSD {
 	}
 
 	protected Map<String, Object> getFieldContext(
+		PageContext pageContext, String portletNamespace, String namespace,
 		Element dynamicElementElement, Locale locale) {
+
+		Map<String, Map<String, Object>> fieldsContext = getFieldsContext(
+			pageContext, portletNamespace, namespace);
+
+		String name = dynamicElementElement.attributeValue("name");
+
+		Map<String, Object> fieldContext = fieldsContext.get(name);
+
+		if (fieldContext != null) {
+			return fieldContext;
+		}
 
 		Document document = dynamicElementElement.getDocument();
 
@@ -512,21 +523,44 @@ public class DDMXSDImpl implements DDMXSD {
 			(Element)dynamicElementElement.selectSingleNode(
 				"meta-data[@locale='" + languageId + "']");
 
-		Map<String, Object> field = new HashMap<String, Object>();
+		fieldContext = new HashMap<String, Object>();
 
 		if (metadataElement != null) {
 			for (Element metadataEntry : metadataElement.elements()) {
-				field.put(
+				fieldContext.put(
 					metadataEntry.attributeValue("name"),
 					metadataEntry.getText());
 			}
 		}
 
 		for (Attribute attribute : dynamicElementElement.attributes()) {
-			field.put(attribute.getName(), attribute.getValue());
+			fieldContext.put(attribute.getName(), attribute.getValue());
 		}
 
-		return field;
+		fieldContext.put("fieldNamespace", PwdGenerator.getPassword(4));
+
+		fieldsContext.put(name, fieldContext);
+
+		return fieldContext;
+	}
+
+	protected Map<String, Map<String, Object>> getFieldsContext(
+		PageContext pageContext, String portletNamespace, String namespace) {
+
+		String fieldsContextKey =
+			portletNamespace + namespace + "fieldsContext";
+
+		Map<String, Map<String, Object>> fieldsContext =
+			(Map<String, Map<String, Object>>)pageContext.getAttribute(
+				fieldsContextKey);
+
+		if (fieldsContext == null) {
+			fieldsContext = new HashMap<String, Map<String, Object>>();
+
+			pageContext.setAttribute(fieldsContextKey, fieldsContext);
+		}
+
+		return fieldsContext;
 	}
 
 	protected DDMFieldsCounter getFieldsCounter(
@@ -548,23 +582,29 @@ public class DDMXSDImpl implements DDMXSD {
 	}
 
 	protected Map<String, Object> getFreeMarkerContext(
+		PageContext pageContext, String portletNamespace, String namespace,
 		Element dynamicElementElement, Locale locale) {
 
 		Map<String, Object> freeMarkerContext = new HashMap<String, Object>();
 
 		Map<String, Object> fieldContext = getFieldContext(
-			dynamicElementElement, locale);
+			pageContext, portletNamespace, namespace, dynamicElementElement,
+			locale);
 
 		Map<String, Object> parentFieldContext = new HashMap<String, Object>();
 
 		Element parentElement = dynamicElementElement.getParent();
 
 		if (parentElement != null) {
-			parentFieldContext = getFieldContext(parentElement, locale);
+			parentFieldContext = getFieldContext(
+				pageContext, portletNamespace, namespace, parentElement,
+				locale);
 		}
 
 		freeMarkerContext.put("fieldStructure", fieldContext);
+		freeMarkerContext.put("namespace", namespace);
 		freeMarkerContext.put("parentFieldStructure", parentFieldContext);
+		freeMarkerContext.put("portletNamespace", portletNamespace);
 		freeMarkerContext.put("requestedLocale", locale);
 
 		return freeMarkerContext;

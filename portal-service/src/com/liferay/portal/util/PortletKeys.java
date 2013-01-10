@@ -116,8 +116,6 @@ public class PortletKeys {
 
 	public static final String MESSAGE_BOARDS_ADMIN = "162";
 
-	public static final String METADATA_SET_ADMIN = "171";
-
 	public static final String MOBILE_DEVICE_GLOBAL_ADMIN = "177";
 
 	public static final String MOBILE_DEVICE_SITE_ADMIN = "178";
@@ -135,8 +133,6 @@ public class PortletKeys {
 	public static final String MY_WORKFLOW_TASKS = "153";
 
 	public static final String NESTED_PORTLETS = "118";
-
-	public static final String ORGANIZATION_ADMIN = "80";
 
 	public static final String PAGE_COMMENTS = "107";
 

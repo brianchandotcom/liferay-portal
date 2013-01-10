@@ -19,7 +19,7 @@ import com.liferay.portal.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -134,13 +134,13 @@ public class PortletExporter {
 		throws Exception {
 
 		try {
-			ImportExportThreadLocal.setPortletExportInProcess(true);
+			ExportImportThreadLocal.setPortletExportInProcess(true);
 
 			return doExportPortletInfoAsFile(
 				plid, groupId, portletId, parameterMap, startDate, endDate);
 		}
 		finally {
-			ImportExportThreadLocal.setPortletExportInProcess(false);
+			ExportImportThreadLocal.setPortletExportInProcess(false);
 		}
 	}
 
@@ -981,7 +981,7 @@ public class PortletExporter {
 
 		boolean staged = liveGroup.isStagedPortlet(portlet.getRootPortletId());
 
-		if (!staged && ImportExportThreadLocal.isLayoutExportInProcess()) {
+		if (!staged && ExportImportThreadLocal.isLayoutExportInProcess()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Not exporting data for " + portletId +

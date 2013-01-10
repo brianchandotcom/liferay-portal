@@ -16,7 +16,7 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,7 +46,7 @@ public class PermissionCacheUtil {
 		PermissionCacheUtil.class.getName() + "_RESOURCE_BLOCK_IDS_BAG";
 
 	public static void clearCache() {
-		if (ImportExportThreadLocal.isImportInProcess() ||
+		if (ExportImportThreadLocal.isImportInProcess() ||
 			!PermissionThreadLocal.isFlushEnabled()) {
 
 			return;

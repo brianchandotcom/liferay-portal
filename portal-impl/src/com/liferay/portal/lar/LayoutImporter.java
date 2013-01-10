@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
@@ -140,12 +140,12 @@ public class LayoutImporter {
 		throws Exception {
 
 		try {
-			ImportExportThreadLocal.setLayoutImportInProcess(true);
+			ExportImportThreadLocal.setLayoutImportInProcess(true);
 
 			doImportLayouts(userId, groupId, privateLayout, parameterMap, file);
 		}
 		finally {
-			ImportExportThreadLocal.setLayoutImportInProcess(false);
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
 
 			CacheUtil.clearCache();
 			JournalContentUtil.clearCache();

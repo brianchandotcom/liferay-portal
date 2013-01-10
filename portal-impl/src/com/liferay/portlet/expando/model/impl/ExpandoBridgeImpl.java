@@ -16,7 +16,7 @@ package com.liferay.portlet.expando.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -76,7 +76,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		boolean secure =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
 
-		if (ImportExportThreadLocal.isImportInProcess()) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
 			secure = false;
 		}
 
@@ -93,7 +93,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		boolean secure =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
 
-		if (ImportExportThreadLocal.isImportInProcess()) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
 			secure = false;
 		}
 
@@ -112,7 +112,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		boolean secure =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
 
-		if (ImportExportThreadLocal.isImportInProcess()) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
 			secure = false;
 		}
 
@@ -187,7 +187,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		boolean secure =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT;
 
-		if (ImportExportThreadLocal.isExportInProcess()) {
+		if (ExportImportThreadLocal.isExportInProcess()) {
 			secure = false;
 		}
 
@@ -264,7 +264,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		boolean secure =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT;
 
-		if (ImportExportThreadLocal.isExportInProcess()) {
+		if (ExportImportThreadLocal.isExportInProcess()) {
 			secure = false;
 		}
 
@@ -287,7 +287,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		boolean secure =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT;
 
-		if (ImportExportThreadLocal.isExportInProcess()) {
+		if (ExportImportThreadLocal.isExportInProcess()) {
 			secure = false;
 		}
 
@@ -395,7 +395,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		boolean secure =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
 
-		if (ImportExportThreadLocal.isImportInProcess()) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
 			secure = false;
 		}
 
@@ -448,7 +448,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		boolean secure =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
 
-		if (ImportExportThreadLocal.isImportInProcess()) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
 			secure = false;
 		}
 
@@ -481,7 +481,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		boolean secure =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
 
-		if (ImportExportThreadLocal.isImportInProcess()) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
 			secure = false;
 		}
 
@@ -523,7 +523,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		boolean secure =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
 
-		if (ImportExportThreadLocal.isImportInProcess()) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
 			secure = false;
 		}
 

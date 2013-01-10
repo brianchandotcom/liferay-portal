@@ -17,7 +17,7 @@ package com.liferay.portlet.social.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -97,7 +97,7 @@ public class SocialActivityLocalServiceImpl
 			long classPK, int type, String extraData, long receiverUserId)
 		throws PortalException, SystemException {
 
-		if (ImportExportThreadLocal.isImportInProcess()) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
 		}
 
@@ -172,7 +172,7 @@ public class SocialActivityLocalServiceImpl
 			String extraData, long receiverUserId)
 		throws PortalException, SystemException {
 
-		if (ImportExportThreadLocal.isImportInProcess()) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
 		}
 
@@ -204,7 +204,7 @@ public class SocialActivityLocalServiceImpl
 			SocialActivity activity, SocialActivity mirrorActivity)
 		throws PortalException, SystemException {
 
-		if (ImportExportThreadLocal.isImportInProcess()) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
 		}
 

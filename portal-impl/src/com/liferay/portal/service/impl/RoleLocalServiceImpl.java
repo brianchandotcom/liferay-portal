@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
@@ -202,7 +202,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				user.getCompanyId(), 0, userId, Role.class.getName(),
 				role.getRoleId(), false, false, false);
 
-			if (!ImportExportThreadLocal.isImportInProcess()) {
+			if (!ExportImportThreadLocal.isImportInProcess()) {
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 					User.class);
 

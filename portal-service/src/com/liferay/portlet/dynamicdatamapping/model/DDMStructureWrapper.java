@@ -809,6 +809,13 @@ public class DDMStructureWrapper implements DDMStructure,
 		return _ddmStructure.getAvailableLanguageIds();
 	}
 
+	public java.util.List<java.lang.String> getChildrenFieldNames(
+		java.lang.String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructure.getChildrenFieldNames(fieldName);
+	}
+
 	public java.lang.String getCompleteXsd()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -907,6 +914,12 @@ public class DDMStructureWrapper implements DDMStructure,
 
 	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedTransientFieldsMap() {
 		return _ddmStructure.getLocalizedTransientFieldsMap();
+	}
+
+	public java.util.List<java.lang.String> getParentFieldNames()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructure.getParentFieldNames();
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates()

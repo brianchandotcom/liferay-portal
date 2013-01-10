@@ -128,4 +128,6 @@ public interface PACLConstants {
 
 	public static final String SOCKET_PERMISSION_LISTEN = "listen";
 
+	public static final String SOCKET_PERMISSION_RESOLVE = "resolve";
+
 }

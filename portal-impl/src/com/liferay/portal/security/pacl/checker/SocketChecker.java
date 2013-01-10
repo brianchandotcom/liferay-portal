@@ -57,16 +57,18 @@ public class SocketChecker extends BaseChecker {
 
 			String actions = permission.getActions();
 
+			if (actions.equals(SOCKET_PERMISSION_RESOLVE)) {
+
+				// This should not happen, since resolving host names is always
+				// allowed
+
+				return rule;
+			}
+
 			String name = permission.getName();
 
 			int pos = name.indexOf(StringPool.COLON);
 			int port = GetterUtil.getInteger(name.substring(pos + 1));
-
-			// resolve
-
-			if (port == -1) {
-				return rule;
-			}
 
 			if (actions.contains(SOCKET_PERMISSION_ACCEPT)) {
 				rule[0] = "security-manager-sockets-accept";

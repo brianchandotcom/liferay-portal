@@ -74,8 +74,8 @@
 	<td>Public Pages</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//li/ul/li[1]/div/div[3]/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
 	<td>welcome1Present</td>
 </tr>
 <tr>
@@ -159,8 +159,8 @@
 	<td>Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog.</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//li/ul/li[1]/div/div[3]/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
 	<td>welcome2Present</td>
 </tr>
 <tr>
@@ -244,18 +244,13 @@
 	<td>Child Test Page</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>link=Child Test Page</td>
-	<td>Child Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Child Test Page</td>
 	<td>Child Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//nav/ul/li[3]/span/a</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[@class='last']/span/a</td>
 	<td>Child Test Page</td>
 </tr>
 </tbody></table>

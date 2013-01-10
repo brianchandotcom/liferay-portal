@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.breadcrumb.portlet.addportletmultiple;
+package com.liferay.portalweb.portlet.breadcrumb.portlet.addportletbreadcrumb;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

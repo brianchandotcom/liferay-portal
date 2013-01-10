@@ -28,12 +28,15 @@ public class ViewPortletBreadcrumbTest extends BaseTestCase {
 		selenium.clickAt("link=Breadcrumb Test Page",
 			RuntimeVariables.replace("Breadcrumb Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Liferay"),
-			selenium.getText(
-				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
 			selenium.getText(
-				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[2]/span/a"));
+				"//nav[@id='breadcrumbs']/ul/li[@class='last']/span/a"));
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText(
+				"//div[@class='portlet-body']/ul/li[@class='first']/span/a"));
+		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
+			selenium.getText(
+				"//div[@class='portlet-body']/ul/li[@class='last']/span/a"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='portlet-body']/ul/li[3]"));
 		selenium.mouseOver("link=Breadcrumb Test Page");
@@ -41,14 +44,19 @@ public class ViewPortletBreadcrumbTest extends BaseTestCase {
 		selenium.clickAt("link=Child Test Page",
 			RuntimeVariables.replace("Child Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Liferay"),
-			selenium.getText(
-				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
 			selenium.getText(
-				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[2]/span/a"));
+				"//nav[@id='breadcrumbs']/ul/li[@class='first']/span/a"));
 		assertEquals(RuntimeVariables.replace("Child Test Page"),
 			selenium.getText(
-				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[3]/span/a"));
+				"//nav[@id='breadcrumbs']/ul/li[@class='last']/span/a"));
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText(
+				"//div[@class='portlet-body']/ul/li[@class='first']/span/a"));
+		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
+			selenium.getText("//div[@class='portlet-body']/ul/li[2]/span/a"));
+		assertEquals(RuntimeVariables.replace("Child Test Page"),
+			selenium.getText(
+				"//div[@class='portlet-body']/ul/li[@class='last']/span/a"));
 	}
 }

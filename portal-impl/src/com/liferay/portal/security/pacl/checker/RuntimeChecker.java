@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLClassUtil;
@@ -94,9 +93,8 @@ public class RuntimeChecker extends BaseReflectChecker {
 			}
 		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
-			int pos = name.indexOf(StringPool.PERIOD);
-
-			String envName = name.substring(pos + 1);
+			String envName = name.substring(
+				RUNTIME_PERMISSION_GET_ENV.length() + 1);
 
 			if (!hasGetEnv(envName)) {
 				throwSecurityException(
@@ -150,19 +148,18 @@ public class RuntimeChecker extends BaseReflectChecker {
 			if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
 				rule[0] = "security-manager-class-loader-reference-ids";
 
-				if (Validator.isNull(name)) {
-					name = "portal";
+				if (name.equals(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+					rule[1] = "portal";
 				}
-
-				rule[1] = name;
+				else {
+					rule[1] = name.substring(
+						RUNTIME_PERMISSION_GET_CLASSLOADER.length() + 1);;
+				}
 			}
 			else if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
-				int pos = name.indexOf(StringPool.PERIOD);
-
-				String envName = name.substring(pos + 1);
-
 				rule[0] = "security-manager-get-environment-variable";
-				rule[1] = envName;
+				rule[1] = name.substring(
+					RUNTIME_PERMISSION_GET_ENV.length() + 1);
 			}
 		}
 

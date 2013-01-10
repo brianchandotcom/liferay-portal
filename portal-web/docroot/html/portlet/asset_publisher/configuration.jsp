@@ -90,6 +90,14 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 			List<KeyValuePair> scopesRightList = new ArrayList<KeyValuePair>();
 
 			Arrays.sort(groupIds);
+
+			for (Group group : groups) {
+				if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
+					scopesRightList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(group, locale)));
+				}
+			}
+
+			scopesRightList = ListUtil.sort(scopesRightList, new KeyValuePairComparator(false, true));
 			%>
 
 			<aui:select label="" name="preferences--defaultScope--" onChange='<%= renderResponse.getNamespace() + "selectScope();" %>'>
@@ -99,9 +107,6 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 
 					<%
 					for (Group group : groups) {
-						if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
-							scopesRightList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(group, locale)));
-						}
 					%>
 
 						<aui:option label="<%= _getName(group, locale) %>" selected="<%= (groupIds.length == 1) && (group.getGroupId() == groupIds[0]) %>" value="<%= _getScopeId(group, scopeGroupId) %>" />
@@ -114,10 +119,6 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 			</aui:select>
 
 			<aui:input name="preferences--scopeIds--" type="hidden" />
-
-			<%
-			scopesRightList = ListUtil.sort(scopesRightList, new KeyValuePairComparator(false, true));
-			%>
 
 			<div class="<%= defaultScope ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />scopesBoxes">
 				<liferay-ui:input-move-boxes

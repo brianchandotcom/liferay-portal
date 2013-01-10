@@ -131,11 +131,9 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 		boolean changed = false;
 
 		if (trackedRules == null) {
-			trackedRules = new HashSet<String>();
-		}
+			trackedRules = new HashSet<String>(existingPolicyRules);
 
-		if (!existingPolicyRules.isEmpty()) {
-			trackedRules.addAll(existingPolicyRules);
+			changed = true;
 		}
 
 		for (String value : values) {

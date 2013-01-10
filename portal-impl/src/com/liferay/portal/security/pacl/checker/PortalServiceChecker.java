@@ -187,6 +187,10 @@ public class PortalServiceChecker extends BaseChecker {
 		}
 		else {
 			services = _pluginServices.get(paclPolicy.getServletContextName());
+
+			if (services == null) {
+				return Collections.EMPTY_SET;
+			}
 		}
 
 		return services;

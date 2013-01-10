@@ -294,7 +294,7 @@
 					{
 						handler: function(event) {
 							if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
-								Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= entry.getEntryId() %>, uri: '<%= deleteEntryURL.toString() %>'});
+								submitForm(document.hrefFm, '<%= deleteEntryURL.toString() %>');
 							}
 						},
 						icon: 'delete',
@@ -335,14 +335,13 @@
 					{
 						handler: function(event) {
 							if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
-								location.href = '<%= deleteEntryURL %>';
+								submitForm(document.hrefFm, '<%= deleteEntryURL.toString() %>');
 							}
 						},
 						icon: 'delete',
 						label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>'
 					}
 				);
-
 			</c:otherwise>
 		</c:choose>
 

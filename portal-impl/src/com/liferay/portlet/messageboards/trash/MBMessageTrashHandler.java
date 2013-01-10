@@ -24,7 +24,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 /**
- * Implements trash handling for message boards thread entity.
+ * Implements trash handling for message boards message entity.
  *
  * @author Zsolt Berentey
  */

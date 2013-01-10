@@ -47,6 +47,14 @@ public class SocketChecker extends BaseChecker {
 
 		String name = permission.getName();
 
+		if (actions.equals(SOCKET_PERMISSION_RESOLVE)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Always allow resolving of host " + name);
+			}
+
+			return;
+		}
+
 		int pos = name.indexOf(StringPool.COLON);
 
 		String host = "localhost";
@@ -56,16 +64,6 @@ public class SocketChecker extends BaseChecker {
 		}
 
 		int port = GetterUtil.getInteger(name.substring(pos + 1));
-
-		// resolve
-
-		if (port == -1) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Always allow resolving of host " + host);
-			}
-
-			return;
-		}
 
 		if (actions.contains(SOCKET_PERMISSION_ACCEPT)) {
 			if (!hasAccept(host, port)) {
@@ -102,16 +100,20 @@ public class SocketChecker extends BaseChecker {
 
 			String actions = permission.getActions();
 
+			if (actions.equals(SOCKET_PERMISSION_RESOLVE)) {
+
+				// This should not happen, since resolving host names is always
+				// allowed
+
+				return rule;
+			}
+
 			String name = permission.getName();
 
 			int pos = name.indexOf(StringPool.COLON);
 			int port = GetterUtil.getInteger(name.substring(pos + 1));
 
-			// resolve
-
-			if (port == -1) {
-			}
-			else if (actions.contains(SOCKET_PERMISSION_ACCEPT)) {
+			if (actions.contains(SOCKET_PERMISSION_ACCEPT)) {
 				rule[0] = "security-manager-sockets-accept";
 				rule[1] = name;
 			}

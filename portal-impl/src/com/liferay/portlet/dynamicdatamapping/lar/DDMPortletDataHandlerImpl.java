@@ -56,6 +56,7 @@ import javax.portlet.PortletPreferences;
 
 /**
  * @author Marcellus Tavares
+ * @author Juan Fernández
  */
 public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
@@ -65,6 +66,14 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		throws Exception {
 
 		String path = getStructurePath(portletDataContext, structure);
+
+		exportStructure(portletDataContext, structuresElement, path, structure);
+	}
+
+	public static void exportStructure(
+			PortletDataContext portletDataContext, Element structuresElement,
+			String path, DDMStructure structure)
+		throws Exception {
 
 		if (!portletDataContext.isPathNotProcessed(path)) {
 			return;

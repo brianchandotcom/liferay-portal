@@ -1170,16 +1170,18 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 			query.append(_FINDER_COLUMN_C_K_COMPANYID_2);
 
+			boolean bindKey = false;
+
 			if (key == null) {
 				query.append(_FINDER_COLUMN_C_K_KEY_1);
 			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
 			else {
-				if (key.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_K_KEY_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_K_KEY_2);
-				}
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_C_K_KEY_2);
 			}
 
 			if (orderByComparator != null) {
@@ -1204,7 +1206,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 				qPos.add(companyId);
 
-				if (key != null) {
+				if (bindKey) {
 					qPos.add(key);
 				}
 
@@ -1411,16 +1413,18 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 		query.append(_FINDER_COLUMN_C_K_COMPANYID_2);
 
+		boolean bindKey = false;
+
 		if (key == null) {
 			query.append(_FINDER_COLUMN_C_K_KEY_1);
 		}
+		else if (key.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_C_K_KEY_3);
+		}
 		else {
-			if (key.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_K_KEY_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_C_K_KEY_2);
-			}
+			bindKey = true;
+
+			query.append(_FINDER_COLUMN_C_K_KEY_2);
 		}
 
 		if (orderByComparator != null) {
@@ -1493,7 +1497,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 		qPos.add(companyId);
 
-		if (key != null) {
+		if (bindKey) {
 			qPos.add(key);
 		}
 
@@ -1553,16 +1557,18 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 			query.append(_FINDER_COLUMN_C_K_COMPANYID_2);
 
+			boolean bindKey = false;
+
 			if (key == null) {
 				query.append(_FINDER_COLUMN_C_K_KEY_1);
 			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
 			else {
-				if (key.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_C_K_KEY_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_C_K_KEY_2);
-				}
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_C_K_KEY_2);
 			}
 
 			String sql = query.toString();
@@ -1578,7 +1584,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 				qPos.add(companyId);
 
-				if (key != null) {
+				if (bindKey) {
 					qPos.add(key);
 				}
 
@@ -1602,7 +1608,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	private static final String _FINDER_COLUMN_C_K_COMPANYID_2 = "assetCategoryProperty.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_K_KEY_1 = "assetCategoryProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_C_K_KEY_2 = "assetCategoryProperty.key = ?";
-	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = ?)";
+	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_CA_K = new FinderPath(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
 			AssetCategoryPropertyModelImpl.FINDER_CACHE_ENABLED,
 			AssetCategoryPropertyImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -1701,16 +1707,18 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 			query.append(_FINDER_COLUMN_CA_K_CATEGORYID_2);
 
+			boolean bindKey = false;
+
 			if (key == null) {
 				query.append(_FINDER_COLUMN_CA_K_KEY_1);
 			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_CA_K_KEY_3);
+			}
 			else {
-				if (key.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_CA_K_KEY_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_CA_K_KEY_2);
-				}
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_CA_K_KEY_2);
 			}
 
 			String sql = query.toString();
@@ -1726,7 +1734,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 				qPos.add(categoryId);
 
-				if (key != null) {
+				if (bindKey) {
 					qPos.add(key);
 				}
 
@@ -1809,16 +1817,18 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 			query.append(_FINDER_COLUMN_CA_K_CATEGORYID_2);
 
+			boolean bindKey = false;
+
 			if (key == null) {
 				query.append(_FINDER_COLUMN_CA_K_KEY_1);
 			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_CA_K_KEY_3);
+			}
 			else {
-				if (key.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_CA_K_KEY_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_CA_K_KEY_2);
-				}
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_CA_K_KEY_2);
 			}
 
 			String sql = query.toString();
@@ -1834,7 +1844,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 				qPos.add(categoryId);
 
-				if (key != null) {
+				if (bindKey) {
 					qPos.add(key);
 				}
 
@@ -1858,7 +1868,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	private static final String _FINDER_COLUMN_CA_K_CATEGORYID_2 = "assetCategoryProperty.categoryId = ? AND ";
 	private static final String _FINDER_COLUMN_CA_K_KEY_1 = "assetCategoryProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_CA_K_KEY_2 = "assetCategoryProperty.key = ?";
-	private static final String _FINDER_COLUMN_CA_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = ?)";
+	private static final String _FINDER_COLUMN_CA_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = '')";
 
 	/**
 	 * Caches the asset category property in the entity cache if it is enabled.
@@ -1872,9 +1882,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CA_K,
 			new Object[] {
-				Long.valueOf(assetCategoryProperty.getCategoryId()),
-				
-			assetCategoryProperty.getKey()
+				assetCategoryProperty.getCategoryId(),
+				assetCategoryProperty.getKey()
 			}, assetCategoryProperty);
 
 		assetCategoryProperty.resetOriginalValues();
@@ -1956,8 +1965,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		AssetCategoryProperty assetCategoryProperty) {
 		if (assetCategoryProperty.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(assetCategoryProperty.getCategoryId()),
-					
+					assetCategoryProperty.getCategoryId(),
 					assetCategoryProperty.getKey()
 				};
 
@@ -1972,8 +1980,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 			if ((assetCategoryPropertyModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_CA_K.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetCategoryProperty.getCategoryId()),
-						
+						assetCategoryProperty.getCategoryId(),
 						assetCategoryProperty.getKey()
 					};
 
@@ -1990,8 +1997,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl = (AssetCategoryPropertyModelImpl)assetCategoryProperty;
 
 		Object[] args = new Object[] {
-				Long.valueOf(assetCategoryProperty.getCategoryId()),
-				
+				assetCategoryProperty.getCategoryId(),
 				assetCategoryProperty.getKey()
 			};
 
@@ -2001,8 +2007,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		if ((assetCategoryPropertyModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_CA_K.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(assetCategoryPropertyModelImpl.getOriginalCategoryId()),
-					
+					assetCategoryPropertyModelImpl.getOriginalCategoryId(),
 					assetCategoryPropertyModelImpl.getOriginalKey()
 				};
 
@@ -2036,7 +2041,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	 */
 	public AssetCategoryProperty remove(long categoryPropertyId)
 		throws NoSuchCategoryPropertyException, SystemException {
-		return remove(Long.valueOf(categoryPropertyId));
+		return remove((Serializable)categoryPropertyId);
 	}
 
 	/**
@@ -2154,7 +2159,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 			if ((assetCategoryPropertyModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetCategoryPropertyModelImpl.getOriginalCompanyId())
+						assetCategoryPropertyModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -2163,7 +2168,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 					args);
 
 				args = new Object[] {
-						Long.valueOf(assetCategoryPropertyModelImpl.getCompanyId())
+						assetCategoryPropertyModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -2175,7 +2180,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 			if ((assetCategoryPropertyModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetCategoryPropertyModelImpl.getOriginalCategoryId())
+						assetCategoryPropertyModelImpl.getOriginalCategoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CATEGORYID,
@@ -2184,7 +2189,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 					args);
 
 				args = new Object[] {
-						Long.valueOf(assetCategoryPropertyModelImpl.getCategoryId())
+						assetCategoryPropertyModelImpl.getCategoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CATEGORYID,
@@ -2196,8 +2201,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 			if ((assetCategoryPropertyModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_K.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetCategoryPropertyModelImpl.getOriginalCompanyId()),
-						
+						assetCategoryPropertyModelImpl.getOriginalCompanyId(),
 						assetCategoryPropertyModelImpl.getOriginalKey()
 					};
 
@@ -2206,8 +2210,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 					args);
 
 				args = new Object[] {
-						Long.valueOf(assetCategoryPropertyModelImpl.getCompanyId()),
-						
+						assetCategoryPropertyModelImpl.getCompanyId(),
 						assetCategoryPropertyModelImpl.getKey()
 					};
 

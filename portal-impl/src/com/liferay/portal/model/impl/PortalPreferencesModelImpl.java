@@ -95,7 +95,7 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_portalPreferencesId);
+		return _portalPreferencesId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

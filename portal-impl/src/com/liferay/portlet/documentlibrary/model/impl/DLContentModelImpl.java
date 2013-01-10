@@ -104,7 +104,7 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_contentId);
+		return _contentId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

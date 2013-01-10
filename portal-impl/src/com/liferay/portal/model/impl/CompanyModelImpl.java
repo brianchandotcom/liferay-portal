@@ -156,7 +156,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_companyId);
+		return _companyId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

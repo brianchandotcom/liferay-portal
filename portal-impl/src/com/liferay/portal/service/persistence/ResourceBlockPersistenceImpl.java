@@ -1603,12 +1603,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 			new Object[] {
-				Long.valueOf(resourceBlock.getCompanyId()),
-				Long.valueOf(resourceBlock.getGroupId()),
-				
-			resourceBlock.getName(),
-				
-			resourceBlock.getPermissionsHash()
+				resourceBlock.getCompanyId(), resourceBlock.getGroupId(),
+				resourceBlock.getName(), resourceBlock.getPermissionsHash()
 			}, resourceBlock);
 
 		resourceBlock.resetOriginalValues();
@@ -1686,12 +1682,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	protected void cacheUniqueFindersCache(ResourceBlock resourceBlock) {
 		if (resourceBlock.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(resourceBlock.getCompanyId()),
-					Long.valueOf(resourceBlock.getGroupId()),
-					
-					resourceBlock.getName(),
-					
-					resourceBlock.getPermissionsHash()
+					resourceBlock.getCompanyId(), resourceBlock.getGroupId(),
+					resourceBlock.getName(), resourceBlock.getPermissionsHash()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_G_N_P, args,
@@ -1705,11 +1697,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			if ((resourceBlockModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_G_N_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(resourceBlock.getCompanyId()),
-						Long.valueOf(resourceBlock.getGroupId()),
-						
+						resourceBlock.getCompanyId(), resourceBlock.getGroupId(),
 						resourceBlock.getName(),
-						
 						resourceBlock.getPermissionsHash()
 					};
 
@@ -1725,12 +1714,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		ResourceBlockModelImpl resourceBlockModelImpl = (ResourceBlockModelImpl)resourceBlock;
 
 		Object[] args = new Object[] {
-				Long.valueOf(resourceBlock.getCompanyId()),
-				Long.valueOf(resourceBlock.getGroupId()),
-				
-				resourceBlock.getName(),
-				
-				resourceBlock.getPermissionsHash()
+				resourceBlock.getCompanyId(), resourceBlock.getGroupId(),
+				resourceBlock.getName(), resourceBlock.getPermissionsHash()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_G_N_P, args);
@@ -1739,11 +1724,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		if ((resourceBlockModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_G_N_P.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(resourceBlockModelImpl.getOriginalCompanyId()),
-					Long.valueOf(resourceBlockModelImpl.getOriginalGroupId()),
-					
+					resourceBlockModelImpl.getOriginalCompanyId(),
+					resourceBlockModelImpl.getOriginalGroupId(),
 					resourceBlockModelImpl.getOriginalName(),
-					
 					resourceBlockModelImpl.getOriginalPermissionsHash()
 				};
 
@@ -1777,7 +1760,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	public ResourceBlock remove(long resourceBlockId)
 		throws NoSuchResourceBlockException, SystemException {
-		return remove(Long.valueOf(resourceBlockId));
+		return remove((Serializable)resourceBlockId);
 	}
 
 	/**
@@ -1895,8 +1878,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			if ((resourceBlockModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(resourceBlockModelImpl.getOriginalCompanyId()),
-						
+						resourceBlockModelImpl.getOriginalCompanyId(),
 						resourceBlockModelImpl.getOriginalName()
 					};
 
@@ -1905,8 +1887,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 					args);
 
 				args = new Object[] {
-						Long.valueOf(resourceBlockModelImpl.getCompanyId()),
-						
+						resourceBlockModelImpl.getCompanyId(),
 						resourceBlockModelImpl.getName()
 					};
 
@@ -1918,9 +1899,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			if ((resourceBlockModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(resourceBlockModelImpl.getOriginalCompanyId()),
-						Long.valueOf(resourceBlockModelImpl.getOriginalGroupId()),
-						
+						resourceBlockModelImpl.getOriginalCompanyId(),
+						resourceBlockModelImpl.getOriginalGroupId(),
 						resourceBlockModelImpl.getOriginalName()
 					};
 
@@ -1929,9 +1909,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 					args);
 
 				args = new Object[] {
-						Long.valueOf(resourceBlockModelImpl.getCompanyId()),
-						Long.valueOf(resourceBlockModelImpl.getGroupId()),
-						
+						resourceBlockModelImpl.getCompanyId(),
+						resourceBlockModelImpl.getGroupId(),
 						resourceBlockModelImpl.getName()
 					};
 

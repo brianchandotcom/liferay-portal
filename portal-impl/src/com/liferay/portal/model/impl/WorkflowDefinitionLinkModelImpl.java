@@ -111,7 +111,7 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_workflowDefinitionLinkId);
+		return _workflowDefinitionLinkId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

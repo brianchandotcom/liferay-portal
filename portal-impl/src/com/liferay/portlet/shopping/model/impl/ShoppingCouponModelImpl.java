@@ -175,7 +175,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_couponId);
+		return _couponId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -666,7 +666,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	public ShoppingItemField remove(long itemFieldId)
 		throws NoSuchItemFieldException, SystemException {
-		return remove(Long.valueOf(itemFieldId));
+		return remove((Serializable)itemFieldId);
 	}
 
 	/**
@@ -784,16 +784,14 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 			if ((shoppingItemFieldModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ITEMID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shoppingItemFieldModelImpl.getOriginalItemId())
+						shoppingItemFieldModelImpl.getOriginalItemId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ITEMID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ITEMID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(shoppingItemFieldModelImpl.getItemId())
-					};
+				args = new Object[] { shoppingItemFieldModelImpl.getItemId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ITEMID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ITEMID,

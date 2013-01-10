@@ -1514,11 +1514,11 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
 			new Object[] {
-				Long.valueOf(workflowDefinitionLink.getGroupId()),
-				Long.valueOf(workflowDefinitionLink.getCompanyId()),
-				Long.valueOf(workflowDefinitionLink.getClassNameId()),
-				Long.valueOf(workflowDefinitionLink.getClassPK()),
-				Long.valueOf(workflowDefinitionLink.getTypePK())
+				workflowDefinitionLink.getGroupId(),
+				workflowDefinitionLink.getCompanyId(),
+				workflowDefinitionLink.getClassNameId(),
+				workflowDefinitionLink.getClassPK(),
+				workflowDefinitionLink.getTypePK()
 			}, workflowDefinitionLink);
 
 		workflowDefinitionLink.resetOriginalValues();
@@ -1601,11 +1601,11 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		WorkflowDefinitionLink workflowDefinitionLink) {
 		if (workflowDefinitionLink.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(workflowDefinitionLink.getGroupId()),
-					Long.valueOf(workflowDefinitionLink.getCompanyId()),
-					Long.valueOf(workflowDefinitionLink.getClassNameId()),
-					Long.valueOf(workflowDefinitionLink.getClassPK()),
-					Long.valueOf(workflowDefinitionLink.getTypePK())
+					workflowDefinitionLink.getGroupId(),
+					workflowDefinitionLink.getCompanyId(),
+					workflowDefinitionLink.getClassNameId(),
+					workflowDefinitionLink.getClassPK(),
+					workflowDefinitionLink.getTypePK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args,
@@ -1619,11 +1619,11 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			if ((workflowDefinitionLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_C_C_C_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(workflowDefinitionLink.getGroupId()),
-						Long.valueOf(workflowDefinitionLink.getCompanyId()),
-						Long.valueOf(workflowDefinitionLink.getClassNameId()),
-						Long.valueOf(workflowDefinitionLink.getClassPK()),
-						Long.valueOf(workflowDefinitionLink.getTypePK())
+						workflowDefinitionLink.getGroupId(),
+						workflowDefinitionLink.getCompanyId(),
+						workflowDefinitionLink.getClassNameId(),
+						workflowDefinitionLink.getClassPK(),
+						workflowDefinitionLink.getTypePK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args,
@@ -1639,11 +1639,11 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl = (WorkflowDefinitionLinkModelImpl)workflowDefinitionLink;
 
 		Object[] args = new Object[] {
-				Long.valueOf(workflowDefinitionLink.getGroupId()),
-				Long.valueOf(workflowDefinitionLink.getCompanyId()),
-				Long.valueOf(workflowDefinitionLink.getClassNameId()),
-				Long.valueOf(workflowDefinitionLink.getClassPK()),
-				Long.valueOf(workflowDefinitionLink.getTypePK())
+				workflowDefinitionLink.getGroupId(),
+				workflowDefinitionLink.getCompanyId(),
+				workflowDefinitionLink.getClassNameId(),
+				workflowDefinitionLink.getClassPK(),
+				workflowDefinitionLink.getTypePK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args);
@@ -1652,11 +1652,11 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		if ((workflowDefinitionLinkModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_C_C_C_T.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalGroupId()),
-					Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalCompanyId()),
-					Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalClassNameId()),
-					Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalClassPK()),
-					Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalTypePK())
+					workflowDefinitionLinkModelImpl.getOriginalGroupId(),
+					workflowDefinitionLinkModelImpl.getOriginalCompanyId(),
+					workflowDefinitionLinkModelImpl.getOriginalClassNameId(),
+					workflowDefinitionLinkModelImpl.getOriginalClassPK(),
+					workflowDefinitionLinkModelImpl.getOriginalTypePK()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args);
@@ -1689,7 +1689,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	public WorkflowDefinitionLink remove(long workflowDefinitionLinkId)
 		throws NoSuchWorkflowDefinitionLinkException, SystemException {
-		return remove(Long.valueOf(workflowDefinitionLinkId));
+		return remove((Serializable)workflowDefinitionLinkId);
 	}
 
 	/**
@@ -1808,7 +1808,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			if ((workflowDefinitionLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalCompanyId())
+						workflowDefinitionLinkModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -1817,7 +1817,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 					args);
 
 				args = new Object[] {
-						Long.valueOf(workflowDefinitionLinkModelImpl.getCompanyId())
+						workflowDefinitionLinkModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -1829,10 +1829,9 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			if ((workflowDefinitionLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_W_W.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(workflowDefinitionLinkModelImpl.getOriginalCompanyId()),
-						
+						workflowDefinitionLinkModelImpl.getOriginalCompanyId(),
 						workflowDefinitionLinkModelImpl.getOriginalWorkflowDefinitionName(),
-						Integer.valueOf(workflowDefinitionLinkModelImpl.getOriginalWorkflowDefinitionVersion())
+						workflowDefinitionLinkModelImpl.getOriginalWorkflowDefinitionVersion()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_W_W, args);
@@ -1840,10 +1839,9 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 					args);
 
 				args = new Object[] {
-						Long.valueOf(workflowDefinitionLinkModelImpl.getCompanyId()),
-						
+						workflowDefinitionLinkModelImpl.getCompanyId(),
 						workflowDefinitionLinkModelImpl.getWorkflowDefinitionName(),
-						Integer.valueOf(workflowDefinitionLinkModelImpl.getWorkflowDefinitionVersion())
+						workflowDefinitionLinkModelImpl.getWorkflowDefinitionVersion()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_W_W, args);

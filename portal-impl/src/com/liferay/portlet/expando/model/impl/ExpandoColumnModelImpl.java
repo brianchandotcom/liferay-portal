@@ -145,7 +145,7 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_columnId);
+		return _columnId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

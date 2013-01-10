@@ -4497,14 +4497,14 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				mdrRuleGroupInstance.getUuid(),
-				Long.valueOf(mdrRuleGroupInstance.getGroupId())
+				mdrRuleGroupInstance.getGroupId()
 			}, mdrRuleGroupInstance);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_R,
 			new Object[] {
-				Long.valueOf(mdrRuleGroupInstance.getClassNameId()),
-				Long.valueOf(mdrRuleGroupInstance.getClassPK()),
-				Long.valueOf(mdrRuleGroupInstance.getRuleGroupId())
+				mdrRuleGroupInstance.getClassNameId(),
+				mdrRuleGroupInstance.getClassPK(),
+				mdrRuleGroupInstance.getRuleGroupId()
 			}, mdrRuleGroupInstance);
 
 		mdrRuleGroupInstance.resetOriginalValues();
@@ -4586,7 +4586,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		if (mdrRuleGroupInstance.isNew()) {
 			Object[] args = new Object[] {
 					mdrRuleGroupInstance.getUuid(),
-					Long.valueOf(mdrRuleGroupInstance.getGroupId())
+					mdrRuleGroupInstance.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -4595,9 +4595,9 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				mdrRuleGroupInstance);
 
 			args = new Object[] {
-					Long.valueOf(mdrRuleGroupInstance.getClassNameId()),
-					Long.valueOf(mdrRuleGroupInstance.getClassPK()),
-					Long.valueOf(mdrRuleGroupInstance.getRuleGroupId())
+					mdrRuleGroupInstance.getClassNameId(),
+					mdrRuleGroupInstance.getClassPK(),
+					mdrRuleGroupInstance.getRuleGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_R, args,
@@ -4612,7 +4612,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						mdrRuleGroupInstance.getUuid(),
-						Long.valueOf(mdrRuleGroupInstance.getGroupId())
+						mdrRuleGroupInstance.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -4624,9 +4624,9 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			if ((mdrRuleGroupInstanceModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mdrRuleGroupInstance.getClassNameId()),
-						Long.valueOf(mdrRuleGroupInstance.getClassPK()),
-						Long.valueOf(mdrRuleGroupInstance.getRuleGroupId())
+						mdrRuleGroupInstance.getClassNameId(),
+						mdrRuleGroupInstance.getClassPK(),
+						mdrRuleGroupInstance.getRuleGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_R, args,
@@ -4643,7 +4643,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 		Object[] args = new Object[] {
 				mdrRuleGroupInstance.getUuid(),
-				Long.valueOf(mdrRuleGroupInstance.getGroupId())
+				mdrRuleGroupInstance.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -4653,7 +4653,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					mdrRuleGroupInstanceModelImpl.getOriginalUuid(),
-					Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalGroupId())
+					mdrRuleGroupInstanceModelImpl.getOriginalGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -4661,9 +4661,9 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		}
 
 		args = new Object[] {
-				Long.valueOf(mdrRuleGroupInstance.getClassNameId()),
-				Long.valueOf(mdrRuleGroupInstance.getClassPK()),
-				Long.valueOf(mdrRuleGroupInstance.getRuleGroupId())
+				mdrRuleGroupInstance.getClassNameId(),
+				mdrRuleGroupInstance.getClassPK(),
+				mdrRuleGroupInstance.getRuleGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_R, args);
@@ -4672,9 +4672,9 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		if ((mdrRuleGroupInstanceModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C_R.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalClassNameId()),
-					Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalClassPK()),
-					Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalRuleGroupId())
+					mdrRuleGroupInstanceModelImpl.getOriginalClassNameId(),
+					mdrRuleGroupInstanceModelImpl.getOriginalClassPK(),
+					mdrRuleGroupInstanceModelImpl.getOriginalRuleGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_R, args);
@@ -4711,7 +4711,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 */
 	public MDRRuleGroupInstance remove(long ruleGroupInstanceId)
 		throws NoSuchRuleGroupInstanceException, SystemException {
-		return remove(Long.valueOf(ruleGroupInstanceId));
+		return remove((Serializable)ruleGroupInstanceId);
 	}
 
 	/**
@@ -4853,7 +4853,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						mdrRuleGroupInstanceModelImpl.getOriginalUuid(),
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalCompanyId())
+						mdrRuleGroupInstanceModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -4862,7 +4862,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 				args = new Object[] {
 						mdrRuleGroupInstanceModelImpl.getUuid(),
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getCompanyId())
+						mdrRuleGroupInstanceModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -4873,16 +4873,14 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			if ((mdrRuleGroupInstanceModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalGroupId())
+						mdrRuleGroupInstanceModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getGroupId())
-					};
+				args = new Object[] { mdrRuleGroupInstanceModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -4892,7 +4890,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			if ((mdrRuleGroupInstanceModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalRuleGroupId())
+						mdrRuleGroupInstanceModelImpl.getOriginalRuleGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPID,
@@ -4901,7 +4899,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getRuleGroupId())
+						mdrRuleGroupInstanceModelImpl.getRuleGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPID,
@@ -4913,8 +4911,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			if ((mdrRuleGroupInstanceModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalClassNameId()),
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalClassPK())
+						mdrRuleGroupInstanceModelImpl.getOriginalClassNameId(),
+						mdrRuleGroupInstanceModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -4922,8 +4920,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getClassNameId()),
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getClassPK())
+						mdrRuleGroupInstanceModelImpl.getClassNameId(),
+						mdrRuleGroupInstanceModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -4934,9 +4932,9 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			if ((mdrRuleGroupInstanceModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalGroupId()),
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalClassNameId()),
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getOriginalClassPK())
+						mdrRuleGroupInstanceModelImpl.getOriginalGroupId(),
+						mdrRuleGroupInstanceModelImpl.getOriginalClassNameId(),
+						mdrRuleGroupInstanceModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
@@ -4944,9 +4942,9 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getGroupId()),
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getClassNameId()),
-						Long.valueOf(mdrRuleGroupInstanceModelImpl.getClassPK())
+						mdrRuleGroupInstanceModelImpl.getGroupId(),
+						mdrRuleGroupInstanceModelImpl.getClassNameId(),
+						mdrRuleGroupInstanceModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);

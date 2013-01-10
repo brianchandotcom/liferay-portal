@@ -197,7 +197,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_fileVersionId);
+		return _fileVersionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

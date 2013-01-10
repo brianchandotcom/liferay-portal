@@ -1552,12 +1552,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N_P_C,
 			new Object[] {
-				Long.valueOf(portletItem.getGroupId()),
-				
-			portletItem.getName(),
-				
-			portletItem.getPortletId(),
-				Long.valueOf(portletItem.getClassNameId())
+				portletItem.getGroupId(), portletItem.getName(),
+				portletItem.getPortletId(), portletItem.getClassNameId()
 			}, portletItem);
 
 		portletItem.resetOriginalValues();
@@ -1635,12 +1631,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	protected void cacheUniqueFindersCache(PortletItem portletItem) {
 		if (portletItem.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(portletItem.getGroupId()),
-					
-					portletItem.getName(),
-					
-					portletItem.getPortletId(),
-					Long.valueOf(portletItem.getClassNameId())
+					portletItem.getGroupId(), portletItem.getName(),
+					portletItem.getPortletId(), portletItem.getClassNameId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N_P_C, args,
@@ -1654,12 +1646,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 			if ((portletItemModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N_P_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(portletItem.getGroupId()),
-						
-						portletItem.getName(),
-						
-						portletItem.getPortletId(),
-						Long.valueOf(portletItem.getClassNameId())
+						portletItem.getGroupId(), portletItem.getName(),
+						portletItem.getPortletId(), portletItem.getClassNameId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N_P_C, args,
@@ -1674,12 +1662,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		PortletItemModelImpl portletItemModelImpl = (PortletItemModelImpl)portletItem;
 
 		Object[] args = new Object[] {
-				Long.valueOf(portletItem.getGroupId()),
-				
-				portletItem.getName(),
-				
-				portletItem.getPortletId(),
-				Long.valueOf(portletItem.getClassNameId())
+				portletItem.getGroupId(), portletItem.getName(),
+				portletItem.getPortletId(), portletItem.getClassNameId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_P_C, args);
@@ -1688,12 +1672,10 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		if ((portletItemModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_N_P_C.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(portletItemModelImpl.getOriginalGroupId()),
-					
+					portletItemModelImpl.getOriginalGroupId(),
 					portletItemModelImpl.getOriginalName(),
-					
 					portletItemModelImpl.getOriginalPortletId(),
-					Long.valueOf(portletItemModelImpl.getOriginalClassNameId())
+					portletItemModelImpl.getOriginalClassNameId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_P_C, args);
@@ -1726,7 +1708,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	public PortletItem remove(long portletItemId)
 		throws NoSuchPortletItemException, SystemException {
-		return remove(Long.valueOf(portletItemId));
+		return remove((Serializable)portletItemId);
 	}
 
 	/**
@@ -1844,8 +1826,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 			if ((portletItemModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(portletItemModelImpl.getOriginalGroupId()),
-						Long.valueOf(portletItemModelImpl.getOriginalClassNameId())
+						portletItemModelImpl.getOriginalGroupId(),
+						portletItemModelImpl.getOriginalClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
@@ -1853,8 +1835,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(portletItemModelImpl.getGroupId()),
-						Long.valueOf(portletItemModelImpl.getClassNameId())
+						portletItemModelImpl.getGroupId(),
+						portletItemModelImpl.getClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
@@ -1865,10 +1847,9 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 			if ((portletItemModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(portletItemModelImpl.getOriginalGroupId()),
-						
+						portletItemModelImpl.getOriginalGroupId(),
 						portletItemModelImpl.getOriginalPortletId(),
-						Long.valueOf(portletItemModelImpl.getOriginalClassNameId())
+						portletItemModelImpl.getOriginalClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_C, args);
@@ -1876,10 +1857,9 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(portletItemModelImpl.getGroupId()),
-						
+						portletItemModelImpl.getGroupId(),
 						portletItemModelImpl.getPortletId(),
-						Long.valueOf(portletItemModelImpl.getClassNameId())
+						portletItemModelImpl.getClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_C, args);

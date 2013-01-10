@@ -97,7 +97,7 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_resourcePrimKey);
+		return _resourcePrimKey;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

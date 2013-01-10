@@ -108,7 +108,7 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_workflowInstanceLinkId);
+		return _workflowInstanceLinkId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -195,7 +195,7 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_pageId);
+		return _pageId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

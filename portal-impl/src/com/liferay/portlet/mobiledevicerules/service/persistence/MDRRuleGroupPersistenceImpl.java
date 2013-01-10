@@ -2261,9 +2261,8 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			MDRRuleGroupImpl.class, mdrRuleGroup.getPrimaryKey(), mdrRuleGroup);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				mdrRuleGroup.getUuid(), Long.valueOf(mdrRuleGroup.getGroupId())
-			}, mdrRuleGroup);
+			new Object[] { mdrRuleGroup.getUuid(), mdrRuleGroup.getGroupId() },
+			mdrRuleGroup);
 
 		mdrRuleGroup.resetOriginalValues();
 	}
@@ -2340,8 +2339,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	protected void cacheUniqueFindersCache(MDRRuleGroup mdrRuleGroup) {
 		if (mdrRuleGroup.isNew()) {
 			Object[] args = new Object[] {
-					mdrRuleGroup.getUuid(),
-					Long.valueOf(mdrRuleGroup.getGroupId())
+					mdrRuleGroup.getUuid(), mdrRuleGroup.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -2355,8 +2353,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			if ((mdrRuleGroupModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						mdrRuleGroup.getUuid(),
-						Long.valueOf(mdrRuleGroup.getGroupId())
+						mdrRuleGroup.getUuid(), mdrRuleGroup.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -2371,7 +2368,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		MDRRuleGroupModelImpl mdrRuleGroupModelImpl = (MDRRuleGroupModelImpl)mdrRuleGroup;
 
 		Object[] args = new Object[] {
-				mdrRuleGroup.getUuid(), Long.valueOf(mdrRuleGroup.getGroupId())
+				mdrRuleGroup.getUuid(), mdrRuleGroup.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2381,7 +2378,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					mdrRuleGroupModelImpl.getOriginalUuid(),
-					Long.valueOf(mdrRuleGroupModelImpl.getOriginalGroupId())
+					mdrRuleGroupModelImpl.getOriginalGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2418,7 +2415,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 */
 	public MDRRuleGroup remove(long ruleGroupId)
 		throws NoSuchRuleGroupException, SystemException {
-		return remove(Long.valueOf(ruleGroupId));
+		return remove((Serializable)ruleGroupId);
 	}
 
 	/**
@@ -2560,7 +2557,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						mdrRuleGroupModelImpl.getOriginalUuid(),
-						Long.valueOf(mdrRuleGroupModelImpl.getOriginalCompanyId())
+						mdrRuleGroupModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -2569,7 +2566,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 
 				args = new Object[] {
 						mdrRuleGroupModelImpl.getUuid(),
-						Long.valueOf(mdrRuleGroupModelImpl.getCompanyId())
+						mdrRuleGroupModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -2580,16 +2577,14 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			if ((mdrRuleGroupModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mdrRuleGroupModelImpl.getOriginalGroupId())
+						mdrRuleGroupModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(mdrRuleGroupModelImpl.getGroupId())
-					};
+				args = new Object[] { mdrRuleGroupModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,

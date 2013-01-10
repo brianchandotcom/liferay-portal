@@ -223,7 +223,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_id);
+		return _id;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

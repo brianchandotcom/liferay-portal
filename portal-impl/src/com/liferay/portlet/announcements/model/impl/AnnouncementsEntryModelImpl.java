@@ -180,7 +180,7 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_entryId);
+		return _entryId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -478,7 +478,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 */
 	public Release remove(long releaseId)
 		throws NoSuchReleaseException, SystemException {
-		return remove(Long.valueOf(releaseId));
+		return remove((Serializable)releaseId);
 	}
 
 	/**

@@ -169,7 +169,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_vocabularyId);
+		return _vocabularyId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

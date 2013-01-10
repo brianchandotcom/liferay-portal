@@ -3131,11 +3131,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_O_O_P_P,
 			new Object[] {
-				Long.valueOf(portletPreferences.getOwnerId()),
-				Integer.valueOf(portletPreferences.getOwnerType()),
-				Long.valueOf(portletPreferences.getPlid()),
-				
-			portletPreferences.getPortletId()
+				portletPreferences.getOwnerId(),
+				portletPreferences.getOwnerType(), portletPreferences.getPlid(),
+				portletPreferences.getPortletId()
 			}, portletPreferences);
 
 		portletPreferences.resetOriginalValues();
@@ -3215,10 +3213,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		PortletPreferences portletPreferences) {
 		if (portletPreferences.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(portletPreferences.getOwnerId()),
-					Integer.valueOf(portletPreferences.getOwnerType()),
-					Long.valueOf(portletPreferences.getPlid()),
-					
+					portletPreferences.getOwnerId(),
+					portletPreferences.getOwnerType(),
+					portletPreferences.getPlid(),
 					portletPreferences.getPortletId()
 				};
 
@@ -3233,10 +3230,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			if ((portletPreferencesModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_O_O_P_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(portletPreferences.getOwnerId()),
-						Integer.valueOf(portletPreferences.getOwnerType()),
-						Long.valueOf(portletPreferences.getPlid()),
-						
+						portletPreferences.getOwnerId(),
+						portletPreferences.getOwnerType(),
+						portletPreferences.getPlid(),
 						portletPreferences.getPortletId()
 					};
 
@@ -3253,10 +3249,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		PortletPreferencesModelImpl portletPreferencesModelImpl = (PortletPreferencesModelImpl)portletPreferences;
 
 		Object[] args = new Object[] {
-				Long.valueOf(portletPreferences.getOwnerId()),
-				Integer.valueOf(portletPreferences.getOwnerType()),
-				Long.valueOf(portletPreferences.getPlid()),
-				
+				portletPreferences.getOwnerId(),
+				portletPreferences.getOwnerType(), portletPreferences.getPlid(),
 				portletPreferences.getPortletId()
 			};
 
@@ -3266,10 +3260,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		if ((portletPreferencesModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_O_O_P_P.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(portletPreferencesModelImpl.getOriginalOwnerId()),
-					Integer.valueOf(portletPreferencesModelImpl.getOriginalOwnerType()),
-					Long.valueOf(portletPreferencesModelImpl.getOriginalPlid()),
-					
+					portletPreferencesModelImpl.getOriginalOwnerId(),
+					portletPreferencesModelImpl.getOriginalOwnerType(),
+					portletPreferencesModelImpl.getOriginalPlid(),
 					portletPreferencesModelImpl.getOriginalPortletId()
 				};
 
@@ -3303,7 +3296,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	public PortletPreferences remove(long portletPreferencesId)
 		throws NoSuchPortletPreferencesException, SystemException {
-		return remove(Long.valueOf(portletPreferencesId));
+		return remove((Serializable)portletPreferencesId);
 	}
 
 	/**
@@ -3421,16 +3414,14 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			if ((portletPreferencesModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(portletPreferencesModelImpl.getOriginalPlid())
+						portletPreferencesModelImpl.getOriginalPlid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PLID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(portletPreferencesModelImpl.getPlid())
-					};
+				args = new Object[] { portletPreferencesModelImpl.getPlid() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PLID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID,
@@ -3459,8 +3450,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			if ((portletPreferencesModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(portletPreferencesModelImpl.getOriginalPlid()),
-						
+						portletPreferencesModelImpl.getOriginalPlid(),
 						portletPreferencesModelImpl.getOriginalPortletId()
 					};
 
@@ -3469,8 +3459,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 					args);
 
 				args = new Object[] {
-						Long.valueOf(portletPreferencesModelImpl.getPlid()),
-						
+						portletPreferencesModelImpl.getPlid(),
 						portletPreferencesModelImpl.getPortletId()
 					};
 
@@ -3482,9 +3471,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			if ((portletPreferencesModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_O_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(portletPreferencesModelImpl.getOriginalOwnerId()),
-						Integer.valueOf(portletPreferencesModelImpl.getOriginalOwnerType()),
-						Long.valueOf(portletPreferencesModelImpl.getOriginalPlid())
+						portletPreferencesModelImpl.getOriginalOwnerId(),
+						portletPreferencesModelImpl.getOriginalOwnerType(),
+						portletPreferencesModelImpl.getOriginalPlid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_O_O_P, args);
@@ -3492,9 +3481,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 					args);
 
 				args = new Object[] {
-						Long.valueOf(portletPreferencesModelImpl.getOwnerId()),
-						Integer.valueOf(portletPreferencesModelImpl.getOwnerType()),
-						Long.valueOf(portletPreferencesModelImpl.getPlid())
+						portletPreferencesModelImpl.getOwnerId(),
+						portletPreferencesModelImpl.getOwnerType(),
+						portletPreferencesModelImpl.getPlid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_O_O_P, args);
@@ -3505,9 +3494,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			if ((portletPreferencesModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_P_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Integer.valueOf(portletPreferencesModelImpl.getOriginalOwnerType()),
-						Long.valueOf(portletPreferencesModelImpl.getOriginalPlid()),
-						
+						portletPreferencesModelImpl.getOriginalOwnerType(),
+						portletPreferencesModelImpl.getOriginalPlid(),
 						portletPreferencesModelImpl.getOriginalPortletId()
 					};
 
@@ -3516,9 +3504,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 					args);
 
 				args = new Object[] {
-						Integer.valueOf(portletPreferencesModelImpl.getOwnerType()),
-						Long.valueOf(portletPreferencesModelImpl.getPlid()),
-						
+						portletPreferencesModelImpl.getOwnerType(),
+						portletPreferencesModelImpl.getPlid(),
 						portletPreferencesModelImpl.getPortletId()
 					};
 

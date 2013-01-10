@@ -180,7 +180,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	 */
 	public Account remove(long accountId)
 		throws NoSuchAccountException, SystemException {
-		return remove(Long.valueOf(accountId));
+		return remove((Serializable)accountId);
 	}
 
 	/**

@@ -101,7 +101,7 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_webDavPropsId);
+		return _webDavPropsId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

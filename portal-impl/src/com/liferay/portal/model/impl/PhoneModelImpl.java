@@ -165,7 +165,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_phoneId);
+		return _phoneId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

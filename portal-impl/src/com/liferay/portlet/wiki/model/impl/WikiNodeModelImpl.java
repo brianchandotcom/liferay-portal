@@ -171,7 +171,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_nodeId);
+		return _nodeId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

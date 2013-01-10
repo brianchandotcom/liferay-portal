@@ -176,7 +176,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_fileShortcutId);
+		return _fileShortcutId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -637,7 +637,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	public Image remove(long imageId)
 		throws NoSuchImageException, SystemException {
-		return remove(Long.valueOf(imageId));
+		return remove((Serializable)imageId);
 	}
 
 	/**

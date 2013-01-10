@@ -145,7 +145,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_imageId);
+		return _imageId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

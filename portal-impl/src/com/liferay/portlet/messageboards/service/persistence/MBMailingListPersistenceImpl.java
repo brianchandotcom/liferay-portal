@@ -2135,15 +2135,12 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			mbMailingList);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				mbMailingList.getUuid(),
-				Long.valueOf(mbMailingList.getGroupId())
-			}, mbMailingList);
+			new Object[] { mbMailingList.getUuid(), mbMailingList.getGroupId() },
+			mbMailingList);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C,
 			new Object[] {
-				Long.valueOf(mbMailingList.getGroupId()),
-				Long.valueOf(mbMailingList.getCategoryId())
+				mbMailingList.getGroupId(), mbMailingList.getCategoryId()
 			}, mbMailingList);
 
 		mbMailingList.resetOriginalValues();
@@ -2221,8 +2218,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	protected void cacheUniqueFindersCache(MBMailingList mbMailingList) {
 		if (mbMailingList.isNew()) {
 			Object[] args = new Object[] {
-					mbMailingList.getUuid(),
-					Long.valueOf(mbMailingList.getGroupId())
+					mbMailingList.getUuid(), mbMailingList.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -2231,8 +2227,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				mbMailingList);
 
 			args = new Object[] {
-					Long.valueOf(mbMailingList.getGroupId()),
-					Long.valueOf(mbMailingList.getCategoryId())
+					mbMailingList.getGroupId(), mbMailingList.getCategoryId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C, args,
@@ -2246,8 +2241,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			if ((mbMailingListModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						mbMailingList.getUuid(),
-						Long.valueOf(mbMailingList.getGroupId())
+						mbMailingList.getUuid(), mbMailingList.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -2259,8 +2253,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			if ((mbMailingListModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMailingList.getGroupId()),
-						Long.valueOf(mbMailingList.getCategoryId())
+						mbMailingList.getGroupId(),
+						mbMailingList.getCategoryId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C, args,
@@ -2275,8 +2269,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		MBMailingListModelImpl mbMailingListModelImpl = (MBMailingListModelImpl)mbMailingList;
 
 		Object[] args = new Object[] {
-				mbMailingList.getUuid(),
-				Long.valueOf(mbMailingList.getGroupId())
+				mbMailingList.getUuid(), mbMailingList.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2286,7 +2279,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					mbMailingListModelImpl.getOriginalUuid(),
-					Long.valueOf(mbMailingListModelImpl.getOriginalGroupId())
+					mbMailingListModelImpl.getOriginalGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2294,8 +2287,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		}
 
 		args = new Object[] {
-				Long.valueOf(mbMailingList.getGroupId()),
-				Long.valueOf(mbMailingList.getCategoryId())
+				mbMailingList.getGroupId(), mbMailingList.getCategoryId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
@@ -2304,8 +2296,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		if ((mbMailingListModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_C.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(mbMailingListModelImpl.getOriginalGroupId()),
-					Long.valueOf(mbMailingListModelImpl.getOriginalCategoryId())
+					mbMailingListModelImpl.getOriginalGroupId(),
+					mbMailingListModelImpl.getOriginalCategoryId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
@@ -2342,7 +2334,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	public MBMailingList remove(long mailingListId)
 		throws NoSuchMailingListException, SystemException {
-		return remove(Long.valueOf(mailingListId));
+		return remove((Serializable)mailingListId);
 	}
 
 	/**
@@ -2484,7 +2476,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						mbMailingListModelImpl.getOriginalUuid(),
-						Long.valueOf(mbMailingListModelImpl.getOriginalCompanyId())
+						mbMailingListModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -2493,7 +2485,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 				args = new Object[] {
 						mbMailingListModelImpl.getUuid(),
-						Long.valueOf(mbMailingListModelImpl.getCompanyId())
+						mbMailingListModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -2504,16 +2496,14 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			if ((mbMailingListModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Boolean.valueOf(mbMailingListModelImpl.getOriginalActive())
+						mbMailingListModelImpl.getOriginalActive()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
 					args);
 
-				args = new Object[] {
-						Boolean.valueOf(mbMailingListModelImpl.getActive())
-					};
+				args = new Object[] { mbMailingListModelImpl.getActive() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,

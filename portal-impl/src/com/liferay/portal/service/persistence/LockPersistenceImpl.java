@@ -2060,7 +2060,6 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				FINDER_PATH_FETCH_BY_C_K.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					lockModelImpl.getOriginalClassName(),
-					
 					lockModelImpl.getOriginalKey()
 				};
 
@@ -2097,7 +2096,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Lock remove(long lockId) throws NoSuchLockException, SystemException {
-		return remove(Long.valueOf(lockId));
+		return remove((Serializable)lockId);
 	}
 
 	/**
@@ -2233,7 +2232,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						lockModelImpl.getOriginalUuid(),
-						Long.valueOf(lockModelImpl.getOriginalCompanyId())
+						lockModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -2241,8 +2240,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 					args);
 
 				args = new Object[] {
-						lockModelImpl.getUuid(),
-						Long.valueOf(lockModelImpl.getCompanyId())
+						lockModelImpl.getUuid(), lockModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);

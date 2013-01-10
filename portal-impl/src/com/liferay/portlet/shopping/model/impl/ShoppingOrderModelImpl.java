@@ -244,7 +244,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_orderId);
+		return _orderId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

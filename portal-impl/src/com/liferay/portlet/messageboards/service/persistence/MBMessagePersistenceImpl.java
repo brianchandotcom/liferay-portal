@@ -18140,9 +18140,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			MBMessageImpl.class, mbMessage.getPrimaryKey(), mbMessage);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				mbMessage.getUuid(), Long.valueOf(mbMessage.getGroupId())
-			}, mbMessage);
+			new Object[] { mbMessage.getUuid(), mbMessage.getGroupId() },
+			mbMessage);
 
 		mbMessage.resetOriginalValues();
 	}
@@ -18219,7 +18218,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	protected void cacheUniqueFindersCache(MBMessage mbMessage) {
 		if (mbMessage.isNew()) {
 			Object[] args = new Object[] {
-					mbMessage.getUuid(), Long.valueOf(mbMessage.getGroupId())
+					mbMessage.getUuid(), mbMessage.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -18233,8 +18232,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						mbMessage.getUuid(),
-						Long.valueOf(mbMessage.getGroupId())
+						mbMessage.getUuid(), mbMessage.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -18248,9 +18246,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	protected void clearUniqueFindersCache(MBMessage mbMessage) {
 		MBMessageModelImpl mbMessageModelImpl = (MBMessageModelImpl)mbMessage;
 
-		Object[] args = new Object[] {
-				mbMessage.getUuid(), Long.valueOf(mbMessage.getGroupId())
-			};
+		Object[] args = new Object[] { mbMessage.getUuid(), mbMessage.getGroupId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
@@ -18259,7 +18255,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					mbMessageModelImpl.getOriginalUuid(),
-					Long.valueOf(mbMessageModelImpl.getOriginalGroupId())
+					mbMessageModelImpl.getOriginalGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -18296,7 +18292,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	 */
 	public MBMessage remove(long messageId)
 		throws NoSuchMessageException, SystemException {
-		return remove(Long.valueOf(messageId));
+		return remove((Serializable)messageId);
 	}
 
 	/**
@@ -18463,7 +18459,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						mbMessageModelImpl.getOriginalUuid(),
-						Long.valueOf(mbMessageModelImpl.getOriginalCompanyId())
+						mbMessageModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -18472,7 +18468,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				args = new Object[] {
 						mbMessageModelImpl.getUuid(),
-						Long.valueOf(mbMessageModelImpl.getCompanyId())
+						mbMessageModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -18483,16 +18479,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalGroupId())
+						mbMessageModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getGroupId())
-					};
+				args = new Object[] { mbMessageModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -18502,7 +18496,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalCompanyId())
+						mbMessageModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -18510,9 +18504,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getCompanyId())
-					};
+				args = new Object[] { mbMessageModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -18523,16 +18515,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalThreadId())
+						mbMessageModelImpl.getOriginalThreadId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THREADID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getThreadId())
-					};
+				args = new Object[] { mbMessageModelImpl.getThreadId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THREADID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADID,
@@ -18542,7 +18532,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADREPLIES.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalThreadId())
+						mbMessageModelImpl.getOriginalThreadId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THREADREPLIES,
@@ -18550,9 +18540,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADREPLIES,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getThreadId())
-					};
+				args = new Object[] { mbMessageModelImpl.getThreadId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THREADREPLIES,
 					args);
@@ -18563,14 +18551,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalUserId())
+						mbMessageModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] { Long.valueOf(mbMessageModelImpl.getUserId()) };
+				args = new Object[] { mbMessageModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -18580,8 +18568,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalGroupId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalUserId())
+						mbMessageModelImpl.getOriginalGroupId(),
+						mbMessageModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -18589,8 +18577,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getGroupId()),
-						Long.valueOf(mbMessageModelImpl.getUserId())
+						mbMessageModelImpl.getGroupId(),
+						mbMessageModelImpl.getUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -18601,8 +18589,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalGroupId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalCategoryId())
+						mbMessageModelImpl.getOriginalGroupId(),
+						mbMessageModelImpl.getOriginalCategoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
@@ -18610,8 +18598,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getGroupId()),
-						Long.valueOf(mbMessageModelImpl.getCategoryId())
+						mbMessageModelImpl.getGroupId(),
+						mbMessageModelImpl.getCategoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
@@ -18622,8 +18610,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalGroupId()),
-						Integer.valueOf(mbMessageModelImpl.getOriginalStatus())
+						mbMessageModelImpl.getOriginalGroupId(),
+						mbMessageModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
@@ -18631,8 +18619,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getGroupId()),
-						Integer.valueOf(mbMessageModelImpl.getStatus())
+						mbMessageModelImpl.getGroupId(),
+						mbMessageModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
@@ -18643,8 +18631,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalCompanyId()),
-						Integer.valueOf(mbMessageModelImpl.getOriginalStatus())
+						mbMessageModelImpl.getOriginalCompanyId(),
+						mbMessageModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
@@ -18652,8 +18640,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getCompanyId()),
-						Integer.valueOf(mbMessageModelImpl.getStatus())
+						mbMessageModelImpl.getCompanyId(),
+						mbMessageModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
@@ -18664,8 +18652,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalUserId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalClassNameId())
+						mbMessageModelImpl.getOriginalUserId(),
+						mbMessageModelImpl.getOriginalClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C, args);
@@ -18673,8 +18661,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getUserId()),
-						Long.valueOf(mbMessageModelImpl.getClassNameId())
+						mbMessageModelImpl.getUserId(),
+						mbMessageModelImpl.getClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C, args);
@@ -18685,8 +18673,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalClassNameId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalClassPK())
+						mbMessageModelImpl.getOriginalClassNameId(),
+						mbMessageModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -18694,8 +18682,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getClassNameId()),
-						Long.valueOf(mbMessageModelImpl.getClassPK())
+						mbMessageModelImpl.getClassNameId(),
+						mbMessageModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -18706,8 +18694,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalThreadId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalParentMessageId())
+						mbMessageModelImpl.getOriginalThreadId(),
+						mbMessageModelImpl.getOriginalParentMessageId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_P, args);
@@ -18715,8 +18703,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getThreadId()),
-						Long.valueOf(mbMessageModelImpl.getParentMessageId())
+						mbMessageModelImpl.getThreadId(),
+						mbMessageModelImpl.getParentMessageId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_P, args);
@@ -18727,8 +18715,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalThreadId()),
-						Boolean.valueOf(mbMessageModelImpl.getOriginalAnswer())
+						mbMessageModelImpl.getOriginalThreadId(),
+						mbMessageModelImpl.getOriginalAnswer()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
@@ -18736,8 +18724,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getThreadId()),
-						Boolean.valueOf(mbMessageModelImpl.getAnswer())
+						mbMessageModelImpl.getThreadId(),
+						mbMessageModelImpl.getAnswer()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
@@ -18748,8 +18736,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalThreadId()),
-						Integer.valueOf(mbMessageModelImpl.getOriginalStatus())
+						mbMessageModelImpl.getOriginalThreadId(),
+						mbMessageModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
@@ -18757,8 +18745,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getThreadId()),
-						Integer.valueOf(mbMessageModelImpl.getStatus())
+						mbMessageModelImpl.getThreadId(),
+						mbMessageModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
@@ -18769,8 +18757,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TR_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalThreadId()),
-						Integer.valueOf(mbMessageModelImpl.getOriginalStatus())
+						mbMessageModelImpl.getOriginalThreadId(),
+						mbMessageModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TR_S, args);
@@ -18778,8 +18766,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getThreadId()),
-						Integer.valueOf(mbMessageModelImpl.getStatus())
+						mbMessageModelImpl.getThreadId(),
+						mbMessageModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TR_S, args);
@@ -18790,9 +18778,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalGroupId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalUserId()),
-						Integer.valueOf(mbMessageModelImpl.getOriginalStatus())
+						mbMessageModelImpl.getOriginalGroupId(),
+						mbMessageModelImpl.getOriginalUserId(),
+						mbMessageModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
@@ -18800,9 +18788,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getGroupId()),
-						Long.valueOf(mbMessageModelImpl.getUserId()),
-						Integer.valueOf(mbMessageModelImpl.getStatus())
+						mbMessageModelImpl.getGroupId(),
+						mbMessageModelImpl.getUserId(),
+						mbMessageModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
@@ -18813,9 +18801,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalGroupId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalCategoryId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalThreadId())
+						mbMessageModelImpl.getOriginalGroupId(),
+						mbMessageModelImpl.getOriginalCategoryId(),
+						mbMessageModelImpl.getOriginalThreadId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T, args);
@@ -18823,9 +18811,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getGroupId()),
-						Long.valueOf(mbMessageModelImpl.getCategoryId()),
-						Long.valueOf(mbMessageModelImpl.getThreadId())
+						mbMessageModelImpl.getGroupId(),
+						mbMessageModelImpl.getCategoryId(),
+						mbMessageModelImpl.getThreadId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T, args);
@@ -18836,9 +18824,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalGroupId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalCategoryId()),
-						Integer.valueOf(mbMessageModelImpl.getOriginalStatus())
+						mbMessageModelImpl.getOriginalGroupId(),
+						mbMessageModelImpl.getOriginalCategoryId(),
+						mbMessageModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
@@ -18846,9 +18834,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getGroupId()),
-						Long.valueOf(mbMessageModelImpl.getCategoryId()),
-						Integer.valueOf(mbMessageModelImpl.getStatus())
+						mbMessageModelImpl.getGroupId(),
+						mbMessageModelImpl.getCategoryId(),
+						mbMessageModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_S, args);
@@ -18859,9 +18847,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalUserId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalClassNameId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalClassPK())
+						mbMessageModelImpl.getOriginalUserId(),
+						mbMessageModelImpl.getOriginalClassNameId(),
+						mbMessageModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_C, args);
@@ -18869,9 +18857,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getUserId()),
-						Long.valueOf(mbMessageModelImpl.getClassNameId()),
-						Long.valueOf(mbMessageModelImpl.getClassPK())
+						mbMessageModelImpl.getUserId(),
+						mbMessageModelImpl.getClassNameId(),
+						mbMessageModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_C, args);
@@ -18882,9 +18870,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalUserId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalClassNameId()),
-						Integer.valueOf(mbMessageModelImpl.getOriginalStatus())
+						mbMessageModelImpl.getOriginalUserId(),
+						mbMessageModelImpl.getOriginalClassNameId(),
+						mbMessageModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_S, args);
@@ -18892,9 +18880,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getUserId()),
-						Long.valueOf(mbMessageModelImpl.getClassNameId()),
-						Integer.valueOf(mbMessageModelImpl.getStatus())
+						mbMessageModelImpl.getUserId(),
+						mbMessageModelImpl.getClassNameId(),
+						mbMessageModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_S, args);
@@ -18905,9 +18893,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalClassNameId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalClassPK()),
-						Integer.valueOf(mbMessageModelImpl.getOriginalStatus())
+						mbMessageModelImpl.getOriginalClassNameId(),
+						mbMessageModelImpl.getOriginalClassPK(),
+						mbMessageModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
@@ -18915,9 +18903,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getClassNameId()),
-						Long.valueOf(mbMessageModelImpl.getClassPK()),
-						Integer.valueOf(mbMessageModelImpl.getStatus())
+						mbMessageModelImpl.getClassNameId(),
+						mbMessageModelImpl.getClassPK(),
+						mbMessageModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
@@ -18928,10 +18916,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalGroupId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalCategoryId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalThreadId()),
-						Boolean.valueOf(mbMessageModelImpl.getOriginalAnswer())
+						mbMessageModelImpl.getOriginalGroupId(),
+						mbMessageModelImpl.getOriginalCategoryId(),
+						mbMessageModelImpl.getOriginalThreadId(),
+						mbMessageModelImpl.getOriginalAnswer()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T_A, args);
@@ -18939,10 +18927,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getGroupId()),
-						Long.valueOf(mbMessageModelImpl.getCategoryId()),
-						Long.valueOf(mbMessageModelImpl.getThreadId()),
-						Boolean.valueOf(mbMessageModelImpl.getAnswer())
+						mbMessageModelImpl.getGroupId(),
+						mbMessageModelImpl.getCategoryId(),
+						mbMessageModelImpl.getThreadId(),
+						mbMessageModelImpl.getAnswer()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T_A, args);
@@ -18953,10 +18941,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_T_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalGroupId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalCategoryId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalThreadId()),
-						Integer.valueOf(mbMessageModelImpl.getOriginalStatus())
+						mbMessageModelImpl.getOriginalGroupId(),
+						mbMessageModelImpl.getOriginalCategoryId(),
+						mbMessageModelImpl.getOriginalThreadId(),
+						mbMessageModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T_S, args);
@@ -18964,10 +18952,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getGroupId()),
-						Long.valueOf(mbMessageModelImpl.getCategoryId()),
-						Long.valueOf(mbMessageModelImpl.getThreadId()),
-						Integer.valueOf(mbMessageModelImpl.getStatus())
+						mbMessageModelImpl.getGroupId(),
+						mbMessageModelImpl.getCategoryId(),
+						mbMessageModelImpl.getThreadId(),
+						mbMessageModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T_S, args);
@@ -18978,10 +18966,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getOriginalUserId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalClassNameId()),
-						Long.valueOf(mbMessageModelImpl.getOriginalClassPK()),
-						Integer.valueOf(mbMessageModelImpl.getOriginalStatus())
+						mbMessageModelImpl.getOriginalUserId(),
+						mbMessageModelImpl.getOriginalClassNameId(),
+						mbMessageModelImpl.getOriginalClassPK(),
+						mbMessageModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_C_S, args);
@@ -18989,10 +18977,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbMessageModelImpl.getUserId()),
-						Long.valueOf(mbMessageModelImpl.getClassNameId()),
-						Long.valueOf(mbMessageModelImpl.getClassPK()),
-						Integer.valueOf(mbMessageModelImpl.getStatus())
+						mbMessageModelImpl.getUserId(),
+						mbMessageModelImpl.getClassNameId(),
+						mbMessageModelImpl.getClassPK(),
+						mbMessageModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_C_S, args);

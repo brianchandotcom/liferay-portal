@@ -950,7 +950,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	public ShoppingCoupon remove(long couponId)
 		throws NoSuchCouponException, SystemException {
-		return remove(Long.valueOf(couponId));
+		return remove((Serializable)couponId);
 	}
 
 	/**
@@ -1068,16 +1068,14 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			if ((shoppingCouponModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shoppingCouponModelImpl.getOriginalGroupId())
+						shoppingCouponModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(shoppingCouponModelImpl.getGroupId())
-					};
+				args = new Object[] { shoppingCouponModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,

@@ -102,7 +102,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_ticketId);
+		return _ticketId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

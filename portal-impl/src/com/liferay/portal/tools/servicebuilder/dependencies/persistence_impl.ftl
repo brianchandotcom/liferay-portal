@@ -157,15 +157,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				FINDER_PATH_FETCH_BY_${finder.name?upper_case},
 				new Object[] {
 					<#list finderColsList as finderCol>
-						<#if finderCol.isPrimitiveType()>
-							${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-						</#if>
-
 						${entity.varName}.get${finderCol.methodName}()
-
-						<#if finderCol.isPrimitiveType()>
-							)
-						</#if>
 
 						<#if finderCol_has_next>
 							,
@@ -258,15 +250,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					</#if>
 					args = new Object[] {
 						<#list finderColsList as finderCol>
-							<#if finderCol.isPrimitiveType()>
-								${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-							</#if>
-
 							${entity.varName}.get${finderCol.methodName}()
-
-							<#if finderCol.isPrimitiveType()>
-								)
-							</#if>
 
 							<#if finderCol_has_next>
 								,
@@ -287,15 +271,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					if ((${entity.varName}ModelImpl.getColumnBitmask() & FINDER_PATH_FETCH_BY_${finder.name?upper_case}.getColumnBitmask()) != 0) {
 						Object[] args = new Object[] {
 							<#list finderColsList as finderCol>
-								<#if finderCol.isPrimitiveType()>
-									${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-								</#if>
-
 								${entity.varName}.get${finderCol.methodName}()
-
-								<#if finderCol.isPrimitiveType()>
-									)
-								</#if>
 
 								<#if finderCol_has_next>
 									,
@@ -321,15 +297,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#if>
 				args = new Object[] {
 					<#list finderColsList as finderCol>
-						<#if finderCol.isPrimitiveType()>
-							${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-						</#if>
-
 						${entity.varName}.get${finderCol.methodName}()
-
-						<#if finderCol.isPrimitiveType()>
-							)
-						</#if>
 
 						<#if finderCol_has_next>
 							,
@@ -343,15 +311,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				if ((${entity.varName}ModelImpl.getColumnBitmask() & FINDER_PATH_FETCH_BY_${finder.name?upper_case}.getColumnBitmask()) != 0) {
 					args = new Object[] {
 						<#list finderColsList as finderCol>
-							<#if finderCol.isPrimitiveType()>
-								${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-							</#if>
-
 							${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
-
-							<#if finderCol.isPrimitiveType()>
-								)
-							</#if>
 
 							<#if finderCol_has_next>
 								,
@@ -396,11 +356,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 * @throws SystemException if a system exception occurred
 	 */
 	public ${entity.name} remove(${entity.PKClassName} ${entity.PKVarName}) throws ${noSuchEntity}Exception, SystemException {
-		<#if entity.hasPrimitivePK(false)>
-			return remove(${serviceBuilder.getPrimitiveObj("${entity.PKClassName}")}.valueOf(${entity.PKVarName}));
-		<#else>
-			return remove((Serializable)${entity.PKVarName});
-		</#if>
+		return remove((Serializable)${entity.PKVarName});
 	}
 
 	/**
@@ -678,15 +634,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 						Object[] args = new Object[] {
 							<#list finderColsList as finderCol>
-								<#if finderCol.isPrimitiveType()>
-									${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-								</#if>
-
 								${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
-
-								<#if finderCol.isPrimitiveType()>
-									)
-								</#if>
 
 								<#if finderCol_has_next>
 									,
@@ -699,15 +647,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 						args = new Object[] {
 							<#list finderColsList as finderCol>
-								<#if finderCol.isPrimitiveType()>
-									${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-								</#if>
-
 								${entity.varName}ModelImpl.get${finderCol.methodName}()
-
-								<#if finderCol.isPrimitiveType()>
-									)
-								</#if>
 
 								<#if finderCol_has_next>
 									,
@@ -1060,13 +1000,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				"get${tempEntity.names}",
 				new String[] {
-					<#if entity.hasPrimitivePK()>
-						${serviceBuilder.getPrimitiveObj(entity.getPKClassName())}
-					<#else>
-						${entity.PKClassName}
-					</#if>
-
-					.class.getName(), Integer.class.getName(), Integer.class.getName(), OrderByComparator.class.getName()
+					${serviceBuilder.getPrimitiveObj(entity.getPKClassName())}.class.getName(), Integer.class.getName(), Integer.class.getName(), OrderByComparator.class.getName()
 				});
 
 			static {
@@ -1173,13 +1107,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				"get${tempEntity.names}Size",
 				new String[] {
-					<#if entity.hasPrimitivePK()>
-						${serviceBuilder.getPrimitiveObj(entity.getPKClassName())}
-					<#else>
-						${entity.PKClassName}
-					</#if>
-
-					.class.getName()
+					${serviceBuilder.getPrimitiveObj(entity.getPKClassName())}.class.getName()
 				});
 
 			static {
@@ -1244,21 +1172,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				"contains${tempEntity.name}",
 				new String[] {
-					<#if entity.hasPrimitivePK()>
-						${serviceBuilder.getPrimitiveObj(entity.getPKClassName())}
-					<#else>
-						${entity.PKClassName}
-					</#if>
-
-					.class.getName(),
-
-					<#if tempEntity.hasPrimitivePK()>
-						${serviceBuilder.getPrimitiveObj(tempEntity.getPKClassName())}
-					<#else>
-						${tempEntity.PKClassName}
-					</#if>
-
-					.class.getName()
+					${serviceBuilder.getPrimitiveObj(entity.getPKClassName())}.class.getName(), ${serviceBuilder.getPrimitiveObj(tempEntity.getPKClassName())}.class.getName()
 				});
 
 			/**

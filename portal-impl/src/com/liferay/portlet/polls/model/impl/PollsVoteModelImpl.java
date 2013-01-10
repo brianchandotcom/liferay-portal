@@ -157,7 +157,7 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_voteId);
+		return _voteId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

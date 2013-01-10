@@ -99,7 +99,7 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_discussionId);
+		return _discussionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

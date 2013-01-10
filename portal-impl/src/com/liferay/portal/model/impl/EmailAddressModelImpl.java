@@ -164,7 +164,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_emailAddressId);
+		return _emailAddressId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

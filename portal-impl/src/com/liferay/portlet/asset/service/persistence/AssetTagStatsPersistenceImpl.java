@@ -1277,8 +1277,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_C,
 			new Object[] {
-				Long.valueOf(assetTagStats.getTagId()),
-				Long.valueOf(assetTagStats.getClassNameId())
+				assetTagStats.getTagId(), assetTagStats.getClassNameId()
 			}, assetTagStats);
 
 		assetTagStats.resetOriginalValues();
@@ -1356,8 +1355,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	protected void cacheUniqueFindersCache(AssetTagStats assetTagStats) {
 		if (assetTagStats.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(assetTagStats.getTagId()),
-					Long.valueOf(assetTagStats.getClassNameId())
+					assetTagStats.getTagId(), assetTagStats.getClassNameId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_C, args,
@@ -1371,8 +1369,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 			if ((assetTagStatsModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_T_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetTagStats.getTagId()),
-						Long.valueOf(assetTagStats.getClassNameId())
+						assetTagStats.getTagId(), assetTagStats.getClassNameId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_C, args,
@@ -1387,8 +1384,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		AssetTagStatsModelImpl assetTagStatsModelImpl = (AssetTagStatsModelImpl)assetTagStats;
 
 		Object[] args = new Object[] {
-				Long.valueOf(assetTagStats.getTagId()),
-				Long.valueOf(assetTagStats.getClassNameId())
+				assetTagStats.getTagId(), assetTagStats.getClassNameId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_C, args);
@@ -1397,8 +1393,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		if ((assetTagStatsModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_T_C.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(assetTagStatsModelImpl.getOriginalTagId()),
-					Long.valueOf(assetTagStatsModelImpl.getOriginalClassNameId())
+					assetTagStatsModelImpl.getOriginalTagId(),
+					assetTagStatsModelImpl.getOriginalClassNameId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_C, args);
@@ -1431,7 +1427,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	public AssetTagStats remove(long tagStatsId)
 		throws NoSuchTagStatsException, SystemException {
-		return remove(Long.valueOf(tagStatsId));
+		return remove((Serializable)tagStatsId);
 	}
 
 	/**
@@ -1549,16 +1545,14 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 			if ((assetTagStatsModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TAGID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetTagStatsModelImpl.getOriginalTagId())
+						assetTagStatsModelImpl.getOriginalTagId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TAGID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TAGID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(assetTagStatsModelImpl.getTagId())
-					};
+				args = new Object[] { assetTagStatsModelImpl.getTagId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TAGID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TAGID,
@@ -1568,7 +1562,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 			if ((assetTagStatsModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetTagStatsModelImpl.getOriginalClassNameId())
+						assetTagStatsModelImpl.getOriginalClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
@@ -1576,9 +1570,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(assetTagStatsModelImpl.getClassNameId())
-					};
+				args = new Object[] { assetTagStatsModelImpl.getClassNameId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
 					args);

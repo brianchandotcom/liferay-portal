@@ -188,7 +188,7 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_categoryId);
+		return _categoryId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

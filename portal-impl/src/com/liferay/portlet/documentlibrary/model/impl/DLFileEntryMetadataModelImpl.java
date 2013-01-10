@@ -102,7 +102,7 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_fileEntryMetadataId);
+		return _fileEntryMetadataId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

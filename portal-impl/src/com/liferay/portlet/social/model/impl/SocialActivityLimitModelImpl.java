@@ -108,7 +108,7 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_activityLimitId);
+		return _activityLimitId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

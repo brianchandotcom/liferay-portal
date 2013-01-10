@@ -185,7 +185,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_fileEntryTypeId);
+		return _fileEntryTypeId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

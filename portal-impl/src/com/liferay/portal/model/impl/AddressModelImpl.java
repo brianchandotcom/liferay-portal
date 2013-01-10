@@ -179,7 +179,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_addressId);
+		return _addressId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

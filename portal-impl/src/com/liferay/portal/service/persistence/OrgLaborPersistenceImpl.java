@@ -667,7 +667,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	public OrgLabor remove(long orgLaborId)
 		throws NoSuchOrgLaborException, SystemException {
-		return remove(Long.valueOf(orgLaborId));
+		return remove((Serializable)orgLaborId);
 	}
 
 	/**
@@ -783,7 +783,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 			if ((orgLaborModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ORGANIZATIONID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(orgLaborModelImpl.getOriginalOrganizationId())
+						orgLaborModelImpl.getOriginalOrganizationId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ORGANIZATIONID,
@@ -791,9 +791,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ORGANIZATIONID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(orgLaborModelImpl.getOrganizationId())
-					};
+				args = new Object[] { orgLaborModelImpl.getOrganizationId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ORGANIZATIONID,
 					args);

@@ -100,7 +100,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_versionId);
+		return _versionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

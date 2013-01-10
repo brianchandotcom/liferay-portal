@@ -1333,10 +1333,8 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 			LayoutSetImpl.class, layoutSet.getPrimaryKey(), layoutSet);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P,
-			new Object[] {
-				Long.valueOf(layoutSet.getGroupId()),
-				Boolean.valueOf(layoutSet.getPrivateLayout())
-			}, layoutSet);
+			new Object[] { layoutSet.getGroupId(), layoutSet.getPrivateLayout() },
+			layoutSet);
 
 		layoutSet.resetOriginalValues();
 	}
@@ -1413,8 +1411,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	protected void cacheUniqueFindersCache(LayoutSet layoutSet) {
 		if (layoutSet.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(layoutSet.getGroupId()),
-					Boolean.valueOf(layoutSet.getPrivateLayout())
+					layoutSet.getGroupId(), layoutSet.getPrivateLayout()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P, args,
@@ -1427,8 +1424,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 			if ((layoutSetModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutSet.getGroupId()),
-						Boolean.valueOf(layoutSet.getPrivateLayout())
+						layoutSet.getGroupId(), layoutSet.getPrivateLayout()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P, args,
@@ -1443,8 +1439,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		LayoutSetModelImpl layoutSetModelImpl = (LayoutSetModelImpl)layoutSet;
 
 		Object[] args = new Object[] {
-				Long.valueOf(layoutSet.getGroupId()),
-				Boolean.valueOf(layoutSet.getPrivateLayout())
+				layoutSet.getGroupId(), layoutSet.getPrivateLayout()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -1453,8 +1448,8 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		if ((layoutSetModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_P.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(layoutSetModelImpl.getOriginalGroupId()),
-					Boolean.valueOf(layoutSetModelImpl.getOriginalPrivateLayout())
+					layoutSetModelImpl.getOriginalGroupId(),
+					layoutSetModelImpl.getOriginalPrivateLayout()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -1487,7 +1482,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	public LayoutSet remove(long layoutSetId)
 		throws NoSuchLayoutSetException, SystemException {
-		return remove(Long.valueOf(layoutSetId));
+		return remove((Serializable)layoutSetId);
 	}
 
 	/**
@@ -1604,16 +1599,14 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 			if ((layoutSetModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutSetModelImpl.getOriginalGroupId())
+						layoutSetModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(layoutSetModelImpl.getGroupId())
-					};
+				args = new Object[] { layoutSetModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,

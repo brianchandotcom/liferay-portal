@@ -206,7 +206,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_contactId);
+		return _contactId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

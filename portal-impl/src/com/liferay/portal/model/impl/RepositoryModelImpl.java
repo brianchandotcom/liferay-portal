@@ -169,7 +169,7 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_repositoryId);
+		return _repositoryId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

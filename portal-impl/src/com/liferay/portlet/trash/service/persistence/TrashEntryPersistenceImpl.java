@@ -1813,10 +1813,8 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 			TrashEntryImpl.class, trashEntry.getPrimaryKey(), trashEntry);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C,
-			new Object[] {
-				Long.valueOf(trashEntry.getClassNameId()),
-				Long.valueOf(trashEntry.getClassPK())
-			}, trashEntry);
+			new Object[] { trashEntry.getClassNameId(), trashEntry.getClassPK() },
+			trashEntry);
 
 		trashEntry.resetOriginalValues();
 	}
@@ -1893,8 +1891,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	protected void cacheUniqueFindersCache(TrashEntry trashEntry) {
 		if (trashEntry.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(trashEntry.getClassNameId()),
-					Long.valueOf(trashEntry.getClassPK())
+					trashEntry.getClassNameId(), trashEntry.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
@@ -1907,8 +1904,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 			if ((trashEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(trashEntry.getClassNameId()),
-						Long.valueOf(trashEntry.getClassPK())
+						trashEntry.getClassNameId(), trashEntry.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
@@ -1923,8 +1919,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		TrashEntryModelImpl trashEntryModelImpl = (TrashEntryModelImpl)trashEntry;
 
 		Object[] args = new Object[] {
-				Long.valueOf(trashEntry.getClassNameId()),
-				Long.valueOf(trashEntry.getClassPK())
+				trashEntry.getClassNameId(), trashEntry.getClassPK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -1933,8 +1928,8 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		if ((trashEntryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(trashEntryModelImpl.getOriginalClassNameId()),
-					Long.valueOf(trashEntryModelImpl.getOriginalClassPK())
+					trashEntryModelImpl.getOriginalClassNameId(),
+					trashEntryModelImpl.getOriginalClassPK()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -1967,7 +1962,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	 */
 	public TrashEntry remove(long entryId)
 		throws NoSuchEntryException, SystemException {
-		return remove(Long.valueOf(entryId));
+		return remove((Serializable)entryId);
 	}
 
 	/**
@@ -2085,16 +2080,14 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 			if ((trashEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(trashEntryModelImpl.getOriginalGroupId())
+						trashEntryModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(trashEntryModelImpl.getGroupId())
-					};
+				args = new Object[] { trashEntryModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -2104,7 +2097,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 			if ((trashEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(trashEntryModelImpl.getOriginalCompanyId())
+						trashEntryModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -2112,9 +2105,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(trashEntryModelImpl.getCompanyId())
-					};
+				args = new Object[] { trashEntryModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);

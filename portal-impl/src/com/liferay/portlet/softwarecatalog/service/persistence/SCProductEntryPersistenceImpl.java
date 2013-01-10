@@ -2622,8 +2622,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_RG_RA,
 			new Object[] {
 				scProductEntry.getRepoGroupId(),
-				
-			scProductEntry.getRepoArtifactId()
+				scProductEntry.getRepoArtifactId()
 			}, scProductEntry);
 
 		scProductEntry.resetOriginalValues();
@@ -2702,7 +2701,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		if (scProductEntry.isNew()) {
 			Object[] args = new Object[] {
 					scProductEntry.getRepoGroupId(),
-					
 					scProductEntry.getRepoArtifactId()
 				};
 
@@ -2718,7 +2716,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 					FINDER_PATH_FETCH_BY_RG_RA.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						scProductEntry.getRepoGroupId(),
-						
 						scProductEntry.getRepoArtifactId()
 					};
 
@@ -2735,7 +2732,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 		Object[] args = new Object[] {
 				scProductEntry.getRepoGroupId(),
-				
 				scProductEntry.getRepoArtifactId()
 			};
 
@@ -2746,7 +2742,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 				FINDER_PATH_FETCH_BY_RG_RA.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					scProductEntryModelImpl.getOriginalRepoGroupId(),
-					
 					scProductEntryModelImpl.getOriginalRepoArtifactId()
 				};
 
@@ -2780,7 +2775,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	 */
 	public SCProductEntry remove(long productEntryId)
 		throws NoSuchProductEntryException, SystemException {
-		return remove(Long.valueOf(productEntryId));
+		return remove((Serializable)productEntryId);
 	}
 
 	/**
@@ -2908,16 +2903,14 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			if ((scProductEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(scProductEntryModelImpl.getOriginalGroupId())
+						scProductEntryModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(scProductEntryModelImpl.getGroupId())
-					};
+				args = new Object[] { scProductEntryModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -2927,7 +2920,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			if ((scProductEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(scProductEntryModelImpl.getOriginalCompanyId())
+						scProductEntryModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -2935,9 +2928,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(scProductEntryModelImpl.getCompanyId())
-					};
+				args = new Object[] { scProductEntryModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -2948,8 +2939,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			if ((scProductEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(scProductEntryModelImpl.getOriginalGroupId()),
-						Long.valueOf(scProductEntryModelImpl.getOriginalUserId())
+						scProductEntryModelImpl.getOriginalGroupId(),
+						scProductEntryModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -2957,8 +2948,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 					args);
 
 				args = new Object[] {
-						Long.valueOf(scProductEntryModelImpl.getGroupId()),
-						Long.valueOf(scProductEntryModelImpl.getUserId())
+						scProductEntryModelImpl.getGroupId(),
+						scProductEntryModelImpl.getUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);

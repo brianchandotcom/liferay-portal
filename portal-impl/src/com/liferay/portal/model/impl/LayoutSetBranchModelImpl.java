@@ -180,7 +180,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_layoutSetBranchId);
+		return _layoutSetBranchId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

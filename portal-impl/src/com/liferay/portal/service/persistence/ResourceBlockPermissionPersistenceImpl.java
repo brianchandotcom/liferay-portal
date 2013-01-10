@@ -818,8 +818,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_R,
 			new Object[] {
-				Long.valueOf(resourceBlockPermission.getResourceBlockId()),
-				Long.valueOf(resourceBlockPermission.getRoleId())
+				resourceBlockPermission.getResourceBlockId(),
+				resourceBlockPermission.getRoleId()
 			}, resourceBlockPermission);
 
 		resourceBlockPermission.resetOriginalValues();
@@ -903,8 +903,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		ResourceBlockPermission resourceBlockPermission) {
 		if (resourceBlockPermission.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(resourceBlockPermission.getResourceBlockId()),
-					Long.valueOf(resourceBlockPermission.getRoleId())
+					resourceBlockPermission.getResourceBlockId(),
+					resourceBlockPermission.getRoleId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_R, args,
@@ -918,8 +918,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			if ((resourceBlockPermissionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_R_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(resourceBlockPermission.getResourceBlockId()),
-						Long.valueOf(resourceBlockPermission.getRoleId())
+						resourceBlockPermission.getResourceBlockId(),
+						resourceBlockPermission.getRoleId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_R, args,
@@ -935,8 +935,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl = (ResourceBlockPermissionModelImpl)resourceBlockPermission;
 
 		Object[] args = new Object[] {
-				Long.valueOf(resourceBlockPermission.getResourceBlockId()),
-				Long.valueOf(resourceBlockPermission.getRoleId())
+				resourceBlockPermission.getResourceBlockId(),
+				resourceBlockPermission.getRoleId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_R, args);
@@ -945,8 +945,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		if ((resourceBlockPermissionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_R_R.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(resourceBlockPermissionModelImpl.getOriginalResourceBlockId()),
-					Long.valueOf(resourceBlockPermissionModelImpl.getOriginalRoleId())
+					resourceBlockPermissionModelImpl.getOriginalResourceBlockId(),
+					resourceBlockPermissionModelImpl.getOriginalRoleId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_R, args);
@@ -979,7 +979,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	public ResourceBlockPermission remove(long resourceBlockPermissionId)
 		throws NoSuchResourceBlockPermissionException, SystemException {
-		return remove(Long.valueOf(resourceBlockPermissionId));
+		return remove((Serializable)resourceBlockPermissionId);
 	}
 
 	/**
@@ -1098,7 +1098,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			if ((resourceBlockPermissionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEBLOCKID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(resourceBlockPermissionModelImpl.getOriginalResourceBlockId())
+						resourceBlockPermissionModelImpl.getOriginalResourceBlockId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,
@@ -1107,7 +1107,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 					args);
 
 				args = new Object[] {
-						Long.valueOf(resourceBlockPermissionModelImpl.getResourceBlockId())
+						resourceBlockPermissionModelImpl.getResourceBlockId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEBLOCKID,

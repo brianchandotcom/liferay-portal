@@ -2220,7 +2220,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	public MembershipRequest remove(long membershipRequestId)
 		throws NoSuchMembershipRequestException, SystemException {
-		return remove(Long.valueOf(membershipRequestId));
+		return remove((Serializable)membershipRequestId);
 	}
 
 	/**
@@ -2338,16 +2338,14 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			if ((membershipRequestModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(membershipRequestModelImpl.getOriginalGroupId())
+						membershipRequestModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(membershipRequestModelImpl.getGroupId())
-					};
+				args = new Object[] { membershipRequestModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -2357,16 +2355,14 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			if ((membershipRequestModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(membershipRequestModelImpl.getOriginalUserId())
+						membershipRequestModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(membershipRequestModelImpl.getUserId())
-					};
+				args = new Object[] { membershipRequestModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -2376,8 +2372,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			if ((membershipRequestModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(membershipRequestModelImpl.getOriginalGroupId()),
-						Integer.valueOf(membershipRequestModelImpl.getOriginalStatusId())
+						membershipRequestModelImpl.getOriginalGroupId(),
+						membershipRequestModelImpl.getOriginalStatusId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
@@ -2385,8 +2381,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 					args);
 
 				args = new Object[] {
-						Long.valueOf(membershipRequestModelImpl.getGroupId()),
-						Integer.valueOf(membershipRequestModelImpl.getStatusId())
+						membershipRequestModelImpl.getGroupId(),
+						membershipRequestModelImpl.getStatusId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
@@ -2397,9 +2393,9 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			if ((membershipRequestModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(membershipRequestModelImpl.getOriginalGroupId()),
-						Long.valueOf(membershipRequestModelImpl.getOriginalUserId()),
-						Integer.valueOf(membershipRequestModelImpl.getOriginalStatusId())
+						membershipRequestModelImpl.getOriginalGroupId(),
+						membershipRequestModelImpl.getOriginalUserId(),
+						membershipRequestModelImpl.getOriginalStatusId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);
@@ -2407,9 +2403,9 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 					args);
 
 				args = new Object[] {
-						Long.valueOf(membershipRequestModelImpl.getGroupId()),
-						Long.valueOf(membershipRequestModelImpl.getUserId()),
-						Integer.valueOf(membershipRequestModelImpl.getStatusId())
+						membershipRequestModelImpl.getGroupId(),
+						membershipRequestModelImpl.getUserId(),
+						membershipRequestModelImpl.getStatusId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_S, args);

@@ -472,7 +472,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 */
 	public Ticket remove(long ticketId)
 		throws NoSuchTicketException, SystemException {
-		return remove(Long.valueOf(ticketId));
+		return remove((Serializable)ticketId);
 	}
 
 	/**

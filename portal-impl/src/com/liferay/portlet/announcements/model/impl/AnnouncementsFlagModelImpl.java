@@ -150,7 +150,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_flagId);
+		return _flagId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

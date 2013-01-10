@@ -105,7 +105,7 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_linkId);
+		return _linkId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

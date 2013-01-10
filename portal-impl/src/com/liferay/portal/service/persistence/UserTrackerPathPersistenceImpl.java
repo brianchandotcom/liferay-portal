@@ -674,7 +674,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 */
 	public UserTrackerPath remove(long userTrackerPathId)
 		throws NoSuchUserTrackerPathException, SystemException {
-		return remove(Long.valueOf(userTrackerPathId));
+		return remove((Serializable)userTrackerPathId);
 	}
 
 	/**
@@ -792,7 +792,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			if ((userTrackerPathModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERTRACKERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userTrackerPathModelImpl.getOriginalUserTrackerId())
+						userTrackerPathModelImpl.getOriginalUserTrackerId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERTRACKERID,
@@ -800,9 +800,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERTRACKERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(userTrackerPathModelImpl.getUserTrackerId())
-					};
+				args = new Object[] { userTrackerPathModelImpl.getUserTrackerId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERTRACKERID,
 					args);

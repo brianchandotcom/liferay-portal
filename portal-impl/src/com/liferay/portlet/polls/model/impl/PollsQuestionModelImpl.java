@@ -169,7 +169,7 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_questionId);
+		return _questionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

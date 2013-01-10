@@ -210,7 +210,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_layoutRevisionId);
+		return _layoutRevisionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

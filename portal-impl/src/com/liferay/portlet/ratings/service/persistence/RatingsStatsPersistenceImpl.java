@@ -319,8 +319,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C,
 			new Object[] {
-				Long.valueOf(ratingsStats.getClassNameId()),
-				Long.valueOf(ratingsStats.getClassPK())
+				ratingsStats.getClassNameId(), ratingsStats.getClassPK()
 			}, ratingsStats);
 
 		ratingsStats.resetOriginalValues();
@@ -398,8 +397,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	protected void cacheUniqueFindersCache(RatingsStats ratingsStats) {
 		if (ratingsStats.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(ratingsStats.getClassNameId()),
-					Long.valueOf(ratingsStats.getClassPK())
+					ratingsStats.getClassNameId(), ratingsStats.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
@@ -413,8 +411,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 			if ((ratingsStatsModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(ratingsStats.getClassNameId()),
-						Long.valueOf(ratingsStats.getClassPK())
+						ratingsStats.getClassNameId(), ratingsStats.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
@@ -429,8 +426,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		RatingsStatsModelImpl ratingsStatsModelImpl = (RatingsStatsModelImpl)ratingsStats;
 
 		Object[] args = new Object[] {
-				Long.valueOf(ratingsStats.getClassNameId()),
-				Long.valueOf(ratingsStats.getClassPK())
+				ratingsStats.getClassNameId(), ratingsStats.getClassPK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -439,8 +435,8 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		if ((ratingsStatsModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(ratingsStatsModelImpl.getOriginalClassNameId()),
-					Long.valueOf(ratingsStatsModelImpl.getOriginalClassPK())
+					ratingsStatsModelImpl.getOriginalClassNameId(),
+					ratingsStatsModelImpl.getOriginalClassPK()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -473,7 +469,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	 */
 	public RatingsStats remove(long statsId)
 		throws NoSuchStatsException, SystemException {
-		return remove(Long.valueOf(statsId));
+		return remove((Serializable)statsId);
 	}
 
 	/**

@@ -1910,7 +1910,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	public SCLicense remove(long licenseId)
 		throws NoSuchLicenseException, SystemException {
-		return remove(Long.valueOf(licenseId));
+		return remove((Serializable)licenseId);
 	}
 
 	/**
@@ -2038,16 +2038,14 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			if ((scLicenseModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Boolean.valueOf(scLicenseModelImpl.getOriginalActive())
+						scLicenseModelImpl.getOriginalActive()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
 					args);
 
-				args = new Object[] {
-						Boolean.valueOf(scLicenseModelImpl.getActive())
-					};
+				args = new Object[] { scLicenseModelImpl.getActive() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
@@ -2057,8 +2055,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			if ((scLicenseModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Boolean.valueOf(scLicenseModelImpl.getOriginalActive()),
-						Boolean.valueOf(scLicenseModelImpl.getOriginalRecommended())
+						scLicenseModelImpl.getOriginalActive(),
+						scLicenseModelImpl.getOriginalRecommended()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_R, args);
@@ -2066,8 +2064,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 					args);
 
 				args = new Object[] {
-						Boolean.valueOf(scLicenseModelImpl.getActive()),
-						Boolean.valueOf(scLicenseModelImpl.getRecommended())
+						scLicenseModelImpl.getActive(),
+						scLicenseModelImpl.getRecommended()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_R, args);

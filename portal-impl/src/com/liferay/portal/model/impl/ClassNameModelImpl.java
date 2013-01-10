@@ -139,7 +139,7 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_classNameId);
+		return _classNameId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

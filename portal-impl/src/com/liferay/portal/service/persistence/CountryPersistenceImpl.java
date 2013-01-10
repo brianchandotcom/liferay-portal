@@ -1470,7 +1470,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	public Country remove(long countryId)
 		throws NoSuchCountryException, SystemException {
-		return remove(Long.valueOf(countryId));
+		return remove((Serializable)countryId);
 	}
 
 	/**
@@ -1585,16 +1585,14 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 			if ((countryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Boolean.valueOf(countryModelImpl.getOriginalActive())
+						countryModelImpl.getOriginalActive()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
 					args);
 
-				args = new Object[] {
-						Boolean.valueOf(countryModelImpl.getActive())
-					};
+				args = new Object[] { countryModelImpl.getActive() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,

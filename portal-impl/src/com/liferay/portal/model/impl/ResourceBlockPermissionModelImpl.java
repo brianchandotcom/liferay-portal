@@ -94,7 +94,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_resourceBlockPermissionId);
+		return _resourceBlockPermissionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

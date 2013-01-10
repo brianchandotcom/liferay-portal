@@ -3838,7 +3838,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	 */
 	public LayoutSetPrototype remove(long layoutSetPrototypeId)
 		throws NoSuchLayoutSetPrototypeException, SystemException {
-		return remove(Long.valueOf(layoutSetPrototypeId));
+		return remove((Serializable)layoutSetPrototypeId);
 	}
 
 	/**
@@ -3980,7 +3980,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						layoutSetPrototypeModelImpl.getOriginalUuid(),
-						Long.valueOf(layoutSetPrototypeModelImpl.getOriginalCompanyId())
+						layoutSetPrototypeModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -3989,7 +3989,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 
 				args = new Object[] {
 						layoutSetPrototypeModelImpl.getUuid(),
-						Long.valueOf(layoutSetPrototypeModelImpl.getCompanyId())
+						layoutSetPrototypeModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -4000,7 +4000,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			if ((layoutSetPrototypeModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutSetPrototypeModelImpl.getOriginalCompanyId())
+						layoutSetPrototypeModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -4008,9 +4008,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(layoutSetPrototypeModelImpl.getCompanyId())
-					};
+				args = new Object[] { layoutSetPrototypeModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -4021,8 +4019,8 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			if ((layoutSetPrototypeModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutSetPrototypeModelImpl.getOriginalCompanyId()),
-						Boolean.valueOf(layoutSetPrototypeModelImpl.getOriginalActive())
+						layoutSetPrototypeModelImpl.getOriginalCompanyId(),
+						layoutSetPrototypeModelImpl.getOriginalActive()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
@@ -4030,8 +4028,8 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 					args);
 
 				args = new Object[] {
-						Long.valueOf(layoutSetPrototypeModelImpl.getCompanyId()),
-						Boolean.valueOf(layoutSetPrototypeModelImpl.getActive())
+						layoutSetPrototypeModelImpl.getCompanyId(),
+						layoutSetPrototypeModelImpl.getActive()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_A, args);

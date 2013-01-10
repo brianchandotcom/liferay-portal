@@ -699,7 +699,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	public ListType remove(int listTypeId)
 		throws NoSuchListTypeException, SystemException {
-		return remove(Integer.valueOf(listTypeId));
+		return remove((Serializable)listTypeId);
 	}
 
 	/**

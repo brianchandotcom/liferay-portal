@@ -981,9 +981,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	protected void cacheUniqueFindersCache(ResourceAction resourceAction) {
 		if (resourceAction.isNew()) {
 			Object[] args = new Object[] {
-					resourceAction.getName(),
-					
-					resourceAction.getActionId()
+					resourceAction.getName(), resourceAction.getActionId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_A, args,
@@ -997,9 +995,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			if ((resourceActionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_N_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						resourceAction.getName(),
-						
-						resourceAction.getActionId()
+						resourceAction.getName(), resourceAction.getActionId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_A, args,
@@ -1014,9 +1010,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		ResourceActionModelImpl resourceActionModelImpl = (ResourceActionModelImpl)resourceAction;
 
 		Object[] args = new Object[] {
-				resourceAction.getName(),
-				
-				resourceAction.getActionId()
+				resourceAction.getName(), resourceAction.getActionId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_A, args);
@@ -1026,7 +1020,6 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 				FINDER_PATH_FETCH_BY_N_A.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					resourceActionModelImpl.getOriginalName(),
-					
 					resourceActionModelImpl.getOriginalActionId()
 				};
 
@@ -1060,7 +1053,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	public ResourceAction remove(long resourceActionId)
 		throws NoSuchResourceActionException, SystemException {
-		return remove(Long.valueOf(resourceActionId));
+		return remove((Serializable)resourceActionId);
 	}
 
 	/**

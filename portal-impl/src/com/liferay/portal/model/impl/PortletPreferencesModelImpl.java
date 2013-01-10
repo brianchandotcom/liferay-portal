@@ -149,7 +149,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_portletPreferencesId);
+		return _portletPreferencesId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -788,7 +788,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	 */
 	public WorkflowInstanceLink remove(long workflowInstanceLinkId)
 		throws NoSuchWorkflowInstanceLinkException, SystemException {
-		return remove(Long.valueOf(workflowInstanceLinkId));
+		return remove((Serializable)workflowInstanceLinkId);
 	}
 
 	/**
@@ -906,10 +906,10 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 			if ((workflowInstanceLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(workflowInstanceLinkModelImpl.getOriginalGroupId()),
-						Long.valueOf(workflowInstanceLinkModelImpl.getOriginalCompanyId()),
-						Long.valueOf(workflowInstanceLinkModelImpl.getOriginalClassNameId()),
-						Long.valueOf(workflowInstanceLinkModelImpl.getOriginalClassPK())
+						workflowInstanceLinkModelImpl.getOriginalGroupId(),
+						workflowInstanceLinkModelImpl.getOriginalCompanyId(),
+						workflowInstanceLinkModelImpl.getOriginalClassNameId(),
+						workflowInstanceLinkModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C, args);
@@ -917,10 +917,10 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 					args);
 
 				args = new Object[] {
-						Long.valueOf(workflowInstanceLinkModelImpl.getGroupId()),
-						Long.valueOf(workflowInstanceLinkModelImpl.getCompanyId()),
-						Long.valueOf(workflowInstanceLinkModelImpl.getClassNameId()),
-						Long.valueOf(workflowInstanceLinkModelImpl.getClassPK())
+						workflowInstanceLinkModelImpl.getGroupId(),
+						workflowInstanceLinkModelImpl.getCompanyId(),
+						workflowInstanceLinkModelImpl.getClassNameId(),
+						workflowInstanceLinkModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C, args);

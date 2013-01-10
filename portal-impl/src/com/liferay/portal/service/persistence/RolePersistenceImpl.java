@@ -4221,14 +4221,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			RoleImpl.class, role.getPrimaryKey(), role);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
-			new Object[] { Long.valueOf(role.getCompanyId()), role.getName() },
-			role);
+			new Object[] { role.getCompanyId(), role.getName() }, role);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C,
 			new Object[] {
-				Long.valueOf(role.getCompanyId()),
-				Long.valueOf(role.getClassNameId()),
-				Long.valueOf(role.getClassPK())
+				role.getCompanyId(), role.getClassNameId(), role.getClassPK()
 			}, role);
 
 		role.resetOriginalValues();
@@ -4304,20 +4301,15 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 	protected void cacheUniqueFindersCache(Role role) {
 		if (role.isNew()) {
-			Object[] args = new Object[] {
-					Long.valueOf(role.getCompanyId()),
-					
-					role.getName()
-				};
+			Object[] args = new Object[] { role.getCompanyId(), role.getName() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args, role);
 
 			args = new Object[] {
-					Long.valueOf(role.getCompanyId()),
-					Long.valueOf(role.getClassNameId()),
-					Long.valueOf(role.getClassPK())
+					role.getCompanyId(), role.getClassNameId(),
+					role.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_C, args,
@@ -4329,11 +4321,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			if ((roleModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(role.getCompanyId()),
-						
-						role.getName()
-					};
+				Object[] args = new Object[] { role.getCompanyId(), role.getName() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
 					Long.valueOf(1));
@@ -4343,9 +4331,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			if ((roleModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(role.getCompanyId()),
-						Long.valueOf(role.getClassNameId()),
-						Long.valueOf(role.getClassPK())
+						role.getCompanyId(), role.getClassNameId(),
+						role.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_C, args,
@@ -4358,11 +4345,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	protected void clearUniqueFindersCache(Role role) {
 		RoleModelImpl roleModelImpl = (RoleModelImpl)role;
 
-		Object[] args = new Object[] {
-				Long.valueOf(role.getCompanyId()),
-				
-				role.getName()
-			};
+		Object[] args = new Object[] { role.getCompanyId(), role.getName() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
@@ -4370,8 +4353,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if ((roleModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(roleModelImpl.getOriginalCompanyId()),
-					
+					roleModelImpl.getOriginalCompanyId(),
 					roleModelImpl.getOriginalName()
 				};
 
@@ -4380,9 +4362,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		args = new Object[] {
-				Long.valueOf(role.getCompanyId()),
-				Long.valueOf(role.getClassNameId()),
-				Long.valueOf(role.getClassPK())
+				role.getCompanyId(), role.getClassNameId(), role.getClassPK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
@@ -4391,9 +4371,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if ((roleModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C_C.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(roleModelImpl.getOriginalCompanyId()),
-					Long.valueOf(roleModelImpl.getOriginalClassNameId()),
-					Long.valueOf(roleModelImpl.getOriginalClassPK())
+					roleModelImpl.getOriginalCompanyId(),
+					roleModelImpl.getOriginalClassNameId(),
+					roleModelImpl.getOriginalClassPK()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
@@ -4425,7 +4405,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Role remove(long roleId) throws NoSuchRoleException, SystemException {
-		return remove(Long.valueOf(roleId));
+		return remove((Serializable)roleId);
 	}
 
 	/**
@@ -4559,7 +4539,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			if ((roleModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(roleModelImpl.getOriginalCompanyId())
+						roleModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -4567,7 +4547,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] { Long.valueOf(roleModelImpl.getCompanyId()) };
+				args = new Object[] { roleModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -4608,8 +4588,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			if ((roleModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Integer.valueOf(roleModelImpl.getOriginalType()),
-						
+						roleModelImpl.getOriginalType(),
 						roleModelImpl.getOriginalSubtype()
 					};
 
@@ -4618,9 +4597,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					args);
 
 				args = new Object[] {
-						Integer.valueOf(roleModelImpl.getType()),
-						
-						roleModelImpl.getSubtype()
+						roleModelImpl.getType(), roleModelImpl.getSubtype()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);

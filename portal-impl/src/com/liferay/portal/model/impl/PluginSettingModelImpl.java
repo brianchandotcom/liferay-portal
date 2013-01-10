@@ -147,7 +147,7 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_pluginSettingId);
+		return _pluginSettingId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

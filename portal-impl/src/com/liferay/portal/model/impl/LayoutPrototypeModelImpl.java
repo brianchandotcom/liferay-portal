@@ -155,7 +155,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_layoutPrototypeId);
+		return _layoutPrototypeId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

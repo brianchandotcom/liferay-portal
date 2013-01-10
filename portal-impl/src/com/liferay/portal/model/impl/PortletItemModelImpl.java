@@ -107,7 +107,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_portletItemId);
+		return _portletItemId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

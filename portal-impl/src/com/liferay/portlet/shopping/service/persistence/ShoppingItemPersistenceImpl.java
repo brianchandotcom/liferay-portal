@@ -1887,23 +1887,17 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 			ShoppingItemImpl.class, shoppingItem.getPrimaryKey(), shoppingItem);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID,
-			new Object[] { Long.valueOf(shoppingItem.getSmallImageId()) },
-			shoppingItem);
+			new Object[] { shoppingItem.getSmallImageId() }, shoppingItem);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_MEDIUMIMAGEID,
-			new Object[] { Long.valueOf(shoppingItem.getMediumImageId()) },
-			shoppingItem);
+			new Object[] { shoppingItem.getMediumImageId() }, shoppingItem);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LARGEIMAGEID,
-			new Object[] { Long.valueOf(shoppingItem.getLargeImageId()) },
-			shoppingItem);
+			new Object[] { shoppingItem.getLargeImageId() }, shoppingItem);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_S,
-			new Object[] {
-				Long.valueOf(shoppingItem.getCompanyId()),
-				
-			shoppingItem.getSku()
-			}, shoppingItem);
+			new Object[] { shoppingItem.getCompanyId(), shoppingItem.getSku() },
+			shoppingItem);
 
 		shoppingItem.resetOriginalValues();
 	}
@@ -1979,23 +1973,21 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 	protected void cacheUniqueFindersCache(ShoppingItem shoppingItem) {
 		if (shoppingItem.isNew()) {
-			Object[] args = new Object[] {
-					Long.valueOf(shoppingItem.getSmallImageId())
-				};
+			Object[] args = new Object[] { shoppingItem.getSmallImageId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SMALLIMAGEID, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID, args,
 				shoppingItem);
 
-			args = new Object[] { Long.valueOf(shoppingItem.getMediumImageId()) };
+			args = new Object[] { shoppingItem.getMediumImageId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_MEDIUMIMAGEID, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_MEDIUMIMAGEID, args,
 				shoppingItem);
 
-			args = new Object[] { Long.valueOf(shoppingItem.getLargeImageId()) };
+			args = new Object[] { shoppingItem.getLargeImageId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LARGEIMAGEID, args,
 				Long.valueOf(1));
@@ -2003,9 +1995,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 				shoppingItem);
 
 			args = new Object[] {
-					Long.valueOf(shoppingItem.getCompanyId()),
-					
-					shoppingItem.getSku()
+					shoppingItem.getCompanyId(), shoppingItem.getSku()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_S, args,
@@ -2018,9 +2008,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 			if ((shoppingItemModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_SMALLIMAGEID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(shoppingItem.getSmallImageId())
-					};
+				Object[] args = new Object[] { shoppingItem.getSmallImageId() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SMALLIMAGEID,
 					args, Long.valueOf(1));
@@ -2030,9 +2018,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 			if ((shoppingItemModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_MEDIUMIMAGEID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(shoppingItem.getMediumImageId())
-					};
+				Object[] args = new Object[] { shoppingItem.getMediumImageId() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_MEDIUMIMAGEID,
 					args, Long.valueOf(1));
@@ -2042,9 +2028,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 			if ((shoppingItemModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_LARGEIMAGEID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(shoppingItem.getLargeImageId())
-					};
+				Object[] args = new Object[] { shoppingItem.getLargeImageId() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LARGEIMAGEID,
 					args, Long.valueOf(1));
@@ -2055,9 +2039,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 			if ((shoppingItemModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shoppingItem.getCompanyId()),
-						
-						shoppingItem.getSku()
+						shoppingItem.getCompanyId(), shoppingItem.getSku()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_S, args,
@@ -2071,33 +2053,27 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	protected void clearUniqueFindersCache(ShoppingItem shoppingItem) {
 		ShoppingItemModelImpl shoppingItemModelImpl = (ShoppingItemModelImpl)shoppingItem;
 
-		Object[] args = new Object[] {
-				Long.valueOf(shoppingItem.getSmallImageId())
-			};
+		Object[] args = new Object[] { shoppingItem.getSmallImageId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SMALLIMAGEID, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID, args);
 
 		if ((shoppingItemModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_SMALLIMAGEID.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					Long.valueOf(shoppingItemModelImpl.getOriginalSmallImageId())
-				};
+			args = new Object[] { shoppingItemModelImpl.getOriginalSmallImageId() };
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SMALLIMAGEID, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID, args);
 		}
 
-		args = new Object[] { Long.valueOf(shoppingItem.getMediumImageId()) };
+		args = new Object[] { shoppingItem.getMediumImageId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_MEDIUMIMAGEID, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MEDIUMIMAGEID, args);
 
 		if ((shoppingItemModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_MEDIUMIMAGEID.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					Long.valueOf(shoppingItemModelImpl.getOriginalMediumImageId())
-				};
+			args = new Object[] { shoppingItemModelImpl.getOriginalMediumImageId() };
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_MEDIUMIMAGEID,
 				args);
@@ -2105,26 +2081,20 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 				args);
 		}
 
-		args = new Object[] { Long.valueOf(shoppingItem.getLargeImageId()) };
+		args = new Object[] { shoppingItem.getLargeImageId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LARGEIMAGEID, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LARGEIMAGEID, args);
 
 		if ((shoppingItemModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_LARGEIMAGEID.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					Long.valueOf(shoppingItemModelImpl.getOriginalLargeImageId())
-				};
+			args = new Object[] { shoppingItemModelImpl.getOriginalLargeImageId() };
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LARGEIMAGEID, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LARGEIMAGEID, args);
 		}
 
-		args = new Object[] {
-				Long.valueOf(shoppingItem.getCompanyId()),
-				
-				shoppingItem.getSku()
-			};
+		args = new Object[] { shoppingItem.getCompanyId(), shoppingItem.getSku() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_S, args);
@@ -2132,8 +2102,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		if ((shoppingItemModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_S.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(shoppingItemModelImpl.getOriginalCompanyId()),
-					
+					shoppingItemModelImpl.getOriginalCompanyId(),
 					shoppingItemModelImpl.getOriginalSku()
 				};
 
@@ -2167,7 +2136,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 */
 	public ShoppingItem remove(long itemId)
 		throws NoSuchItemException, SystemException {
-		return remove(Long.valueOf(itemId));
+		return remove((Serializable)itemId);
 	}
 
 	/**
@@ -2285,8 +2254,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 			if ((shoppingItemModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shoppingItemModelImpl.getOriginalGroupId()),
-						Long.valueOf(shoppingItemModelImpl.getOriginalCategoryId())
+						shoppingItemModelImpl.getOriginalGroupId(),
+						shoppingItemModelImpl.getOriginalCategoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
@@ -2294,8 +2263,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 					args);
 
 				args = new Object[] {
-						Long.valueOf(shoppingItemModelImpl.getGroupId()),
-						Long.valueOf(shoppingItemModelImpl.getCategoryId())
+						shoppingItemModelImpl.getGroupId(),
+						shoppingItemModelImpl.getCategoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);

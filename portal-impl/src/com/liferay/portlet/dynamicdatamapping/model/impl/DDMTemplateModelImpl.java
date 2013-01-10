@@ -192,7 +192,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_templateId);
+		return _templateId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

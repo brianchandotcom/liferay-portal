@@ -157,7 +157,7 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_tagPropertyId);
+		return _tagPropertyId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

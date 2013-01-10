@@ -180,7 +180,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_categoryId);
+		return _categoryId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

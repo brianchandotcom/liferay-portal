@@ -112,7 +112,7 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_recordVersionId);
+		return _recordVersionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

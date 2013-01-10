@@ -329,8 +329,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_O_O,
 			new Object[] {
-				Long.valueOf(portalPreferences.getOwnerId()),
-				Integer.valueOf(portalPreferences.getOwnerType())
+				portalPreferences.getOwnerId(), portalPreferences.getOwnerType()
 			}, portalPreferences);
 
 		portalPreferences.resetOriginalValues();
@@ -409,8 +408,8 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	protected void cacheUniqueFindersCache(PortalPreferences portalPreferences) {
 		if (portalPreferences.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(portalPreferences.getOwnerId()),
-					Integer.valueOf(portalPreferences.getOwnerType())
+					portalPreferences.getOwnerId(),
+					portalPreferences.getOwnerType()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_O_O, args,
@@ -424,8 +423,8 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			if ((portalPreferencesModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_O_O.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(portalPreferences.getOwnerId()),
-						Integer.valueOf(portalPreferences.getOwnerType())
+						portalPreferences.getOwnerId(),
+						portalPreferences.getOwnerType()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_O_O, args,
@@ -440,8 +439,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		PortalPreferencesModelImpl portalPreferencesModelImpl = (PortalPreferencesModelImpl)portalPreferences;
 
 		Object[] args = new Object[] {
-				Long.valueOf(portalPreferences.getOwnerId()),
-				Integer.valueOf(portalPreferences.getOwnerType())
+				portalPreferences.getOwnerId(), portalPreferences.getOwnerType()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_O_O, args);
@@ -450,8 +448,8 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		if ((portalPreferencesModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_O_O.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(portalPreferencesModelImpl.getOriginalOwnerId()),
-					Integer.valueOf(portalPreferencesModelImpl.getOriginalOwnerType())
+					portalPreferencesModelImpl.getOriginalOwnerId(),
+					portalPreferencesModelImpl.getOriginalOwnerType()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_O_O, args);
@@ -484,7 +482,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	 */
 	public PortalPreferences remove(long portalPreferencesId)
 		throws NoSuchPreferencesException, SystemException {
-		return remove(Long.valueOf(portalPreferencesId));
+		return remove((Serializable)portalPreferencesId);
 	}
 
 	/**

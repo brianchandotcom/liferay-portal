@@ -154,7 +154,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_resourcePermissionId);
+		return _resourcePermissionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

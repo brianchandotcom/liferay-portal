@@ -173,7 +173,7 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_recordSetId);
+		return _recordSetId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

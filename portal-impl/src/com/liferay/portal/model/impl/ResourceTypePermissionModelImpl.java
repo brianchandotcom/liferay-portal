@@ -99,7 +99,7 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_resourceTypePermissionId);
+		return _resourceTypePermissionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

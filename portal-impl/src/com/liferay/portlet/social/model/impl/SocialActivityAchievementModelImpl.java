@@ -103,7 +103,7 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_activityAchievementId);
+		return _activityAchievementId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

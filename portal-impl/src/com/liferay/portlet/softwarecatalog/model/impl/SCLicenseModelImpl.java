@@ -159,7 +159,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_licenseId);
+		return _licenseId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

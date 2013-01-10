@@ -175,7 +175,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_actionId);
+		return _actionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -891,11 +891,8 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_I_T,
 			new Object[] {
-				Long.valueOf(pluginSetting.getCompanyId()),
-				
-			pluginSetting.getPluginId(),
-				
-			pluginSetting.getPluginType()
+				pluginSetting.getCompanyId(), pluginSetting.getPluginId(),
+				pluginSetting.getPluginType()
 			}, pluginSetting);
 
 		pluginSetting.resetOriginalValues();
@@ -973,10 +970,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	protected void cacheUniqueFindersCache(PluginSetting pluginSetting) {
 		if (pluginSetting.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(pluginSetting.getCompanyId()),
-					
-					pluginSetting.getPluginId(),
-					
+					pluginSetting.getCompanyId(), pluginSetting.getPluginId(),
 					pluginSetting.getPluginType()
 				};
 
@@ -991,10 +985,8 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			if ((pluginSettingModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_I_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(pluginSetting.getCompanyId()),
-						
+						pluginSetting.getCompanyId(),
 						pluginSetting.getPluginId(),
-						
 						pluginSetting.getPluginType()
 					};
 
@@ -1010,10 +1002,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		PluginSettingModelImpl pluginSettingModelImpl = (PluginSettingModelImpl)pluginSetting;
 
 		Object[] args = new Object[] {
-				Long.valueOf(pluginSetting.getCompanyId()),
-				
-				pluginSetting.getPluginId(),
-				
+				pluginSetting.getCompanyId(), pluginSetting.getPluginId(),
 				pluginSetting.getPluginType()
 			};
 
@@ -1023,10 +1012,8 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		if ((pluginSettingModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_I_T.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(pluginSettingModelImpl.getOriginalCompanyId()),
-					
+					pluginSettingModelImpl.getOriginalCompanyId(),
 					pluginSettingModelImpl.getOriginalPluginId(),
-					
 					pluginSettingModelImpl.getOriginalPluginType()
 				};
 
@@ -1060,7 +1047,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	public PluginSetting remove(long pluginSettingId)
 		throws NoSuchPluginSettingException, SystemException {
-		return remove(Long.valueOf(pluginSettingId));
+		return remove((Serializable)pluginSettingId);
 	}
 
 	/**
@@ -1178,7 +1165,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			if ((pluginSettingModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(pluginSettingModelImpl.getOriginalCompanyId())
+						pluginSettingModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -1186,9 +1173,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(pluginSettingModelImpl.getCompanyId())
-					};
+				args = new Object[] { pluginSettingModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);

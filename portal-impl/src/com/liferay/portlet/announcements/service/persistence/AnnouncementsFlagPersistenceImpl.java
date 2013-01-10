@@ -830,9 +830,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_E_V,
 			new Object[] {
-				Long.valueOf(announcementsFlag.getUserId()),
-				Long.valueOf(announcementsFlag.getEntryId()),
-				Integer.valueOf(announcementsFlag.getValue())
+				announcementsFlag.getUserId(), announcementsFlag.getEntryId(),
+				announcementsFlag.getValue()
 			}, announcementsFlag);
 
 		announcementsFlag.resetOriginalValues();
@@ -911,9 +910,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	protected void cacheUniqueFindersCache(AnnouncementsFlag announcementsFlag) {
 		if (announcementsFlag.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(announcementsFlag.getUserId()),
-					Long.valueOf(announcementsFlag.getEntryId()),
-					Integer.valueOf(announcementsFlag.getValue())
+					announcementsFlag.getUserId(),
+					announcementsFlag.getEntryId(), announcementsFlag.getValue()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_E_V, args,
@@ -927,9 +925,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			if ((announcementsFlagModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_U_E_V.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(announcementsFlag.getUserId()),
-						Long.valueOf(announcementsFlag.getEntryId()),
-						Integer.valueOf(announcementsFlag.getValue())
+						announcementsFlag.getUserId(),
+						announcementsFlag.getEntryId(),
+						announcementsFlag.getValue()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_E_V, args,
@@ -944,9 +942,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		AnnouncementsFlagModelImpl announcementsFlagModelImpl = (AnnouncementsFlagModelImpl)announcementsFlag;
 
 		Object[] args = new Object[] {
-				Long.valueOf(announcementsFlag.getUserId()),
-				Long.valueOf(announcementsFlag.getEntryId()),
-				Integer.valueOf(announcementsFlag.getValue())
+				announcementsFlag.getUserId(), announcementsFlag.getEntryId(),
+				announcementsFlag.getValue()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_E_V, args);
@@ -955,9 +952,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		if ((announcementsFlagModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_E_V.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(announcementsFlagModelImpl.getOriginalUserId()),
-					Long.valueOf(announcementsFlagModelImpl.getOriginalEntryId()),
-					Integer.valueOf(announcementsFlagModelImpl.getOriginalValue())
+					announcementsFlagModelImpl.getOriginalUserId(),
+					announcementsFlagModelImpl.getOriginalEntryId(),
+					announcementsFlagModelImpl.getOriginalValue()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_E_V, args);
@@ -990,7 +987,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	public AnnouncementsFlag remove(long flagId)
 		throws NoSuchFlagException, SystemException {
-		return remove(Long.valueOf(flagId));
+		return remove((Serializable)flagId);
 	}
 
 	/**
@@ -1108,16 +1105,14 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			if ((announcementsFlagModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(announcementsFlagModelImpl.getOriginalEntryId())
+						announcementsFlagModelImpl.getOriginalEntryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ENTRYID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(announcementsFlagModelImpl.getEntryId())
-					};
+				args = new Object[] { announcementsFlagModelImpl.getEntryId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ENTRYID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID,

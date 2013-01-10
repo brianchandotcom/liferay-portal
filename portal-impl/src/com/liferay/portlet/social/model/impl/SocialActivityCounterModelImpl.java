@@ -112,7 +112,7 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_activityCounterId);
+		return _activityCounterId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

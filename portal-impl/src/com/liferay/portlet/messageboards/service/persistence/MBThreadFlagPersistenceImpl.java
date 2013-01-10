@@ -1268,10 +1268,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKey(), mbThreadFlag);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T,
-			new Object[] {
-				Long.valueOf(mbThreadFlag.getUserId()),
-				Long.valueOf(mbThreadFlag.getThreadId())
-			}, mbThreadFlag);
+			new Object[] { mbThreadFlag.getUserId(), mbThreadFlag.getThreadId() },
+			mbThreadFlag);
 
 		mbThreadFlag.resetOriginalValues();
 	}
@@ -1348,8 +1346,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	protected void cacheUniqueFindersCache(MBThreadFlag mbThreadFlag) {
 		if (mbThreadFlag.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(mbThreadFlag.getUserId()),
-					Long.valueOf(mbThreadFlag.getThreadId())
+					mbThreadFlag.getUserId(), mbThreadFlag.getThreadId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_T, args,
@@ -1363,8 +1360,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			if ((mbThreadFlagModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_U_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbThreadFlag.getUserId()),
-						Long.valueOf(mbThreadFlag.getThreadId())
+						mbThreadFlag.getUserId(), mbThreadFlag.getThreadId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_T, args,
@@ -1379,8 +1375,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		MBThreadFlagModelImpl mbThreadFlagModelImpl = (MBThreadFlagModelImpl)mbThreadFlag;
 
 		Object[] args = new Object[] {
-				Long.valueOf(mbThreadFlag.getUserId()),
-				Long.valueOf(mbThreadFlag.getThreadId())
+				mbThreadFlag.getUserId(), mbThreadFlag.getThreadId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
@@ -1389,8 +1384,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		if ((mbThreadFlagModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_T.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(mbThreadFlagModelImpl.getOriginalUserId()),
-					Long.valueOf(mbThreadFlagModelImpl.getOriginalThreadId())
+					mbThreadFlagModelImpl.getOriginalUserId(),
+					mbThreadFlagModelImpl.getOriginalThreadId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
@@ -1423,7 +1418,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	public MBThreadFlag remove(long threadFlagId)
 		throws NoSuchThreadFlagException, SystemException {
-		return remove(Long.valueOf(threadFlagId));
+		return remove((Serializable)threadFlagId);
 	}
 
 	/**
@@ -1541,16 +1536,14 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			if ((mbThreadFlagModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbThreadFlagModelImpl.getOriginalUserId())
+						mbThreadFlagModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(mbThreadFlagModelImpl.getUserId())
-					};
+				args = new Object[] { mbThreadFlagModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -1560,16 +1553,14 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			if ((mbThreadFlagModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbThreadFlagModelImpl.getOriginalThreadId())
+						mbThreadFlagModelImpl.getOriginalThreadId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THREADID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(mbThreadFlagModelImpl.getThreadId())
-					};
+				args = new Object[] { mbThreadFlagModelImpl.getThreadId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_THREADID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_THREADID,

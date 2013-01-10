@@ -95,7 +95,7 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_resourceActionId);
+		return _resourceActionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

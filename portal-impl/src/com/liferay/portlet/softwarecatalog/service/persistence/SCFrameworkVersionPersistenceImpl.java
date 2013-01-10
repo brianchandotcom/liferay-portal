@@ -2416,7 +2416,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	 */
 	public SCFrameworkVersion remove(long frameworkVersionId)
 		throws NoSuchFrameworkVersionException, SystemException {
-		return remove(Long.valueOf(frameworkVersionId));
+		return remove((Serializable)frameworkVersionId);
 	}
 
 	/**
@@ -2544,16 +2544,14 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 			if ((scFrameworkVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(scFrameworkVersionModelImpl.getOriginalGroupId())
+						scFrameworkVersionModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(scFrameworkVersionModelImpl.getGroupId())
-					};
+				args = new Object[] { scFrameworkVersionModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -2563,7 +2561,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 			if ((scFrameworkVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(scFrameworkVersionModelImpl.getOriginalCompanyId())
+						scFrameworkVersionModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -2571,9 +2569,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(scFrameworkVersionModelImpl.getCompanyId())
-					};
+				args = new Object[] { scFrameworkVersionModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -2584,8 +2580,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 			if ((scFrameworkVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(scFrameworkVersionModelImpl.getOriginalGroupId()),
-						Boolean.valueOf(scFrameworkVersionModelImpl.getOriginalActive())
+						scFrameworkVersionModelImpl.getOriginalGroupId(),
+						scFrameworkVersionModelImpl.getOriginalActive()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
@@ -2593,8 +2589,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 					args);
 
 				args = new Object[] {
-						Long.valueOf(scFrameworkVersionModelImpl.getGroupId()),
-						Boolean.valueOf(scFrameworkVersionModelImpl.getActive())
+						scFrameworkVersionModelImpl.getGroupId(),
+						scFrameworkVersionModelImpl.getActive()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);

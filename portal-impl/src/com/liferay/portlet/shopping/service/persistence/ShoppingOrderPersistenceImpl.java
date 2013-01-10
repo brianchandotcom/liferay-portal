@@ -2632,7 +2632,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	public ShoppingOrder remove(long orderId)
 		throws NoSuchOrderException, SystemException {
-		return remove(Long.valueOf(orderId));
+		return remove((Serializable)orderId);
 	}
 
 	/**
@@ -2750,16 +2750,14 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			if ((shoppingOrderModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shoppingOrderModelImpl.getOriginalGroupId())
+						shoppingOrderModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(shoppingOrderModelImpl.getGroupId())
-					};
+				args = new Object[] { shoppingOrderModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -2769,9 +2767,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			if ((shoppingOrderModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_PPPS.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shoppingOrderModelImpl.getOriginalGroupId()),
-						Long.valueOf(shoppingOrderModelImpl.getOriginalUserId()),
-						
+						shoppingOrderModelImpl.getOriginalGroupId(),
+						shoppingOrderModelImpl.getOriginalUserId(),
 						shoppingOrderModelImpl.getOriginalPpPaymentStatus()
 					};
 
@@ -2780,9 +2777,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 					args);
 
 				args = new Object[] {
-						Long.valueOf(shoppingOrderModelImpl.getGroupId()),
-						Long.valueOf(shoppingOrderModelImpl.getUserId()),
-						
+						shoppingOrderModelImpl.getGroupId(),
+						shoppingOrderModelImpl.getUserId(),
 						shoppingOrderModelImpl.getPpPaymentStatus()
 					};
 

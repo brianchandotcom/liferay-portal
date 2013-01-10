@@ -170,7 +170,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_userGroupId);
+		return _userGroupId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -1680,11 +1680,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			expandoColumn);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_N,
-			new Object[] {
-				Long.valueOf(expandoColumn.getTableId()),
-				
-			expandoColumn.getName()
-			}, expandoColumn);
+			new Object[] { expandoColumn.getTableId(), expandoColumn.getName() },
+			expandoColumn);
 
 		expandoColumn.resetOriginalValues();
 	}
@@ -1761,9 +1758,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	protected void cacheUniqueFindersCache(ExpandoColumn expandoColumn) {
 		if (expandoColumn.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(expandoColumn.getTableId()),
-					
-					expandoColumn.getName()
+					expandoColumn.getTableId(), expandoColumn.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_N, args,
@@ -1777,9 +1772,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			if ((expandoColumnModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_T_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(expandoColumn.getTableId()),
-						
-						expandoColumn.getName()
+						expandoColumn.getTableId(), expandoColumn.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_N, args,
@@ -1794,9 +1787,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		ExpandoColumnModelImpl expandoColumnModelImpl = (ExpandoColumnModelImpl)expandoColumn;
 
 		Object[] args = new Object[] {
-				Long.valueOf(expandoColumn.getTableId()),
-				
-				expandoColumn.getName()
+				expandoColumn.getTableId(), expandoColumn.getName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_N, args);
@@ -1805,8 +1796,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		if ((expandoColumnModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_T_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(expandoColumnModelImpl.getOriginalTableId()),
-					
+					expandoColumnModelImpl.getOriginalTableId(),
 					expandoColumnModelImpl.getOriginalName()
 				};
 
@@ -1840,7 +1830,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	public ExpandoColumn remove(long columnId)
 		throws NoSuchColumnException, SystemException {
-		return remove(Long.valueOf(columnId));
+		return remove((Serializable)columnId);
 	}
 
 	/**
@@ -1958,16 +1948,14 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			if ((expandoColumnModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TABLEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(expandoColumnModelImpl.getOriginalTableId())
+						expandoColumnModelImpl.getOriginalTableId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TABLEID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TABLEID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(expandoColumnModelImpl.getTableId())
-					};
+				args = new Object[] { expandoColumnModelImpl.getTableId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TABLEID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TABLEID,
@@ -1977,8 +1965,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			if ((expandoColumnModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(expandoColumnModelImpl.getOriginalTableId()),
-						
+						expandoColumnModelImpl.getOriginalTableId(),
 						expandoColumnModelImpl.getOriginalName()
 					};
 
@@ -1987,8 +1974,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 					args);
 
 				args = new Object[] {
-						Long.valueOf(expandoColumnModelImpl.getTableId()),
-						
+						expandoColumnModelImpl.getTableId(),
 						expandoColumnModelImpl.getName()
 					};
 

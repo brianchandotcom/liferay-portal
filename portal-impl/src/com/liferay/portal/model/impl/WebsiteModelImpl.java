@@ -164,7 +164,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_websiteId);
+		return _websiteId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

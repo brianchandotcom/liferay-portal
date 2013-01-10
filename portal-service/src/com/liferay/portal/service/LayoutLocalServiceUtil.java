@@ -301,18 +301,17 @@ public class LayoutLocalServiceUtil {
 	normalized when accessed see {@link
 	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	String)}.
-	* @param serviceContext the service context. Must set the universally
-	unique identifier (UUID) for the layout. Can set the creation
-	date, modification date and the expando bridge attributes for the
-	layout. For layouts that belong to a layout set prototype, an
-	attribute named 'layoutUpdateable' can be set to specify whether
-	site administrators can modify this page within their site. For
-	layouts that are created from a layout prototype, attributes
-	named 'layoutPrototypeUuid' and 'layoutPrototypeLinkedEnabled'
-	can be specified to provide the unique identifier of the source
-	prototype and a boolean to determined whether a link to it should
-	be enabled to activate propagation of changes made to the linked
-	page in the prototype.
+	* @param serviceContext the service context. Must set the UUID for the
+	layout. Can set the creation date, modification date and the
+	expando bridge attributes for the layout. For layouts that belong
+	to a layout set prototype, an attribute named 'layoutUpdateable'
+	can be set to specify whether site administrators can modify this
+	page within their site. For layouts that are created from a
+	layout prototype, attributes named 'layoutPrototypeUuid' and
+	'layoutPrototypeLinkedEnabled' can be specified to provide the
+	unique identifier of the source prototype and a boolean to
+	determined whether a link to it should be enabled to activate
+	propagation of changes made to the linked page in the prototype.
 	* @return the layout
 	* @throws PortalException if a group or user with the primary key could not
 	be found, or if layout values were invalid
@@ -379,12 +378,11 @@ public class LayoutLocalServiceUtil {
 	normalized when accessed see {@link
 	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	String)}.
-	* @param serviceContext the service context. Must set the universally
-	unique identifier (UUID) for the layout. Can set the creation
-	date and modification date for the layout. For layouts that
-	belong to a layout set prototype, an attribute named
-	'layoutUpdateable' can be set to specify whether site
-	administrators can modify this page within their site.
+	* @param serviceContext the service context. Must set the UUID for the
+	layout. Can set the creation date and modification date for the
+	layout. For layouts that belong to a layout set prototype, an
+	attribute named 'layoutUpdateable' can be set to specify whether
+	site administrators can modify this page within their site.
 	* @return the layout
 	* @throws PortalException if a group or user with the primary key could not
 	be found
@@ -632,10 +630,9 @@ public class LayoutLocalServiceUtil {
 	}
 
 	/**
-	* Returns the layout matching the universally unique identifier and group
-	* ID
+	* Returns the layout matching the UUID and group.
 	*
-	* @param uuid the universally unique identifier of the scope layout
+	* @param uuid the layout's UUID
 	* @param groupId the primary key of the group
 	* @return the layout, or <code>null</code> if a matching layout could not
 	be found
@@ -1485,12 +1482,11 @@ public class LayoutLocalServiceUtil {
 
 	/**
 	* Updates the names of the portlets within scope of the group, the scope of
-	* the layout's universally unique identifier, and the privacy.
+	* the layout's UUID, and the privacy.
 	*
 	* @param groupId the primary key of the group
 	* @param privateLayout whether the layout is private to the group
-	* @param layoutId the primary key of the layout whose universally unique
-	identifier to match
+	* @param layoutId the primary key of the layout whose UUID to match
 	* @param name the new name for the portlets
 	* @param languageId the primary key of the language
 	* @throws PortalException if a matching layout could not be found

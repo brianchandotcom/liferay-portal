@@ -392,9 +392,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @param sendEmail whether to send the user an email notification about
 	their new account
 	* @param serviceContext the user's service context (optionally
-	<code>null</code>). Can set the universally unique identifier
-	(with the <code>uuid</code> attribute), asset category IDs, asset
-	tag names, and expando bridge attributes for the user.
+	<code>null</code>). Can set the UUID (with the <code>uuid</code>
+	attribute), asset category IDs, asset tag names, and expando
+	bridge attributes for the user.
 	* @return the new user
 	* @throws PortalException if the user's information was invalid
 	* @throws SystemException if a system exception occurred
@@ -467,9 +467,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @param sendEmail whether to send the user an email notification about
 	their new account
 	* @param serviceContext the user's service context (optionally
-	<code>null</code>). Can set the universally unique identifier
-	(with the <code>uuid</code> attribute), asset category IDs, asset
-	tag names, and expando bridge attributes for the user.
+	<code>null</code>). Can set the UUID (with the <code>uuid</code>
+	attribute), asset category IDs, asset tag names, and expando
+	bridge attributes for the user.
 	* @return the new user
 	* @throws PortalException if the user's information was invalid
 	* @throws SystemException if a system exception occurred
@@ -1466,12 +1466,11 @@ public interface UserLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the user with the universally unique identifier.
+	* Returns the user with the UUID.
 	*
-	* @param uuid the user's universally unique identifier
-	* @return the user with the universally unique identifier
-	* @throws PortalException if a user with the universally unique
-	identifier could not be found
+	* @param uuid the user's UUID
+	* @return the user with the UUID
+	* @throws PortalException if a user with the UUID could not be found
 	* @throws SystemException if a system exception occurred
 	* @deprecated {@link #getUserByUuidAndCompanyId(String, long)}
 	*/
@@ -1481,13 +1480,12 @@ public interface UserLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the user with the universally unique identifier.
+	* Returns the user with the UUID.
 	*
-	* @param uuid the user's universally unique identifier
+	* @param uuid the user's UUID
 	* @param companyId the primary key of the user's company
-	* @return the user with the universally unique identifier
-	* @throws PortalException if a user with the universally unique identifier
-	could not be found
+	* @return the user with the UUID
+	* @throws PortalException if a user with the UUID could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -2595,9 +2593,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @param userGroupRoles the user user's group roles
 	* @param userGroupIds the primary keys of the user's user groups
 	* @param serviceContext the user's service context (optionally
-	<code>null</code>). Can set the universally unique identifier
-	(with the <code>uuid</code> attribute), asset category IDs, asset
-	tag names, and expando bridge attributes for the user.
+	<code>null</code>). Can set the UUID (with the <code>uuid</code>
+	attribute), asset category IDs, asset tag names, and expando
+	bridge attributes for the user.
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be found
 	or if the new information was invalid

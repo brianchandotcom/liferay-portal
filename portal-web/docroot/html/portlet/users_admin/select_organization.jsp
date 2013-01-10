@@ -28,7 +28,7 @@ if (Validator.isNotNull(target)) {
 }
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" method="post" name="selectOrganizationFm">
 	<liferay-ui:header
 		title="organizations"
 	/>
@@ -76,7 +76,7 @@ if (Validator.isNotNull(target)) {
 			if (OrganizationPermissionUtil.contains(permissionChecker, organization.getOrganizationId(), ActionKeys.ASSIGN_MEMBERS)) {
 				StringBundler sb = new StringBundler(13);
 
-				sb.append("javascript:opener.");
+				sb.append("javascript:Liferay.Util.getTop().parent.");
 				sb.append(renderResponse.getNamespace());
 				sb.append("selectOrganization('");
 				sb.append(organization.getOrganizationId());
@@ -88,7 +88,7 @@ if (Validator.isNotNull(target)) {
 				sb.append(UnicodeLanguageUtil.get(pageContext, organization.getType()));
 				sb.append("', '");
 				sb.append(target);
-				sb.append("'); window.close();");
+				sb.append("');");
 
 				rowHREF = sb.toString();
 			}
@@ -156,5 +156,5 @@ if (Validator.isNotNull(target)) {
 </aui:form>
 
 <aui:script>
-	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
+	Liferay.Util.focusFormField(document.<portlet:namespace />selectOrganizationFm.<portlet:namespace />name);
 </aui:script>

@@ -241,46 +241,68 @@ if (parentOrganization != null) {
 	url='<%= "javascript:" + renderResponse.getNamespace() + "openOrganizationSelector();" %>'
 />
 
+<portlet:renderURL var="organizationSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="struts_action" value="/users_admin/select_organization" />
+</portlet:renderURL>
+
 <aui:script>
+	<c:choose>
+		<c:when test="<%= organization == null %>">
+			var type = document.<portlet:namespace />fm.<portlet:namespace />type.value;
+		</c:when>
+		<c:otherwise>
+			var type = '<%= HtmlUtil.escape(type) %>';
+		</c:otherwise>
+	</c:choose>
+
+	var selectOrganizationDialog;
+
 	function <portlet:namespace />openOrganizationSelector() {
-		var url = '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization" /></portlet:renderURL>';
+		AUI().use('aui-dialog', function(A) {
+			Liferay.Util.openWindow(
+				{
+				 dialog:
+					   {
+					   align: Liferay.Util.Window.ALIGN_CENTER,
+					   constrain: true,
+					   modal: true,
+					   width: 600
+					   },
+				 id: '<portlet:namespace />selectOrganizationDialog',
+				 title: '<%= UnicodeLanguageUtil.get(pageContext, "select").concat(" ").concat(UnicodeLanguageUtil.get(pageContext, "parent-organization")) %>',
+				 uri: '<%= organizationSelectorURL.toString() %>'
+				},
+				function (dialogInstance) {
+					selectOrganizationDialog = dialogInstance;
+				}
+			);
 
-		<c:choose>
-			<c:when test="<%= organization == null %>">
-				var type = document.<portlet:namespace />fm.<portlet:namespace />type.value;
-			</c:when>
-			<c:otherwise>
-				var type = '<%= HtmlUtil.escape(type) %>';
-			</c:otherwise>
-		</c:choose>
+			Liferay.provide(
+				Liferay.Util.getTop(),
+				'<portlet:namespace />selectOrganization',
+				function(organizationId, groupId, name, type) {
+					var A = AUI();
 
-		var organizationWindow = window.open(url, 'organization', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680');
+					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />parentOrganizationSearchContainer');
 
-		organizationWindow.focus();
+					var rowColumns = [];
+
+					var href = "<portlet:renderURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=" + organizationId;
+
+					rowColumns.push(<portlet:namespace />createURL(href, name));
+					rowColumns.push(<portlet:namespace />createURL(href, type));
+					rowColumns.push('<a class="modify-link" data-rowId="' + organizationId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
+
+					searchContainer.deleteRow(1, searchContainer.getData());
+					searchContainer.addRow(rowColumns, organizationId);
+					searchContainer.updateDataStore(organizationId);
+
+					selectOrganizationDialog.hide();
+				},
+				['liferay-search-container']
+			);
+		});
 	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectOrganization',
-		function(organizationId, groupId, name, type) {
-			var A = AUI();
-
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />parentOrganizationSearchContainer');
-
-			var rowColumns = [];
-
-			var href = "<portlet:renderURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=" + organizationId;
-
-			rowColumns.push(<portlet:namespace />createURL(href, name));
-			rowColumns.push(<portlet:namespace />createURL(href, type));
-			rowColumns.push('<a class="modify-link" data-rowId="' + organizationId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
-
-			searchContainer.deleteRow(1, searchContainer.getData());
-			searchContainer.addRow(rowColumns, organizationId);
-			searchContainer.updateDataStore(organizationId);
-		},
-		['liferay-search-container']
-	);
 </aui:script>
 
 <aui:script use="liferay-dynamic-select,liferay-search-container">

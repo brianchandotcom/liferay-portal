@@ -15,6 +15,12 @@
 package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.record.addrecordspreadsheetview;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinition.AddDataDefinitionTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinition.TearDownDataDefinitionTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.list.addlist.AddListTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.list.addlist.TearDownListTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.record.addrecord.AddDMDocumentTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.record.addrecord.TearDownDMContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

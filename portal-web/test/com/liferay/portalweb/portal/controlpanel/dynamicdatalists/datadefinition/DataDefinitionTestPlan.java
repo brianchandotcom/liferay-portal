@@ -15,11 +15,11 @@
 package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinition.AddDataDefinitionTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinitionboolean.AddDataDefinitionBooleanTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinitiondate.AddDataDefinitionDateTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinitiondecimal.AddDataDefinitionDecimalTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinitiondocumentlibrary.AddDataDefinitionDocumentLibraryTests;
-import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinitionfieldfull.AddDataDefinitionFieldFullTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinitionfieldnull.AddDataDefinitionFieldNullTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinitionfileupload.AddDataDefinitionFileUploadTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinitionnameduplicate.AddDataDefinitionNameDuplicateTests;
@@ -43,11 +43,11 @@ public class DataDefinitionTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(AddDataDefinitionTests.suite());
 		testSuite.addTest(AddDataDefinitionBooleanTests.suite());
 		testSuite.addTest(AddDataDefinitionDateTests.suite());
 		testSuite.addTest(AddDataDefinitionDecimalTests.suite());
 		testSuite.addTest(AddDataDefinitionDocumentLibraryTests.suite());
-		testSuite.addTest(AddDataDefinitionFieldFullTests.suite());
 		testSuite.addTest(AddDataDefinitionFieldNullTests.suite());
 		testSuite.addTest(AddDataDefinitionFileUploadTests.suite());
 		testSuite.addTest(AddDataDefinitionNameDuplicateTests.suite());

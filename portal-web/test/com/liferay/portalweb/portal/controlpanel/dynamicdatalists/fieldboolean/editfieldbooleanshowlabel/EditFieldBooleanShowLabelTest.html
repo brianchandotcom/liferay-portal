@@ -9,14 +9,19 @@
 <tr><td rowspan="1" colspan="3">EditFieldBooleanShowLabelTest</td></tr>
 </thead><tbody>
 <tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td></td>
-</tr>
-<tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -70,12 +75,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -115,22 +120,22 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='yui3-datatable-scrollable aui-property-list-content']</td>
+	<td>//div[@class='yui3-datatable-x-scroller']</td>
 	<td>Settings</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]/div</td>
+	<td>//tr[3]/td[1]</td>
 	<td>Show Label</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]/div</td>
+	<td>//tr[3]/td[2]</td>
 	<td>Yes</td>
 </tr>
 <tr>
 	<td>doubleClickAt</td>
-	<td>//tr[3]/td[2]/div</td>
+	<td>//tr[3]/td[2]</td>
 	<td>Yes</td>
 </tr>
 <tr>
@@ -150,7 +155,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]/div</td>
+	<td>//tr[3]/td[2]</td>
 	<td>No</td>
 </tr>
 <tr>

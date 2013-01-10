@@ -25,6 +25,10 @@ public class AddListNameDuplicateTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -46,16 +50,16 @@ public class AddListNameDuplicateTest extends BaseTestCase {
 		selenium.clickAt("link=Select", RuntimeVariables.replace("Select"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-		selenium.waitForVisible("//input[@name='_166_keywords']");
-		selenium.type("//input[@name='_166_keywords']",
-			RuntimeVariables.replace("Data Definition"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//td[2]/a", "Data Definition"));
-		selenium.clickAt("//td[2]/a",
+		selenium.waitForVisible("//tr[contains(.,'Data Definition')]/td[3]/a");
+		assertTrue(selenium.isPartialText(
+				"//tr[contains(.,'Data Definition')]/td[3]/a", "Data Definition"));
+		selenium.clickAt("//tr[contains(.,'Data Definition')]/td[3]/a",
 			RuntimeVariables.replace("Data Definition"));
 		selenium.selectFrame("relative=top");
+		selenium.waitForText("//span[@id='_167_ddmStructureNameDisplay']/a",
+			"Data Definition");
+		assertEquals(RuntimeVariables.replace("Data Definition"),
+			selenium.getText("//span[@id='_167_ddmStructureNameDisplay']/a"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

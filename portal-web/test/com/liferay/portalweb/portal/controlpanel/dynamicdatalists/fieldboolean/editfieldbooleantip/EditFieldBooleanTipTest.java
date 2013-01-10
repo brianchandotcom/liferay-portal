@@ -24,8 +24,11 @@ public class EditFieldBooleanTipTest extends BaseTestCase {
 	public void testEditFieldBooleanTip() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -43,8 +46,9 @@ public class EditFieldBooleanTipTest extends BaseTestCase {
 		selenium.selectFrame("//iframe");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
@@ -62,20 +66,20 @@ public class EditFieldBooleanTipTest extends BaseTestCase {
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
 		selenium.doubleClickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
 			RuntimeVariables.replace("Boolean"));
-		selenium.waitForVisible(
-			"//div[@class='yui3-datatable-scrollable aui-property-list-content']");
+		selenium.waitForVisible("//div[@class='yui3-datatable-x-scroller']");
 		assertEquals(RuntimeVariables.replace("Tip"),
-			selenium.getText("//tr[6]/td[1]/div"));
+			selenium.getText("//tr[6]/td[1]"));
 		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText("//tr[6]/td[2]/div"));
-		selenium.doubleClickAt("//tr[6]/td[2]/div", RuntimeVariables.replace(""));
-		selenium.waitForVisible("//textarea[@class='aui-celleditor-element']");
-		selenium.type("//textarea[@class='aui-celleditor-element']",
+			selenium.getText("//tr[6]/td[2]"));
+		selenium.doubleClickAt("//tr[6]/td[2]", RuntimeVariables.replace(""));
+		selenium.waitForVisible(
+			"//textarea[contains(@class,'aui-celleditor-element')]");
+		selenium.type("//textarea[contains(@class,'aui-celleditor-element')]",
 			RuntimeVariables.replace("Boolean Field Tip Edited"));
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Boolean Field Tip Edited"),
-			selenium.getText("//tr[6]/td[2]/div"));
+			selenium.getText("//tr[6]/td[2]"));
 		assertTrue(selenium.isVisible("//a[@class='aui-form-builder-icon-tip']"));
 		selenium.mouseOver("//a[@class='aui-form-builder-icon-tip']");
 		assertEquals(RuntimeVariables.replace("Boolean Field Tip Edited"),

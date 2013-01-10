@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.list.addlistdatadefinitionnull;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.list.addlist.TearDownListTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -24,8 +24,11 @@ public class ViewDataDefinitionNameDuplicateTest extends BaseTestCase {
 	public void testViewDataDefinitionNameDuplicate() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -43,11 +46,14 @@ public class ViewDataDefinitionNameDuplicateTest extends BaseTestCase {
 			RuntimeVariables.replace("Manage Data Definitions"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-		selenium.waitForVisible("//tr[3]/td[2]");
+		selenium.waitForVisible(
+			"xpath=(//tr[contains(.,'Data Definition')]/td[3])[1]");
 		assertEquals(RuntimeVariables.replace("Data Definition"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText(
+				"xpath=(//tr[contains(.,'Data Definition')]/td[3])[1]"));
 		assertEquals(RuntimeVariables.replace("Data Definition"),
-			selenium.getText("//tr[4]/td[2]"));
+			selenium.getText(
+				"xpath=(//tr[contains(.,'Data Definition')]/td[3])[2]"));
 		selenium.selectFrame("relative=top");
 	}
 }

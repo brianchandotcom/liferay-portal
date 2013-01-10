@@ -18,6 +18,10 @@
 		</layout>
 	</appender>
 
+	<category name="com.browseengine.bobo">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.ecyrd.jspwiki">
 		<priority value="ERROR" />
 	</category>

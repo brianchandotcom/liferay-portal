@@ -18,6 +18,7 @@
 
 <%
 boolean editable = true;
+boolean enablePermLink = true;
 
 MBTreeWalker treeWalker = (MBTreeWalker)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER);
 MBMessage selMessage = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE);
@@ -43,6 +44,7 @@ if (treeWalker.isOdd()) {
 	request.setAttribute("edit_message.jsp-className", className);
 	request.setAttribute("edit_message.jsp-depth", depth);
 	request.setAttribute("edit_message.jsp-editable", editable);
+	request.setAttribute("edit-message.jsp-enablePermLink", enablePermLink);
 	request.setAttribute("edit_message.jsp-message", message);
 	request.setAttribute("edit_message.jsp-thread", thread);
 	%>

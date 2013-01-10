@@ -21,6 +21,7 @@ MBCategory category = (MBCategory)request.getAttribute("edit_message.jsp-categor
 String className = (String)request.getAttribute("edit_message.jsp-className");
 Integer depth = (Integer)request.getAttribute("edit_message.jsp-depth");
 Boolean editable = (Boolean)request.getAttribute("edit_message.jsp-editable");
+Boolean enablePermLink = (Boolean)request.getAttribute("edit-message.jsp-enablePermLink");
 MBMessage message = (MBMessage)request.getAttribute("edit_message.jsp-message");
 MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 %>
@@ -124,7 +125,16 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 		<td class="lfr-top">
 			<div class="thread-top float-container">
 				<div class="subject">
-					<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title="<liferay-ui:message key="permanent-link-to-this-item" />"><strong><%= HtmlUtil.escape(message.getSubject()) %></strong></a><br />
+					<c:choose>
+						<c:when test="<%= enablePermLink %>">
+							<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title='<liferay-ui:message key="permanent-link-to-this-item" />'><strong><%= HtmlUtil.escape(message.getSubject()) %></strong></a>
+						</c:when>
+						<c:otherwise>
+							<strong><%= HtmlUtil.escape(message.getSubject()) %></strong>
+						</c:otherwise>
+					</c:choose>
+
+					<br />
 
 					<%
 					String assetTagNames = (String)request.getAttribute("edit_message.jsp-assetTagNames");

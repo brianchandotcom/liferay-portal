@@ -90,6 +90,8 @@ public class DDMImpl implements DDM {
 
 	public static final String TYPE_DDM_FILEUPLOAD = "ddm-fileupload";
 
+	public static final String TYPE_DDM_LINK_TO_PAGE = "ddm-link-to-page";
+
 	public static final String TYPE_RADIO = "radio";
 
 	public static final String TYPE_SELECT = "select";

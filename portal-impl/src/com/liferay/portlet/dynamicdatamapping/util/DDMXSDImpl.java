@@ -127,7 +127,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 		int fieldRepetition = 1;
 
-		FieldsCounter fieldsCounter = getFieldsCounter(
+		DDMFieldsCounter fieldsCounter = getFieldsCounter(
 			pageContext, fields, portletNamespace, namespace);
 
 		if (fields != null) {
@@ -529,17 +529,17 @@ public class DDMXSDImpl implements DDMXSD {
 		return field;
 	}
 
-	protected FieldsCounter getFieldsCounter(
+	protected DDMFieldsCounter getFieldsCounter(
 		PageContext pageContext, Fields fields, String portletNamespace,
 		String namespace) {
 
 		String fieldsCounterKey = portletNamespace + namespace + "fieldsCount";
 
-		FieldsCounter fieldsCounter = (FieldsCounter)pageContext.getAttribute(
-			fieldsCounterKey);
+		DDMFieldsCounter fieldsCounter =
+			(DDMFieldsCounter)pageContext.getAttribute(fieldsCounterKey);
 
 		if (fieldsCounter == null) {
-			fieldsCounter = new FieldsCounter();
+			fieldsCounter = new DDMFieldsCounter();
 
 			pageContext.setAttribute(fieldsCounterKey, fieldsCounter);
 		}
@@ -763,26 +763,5 @@ public class DDMXSDImpl implements DDMXSD {
 
 	private TemplateResource _defaultReadOnlyTemplateResource;
 	private TemplateResource _defaultTemplateResource;
-
-	private class FieldsCounter extends HashMap<Object, Integer> {
-
-		@Override
-		public Integer get(Object key) {
-			if (!containsKey(key)) {
-				put(key, 0);
-			}
-
-			return super.get(key);
-		}
-
-		public int incrementKey(Object key) {
-			int value = get(key);
-
-			put(key, value++);
-
-			return value;
-		}
-
-	}
 
 }

@@ -44,6 +44,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -57,9 +58,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DDMStructureImpl extends DDMStructureBaseImpl {
 
-	public DDMStructureImpl() {
-	}
-
 	public List<String> getAvailableLanguageIds() {
 		Document document = getDocument();
 
@@ -69,6 +67,26 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			"available-locales");
 
 		return ListUtil.fromArray(StringUtil.split(availableLocales));
+	}
+
+	public List<String> getChildrenFieldNames(String fieldName)
+		throws PortalException, SystemException {
+
+		List<String> childrenFieldNames = new ArrayList<String>();
+
+		Map<String, Map<String, String>> fieldsMap = getFieldsMap();
+
+		for (Map<String, String> field : fieldsMap.values()) {
+			String parentNameKey = _getPrivateAttributeKey("parentName");
+
+			String parentName = field.get(parentNameKey);
+
+			if (fieldName.equals(parentName)) {
+				childrenFieldNames.add(field.get("name"));
+			}
+		}
+
+		return childrenFieldNames;
 	}
 
 	public String getCompleteXsd() throws PortalException, SystemException {
@@ -246,6 +264,28 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		getLocalizedTransientFieldsMap() {
 
 		return _localizedTransientFieldsMap;
+	}
+
+	public List<String> getParentFieldNames()
+		throws PortalException, SystemException {
+
+		List<String> parentFieldNames = new ArrayList<String>();
+
+		Map<String, Map<String, String>> fieldsMap = getFieldsMap();
+
+		for (Map.Entry<String, Map<String, String>> fieldEntry :
+				fieldsMap.entrySet()) {
+
+			Map<String, String> field = fieldEntry.getValue();
+
+			String parentNameKey = _getPrivateAttributeKey("parentName");
+
+			if (!field.containsKey(parentNameKey)) {
+				parentFieldNames.add(fieldEntry.getKey());
+			}
+		}
+
+		return parentFieldNames;
 	}
 
 	public List<DDMTemplate> getTemplates() throws SystemException {

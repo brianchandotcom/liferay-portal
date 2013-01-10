@@ -76,6 +76,14 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 			descriptionMap, settings, serviceContext);
 	}
 
+	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
+		java.lang.String title,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabularyService.addVocabulary(title, serviceContext);
+	}
+
 	public void deleteVocabularies(long[] vocabularyIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

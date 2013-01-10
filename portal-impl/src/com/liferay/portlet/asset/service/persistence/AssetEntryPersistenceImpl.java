@@ -1153,14 +1153,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			query.append(_SQL_SELECT_ASSETENTRY_WHERE);
 
-			boolean bindPublishDate = false;
-
 			if (publishDate == null) {
 				query.append(_FINDER_COLUMN_PUBLISHDATE_PUBLISHDATE_1);
 			}
 			else {
-				bindPublishDate = true;
-
 				query.append(_FINDER_COLUMN_PUBLISHDATE_PUBLISHDATE_2);
 			}
 
@@ -1184,7 +1180,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindPublishDate) {
+				if (publishDate != null) {
 					qPos.add(CalendarUtil.getTimestamp(publishDate));
 				}
 
@@ -1377,14 +1373,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 		query.append(_SQL_SELECT_ASSETENTRY_WHERE);
 
-		boolean bindPublishDate = false;
-
 		if (publishDate == null) {
 			query.append(_FINDER_COLUMN_PUBLISHDATE_PUBLISHDATE_1);
 		}
 		else {
-			bindPublishDate = true;
-
 			query.append(_FINDER_COLUMN_PUBLISHDATE_PUBLISHDATE_2);
 		}
 
@@ -1456,7 +1448,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (bindPublishDate) {
+		if (publishDate != null) {
 			qPos.add(CalendarUtil.getTimestamp(publishDate));
 		}
 
@@ -1511,14 +1503,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			query.append(_SQL_COUNT_ASSETENTRY_WHERE);
 
-			boolean bindPublishDate = false;
-
 			if (publishDate == null) {
 				query.append(_FINDER_COLUMN_PUBLISHDATE_PUBLISHDATE_1);
 			}
 			else {
-				bindPublishDate = true;
-
 				query.append(_FINDER_COLUMN_PUBLISHDATE_PUBLISHDATE_2);
 			}
 
@@ -1533,7 +1521,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindPublishDate) {
+				if (publishDate != null) {
 					qPos.add(CalendarUtil.getTimestamp(publishDate));
 				}
 
@@ -1671,14 +1659,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			query.append(_SQL_SELECT_ASSETENTRY_WHERE);
 
-			boolean bindExpirationDate = false;
-
 			if (expirationDate == null) {
 				query.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_1);
 			}
 			else {
-				bindExpirationDate = true;
-
 				query.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_2);
 			}
 
@@ -1702,7 +1686,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindExpirationDate) {
+				if (expirationDate != null) {
 					qPos.add(CalendarUtil.getTimestamp(expirationDate));
 				}
 
@@ -1895,14 +1879,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 		query.append(_SQL_SELECT_ASSETENTRY_WHERE);
 
-		boolean bindExpirationDate = false;
-
 		if (expirationDate == null) {
 			query.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_1);
 		}
 		else {
-			bindExpirationDate = true;
-
 			query.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_2);
 		}
 
@@ -1974,7 +1954,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (bindExpirationDate) {
+		if (expirationDate != null) {
 			qPos.add(CalendarUtil.getTimestamp(expirationDate));
 		}
 
@@ -2031,14 +2011,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			query.append(_SQL_COUNT_ASSETENTRY_WHERE);
 
-			boolean bindExpirationDate = false;
-
 			if (expirationDate == null) {
 				query.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_1);
 			}
 			else {
-				bindExpirationDate = true;
-
 				query.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_2);
 			}
 
@@ -2053,7 +2029,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindExpirationDate) {
+				if (expirationDate != null) {
 					qPos.add(CalendarUtil.getTimestamp(expirationDate));
 				}
 
@@ -2185,18 +2161,16 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			query.append(_SQL_SELECT_ASSETENTRY_WHERE);
 
-			boolean bindLayoutUuid = false;
-
 			if (layoutUuid == null) {
 				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_1);
 			}
-			else if (layoutUuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3);
-			}
 			else {
-				bindLayoutUuid = true;
-
-				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_2);
+				if (layoutUuid.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_2);
+				}
 			}
 
 			if (orderByComparator != null) {
@@ -2219,7 +2193,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindLayoutUuid) {
+				if (layoutUuid != null) {
 					qPos.add(layoutUuid);
 				}
 
@@ -2412,18 +2386,16 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 		query.append(_SQL_SELECT_ASSETENTRY_WHERE);
 
-		boolean bindLayoutUuid = false;
-
 		if (layoutUuid == null) {
 			query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_1);
 		}
-		else if (layoutUuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3);
-		}
 		else {
-			bindLayoutUuid = true;
-
-			query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_2);
+			if (layoutUuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_2);
+			}
 		}
 
 		if (orderByComparator != null) {
@@ -2494,7 +2466,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (bindLayoutUuid) {
+		if (layoutUuid != null) {
 			qPos.add(layoutUuid);
 		}
 
@@ -2549,18 +2521,16 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			query.append(_SQL_COUNT_ASSETENTRY_WHERE);
 
-			boolean bindLayoutUuid = false;
-
 			if (layoutUuid == null) {
 				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_1);
 			}
-			else if (layoutUuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3);
-			}
 			else {
-				bindLayoutUuid = true;
-
-				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_2);
+				if (layoutUuid.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_2);
+				}
 			}
 
 			String sql = query.toString();
@@ -2574,7 +2544,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindLayoutUuid) {
+				if (layoutUuid != null) {
 					qPos.add(layoutUuid);
 				}
 
@@ -2597,7 +2567,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	private static final String _FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_1 = "assetEntry.layoutUuid IS NULL";
 	private static final String _FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_2 = "assetEntry.layoutUuid = ?";
-	private static final String _FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3 = "(assetEntry.layoutUuid IS NULL OR assetEntry.layoutUuid = '')";
+	private static final String _FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3 = "(assetEntry.layoutUuid IS NULL OR assetEntry.layoutUuid = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_CU = new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryModelImpl.FINDER_CACHE_ENABLED, AssetEntryImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_CU",
@@ -2694,18 +2664,16 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			query.append(_FINDER_COLUMN_G_CU_GROUPID_2);
 
-			boolean bindClassUuid = false;
-
 			if (classUuid == null) {
 				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_1);
 			}
-			else if (classUuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_3);
-			}
 			else {
-				bindClassUuid = true;
-
-				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_2);
+				if (classUuid.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_CU_CLASSUUID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_CU_CLASSUUID_2);
+				}
 			}
 
 			String sql = query.toString();
@@ -2721,7 +2689,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 				qPos.add(groupId);
 
-				if (bindClassUuid) {
+				if (classUuid != null) {
 					qPos.add(classUuid);
 				}
 
@@ -2811,18 +2779,16 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			query.append(_FINDER_COLUMN_G_CU_GROUPID_2);
 
-			boolean bindClassUuid = false;
-
 			if (classUuid == null) {
 				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_1);
 			}
-			else if (classUuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_3);
-			}
 			else {
-				bindClassUuid = true;
-
-				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_2);
+				if (classUuid.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_CU_CLASSUUID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_CU_CLASSUUID_2);
+				}
 			}
 
 			String sql = query.toString();
@@ -2838,7 +2804,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 				qPos.add(groupId);
 
-				if (bindClassUuid) {
+				if (classUuid != null) {
 					qPos.add(classUuid);
 				}
 
@@ -2862,7 +2828,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	private static final String _FINDER_COLUMN_G_CU_GROUPID_2 = "assetEntry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_CU_CLASSUUID_1 = "assetEntry.classUuid IS NULL";
 	private static final String _FINDER_COLUMN_G_CU_CLASSUUID_2 = "assetEntry.classUuid = ?";
-	private static final String _FINDER_COLUMN_G_CU_CLASSUUID_3 = "(assetEntry.classUuid IS NULL OR assetEntry.classUuid = '')";
+	private static final String _FINDER_COLUMN_G_CU_CLASSUUID_3 = "(assetEntry.classUuid IS NULL OR assetEntry.classUuid = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C = new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryModelImpl.FINDER_CACHE_ENABLED, AssetEntryImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",

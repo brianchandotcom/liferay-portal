@@ -281,6 +281,15 @@ public class AssetCategoryLocalServiceUtil {
 			descriptionMap, vocabularyId, categoryProperties, serviceContext);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetCategory addCategory(
+		long userId, java.lang.String title, long vocabularyId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addCategory(userId, title, vocabularyId, serviceContext);
+	}
+
 	public static void addCategoryResources(
 		com.liferay.portlet.asset.model.AssetCategory category,
 		boolean addGroupPermissions, boolean addGuestPermissions)

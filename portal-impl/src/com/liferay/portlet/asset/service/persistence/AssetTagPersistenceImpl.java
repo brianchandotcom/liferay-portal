@@ -1018,18 +1018,16 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
 
-			boolean bindName = false;
-
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_N_NAME_1);
 			}
-			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_N_NAME_3);
-			}
 			else {
-				bindName = true;
-
-				query.append(_FINDER_COLUMN_G_N_NAME_2);
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_N_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_N_NAME_2);
+				}
 			}
 
 			String sql = query.toString();
@@ -1045,7 +1043,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 				qPos.add(groupId);
 
-				if (bindName) {
+				if (name != null) {
 					qPos.add(name);
 				}
 
@@ -1134,18 +1132,16 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
 
-			boolean bindName = false;
-
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_N_NAME_1);
 			}
-			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_N_NAME_3);
-			}
 			else {
-				bindName = true;
-
-				query.append(_FINDER_COLUMN_G_N_NAME_2);
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_N_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_N_NAME_2);
+				}
 			}
 
 			String sql = query.toString();
@@ -1161,7 +1157,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 				qPos.add(groupId);
 
-				if (bindName) {
+				if (name != null) {
 					qPos.add(name);
 				}
 
@@ -1185,7 +1181,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "assetTag.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_NAME_1 = "assetTag.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "assetTag.name = ?";
-	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(assetTag.name IS NULL OR assetTag.name = '')";
+	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(assetTag.name IS NULL OR assetTag.name = ?)";
 
 	/**
 	 * Caches the asset tag in the entity cache if it is enabled.

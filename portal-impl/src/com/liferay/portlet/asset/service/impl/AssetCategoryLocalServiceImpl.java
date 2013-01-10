@@ -41,6 +41,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.base.AssetCategoryLocalServiceBaseImpl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -141,6 +142,28 @@ public class AssetCategoryLocalServiceImpl
 		}
 
 		return category;
+	}
+
+	public AssetCategory addCategory(
+			long userId, String title, long vocabularyId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Locale locale = LocaleUtil.getDefault();
+
+		Map<Locale, String> categoryTitleMap = new HashMap<Locale, String>();
+
+		categoryTitleMap.put(locale, title);
+
+		Map<Locale, String> categoryDescriptionMap =
+			new HashMap<Locale, String>();
+
+		categoryDescriptionMap.put(locale, StringPool.BLANK);
+
+		return addCategory(
+			userId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			categoryTitleMap, categoryDescriptionMap, vocabularyId, null,
+			serviceContext);
 	}
 
 	public void addCategoryResources(

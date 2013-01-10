@@ -1171,18 +1171,16 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 			query.append(_FINDER_COLUMN_C_K_COMPANYID_2);
 
-			boolean bindKey = false;
-
 			if (key == null) {
 				query.append(_FINDER_COLUMN_C_K_KEY_1);
 			}
-			else if (key.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_K_KEY_3);
-			}
 			else {
-				bindKey = true;
-
-				query.append(_FINDER_COLUMN_C_K_KEY_2);
+				if (key.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_K_KEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_K_KEY_2);
+				}
 			}
 
 			if (orderByComparator != null) {
@@ -1207,7 +1205,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 				qPos.add(companyId);
 
-				if (bindKey) {
+				if (key != null) {
 					qPos.add(key);
 				}
 
@@ -1414,18 +1412,16 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 		query.append(_FINDER_COLUMN_C_K_COMPANYID_2);
 
-		boolean bindKey = false;
-
 		if (key == null) {
 			query.append(_FINDER_COLUMN_C_K_KEY_1);
 		}
-		else if (key.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_C_K_KEY_3);
-		}
 		else {
-			bindKey = true;
-
-			query.append(_FINDER_COLUMN_C_K_KEY_2);
+			if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_C_K_KEY_2);
+			}
 		}
 
 		if (orderByComparator != null) {
@@ -1498,7 +1494,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 		qPos.add(companyId);
 
-		if (bindKey) {
+		if (key != null) {
 			qPos.add(key);
 		}
 
@@ -1558,18 +1554,16 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 			query.append(_FINDER_COLUMN_C_K_COMPANYID_2);
 
-			boolean bindKey = false;
-
 			if (key == null) {
 				query.append(_FINDER_COLUMN_C_K_KEY_1);
 			}
-			else if (key.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_K_KEY_3);
-			}
 			else {
-				bindKey = true;
-
-				query.append(_FINDER_COLUMN_C_K_KEY_2);
+				if (key.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_C_K_KEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_C_K_KEY_2);
+				}
 			}
 
 			String sql = query.toString();
@@ -1585,7 +1579,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 				qPos.add(companyId);
 
-				if (bindKey) {
+				if (key != null) {
 					qPos.add(key);
 				}
 
@@ -1609,7 +1603,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	private static final String _FINDER_COLUMN_C_K_COMPANYID_2 = "assetCategoryProperty.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_K_KEY_1 = "assetCategoryProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_C_K_KEY_2 = "assetCategoryProperty.key = ?";
-	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = '')";
+	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_CA_K = new FinderPath(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
 			AssetCategoryPropertyModelImpl.FINDER_CACHE_ENABLED,
 			AssetCategoryPropertyImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -1708,18 +1702,16 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 			query.append(_FINDER_COLUMN_CA_K_CATEGORYID_2);
 
-			boolean bindKey = false;
-
 			if (key == null) {
 				query.append(_FINDER_COLUMN_CA_K_KEY_1);
 			}
-			else if (key.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_CA_K_KEY_3);
-			}
 			else {
-				bindKey = true;
-
-				query.append(_FINDER_COLUMN_CA_K_KEY_2);
+				if (key.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_CA_K_KEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_CA_K_KEY_2);
+				}
 			}
 
 			String sql = query.toString();
@@ -1735,7 +1727,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 				qPos.add(categoryId);
 
-				if (bindKey) {
+				if (key != null) {
 					qPos.add(key);
 				}
 
@@ -1818,18 +1810,16 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 			query.append(_FINDER_COLUMN_CA_K_CATEGORYID_2);
 
-			boolean bindKey = false;
-
 			if (key == null) {
 				query.append(_FINDER_COLUMN_CA_K_KEY_1);
 			}
-			else if (key.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_CA_K_KEY_3);
-			}
 			else {
-				bindKey = true;
-
-				query.append(_FINDER_COLUMN_CA_K_KEY_2);
+				if (key.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_CA_K_KEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_CA_K_KEY_2);
+				}
 			}
 
 			String sql = query.toString();
@@ -1845,7 +1835,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 				qPos.add(categoryId);
 
-				if (bindKey) {
+				if (key != null) {
 					qPos.add(key);
 				}
 
@@ -1869,7 +1859,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	private static final String _FINDER_COLUMN_CA_K_CATEGORYID_2 = "assetCategoryProperty.categoryId = ? AND ";
 	private static final String _FINDER_COLUMN_CA_K_KEY_1 = "assetCategoryProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_CA_K_KEY_2 = "assetCategoryProperty.key = ?";
-	private static final String _FINDER_COLUMN_CA_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = '')";
+	private static final String _FINDER_COLUMN_CA_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = ?)";
 
 	/**
 	 * Caches the asset category property in the entity cache if it is enabled.

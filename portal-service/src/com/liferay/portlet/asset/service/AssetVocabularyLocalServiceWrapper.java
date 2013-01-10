@@ -293,6 +293,15 @@ public class AssetVocabularyLocalServiceWrapper
 			titleMap, descriptionMap, settings, serviceContext);
 	}
 
+	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
+		long userId, java.lang.String title,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabularyLocalService.addVocabulary(userId, title,
+			serviceContext);
+	}
+
 	public void addVocabularyResources(
 		com.liferay.portlet.asset.model.AssetVocabulary vocabulary,
 		boolean addGroupPermissions, boolean addGuestPermissions)

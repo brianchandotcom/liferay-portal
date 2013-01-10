@@ -288,7 +288,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="7" />
+		<property name="build-test-ant-scripts.version" value="8" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1998,45 +1998,45 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="social-office-sites-blogs" />
+			<param name="test.ant.script.command" value="social-office-site-blogs" />
 			<param name="test.ant.script.social.office" value="true" />
-			<param name="test.ant.script.suite" value="SocialOfficeSitesBlogsTestSuite" />
+			<param name="test.ant.script.suite" value="SocialOfficeSiteBlogsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="social-office-sites-calendar" />
+			<param name="test.ant.script.command" value="social-office-site-calendar" />
 			<param name="test.ant.script.social.office" value="true" />
-			<param name="test.ant.script.suite" value="SocialOfficeSitesCalendarTestSuite" />
+			<param name="test.ant.script.suite" value="SocialOfficeSiteCalendarTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="social-office-sites-documents" />
+			<param name="test.ant.script.command" value="social-office-site-documents" />
 			<param name="test.ant.script.social.office" value="true" />
-			<param name="test.ant.script.suite" value="SocialOfficeSitesDocumentsTestSuite" />
+			<param name="test.ant.script.suite" value="SocialOfficeSiteDocumentsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="social-office-sites-forums" />
+			<param name="test.ant.script.command" value="social-office-site-forums" />
 			<param name="test.ant.script.social.office" value="true" />
-			<param name="test.ant.script.suite" value="SocialOfficeSitesForumsTestSuite" />
+			<param name="test.ant.script.suite" value="SocialOfficeSiteForumsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="social-office-sites-home" />
+			<param name="test.ant.script.command" value="social-office-site-home" />
 			<param name="test.ant.script.social.office" value="true" />
-			<param name="test.ant.script.suite" value="SocialOfficeSitesHomeTestSuite" />
+			<param name="test.ant.script.suite" value="SocialOfficeSiteHomeTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="social-office-sites-members" />
+			<param name="test.ant.script.command" value="social-office-site-members" />
 			<param name="test.ant.script.social.office" value="true" />
-			<param name="test.ant.script.suite" value="SocialOfficeSitesMembersTestSuite" />
+			<param name="test.ant.script.suite" value="SocialOfficeSiteMembersTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="social-office-sites-wiki" />
+			<param name="test.ant.script.command" value="social-office-site-wiki" />
 			<param name="test.ant.script.social.office" value="true" />
-			<param name="test.ant.script.suite" value="SocialOfficeSitesWikiTestSuite" />
+			<param name="test.ant.script.suite" value="SocialOfficeSiteWikiTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

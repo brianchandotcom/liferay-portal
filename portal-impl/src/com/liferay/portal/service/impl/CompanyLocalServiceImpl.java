@@ -182,21 +182,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		Company company = companyPersistence.fetchByWebId(webId);
 
 		if (company == null) {
-			String name = webId;
-
-			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-				name = PropsValues.COMPANY_DEFAULT_NAME;
-			}
-
-			String legalName = null;
-			String legalId = null;
-			String legalType = null;
-			String sicCode = null;
-			String tickerSymbol = null;
-			String industry = null;
-			String type = null;
-			String size = null;
-
 			long companyId = counterLocalService.increment();
 
 			company = companyPersistence.create(companyId);
@@ -220,6 +205,21 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				Company.class.getName(), companyId, shardName);
 
 			// Account
+
+			String legalName = null;
+			String legalId = null;
+			String legalType = null;
+			String sicCode = null;
+			String tickerSymbol = null;
+			String industry = null;
+			String type = null;
+			String size = null;
+
+			String name = webId;
+
+			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+				name = PropsValues.COMPANY_DEFAULT_NAME;
+			}
 
 			updateAccount(
 				company, name, legalName, legalId, legalType, sicCode,

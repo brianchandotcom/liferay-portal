@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil_IW;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -85,8 +84,8 @@ import com.liferay.util.portlet.PortletRequestUtil;
 import java.lang.reflect.Method;
 
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -284,33 +283,31 @@ public class TemplateContextHelper {
 	}
 
 	public void removeAllHelperUtilities() {
-		_helperUtilitiesCache.clear();
+		_helperUtilitiesMapCache.clear();
 	}
 
 	public void removeHelperUtilities(ClassLoader classLoader) {
-		Iterator<ObjectValuePair<ClassLoader, TemplateContextType>> itr =
-			_helperUtilitiesCache.keySet().iterator();
-
-		while (itr.hasNext()) {
-			ObjectValuePair<ClassLoader, TemplateContextType> objectValuePair =
-				itr.next();
-
-			if (objectValuePair.getKey().equals(classLoader)) {
-				itr.remove();
-			}
-		}
+		_helperUtilitiesMapCache.remove(classLoader);
 	}
 
 	protected Map<String, Object> doGetHelperUtilities(
 		ClassLoader contextClassLoader,
 		TemplateContextType templateContextType) {
 
-		ObjectValuePair<ClassLoader, TemplateContextType> cacheKey =
-			new ObjectValuePair<ClassLoader, TemplateContextType>(
-				contextClassLoader, templateContextType);
+		EnumMap<TemplateContextType, Map<String, Object>> helperUtilitiesMap =
+			_helperUtilitiesMapCache.get(contextClassLoader);
 
-		Map<String, Object> helperUtilities = _helperUtilitiesCache.get(
-			cacheKey);
+		if (helperUtilitiesMap == null) {
+			helperUtilitiesMap =
+				new EnumMap<TemplateContextType, Map<String, Object>>(
+					TemplateContextType.class);
+
+			_helperUtilitiesMapCache.put(
+				contextClassLoader, helperUtilitiesMap);
+		}
+
+		Map<String, Object> helperUtilities = helperUtilitiesMap.get(
+			templateContextType);
 
 		if (helperUtilities != null) {
 			return helperUtilities;
@@ -331,7 +328,7 @@ public class TemplateContextHelper {
 
 		helperUtilities = Collections.unmodifiableMap(helperUtilities);
 
-		_helperUtilitiesCache.put(cacheKey, helperUtilities);
+		helperUtilitiesMap.put(templateContextType, helperUtilities);
 
 		return helperUtilities;
 	}
@@ -824,11 +821,10 @@ public class TemplateContextHelper {
 	private static Log _log = LogFactoryUtil.getLog(
 		TemplateContextHelper.class);
 
-	private Map<
-		ObjectValuePair<ClassLoader, TemplateContextType>, Map<String, Object>>
-		_helperUtilitiesCache =
-			new ConcurrentHashMap<
-				ObjectValuePair<ClassLoader, TemplateContextType>,
-				Map<String, Object>>();
+	private Map<ClassLoader, EnumMap<TemplateContextType, Map<String, Object>>>
+		_helperUtilitiesMapCache =
+			new ConcurrentHashMap
+				<ClassLoader,
+					EnumMap<TemplateContextType, Map<String, Object>>>();
 
 }

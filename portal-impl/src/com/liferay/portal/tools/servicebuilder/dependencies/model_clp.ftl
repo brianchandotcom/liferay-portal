@@ -90,19 +90,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 
 			);
 		<#else>
-			return
-
-			<#if entity.hasPrimitivePK()>
-				new ${serviceBuilder.getPrimitiveObj("${entity.PKClassName}")} (
-			</#if>
-
-			_${entity.PKList[0].name}
-
-			<#if entity.hasPrimitivePK()>
-				)
-			</#if>
-
-			;
+			return _${entity.PKList[0].name};
 		</#if>
 	}
 

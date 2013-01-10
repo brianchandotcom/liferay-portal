@@ -122,15 +122,12 @@ public class PortalRuntimeChecker extends BaseChecker {
 				(PortalRuntimePermission)args[0];
 
 			String name = portalRuntimePermission.getName();
+			String property = portalRuntimePermission.getProperty();
 			Object subject = portalRuntimePermission.getSubject();
-			String property = GetterUtil.getString(
-				portalRuntimePermission.getProperty());
 
 			if (name.equals(PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE)) {
-				String className = (String)subject;
-
 				rule[0] = "security-manager-expando-bridge";
-				rule[1] = className;
+				rule[1] = (String)subject;
 			}
 			else if (name.equals(PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY)) {
 				Class<?> clazz = (Class<?>)subject;
@@ -139,14 +136,12 @@ public class PortalRuntimeChecker extends BaseChecker {
 				rule[1] = clazz.getName();
 
 				if (Validator.isNotNull(property)) {
-					rule[1] += StringPool.POUND.concat(property);
+					rule[1] = rule[1].concat(StringPool.POUND.concat(property));
 				}
 			}
 			else if (name.equals(PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE)) {
-				String searchEngineId = (String)subject;
-
 				rule[0] = "security-manager-search-engine-ids";
-				rule[1] = searchEngineId;
+				rule[1] = (String)subject;
 			}
 			else if (name.equals(PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY)) {
 				Class<?> clazz = (Class<?>)subject;
@@ -155,15 +150,14 @@ public class PortalRuntimeChecker extends BaseChecker {
 				rule[1] = clazz.getName();
 
 				if (Validator.isNotNull(property)) {
-					rule[1] += StringPool.POUND.concat(property);
+					rule[1] = rule[1].concat(StringPool.POUND.concat(property));
 				}
 			}
 			else if (name.equals(
 						PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR)) {
-				String threadPoolExecutorName = (String)subject;
 
 				rule[0] = "security-manager-thread-pool-executor-names";
-				rule[1] = threadPoolExecutorName;
+				rule[1] = (String)subject;
 			}
 		}
 

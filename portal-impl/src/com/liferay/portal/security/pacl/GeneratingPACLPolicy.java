@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
@@ -42,8 +43,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.locks.ReentrantLock;
-
-import jodd.util.StringPool;
 
 /**
  * @author Raymond Augé
@@ -113,6 +112,38 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 		return true;
 	}
 
+	private String generateProperties() {
+		StringBundler sb = new StringBundler();
+
+		for (Map.Entry<String, Set<String>> entry : _policyRules.entrySet()) {
+			String key = entry.getKey();
+			Set<String> valueSet = entry.getValue();
+
+			sb.append(key);
+			sb.append(StringPool.EQUAL);
+
+			Set<String> sortedSet = new TreeSet<String>(valueSet);
+
+			for (String value : sortedSet) {
+				sb.append(StringPool.BACK_SLASH);
+				sb.append(StringPool.NEW_LINE);
+				sb.append(_INDENT);
+				sb.append(value);
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			sb.append(StringPool.NEW_LINE.concat(StringPool.NEW_LINE));
+		}
+
+		if (sb.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
+	}
+
 	private void trackGeneratedRule(String[] rule) {
 		if ((rule == null) || (rule.length != 2) || (rule[0] == null)) {
 
@@ -155,7 +186,7 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 				"[PACL][" + getServletContextName() + "] adding rule {" +
 					rule[0] + "=" + rule[1] + "}");
 
-			// Only add new rules to the map is there was a change and we have a
+			// Only add new rules to the map if there was a change and we have a
 			// lock
 
 			_policyRules.put(key, trackedRules);
@@ -173,7 +204,7 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 		try {
 			PortalSecurityManagerThreadLocal.setEnabled(false);
 
-			String fileName = getServletContextName().concat(_fileExtension);
+			String fileName = getServletContextName().concat(_FILE_EXTENSION);
 
 			String writePath = GetterUtil.getString(
 				getProperty("security-manager-generator-dir"));
@@ -195,41 +226,11 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 		}
 	}
 
-	private String generateProperties() {
-		StringBundler sb = new StringBundler();
-
-		for (Map.Entry<String, Set<String>> entry : _policyRules.entrySet()) {
-			String key = entry.getKey();
-			Set<String> valueSet = entry.getValue();
-
-			sb.append(key);
-			sb.append(StringPool.EQUALS);
-
-			Set<String> sortedSet = new TreeSet<String>(valueSet);
-
-			for (String value : sortedSet) {
-				sb.append(StringPool.BACK_SLASH);
-				sb.append(StringPool.NEWLINE);
-				sb.append("    ");
-				sb.append(value);
-				sb.append(StringPool.COMMA);
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			sb.append(StringPool.NEWLINE.concat(StringPool.NEWLINE));
-		}
-
-		if (sb.length() > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return sb.toString();
-	}
+	private static final String _FILE_EXTENSION = ".policy";
+	private static final String _INDENT =
+		StringPool.THREE_SPACES + StringPool.SPACE;
 
 	private static Log _log = LogFactoryUtil.getLog(GeneratingPACLPolicy.class);
-
-	private static final String _fileExtension = ".policy";
 
 	private ConcurrentSkipListMap<String, Set<String>> _policyRules =
 		new ConcurrentSkipListMap<String, Set<String>>();

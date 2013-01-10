@@ -37,8 +37,8 @@ public class PACLPolicyManager {
 	public enum State {
 		disabled, enabled, generate;
 
-		public static State read(Object state) {
-			if ("generate".equals(state)) {
+		public static State read(String state) {
+			if (state.equals("generate")) {
 				return generate;
 			}
 			else if (GetterUtil.getBoolean(state) == true) {
@@ -53,10 +53,10 @@ public class PACLPolicyManager {
 		String servletContextName, ClassLoader classLoader,
 		Properties properties) {
 
-		State state = State.read(
-			properties.get("security-manager-enabled"));
-
 		PACLPolicy paclPolicy = null;
+
+		State state = State.read(
+			properties.getProperty("security-manager-enabled", "false"));
 
 		if (state == State.enabled) {
 			paclPolicy = new ActivePACLPolicy(

@@ -125,10 +125,8 @@ public class PortalHookChecker extends BaseChecker {
 				rule[1] = "true";
 			}
 			else if (name.equals(PORTAL_HOOK_PERMISSION_INDEXER)) {
-				String indexerClassName = (String)subject;
-
 				rule[0] = "security-manager-hook-indexers";
-				rule[1] = indexerClassName;
+				rule[1] = (String)subject;
 			}
 			else if (name.equals(
 						PORTAL_HOOK_PERMISSION_LANGUAGE_PROPERTIES_LOCALE)) {
@@ -138,27 +136,23 @@ public class PortalHookChecker extends BaseChecker {
 				rule[0] = "security-manager-hook-language-properties-locales";
 				rule[1] = locale.toString();
 			}
-			else if (name.equals(PORTAL_HOOK_PERMISSION_PORTAL_PROPERTIES_KEY)) {
-				String key = (String)subject;
+			else if (name.equals(
+						PORTAL_HOOK_PERMISSION_PORTAL_PROPERTIES_KEY)) {
 
 				rule[0] = "security-manager-hook-portal-properties-keys";
-				rule[1] = key;
+				rule[1] = (String)subject;
 			}
 			else if (name.equals(PORTAL_HOOK_PERMISSION_SERVICE)) {
-				String serviceType = (String)subject;
-
 				rule[0] = "security-manager-hook-services";
-				rule[1] = serviceType;
+				rule[1] = (String)subject;
 			}
 			else if (name.equals(PORTAL_HOOK_PERMISSION_SERVLET_FILTERS)) {
 				rule[0] = "security-manager-hook-servlet-filters-enabled";
 				rule[1] = "true";
 			}
 			else if (name.equals(PORTAL_HOOK_PERMISSION_STRUTS_ACTION_PATH)) {
-				String strutsActionPath = (String)subject;
-
 				rule[0] = "security-manager-hook-struts-action-paths";
-				rule[1] = strutsActionPath;
+				rule[1] = (String)subject;
 			}
 		}
 

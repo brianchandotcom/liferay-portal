@@ -188,7 +188,6 @@ public class FileChecker extends BaseChecker {
 
 			Permission permission = (Permission)args[0];
 
-			String path = permission.getName();
 			String actions = permission.getActions();
 
 			if (actions.equals(FILE_PERMISSION_ACTION_DELETE)) {
@@ -204,7 +203,7 @@ public class FileChecker extends BaseChecker {
 				rule[0] = "security-manager-files-write";
 			}
 
-			rule[1] = path;
+			rule[1] = permission.getName();
 		}
 
 		return rule;

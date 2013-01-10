@@ -504,6 +504,8 @@ public interface TrashHandler {
 	 */
 	public boolean isContainerModel();
 
+	public boolean isDeletable();
+
 	/**
 	 * Returns <code>true</code> if the model entity with the primary key is in
 	 * the Recycle Bin.

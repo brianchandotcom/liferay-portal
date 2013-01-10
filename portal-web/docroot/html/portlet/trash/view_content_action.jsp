@@ -65,15 +65,17 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRender
 		/>
 	</c:if>
 
-	<portlet:actionURL var="deleteEntryURL">
-		<portlet:param name="struts_action" value="/trash/edit_entry" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
-		<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
-	</portlet:actionURL>
+	<c:if test="<%= trashHandler.isDeletable() %>">
+		<portlet:actionURL var="deleteEntryURL">
+			<portlet:param name="struts_action" value="/trash/edit_entry" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
+			<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		url="<%= deleteEntryURL %>"
-	/>
+		<liferay-ui:icon-delete
+			url="<%= deleteEntryURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

@@ -37,6 +37,11 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 		return MBMessageAssetRendererFactory.CLASS_NAME;
 	}
 
+	@Override
+	public boolean isDeletable() {
+		return false;
+	}
+
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 

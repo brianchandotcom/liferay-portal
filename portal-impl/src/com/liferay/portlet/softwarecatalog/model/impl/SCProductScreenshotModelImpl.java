@@ -99,7 +99,7 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_productScreenshotId);
+		return _productScreenshotId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

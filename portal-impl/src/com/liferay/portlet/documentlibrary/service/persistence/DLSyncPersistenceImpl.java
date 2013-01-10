@@ -869,7 +869,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 			DLSyncImpl.class, dlSync.getPrimaryKey(), dlSync);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FILEID,
-			new Object[] { Long.valueOf(dlSync.getFileId()) }, dlSync);
+			new Object[] { dlSync.getFileId() }, dlSync);
 
 		dlSync.resetOriginalValues();
 	}
@@ -945,7 +945,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 	protected void cacheUniqueFindersCache(DLSync dlSync) {
 		if (dlSync.isNew()) {
-			Object[] args = new Object[] { Long.valueOf(dlSync.getFileId()) };
+			Object[] args = new Object[] { dlSync.getFileId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_FILEID, args,
 				Long.valueOf(1));
@@ -956,7 +956,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 			if ((dlSyncModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_FILEID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { Long.valueOf(dlSync.getFileId()) };
+				Object[] args = new Object[] { dlSync.getFileId() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_FILEID, args,
 					Long.valueOf(1));
@@ -969,16 +969,14 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	protected void clearUniqueFindersCache(DLSync dlSync) {
 		DLSyncModelImpl dlSyncModelImpl = (DLSyncModelImpl)dlSync;
 
-		Object[] args = new Object[] { Long.valueOf(dlSync.getFileId()) };
+		Object[] args = new Object[] { dlSync.getFileId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEID, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID, args);
 
 		if ((dlSyncModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_FILEID.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					Long.valueOf(dlSyncModelImpl.getOriginalFileId())
-				};
+			args = new Object[] { dlSyncModelImpl.getOriginalFileId() };
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEID, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID, args);
@@ -1010,7 +1008,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 */
 	public DLSync remove(long syncId)
 		throws NoSuchSyncException, SystemException {
-		return remove(Long.valueOf(syncId));
+		return remove((Serializable)syncId);
 	}
 
 	/**

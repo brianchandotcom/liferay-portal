@@ -175,7 +175,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_threadId);
+		return _threadId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -176,7 +176,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_roleId);
+		return _roleId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

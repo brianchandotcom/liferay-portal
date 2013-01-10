@@ -559,8 +559,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_L,
 			new Object[] {
-				Long.valueOf(virtualHost.getCompanyId()),
-				Long.valueOf(virtualHost.getLayoutSetId())
+				virtualHost.getCompanyId(), virtualHost.getLayoutSetId()
 			}, virtualHost);
 
 		virtualHost.resetOriginalValues();
@@ -645,8 +644,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 				virtualHost);
 
 			args = new Object[] {
-					Long.valueOf(virtualHost.getCompanyId()),
-					Long.valueOf(virtualHost.getLayoutSetId())
+					virtualHost.getCompanyId(), virtualHost.getLayoutSetId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_L, args,
@@ -670,8 +668,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 			if ((virtualHostModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_L.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(virtualHost.getCompanyId()),
-						Long.valueOf(virtualHost.getLayoutSetId())
+						virtualHost.getCompanyId(), virtualHost.getLayoutSetId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_L, args,
@@ -699,8 +696,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		}
 
 		args = new Object[] {
-				Long.valueOf(virtualHost.getCompanyId()),
-				Long.valueOf(virtualHost.getLayoutSetId())
+				virtualHost.getCompanyId(), virtualHost.getLayoutSetId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_L, args);
@@ -709,8 +705,8 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		if ((virtualHostModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_L.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(virtualHostModelImpl.getOriginalCompanyId()),
-					Long.valueOf(virtualHostModelImpl.getOriginalLayoutSetId())
+					virtualHostModelImpl.getOriginalCompanyId(),
+					virtualHostModelImpl.getOriginalLayoutSetId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_L, args);
@@ -743,7 +739,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 */
 	public VirtualHost remove(long virtualHostId)
 		throws NoSuchVirtualHostException, SystemException {
-		return remove(Long.valueOf(virtualHostId));
+		return remove((Serializable)virtualHostId);
 	}
 
 	/**

@@ -95,7 +95,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_serviceComponentId);
+		return _serviceComponentId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

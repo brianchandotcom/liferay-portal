@@ -105,7 +105,7 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_fileRankId);
+		return _fileRankId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

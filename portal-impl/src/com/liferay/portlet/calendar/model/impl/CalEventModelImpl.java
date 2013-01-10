@@ -190,7 +190,7 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_eventId);
+		return _eventId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

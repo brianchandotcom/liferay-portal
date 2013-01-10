@@ -164,7 +164,7 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_syncId);
+		return _syncId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

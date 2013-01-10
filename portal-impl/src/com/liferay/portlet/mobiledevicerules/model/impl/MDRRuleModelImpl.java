@@ -171,7 +171,7 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_ruleId);
+		return _ruleId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

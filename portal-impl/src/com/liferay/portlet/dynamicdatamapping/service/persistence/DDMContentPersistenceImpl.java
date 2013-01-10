@@ -2376,9 +2376,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 			DDMContentImpl.class, ddmContent.getPrimaryKey(), ddmContent);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				ddmContent.getUuid(), Long.valueOf(ddmContent.getGroupId())
-			}, ddmContent);
+			new Object[] { ddmContent.getUuid(), ddmContent.getGroupId() },
+			ddmContent);
 
 		ddmContent.resetOriginalValues();
 	}
@@ -2455,7 +2454,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	protected void cacheUniqueFindersCache(DDMContent ddmContent) {
 		if (ddmContent.isNew()) {
 			Object[] args = new Object[] {
-					ddmContent.getUuid(), Long.valueOf(ddmContent.getGroupId())
+					ddmContent.getUuid(), ddmContent.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -2469,8 +2468,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 			if ((ddmContentModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ddmContent.getUuid(),
-						Long.valueOf(ddmContent.getGroupId())
+						ddmContent.getUuid(), ddmContent.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -2485,7 +2483,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		DDMContentModelImpl ddmContentModelImpl = (DDMContentModelImpl)ddmContent;
 
 		Object[] args = new Object[] {
-				ddmContent.getUuid(), Long.valueOf(ddmContent.getGroupId())
+				ddmContent.getUuid(), ddmContent.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2495,7 +2493,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					ddmContentModelImpl.getOriginalUuid(),
-					Long.valueOf(ddmContentModelImpl.getOriginalGroupId())
+					ddmContentModelImpl.getOriginalGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2532,7 +2530,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	public DDMContent remove(long contentId)
 		throws NoSuchContentException, SystemException {
-		return remove(Long.valueOf(contentId));
+		return remove((Serializable)contentId);
 	}
 
 	/**
@@ -2674,7 +2672,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						ddmContentModelImpl.getOriginalUuid(),
-						Long.valueOf(ddmContentModelImpl.getOriginalCompanyId())
+						ddmContentModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -2683,7 +2681,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 
 				args = new Object[] {
 						ddmContentModelImpl.getUuid(),
-						Long.valueOf(ddmContentModelImpl.getCompanyId())
+						ddmContentModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -2694,16 +2692,14 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 			if ((ddmContentModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(ddmContentModelImpl.getOriginalGroupId())
+						ddmContentModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(ddmContentModelImpl.getGroupId())
-					};
+				args = new Object[] { ddmContentModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -2713,7 +2709,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 			if ((ddmContentModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(ddmContentModelImpl.getOriginalCompanyId())
+						ddmContentModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -2721,9 +2717,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(ddmContentModelImpl.getCompanyId())
-					};
+				args = new Object[] { ddmContentModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);

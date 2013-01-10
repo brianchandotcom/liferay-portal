@@ -995,7 +995,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 */
 	public SCProductVersion remove(long productVersionId)
 		throws NoSuchProductVersionException, SystemException {
-		return remove(Long.valueOf(productVersionId));
+		return remove((Serializable)productVersionId);
 	}
 
 	/**
@@ -1123,7 +1123,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 			if ((scProductVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTENTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(scProductVersionModelImpl.getOriginalProductEntryId())
+						scProductVersionModelImpl.getOriginalProductEntryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PRODUCTENTRYID,
@@ -1132,7 +1132,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 					args);
 
 				args = new Object[] {
-						Long.valueOf(scProductVersionModelImpl.getProductEntryId())
+						scProductVersionModelImpl.getProductEntryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PRODUCTENTRYID,

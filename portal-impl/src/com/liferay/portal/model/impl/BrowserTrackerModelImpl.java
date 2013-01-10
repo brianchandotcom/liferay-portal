@@ -94,7 +94,7 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_browserTrackerId);
+		return _browserTrackerId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -3032,10 +3032,9 @@ public class SocialActivityAchievementPersistenceImpl
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U_N,
 			new Object[] {
-				Long.valueOf(socialActivityAchievement.getGroupId()),
-				Long.valueOf(socialActivityAchievement.getUserId()),
-				
-			socialActivityAchievement.getName()
+				socialActivityAchievement.getGroupId(),
+				socialActivityAchievement.getUserId(),
+				socialActivityAchievement.getName()
 			}, socialActivityAchievement);
 
 		socialActivityAchievement.resetOriginalValues();
@@ -3119,9 +3118,8 @@ public class SocialActivityAchievementPersistenceImpl
 		SocialActivityAchievement socialActivityAchievement) {
 		if (socialActivityAchievement.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(socialActivityAchievement.getGroupId()),
-					Long.valueOf(socialActivityAchievement.getUserId()),
-					
+					socialActivityAchievement.getGroupId(),
+					socialActivityAchievement.getUserId(),
 					socialActivityAchievement.getName()
 				};
 
@@ -3137,9 +3135,8 @@ public class SocialActivityAchievementPersistenceImpl
 			if ((socialActivityAchievementModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_U_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityAchievement.getGroupId()),
-						Long.valueOf(socialActivityAchievement.getUserId()),
-						
+						socialActivityAchievement.getGroupId(),
+						socialActivityAchievement.getUserId(),
 						socialActivityAchievement.getName()
 					};
 
@@ -3156,9 +3153,8 @@ public class SocialActivityAchievementPersistenceImpl
 		SocialActivityAchievementModelImpl socialActivityAchievementModelImpl = (SocialActivityAchievementModelImpl)socialActivityAchievement;
 
 		Object[] args = new Object[] {
-				Long.valueOf(socialActivityAchievement.getGroupId()),
-				Long.valueOf(socialActivityAchievement.getUserId()),
-				
+				socialActivityAchievement.getGroupId(),
+				socialActivityAchievement.getUserId(),
 				socialActivityAchievement.getName()
 			};
 
@@ -3168,9 +3164,8 @@ public class SocialActivityAchievementPersistenceImpl
 		if ((socialActivityAchievementModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_U_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(socialActivityAchievementModelImpl.getOriginalGroupId()),
-					Long.valueOf(socialActivityAchievementModelImpl.getOriginalUserId()),
-					
+					socialActivityAchievementModelImpl.getOriginalGroupId(),
+					socialActivityAchievementModelImpl.getOriginalUserId(),
 					socialActivityAchievementModelImpl.getOriginalName()
 				};
 
@@ -3204,7 +3199,7 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	public SocialActivityAchievement remove(long activityAchievementId)
 		throws NoSuchActivityAchievementException, SystemException {
-		return remove(Long.valueOf(activityAchievementId));
+		return remove((Serializable)activityAchievementId);
 	}
 
 	/**
@@ -3324,7 +3319,7 @@ public class SocialActivityAchievementPersistenceImpl
 			if ((socialActivityAchievementModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityAchievementModelImpl.getOriginalGroupId())
+						socialActivityAchievementModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
@@ -3332,7 +3327,7 @@ public class SocialActivityAchievementPersistenceImpl
 					args);
 
 				args = new Object[] {
-						Long.valueOf(socialActivityAchievementModelImpl.getGroupId())
+						socialActivityAchievementModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
@@ -3343,8 +3338,8 @@ public class SocialActivityAchievementPersistenceImpl
 			if ((socialActivityAchievementModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityAchievementModelImpl.getOriginalGroupId()),
-						Long.valueOf(socialActivityAchievementModelImpl.getOriginalUserId())
+						socialActivityAchievementModelImpl.getOriginalGroupId(),
+						socialActivityAchievementModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -3352,8 +3347,8 @@ public class SocialActivityAchievementPersistenceImpl
 					args);
 
 				args = new Object[] {
-						Long.valueOf(socialActivityAchievementModelImpl.getGroupId()),
-						Long.valueOf(socialActivityAchievementModelImpl.getUserId())
+						socialActivityAchievementModelImpl.getGroupId(),
+						socialActivityAchievementModelImpl.getUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -3364,8 +3359,7 @@ public class SocialActivityAchievementPersistenceImpl
 			if ((socialActivityAchievementModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityAchievementModelImpl.getOriginalGroupId()),
-						
+						socialActivityAchievementModelImpl.getOriginalGroupId(),
 						socialActivityAchievementModelImpl.getOriginalName()
 					};
 
@@ -3374,8 +3368,7 @@ public class SocialActivityAchievementPersistenceImpl
 					args);
 
 				args = new Object[] {
-						Long.valueOf(socialActivityAchievementModelImpl.getGroupId()),
-						
+						socialActivityAchievementModelImpl.getGroupId(),
 						socialActivityAchievementModelImpl.getName()
 					};
 
@@ -3387,8 +3380,8 @@ public class SocialActivityAchievementPersistenceImpl
 			if ((socialActivityAchievementModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityAchievementModelImpl.getOriginalGroupId()),
-						Boolean.valueOf(socialActivityAchievementModelImpl.getOriginalFirstInGroup())
+						socialActivityAchievementModelImpl.getOriginalGroupId(),
+						socialActivityAchievementModelImpl.getOriginalFirstInGroup()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
@@ -3396,8 +3389,8 @@ public class SocialActivityAchievementPersistenceImpl
 					args);
 
 				args = new Object[] {
-						Long.valueOf(socialActivityAchievementModelImpl.getGroupId()),
-						Boolean.valueOf(socialActivityAchievementModelImpl.getFirstInGroup())
+						socialActivityAchievementModelImpl.getGroupId(),
+						socialActivityAchievementModelImpl.getFirstInGroup()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
@@ -3408,9 +3401,9 @@ public class SocialActivityAchievementPersistenceImpl
 			if ((socialActivityAchievementModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_F.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityAchievementModelImpl.getOriginalGroupId()),
-						Long.valueOf(socialActivityAchievementModelImpl.getOriginalUserId()),
-						Boolean.valueOf(socialActivityAchievementModelImpl.getOriginalFirstInGroup())
+						socialActivityAchievementModelImpl.getOriginalGroupId(),
+						socialActivityAchievementModelImpl.getOriginalUserId(),
+						socialActivityAchievementModelImpl.getOriginalFirstInGroup()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_F, args);
@@ -3418,9 +3411,9 @@ public class SocialActivityAchievementPersistenceImpl
 					args);
 
 				args = new Object[] {
-						Long.valueOf(socialActivityAchievementModelImpl.getGroupId()),
-						Long.valueOf(socialActivityAchievementModelImpl.getUserId()),
-						Boolean.valueOf(socialActivityAchievementModelImpl.getFirstInGroup())
+						socialActivityAchievementModelImpl.getGroupId(),
+						socialActivityAchievementModelImpl.getUserId(),
+						socialActivityAchievementModelImpl.getFirstInGroup()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_F, args);

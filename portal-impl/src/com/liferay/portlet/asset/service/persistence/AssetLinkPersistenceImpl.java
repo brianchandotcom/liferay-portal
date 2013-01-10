@@ -2825,9 +2825,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_E_E_T,
 			new Object[] {
-				Long.valueOf(assetLink.getEntryId1()),
-				Long.valueOf(assetLink.getEntryId2()),
-				Integer.valueOf(assetLink.getType())
+				assetLink.getEntryId1(), assetLink.getEntryId2(),
+				assetLink.getType()
 			}, assetLink);
 
 		assetLink.resetOriginalValues();
@@ -2905,9 +2904,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	protected void cacheUniqueFindersCache(AssetLink assetLink) {
 		if (assetLink.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(assetLink.getEntryId1()),
-					Long.valueOf(assetLink.getEntryId2()),
-					Integer.valueOf(assetLink.getType())
+					assetLink.getEntryId1(), assetLink.getEntryId2(),
+					assetLink.getType()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_E_E_T, args,
@@ -2921,9 +2919,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			if ((assetLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_E_E_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetLink.getEntryId1()),
-						Long.valueOf(assetLink.getEntryId2()),
-						Integer.valueOf(assetLink.getType())
+						assetLink.getEntryId1(), assetLink.getEntryId2(),
+						assetLink.getType()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_E_E_T, args,
@@ -2938,9 +2935,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		AssetLinkModelImpl assetLinkModelImpl = (AssetLinkModelImpl)assetLink;
 
 		Object[] args = new Object[] {
-				Long.valueOf(assetLink.getEntryId1()),
-				Long.valueOf(assetLink.getEntryId2()),
-				Integer.valueOf(assetLink.getType())
+				assetLink.getEntryId1(), assetLink.getEntryId2(),
+				assetLink.getType()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E_E_T, args);
@@ -2949,9 +2945,9 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		if ((assetLinkModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_E_E_T.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(assetLinkModelImpl.getOriginalEntryId1()),
-					Long.valueOf(assetLinkModelImpl.getOriginalEntryId2()),
-					Integer.valueOf(assetLinkModelImpl.getOriginalType())
+					assetLinkModelImpl.getOriginalEntryId1(),
+					assetLinkModelImpl.getOriginalEntryId2(),
+					assetLinkModelImpl.getOriginalType()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E_E_T, args);
@@ -2984,7 +2980,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public AssetLink remove(long linkId)
 		throws NoSuchLinkException, SystemException {
-		return remove(Long.valueOf(linkId));
+		return remove((Serializable)linkId);
 	}
 
 	/**
@@ -3102,16 +3098,14 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			if ((assetLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_E1.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetLinkModelImpl.getOriginalEntryId1())
+						assetLinkModelImpl.getOriginalEntryId1()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E1, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_E1,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(assetLinkModelImpl.getEntryId1())
-					};
+				args = new Object[] { assetLinkModelImpl.getEntryId1() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E1, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_E1,
@@ -3121,16 +3115,14 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			if ((assetLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_E2.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetLinkModelImpl.getOriginalEntryId2())
+						assetLinkModelImpl.getOriginalEntryId2()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E2, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_E2,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(assetLinkModelImpl.getEntryId2())
-					};
+				args = new Object[] { assetLinkModelImpl.getEntryId2() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E2, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_E2,
@@ -3140,8 +3132,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			if ((assetLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_E_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetLinkModelImpl.getOriginalEntryId1()),
-						Long.valueOf(assetLinkModelImpl.getOriginalEntryId2())
+						assetLinkModelImpl.getOriginalEntryId1(),
+						assetLinkModelImpl.getOriginalEntryId2()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E_E, args);
@@ -3149,8 +3141,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(assetLinkModelImpl.getEntryId1()),
-						Long.valueOf(assetLinkModelImpl.getEntryId2())
+						assetLinkModelImpl.getEntryId1(),
+						assetLinkModelImpl.getEntryId2()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E_E, args);
@@ -3161,8 +3153,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			if ((assetLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_E1_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetLinkModelImpl.getOriginalEntryId1()),
-						Integer.valueOf(assetLinkModelImpl.getOriginalType())
+						assetLinkModelImpl.getOriginalEntryId1(),
+						assetLinkModelImpl.getOriginalType()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E1_T, args);
@@ -3170,8 +3162,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(assetLinkModelImpl.getEntryId1()),
-						Integer.valueOf(assetLinkModelImpl.getType())
+						assetLinkModelImpl.getEntryId1(),
+						assetLinkModelImpl.getType()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E1_T, args);
@@ -3182,8 +3174,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			if ((assetLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_E2_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetLinkModelImpl.getOriginalEntryId2()),
-						Integer.valueOf(assetLinkModelImpl.getOriginalType())
+						assetLinkModelImpl.getOriginalEntryId2(),
+						assetLinkModelImpl.getOriginalType()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E2_T, args);
@@ -3191,8 +3183,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(assetLinkModelImpl.getEntryId2()),
-						Integer.valueOf(assetLinkModelImpl.getType())
+						assetLinkModelImpl.getEntryId2(),
+						assetLinkModelImpl.getType()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E2_T, args);

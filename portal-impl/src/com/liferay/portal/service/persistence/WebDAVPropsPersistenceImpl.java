@@ -317,10 +317,8 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 			WebDAVPropsImpl.class, webDAVProps.getPrimaryKey(), webDAVProps);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C,
-			new Object[] {
-				Long.valueOf(webDAVProps.getClassNameId()),
-				Long.valueOf(webDAVProps.getClassPK())
-			}, webDAVProps);
+			new Object[] { webDAVProps.getClassNameId(), webDAVProps.getClassPK() },
+			webDAVProps);
 
 		webDAVProps.resetOriginalValues();
 	}
@@ -397,8 +395,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	protected void cacheUniqueFindersCache(WebDAVProps webDAVProps) {
 		if (webDAVProps.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(webDAVProps.getClassNameId()),
-					Long.valueOf(webDAVProps.getClassPK())
+					webDAVProps.getClassNameId(), webDAVProps.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
@@ -412,8 +409,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 			if ((webDAVPropsModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(webDAVProps.getClassNameId()),
-						Long.valueOf(webDAVProps.getClassPK())
+						webDAVProps.getClassNameId(), webDAVProps.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
@@ -428,8 +424,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		WebDAVPropsModelImpl webDAVPropsModelImpl = (WebDAVPropsModelImpl)webDAVProps;
 
 		Object[] args = new Object[] {
-				Long.valueOf(webDAVProps.getClassNameId()),
-				Long.valueOf(webDAVProps.getClassPK())
+				webDAVProps.getClassNameId(), webDAVProps.getClassPK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -438,8 +433,8 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		if ((webDAVPropsModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(webDAVPropsModelImpl.getOriginalClassNameId()),
-					Long.valueOf(webDAVPropsModelImpl.getOriginalClassPK())
+					webDAVPropsModelImpl.getOriginalClassNameId(),
+					webDAVPropsModelImpl.getOriginalClassPK()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -472,7 +467,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	 */
 	public WebDAVProps remove(long webDavPropsId)
 		throws NoSuchWebDAVPropsException, SystemException {
-		return remove(Long.valueOf(webDavPropsId));
+		return remove((Serializable)webDavPropsId);
 	}
 
 	/**

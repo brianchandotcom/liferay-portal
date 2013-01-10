@@ -97,7 +97,7 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_shardId);
+		return _shardId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -103,7 +103,7 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_userTrackerId);
+		return _userTrackerId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

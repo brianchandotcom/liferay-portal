@@ -153,7 +153,7 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_valueId);
+		return _valueId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

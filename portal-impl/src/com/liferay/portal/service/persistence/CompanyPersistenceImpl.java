@@ -1258,7 +1258,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			new Object[] { company.getMx() }, company);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LOGOID,
-			new Object[] { Long.valueOf(company.getLogoId()) }, company);
+			new Object[] { company.getLogoId() }, company);
 
 		company.resetOriginalValues();
 	}
@@ -1346,7 +1346,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_MX, args, company);
 
-			args = new Object[] { Long.valueOf(company.getLogoId()) };
+			args = new Object[] { company.getLogoId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LOGOID, args,
 				Long.valueOf(1));
@@ -1376,7 +1376,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 			if ((companyModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_LOGOID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { Long.valueOf(company.getLogoId()) };
+				Object[] args = new Object[] { company.getLogoId() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LOGOID, args,
 					Long.valueOf(1));
@@ -1415,16 +1415,14 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MX, args);
 		}
 
-		args = new Object[] { Long.valueOf(company.getLogoId()) };
+		args = new Object[] { company.getLogoId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LOGOID, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LOGOID, args);
 
 		if ((companyModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_LOGOID.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					Long.valueOf(companyModelImpl.getOriginalLogoId())
-				};
+			args = new Object[] { companyModelImpl.getOriginalLogoId() };
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LOGOID, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LOGOID, args);
@@ -1456,7 +1454,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 */
 	public Company remove(long companyId)
 		throws NoSuchCompanyException, SystemException {
-		return remove(Long.valueOf(companyId));
+		return remove((Serializable)companyId);
 	}
 
 	/**
@@ -1571,16 +1569,14 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			if ((companyModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SYSTEM.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Boolean.valueOf(companyModelImpl.getOriginalSystem())
+						companyModelImpl.getOriginalSystem()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SYSTEM, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SYSTEM,
 					args);
 
-				args = new Object[] {
-						Boolean.valueOf(companyModelImpl.getSystem())
-					};
+				args = new Object[] { companyModelImpl.getSystem() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SYSTEM, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SYSTEM,

@@ -107,7 +107,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_lockId);
+		return _lockId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

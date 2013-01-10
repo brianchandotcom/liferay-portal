@@ -90,7 +90,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_clusterGroupId);
+		return _clusterGroupId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

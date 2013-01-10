@@ -2765,16 +2765,14 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 			if ((userGroupRoleModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userGroupRoleModelImpl.getOriginalUserId())
+						userGroupRoleModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(userGroupRoleModelImpl.getUserId())
-					};
+				args = new Object[] { userGroupRoleModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -2784,16 +2782,14 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 			if ((userGroupRoleModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userGroupRoleModelImpl.getOriginalGroupId())
+						userGroupRoleModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(userGroupRoleModelImpl.getGroupId())
-					};
+				args = new Object[] { userGroupRoleModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -2803,16 +2799,14 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 			if ((userGroupRoleModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ROLEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userGroupRoleModelImpl.getOriginalRoleId())
+						userGroupRoleModelImpl.getOriginalRoleId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ROLEID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ROLEID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(userGroupRoleModelImpl.getRoleId())
-					};
+				args = new Object[] { userGroupRoleModelImpl.getRoleId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ROLEID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ROLEID,
@@ -2822,8 +2816,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 			if ((userGroupRoleModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userGroupRoleModelImpl.getOriginalUserId()),
-						Long.valueOf(userGroupRoleModelImpl.getOriginalGroupId())
+						userGroupRoleModelImpl.getOriginalUserId(),
+						userGroupRoleModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_G, args);
@@ -2831,8 +2825,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 					args);
 
 				args = new Object[] {
-						Long.valueOf(userGroupRoleModelImpl.getUserId()),
-						Long.valueOf(userGroupRoleModelImpl.getGroupId())
+						userGroupRoleModelImpl.getUserId(),
+						userGroupRoleModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_G, args);
@@ -2843,8 +2837,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 			if ((userGroupRoleModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userGroupRoleModelImpl.getOriginalGroupId()),
-						Long.valueOf(userGroupRoleModelImpl.getOriginalRoleId())
+						userGroupRoleModelImpl.getOriginalGroupId(),
+						userGroupRoleModelImpl.getOriginalRoleId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
@@ -2852,8 +2846,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 					args);
 
 				args = new Object[] {
-						Long.valueOf(userGroupRoleModelImpl.getGroupId()),
-						Long.valueOf(userGroupRoleModelImpl.getRoleId())
+						userGroupRoleModelImpl.getGroupId(),
+						userGroupRoleModelImpl.getRoleId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);

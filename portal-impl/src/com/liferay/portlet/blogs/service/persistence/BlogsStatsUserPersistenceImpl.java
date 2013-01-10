@@ -2834,10 +2834,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			blogsStatsUser);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U,
-			new Object[] {
-				Long.valueOf(blogsStatsUser.getGroupId()),
-				Long.valueOf(blogsStatsUser.getUserId())
-			}, blogsStatsUser);
+			new Object[] { blogsStatsUser.getGroupId(), blogsStatsUser.getUserId() },
+			blogsStatsUser);
 
 		blogsStatsUser.resetOriginalValues();
 	}
@@ -2914,8 +2912,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	protected void cacheUniqueFindersCache(BlogsStatsUser blogsStatsUser) {
 		if (blogsStatsUser.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(blogsStatsUser.getGroupId()),
-					Long.valueOf(blogsStatsUser.getUserId())
+					blogsStatsUser.getGroupId(), blogsStatsUser.getUserId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U, args,
@@ -2929,8 +2926,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			if ((blogsStatsUserModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(blogsStatsUser.getGroupId()),
-						Long.valueOf(blogsStatsUser.getUserId())
+						blogsStatsUser.getGroupId(), blogsStatsUser.getUserId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U, args,
@@ -2945,8 +2941,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		BlogsStatsUserModelImpl blogsStatsUserModelImpl = (BlogsStatsUserModelImpl)blogsStatsUser;
 
 		Object[] args = new Object[] {
-				Long.valueOf(blogsStatsUser.getGroupId()),
-				Long.valueOf(blogsStatsUser.getUserId())
+				blogsStatsUser.getGroupId(), blogsStatsUser.getUserId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -2955,8 +2950,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		if ((blogsStatsUserModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_U.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(blogsStatsUserModelImpl.getOriginalGroupId()),
-					Long.valueOf(blogsStatsUserModelImpl.getOriginalUserId())
+					blogsStatsUserModelImpl.getOriginalGroupId(),
+					blogsStatsUserModelImpl.getOriginalUserId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -2989,7 +2984,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	 */
 	public BlogsStatsUser remove(long statsUserId)
 		throws NoSuchStatsUserException, SystemException {
-		return remove(Long.valueOf(statsUserId));
+		return remove((Serializable)statsUserId);
 	}
 
 	/**
@@ -3107,16 +3102,14 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			if ((blogsStatsUserModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(blogsStatsUserModelImpl.getOriginalGroupId())
+						blogsStatsUserModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(blogsStatsUserModelImpl.getGroupId())
-					};
+				args = new Object[] { blogsStatsUserModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -3126,16 +3119,14 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			if ((blogsStatsUserModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(blogsStatsUserModelImpl.getOriginalUserId())
+						blogsStatsUserModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(blogsStatsUserModelImpl.getUserId())
-					};
+				args = new Object[] { blogsStatsUserModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -3145,8 +3136,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			if ((blogsStatsUserModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_L.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(blogsStatsUserModelImpl.getOriginalUserId()),
-						
+						blogsStatsUserModelImpl.getOriginalUserId(),
 						blogsStatsUserModelImpl.getOriginalLastPostDate()
 					};
 
@@ -3155,8 +3145,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 					args);
 
 				args = new Object[] {
-						Long.valueOf(blogsStatsUserModelImpl.getUserId()),
-						
+						blogsStatsUserModelImpl.getUserId(),
 						blogsStatsUserModelImpl.getLastPostDate()
 					};
 

@@ -100,7 +100,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_releaseId);
+		return _releaseId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

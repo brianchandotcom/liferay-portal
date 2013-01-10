@@ -203,7 +203,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_groupId);
+		return _groupId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

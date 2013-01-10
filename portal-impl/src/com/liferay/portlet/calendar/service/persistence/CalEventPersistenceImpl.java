@@ -7278,8 +7278,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			CalEventImpl.class, calEvent.getPrimaryKey(), calEvent);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { calEvent.getUuid(), Long.valueOf(
-					calEvent.getGroupId()) }, calEvent);
+			new Object[] { calEvent.getUuid(), calEvent.getGroupId() }, calEvent);
 
 		calEvent.resetOriginalValues();
 	}
@@ -7356,7 +7355,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	protected void cacheUniqueFindersCache(CalEvent calEvent) {
 		if (calEvent.isNew()) {
 			Object[] args = new Object[] {
-					calEvent.getUuid(), Long.valueOf(calEvent.getGroupId())
+					calEvent.getUuid(), calEvent.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -7370,7 +7369,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			if ((calEventModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						calEvent.getUuid(), Long.valueOf(calEvent.getGroupId())
+						calEvent.getUuid(), calEvent.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -7384,9 +7383,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	protected void clearUniqueFindersCache(CalEvent calEvent) {
 		CalEventModelImpl calEventModelImpl = (CalEventModelImpl)calEvent;
 
-		Object[] args = new Object[] {
-				calEvent.getUuid(), Long.valueOf(calEvent.getGroupId())
-			};
+		Object[] args = new Object[] { calEvent.getUuid(), calEvent.getGroupId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
@@ -7395,7 +7392,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					calEventModelImpl.getOriginalUuid(),
-					Long.valueOf(calEventModelImpl.getOriginalGroupId())
+					calEventModelImpl.getOriginalGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -7432,7 +7429,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	public CalEvent remove(long eventId)
 		throws NoSuchEventException, SystemException {
-		return remove(Long.valueOf(eventId));
+		return remove((Serializable)eventId);
 	}
 
 	/**
@@ -7602,7 +7599,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						calEventModelImpl.getOriginalUuid(),
-						Long.valueOf(calEventModelImpl.getOriginalCompanyId())
+						calEventModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -7611,7 +7608,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				args = new Object[] {
 						calEventModelImpl.getUuid(),
-						Long.valueOf(calEventModelImpl.getCompanyId())
+						calEventModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -7622,7 +7619,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			if ((calEventModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(calEventModelImpl.getOriginalCompanyId())
+						calEventModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -7630,9 +7627,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(calEventModelImpl.getCompanyId())
-					};
+				args = new Object[] { calEventModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -7643,14 +7638,14 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			if ((calEventModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(calEventModelImpl.getOriginalGroupId())
+						calEventModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] { Long.valueOf(calEventModelImpl.getGroupId()) };
+				args = new Object[] { calEventModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -7660,8 +7655,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			if ((calEventModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(calEventModelImpl.getOriginalGroupId()),
-						
+						calEventModelImpl.getOriginalGroupId(),
 						calEventModelImpl.getOriginalType()
 					};
 
@@ -7670,8 +7664,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(calEventModelImpl.getGroupId()),
-						
+						calEventModelImpl.getGroupId(),
 						calEventModelImpl.getType()
 					};
 
@@ -7683,8 +7676,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			if ((calEventModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(calEventModelImpl.getOriginalGroupId()),
-						Boolean.valueOf(calEventModelImpl.getOriginalRepeating())
+						calEventModelImpl.getOriginalGroupId(),
+						calEventModelImpl.getOriginalRepeating()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
@@ -7692,8 +7685,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(calEventModelImpl.getGroupId()),
-						Boolean.valueOf(calEventModelImpl.getRepeating())
+						calEventModelImpl.getGroupId(),
+						calEventModelImpl.getRepeating()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
@@ -7704,10 +7697,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			if ((calEventModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(calEventModelImpl.getOriginalGroupId()),
-						
+						calEventModelImpl.getOriginalGroupId(),
 						calEventModelImpl.getOriginalType(),
-						Boolean.valueOf(calEventModelImpl.getOriginalRepeating())
+						calEventModelImpl.getOriginalRepeating()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T_R, args);
@@ -7715,10 +7707,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(calEventModelImpl.getGroupId()),
-						
+						calEventModelImpl.getGroupId(),
 						calEventModelImpl.getType(),
-						Boolean.valueOf(calEventModelImpl.getRepeating())
+						calEventModelImpl.getRepeating()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T_R, args);

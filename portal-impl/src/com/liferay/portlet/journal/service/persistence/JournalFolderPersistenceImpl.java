@@ -4201,24 +4201,17 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			journalFolder);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				journalFolder.getUuid(),
-				Long.valueOf(journalFolder.getGroupId())
-			}, journalFolder);
+			new Object[] { journalFolder.getUuid(), journalFolder.getGroupId() },
+			journalFolder);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-			new Object[] {
-				Long.valueOf(journalFolder.getGroupId()),
-				
-			journalFolder.getName()
-			}, journalFolder);
+			new Object[] { journalFolder.getGroupId(), journalFolder.getName() },
+			journalFolder);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_N,
 			new Object[] {
-				Long.valueOf(journalFolder.getGroupId()),
-				Long.valueOf(journalFolder.getParentFolderId()),
-				
-			journalFolder.getName()
+				journalFolder.getGroupId(), journalFolder.getParentFolderId(),
+				journalFolder.getName()
 			}, journalFolder);
 
 		journalFolder.resetOriginalValues();
@@ -4296,8 +4289,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	protected void cacheUniqueFindersCache(JournalFolder journalFolder) {
 		if (journalFolder.isNew()) {
 			Object[] args = new Object[] {
-					journalFolder.getUuid(),
-					Long.valueOf(journalFolder.getGroupId())
+					journalFolder.getUuid(), journalFolder.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -4306,9 +4298,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 				journalFolder);
 
 			args = new Object[] {
-					Long.valueOf(journalFolder.getGroupId()),
-					
-					journalFolder.getName()
+					journalFolder.getGroupId(), journalFolder.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
@@ -4317,10 +4307,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 				journalFolder);
 
 			args = new Object[] {
-					Long.valueOf(journalFolder.getGroupId()),
-					Long.valueOf(journalFolder.getParentFolderId()),
-					
-					journalFolder.getName()
+					journalFolder.getGroupId(),
+					journalFolder.getParentFolderId(), journalFolder.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_N, args,
@@ -4334,8 +4322,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			if ((journalFolderModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						journalFolder.getUuid(),
-						Long.valueOf(journalFolder.getGroupId())
+						journalFolder.getUuid(), journalFolder.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -4347,9 +4334,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			if ((journalFolderModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(journalFolder.getGroupId()),
-						
-						journalFolder.getName()
+						journalFolder.getGroupId(), journalFolder.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
@@ -4361,9 +4346,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			if ((journalFolderModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_P_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(journalFolder.getGroupId()),
-						Long.valueOf(journalFolder.getParentFolderId()),
-						
+						journalFolder.getGroupId(),
+						journalFolder.getParentFolderId(),
 						journalFolder.getName()
 					};
 
@@ -4379,8 +4363,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		JournalFolderModelImpl journalFolderModelImpl = (JournalFolderModelImpl)journalFolder;
 
 		Object[] args = new Object[] {
-				journalFolder.getUuid(),
-				Long.valueOf(journalFolder.getGroupId())
+				journalFolder.getUuid(), journalFolder.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -4390,18 +4373,14 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					journalFolderModelImpl.getOriginalUuid(),
-					Long.valueOf(journalFolderModelImpl.getOriginalGroupId())
+					journalFolderModelImpl.getOriginalGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] {
-				Long.valueOf(journalFolder.getGroupId()),
-				
-				journalFolder.getName()
-			};
+		args = new Object[] { journalFolder.getGroupId(), journalFolder.getName() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
@@ -4409,8 +4388,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		if ((journalFolderModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(journalFolderModelImpl.getOriginalGroupId()),
-					
+					journalFolderModelImpl.getOriginalGroupId(),
 					journalFolderModelImpl.getOriginalName()
 				};
 
@@ -4419,9 +4397,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		}
 
 		args = new Object[] {
-				Long.valueOf(journalFolder.getGroupId()),
-				Long.valueOf(journalFolder.getParentFolderId()),
-				
+				journalFolder.getGroupId(), journalFolder.getParentFolderId(),
 				journalFolder.getName()
 			};
 
@@ -4431,9 +4407,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		if ((journalFolderModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_P_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(journalFolderModelImpl.getOriginalGroupId()),
-					Long.valueOf(journalFolderModelImpl.getOriginalParentFolderId()),
-					
+					journalFolderModelImpl.getOriginalGroupId(),
+					journalFolderModelImpl.getOriginalParentFolderId(),
 					journalFolderModelImpl.getOriginalName()
 				};
 
@@ -4471,7 +4446,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	 */
 	public JournalFolder remove(long folderId)
 		throws NoSuchFolderException, SystemException {
-		return remove(Long.valueOf(folderId));
+		return remove((Serializable)folderId);
 	}
 
 	/**
@@ -4613,7 +4588,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						journalFolderModelImpl.getOriginalUuid(),
-						Long.valueOf(journalFolderModelImpl.getOriginalCompanyId())
+						journalFolderModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -4622,7 +4597,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 				args = new Object[] {
 						journalFolderModelImpl.getUuid(),
-						Long.valueOf(journalFolderModelImpl.getCompanyId())
+						journalFolderModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -4633,16 +4608,14 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			if ((journalFolderModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(journalFolderModelImpl.getOriginalGroupId())
+						journalFolderModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(journalFolderModelImpl.getGroupId())
-					};
+				args = new Object[] { journalFolderModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -4652,7 +4625,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			if ((journalFolderModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(journalFolderModelImpl.getOriginalCompanyId())
+						journalFolderModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -4660,9 +4633,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(journalFolderModelImpl.getCompanyId())
-					};
+				args = new Object[] { journalFolderModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -4673,8 +4644,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			if ((journalFolderModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(journalFolderModelImpl.getOriginalGroupId()),
-						Long.valueOf(journalFolderModelImpl.getOriginalParentFolderId())
+						journalFolderModelImpl.getOriginalGroupId(),
+						journalFolderModelImpl.getOriginalParentFolderId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -4682,8 +4653,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 					args);
 
 				args = new Object[] {
-						Long.valueOf(journalFolderModelImpl.getGroupId()),
-						Long.valueOf(journalFolderModelImpl.getParentFolderId())
+						journalFolderModelImpl.getGroupId(),
+						journalFolderModelImpl.getParentFolderId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);

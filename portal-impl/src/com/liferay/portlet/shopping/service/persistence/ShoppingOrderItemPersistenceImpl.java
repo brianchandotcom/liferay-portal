@@ -667,7 +667,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	public ShoppingOrderItem remove(long orderItemId)
 		throws NoSuchOrderItemException, SystemException {
-		return remove(Long.valueOf(orderItemId));
+		return remove((Serializable)orderItemId);
 	}
 
 	/**
@@ -785,16 +785,14 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 			if ((shoppingOrderItemModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ORDERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shoppingOrderItemModelImpl.getOriginalOrderId())
+						shoppingOrderItemModelImpl.getOriginalOrderId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ORDERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ORDERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(shoppingOrderItemModelImpl.getOrderId())
-					};
+				args = new Object[] { shoppingOrderItemModelImpl.getOrderId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ORDERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ORDERID,

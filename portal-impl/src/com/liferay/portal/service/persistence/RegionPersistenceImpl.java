@@ -1807,11 +1807,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			RegionImpl.class, region.getPrimaryKey(), region);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R,
-			new Object[] {
-				Long.valueOf(region.getCountryId()),
-				
-			region.getRegionCode()
-			}, region);
+			new Object[] { region.getCountryId(), region.getRegionCode() },
+			region);
 
 		region.resetOriginalValues();
 	}
@@ -1888,9 +1885,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	protected void cacheUniqueFindersCache(Region region) {
 		if (region.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(region.getCountryId()),
-					
-					region.getRegionCode()
+					region.getCountryId(), region.getRegionCode()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R, args,
@@ -1903,9 +1898,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			if ((regionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(region.getCountryId()),
-						
-						region.getRegionCode()
+						region.getCountryId(), region.getRegionCode()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R, args,
@@ -1919,9 +1912,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		RegionModelImpl regionModelImpl = (RegionModelImpl)region;
 
 		Object[] args = new Object[] {
-				Long.valueOf(region.getCountryId()),
-				
-				region.getRegionCode()
+				region.getCountryId(), region.getRegionCode()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
@@ -1930,8 +1921,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		if ((regionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_R.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(regionModelImpl.getOriginalCountryId()),
-					
+					regionModelImpl.getOriginalCountryId(),
 					regionModelImpl.getOriginalRegionCode()
 				};
 
@@ -1965,7 +1955,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	public Region remove(long regionId)
 		throws NoSuchRegionException, SystemException {
-		return remove(Long.valueOf(regionId));
+		return remove((Serializable)regionId);
 	}
 
 	/**
@@ -2080,7 +2070,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			if ((regionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COUNTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(regionModelImpl.getOriginalCountryId())
+						regionModelImpl.getOriginalCountryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COUNTRYID,
@@ -2088,7 +2078,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COUNTRYID,
 					args);
 
-				args = new Object[] { Long.valueOf(regionModelImpl.getCountryId()) };
+				args = new Object[] { regionModelImpl.getCountryId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COUNTRYID,
 					args);
@@ -2098,15 +2088,13 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 			if ((regionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Boolean.valueOf(regionModelImpl.getOriginalActive())
-					};
+				Object[] args = new Object[] { regionModelImpl.getOriginalActive() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
 					args);
 
-				args = new Object[] { Boolean.valueOf(regionModelImpl.getActive()) };
+				args = new Object[] { regionModelImpl.getActive() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACTIVE, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE,
@@ -2116,8 +2104,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			if ((regionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(regionModelImpl.getOriginalCountryId()),
-						Boolean.valueOf(regionModelImpl.getOriginalActive())
+						regionModelImpl.getOriginalCountryId(),
+						regionModelImpl.getOriginalActive()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
@@ -2125,8 +2113,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(regionModelImpl.getCountryId()),
-						Boolean.valueOf(regionModelImpl.getActive())
+						regionModelImpl.getCountryId(),
+						regionModelImpl.getActive()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_A, args);

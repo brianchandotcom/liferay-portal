@@ -2316,8 +2316,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_D_F,
 			new Object[] {
-				Long.valueOf(dlFileEntryMetadata.getDDMStructureId()),
-				Long.valueOf(dlFileEntryMetadata.getFileVersionId())
+				dlFileEntryMetadata.getDDMStructureId(),
+				dlFileEntryMetadata.getFileVersionId()
 			}, dlFileEntryMetadata);
 
 		dlFileEntryMetadata.resetOriginalValues();
@@ -2398,8 +2398,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		DLFileEntryMetadata dlFileEntryMetadata) {
 		if (dlFileEntryMetadata.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(dlFileEntryMetadata.getDDMStructureId()),
-					Long.valueOf(dlFileEntryMetadata.getFileVersionId())
+					dlFileEntryMetadata.getDDMStructureId(),
+					dlFileEntryMetadata.getFileVersionId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_D_F, args,
@@ -2413,8 +2413,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			if ((dlFileEntryMetadataModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_D_F.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileEntryMetadata.getDDMStructureId()),
-						Long.valueOf(dlFileEntryMetadata.getFileVersionId())
+						dlFileEntryMetadata.getDDMStructureId(),
+						dlFileEntryMetadata.getFileVersionId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_D_F, args,
@@ -2430,8 +2430,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		DLFileEntryMetadataModelImpl dlFileEntryMetadataModelImpl = (DLFileEntryMetadataModelImpl)dlFileEntryMetadata;
 
 		Object[] args = new Object[] {
-				Long.valueOf(dlFileEntryMetadata.getDDMStructureId()),
-				Long.valueOf(dlFileEntryMetadata.getFileVersionId())
+				dlFileEntryMetadata.getDDMStructureId(),
+				dlFileEntryMetadata.getFileVersionId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_D_F, args);
@@ -2440,8 +2440,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		if ((dlFileEntryMetadataModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_D_F.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(dlFileEntryMetadataModelImpl.getOriginalDDMStructureId()),
-					Long.valueOf(dlFileEntryMetadataModelImpl.getOriginalFileVersionId())
+					dlFileEntryMetadataModelImpl.getOriginalDDMStructureId(),
+					dlFileEntryMetadataModelImpl.getOriginalFileVersionId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_D_F, args);
@@ -2478,7 +2478,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	 */
 	public DLFileEntryMetadata remove(long fileEntryMetadataId)
 		throws NoSuchFileEntryMetadataException, SystemException {
-		return remove(Long.valueOf(fileEntryMetadataId));
+		return remove((Serializable)fileEntryMetadataId);
 	}
 
 	/**
@@ -2619,7 +2619,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			if ((dlFileEntryMetadataModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEENTRYTYPEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileEntryMetadataModelImpl.getOriginalFileEntryTypeId())
+						dlFileEntryMetadataModelImpl.getOriginalFileEntryTypeId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEENTRYTYPEID,
@@ -2628,7 +2628,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 					args);
 
 				args = new Object[] {
-						Long.valueOf(dlFileEntryMetadataModelImpl.getFileEntryTypeId())
+						dlFileEntryMetadataModelImpl.getFileEntryTypeId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEENTRYTYPEID,
@@ -2640,7 +2640,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			if ((dlFileEntryMetadataModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEENTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileEntryMetadataModelImpl.getOriginalFileEntryId())
+						dlFileEntryMetadataModelImpl.getOriginalFileEntryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEENTRYID,
@@ -2649,7 +2649,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 					args);
 
 				args = new Object[] {
-						Long.valueOf(dlFileEntryMetadataModelImpl.getFileEntryId())
+						dlFileEntryMetadataModelImpl.getFileEntryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEENTRYID,
@@ -2661,7 +2661,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			if ((dlFileEntryMetadataModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEVERSIONID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileEntryMetadataModelImpl.getOriginalFileVersionId())
+						dlFileEntryMetadataModelImpl.getOriginalFileVersionId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEVERSIONID,
@@ -2670,7 +2670,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 					args);
 
 				args = new Object[] {
-						Long.valueOf(dlFileEntryMetadataModelImpl.getFileVersionId())
+						dlFileEntryMetadataModelImpl.getFileVersionId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEVERSIONID,

@@ -266,7 +266,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_userId);
+		return _userId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

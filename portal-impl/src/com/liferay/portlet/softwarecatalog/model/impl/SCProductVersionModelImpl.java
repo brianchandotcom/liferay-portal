@@ -177,7 +177,7 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_productVersionId);
+		return _productVersionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

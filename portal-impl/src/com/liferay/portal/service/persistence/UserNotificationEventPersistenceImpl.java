@@ -2281,7 +2281,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	public UserNotificationEvent remove(long userNotificationEventId)
 		throws NoSuchUserNotificationEventException, SystemException {
-		return remove(Long.valueOf(userNotificationEventId));
+		return remove((Serializable)userNotificationEventId);
 	}
 
 	/**
@@ -2423,7 +2423,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						userNotificationEventModelImpl.getOriginalUuid(),
-						Long.valueOf(userNotificationEventModelImpl.getOriginalCompanyId())
+						userNotificationEventModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -2432,7 +2432,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 				args = new Object[] {
 						userNotificationEventModelImpl.getUuid(),
-						Long.valueOf(userNotificationEventModelImpl.getCompanyId())
+						userNotificationEventModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -2443,16 +2443,14 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			if ((userNotificationEventModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userNotificationEventModelImpl.getOriginalUserId())
+						userNotificationEventModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(userNotificationEventModelImpl.getUserId())
-					};
+				args = new Object[] { userNotificationEventModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -2462,8 +2460,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			if ((userNotificationEventModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userNotificationEventModelImpl.getOriginalUserId()),
-						Boolean.valueOf(userNotificationEventModelImpl.getOriginalArchived())
+						userNotificationEventModelImpl.getOriginalUserId(),
+						userNotificationEventModelImpl.getOriginalArchived()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_A, args);
@@ -2471,8 +2469,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 					args);
 
 				args = new Object[] {
-						Long.valueOf(userNotificationEventModelImpl.getUserId()),
-						Boolean.valueOf(userNotificationEventModelImpl.getArchived())
+						userNotificationEventModelImpl.getUserId(),
+						userNotificationEventModelImpl.getArchived()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_A, args);

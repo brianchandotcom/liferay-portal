@@ -105,7 +105,7 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_statsUserId);
+		return _statsUserId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -175,7 +175,7 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_frameworkVersionId);
+		return _frameworkVersionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

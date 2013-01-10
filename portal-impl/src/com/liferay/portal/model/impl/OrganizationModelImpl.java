@@ -172,7 +172,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_organizationId);
+		return _organizationId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

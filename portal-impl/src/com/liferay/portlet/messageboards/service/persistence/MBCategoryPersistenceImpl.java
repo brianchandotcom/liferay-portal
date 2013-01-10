@@ -7087,9 +7087,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			MBCategoryImpl.class, mbCategory.getPrimaryKey(), mbCategory);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				mbCategory.getUuid(), Long.valueOf(mbCategory.getGroupId())
-			}, mbCategory);
+			new Object[] { mbCategory.getUuid(), mbCategory.getGroupId() },
+			mbCategory);
 
 		mbCategory.resetOriginalValues();
 	}
@@ -7166,7 +7165,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	protected void cacheUniqueFindersCache(MBCategory mbCategory) {
 		if (mbCategory.isNew()) {
 			Object[] args = new Object[] {
-					mbCategory.getUuid(), Long.valueOf(mbCategory.getGroupId())
+					mbCategory.getUuid(), mbCategory.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -7180,8 +7179,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			if ((mbCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						mbCategory.getUuid(),
-						Long.valueOf(mbCategory.getGroupId())
+						mbCategory.getUuid(), mbCategory.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -7196,7 +7194,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		MBCategoryModelImpl mbCategoryModelImpl = (MBCategoryModelImpl)mbCategory;
 
 		Object[] args = new Object[] {
-				mbCategory.getUuid(), Long.valueOf(mbCategory.getGroupId())
+				mbCategory.getUuid(), mbCategory.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -7206,7 +7204,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					mbCategoryModelImpl.getOriginalUuid(),
-					Long.valueOf(mbCategoryModelImpl.getOriginalGroupId())
+					mbCategoryModelImpl.getOriginalGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -7243,7 +7241,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	public MBCategory remove(long categoryId)
 		throws NoSuchCategoryException, SystemException {
-		return remove(Long.valueOf(categoryId));
+		return remove((Serializable)categoryId);
 	}
 
 	/**
@@ -7385,7 +7383,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						mbCategoryModelImpl.getOriginalUuid(),
-						Long.valueOf(mbCategoryModelImpl.getOriginalCompanyId())
+						mbCategoryModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -7394,7 +7392,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 				args = new Object[] {
 						mbCategoryModelImpl.getUuid(),
-						Long.valueOf(mbCategoryModelImpl.getCompanyId())
+						mbCategoryModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -7405,16 +7403,14 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			if ((mbCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbCategoryModelImpl.getOriginalGroupId())
+						mbCategoryModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(mbCategoryModelImpl.getGroupId())
-					};
+				args = new Object[] { mbCategoryModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -7424,7 +7420,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			if ((mbCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbCategoryModelImpl.getOriginalCompanyId())
+						mbCategoryModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -7432,9 +7428,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(mbCategoryModelImpl.getCompanyId())
-					};
+				args = new Object[] { mbCategoryModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -7445,8 +7439,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			if ((mbCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbCategoryModelImpl.getOriginalGroupId()),
-						Long.valueOf(mbCategoryModelImpl.getOriginalParentCategoryId())
+						mbCategoryModelImpl.getOriginalGroupId(),
+						mbCategoryModelImpl.getOriginalParentCategoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -7454,8 +7448,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbCategoryModelImpl.getGroupId()),
-						Long.valueOf(mbCategoryModelImpl.getParentCategoryId())
+						mbCategoryModelImpl.getGroupId(),
+						mbCategoryModelImpl.getParentCategoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -7466,8 +7460,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			if ((mbCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbCategoryModelImpl.getOriginalGroupId()),
-						Integer.valueOf(mbCategoryModelImpl.getOriginalStatus())
+						mbCategoryModelImpl.getOriginalGroupId(),
+						mbCategoryModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
@@ -7475,8 +7469,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbCategoryModelImpl.getGroupId()),
-						Integer.valueOf(mbCategoryModelImpl.getStatus())
+						mbCategoryModelImpl.getGroupId(),
+						mbCategoryModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
@@ -7487,8 +7481,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			if ((mbCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbCategoryModelImpl.getOriginalCompanyId()),
-						Integer.valueOf(mbCategoryModelImpl.getOriginalStatus())
+						mbCategoryModelImpl.getOriginalCompanyId(),
+						mbCategoryModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
@@ -7496,8 +7490,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbCategoryModelImpl.getCompanyId()),
-						Integer.valueOf(mbCategoryModelImpl.getStatus())
+						mbCategoryModelImpl.getCompanyId(),
+						mbCategoryModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
@@ -7508,9 +7502,9 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			if ((mbCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbCategoryModelImpl.getOriginalGroupId()),
-						Long.valueOf(mbCategoryModelImpl.getOriginalParentCategoryId()),
-						Integer.valueOf(mbCategoryModelImpl.getOriginalStatus())
+						mbCategoryModelImpl.getOriginalGroupId(),
+						mbCategoryModelImpl.getOriginalParentCategoryId(),
+						mbCategoryModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_S, args);
@@ -7518,9 +7512,9 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(mbCategoryModelImpl.getGroupId()),
-						Long.valueOf(mbCategoryModelImpl.getParentCategoryId()),
-						Integer.valueOf(mbCategoryModelImpl.getStatus())
+						mbCategoryModelImpl.getGroupId(),
+						mbCategoryModelImpl.getParentCategoryId(),
+						mbCategoryModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_S, args);

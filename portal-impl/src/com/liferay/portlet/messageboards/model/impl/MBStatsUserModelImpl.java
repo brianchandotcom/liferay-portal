@@ -99,7 +99,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_statsUserId);
+		return _statsUserId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

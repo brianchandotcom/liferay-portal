@@ -2935,11 +2935,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			OrganizationImpl.class, organization.getPrimaryKey(), organization);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
-			new Object[] {
-				Long.valueOf(organization.getCompanyId()),
-				
-			organization.getName()
-			}, organization);
+			new Object[] { organization.getCompanyId(), organization.getName() },
+			organization);
 
 		organization.resetOriginalValues();
 	}
@@ -3016,9 +3013,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	protected void cacheUniqueFindersCache(Organization organization) {
 		if (organization.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(organization.getCompanyId()),
-					
-					organization.getName()
+					organization.getCompanyId(), organization.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
@@ -3032,9 +3027,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			if ((organizationModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(organization.getCompanyId()),
-						
-						organization.getName()
+						organization.getCompanyId(), organization.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
@@ -3049,9 +3042,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		OrganizationModelImpl organizationModelImpl = (OrganizationModelImpl)organization;
 
 		Object[] args = new Object[] {
-				Long.valueOf(organization.getCompanyId()),
-				
-				organization.getName()
+				organization.getCompanyId(), organization.getName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
@@ -3060,8 +3051,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		if ((organizationModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(organizationModelImpl.getOriginalCompanyId()),
-					
+					organizationModelImpl.getOriginalCompanyId(),
 					organizationModelImpl.getOriginalName()
 				};
 
@@ -3095,7 +3085,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	public Organization remove(long organizationId)
 		throws NoSuchOrganizationException, SystemException {
-		return remove(Long.valueOf(organizationId));
+		return remove((Serializable)organizationId);
 	}
 
 	/**
@@ -3233,7 +3223,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			if ((organizationModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(organizationModelImpl.getOriginalCompanyId())
+						organizationModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -3241,9 +3231,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(organizationModelImpl.getCompanyId())
-					};
+				args = new Object[] { organizationModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -3254,7 +3242,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			if ((organizationModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LOCATIONS.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(organizationModelImpl.getOriginalCompanyId())
+						organizationModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LOCATIONS,
@@ -3262,9 +3250,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LOCATIONS,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(organizationModelImpl.getCompanyId())
-					};
+				args = new Object[] { organizationModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LOCATIONS,
 					args);
@@ -3275,8 +3261,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			if ((organizationModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(organizationModelImpl.getOriginalCompanyId()),
-						Long.valueOf(organizationModelImpl.getOriginalParentOrganizationId())
+						organizationModelImpl.getOriginalCompanyId(),
+						organizationModelImpl.getOriginalParentOrganizationId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
@@ -3284,8 +3270,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 					args);
 
 				args = new Object[] {
-						Long.valueOf(organizationModelImpl.getCompanyId()),
-						Long.valueOf(organizationModelImpl.getParentOrganizationId())
+						organizationModelImpl.getCompanyId(),
+						organizationModelImpl.getParentOrganizationId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);

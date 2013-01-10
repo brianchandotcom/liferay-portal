@@ -162,7 +162,7 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_entryId);
+		return _entryId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

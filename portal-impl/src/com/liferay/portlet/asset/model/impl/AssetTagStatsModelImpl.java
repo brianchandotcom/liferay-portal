@@ -98,7 +98,7 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_tagStatsId);
+		return _tagStatsId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -665,7 +665,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 */
 	public PasswordTracker remove(long passwordTrackerId)
 		throws NoSuchPasswordTrackerException, SystemException {
-		return remove(Long.valueOf(passwordTrackerId));
+		return remove((Serializable)passwordTrackerId);
 	}
 
 	/**
@@ -783,16 +783,14 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 			if ((passwordTrackerModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(passwordTrackerModelImpl.getOriginalUserId())
+						passwordTrackerModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(passwordTrackerModelImpl.getUserId())
-					};
+				args = new Object[] { passwordTrackerModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,

@@ -1412,9 +1412,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_C_C,
 			new Object[] {
-				Long.valueOf(ratingsEntry.getUserId()),
-				Long.valueOf(ratingsEntry.getClassNameId()),
-				Long.valueOf(ratingsEntry.getClassPK())
+				ratingsEntry.getUserId(), ratingsEntry.getClassNameId(),
+				ratingsEntry.getClassPK()
 			}, ratingsEntry);
 
 		ratingsEntry.resetOriginalValues();
@@ -1492,9 +1491,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	protected void cacheUniqueFindersCache(RatingsEntry ratingsEntry) {
 		if (ratingsEntry.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(ratingsEntry.getUserId()),
-					Long.valueOf(ratingsEntry.getClassNameId()),
-					Long.valueOf(ratingsEntry.getClassPK())
+					ratingsEntry.getUserId(), ratingsEntry.getClassNameId(),
+					ratingsEntry.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_C_C, args,
@@ -1508,9 +1506,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 			if ((ratingsEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_U_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(ratingsEntry.getUserId()),
-						Long.valueOf(ratingsEntry.getClassNameId()),
-						Long.valueOf(ratingsEntry.getClassPK())
+						ratingsEntry.getUserId(), ratingsEntry.getClassNameId(),
+						ratingsEntry.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_C_C, args,
@@ -1525,9 +1522,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		RatingsEntryModelImpl ratingsEntryModelImpl = (RatingsEntryModelImpl)ratingsEntry;
 
 		Object[] args = new Object[] {
-				Long.valueOf(ratingsEntry.getUserId()),
-				Long.valueOf(ratingsEntry.getClassNameId()),
-				Long.valueOf(ratingsEntry.getClassPK())
+				ratingsEntry.getUserId(), ratingsEntry.getClassNameId(),
+				ratingsEntry.getClassPK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_C, args);
@@ -1536,9 +1532,9 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		if ((ratingsEntryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_C_C.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(ratingsEntryModelImpl.getOriginalUserId()),
-					Long.valueOf(ratingsEntryModelImpl.getOriginalClassNameId()),
-					Long.valueOf(ratingsEntryModelImpl.getOriginalClassPK())
+					ratingsEntryModelImpl.getOriginalUserId(),
+					ratingsEntryModelImpl.getOriginalClassNameId(),
+					ratingsEntryModelImpl.getOriginalClassPK()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_C, args);
@@ -1571,7 +1567,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	public RatingsEntry remove(long entryId)
 		throws NoSuchEntryException, SystemException {
-		return remove(Long.valueOf(entryId));
+		return remove((Serializable)entryId);
 	}
 
 	/**
@@ -1689,8 +1685,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 			if ((ratingsEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(ratingsEntryModelImpl.getOriginalClassNameId()),
-						Long.valueOf(ratingsEntryModelImpl.getOriginalClassPK())
+						ratingsEntryModelImpl.getOriginalClassNameId(),
+						ratingsEntryModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -1698,8 +1694,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 					args);
 
 				args = new Object[] {
-						Long.valueOf(ratingsEntryModelImpl.getClassNameId()),
-						Long.valueOf(ratingsEntryModelImpl.getClassPK())
+						ratingsEntryModelImpl.getClassNameId(),
+						ratingsEntryModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -1710,9 +1706,9 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 			if ((ratingsEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(ratingsEntryModelImpl.getOriginalClassNameId()),
-						Long.valueOf(ratingsEntryModelImpl.getOriginalClassPK()),
-						Double.valueOf(ratingsEntryModelImpl.getOriginalScore())
+						ratingsEntryModelImpl.getOriginalClassNameId(),
+						ratingsEntryModelImpl.getOriginalClassPK(),
+						ratingsEntryModelImpl.getOriginalScore()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
@@ -1720,9 +1716,9 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 					args);
 
 				args = new Object[] {
-						Long.valueOf(ratingsEntryModelImpl.getClassNameId()),
-						Long.valueOf(ratingsEntryModelImpl.getClassPK()),
-						Double.valueOf(ratingsEntryModelImpl.getScore())
+						ratingsEntryModelImpl.getClassNameId(),
+						ratingsEntryModelImpl.getClassPK(),
+						ratingsEntryModelImpl.getScore()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);

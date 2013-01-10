@@ -154,7 +154,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_banId);
+		return _banId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

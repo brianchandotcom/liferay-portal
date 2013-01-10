@@ -1656,7 +1656,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	public UserTracker remove(long userTrackerId)
 		throws NoSuchUserTrackerException, SystemException {
-		return remove(Long.valueOf(userTrackerId));
+		return remove((Serializable)userTrackerId);
 	}
 
 	/**
@@ -1774,7 +1774,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			if ((userTrackerModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userTrackerModelImpl.getOriginalCompanyId())
+						userTrackerModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -1782,9 +1782,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(userTrackerModelImpl.getCompanyId())
-					};
+				args = new Object[] { userTrackerModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -1795,16 +1793,14 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			if ((userTrackerModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userTrackerModelImpl.getOriginalUserId())
+						userTrackerModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(userTrackerModelImpl.getUserId())
-					};
+				args = new Object[] { userTrackerModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,

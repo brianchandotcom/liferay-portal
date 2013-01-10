@@ -100,7 +100,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_statsId);
+		return _statsId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

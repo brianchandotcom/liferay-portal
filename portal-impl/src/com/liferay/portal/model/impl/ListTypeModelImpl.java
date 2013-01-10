@@ -135,7 +135,7 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Integer(_listTypeId);
+		return _listTypeId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

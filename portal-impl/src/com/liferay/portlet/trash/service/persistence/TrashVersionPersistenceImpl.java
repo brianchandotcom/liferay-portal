@@ -1172,7 +1172,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	public TrashVersion remove(long versionId)
 		throws NoSuchVersionException, SystemException {
-		return remove(Long.valueOf(versionId));
+		return remove((Serializable)versionId);
 	}
 
 	/**
@@ -1290,16 +1290,14 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 			if ((trashVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(trashVersionModelImpl.getOriginalEntryId())
+						trashVersionModelImpl.getOriginalEntryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ENTRYID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(trashVersionModelImpl.getEntryId())
-					};
+				args = new Object[] { trashVersionModelImpl.getEntryId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ENTRYID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID,
@@ -1309,8 +1307,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 			if ((trashVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(trashVersionModelImpl.getOriginalClassNameId()),
-						Long.valueOf(trashVersionModelImpl.getOriginalClassPK())
+						trashVersionModelImpl.getOriginalClassNameId(),
+						trashVersionModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -1318,8 +1316,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 					args);
 
 				args = new Object[] {
-						Long.valueOf(trashVersionModelImpl.getClassNameId()),
-						Long.valueOf(trashVersionModelImpl.getClassPK())
+						trashVersionModelImpl.getClassNameId(),
+						trashVersionModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);

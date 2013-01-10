@@ -4454,16 +4454,12 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			dlFileVersion);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				dlFileVersion.getUuid(),
-				Long.valueOf(dlFileVersion.getGroupId())
-			}, dlFileVersion);
+			new Object[] { dlFileVersion.getUuid(), dlFileVersion.getGroupId() },
+			dlFileVersion);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V,
 			new Object[] {
-				Long.valueOf(dlFileVersion.getFileEntryId()),
-				
-			dlFileVersion.getVersion()
+				dlFileVersion.getFileEntryId(), dlFileVersion.getVersion()
 			}, dlFileVersion);
 
 		dlFileVersion.resetOriginalValues();
@@ -4541,8 +4537,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	protected void cacheUniqueFindersCache(DLFileVersion dlFileVersion) {
 		if (dlFileVersion.isNew()) {
 			Object[] args = new Object[] {
-					dlFileVersion.getUuid(),
-					Long.valueOf(dlFileVersion.getGroupId())
+					dlFileVersion.getUuid(), dlFileVersion.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -4551,9 +4546,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 				dlFileVersion);
 
 			args = new Object[] {
-					Long.valueOf(dlFileVersion.getFileEntryId()),
-					
-					dlFileVersion.getVersion()
+					dlFileVersion.getFileEntryId(), dlFileVersion.getVersion()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_F_V, args,
@@ -4567,8 +4560,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			if ((dlFileVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileVersion.getUuid(),
-						Long.valueOf(dlFileVersion.getGroupId())
+						dlFileVersion.getUuid(), dlFileVersion.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -4580,8 +4572,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			if ((dlFileVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_F_V.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileVersion.getFileEntryId()),
-						
+						dlFileVersion.getFileEntryId(),
 						dlFileVersion.getVersion()
 					};
 
@@ -4597,8 +4588,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		DLFileVersionModelImpl dlFileVersionModelImpl = (DLFileVersionModelImpl)dlFileVersion;
 
 		Object[] args = new Object[] {
-				dlFileVersion.getUuid(),
-				Long.valueOf(dlFileVersion.getGroupId())
+				dlFileVersion.getUuid(), dlFileVersion.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -4608,7 +4598,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					dlFileVersionModelImpl.getOriginalUuid(),
-					Long.valueOf(dlFileVersionModelImpl.getOriginalGroupId())
+					dlFileVersionModelImpl.getOriginalGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -4616,9 +4606,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		}
 
 		args = new Object[] {
-				Long.valueOf(dlFileVersion.getFileEntryId()),
-				
-				dlFileVersion.getVersion()
+				dlFileVersion.getFileEntryId(), dlFileVersion.getVersion()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_F_V, args);
@@ -4627,8 +4615,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		if ((dlFileVersionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_F_V.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(dlFileVersionModelImpl.getOriginalFileEntryId()),
-					
+					dlFileVersionModelImpl.getOriginalFileEntryId(),
 					dlFileVersionModelImpl.getOriginalVersion()
 				};
 
@@ -4666,7 +4653,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 */
 	public DLFileVersion remove(long fileVersionId)
 		throws NoSuchFileVersionException, SystemException {
-		return remove(Long.valueOf(fileVersionId));
+		return remove((Serializable)fileVersionId);
 	}
 
 	/**
@@ -4808,7 +4795,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						dlFileVersionModelImpl.getOriginalUuid(),
-						Long.valueOf(dlFileVersionModelImpl.getOriginalCompanyId())
+						dlFileVersionModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -4817,7 +4804,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				args = new Object[] {
 						dlFileVersionModelImpl.getUuid(),
-						Long.valueOf(dlFileVersionModelImpl.getCompanyId())
+						dlFileVersionModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -4828,7 +4815,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			if ((dlFileVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEENTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileVersionModelImpl.getOriginalFileEntryId())
+						dlFileVersionModelImpl.getOriginalFileEntryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEENTRYID,
@@ -4836,9 +4823,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEENTRYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(dlFileVersionModelImpl.getFileEntryId())
-					};
+				args = new Object[] { dlFileVersionModelImpl.getFileEntryId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEENTRYID,
 					args);
@@ -4866,8 +4851,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			if ((dlFileVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_F_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileVersionModelImpl.getOriginalFileEntryId()),
-						Integer.valueOf(dlFileVersionModelImpl.getOriginalStatus())
+						dlFileVersionModelImpl.getOriginalFileEntryId(),
+						dlFileVersionModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_F_S, args);
@@ -4875,8 +4860,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 					args);
 
 				args = new Object[] {
-						Long.valueOf(dlFileVersionModelImpl.getFileEntryId()),
-						Integer.valueOf(dlFileVersionModelImpl.getStatus())
+						dlFileVersionModelImpl.getFileEntryId(),
+						dlFileVersionModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_F_S, args);
@@ -4887,9 +4872,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			if ((dlFileVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileVersionModelImpl.getOriginalGroupId()),
-						Long.valueOf(dlFileVersionModelImpl.getOriginalFolderId()),
-						Integer.valueOf(dlFileVersionModelImpl.getOriginalStatus())
+						dlFileVersionModelImpl.getOriginalGroupId(),
+						dlFileVersionModelImpl.getOriginalFolderId(),
+						dlFileVersionModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_S, args);
@@ -4897,9 +4882,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 					args);
 
 				args = new Object[] {
-						Long.valueOf(dlFileVersionModelImpl.getGroupId()),
-						Long.valueOf(dlFileVersionModelImpl.getFolderId()),
-						Integer.valueOf(dlFileVersionModelImpl.getStatus())
+						dlFileVersionModelImpl.getGroupId(),
+						dlFileVersionModelImpl.getFolderId(),
+						dlFileVersionModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_S, args);
@@ -4910,11 +4895,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			if ((dlFileVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F_T_V.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileVersionModelImpl.getOriginalGroupId()),
-						Long.valueOf(dlFileVersionModelImpl.getOriginalFolderId()),
-						
+						dlFileVersionModelImpl.getOriginalGroupId(),
+						dlFileVersionModelImpl.getOriginalFolderId(),
 						dlFileVersionModelImpl.getOriginalTitle(),
-						
 						dlFileVersionModelImpl.getOriginalVersion()
 					};
 
@@ -4923,11 +4906,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 					args);
 
 				args = new Object[] {
-						Long.valueOf(dlFileVersionModelImpl.getGroupId()),
-						Long.valueOf(dlFileVersionModelImpl.getFolderId()),
-						
+						dlFileVersionModelImpl.getGroupId(),
+						dlFileVersionModelImpl.getFolderId(),
 						dlFileVersionModelImpl.getTitle(),
-						
 						dlFileVersionModelImpl.getVersion()
 					};
 

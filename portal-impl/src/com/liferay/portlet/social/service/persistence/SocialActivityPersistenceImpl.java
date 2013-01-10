@@ -4821,18 +4821,15 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			socialActivity);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_MIRRORACTIVITYID,
-			new Object[] { Long.valueOf(socialActivity.getMirrorActivityId()) },
+			new Object[] { socialActivity.getMirrorActivityId() },
 			socialActivity);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U_CD_C_C_T_R,
 			new Object[] {
-				Long.valueOf(socialActivity.getGroupId()),
-				Long.valueOf(socialActivity.getUserId()),
-				Long.valueOf(socialActivity.getCreateDate()),
-				Long.valueOf(socialActivity.getClassNameId()),
-				Long.valueOf(socialActivity.getClassPK()),
-				Integer.valueOf(socialActivity.getType()),
-				Long.valueOf(socialActivity.getReceiverUserId())
+				socialActivity.getGroupId(), socialActivity.getUserId(),
+				socialActivity.getCreateDate(), socialActivity.getClassNameId(),
+				socialActivity.getClassPK(), socialActivity.getType(),
+				socialActivity.getReceiverUserId()
 			}, socialActivity);
 
 		socialActivity.resetOriginalValues();
@@ -4909,9 +4906,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 
 	protected void cacheUniqueFindersCache(SocialActivity socialActivity) {
 		if (socialActivity.isNew()) {
-			Object[] args = new Object[] {
-					Long.valueOf(socialActivity.getMirrorActivityId())
-				};
+			Object[] args = new Object[] { socialActivity.getMirrorActivityId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_MIRRORACTIVITYID,
 				args, Long.valueOf(1));
@@ -4919,13 +4914,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				args, socialActivity);
 
 			args = new Object[] {
-					Long.valueOf(socialActivity.getGroupId()),
-					Long.valueOf(socialActivity.getUserId()),
-					Long.valueOf(socialActivity.getCreateDate()),
-					Long.valueOf(socialActivity.getClassNameId()),
-					Long.valueOf(socialActivity.getClassPK()),
-					Integer.valueOf(socialActivity.getType()),
-					Long.valueOf(socialActivity.getReceiverUserId())
+					socialActivity.getGroupId(), socialActivity.getUserId(),
+					socialActivity.getCreateDate(),
+					socialActivity.getClassNameId(), socialActivity.getClassPK(),
+					socialActivity.getType(), socialActivity.getReceiverUserId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U_CD_C_C_T_R,
@@ -4939,7 +4931,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			if ((socialActivityModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_MIRRORACTIVITYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivity.getMirrorActivityId())
+						socialActivity.getMirrorActivityId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_MIRRORACTIVITYID,
@@ -4951,13 +4943,11 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			if ((socialActivityModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_U_CD_C_C_T_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivity.getGroupId()),
-						Long.valueOf(socialActivity.getUserId()),
-						Long.valueOf(socialActivity.getCreateDate()),
-						Long.valueOf(socialActivity.getClassNameId()),
-						Long.valueOf(socialActivity.getClassPK()),
-						Integer.valueOf(socialActivity.getType()),
-						Long.valueOf(socialActivity.getReceiverUserId())
+						socialActivity.getGroupId(), socialActivity.getUserId(),
+						socialActivity.getCreateDate(),
+						socialActivity.getClassNameId(),
+						socialActivity.getClassPK(), socialActivity.getType(),
+						socialActivity.getReceiverUserId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U_CD_C_C_T_R,
@@ -4971,9 +4961,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	protected void clearUniqueFindersCache(SocialActivity socialActivity) {
 		SocialActivityModelImpl socialActivityModelImpl = (SocialActivityModelImpl)socialActivity;
 
-		Object[] args = new Object[] {
-				Long.valueOf(socialActivity.getMirrorActivityId())
-			};
+		Object[] args = new Object[] { socialActivity.getMirrorActivityId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_MIRRORACTIVITYID, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MIRRORACTIVITYID, args);
@@ -4981,7 +4969,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		if ((socialActivityModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_MIRRORACTIVITYID.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(socialActivityModelImpl.getOriginalMirrorActivityId())
+					socialActivityModelImpl.getOriginalMirrorActivityId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_MIRRORACTIVITYID,
@@ -4991,13 +4979,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		}
 
 		args = new Object[] {
-				Long.valueOf(socialActivity.getGroupId()),
-				Long.valueOf(socialActivity.getUserId()),
-				Long.valueOf(socialActivity.getCreateDate()),
-				Long.valueOf(socialActivity.getClassNameId()),
-				Long.valueOf(socialActivity.getClassPK()),
-				Integer.valueOf(socialActivity.getType()),
-				Long.valueOf(socialActivity.getReceiverUserId())
+				socialActivity.getGroupId(), socialActivity.getUserId(),
+				socialActivity.getCreateDate(), socialActivity.getClassNameId(),
+				socialActivity.getClassPK(), socialActivity.getType(),
+				socialActivity.getReceiverUserId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_CD_C_C_T_R, args);
@@ -5006,13 +4991,13 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		if ((socialActivityModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_U_CD_C_C_T_R.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(socialActivityModelImpl.getOriginalGroupId()),
-					Long.valueOf(socialActivityModelImpl.getOriginalUserId()),
-					Long.valueOf(socialActivityModelImpl.getOriginalCreateDate()),
-					Long.valueOf(socialActivityModelImpl.getOriginalClassNameId()),
-					Long.valueOf(socialActivityModelImpl.getOriginalClassPK()),
-					Integer.valueOf(socialActivityModelImpl.getOriginalType()),
-					Long.valueOf(socialActivityModelImpl.getOriginalReceiverUserId())
+					socialActivityModelImpl.getOriginalGroupId(),
+					socialActivityModelImpl.getOriginalUserId(),
+					socialActivityModelImpl.getOriginalCreateDate(),
+					socialActivityModelImpl.getOriginalClassNameId(),
+					socialActivityModelImpl.getOriginalClassPK(),
+					socialActivityModelImpl.getOriginalType(),
+					socialActivityModelImpl.getOriginalReceiverUserId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_CD_C_C_T_R,
@@ -5047,7 +5032,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	 */
 	public SocialActivity remove(long activityId)
 		throws NoSuchActivityException, SystemException {
-		return remove(Long.valueOf(activityId));
+		return remove((Serializable)activityId);
 	}
 
 	/**
@@ -5165,16 +5150,14 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			if ((socialActivityModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getOriginalGroupId())
+						socialActivityModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getGroupId())
-					};
+				args = new Object[] { socialActivityModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -5184,7 +5167,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			if ((socialActivityModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getOriginalCompanyId())
+						socialActivityModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -5192,9 +5175,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getCompanyId())
-					};
+				args = new Object[] { socialActivityModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -5205,16 +5186,14 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			if ((socialActivityModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getOriginalUserId())
+						socialActivityModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getUserId())
-					};
+				args = new Object[] { socialActivityModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -5224,7 +5203,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			if ((socialActivityModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getOriginalClassNameId())
+						socialActivityModelImpl.getOriginalClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
@@ -5232,9 +5211,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getClassNameId())
-					};
+				args = new Object[] { socialActivityModelImpl.getClassNameId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
 					args);
@@ -5245,7 +5222,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			if ((socialActivityModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECEIVERUSERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getOriginalReceiverUserId())
+						socialActivityModelImpl.getOriginalReceiverUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECEIVERUSERID,
@@ -5253,9 +5230,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECEIVERUSERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getReceiverUserId())
-					};
+				args = new Object[] { socialActivityModelImpl.getReceiverUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECEIVERUSERID,
 					args);
@@ -5266,8 +5241,8 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			if ((socialActivityModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getOriginalClassNameId()),
-						Long.valueOf(socialActivityModelImpl.getOriginalClassPK())
+						socialActivityModelImpl.getOriginalClassNameId(),
+						socialActivityModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -5275,8 +5250,8 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 					args);
 
 				args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getClassNameId()),
-						Long.valueOf(socialActivityModelImpl.getClassPK())
+						socialActivityModelImpl.getClassNameId(),
+						socialActivityModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -5287,9 +5262,9 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			if ((socialActivityModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_M_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getOriginalMirrorActivityId()),
-						Long.valueOf(socialActivityModelImpl.getOriginalClassNameId()),
-						Long.valueOf(socialActivityModelImpl.getOriginalClassPK())
+						socialActivityModelImpl.getOriginalMirrorActivityId(),
+						socialActivityModelImpl.getOriginalClassNameId(),
+						socialActivityModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_M_C_C, args);
@@ -5297,9 +5272,9 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 					args);
 
 				args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getMirrorActivityId()),
-						Long.valueOf(socialActivityModelImpl.getClassNameId()),
-						Long.valueOf(socialActivityModelImpl.getClassPK())
+						socialActivityModelImpl.getMirrorActivityId(),
+						socialActivityModelImpl.getClassNameId(),
+						socialActivityModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_M_C_C, args);
@@ -5310,12 +5285,12 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			if ((socialActivityModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_C_C_T_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getOriginalGroupId()),
-						Long.valueOf(socialActivityModelImpl.getOriginalUserId()),
-						Long.valueOf(socialActivityModelImpl.getOriginalClassNameId()),
-						Long.valueOf(socialActivityModelImpl.getOriginalClassPK()),
-						Integer.valueOf(socialActivityModelImpl.getOriginalType()),
-						Long.valueOf(socialActivityModelImpl.getOriginalReceiverUserId())
+						socialActivityModelImpl.getOriginalGroupId(),
+						socialActivityModelImpl.getOriginalUserId(),
+						socialActivityModelImpl.getOriginalClassNameId(),
+						socialActivityModelImpl.getOriginalClassPK(),
+						socialActivityModelImpl.getOriginalType(),
+						socialActivityModelImpl.getOriginalReceiverUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_C_C_T_R,
@@ -5324,12 +5299,12 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 					args);
 
 				args = new Object[] {
-						Long.valueOf(socialActivityModelImpl.getGroupId()),
-						Long.valueOf(socialActivityModelImpl.getUserId()),
-						Long.valueOf(socialActivityModelImpl.getClassNameId()),
-						Long.valueOf(socialActivityModelImpl.getClassPK()),
-						Integer.valueOf(socialActivityModelImpl.getType()),
-						Long.valueOf(socialActivityModelImpl.getReceiverUserId())
+						socialActivityModelImpl.getGroupId(),
+						socialActivityModelImpl.getUserId(),
+						socialActivityModelImpl.getClassNameId(),
+						socialActivityModelImpl.getClassPK(),
+						socialActivityModelImpl.getType(),
+						socialActivityModelImpl.getReceiverUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_C_C_T_R,

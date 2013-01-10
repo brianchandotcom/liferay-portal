@@ -2134,12 +2134,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R_P_V,
 			new Object[] {
-				Long.valueOf(dlContent.getCompanyId()),
-				Long.valueOf(dlContent.getRepositoryId()),
-				
-			dlContent.getPath(),
-				
-			dlContent.getVersion()
+				dlContent.getCompanyId(), dlContent.getRepositoryId(),
+				dlContent.getPath(), dlContent.getVersion()
 			}, dlContent);
 
 		dlContent.resetOriginalValues();
@@ -2217,12 +2213,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	protected void cacheUniqueFindersCache(DLContent dlContent) {
 		if (dlContent.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(dlContent.getCompanyId()),
-					Long.valueOf(dlContent.getRepositoryId()),
-					
-					dlContent.getPath(),
-					
-					dlContent.getVersion()
+					dlContent.getCompanyId(), dlContent.getRepositoryId(),
+					dlContent.getPath(), dlContent.getVersion()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R_P_V, args,
@@ -2236,12 +2228,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			if ((dlContentModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_R_P_V.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlContent.getCompanyId()),
-						Long.valueOf(dlContent.getRepositoryId()),
-						
-						dlContent.getPath(),
-						
-						dlContent.getVersion()
+						dlContent.getCompanyId(), dlContent.getRepositoryId(),
+						dlContent.getPath(), dlContent.getVersion()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R_P_V, args,
@@ -2256,12 +2244,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		DLContentModelImpl dlContentModelImpl = (DLContentModelImpl)dlContent;
 
 		Object[] args = new Object[] {
-				Long.valueOf(dlContent.getCompanyId()),
-				Long.valueOf(dlContent.getRepositoryId()),
-				
-				dlContent.getPath(),
-				
-				dlContent.getVersion()
+				dlContent.getCompanyId(), dlContent.getRepositoryId(),
+				dlContent.getPath(), dlContent.getVersion()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_P_V, args);
@@ -2270,11 +2254,9 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		if ((dlContentModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_R_P_V.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
-					Long.valueOf(dlContentModelImpl.getOriginalRepositoryId()),
-					
+					dlContentModelImpl.getOriginalCompanyId(),
+					dlContentModelImpl.getOriginalRepositoryId(),
 					dlContentModelImpl.getOriginalPath(),
-					
 					dlContentModelImpl.getOriginalVersion()
 				};
 
@@ -2308,7 +2290,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	 */
 	public DLContent remove(long contentId)
 		throws NoSuchContentException, SystemException {
-		return remove(Long.valueOf(contentId));
+		return remove((Serializable)contentId);
 	}
 
 	/**
@@ -2430,8 +2412,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			if ((dlContentModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
-						Long.valueOf(dlContentModelImpl.getOriginalRepositoryId())
+						dlContentModelImpl.getOriginalCompanyId(),
+						dlContentModelImpl.getOriginalRepositoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
@@ -2439,8 +2421,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(dlContentModelImpl.getCompanyId()),
-						Long.valueOf(dlContentModelImpl.getRepositoryId())
+						dlContentModelImpl.getCompanyId(),
+						dlContentModelImpl.getRepositoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
@@ -2451,9 +2433,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			if ((dlContentModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
-						Long.valueOf(dlContentModelImpl.getOriginalRepositoryId()),
-						
+						dlContentModelImpl.getOriginalCompanyId(),
+						dlContentModelImpl.getOriginalRepositoryId(),
 						dlContentModelImpl.getOriginalPath()
 					};
 
@@ -2462,9 +2443,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(dlContentModelImpl.getCompanyId()),
-						Long.valueOf(dlContentModelImpl.getRepositoryId()),
-						
+						dlContentModelImpl.getCompanyId(),
+						dlContentModelImpl.getRepositoryId(),
 						dlContentModelImpl.getPath()
 					};
 

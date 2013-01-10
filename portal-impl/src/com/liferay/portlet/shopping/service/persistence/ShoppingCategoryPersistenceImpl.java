@@ -1926,7 +1926,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	public ShoppingCategory remove(long categoryId)
 		throws NoSuchCategoryException, SystemException {
-		return remove(Long.valueOf(categoryId));
+		return remove((Serializable)categoryId);
 	}
 
 	/**
@@ -2044,16 +2044,14 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			if ((shoppingCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shoppingCategoryModelImpl.getOriginalGroupId())
+						shoppingCategoryModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(shoppingCategoryModelImpl.getGroupId())
-					};
+				args = new Object[] { shoppingCategoryModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -2063,8 +2061,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			if ((shoppingCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shoppingCategoryModelImpl.getOriginalGroupId()),
-						Long.valueOf(shoppingCategoryModelImpl.getOriginalParentCategoryId())
+						shoppingCategoryModelImpl.getOriginalGroupId(),
+						shoppingCategoryModelImpl.getOriginalParentCategoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -2072,8 +2070,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 					args);
 
 				args = new Object[] {
-						Long.valueOf(shoppingCategoryModelImpl.getGroupId()),
-						Long.valueOf(shoppingCategoryModelImpl.getParentCategoryId())
+						shoppingCategoryModelImpl.getGroupId(),
+						shoppingCategoryModelImpl.getParentCategoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);

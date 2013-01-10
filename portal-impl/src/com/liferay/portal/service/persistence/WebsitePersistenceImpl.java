@@ -2788,7 +2788,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	public Website remove(long websiteId)
 		throws NoSuchWebsiteException, SystemException {
-		return remove(Long.valueOf(websiteId));
+		return remove((Serializable)websiteId);
 	}
 
 	/**
@@ -2903,7 +2903,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			if ((websiteModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(websiteModelImpl.getOriginalCompanyId())
+						websiteModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -2911,9 +2911,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(websiteModelImpl.getCompanyId())
-					};
+				args = new Object[] { websiteModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -2924,14 +2922,14 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			if ((websiteModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(websiteModelImpl.getOriginalUserId())
+						websiteModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] { Long.valueOf(websiteModelImpl.getUserId()) };
+				args = new Object[] { websiteModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -2941,8 +2939,8 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			if ((websiteModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(websiteModelImpl.getOriginalCompanyId()),
-						Long.valueOf(websiteModelImpl.getOriginalClassNameId())
+						websiteModelImpl.getOriginalCompanyId(),
+						websiteModelImpl.getOriginalClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -2950,8 +2948,8 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(websiteModelImpl.getCompanyId()),
-						Long.valueOf(websiteModelImpl.getClassNameId())
+						websiteModelImpl.getCompanyId(),
+						websiteModelImpl.getClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -2962,9 +2960,9 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			if ((websiteModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(websiteModelImpl.getOriginalCompanyId()),
-						Long.valueOf(websiteModelImpl.getOriginalClassNameId()),
-						Long.valueOf(websiteModelImpl.getOriginalClassPK())
+						websiteModelImpl.getOriginalCompanyId(),
+						websiteModelImpl.getOriginalClassNameId(),
+						websiteModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
@@ -2972,9 +2970,9 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(websiteModelImpl.getCompanyId()),
-						Long.valueOf(websiteModelImpl.getClassNameId()),
-						Long.valueOf(websiteModelImpl.getClassPK())
+						websiteModelImpl.getCompanyId(),
+						websiteModelImpl.getClassNameId(),
+						websiteModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
@@ -2985,10 +2983,10 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			if ((websiteModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(websiteModelImpl.getOriginalCompanyId()),
-						Long.valueOf(websiteModelImpl.getOriginalClassNameId()),
-						Long.valueOf(websiteModelImpl.getOriginalClassPK()),
-						Boolean.valueOf(websiteModelImpl.getOriginalPrimary())
+						websiteModelImpl.getOriginalCompanyId(),
+						websiteModelImpl.getOriginalClassNameId(),
+						websiteModelImpl.getOriginalClassPK(),
+						websiteModelImpl.getOriginalPrimary()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);
@@ -2996,10 +2994,10 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(websiteModelImpl.getCompanyId()),
-						Long.valueOf(websiteModelImpl.getClassNameId()),
-						Long.valueOf(websiteModelImpl.getClassPK()),
-						Boolean.valueOf(websiteModelImpl.getPrimary())
+						websiteModelImpl.getCompanyId(),
+						websiteModelImpl.getClassNameId(),
+						websiteModelImpl.getClassPK(),
+						websiteModelImpl.getPrimary()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);

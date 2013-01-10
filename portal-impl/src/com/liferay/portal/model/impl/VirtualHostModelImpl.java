@@ -96,7 +96,7 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_virtualHostId);
+		return _virtualHostId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -158,7 +158,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_LayoutBranchId);
+		return _LayoutBranchId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

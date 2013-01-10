@@ -180,7 +180,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	 */
 	public ClusterGroup remove(long clusterGroupId)
 		throws NoSuchClusterGroupException, SystemException {
-		return remove(Long.valueOf(clusterGroupId));
+		return remove((Serializable)clusterGroupId);
 	}
 
 	/**

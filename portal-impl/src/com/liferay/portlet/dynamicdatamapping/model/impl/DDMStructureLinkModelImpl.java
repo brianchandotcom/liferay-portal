@@ -99,7 +99,7 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_structureLinkId);
+		return _structureLinkId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

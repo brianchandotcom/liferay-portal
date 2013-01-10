@@ -1805,10 +1805,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 			MBStatsUserImpl.class, mbStatsUser.getPrimaryKey(), mbStatsUser);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U,
-			new Object[] {
-				Long.valueOf(mbStatsUser.getGroupId()),
-				Long.valueOf(mbStatsUser.getUserId())
-			}, mbStatsUser);
+			new Object[] { mbStatsUser.getGroupId(), mbStatsUser.getUserId() },
+			mbStatsUser);
 
 		mbStatsUser.resetOriginalValues();
 	}
@@ -1885,8 +1883,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	protected void cacheUniqueFindersCache(MBStatsUser mbStatsUser) {
 		if (mbStatsUser.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(mbStatsUser.getGroupId()),
-					Long.valueOf(mbStatsUser.getUserId())
+					mbStatsUser.getGroupId(), mbStatsUser.getUserId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U, args,
@@ -1900,8 +1897,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 			if ((mbStatsUserModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbStatsUser.getGroupId()),
-						Long.valueOf(mbStatsUser.getUserId())
+						mbStatsUser.getGroupId(), mbStatsUser.getUserId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U, args,
@@ -1916,8 +1912,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		MBStatsUserModelImpl mbStatsUserModelImpl = (MBStatsUserModelImpl)mbStatsUser;
 
 		Object[] args = new Object[] {
-				Long.valueOf(mbStatsUser.getGroupId()),
-				Long.valueOf(mbStatsUser.getUserId())
+				mbStatsUser.getGroupId(), mbStatsUser.getUserId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -1926,8 +1921,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		if ((mbStatsUserModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_U.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(mbStatsUserModelImpl.getOriginalGroupId()),
-					Long.valueOf(mbStatsUserModelImpl.getOriginalUserId())
+					mbStatsUserModelImpl.getOriginalGroupId(),
+					mbStatsUserModelImpl.getOriginalUserId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -1960,7 +1955,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	public MBStatsUser remove(long statsUserId)
 		throws NoSuchStatsUserException, SystemException {
-		return remove(Long.valueOf(statsUserId));
+		return remove((Serializable)statsUserId);
 	}
 
 	/**
@@ -2078,16 +2073,14 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 			if ((mbStatsUserModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbStatsUserModelImpl.getOriginalGroupId())
+						mbStatsUserModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(mbStatsUserModelImpl.getGroupId())
-					};
+				args = new Object[] { mbStatsUserModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -2097,16 +2090,14 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 			if ((mbStatsUserModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbStatsUserModelImpl.getOriginalUserId())
+						mbStatsUserModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(mbStatsUserModelImpl.getUserId())
-					};
+				args = new Object[] { mbStatsUserModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,

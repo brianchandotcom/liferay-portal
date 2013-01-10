@@ -148,7 +148,7 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_resourceBlockId);
+		return _resourceBlockId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

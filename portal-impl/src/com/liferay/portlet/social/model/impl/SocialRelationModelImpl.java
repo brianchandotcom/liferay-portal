@@ -102,7 +102,7 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_relationId);
+		return _relationId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

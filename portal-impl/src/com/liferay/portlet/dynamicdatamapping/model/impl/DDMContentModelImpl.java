@@ -113,7 +113,7 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_contentId);
+		return _contentId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

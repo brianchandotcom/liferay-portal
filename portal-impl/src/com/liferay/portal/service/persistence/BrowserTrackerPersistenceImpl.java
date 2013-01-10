@@ -298,8 +298,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 			browserTracker);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERID,
-			new Object[] { Long.valueOf(browserTracker.getUserId()) },
-			browserTracker);
+			new Object[] { browserTracker.getUserId() }, browserTracker);
 
 		browserTracker.resetOriginalValues();
 	}
@@ -375,9 +374,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 	protected void cacheUniqueFindersCache(BrowserTracker browserTracker) {
 		if (browserTracker.isNew()) {
-			Object[] args = new Object[] {
-					Long.valueOf(browserTracker.getUserId())
-				};
+			Object[] args = new Object[] { browserTracker.getUserId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_USERID, args,
 				Long.valueOf(1));
@@ -389,9 +386,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 			if ((browserTrackerModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_USERID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(browserTracker.getUserId())
-					};
+				Object[] args = new Object[] { browserTracker.getUserId() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_USERID, args,
 					Long.valueOf(1));
@@ -404,16 +399,14 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	protected void clearUniqueFindersCache(BrowserTracker browserTracker) {
 		BrowserTrackerModelImpl browserTrackerModelImpl = (BrowserTrackerModelImpl)browserTracker;
 
-		Object[] args = new Object[] { Long.valueOf(browserTracker.getUserId()) };
+		Object[] args = new Object[] { browserTracker.getUserId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID, args);
 
 		if ((browserTrackerModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_USERID.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					Long.valueOf(browserTrackerModelImpl.getOriginalUserId())
-				};
+			args = new Object[] { browserTrackerModelImpl.getOriginalUserId() };
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID, args);
@@ -445,7 +438,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 */
 	public BrowserTracker remove(long browserTrackerId)
 		throws NoSuchBrowserTrackerException, SystemException {
-		return remove(Long.valueOf(browserTrackerId));
+		return remove((Serializable)browserTrackerId);
 	}
 
 	/**

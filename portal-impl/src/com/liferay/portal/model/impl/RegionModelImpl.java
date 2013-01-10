@@ -145,7 +145,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_regionId);
+		return _regionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

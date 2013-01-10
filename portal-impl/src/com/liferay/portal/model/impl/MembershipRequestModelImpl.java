@@ -160,7 +160,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_membershipRequestId);
+		return _membershipRequestId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -171,7 +171,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_requestId);
+		return _requestId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

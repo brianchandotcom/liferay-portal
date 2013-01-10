@@ -153,7 +153,7 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_deliveryId);
+		return _deliveryId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

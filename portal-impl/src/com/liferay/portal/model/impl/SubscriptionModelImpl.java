@@ -106,7 +106,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_subscriptionId);
+		return _subscriptionId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

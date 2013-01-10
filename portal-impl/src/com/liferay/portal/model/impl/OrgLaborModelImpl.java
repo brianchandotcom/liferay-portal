@@ -166,7 +166,7 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_orgLaborId);
+		return _orgLaborId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

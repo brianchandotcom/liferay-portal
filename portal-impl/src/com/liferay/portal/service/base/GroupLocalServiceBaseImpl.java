@@ -227,6 +227,7 @@ import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserFinder;
 import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserPersistence;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderService;
+import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder;
 import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderPersistence;
 import com.liferay.portlet.calendar.service.CalEventLocalService;
 import com.liferay.portlet.calendar.service.CalEventService;
@@ -4162,6 +4163,25 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the bookmarks folder finder.
+	 *
+	 * @return the bookmarks folder finder
+	 */
+	public BookmarksFolderFinder getBookmarksFolderFinder() {
+		return bookmarksFolderFinder;
+	}
+
+	/**
+	 * Sets the bookmarks folder finder.
+	 *
+	 * @param bookmarksFolderFinder the bookmarks folder finder
+	 */
+	public void setBookmarksFolderFinder(
+		BookmarksFolderFinder bookmarksFolderFinder) {
+		this.bookmarksFolderFinder = bookmarksFolderFinder;
+	}
+
+	/**
 	 * Returns the cal event local service.
 	 *
 	 * @return the cal event local service
@@ -5791,6 +5811,8 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected BookmarksFolderService bookmarksFolderService;
 	@BeanReference(type = BookmarksFolderPersistence.class)
 	protected BookmarksFolderPersistence bookmarksFolderPersistence;
+	@BeanReference(type = BookmarksFolderFinder.class)
+	protected BookmarksFolderFinder bookmarksFolderFinder;
 	@BeanReference(type = CalEventLocalService.class)
 	protected CalEventLocalService calEventLocalService;
 	@BeanReference(type = CalEventService.class)

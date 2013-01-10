@@ -467,7 +467,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 */
 	public ClassName remove(long classNameId)
 		throws NoSuchClassNameException, SystemException {
-		return remove(Long.valueOf(classNameId));
+		return remove((Serializable)classNameId);
 	}
 
 	/**

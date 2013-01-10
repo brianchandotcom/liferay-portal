@@ -169,7 +169,7 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_ruleGroupInstanceId);
+		return _ruleGroupInstanceId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -99,7 +99,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_userIdMapperId);
+		return _userIdMapperId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

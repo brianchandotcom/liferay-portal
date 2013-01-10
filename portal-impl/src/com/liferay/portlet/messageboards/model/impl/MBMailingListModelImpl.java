@@ -124,7 +124,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_mailingListId);
+		return _mailingListId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

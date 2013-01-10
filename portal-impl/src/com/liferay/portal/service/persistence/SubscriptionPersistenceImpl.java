@@ -1913,10 +1913,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_C_C,
 			new Object[] {
-				Long.valueOf(subscription.getCompanyId()),
-				Long.valueOf(subscription.getUserId()),
-				Long.valueOf(subscription.getClassNameId()),
-				Long.valueOf(subscription.getClassPK())
+				subscription.getCompanyId(), subscription.getUserId(),
+				subscription.getClassNameId(), subscription.getClassPK()
 			}, subscription);
 
 		subscription.resetOriginalValues();
@@ -1994,10 +1992,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	protected void cacheUniqueFindersCache(Subscription subscription) {
 		if (subscription.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(subscription.getCompanyId()),
-					Long.valueOf(subscription.getUserId()),
-					Long.valueOf(subscription.getClassNameId()),
-					Long.valueOf(subscription.getClassPK())
+					subscription.getCompanyId(), subscription.getUserId(),
+					subscription.getClassNameId(), subscription.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_C_C, args,
@@ -2011,10 +2007,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			if ((subscriptionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_U_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(subscription.getCompanyId()),
-						Long.valueOf(subscription.getUserId()),
-						Long.valueOf(subscription.getClassNameId()),
-						Long.valueOf(subscription.getClassPK())
+						subscription.getCompanyId(), subscription.getUserId(),
+						subscription.getClassNameId(), subscription.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_C_C, args,
@@ -2029,10 +2023,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		SubscriptionModelImpl subscriptionModelImpl = (SubscriptionModelImpl)subscription;
 
 		Object[] args = new Object[] {
-				Long.valueOf(subscription.getCompanyId()),
-				Long.valueOf(subscription.getUserId()),
-				Long.valueOf(subscription.getClassNameId()),
-				Long.valueOf(subscription.getClassPK())
+				subscription.getCompanyId(), subscription.getUserId(),
+				subscription.getClassNameId(), subscription.getClassPK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_C_C, args);
@@ -2041,10 +2033,10 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		if ((subscriptionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_U_C_C.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(subscriptionModelImpl.getOriginalCompanyId()),
-					Long.valueOf(subscriptionModelImpl.getOriginalUserId()),
-					Long.valueOf(subscriptionModelImpl.getOriginalClassNameId()),
-					Long.valueOf(subscriptionModelImpl.getOriginalClassPK())
+					subscriptionModelImpl.getOriginalCompanyId(),
+					subscriptionModelImpl.getOriginalUserId(),
+					subscriptionModelImpl.getOriginalClassNameId(),
+					subscriptionModelImpl.getOriginalClassPK()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_C_C, args);
@@ -2077,7 +2069,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	public Subscription remove(long subscriptionId)
 		throws NoSuchSubscriptionException, SystemException {
-		return remove(Long.valueOf(subscriptionId));
+		return remove((Serializable)subscriptionId);
 	}
 
 	/**
@@ -2195,16 +2187,14 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			if ((subscriptionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(subscriptionModelImpl.getOriginalUserId())
+						subscriptionModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(subscriptionModelImpl.getUserId())
-					};
+				args = new Object[] { subscriptionModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -2214,8 +2204,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			if ((subscriptionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(subscriptionModelImpl.getOriginalUserId()),
-						Long.valueOf(subscriptionModelImpl.getOriginalClassNameId())
+						subscriptionModelImpl.getOriginalUserId(),
+						subscriptionModelImpl.getOriginalClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C, args);
@@ -2223,8 +2213,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 					args);
 
 				args = new Object[] {
-						Long.valueOf(subscriptionModelImpl.getUserId()),
-						Long.valueOf(subscriptionModelImpl.getClassNameId())
+						subscriptionModelImpl.getUserId(),
+						subscriptionModelImpl.getClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C, args);
@@ -2235,9 +2225,9 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			if ((subscriptionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(subscriptionModelImpl.getOriginalCompanyId()),
-						Long.valueOf(subscriptionModelImpl.getOriginalClassNameId()),
-						Long.valueOf(subscriptionModelImpl.getOriginalClassPK())
+						subscriptionModelImpl.getOriginalCompanyId(),
+						subscriptionModelImpl.getOriginalClassNameId(),
+						subscriptionModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
@@ -2245,9 +2235,9 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 					args);
 
 				args = new Object[] {
-						Long.valueOf(subscriptionModelImpl.getCompanyId()),
-						Long.valueOf(subscriptionModelImpl.getClassNameId()),
-						Long.valueOf(subscriptionModelImpl.getClassPK())
+						subscriptionModelImpl.getCompanyId(),
+						subscriptionModelImpl.getClassNameId(),
+						subscriptionModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);

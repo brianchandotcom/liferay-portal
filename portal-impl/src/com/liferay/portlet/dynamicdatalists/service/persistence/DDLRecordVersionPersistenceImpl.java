@@ -1348,9 +1348,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_V,
 			new Object[] {
-				Long.valueOf(ddlRecordVersion.getRecordId()),
-				
-			ddlRecordVersion.getVersion()
+				ddlRecordVersion.getRecordId(), ddlRecordVersion.getVersion()
 			}, ddlRecordVersion);
 
 		ddlRecordVersion.resetOriginalValues();
@@ -1429,8 +1427,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	protected void cacheUniqueFindersCache(DDLRecordVersion ddlRecordVersion) {
 		if (ddlRecordVersion.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(ddlRecordVersion.getRecordId()),
-					
+					ddlRecordVersion.getRecordId(),
 					ddlRecordVersion.getVersion()
 				};
 
@@ -1445,8 +1442,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			if ((ddlRecordVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_R_V.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(ddlRecordVersion.getRecordId()),
-						
+						ddlRecordVersion.getRecordId(),
 						ddlRecordVersion.getVersion()
 					};
 
@@ -1462,9 +1458,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		DDLRecordVersionModelImpl ddlRecordVersionModelImpl = (DDLRecordVersionModelImpl)ddlRecordVersion;
 
 		Object[] args = new Object[] {
-				Long.valueOf(ddlRecordVersion.getRecordId()),
-				
-				ddlRecordVersion.getVersion()
+				ddlRecordVersion.getRecordId(), ddlRecordVersion.getVersion()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_V, args);
@@ -1473,8 +1467,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		if ((ddlRecordVersionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_R_V.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(ddlRecordVersionModelImpl.getOriginalRecordId()),
-					
+					ddlRecordVersionModelImpl.getOriginalRecordId(),
 					ddlRecordVersionModelImpl.getOriginalVersion()
 				};
 
@@ -1508,7 +1501,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	public DDLRecordVersion remove(long recordVersionId)
 		throws NoSuchRecordVersionException, SystemException {
-		return remove(Long.valueOf(recordVersionId));
+		return remove((Serializable)recordVersionId);
 	}
 
 	/**
@@ -1626,16 +1619,14 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			if ((ddlRecordVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECORDID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(ddlRecordVersionModelImpl.getOriginalRecordId())
+						ddlRecordVersionModelImpl.getOriginalRecordId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECORDID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECORDID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(ddlRecordVersionModelImpl.getRecordId())
-					};
+				args = new Object[] { ddlRecordVersionModelImpl.getRecordId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RECORDID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RECORDID,
@@ -1645,8 +1636,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			if ((ddlRecordVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(ddlRecordVersionModelImpl.getOriginalRecordId()),
-						Integer.valueOf(ddlRecordVersionModelImpl.getOriginalStatus())
+						ddlRecordVersionModelImpl.getOriginalRecordId(),
+						ddlRecordVersionModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_S, args);
@@ -1654,8 +1645,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 					args);
 
 				args = new Object[] {
-						Long.valueOf(ddlRecordVersionModelImpl.getRecordId()),
-						Integer.valueOf(ddlRecordVersionModelImpl.getStatus())
+						ddlRecordVersionModelImpl.getRecordId(),
+						ddlRecordVersionModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_S, args);

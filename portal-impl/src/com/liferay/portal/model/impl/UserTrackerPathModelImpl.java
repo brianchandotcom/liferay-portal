@@ -95,7 +95,7 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_userTrackerPathId);
+		return _userTrackerPathId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

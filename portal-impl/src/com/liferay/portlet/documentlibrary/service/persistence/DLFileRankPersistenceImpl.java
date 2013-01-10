@@ -2363,9 +2363,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_F,
 			new Object[] {
-				Long.valueOf(dlFileRank.getCompanyId()),
-				Long.valueOf(dlFileRank.getUserId()),
-				Long.valueOf(dlFileRank.getFileEntryId())
+				dlFileRank.getCompanyId(), dlFileRank.getUserId(),
+				dlFileRank.getFileEntryId()
 			}, dlFileRank);
 
 		dlFileRank.resetOriginalValues();
@@ -2443,9 +2442,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	protected void cacheUniqueFindersCache(DLFileRank dlFileRank) {
 		if (dlFileRank.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(dlFileRank.getCompanyId()),
-					Long.valueOf(dlFileRank.getUserId()),
-					Long.valueOf(dlFileRank.getFileEntryId())
+					dlFileRank.getCompanyId(), dlFileRank.getUserId(),
+					dlFileRank.getFileEntryId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_F, args,
@@ -2459,9 +2457,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			if ((dlFileRankModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_U_F.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileRank.getCompanyId()),
-						Long.valueOf(dlFileRank.getUserId()),
-						Long.valueOf(dlFileRank.getFileEntryId())
+						dlFileRank.getCompanyId(), dlFileRank.getUserId(),
+						dlFileRank.getFileEntryId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_F, args,
@@ -2476,9 +2473,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		DLFileRankModelImpl dlFileRankModelImpl = (DLFileRankModelImpl)dlFileRank;
 
 		Object[] args = new Object[] {
-				Long.valueOf(dlFileRank.getCompanyId()),
-				Long.valueOf(dlFileRank.getUserId()),
-				Long.valueOf(dlFileRank.getFileEntryId())
+				dlFileRank.getCompanyId(), dlFileRank.getUserId(),
+				dlFileRank.getFileEntryId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_F, args);
@@ -2487,9 +2483,9 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		if ((dlFileRankModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_U_F.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(dlFileRankModelImpl.getOriginalCompanyId()),
-					Long.valueOf(dlFileRankModelImpl.getOriginalUserId()),
-					Long.valueOf(dlFileRankModelImpl.getOriginalFileEntryId())
+					dlFileRankModelImpl.getOriginalCompanyId(),
+					dlFileRankModelImpl.getOriginalUserId(),
+					dlFileRankModelImpl.getOriginalFileEntryId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_F, args);
@@ -2522,7 +2518,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	 */
 	public DLFileRank remove(long fileRankId)
 		throws NoSuchFileRankException, SystemException {
-		return remove(Long.valueOf(fileRankId));
+		return remove((Serializable)fileRankId);
 	}
 
 	/**
@@ -2640,16 +2636,14 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			if ((dlFileRankModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileRankModelImpl.getOriginalUserId())
+						dlFileRankModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(dlFileRankModelImpl.getUserId())
-					};
+				args = new Object[] { dlFileRankModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -2659,7 +2653,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			if ((dlFileRankModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEENTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileRankModelImpl.getOriginalFileEntryId())
+						dlFileRankModelImpl.getOriginalFileEntryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEENTRYID,
@@ -2667,9 +2661,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEENTRYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(dlFileRankModelImpl.getFileEntryId())
-					};
+				args = new Object[] { dlFileRankModelImpl.getFileEntryId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FILEENTRYID,
 					args);
@@ -2680,8 +2672,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			if ((dlFileRankModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileRankModelImpl.getOriginalGroupId()),
-						Long.valueOf(dlFileRankModelImpl.getOriginalUserId())
+						dlFileRankModelImpl.getOriginalGroupId(),
+						dlFileRankModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -2689,8 +2681,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(dlFileRankModelImpl.getGroupId()),
-						Long.valueOf(dlFileRankModelImpl.getUserId())
+						dlFileRankModelImpl.getGroupId(),
+						dlFileRankModelImpl.getUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -2701,9 +2693,9 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			if ((dlFileRankModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileRankModelImpl.getOriginalGroupId()),
-						Long.valueOf(dlFileRankModelImpl.getOriginalUserId()),
-						Boolean.valueOf(dlFileRankModelImpl.getOriginalActive())
+						dlFileRankModelImpl.getOriginalGroupId(),
+						dlFileRankModelImpl.getOriginalUserId(),
+						dlFileRankModelImpl.getOriginalActive()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_A, args);
@@ -2711,9 +2703,9 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(dlFileRankModelImpl.getGroupId()),
-						Long.valueOf(dlFileRankModelImpl.getUserId()),
-						Boolean.valueOf(dlFileRankModelImpl.getActive())
+						dlFileRankModelImpl.getGroupId(),
+						dlFileRankModelImpl.getUserId(),
+						dlFileRankModelImpl.getActive()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_A, args);

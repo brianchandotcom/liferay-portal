@@ -104,7 +104,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_userNotificationEventId);
+		return _userNotificationEventId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

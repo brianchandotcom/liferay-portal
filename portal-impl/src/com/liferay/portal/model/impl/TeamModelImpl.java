@@ -169,7 +169,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_teamId);
+		return _teamId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -2784,7 +2784,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	public Phone remove(long phoneId)
 		throws NoSuchPhoneException, SystemException {
-		return remove(Long.valueOf(phoneId));
+		return remove((Serializable)phoneId);
 	}
 
 	/**
@@ -2899,7 +2899,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 			if ((phoneModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(phoneModelImpl.getOriginalCompanyId())
+						phoneModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -2907,7 +2907,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] { Long.valueOf(phoneModelImpl.getCompanyId()) };
+				args = new Object[] { phoneModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -2917,15 +2917,13 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 			if ((phoneModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(phoneModelImpl.getOriginalUserId())
-					};
+				Object[] args = new Object[] { phoneModelImpl.getOriginalUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] { Long.valueOf(phoneModelImpl.getUserId()) };
+				args = new Object[] { phoneModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -2935,8 +2933,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 			if ((phoneModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(phoneModelImpl.getOriginalCompanyId()),
-						Long.valueOf(phoneModelImpl.getOriginalClassNameId())
+						phoneModelImpl.getOriginalCompanyId(),
+						phoneModelImpl.getOriginalClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -2944,8 +2942,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(phoneModelImpl.getCompanyId()),
-						Long.valueOf(phoneModelImpl.getClassNameId())
+						phoneModelImpl.getCompanyId(),
+						phoneModelImpl.getClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -2956,9 +2954,9 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 			if ((phoneModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(phoneModelImpl.getOriginalCompanyId()),
-						Long.valueOf(phoneModelImpl.getOriginalClassNameId()),
-						Long.valueOf(phoneModelImpl.getOriginalClassPK())
+						phoneModelImpl.getOriginalCompanyId(),
+						phoneModelImpl.getOriginalClassNameId(),
+						phoneModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
@@ -2966,9 +2964,9 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(phoneModelImpl.getCompanyId()),
-						Long.valueOf(phoneModelImpl.getClassNameId()),
-						Long.valueOf(phoneModelImpl.getClassPK())
+						phoneModelImpl.getCompanyId(),
+						phoneModelImpl.getClassNameId(),
+						phoneModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
@@ -2979,10 +2977,10 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 			if ((phoneModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(phoneModelImpl.getOriginalCompanyId()),
-						Long.valueOf(phoneModelImpl.getOriginalClassNameId()),
-						Long.valueOf(phoneModelImpl.getOriginalClassPK()),
-						Boolean.valueOf(phoneModelImpl.getOriginalPrimary())
+						phoneModelImpl.getOriginalCompanyId(),
+						phoneModelImpl.getOriginalClassNameId(),
+						phoneModelImpl.getOriginalClassPK(),
+						phoneModelImpl.getOriginalPrimary()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);
@@ -2990,10 +2988,9 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(phoneModelImpl.getCompanyId()),
-						Long.valueOf(phoneModelImpl.getClassNameId()),
-						Long.valueOf(phoneModelImpl.getClassPK()),
-						Boolean.valueOf(phoneModelImpl.getPrimary())
+						phoneModelImpl.getCompanyId(),
+						phoneModelImpl.getClassNameId(),
+						phoneModelImpl.getClassPK(), phoneModelImpl.getPrimary()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_P, args);

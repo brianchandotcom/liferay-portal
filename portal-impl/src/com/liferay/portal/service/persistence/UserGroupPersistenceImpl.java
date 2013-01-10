@@ -2083,11 +2083,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			UserGroupImpl.class, userGroup.getPrimaryKey(), userGroup);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
-			new Object[] {
-				Long.valueOf(userGroup.getCompanyId()),
-				
-			userGroup.getName()
-			}, userGroup);
+			new Object[] { userGroup.getCompanyId(), userGroup.getName() },
+			userGroup);
 
 		userGroup.resetOriginalValues();
 	}
@@ -2164,9 +2161,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	protected void cacheUniqueFindersCache(UserGroup userGroup) {
 		if (userGroup.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(userGroup.getCompanyId()),
-					
-					userGroup.getName()
+					userGroup.getCompanyId(), userGroup.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
@@ -2179,9 +2174,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			if ((userGroupModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userGroup.getCompanyId()),
-						
-						userGroup.getName()
+						userGroup.getCompanyId(), userGroup.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
@@ -2196,9 +2189,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		UserGroupModelImpl userGroupModelImpl = (UserGroupModelImpl)userGroup;
 
 		Object[] args = new Object[] {
-				Long.valueOf(userGroup.getCompanyId()),
-				
-				userGroup.getName()
+				userGroup.getCompanyId(), userGroup.getName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
@@ -2207,8 +2198,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		if ((userGroupModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(userGroupModelImpl.getOriginalCompanyId()),
-					
+					userGroupModelImpl.getOriginalCompanyId(),
 					userGroupModelImpl.getOriginalName()
 				};
 
@@ -2242,7 +2232,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	public UserGroup remove(long userGroupId)
 		throws NoSuchUserGroupException, SystemException {
-		return remove(Long.valueOf(userGroupId));
+		return remove((Serializable)userGroupId);
 	}
 
 	/**
@@ -2389,7 +2379,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			if ((userGroupModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userGroupModelImpl.getOriginalCompanyId())
+						userGroupModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -2397,9 +2387,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(userGroupModelImpl.getCompanyId())
-					};
+				args = new Object[] { userGroupModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -2410,8 +2398,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			if ((userGroupModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(userGroupModelImpl.getOriginalCompanyId()),
-						Long.valueOf(userGroupModelImpl.getOriginalParentUserGroupId())
+						userGroupModelImpl.getOriginalCompanyId(),
+						userGroupModelImpl.getOriginalParentUserGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
@@ -2419,8 +2407,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(userGroupModelImpl.getCompanyId()),
-						Long.valueOf(userGroupModelImpl.getParentUserGroupId())
+						userGroupModelImpl.getCompanyId(),
+						userGroupModelImpl.getParentUserGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);

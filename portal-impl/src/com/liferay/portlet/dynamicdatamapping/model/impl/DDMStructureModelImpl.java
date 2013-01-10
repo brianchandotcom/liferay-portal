@@ -180,7 +180,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_structureId);
+		return _structureId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

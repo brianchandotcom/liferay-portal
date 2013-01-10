@@ -832,9 +832,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T,
 			new Object[] {
-				Long.valueOf(announcementsDelivery.getUserId()),
-				
-			announcementsDelivery.getType()
+				announcementsDelivery.getUserId(),
+				announcementsDelivery.getType()
 			}, announcementsDelivery);
 
 		announcementsDelivery.resetOriginalValues();
@@ -916,8 +915,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		AnnouncementsDelivery announcementsDelivery) {
 		if (announcementsDelivery.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(announcementsDelivery.getUserId()),
-					
+					announcementsDelivery.getUserId(),
 					announcementsDelivery.getType()
 				};
 
@@ -932,8 +930,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			if ((announcementsDeliveryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_U_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(announcementsDelivery.getUserId()),
-						
+						announcementsDelivery.getUserId(),
 						announcementsDelivery.getType()
 					};
 
@@ -950,8 +947,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl = (AnnouncementsDeliveryModelImpl)announcementsDelivery;
 
 		Object[] args = new Object[] {
-				Long.valueOf(announcementsDelivery.getUserId()),
-				
+				announcementsDelivery.getUserId(),
 				announcementsDelivery.getType()
 			};
 
@@ -961,8 +957,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		if ((announcementsDeliveryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_T.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(announcementsDeliveryModelImpl.getOriginalUserId()),
-					
+					announcementsDeliveryModelImpl.getOriginalUserId(),
 					announcementsDeliveryModelImpl.getOriginalType()
 				};
 
@@ -996,7 +991,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	public AnnouncementsDelivery remove(long deliveryId)
 		throws NoSuchDeliveryException, SystemException {
-		return remove(Long.valueOf(deliveryId));
+		return remove((Serializable)deliveryId);
 	}
 
 	/**
@@ -1114,16 +1109,14 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			if ((announcementsDeliveryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(announcementsDeliveryModelImpl.getOriginalUserId())
+						announcementsDeliveryModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(announcementsDeliveryModelImpl.getUserId())
-					};
+				args = new Object[] { announcementsDeliveryModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,

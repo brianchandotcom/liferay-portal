@@ -98,7 +98,7 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_threadFlagId);
+		return _threadFlagId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

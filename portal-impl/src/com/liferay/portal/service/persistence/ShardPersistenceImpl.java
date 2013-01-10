@@ -571,10 +571,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			new Object[] { shard.getName() }, shard);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C,
-			new Object[] {
-				Long.valueOf(shard.getClassNameId()),
-				Long.valueOf(shard.getClassPK())
-			}, shard);
+			new Object[] { shard.getClassNameId(), shard.getClassPK() }, shard);
 
 		shard.resetOriginalValues();
 	}
@@ -655,10 +652,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME, args, shard);
 
-			args = new Object[] {
-					Long.valueOf(shard.getClassNameId()),
-					Long.valueOf(shard.getClassPK())
-				};
+			args = new Object[] { shard.getClassNameId(), shard.getClassPK() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 				Long.valueOf(1));
@@ -679,8 +673,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			if ((shardModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shard.getClassNameId()),
-						Long.valueOf(shard.getClassPK())
+						shard.getClassNameId(), shard.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
@@ -706,10 +699,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME, args);
 		}
 
-		args = new Object[] {
-				Long.valueOf(shard.getClassNameId()),
-				Long.valueOf(shard.getClassPK())
-			};
+		args = new Object[] { shard.getClassNameId(), shard.getClassPK() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
@@ -717,8 +707,8 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		if ((shardModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(shardModelImpl.getOriginalClassNameId()),
-					Long.valueOf(shardModelImpl.getOriginalClassPK())
+					shardModelImpl.getOriginalClassNameId(),
+					shardModelImpl.getOriginalClassPK()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -751,7 +741,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 */
 	public Shard remove(long shardId)
 		throws NoSuchShardException, SystemException {
-		return remove(Long.valueOf(shardId));
+		return remove((Serializable)shardId);
 	}
 
 	/**

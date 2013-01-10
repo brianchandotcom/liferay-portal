@@ -159,7 +159,7 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_categoryId);
+		return _categoryId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

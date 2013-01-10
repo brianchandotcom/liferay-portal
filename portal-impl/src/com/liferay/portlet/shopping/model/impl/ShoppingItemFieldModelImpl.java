@@ -96,7 +96,7 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_itemFieldId);
+		return _itemFieldId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

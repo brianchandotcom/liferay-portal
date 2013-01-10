@@ -4388,12 +4388,10 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			WikiNodeImpl.class, wikiNode.getPrimaryKey(), wikiNode);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { wikiNode.getUuid(), Long.valueOf(
-					wikiNode.getGroupId()) }, wikiNode);
+			new Object[] { wikiNode.getUuid(), wikiNode.getGroupId() }, wikiNode);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-			new Object[] { Long.valueOf(wikiNode.getGroupId()), wikiNode.getName() },
-			wikiNode);
+			new Object[] { wikiNode.getGroupId(), wikiNode.getName() }, wikiNode);
 
 		wikiNode.resetOriginalValues();
 	}
@@ -4470,7 +4468,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	protected void cacheUniqueFindersCache(WikiNode wikiNode) {
 		if (wikiNode.isNew()) {
 			Object[] args = new Object[] {
-					wikiNode.getUuid(), Long.valueOf(wikiNode.getGroupId())
+					wikiNode.getUuid(), wikiNode.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -4478,11 +4476,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				wikiNode);
 
-			args = new Object[] {
-					Long.valueOf(wikiNode.getGroupId()),
-					
-					wikiNode.getName()
-				};
+			args = new Object[] { wikiNode.getGroupId(), wikiNode.getName() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 				Long.valueOf(1));
@@ -4494,7 +4488,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			if ((wikiNodeModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						wikiNode.getUuid(), Long.valueOf(wikiNode.getGroupId())
+						wikiNode.getUuid(), wikiNode.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -4506,9 +4500,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			if ((wikiNodeModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(wikiNode.getGroupId()),
-						
-						wikiNode.getName()
+						wikiNode.getGroupId(), wikiNode.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
@@ -4522,9 +4514,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	protected void clearUniqueFindersCache(WikiNode wikiNode) {
 		WikiNodeModelImpl wikiNodeModelImpl = (WikiNodeModelImpl)wikiNode;
 
-		Object[] args = new Object[] {
-				wikiNode.getUuid(), Long.valueOf(wikiNode.getGroupId())
-			};
+		Object[] args = new Object[] { wikiNode.getUuid(), wikiNode.getGroupId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
@@ -4533,18 +4523,14 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					wikiNodeModelImpl.getOriginalUuid(),
-					Long.valueOf(wikiNodeModelImpl.getOriginalGroupId())
+					wikiNodeModelImpl.getOriginalGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] {
-				Long.valueOf(wikiNode.getGroupId()),
-				
-				wikiNode.getName()
-			};
+		args = new Object[] { wikiNode.getGroupId(), wikiNode.getName() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
@@ -4552,8 +4538,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		if ((wikiNodeModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(wikiNodeModelImpl.getOriginalGroupId()),
-					
+					wikiNodeModelImpl.getOriginalGroupId(),
 					wikiNodeModelImpl.getOriginalName()
 				};
 
@@ -4591,7 +4576,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 */
 	public WikiNode remove(long nodeId)
 		throws NoSuchNodeException, SystemException {
-		return remove(Long.valueOf(nodeId));
+		return remove((Serializable)nodeId);
 	}
 
 	/**
@@ -4729,7 +4714,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						wikiNodeModelImpl.getOriginalUuid(),
-						Long.valueOf(wikiNodeModelImpl.getOriginalCompanyId())
+						wikiNodeModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -4738,7 +4723,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 				args = new Object[] {
 						wikiNodeModelImpl.getUuid(),
-						Long.valueOf(wikiNodeModelImpl.getCompanyId())
+						wikiNodeModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -4749,14 +4734,14 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			if ((wikiNodeModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(wikiNodeModelImpl.getOriginalGroupId())
+						wikiNodeModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] { Long.valueOf(wikiNodeModelImpl.getGroupId()) };
+				args = new Object[] { wikiNodeModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -4766,7 +4751,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			if ((wikiNodeModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(wikiNodeModelImpl.getOriginalCompanyId())
+						wikiNodeModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -4774,9 +4759,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(wikiNodeModelImpl.getCompanyId())
-					};
+				args = new Object[] { wikiNodeModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -4787,8 +4770,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			if ((wikiNodeModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(wikiNodeModelImpl.getOriginalGroupId()),
-						Integer.valueOf(wikiNodeModelImpl.getOriginalStatus())
+						wikiNodeModelImpl.getOriginalGroupId(),
+						wikiNodeModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
@@ -4796,8 +4779,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(wikiNodeModelImpl.getGroupId()),
-						Integer.valueOf(wikiNodeModelImpl.getStatus())
+						wikiNodeModelImpl.getGroupId(),
+						wikiNodeModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
@@ -4808,8 +4791,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			if ((wikiNodeModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(wikiNodeModelImpl.getOriginalCompanyId()),
-						Integer.valueOf(wikiNodeModelImpl.getOriginalStatus())
+						wikiNodeModelImpl.getOriginalCompanyId(),
+						wikiNodeModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
@@ -4817,8 +4800,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(wikiNodeModelImpl.getCompanyId()),
-						Integer.valueOf(wikiNodeModelImpl.getStatus())
+						wikiNodeModelImpl.getCompanyId(),
+						wikiNodeModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);

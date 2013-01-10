@@ -1734,10 +1734,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			MBBanImpl.class, mbBan.getPrimaryKey(), mbBan);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_B,
-			new Object[] {
-				Long.valueOf(mbBan.getGroupId()),
-				Long.valueOf(mbBan.getBanUserId())
-			}, mbBan);
+			new Object[] { mbBan.getGroupId(), mbBan.getBanUserId() }, mbBan);
 
 		mbBan.resetOriginalValues();
 	}
@@ -1813,8 +1810,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	protected void cacheUniqueFindersCache(MBBan mbBan) {
 		if (mbBan.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(mbBan.getGroupId()),
-					Long.valueOf(mbBan.getBanUserId())
+					mbBan.getGroupId(), mbBan.getBanUserId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_B, args,
@@ -1827,8 +1823,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			if ((mbBanModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_B.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbBan.getGroupId()),
-						Long.valueOf(mbBan.getBanUserId())
+						mbBan.getGroupId(), mbBan.getBanUserId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_B, args,
@@ -1841,10 +1836,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	protected void clearUniqueFindersCache(MBBan mbBan) {
 		MBBanModelImpl mbBanModelImpl = (MBBanModelImpl)mbBan;
 
-		Object[] args = new Object[] {
-				Long.valueOf(mbBan.getGroupId()),
-				Long.valueOf(mbBan.getBanUserId())
-			};
+		Object[] args = new Object[] { mbBan.getGroupId(), mbBan.getBanUserId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_B, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B, args);
@@ -1852,8 +1844,8 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		if ((mbBanModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_B.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(mbBanModelImpl.getOriginalGroupId()),
-					Long.valueOf(mbBanModelImpl.getOriginalBanUserId())
+					mbBanModelImpl.getOriginalGroupId(),
+					mbBanModelImpl.getOriginalBanUserId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_B, args);
@@ -1885,7 +1877,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public MBBan remove(long banId) throws NoSuchBanException, SystemException {
-		return remove(Long.valueOf(banId));
+		return remove((Serializable)banId);
 	}
 
 	/**
@@ -1999,15 +1991,13 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		else {
 			if ((mbBanModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(mbBanModelImpl.getOriginalGroupId())
-					};
+				Object[] args = new Object[] { mbBanModelImpl.getOriginalGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] { Long.valueOf(mbBanModelImpl.getGroupId()) };
+				args = new Object[] { mbBanModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -2016,15 +2006,13 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 			if ((mbBanModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(mbBanModelImpl.getOriginalUserId())
-					};
+				Object[] args = new Object[] { mbBanModelImpl.getOriginalUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] { Long.valueOf(mbBanModelImpl.getUserId()) };
+				args = new Object[] { mbBanModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -2034,7 +2022,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			if ((mbBanModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BANUSERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(mbBanModelImpl.getOriginalBanUserId())
+						mbBanModelImpl.getOriginalBanUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BANUSERID,
@@ -2042,7 +2030,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BANUSERID,
 					args);
 
-				args = new Object[] { Long.valueOf(mbBanModelImpl.getBanUserId()) };
+				args = new Object[] { mbBanModelImpl.getBanUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BANUSERID,
 					args);

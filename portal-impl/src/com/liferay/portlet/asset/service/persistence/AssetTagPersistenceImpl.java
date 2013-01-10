@@ -1017,16 +1017,18 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_N_NAME_1);
 			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_N_NAME_3);
+			}
 			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_N_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_N_NAME_2);
-				}
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_N_NAME_2);
 			}
 
 			String sql = query.toString();
@@ -1042,7 +1044,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 				qPos.add(groupId);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -1131,16 +1133,18 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_N_NAME_1);
 			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_N_NAME_3);
+			}
 			else {
-				if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_N_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_G_N_NAME_2);
-				}
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_N_NAME_2);
 			}
 
 			String sql = query.toString();
@@ -1156,7 +1160,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 				qPos.add(groupId);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -1180,7 +1184,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "assetTag.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_NAME_1 = "assetTag.name IS NULL";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "assetTag.name = ?";
-	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(assetTag.name IS NULL OR assetTag.name = ?)";
+	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(assetTag.name IS NULL OR assetTag.name = '')";
 
 	/**
 	 * Caches the asset tag in the entity cache if it is enabled.
@@ -1192,8 +1196,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 			AssetTagImpl.class, assetTag.getPrimaryKey(), assetTag);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-			new Object[] { Long.valueOf(assetTag.getGroupId()), assetTag.getName() },
-			assetTag);
+			new Object[] { assetTag.getGroupId(), assetTag.getName() }, assetTag);
 
 		assetTag.resetOriginalValues();
 	}
@@ -1270,9 +1273,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	protected void cacheUniqueFindersCache(AssetTag assetTag) {
 		if (assetTag.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(assetTag.getGroupId()),
-					
-					assetTag.getName()
+					assetTag.getGroupId(), assetTag.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
@@ -1285,9 +1286,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 			if ((assetTagModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetTag.getGroupId()),
-						
-						assetTag.getName()
+						assetTag.getGroupId(), assetTag.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
@@ -1301,11 +1300,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	protected void clearUniqueFindersCache(AssetTag assetTag) {
 		AssetTagModelImpl assetTagModelImpl = (AssetTagModelImpl)assetTag;
 
-		Object[] args = new Object[] {
-				Long.valueOf(assetTag.getGroupId()),
-				
-				assetTag.getName()
-			};
+		Object[] args = new Object[] { assetTag.getGroupId(), assetTag.getName() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
@@ -1313,8 +1308,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		if ((assetTagModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(assetTagModelImpl.getOriginalGroupId()),
-					
+					assetTagModelImpl.getOriginalGroupId(),
 					assetTagModelImpl.getOriginalName()
 				};
 
@@ -1348,7 +1342,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	public AssetTag remove(long tagId)
 		throws NoSuchTagException, SystemException {
-		return remove(Long.valueOf(tagId));
+		return remove((Serializable)tagId);
 	}
 
 	/**
@@ -1475,14 +1469,14 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 			if ((assetTagModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(assetTagModelImpl.getOriginalGroupId())
+						assetTagModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] { Long.valueOf(assetTagModelImpl.getGroupId()) };
+				args = new Object[] { assetTagModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,

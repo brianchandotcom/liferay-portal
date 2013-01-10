@@ -97,7 +97,7 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_resourcePrimKey);
+		return _resourcePrimKey;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -3000,17 +3000,12 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			dlFileEntryType);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				dlFileEntryType.getUuid(),
-				Long.valueOf(dlFileEntryType.getGroupId())
-			}, dlFileEntryType);
+			new Object[] { dlFileEntryType.getUuid(), dlFileEntryType.getGroupId() },
+			dlFileEntryType);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-			new Object[] {
-				Long.valueOf(dlFileEntryType.getGroupId()),
-				
-			dlFileEntryType.getName()
-			}, dlFileEntryType);
+			new Object[] { dlFileEntryType.getGroupId(), dlFileEntryType.getName() },
+			dlFileEntryType);
 
 		dlFileEntryType.resetOriginalValues();
 	}
@@ -3088,8 +3083,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	protected void cacheUniqueFindersCache(DLFileEntryType dlFileEntryType) {
 		if (dlFileEntryType.isNew()) {
 			Object[] args = new Object[] {
-					dlFileEntryType.getUuid(),
-					Long.valueOf(dlFileEntryType.getGroupId())
+					dlFileEntryType.getUuid(), dlFileEntryType.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -3098,9 +3092,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				dlFileEntryType);
 
 			args = new Object[] {
-					Long.valueOf(dlFileEntryType.getGroupId()),
-					
-					dlFileEntryType.getName()
+					dlFileEntryType.getGroupId(), dlFileEntryType.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
@@ -3114,8 +3106,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			if ((dlFileEntryTypeModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileEntryType.getUuid(),
-						Long.valueOf(dlFileEntryType.getGroupId())
+						dlFileEntryType.getUuid(), dlFileEntryType.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -3127,9 +3118,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			if ((dlFileEntryTypeModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileEntryType.getGroupId()),
-						
-						dlFileEntryType.getName()
+						dlFileEntryType.getGroupId(), dlFileEntryType.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
@@ -3144,8 +3133,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		DLFileEntryTypeModelImpl dlFileEntryTypeModelImpl = (DLFileEntryTypeModelImpl)dlFileEntryType;
 
 		Object[] args = new Object[] {
-				dlFileEntryType.getUuid(),
-				Long.valueOf(dlFileEntryType.getGroupId())
+				dlFileEntryType.getUuid(), dlFileEntryType.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -3155,7 +3143,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					dlFileEntryTypeModelImpl.getOriginalUuid(),
-					Long.valueOf(dlFileEntryTypeModelImpl.getOriginalGroupId())
+					dlFileEntryTypeModelImpl.getOriginalGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -3163,9 +3151,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		}
 
 		args = new Object[] {
-				Long.valueOf(dlFileEntryType.getGroupId()),
-				
-				dlFileEntryType.getName()
+				dlFileEntryType.getGroupId(), dlFileEntryType.getName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
@@ -3174,8 +3160,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		if ((dlFileEntryTypeModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(dlFileEntryTypeModelImpl.getOriginalGroupId()),
-					
+					dlFileEntryTypeModelImpl.getOriginalGroupId(),
 					dlFileEntryTypeModelImpl.getOriginalName()
 				};
 
@@ -3213,7 +3198,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	public DLFileEntryType remove(long fileEntryTypeId)
 		throws NoSuchFileEntryTypeException, SystemException {
-		return remove(Long.valueOf(fileEntryTypeId));
+		return remove((Serializable)fileEntryTypeId);
 	}
 
 	/**
@@ -3375,7 +3360,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						dlFileEntryTypeModelImpl.getOriginalUuid(),
-						Long.valueOf(dlFileEntryTypeModelImpl.getOriginalCompanyId())
+						dlFileEntryTypeModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -3384,7 +3369,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 				args = new Object[] {
 						dlFileEntryTypeModelImpl.getUuid(),
-						Long.valueOf(dlFileEntryTypeModelImpl.getCompanyId())
+						dlFileEntryTypeModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -3395,16 +3380,14 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			if ((dlFileEntryTypeModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(dlFileEntryTypeModelImpl.getOriginalGroupId())
+						dlFileEntryTypeModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(dlFileEntryTypeModelImpl.getGroupId())
-					};
+				args = new Object[] { dlFileEntryTypeModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,

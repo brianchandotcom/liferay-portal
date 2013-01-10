@@ -891,10 +891,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_N,
 			new Object[] {
-				Long.valueOf(expandoTable.getCompanyId()),
-				Long.valueOf(expandoTable.getClassNameId()),
-				
-			expandoTable.getName()
+				expandoTable.getCompanyId(), expandoTable.getClassNameId(),
+				expandoTable.getName()
 			}, expandoTable);
 
 		expandoTable.resetOriginalValues();
@@ -972,9 +970,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	protected void cacheUniqueFindersCache(ExpandoTable expandoTable) {
 		if (expandoTable.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(expandoTable.getCompanyId()),
-					Long.valueOf(expandoTable.getClassNameId()),
-					
+					expandoTable.getCompanyId(), expandoTable.getClassNameId(),
 					expandoTable.getName()
 				};
 
@@ -989,10 +985,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			if ((expandoTableModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(expandoTable.getCompanyId()),
-						Long.valueOf(expandoTable.getClassNameId()),
-						
-						expandoTable.getName()
+						expandoTable.getCompanyId(),
+						expandoTable.getClassNameId(), expandoTable.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_N, args,
@@ -1007,9 +1001,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		ExpandoTableModelImpl expandoTableModelImpl = (ExpandoTableModelImpl)expandoTable;
 
 		Object[] args = new Object[] {
-				Long.valueOf(expandoTable.getCompanyId()),
-				Long.valueOf(expandoTable.getClassNameId()),
-				
+				expandoTable.getCompanyId(), expandoTable.getClassNameId(),
 				expandoTable.getName()
 			};
 
@@ -1019,9 +1011,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		if ((expandoTableModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(expandoTableModelImpl.getOriginalCompanyId()),
-					Long.valueOf(expandoTableModelImpl.getOriginalClassNameId()),
-					
+					expandoTableModelImpl.getOriginalCompanyId(),
+					expandoTableModelImpl.getOriginalClassNameId(),
 					expandoTableModelImpl.getOriginalName()
 				};
 
@@ -1055,7 +1046,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	public ExpandoTable remove(long tableId)
 		throws NoSuchTableException, SystemException {
-		return remove(Long.valueOf(tableId));
+		return remove((Serializable)tableId);
 	}
 
 	/**
@@ -1173,8 +1164,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			if ((expandoTableModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(expandoTableModelImpl.getOriginalCompanyId()),
-						Long.valueOf(expandoTableModelImpl.getOriginalClassNameId())
+						expandoTableModelImpl.getOriginalCompanyId(),
+						expandoTableModelImpl.getOriginalClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -1182,8 +1173,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 					args);
 
 				args = new Object[] {
-						Long.valueOf(expandoTableModelImpl.getCompanyId()),
-						Long.valueOf(expandoTableModelImpl.getClassNameId())
+						expandoTableModelImpl.getCompanyId(),
+						expandoTableModelImpl.getClassNameId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);

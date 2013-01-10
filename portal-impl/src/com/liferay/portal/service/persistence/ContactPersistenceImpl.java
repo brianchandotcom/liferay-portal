@@ -1645,7 +1645,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 */
 	public Contact remove(long contactId)
 		throws NoSuchContactException, SystemException {
-		return remove(Long.valueOf(contactId));
+		return remove((Serializable)contactId);
 	}
 
 	/**
@@ -1760,7 +1760,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			if ((contactModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(contactModelImpl.getOriginalCompanyId())
+						contactModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -1768,9 +1768,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(contactModelImpl.getCompanyId())
-					};
+				args = new Object[] { contactModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
@@ -1781,7 +1779,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			if ((contactModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCOUNTID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(contactModelImpl.getOriginalAccountId())
+						contactModelImpl.getOriginalAccountId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACCOUNTID,
@@ -1789,9 +1787,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCOUNTID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(contactModelImpl.getAccountId())
-					};
+				args = new Object[] { contactModelImpl.getAccountId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ACCOUNTID,
 					args);
@@ -1802,8 +1798,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			if ((contactModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(contactModelImpl.getOriginalClassNameId()),
-						Long.valueOf(contactModelImpl.getOriginalClassPK())
+						contactModelImpl.getOriginalClassNameId(),
+						contactModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -1811,8 +1807,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 					args);
 
 				args = new Object[] {
-						Long.valueOf(contactModelImpl.getClassNameId()),
-						Long.valueOf(contactModelImpl.getClassPK())
+						contactModelImpl.getClassNameId(),
+						contactModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);

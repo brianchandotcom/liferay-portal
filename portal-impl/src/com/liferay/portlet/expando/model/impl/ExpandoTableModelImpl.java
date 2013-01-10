@@ -96,7 +96,7 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_tableId);
+		return _tableId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

@@ -5567,9 +5567,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_L_H_P,
 			new Object[] {
-				Long.valueOf(layoutRevision.getLayoutSetBranchId()),
-				Boolean.valueOf(layoutRevision.getHead()),
-				Long.valueOf(layoutRevision.getPlid())
+				layoutRevision.getLayoutSetBranchId(), layoutRevision.getHead(),
+				layoutRevision.getPlid()
 			}, layoutRevision);
 
 		layoutRevision.resetOriginalValues();
@@ -5647,9 +5646,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	protected void cacheUniqueFindersCache(LayoutRevision layoutRevision) {
 		if (layoutRevision.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(layoutRevision.getLayoutSetBranchId()),
-					Boolean.valueOf(layoutRevision.getHead()),
-					Long.valueOf(layoutRevision.getPlid())
+					layoutRevision.getLayoutSetBranchId(),
+					layoutRevision.getHead(), layoutRevision.getPlid()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_L_H_P, args,
@@ -5663,9 +5661,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			if ((layoutRevisionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_L_H_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutRevision.getLayoutSetBranchId()),
-						Boolean.valueOf(layoutRevision.getHead()),
-						Long.valueOf(layoutRevision.getPlid())
+						layoutRevision.getLayoutSetBranchId(),
+						layoutRevision.getHead(), layoutRevision.getPlid()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_L_H_P, args,
@@ -5680,9 +5677,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		LayoutRevisionModelImpl layoutRevisionModelImpl = (LayoutRevisionModelImpl)layoutRevision;
 
 		Object[] args = new Object[] {
-				Long.valueOf(layoutRevision.getLayoutSetBranchId()),
-				Boolean.valueOf(layoutRevision.getHead()),
-				Long.valueOf(layoutRevision.getPlid())
+				layoutRevision.getLayoutSetBranchId(), layoutRevision.getHead(),
+				layoutRevision.getPlid()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_H_P, args);
@@ -5691,9 +5687,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		if ((layoutRevisionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_L_H_P.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(layoutRevisionModelImpl.getOriginalLayoutSetBranchId()),
-					Boolean.valueOf(layoutRevisionModelImpl.getOriginalHead()),
-					Long.valueOf(layoutRevisionModelImpl.getOriginalPlid())
+					layoutRevisionModelImpl.getOriginalLayoutSetBranchId(),
+					layoutRevisionModelImpl.getOriginalHead(),
+					layoutRevisionModelImpl.getOriginalPlid()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_H_P, args);
@@ -5726,7 +5722,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 */
 	public LayoutRevision remove(long layoutRevisionId)
 		throws NoSuchLayoutRevisionException, SystemException {
-		return remove(Long.valueOf(layoutRevisionId));
+		return remove((Serializable)layoutRevisionId);
 	}
 
 	/**
@@ -5844,7 +5840,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			if ((layoutRevisionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTSETBRANCHID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getOriginalLayoutSetBranchId())
+						layoutRevisionModelImpl.getOriginalLayoutSetBranchId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LAYOUTSETBRANCHID,
@@ -5853,7 +5849,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					args);
 
 				args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getLayoutSetBranchId())
+						layoutRevisionModelImpl.getLayoutSetBranchId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LAYOUTSETBRANCHID,
@@ -5865,16 +5861,14 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			if ((layoutRevisionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getOriginalPlid())
+						layoutRevisionModelImpl.getOriginalPlid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PLID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getPlid())
-					};
+				args = new Object[] { layoutRevisionModelImpl.getPlid() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PLID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID,
@@ -5884,8 +5878,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			if ((layoutRevisionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_L_H.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getOriginalLayoutSetBranchId()),
-						Boolean.valueOf(layoutRevisionModelImpl.getOriginalHead())
+						layoutRevisionModelImpl.getOriginalLayoutSetBranchId(),
+						layoutRevisionModelImpl.getOriginalHead()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_H, args);
@@ -5893,8 +5887,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					args);
 
 				args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getLayoutSetBranchId()),
-						Boolean.valueOf(layoutRevisionModelImpl.getHead())
+						layoutRevisionModelImpl.getLayoutSetBranchId(),
+						layoutRevisionModelImpl.getHead()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_H, args);
@@ -5905,8 +5899,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			if ((layoutRevisionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_L_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getOriginalLayoutSetBranchId()),
-						Long.valueOf(layoutRevisionModelImpl.getOriginalPlid())
+						layoutRevisionModelImpl.getOriginalLayoutSetBranchId(),
+						layoutRevisionModelImpl.getOriginalPlid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_P, args);
@@ -5914,8 +5908,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					args);
 
 				args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getLayoutSetBranchId()),
-						Long.valueOf(layoutRevisionModelImpl.getPlid())
+						layoutRevisionModelImpl.getLayoutSetBranchId(),
+						layoutRevisionModelImpl.getPlid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_P, args);
@@ -5926,8 +5920,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			if ((layoutRevisionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_L_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getOriginalLayoutSetBranchId()),
-						Integer.valueOf(layoutRevisionModelImpl.getOriginalStatus())
+						layoutRevisionModelImpl.getOriginalLayoutSetBranchId(),
+						layoutRevisionModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_S, args);
@@ -5935,8 +5929,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					args);
 
 				args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getLayoutSetBranchId()),
-						Integer.valueOf(layoutRevisionModelImpl.getStatus())
+						layoutRevisionModelImpl.getLayoutSetBranchId(),
+						layoutRevisionModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_S, args);
@@ -5947,8 +5941,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			if ((layoutRevisionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_H_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Boolean.valueOf(layoutRevisionModelImpl.getOriginalHead()),
-						Long.valueOf(layoutRevisionModelImpl.getOriginalPlid())
+						layoutRevisionModelImpl.getOriginalHead(),
+						layoutRevisionModelImpl.getOriginalPlid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_H_P, args);
@@ -5956,8 +5950,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					args);
 
 				args = new Object[] {
-						Boolean.valueOf(layoutRevisionModelImpl.getHead()),
-						Long.valueOf(layoutRevisionModelImpl.getPlid())
+						layoutRevisionModelImpl.getHead(),
+						layoutRevisionModelImpl.getPlid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_H_P, args);
@@ -5968,9 +5962,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			if ((layoutRevisionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_L_L_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getOriginalLayoutSetBranchId()),
-						Long.valueOf(layoutRevisionModelImpl.getOriginalLayoutBranchId()),
-						Long.valueOf(layoutRevisionModelImpl.getOriginalPlid())
+						layoutRevisionModelImpl.getOriginalLayoutSetBranchId(),
+						layoutRevisionModelImpl.getOriginalLayoutBranchId(),
+						layoutRevisionModelImpl.getOriginalPlid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_L_P, args);
@@ -5978,9 +5972,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					args);
 
 				args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getLayoutSetBranchId()),
-						Long.valueOf(layoutRevisionModelImpl.getLayoutBranchId()),
-						Long.valueOf(layoutRevisionModelImpl.getPlid())
+						layoutRevisionModelImpl.getLayoutSetBranchId(),
+						layoutRevisionModelImpl.getLayoutBranchId(),
+						layoutRevisionModelImpl.getPlid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_L_P, args);
@@ -5991,9 +5985,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			if ((layoutRevisionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_L_P_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getOriginalLayoutSetBranchId()),
-						Long.valueOf(layoutRevisionModelImpl.getOriginalParentLayoutRevisionId()),
-						Long.valueOf(layoutRevisionModelImpl.getOriginalPlid())
+						layoutRevisionModelImpl.getOriginalLayoutSetBranchId(),
+						layoutRevisionModelImpl.getOriginalParentLayoutRevisionId(),
+						layoutRevisionModelImpl.getOriginalPlid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_P_P, args);
@@ -6001,9 +5995,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					args);
 
 				args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getLayoutSetBranchId()),
-						Long.valueOf(layoutRevisionModelImpl.getParentLayoutRevisionId()),
-						Long.valueOf(layoutRevisionModelImpl.getPlid())
+						layoutRevisionModelImpl.getLayoutSetBranchId(),
+						layoutRevisionModelImpl.getParentLayoutRevisionId(),
+						layoutRevisionModelImpl.getPlid()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_P_P, args);
@@ -6014,9 +6008,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			if ((layoutRevisionModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_L_P_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getOriginalLayoutSetBranchId()),
-						Long.valueOf(layoutRevisionModelImpl.getOriginalPlid()),
-						Integer.valueOf(layoutRevisionModelImpl.getOriginalStatus())
+						layoutRevisionModelImpl.getOriginalLayoutSetBranchId(),
+						layoutRevisionModelImpl.getOriginalPlid(),
+						layoutRevisionModelImpl.getOriginalStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_P_S, args);
@@ -6024,9 +6018,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					args);
 
 				args = new Object[] {
-						Long.valueOf(layoutRevisionModelImpl.getLayoutSetBranchId()),
-						Long.valueOf(layoutRevisionModelImpl.getPlid()),
-						Integer.valueOf(layoutRevisionModelImpl.getStatus())
+						layoutRevisionModelImpl.getLayoutSetBranchId(),
+						layoutRevisionModelImpl.getPlid(),
+						layoutRevisionModelImpl.getStatus()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_P_S, args);

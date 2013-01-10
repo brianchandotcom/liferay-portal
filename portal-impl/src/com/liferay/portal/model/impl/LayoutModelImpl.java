@@ -207,7 +207,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_plid);
+		return _plid;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

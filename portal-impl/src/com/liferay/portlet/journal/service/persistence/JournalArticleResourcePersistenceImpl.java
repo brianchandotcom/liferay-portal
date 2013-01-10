@@ -1621,14 +1621,13 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				journalArticleResource.getUuid(),
-				Long.valueOf(journalArticleResource.getGroupId())
+				journalArticleResource.getGroupId()
 			}, journalArticleResource);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A,
 			new Object[] {
-				Long.valueOf(journalArticleResource.getGroupId()),
-				
-			journalArticleResource.getArticleId()
+				journalArticleResource.getGroupId(),
+				journalArticleResource.getArticleId()
 			}, journalArticleResource);
 
 		journalArticleResource.resetOriginalValues();
@@ -1712,7 +1711,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		if (journalArticleResource.isNew()) {
 			Object[] args = new Object[] {
 					journalArticleResource.getUuid(),
-					Long.valueOf(journalArticleResource.getGroupId())
+					journalArticleResource.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -1721,8 +1720,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 				journalArticleResource);
 
 			args = new Object[] {
-					Long.valueOf(journalArticleResource.getGroupId()),
-					
+					journalArticleResource.getGroupId(),
 					journalArticleResource.getArticleId()
 				};
 
@@ -1738,7 +1736,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						journalArticleResource.getUuid(),
-						Long.valueOf(journalArticleResource.getGroupId())
+						journalArticleResource.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -1750,8 +1748,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			if ((journalArticleResourceModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(journalArticleResource.getGroupId()),
-						
+						journalArticleResource.getGroupId(),
 						journalArticleResource.getArticleId()
 					};
 
@@ -1769,7 +1766,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 		Object[] args = new Object[] {
 				journalArticleResource.getUuid(),
-				Long.valueOf(journalArticleResource.getGroupId())
+				journalArticleResource.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -1779,7 +1776,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					journalArticleResourceModelImpl.getOriginalUuid(),
-					Long.valueOf(journalArticleResourceModelImpl.getOriginalGroupId())
+					journalArticleResourceModelImpl.getOriginalGroupId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -1787,8 +1784,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		}
 
 		args = new Object[] {
-				Long.valueOf(journalArticleResource.getGroupId()),
-				
+				journalArticleResource.getGroupId(),
 				journalArticleResource.getArticleId()
 			};
 
@@ -1798,8 +1794,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		if ((journalArticleResourceModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_A.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(journalArticleResourceModelImpl.getOriginalGroupId()),
-					
+					journalArticleResourceModelImpl.getOriginalGroupId(),
 					journalArticleResourceModelImpl.getOriginalArticleId()
 				};
 
@@ -1837,7 +1832,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 */
 	public JournalArticleResource remove(long resourcePrimKey)
 		throws NoSuchArticleResourceException, SystemException {
-		return remove(Long.valueOf(resourcePrimKey));
+		return remove((Serializable)resourcePrimKey);
 	}
 
 	/**
@@ -1979,16 +1974,14 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			if ((journalArticleResourceModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(journalArticleResourceModelImpl.getOriginalGroupId())
+						journalArticleResourceModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(journalArticleResourceModelImpl.getGroupId())
-					};
+				args = new Object[] { journalArticleResourceModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,

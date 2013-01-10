@@ -151,7 +151,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_countryId);
+		return _countryId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

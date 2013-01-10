@@ -1185,8 +1185,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			TeamImpl.class, team.getPrimaryKey(), team);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-			new Object[] { Long.valueOf(team.getGroupId()), team.getName() },
-			team);
+			new Object[] { team.getGroupId(), team.getName() }, team);
 
 		team.resetOriginalValues();
 	}
@@ -1261,11 +1260,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 	protected void cacheUniqueFindersCache(Team team) {
 		if (team.isNew()) {
-			Object[] args = new Object[] {
-					Long.valueOf(team.getGroupId()),
-					
-					team.getName()
-				};
+			Object[] args = new Object[] { team.getGroupId(), team.getName() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 				Long.valueOf(1));
@@ -1276,11 +1271,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 			if ((teamModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(team.getGroupId()),
-						
-						team.getName()
-					};
+				Object[] args = new Object[] { team.getGroupId(), team.getName() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 					Long.valueOf(1));
@@ -1292,11 +1283,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	protected void clearUniqueFindersCache(Team team) {
 		TeamModelImpl teamModelImpl = (TeamModelImpl)team;
 
-		Object[] args = new Object[] {
-				Long.valueOf(team.getGroupId()),
-				
-				team.getName()
-			};
+		Object[] args = new Object[] { team.getGroupId(), team.getName() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
@@ -1304,8 +1291,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		if ((teamModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(teamModelImpl.getOriginalGroupId()),
-					
+					teamModelImpl.getOriginalGroupId(),
 					teamModelImpl.getOriginalName()
 				};
 
@@ -1338,7 +1324,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Team remove(long teamId) throws NoSuchTeamException, SystemException {
-		return remove(Long.valueOf(teamId));
+		return remove((Serializable)teamId);
 	}
 
 	/**
@@ -1471,15 +1457,13 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		else {
 			if ((teamModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(teamModelImpl.getOriginalGroupId())
-					};
+				Object[] args = new Object[] { teamModelImpl.getOriginalGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] { Long.valueOf(teamModelImpl.getGroupId()) };
+				args = new Object[] { teamModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,

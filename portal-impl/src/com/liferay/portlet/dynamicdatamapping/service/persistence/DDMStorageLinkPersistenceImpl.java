@@ -1301,8 +1301,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 			ddmStorageLink);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSPK,
-			new Object[] { Long.valueOf(ddmStorageLink.getClassPK()) },
-			ddmStorageLink);
+			new Object[] { ddmStorageLink.getClassPK() }, ddmStorageLink);
 
 		ddmStorageLink.resetOriginalValues();
 	}
@@ -1378,9 +1377,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 	protected void cacheUniqueFindersCache(DDMStorageLink ddmStorageLink) {
 		if (ddmStorageLink.isNew()) {
-			Object[] args = new Object[] {
-					Long.valueOf(ddmStorageLink.getClassPK())
-				};
+			Object[] args = new Object[] { ddmStorageLink.getClassPK() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CLASSPK, args,
 				Long.valueOf(1));
@@ -1392,9 +1389,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 			if ((ddmStorageLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_CLASSPK.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(ddmStorageLink.getClassPK())
-					};
+				Object[] args = new Object[] { ddmStorageLink.getClassPK() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CLASSPK, args,
 					Long.valueOf(1));
@@ -1407,16 +1402,14 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	protected void clearUniqueFindersCache(DDMStorageLink ddmStorageLink) {
 		DDMStorageLinkModelImpl ddmStorageLinkModelImpl = (DDMStorageLinkModelImpl)ddmStorageLink;
 
-		Object[] args = new Object[] { Long.valueOf(ddmStorageLink.getClassPK()) };
+		Object[] args = new Object[] { ddmStorageLink.getClassPK() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSPK, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSPK, args);
 
 		if ((ddmStorageLinkModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_CLASSPK.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					Long.valueOf(ddmStorageLinkModelImpl.getOriginalClassPK())
-				};
+			args = new Object[] { ddmStorageLinkModelImpl.getOriginalClassPK() };
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSPK, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSPK, args);
@@ -1452,7 +1445,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	 */
 	public DDMStorageLink remove(long storageLinkId)
 		throws NoSuchStorageLinkException, SystemException {
-		return remove(Long.valueOf(storageLinkId));
+		return remove((Serializable)storageLinkId);
 	}
 
 	/**
@@ -1593,7 +1586,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 			if ((ddmStorageLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(ddmStorageLinkModelImpl.getOriginalStructureId())
+						ddmStorageLinkModelImpl.getOriginalStructureId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID,
@@ -1601,9 +1594,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(ddmStorageLinkModelImpl.getStructureId())
-					};
+				args = new Object[] { ddmStorageLinkModelImpl.getStructureId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREID,
 					args);

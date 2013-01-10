@@ -98,7 +98,7 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_passwordPolicyRelId);
+		return _passwordPolicyRelId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

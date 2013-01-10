@@ -896,7 +896,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BNS_BNU,
 			new Object[] {
 				serviceComponent.getBuildNamespace(),
-				Long.valueOf(serviceComponent.getBuildNumber())
+				serviceComponent.getBuildNumber()
 			}, serviceComponent);
 
 		serviceComponent.resetOriginalValues();
@@ -976,7 +976,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		if (serviceComponent.isNew()) {
 			Object[] args = new Object[] {
 					serviceComponent.getBuildNamespace(),
-					Long.valueOf(serviceComponent.getBuildNumber())
+					serviceComponent.getBuildNumber()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_BNS_BNU, args,
@@ -991,7 +991,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 					FINDER_PATH_FETCH_BY_BNS_BNU.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						serviceComponent.getBuildNamespace(),
-						Long.valueOf(serviceComponent.getBuildNumber())
+						serviceComponent.getBuildNumber()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_BNS_BNU, args,
@@ -1007,7 +1007,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 		Object[] args = new Object[] {
 				serviceComponent.getBuildNamespace(),
-				Long.valueOf(serviceComponent.getBuildNumber())
+				serviceComponent.getBuildNumber()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BNS_BNU, args);
@@ -1017,7 +1017,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 				FINDER_PATH_FETCH_BY_BNS_BNU.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					serviceComponentModelImpl.getOriginalBuildNamespace(),
-					Long.valueOf(serviceComponentModelImpl.getOriginalBuildNumber())
+					serviceComponentModelImpl.getOriginalBuildNumber()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BNS_BNU, args);
@@ -1050,7 +1050,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 */
 	public ServiceComponent remove(long serviceComponentId)
 		throws NoSuchServiceComponentException, SystemException {
-		return remove(Long.valueOf(serviceComponentId));
+		return remove((Serializable)serviceComponentId);
 	}
 
 	/**

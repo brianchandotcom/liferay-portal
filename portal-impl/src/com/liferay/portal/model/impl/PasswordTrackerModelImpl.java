@@ -98,7 +98,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_passwordTrackerId);
+		return _passwordTrackerId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

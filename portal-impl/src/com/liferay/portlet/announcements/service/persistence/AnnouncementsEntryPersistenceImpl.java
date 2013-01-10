@@ -4793,7 +4793,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	public AnnouncementsEntry remove(long entryId)
 		throws NoSuchEntryException, SystemException {
-		return remove(Long.valueOf(entryId));
+		return remove((Serializable)entryId);
 	}
 
 	/**
@@ -4935,7 +4935,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						announcementsEntryModelImpl.getOriginalUuid(),
-						Long.valueOf(announcementsEntryModelImpl.getOriginalCompanyId())
+						announcementsEntryModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -4944,7 +4944,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 				args = new Object[] {
 						announcementsEntryModelImpl.getUuid(),
-						Long.valueOf(announcementsEntryModelImpl.getCompanyId())
+						announcementsEntryModelImpl.getCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -4955,16 +4955,14 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			if ((announcementsEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(announcementsEntryModelImpl.getOriginalUserId())
+						announcementsEntryModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(announcementsEntryModelImpl.getUserId())
-					};
+				args = new Object[] { announcementsEntryModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
@@ -4974,8 +4972,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			if ((announcementsEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(announcementsEntryModelImpl.getOriginalClassNameId()),
-						Long.valueOf(announcementsEntryModelImpl.getOriginalClassPK())
+						announcementsEntryModelImpl.getOriginalClassNameId(),
+						announcementsEntryModelImpl.getOriginalClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -4983,8 +4981,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 					args);
 
 				args = new Object[] {
-						Long.valueOf(announcementsEntryModelImpl.getClassNameId()),
-						Long.valueOf(announcementsEntryModelImpl.getClassPK())
+						announcementsEntryModelImpl.getClassNameId(),
+						announcementsEntryModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -4995,9 +4993,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			if ((announcementsEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(announcementsEntryModelImpl.getOriginalClassNameId()),
-						Long.valueOf(announcementsEntryModelImpl.getOriginalClassPK()),
-						Boolean.valueOf(announcementsEntryModelImpl.getOriginalAlert())
+						announcementsEntryModelImpl.getOriginalClassNameId(),
+						announcementsEntryModelImpl.getOriginalClassPK(),
+						announcementsEntryModelImpl.getOriginalAlert()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_A, args);
@@ -5005,9 +5003,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 					args);
 
 				args = new Object[] {
-						Long.valueOf(announcementsEntryModelImpl.getClassNameId()),
-						Long.valueOf(announcementsEntryModelImpl.getClassPK()),
-						Boolean.valueOf(announcementsEntryModelImpl.getAlert())
+						announcementsEntryModelImpl.getClassNameId(),
+						announcementsEntryModelImpl.getClassPK(),
+						announcementsEntryModelImpl.getAlert()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_A, args);

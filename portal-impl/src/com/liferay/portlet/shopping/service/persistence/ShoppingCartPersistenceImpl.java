@@ -1266,10 +1266,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			ShoppingCartImpl.class, shoppingCart.getPrimaryKey(), shoppingCart);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U,
-			new Object[] {
-				Long.valueOf(shoppingCart.getGroupId()),
-				Long.valueOf(shoppingCart.getUserId())
-			}, shoppingCart);
+			new Object[] { shoppingCart.getGroupId(), shoppingCart.getUserId() },
+			shoppingCart);
 
 		shoppingCart.resetOriginalValues();
 	}
@@ -1346,8 +1344,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	protected void cacheUniqueFindersCache(ShoppingCart shoppingCart) {
 		if (shoppingCart.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(shoppingCart.getGroupId()),
-					Long.valueOf(shoppingCart.getUserId())
+					shoppingCart.getGroupId(), shoppingCart.getUserId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U, args,
@@ -1361,8 +1358,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			if ((shoppingCartModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shoppingCart.getGroupId()),
-						Long.valueOf(shoppingCart.getUserId())
+						shoppingCart.getGroupId(), shoppingCart.getUserId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U, args,
@@ -1377,8 +1373,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		ShoppingCartModelImpl shoppingCartModelImpl = (ShoppingCartModelImpl)shoppingCart;
 
 		Object[] args = new Object[] {
-				Long.valueOf(shoppingCart.getGroupId()),
-				Long.valueOf(shoppingCart.getUserId())
+				shoppingCart.getGroupId(), shoppingCart.getUserId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -1387,8 +1382,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		if ((shoppingCartModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_U.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(shoppingCartModelImpl.getOriginalGroupId()),
-					Long.valueOf(shoppingCartModelImpl.getOriginalUserId())
+					shoppingCartModelImpl.getOriginalGroupId(),
+					shoppingCartModelImpl.getOriginalUserId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -1421,7 +1416,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	public ShoppingCart remove(long cartId)
 		throws NoSuchCartException, SystemException {
-		return remove(Long.valueOf(cartId));
+		return remove((Serializable)cartId);
 	}
 
 	/**
@@ -1539,16 +1534,14 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			if ((shoppingCartModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shoppingCartModelImpl.getOriginalGroupId())
+						shoppingCartModelImpl.getOriginalGroupId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(shoppingCartModelImpl.getGroupId())
-					};
+				args = new Object[] { shoppingCartModelImpl.getGroupId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
@@ -1558,16 +1551,14 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			if ((shoppingCartModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(shoppingCartModelImpl.getOriginalUserId())
+						shoppingCartModelImpl.getOriginalUserId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(shoppingCartModelImpl.getUserId())
-					};
+				args = new Object[] { shoppingCartModelImpl.getUserId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,

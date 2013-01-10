@@ -100,7 +100,7 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_storageLinkId);
+		return _storageLinkId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

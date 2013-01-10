@@ -824,11 +824,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 			PortletImpl.class, portlet.getPrimaryKey(), portlet);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P,
-			new Object[] {
-				Long.valueOf(portlet.getCompanyId()),
-				
-			portlet.getPortletId()
-			}, portlet);
+			new Object[] { portlet.getCompanyId(), portlet.getPortletId() },
+			portlet);
 
 		portlet.resetOriginalValues();
 	}
@@ -905,9 +902,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	protected void cacheUniqueFindersCache(Portlet portlet) {
 		if (portlet.isNew()) {
 			Object[] args = new Object[] {
-					Long.valueOf(portlet.getCompanyId()),
-					
-					portlet.getPortletId()
+					portlet.getCompanyId(), portlet.getPortletId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_P, args,
@@ -920,9 +915,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 			if ((portletModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(portlet.getCompanyId()),
-						
-						portlet.getPortletId()
+						portlet.getCompanyId(), portlet.getPortletId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_P, args,
@@ -937,9 +930,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		PortletModelImpl portletModelImpl = (PortletModelImpl)portlet;
 
 		Object[] args = new Object[] {
-				Long.valueOf(portlet.getCompanyId()),
-				
-				portlet.getPortletId()
+				portlet.getCompanyId(), portlet.getPortletId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
@@ -948,8 +939,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		if ((portletModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_P.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					Long.valueOf(portletModelImpl.getOriginalCompanyId()),
-					
+					portletModelImpl.getOriginalCompanyId(),
 					portletModelImpl.getOriginalPortletId()
 				};
 
@@ -983,7 +973,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	public Portlet remove(long id)
 		throws NoSuchPortletException, SystemException {
-		return remove(Long.valueOf(id));
+		return remove((Serializable)id);
 	}
 
 	/**
@@ -1098,7 +1088,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 			if ((portletModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						Long.valueOf(portletModelImpl.getOriginalCompanyId())
+						portletModelImpl.getOriginalCompanyId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
@@ -1106,9 +1096,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
-				args = new Object[] {
-						Long.valueOf(portletModelImpl.getCompanyId())
-					};
+				args = new Object[] { portletModelImpl.getCompanyId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);

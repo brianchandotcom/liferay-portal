@@ -187,7 +187,7 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	}
 
 	public Serializable getPrimaryKeyObj() {
-		return new Long(_productEntryId);
+		return _productEntryId;
 	}
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {

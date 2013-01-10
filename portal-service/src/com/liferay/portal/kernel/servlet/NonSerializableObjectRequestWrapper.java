@@ -22,8 +22,13 @@ import javax.servlet.http.HttpServletRequest;
 public class NonSerializableObjectRequestWrapper extends
 	PersistentHttpServletRequestWrapper {
 
+	public static final String REQUEST_FLAG_NAME =
+		NonSerializableObjectRequestWrapper.class.getName();
+
 	public NonSerializableObjectRequestWrapper(HttpServletRequest request) {
 		super(request);
+
+		request.setAttribute(REQUEST_FLAG_NAME, Boolean.TRUE);
 	}
 
 	@Override
@@ -33,6 +38,17 @@ public class NonSerializableObjectRequestWrapper extends
 		object = NonSerializableObjectHandler.getValue(object);
 
 		return object;
+	}
+
+	public static boolean isRequestWrapped(HttpServletRequest request) {
+		Object flag = request.getAttribute(REQUEST_FLAG_NAME);
+
+		if (flag == null) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	@Override

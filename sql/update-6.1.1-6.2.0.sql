@@ -1,3 +1,18 @@
+drop index IX_852EA801 on AssetCategory;
+drop index IX_D61ABE08 on AssetCategory;
+drop index IX_9DDD15EA on AssetCategory;
+
+drop index IX_52340033 on AssetCategoryProperty;
+drop index IX_8654719F on AssetCategoryProperty;
+
+drop index IX_75D42FF9 on AssetEntry;
+drop index IX_FEC4A201 on AssetEntry;
+drop index IX_2E4E3885 on AssetEntry;
+drop index IX_9029E15A on AssetEntry;
+
+drop index IX_13805BF7 on AssetTagProperty;
+drop index IX_DFF1F063 on AssetTagProperty;
+
 update BlogsEntry set status = 2 where status = 9;
 
 alter table BookmarksEntry add status INTEGER;

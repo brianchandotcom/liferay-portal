@@ -91,9 +91,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.asset.model.AssetTagProperty"),
 			true);
-	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long KEY_COLUMN_BITMASK = 2L;
-	public static long TAGID_COLUMN_BITMASK = 4L;
+	public static long KEY_COLUMN_BITMASK = 1L;
+	public static long TAGID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -261,19 +260,7 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 	}
 
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
 		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -476,10 +463,6 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 	public void resetOriginalValues() {
 		AssetTagPropertyModelImpl assetTagPropertyModelImpl = this;
 
-		assetTagPropertyModelImpl._originalCompanyId = assetTagPropertyModelImpl._companyId;
-
-		assetTagPropertyModelImpl._setOriginalCompanyId = false;
-
 		assetTagPropertyModelImpl._originalTagId = assetTagPropertyModelImpl._tagId;
 
 		assetTagPropertyModelImpl._setOriginalTagId = false;
@@ -628,8 +611,6 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		};
 	private long _tagPropertyId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

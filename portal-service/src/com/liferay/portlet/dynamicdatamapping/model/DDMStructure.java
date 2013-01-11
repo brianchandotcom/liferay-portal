@@ -103,7 +103,7 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 
 	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedTransientFieldsMap();
 
-	public java.util.List<java.lang.String> getParentFieldNames()
+	public java.util.List<java.lang.String> getRootFieldNames()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

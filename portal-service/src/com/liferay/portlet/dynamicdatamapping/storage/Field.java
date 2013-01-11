@@ -85,13 +85,8 @@ public class Field implements Serializable {
 	}
 
 	public void addValues(Locale locale, List<Serializable> values) {
-		List<Serializable> existingValues = _valuesMap.get(locale);
-
-		if (existingValues == null) {
-			_valuesMap.put(locale, values);
-		}
-		else {
-			existingValues.addAll(values);
+		for (Serializable value : values) {
+			addValue(locale, value);
 		}
 	}
 

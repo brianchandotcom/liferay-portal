@@ -59,9 +59,9 @@ public class JournalConverterUtil {
 		Field fieldsDisplay = new Field(
 			DDMImpl.FIELDS_DISPLAY_NAME, StringPool.BLANK);
 
-		Fields fields = new Fields();
+		Fields ddmFields = new Fields();
 
-		fields.put(fieldsDisplay);
+		ddmFields.put(fieldsDisplay);
 
 		Element rootElement = document.getRootElement();
 
@@ -71,20 +71,20 @@ public class JournalConverterUtil {
 			"dynamic-element");
 
 		for (Element dynamicElementElement : dynamicElementElements) {
-			addFields(
-				dynamicElementElement, ddmStructure, fields, defaultLocale);
+			addDDMFields(
+				dynamicElementElement, ddmStructure, ddmFields, defaultLocale);
 		}
 
-		return fields;
+		return ddmFields;
 	}
 
-	public static String getXML(DDMStructure ddmStructure, Fields fields)
+	public static String getXML(DDMStructure ddmStructure, Fields ddmFields)
 		throws Exception {
 
 		Document document = SAXReaderUtil.createDocument();
 
-		String availableLocales = getAvailableLocales(fields);
-		Locale defaultLocale = fields.getDefaultLocale();
+		String availableLocales = getAvailableLocales(ddmFields);
+		Locale defaultLocale = ddmFields.getDefaultLocale();
 
 		Element rootElement = document.addElement("root");
 
@@ -94,8 +94,9 @@ public class JournalConverterUtil {
 
 		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
 
-		for (String fieldName : ddmStructure.getParentFieldNames()) {
-			int repetitions = countFieldRepetition(fields, fieldName, null, -1);
+		for (String fieldName : ddmStructure.getRootFieldNames()) {
+			int repetitions = countFieldRepetition(
+				ddmFields, fieldName, null, -1);
 
 			for (int i = 0; i < repetitions; i++) {
 				Element dynamicElementElement = rootElement.addElement(
@@ -104,7 +105,7 @@ public class JournalConverterUtil {
 				dynamicElementElement.addAttribute("name", fieldName);
 
 				updateDynamicElement(
-					dynamicElementElement, ddmStructure, fields,
+					dynamicElementElement, ddmStructure, ddmFields,
 					ddmFieldsCounter);
 			}
 		}
@@ -112,60 +113,28 @@ public class JournalConverterUtil {
 		return DDMXMLUtil.formatXML(document.asXML());
 	}
 
-	public static void updateDynamicElement(
+	protected static void addDDMFields(
 			Element dynamicElementElement, DDMStructure ddmStructure,
-			Fields fields, DDMFieldsCounter ddmFieldsCounter)
+			Fields ddmFields, String defaultLocale)
 		throws Exception {
 
-		String fieldName = dynamicElementElement.attributeValue("name");
-
-		for (String childFieldName :
-				ddmStructure.getChildrenFieldNames(fieldName)) {
-
-			int offset = ddmFieldsCounter.get(fieldName);
-
-			int repetitions = countFieldRepetition(
-				fields, childFieldName, fieldName, offset);
-
-			for (int i = 0; i < repetitions; i++) {
-				Element childDynamicElementElement =
-					dynamicElementElement.addElement("dynamic-element");
-
-				childDynamicElementElement.addAttribute("name", childFieldName);
-
-				updateDynamicElement(
-					childDynamicElementElement, ddmStructure, fields,
-					ddmFieldsCounter);
-			}
-		}
-
-		updateDynamicElement(
-			dynamicElementElement, ddmStructure, fields.get(fieldName),
-			ddmFieldsCounter);
-	}
-
-	protected static void addFields(
-			Element dynamicElementElement, DDMStructure ddmStructure,
-			Fields fields, String defaultLocale)
-		throws Exception {
-
-		Field field = getField(
+		Field ddmField = getField(
 			dynamicElementElement, ddmStructure, defaultLocale);
 
-		String fieldName = field.getName();
+		String fieldName = ddmField.getName();
 
-		Field existingField = fields.get(fieldName);
+		Field existingDDMField = ddmFields.get(fieldName);
 
-		if (existingField != null) {
-			for (Locale locale : field.getAvailableLocales()) {
-				existingField.addValues(locale, field.getValues(locale));
+		if (existingDDMField != null) {
+			for (Locale locale : ddmField.getAvailableLocales()) {
+				existingDDMField.addValues(locale, ddmField.getValues(locale));
 			}
 		}
 		else {
-			fields.put(field);
+			ddmFields.put(ddmField);
 		}
 
-		updateFieldsDisplay(fields, fieldName);
+		updateFieldsDisplay(ddmFields, fieldName);
 
 		List<Element> childrenDynamicElementElements =
 			dynamicElementElement.elements("dynamic-element");
@@ -173,18 +142,18 @@ public class JournalConverterUtil {
 		for (Element childrenDynamicElementElement :
 				childrenDynamicElementElements) {
 
-			addFields(
-				childrenDynamicElementElement, ddmStructure, fields,
+			addDDMFields(
+				childrenDynamicElementElement, ddmStructure, ddmFields,
 				defaultLocale);
 		}
 	}
 
 	protected static int countFieldRepetition(
-			Fields fields, String fieldName, String parentFieldName,
+			Fields ddmFields, String fieldName, String parentFieldName,
 			int parentOffset)
 		throws Exception {
 
-		Field fieldsDisplay = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+		Field fieldsDisplay = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
 		String value = (String)fieldsDisplay.getValue();
 
@@ -216,8 +185,8 @@ public class JournalConverterUtil {
 		return repetitions;
 	}
 
-	protected static String getAvailableLocales(Fields fields) {
-		Set<Locale> availableLocales = fields.getAvailableLocales();
+	protected static String getAvailableLocales(Fields ddmFields) {
+		Set<Locale> availableLocales = ddmFields.getAvailableLocales();
 
 		Locale[] availableLocalesArray = new Locale[availableLocales.size()];
 
@@ -233,13 +202,13 @@ public class JournalConverterUtil {
 			String defaultLocale)
 		throws Exception {
 
-		Field field = new Field();
+		Field ddmField = new Field();
 
 		String name = dynamicElementElement.attributeValue("name");
 
-		field.setDDMStructureId(ddmStructure.getStructureId());
-		field.setDefaultLocale(LocaleUtil.fromLanguageId(defaultLocale));
-		field.setName(name);
+		ddmField.setDDMStructureId(ddmStructure.getStructureId());
+		ddmField.setDefaultLocale(LocaleUtil.fromLanguageId(defaultLocale));
+		ddmField.setName(name);
 
 		String dataType = ddmStructure.getFieldDataType(name);
 		String type = ddmStructure.getFieldType(name);
@@ -254,10 +223,10 @@ public class JournalConverterUtil {
 			Serializable serializable = getFieldValue(
 				dataType, type, dynamicContentElement);
 
-			field.addValue(locale, serializable);
+			ddmField.addValue(locale, serializable);
 		}
 
-		return field;
+		return ddmField;
 	}
 
 	protected static Serializable getFieldValue(
@@ -393,10 +362,10 @@ public class JournalConverterUtil {
 
 	protected static void updateDynamicElement(
 			Element dynamicElementElement, DDMStructure ddmStructure,
-			Field field, DDMFieldsCounter ddmFieldsCounter)
+			Field ddmField, DDMFieldsCounter ddmFieldsCounter)
 		throws Exception {
 
-		String fieldName = field.getName();
+		String fieldName = ddmField.getName();
 
 		String fieldType = ddmStructure.getFieldType(fieldName);
 		String indexType = ddmStructure.getFieldProperty(
@@ -405,7 +374,7 @@ public class JournalConverterUtil {
 		dynamicElementElement.addAttribute("type", _ddmTypesMap.get(fieldType));
 		dynamicElementElement.addAttribute("index-type", indexType);
 
-		for (Locale locale : field.getAvailableLocales()) {
+		for (Locale locale : ddmField.getAvailableLocales()) {
 			Element dynamicContentElement = dynamicElementElement.addElement(
 				"dynamic-content");
 
@@ -414,7 +383,7 @@ public class JournalConverterUtil {
 
 			int index = ddmFieldsCounter.get(fieldName);
 
-			Serializable fieldValue = field.getValue(locale, index);
+			Serializable fieldValue = ddmField.getValue(locale, index);
 
 			updateDynamicContentValue(
 				dynamicContentElement, fieldType, String.valueOf(fieldValue));
@@ -423,12 +392,46 @@ public class JournalConverterUtil {
 		ddmFieldsCounter.incrementKey(fieldName);
 	}
 
-	protected static void updateFieldsDisplay(Fields fields, String fieldName) {
+	protected static void updateDynamicElement(
+			Element dynamicElementElement, DDMStructure ddmStructure,
+			Fields ddmFields, DDMFieldsCounter ddmFieldsCounter)
+		throws Exception {
+
+		String fieldName = dynamicElementElement.attributeValue("name");
+
+		for (String childFieldName :
+				ddmStructure.getChildrenFieldNames(fieldName)) {
+
+			int offset = ddmFieldsCounter.get(fieldName);
+
+			int repetitions = countFieldRepetition(
+				ddmFields, childFieldName, fieldName, offset);
+
+			for (int i = 0; i < repetitions; i++) {
+				Element childDynamicElementElement =
+					dynamicElementElement.addElement("dynamic-element");
+
+				childDynamicElementElement.addAttribute("name", childFieldName);
+
+				updateDynamicElement(
+					childDynamicElementElement, ddmStructure, ddmFields,
+					ddmFieldsCounter);
+			}
+		}
+
+		updateDynamicElement(
+			dynamicElementElement, ddmStructure, ddmFields.get(fieldName),
+			ddmFieldsCounter);
+	}
+
+	protected static void updateFieldsDisplay(
+		Fields ddmFields, String fieldName) {
+
 		String fieldsDisplayValue =
 			fieldName.concat(DDMImpl.INSTANCE_SEPARATOR).concat(
 				PwdGenerator.getPassword());
 
-		Field fieldsDisplay = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+		Field fieldsDisplay = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
 		String[] fieldsDisplayValues = StringUtil.split(
 			(String)fieldsDisplay.getValue());

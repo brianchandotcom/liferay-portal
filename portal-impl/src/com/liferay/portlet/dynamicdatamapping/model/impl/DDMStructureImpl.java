@@ -72,7 +72,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public List<String> getChildrenFieldNames(String fieldName)
 		throws PortalException, SystemException {
 
-		List<String> childrenFieldNames = new ArrayList<String>();
+		List<String> fieldNames = new ArrayList<String>();
 
 		Map<String, Map<String, String>> fieldsMap = getFieldsMap();
 
@@ -82,11 +82,11 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			String parentName = field.get(parentNameKey);
 
 			if (fieldName.equals(parentName)) {
-				childrenFieldNames.add(field.get("name"));
+				fieldNames.add(field.get("name"));
 			}
 		}
 
-		return childrenFieldNames;
+		return fieldNames;
 	}
 
 	public String getCompleteXsd() throws PortalException, SystemException {
@@ -266,10 +266,10 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return _localizedTransientFieldsMap;
 	}
 
-	public List<String> getParentFieldNames()
+	public List<String> getRootFieldNames()
 		throws PortalException, SystemException {
 
-		List<String> parentFieldNames = new ArrayList<String>();
+		List<String> fieldNames = new ArrayList<String>();
 
 		Map<String, Map<String, String>> fieldsMap = getFieldsMap();
 
@@ -281,11 +281,11 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			String parentNameKey = _getPrivateAttributeKey("parentName");
 
 			if (!field.containsKey(parentNameKey)) {
-				parentFieldNames.add(fieldEntry.getKey());
+				fieldNames.add(fieldEntry.getKey());
 			}
 		}
 
-		return parentFieldNames;
+		return fieldNames;
 	}
 
 	public List<DDMTemplate> getTemplates() throws SystemException {

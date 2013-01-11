@@ -916,10 +916,10 @@ public class DDMStructureWrapper implements DDMStructure,
 		return _ddmStructure.getLocalizedTransientFieldsMap();
 	}
 
-	public java.util.List<java.lang.String> getParentFieldNames()
+	public java.util.List<java.lang.String> getRootFieldNames()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ddmStructure.getParentFieldNames();
+		return _ddmStructure.getRootFieldNames();
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates()

@@ -127,7 +127,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 		int fieldRepetition = 1;
 
-		DDMFieldsCounter fieldsCounter = getFieldsCounter(
+		DDMFieldsCounter ddmFieldsCounter = getFieldsCounter(
 			pageContext, fields, portletNamespace, namespace);
 
 		if (fields != null) {
@@ -146,7 +146,7 @@ public class DDMXSDImpl implements DDMXSD {
 				String parentFieldName = (String)parentFieldStructure.get(
 					"name");
 
-				int offset = fieldsCounter.get(DDMImpl.FIELDS_DISPLAY_NAME);
+				int offset = ddmFieldsCounter.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
 				fieldRepetition = countFieldRepetition(
 					fieldsDisplayValues, parentFieldName, offset);
@@ -159,10 +159,10 @@ public class DDMXSDImpl implements DDMXSD {
 
 		while (fieldRepetition > 0) {
 			fieldStructure.put("fieldNamespace", PwdGenerator.getPassword(4));
-			fieldStructure.put("valueIndex", fieldsCounter.get(name));
+			fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
 
-			fieldsCounter.incrementKey(name);
-			fieldsCounter.incrementKey(DDMImpl.FIELDS_DISPLAY_NAME);
+			ddmFieldsCounter.incrementKey(name);
+			ddmFieldsCounter.incrementKey(DDMImpl.FIELDS_DISPLAY_NAME);
 
 			String childrenHTML = getHTML(
 				pageContext, element, fields, namespace, mode, readOnly,
@@ -535,16 +535,16 @@ public class DDMXSDImpl implements DDMXSD {
 
 		String fieldsCounterKey = portletNamespace + namespace + "fieldsCount";
 
-		DDMFieldsCounter fieldsCounter =
+		DDMFieldsCounter ddmFieldsCounter =
 			(DDMFieldsCounter)pageContext.getAttribute(fieldsCounterKey);
 
-		if (fieldsCounter == null) {
-			fieldsCounter = new DDMFieldsCounter();
+		if (ddmFieldsCounter == null) {
+			ddmFieldsCounter = new DDMFieldsCounter();
 
-			pageContext.setAttribute(fieldsCounterKey, fieldsCounter);
+			pageContext.setAttribute(fieldsCounterKey, ddmFieldsCounter);
 		}
 
-		return fieldsCounter;
+		return ddmFieldsCounter;
 	}
 
 	protected Map<String, Object> getFreeMarkerContext(

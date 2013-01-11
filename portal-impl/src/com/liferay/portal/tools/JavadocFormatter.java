@@ -788,6 +788,10 @@ public class JavadocFormatter {
 		}
 
 		if (pos == -1) {
+			pos = fileName.indexOf("service/");
+		}
+
+		if (pos == -1) {
 			throw new RuntimeException(fileName);
 		}
 

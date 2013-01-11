@@ -495,13 +495,15 @@ public class PortletImporter {
 			long vocabularyId, int count)
 		throws Exception {
 
-		AssetCategory assetCategory = AssetCategoryUtil.findByP_N_V(
+		AssetCategory assetCategory = AssetCategoryUtil.fetchByP_N_V(
 			parentCategoryId, name, vocabularyId);;
 
-		if (assetCategory != null && assetCategory.getGroupId() == groupId) {
+		if ((assetCategory != null) &&
+				(assetCategory.getGroupId() == groupId)) {
 
 			if (Validator.isNotNull(uuid) &&
 					uuid.equals(assetCategory.getUuid())) {
+
 				return name;
 			}
 

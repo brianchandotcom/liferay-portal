@@ -25,13 +25,11 @@ public class SelectBirthdayTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Joe Bloggs");
 		selenium.clickAt("link=Joe Bloggs",
 			RuntimeVariables.replace("Joe Bloggs"));
-		Thread.sleep(5000);
-		selenium.waitForVisible("//select[@id='_2_birthdayMonth']");
-		Thread.sleep(5000);
-		selenium.click("//select[@id='_2_birthdayMonth']");
+		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//select[@id='_2_birthdayMonth']",
+			RuntimeVariables.replace("March"));
 		selenium.select("//select[@id='_2_birthdayMonth']",
 			RuntimeVariables.replace("March"));
 		selenium.waitForSelectedLabel("//select[@id='_2_birthdayMonth']",
@@ -42,20 +40,30 @@ public class SelectBirthdayTest extends BaseTestCase {
 		selenium.waitForVisible("//button[@id='buttonTest']");
 		selenium.clickAt("//button[@id='buttonTest']",
 			RuntimeVariables.replace("Date Picker"));
-		selenium.waitForVisible("//div[@class='aui-calendar-title']");
+		selenium.waitForVisible("//div[contains(@class,'calendar-header')]/div");
 		assertEquals(RuntimeVariables.replace("March 1986"),
-			selenium.getText("//div[@class='aui-calendar-title']"));
-		selenium.clickAt("link=Prev", RuntimeVariables.replace("Prev"));
-		selenium.waitForText("//div[@class='aui-calendar-title']", "April 1986");
+			selenium.getText("//div[contains(@class,'calendar-header')]/div"));
+		selenium.clickAt("//a[@aria-label='Go to next month']",
+			RuntimeVariables.replace("Next Month"));
+		selenium.waitForText("//div[contains(@class,'calendar-header')]/div",
+			"April 1986");
 		assertEquals(RuntimeVariables.replace("April 1986"),
-			selenium.getText("//div[@class='aui-calendar-title']"));
-		selenium.clickAt("link=Prev", RuntimeVariables.replace("Prev"));
-		selenium.waitForText("//div[@class='aui-calendar-title']", "May 1986");
+			selenium.getText("//div[contains(@class,'calendar-header')]/div"));
+		selenium.clickAt("//a[@aria-label='Go to next month']",
+			RuntimeVariables.replace("Next Month"));
+		selenium.waitForText("//div[contains(@class,'calendar-header')]/div",
+			"May 1986");
 		assertEquals(RuntimeVariables.replace("May 1986"),
-			selenium.getText("//div[@class='aui-calendar-title']"));
-		selenium.waitForVisible("link=31");
-		selenium.clickAt("link=31", RuntimeVariables.replace("31"));
-		selenium.waitForNotVisible("//div[@class='aui-calendar-title']");
+			selenium.getText("//div[contains(@class,'calendar-header')]/div"));
+		selenium.waitForVisible(
+			"//table[@aria-label='May 1986']/tbody/tr[5]/td[9]");
+		assertEquals(RuntimeVariables.replace("31"),
+			selenium.getText(
+				"//table[@aria-label='May 1986']/tbody/tr[5]/td[9]"));
+		selenium.clickAt("//table[@aria-label='May 1986']/tbody/tr[5]/td[9]",
+			RuntimeVariables.replace("31"));
+		selenium.waitForNotVisible(
+			"//div[contains(@class,'calendar-header')]/div");
 		assertEquals("May",
 			selenium.getSelectedLabel("//select[@id='_2_birthdayMonth']"));
 		assertEquals("31",

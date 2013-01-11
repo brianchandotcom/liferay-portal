@@ -25,11 +25,9 @@ public class TearDownTimeZoneTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Joe Bloggs");
 		selenium.clickAt("link=Joe Bloggs",
 			RuntimeVariables.replace("Joe Bloggs"));
-		Thread.sleep(5000);
-		selenium.waitForVisible("//a[@id='_2_displaySettingsLink']");
+		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//a[@id='_2_displaySettingsLink']",
 			RuntimeVariables.replace("Display Settings"));
 		selenium.waitForVisible("//select[@name='_2_timeZoneId']");

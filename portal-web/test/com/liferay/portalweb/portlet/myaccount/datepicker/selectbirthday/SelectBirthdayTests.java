@@ -26,6 +26,7 @@ public class SelectBirthdayTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(SelectBirthdayTest.class);
+		testSuite.addTestSuite(ViewBirthdayTest.class);
 		testSuite.addTestSuite(TearDownBirthdayTest.class);
 
 		return testSuite;

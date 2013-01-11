@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletRootLayoutTest extends BaseTestCase {
-	public void testConfigurePortletRootLayout() throws Exception {
+public class ConfigurePortletSMRootLayoutTest extends BaseTestCase {
+	public void testConfigurePortletSMRootLayout() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -46,8 +46,10 @@ public class ConfigurePortletRootLayoutTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//select[@id='_86_rootLayoutUuid']");
@@ -69,6 +71,10 @@ public class ConfigurePortletRootLayoutTest extends BaseTestCase {
 			RuntimeVariables.replace("Site Map Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site Map Test Child Page"),
-			selenium.getText("//div[@class='portlet-body']/ul/li/a"));
+			selenium.getText("xPath=(//div[@class='portlet-body']/ul/li/a)[1]"));
+		assertTrue(selenium.isElementNotPresent(
+				"xPath=(//div[@class='portlet-body']/ul/li/a)[2]"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='portlet-body']/ul/li/ul/li/a"));
 	}
 }

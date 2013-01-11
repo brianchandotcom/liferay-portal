@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ViewPortletSiteMapTest</title>
+<title>ViewPortletSMTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ViewPortletSiteMapTest</td></tr>
+<tr><td rowspan="1" colspan="3">ViewPortletSMTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -34,14 +34,14 @@
 	<td>Sign In</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xPath=(//h1[@class='portlet-title'])[2]</td>
-	<td>Hello World</td>
-</tr>
-<tr>
 	<td>assertVisible</td>
 	<td>xPath=(//section[@class='portlet'])[1]</td>
 	<td>Sign In Portlet</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//h1[@class='portlet-title'])[2]</td>
+	<td>Hello World</td>
 </tr>
 <tr>
 	<td>assertVisible</td>

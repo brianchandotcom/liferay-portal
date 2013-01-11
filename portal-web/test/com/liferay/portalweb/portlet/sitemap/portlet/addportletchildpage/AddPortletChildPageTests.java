@@ -29,7 +29,7 @@ public class AddPortletChildPageTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageSMTest.class);
 		testSuite.addTestSuite(AddChildPageTest.class);
-		testSuite.addTestSuite(AddPortletChildPageTest.class);
+		testSuite.addTestSuite(AddPortletSMChildPageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

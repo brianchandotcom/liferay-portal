@@ -25,7 +25,6 @@ public class SA_AddMemberAnnouncementTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Announcements Permissions Page");
 		selenium.clickAt("link=Announcements Permissions Page",
 			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
@@ -33,7 +32,7 @@ public class SA_AddMemberAnnouncementTest extends BaseTestCase {
 			RuntimeVariables.replace("Manage Entries"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_84_distributionScope']",
-			RuntimeVariables.replace("label=Site Member"));
+			RuntimeVariables.replace("Site Member"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Entry']",
 			RuntimeVariables.replace("Add Entry"));
@@ -66,11 +65,16 @@ public class SA_AddMemberAnnouncementTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test Member Announcement"),
-			selenium.getText("//tr[3]/td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Test Member Announcement')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("General"),
-			selenium.getText("//tr[3]/td[2]/a"));
-		assertTrue(selenium.isElementPresent("//tr[3]/td[3]/a"));
-		assertTrue(selenium.isElementPresent("//tr[3]/td[4]/a"));
-		assertTrue(selenium.isElementPresent("//tr[3]/td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Test Member Announcement')]/td[2]/a"));
+		assertTrue(selenium.isElementPresent(
+				"//tr[contains(.,'Test Member Announcement')]/td[3]/a"));
+		assertTrue(selenium.isElementPresent(
+				"//tr[contains(.,'Test Member Announcement')]/td[4]/a"));
+		assertTrue(selenium.isElementPresent(
+				"//tr[contains(.,'Test Member Announcement')]/td[5]/a"));
 	}
 }

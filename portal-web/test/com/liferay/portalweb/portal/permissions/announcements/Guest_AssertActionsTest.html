@@ -14,23 +14,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Announcements Permissions Page</td>
-	<td>Announcements Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Announcements Permissions Page</td>
 	<td>Announcements Permissions Page</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>link=Edit</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Edit')]/td[1]/span/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>link=Delete</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Delete')]/td[2]/span/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -40,10 +35,9 @@
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>link=Mark as Read</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Mark as Read')]/td[3]/a</td>
 	<td>Mark as Read</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

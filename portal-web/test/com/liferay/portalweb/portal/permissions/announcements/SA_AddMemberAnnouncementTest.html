@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Announcements Permissions Page</td>
-	<td>Announcements Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Announcements Permissions Page</td>
 	<td>Announcements Permissions Page</td>
@@ -31,7 +26,7 @@
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_84_distributionScope']</td>
-	<td>label=Site Member</td>
+	<td>Site Member</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -120,27 +115,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]/a</td>
+	<td>//tr[contains(.,'Test Member Announcement')]/td[1]/a</td>
 	<td>Test Member Announcement</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>//tr[contains(.,'Test Member Announcement')]/td[2]/a</td>
 	<td>General</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//tr[3]/td[3]/a</td>
+	<td>//tr[contains(.,'Test Member Announcement')]/td[3]/a</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//tr[3]/td[4]/a</td>
+	<td>//tr[contains(.,'Test Member Announcement')]/td[4]/a</td>
 	<td>Display Date</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//tr[3]/td[5]/a</td>
+	<td>//tr[contains(.,'Test Member Announcement')]/td[5]/a</td>
 	<td>Expiration Date</td>
 </tr>
 </tbody></table>

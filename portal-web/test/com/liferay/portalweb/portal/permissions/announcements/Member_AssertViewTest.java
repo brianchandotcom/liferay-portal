@@ -25,14 +25,15 @@ public class Member_AssertViewTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Announcements Permissions Page");
 		selenium.clickAt("link=Announcements Permissions Page",
 			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Test General Announcement"));
-		assertTrue(selenium.isTextPresent(
+		assertEquals(RuntimeVariables.replace("Test General Announcement"),
+			selenium.getText("//h3[@class='entry-title']/a"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class=' entry-content entry-type-general']",
 				"This is a test General Announcement."));
-		assertTrue(selenium.isElementPresent("link=Mark as Read"));
+		assertTrue(selenium.isElementPresent("//td[@class='control-entry']/a"));
 		assertFalse(selenium.isTextPresent("Test AA Announcement"));
 	}
 }

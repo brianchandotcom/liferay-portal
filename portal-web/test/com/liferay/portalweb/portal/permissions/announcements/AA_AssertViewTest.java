@@ -25,7 +25,6 @@ public class AA_AssertViewTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Announcements Permissions Page");
 		selenium.clickAt("link=Announcements Permissions Page",
 			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,19 +46,21 @@ public class AA_AssertViewTest extends BaseTestCase {
 			RuntimeVariables.replace("Manage Entries"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_84_distributionScope']",
-			RuntimeVariables.replace("label=Announcements Administrator"));
+			RuntimeVariables.replace("Announcements Administrator"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test AA Announcement"),
-			selenium.getText("//tr[3]/td/a"));
+			selenium.getText("//tr[contains(.,'Test AA Announcement')]/td[1]/a"));
 		selenium.select("//select[@id='_84_distributionScope']",
-			RuntimeVariables.replace("label=Guest"));
+			RuntimeVariables.replace("Guest"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test Guest Announcement"),
-			selenium.getText("//tr[3]/td/a"));
+			selenium.getText(
+				"//tr[contains(.,'Test Guest Announcement')]/td[1]/a"));
 		selenium.select("//select[@id='_84_distributionScope']",
-			RuntimeVariables.replace("label=Site Member"));
+			RuntimeVariables.replace("Site Member"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test Member Announcement"),
-			selenium.getText("//tr[3]/td/a"));
+			selenium.getText(
+				"//tr[contains(.,'Test Member Announcement')]/td[1]/a"));
 	}
 }

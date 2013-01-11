@@ -14,63 +14,58 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Announcements Permissions Page</td>
-	<td>Announcements Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Announcements Permissions Page</td>
 	<td>Announcements Permissions Page</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Edit</td>
+	<td>assertText</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Edit')]/td[1]/span/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Delete</td>
+	<td>assertText</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Delete')]/td[2]/span/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Mark as Read</td>
+	<td>assertText</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Mark as Read')]/td[3]/a</td>
 	<td>Mark as Read</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Mark as Read</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Mark as Read')]/td[3]/a</td>
 	<td>Mark as Read</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Show</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Show')]/td[3]/a</td>
 	<td>Show</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Show</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Show')]/td[3]/a</td>
 	<td>Show</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Hide</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Hide')]/td[3]/a</td>
 	<td>Hide</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Hide</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Hide')]/td[3]/a</td>
 	<td>Hide</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Show</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Show')]/td[3]/a</td>
 	<td>Show</td>
 </tr>
 <tr>
 	<td>waitForElementNotPresent</td>
-	<td>link=Hide</td>
+	<td>//div[@class='edit-actions']/table/tbody/tr[contains(.,'Hide')]/td[3]/a</td>
 	<td>Hide</td>
 </tr>
 <tr>
@@ -83,7 +78,6 @@
 	<td>//input[@value='Add Entry']</td>
 	<td>Add Entry</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

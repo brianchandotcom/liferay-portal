@@ -15,6 +15,8 @@
 <#else>
 	<#assign parentFieldRepeatableIndex = "">
 
+	<#assign parentFieldNamespace = "">
+
 	<#if parentFieldStructure.fieldNamespace??>
 		<#assign parentFieldNamespace = parentFieldStructure.fieldNamespace>
 	</#if>

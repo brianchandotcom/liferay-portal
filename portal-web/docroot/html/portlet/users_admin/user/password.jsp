@@ -64,14 +64,14 @@ else {
 	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_LENGTH %>">
 
 		<%
-		int passwordPolictyMinLength = PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH;
+		int passwordPolicyMinLength = PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH;
 
 		if (passwordPolicy != null) {
-			passwordPolictyMinLength = passwordPolicy.getMinLength();
+			passwordPolicyMinLength = passwordPolicy.getMinLength();
 		}
 		%>
 
-		<%= LanguageUtil.format(pageContext, "that-password-is-too-short-or-too-long-please-make-sure-your-password-is-between-x-and-512-characters", String.valueOf(passwordPolictyMinLength), false) %>
+		<%= LanguageUtil.format(pageContext, "that-password-is-too-short-or-too-long-please-make-sure-your-password-is-between-x-and-512-characters", String.valueOf(passwordPolicyMinLength), false) %>
 	</c:if>
 
 	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_NOT_CHANGEABLE %>">
@@ -89,14 +89,14 @@ else {
 	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_TOO_YOUNG %>">
 
 		<%
-		long passwordPolictyMinAge = PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_AGE;
+		long passwordPolicyMinAge = PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_AGE;
 
 		if (passwordPolicy != null) {
-			passwordPolictyMinAge = passwordPolicy.getMinAge();
+			passwordPolicyMinAge = passwordPolicy.getMinAge();
 		}
 		%>
 
-		<%= LanguageUtil.format(pageContext, "you-cannot-change-your-password-yet-please-wait-at-least-x-before-changing-your-password-again", LanguageUtil.getTimeDescription(pageContext, passwordPolictyMinAge * 1000), false) %>
+		<%= LanguageUtil.format(pageContext, "you-cannot-change-your-password-yet-please-wait-at-least-x-before-changing-your-password-again", LanguageUtil.getTimeDescription(pageContext, passwordPolicyMinAge * 1000), false) %>
 	</c:if>
 
 	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORDS_DO_NOT_MATCH %>">

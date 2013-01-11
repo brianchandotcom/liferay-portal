@@ -55,37 +55,37 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//tr[3]/td[2]/span/span/span/input</td>
+	<td>//tr[contains(.,'Knowledge Base Admin Article Title')]/td[2]/span/span/span/input</td>
 	<td>1.0</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]</td>
+	<td>//tr[contains(.,'Knowledge Base Admin Article Title')]/td[3]</td>
 	<td>Knowledge Base Admin Article Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[4]</td>
+	<td>//tr[contains(.,'Knowledge Base Admin Article Title')]/td[4]</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//tr[3]/td[5]</td>
+	<td>//tr[contains(.,'Knowledge Base Admin Article Title')]/td[5]</td>
 	<td>Create Date</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//tr[3]/td[6]</td>
+	<td>//tr[contains(.,'Knowledge Base Admin Article Title')]/td[6]</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[7]</td>
+	<td>//tr[contains(.,'Knowledge Base Admin Article Title')]/td[7]</td>
 	<td>0 (Approved)</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//tr[3]/td[8]</td>
+	<td>//tr[contains(.,'Knowledge Base Admin Article Title')]/td[8]</td>
 	<td>Views</td>
 </tr>
 <tr>
@@ -109,33 +109,28 @@
 	<td>View</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAtAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a</td>
 	<td>View</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='kb-title']</td>
-	<td>Knowledge Base Admin Article Title</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='kb-title']</td>
 	<td>Knowledge Base Admin Article Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[contains(.,'Subscribe')]/span/a/span</td>
+	<td>//div[@class='kb-article-tools']/span/a[contains(.,'Subscribe')]</td>
 	<td>Subscribe</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[contains(.,'History')]/span/a/span</td>
+	<td>//div[@class='kb-article-tools']/span/a[contains(.,'History')]</td>
 	<td>History</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[contains(.,'Print')]/span/a/span</td>
+	<td>//div[@class='kb-article-tools']/span/a[contains(.,'Print')]</td>
 	<td>Print</td>
 </tr>
 <tr>

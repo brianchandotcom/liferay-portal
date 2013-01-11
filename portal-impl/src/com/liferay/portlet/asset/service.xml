@@ -56,25 +56,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="vocabularyId" />
 		</finder>
-		<finder name="P_N" return-type="Collection">
-			<finder-column name="parentCategoryId" />
-			<finder-column name="name" />
-		</finder>
 		<finder name="P_V" return-type="Collection">
 			<finder-column name="parentCategoryId" />
 			<finder-column name="vocabularyId" />
 		</finder>
-		<finder name="N_V" return-type="Collection">
-			<finder-column name="name" />
-			<finder-column name="vocabularyId" />
-		</finder>
 		<finder name="P_N_V" return-type="AssetCategory" unique="true">
-			<finder-column name="parentCategoryId" />
-			<finder-column name="name" />
-			<finder-column name="vocabularyId" />
-		</finder>
-		<finder name="G_P_N_V" return-type="Collection">
-			<finder-column name="groupId" />
 			<finder-column name="parentCategoryId" />
 			<finder-column name="name" />
 			<finder-column name="vocabularyId" />
@@ -108,15 +94,8 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 		<finder name="CategoryId" return-type="Collection">
 			<finder-column name="categoryId" />
-		</finder>
-		<finder name="C_K" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="key" />
 		</finder>
 		<finder name="CA_K" return-type="AssetCategoryProperty" unique="true">
 			<finder-column name="categoryId" />
@@ -172,18 +151,6 @@
 
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
-		</finder>
-		<finder name="Visible" return-type="Collection">
-			<finder-column name="visible" />
-		</finder>
-		<finder name="PublishDate" return-type="Collection">
-			<finder-column name="publishDate" />
-		</finder>
-		<finder name="ExpirationDate" return-type="Collection">
-			<finder-column name="expirationDate" />
-		</finder>
-		<finder name="LayoutUuid" return-type="Collection">
-			<finder-column name="layoutUuid" />
 		</finder>
 		<finder name="G_CU" return-type="AssetEntry">
 			<finder-column name="groupId" />
@@ -335,15 +302,8 @@
 
 		<!--Finder methods -->
 
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 		<finder name="TagId" return-type="Collection">
 			<finder-column name="tagId" />
-		</finder>
-		<finder name="C_K" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="key" />
 		</finder>
 		<finder name="T_K" return-type="AssetTagProperty" unique="true">
 			<finder-column name="tagId" />

@@ -21,5 +21,7 @@ import com.liferay.portalweb.portal.BaseTestCase;
  */
 public class RemoveMemberUGSOUserGroupUserTest extends BaseTestCase {
 	public void testRemoveMemberUGSOUserGroupUser() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 	}
 }

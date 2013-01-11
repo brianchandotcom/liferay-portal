@@ -73,7 +73,7 @@ public class LocalizationImplUnitTest extends PowerMockito {
 		Locale[] array = new Locale[localeIds.length];
 
 		for (int i = 0; i < localeIds.length; i++) {
-			array[i] = new Locale(localeIds[i]);
+			array[i] =  LocaleUtil.fromLanguageId(localeIds[i], false);
 		}
 
 		return array;

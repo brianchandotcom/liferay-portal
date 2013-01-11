@@ -495,21 +495,21 @@ public class PortletImporter {
 			long vocabularyId, int count)
 		throws Exception {
 
-		AssetCategory assetCategory = null;
+		AssetCategory assetCategory = AssetCategoryUtil.findByP_N_V(
+			parentCategoryId, name, vocabularyId);;
 
-		try {
-			assetCategory = AssetCategoryUtil.findByG_P_N_V_First(
-				groupId, parentCategoryId, name, vocabularyId, null);
+		if (assetCategory != null && assetCategory.getGroupId() == groupId) {
+
+			if (Validator.isNotNull(uuid) &&
+					uuid.equals(assetCategory.getUuid())) {
+				return name;
+			}
+
+			name = StringUtil.appendParentheticalSuffix(name, count);
 		}
-		catch (NoSuchCategoryException nsce) {
+		else {
 			return name;
 		}
-
-		if (Validator.isNotNull(uuid) && uuid.equals(assetCategory.getUuid())) {
-			return name;
-		}
-
-		name = StringUtil.appendParentheticalSuffix(name, count);
 
 		return getAssetCategoryName(
 			uuid, groupId, parentCategoryId, name, vocabularyId, ++count);

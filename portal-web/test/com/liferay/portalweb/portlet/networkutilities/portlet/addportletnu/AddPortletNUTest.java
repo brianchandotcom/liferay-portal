@@ -45,7 +45,7 @@ public class AddPortletNUTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("n"));
-		selenium.waitForVisible("//li[@title='Nested Portlets']/p/a");
+		selenium.waitForVisible("//li[@title='Network Utilities']/p/a");
 		selenium.clickAt("//li[@title='Network Utilities']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");

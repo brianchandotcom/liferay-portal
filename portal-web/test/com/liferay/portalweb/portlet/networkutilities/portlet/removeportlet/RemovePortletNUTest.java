@@ -25,13 +25,13 @@ public class RemovePortletNUTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Network Utilities Test Page");
 		selenium.clickAt("link=Network Utilities Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Network Utilities Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.click("//img[@alt='Remove']");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
+		selenium.clickAt("//img[@title='Remove']",
+			RuntimeVariables.replace("Remove"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to remove this component?");
 		selenium.waitForElementNotPresent("//section");
 		assertTrue(selenium.isElementNotPresent("//section"));
 	}

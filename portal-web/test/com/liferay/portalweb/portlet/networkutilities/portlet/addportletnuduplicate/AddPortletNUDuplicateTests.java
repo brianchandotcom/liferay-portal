@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.networkutilities.portlet.addportletduplicate;
+package com.liferay.portalweb.portlet.networkutilities.portlet.addportletnuduplicate;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletDuplicateTests extends BaseTestSuite {
+public class AddPortletNUDuplicateTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageNUTest.class);

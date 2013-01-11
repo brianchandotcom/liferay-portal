@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -36,8 +34,8 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -96,45 +94,6 @@ public class StagingImplTest {
 			assetVocabulary.getVocabularyId(), new String[0], serviceContext);
 	}
 
-	protected JournalArticle addJournalArticle(
-			long groupId, String name, String content)
-		throws Exception {
-
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
-
-		for (Locale locale : _locales) {
-			titleMap.put(locale, name.concat(LocaleUtil.toLanguageId(locale)));
-		}
-
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		StringBundler sb = new StringBundler(3 + 6 * _locales.length);
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=");
-		sb.append("\"en_US,es_ES,de_DE\" default-locale=\"en_US\">");
-
-		for (Locale locale : _locales) {
-			sb.append("<static-content language-id=\"");
-			sb.append(LocaleUtil.toLanguageId(locale));
-			sb.append("\"><![CDATA[<p>");
-			sb.append(content);
-			sb.append(LocaleUtil.toLanguageId(locale));
-			sb.append("</p>]]></static-content>");
-		}
-
-		sb.append("</root>");
-
-		return JournalArticleLocalServiceUtil.addArticle(
-			TestPropsValues.getUserId(), groupId,
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, 0, 0,
-			StringPool.BLANK, true, 1, titleMap, descriptionMap, sb.toString(),
-			"general", null, null, null, 1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true,
-			0, 0, 0, 0, 0, true, false, false, null, null, null, null,
-			serviceContext);
-	}
-
 	protected void enableLocalStaging(
 			boolean stageJournal, boolean stageCategories)
 		throws Exception {
@@ -151,7 +110,7 @@ public class StagingImplTest {
 
 		AssetCategory assetCategory = addAssetCategory(
 			group.getGroupId(), "Title", "content");
-		JournalArticle journalArticle = addJournalArticle(
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			group.getGroupId(), "Title", "content");
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
@@ -213,7 +172,7 @@ public class StagingImplTest {
 			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
 				stagingGroup.getGroupId(), journalArticle.getUrlTitle());
 
-		stagingJournalArticle = updateJournalArticle(
+		stagingJournalArticle = JournalTestUtil.updateArticle(
 			stagingJournalArticle, "Title2",
 			stagingJournalArticle.getContent());
 
@@ -275,25 +234,6 @@ public class StagingImplTest {
 			TestPropsValues.getUserId(), category.getCategoryId(),
 			category.getParentCategoryId(), titleMap,
 			category.getDescriptionMap(), category.getVocabularyId(), null,
-			ServiceTestUtil.getServiceContext());
-	}
-
-	protected JournalArticle updateJournalArticle(
-			JournalArticle journalArticle, String name, String content)
-		throws Exception {
-
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
-
-		for (Locale locale : _locales) {
-			titleMap.put(locale, name.concat(LocaleUtil.toLanguageId(locale)));
-		}
-
-		return JournalArticleLocalServiceUtil.updateArticle(
-			journalArticle.getUserId(), journalArticle.getGroupId(),
-			journalArticle.getFolderId(), journalArticle.getArticleId(),
-			journalArticle.getVersion(), titleMap,
-			journalArticle.getDescriptionMap(), content,
-			journalArticle.getLayoutUuid(),
 			ServiceTestUtil.getServiceContext());
 	}
 

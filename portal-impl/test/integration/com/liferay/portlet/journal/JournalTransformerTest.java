@@ -29,7 +29,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalTemplateConstants;
-import com.liferay.portlet.journal.service.BaseJournalServiceTestCase;
+import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
 import java.util.Map;
@@ -48,7 +48,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
-public class JournalTransformerTest extends BaseJournalServiceTestCase {
+public class JournalTransformerTest {
 
 	@Test
 	public void testContentTransformerListener() throws Exception {
@@ -56,29 +56,30 @@ public class JournalTransformerTest extends BaseJournalServiceTestCase {
 
 		Element rootElement = document.addElement("root");
 
-		addDynamicElement(rootElement, "text", "name");
-		addDynamicElement(rootElement, "text", "link");
+		JournalTestUtil.addDynamicElement(rootElement, "text", "name");
+		JournalTestUtil.addDynamicElement(rootElement, "text", "link");
 
 		String xsd = document.asXML();
 
-		DDMStructure ddmStructure = addDDMStructure(xsd);
+		DDMStructure ddmStructure = JournalTestUtil.addDDMStructure(xsd);
 
 		String xsl = "$name.getData()";
 
-		DDMTemplate ddmTemplate = addDDMTemplate(
+		DDMTemplate ddmTemplate = JournalTestUtil.addDDMTemplate(
 			ddmStructure.getStructureId(), xsl,
 			JournalTemplateConstants.LANG_TYPE_VM);
 
-		document = createDocument("en_US", "en_US");
+		document = JournalTestUtil.createDocument("en_US", "en_US");
 
-		Element dynamicElement = addDynamicElement(
+		Element dynamicElement = JournalTestUtil.addDynamicElement(
 			document.getRootElement(), "text", "name");
 
-		addDynamicContent(dynamicElement, "en_US", "Joe Bloggs");
+		JournalTestUtil.addDynamicContent(
+			dynamicElement, "en_US", "Joe Bloggs");
 
 		String xml = document.asXML();
 
-		JournalArticle article = addArticle(
+		JournalArticle article = JournalTestUtil.addArticle(
 			xml, ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
 
 		Map<String, String> tokens = getTokens();
@@ -105,7 +106,7 @@ public class JournalTransformerTest extends BaseJournalServiceTestCase {
 	public void testFTLTransformation() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		String xml = getDefaultContent();
+		String xml = JournalTestUtil.getSampleStructuredContent();
 
 		String script = "${name.getData()} - ${viewMode}";
 
@@ -120,13 +121,16 @@ public class JournalTransformerTest extends BaseJournalServiceTestCase {
 	public void testLocaleTransformerListener() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		Document document = createDocument("en_US,pt_BR", "en_US");
+		Document document = JournalTestUtil.createDocument(
+			"en_US,pt_BR", "en_US");
 
-		Element dynamicElementElement = addDynamicElement(
+		Element dynamicElementElement = JournalTestUtil.addDynamicElement(
 			document.getRootElement(), "text", "name");
 
-		addDynamicContent(dynamicElementElement, "en_US", "Joe Bloggs");
-		addDynamicContent(dynamicElementElement, "pt_BR", "Joao da Silva");
+		JournalTestUtil.addDynamicContent(
+			dynamicElementElement, "en_US", "Joe Bloggs");
+		JournalTestUtil.addDynamicContent(
+			dynamicElementElement, "pt_BR", "Joao da Silva");
 
 		String xml = document.asXML();
 
@@ -155,7 +159,7 @@ public class JournalTransformerTest extends BaseJournalServiceTestCase {
 	public void testRegexTransformerListener() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		String xml = getDefaultContent();
+		String xml = JournalTestUtil.getSampleStructuredContent();
 
 		String script = "Hello $name.getData(), Welcome to beta.sample.com.";
 
@@ -171,7 +175,7 @@ public class JournalTransformerTest extends BaseJournalServiceTestCase {
 	public void testTokensTransformerListener() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		String xml = getDefaultContent();
+		String xml = JournalTestUtil.getSampleStructuredContent();
 
 		String script = "@company_id@";
 
@@ -198,7 +202,7 @@ public class JournalTransformerTest extends BaseJournalServiceTestCase {
 
 		tokens.put("article_resource_pk", "1");
 
-		String xml = getDefaultContent();
+		String xml = JournalTestUtil.getSampleStructuredContent();
 
 		String script = "@view_counter@";
 
@@ -222,7 +226,7 @@ public class JournalTransformerTest extends BaseJournalServiceTestCase {
 	public void testVMTransformation() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		String xml = getDefaultContent();
+		String xml = JournalTestUtil.getSampleStructuredContent();
 
 		String script = "$name.getData()";
 
@@ -231,52 +235,6 @@ public class JournalTransformerTest extends BaseJournalServiceTestCase {
 			JournalTemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
-	}
-
-	protected void addDynamicContent(
-		Element dynamicElement, String languageId, String value) {
-
-		Element dynamicContent = dynamicElement.addElement("dynamic-content");
-
-		dynamicContent.addAttribute("language-id", languageId);
-
-		dynamicContent.setText(value);
-	}
-
-	protected Element addDynamicElement(
-		Element element, String type, String name) {
-
-		Element dynamicElement = element.addElement("dynamic-element");
-
-		dynamicElement.addAttribute("name", name);
-		dynamicElement.addAttribute("type", type);
-
-		return dynamicElement;
-	}
-
-	protected Document createDocument(
-		String availableLocales, String defaultLocale) {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		rootElement.addAttribute("available-locales", availableLocales);
-		rootElement.addAttribute("default-locale", defaultLocale);
-		rootElement.addElement("request");
-
-		return document;
-	}
-
-	protected String getDefaultContent() {
-		Document document = createDocument("en_US", "en_US");
-
-		Element dynamicElement = addDynamicElement(
-			document.getRootElement(), "text", "name");
-
-		addDynamicContent(dynamicElement, "en_US", "Joe Bloggs");
-
-		return document.asXML();
 	}
 
 	protected Map<String, String> getTokens() throws Exception {

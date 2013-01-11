@@ -480,7 +480,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  fileEntryId the primary key of the file entry to check in
-	 * @param  lockUuid the lock's universally unique identifier
+	 * @param  lockUuid the lock's UUID
 	 * @param  serviceContext the service context to be applied
 	 * @throws PortalException if the file entry could not be found
 	 * @throws SystemException if a system exception occurred
@@ -1062,7 +1062,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	/**
 	 * Returns the file entry with the UUID and group.
 	 *
-	 * @param  uuid the file entry's universally unique identifier
+	 * @param  uuid the file entry's UUID
 	 * @param  groupId the primary key of the file entry's group
 	 * @return the file entry with the UUID and group
 	 * @throws PortalException if the file entry could not be found
@@ -2295,7 +2295,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * Refreshes the lock for the file entry. This method is primarily used by
 	 * WebDAV.
 	 *
-	 * @param  lockUuid the lock's universally unique identifier
+	 * @param  lockUuid the lock's UUID
 	 * @param  companyId the primary key of the file entry's company
 	 * @param  expirationTime the time in milliseconds before the lock expires.
 	 *         If the value is <code>0</code>, the default expiration time will
@@ -2323,7 +2323,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * Refreshes the lock for the folder. This method is primarily used by
 	 * WebDAV.
 	 *
-	 * @param  lockUuid the lock's universally unique identifier
+	 * @param  lockUuid the lock's UUID
 	 * @param  companyId the primary key of the file entry's company
 	 * @param  expirationTime the time in milliseconds before the lock expires.
 	 *         If the value is <code>0</code>, the default expiration time will
@@ -2496,7 +2496,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *
 	 * @param  repositoryId the primary key of the repository
 	 * @param  folderId the primary key of the folder
-	 * @param  lockUuid the lock's universally unique identifier
+	 * @param  lockUuid the lock's UUID
 	 * @throws PortalException if the repository or folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2514,7 +2514,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @param  repositoryId the primary key of the repository
 	 * @param  parentFolderId the primary key of the parent folder
 	 * @param  name the folder's name
-	 * @param  lockUuid the lock's universally unique identifier
+	 * @param  lockUuid the lock's UUID
 	 * @throws PortalException if the repository or folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2857,7 +2857,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *
 	 * @param  repositoryId the primary key for the repository
 	 * @param  fileEntryId the primary key for the file entry
-	 * @param  lockUuid the lock's universally unique identifier
+	 * @param  lockUuid the lock's UUID
 	 * @return <code>true</code> if the file entry is checked out;
 	 *         <code>false</code> otherwise
 	 * @throws PortalException if the file entry could not be found
@@ -2887,7 +2887,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *
 	 * @param  repositoryId the primary key for the repository
 	 * @param  folderId the primary key for the folder
-	 * @param  lockUuid the lock's universally unique identifier
+	 * @param  lockUuid the lock's UUID
 	 * @return <code>true</code> if the inheritable lock exists;
 	 *         <code>false</code> otherwise
 	 * @throws PortalException if the folder could not be found

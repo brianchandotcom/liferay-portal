@@ -538,15 +538,7 @@ public class LanguageImpl implements Language {
 	}
 
 	public boolean isAvailableLanguageCode(String languageCode) {
-		for (Locale locale : _localesSet) {
-			String language = locale.getLanguage();
-
-			if (language.equals(languageCode)) {
-				return true;
-			}
-		}
-
-		return false;
+		return _getInstance()._localesMap.containsKey(languageCode);
 	}
 
 	public boolean isAvailableLocale(Locale locale) {

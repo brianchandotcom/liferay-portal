@@ -30,8 +30,8 @@ engine = Sass::Engine.new(
 		:filename => $cssRealPath,
 		:full_exception => log.isDebugEnabled,
 		:line => 0,
-		:syntax => :scss,
 		:load_paths => load_paths,
+		:syntax => :scss,
 		:ugly => true
 	}
 )

@@ -92,8 +92,7 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 				"value.object.column.bitmask.enabled.com.liferay.portlet.asset.model.AssetCategoryProperty"),
 			true);
 	public static long CATEGORYID_COLUMN_BITMASK = 1L;
-	public static long COMPANYID_COLUMN_BITMASK = 2L;
-	public static long KEY_COLUMN_BITMASK = 4L;
+	public static long KEY_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -262,19 +261,7 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	}
 
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
 		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -477,10 +464,6 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	public void resetOriginalValues() {
 		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl = this;
 
-		assetCategoryPropertyModelImpl._originalCompanyId = assetCategoryPropertyModelImpl._companyId;
-
-		assetCategoryPropertyModelImpl._setOriginalCompanyId = false;
-
 		assetCategoryPropertyModelImpl._originalCategoryId = assetCategoryPropertyModelImpl._categoryId;
 
 		assetCategoryPropertyModelImpl._setOriginalCategoryId = false;
@@ -629,8 +612,6 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		};
 	private long _categoryPropertyId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

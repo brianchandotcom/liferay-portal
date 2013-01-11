@@ -117,12 +117,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	public static long CLASSPK_COLUMN_BITMASK = 2L;
 	public static long CLASSUUID_COLUMN_BITMASK = 4L;
 	public static long COMPANYID_COLUMN_BITMASK = 8L;
-	public static long EXPIRATIONDATE_COLUMN_BITMASK = 16L;
-	public static long GROUPID_COLUMN_BITMASK = 32L;
-	public static long LAYOUTUUID_COLUMN_BITMASK = 64L;
-	public static long PUBLISHDATE_COLUMN_BITMASK = 128L;
-	public static long VISIBLE_COLUMN_BITMASK = 256L;
-	public static long ENTRYID_COLUMN_BITMASK = 512L;
+	public static long GROUPID_COLUMN_BITMASK = 16L;
+	public static long ENTRYID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -634,19 +630,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	}
 
 	public void setVisible(boolean visible) {
-		_columnBitmask |= VISIBLE_COLUMN_BITMASK;
-
-		if (!_setOriginalVisible) {
-			_setOriginalVisible = true;
-
-			_originalVisible = _visible;
-		}
-
 		_visible = visible;
-	}
-
-	public boolean getOriginalVisible() {
-		return _originalVisible;
 	}
 
 	@JSON
@@ -673,17 +657,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	}
 
 	public void setPublishDate(Date publishDate) {
-		_columnBitmask |= PUBLISHDATE_COLUMN_BITMASK;
-
-		if (_originalPublishDate == null) {
-			_originalPublishDate = _publishDate;
-		}
-
 		_publishDate = publishDate;
-	}
-
-	public Date getOriginalPublishDate() {
-		return _originalPublishDate;
 	}
 
 	@JSON
@@ -692,17 +666,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	}
 
 	public void setExpirationDate(Date expirationDate) {
-		_columnBitmask |= EXPIRATIONDATE_COLUMN_BITMASK;
-
-		if (_originalExpirationDate == null) {
-			_originalExpirationDate = _expirationDate;
-		}
-
 		_expirationDate = expirationDate;
-	}
-
-	public Date getOriginalExpirationDate() {
-		return _originalExpirationDate;
 	}
 
 	@JSON
@@ -1004,17 +968,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	}
 
 	public void setLayoutUuid(String layoutUuid) {
-		_columnBitmask |= LAYOUTUUID_COLUMN_BITMASK;
-
-		if (_originalLayoutUuid == null) {
-			_originalLayoutUuid = _layoutUuid;
-		}
-
 		_layoutUuid = layoutUuid;
-	}
-
-	public String getOriginalLayoutUuid() {
-		return GetterUtil.getString(_originalLayoutUuid);
 	}
 
 	@JSON
@@ -1192,16 +1146,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		assetEntryModelImpl._setOriginalClassPK = false;
 
 		assetEntryModelImpl._originalClassUuid = assetEntryModelImpl._classUuid;
-
-		assetEntryModelImpl._originalVisible = assetEntryModelImpl._visible;
-
-		assetEntryModelImpl._setOriginalVisible = false;
-
-		assetEntryModelImpl._originalPublishDate = assetEntryModelImpl._publishDate;
-
-		assetEntryModelImpl._originalExpirationDate = assetEntryModelImpl._expirationDate;
-
-		assetEntryModelImpl._originalLayoutUuid = assetEntryModelImpl._layoutUuid;
 
 		assetEntryModelImpl._columnBitmask = 0;
 	}
@@ -1559,14 +1503,10 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	private String _originalClassUuid;
 	private long _classTypeId;
 	private boolean _visible;
-	private boolean _originalVisible;
-	private boolean _setOriginalVisible;
 	private Date _startDate;
 	private Date _endDate;
 	private Date _publishDate;
-	private Date _originalPublishDate;
 	private Date _expirationDate;
-	private Date _originalExpirationDate;
 	private String _mimeType;
 	private String _title;
 	private String _titleCurrentLanguageId;
@@ -1576,7 +1516,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	private String _summaryCurrentLanguageId;
 	private String _url;
 	private String _layoutUuid;
-	private String _originalLayoutUuid;
 	private int _height;
 	private int _width;
 	private double _priority;

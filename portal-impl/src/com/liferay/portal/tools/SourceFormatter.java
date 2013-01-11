@@ -739,16 +739,24 @@ public class SourceFormatter {
 		do {
 			String match = matcher.group();
 
-			int x = -1;
+			String str = null;
 
 			if (pattern.equals(_sessionKeyPattern)) {
-				x = match.indexOf(StringPool.COMMA);
+				str = StringPool.COMMA;
 			}
 			else if (pattern.equals(_taglibSessionKeyPattern)) {
-				x = match.indexOf("key=");
+				str = "key=";
 			}
 
-			String substring = match.substring(x + 1).trim();
+			int x = match.indexOf(str);
+
+			if (x == -1) {
+				continue;
+			}
+
+			x = x + str.length();
+
+			String substring = match.substring(x).trim();
 
 			String quote = StringPool.BLANK;
 
@@ -762,10 +770,10 @@ public class SourceFormatter {
 				continue;
 			}
 
-			int y = match.indexOf(quote, x + 1);
+			int y = match.indexOf(quote, x);
 			int z = match.indexOf(quote, y + 1);
 
-			if ((x == -1) || (y == -1) || (z == -1)) {
+			if ((y == -1) || (z == -1)) {
 				continue;
 			}
 
@@ -773,12 +781,18 @@ public class SourceFormatter {
 			String suffix = match.substring(z);
 			String oldKey = match.substring(y + 1, z);
 
-			for (char c : oldKey.toCharArray()) {
-				if (!Validator.isChar(c) || !Validator.isDigit(c) ||
-					(c != CharPool.DASH) || (c != CharPool.UNDERLINE)) {
+			boolean alphaNumericKey = true;
 
-					continue;
+			for (char c : oldKey.toCharArray()) {
+				if (!Validator.isChar(c) && !Validator.isDigit(c) &&
+					(c != CharPool.DASH) && (c != CharPool.UNDERLINE)) {
+
+					alphaNumericKey = false;
 				}
+			}
+
+			if (!alphaNumericKey) {
+				continue;
 			}
 
 			String newKey = TextFormatter.format(oldKey, TextFormatter.O);

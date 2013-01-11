@@ -82,7 +82,6 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
 <c:if test="<%= (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
-	<aui:form name="fm">
 
 		<%
 		for (long groupId : groupIds) {
@@ -96,7 +95,6 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 		}
 		%>
 
-	</aui:form>
 </c:if>
 
 <%

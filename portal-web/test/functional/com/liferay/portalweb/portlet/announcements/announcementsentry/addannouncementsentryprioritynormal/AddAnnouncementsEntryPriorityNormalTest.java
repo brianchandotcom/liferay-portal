@@ -64,6 +64,7 @@ public class AddAnnouncementsEntryPriorityNormalTest extends BaseTestCase {
 		selenium.waitForText("//body",
 			"Announcements Entry Content Priority Normal");
 		selenium.selectFrame("relative=top");
+		selenium.waitForVisible("//select[@id='_84_priority']");
 		selenium.select("//select[@id='_84_priority']",
 			RuntimeVariables.replace("Normal"));
 		assertEquals("Normal",
@@ -76,33 +77,5 @@ public class AddAnnouncementsEntryPriorityNormalTest extends BaseTestCase {
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[1]/a",
-			RuntimeVariables.replace(
-				"Announcements Entry Title Priority Normal"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals("Announcements Entry Title Priority Normal",
-			selenium.getValue("//input[@id='_84_title']"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_84_editor' and @style='display: none;']");
-		selenium.waitForVisible("//td[@id='cke_contents__84_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__84_editor']/iframe");
-		selenium.waitForText("//body",
-			"Announcements Entry Content Priority Normal");
-		selenium.selectFrame("relative=top");
-		assertEquals("Normal",
-			selenium.getSelectedLabel("//select[@id='_84_priority']"));
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Announcements Test Page",
-			RuntimeVariables.replace("Announcements Test Page"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Announcements Entry Title Priority Normal"),
-			selenium.getText("//div[contains(.,'Normal')]/h3/a"));
-		assertEquals(RuntimeVariables.replace("General"),
-			selenium.getText(
-				"//div[contains(.,'Normal')]/div/span[@class='entry-scope']"));
-		assertEquals(RuntimeVariables.replace(
-				"Announcements Entry Content Priority Normal"),
-			selenium.getText("//div[contains(.,'Normal')]/div/p"));
 	}
 }

@@ -28,23 +28,28 @@ public class HideAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/store.js')]");
+		assertFalse(selenium.isVisible("//span[@class='entry-scope']"));
+		assertFalse(selenium.isVisible("//p"));
 		assertEquals(RuntimeVariables.replace("Show"),
-			selenium.getText("//a[contains(.,'Show')]"));
-		selenium.clickAt("//a[contains(.,'Show')]",
+			selenium.getText(
+				"//td[@class='control-entry']/a[contains(.,'Show')]"));
+		selenium.clickAt("//td[@class='control-entry']/a[contains(.,'Show')]",
 			RuntimeVariables.replace("Show"));
-		selenium.waitForText("//a[contains(.,'Hide')]", "Hide");
+		selenium.waitForText("//td[@class='control-entry']/a[contains(.,'Hide')]",
+			"Hide");
 		assertEquals(RuntimeVariables.replace("Hide"),
-			selenium.getText("//a[contains(.,'Hide')]"));
+			selenium.getText(
+				"//td[@class='control-entry']/a[contains(.,'Hide')]"));
+		assertTrue(selenium.isVisible("//span[@class='entry-scope']"));
 		assertTrue(selenium.isVisible("//p"));
-		selenium.clickAt("//a[contains(.,'Hide')]",
+		selenium.clickAt("//td[@class='control-entry']/a[contains(.,'Hide')]",
 			RuntimeVariables.replace("Hide"));
-		selenium.waitForText("//a[contains(.,'Show')]", "Show");
+		selenium.waitForText("//td[@class='control-entry']/a[contains(.,'Show')]",
+			"Show");
 		assertEquals(RuntimeVariables.replace("Show"),
-			selenium.getText("//a[contains(.,'Show')]"));
+			selenium.getText(
+				"//td[@class='control-entry']/a[contains(.,'Show')]"));
+		assertFalse(selenium.isVisible("//span[@class='entry-scope']"));
 		assertFalse(selenium.isVisible("//p"));
 	}
 }

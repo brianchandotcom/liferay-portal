@@ -28,6 +28,8 @@ public class ShowAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertFalse(selenium.isVisible("//span[@class='entry-scope']"));
+		assertFalse(selenium.isVisible("//p"));
 		assertEquals(RuntimeVariables.replace("Show"),
 			selenium.getText("//td[@class='control-entry']/a"));
 		selenium.clickAt("//td[@class='control-entry']/a",
@@ -35,6 +37,7 @@ public class ShowAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.waitForText("//td[@class='control-entry']/a", "Hide");
 		assertEquals(RuntimeVariables.replace("Hide"),
 			selenium.getText("//td[@class='control-entry']/a"));
+		assertTrue(selenium.isVisible("//span[@class='entry-scope']"));
 		assertTrue(selenium.isVisible("//p"));
 	}
 }

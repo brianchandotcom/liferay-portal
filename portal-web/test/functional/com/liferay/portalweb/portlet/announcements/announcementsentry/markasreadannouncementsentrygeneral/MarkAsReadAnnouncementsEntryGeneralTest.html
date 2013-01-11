@@ -19,34 +19,44 @@
 	<td>Announcements Test Page</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div[@id='dockbar']</td>
-	<td>Dockbar</td>
+	<td>assertVisible</td>
+	<td>//span[@class='entry-scope']</td>
+	<td>General</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/liferay/store.js')]</td>
-	<td>Liferay Store</td>
+	<td>assertVisible</td>
+	<td>//p</td>
+	<td>Announcements Entry Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(.,'Mark as Read')]</td>
+	<td>//td[@class='control-entry']/a[contains(.,'Mark as Read')]</td>
 	<td>Mark as Read</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[contains(.,'Mark as Read')]</td>
+	<td>//td[@class='control-entry']/a[contains(.,'Mark as Read')]</td>
 	<td>Mark as Read</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//a[contains(.,'Show')]</td>
+	<td>waitForText</td>
+	<td>//td[@class='control-entry']/a[contains(.,'Show')]</td>
 	<td>Show</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(.,'Show')]</td>
+	<td>//td[@class='control-entry']/a[contains(.,'Show')]</td>
 	<td>Show</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//span[@class='entry-scope']</td>
+	<td>General</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//p</td>
+	<td>Announcements Entry Content</td>
 </tr>
 </tbody></table>
 </body>

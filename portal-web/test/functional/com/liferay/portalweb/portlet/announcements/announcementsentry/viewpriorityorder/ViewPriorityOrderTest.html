@@ -19,16 +19,75 @@
 	<td>Announcements Test Page</td>
 </tr>
 <tr>
+	<td>assertVisible</td>
+	<td>link=Entries</td>
+	<td>Entries</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Manage Entries</td>
+	<td>Manage Entries</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>xPath=(//h3[@class='entry-title'])[1]/a</td>
+	<td>xPath=(//h3[@class='entry-title']/a)[1]</td>
 	<td>Announcements Entry Title Priority Important</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//h3[@class='entry-title'])[2]/a</td>
+	<td>xPath=(//td[@class='edit-entry']/span/a/span)[1]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//td[@class='delete-entry']/span/a/span)[1]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//td[@class='control-entry']/a)[1]</td>
+	<td>Mark as Read</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//span[@class='entry-scope'])[1]</td>
+	<td>General</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class=' entry-content entry-type-general']/p)[1]</td>
+	<td>Announcements Entry Content Priority Important</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//h3[@class='entry-title']/a)[2]</td>
 	<td>Announcements Entry Title Priority Normal</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//td[@class='edit-entry']/span/a/span)[2]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//td[@class='delete-entry']/span/a/span)[2]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//td[@class='control-entry']/a)[2]</td>
+	<td>Mark as Read</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//span[@class='entry-scope'])[2]</td>
+	<td>General</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class=' entry-content entry-type-general']/p)[2]</td>
+	<td>Announcements Entry Content Priority Normal</td>
+</tr>
 </tbody></table>
 </body>
 </html>

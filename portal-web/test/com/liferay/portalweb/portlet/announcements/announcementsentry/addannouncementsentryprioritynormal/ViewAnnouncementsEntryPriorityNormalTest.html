@@ -1,0 +1,183 @@
+ee<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewAnnouncementsEntryPriorityNormalTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewAnnouncementsEntryPriorityNormalTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Announcements Test Page</td>
+	<td>Announcements Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(.,'Normal')]/h3[@class='entry-title']/a</td>
+	<td>Announcements Entry Title Priority Normal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[@class='edit-entry']/span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[@class='edit-entry']/span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_84_title']</td>
+	<td>Announcements Entry Title Priority Normal</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_84_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__84_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__84_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//body</td>
+	<td>Announcements Entry Content Priority Normal</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_84_priority']</td>
+	<td>Normal</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Announcements Test Page</td>
+	<td>Announcements Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Entries</td>
+	<td>Entries</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Manage Entries</td>
+	<td>Manage Entries</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(.,'Normal')]/h3[@class='entry-title']/a</td>
+	<td>Announcements Entry Title Priority Normal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(.,'Normal')]/div/span[@class='entry-scope']</td>
+	<td>General</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(.,'Normal')]/div[contains(@class,'entry-content')]/p</td>
+	<td>Announcements Entry Content Priority Normal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[@class='edit-entry']/span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[@class='delete-entry']/span/a/span</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[@class='control-entry']/a</td>
+	<td>Mark as Read</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='entry-scope']</td>
+	<td>General</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class=' entry-content entry-type-general']/p</td>
+	<td>Announcements Entry Content Priority Normal</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Manage Entries</td>
+	<td>Manage Entries</td>
+</tr>
+<tr>
+	<td>selectAndWait</td>
+	<td>//select[@id='_84_distributionScope']</td>
+	<td>General</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Add Entry']</td>
+	<td>Add Entry</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Announcements Entry Title Priority Normal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>General</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//td[3]/a</td>
+	<td>Modified Date</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//td[4]/a</td>
+	<td>Display Date</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//td[5]/a</td>
+	<td>Expiration Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[6]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 result.</td>
+</tr>
+</tbody></table>
+</body>
+</html>

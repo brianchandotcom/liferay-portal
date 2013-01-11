@@ -29,16 +29,19 @@ public class MarkAsReadAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/store.js')]");
+		assertTrue(selenium.isVisible("//span[@class='entry-scope']"));
+		assertTrue(selenium.isVisible("//p"));
 		assertEquals(RuntimeVariables.replace("Mark as Read"),
-			selenium.getText("//a[contains(.,'Mark as Read')]"));
-		selenium.clickAt("//a[contains(.,'Mark as Read')]",
+			selenium.getText(
+				"//td[@class='control-entry']/a[contains(.,'Mark as Read')]"));
+		selenium.clickAt("//td[@class='control-entry']/a[contains(.,'Mark as Read')]",
 			RuntimeVariables.replace("Mark as Read"));
-		selenium.waitForVisible("//a[contains(.,'Show')]");
+		selenium.waitForText("//td[@class='control-entry']/a[contains(.,'Show')]",
+			"Show");
 		assertEquals(RuntimeVariables.replace("Show"),
-			selenium.getText("//a[contains(.,'Show')]"));
+			selenium.getText(
+				"//td[@class='control-entry']/a[contains(.,'Show')]"));
+		assertFalse(selenium.isVisible("//span[@class='entry-scope']"));
+		assertFalse(selenium.isVisible("//p"));
 	}
 }

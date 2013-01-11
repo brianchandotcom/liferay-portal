@@ -19,8 +19,6 @@ import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.announcements.announcementsentry.addannouncementsentrygeneral.TearDownAnnouncementsEntryTest;
 import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncements.AddPageAnnouncementsTest;
 import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncements.AddPortletAnnouncementsTest;
-import com.liferay.portalweb.portlet.myaccount.timezone.selecttimezonepacificstandardtime.SelectTimeZonePacificStandardTimeTest;
-import com.liferay.portalweb.portlet.myaccount.timezone.selecttimezonepacificstandardtime.TearDownTimeZoneTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,12 +29,11 @@ import junit.framework.TestSuite;
 public class AddAnnouncementsEntryPriorityImportantTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(SelectTimeZonePacificStandardTimeTest.class);
 		testSuite.addTestSuite(AddPageAnnouncementsTest.class);
 		testSuite.addTestSuite(AddPortletAnnouncementsTest.class);
 		testSuite.addTestSuite(AddAnnouncementsEntryPriorityImportantTest.class);
+		testSuite.addTestSuite(ViewAnnouncementsEntryPriorityImportantTest.class);
 		testSuite.addTestSuite(TearDownAnnouncementsEntryTest.class);
-		testSuite.addTestSuite(TearDownTimeZoneTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

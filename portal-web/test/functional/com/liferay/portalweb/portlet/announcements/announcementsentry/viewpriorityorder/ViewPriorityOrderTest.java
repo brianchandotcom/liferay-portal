@@ -28,11 +28,39 @@ public class ViewPriorityOrderTest extends BaseTestCase {
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("link=Entries"));
+		assertTrue(selenium.isVisible("link=Manage Entries"));
 		assertEquals(RuntimeVariables.replace(
 				"Announcements Entry Title Priority Important"),
-			selenium.getText("xPath=(//h3[@class='entry-title'])[1]/a"));
+			selenium.getText("xPath=(//h3[@class='entry-title']/a)[1]"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText("xPath=(//td[@class='edit-entry']/span/a/span)[1]"));
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText(
+				"xPath=(//td[@class='delete-entry']/span/a/span)[1]"));
+		assertEquals(RuntimeVariables.replace("Mark as Read"),
+			selenium.getText("xPath=(//td[@class='control-entry']/a)[1]"));
+		assertEquals(RuntimeVariables.replace("General"),
+			selenium.getText("xpath=(//span[@class='entry-scope'])[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"Announcements Entry Content Priority Important"),
+			selenium.getText(
+				"xpath=(//div[@class=' entry-content entry-type-general']/p)[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"Announcements Entry Title Priority Normal"),
-			selenium.getText("xPath=(//h3[@class='entry-title'])[2]/a"));
+			selenium.getText("xPath=(//h3[@class='entry-title']/a)[2]"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText("xPath=(//td[@class='edit-entry']/span/a/span)[2]"));
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText(
+				"xPath=(//td[@class='delete-entry']/span/a/span)[2]"));
+		assertEquals(RuntimeVariables.replace("Mark as Read"),
+			selenium.getText("xPath=(//td[@class='control-entry']/a)[2]"));
+		assertEquals(RuntimeVariables.replace("General"),
+			selenium.getText("xpath=(//span[@class='entry-scope'])[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"Announcements Entry Content Priority Normal"),
+			selenium.getText(
+				"xpath=(//div[@class=' entry-content entry-type-general']/p)[2]"));
 	}
 }

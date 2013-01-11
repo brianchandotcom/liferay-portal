@@ -26,7 +26,6 @@ public class ViewConfigurePortletKBSSectionsASTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Knowledge Base Section Test Page");
 		selenium.clickAt("link=Knowledge Base Section Test Page",
 			RuntimeVariables.replace("Knowledge Base Section Test Page"));
 		selenium.waitForPageToLoad("30000");

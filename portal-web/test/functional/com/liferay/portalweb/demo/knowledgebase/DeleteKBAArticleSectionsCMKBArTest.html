@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Knowledge Base Article Test Page</td>
-	<td>Knowledge Base Article Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Knowledge Base Article Test Page</td>
 	<td>Knowledge Base Article Test Page</td>
@@ -29,13 +24,18 @@
 	<td>Knowledge Base Article 1</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='kb-article-icons']/table/tbody/tr/td/span/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//div[@class='kb-article-icons']/table/tbody/tr/td[4]/span/a</td>
+	<td>//div[@class='kb-article-icons']/table/tbody/tr/td/span/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='kb-article-icons']/table/tbody/tr/td[4]/span/a</td>
+	<td>//div[@class='kb-article-icons']/table/tbody/tr/td/span/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>

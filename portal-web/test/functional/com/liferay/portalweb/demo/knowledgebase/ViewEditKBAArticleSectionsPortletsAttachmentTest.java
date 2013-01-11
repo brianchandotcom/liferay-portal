@@ -27,7 +27,6 @@ public class ViewEditKBAArticleSectionsPortletsAttachmentTest
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Knowledge Base Display Test Page");
 		selenium.clickAt("link=Knowledge Base Display Test Page",
 			RuntimeVariables.replace("Knowledge Base Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -36,7 +35,7 @@ public class ViewEditKBAArticleSectionsPortletsAttachmentTest
 		selenium.clickAt("//tr[3]/td[2]/a",
 			RuntimeVariables.replace("KB Admin Article"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Document_1.jpg (12.9k)"),
+		assertEquals(RuntimeVariables.replace("Document_1.jpg (13k)"),
 			selenium.getText(
 				"//div[@class='kb-article-attachments']/div/span/a/span"));
 	}

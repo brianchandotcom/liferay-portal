@@ -26,7 +26,14 @@ public class EditKBAArticleSectionsPortletsAttachmentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -40,11 +47,11 @@ public class EditKBAArticleSectionsPortletsAttachmentTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Attachments \u00bb"),
@@ -52,10 +59,8 @@ public class EditKBAArticleSectionsPortletsAttachmentTest extends BaseTestCase {
 				"//div[@id='_1_WAR_knowledgebaseportlet_attachments']/div/div/a"));
 		selenium.clickAt("//div[@id='_1_WAR_knowledgebaseportlet_attachments']/div/div/a",
 			RuntimeVariables.replace("Add Attachments \u00bb"));
-		selenium.waitForPopUp("selectAttachments",
-			RuntimeVariables.replace("30000"));
-		selenium.selectWindow("name=selectAttachments");
 		Thread.sleep(5000);
+		selenium.selectWindow("title=Knowledge Base (Admin)");
 		selenium.waitForVisible(
 			"//input[@id='_1_WAR_knowledgebaseportlet_file']");
 		selenium.uploadCommonFile("//input[@id='_1_WAR_knowledgebaseportlet_file']",

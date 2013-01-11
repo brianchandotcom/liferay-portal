@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.demo.knowledgebase;
 
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebaseadmin.kbaarticle.addkbaarticle.TearDownKBAArticleTest;
 import com.liferay.portalweb.plugins.knowledgebase.knowledgebasearticle.portlet.addportletkbar.AddPageKBArTest;
 import com.liferay.portalweb.plugins.knowledgebase.knowledgebasearticle.portlet.addportletkbar.AddPortletKBArTest;
 import com.liferay.portalweb.plugins.knowledgebase.knowledgebasedisplay.portlet.addportletkbd.AddPageKBDTest;

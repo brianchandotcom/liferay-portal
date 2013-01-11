@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Knowledge Base Article Test Page</td>
-	<td>Knowledge Base Article Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Knowledge Base Article Test Page</td>
 	<td>Knowledge Base Article Test Page</td>
@@ -34,6 +29,21 @@
 	<td>Please configure this portlet to make it visible to all users.</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='kb-edit-link']/a</td>
 	<td>Select Article »</td>
@@ -49,14 +59,14 @@
 	<td>Select Article »</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>selectConfigurationKBArticle</td>
-	<td>30000</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>selectWindow</td>
-	<td>name=selectConfigurationKBArticle</td>
-	<td>Select Article Window</td>
+	<td>title=Knowledge Base Article</td>
+	<td>Knowledge Base Article</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -74,9 +84,24 @@
 	<td>Knowledge Base Article 1</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>selectWindow</td>
 	<td>null</td>
 	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -97,6 +122,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

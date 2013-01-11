@@ -25,27 +25,32 @@ public class ConfigurePortletKBSSectionsASTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Knowledge Base Section Test Page");
 		selenium.clickAt("link=Knowledge Base Section Test Page",
 			RuntimeVariables.replace("Knowledge Base Section Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isPartialText(
+				"//section/div/div/div[@class='portlet-body']", "General"));
+		assertTrue(selenium.isPartialText(
+				"//section/div/div/div[@class='portlet-body']",
+				"No articles were found."));
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace(
-				"General \n No articles were found."),
-			selenium.getText("//section/div/div/div[@class='portlet-body']"));
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
+		selenium.waitForElementPresent(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForVisible("//select[@id='_86_kbArticlesSections']");
-		selenium.addSelection("//select[@id='_86_kbArticlesSections']",
+		selenium.select("//select[@id='_86_kbArticlesSections']",
 			RuntimeVariables.replace("Application Server"));
 		assertEquals("Application Server",
 			selenium.getSelectedLabel("//select[@id='_86_kbArticlesSections']"));
@@ -55,8 +60,8 @@ public class ConfigurePortletKBSSectionsASTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 		selenium.waitForVisible("//div[@class='kb-articles-sections-title']");
-		selenium.waitForVisible("//div[@class='kb-articles']/div/span/a/span");
 		assertEquals(RuntimeVariables.replace("Application Server"),
 			selenium.getText("//div[@class='kb-articles-sections-title']"));
 		assertEquals(RuntimeVariables.replace("The third"),

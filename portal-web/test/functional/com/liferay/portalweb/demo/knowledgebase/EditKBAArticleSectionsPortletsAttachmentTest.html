@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -45,17 +65,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -69,19 +89,14 @@
 	<td>Add Attachments »</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>selectAttachments</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>name=selectAttachments</td>
-	<td>Select Attachments Window</td>
-</tr>
-<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>title=Knowledge Base (Admin)</td>
+	<td>Select Attachments Window</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -105,8 +120,8 @@
 </tr>
 <tr>
 	<td>close</td>
-	<td>selectAttachments</td>
-	<td></td>
+	<td>title=Knowledge Base (Admin)</td>
+	<td>Knowledge Base (Admin)</td>
 </tr>
 <tr>
 	<td>pause</td>

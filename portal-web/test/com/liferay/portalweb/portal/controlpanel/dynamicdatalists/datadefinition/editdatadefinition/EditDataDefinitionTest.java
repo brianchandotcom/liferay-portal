@@ -46,7 +46,7 @@ public class EditDataDefinitionTest extends BaseTestCase {
 			RuntimeVariables.replace("Manage Data Definitions"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Data Definition"),
 			selenium.getText("//tr[contains(.,'Data Definition')]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Actions"),

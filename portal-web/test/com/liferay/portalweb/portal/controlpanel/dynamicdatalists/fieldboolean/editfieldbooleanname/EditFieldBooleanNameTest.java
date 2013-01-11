@@ -44,7 +44,7 @@ public class EditFieldBooleanNameTest extends BaseTestCase {
 			RuntimeVariables.replace("Manage Data Definitions"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span"));
@@ -58,7 +58,7 @@ public class EditFieldBooleanNameTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
@@ -70,8 +70,9 @@ public class EditFieldBooleanNameTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//tr[4]/td[2]", "boolean"));
 		selenium.doubleClickAt("//tr[4]/td[2]",
 			RuntimeVariables.replace("boolean"));
-		selenium.waitForVisible("//input[@class='aui-celleditor-element']");
-		selenium.type("//input[@class='aui-celleditor-element']",
+		selenium.waitForVisible(
+			"//input[contains(@class,'aui-celleditor-element')]");
+		selenium.type("//input[contains(@class,'aui-celleditor-element')]",
 			RuntimeVariables.replace("booleannameedited"));
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));

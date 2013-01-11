@@ -52,7 +52,7 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 					RuntimeVariables.replace("Manage Data Definitions"));
 				selenium.waitForVisible("//iframe");
 				selenium.selectFrame("//iframe");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean actionsVisible1 = selenium.isElementPresent(
 						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span");
@@ -78,7 +78,7 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean actionsVisible2 = selenium.isElementPresent(
 						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span");
@@ -104,7 +104,7 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean actionsVisible3 = selenium.isElementPresent(
 						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span");
@@ -130,7 +130,7 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean actionsVisible4 = selenium.isElementPresent(
 						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span");
@@ -156,7 +156,7 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean actionsVisible5 = selenium.isElementPresent(
 						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span");

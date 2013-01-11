@@ -47,7 +47,7 @@ public class ViewDataDefinitionDocumentLibraryTest extends BaseTestCase {
 			RuntimeVariables.replace("Manage Data Definitions"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span"));

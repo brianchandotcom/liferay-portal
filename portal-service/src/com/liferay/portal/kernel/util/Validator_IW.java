@@ -175,6 +175,14 @@ public class Validator_IW {
 		return Validator.isIPAddress(ipAddress);
 	}
 
+	public boolean isIPv4Address(java.lang.String ipAddress) {
+		return Validator.isIPv4Address(ipAddress);
+	}
+
+	public boolean isIPv6Address(java.lang.String ipAddress) {
+		return Validator.isIPv6Address(ipAddress);
+	}
+
 	public boolean isJulianDate(int month, int day, int year) {
 		return Validator.isJulianDate(month, day, year);
 	}

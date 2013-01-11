@@ -306,7 +306,7 @@ public class LayoutServiceSoap {
 	}
 
 	/**
-	* Returns the layout matching the UUID and group.
+	* Returns the layout with the UUID and privateLayout in the group.
 	*
 	* @param uuid the layout's UUID
 	* @param groupId the primary key of the group

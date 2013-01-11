@@ -181,7 +181,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	/**
-	* Returns the layout with the UUID in the group and privateLayout.
+	* Returns the layout with the UUID and privateLayout in the group.
 	*
 	* @param uuid the UUID of layout
 	* @param groupId the group id of the layout
@@ -617,7 +617,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	/**
-	* Returns the layout matching the UUID, group ID, and privateLayout.
+	* Returns the layout with the UUID and privateLayout in the group.
 	*
 	* @param uuid the layout's UUID
 	* @param groupId the primary key of the group

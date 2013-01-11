@@ -24,7 +24,8 @@ public class LoginTest extends BaseTestCase {
 	public void testLogin() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.setTimeout("180000");
+		selenium.setDefaultTimeout();
+		selenium.setDefaultTimeoutImplicit();
 		selenium.open("/web/guest/home");
 		selenium.waitForVisible("link=Sign In");
 		selenium.clickAt("link=Sign In", RuntimeVariables.replace(""));

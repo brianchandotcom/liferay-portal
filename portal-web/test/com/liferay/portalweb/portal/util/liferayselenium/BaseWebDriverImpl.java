@@ -281,6 +281,17 @@ public abstract class BaseWebDriverImpl
 		LiferaySeleniumHelper.setBrowserOption();
 	}
 
+	public void setDefaultTimeout() {
+	}
+
+	public void setDefaultTimeoutImplicit() {
+		WebDriverHelper.setDefaultTimeoutImplicit(this);
+	}
+
+	public void setTimeoutImplicit(String timeout) {
+		WebDriverHelper.setTimeoutImplicit(this, timeout);
+	}
+
 	public void uploadCommonFile(String location, String value) {
 		uploadFile(
 			location,

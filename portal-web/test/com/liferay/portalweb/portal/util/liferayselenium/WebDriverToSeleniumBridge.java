@@ -26,7 +26,6 @@ import com.thoughtworks.selenium.Selenium;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -574,7 +573,11 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public boolean isElementPresent(String locator) {
+		WebDriverHelper.setTimeoutImplicit(this, "1");
+
 		List<WebElement> webElements = getWebElements(locator);
+
+		WebDriverHelper.setDefaultTimeoutImplicit(this);
 
 		return !webElements.isEmpty();
 	}
@@ -1104,11 +1107,6 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void setTimeout(String timeout) {
-		WebDriver.Options options = manage();
-
-		Timeouts timeouts = options.timeouts();
-
-		timeouts.implicitlyWait(1, TimeUnit.MILLISECONDS);
 	}
 
 	public void shiftKeyDown() {

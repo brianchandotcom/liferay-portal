@@ -117,6 +117,12 @@ public interface LiferaySelenium extends Selenium {
 
 	public void setBrowserOption();
 
+	public void setDefaultTimeout();
+
+	public void setDefaultTimeoutImplicit();
+
+	public void setTimeoutImplicit(String timeout);
+
 	public void uploadCommonFile(String locator, String value);
 
 	public void uploadFile(String locator, String value);

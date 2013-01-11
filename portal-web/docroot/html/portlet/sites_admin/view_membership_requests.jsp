@@ -36,7 +36,7 @@ else {
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 %>
 
-<liferay-ui:success key="membership_reply_sent" message="your-reply-will-be-sent-to-the-user-by-email" />
+<liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />
 
 <liferay-ui:header
 	backURL="<%= redirect %>"

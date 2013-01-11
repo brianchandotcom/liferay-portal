@@ -26,7 +26,6 @@
 		<column name="classPK" type="long" />
 		<column name="typeSettings" type="String" />
 		<column name="status" type="int" />
-		<column name="trashVersions" type="Collection" entity="TrashVersion" mapping-key="entryId" />
 
 		<!-- Order -->
 

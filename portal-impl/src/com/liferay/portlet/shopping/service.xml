@@ -177,10 +177,6 @@
 		<column name="largeImageId" type="long" />
 		<column name="largeImageURL" type="String" />
 
-		<!-- Relationships -->
-
-		<column name="shoppingItemPrices" type="Collection" entity="ShoppingItemPrice" mapping-key="itemId" />
-
 		<!-- Order -->
 
 		<order by="asc">

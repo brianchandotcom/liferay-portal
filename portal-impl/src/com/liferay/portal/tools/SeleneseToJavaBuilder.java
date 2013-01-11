@@ -882,7 +882,9 @@ public class SeleneseToJavaBuilder {
 					 param1.equals("open") || param1.equals("selectFrame") ||
 					 param1.equals("selectPopUp") ||
 					 param1.equals("selectWindow") ||
-					 param1.equals("setTimeout") || param1.equals("uncheck") ||
+					 param1.equals("setTimeout") ||
+					 param1.equals("setTimeoutImplicit") ||
+					 param1.equals("uncheck") ||
 					 param1.equals("waitForConfirmation") ||
 					 param1.equals("waitForElementPresent") ||
 					 param1.equals("waitForElementNotPresent") ||
@@ -938,6 +940,8 @@ public class SeleneseToJavaBuilder {
 			else if (param1.equals("close") || param1.equals("goBack") ||
 					 param1.equals("refresh") ||
 					 param1.equals("setBrowserOption") ||
+					 param1.equals("setDefaultTimeout") ||
+					 param1.equals("setDefaultTimeoutImplicit") ||
 					 param1.equals("windowFocus") ||
 					 param1.equals("windowMaximize")) {
 

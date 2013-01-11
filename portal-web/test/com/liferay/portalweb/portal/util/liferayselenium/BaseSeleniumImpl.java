@@ -263,11 +263,23 @@ public abstract class BaseSeleniumImpl
 		LiferaySeleniumHelper.setBrowserOption();
 	}
 
+	public void setDefaultTimeout() {
+		int timeout = TestPropsValues.TIMEOUT_EXPLICIT_WAIT * 1000;
+
+		setTimeout(String.valueOf(timeout));
+	}
+
+	public void setDefaultTimeoutImplicit() {
+	}
+
 	@Override
 	public void setTimeout(String timeout) {
 		super.setTimeout(timeout);
 
 		_timeout = timeout;
+	}
+
+	public void setTimeoutImplicit(String timeout) {
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -50,13 +51,29 @@ public class LiferaySeleniumHelper {
 	public static void assertElementNotPresent(
 		LiferaySelenium liferaySelenium, String locator) {
 
-		BaseTestCase.assertFalse(liferaySelenium.isElementPresent(locator));
+		if (liferaySelenium.isElementPresent(locator)) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("able to find the locator \"");
+			sb.append(locator);
+			sb.append("\"\n");
+
+			BaseTestCase.fail(sb.toString());
+		}
 	}
 
 	public static void assertElementPresent(
 		LiferaySelenium liferaySelenium, String locator) {
 
-		BaseTestCase.assertTrue(liferaySelenium.isElementPresent(locator));
+		if (liferaySelenium.isElementNotPresent(locator)) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("unable to find the locator \"");
+			sb.append(locator);
+			sb.append("\"\n");
+
+			BaseTestCase.fail(sb.toString());
+		}
 	}
 
 	public static void assertLocation(
@@ -241,12 +258,32 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail(
-					"Timeout: unable to find the locator \"" + locator + "\"");
+				liferaySelenium.assertElementNotPresent(locator);
 			}
 
 			try {
-				if (!liferaySelenium.isElementPresent(locator)) {
+				if (liferaySelenium.isElementNotPresent(locator)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public static void waitForElementPresent(
+			LiferaySelenium liferaySelenium, String locator)
+		throws Exception {
+
+		for (int second = 0;; second++) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				liferaySelenium.assertElementPresent(locator);
+			}
+
+			try {
+				if (liferaySelenium.isElementPresent(locator)) {
 					break;
 				}
 			}

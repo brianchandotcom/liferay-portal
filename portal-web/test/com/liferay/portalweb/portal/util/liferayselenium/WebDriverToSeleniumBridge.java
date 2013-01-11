@@ -1108,8 +1108,7 @@ public class WebDriverToSeleniumBridge
 
 		Timeouts timeouts = options.timeouts();
 
-		timeouts.implicitlyWait(
-			TestPropsValues.TIMEOUT_IMPLICIT_WAIT, TimeUnit.SECONDS);
+		timeouts.implicitlyWait(1, TimeUnit.MILLISECONDS);
 	}
 
 	public void shiftKeyDown() {
@@ -1266,92 +1265,69 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected WebElement getWebElement(String locator) {
-		WebDriverWait webDriverWait = new WebDriverWait(
-			this, TestPropsValues.TIMEOUT_IMPLICIT_WAIT);
+		List<WebElement> webElements = getWebElements(locator);
 
-		if (locator.startsWith("//")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
-		}
-		else if (locator.startsWith("class=")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfElementLocated(
-					By.className(locator.substring(6))));
-		}
-		else if (locator.startsWith("css=")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfElementLocated(
-					By.cssSelector(locator.substring(4))));
-		}
-		else if (locator.startsWith("link=")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfElementLocated(
-					By.linkText(locator.substring(5))));
-		}
-		else if (locator.startsWith("name=")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfElementLocated(
-					By.name(locator.substring(5))));
-		}
-		else if (locator.startsWith("tag=")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfElementLocated(
-					By.tagName(locator.substring(4))));
-		}
-		else if (locator.startsWith("xpath=") || locator.startsWith("xPath=")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfElementLocated(
-					By.xpath(locator.substring(6))));
+		if (!webElements.isEmpty()) {
+			return webElements.get(0);
 		}
 		else {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfElementLocated(By.id(locator)));
+			return null;
 		}
 	}
 
 	protected List<WebElement> getWebElements(String locator) {
-		WebDriverWait webDriverWait = new WebDriverWait(
-			this, TestPropsValues.TIMEOUT_IMPLICIT_WAIT);
-
 		if (locator.startsWith("//")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfAllElementsLocatedBy(
-					By.xpath(locator)));
+			List<WebElement> webElements = findElements(By.xpath(locator));
+
+			return webElements;
 		}
 		else if (locator.startsWith("class=")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfAllElementsLocatedBy(
-					By.className(locator.substring(6))));
+			locator = locator.substring(6);
+
+			List<WebElement> webElements = findElements(By.className(locator));
+
+			return webElements;
 		}
 		else if (locator.startsWith("css=")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfAllElementsLocatedBy(
-					By.cssSelector(locator.substring(4))));
+			locator = locator.substring(4);
+
+			List<WebElement> webElements = findElements(
+				By.cssSelector(locator));
+
+			return webElements;
 		}
 		else if (locator.startsWith("link=")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfAllElementsLocatedBy(
-					By.linkText(locator.substring(5))));
+			locator = locator.substring(5);
+
+			List<WebElement> webElements = findElements(By.linkText(locator));
+
+			return webElements;
 		}
 		else if (locator.startsWith("name=")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfAllElementsLocatedBy(
-					By.name(locator.substring(5))));
+			locator = locator.substring(5);
+
+			List<WebElement> webElements = findElements(By.name(locator));
+
+			return webElements;
 		}
 		else if (locator.startsWith("tag=")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfAllElementsLocatedBy(
-					By.tagName(locator.substring(4))));
+			locator = locator.substring(4);
+
+			List<WebElement> webElements = findElements(By.tagName(locator));
+
+			return webElements;
 		}
 		else if (locator.startsWith("xpath=") || locator.startsWith("xPath=")) {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfAllElementsLocatedBy(
-					By.xpath(locator.substring(6))));
+			locator = locator.substring(6);
+
+			List<WebElement> webElements = findElements(By.xpath(locator));
+
+			return webElements;
 		}
 		else {
-			return webDriverWait.until(
-				ExpectedConditions.presenceOfAllElementsLocatedBy(
-					By.id(locator)));
+			List<WebElement> webElements = findElements(By.id(locator));
+
+			return webElements;
 		}
 	}
 

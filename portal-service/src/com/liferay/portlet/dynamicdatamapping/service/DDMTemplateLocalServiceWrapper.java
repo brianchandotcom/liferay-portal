@@ -416,6 +416,16 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 			type, mode);
 	}
 
+	public int getTemplatesCount(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateLocalService.getTemplatesCount(groupId);
+	}
+
+	public int getTemplatesCount(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateLocalService.getTemplatesCount(groupId, classNameId);
+	}
+
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		long companyId, long groupId, long classNameId, long classPK,
 		java.lang.String keywords, java.lang.String type,

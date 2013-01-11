@@ -358,6 +358,16 @@ public class DDMTemplateLocalServiceImpl
 			classNameId, classPK, type, mode);
 	}
 
+	public int getTemplatesCount(long groupId) throws SystemException {
+		return ddmTemplatePersistence.countByGroupId(groupId);
+	}
+
+	public int getTemplatesCount(long groupId, long classNameId)
+		throws SystemException {
+
+		return ddmTemplatePersistence.countByG_C(groupId, classNameId);
+	}
+
 	public List<DDMTemplate> search(
 			long companyId, long groupId, long classNameId, long classPK,
 			String keywords, String type, String mode, int start, int end,

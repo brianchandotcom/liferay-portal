@@ -18,11 +18,8 @@ create index IX_9C7EB9F on AnnouncementsFlag (entryId);
 create unique index IX_4539A99C on AnnouncementsFlag (userId, entryId, value);
 
 create index IX_E639E2F6 on AssetCategory (groupId);
-create index IX_852EA801 on AssetCategory (groupId, parentCategoryId, name, vocabularyId);
 create index IX_2008FACB on AssetCategory (groupId, vocabularyId);
-create index IX_D61ABE08 on AssetCategory (name, vocabularyId);
 create index IX_7BB1826B on AssetCategory (parentCategoryId);
-create index IX_9DDD15EA on AssetCategory (parentCategoryId, name);
 create unique index IX_BE4DF2BF on AssetCategory (parentCategoryId, name, vocabularyId);
 create index IX_B185E980 on AssetCategory (parentCategoryId, vocabularyId);
 create index IX_4D37BB00 on AssetCategory (uuid_);
@@ -32,8 +29,6 @@ create index IX_287B1F89 on AssetCategory (vocabularyId);
 
 create index IX_99DA856 on AssetCategoryProperty (categoryId);
 create unique index IX_DBD111AA on AssetCategoryProperty (categoryId, key_);
-create index IX_8654719F on AssetCategoryProperty (companyId);
-create index IX_52340033 on AssetCategoryProperty (companyId, key_);
 
 create index IX_A188F560 on AssetEntries_AssetCategories (categoryId);
 create index IX_E119938A on AssetEntries_AssetCategories (entryId);
@@ -44,11 +39,7 @@ create index IX_B2A61B55 on AssetEntries_AssetTags (tagId);
 create unique index IX_1E9D371D on AssetEntry (classNameId, classPK);
 create index IX_FC1F9C7B on AssetEntry (classUuid);
 create index IX_7306C60 on AssetEntry (companyId);
-create index IX_75D42FF9 on AssetEntry (expirationDate);
 create index IX_1EBA6821 on AssetEntry (groupId, classUuid);
-create index IX_FEC4A201 on AssetEntry (layoutUuid);
-create index IX_2E4E3885 on AssetEntry (publishDate);
-create index IX_9029E15A on AssetEntry (visible);
 
 create index IX_128516C8 on AssetLink (entryId1);
 create index IX_56E0AB21 on AssetLink (entryId1, entryId2);
@@ -60,8 +51,6 @@ create index IX_91F132C on AssetLink (entryId2, type_);
 create index IX_7C9E46BA on AssetTag (groupId);
 create index IX_D63322F9 on AssetTag (groupId, name);
 
-create index IX_DFF1F063 on AssetTagProperty (companyId);
-create index IX_13805BF7 on AssetTagProperty (companyId, key_);
 create index IX_3269E180 on AssetTagProperty (tagId);
 create unique index IX_2C944354 on AssetTagProperty (tagId, key_);
 

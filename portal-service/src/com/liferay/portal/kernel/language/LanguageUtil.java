@@ -247,6 +247,10 @@ public class LanguageUtil {
 		getLanguage().init();
 	}
 
+	public static boolean isAvailableLanguageCode(String languageCode) {
+		return getLanguage().isAvailableLanguageCode(languageCode);
+	}
+
 	public static boolean isAvailableLocale(Locale locale) {
 		return getLanguage().isAvailableLocale(locale);
 	}

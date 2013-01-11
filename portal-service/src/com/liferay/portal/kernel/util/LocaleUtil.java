@@ -159,13 +159,8 @@ public class LocaleUtil {
 				}
 			}
 
-			if (validate) {
-				if (!LanguageUtil.isAvailableLocale(locale) &&
-					!LanguageUtil.isDuplicateLanguageCode(languageId)) {
-
-					throw new IllegalArgumentException(
-						"Invalid locale " + locale);
-				}
+			if (validate && !LanguageUtil.isAvailableLanguageCode(languageId)) {
+				throw new IllegalArgumentException("Invalid locale " + locale);
 			}
 
 			_locales.put(languageId, locale);

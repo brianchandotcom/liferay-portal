@@ -130,6 +130,8 @@ public interface Language {
 
 	public void init();
 
+	public boolean isAvailableLanguageCode(String languageCode);
+
 	public boolean isAvailableLocale(Locale locale);
 
 	public boolean isBetaLocale(Locale locale);

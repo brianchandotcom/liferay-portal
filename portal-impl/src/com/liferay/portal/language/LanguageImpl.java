@@ -537,6 +537,10 @@ public class LanguageImpl implements Language {
 		_instances.clear();
 	}
 
+	public boolean isAvailableLanguageCode(String languageCode) {
+		return _getInstance()._localesMap.containsKey(languageCode);
+	}
+
 	public boolean isAvailableLocale(Locale locale) {
 		return _getInstance()._localesSet.contains(locale);
 	}

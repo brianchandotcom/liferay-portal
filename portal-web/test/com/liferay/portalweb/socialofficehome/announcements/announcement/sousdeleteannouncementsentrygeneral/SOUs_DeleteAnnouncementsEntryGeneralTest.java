@@ -23,69 +23,21 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_DeleteAnnouncementsEntryGeneralTest extends BaseTestCase {
 	public void testSOUs_DeleteAnnouncementsEntryGeneral()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/socialoffice01/so/dashboard");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[contains(@class, 'selected')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[contains(@class, 'selected')]/a/span");
 		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//button[contains(.,'Sites Directory')]/span[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//button[contains(.,'Sites Directory')]/span[2]");
 		assertEquals(RuntimeVariables.replace("Sites Directory"),
 			selenium.getText("//button[contains(.,'Sites Directory')]/span[2]"));
 		selenium.clickAt("//button[contains(.,'Sites Directory')]/span[2]",
 			RuntimeVariables.replace("Sites Directory"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//h1[@class='header-title']/span)[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("xPath=(//h1[@class='header-title']/span)[1]");
 		assertEquals(RuntimeVariables.replace("Directory"),
 			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
 		assertTrue(selenium.isVisible(
@@ -99,23 +51,7 @@ public class SOUs_DeleteAnnouncementsEntryGeneralTest extends BaseTestCase {
 			selenium.getText("//span[@class='description']"));
 		selenium.clickAt("//span[@class='name']/a",
 			RuntimeVariables.replace("Open Site Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//td[2]/span/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[2]/span/a/span");
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText("//td[2]/span/a/span"));
 		selenium.clickAt("//td[2]/span/a/span",
@@ -123,45 +59,13 @@ public class SOUs_DeleteAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Manage Entries")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Manage Entries");
 		selenium.clickAt("link=Manage Entries",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_84_distributionScope']",
 			RuntimeVariables.replace("Open Site Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//form/div[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//form/div[2]");
 		assertEquals(RuntimeVariables.replace("No entries were found."),
 			selenium.getText("//form/div[2]"));
 	}

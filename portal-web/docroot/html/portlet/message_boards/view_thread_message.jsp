@@ -21,6 +21,7 @@ MBCategory category = (MBCategory)request.getAttribute("edit_message.jsp-categor
 String className = (String)request.getAttribute("edit_message.jsp-className");
 Integer depth = (Integer)request.getAttribute("edit_message.jsp-depth");
 Boolean editable = (Boolean)request.getAttribute("edit_message.jsp-editable");
+Boolean enablePermLink = (Boolean)request.getAttribute("edit-message.jsp-enablePermLink");
 MBMessage message = (MBMessage)request.getAttribute("edit_message.jsp-message");
 MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 %>
@@ -124,7 +125,16 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 		<td class="lfr-top">
 			<div class="thread-top float-container">
 				<div class="subject">
-					<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title="<liferay-ui:message key="permanent-link-to-this-item" />"><strong><%= HtmlUtil.escape(message.getSubject()) %></strong></a><br />
+					<c:choose>
+						<c:when test="<%= enablePermLink %>">
+							<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title='<liferay-ui:message key="permanent-link-to-this-item" />'><strong><%= HtmlUtil.escape(message.getSubject()) %></strong></a>
+						</c:when>
+						<c:otherwise>
+							<strong><%= HtmlUtil.escape(message.getSubject()) %></strong>
+						</c:otherwise>
+					</c:choose>
+
+					<br />
 
 					<%
 					String assetTagNames = (String)request.getAttribute("edit_message.jsp-assetTagNames");
@@ -301,80 +311,76 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						<div class="message-attachments">
 							<h3><liferay-ui:message key="attachments" />:</h3>
 
-							<c:if test="<%= attachmentsFileEntriesCount > 0 %>">
+							<%
+							List<FileEntry> attachmentsFileEntries = message.getAttachmentsFileEntries();
+
+							for (FileEntry fileEntry : attachmentsFileEntries) {
+								if (MimeTypesUtil.isWebImage(fileEntry.getMimeType())) {
+							%>
+
+									<div>
+										<img alt="<liferay-ui:message key="attachment" />" src="<%= themeDisplay.getPathMain() %>/message_boards/get_message_attachment?messageId=<%= message.getMessageId() %>&attachment=<%= HttpUtil.encodeURL(fileEntry.getTitle()) %>" />
+									</div>
+
+									<br />
+
+							<%
+								}
+							}
+							%>
+
+							<ul>
 
 								<%
-								List<FileEntry> attachmentsFileEntries = message.getAttachmentsFileEntries();
-
 								for (FileEntry fileEntry : attachmentsFileEntries) {
-									if (MimeTypesUtil.isWebImage(fileEntry.getMimeType())) {
 								%>
 
-										<div>
-											<img alt="<liferay-ui:message key="attachment" />" src="<%= themeDisplay.getPathMain() %>/message_boards/get_message_attachment?messageId=<%= message.getMessageId() %>&attachment=<%= HttpUtil.encodeURL(fileEntry.getTitle()) %>" />
-										</div>
+									<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+										<portlet:param name="struts_action" value="/message_boards/get_message_attachment" />
+										<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+										<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
+									</portlet:actionURL>
 
-										<br />
+									<li class="message-attachment">
+
+										<%
+										StringBundler sb = new StringBundler(4);
+
+										sb.append(fileEntry.getTitle());
+										sb.append(StringPool.OPEN_PARENTHESIS);
+										sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
+										sb.append(StringPool.CLOSE_PARENTHESIS);
+										%>
+
+										<liferay-ui:icon
+											image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
+											label="<%= true %>"
+											message="<%= sb.toString() %>"
+											url="<%= attachmentURL %>"
+										/>
+									</li>
 
 								<%
-									}
 								}
 								%>
 
-								<ul>
-
-									<%
-									for (FileEntry fileEntry : attachmentsFileEntries) {
-									%>
-
-										<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-											<portlet:param name="struts_action" value="/message_boards/get_message_attachment" />
+								<c:if test="<%= (deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
+									<li class="message-attachment">
+										<portlet:renderURL var="viewTrashAttachmentsURL">
+											<portlet:param name="struts_action" value="/message_boards/view_deleted_message_attachments" />
+											<portlet:param name="redirect" value="<%= currentURL %>" />
 											<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-											<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
-										</portlet:actionURL>
+										</portlet:renderURL>
 
-										<li class="message-attachment">
-
-											<%
-											StringBundler sb = new StringBundler(4);
-
-											sb.append(fileEntry.getTitle());
-											sb.append(StringPool.OPEN_PARENTHESIS);
-											sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
-											sb.append(StringPool.CLOSE_PARENTHESIS);
-											%>
-
-											<liferay-ui:icon
-												image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
-												label="<%= true %>"
-												message="<%= sb.toString() %>"
-												url="<%= attachmentURL %>"
-											/>
-										</li>
-
-									<%
-									}
-									%>
-
-								</ul>
-							</c:if>
-
-							<c:if test="<%= (deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
-								<div class="message-attachments">
-									<portlet:renderURL var="viewTrashAttachmentsURL">
-										<portlet:param name="struts_action" value="/message_boards/view_deleted_message_attachments" />
-										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-									</portlet:renderURL>
-
-									<liferay-ui:icon
-										image="delete_attachment"
-										label="<%= true %>"
-										message='<%= LanguageUtil.format(pageContext, (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsFileEntriesCount) %>'
-										url="<%= viewTrashAttachmentsURL %>"
-									/>
-								</div>
-							</c:if>
+										<liferay-ui:icon
+											image="delete_attachment"
+											label="<%= true %>"
+											message='<%= LanguageUtil.format(pageContext, (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsFileEntriesCount) %>'
+											url="<%= viewTrashAttachmentsURL %>"
+										/>
+									</li>
+								</c:if>
+							</ul>
 						</div>
 					</c:if>
 				</c:if>

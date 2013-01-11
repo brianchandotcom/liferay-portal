@@ -329,6 +329,10 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return false;
 	}
 
+	public boolean isDeletable() {
+		return true;
+	}
+
 	/**
 	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred

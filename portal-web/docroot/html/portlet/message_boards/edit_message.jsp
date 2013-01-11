@@ -106,6 +106,7 @@ if (Validator.isNull(redirect)) {
 	previewMessage.setBody(body);
 
 	boolean editable = false;
+	boolean enablePermLink = true;
 
 	MBCategory category = null;
 
@@ -119,6 +120,7 @@ if (Validator.isNull(redirect)) {
 	request.setAttribute("edit_message.jsp-className", className);
 	request.setAttribute("edit_message.jsp-depth", depth);
 	request.setAttribute("edit_message.jsp-editable", editable);
+	request.setAttribute("edit-message.jsp-enablePermLink", enablePermLink);
 	request.setAttribute("edit_message.jsp-message", previewMessage);
 	request.setAttribute("edit_message.jsp-thread", thread);
 	%>
@@ -447,6 +449,7 @@ if (Validator.isNull(redirect)) {
 
 		<%
 		boolean editable = false;
+		boolean enablePermLink = true;
 
 		message = curParentMessage;
 		MBCategory category = null;
@@ -460,6 +463,7 @@ if (Validator.isNull(redirect)) {
 		request.setAttribute("edit_message.jsp-className", className);
 		request.setAttribute("edit_message.jsp-depth", depth);
 		request.setAttribute("edit_message.jsp-editable", editable);
+		request.setAttribute("edit-message.jsp-enablePermLink", enablePermLink);
 		request.setAttribute("edit_message.jsp-message", message);
 		request.setAttribute("edit_message.jsp-thread", thread);
 		%>

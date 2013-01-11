@@ -216,7 +216,7 @@ public class MBMessageAssetRenderer
 
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
+		return themeDisplay.getPathThemeImages() + "/common/message.png";
 	}
 
 	private MBMessage _message;

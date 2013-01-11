@@ -57,6 +57,7 @@ if (threadView.equals(MBThreadConstants.THREAD_VIEW_FLAT)) {
 
 <%
 boolean editable = true;
+boolean enablePermLink = true;
 
 int depth = 0;
 
@@ -81,6 +82,7 @@ for (int i = 0; i < messages.size(); i++) {
 	request.setAttribute("edit_message.jsp-className", className);
 	request.setAttribute("edit_message.jsp-depth", depth);
 	request.setAttribute("edit_message.jsp-editable", editable);
+	request.setAttribute("edit-message.jsp-enablePermLink", enablePermLink);
 	request.setAttribute("edit_message.jsp-message", message);
 	request.setAttribute("edit_message.jsp-thread", thread);
 %>

@@ -806,9 +806,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setTitle(name);
 		syndFeed.setUri(feedURL);
-		syndFeed.setPublishedDate(new Date());
-		syndFeed.setTitle(name);
-		syndFeed.setUri(feedURL);
 
 		try {
 			return RSSUtil.export(syndFeed);

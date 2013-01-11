@@ -1578,7 +1578,8 @@ public class StagingImpl implements Staging {
 
 			try {
 				LayoutServiceHttp.getLayoutByUuidAndGroupId(
-					httpPrincipal, parentLayout.getUuid(), remoteGroupId);
+					httpPrincipal, parentLayout.getUuid(), remoteGroupId,
+					parentLayout.getPrivateLayout());
 
 				// If one parent is found all others are assumed to exist
 

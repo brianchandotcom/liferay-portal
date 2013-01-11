@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portal.permissions.announcements;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -40,20 +43,20 @@ public class AnnouncementsTests extends BaseTestSuite {
 		testSuite.addTestSuite(SA_AddAAAnnouncementTest.class);
 		testSuite.addTestSuite(SA_AddMemberAnnouncementTest.class);
 		testSuite.addTestSuite(SA_AddGuestAnnouncementTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(LoginUsersTest.class);
 		testSuite.addTestSuite(AA_LoginTest.class);
 		testSuite.addTestSuite(AA_AssertViewTest.class);
 		testSuite.addTestSuite(AA_AssertActionsTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
 		testSuite.addTestSuite(Member_AssertViewTest.class);
 		testSuite.addTestSuite(Member_DismissAnnouncementTest.class);
 		testSuite.addTestSuite(Member_AssertActionsTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_AssertViewTest.class);
 		testSuite.addTestSuite(Guest_AssertActionsTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownRolesTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

@@ -22,41 +22,78 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SA_DefineMemberRoleTest extends BaseTestCase {
 	public void testSA_DefineMemberRole() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_128_keywords']",
-			RuntimeVariables.replace("Member"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Member"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a", RuntimeVariables.replace("Member"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Define Permissions",
-			RuntimeVariables.replace("Define Permissions"));
-		selenium.waitForPageToLoad("30000");
-		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("label=Announcements"));
-		selenium.waitForPageToLoad("30000");
-		selenium.check(
-			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.announcements.model.AnnouncementsEntryVIEW']");
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"The role permissions were updated."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("Announcements"));
-		selenium.clickAt("//optgroup[@label='Site Applications']",
-			RuntimeVariables.replace("Announcements"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
+				selenium.waitForPageToLoad("30000");
+				selenium.type("//input[@id='_128_keywords']",
+					RuntimeVariables.replace("Member"));
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Member"),
+					selenium.getText("//tr[contains(.,'Member')]/td[1]/a"));
+				selenium.clickAt("//tr[contains(.,'Member')]/td[1]/a",
+					RuntimeVariables.replace("Member"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Define Permissions",
+					RuntimeVariables.replace("Define Permissions"));
+				selenium.waitForPageToLoad("30000");
+				selenium.select("//select[@id='_128_add-permissions']",
+					RuntimeVariables.replace("Announcements"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean announcementsViewCheckbox = selenium.isChecked(
+						"//input[@name='_128_rowIds' and @value='com.liferay.portlet.announcements.model.AnnouncementsEntryVIEW']");
+
+				if (announcementsViewCheckbox) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@name='_128_rowIds' and @value='com.liferay.portlet.announcements.model.AnnouncementsEntryVIEW']",
+					RuntimeVariables.replace("Announcements View Checkbox"));
+
+			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[@name='_128_rowIds' and @value='com.liferay.portlet.announcements.model.AnnouncementsEntryVIEW']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"The role permissions were updated."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertEquals(RuntimeVariables.replace("Announcements"),
+					selenium.getText(
+						"//tr[contains(.,'Announcements')]/td[1]/a"));
+				assertEquals(RuntimeVariables.replace("Announcement"),
+					selenium.getText("//tr[contains(.,'Announcements')]/td[2]"));
+				assertEquals(RuntimeVariables.replace("View"),
+					selenium.getText("//tr[contains(.,'Announcements')]/td[3]"));
+				assertEquals(RuntimeVariables.replace("Portal"),
+					selenium.getText("//tr[contains(.,'Announcements')]/td[4]"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

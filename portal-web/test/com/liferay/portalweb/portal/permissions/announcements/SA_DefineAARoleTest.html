@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -40,12 +60,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td/a</td>
+	<td>//tr[contains(.,'Announcements Administrator')]/td[1]/a</td>
 	<td>Announcements Administrator</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[3]/td/a</td>
+	<td>//tr[contains(.,'Announcements Administrator')]/td[1]/a</td>
 	<td>Announcements Administrator</td>
 </tr>
 <tr>
@@ -56,12 +76,32 @@
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>label=Roles</td>
+	<td>Roles</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>storeChecked</td>
 	<td>//input[@name='_128_rowIds' and @value='com.liferay.portal.model.RoleMANAGE_ANNOUNCEMENTS']</td>
-	<td>Manage Announcements</td>
+	<td>manage1AnnouncementsCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${manage1AnnouncementsCheckbox}</td>
+	<td>Manage1AnnouncementsCheckbox</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portal.model.RoleMANAGE_ANNOUNCEMENTS']</td>
+	<td>Manage Announcements Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Manage1AnnouncementsCheckbox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portal.model.RoleMANAGE_ANNOUNCEMENTS']</td>
+	<td>Manage Announcements Checkbox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -76,17 +116,57 @@
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>label=Sites</td>
+	<td>Sites</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>storeChecked</td>
 	<td>//input[@name='_128_rowIds' and @value='com.liferay.portal.model.GroupMANAGE_ANNOUNCEMENTS']</td>
-	<td>Manage Announcements</td>
+	<td>manage2AnnouncementsCheckbox</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>gotoIf</td>
+	<td>${manage2AnnouncementsCheckbox}</td>
+	<td>Manage2AnnouncementsCheckbox</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portal.model.GroupMANAGE_ANNOUNCEMENTS']</td>
+	<td>Manage Announcements Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Manage2AnnouncementsCheckbox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portal.model.GroupMANAGE_ANNOUNCEMENTS']</td>
+	<td>Manage Announcements Checkbox</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
 	<td>//input[@name='_128_rowIds' and @value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
-	<td>Manage Archived Setups</td>
+	<td>manageArchivedSetupsCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${manageArchivedSetupsCheckbox}</td>
+	<td>ManageArchivedSetupsCheckbox</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
+	<td>Manage Archived Setups Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ManageArchivedSetupsCheckbox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
+	<td>Manage Archived Setups Checkbox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -101,12 +181,32 @@
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>label=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>storeChecked</td>
 	<td>//input[@name='_128_rowIds' and @value='com.liferay.portal.model.UserGroupMANAGE_ANNOUNCEMENTS']</td>
-	<td>Manage Announcements</td>
+	<td>manage3AnnouncementsCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${manage3AnnouncementsCheckbox}</td>
+	<td>Manage3AnnouncementsCheckbox</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portal.model.UserGroupMANAGE_ANNOUNCEMENTS']</td>
+	<td>Manage Announcements Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Manage3AnnouncementsCheckbox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portal.model.UserGroupMANAGE_ANNOUNCEMENTS']</td>
+	<td>Manage Announcements Checkbox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -121,12 +221,32 @@
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>label=Announcements</td>
+	<td>Announcements</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@name='_128_allRowIds']</td>
+	<td>select1AllCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${select1AllCheckbox}</td>
+	<td>Select1AllCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_128_allRowIds']</td>
-	<td>Select All</td>
+	<td>Select All Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Select1AllCheckbox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_128_allRowIds']</td>
+	<td>Select All Checkbox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -139,14 +259,9 @@
 	<td>The role permissions were updated.</td>
 </tr>
 <tr>
-	<td>typeKeys</td>
+	<td>selectAndWait</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>aaaaa</td>
-</tr>
-<tr>
-	<td>keyPressAndWait</td>
-	<td>//select[@id='_128_add-permissions']</td>
-	<td>\13</td>
+	<td>index=34</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -154,9 +269,29 @@
 	<td>Announcements</td>
 </tr>
 <tr>
+	<td>storeChecked</td>
+	<td>//input[@name='_128_allRowIds']</td>
+	<td>select2AllCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${select2AllCheckbox}</td>
+	<td>Select2AllCheckbox</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//input[@name='_128_allRowIds']</td>
-	<td>Select All</td>
+	<td>Select All Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Select2AllCheckbox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_128_allRowIds']</td>
+	<td>Select All Checkbox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

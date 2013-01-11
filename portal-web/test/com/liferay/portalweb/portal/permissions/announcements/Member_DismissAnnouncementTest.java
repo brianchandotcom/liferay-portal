@@ -25,16 +25,20 @@ public class Member_DismissAnnouncementTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Announcements Permissions Page");
 		selenium.clickAt("link=Announcements Permissions Page",
 			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Mark as Read",
+		selenium.clickAt("//div[@class='edit-actions']/table/tbody/tr[contains(.,'Mark as Read')]/td[3]/a",
 			RuntimeVariables.replace("Mark as Read"));
-		selenium.waitForVisible("link=Show");
-		selenium.clickAt("link=Show", RuntimeVariables.replace("Show"));
-		selenium.waitForVisible("link=Hide");
-		selenium.clickAt("link=Hide", RuntimeVariables.replace("Hide"));
-		selenium.waitForVisible("link=Show");
+		selenium.waitForVisible(
+			"//div[@class='edit-actions']/table/tbody/tr[contains(.,'Show')]/td[3]/a");
+		selenium.clickAt("//div[@class='edit-actions']/table/tbody/tr[contains(.,'Show')]/td[3]/a",
+			RuntimeVariables.replace("Show"));
+		selenium.waitForVisible(
+			"//div[@class='edit-actions']/table/tbody/tr[contains(.,'Hide')]/td[3]/a");
+		selenium.clickAt("//div[@class='edit-actions']/table/tbody/tr[contains(.,'Hide')]/td[3]/a",
+			RuntimeVariables.replace("Hide"));
+		selenium.waitForVisible(
+			"//div[@class='edit-actions']/table/tbody/tr[contains(.,'Show')]/td[3]/a");
 	}
 }

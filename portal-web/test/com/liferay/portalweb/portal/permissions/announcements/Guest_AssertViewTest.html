@@ -14,36 +14,30 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Announcements Permissions Page</td>
-	<td>Announcements Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Announcements Permissions Page</td>
 	<td>Announcements Permissions Page</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Test General Announcement</td>
+	<td>assertText</td>
+	<td>xPath=(//h3[@class='entry-title']/a)[2]</td>
 	<td>Test General Announcement</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>This is a test General Announcement.</td>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class=' entry-content entry-type-general'])[2]</td>
 	<td>This is a test General Announcement.</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
 	<td>Test CA Announcement</td>
-	<td>Test CA Announcement</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
 	<td>Test Member Announcement</td>
-	<td>Test Member Announcement</td>
+	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

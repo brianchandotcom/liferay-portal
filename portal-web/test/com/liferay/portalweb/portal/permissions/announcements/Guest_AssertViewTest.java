@@ -25,12 +25,13 @@ public class Guest_AssertViewTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Announcements Permissions Page");
 		selenium.clickAt("link=Announcements Permissions Page",
 			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Test General Announcement"));
-		assertTrue(selenium.isTextPresent(
+		assertEquals(RuntimeVariables.replace("Test General Announcement"),
+			selenium.getText("xPath=(//h3[@class='entry-title']/a)[2]"));
+		assertTrue(selenium.isPartialText(
+				"xPath=(//div[@class=' entry-content entry-type-general'])[2]",
 				"This is a test General Announcement."));
 		assertFalse(selenium.isTextPresent("Test CA Announcement"));
 		assertFalse(selenium.isTextPresent("Test Member Announcement"));

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Announcements Permissions Page</td>
-	<td>Announcements Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Announcements Permissions Page</td>
 	<td>Announcements Permissions Page</td>
@@ -61,31 +56,31 @@
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_84_distributionScope']</td>
-	<td>label=Announcements Administrator</td>
+	<td>Announcements Administrator</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td/a</td>
+	<td>//tr[contains(.,'Test AA Announcement')]/td[1]/a</td>
 	<td>Test AA Announcement</td>
 </tr>
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_84_distributionScope']</td>
-	<td>label=Guest</td>
+	<td>Guest</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td/a</td>
+	<td>//tr[contains(.,'Test Guest Announcement')]/td[1]/a</td>
 	<td>Test Guest Announcement</td>
 </tr>
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_84_distributionScope']</td>
-	<td>label=Site Member</td>
+	<td>Site Member</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td/a</td>
+	<td>//tr[contains(.,'Test Member Announcement')]/td[1]/a</td>
 	<td>Test Member Announcement</td>
 </tr>
 </tbody></table>

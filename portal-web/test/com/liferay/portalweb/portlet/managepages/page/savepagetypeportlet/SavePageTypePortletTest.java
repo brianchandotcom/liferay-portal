@@ -53,7 +53,7 @@ public class SavePageTypePortletTest extends BaseTestCase {
 					selenium.getText("//a[@class='layout-tree']"));
 
 				boolean welcomePresent = selenium.isVisible(
-						"//li/ul/li[1]/div/div[3]/a");
+						"//a[@id='layoutsTree_layout_home']");
 
 				if (welcomePresent) {
 					label = 2;
@@ -65,18 +65,18 @@ public class SavePageTypePortletTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-				selenium.waitForVisible("//li/ul/li[1]/div/div[3]/a");
+				selenium.waitForVisible("//a[@id='layoutsTree_layout_home']");
 				assertEquals(RuntimeVariables.replace("Welcome"),
-					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
+					selenium.getText("//a[@id='layoutsTree_layout_home']"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
-					selenium.getText("//li/ul/li[2]/div/div[3]/a"));
-				selenium.clickAt("//li/ul/li[2]/div/div[3]/a",
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_manage-pages-test-page']"));
+				selenium.clickAt("//a[@id='layoutsTree_layout_manage-pages-test-page']",
 					RuntimeVariables.replace("Manage Pages Test Page"));
-				selenium.waitForValue("//div[1]/fieldset/div/span[1]/span/span/span/input",
+				selenium.waitForValue("//input[@id='_88_name_en_US']",
 					"Manage Pages Test Page");
 				assertEquals("Manage Pages Test Page",
-					selenium.getValue(
-						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
+					selenium.getValue("//input[@id='_88_name_en_US']"));
 				Thread.sleep(5000);
 				selenium.waitForPartialText("//select[@id='_88_type']",
 					"Portlet");
@@ -94,7 +94,7 @@ public class SavePageTypePortletTest extends BaseTestCase {
 					RuntimeVariables.replace("Manage Pages Test Page"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
-					selenium.getText("//nav/ul/li[2]/span/a"));
+					selenium.getText("//nav[@id='breadcrumbs']/ul/li/span/a"));
 				assertTrue(selenium.isElementPresent("layout-column_column-1"));
 				assertTrue(selenium.isElementPresent("layout-column_column-2"));
 

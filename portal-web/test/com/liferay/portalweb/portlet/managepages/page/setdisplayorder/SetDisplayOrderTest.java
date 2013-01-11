@@ -32,11 +32,14 @@ public class SetDisplayOrderTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 				selenium.mouseOver("link=Manage Pages Test Page");
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
-					selenium.getText("//li[2]/ul/li[1]"));
+					selenium.getText(
+						"//ul[@class='child-menu']/li/a[contains(.,'Child Test Page1')]"));
 				assertEquals(RuntimeVariables.replace("Child Test Page2"),
-					selenium.getText("//li[2]/ul/li[2]"));
+					selenium.getText(
+						"//ul[@class='child-menu']/li/a[contains(.,'Child Test Page2')]"));
 				assertEquals(RuntimeVariables.replace("Child Test Page3"),
-					selenium.getText("//li[2]/ul/li[3]"));
+					selenium.getText(
+						"//ul[@class='child-menu']/li/a[contains(.,'Child Test Page3')]"));
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(
@@ -60,7 +63,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					selenium.getText("//a[@class='layout-tree']"));
 
 				boolean welcomePresent = selenium.isVisible(
-						"//li/ul/li[1]/div/div[3]/a");
+						"//a[@id='layoutsTree_layout_home']");
 
 				if (welcomePresent) {
 					label = 2;
@@ -72,18 +75,19 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-				selenium.waitForText("//li/ul/li[1]/div/div[3]/a", "Welcome");
+				selenium.waitForText("//a[@id='layoutsTree_layout_home']",
+					"Welcome");
 				assertEquals(RuntimeVariables.replace("Welcome"),
-					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
+					selenium.getText("//a[@id='layoutsTree_layout_home']"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
-					selenium.getText("//li/ul/li[2]/div/div[3]/a"));
-				selenium.clickAt("//li/ul/li[2]/div/div[3]/a",
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_manage-pages-test-page']"));
+				selenium.clickAt("//a[@id='layoutsTree_layout_manage-pages-test-page']",
 					RuntimeVariables.replace("Manage Pages Test Page"));
-				selenium.waitForValue("//div[1]/fieldset/div/span[1]/span/span/span/input",
+				selenium.waitForValue("//input[@id='_88_name_en_US']",
 					"Manage Pages Test Page");
 				assertEquals("Manage Pages Test Page",
-					selenium.getValue(
-						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
+					selenium.getValue("//input[@id='_88_name_en_US']"));
 
 				boolean childPagePresent = selenium.isElementPresent(
 						"//li[2]/ul/li[1]/div/div[3]/a");
@@ -98,16 +102,22 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 3:
-				selenium.waitForVisible("//li[2]/ul/li[1]/div/div[3]/a");
+				selenium.waitForVisible(
+					"//a[@id='layoutsTree_layout_child-test-page1']");
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
-					selenium.getText("//li[2]/ul/li[1]/div/div[3]/a"));
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_child-test-page1']"));
 				assertEquals(RuntimeVariables.replace("Child Test Page2"),
-					selenium.getText("//li[2]/ul/li[2]/div/div[3]/a"));
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_child-test-page2']"));
 				assertEquals(RuntimeVariables.replace("Child Test Page3"),
-					selenium.getText("//li[2]/ul/li[3]/div/div[3]/a"));
-				selenium.mouseOver("//li[2]/ul/li[1]/div/div[3]/a");
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_child-test-page3']"));
+				selenium.mouseOver(
+					"//a[@id='layoutsTree_layout_child-test-page1']");
 				Thread.sleep(5000);
-				selenium.mouseDown("//li[2]/ul/li[1]/div/div[3]/a");
+				selenium.mouseDown(
+					"//a[@id='layoutsTree_layout_child-test-page1']");
 				selenium.waitForVisible(
 					"//div[contains(@class, 'yui3-dd-drop-active-valid')]");
 				selenium.mouseMoveAt("//li[2]/ul/li[3]/div/div[3]/a",
@@ -120,20 +130,26 @@ public class SetDisplayOrderTest extends BaseTestCase {
 				selenium.waitForText("//li[2]/ul/li[1]/div/div[3]/a",
 					"Child Test Page2");
 				assertEquals(RuntimeVariables.replace("Child Test Page2"),
-					selenium.getText("//li[2]/ul/li[1]/div/div[3]/a"));
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_child-test-page2']"));
 				assertEquals(RuntimeVariables.replace("Child Test Page3"),
-					selenium.getText("//li[2]/ul/li[2]/div/div[3]/a"));
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_child-test-page3']"));
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
-					selenium.getText("//li[2]/ul/li[3]/div/div[3]/a"));
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_child-test-page1']"));
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				selenium.mouseOver("link=Manage Pages Test Page");
 				assertEquals(RuntimeVariables.replace("Child Test Page2"),
-					selenium.getText("//li[2]/ul/li[1]"));
+					selenium.getText(
+						"//ul[@class='child-menu']/li/a[contains(.,'Child Test Page2')]"));
 				assertEquals(RuntimeVariables.replace("Child Test Page3"),
-					selenium.getText("//li[2]/ul/li[2]"));
+					selenium.getText(
+						"//ul[@class='child-menu']/li/a[contains(.,'Child Test Page3')]"));
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
-					selenium.getText("//li[2]/ul/li[3]"));
+					selenium.getText(
+						"//ul[@class='child-menu']/li/a[contains(.,'Child Test Page1')]"));
 
 			case 100:
 				label = -1;

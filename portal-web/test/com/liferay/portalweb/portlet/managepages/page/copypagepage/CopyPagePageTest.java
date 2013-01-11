@@ -63,7 +63,7 @@ public class CopyPagePageTest extends BaseTestCase {
 					selenium.getText("//a[@class='layout-tree']"));
 
 				boolean welcomePresent = selenium.isVisible(
-						"//li/ul/li[1]/div/div[3]/a");
+						"//a[@id='layoutsTree_layout_home']");
 
 				if (welcomePresent) {
 					label = 2;
@@ -75,25 +75,27 @@ public class CopyPagePageTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-				selenium.waitForVisible("//li[1]/ul/li[1]/div/div[3]/a");
+				selenium.waitForVisible("//a[@id='layoutsTree_layout_home']");
 				assertEquals(RuntimeVariables.replace("Welcome"),
-					selenium.getText("//li[1]/ul/li[1]/div/div[3]/a"));
+					selenium.getText("//a[@id='layoutsTree_layout_home']"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
-					selenium.getText("//li[1]/ul/li[2]/div/div[3]/a"));
-				selenium.clickAt("//li[1]/ul/li[2]/div/div[3]/a",
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_manage-pages-test-page']"));
+				selenium.clickAt("//a[@id='layoutsTree_layout_manage-pages-test-page']",
 					RuntimeVariables.replace("Manage Pages Test Page"));
-				selenium.waitForValue("//div[1]/fieldset/div/span[1]/span/span/span/input",
+				selenium.waitForValue("//input[@id='_88_name_en_US']",
 					"Manage Pages Test Page");
 				assertEquals("Manage Pages Test Page",
-					selenium.getValue(
-						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
+					selenium.getValue("//input[@id='_88_name_en_US']"));
 				Thread.sleep(5000);
 				selenium.select("//select[@id='_88_type']",
 					RuntimeVariables.replace("Portlet"));
-				selenium.waitForVisible("//button[4]/span[2]");
+				selenium.waitForVisible(
+					"//div[contains(.,'Copy Portlets from Page')]/span/button[4]");
 				assertEquals(RuntimeVariables.replace("Copy Portlets from Page"),
-					selenium.getText("//button[4]/span[2]"));
-				selenium.clickAt("//button[4]/span[2]",
+					selenium.getText(
+						"//div[contains(.,'Copy Portlets from Page')]/span/button[4]"));
+				selenium.clickAt("//div[contains(.,'Copy Portlets from Page')]/span/button[4]",
 					RuntimeVariables.replace("Copy Portlets from Page"));
 				selenium.waitForVisible("//select[@id='_88_copyLayoutId']");
 				assertEquals(RuntimeVariables.replace(
@@ -113,11 +115,11 @@ public class CopyPagePageTest extends BaseTestCase {
 					RuntimeVariables.replace("Manage Pages Test Page"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
-					selenium.getText("//nav/ul/li[2]/span/a"));
+					selenium.getText("//nav[@id='breadcrumbs']/ul/li/span/a"));
 				assertEquals(RuntimeVariables.replace("Sign In"),
-					selenium.getText("//section[@id='portlet_58']/header/h1"));
+					selenium.getText("//h1[contains(.,'Sign In')]/span[2]"));
 				assertEquals(RuntimeVariables.replace("Hello World"),
-					selenium.getText("//section[@id='portlet_47']/header/h1"));
+					selenium.getText("//h1[contains(.,'Hello World')]/span[2]"));
 
 			case 100:
 				label = -1;

@@ -53,7 +53,7 @@ public class AddChildPageTest extends BaseTestCase {
 					selenium.getText("//a[@class='layout-tree']"));
 
 				boolean welcome1Present = selenium.isVisible(
-						"//li/ul/li[1]/div/div[3]/a");
+						"//a[@id='layoutsTree_layout_home']");
 
 				if (welcome1Present) {
 					label = 2;
@@ -65,23 +65,26 @@ public class AddChildPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-				selenium.waitForText("//li/ul/li[1]/div/div[3]/a", "Welcome");
+				selenium.waitForText("//a[@id='layoutsTree_layout_home']",
+					"Welcome");
 				assertEquals(RuntimeVariables.replace("Welcome"),
-					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
+					selenium.getText("//a[@id='layoutsTree_layout_home']"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
-					selenium.getText("//li/ul/li[2]/div/div[3]/a"));
-				selenium.clickAt("//li/ul/li[2]/div/div[3]/a",
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_manage-pages-test-page']"));
+				selenium.clickAt("//a[@id='layoutsTree_layout_manage-pages-test-page']",
 					RuntimeVariables.replace("Manage Pages Test Page"));
-				selenium.waitForValue("//div[1]/fieldset/div/span[1]/span/span/span/input",
+				selenium.waitForValue("//input[@id='_88_name_en_US']",
 					"Manage Pages Test Page");
 				assertEquals("Manage Pages Test Page",
-					selenium.getValue(
-						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
+					selenium.getValue("//input[@id='_88_name_en_US']"));
 				Thread.sleep(5000);
-				selenium.waitForVisible("//div/span/button[1]");
+				selenium.waitForVisible(
+					"//div[contains(.,'Add Child Page')]/span/button");
 				assertEquals(RuntimeVariables.replace("Add Child Page"),
-					selenium.getText("//div/span/button[1]"));
-				selenium.clickAt("//div/span/button[1]",
+					selenium.getText(
+						"//div[contains(.,'Add Child Page')]/span/button"));
+				selenium.clickAt("//div[contains(.,'Add Child Page')]/span/button",
 					RuntimeVariables.replace("Add Child Page"));
 				selenium.waitForVisible(
 					"//input[@id='_88_addLayoutName_en_US']");
@@ -95,7 +98,7 @@ public class AddChildPageTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean welcome2Present = selenium.isElementPresent(
-						"//li/ul/li[1]/div/div[3]/a");
+						"//a[@id='layoutsTree_layout_home']");
 
 				if (welcome2Present) {
 					label = 3;
@@ -107,14 +110,16 @@ public class AddChildPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 3:
-				selenium.waitForText("//li/ul/li[1]/div/div[3]/a", "Welcome");
+				selenium.waitForText("//a[@id='layoutsTree_layout_home']",
+					"Welcome");
 				assertEquals(RuntimeVariables.replace("Welcome"),
-					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
+					selenium.getText("//a[@id='layoutsTree_layout_home']"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
-					selenium.getText("//li/ul/li[2]/div/div[3]/a"));
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_manage-pages-test-page']"));
 
 				boolean childPagePresent = selenium.isElementPresent(
-						"//li[2]/ul/li[1]/div/div[3]/a");
+						"//a[@id='layoutsTree_layout_child-test-page']");
 
 				if (childPagePresent) {
 					label = 4;
@@ -122,14 +127,15 @@ public class AddChildPageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//li/ul/li[2]/div/div[1]",
+				selenium.clickAt("//li[2]/ul/li[1]/div/div[3]/a",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 4:
-				selenium.waitForText("//li[2]/ul/li[1]/div/div[3]/a",
+				selenium.waitForText("//a[@id='layoutsTree_layout_child-test-page']",
 					"Child Test Page");
 				assertEquals(RuntimeVariables.replace("Child Test Page"),
-					selenium.getText("//li[2]/ul/li[1]/div/div[3]/a"));
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_child-test-page']"));
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				selenium.mouseOver("link=Manage Pages Test Page");
@@ -139,7 +145,7 @@ public class AddChildPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Child Test Page"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Child Test Page"),
-					selenium.getText("//nav/ul/li[3]/span/a"));
+					selenium.getText("//nav[@id='breadcrumbs']/ul/li[2]/span/a"));
 
 			case 100:
 				label = -1;

@@ -16,6 +16,7 @@ package com.liferay.portal.service;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -40,6 +42,7 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
@@ -206,6 +209,55 @@ public class ServiceTestUtil {
 			nameMap, null, true, true, getServiceContext());
 	}
 
+	public static void addResourcePermission(
+			Role role, String resourceName, int scope, String primKey,
+			String actionId)
+		throws Exception {
+
+		ResourcePermissionLocalServiceUtil.addResourcePermission(
+			role.getCompanyId(), resourceName, scope, primKey, role.getRoleId(),
+			actionId);
+	}
+
+	public static void addResourcePermission(
+			String roleName, String resourceName, int scope, String primKey,
+			String actionId)
+		throws Exception {
+
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), roleName);
+
+		addResourcePermission(role, resourceName, scope, primKey, actionId);
+	}
+
+	public static Role addRole(String roleName, int roleType) throws Exception {
+		Role role = null;
+
+		try {
+			role = RoleLocalServiceUtil.getRole(
+				TestPropsValues.getCompanyId(), roleName);
+		}
+		catch (NoSuchRoleException nsre) {
+			role = RoleLocalServiceUtil.addRole(
+				TestPropsValues.getUserId(), null, 0, roleName, null, null,
+				roleType, null);
+		}
+
+		return role;
+	}
+
+	public static Role addRole(
+			String roleName, int roleType, String resourceName, int scope,
+			String primKey, String actionId)
+		throws Exception {
+
+		Role role = addRole(roleName, roleType);
+
+		addResourcePermission(role, resourceName, scope, primKey, actionId);
+
+		return role;
+	}
+
 	public static User addUser(
 			String screenName, boolean autoScreenName, long[] groupIds)
 		throws Exception {
@@ -248,6 +300,17 @@ public class ServiceTestUtil {
 			userGroupIds, sendMail, getServiceContext());
 	}
 
+	public static User addUser(String screenName, long groupId)
+		throws Exception {
+
+		if (Validator.isNull(screenName)) {
+			return addUser(null, true, new long[] {groupId});
+		}
+		else {
+			return addUser(screenName, false, new long[] {groupId});
+		}
+	}
+
 	public static void destroyServices() {
 		_deleteDLDirectories();
 	}
@@ -275,11 +338,19 @@ public class ServiceTestUtil {
 	public static ServiceContext getServiceContext(long groupId)
 		throws Exception {
 
+		return getServiceContext(groupId, TestPropsValues.getUserId());
+	}
+
+	public static ServiceContext getServiceContext(long groupId, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext = new ServiceContext();
 
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
 		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setUserId(TestPropsValues.getUserId());
+		serviceContext.setUserId(userId);
 
 		return serviceContext;
 	}
@@ -294,15 +365,7 @@ public class ServiceTestUtil {
 		try {
 			PortalInstances.addCompanyId(TestPropsValues.getCompanyId());
 
-			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
-			User user = UserLocalServiceUtil.getUserById(
-				TestPropsValues.getUserId());
-
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			setUser(TestPropsValues.getUser());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -490,6 +553,15 @@ public class ServiceTestUtil {
 
 	public static String randomString(int length) throws Exception {
 		return PwdGenerator.getPassword(length);
+	}
+
+	public static void setUser(User user) throws Exception {
+		PrincipalThreadLocal.setName(user.getUserId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 	}
 
 	private static void _checkClassNames() {

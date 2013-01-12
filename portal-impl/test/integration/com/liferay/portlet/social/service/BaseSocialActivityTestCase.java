@@ -56,11 +56,9 @@ public class BaseSocialActivityTestCase {
 	public void beforeTest() throws Exception {
 		_group = ServiceTestUtil.addGroup();
 
-		_actorUser = ServiceTestUtil.addUser(
-			"actor", false, new long[] {_group.getGroupId()});
+		_actorUser = ServiceTestUtil.addUser("actor", _group.getGroupId());
 
-		_creatorUser = ServiceTestUtil.addUser(
-			"creator", false, new long[] {_group.getGroupId()});
+		_creatorUser = ServiceTestUtil.addUser("creator", _group.getGroupId());
 
 		_assetEntry = SocialActivityTestUtil.addAsset(
 			_creatorUser, _group, null);

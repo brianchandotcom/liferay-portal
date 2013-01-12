@@ -14,7 +14,6 @@
 
 package com.liferay.portal.webserver;
 
-import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -28,7 +27,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -60,25 +58,13 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_user = ServiceTestUtil.addUser(
-			null, true, new long[] {group.getGroupId()});
+		_user = ServiceTestUtil.addUser(null, group.getGroupId());
 
-		try {
-			_role = RoleLocalServiceUtil.getRole(
-				TestPropsValues.getCompanyId(), "Trash Admin");
-		}
-		catch (NoSuchRoleException nsre) {
-			_role = RoleLocalServiceUtil.addRole(
-				TestPropsValues.getUserId(), null, 0, "Trash Admin", null, null,
-				RoleConstants.TYPE_REGULAR, null);
-		}
-
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
-			_user.getCompanyId(), PortletKeys.TRASH,
+		_role = ServiceTestUtil.addRole(
+			"Trash Admin", RoleConstants.TYPE_REGULAR, PortletKeys.TRASH,
 			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), _role.getRoleId(),
+			String.valueOf(TestPropsValues.getCompanyId()),
 			ActionKeys.ACCESS_IN_CONTROL_PANEL);
-
 	}
 
 	@Override
@@ -89,7 +75,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 			UserLocalServiceUtil.deleteUser(_user.getUserId());
 		}
 
-		if (_role !=null) {
+		if (_role != null) {
 			RoleLocalServiceUtil.deleteRole(_role.getRoleId());
 		}
 	}

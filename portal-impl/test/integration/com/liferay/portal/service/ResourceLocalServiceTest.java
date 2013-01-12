@@ -45,8 +45,7 @@ public class ResourceLocalServiceTest {
 
 		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
 			User user = ServiceTestUtil.addUser(
-				"ResourceLocalServiceTest" + (i + 1), false,
-				new long[] {_group.getGroupId()});
+				"ResourceLocalServiceTest" + (i + 1), _group.getGroupId());
 
 			_userIds[i] = user.getUserId();
 		}

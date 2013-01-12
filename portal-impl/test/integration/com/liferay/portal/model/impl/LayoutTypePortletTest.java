@@ -177,8 +177,7 @@ public class LayoutTypePortletTest {
 		Layout layout = layoutTypePortlet.getLayout();
 
 		User user = ServiceTestUtil.addUser(
-			ServiceTestUtil.randomString(), false,
-			new long[] {layout.getGroupId()});
+			ServiceTestUtil.randomString(), layout.getGroupId());
 
 		String portletId = PortletKeys.JOURNAL_CONTENT;
 
@@ -207,8 +206,7 @@ public class LayoutTypePortletTest {
 		Layout layout = layoutTypePortlet.getLayout();
 
 		User user = ServiceTestUtil.addUser(
-			ServiceTestUtil.randomString(), false,
-			new long[] {layout.getGroupId()});
+			ServiceTestUtil.randomString(), layout.getGroupId());
 
 		String portletId = PortletKeys.JOURNAL_CONTENT;
 
@@ -243,8 +241,7 @@ public class LayoutTypePortletTest {
 		Layout layout = layoutTypePortlet.getLayout();
 
 		User user = ServiceTestUtil.addUser(
-			ServiceTestUtil.randomString(), false,
-			new long[] {layout.getGroupId()});
+			ServiceTestUtil.randomString(), layout.getGroupId());
 
 		String portletId = ServiceTestUtil.randomString();
 
@@ -263,8 +260,7 @@ public class LayoutTypePortletTest {
 		Layout layout = layoutTypePortlet.getLayout();
 
 		User user = ServiceTestUtil.addUser(
-			ServiceTestUtil.randomString(), false,
-			new long[] {layout.getGroupId()});
+			ServiceTestUtil.randomString(), layout.getGroupId());
 
 		String portletId = ServiceTestUtil.randomString();
 
@@ -281,8 +277,7 @@ public class LayoutTypePortletTest {
 		Layout layout = layoutTypePortlet.getLayout();
 
 		User user = ServiceTestUtil.addUser(
-			ServiceTestUtil.randomString(), false,
-			new long[] {layout.getGroupId()});
+			ServiceTestUtil.randomString(), layout.getGroupId());
 
 		String portletId = PortletKeys.JOURNAL_CONTENT;
 

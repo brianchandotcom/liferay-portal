@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -67,8 +66,7 @@ public class GroupServiceTest {
 	public void testAddPermissionsCustomRole() throws Exception {
 		Group group = ServiceTestUtil.addGroup();
 
-		User user = ServiceTestUtil.addUser(
-			null, true, new long[] {group.getGroupId()});
+		User user = ServiceTestUtil.addUser(null, group.getGroupId());
 
 		givePermissionToManageSubsites(user, group);
 
@@ -84,8 +82,7 @@ public class GroupServiceTest {
 		Group group11 = ServiceTestUtil.addGroup(
 			group1.getGroupId(), "Test 1.1");
 
-		User user = ServiceTestUtil.addUser(
-			null, true, new long[] {group11.getGroupId()});
+		User user = ServiceTestUtil.addUser(null, group11.getGroupId());
 
 		givePermissionToManageSubsites(user, group11);
 
@@ -98,8 +95,7 @@ public class GroupServiceTest {
 	public void testAddPermissionsRegularUser() throws Exception {
 		Group group = ServiceTestUtil.addGroup();
 
-		User user = ServiceTestUtil.addUser(
-			null, true, new long[] {group.getGroupId()});
+		User user = ServiceTestUtil.addUser(null, group.getGroupId());
 
 		testGroup(
 			user, group, null, null, true, false, false, false, false, false,
@@ -110,8 +106,7 @@ public class GroupServiceTest {
 	public void testAddPermissionsSiteAdmin() throws Exception {
 		Group group = ServiceTestUtil.addGroup();
 
-		User user = ServiceTestUtil.addUser(
-			null, true, new long[] {group.getGroupId()});
+		User user = ServiceTestUtil.addUser(null, group.getGroupId());
 
 		giveSiteAdminRole(user, group);
 
@@ -127,8 +122,7 @@ public class GroupServiceTest {
 		Group group11 = ServiceTestUtil.addGroup(
 			group1.getGroupId(), "Test 1.1");
 
-		User user = ServiceTestUtil.addUser(
-			null, true, new long[] {group11.getGroupId()});
+		User user = ServiceTestUtil.addUser(null, group11.getGroupId());
 
 		giveSiteAdminRole(user, group11);
 
@@ -142,8 +136,7 @@ public class GroupServiceTest {
 		Group group = ServiceTestUtil.addGroup();
 
 		User user = ServiceTestUtil.addUser(
-			ServiceTestUtil.randomString(), false,
-			new long[] {group.getGroupId()});
+			ServiceTestUtil.randomString(), group.getGroupId());
 
 		BlogsEntry blogsEntry = BlogsTestUtil.addBlogsEntry(
 			user.getUserId(), group, true);
@@ -199,8 +192,7 @@ public class GroupServiceTest {
 	public void testUpdatePermissionsCustomRole() throws Exception {
 		Group group = ServiceTestUtil.addGroup();
 
-		User user = ServiceTestUtil.addUser(
-			null, true, new long[] {group.getGroupId()});
+		User user = ServiceTestUtil.addUser(null, group.getGroupId());
 
 		givePermissionToManageSubsites(user, group);
 
@@ -216,8 +208,7 @@ public class GroupServiceTest {
 		Group group11 = ServiceTestUtil.addGroup(
 			group1.getGroupId(), "Test 1.1");
 
-		User user = ServiceTestUtil.addUser(
-			null, true, new long[] {group11.getGroupId()});
+		User user = ServiceTestUtil.addUser(null, group11.getGroupId());
 
 		givePermissionToManageSubsites(user, group11);
 
@@ -230,8 +221,7 @@ public class GroupServiceTest {
 	public void testUpdatePermissionsRegularUser() throws Exception {
 		Group group = ServiceTestUtil.addGroup();
 
-		User user = ServiceTestUtil.addUser(
-			null, true, new long[] {group.getGroupId()});
+		User user = ServiceTestUtil.addUser(null, group.getGroupId());
 
 		testGroup(
 			user, group, null, null, false, true, false, false, false, false,
@@ -242,8 +232,7 @@ public class GroupServiceTest {
 	public void testUpdatePermissionsSiteAdmin() throws Exception {
 		Group group = ServiceTestUtil.addGroup();
 
-		User user = ServiceTestUtil.addUser(
-			null, true, new long[] {group.getGroupId()});
+		User user = ServiceTestUtil.addUser(null, group.getGroupId());
 
 		giveSiteAdminRole(user, group);
 
@@ -259,8 +248,7 @@ public class GroupServiceTest {
 		Group group11 = ServiceTestUtil.addGroup(
 			group1.getGroupId(), "Test 1.1");
 
-		User user = ServiceTestUtil.addUser(
-			null, true, new long[] {group11.getGroupId()});
+		User user = ServiceTestUtil.addUser(null, group11.getGroupId());
 
 		giveSiteAdminRole(user, group11);
 
@@ -299,23 +287,11 @@ public class GroupServiceTest {
 	protected void givePermissionToManageSubsites(User user, Group group)
 		throws Exception {
 
-		Role role = null;
-
-		try {
-			role = RoleLocalServiceUtil.getRole(
-				TestPropsValues.getCompanyId(), "Subsites Admin");
-		}
-		catch (NoSuchRoleException nsre) {
-			role = RoleLocalServiceUtil.addRole(
-				TestPropsValues.getUserId(), null, 0, "Subsites Admin", null,
-				null, RoleConstants.TYPE_SITE, null);
-		}
-
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
-			group.getCompanyId(), Group.class.getName(),
+		Role role = ServiceTestUtil.addRole(
+			"Subsites Admin", RoleConstants.TYPE_SITE, Group.class.getName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-			role.getRoleId(), ActionKeys.MANAGE_SUBGROUPS);
+			ActionKeys.MANAGE_SUBGROUPS);
 
 		long[] roleIds = new long[] {role.getRoleId()};
 

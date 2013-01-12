@@ -14,9 +14,9 @@
  */
 --%>
 
-<c:if test="<%= showActions && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && fileEntry.isSupportsLocking() %>">
+<c:if test="<%= showActions && fileEntry.isSupportsLocking() %>">
 	<c:choose>
-		<c:when test="<%= !checkedOut %>">
+		<c:when test="<%= !checkedOut && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 			<portlet:actionURL var="checkOutURL">
 				<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKOUT %>" />

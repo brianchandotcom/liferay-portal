@@ -1,27 +1,18 @@
 AUI.add(
 	'liferay-icon',
 	function(A) {
+		var buffer = [];
+
 		var Icon = {
-			register: function(config) {
+			register: function(id) {
 				var instance = this;
 
-				var icon = A.one('#' + config.id);
+				var iconNode = document.getElementById(id);
 
-				var srcHover = config.srcHover;
-				var src = config.src;
-				var forcePost = config.forcePost;
+				if (iconNode) {
+					buffer.push(iconNode);
 
-				if (icon) {
-					if (srcHover) {
-						instance._onMouseOver = A.rbind(instance._onMouseHover, instance, srcHover);
-						instance._onMouseOut = A.rbind(instance._onMouseHover, instance, src);
-
-						icon.hover(instance._onMouseOver, instance._onMouseOut);
-					}
-
-					if (forcePost) {
-						icon.on('click', instance._onClick, instance);
-					}
+					Icon._registerTask(instance);
 				}
 			},
 
@@ -43,6 +34,44 @@ AUI.add(
 				}
 			}
 		};
+
+		Icon._registerTask = A.debounce(
+			function(instance) {
+
+				if (buffer.length) {
+					var nodeList = A.all(buffer);
+
+					buffer = [];
+
+					var elements = nodeList._nodes;
+
+					for (var i = elements.length - 1; i >= 0 ; i--) {
+						var element = elements[i];
+
+						var forcePost = element.getAttribute('data-force-post');
+						var srcHover = element.getAttribute('data-src-hover');
+
+						if (forcePost || srcHover) {
+							var item = A.one(element);
+
+							if (forcePost) {
+								item.on('click', instance._onClick, instance);
+							}
+
+							if (srcHover) {
+								var src = element.getAttribute('data-src');
+
+								instance._onMouseOver = A.rbind(instance._onMouseHover, instance, srcHover);
+								instance._onMouseOut = A.rbind(instance._onMouseHover, instance, src);
+
+								item.hover(instance._onMouseOver, instance._onMouseOut);
+							}
+						}
+					}
+				}
+			},
+			100
+		);
 
 		Liferay.Icon = Icon;
 	},

@@ -120,6 +120,22 @@ if (auiImage) {
 }
 
 boolean urlIsNotNull = Validator.isNotNull(url);
+
+boolean forcePost = method.equals("post") && (url.startsWith(Http.HTTP_WITH_SLASH) || url.startsWith(Http.HTTPS_WITH_SLASH));
+
+if (Validator.isNull(data)) {
+	data = new HashMap<String, Object>();
+}
+
+
+if (Validator.isNotNull(srcHover) || forcePost) {
+	data.put("force-post", forcePost);
+
+	if (Validator.isNotNull(srcHover)) {
+		data.put("src", src);
+		data.put("src-hover", srcHover);
+	}
+}
 %>
 
 <liferay-util:buffer var="linkContent">
@@ -194,22 +210,8 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 	</c:otherwise>
 </c:choose>
 
-<%
-boolean forcePost = method.equals("post") && (url.startsWith(Http.HTTP_WITH_SLASH) || url.startsWith(Http.HTTPS_WITH_SLASH));
-%>
-
 <c:if test="<%= Validator.isNotNull(srcHover) || forcePost %>">
 	<aui:script use="liferay-icon">
-		Liferay.Icon.register(
-			{
-				forcePost: <%= forcePost %>,
-				id: '<portlet:namespace /><%= id %>'
-
-				<c:if test="<%= Validator.isNotNull(srcHover) %>">
-					, src: '<%= src %>',
-					srcHover: '<%= srcHover %>'
-				</c:if>
-			}
-		);
+		Liferay.Icon.register('<portlet:namespace /><%= id %>');
 	</aui:script>
 </c:if>

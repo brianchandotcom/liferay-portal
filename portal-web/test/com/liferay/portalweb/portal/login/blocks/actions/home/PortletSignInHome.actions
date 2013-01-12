@@ -1,0 +1,7 @@
+<actions object="PortletSignInHome">
+	<actiondef command="click">
+		<conditional elements="SIGN_OUT_LINK">
+			<function object="Click" command="textClickAtAndWait" />
+		</conditional>
+	</actiondef>
+</actions>

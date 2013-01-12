@@ -1,0 +1,11 @@
+<actions object="CPUsersAndOrganizationsSearchAllActiveUsers">
+	<actiondef command="click">
+		<conditional elements="BASIC_SEARCH_ADVANCED_LINK,ADVANCED_SEARCH_BASIC_LINK">
+			<function object="Click" command="clickAt" />
+		</conditional>
+
+		<conditional elements="USERS_USER_1_FIRST_NAME">
+			<function object="Click" command="textClickAndWait" />
+		</conditional>
+	</actiondef>
+</actions>

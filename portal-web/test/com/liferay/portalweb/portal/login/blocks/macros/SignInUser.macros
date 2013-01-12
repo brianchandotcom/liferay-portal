@@ -1,0 +1,103 @@
+<macros object="SignInUser">
+	<macrodef
+		command="signIn"
+		description="Log into the portal as ${email} with the password ${password}."
+	>
+		<params>
+			<param name="email" description="User's email address" example="test@liferay.com" />
+			<param name="password" description="User's password" example="test" />
+		</params>
+		<steps>
+			<action object="Home" command="open" target="URL_GUEST" />
+
+			<action object="PortletSignInHome" command="type" target="EMAIL_ADDRESS_FIELD" value="${email}" />
+			<action object="PortletSignInHome" command="type" target="PASSWORD_FIELD" value="${password}" />
+			<action object="PortletSignInHome" command="check" target="REMEMBER_ME_LINK" />
+			<action object="PortletSignInHome" command="click" target="SIGN_IN_LINK" value="Sign In" />
+
+			<if object="PortletSignInHome" command="isElementPresent" target="I_AGREE_LINK">
+				<action object="PortletSignInHome" command="click" target="I_AGREE_LINK" value="I Agree" />
+			</if>
+
+			<if object="PortletSignInHome" command="isElementPresent" target="ANSWER_FIELD">
+				<action object="PortletSignInHome" command="type" target="ANSWER_FIELD" value="test" />
+				<action object="PortletSignInHome" command="click" target="SAVE_LINK" value="Save" />
+			</if>
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="signInNewPassword"
+		description="Log into the portal for the first time as ${email} with the password ${password} and reset the password to ${newPassword}."
+	>
+		<params>
+			<param name="email" description="User's email address" example="test@liferay.com" />
+			<param name="password" description="User's password" example="password" />
+			<param name="newPassword" description="User's new password" example="test" />
+		</params>
+		<steps>
+			<action object="Home" command="open" target="URL_GUEST" />
+
+			<action object="PortletSignInHome" command="type" target="EMAIL_ADDRESS_FIELD" value="${email}" />
+			<action object="PortletSignInHome" command="type" target="PASSWORD_FIELD" value="${password}" />
+			<action object="PortletSignInHome" command="check" target="REMEMBER_ME_LINK" />
+			<action object="PortletSignInHome" command="click" target="SIGN_IN_LINK" value="Sign In" />
+
+			<if object="PortletSignInHome" command="isElementPresent" target="I_AGREE_LINK">
+				<action object="PortletSignInHome" command="click" target="I_AGREE_LINK" value="I Agree" />
+			</if>
+
+			<if object="PortletSignInHome" command="isElementPresent" target="NEW_PASSWORD_FIELD">
+				<action object="PortletSignInHome" command="type" target="NEW_PASSWORD_FIELD" value="${newPassword}" />
+				<action object="PortletSignInHome" command="type" target="NEW_PASSWORD_ENTER_AGAIN_FIELD" value="${newPassword}" />
+				<action object="PortletSignInHome" command="click" target="SAVE_LINK" value="Save" />
+			</if>
+
+			<if object="PortletSignInHome" command="isElementPresent" target="ANSWER_FIELD">
+				<action object="PortletSignInHome" command="type" target="ANSWER_FIELD" value="test" />
+				<action object="PortletSignInHome" command="click" target="SAVE_LINK" value="Save" />
+			</if>
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="signInSAUser"
+		description="Log into the portal as SA user test@liferay.com with the password test. Log out first if already signed in as another user, or do nothing if already signed in as the default user."
+	>
+		<params>
+		</params>
+		<steps>
+			<action object="Home" command="open" target="URL_GUEST" />
+
+			<if object="PortletSignInHome" command="isElementPresent" target="USER_NAME">
+				<if object="PortletSignInHome" command="isNotText" target="USER_NAME" value="Test Test">
+					<macro object="SignInUser" command="signOut" />
+
+					<macro object="SignInUser" command="signIn">
+						<param name="email" value="test@liferay.com" />
+						<param name="password" value="test" />
+					</macro>
+				</if>
+			</if>
+			<else>
+				<macro object="SignInUser" command="signIn">
+					<param name="email" value="test@liferay.com" />
+					<param name="password" value="test" />
+				</macro>
+			</else>
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="signOut"
+		description="Log out of the portal."
+	>
+		<params>
+		</params>
+		<steps>
+			<action object="Home" command="open" target="URL_GUEST" />
+
+			<action object="PortletSignInHome" command="click" target="SIGN_OUT_LINK" value="Sign Out" />
+		</steps>
+	</macrodef>
+</macros>

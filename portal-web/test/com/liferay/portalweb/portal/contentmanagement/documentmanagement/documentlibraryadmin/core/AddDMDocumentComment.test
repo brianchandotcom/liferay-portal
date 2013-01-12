@@ -1,0 +1,21 @@
+<test
+	name="AddDMDocumentComment"
+	description="In the Control Panel Documents and Media Portlet, add a Comment to a Document."
+>
+	<setup>
+		<macro object="CPDocumentsAndMediaDocument" command="add">
+			<param name="title" value="DM Document Title" />
+			<param name="file" value="Document_1.doc" />
+		</macro>
+	</setup>
+	<steps>
+		<macro object="CPDocumentsAndMediaComment" command="add">
+			<param name="document" value="DM Document Title" />
+			<param name="documentComment" value="DM Document Comment" />
+		</macro>
+	</steps>
+	<teardown>
+		<macro object="CPDocumentsAndMediaDocument" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
+	</teardown>
+</test>

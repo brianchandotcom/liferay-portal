@@ -1,0 +1,63 @@
+<macros object="CPDocumentsAndMediaFolder">
+	<macrodef
+		command="add"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add a &lt;em&gt;Folder&lt;/em&gt; with a name of &lt;strong&gt;&quot;${name}&quot;&lt;/strong&gt;."
+	>
+		<params>
+			<param name="name" description="Title of the Folder" example="DM Folder" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
+
+			<action object="CPDocumentsAndMediaHome" command="click" target="TOOLBAR_ADD_BUTTON" value="Add" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="ADD_FOLDER" value="Folder" />
+
+			<action object="CPDocumentsAndMediaAddFolder" command="type" target="CONTENT_NAME" value="${name}" />
+			<action object="CPDocumentsAndMediaAddFolder" command="click" target="BUTTON_SAVE" value="Save" />
+
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="FOLDER_NAME" value="${name}" />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="delete"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, delete a &lt;em&gt;Folder&lt;/em&gt; with a name of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt;."
+	>
+		<params>
+			<param name="name" description="Title of the Folder" example="DM Folder" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
+
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="FOLDER_NAME" value="${name}" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="FOLDER_ACTIONS" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="FOLDER_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE_UNDO" value="The selected item was moved to the Recycle Bin. Undo" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextNotPresent" value="${name}" />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="tearDown"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, delete all the &lt;em&gt;Entries&lt;/em&gt;."
+	>
+		<params>
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
+
+			<while object="CPDocumentsAndMediaHome" command="isElementPresent" target="FOLDER_NAME">
+				<action object="CPDocumentsAndMediaHome" command="check" target="TOOLBAR_ALL_ROWS" />
+				<action object="CPDocumentsAndMediaHome" command="click" target="TOOLBAR_ACTIONS_BUTTON" value="Actions" />
+				<action object="CPDocumentsAndMediaHome" command="click" target="ALL_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
+			</while>
+		</steps>
+	</macrodef>
+</macros>

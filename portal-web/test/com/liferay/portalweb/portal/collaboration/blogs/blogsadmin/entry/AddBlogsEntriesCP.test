@@ -1,0 +1,25 @@
+<test
+	name="AddBlogsEntriesCP"
+	description="In the Control Panel Blogs Portlet, add 3 different Blogs Entries."
+>
+	<setup>
+	</setup>
+	<steps>
+		<macro object="CPBlogsEntry" command="add">
+			<param name="title" value="Blogs Entry1 Title" />
+			<param name="content" value="Blogs Entry1 Content" />
+		</macro>
+		<macro object="CPBlogsEntry" command="add">
+			<param name="title" value="Blogs Entry2 Title" />
+			<param name="content" value="Blogs Entry2 Content" />
+		</macro>
+		<macro object="CPBlogsEntry" command="add">
+			<param name="title" value="Blogs Entry3 Title" />
+			<param name="content" value="Blogs Entry3 Content" />
+		</macro>
+	</steps>
+	<teardown>
+		<macro object="CPBlogsEntry" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
+	</teardown>
+</test>

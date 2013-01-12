@@ -1,0 +1,45 @@
+<test
+	name="AssignRegRoleUser"
+	description="In the &lt;strong&gt;Control Panel Roles Portlet&lt;/strong&gt;, add assign a Regular Role to a user."
+>
+	<setup>
+		<macro object="CPUsersAndOrganizationsUsers" command="add">
+			<param name="screenName" value="usersn" />
+			<param name="emailAddress" value="userea@liferay.com" />
+			<param name="firstName" value="userfn" />
+			<param name="lastName" value="userln" />
+		</macro>
+
+		<macro object="CPRoles" command="addRegRole">
+			<param name="name" value="Regrole Name " />
+			<param name="title" value="Regrole Title" />
+			<param name="description" value="Regrole Description" />
+		</macro>
+	</setup>
+	<steps>
+		<macro object="CPRoles" command="assignRegrole">
+			<param name="role" value="Regrole Title" />
+			<param name="firstName" value="userfn " />
+		</macro>
+
+		<macro object="CPUsersAndOrganizationsUsers" command="basicSearch" />
+
+		<macro object="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Users and Organizations" />
+		</macro>
+
+		<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
+
+		<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" target="BASIC_SEARCH_FIELD" value="userfn" />
+		<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_BUTTON" value="Search" />
+		<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="USERS_USER_1_FIRST_NAME" value="userfn" />
+
+		<action object="CPUsersAndOrganizationsEditUser" command="click" target="USER_INFORMATION_ROLES" value="Roles" />
+
+		<action object="CPUsersAndOrganizationsEditUserRoles" command="assertTextEquals" target="REGULAR_ROLES_SECOND_REGULAR_ROLE" value="Regrole Title" />
+	</steps>
+	<teardown>
+		<macro object="CPUsersAndOrganizationsUsers" command="tearDown" />
+		<macro object="CPRoles" command="tearDown" />
+	</teardown>
+</test>

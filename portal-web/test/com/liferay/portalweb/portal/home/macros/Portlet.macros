@@ -1,0 +1,21 @@
+<macros object="Portlet">
+	<macrodef
+		command="add"
+		description="Add the &lt;strong&gt;${portlet} Portlet&lt;/strong&gt; to the &lt;strong&gt;${portlet} Page&lt;/strong&gt; in the &lt;strong&gt;Guest Community&lt;/strong&gt;."
+	>
+		<params>
+			<param name="portlet" description="Name of the Portlet to add to the page" example="Blogs" />
+		</params>
+		<steps>
+			<macro object="Goto" command="pagePortlet">
+				<param name="portlet" value="${portlet}" />
+			</macro>
+
+			<action object="Home" command="mouseOver" target="ADD_LINK" />
+			<action object="Home" command="click" target="ADD_LINK_APPLICATION" />
+			<action object="Home" command="type" target="PORTLET_FIELD_SEARCH" value="${portlet}" value-first-letter="true" />
+			<action object="Home" command="click" locator="//div[@title='${portlet}']/p/a" />
+			<action object="Home" command="assertTextEquals" target="PORTLET_TEXT_TITLE" value="${portlet}" />
+		</steps>
+	</macrodef>
+</macros>

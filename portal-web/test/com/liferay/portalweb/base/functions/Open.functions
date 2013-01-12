@@ -1,0 +1,16 @@
+<functions object="Open">
+	<functiondef command="open" default="true">
+		<selenium command="selectWindow" target="null" />
+		<selenium command="selectFrame" target="relative=top" />
+		<selenium command="open" />
+	</functiondef>
+
+	<functiondef command="openWindow">
+		<selenium command="pause" target="15000" />
+		<selenium command="selectWindow" target="null" />
+		<selenium command="selectFrame" target="relative=top" />
+		<selenium command="openWindow" value="windowName" />
+		<selenium command="waitForPopUp" target="windowName" value="windowName" />
+		<selenium command="selectWindow" target="windowName" />
+	</functiondef>
+</functions>

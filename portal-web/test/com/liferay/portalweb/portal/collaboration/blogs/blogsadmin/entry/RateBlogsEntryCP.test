@@ -1,0 +1,28 @@
+<test
+	name="RateBlogsEntryCP"
+	description="In the Control Panel Blogs Portlet, rate a Blogs Entry."
+>
+	<setup>
+		<macro object="CPBlogsEntry" command="add">
+			<param name="title" value="Blogs Entry Title" />
+			<param name="content" value="Blogs Entry Content" />
+		</macro>
+	</setup>
+	<steps>
+		`<macro object="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Blogs" />
+		</macro>
+
+		<action object="CPBlogsHome" command="click" target="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+
+		<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_TITLE" value="Blogs Entry Title" />
+		<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_CONTENT" value="Blogs Entry Content" />
+		<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_RATING_AVERAGE" value="0 Votes" />
+		<action object="CPBlogsEntryView" command="click" target="BLOGS_ENTRY_LINK_RATE_STAR_5" value="" />
+		<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_RATING_AVERAGE" value="1 Vote" />
+	</steps>
+	<teardown>
+		<macro object="CPBlogsEntry" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
+	</teardown>
+</test>

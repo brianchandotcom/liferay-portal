@@ -1,0 +1,137 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPUsersAndOrganizationsAddUserOrganizations</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPUsersAndOrganizationsAddUserOrganizations</td></tr></thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Users and Organizations Add User Organizations Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMBS-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td>Breadcrumb 1</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[2]/span</td>
+	<td>Breadcrumb 2</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td>Breadcrumb 3</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_4</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[4]/span/a</td>
+	<td>Breadcrumb 4</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//h1[@id='cpPortletTitle']/span</td>
+	<td>Portlet Title</td>
+</tr>
+<tr>
+	<td>PORTLET_DESCRIPTION</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Portlet Description</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_BROWSE</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][1])/a</td>
+	<td>Browse</td>
+</tr>
+<tr>
+	<td>TOOLBAR_VIEW_ORGANIZATIONS</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][2])/a</td>
+	<td>View Organizations</td>
+</tr>
+<tr>
+	<td>TOOLBAR_VIEW_USERS</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][3])/a</td>
+	<td>View Users</td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>TOOLBAR_EXPORT_USERS</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][4])/a</td>
+	<td>Export Users</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATIONS-->
+<tr>
+	<td>ORGANIZATIONS_SELECT</td>
+	<td>//div[@id='_125_organizations']/span/a/span</td>
+	<td>Select Organizations</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER INFORMATION-->
+<tr>
+	<td>USER_INFORMATION_DETAILS</td>
+	<td>//a[@id='_125_detailsLink']</td>
+	<td>Details</td>
+</tr>
+<tr>
+	<td>USER_INFORMATION_ORGANIZATIONS</td>
+	<td>//a[@id='_125_organizationsLink']</td>
+	<td>Organizations</td>
+</tr>
+<tr>
+	<td>USER_INFORMATION_PERSONAL_SITE</td>
+	<td>//a[@id='_125_personalSiteLink']</td>
+	<td>Personal site</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BUTTONS-->
+<tr>
+	<td>BUTTONS_SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>BUTTONS_CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

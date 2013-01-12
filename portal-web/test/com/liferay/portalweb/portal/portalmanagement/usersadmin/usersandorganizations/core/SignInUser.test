@@ -1,0 +1,40 @@
+<test
+	name="SignInUser"
+	description="In the &lt;strong&gt;Sign In Portlet&lt;/strong&gt;, sign in with a created User."
+>
+	<setup>
+		<macro object="CPUsersAndOrganizationsUsers" command="add">
+			<param name="screenName" value="usersn" />
+			<param name="emailAddress" value="userea@liferay.com" />
+			<param name="firstName" value="userfn" />
+			<param name="lastName" value="userln" />
+		</macro>
+
+		<macro object="CPUsersAndOrganizationsUsers" command="changePassword">
+			<param name="firstName" value="userfn" />
+			<param name="password" value="password" />
+		</macro>
+	</setup>
+	<steps>
+		<macro object="SignInUser" command="signOut">
+		</macro>
+
+		<macro object="SignInUser" command="signInNewPassword">
+			<param name="email" value="userea@liferay.com" />
+			<param name="password" value="password" />
+			<param name="newPassword" value="test" />
+		</macro>
+
+		<macro object="SignInUser" command="signOut">
+		</macro>
+
+		<macro object="SignInUser" command="signIn">
+			<param name="email" value="test@liferay.com" />
+			<param name="password" value="test" />
+		</macro>
+	</steps>
+	<teardown>
+		<macro object="CPUsersAndOrganizationsUsers" command="tearDown">
+		</macro>
+	</teardown>
+</test>

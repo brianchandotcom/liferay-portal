@@ -1,0 +1,34 @@
+<test
+	name="SearchBlogsEntryTitleCP"
+	description="In the Control Panel Blogs Portlet, search for a Blogs Entry by its title."
+>
+	<setup>
+		<macro object="CPBlogsEntry" command="add">
+			<param name="title" value="Blogs Entry Title" />
+			<param name="content" value="Blogs Entry Content" />
+		</macro>
+	</setup>
+	<steps>
+		`<macro object="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Blogs" />
+		</macro>
+
+		<action object="CPBlogsHome" command="type" target="PORTLET_FIELD_SEARCH" value="Title" />
+		<action object="CPBlogsHome" command="click" target="PORTLET_LINK_SEARCH" value="Search" />
+
+		<action object="CPBlogsSearch" command="assertTextEquals" target="TABLE_NUMBER" value="1." />
+		<action object="CPBlogsSearch" command="assertTextEquals" target="TABLE_ENTRY" value="Blogs Entry Title" />
+		<action object="CPBlogsSearch" command="assertTextEquals" target="SEARCH_RESULTS" value="Showing 1 result." />
+
+		<action object="CPBlogsSearch" command="type" target="SEARCH_FIELD" value="Title1" />
+		<action object="CPBlogsSearch" command="click" target="SEARCH_BUTTON" value="Search" />
+		<action object="CPBlogsSearch" command="assertElementNotPresent" target="TABLE_NUMBER" value="1." />
+		<action object="CPBlogsSearch" command="assertElementNotPresent" target="TABLE_ENTRY" value="Blogs Entry Title" />
+		<action object="CPBlogsSearch" command="assertTextNotPresent" value="Blogs Entry Title" />
+		<action object="CPBlogsSearch" command="assertTextEquals" target="PORTLET_INFO" value="No entries were found that matched the keywords: Title1." />
+	</steps>
+	<teardown>
+		<macro object="CPBlogsEntry" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
+	</teardown>
+</test>

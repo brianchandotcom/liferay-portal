@@ -20,6 +20,8 @@ import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
+import com.thoughtworks.selenium.Selenium;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -195,12 +197,22 @@ public class LiferaySeleniumHelper {
 		System.out.println(message);
 	}
 
+	public static String firstLetter(String s) {
+		return s.substring(0, 1);
+	}
+
 	public static String getNumberDecrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) - 1);
 	}
 
 	public static String getNumberIncrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
+	}
+
+	public static boolean isSelenium() {
+		String seleniumImplementation = TestPropsValues.SELENIUM_IMPLEMENTATION;
+
+		return seleniumImplementation.equals(Selenium.class.getName());
 	}
 
 	public static boolean isText(

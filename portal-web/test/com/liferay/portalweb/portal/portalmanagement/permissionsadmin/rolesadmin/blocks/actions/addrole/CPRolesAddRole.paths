@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPRolesAddRole</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPRolesAddRole</td></tr></thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Roles Add Role Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMB-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>//div[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td>1st Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>//div[@id='breadcrumbs']/ul/li[2]/span/a</td>
+	<td>2nd Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>//div[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td>3rd Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_4</td>
+	<td>//div[@id='breadcrumbs']/ul/li[4]/span/a</td>
+	<td>4th Breadcrumb</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ROLE-->
+<tr>
+	<td>ROLE_TYPE</td>
+	<td>//fieldset/div/div/div</td>
+	<td>Role Type</td>
+</tr>
+<tr>
+	<td>ROLE_NAME</td>
+	<td>//input[@id='_128_name']</td>
+	<td>Role Name Field</td>
+</tr>
+<tr>
+	<td>ROLE_TITLE</td>
+	<td>//input[@id='_128_title_en_US']</td>
+	<td>Role Title Field</td>
+</tr>
+<tr>
+	<td>ROLE_DESCRIPTION</td>
+	<td>//textarea[@id='_128_description_en_US']</td>
+	<td>Role Description Field</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BUTTON-->
+<tr>
+	<td>BUTTON_SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td>Save Button</td>
+</tr>
+<tr>
+	<td>BUTTON_CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel Button</td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

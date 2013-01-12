@@ -79,8 +79,7 @@ public class MBMessageServiceTest {
 
 		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
 			ServiceTestUtil.addUser(
-				ServiceTestUtil.randomString(), false,
-				new long[] {_group.getGroupId()});
+				ServiceTestUtil.randomString(), _group.getGroupId());
 		}
 
 		ServiceContext serviceContext = new ServiceContext();

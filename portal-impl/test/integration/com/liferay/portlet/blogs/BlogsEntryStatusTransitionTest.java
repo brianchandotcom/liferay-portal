@@ -57,8 +57,7 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 		group = ServiceTestUtil.addGroup();
 
 		User user = ServiceTestUtil.addUser(
-			ServiceTestUtil.randomString(), false,
-			new long[] {group.getGroupId()});
+			ServiceTestUtil.randomString(), group.getGroupId());
 
 		blogsEntry = BlogsTestUtil.addBlogsEntry(
 			user.getUserId(), group, false);

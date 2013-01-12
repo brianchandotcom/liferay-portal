@@ -80,8 +80,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		catch (NoSuchFileEntryException nsfee) {
 		}
 
-		return dlFileEntryLocalService.cancelCheckOut(
-			getUserId(), fileEntryId);
+		return dlFileEntryLocalService.cancelCheckOut(getUserId(), fileEntryId);
 	}
 
 	public void checkInFileEntry(

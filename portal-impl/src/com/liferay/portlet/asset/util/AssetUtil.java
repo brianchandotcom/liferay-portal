@@ -133,7 +133,6 @@ public class AssetUtil {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
@@ -224,7 +223,8 @@ public class AssetUtil {
 		}
 
 		if (classTypeId > 0) {
-			addPortletURL.setParameter("classTypeId", String.valueOf(classTypeId));
+			addPortletURL.setParameter(
+				"classTypeId", String.valueOf(classTypeId));
 
 			if (className.equals(DLFileEntry.class.getName())) {
 				addPortletURL.setParameter(Constants.CMD, Constants.ADD);

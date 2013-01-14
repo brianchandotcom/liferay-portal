@@ -30,44 +30,9 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 			<%= selectScope %>
 		</aui:fieldset>
 
-		<aui:fieldset>
+		<aui:fieldset label="model.resource.com.liferay.portlet.asset">
 
 			<%
-			classNameIds = availableClassNameIds;
-
-			String portletId = portletResource;
-
-			for (long groupId : groupIds) {
-			%>
-
-				<div class="add-asset-selector">
-					<div class="lfr-meta-actions edit-controls">
-						<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
-
-						<liferay-ui:icon-menu align="left" cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' message="select-existing" showWhenSingleIcon="<%= true %>">
-
-							<%
-							for (AssetRendererFactory curRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {
-								if (curRendererFactory.isSelectable()) {
-									String taglibURL = "javascript:" + renderResponse.getNamespace() + "selectionForType('" + groupId + "', '" + curRendererFactory.getClassName() + "')";
-								%>
-
-									<liferay-ui:icon
-										message="<%= ResourceActionsUtil.getModelResource(locale, curRendererFactory.getClassName()) %>" src="<%= curRendererFactory.getIconPath(renderRequest) %>" url="<%= taglibURL %>"
-									/>
-
-								<%
-								}
-							}
-							%>
-
-						</liferay-ui:icon-menu>
-					</div>
-				</div>
-
-			<%
-			}
-
 			List<String> deletedAssets = new ArrayList<String>();
 
 			List<String> headerNames = new ArrayList<String>();
@@ -197,7 +162,45 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 				</div>
 			</c:if>
 
-			<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+			<liferay-ui:search-iterator paginate="<%= total > SearchContainer.DEFAULT_DELTA %>" searchContainer="<%= searchContainer %>" />
+
+			<%
+			classNameIds = availableClassNameIds;
+
+			String portletId = portletResource;
+
+			for (long groupId : groupIds) {
+			%>
+
+				<div class="add-asset-selector">
+					<div class="lfr-meta-actions edit-controls">
+						<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
+
+						<liferay-ui:icon-menu align="left" cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "select" : "select-in-x", new Object[] {(GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)}) %>' showWhenSingleIcon="<%= true %>">
+
+							<%
+							for (AssetRendererFactory curRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {
+								if (curRendererFactory.isSelectable()) {
+									String taglibURL = "javascript:" + renderResponse.getNamespace() + "selectionForType('" + groupId + "', '" + curRendererFactory.getClassName() + "')";
+								%>
+
+									<liferay-ui:icon
+										message="<%= ResourceActionsUtil.getModelResource(locale, curRendererFactory.getClassName()) %>" src="<%= curRendererFactory.getIconPath(renderRequest) %>" url="<%= taglibURL %>"
+									/>
+
+								<%
+								}
+							}
+							%>
+
+						</liferay-ui:icon-menu>
+					</div>
+				</div>
+
+			<%
+			}
+			%>
+
 		</aui:fieldset>
 	</liferay-ui:panel>
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherSelectionDisplaySettingsPanel" persistState="<%= true %>" title="display-settings">

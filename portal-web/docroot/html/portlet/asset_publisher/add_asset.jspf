@@ -74,10 +74,10 @@ addPortletURLs = getAddPortletURLs(liferayPortletRequest, liferayPortletResponse
 			else {
 				message = ResourceActionsUtil.getModelResourceNamePrefix() + className;
 
-				int pos = className.indexOf(_CLASSNAME_SEPARATOR);
+				int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
 
 				if (pos != -1) {
-					message = className.substring(pos + _CLASSNAME_SEPARATOR.length());
+					message = className.substring(pos + AssetUtil.CLASSNAME_SEPARATOR.length());
 
 					className = className.substring(0, pos);
 				}
@@ -117,89 +117,6 @@ addPortletURLs = getAddPortletURLs(liferayPortletRequest, liferayPortletResponse
 </c:if>
 
 <%!
-public PortletURL getAddPortletURL(LiferayPortletRequest liferayPortletRequest, LiferayPortletResponse liferayPortletResponse, String className, long classTypeId, long[] allAssetCategoryIds, String[] allAssetTagNames) throws Exception {
-	ThemeDisplay themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
-
-	if (assetRendererFactory == null) {
-		return null;
-	}
-
-	liferayPortletRequest.setAttribute(WebKeys.ASSET_RENDERER_FACTORY_CLASS_TYPE_ID, classTypeId);
-
-	PortletURL addPortletURL = assetRendererFactory.getURLAdd(liferayPortletRequest, liferayPortletResponse);
-
-	if (addPortletURL == null) {
-		return null;
-	}
-
-	PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-	PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(themeDisplay.getPlid(), portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
-
-	redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect");
-	redirectURL.setWindowState(LiferayWindowState.POP_UP);
-
-	addPortletURL.setParameter("redirect", redirectURL.toString());
-
-	String referringPortletResource = ParamUtil.getString(liferayPortletRequest, "portletResource");
-
-	if (Validator.isNotNull(referringPortletResource)) {
-		addPortletURL.setParameter("referringPortletResource", referringPortletResource);
-	}
-	else {
-		addPortletURL.setParameter("referringPortletResource", portletDisplay.getId());
-
-		Map<Long, String> assetVocabularyAssetCategoryIds = new HashMap<Long, String>();
-
-		for (long assetCategoryId : allAssetCategoryIds) {
-			AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
-
-			long assetVocabularyId = assetCategory.getVocabularyId();
-
-			if (assetVocabularyAssetCategoryIds.containsKey(assetVocabularyId)) {
-				String assetCategoryIds = assetVocabularyAssetCategoryIds.get(assetVocabularyId);
-
-				assetVocabularyAssetCategoryIds.put(assetVocabularyId, assetCategoryIds + StringPool.COMMA + assetCategoryId);
-			}
-			else {
-				assetVocabularyAssetCategoryIds.put(assetVocabularyId, String.valueOf(assetCategoryId));
-			}
-		}
-
-		for (Map.Entry<Long, String> entry : assetVocabularyAssetCategoryIds.entrySet()) {
-			long assetVocabularyId = entry.getKey();
-			String assetCategoryIds = entry.getValue();
-
-			addPortletURL.setParameter("assetCategoryIds" + StringPool.UNDERLINE + assetVocabularyId, assetCategoryIds);
-		}
-
-		addPortletURL.setParameter("assetTagNames", StringUtil.merge(allAssetTagNames));
-	}
-
-	if (classTypeId > 0) {
-		addPortletURL.setParameter("classTypeId", String.valueOf(classTypeId));
-
-		if (className.equals(DLFileEntry.class.getName())) {
-			addPortletURL.setParameter(Constants.CMD, Constants.ADD);
-			addPortletURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-			addPortletURL.setParameter("fileEntryTypeId", String.valueOf(classTypeId));
-		}
-
-		if (className.equals(JournalArticle.class.getName())) {
-			DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(classTypeId);
-
-			addPortletURL.setParameter("structureId", ddmStructure.getStructureKey());
-		}
-	}
-
-	addPortletURL.setPortletMode(PortletMode.VIEW);
-	addPortletURL.setWindowState(LiferayWindowState.POP_UP);
-
-	return addPortletURL;
-}
-
 public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPortletRequest, LiferayPortletResponse liferayPortletResponse, long[] classNameIds, long[] classTypeIds, long[] allAssetCategoryIds, String[] allAssetTagNames) throws Exception {
 	ThemeDisplay themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
@@ -219,7 +136,7 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 		Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), themeDisplay.getScopeGroupId()}, themeDisplay.getLocale());
 
 		if ((classTypeIds.length == 0) || (classTypes == null)) {
-			PortletURL addPortletURL = getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className, 0, allAssetCategoryIds, allAssetTagNames);
+			PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className, 0, allAssetCategoryIds, allAssetTagNames);
 
 			if (addPortletURL != null) {
 				addPortletURLs.put(className, addPortletURL);
@@ -229,10 +146,10 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 		if (classTypes != null) {
 			for (long classTypeId : classTypes.keySet()) {
 				if (ArrayUtil.contains(classTypeIds, classTypeId) || (classTypeIds.length == 0)) {
-					PortletURL addPortletURL = getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className, classTypeId, allAssetCategoryIds, allAssetTagNames);
+					PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className, classTypeId, allAssetCategoryIds, allAssetTagNames);
 
 					if (addPortletURL != null) {
-						String mesage = className + _CLASSNAME_SEPARATOR + classTypes.get(classTypeId);
+						String mesage = className + AssetUtil.CLASSNAME_SEPARATOR + classTypes.get(classTypeId);
 
 						addPortletURLs.put(mesage, addPortletURL);
 					}
@@ -255,6 +172,4 @@ public boolean hasSubtype(String subtypeClassName, Map<String, PortletURL> addPo
 
 	return false;
 }
-
-private static final String _CLASSNAME_SEPARATOR = "_CLASSNAME_";
 %>

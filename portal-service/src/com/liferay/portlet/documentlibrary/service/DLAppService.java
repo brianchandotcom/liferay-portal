@@ -1836,6 +1836,10 @@ public interface DLAppService extends BaseService {
 		com.liferay.portal.kernel.search.Query query)
 		throws com.liferay.portal.kernel.search.SearchException;
 
+	public void subscribeFolder(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* @deprecated Use {@link #checkInFileEntry(long, boolean, String,
 	ServiceContext)}.
@@ -1877,6 +1881,10 @@ public interface DLAppService extends BaseService {
 	*/
 	public void unlockFolder(long repositoryId, long parentFolderId,
 		java.lang.String name, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void unsubscribeFolder(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

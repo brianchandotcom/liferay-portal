@@ -563,6 +563,18 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		_dlAppLocalService.restoreFileEntryFromTrash(userId, fileEntryId);
 	}
 
+	public void subscribeFolder(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppLocalService.subscribeFolder(userId, groupId, folderId);
+	}
+
+	public void unsubscribeFolder(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppLocalService.unsubscribeFolder(userId, groupId, folderId);
+	}
+
 	/**
 	* Updates the file entry's asset replacing its asset categories, tags, and
 	* links.

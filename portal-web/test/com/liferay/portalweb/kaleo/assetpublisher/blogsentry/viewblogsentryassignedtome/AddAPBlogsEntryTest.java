@@ -25,11 +25,10 @@ public class AddAPBlogsEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Asset Publisher Page");
-		selenium.clickAt("link=Asset Publisher Page",
-			RuntimeVariables.replace("Asset Publisher Page"));
+		selenium.clickAt("link=Asset Publisher Test Page",
+			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
@@ -41,8 +40,10 @@ public class AddAPBlogsEntryTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 			RuntimeVariables.replace("Blogs Entry"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
+		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/lang/en.js')]");
 		selenium.waitForVisible("//input[@id='_33_title']");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title"));
@@ -67,10 +68,15 @@ public class AddAPBlogsEntryTest extends BaseTestCase {
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.waitForText("//body", "Blogs Entry Content");
 		selenium.selectFrame("relative=top");
+		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
+		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/lang/en.js')]");
 		selenium.waitForVisible("//input[@value='Submit for Publication']");
 		selenium.clickAt("//input[@value='Submit for Publication']",
 			RuntimeVariables.replace("Submit for Publication"));
 		selenium.waitForPageToLoad("30000");
+		selenium.selectFrame("relative=top");
 		selenium.waitForVisible("//section");
 		assertEquals(RuntimeVariables.replace("There are no results."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

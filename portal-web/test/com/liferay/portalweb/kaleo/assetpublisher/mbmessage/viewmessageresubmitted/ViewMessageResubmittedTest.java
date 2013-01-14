@@ -33,6 +33,10 @@ public class ViewMessageResubmittedTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("Message Boards Message Subject"));
 		assertFalse(selenium.isTextPresent("Message Boards Message Body"));
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");

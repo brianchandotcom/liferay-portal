@@ -653,7 +653,7 @@ public class Validator {
 	/**
 	 * Returns <code>true</code> if the file extension is valid.
 	 *
-	 * @param  fileExtension file extension
+	 * @param  fileExtension string to check
 	 * @return <code>true</code> if the extension is valid; <code>false</code>
 	 *         otherwise
 	 */
@@ -834,12 +834,12 @@ public class Validator {
 	}
 
 	/**
-	 * Returns <code>true</code> if the string is a valid IPv4 or IPv6
-	 * IP address.
+	 * Returns <code>true</code> if the string is a valid IPv4 or IPv6 IP
+	 * address.
 	 *
 	 * @param  ipAddress the string to check
-	 * @return <code>true</code> if the string is an IPv4 or IPv6 IP address;
-	 *         <code>false</code> otherwise
+	 * @return <code>true</code> if the string is a valid IPv4 or IPv6 IP
+	 *         address; <code>false</code> otherwise
 	 */
 	public static boolean isIPAddress(String ipAddress) {
 		if (isIPv4Address(ipAddress) || isIPv6Address(ipAddress)) {
@@ -853,7 +853,7 @@ public class Validator {
 	 * Returns <code>true</code> if the string is a valid IPv4 IP address.
 	 *
 	 * @param  ipAddress the string to check
-	 * @return <code>true</code> if the string is an IPv4 IP address;
+	 * @return <code>true</code> if the string is a valid IPv4 IP address;
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isIPv4Address(String ipAddress) {
@@ -866,7 +866,7 @@ public class Validator {
 	 * Returns <code>true</code> if the string is a valid IPv6 IP address.
 	 *
 	 * @param  ipAddress the string to check
-	 * @return <code>true</code> if the string is an IPv6 IP address;
+	 * @return <code>true</code> if the string is a valid IPv6 IP address;
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isIPv6Address(String ipAddress) {
@@ -891,8 +891,8 @@ public class Validator {
 	 * @param  month the month (0-based, meaning 0 for January)
 	 * @param  day the day of the month
 	 * @param  year the year
-	 * @return <code>true</code> if the date is valid; <code>false</code>
-	 *         otherwise
+	 * @return <code>true</code> if the date is valid in the Julian calendar;
+	 *         <code>false</code> otherwise
 	 */
 	public static boolean isJulianDate(int month, int day, int year) {
 		if ((month < 0) || (month > 11)) {
@@ -1175,7 +1175,7 @@ public class Validator {
 	 * is at least four characters long and contains only letters and decimal
 	 * digits.
 	 *
-	 * @param  password the password to check
+	 * @param  password the string to check
 	 * @return <code>true</code> if the string is a valid password;
 	 *         <code>false</code> otherwise
 	 */

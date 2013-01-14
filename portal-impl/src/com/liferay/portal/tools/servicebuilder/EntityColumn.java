@@ -27,7 +27,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 	public EntityColumn(String name) {
 		this(
-			name, null, null, false, false, false, null, null, null, true, true,
+			name, null, null, false, false, false, null, null, true, true,
 			false, null, null, null, null, true, true, false, false, false,
 			false);
 	}
@@ -35,11 +35,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	public EntityColumn(
 		String name, String dbName, String type, boolean primary,
 		boolean accessor, boolean filterPrimary, String ejbName,
-		String mappingKey, String mappingTable, boolean caseSensitive,
-		boolean orderByAscending, boolean orderColumn, String comparator,
-		String arrayableOperator, String idType, String idParam,
-		boolean convertNull, boolean lazy, boolean localized,
-		boolean jsonEnabled, boolean containerModel,
+		String mappingTable, boolean caseSensitive, boolean orderByAscending,
+		boolean orderColumn, String comparator, String arrayableOperator,
+		String idType, String idParam, boolean convertNull, boolean lazy,
+		boolean localized, boolean jsonEnabled, boolean containerModel,
 		boolean parentContainerModel) {
 
 		_name = name;
@@ -51,7 +50,6 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_humanName = ServiceBuilder.toHumanName(name);
 		_methodName = TextFormatter.format(name, TextFormatter.G);
 		_ejbName = ejbName;
-		_mappingKey = mappingKey;
 		_mappingTable = mappingTable;
 		_caseSensitive = caseSensitive;
 		_orderByAscending = orderByAscending;
@@ -71,15 +69,14 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	public EntityColumn(
 		String name, String dbName, String type, boolean primary,
 		boolean accessor, boolean filterPrimary, String ejbName,
-		String mappingKey, String mappingTable, String idType, String idParam,
-		boolean convertNull, boolean lazy, boolean localized,
-		boolean jsonEnabled, boolean containerModel,
-		boolean parentContainerModel) {
+		String mappingTable, String idType, String idParam, boolean convertNull,
+		boolean lazy, boolean localized, boolean jsonEnabled,
+		boolean containerModel, boolean parentContainerModel) {
 
 		this(
 			name, dbName, type, primary, accessor, filterPrimary, ejbName,
-			mappingKey, mappingTable, true, true, false, null, null, idType,
-			idParam, convertNull, lazy, localized, jsonEnabled, containerModel,
+			mappingTable, true, true, false, null, null, idType, idParam,
+			convertNull, lazy, localized, jsonEnabled, containerModel,
 			parentContainerModel);
 	}
 
@@ -87,7 +84,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	public Object clone() {
 		return new EntityColumn(
 			getName(), getDBName(), getType(), isPrimary(), isAccessor(),
-			isFilterPrimary(), getEJBName(), getMappingKey(), getMappingTable(),
+			isFilterPrimary(), getEJBName(), getMappingTable(),
 			isCaseSensitive(), isOrderByAscending(), isOrderColumn(),
 			getComparator(), getArrayableOperator(), getIdType(), getIdParam(),
 			isConvertNull(), isLazy(), isLocalized(), isJsonEnabled(),
@@ -164,10 +161,6 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 	public String getIdType() {
 		return _idType;
-	}
-
-	public String getMappingKey() {
-		return _mappingKey;
 	}
 
 	public String getMappingTable() {
@@ -276,10 +269,6 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 	public boolean isMappingManyToMany() {
 		return Validator.isNotNull(_mappingTable);
-	}
-
-	public boolean isMappingOneToMany() {
-		return Validator.isNotNull(_mappingKey);
 	}
 
 	public boolean isOrderByAscending() {
@@ -445,7 +434,6 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	private boolean _jsonEnabled;
 	private boolean _lazy;
 	private boolean _localized;
-	private String _mappingKey;
 	private String _mappingTable;
 	private String _methodName;
 	private String _name;

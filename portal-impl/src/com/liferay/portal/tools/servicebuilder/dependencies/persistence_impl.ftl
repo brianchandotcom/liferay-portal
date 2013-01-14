@@ -954,7 +954,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	<#list entity.columnList as column>
-		<#if column.isCollection() && (column.isMappingManyToMany() || column.isMappingOneToMany())>
+		<#if column.isCollection() && column.isMappingManyToMany()>
 			<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
 
 			/**
@@ -1735,7 +1735,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 
 		<#list entity.columnList as column>
-			<#if column.isCollection() && (column.isMappingManyToMany() || column.isMappingOneToMany())>
+			<#if column.isCollection() && column.isMappingManyToMany()>
 				<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
 
 				contains${tempEntity.name} = new Contains${tempEntity.name}();
@@ -1765,7 +1765,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	<#list entity.columnList as column>
-		<#if column.isCollection() && (column.isMappingManyToMany() || column.isMappingOneToMany())>
+		<#if column.isCollection() && column.isMappingManyToMany()>
 			<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
 
 			@BeanReference(type = ${tempEntity.name}Persistence.class)
@@ -1782,7 +1782,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#list>
 
 	<#list entity.columnList as column>
-		<#if column.isCollection() && (column.isMappingManyToMany() || column.isMappingOneToMany())>
+		<#if column.isCollection() && column.isMappingManyToMany()>
 			<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
 			<#assign entitySqlType = serviceBuilder.getSqlType(packagePath + ".model." + entity.getName(), entity.getPKVarName(), entity.getPKClassName())>
 			<#assign tempEntitySqlType = serviceBuilder.getSqlType(tempEntity.getPackagePath() + ".model." + entity.getName(), tempEntity.getPKVarName(), tempEntity.getPKClassName())>
@@ -2040,12 +2040,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				private static final String _SQL_GET${tempEntity.names?upper_case}SIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM ${column.mappingTable} WHERE ${entity.PKDBName} = ?";
 
 				private static final String _SQL_CONTAINS${tempEntity.name?upper_case} = "SELECT COUNT(*) AS COUNT_VALUE FROM ${column.mappingTable} WHERE ${entity.PKDBName} = ? AND ${tempEntity.PKDBName} = ?";
-			<#elseif column.isMappingOneToMany()>
-				private static final String _SQL_GET${tempEntity.names?upper_case} = "SELECT {${tempEntity.table}.*} FROM ${tempEntity.table} INNER JOIN ${entity.table} ON (${entity.table}.${entity.PKDBName} = ${tempEntity.table}.${entity.PKDBName}) WHERE (${entity.table}.${entity.PKDBName} = ?)";
-
-				private static final String _SQL_GET${tempEntity.names?upper_case}SIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM ${tempEntity.table} WHERE ${entity.PKDBName} = ?";
-
-				private static final String _SQL_CONTAINS${tempEntity.name?upper_case} = "SELECT COUNT(*) AS COUNT_VALUE FROM ${tempEntity.table} WHERE ${entity.PKDBName} = ? AND ${tempEntity.PKDBName} = ?";
 			</#if>
 		</#if>
 	</#list>

@@ -124,7 +124,9 @@ portletURL.setParameter("callback", callback);
 
 			// Modified date
 
-			row.addText(dateFormatDate.format(assetEntry.getModifiedDate()), rowHREF);
+			Date modifiedDate = assetEntry.getModifiedDate();
+
+			row.addText(LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - modifiedDate.getTime(), true)), rowHREF);
 
 			// Scope
 

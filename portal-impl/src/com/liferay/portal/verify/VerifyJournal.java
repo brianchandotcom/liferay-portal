@@ -234,6 +234,10 @@ public class VerifyJournal extends VerifyProcess {
 					JournalContentSearchLocalServiceUtil.
 						getArticleContentSearches(groupId, articleId);
 
+				if (contentSearches.isEmpty()) {
+					continue;
+				}
+
 				JournalContentSearch contentSearch = contentSearches.get(0);
 
 				JournalContentSearchLocalServiceUtil.updateContentSearch(

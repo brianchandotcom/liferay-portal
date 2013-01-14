@@ -498,6 +498,8 @@ public class EditArticleAction extends PortletAction {
 		String cmd = ParamUtil.getString(uploadPortletRequest, Constants.CMD);
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			uploadPortletRequest, "privateLayout");
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 		long classNameId = ParamUtil.getLong(
 			uploadPortletRequest, "classNameId");
@@ -579,7 +581,7 @@ public class EditArticleAction extends PortletAction {
 
 		Layout targetLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layoutUuid, groupId);
+				layoutUuid, groupId, privateLayout);
 
 		if (targetLayout == null) {
 			layoutUuid = null;

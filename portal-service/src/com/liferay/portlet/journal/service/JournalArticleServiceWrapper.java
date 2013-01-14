@@ -340,6 +340,13 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		_journalArticleService.moveArticle(groupId, articleId, newFolderId);
 	}
 
+	public com.liferay.portlet.journal.model.JournalArticle moveArticleToTrash(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.moveArticleToTrash(groupId, articleId);
+	}
+
 	public void removeArticleLocale(long companyId, java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -353,6 +360,18 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleService.removeArticleLocale(groupId, articleId,
 			version, languageId);
+	}
+
+	public void restoreArticleFromTrash(long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalArticleService.restoreArticleFromTrash(resourcePrimKey);
+	}
+
+	public void restoreArticleFromTrash(long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalArticleService.restoreArticleFromTrash(groupId, articleId);
 	}
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(

@@ -259,7 +259,7 @@ public class MBUtil {
 
 		Collections.reverse(categories);
 
-		StringBundler sb = new StringBundler((categories.size() * 3) + 6);
+		StringBundler sb = new StringBundler((categories.size() * 3) + 5);
 
 		sb.append(themeDisplay.translate("home"));
 		sb.append(StringPool.SPACE);

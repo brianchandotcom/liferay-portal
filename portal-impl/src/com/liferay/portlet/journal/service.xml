@@ -131,6 +131,11 @@
 			<finder-column name="folderId" />
 			<finder-column name="status" arrayable-operator="OR" />
 		</finder>
+		<finder name="G_F_notST" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
 		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
@@ -176,6 +181,12 @@
 			<finder-column name="version" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_U_C_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="classNameId" />
+			<finder-column name="status" comparator="!="/>
+		</finder>
 
 		<!-- References -->
 
@@ -195,6 +206,7 @@
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
 	<entity name="JournalArticleImage" local-service="true" remote-service="false">
 

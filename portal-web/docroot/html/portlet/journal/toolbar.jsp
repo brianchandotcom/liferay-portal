@@ -19,15 +19,13 @@
 <liferay-ui:icon-menu align="left" cssClass="actions-button" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 	<%
-	String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.DELETE + "'});";
+	String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + (TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE) + "'});";
 	%>
 
-	<liferay-ui:icon
-		cssClass="delete-articles-button"
-		image="delete"
-		message="delete"
-		onClick="<%= taglibOnClick %>"
-		url="javascript:;"
+	<liferay-ui:icon-delete
+		confirmation="are-you-sure-you-want-to-delete-the-selected-entries"
+		trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+		url="<%= taglibOnClick %>"
 	/>
 
 	<%

@@ -327,7 +327,7 @@ public class DLImpl implements DL {
 
 		Collections.reverse(dlFolders);
 
-		StringBundler sb = new StringBundler((dlFolders.size() * 3) + 6);
+		StringBundler sb = new StringBundler((dlFolders.size() * 3) + 5);
 
 		sb.append(themeDisplay.translate("home"));
 		sb.append(StringPool.SPACE);

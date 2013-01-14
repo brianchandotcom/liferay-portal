@@ -708,6 +708,12 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticlesCount(groupId, folderId);
 	}
 
+	public static int getArticlesCount(long groupId, long folderId,
+		int notStatus)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getArticlesCount(groupId, folderId, notStatus);
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getCompanyArticles(
 		long companyId, double version, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -877,6 +883,20 @@ public class JournalArticleLocalServiceUtil {
 		getService().moveArticle(groupId, articleId, newFolderId);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticle moveArticleToTrash(
+		long userId, com.liferay.portlet.journal.model.JournalArticle article)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveArticleToTrash(userId, article);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle moveArticleToTrash(
+		long userId, long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveArticleToTrash(userId, groupId, articleId);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalArticle removeArticleLocale(
 		long groupId, java.lang.String articleId, double version,
 		java.lang.String languageId)
@@ -884,6 +904,13 @@ public class JournalArticleLocalServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .removeArticleLocale(groupId, articleId, version, languageId);
+	}
+
+	public static void restoreArticleFromTrash(long userId,
+		com.liferay.portlet.journal.model.JournalArticle article)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreArticleFromTrash(userId, article);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
@@ -1128,31 +1155,36 @@ public class JournalArticleLocalServiceUtil {
 	public static com.liferay.portlet.journal.model.JournalArticle updateStatus(
 		long userId, com.liferay.portlet.journal.model.JournalArticle article,
 		int status, java.lang.String articleURL,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateStatus(userId, article, status, articleURL,
-			serviceContext);
+			workflowContext, serviceContext);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle updateStatus(
 		long userId, long classPK, int status,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateStatus(userId, classPK, status, serviceContext);
+		return getService()
+				   .updateStatus(userId, classPK, status, workflowContext,
+			serviceContext);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle updateStatus(
 		long userId, long groupId, java.lang.String articleId, double version,
 		int status, java.lang.String articleURL,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateStatus(userId, groupId, articleId, version, status,
-			articleURL, serviceContext);
+			articleURL, workflowContext, serviceContext);
 	}
 
 	public static void updateTemplateId(long groupId, long classNameId,

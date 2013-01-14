@@ -16,11 +16,14 @@ package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -101,6 +104,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Raymond Augé
  * @author Eduardo Lundgren
  * @author Juan Fernández
+ * @author Levente Hudák
  */
 public class EditArticleAction extends PortletAction {
 
@@ -143,7 +147,8 @@ public class EditArticleAction extends PortletAction {
 				oldUrlTitle = ((String)returnValue[1]);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteArticles(actionRequest);
+				deleteArticles(
+					(LiferayPortletConfig)portletConfig, actionRequest, false);
 			}
 			else if (cmd.equals(Constants.DELETE_TRANSLATION)) {
 				removeArticlesLocale(actionRequest);
@@ -153,6 +158,13 @@ public class EditArticleAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.MOVE)) {
 				moveArticles(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteArticles(
+					(LiferayPortletConfig)portletConfig, actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				restoreArticles(actionRequest);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribeArticles(actionRequest);
@@ -329,21 +341,51 @@ public class EditArticleAction extends PortletAction {
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
-	protected void deleteArticles(ActionRequest actionRequest)
+	protected void deleteArticles(
+			LiferayPortletConfig liferayPortletConfig,
+			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String[] deleteArticleIds = null;
 
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
 
 		if (Validator.isNotNull(articleId)) {
-			ActionUtil.deleteArticle(actionRequest, articleId);
+			deleteArticleIds = new String[] {articleId};
 		}
 		else {
-			String[] deleteArticleIds = StringUtil.split(
+			deleteArticleIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "articleIds"));
+		}
 
-			for (String deleteArticleId : deleteArticleIds) {
+		for (String deleteArticleId : deleteArticleIds) {
+			if (moveToTrash) {
+				JournalArticleServiceUtil.moveArticleToTrash(
+					themeDisplay.getScopeGroupId(), deleteArticleId);
+			}
+			else {
 				ActionUtil.deleteArticle(actionRequest, deleteArticleId);
 			}
+		}
+
+		if (moveToTrash && (deleteArticleIds.length > 0)) {
+			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(
+				"restoreEntryIds", ArrayUtil.toStringArray(deleteArticleIds));
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 		}
 	}
 
@@ -468,6 +510,21 @@ public class EditArticleAction extends PortletAction {
 
 			JournalArticleServiceUtil.removeArticleLocale(
 				groupId, articleId, version, languageId);
+		}
+	}
+
+	protected void restoreArticles(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String[] restoreEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreEntryIds"));
+
+		for (String restoreEntryId : restoreEntryIds) {
+			JournalArticleServiceUtil.restoreArticleFromTrash(
+				themeDisplay.getScopeGroupId(), restoreEntryId);
 		}
 	}
 

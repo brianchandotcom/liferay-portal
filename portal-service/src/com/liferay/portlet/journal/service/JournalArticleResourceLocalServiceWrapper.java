@@ -274,6 +274,13 @@ public class JournalArticleResourceLocalServiceWrapper
 			articleId);
 	}
 
+	public com.liferay.portlet.journal.model.JournalArticleResource fetchArticleResource(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleResourceLocalService.fetchArticleResource(groupId,
+			articleId);
+	}
+
 	public com.liferay.portlet.journal.model.JournalArticleResource getArticleResource(
 		long articleResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -37,7 +37,7 @@ public interface JournalArticleFinder {
 		java.lang.String structureId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(long companyId,
+	public int countByC_G_F_C_notS_A_V_T_D_C_T_S_T_D_S_R(long companyId,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
@@ -47,7 +47,7 @@ public interface JournalArticleFinder {
 		java.util.Date reviewDate, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(long companyId,
+	public int countByC_G_F_C_notS_A_V_T_D_C_T_S_T_D_S_R(long companyId,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
@@ -57,7 +57,7 @@ public interface JournalArticleFinder {
 		java.util.Date reviewDate, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(long companyId,
+	public int countByC_G_F_C_notS_A_V_T_D_C_T_S_T_D_S_R(long companyId,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String[] articleIds,
 		java.lang.Double version, java.lang.String[] titles,
@@ -88,7 +88,7 @@ public interface JournalArticleFinder {
 		java.lang.String structureId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(long companyId,
+	public int filterCountByC_G_F_C_notS_A_V_T_D_C_T_S_T_D_S_R(long companyId,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
@@ -98,7 +98,7 @@ public interface JournalArticleFinder {
 		java.util.Date reviewDate, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(long companyId,
+	public int filterCountByC_G_F_C_notS_A_V_T_D_C_T_S_T_D_S_R(long companyId,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
@@ -108,7 +108,7 @@ public interface JournalArticleFinder {
 		java.util.Date reviewDate, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(long companyId,
+	public int filterCountByC_G_F_C_notS_A_V_T_D_C_T_S_T_D_S_R(long companyId,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String[] articleIds,
 		java.lang.Double version, java.lang.String[] titles,
@@ -141,7 +141,7 @@ public interface JournalArticleFinder {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_notS_A_V_T_D_C_T_S_T_D_S_R(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
@@ -152,7 +152,7 @@ public interface JournalArticleFinder {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_notS_A_V_T_D_C_T_S_T_D_S_R(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
@@ -163,7 +163,7 @@ public interface JournalArticleFinder {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_notS_A_V_T_D_C_T_S_T_D_S_R(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String[] articleIds,
 		java.lang.Double version, java.lang.String[] titles,
@@ -211,7 +211,7 @@ public interface JournalArticleFinder {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_notS_A_V_T_D_C_T_S_T_D_S_R(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
@@ -222,7 +222,7 @@ public interface JournalArticleFinder {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_notS_A_V_T_D_C_T_S_T_D_S_R(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
@@ -233,7 +233,7 @@ public interface JournalArticleFinder {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_notS_A_V_T_D_C_T_S_T_D_S_R(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String[] articleIds,
 		java.lang.Double version, java.lang.String[] titles,

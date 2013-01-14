@@ -57,6 +57,7 @@ import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.service.persistence.JournalArticleActionableDynamicQuery;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -260,7 +261,13 @@ public class JournalIndexer extends BaseIndexer {
 		document.addKeyword(Field.TYPE, article.getType());
 		document.addKeyword(Field.VERSION, article.getVersion());
 
-		document.addKeyword("articleId", article.getArticleId());
+		String articleId = article.getArticleId();
+
+		if (article.isInTrash()) {
+			articleId = TrashUtil.getOriginalTitle(articleId);
+		}
+
+		document.addKeyword("articleId", articleId);
 		document.addDate("displayDate", article.getDisplayDate());
 		document.addKeyword("layoutUuid", article.getLayoutUuid());
 		document.addKeyword("structureId", article.getStructureId());
@@ -347,7 +354,7 @@ public class JournalIndexer extends BaseIndexer {
 		Document document = getDocument(article);
 
 		if (!article.isIndexable() ||
-			(!article.isApproved() &&
+			(!article.isApproved() && !article.isInTrash() &&
 			 (article.getVersion() !=
 				  JournalArticleConstants.VERSION_DEFAULT))) {
 

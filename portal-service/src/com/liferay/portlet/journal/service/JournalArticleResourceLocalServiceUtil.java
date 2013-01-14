@@ -276,6 +276,12 @@ public class JournalArticleResourceLocalServiceUtil {
 		getService().deleteArticleResource(groupId, articleId);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticleResource fetchArticleResource(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchArticleResource(groupId, articleId);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalArticleResource getArticleResource(
 		long articleResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,

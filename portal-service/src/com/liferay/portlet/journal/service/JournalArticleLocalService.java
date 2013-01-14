@@ -561,6 +561,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getArticlesCount(long groupId, long folderId, int notStatus)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getCompanyArticles(
 		long companyId, double version, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -696,9 +700,24 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		long newFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portlet.journal.model.JournalArticle moveArticleToTrash(
+		long userId, com.liferay.portlet.journal.model.JournalArticle article)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.journal.model.JournalArticle moveArticleToTrash(
+		long userId, long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.journal.model.JournalArticle removeArticleLocale(
 		long groupId, java.lang.String articleId, double version,
 		java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void restoreArticleFromTrash(long userId,
+		com.liferay.portlet.journal.model.JournalArticle article)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -871,12 +890,14 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public com.liferay.portlet.journal.model.JournalArticle updateStatus(
 		long userId, com.liferay.portlet.journal.model.JournalArticle article,
 		int status, java.lang.String articleURL,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.journal.model.JournalArticle updateStatus(
 		long userId, long classPK, int status,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -884,6 +905,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public com.liferay.portlet.journal.model.JournalArticle updateStatus(
 		long userId, long groupId, java.lang.String articleId, double version,
 		int status, java.lang.String articleURL,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

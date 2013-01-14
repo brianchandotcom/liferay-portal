@@ -70,7 +70,8 @@ public class JournalArticleWorkflowHandler extends BaseWorkflowHandler {
 			serviceContext.getScopeGroupId(), PortletKeys.JOURNAL, null);
 
 		return JournalArticleLocalServiceUtil.updateStatus(
-			userId, article, status, articleURL, serviceContext);
+			userId, article, status, articleURL, workflowContext,
+			serviceContext);
 	}
 
 	@Override

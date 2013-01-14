@@ -159,9 +159,9 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 			String key = (String)keys.nextElement();
 
 			if (_policyRules.containsKey(key) ||
-				!key.startsWith("security-manager-") ||
-				key.equals("security-manager-enabled") ||
-				key.equals("security-manager-generator-dir")) {
+				!key.startsWith(_SECURITY_MANAGER_PREFIX) ||
+				key.equals(_SECURITY_MANAGER_ENABLED) ||
+				key.equals(_SECURITY_MANAGER_GENERATOR_DIR)) {
 
 				continue;
 			}
@@ -237,11 +237,11 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 			String fileName = getServletContextName().concat(_FILE_EXTENSION);
 
 			String writePath = GetterUtil.getString(
-				getProperty("security-manager-generator-dir"));
+				getProperty(_SECURITY_MANAGER_GENERATOR_DIR));
 
 			if (Validator.isNull(writePath)) {
 				writePath = PropsValues.LIFERAY_HOME.concat(
-					File.separator).concat("pacl-policy");
+					File.separator).concat(_POLICY_DIR);
 			}
 
 			String properties = generateProperties();
@@ -259,6 +259,12 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 	private static final String _FILE_EXTENSION = ".policy";
 	private static final String _INDENT =
 		StringPool.THREE_SPACES + StringPool.SPACE;
+	private static final String _POLICY_DIR = "pacl-policy";
+	private static final String _SECURITY_MANAGER_ENABLED =
+		"security-manager-enabled";
+	private static final String _SECURITY_MANAGER_GENERATOR_DIR =
+		"security-manager-generator-dir";
+	private static final String _SECURITY_MANAGER_PREFIX = "security-manager-";
 
 	private static Log _log = LogFactoryUtil.getLog(GeneratingPACLPolicy.class);
 

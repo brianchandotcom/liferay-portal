@@ -164,6 +164,12 @@ public class DLUtil {
 		return getDL().getFileIcon(extension);
 	}
 
+	public static Set<Long> getFolderSubscriptionClassPKs(long userId)
+			throws SystemException {
+
+		return getDL().getFolderSubscriptionClassPKs(userId);
+	}
+
 	public static String getGenericName(String extension) {
 		return getDL().getGenericName(extension);
 	}

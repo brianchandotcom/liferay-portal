@@ -94,6 +94,9 @@ public interface DL {
 
 	public String getFileIcon(String extension);
 
+	public Set<Long> getFolderSubscriptionClassPKs(long userId)
+			throws SystemException;
+
 	public String getGenericName(String extension);
 
 	public String[] getMediaGalleryMimeTypes(

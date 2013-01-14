@@ -41,13 +41,7 @@ if (folder != null) {
 Set<Long> folderSubscriptionClassPKs = null;
 
 if (themeDisplay.isSignedIn()) {
-	List<Subscription> categorySubscriptions = SubscriptionLocalServiceUtil.getUserSubscriptions(user.getUserId(), Folder.class.getName());
-
-	folderSubscriptionClassPKs = new HashSet<Long>(categorySubscriptions.size());
-
-	for (Subscription subscription : categorySubscriptions) {
-		folderSubscriptionClassPKs.add(subscription.getClassPK());
-	}
+	folderSubscriptionClassPKs = DLUtil.getFolderSubscriptionClassPKs(user.getUserId());
 }
 
 int status = WorkflowConstants.STATUS_APPROVED;

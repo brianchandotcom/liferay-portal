@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InitialThreadLocal;
 import com.liferay.portal.model.Company;
@@ -75,19 +76,14 @@ public class ShardAdvice {
 	}
 
 	public String getCurrentShardName() {
-		String shardName = null;
-
 		Stack<String> stack = _getCompanyServiceStack();
 
-		if (!stack.isEmpty()) {
-			shardName = _getCompanyServiceStack().peek();
+		if (stack.isEmpty()) {
+			return PropsValues.SHARD_DEFAULT_NAME;
 		}
 
-		if (shardName == null) {
-			shardName = PropsValues.SHARD_DEFAULT_NAME;
-		}
-
-		return shardName;
+		return GetterUtil.getString(
+			stack.peek(), PropsValues.SHARD_DEFAULT_NAME);
 	}
 
 	public DataSource getDataSource() {

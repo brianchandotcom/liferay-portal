@@ -358,28 +358,36 @@ public class Creole10Parser]]></replacevalue>
 		<delete dir="${tstamp.value}" />
 	</target>
 
-	<target name="build-selenium">
-		<ant dir="../portal-web" target="build-selenium" />
-	</target>
-
-	<target name="build-selenium-actions">
-		<ant dir="../portal-web" target="build-selenium-actions" />
-	</target>
-
-	<target name="build-selenium-functions">
-		<ant dir="../portal-web" target="build-selenium-functions" />
-	</target>
-
-	<target name="build-selenium-macros">
-		<ant dir="../portal-web" target="build-selenium-macros" />
+	<target name="build-selenium-old">
+		<ant dir="../portal-web" target="build-selenium-old" />
 	</target>
 
 	<target name="build-selenium-new">
 		<ant dir="../portal-web" target="build-selenium-new" />
 	</target>
 
-	<target name="build-selenium-paths">
-		<ant dir="../portal-web" target="build-selenium-paths" />
+	<target name="build-selenium-new-actions">
+		<ant dir="../portal-web" target="build-selenium-new-actions" />
+	</target>
+
+	<target name="build-selenium-new-functions">
+		<ant dir="../portal-web" target="build-selenium-new-functions" />
+	</target>
+
+	<target name="build-selenium-new-macros">
+		<ant dir="../portal-web" target="build-selenium-new-macros" />
+	</target>
+
+	<target name="build-selenium-new-paths">
+		<ant dir="../portal-web" target="build-selenium-new-paths" />
+	</target>
+
+	<target name="build-selenium-new-test-plans">
+		<ant dir="../portal-web" target="build-selenium-new-test-plans" />
+	</target>
+
+	<target name="build-selenium-new-tests">
+		<ant dir="../portal-web" target="build-selenium-new-tests" />
 	</target>
 
 	<target name="build-selenium-server">
@@ -533,14 +541,6 @@ public class Creole10Parser]]></replacevalue>
 		<zip basedir="${tstamp.value}" destfile="${project.dir}/lib/development/selenium-server.jar.new" />
 
 		<delete dir="${tstamp.value}" />
-	</target>
-
-	<target name="build-selenium-test-plans">
-		<ant dir="../portal-web" target="build-selenium-test-plans" />
-	</target>
-
-	<target name="build-selenium-tests">
-		<ant dir="../portal-web" target="build-selenium-tests" />
 	</target>
 
 	<target name="build-service">

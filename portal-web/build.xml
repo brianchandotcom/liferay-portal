@@ -915,7 +915,7 @@
 		</if>
 	</target>
 
-	<target name="build-selenium">
+	<target name="build-selenium-old">
 		<delete dir="test-classes" />
 
 		<!--
@@ -934,45 +934,6 @@
 		</java>
 	</target>
 
-	<target name="build-selenium-actions">
-		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.ActionsXMLToJavaBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test" />
-		</java>
-	</target>
-
-	<target name="build-selenium-functions">
-		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.FunctionsXMLToJavaBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test" />
-		</java>
-	</target>
-
-	<target name="build-selenium-macros">
-		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.MacrosXMLToJavaBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test" />
-		</java>
-	</target>
-
 	<target name="build-selenium-new">
 		<java
 			classname="com.liferay.portal.tools.seleniumbuilder.SeleniumBuilder"
@@ -986,7 +947,46 @@
 		</java>
 	</target>
 
-	<target name="build-selenium-paths">
+	<target name="build-selenium-new-actions">
+		<java
+			classname="com.liferay.portal.tools.seleniumbuilder.ActionsXMLToJavaBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test" />
+		</java>
+	</target>
+
+	<target name="build-selenium-new-functions">
+		<java
+			classname="com.liferay.portal.tools.seleniumbuilder.FunctionsXMLToJavaBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test" />
+		</java>
+	</target>
+
+	<target name="build-selenium-new-macros">
+		<java
+			classname="com.liferay.portal.tools.seleniumbuilder.MacrosXMLToJavaBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg line="--basedir test" />
+		</java>
+	</target>
+
+	<target name="build-selenium-new-paths">
 		<java
 			classname="com.liferay.portal.tools.seleniumbuilder.PathsXMLToJavaBuilder"
 			classpathref="project.classpath"
@@ -999,7 +999,7 @@
 		</java>
 	</target>
 
-	<target name="build-selenium-test-plans">
+	<target name="build-selenium-new-test-plans">
 		<java
 			classname="com.liferay.portal.tools.seleniumbuilder.TestPlanBuilder"
 			classpathref="project.classpath"
@@ -1012,7 +1012,7 @@
 		</java>
 	</target>
 
-	<target name="build-selenium-tests">
+	<target name="build-selenium-new-tests">
 		<java
 			classname="com.liferay.portal.tools.seleniumbuilder.TestXMLToJavaBuilder"
 			classpathref="project.classpath"

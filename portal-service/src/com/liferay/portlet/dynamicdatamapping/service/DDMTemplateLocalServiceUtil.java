@@ -367,6 +367,15 @@ public class DDMTemplateLocalServiceUtil {
 		return getService().fetchTemplate(groupId, templateKey);
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(
+		long groupId, java.lang.String templateKey,
+		boolean includeGlobalTemplates)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchTemplate(groupId, templateKey, includeGlobalTemplates);
+	}
+
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
 		long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException,

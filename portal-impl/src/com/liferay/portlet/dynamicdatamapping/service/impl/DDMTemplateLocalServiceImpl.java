@@ -284,6 +284,28 @@ public class DDMTemplateLocalServiceImpl
 		return ddmTemplatePersistence.fetchByG_T(groupId, templateKey);
 	}
 
+	public DDMTemplate fetchTemplate(
+			long groupId, String templateKey, boolean includeGlobalTemplates)
+		throws PortalException, SystemException {
+
+		templateKey = templateKey.trim().toUpperCase();
+
+		DDMTemplate template = ddmTemplatePersistence.fetchByG_T(
+			groupId, templateKey);
+
+		if (!includeGlobalTemplates || (template != null)) {
+			return template;
+		}
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			group.getCompanyId());
+
+		return ddmTemplatePersistence.fetchByG_T(
+			companyGroup.getGroupId(), templateKey);
+	}
+
 	public DDMTemplate getTemplate(long templateId)
 		throws PortalException, SystemException {
 

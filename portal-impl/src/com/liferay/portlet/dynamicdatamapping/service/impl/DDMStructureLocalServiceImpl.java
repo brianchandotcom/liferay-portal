@@ -289,6 +289,28 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.fetchByG_S(groupId, structureKey);
 	}
 
+	public DDMStructure fetchStructure(
+			long groupId, String structureKey, boolean includeGlobalStructures)
+		throws PortalException, SystemException {
+
+		structureKey = structureKey.trim().toUpperCase();
+
+		DDMStructure structure = ddmStructurePersistence.fetchByG_S(
+			groupId, structureKey);
+
+		if (!includeGlobalStructures || (structure != null)) {
+			return structure;
+		}
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			group.getCompanyId());
+
+		return ddmStructurePersistence.fetchByG_S(
+			companyGroup.getGroupId(), structureKey);
+	}
+
 	/**
 	 * @deprecated {@link #getClassStructures(long, long)}
 	 */

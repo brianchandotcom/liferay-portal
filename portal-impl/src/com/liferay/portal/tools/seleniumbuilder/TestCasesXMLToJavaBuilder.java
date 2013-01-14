@@ -28,15 +28,15 @@ import java.util.TreeSet;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TestXMLToJavaBuilder extends SeleniumBuilder {
+public class TestCasesXMLToJavaBuilder extends SeleniumBuilder {
 
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();
 
-		new TestXMLToJavaBuilder(args);
+		new TestCasesXMLToJavaBuilder(args);
 	}
 
-	public TestXMLToJavaBuilder(String[] args) throws Exception {
+	public TestCasesXMLToJavaBuilder(String[] args) throws Exception {
 		super(args);
 
 		_basedir = getBasedir();
@@ -47,19 +47,19 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		_validCommands.add("macro");
 		_validCommands.add("window");
 
-		Set<String> fileNameSetTests = getFileNameSetTests();
+		Set<String> fileNameSetTestCases = getFileNameSetTestCases();
 
-		for (String fileName : fileNameSetTests) {
+		for (String fileName : fileNameSetTestCases) {
 			if (fileName.length() > 161) {
 				System.out.println(
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
-			generateTest(fileName);
+			generateTestCase(fileName);
 		}
 	}
 
-	protected void generateTest(String fileName) throws Exception {
+	protected void generateTestCase(String fileName) throws Exception {
 		if (!FileUtil.exists(_basedir + "/" + fileName)) {
 			return;
 		}
@@ -67,13 +67,14 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
 
-		String testFilePath = fileName.substring(0, x);
-		String testSimpleClassName = fileName.substring(x + 1, y) + "Test";
+		String testCaseFilePath = fileName.substring(0, x);
+		String testCaseSimpleClassName =
+			fileName.substring(x + 1, y) + "TestCase";
 
-		String testFileName =
-			testFilePath + "/" + testSimpleClassName + ".java";
-		String testPackagePath = StringUtil.replace(
-			testFilePath, StringPool.SLASH, StringPool.PERIOD);
+		String testCaseFileName =
+			testCaseFilePath + "/" + testCaseSimpleClassName + ".java";
+		String testCasePackagePath = StringUtil.replace(
+			testCaseFilePath, StringPool.SLASH, StringPool.PERIOD);
 
 		Element rootElement = getRootElement(fileName);
 		Element setupBlock = rootElement.element("setup");
@@ -85,7 +86,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		StringBundler sb = new StringBundler();
 
 		sb.append("package ");
-		sb.append(testPackagePath);
+		sb.append(testCasePackagePath);
 		sb.append(";\n");
 
 		sb.append("import com.liferay.portalweb.portal.BaseTestCase;\n");
@@ -96,7 +97,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 		sb.append(processBlocksImports(rootElement));
 
 		sb.append("public class ");
-		sb.append(testSimpleClassName);
+		sb.append(testCaseSimpleClassName);
 		sb.append(" extends BaseTestCase {");
 
 		sb.append(_processSetupBlock(setupBlock));
@@ -105,7 +106,7 @@ public class TestXMLToJavaBuilder extends SeleniumBuilder {
 
 		sb.append("}");
 
-		writeFile(testFileName, sb.toString(), true);
+		writeFile(testCaseFileName, sb.toString(), true);
 	}
 
 	protected String processBlockObjectDeclaractions(Element element)

@@ -80,12 +80,12 @@ public class TestPlanBuilder extends SeleniumBuilder {
 		sb.append("public static Test suite() {\n");
 		sb.append("TestSuite testSuite = new TestSuite();\n\n");
 
-		Set<String> testSimpleClassNameSet = _getTestSimpleClassNames(
+		Set<String> testCaseSimpleClassNameSet = _getTestSimpleClassNames(
 			directoryName);
 
-		for (String testSimpleClassName : testSimpleClassNameSet) {
+		for (String testCaseSimpleClassName : testCaseSimpleClassNameSet) {
 			sb.append("testSuite.addTestSuite(");
-			sb.append(testSimpleClassName);
+			sb.append(testCaseSimpleClassName);
 			sb.append(".class);");
 		}
 
@@ -100,9 +100,9 @@ public class TestPlanBuilder extends SeleniumBuilder {
 	private Set<String> _getDirectoryNames() throws Exception {
 		Set<String> treeSet = new TreeSet<String>();
 
-		Set<String> fileNameSetTests = getFileNameSetTests();
+		Set<String> fileNameSetTestCases = getFileNameSetTestCases();
 
-		for (String fileName : fileNameSetTests) {
+		for (String fileName : fileNameSetTestCases) {
 			int x = fileName.lastIndexOf("/");
 
 			treeSet.add(fileName.substring(0, x));
@@ -116,17 +116,17 @@ public class TestPlanBuilder extends SeleniumBuilder {
 
 		Set<String> treeSet = new TreeSet<String>();
 
-		Set<String> fileNameSetTests = getFileNameSetTests();
+		Set<String> fileNameSetTestCases = getFileNameSetTestCases();
 
-		for (String fileName : fileNameSetTests) {
+		for (String fileName : fileNameSetTestCases) {
 			if (fileName.startsWith(directoryName)) {
 				int x = fileName.lastIndexOf(StringPool.SLASH);
 				int y = fileName.indexOf(CharPool.PERIOD);
 
-				String testSimpleClassName =
-					fileName.substring(x + 1, y) + "Test";
+				String testCaseSimpleClassName =
+					fileName.substring(x + 1, y) + "TestCase";
 
-				treeSet.add(testSimpleClassName);
+				treeSet.add(testCaseSimpleClassName);
 			}
 		}
 

@@ -999,9 +999,9 @@
 		</java>
 	</target>
 
-	<target name="build-selenium-new-test-plans">
+	<target name="build-selenium-new-test-cases">
 		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.TestPlanBuilder"
+			classname="com.liferay.portal.tools.seleniumbuilder.TestCasesXMLToJavaBuilder"
 			classpathref="project.classpath"
 			fork="true"
 			maxmemory="1024m"
@@ -1012,9 +1012,9 @@
 		</java>
 	</target>
 
-	<target name="build-selenium-new-tests">
+	<target name="build-selenium-new-test-plans">
 		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.TestXMLToJavaBuilder"
+			classname="com.liferay.portal.tools.seleniumbuilder.TestPlanBuilder"
 			classpathref="project.classpath"
 			fork="true"
 			maxmemory="1024m"

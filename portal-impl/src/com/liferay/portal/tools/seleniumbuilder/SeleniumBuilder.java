@@ -52,7 +52,7 @@ public class SeleniumBuilder {
 		new ActionsXMLToJavaBuilder(args);
 		new MacrosXMLToJavaBuilder(args);
 		new PathsXMLToJavaBuilder(args);
-		new TestXMLToJavaBuilder(args);
+		new TestCasesXMLToJavaBuilder(args);
 		new TestPlanBuilder(args);
 		new FunctionsXMLToJavaBuilder(args);
 	}
@@ -73,7 +73,7 @@ public class SeleniumBuilder {
 		_fileNameSetFunctions = _initFileNameSetFunctions();
 		_fileNameSetMacros = _initFileNameSetMacros();
 		_fileNameSetPaths = _initFileNameSetPaths();
-		_fileNameSetTests = _initFileNameSetTests();
+		_fileNameSetTestCases = _initFileNameSetTestCases();
 
 		_classNameSetAvailable = _initClassNameSetAvailable();
 
@@ -110,8 +110,8 @@ public class SeleniumBuilder {
 		return _fileNameSetPaths;
 	}
 
-	public Set<String> getFileNameSetTests() throws Exception {
-		return _fileNameSetTests;
+	public Set<String> getFileNameSetTestCases() throws Exception {
+		return _fileNameSetTestCases;
 	}
 
 	public Map<String, List<String>> getFunctionMethodParamListMap()
@@ -205,7 +205,7 @@ public class SeleniumBuilder {
 		String objectName = "";
 		String objectFileName = fileName.substring(x + 1, y);
 
-		if (fileName.endsWith(".test")) {
+		if (fileName.endsWith(".case")) {
 			objectName = rootElement.attributeValue("name");
 		}
 		else {
@@ -354,7 +354,7 @@ public class SeleniumBuilder {
 		String rootElementName = rootElement.getName();
 		String objectName = "";
 
-		if (rootElementName.equals("test")) {
+		if (rootElementName.equals("testcase")) {
 			objectName = rootElement.attributeValue("name");
 		}
 		else {
@@ -418,9 +418,9 @@ public class SeleniumBuilder {
 		directoryScanner.setBasedir(_basedir);
 		directoryScanner.setIncludes(
 			new String[] {
-				"**\\portalweb\\**\\*.actions",
+				"**\\portalweb\\**\\*.actions", "**\\portalweb\\**\\*.case",
 				"**\\portalweb\\**\\*.functions", "**\\portalweb\\**\\*.macros",
-				"**\\portalweb\\**\\*.paths", "**\\portalweb\\**\\*.test"
+				"**\\portalweb\\**\\*.paths"
 			});
 
 		directoryScanner.scan();
@@ -452,8 +452,8 @@ public class SeleniumBuilder {
 		return _initFileNameSetType(".paths");
 	}
 
-	private Set<String> _initFileNameSetTests() throws Exception {
-		return _initFileNameSetType(".test");
+	private Set<String> _initFileNameSetTestCases() throws Exception {
+		return _initFileNameSetType(".case");
 	}
 
 	private Set<String> _initFileNameSetType(String suffix) throws Exception {
@@ -997,7 +997,7 @@ public class SeleniumBuilder {
 	private Set<String> _fileNameSetFunctions;
 	private Set<String> _fileNameSetMacros;
 	private Set<String> _fileNameSetPaths;
-	private Set<String> _fileNameSetTests;
+	private Set<String> _fileNameSetTestCases;
 	private Map<String, List<String>> _functionMethodParamListMap;
 	private Map<String, String> _functionMethodReturnTypeMap;
 	private Map<String, Integer> _seleniumMethodParamMap;

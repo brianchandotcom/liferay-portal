@@ -52,6 +52,8 @@ public class I18nServlet extends HttpServlet {
 	}
 
 	public static void setLanguageIds(Element root) {
+		_languageIds = new HashSet<String>();
+
 		List<Element> rootElements = root.elements("servlet-mapping");
 
 		for (Element element : rootElements) {
@@ -155,6 +157,6 @@ public class I18nServlet extends HttpServlet {
 
 	private static Log _log = LogFactoryUtil.getLog(I18nServlet.class);
 
-	private static Set<String> _languageIds = new HashSet<String>();
+	private static Set<String> _languageIds;
 
 }

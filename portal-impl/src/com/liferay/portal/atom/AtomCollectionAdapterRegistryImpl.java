@@ -17,6 +17,8 @@ package com.liferay.portal.atom;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapterRegistry;
 import com.liferay.portal.kernel.atom.AtomException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -45,9 +47,13 @@ public class AtomCollectionAdapterRegistryImpl
 		if (_atomCollectionAdapters.containsKey(
 				atomCollectionAdapter.getCollectionName())) {
 
-			throw new AtomException(
-				"Duplicate collection name " +
-					atomCollectionAdapter.getCollectionName());
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Duplicate collection name " +
+						atomCollectionAdapter.getCollectionName());
+			}
+
+			return;
 		}
 
 		_atomCollectionAdapters.put(
@@ -58,6 +64,9 @@ public class AtomCollectionAdapterRegistryImpl
 		_atomCollectionAdapters.remove(
 			atomCollectionAdapter.getCollectionName());
 	}
+
+	public static final Log _log = LogFactoryUtil.getLog(
+		AtomCollectionAdapterRegistryImpl.class);
 
 	private Map<String, AtomCollectionAdapter<?>> _atomCollectionAdapters =
 		new ConcurrentHashMap<String, AtomCollectionAdapter<?>>();

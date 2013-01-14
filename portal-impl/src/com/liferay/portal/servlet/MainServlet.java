@@ -100,6 +100,7 @@ import com.liferay.util.servlet.EncryptedServletRequest;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -247,10 +248,10 @@ public class MainServlet extends ActionServlet {
 			_log.debug("Initialize portlets");
 		}
 
-		List<Portlet> portlets = null;
+		List<Portlet> portlets = new ArrayList<Portlet>();
 
 		try {
-			portlets = initPortlets(pluginPackage);
+			portlets.addAll(initPortlets(pluginPackage));
 		}
 		catch (Exception e) {
 			_log.error(e, e);

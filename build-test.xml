@@ -3277,17 +3277,22 @@ file.
 			</then>
 			<else>
 				<if>
-					<or>
+					<and>
 						<not>
-							<available file="sql/legacy" />
+							<isset property="skip.rebuild-legacy" />
 						</not>
-						<not>
-							<uptodate
-								srcfile="${sql.legacy.zip}"
-								targetfile="sql/legacy"
-							/>
-						</not>
-					</or>
+						<or>
+							<not>
+								<available file="sql/legacy" />
+							</not>
+							<not>
+								<uptodate
+									srcfile="${sql.legacy.zip}"
+									targetfile="sql/legacy"
+								/>
+							</not>
+						</or>
+					</and>
 					<then>
 						<delete dir="sql/legacy" failonerror="false" />
 

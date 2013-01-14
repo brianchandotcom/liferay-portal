@@ -380,6 +380,12 @@ public class DDMStructureLocalServiceUtil {
 		return getService().fetchStructure(groupId, structureKey);
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchStructure(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchStructure(uuid, groupId);
+	}
+
 	/**
 	* @deprecated {@link #getClassStructures(long, long)}
 	*/

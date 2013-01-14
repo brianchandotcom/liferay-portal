@@ -852,6 +852,12 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	public JournalArticle fetchJournalArticle(String uuid, long groupId)
+		throws SystemException {
+
+		return journalArticlePersistence.fetchByUUID_G(uuid, groupId);
+	}
+
 	public JournalArticle getArticle(long id)
 		throws PortalException, SystemException {
 

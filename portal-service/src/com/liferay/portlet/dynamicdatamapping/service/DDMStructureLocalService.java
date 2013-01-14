@@ -321,6 +321,11 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		long groupId, java.lang.String structureKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchStructure(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* @deprecated {@link #getClassStructures(long, long)}
 	*/

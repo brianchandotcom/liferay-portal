@@ -284,6 +284,12 @@ public class DDMTemplateLocalServiceImpl
 		return ddmTemplatePersistence.fetchByG_T(groupId, templateKey);
 	}
 
+	public DDMTemplate fetchTemplate(String uuid, long groupId)
+		throws SystemException {
+
+		return ddmTemplatePersistence.fetchByUUID_G(uuid, groupId);
+	}
+
 	public DDMTemplate getTemplate(long templateId)
 		throws PortalException, SystemException {
 

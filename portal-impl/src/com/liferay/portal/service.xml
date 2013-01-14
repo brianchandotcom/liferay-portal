@@ -1123,6 +1123,7 @@
 		<column name="minNumbers" type="int" />
 		<column name="minSymbols" type="int" />
 		<column name="minUpperCase" type="int" />
+		<column name="regex" type="String" />
 		<column name="history" type="boolean" />
 		<column name="historyCount" type="int" />
 		<column name="expireable" type="boolean" />

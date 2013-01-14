@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Randomizer;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.PasswordTrackerLocalServiceUtil;
@@ -109,6 +110,13 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 
 				throw new UserPasswordException(
 					UserPasswordException.PASSWORD_TOO_TRIVIAL);
+			}
+
+			if (Validator.isNotNull(passwordPolicy.getRegex()) &&
+				!password1.matches(passwordPolicy.getRegex())) {
+
+				throw new UserPasswordException(
+					UserPasswordException.PASSWORD_INVALID);
 			}
 		}
 

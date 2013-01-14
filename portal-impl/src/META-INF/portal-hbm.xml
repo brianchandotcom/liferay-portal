@@ -618,6 +618,7 @@
 		<property name="minNumbers" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="minSymbols" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="minUpperCase" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="regex" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="history" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="historyCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="expireable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />

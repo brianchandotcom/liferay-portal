@@ -664,6 +664,7 @@
 			<basic name="minNumbers" />
 			<basic name="minSymbols" />
 			<basic name="minUpperCase" />
+			<basic name="regex" />
 			<basic name="history" />
 			<basic name="historyCount" />
 			<basic name="expireable" />

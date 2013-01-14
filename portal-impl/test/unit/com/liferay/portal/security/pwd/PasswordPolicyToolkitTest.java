@@ -38,6 +38,7 @@ public class PasswordPolicyToolkitTest extends TestCase {
 		_passwordPolicy.setMinUpperCase(2);
 		_passwordPolicy.setMinNumbers(1);
 		_passwordPolicy.setMinSymbols(1);
+		_passwordPolicy.setRegex(".{5,}");
 	}
 
 	public void testGeneratePassword() {
@@ -74,6 +75,10 @@ public class PasswordPolicyToolkitTest extends TestCase {
 
 	public void testValidateMinUpperChars() {
 		assertEquals(false, validate("xh9fxM@w"));
+	}
+
+	public void testValidateRegex() {
+		assertEquals(false, validate("xH9fxM@"));
 	}
 
 	public void testValidateValid() {

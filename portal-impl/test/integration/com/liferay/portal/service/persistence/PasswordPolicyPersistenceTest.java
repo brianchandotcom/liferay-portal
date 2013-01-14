@@ -147,6 +147,8 @@ public class PasswordPolicyPersistenceTest {
 
 		newPasswordPolicy.setMinUpperCase(ServiceTestUtil.nextInt());
 
+		newPasswordPolicy.setRegex(ServiceTestUtil.randomString());
+
 		newPasswordPolicy.setHistory(ServiceTestUtil.randomBoolean());
 
 		newPasswordPolicy.setHistoryCount(ServiceTestUtil.nextInt());
@@ -217,6 +219,8 @@ public class PasswordPolicyPersistenceTest {
 			newPasswordPolicy.getMinSymbols());
 		Assert.assertEquals(existingPasswordPolicy.getMinUpperCase(),
 			newPasswordPolicy.getMinUpperCase());
+		Assert.assertEquals(existingPasswordPolicy.getRegex(),
+			newPasswordPolicy.getRegex());
 		Assert.assertEquals(existingPasswordPolicy.getHistory(),
 			newPasswordPolicy.getHistory());
 		Assert.assertEquals(existingPasswordPolicy.getHistoryCount(),
@@ -424,6 +428,8 @@ public class PasswordPolicyPersistenceTest {
 		passwordPolicy.setMinSymbols(ServiceTestUtil.nextInt());
 
 		passwordPolicy.setMinUpperCase(ServiceTestUtil.nextInt());
+
+		passwordPolicy.setRegex(ServiceTestUtil.randomString());
 
 		passwordPolicy.setHistory(ServiceTestUtil.randomBoolean());
 

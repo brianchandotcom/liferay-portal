@@ -27,6 +27,9 @@ import com.liferay.portal.service.permission.PortalPermissionUtil;
  */
 public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 
+	/**
+	 * @deprecated
+	 */
 	public PasswordPolicy addPasswordPolicy(
 			String name, String description, boolean changeable,
 			boolean changeRequired, long minAge, boolean checkSyntax,
@@ -50,6 +53,29 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 			resetTicketMaxAge);
 	}
 
+	public PasswordPolicy addPasswordPolicy(
+			String name, String description, boolean changeable,
+			boolean changeRequired, long minAge, boolean checkSyntax,
+			boolean allowDictionaryWords, int minAlphanumeric, int minLength,
+			int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
+			String regex, boolean history, int historyCount, boolean expireable,
+			long maxAge, long warningTime, int graceLimit, boolean lockout,
+			int maxFailure, long lockoutDuration, long resetFailureCount,
+			long resetTicketMaxAge)
+		throws PortalException, SystemException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(), ActionKeys.ADD_PASSWORD_POLICY);
+
+		return passwordPolicyLocalService.addPasswordPolicy(
+			getUserId(), false, name, description, changeable, changeRequired,
+			minAge, checkSyntax, allowDictionaryWords, minAlphanumeric,
+			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase,
+			regex, history, historyCount, expireable, maxAge, warningTime,
+			graceLimit, lockout, maxFailure, lockoutDuration, resetFailureCount,
+			resetTicketMaxAge);
+	}
+
 	public void deletePasswordPolicy(long passwordPolicyId)
 		throws PortalException, SystemException {
 
@@ -59,6 +85,9 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 		passwordPolicyLocalService.deletePasswordPolicy(passwordPolicyId);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public PasswordPolicy updatePasswordPolicy(
 			long passwordPolicyId, String name, String description,
 			boolean changeable, boolean changeRequired, long minAge,
@@ -67,6 +96,30 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 			int minNumbers, int minSymbols, int minUpperCase, boolean history,
 			int historyCount, boolean expireable, long maxAge, long warningTime,
 			int graceLimit, boolean lockout, int maxFailure,
+			long lockoutDuration, long resetFailureCount,
+			long resetTicketMaxAge)
+			throws PortalException, SystemException {
+
+		PasswordPolicyPermissionUtil.check(
+			getPermissionChecker(), passwordPolicyId, ActionKeys.UPDATE);
+
+		return passwordPolicyLocalService.updatePasswordPolicy(
+			passwordPolicyId, name, description, changeable, changeRequired,
+			minAge, checkSyntax, allowDictionaryWords, minAlphanumeric,
+			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase,
+			history, historyCount, expireable, maxAge, warningTime, graceLimit,
+			lockout, maxFailure, lockoutDuration, resetFailureCount,
+			resetTicketMaxAge);
+	}
+
+	public PasswordPolicy updatePasswordPolicy(
+			long passwordPolicyId, String name, String description,
+			boolean changeable, boolean changeRequired, long minAge,
+			boolean checkSyntax, boolean allowDictionaryWords,
+			int minAlphanumeric, int minLength, int minLowerCase,
+			int minNumbers, int minSymbols, int minUpperCase, String regex,
+			boolean history, int historyCount, boolean expireable, long maxAge,
+			long warningTime, int graceLimit, boolean lockout, int maxFailure,
 			long lockoutDuration, long resetFailureCount,
 			long resetTicketMaxAge)
 		throws PortalException, SystemException {
@@ -78,8 +131,8 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 			passwordPolicyId, name, description, changeable, changeRequired,
 			minAge, checkSyntax, allowDictionaryWords, minAlphanumeric,
 			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase,
-			history, historyCount, expireable, maxAge, warningTime, graceLimit,
-			lockout, maxFailure, lockoutDuration, resetFailureCount,
+			regex, history, historyCount, expireable, maxAge, warningTime,
+			graceLimit, lockout, maxFailure, lockoutDuration, resetFailureCount,
 			resetTicketMaxAge);
 	}
 

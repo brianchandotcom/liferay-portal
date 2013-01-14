@@ -115,6 +115,8 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 					<aui:input helpMessage="minimum-symbols-help" label="minimum-symbols" name="minSymbols" />
 
 					<aui:input helpMessage="minimum-upper-case-help" label="minimum-upper-case" name="minUpperCase" />
+
+					<aui:input helpMessage="regular-expression-help" label="regular-expression" name="regex" />
 				</div>
 			</aui:fieldset>
 		</liferay-ui:panel>

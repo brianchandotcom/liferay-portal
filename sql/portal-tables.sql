@@ -1368,6 +1368,7 @@ create table PasswordPolicy (
 	minNumbers INTEGER,
 	minSymbols INTEGER,
 	minUpperCase INTEGER,
+	regex VARCHAR(75) null,
 	history BOOLEAN,
 	historyCount INTEGER,
 	expireable BOOLEAN,

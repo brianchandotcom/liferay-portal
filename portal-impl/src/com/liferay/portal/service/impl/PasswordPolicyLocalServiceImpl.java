@@ -41,6 +41,9 @@ import java.util.List;
 public class PasswordPolicyLocalServiceImpl
 	extends PasswordPolicyLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated
+	 */
 	public PasswordPolicy addPasswordPolicy(
 			long userId, boolean defaultPolicy, String name, String description,
 			boolean changeable, boolean changeRequired, long minAge,
@@ -49,6 +52,27 @@ public class PasswordPolicyLocalServiceImpl
 			int minNumbers, int minSymbols, int minUpperCase, boolean history,
 			int historyCount, boolean expireable, long maxAge, long warningTime,
 			int graceLimit, boolean lockout, int maxFailure,
+			long lockoutDuration, long resetFailureCount,
+			long resetTicketMaxAge)
+		throws PortalException, SystemException {
+
+		return addPasswordPolicy(
+			userId, defaultPolicy, name, description, changeable,
+			changeRequired, minAge, checkSyntax, allowDictionaryWords,
+			minAlphanumeric, minLength, minLowerCase, minNumbers, minSymbols,
+			minUpperCase, null, history, historyCount, expireable, maxAge,
+			warningTime, graceLimit, lockout, maxFailure, lockoutDuration,
+			resetFailureCount, resetTicketMaxAge);
+	}
+
+	public PasswordPolicy addPasswordPolicy(
+			long userId, boolean defaultPolicy, String name, String description,
+			boolean changeable, boolean changeRequired, long minAge,
+			boolean checkSyntax, boolean allowDictionaryWords,
+			int minAlphanumeric, int minLength, int minLowerCase,
+			int minNumbers, int minSymbols, int minUpperCase, String regex,
+			boolean history, int historyCount, boolean expireable, long maxAge,
+			long warningTime, int graceLimit, boolean lockout, int maxFailure,
 			long lockoutDuration, long resetFailureCount,
 			long resetTicketMaxAge)
 		throws PortalException, SystemException {
@@ -84,6 +108,7 @@ public class PasswordPolicyLocalServiceImpl
 		passwordPolicy.setMinNumbers(minNumbers);
 		passwordPolicy.setMinSymbols(minSymbols);
 		passwordPolicy.setMinUpperCase(minUpperCase);
+		passwordPolicy.setRegex(regex);
 		passwordPolicy.setHistory(history);
 		passwordPolicy.setHistoryCount(historyCount);
 		passwordPolicy.setExpireable(expireable);
@@ -137,6 +162,7 @@ public class PasswordPolicyLocalServiceImpl
 				PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_NUMBERS,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_SYMBOLS,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_UPPERCASE,
+				PropsValues.PASSWORDS_DEFAULT_POLICY_REGEX,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_HISTORY,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_HISTORY_COUNT,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_EXPIREABLE,
@@ -291,6 +317,9 @@ public class PasswordPolicyLocalServiceImpl
 		return passwordPolicyFinder.countByC_N(companyId, name);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public PasswordPolicy updatePasswordPolicy(
 			long passwordPolicyId, String name, String description,
 			boolean changeable, boolean changeRequired, long minAge,
@@ -299,6 +328,27 @@ public class PasswordPolicyLocalServiceImpl
 			int minNumbers, int minSymbols, int minUpperCase, boolean history,
 			int historyCount, boolean expireable, long maxAge, long warningTime,
 			int graceLimit, boolean lockout, int maxFailure,
+			long lockoutDuration, long resetFailureCount,
+			long resetTicketMaxAge)
+		throws PortalException, SystemException {
+
+		return updatePasswordPolicy(
+			passwordPolicyId, name, description, changeable, changeRequired,
+			minAge, checkSyntax, allowDictionaryWords, minAlphanumeric,
+			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase, null,
+			history, historyCount, expireable, maxAge, warningTime, graceLimit,
+			lockout, maxFailure, lockoutDuration, resetFailureCount,
+			resetTicketMaxAge);
+	}
+
+	public PasswordPolicy updatePasswordPolicy(
+			long passwordPolicyId, String name, String description,
+			boolean changeable, boolean changeRequired, long minAge,
+			boolean checkSyntax, boolean allowDictionaryWords,
+			int minAlphanumeric, int minLength, int minLowerCase,
+			int minNumbers, int minSymbols, int minUpperCase, String regex,
+			boolean history, int historyCount, boolean expireable, long maxAge,
+			long warningTime, int graceLimit, boolean lockout, int maxFailure,
 			long lockoutDuration, long resetFailureCount,
 			long resetTicketMaxAge)
 		throws PortalException, SystemException {
@@ -327,6 +377,7 @@ public class PasswordPolicyLocalServiceImpl
 		passwordPolicy.setMinNumbers(minNumbers);
 		passwordPolicy.setMinSymbols(minSymbols);
 		passwordPolicy.setMinUpperCase(minUpperCase);
+		passwordPolicy.setRegex(regex);
 		passwordPolicy.setHistory(history);
 		passwordPolicy.setHistoryCount(historyCount);
 		passwordPolicy.setExpireable(expireable);

@@ -59,6 +59,9 @@ public interface PasswordPolicyService extends BaseService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
+	/**
+	* @deprecated
+	*/
 	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
 		java.lang.String name, java.lang.String description,
 		boolean changeable, boolean changeRequired, long minAge,
@@ -71,10 +74,25 @@ public interface PasswordPolicyService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
+		java.lang.String name, java.lang.String description,
+		boolean changeable, boolean changeRequired, long minAge,
+		boolean checkSyntax, boolean allowDictionaryWords, int minAlphanumeric,
+		int minLength, int minLowerCase, int minNumbers, int minSymbols,
+		int minUpperCase, java.lang.String regex, boolean history,
+		int historyCount, boolean expireable, long maxAge, long warningTime,
+		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
+		long resetFailureCount, long resetTicketMaxAge)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void deletePasswordPolicy(long passwordPolicyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated
+	*/
 	public com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
 		long passwordPolicyId, java.lang.String name,
 		java.lang.String description, boolean changeable,
@@ -84,6 +102,19 @@ public interface PasswordPolicyService extends BaseService {
 		boolean history, int historyCount, boolean expireable, long maxAge,
 		long warningTime, int graceLimit, boolean lockout, int maxFailure,
 		long lockoutDuration, long resetFailureCount, long resetTicketMaxAge)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
+		long passwordPolicyId, java.lang.String name,
+		java.lang.String description, boolean changeable,
+		boolean changeRequired, long minAge, boolean checkSyntax,
+		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
+		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
+		java.lang.String regex, boolean history, int historyCount,
+		boolean expireable, long maxAge, long warningTime, int graceLimit,
+		boolean lockout, int maxFailure, long lockoutDuration,
+		long resetFailureCount, long resetTicketMaxAge)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

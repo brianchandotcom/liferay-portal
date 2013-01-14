@@ -248,6 +248,9 @@ public class PasswordPolicyLocalServiceWrapper
 		_passwordPolicyLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* @deprecated
+	*/
 	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
 		long userId, boolean defaultPolicy, java.lang.String name,
 		java.lang.String description, boolean changeable,
@@ -266,6 +269,27 @@ public class PasswordPolicyLocalServiceWrapper
 			history, historyCount, expireable, maxAge, warningTime, graceLimit,
 			lockout, maxFailure, lockoutDuration, resetFailureCount,
 			resetTicketMaxAge);
+	}
+
+	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
+		long userId, boolean defaultPolicy, java.lang.String name,
+		java.lang.String description, boolean changeable,
+		boolean changeRequired, long minAge, boolean checkSyntax,
+		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
+		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
+		java.lang.String regex, boolean history, int historyCount,
+		boolean expireable, long maxAge, long warningTime, int graceLimit,
+		boolean lockout, int maxFailure, long lockoutDuration,
+		long resetFailureCount, long resetTicketMaxAge)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _passwordPolicyLocalService.addPasswordPolicy(userId,
+			defaultPolicy, name, description, changeable, changeRequired,
+			minAge, checkSyntax, allowDictionaryWords, minAlphanumeric,
+			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase,
+			regex, history, historyCount, expireable, maxAge, warningTime,
+			graceLimit, lockout, maxFailure, lockoutDuration,
+			resetFailureCount, resetTicketMaxAge);
 	}
 
 	public void checkDefaultPasswordPolicy(long companyId)
@@ -320,6 +344,9 @@ public class PasswordPolicyLocalServiceWrapper
 		return _passwordPolicyLocalService.searchCount(companyId, name);
 	}
 
+	/**
+	* @deprecated
+	*/
 	public com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
 		long passwordPolicyId, java.lang.String name,
 		java.lang.String description, boolean changeable,
@@ -335,6 +362,26 @@ public class PasswordPolicyLocalServiceWrapper
 			name, description, changeable, changeRequired, minAge, checkSyntax,
 			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
 			minNumbers, minSymbols, minUpperCase, history, historyCount,
+			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
+			lockoutDuration, resetFailureCount, resetTicketMaxAge);
+	}
+
+	public com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
+		long passwordPolicyId, java.lang.String name,
+		java.lang.String description, boolean changeable,
+		boolean changeRequired, long minAge, boolean checkSyntax,
+		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
+		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
+		java.lang.String regex, boolean history, int historyCount,
+		boolean expireable, long maxAge, long warningTime, int graceLimit,
+		boolean lockout, int maxFailure, long lockoutDuration,
+		long resetFailureCount, long resetTicketMaxAge)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _passwordPolicyLocalService.updatePasswordPolicy(passwordPolicyId,
+			name, description, changeable, changeRequired, minAge, checkSyntax,
+			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
+			minNumbers, minSymbols, minUpperCase, regex, history, historyCount,
 			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
 			lockoutDuration, resetFailureCount, resetTicketMaxAge);
 	}

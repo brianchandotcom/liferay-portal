@@ -84,6 +84,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 			{ "minNumbers", Types.INTEGER },
 			{ "minSymbols", Types.INTEGER },
 			{ "minUpperCase", Types.INTEGER },
+			{ "regex", Types.VARCHAR },
 			{ "history", Types.BOOLEAN },
 			{ "historyCount", Types.INTEGER },
 			{ "expireable", Types.BOOLEAN },
@@ -97,7 +98,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 			{ "resetFailureCount", Types.BIGINT },
 			{ "resetTicketMaxAge", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PasswordPolicy (passwordPolicyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultPolicy BOOLEAN,name VARCHAR(75) null,description STRING null,changeable BOOLEAN,changeRequired BOOLEAN,minAge LONG,checkSyntax BOOLEAN,allowDictionaryWords BOOLEAN,minAlphanumeric INTEGER,minLength INTEGER,minLowerCase INTEGER,minNumbers INTEGER,minSymbols INTEGER,minUpperCase INTEGER,history BOOLEAN,historyCount INTEGER,expireable BOOLEAN,maxAge LONG,warningTime LONG,graceLimit INTEGER,lockout BOOLEAN,maxFailure INTEGER,lockoutDuration LONG,requireUnlock BOOLEAN,resetFailureCount LONG,resetTicketMaxAge LONG)";
+	public static final String TABLE_SQL_CREATE = "create table PasswordPolicy (passwordPolicyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultPolicy BOOLEAN,name VARCHAR(75) null,description STRING null,changeable BOOLEAN,changeRequired BOOLEAN,minAge LONG,checkSyntax BOOLEAN,allowDictionaryWords BOOLEAN,minAlphanumeric INTEGER,minLength INTEGER,minLowerCase INTEGER,minNumbers INTEGER,minSymbols INTEGER,minUpperCase INTEGER,regex VARCHAR(75) null,history BOOLEAN,historyCount INTEGER,expireable BOOLEAN,maxAge LONG,warningTime LONG,graceLimit INTEGER,lockout BOOLEAN,maxFailure INTEGER,lockoutDuration LONG,requireUnlock BOOLEAN,resetFailureCount LONG,resetTicketMaxAge LONG)";
 	public static final String TABLE_SQL_DROP = "drop table PasswordPolicy";
 	public static final String ORDER_BY_JPQL = " ORDER BY passwordPolicy.passwordPolicyId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PasswordPolicy.passwordPolicyId ASC";
@@ -151,6 +152,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		model.setMinNumbers(soapModel.getMinNumbers());
 		model.setMinSymbols(soapModel.getMinSymbols());
 		model.setMinUpperCase(soapModel.getMinUpperCase());
+		model.setRegex(soapModel.getRegex());
 		model.setHistory(soapModel.getHistory());
 		model.setHistoryCount(soapModel.getHistoryCount());
 		model.setExpireable(soapModel.getExpireable());
@@ -241,6 +243,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		attributes.put("minNumbers", getMinNumbers());
 		attributes.put("minSymbols", getMinSymbols());
 		attributes.put("minUpperCase", getMinUpperCase());
+		attributes.put("regex", getRegex());
 		attributes.put("history", getHistory());
 		attributes.put("historyCount", getHistoryCount());
 		attributes.put("expireable", getExpireable());
@@ -378,6 +381,12 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 		if (minUpperCase != null) {
 			setMinUpperCase(minUpperCase);
+		}
+
+		String regex = (String)attributes.get("regex");
+
+		if (regex != null) {
+			setRegex(regex);
 		}
 
 		Boolean history = (Boolean)attributes.get("history");
@@ -711,6 +720,20 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	}
 
 	@JSON
+	public String getRegex() {
+		if (_regex == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _regex;
+		}
+	}
+
+	public void setRegex(String regex) {
+		_regex = regex;
+	}
+
+	@JSON
 	public boolean getHistory() {
 		return _history;
 	}
@@ -885,6 +908,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		passwordPolicyImpl.setMinNumbers(getMinNumbers());
 		passwordPolicyImpl.setMinSymbols(getMinSymbols());
 		passwordPolicyImpl.setMinUpperCase(getMinUpperCase());
+		passwordPolicyImpl.setRegex(getRegex());
 		passwordPolicyImpl.setHistory(getHistory());
 		passwordPolicyImpl.setHistoryCount(getHistoryCount());
 		passwordPolicyImpl.setExpireable(getExpireable());
@@ -1040,6 +1064,14 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 		passwordPolicyCacheModel.minUpperCase = getMinUpperCase();
 
+		passwordPolicyCacheModel.regex = getRegex();
+
+		String regex = passwordPolicyCacheModel.regex;
+
+		if ((regex != null) && (regex.length() == 0)) {
+			passwordPolicyCacheModel.regex = null;
+		}
+
 		passwordPolicyCacheModel.history = getHistory();
 
 		passwordPolicyCacheModel.historyCount = getHistoryCount();
@@ -1069,7 +1101,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{passwordPolicyId=");
 		sb.append(getPasswordPolicyId());
@@ -1111,6 +1143,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		sb.append(getMinSymbols());
 		sb.append(", minUpperCase=");
 		sb.append(getMinUpperCase());
+		sb.append(", regex=");
+		sb.append(getRegex());
 		sb.append(", history=");
 		sb.append(getHistory());
 		sb.append(", historyCount=");
@@ -1141,7 +1175,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(100);
+		StringBundler sb = new StringBundler(103);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.PasswordPolicy");
@@ -1228,6 +1262,10 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		sb.append(getMinUpperCase());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>regex</column-name><column-value><![CDATA[");
+		sb.append(getRegex());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>history</column-name><column-value><![CDATA[");
 		sb.append(getHistory());
 		sb.append("]]></column-value></column>");
@@ -1311,6 +1349,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	private int _minNumbers;
 	private int _minSymbols;
 	private int _minUpperCase;
+	private String _regex;
 	private boolean _history;
 	private int _historyCount;
 	private boolean _expireable;

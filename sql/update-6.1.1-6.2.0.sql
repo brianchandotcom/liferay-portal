@@ -370,6 +370,8 @@ alter table MBMessage drop column attachments;
 
 drop table OrgGroupPermission;
 
+alter table PasswordPolicy add regex VARCHAR(75) null;
+
 drop index IX_C3A17327 on PasswordPolicyRel;
 drop index IX_ED7CF243 on PasswordPolicyRel;
 

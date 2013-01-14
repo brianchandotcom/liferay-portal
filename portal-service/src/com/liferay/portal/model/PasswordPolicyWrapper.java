@@ -64,6 +64,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 		attributes.put("minNumbers", getMinNumbers());
 		attributes.put("minSymbols", getMinSymbols());
 		attributes.put("minUpperCase", getMinUpperCase());
+		attributes.put("regex", getRegex());
 		attributes.put("history", getHistory());
 		attributes.put("historyCount", getHistoryCount());
 		attributes.put("expireable", getExpireable());
@@ -200,6 +201,12 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 
 		if (minUpperCase != null) {
 			setMinUpperCase(minUpperCase);
+		}
+
+		String regex = (String)attributes.get("regex");
+
+		if (regex != null) {
+			setRegex(regex);
 		}
 
 		Boolean history = (Boolean)attributes.get("history");
@@ -716,6 +723,24 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	public void setMinUpperCase(int minUpperCase) {
 		_passwordPolicy.setMinUpperCase(minUpperCase);
+	}
+
+	/**
+	* Returns the regex of this password policy.
+	*
+	* @return the regex of this password policy
+	*/
+	public java.lang.String getRegex() {
+		return _passwordPolicy.getRegex();
+	}
+
+	/**
+	* Sets the regex of this password policy.
+	*
+	* @param regex the regex of this password policy
+	*/
+	public void setRegex(java.lang.String regex) {
+		_passwordPolicy.setRegex(regex);
 	}
 
 	/**

@@ -37,7 +37,7 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{passwordPolicyId=");
 		sb.append(passwordPolicyId);
@@ -79,6 +79,8 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		sb.append(minSymbols);
 		sb.append(", minUpperCase=");
 		sb.append(minUpperCase);
+		sb.append(", regex=");
+		sb.append(regex);
 		sb.append(", history=");
 		sb.append(history);
 		sb.append(", historyCount=");
@@ -163,6 +165,14 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		passwordPolicyImpl.setMinNumbers(minNumbers);
 		passwordPolicyImpl.setMinSymbols(minSymbols);
 		passwordPolicyImpl.setMinUpperCase(minUpperCase);
+
+		if (regex == null) {
+			passwordPolicyImpl.setRegex(StringPool.BLANK);
+		}
+		else {
+			passwordPolicyImpl.setRegex(regex);
+		}
+
 		passwordPolicyImpl.setHistory(history);
 		passwordPolicyImpl.setHistoryCount(historyCount);
 		passwordPolicyImpl.setExpireable(expireable);
@@ -202,6 +212,7 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		minNumbers = objectInput.readInt();
 		minSymbols = objectInput.readInt();
 		minUpperCase = objectInput.readInt();
+		regex = objectInput.readUTF();
 		history = objectInput.readBoolean();
 		historyCount = objectInput.readInt();
 		expireable = objectInput.readBoolean();
@@ -258,6 +269,14 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		objectOutput.writeInt(minNumbers);
 		objectOutput.writeInt(minSymbols);
 		objectOutput.writeInt(minUpperCase);
+
+		if (regex == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(regex);
+		}
+
 		objectOutput.writeBoolean(history);
 		objectOutput.writeInt(historyCount);
 		objectOutput.writeBoolean(expireable);
@@ -292,6 +311,7 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 	public int minNumbers;
 	public int minSymbols;
 	public int minUpperCase;
+	public String regex;
 	public boolean history;
 	public int historyCount;
 	public boolean expireable;

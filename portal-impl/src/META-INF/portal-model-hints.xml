@@ -537,6 +537,7 @@
 		<field name="minUpperCase" type="int">
 			<hint name="display-width">20</hint>
 		</field>
+		<field name="regex" type="String" />
 		<field name="history" type="boolean" />
 		<field name="historyCount" type="int" />
 		<field name="expireable" type="boolean" />

@@ -1253,6 +1253,8 @@ public class PropsValues {
 
 	public static final String PASSWORDS_DEFAULT_POLICY_NAME = PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_NAME);
 
+	public static final String PASSWORDS_DEFAULT_POLICY_REGEX = PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_REGEX);
+
 	public static final long PASSWORDS_DEFAULT_POLICY_RESET_FAILURE_COUNT = GetterUtil.getLong(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_RESET_FAILURE_COUNT));
 
 	public static final long PASSWORDS_DEFAULT_POLICY_RESET_TICKET_MAX_AGE = GetterUtil.getLong(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_RESET_TICKET_MAX_AGE));

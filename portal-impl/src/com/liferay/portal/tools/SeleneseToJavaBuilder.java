@@ -279,8 +279,7 @@ public class SeleneseToJavaBuilder {
 			new String[] {
 				"**\\EvaluateLogTest.java", "**\\EvaluateUserCSVFileTest.java",
 				"**\\IterateThemeTest.java", "**\\StopSeleniumTest.java",
-				"**\\WaitForSystemShutdownTest.java",
-				"**\\portalweb\\tests\\**\\*Test.java"
+				"**\\WaitForSystemShutdownTest.java"
 			});
 		directoryScanner.setIncludes(
 			new String[] {

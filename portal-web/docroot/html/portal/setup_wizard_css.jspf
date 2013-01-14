@@ -77,7 +77,6 @@ body {
 	position: static;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	width: 100%;
 }
 
 .aui-fieldset-content {

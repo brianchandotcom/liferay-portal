@@ -90,12 +90,6 @@
 			font-size: 1em;
 		}
 
-		legend {
-			.aui-legend {
-				width: 100%;
-			}
-		}
-
 		ul {
 			list-style: none;
 		}

@@ -29,10 +29,16 @@ engine = Sass::Engine.new(
 		:debug_info => log.isDebugEnabled,
 		:filename => $cssRealPath,
 		:full_exception => log.isDebugEnabled,
-		:syntax => :scss,
+		:line => 0,
 		:load_paths => load_paths,
+		:syntax => :scss,
 		:ugly => true
 	}
 )
 
-$out.println engine.render
+begin
+	$out.println engine.render
+rescue Sass::SyntaxError => e
+	puts e.message
+	puts e.backtrace
+end

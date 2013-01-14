@@ -26,6 +26,13 @@ public class DeleteWebContentCompletedEditedDetailsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
@@ -33,38 +40,31 @@ public class DeleteWebContentCompletedEditedDetailsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Pending"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
-		selenium.clickAt("//td[3]/a",
-			RuntimeVariables.replace("Web Content Name Edited"));
+		assertEquals(RuntimeVariables.replace(
+				"Web Content Name Edited (Pending)"),
+			selenium.getText("//a[@class='entry-link']/span"));
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace(
+				"Web Content Name Edited (Pending)"),
+			selenium.getText("//a[@class='entry-link']/span"));
+		selenium.clickAt("//div[@class='entry-thumbnail']",
+			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace(
 				"There is a publication workflow in process. Some actions may be disabled depending on the status and your role through this process."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertTrue(selenium.isElementPresent(
 				"//input[@value='Submit for Publication' and @disabled='']"));
-		assertTrue(selenium.isElementPresent("//button[2]"));
-		selenium.click(RuntimeVariables.replace("//button[3]"));
+		assertTrue(selenium.isElementPresent(
+				"//div[@id='_15_articleToolbar']/span/button[2]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@id='_15_articleToolbar']/span/button[2]"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this article version[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
+			selenium.getText("//a[@class='entry-link']/span"));
 	}
 }

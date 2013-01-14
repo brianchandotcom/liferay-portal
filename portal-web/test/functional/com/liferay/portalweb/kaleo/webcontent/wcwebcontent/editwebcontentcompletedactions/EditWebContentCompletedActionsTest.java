@@ -32,26 +32,13 @@ public class EditWebContentCompletedActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Actions"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+			selenium.getText("//a[@class='entry-link']/span"));
+		selenium.clickAt("//div[@class='entry-thumbnail']",
+			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//input[@id='_15_title_en_US']");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name Edited"));
 		selenium.waitForElementPresent(
@@ -84,13 +71,9 @@ public class EditWebContentCompletedActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Pending"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace(
+				"Web Content Name Edited (Pending)"),
+			selenium.getText("//a[@class='entry-link']/span"));
 	}
 }

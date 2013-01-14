@@ -30,6 +30,13 @@ public class TearDownCommunityTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 				selenium.waitForElementPresent("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
@@ -42,125 +49,43 @@ public class TearDownCommunityTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean community1Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+				boolean communityNamePresent = selenium.isElementPresent(
+						"//tr[contains(.,'Community Name')]/td[2]/a");
 
-				if (!community1Present) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-			case 2:
-
-				boolean community2Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
-
-				if (!community2Present) {
+				if (!communityNamePresent) {
 					label = 3;
 
 					continue;
 				}
 
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+				boolean selectCommunity = selenium.isChecked(
+						"//tr[contains(.,'Community Name')]/td[1]/input");
+
+				if (selectCommunity) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//tr[contains(.,'Community Name')]/td[1]/input",
+					RuntimeVariables.replace("Select Community Checkbox"));
+
+			case 2:
+				assertTrue(selenium.isChecked(
+						"//tr[contains(.,'Community Name')]/td[1]/input"));
+				assertEquals(RuntimeVariables.replace(""),
+					selenium.getText("//input[@value='Delete']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 
 			case 3:
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
-				boolean community3Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
-
-				if (!community3Present) {
-					label = 4;
-
-					continue;
-				}
-
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-			case 4:
-
-				boolean community4Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
-
-				if (!community4Present) {
-					label = 5;
-
-					continue;
-				}
-
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-			case 5:
-
-				boolean community5Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
-
-				if (!community5Present) {
-					label = 6;
-
-					continue;
-				}
-
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-			case 6:
 			case 100:
 				label = -1;
 			}

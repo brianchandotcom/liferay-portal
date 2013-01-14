@@ -14,6 +14,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
@@ -39,206 +59,65 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[6]/span/ul/li/strong/a/span'))</td>
-	<td>community1Present</td>
+	<td>storeElementPresent</td>
+	<td>//tr[contains(.,'Community Name')]/td[2]/a</td>
+	<td>communityNamePresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${community1Present}</td>
-	<td>Community1NotPresent</td>
+	<td>!${communityNamePresent}</td>
+	<td>CommunityNameNotPresent</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//tr[contains(.,'Community Name')]/td[1]/input</td>
+	<td>selectCommunity</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${selectCommunity}</td>
+	<td>SelectCommunity</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a/span</td>
-	<td>Actions</td>
+	<td>//tr[contains(.,'Community Name')]/td[1]/input</td>
+	<td>Select Community Checkbox</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
+	<td>label</td>
+	<td>SelectCommunity</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[contains(.,'Community Name')]/td[1]/input</td>
+	<td>Select Community Checkbox</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
+	<td>//input[@value='Delete']</td>
+	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td></td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Community1NotPresent</td>
+	<td>CommunityNameNotPresent</td>
 	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[6]/span/ul/li/strong/a/span'))</td>
-	<td>community2Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${community2Present}</td>
-	<td>Community2NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Community2NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[6]/span/ul/li/strong/a/span'))</td>
-	<td>community3Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${community3Present}</td>
-	<td>Community3NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Community3NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[6]/span/ul/li/strong/a/span'))</td>
-	<td>community4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${community4Present}</td>
-	<td>Community4NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Community4NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[6]/span/ul/li/strong/a/span'))</td>
-	<td>community5Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${community5Present}</td>
-	<td>Community5NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Community5NotPresent</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

@@ -14,6 +14,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
@@ -24,33 +44,38 @@
 	<td>Control Panel</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Liferay']/ul/li/strong/a/span</td>
+	<td>Scope Selector</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a/span</td>
+	<td>//span[@title='Liferay']/ul/li/strong/a/span</td>
 	<td>Scope Selector</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
 	<td>Community Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
 	<td>Community Name</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
 	<td>Community Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//strong/a/span</td>
+	<td>//span[@title='Community Name']/ul/li/strong/a/span</td>
 	<td>Community Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//strong/a/span</td>
+	<td>//span[@title='Community Name']/ul/li/strong/a/span</td>
 	<td>Community Name</td>
 </tr>
 <tr>
@@ -59,9 +84,29 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Add']</td>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -134,6 +179,11 @@
 	<td>top</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//input[@value='Submit for Publication']</td>
+	<td>Submit for Publication</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Submit for Publication']</td>
 	<td>Submit for Publication</td>
@@ -144,34 +194,14 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//td[2]/a</td>
-	<td>Web Content ID</td>
+	<td>assertVisible</td>
+	<td>//div[@class='entry-thumbnail']/img</td>
+	<td>Web Content Tumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>Web Content Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Pending</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[5]/a</td>
-	<td>Modified Date</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[6]/a</td>
-	<td>Display Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[7]/a</td>
-	<td>Joe Bloggs</td>
+	<td>//a[@class='entry-link']/span</td>
+	<td>Web Content Name (Pending)</td>
 </tr>
 </tbody></table>
 </body>

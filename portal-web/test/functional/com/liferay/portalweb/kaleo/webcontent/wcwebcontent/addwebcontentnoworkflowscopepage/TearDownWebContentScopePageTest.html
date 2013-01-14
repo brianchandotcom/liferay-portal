@@ -14,6 +14,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
@@ -24,8 +44,18 @@
 	<td>Control Panel</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Scope: Default']/ul/li/strong/a</td>
+	<td>Scope: Default</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//div/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Scope: Default']/ul/li/strong/a</td>
 	<td>Scope: Default</td>
 </tr>
 <tr>
@@ -44,8 +74,13 @@
 	<td>Web Content Display Page</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Scope: Web Content Display Page']/ul/li/strong/a</td>
+	<td>Web Content Display Page</td>
+</tr>
+<tr>
 	<td>assertPartialText</td>
-	<td>//div/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Scope: Web Content Display Page']/ul/li/strong/a</td>
 	<td>Web Content Display Page</td>
 </tr>
 <tr>
@@ -54,154 +89,69 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent1Present</td>
+	<td>storeElementPresent</td>
+	<td>//div[@class='entry-thumbnail']</td>
+	<td>webContentPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${webContent1Present}</td>
-	<td>WebContent1NotPresent</td>
+	<td>!${webContentPresent}</td>
+	<td>WebContentNotPresent</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_15_allRowIdsCheckbox']</td>
+	<td>Select All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td></td>
+	<td>//input[@id='_15_allRowIdsCheckbox']</td>
+	<td>Select All</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
+	<td>assertChecked</td>
+	<td>//input[@id='_15_allRowIdsCheckbox']</td>
+	<td>Select All</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>WebContent1NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent2Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${webContent2Present}</td>
-	<td>WebContent2NotPresent</td>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td></td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>WebContent2NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent3Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${webContent3Present}</td>
-	<td>WebContent3NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>WebContent3NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${webContent4Present}</td>
-	<td>WebContent4NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>label</td>
-	<td>WebContent4NotPresent</td>
+	<td>WebContentNotPresent</td>
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent5Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${webContent5Present}</td>
-	<td>WebContent5NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>WebContent5NotPresent</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='entries-empty portlet-msg-info']</td>
+	<td>No Web Content was found.</td>
 </tr>
 </tbody></table>
 </body>

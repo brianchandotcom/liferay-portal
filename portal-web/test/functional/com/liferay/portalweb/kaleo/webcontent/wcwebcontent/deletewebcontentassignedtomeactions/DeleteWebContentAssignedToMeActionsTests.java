@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.kaleo.webcontent.wcwebcontent.deletewebcontentassignedtomeactions;
 
+import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontent.AddWebContentTest;
+import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontent.TearDownWebContentTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;

@@ -40,27 +40,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Review')]/td/a</td>
 	<td>Review</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Review')]/td[2]/a</td>
 	<td>Web Content Name Edited</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'Review')]/td[3]/a</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'Review')]/td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'Review')]/td[5]/a</td>
 	<td>Never</td>
 </tr>
 <tr>
@@ -70,27 +70,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Review')]/td/a</td>
 	<td>Review</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Review')]/td[2]/a</td>
 	<td>Web Content Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'Review')]/td[3]/a</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'Review')]/td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'Review')]/td[5]/a</td>
 	<td>Never</td>
 </tr>
 <tr>
@@ -105,37 +105,37 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td/a</td>
 	<td>Single Approver</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[2]/a</td>
 	<td>Web Content Name Edited</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[3]/a</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[4]/a</td>
 	<td>Review</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[5]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[6]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[6]/a</td>
 	<td>Never</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span/a/span</td>
+	<td>//tr[contains(.,'Single Approver')]/td[7]/span/a/span</td>
 	<td>Withdraw Submission</td>
 </tr>
 <tr>
@@ -145,32 +145,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td/a</td>
 	<td>Single Approver</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[2]/a</td>
 	<td>Web Content Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[3]/a</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[4]/a</td>
 	<td>Approved</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[5]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//td[6]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[6]/a</td>
 	<td>End Date</td>
 </tr>
 <tr>
@@ -179,29 +179,14 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>Web Content Name Edited</td>
+	<td>assertVisible</td>
+	<td>//div[@class='entry-thumbnail']/img</td>
+	<td>Web Content Tumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Pending</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[5]/a</td>
-	<td>Modified Date</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[6]/a</td>
-	<td>Display Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[7]/a</td>
-	<td>Joe Bloggs</td>
+	<td>//a[@class='entry-link']/span</td>
+	<td>Web Content Name Edited (Pending)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -220,32 +205,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td/a</td>
 	<td>Single Approver</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[2]/a</td>
 	<td>Web Content Name Edited</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[3]/a</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[4]/a</td>
 	<td>Review</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[5]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[6]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[6]/a</td>
 	<td>Never</td>
 </tr>
 <tr>
@@ -255,35 +240,34 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td/a</td>
 	<td>Single Approver</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[2]/a</td>
 	<td>Web Content Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[3]/a</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[4]/a</td>
 	<td>Approved</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[5]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//td[6]/a</td>
+	<td>//tr[contains(.,'Single Approver')]/td[6]/a</td>
 	<td>End Date</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

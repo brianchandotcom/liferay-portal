@@ -29,16 +29,18 @@ public class ConfigurePortletScopePageTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Page",
 			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+		Thread.sleep(1000);
+		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForVisible("//iframe");
+		selenium.selectFrame("//iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("link=Scope");
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
@@ -56,5 +58,6 @@ public class ConfigurePortletScopePageTest extends BaseTestCase {
 			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
 		assertEquals("Current Page (Web Content Display Page)",
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
+		selenium.selectFrame("relative=top");
 	}
 }

@@ -27,11 +27,19 @@ public class ConfigureWebContentSingleApproverScopeGlobalTest
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//strong/a/span",
+		selenium.waitForVisible("//span[@title='Liferay']/ul/li/strong/a");
+		selenium.clickAt("//span[@title='Liferay']/ul/li/strong/a",
 			RuntimeVariables.replace("Scope Selector"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
@@ -41,12 +49,15 @@ public class ConfigureWebContentSingleApproverScopeGlobalTest
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//strong/a/span", "Global");
+		selenium.waitForText("//span[@title='Global']/ul/li/strong/a/span",
+			"Global");
 		assertEquals(RuntimeVariables.replace("Global"),
-			selenium.getText("//strong/a/span"));
+			selenium.getText("//span[@title='Global']/ul/li/strong/a/span"));
 		selenium.clickAt("link=Workflow Configuration",
 			RuntimeVariables.replace("Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible(
+			"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']");
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']",
 			RuntimeVariables.replace("Single Approver (Version 1)"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));

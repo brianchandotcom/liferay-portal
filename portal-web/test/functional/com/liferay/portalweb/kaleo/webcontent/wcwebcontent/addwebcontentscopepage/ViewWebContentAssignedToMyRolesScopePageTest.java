@@ -26,11 +26,20 @@ public class ViewWebContentAssignedToMyRolesScopePageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div/span/ul/li/strong/a/span",
+		selenium.waitForVisible(
+			"//span[@title='Scope: Default']/ul/li/strong/a/span");
+		selenium.clickAt("//span[@title='Scope: Default']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Scope: Default"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
@@ -51,14 +60,15 @@ public class ViewWebContentAssignedToMyRolesScopePageTest extends BaseTestCase {
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td/a"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
+		assertTrue(selenium.isElementPresent(
+				"//tr[contains(.,'Review')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("There are no completed tasks."),
@@ -68,18 +78,19 @@ public class ViewWebContentAssignedToMyRolesScopePageTest extends BaseTestCase {
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td/a"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[4]/a"));
+		assertTrue(selenium.isElementPresent(
+				"//tr[contains(.,'Single Approver')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[6]/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[6]/a"));
 		assertEquals(RuntimeVariables.replace("Withdraw Submission"),
-			selenium.getText("//span/a/span"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[7]/span"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -88,15 +99,9 @@ public class ViewWebContentAssignedToMyRolesScopePageTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Pending"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("Web Content Name (Pending)"),
+			selenium.getText("//a[@class='entry-link']/span"));
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Submissions",
@@ -105,16 +110,17 @@ public class ViewWebContentAssignedToMyRolesScopePageTest extends BaseTestCase {
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td/a"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[4]/a"));
+		assertTrue(selenium.isElementPresent(
+				"//tr[contains(.,'Single Approver')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[6]/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[6]/a"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

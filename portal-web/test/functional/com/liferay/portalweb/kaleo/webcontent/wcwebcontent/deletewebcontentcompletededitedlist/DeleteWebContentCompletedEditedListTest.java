@@ -23,34 +23,74 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DeleteWebContentCompletedEditedListTest extends BaseTestCase {
 	public void testDeleteWebContentCompletedEditedList()
 		throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Web Content",
-			RuntimeVariables.replace("Web Content"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Pending"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
-		selenium.clickAt("//input[@name='_15_rowIds']",
-			RuntimeVariables.replace(""));
-		selenium.click(RuntimeVariables.replace("//input[@value='Delete']"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("No Web Content was found."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForElementPresent("link=Control Panel");
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Web Content",
+					RuntimeVariables.replace("Web Content"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.isVisible(
+						"//div[@class='entry-thumbnail']/img"));
+				assertEquals(RuntimeVariables.replace(
+						"Web Content Name Edited (Pending)"),
+					selenium.getText("//a[@class='entry-link']/span"));
+
+				boolean webContentPresent = selenium.isElementPresent(
+						"//div[@class='entry-thumbnail']");
+
+				if (!webContentPresent) {
+					label = 2;
+
+					continue;
+				}
+
+				assertFalse(selenium.isChecked(
+						"//input[@id='_15_allRowIdsCheckbox']"));
+				selenium.clickAt("//input[@id='_15_allRowIdsCheckbox']",
+					RuntimeVariables.replace("Select All"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_15_allRowIdsCheckbox']"));
+				selenium.waitForVisible(
+					"//span[@title='Actions']/ul/li/strong/a/span");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
+					RuntimeVariables.replace("Delete"));
+				selenium.waitForPageToLoad("30000");
+
+			case 2:
+				assertEquals(RuntimeVariables.replace(
+						"No Web Content was found."),
+					selenium.getText(
+						"//div[@class='entries-empty portlet-msg-info']"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

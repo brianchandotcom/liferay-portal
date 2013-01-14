@@ -26,11 +26,20 @@ public class ViewWebContentNoWorkflowScopePageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div/span/ul/li/strong/a/span",
+		selenium.waitForVisible(
+			"//span[@title='Scope: Default']/ul/li/strong/a");
+		selenium.clickAt("//span[@title='Scope: Default']/ul/li/strong/a",
 			RuntimeVariables.replace("Scope: Default"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
@@ -40,7 +49,8 @@ public class ViewWebContentNoWorkflowScopePageTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a/span",
+		assertTrue(selenium.isPartialText(
+				"//span[@title='Scope: Web Content Display Page']/ul/li/strong/a",
 				"Web Content Display Page"));
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
@@ -72,15 +82,9 @@ public class ViewWebContentNoWorkflowScopePageTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("//td[2]/a"));
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
+			selenium.getText("//a[@class='entry-link']/span"));
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Submissions",

@@ -26,13 +26,23 @@ public class ConfigureWebContentSingleApproverTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("link=Workflow Configuration");
 		selenium.clickAt("link=Workflow Configuration",
 			RuntimeVariables.replace("Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible(
+			"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']");
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']",
 			RuntimeVariables.replace("label=Single Approver (Version 1)"));
 		selenium.clickAt("//input[@value='Save']",

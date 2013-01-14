@@ -25,17 +25,17 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>waitForVisible</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
@@ -44,14 +44,24 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Configuration</td>
+	<td>waitForVisible</td>
+	<td>//iframe</td>
+	<td>Web Content Display - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe</td>
+	<td>Web Content Display - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -92,6 +102,11 @@
 	<td>assertSelectedLabel</td>
 	<td>//select[@id='_86_scopeLayoutUuid']</td>
 	<td>Current Page (Web Content Display Page)</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

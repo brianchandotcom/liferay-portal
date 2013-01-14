@@ -26,6 +26,13 @@ public class EditWebContentCompletedDraftActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
@@ -33,30 +40,16 @@ public class EditWebContentCompletedDraftActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Actions"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+			selenium.getText("//a[@class='entry-link']/span"));
+		selenium.clickAt("//div[@class='entry-thumbnail']",
+			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//span[2]/strong"));
+			selenium.getText("//span[@class='workflow-version']/strong"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//span[3]/strong"));
+			selenium.getText("//span[@class='workflow-status']/strong"));
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name Edited"));
 		selenium.waitForElementPresent(
@@ -90,10 +83,17 @@ public class EditWebContentCompletedDraftActionsTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("1.1"),
-			selenium.getText("//span[2]/strong"));
+			selenium.getText("//span[@class='workflow-version']/strong"));
 		assertEquals(RuntimeVariables.replace("Draft"),
-			selenium.getText("//span[3]/strong"));
+			selenium.getText("//span[@class='workflow-status']/strong"));
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
@@ -101,13 +101,8 @@ public class EditWebContentCompletedDraftActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Draft"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("Web Content Name Edited (Draft)"),
+			selenium.getText("//a[@class='entry-link']/span"));
 	}
 }

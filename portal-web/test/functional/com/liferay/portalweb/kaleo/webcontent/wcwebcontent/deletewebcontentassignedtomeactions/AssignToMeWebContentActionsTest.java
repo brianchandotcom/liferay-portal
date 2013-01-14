@@ -25,6 +25,13 @@ public class AssignToMeWebContentActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
@@ -35,14 +42,15 @@ public class AssignToMeWebContentActionsTest extends BaseTestCase {
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td/a"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
+		assertTrue(selenium.isElementPresent(
+				"//tr[contains(.,'Review')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -62,14 +70,15 @@ public class AssignToMeWebContentActionsTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td/a"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
+		assertTrue(selenium.isElementPresent(
+				"//tr[contains(.,'Review')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

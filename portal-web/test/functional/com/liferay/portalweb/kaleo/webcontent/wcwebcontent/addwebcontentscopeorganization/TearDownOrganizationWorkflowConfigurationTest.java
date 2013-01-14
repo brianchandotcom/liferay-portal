@@ -26,38 +26,48 @@ public class TearDownOrganizationWorkflowConfigurationTest extends BaseTestCase 
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//strong/a/span",
+		selenium.waitForVisible("//span[@title='Liferay']/ul/li/strong/a/span");
+		selenium.clickAt("//span[@title='Liferay']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Scope Selector"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a[contains(.,'Organization Name')]");
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a[contains(.,'Organization Name')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a[contains(.,'Organization Name')]",
 			RuntimeVariables.replace("Organization Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//strong/a/span", "Organization Name");
+		selenium.waitForText("//span[@title='Organization Name']/ul/li/strong/a/span",
+			"Organization Name");
 		assertEquals(RuntimeVariables.replace("Organization Name"),
-			selenium.getText("//strong/a/span"));
+			selenium.getText(
+				"//span[@title='Organization Name']/ul/li/strong/a/span"));
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Default Configuration",
 			RuntimeVariables.replace("Default Configuration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']",
-			RuntimeVariables.replace("label=No workflow"));
+			RuntimeVariables.replace("label=No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']",
-			RuntimeVariables.replace("label=No workflow"));
+			RuntimeVariables.replace("label=No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']",
-			RuntimeVariables.replace("label=No workflow"));
+			RuntimeVariables.replace("label=No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']",
-			RuntimeVariables.replace("label=No workflow"));
+			RuntimeVariables.replace("label=No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']",
-			RuntimeVariables.replace("label=No workflow"));
+			RuntimeVariables.replace("label=No Workflow"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -68,15 +78,15 @@ public class TearDownOrganizationWorkflowConfigurationTest extends BaseTestCase 
 			RuntimeVariables.replace("Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']",
-			RuntimeVariables.replace("label=Default: No workflow"));
+			RuntimeVariables.replace("label=Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']",
-			RuntimeVariables.replace("label=Default: No workflow"));
+			RuntimeVariables.replace("label=Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']",
-			RuntimeVariables.replace("label=Default: No workflow"));
+			RuntimeVariables.replace("label=Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']",
-			RuntimeVariables.replace("label=Default: No workflow"));
+			RuntimeVariables.replace("label=Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']",
-			RuntimeVariables.replace("label=Default: No workflow"));
+			RuntimeVariables.replace("label=Default: No Workflow"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

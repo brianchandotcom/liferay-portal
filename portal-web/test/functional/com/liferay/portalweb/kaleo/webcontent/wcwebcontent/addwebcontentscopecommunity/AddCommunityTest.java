@@ -25,6 +25,13 @@ public class AddCommunityTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
@@ -50,7 +57,8 @@ public class AddCommunityTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//tr[contains(.,'Community Name')]/td[2]/a");
 		assertEquals(RuntimeVariables.replace("Community Name"),
-			selenium.getText("//tr[3]/td[1]"));
+			selenium.getText("//tr[contains(.,'Community Name')]/td[2]/a"));
 	}
 }

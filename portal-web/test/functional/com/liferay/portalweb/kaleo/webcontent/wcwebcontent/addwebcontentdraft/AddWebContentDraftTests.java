@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentdraft;
 
+import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontent.TearDownWebContentTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;

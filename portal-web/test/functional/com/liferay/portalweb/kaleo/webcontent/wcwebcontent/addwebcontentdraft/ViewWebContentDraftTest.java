@@ -25,13 +25,26 @@ public class ViewWebContentDraftTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("link=My Workflow Tasks");
+		assertEquals(RuntimeVariables.replace("My Workflow Tasks"),
+			selenium.getText("link=My Workflow Tasks"));
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("link=Pending");
+		assertEquals(RuntimeVariables.replace("Pending"),
+			selenium.getText("link=Pending"));
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -42,44 +55,52 @@ public class ViewWebContentDraftTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace("There are no completed tasks."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.click(RuntimeVariables.replace("link=My Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending publications requested by me."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace(
 				"There are no completed publications requested by me."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Draft"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']"));
+		assertEquals(RuntimeVariables.replace("Web Content Name (Draft)"),
+			selenium.getText("//a[@class='entry-link']/span"));
+		selenium.waitForVisible("link=Workflow");
+		assertEquals(RuntimeVariables.replace("Workflow"),
+			selenium.getText("link=Workflow"));
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("link=Submissions");
+		assertEquals(RuntimeVariables.replace("Submissions"),
+			selenium.getText("link=Submissions"));
 		selenium.clickAt("link=Submissions",
 			RuntimeVariables.replace("Submissions"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("link=Pending");
+		assertEquals(RuntimeVariables.replace("Pending"),
+			selenium.getText("link=Pending"));
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending publication requests."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace(
 				"There are no completed publication requests."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

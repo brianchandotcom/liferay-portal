@@ -25,11 +25,19 @@ public class AddWebContentScopeGlobalTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//strong/a/span",
+		selenium.waitForVisible("//span[@title='Liferay']/ul/li/strong/a");
+		selenium.clickAt("//span[@title='Liferay']/ul/li/strong/a",
 			RuntimeVariables.replace("Scope Selector"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
@@ -39,14 +47,25 @@ public class AddWebContentScopeGlobalTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//strong/a/span", "Global");
+		selenium.waitForText("//span[@title='Global']/ul/li/strong/a/span",
+			"Global");
 		assertEquals(RuntimeVariables.replace("Global"),
-			selenium.getText("//strong/a/span"));
+			selenium.getText("//span[@title='Global']/ul/li/strong/a/span"));
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//input[@value='Add']",
+		selenium.waitForVisible("//span[@title='Add']/ul/li/strong/a/span");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[contains(.,'Basic Web Content')]");
+		assertEquals(RuntimeVariables.replace("Basic Web Content"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[contains(.,'Basic Web Content')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[contains(.,'Basic Web Content')]",
+			RuntimeVariables.replace("Basic Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name"));
@@ -79,11 +98,8 @@ public class AddWebContentScopeGlobalTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Pending"),
-			selenium.getText("//td[4]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("Web Content Name (Pending)"),
+			selenium.getText("//a[@class='entry-link']/span"));
 	}
 }

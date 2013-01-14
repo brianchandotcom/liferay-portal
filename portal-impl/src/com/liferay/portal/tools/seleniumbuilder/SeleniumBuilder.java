@@ -273,7 +273,7 @@ public class SeleniumBuilder {
 	protected void writeFile(String fileName, String content, boolean format)
 		throws Exception {
 
-		File file = new File(_basedir + "-generate/" + fileName);
+		File file = new File(_basedir + "-generated/" + fileName);
 
 		if (format) {
 			ServiceBuilder.writeFile(file, content);

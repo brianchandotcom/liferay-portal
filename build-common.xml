@@ -469,7 +469,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<if>
 					<equals arg1="${test.type}" arg2="" />
 					<then>
-						<property name="srcdir" value="test:test-generate" />
+						<property name="srcdir" value="test:test-generated" />
 					</then>
 					<else>
 						<property name="srcdir" value="test/${test.type}" />

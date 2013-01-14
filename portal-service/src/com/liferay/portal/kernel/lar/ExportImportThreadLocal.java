@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 /**
  * @author Michael C. Han
  */
-public class ImportExportThreadLocal {
+public class ExportImportThreadLocal {
 
 	public static boolean isExportInProcess() {
 		if (isLayoutExportInProcess() || isPortletExportInProcess()) {
@@ -71,15 +71,15 @@ public class ImportExportThreadLocal {
 
 	private static ThreadLocal<Boolean> _layoutExportInProcess =
 		new AutoResetThreadLocal<Boolean>(
-			ImportExportThreadLocal.class + "._layoutExportInProcess", false);
+			ExportImportThreadLocal.class + "._layoutExportInProcess", false);
 	private static ThreadLocal<Boolean> _layoutImportInProcess =
 		new AutoResetThreadLocal<Boolean>(
-			ImportExportThreadLocal.class + "._layoutImportInProcess", false);
+			ExportImportThreadLocal.class + "._layoutImportInProcess", false);
 	private static ThreadLocal<Boolean> _portletExportInProcess =
 		new AutoResetThreadLocal<Boolean>(
-			ImportExportThreadLocal.class + "._portletExportInProcess", false);
+			ExportImportThreadLocal.class + "._portletExportInProcess", false);
 	private static ThreadLocal<Boolean> _portletImportInProcess =
 		new AutoResetThreadLocal<Boolean>(
-			ImportExportThreadLocal.class + "._portletImportInProcess", false);
+			ExportImportThreadLocal.class + "._portletImportInProcess", false);
 
 }

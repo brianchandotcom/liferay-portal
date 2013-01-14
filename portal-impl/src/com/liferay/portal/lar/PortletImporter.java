@@ -23,7 +23,7 @@ import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -139,13 +139,13 @@ public class PortletImporter {
 		throws Exception {
 
 		try {
-			ImportExportThreadLocal.setPortletImportInProcess(true);
+			ExportImportThreadLocal.setPortletImportInProcess(true);
 
 			doImportPortletInfo(
 				userId, plid, groupId, portletId, parameterMap, file);
 		}
 		finally {
-			ImportExportThreadLocal.setPortletImportInProcess(false);
+			ExportImportThreadLocal.setPortletImportInProcess(false);
 
 			CacheUtil.clearCache();
 			JournalContentUtil.clearCache();

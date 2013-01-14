@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -2064,7 +2064,7 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle article = latestArticle;
 
-		boolean imported = ImportExportThreadLocal.isImportInProcess();
+		boolean imported = ExportImportThreadLocal.isImportInProcess();
 
 		double latestVersion = latestArticle.getVersion();
 
@@ -3603,7 +3603,7 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		if ((expirationDate != null) && expirationDate.before(new Date()) &&
-			!ImportExportThreadLocal.isImportInProcess()) {
+			!ExportImportThreadLocal.isImportInProcess()) {
 
 			throw new ArticleExpirationDateException();
 		}

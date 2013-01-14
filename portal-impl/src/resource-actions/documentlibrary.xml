@@ -40,6 +40,7 @@
 				<action-key>ADD_STRUCTURE</action-key>
 				<action-key>ADD_SHORTCUT</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
@@ -58,6 +59,7 @@
 				<action-key>ADD_STRUCTURE</action-key>
 				<action-key>ADD_SHORTCUT</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
 			</guest-unsupported>
 		</permissions>
@@ -167,6 +169,7 @@
 				<action-key>ADD_SUBFOLDER</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
@@ -174,6 +177,7 @@
 				<action-key>ADD_DOCUMENT</action-key>
 				<action-key>ADD_SHORTCUT</action-key>
 				<action-key>ADD_SUBFOLDER</action-key>
+				<action-key>SUBSCRIBE</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
 			<guest-defaults>
@@ -185,6 +189,7 @@
 				<action-key>ADD_SUBFOLDER</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
 			</guest-unsupported>
 		</permissions>

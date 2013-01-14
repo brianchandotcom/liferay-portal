@@ -10,6 +10,7 @@
 		<reference package-path="com.liferay.portal" entity="Lock" />
 		<reference package-path="com.liferay.portal" entity="Repository" />
 		<reference package-path="com.liferay.portal" entity="RepositoryEntry" />
+		<reference package-path="com.liferay.portal" entity="Subscription" />
 
 		<!-- Transactions -->
 

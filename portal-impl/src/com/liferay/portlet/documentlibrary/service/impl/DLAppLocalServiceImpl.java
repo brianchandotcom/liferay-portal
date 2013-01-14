@@ -704,6 +704,28 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		dlAppHelperLocalService.restoreFileEntryFromTrash(userId, fileEntry);
 	}
 
+	public void subscribeFolder(long userId, long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			folderId = groupId;
+		}
+
+		subscriptionLocalService.addSubscription(
+			userId, groupId, Folder.class.getName(), folderId);
+	}
+
+	public void unsubscribeFolder(long userId, long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			folderId = groupId;
+		}
+
+		subscriptionLocalService.deleteSubscription(
+			userId, Folder.class.getName(), folderId);
+	}
+
 	/**
 	 * Updates the file entry's asset replacing its asset categories, tags, and
 	 * links.

@@ -335,6 +335,10 @@ public class CMISFolder extends CMISModel implements Folder {
 		return false;
 	}
 
+	public boolean isSupportsSubscribing() {
+		return false;
+	}
+
 	public void setCompanyId(long companyId) {
 		_cmisRepository.setCompanyId(companyId);
 	}

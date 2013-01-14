@@ -2004,6 +2004,12 @@ public class DLAppServiceWrapper implements DLAppService,
 		return _dlAppService.search(repositoryId, searchContext, query);
 	}
 
+	public void subscribeFolder(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppService.subscribeFolder(groupId, folderId);
+	}
+
 	/**
 	* @deprecated Use {@link #checkInFileEntry(long, boolean, String,
 	ServiceContext)}.
@@ -2054,6 +2060,12 @@ public class DLAppServiceWrapper implements DLAppService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_dlAppService.unlockFolder(repositoryId, parentFolderId, name, lockUuid);
+	}
+
+	public void unsubscribeFolder(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppService.unsubscribeFolder(groupId, folderId);
 	}
 
 	/**

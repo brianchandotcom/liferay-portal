@@ -2471,6 +2471,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 	}
 
+	public void subscribeFolder(long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
+
+		dlAppLocalService.subscribeFolder(getUserId(), groupId, folderId);
+	}
+
 	/**
 	 * @deprecated Use {@link #checkInFileEntry(long, boolean, String,
 	 *             ServiceContext)}.
@@ -2526,6 +2535,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		repository.unlockFolder(parentFolderId, name, lockUuid);
+	}
+
+	public void unsubscribeFolder(long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
+
+		dlAppLocalService.unsubscribeFolder(getUserId(), groupId, folderId);
 	}
 
 	/**

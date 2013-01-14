@@ -96,4 +96,6 @@ public interface Folder extends RepositoryModel<Folder> {
 
 	public boolean isSupportsSocial();
 
+	public boolean isSupportsSubscribing();
+
 }

@@ -42,6 +42,12 @@ if (folder != null) {
 	repositoryId = folder.getRepositoryId();
 }
 
+Set<Long> folderSubscriptionClassPKs = null;
+
+if (themeDisplay.isSignedIn()) {
+	folderSubscriptionClassPKs = DLUtil.getFolderSubscriptionClassPKs(user.getUserId());
+}
+
 int status = WorkflowConstants.STATUS_APPROVED;
 
 if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
@@ -73,6 +79,8 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
 
 request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntryQuery));
+
+request.setAttribute("view.jsp-folderSubscriptionClassPKs", folderSubscriptionClassPKs);
 %>
 
 <portlet:actionURL var="undoTrashURL">

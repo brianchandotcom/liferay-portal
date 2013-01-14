@@ -2222,6 +2222,18 @@ public class DLAppServiceSoap {
 		}
 	}
 
+	public static void subscribeFolder(long groupId, long folderId)
+		throws RemoteException {
+		try {
+			DLAppServiceUtil.subscribeFolder(groupId, folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* @deprecated Use {@link #checkInFileEntry(long, boolean, String,
 	ServiceContext)}.
@@ -2290,6 +2302,18 @@ public class DLAppServiceSoap {
 		try {
 			DLAppServiceUtil.unlockFolder(repositoryId, parentFolderId, name,
 				lockUuid);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void unsubscribeFolder(long groupId, long folderId)
+		throws RemoteException {
+		try {
+			DLAppServiceUtil.unsubscribeFolder(groupId, folderId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

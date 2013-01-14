@@ -192,6 +192,10 @@ public class FolderProxyBean
 		return _folder.isSupportsSocial();
 	}
 
+	public boolean isSupportsSubscribing() {
+		return _folder.isSupportsSubscribing();
+	}
+
 	public void setCompanyId(long companyId) {
 		_folder.setCompanyId(companyId);
 	}

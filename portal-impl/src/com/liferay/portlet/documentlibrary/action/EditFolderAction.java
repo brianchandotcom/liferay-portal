@@ -25,6 +25,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -81,6 +83,12 @@ public class EditFolderAction extends PortletAction {
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteFolders(
 					(LiferayPortletConfig)portletConfig, actionRequest, true);
+			}
+			else if (cmd.equals(Constants.SUBSCRIBE)) {
+				subscribeFolder(actionRequest);
+			}
+			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
+				unsubscribeFolder(actionRequest);
 			}
 			else if (cmd.equals("updateWorkflowDefinitions")) {
 				updateWorkflowDefinitions(actionRequest);
@@ -213,6 +221,30 @@ public class EditFolderAction extends PortletAction {
 					moveFolderId, parentFolderId, serviceContext);
 			}
 		}
+	}
+
+	protected void subscribeFolder(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		DLAppServiceUtil.subscribeFolder(
+			themeDisplay.getScopeGroupId(), folderId);
+	}
+
+	protected void unsubscribeFolder(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		DLAppServiceUtil.unsubscribeFolder(
+			themeDisplay.getScopeGroupId(), folderId);
 	}
 
 	protected void updateFolder(ActionRequest actionRequest) throws Exception {

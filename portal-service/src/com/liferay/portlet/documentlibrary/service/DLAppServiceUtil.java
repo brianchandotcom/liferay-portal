@@ -2046,6 +2046,12 @@ public class DLAppServiceUtil {
 		return getService().search(repositoryId, searchContext, query);
 	}
 
+	public static void subscribeFolder(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().subscribeFolder(groupId, folderId);
+	}
+
 	/**
 	* @deprecated Use {@link #checkInFileEntry(long, boolean, String,
 	ServiceContext)}.
@@ -2097,6 +2103,12 @@ public class DLAppServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().unlockFolder(repositoryId, parentFolderId, name, lockUuid);
+	}
+
+	public static void unsubscribeFolder(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsubscribeFolder(groupId, folderId);
 	}
 
 	/**

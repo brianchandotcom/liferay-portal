@@ -73,6 +73,8 @@ if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGr
 	status = WorkflowConstants.STATUS_ANY;
 }
 
+Set<Long> folderSubscriptionClassPKs = (Set<Long>)request.getAttribute("view.jsp-folderSubscriptionClassPKs");
+
 boolean folderSelected = GetterUtil.getBoolean((String)request.getAttribute("view_entries.jsp-folderSelected"));
 
 String modelResource = null;
@@ -291,6 +293,37 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 					</c:if>
 				</c:otherwise>
 			</c:choose>
+
+			<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE) && ((folder == null) || folder.isSupportsSubscribing()) %>">
+				<c:choose>
+					<c:when test="<%= (folderSubscriptionClassPKs != null) && (folderSubscriptionClassPKs.contains(folderId) || ((folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && folderSubscriptionClassPKs.contains(scopeGroupId))) %>">
+						<portlet:actionURL var="unsubscribeURL">
+							<portlet:param name="struts_action" value="/document_library/edit_folder" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+						</portlet:actionURL>
+
+						<liferay-ui:icon
+							image="unsubscribe"
+							url="<%= unsubscribeURL %>"
+						/>
+					</c:when>
+					<c:otherwise>
+						<portlet:actionURL var="subscribeURL">
+							<portlet:param name="struts_action" value="/document_library/edit_folder" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+						</portlet:actionURL>
+
+						<liferay-ui:icon
+							image="subscribe"
+							url="<%= subscribeURL %>"
+						/>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
 		</c:if>
 
 		<%

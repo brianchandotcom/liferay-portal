@@ -576,6 +576,19 @@ public class DLAppLocalServiceUtil {
 		getService().restoreFileEntryFromTrash(userId, fileEntryId);
 	}
 
+	public static void subscribeFolder(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().subscribeFolder(userId, groupId, folderId);
+	}
+
+	public static void unsubscribeFolder(long userId, long groupId,
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsubscribeFolder(userId, groupId, folderId);
+	}
+
 	/**
 	* Updates the file entry's asset replacing its asset categories, tags, and
 	* links.

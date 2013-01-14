@@ -233,6 +233,15 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		}
 	}
 
+	public boolean isSupportsSubscribing() {
+		if (isMountPoint()) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
 	public void setCompanyId(long companyId) {
 		_dlFolder.setCompanyId(companyId);
 	}

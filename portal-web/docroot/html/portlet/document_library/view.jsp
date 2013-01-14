@@ -48,6 +48,12 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 	displayStyle = displayViews[0];
 }
 
+Set<Long> folderSubscriptionClassPKs = null;
+
+if (themeDisplay.isSignedIn()) {
+	folderSubscriptionClassPKs = DLUtil.getFolderSubscriptionClassPKs(user.getUserId());
+}
+
 int entryStart = ParamUtil.getInteger(request, "entryStart");
 int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 
@@ -71,6 +77,8 @@ request.setAttribute("view.jsp-folder", folder);
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
+
+request.setAttribute("view.jsp-folderSubscriptionClassPKs", folderSubscriptionClassPKs);
 %>
 
 <portlet:actionURL var="undoTrashURL">

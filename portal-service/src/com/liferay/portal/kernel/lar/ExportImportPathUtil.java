@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.StagedModel;
 
+import java.io.Serializable;
+
 /**
  * @author Mate Thurzo
  * @author Daniel Kocsis
@@ -27,38 +29,39 @@ public class ExportImportPathUtil {
 
 	public static final String ROOT_PATH_GROUPS = "/groups/";
 
-	public static String getEntityPath(
-		long primaryKey, Class clazz, PortletDataContext portletDataContext) {
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(ROOT_PATH_GROUPS);
-		sb.append(portletDataContext.getSourceGroupId());
-		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(clazz.getName());
-		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(primaryKey + ".xml");
-
-		return sb.toString();
-	}
-
 	public static String getEntityPath(Object entity) {
 		if (!(entity instanceof StagedModel)) {
 			return StringPool.BLANK;
 		}
 
-		long groupId = ((StagedModel)entity).getGroupId();
+		StagedModel stagedModel = (StagedModel)entity;
 
 		ClassedModel classedModel = (ClassedModel)entity;
 
-		StringBundler sb = new StringBundler(6);
+		return getEntityPath(
+			stagedModel.getGroupId(), classedModel.getModelClassName(),
+			classedModel.getPrimaryKeyObj());
+	}
+
+	public static String getEntityPath(
+		String className, long classPK, PortletDataContext portletDataContext) {
+
+		return getEntityPath(
+			portletDataContext.getSourceGroupId(), className, classPK);
+	}
+
+	protected static String getEntityPath(
+		long groupId, String className, Serializable primaryKeyObj) {
+
+		StringBundler sb = new StringBundler(7);
 
 		sb.append(ROOT_PATH_GROUPS);
 		sb.append(groupId);
 		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(classedModel.getModelClassName());
+		sb.append(className);
 		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(classedModel.getPrimaryKeyObj() + ".xml");
+		sb.append(primaryKeyObj.toString());
+		sb.append(".xml");
 
 		return sb.toString();
 	}

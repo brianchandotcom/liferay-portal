@@ -36,6 +36,7 @@ import java.lang.reflect.Method;
 
 import java.security.Permission;
 
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
@@ -144,6 +145,33 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 		return sb.toString();
 	}
 
+	private void mergeUntrackedRules() {
+
+		// This is done so that the written policy is the complete picture
+		// rather than only a list of the modified rules. The developer
+		// therefore need only copy the entire policy.
+
+		Properties properties = getProperties();
+
+		Enumeration<Object> keys = properties.keys();
+
+		while (keys.hasMoreElements()) {
+			String key = (String)keys.nextElement();
+
+			if (_policyRules.containsKey(key) ||
+				!key.startsWith("security-manager-") ||
+				key.equals("security-manager-enabled") ||
+				key.equals("security-manager-generator-dir")) {
+
+				continue;
+			}
+
+			Set<String> propertySet = getPropertySet(key);
+
+			_policyRules.put(key, propertySet);
+		}
+	}
+
 	private void trackGeneratedRule(String[] rule) {
 		if ((rule == null) || (rule.length != 2) || (rule[0] == null)) {
 
@@ -190,6 +218,8 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 			// lock
 
 			_policyRules.put(key, trackedRules);
+
+			mergeUntrackedRules();
 
 			writePropertiesFile();
 		}

@@ -256,8 +256,7 @@ public class ThemeUtil {
 				TemplateManager.FREEMARKER, resourcePath);
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateManager.FREEMARKER, templateResource,
-			TemplateContextType.STANDARD);
+			TemplateManager.FREEMARKER, templateResource, templateContextType);
 
 		// FreeMarker variables
 
@@ -475,8 +474,7 @@ public class ThemeUtil {
 		}
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateManager.VELOCITY, templateResource,
-			TemplateContextType.STANDARD);
+			TemplateManager.VELOCITY, templateResource, templateContextType);
 
 		// Velocity variables
 

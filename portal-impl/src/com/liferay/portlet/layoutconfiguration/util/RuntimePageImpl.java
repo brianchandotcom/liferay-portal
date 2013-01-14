@@ -303,8 +303,7 @@ public class RuntimePageImpl implements RuntimePage {
 			new CustomizationSettingsProcessor(pageContext);
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateManager.VELOCITY, templateResource,
-			TemplateContextType.STANDARD);
+			TemplateManager.VELOCITY, templateResource, templateContextType);
 
 		template.put("processor", processor);
 

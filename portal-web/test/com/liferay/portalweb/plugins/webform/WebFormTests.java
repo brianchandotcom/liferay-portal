@@ -15,6 +15,7 @@
 package com.liferay.portalweb.plugins.webform;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,7 +31,7 @@ public class WebFormTests extends BaseTestSuite {
 		testSuite.addTestSuite(EditFormTest.class);
 		testSuite.addTestSuite(ArchiveTest.class);
 		testSuite.addTestSuite(TearDownArchivedSetupTest.class);
-		testSuite.addTestSuite(DeletePageTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

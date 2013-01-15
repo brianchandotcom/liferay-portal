@@ -1055,6 +1055,8 @@ public class PropsValues {
 
 	public static final String MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT_PREFIX = PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT_PREFIX);
 
+	public static String[] MESSAGE_BOARDS_EMAIL_REPLY_SANITIZERS = PropsUtil.getArray(PropsKeys.MESSAGE_BOARDS_EMAIL_REPLY_SANITIZERS);
+
 	public static final int MESSAGE_BOARDS_EXPIRE_BAN_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EXPIRE_BAN_INTERVAL));
 
 	public static final long MESSAGE_BOARDS_EXPIRE_BAN_JOB_INTERVAL = GetterUtil.getLong(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EXPIRE_BAN_JOB_INTERVAL));

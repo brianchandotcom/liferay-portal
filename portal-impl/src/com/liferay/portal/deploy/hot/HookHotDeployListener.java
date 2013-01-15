@@ -95,6 +95,7 @@ import com.liferay.portal.model.Release;
 import com.liferay.portal.repository.util.RepositoryFactory;
 import com.liferay.portal.repository.util.RepositoryFactoryImpl;
 import com.liferay.portal.repository.util.RepositoryFactoryUtil;
+import com.liferay.portal.sanitizer.SanitizerProcessorUtil;
 import com.liferay.portal.security.auth.AuthFailure;
 import com.liferay.portal.security.auth.AuthPipeline;
 import com.liferay.portal.security.auth.AuthToken;
@@ -222,7 +223,8 @@ public class HookHotDeployListener
 		"lock.listeners", "login.create.account.allow.custom.password",
 		"login.events.post", "login.events.pre", "login.form.navigation.post",
 		"login.form.navigation.pre", "logout.events.post", "logout.events.pre",
-		"mail.hook.impl", "my.sites.show.private.sites.with.no.layouts",
+		"mail.hook.impl", "message.boards.email.reply.sanitizers",
+		"my.sites.show.private.sites.with.no.layouts",
 		"my.sites.show.public.sites.with.no.layouts",
 		"my.sites.show.user.private.sites.with.no.layouts",
 		"my.sites.show.user.public.sites.with.no.layouts",
@@ -431,6 +433,15 @@ public class HookHotDeployListener
 
 		if (portalProperties.containsKey(PropsKeys.MAIL_HOOK_IMPL)) {
 			com.liferay.mail.util.HookFactory.setInstance(null);
+		}
+
+		if (portalProperties.containsKey(
+				PropsKeys.MESSAGE_BOARDS_EMAIL_REPLY_SANITIZERS)) {
+
+			SanitizerContainer sanitizerContainer =
+				_sanitizerContainerMap.remove(servletContextName);
+
+			sanitizerContainer.unregisterSanitizers();
 		}
 
 		if (portalProperties.containsKey(PropsKeys.PASSWORDS_TOOLKIT)) {
@@ -1827,6 +1838,26 @@ public class HookHotDeployListener
 			com.liferay.mail.util.HookFactory.setInstance(mailHook);
 		}
 
+		if (portalProperties.containsKey(
+				PropsKeys.MESSAGE_BOARDS_EMAIL_REPLY_SANITIZERS)) {
+
+			String[] sanitizerClassNames = StringUtil.split(
+				portalProperties.getProperty(
+					PropsKeys.MESSAGE_BOARDS_EMAIL_REPLY_SANITIZERS));
+
+			SanitizerContainer sanitizerContainer = new SanitizerContainer();
+
+			_sanitizerContainerMap.put(servletContextName, sanitizerContainer);
+
+			for (String sanitizerClassName : sanitizerClassNames) {
+				Sanitizer sanitizer = (Sanitizer)newInstance(
+					portletClassLoader, Sanitizer.class, sanitizerClassName);
+
+				sanitizerContainer.registerSanitizer(
+					PropsKeys.MESSAGE_BOARDS_EMAIL_REPLY_SANITIZERS, sanitizer);
+			}
+		}
+
 		if (portalProperties.containsKey(PropsKeys.PASSWORDS_TOOLKIT)) {
 			String toolkitClassName = portalProperties.getProperty(
 				PropsKeys.PASSWORDS_TOOLKIT);
@@ -2570,6 +2601,7 @@ public class HookHotDeployListener
 		"layout.form.add", "layout.form.update", "layout.set.form.update",
 		"layout.static.portlets.all", "layout.types",
 		"login.form.navigation.post", "login.form.navigation.pre",
+		"message.boards.email.reply.sanitizers",
 		"organizations.form.add.identification", "organizations.form.add.main",
 		"organizations.form.add.miscellaneous",
 		"portlet.add.default.resource.check.whitelist",
@@ -2652,6 +2684,8 @@ public class HookHotDeployListener
 		_PROPS_KEYS_EVENTS);
 	private Set<String> _propsKeysSessionEvents = SetUtil.fromArray(
 		_PROPS_KEYS_SESSION_EVENTS);
+	private Map<String, SanitizerContainer> _sanitizerContainerMap =
+		new HashMap<String, SanitizerContainer>();
 	private ServicesContainer _servicesContainer = new ServicesContainer();
 	private Set<String> _servletContextNames = new HashSet<String>();
 	private Map<String, ServletFiltersContainer> _servletFiltersContainerMap =
@@ -3171,6 +3205,40 @@ public class HookHotDeployListener
 		private String[] _pluginStringArray;
 		private String[] _portalStringArray;
 		private String _servletContextName;
+
+	}
+
+	private class SanitizerContainer {
+
+		public void registerSanitizer(String key, Sanitizer sanitizer) {
+			List<Sanitizer> sanitizers = _sanitizersMap.get(key);
+
+			if (sanitizers == null) {
+				sanitizers = new ArrayList<Sanitizer>();
+
+				_sanitizersMap.put(key, sanitizers);
+			}
+
+			sanitizers.add(sanitizer);
+
+			SanitizerProcessorUtil.registerSanitizer(key, sanitizer);
+		}
+
+		public void unregisterSanitizers() {
+			for (Map.Entry<String, List<Sanitizer>> entry :
+					_sanitizersMap.entrySet()) {
+
+				String key = entry.getKey();
+				List<Sanitizer> sanitizers = entry.getValue();
+
+				for (Sanitizer sanitizer : sanitizers) {
+					SanitizerProcessorUtil.unregisterSanitizer(key, sanitizer);
+				}
+			}
+		}
+
+		private Map<String, List<Sanitizer>> _sanitizersMap =
+			new HashMap<String, List<Sanitizer>>();
 
 	}
 

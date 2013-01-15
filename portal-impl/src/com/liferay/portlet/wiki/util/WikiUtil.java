@@ -580,7 +580,7 @@ public class WikiUtil {
 
 	private String _getEditPage(String format) {
 		return PropsUtil.get(
-				PropsKeys.WIKI_FORMATS_EDIT_PAGE, new Filter(format));
+			PropsKeys.WIKI_FORMATS_EDIT_PAGE, new Filter(format));
 	}
 
 	private WikiEngine _getEngine(String format) throws WikiFormatException {
@@ -693,7 +693,6 @@ public class WikiUtil {
 	private static Pattern _editPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE_EDIT\\$\\](.*?)" +
 			"\\[\\$END_PAGE_TITLE_EDIT\\$\\]");
-
 	private static Pattern _viewPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE\\$\\](.*?)\\[\\$END_PAGE_TITLE\\$\\]");
 

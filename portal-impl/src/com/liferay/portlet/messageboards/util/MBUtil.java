@@ -117,7 +117,7 @@ public class MBUtil {
 		}
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-				categoryId);
+			categoryId);
 
 		addPortletBreadcrumbEntries(category, request, renderResponse);
 	}
@@ -336,8 +336,8 @@ public class MBUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromAddress(
-				preferences, companyId,
-				PropsValues.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS);
+			preferences, companyId,
+			PropsValues.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS);
 	}
 
 	public static String getEmailFromName(
@@ -686,10 +686,10 @@ public class MBUtil {
 		throws Exception {
 
 		String[] priorities = LocalizationUtil.getPreferencesValues(
-				preferences, "priorities", languageId);
+			preferences, "priorities", languageId);
 
 		String[] priorityPair = _findThreadPriority(
-				value, themeDisplay, priorities);
+			value, themeDisplay, priorities);
 
 		if (priorityPair == null) {
 			String defaultLanguageId = LocaleUtil.toLanguageId(
@@ -840,8 +840,8 @@ public class MBUtil {
 		PortletPreferences preferences) {
 
 		return GetterUtil.getBoolean(
-				preferences.getValue("allowAnonymousPosting", null),
-				PropsValues.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
+			preferences.getValue("allowAnonymousPosting", null),
+			PropsValues.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
 	}
 
 	public static boolean isViewableMessage(

@@ -60,24 +60,20 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		Hits hits = indexer.search(searchContext);
 
-		List<Document> entries = BlogsUtil.getEntries(hits);
+		List<BlogsEntry> entries = BlogsUtil.getEntries(hits);
 		%>
 
 		<liferay-ui:search-container-results
 			results="<%= entries %>"
-			total="<%= entries.size() %>"
+			total="<%= hits.getLength() %>"
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.search.Document"
-			modelVar="document"
+			className="com.liferay.portlet.blogs.model.BlogsEntry"
+			modelVar="entry"
 		>
 
 			<%
-			long entryId = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
-
-			BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
-
 			entry = entry.toEscapedModel();
 
 			PortletURL rowURL = renderResponse.createRenderURL();

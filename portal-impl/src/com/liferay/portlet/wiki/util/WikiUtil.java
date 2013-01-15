@@ -293,8 +293,8 @@ public class WikiUtil {
 		}
 	}
 
-	public static List<Document> getEntries(Hits hits) {
-		List<Document> entries = new ArrayList<Document>();
+	public static List<WikiPage> getEntries(Hits hits) {
+		List<WikiPage> pages = new ArrayList<WikiPage>();
 
 		for (Document document : hits.getDocs()) {
 			long entryClassPK = GetterUtil.getLong(
@@ -304,9 +304,9 @@ public class WikiUtil {
 			try {
 				WikiNodeLocalServiceUtil.getNode(nodeId);
 
-				WikiPageLocalServiceUtil.getPage(entryClassPK);
+				WikiPage page = WikiPageLocalServiceUtil.getPage(entryClassPK);
 
-				entries.add(document);
+				pages.add(page);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -315,7 +315,7 @@ public class WikiUtil {
 			}
 		}
 
-		return entries;
+		return pages;
 	}
 
 	public static WikiNode getFirstNode(PortletRequest portletRequest)

@@ -73,24 +73,21 @@ portletURL.setParameter("keywords", keywords);
 
 		Hits hits = indexer.search(searchContext);
 
-		List<Document> entries = WikiUtil.getEntries(hits);
+		List<WikiPage> pages = WikiUtil.getEntries(hits);
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= entries %>"
-			total="<%= entries.size() %>"
+			results="<%= pages %>"
+			total="<%= hits.getLength() %>"
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.search.Document"
-			modelVar="document"
+			className="com.liferay.portlet.wiki.model.WikiPage"
+			modelVar="wikiPage"
 		>
 
 			<%
-			long curNodeId = GetterUtil.getLong(document.get("nodeId"));
-			String title = document.get("title");
-
-			WikiNode curNode = WikiNodeLocalServiceUtil.getNode(curNodeId);
+			WikiNode curNode = wikiPage.getNode();
 			%>
 
 			<liferay-ui:search-container-column-text
@@ -101,7 +98,7 @@ portletURL.setParameter("keywords", keywords);
 			<portlet:actionURL var="rowURL">
 				<portlet:param name="struts_action" value="/wiki/view" />
 				<portlet:param name="nodeName" value="<%= node.getName() %>" />
-				<portlet:param name="title" value="<%= title %>" />
+				<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:search-container-column-text
@@ -113,7 +110,7 @@ portletURL.setParameter("keywords", keywords);
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="page"
-				value="<%= title %>"
+				value="<%= wikiPage.getTitle() %>"
 			/>
 		</liferay-ui:search-container-row>
 

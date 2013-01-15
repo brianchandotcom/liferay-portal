@@ -85,43 +85,37 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		Hits hits = indexer.search(searchContext);
 
-		List<Document> entries = MBUtil.getEntries(hits);
+		List<MBMessage> messages = MBUtil.getEntries(hits);
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= entries %>"
-			total="<%= entries.size() %>"
+			results="<%= messages %>"
+			total="<%= hits.getLength() %>"
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.search.Document"
-			modelVar="document"
+			className="com.liferay.portlet.messageboards.model.MBMessage"
+			modelVar="message"
 		>
 
 			<%
-			long categoryId = GetterUtil.getLong(document.get("categoryId"));
-
-			MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
+			MBCategory category = message.getCategory();
 
 			PortletURL categoryUrl = renderResponse.createRenderURL();
 
 			categoryUrl.setParameter("struts_action", "/message_boards/view");
 			categoryUrl.setParameter("redirect", currentURL);
-			categoryUrl.setParameter("mbCategoryId", String.valueOf(categoryId));
+			categoryUrl.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
 
 			// Thread and message
 
-			long curThreadId = GetterUtil.getLong(document.get("threadId"));
-			long messageId = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
-
-			MBThread thread = MBThreadLocalServiceUtil.getThread(curThreadId);
-			MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+			MBThread thread = message.getThread();
 
 			PortletURL rowURL = renderResponse.createRenderURL();
 
 			rowURL.setParameter("struts_action", "/message_boards/view_message");
 			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("messageId", String.valueOf(messageId));
+			rowURL.setParameter("messageId", String.valueOf(message.getMessageId()));
 			%>
 
 			<liferay-ui:search-container-column-text

@@ -188,17 +188,18 @@ public class BlogsUtil {
 			preferences, companyId, PropsValues.BLOGS_EMAIL_FROM_NAME);
 	}
 
-	public static List<Document> getEntries(Hits hits) {
-		List<Document> entries = new ArrayList<Document>();
+	public static List<BlogsEntry> getEntries(Hits hits) {
+		List<BlogsEntry> entries = new ArrayList<BlogsEntry>();
 
 		for (Document document : hits.getDocs()) {
 			long entryClassPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
 			try {
-				BlogsEntryLocalServiceUtil.getEntry(entryClassPK);
+				BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(
+					entryClassPK);
 
-				entries.add(document);
+				entries.add(entry);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

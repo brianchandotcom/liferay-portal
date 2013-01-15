@@ -479,8 +479,8 @@ public class MBUtil {
 		}
 	}
 
-	public static List<Document> getEntries(Hits hits) {
-		List<Document> entries = new ArrayList<Document>();
+	public static List<MBMessage> getEntries(Hits hits) {
+		List<MBMessage> messages = new ArrayList<MBMessage>();
 
 		for (Document document : hits.getDocs()) {
 			long categoryId = GetterUtil.getLong(
@@ -495,6 +495,8 @@ public class MBUtil {
 						"Message boards search index is stale and contains " +
 							"category " + categoryId);
 				}
+
+				continue;
 			}
 
 			long threadId = GetterUtil.getLong(document.get("threadId"));
@@ -508,13 +510,19 @@ public class MBUtil {
 						"Message boards search index is stale and contains " +
 							"thread " + threadId);
 				}
+
+				continue;
 			}
 
 			long entryClassPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
+			MBMessage message = null;
+
 			try {
-				MBMessageLocalServiceUtil.getMessage(entryClassPK);
+				message = MBMessageLocalServiceUtil.getMessage(entryClassPK);
+
+				messages.add(message);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -522,12 +530,12 @@ public class MBUtil {
 						"Message boards search index is stale and contains " +
 							"message " + entryClassPK);
 				}
-			}
 
-			entries.add(document);
+				continue;
+			}
 		}
 
-		return entries;
+		return messages;
 	}
 
 	public static String getMailingListAddress(

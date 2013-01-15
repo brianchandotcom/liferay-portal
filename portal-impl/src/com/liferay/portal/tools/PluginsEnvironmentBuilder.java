@@ -394,6 +394,10 @@ public class PluginsEnvironmentBuilder {
 
 		if (addJunitJars) {
 			addClasspathEntry(sb, "/portal/lib/development/junit.jar");
+			addClasspathEntry(sb, "/portal/lib/development/mockito.jar");
+			addClasspathEntry(
+				sb, "/portal/lib/development/powermock-mockito.jar");
+			addClasspathEntry(sb, "/portal/lib/development/spring-test.jar");
 			addClasspathEntry(sb, "/portal/lib/portal/commons-io.jar");
 		}
 

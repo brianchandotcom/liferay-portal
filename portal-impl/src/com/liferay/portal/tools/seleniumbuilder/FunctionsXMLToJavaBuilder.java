@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.util.InitUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -30,18 +29,20 @@ import java.util.TreeSet;
 /**
  * @author Brian Wing Shun Chan
  */
-public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
+public class FunctionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 
-	public static void main(String[] args) throws Exception {
-		InitUtil.initWithSpring();
+	public FunctionsXMLToJavaBuilder(Map<String, Object> context)
+		throws Exception {
 
-		new FunctionsXMLToJavaBuilder(args);
-	}
+		super(context);
 
-	public FunctionsXMLToJavaBuilder(String[] args) throws Exception {
-		super(args);
+		_basedir = (String)context.get("basedir");
+		_functionMethodParamListMap = (Map<String, List<String>>)context.get(
+			"functionMethodParamListMap");
+		_functionMethodReturnTypeMap = (Map<String, String>)context.get(
+			"functionMethodReturnTypeMap");
 
-		_basedir = getBasedir();
+		_seleniumFileUtil = new SeleniumFileUtil(_basedir);
 
 		_validCommands = new TreeSet<String>();
 
@@ -50,23 +51,14 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 		_validCommands.add("if");
 		_validCommands.add("selenium");
 		_validCommands.add("while");
-
-		_functionMethodParamListMap = getFunctionMethodParamListMap();
-		_functionMethodReturnTypeMap = getFunctionMethodReturnTypeMap();
-
-		Set<String> fileNameSetFunctions = getFileNameSetFunctions();
-
-		for (String fileName : fileNameSetFunctions) {
-			if (fileName.length() > 161) {
-				System.out.println(
-					"Exceeds 177 characters: portal-web/test/" + fileName);
-			}
-
-			generateFunctions(fileName);
-		}
 	}
 
-	protected void generateFunctions(String fileName) throws Exception {
+	public void generateFunctions(String fileName) throws Exception {
+		if (fileName.length() > 161) {
+			System.out.println(
+				"Exceeds 177 characters: portal-web/test/" + fileName);
+		}
+
 		if (!FileUtil.exists(_basedir + "/" + fileName)) {
 			return;
 		}
@@ -83,9 +75,9 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 		String functionsPackagePath = StringUtil.replace(
 			functionsFilePath, StringPool.SLASH, StringPool.PERIOD);
 
-		isValidName(fileName);
+		Element rootElement = _seleniumFileUtil.getRootElement(fileName);
 
-		Element rootElement = getRootElement(fileName);
+		_seleniumFileUtil.isValidName(fileName, rootElement);
 
 		StringBundler sb = new StringBundler();
 
@@ -112,7 +104,7 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 
 		sb.append("}");
 
-		writeFile(functionsFileName, sb.toString(), true);
+		_seleniumFileUtil.writeFile(functionsFileName, sb.toString(), true);
 	}
 
 	private String _processFunctionDefs(Element functions) throws Exception {
@@ -169,6 +161,7 @@ public class FunctionsXMLToJavaBuilder extends SeleniumBuilder {
 	private String _basedir;
 	private Map<String, List<String>> _functionMethodParamListMap;
 	private Map<String, String> _functionMethodReturnTypeMap;
-	private Set<String> _validCommands = new TreeSet<String>();
+	private SeleniumFileUtil _seleniumFileUtil;
+	private Set<String> _validCommands;
 
 }

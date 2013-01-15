@@ -20,46 +20,40 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.util.InitUtil;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class TestCasesXMLToJavaBuilder extends SeleniumBuilder {
+public class TestCasesXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 
-	public static void main(String[] args) throws Exception {
-		InitUtil.initWithSpring();
+	public TestCasesXMLToJavaBuilder(Map<String, Object> context)
+		throws Exception {
 
-		new TestCasesXMLToJavaBuilder(args);
-	}
+		super(context);
 
-	public TestCasesXMLToJavaBuilder(String[] args) throws Exception {
-		super(args);
+		_basedir = (String)context.get("basedir");
 
-		_basedir = getBasedir();
+		_seleniumDataUtil = new SeleniumDataUtil(context);
+
+		_seleniumFileUtil = new SeleniumFileUtil(_basedir);
 
 		_validCommands = new TreeSet<String>();
 
 		_validCommands.add("action");
 		_validCommands.add("macro");
 		_validCommands.add("window");
-
-		Set<String> fileNameSetTestCases = getFileNameSetTestCases();
-
-		for (String fileName : fileNameSetTestCases) {
-			if (fileName.length() > 161) {
-				System.out.println(
-					"Exceeds 177 characters: portal-web/test/" + fileName);
-			}
-
-			generateTestCase(fileName);
-		}
 	}
 
-	protected void generateTestCase(String fileName) throws Exception {
+	public void generateTestCase(String fileName) throws Exception {
+		if (fileName.length() > 161) {
+			System.out.println(
+				"Exceeds 177 characters: portal-web/test/" + fileName);
+		}
+
 		if (!FileUtil.exists(_basedir + "/" + fileName)) {
 			return;
 		}
@@ -76,12 +70,13 @@ public class TestCasesXMLToJavaBuilder extends SeleniumBuilder {
 		String testCasePackagePath = StringUtil.replace(
 			testCaseFilePath, StringPool.SLASH, StringPool.PERIOD);
 
-		Element rootElement = getRootElement(fileName);
+		Element rootElement = _seleniumFileUtil.getRootElement(fileName);
+
 		Element setupBlock = rootElement.element("setup");
 		Element stepsBlock = rootElement.element("steps");
 		Element teardownBlock = rootElement.element("teardown");
 
-		isValidName(fileName);
+		_seleniumFileUtil.isValidName(fileName, rootElement);
 
 		StringBundler sb = new StringBundler();
 
@@ -106,7 +101,7 @@ public class TestCasesXMLToJavaBuilder extends SeleniumBuilder {
 
 		sb.append("}");
 
-		writeFile(testCaseFileName, sb.toString(), true);
+		_seleniumFileUtil.writeFile(testCaseFileName, sb.toString(), true);
 	}
 
 	protected String processBlockObjectDeclaractions(Element element)
@@ -114,7 +109,8 @@ public class TestCasesXMLToJavaBuilder extends SeleniumBuilder {
 
 		StringBundler sb = new StringBundler();
 
-		Set<String> simpleClassNameSet = getChildSimpleClassNameSet(element);
+		Set<String> simpleClassNameSet =
+			_seleniumDataUtil.getChildSimpleClassNameSet(element);
 
 		String elementName = element.getName();
 
@@ -141,9 +137,10 @@ public class TestCasesXMLToJavaBuilder extends SeleniumBuilder {
 
 		StringBundler sb = new StringBundler();
 
-		Set<String> classNameImportSet = getChildClassNameSet(rootElement);
+		Set<String> classNameImportSet = _seleniumDataUtil.getChildClassNameSet(
+			rootElement);
 
-		classNameImportSet = addClassName(
+		classNameImportSet = _seleniumDataUtil.addClassName(
 			classNameImportSet, "SignInUserMacros");
 
 		for (String className : classNameImportSet) {
@@ -203,6 +200,8 @@ public class TestCasesXMLToJavaBuilder extends SeleniumBuilder {
 	}
 
 	private String _basedir;
+	private SeleniumDataUtil _seleniumDataUtil;
+	private SeleniumFileUtil _seleniumFileUtil;
 	private Set<String> _validCommands = new TreeSet<String>();
 
 }

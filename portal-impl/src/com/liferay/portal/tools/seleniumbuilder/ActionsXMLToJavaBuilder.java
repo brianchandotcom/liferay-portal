@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.util.InitUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,39 +30,32 @@ import java.util.TreeSet;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
+public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 
-	public static void main(String[] args) throws Exception {
-		InitUtil.initWithSpring();
+	public ActionsXMLToJavaBuilder(Map<String, Object> context)
+		throws Exception {
 
-		new ActionsXMLToJavaBuilder(args);
-	}
+		super(context);
 
-	public ActionsXMLToJavaBuilder(String[] args) throws Exception {
-		super(args);
+		_basedir = (String)context.get("basedir");
+		_functionMethodParamListMap = (Map<String, List<String>>)context.get(
+			"functionMethodParamListMap");
+		_functionMethodReturnTypeMap = (Map<String, String>)context.get(
+			"functionMethodReturnTypeMap");
 
-		_basedir = getBasedir();
+		_seleniumFileUtil = new SeleniumFileUtil(_basedir);
 
 		_validCommands = new TreeSet<String>();
 
 		_validCommands.add("function");
-
-		_functionMethodParamListMap = getFunctionMethodParamListMap();
-		_functionMethodReturnTypeMap = getFunctionMethodReturnTypeMap();
-
-		Set<String> fileNameSetPaths = getFileNameSetPaths();
-
-		for (String fileName : fileNameSetPaths) {
-			if (fileName.length() > 161) {
-				System.out.println(
-					"Exceeds 177 characters: portal-web/test/" + fileName);
-			}
-
-			generateActions(fileName);
-		}
 	}
 
-	protected void generateActions(String fileName) throws Exception {
+	public void generateActions(String fileName) throws Exception {
+		if (fileName.length() > 161) {
+			System.out.println(
+				"Exceeds 177 characters: portal-web/test/" + fileName);
+		}
+
 		if (!FileUtil.exists(_basedir + "/" + fileName)) {
 			return;
 		}
@@ -87,9 +79,9 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		Element rootElement = null;
 
 		if (FileUtil.exists(_basedir + "/" + actionsXMLFileName)) {
-			isValidName(actionsXMLFileName);
+			rootElement = _seleniumFileUtil.getRootElement(actionsXMLFileName);
 
-			rootElement = getRootElement(actionsXMLFileName);
+			_seleniumFileUtil.isValidName(actionsXMLFileName, rootElement);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -141,7 +133,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 
 		sb.append("}");
 
-		writeFile(actionsFileName, sb.toString(), true);
+		_seleniumFileUtil.writeFile(actionsFileName, sb.toString(), true);
 	}
 
 	private String _combineConditionals(
@@ -217,7 +209,7 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 
 		if (!hasDefaultConditional) {
 			sb.append("else {");
-			sb.append(_processCommandSuper(actionDef));
+			sb.append(_writeCommandSuper(actionDef));
 			sb.append("}");
 		}
 
@@ -292,47 +284,6 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
-	private String _processCommandSuper(Element actionDef) throws Exception {
-		StringBundler sb = new StringBundler();
-
-		String actionDefCommand = actionDef.attributeValue("command");
-
-		String functionObjectName = StringUtil.upperCaseFirstLetter(
-			actionDefCommand);
-
-		String functionReturnType = _functionMethodReturnTypeMap.get(
-			functionObjectName);
-
-		if (!functionReturnType.equals("void")) {
-			sb.append("return ");
-		}
-
-		sb.append("super.");
-		sb.append(actionDefCommand);
-
-		List<String> paramSuffixList = _functionMethodParamListMap.get(
-			functionObjectName);
-
-		String paramList = "";
-
-		for (String paramSuffix : paramSuffixList) {
-			String paramPair = "params[0], params[1], ";
-
-			paramPair = StringUtil.replace(
-				paramPair, "params", "params" + paramSuffix);
-
-			paramList += paramPair;
-		}
-
-		paramList = paramList.substring(0, paramList.length() - 2);
-
-		sb.append("(");
-		sb.append(paramList);
-		sb.append(");\n");
-
-		return sb.toString();
-	}
-
 	private String _processConditional(Element conditional) throws Exception {
 		List<String> clauseList = new ArrayList<String>();
 
@@ -397,9 +348,51 @@ public class ActionsXMLToJavaBuilder extends SeleniumBuilder {
 		return sb.toString();
 	}
 
+	private String _writeCommandSuper(Element actionDef) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		String actionDefCommand = actionDef.attributeValue("command");
+
+		String functionObjectName = StringUtil.upperCaseFirstLetter(
+			actionDefCommand);
+
+		String functionReturnType = _functionMethodReturnTypeMap.get(
+			functionObjectName);
+
+		if (!functionReturnType.equals("void")) {
+			sb.append("return ");
+		}
+
+		sb.append("super.");
+		sb.append(actionDefCommand);
+
+		List<String> paramSuffixList = _functionMethodParamListMap.get(
+			functionObjectName);
+
+		String paramList = "";
+
+		for (String paramSuffix : paramSuffixList) {
+			String paramPair = "params[0], params[1], ";
+
+			paramPair = StringUtil.replace(
+				paramPair, "params", "params" + paramSuffix);
+
+			paramList += paramPair;
+		}
+
+		paramList = paramList.substring(0, paramList.length() - 2);
+
+		sb.append("(");
+		sb.append(paramList);
+		sb.append(");\n");
+
+		return sb.toString();
+	}
+
 	private String _basedir;
 	private Map<String, List<String>> _functionMethodParamListMap;
 	private Map<String, String> _functionMethodReturnTypeMap;
-	private Set<String> _validCommands = new TreeSet<String>();
+	private SeleniumFileUtil _seleniumFileUtil;
+	private Set<String> _validCommands;
 
 }

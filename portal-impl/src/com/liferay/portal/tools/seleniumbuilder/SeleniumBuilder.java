@@ -14,23 +14,16 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 import com.liferay.portal.util.InitUtil;
 
 import jargs.gnu.CmdLineParser;
 
-import java.io.File;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,12 +42,7 @@ public class SeleniumBuilder {
 	public static void main(String[] args) throws Exception {
 		InitUtil.initWithSpring();
 
-		new ActionsXMLToJavaBuilder(args);
-		new MacrosXMLToJavaBuilder(args);
-		new PathsXMLToJavaBuilder(args);
-		new TestCasesXMLToJavaBuilder(args);
-		new TestPlanBuilder(args);
-		new FunctionsXMLToJavaBuilder(args);
+		new SeleniumBuilder(args);
 	}
 
 	public SeleniumBuilder(String[] args) throws Exception {
@@ -62,10 +50,15 @@ public class SeleniumBuilder {
 
 		CmdLineParser.Option basedirOption = cmdLineParser.addStringOption(
 			"basedir");
+		CmdLineParser.Option typeOption = cmdLineParser.addStringOption("type");
 
 		cmdLineParser.parse(args);
 
+		String type = (String)cmdLineParser.getOptionValue(typeOption);
+
 		_basedir = (String)cmdLineParser.getOptionValue(basedirOption);
+
+		_seleniumFileUtil = new SeleniumFileUtil(_basedir);
 
 		_fileNameSet = _initFileNameSet();
 
@@ -76,300 +69,62 @@ public class SeleniumBuilder {
 		_fileNameSetTestCases = _initFileNameSetTestCases();
 
 		_classNameSetAvailable = _initClassNameSetAvailable();
-
+		_directoryNameSet = _initDirectoryNameSet();
 		_functionMethodParamListMap = _initFunctionMethodParamListMap();
 		_functionMethodReturnTypeMap = _initFunctionMethodReturnTypeMap();
 		_seleniumMethodParamMap = _initSeleniumMethodParamMap();
-	}
 
-	public String getBasedir() throws Exception {
-		return _basedir;
-	}
-
-	public Set<String> getClassNameSetAvailable() throws Exception {
-		return _classNameSetAvailable;
-	}
-
-	public Set<String> getFileNameSet() throws Exception {
-		return _fileNameSet;
-	}
-
-	public Set<String> getFileNameSetActions() throws Exception {
-		return _fileNameSetActions;
-	}
-
-	public Set<String> getFileNameSetFunctions() throws Exception {
-		return _fileNameSetFunctions;
-	}
-
-	public Set<String> getFileNameSetMacros() throws Exception {
-		return _fileNameSetMacros;
-	}
-
-	public Set<String> getFileNameSetPaths() throws Exception {
-		return _fileNameSetPaths;
-	}
-
-	public Set<String> getFileNameSetTestCases() throws Exception {
-		return _fileNameSetTestCases;
-	}
-
-	public Map<String, List<String>> getFunctionMethodParamListMap()
-		throws Exception {
-
-		return _functionMethodParamListMap;
-	}
-
-	public Map<String, String> getFunctionMethodReturnTypeMap()
-		throws Exception {
-
-		return _functionMethodReturnTypeMap;
-	}
-
-	public Map<String, Integer> getSeleniumMethodParamMap() throws Exception {
-		return _seleniumMethodParamMap;
-	}
-
-	protected Set<String> addClassName(
-		Set<String> classNameSet, String simpleClassName) throws Exception {
-
-		for (String className : _classNameSetAvailable) {
-			if (className.endsWith("." + simpleClassName)) {
-				classNameSet.add(className);
-			}
-		}
-
-		return classNameSet;
-	}
-
-	protected Set<String> getChildClassNameSet(Element element)
-		throws Exception {
-
-		Set<String> classNameSet = new TreeSet<String>();
-
-		Set<String> childSimpleClassNameSet = getChildSimpleClassNameSet(
-			element);
-
-		for (String childSimpleClassName : childSimpleClassNameSet) {
-			classNameSet = addClassName(classNameSet, childSimpleClassName);
-		}
-
-		return classNameSet;
-	}
-
-	protected Set<String> getChildSimpleClassNameSet(Element element)
-		throws Exception {
-
-		return _getChildSimpleClassNameSet(element, new TreeSet<String>());
-	}
-
-	protected String getNormalizedContent(String fileName) throws Exception {
-		String content = readFile(fileName);
-
-		if (content != null) {
-			content = content.trim();
-			content = StringUtil.replace(content, "\n", "");
-			content = StringUtil.replace(content, "\r\n", "");
-			content = StringUtil.replace(content, "\t", " ");
-			content = content.replaceAll(" +", " ");
-		}
-
-		return content;
-	}
-
-	protected Element getRootElement(String fileName) throws Exception {
-		String content = getNormalizedContent(fileName);
-
-		Document document = SAXReaderUtil.read(content, true);
-
-		return document.getRootElement();
-	}
-
-	protected Element getRootElementByElement(Element element)
-		throws Exception {
-
-		if (element.isRootElement()) {
-			return element;
-		}
-		else {
-			return getRootElementByElement(element.getParent());
-		}
-	}
-
-	protected void isValidName(String fileName) throws Exception {
-		Element rootElement = getRootElement(fileName);
-
-		int x = fileName.lastIndexOf(StringPool.SLASH);
-		int y = fileName.indexOf(CharPool.PERIOD);
-
-		String objectName = "";
-		String objectFileName = fileName.substring(x + 1, y);
-
-		if (fileName.endsWith(".case")) {
-			objectName = rootElement.attributeValue("name");
-		}
-		else {
-			objectName = rootElement.attributeValue("object");
-		}
-
-		if ((objectName == null) || !objectName.equals(objectFileName)) {
-			System.out.println(fileName + " has an invalid name");
-		}
-	}
-
-	protected String processBlockCommands(
-		Element block, Set<String> validCommands) throws Exception {
-
-		StringBundler sb = new StringBundler();
-
-		List<Element> commands = block.elements();
-
-		for (Element command : commands) {
-			sb.append(_processCommand(command, validCommands));
-		}
-
-		return sb.toString();
-	}
-
-	protected String processBlockObjectDeclaractions(Element element)
-		throws Exception {
-
-		StringBundler sb = new StringBundler();
-
-		Set<String> simpleClassNameSet = getChildSimpleClassNameSet(element);
-
-		for (String simpleClassName : simpleClassNameSet) {
-			sb.append(simpleClassName);
-			sb.append(" ");
-			sb.append(StringUtil.lowerCaseFirstLetter(simpleClassName));
-			sb.append(" = new ");
-			sb.append(simpleClassName);
-			sb.append("(selenium);\n");
-		}
-
-		sb.append("\n");
-
-		return sb.toString();
-	}
-
-	protected String processBlocksImports(Element element) throws Exception {
-		StringBundler sb = new StringBundler();
-
-		Set<String> classNameImportSet = getChildClassNameSet(element);
-
-		for (String className : classNameImportSet) {
-			sb.append("import ");
-			sb.append(className);
-			sb.append(";\n");
-		}
-
-		return sb.toString();
-	}
-
-	protected String readFile(String fileName) throws Exception {
-		return FileUtil.read(_basedir + "/" + fileName);
-	}
-
-	protected void writeFile(String fileName, String content, boolean format)
-		throws Exception {
-
-		File file = new File(_basedir + "-generated/" + fileName);
-
-		if (format) {
-			ServiceBuilder.writeFile(file, content);
-		}
-		else {
-			System.out.println("Writing " + file);
-
-			FileUtil.write(file, content);
-		}
-	}
-
-	private Set<String> _getChildSimpleClassNameSet(
-		Element element, Set<String> simpleClassNameSet) {
-
-		List<Element> children = element.elements();
-
-		if (children.isEmpty()) {
-			return simpleClassNameSet;
-		}
-		else {
-			for (Element child : children) {
-				String childName = child.getName();
-				String childObjectName = child.attributeValue("object");
-
-				if (!(childObjectName == null)) {
-					if (childName.equals("action") || childName.equals("if") ||
-						childName.equals("while")) {
-
-						simpleClassNameSet.add(childObjectName + "Actions");
-					}
-					else if (childName.equals("function")) {
-						simpleClassNameSet.add(childObjectName + "Functions");
-					}
-					else if (childName.equals("macro")) {
-						simpleClassNameSet.add(childObjectName + "Macros");
-					}
-				}
-
-				_getChildSimpleClassNameSet(child, simpleClassNameSet);
-			}
-		}
-
-		return simpleClassNameSet;
-	}
-
-	private String _getElementValue(Element element) {
-		return _getElementValue(element, "value");
-	}
-
-	private String _getElementValue(Element element, String attribute) {
-		StringBundler sb = new StringBundler();
-
-		String attributeValue = element.attributeValue(attribute);
-
-		if (!(attributeValue == null)) {
-			String firstLetter = attribute + "-first-letter";
-
-			String firstLetterValue = element.attributeValue(firstLetter);
-
-			if (!(firstLetterValue == null) &&
-				firstLetterValue.equals("true")) {
-
-				sb.append("LiferaySeleniumHelper.firstLetter(");
-				sb.append(_replaceVariables("\"" + attributeValue + "\""));
-				sb.append(")");
-			}
-			else {
-				sb.append(_replaceVariables("\"" + attributeValue + "\""));
-			}
-		}
-
-		return sb.toString();
-	}
-
-	private String _getFileNameByElement(Element command) throws Exception {
-		Element rootElement = getRootElementByElement(command);
-
-		String rootElementName = rootElement.getName();
-		String objectName = "";
-
-		if (rootElementName.equals("testcase")) {
-			objectName = rootElement.attributeValue("name");
-		}
-		else {
-			objectName = rootElement.attributeValue("object");
-		}
-
-		String simpleFileName = objectName + "." + rootElementName;
+		_context = _initContext();
+
+		BaseXMLToJavaBuilder baseXMLToJavaBuilder = new BaseXMLToJavaBuilder(
+			_context);
+		ActionsXMLToJavaBuilder actionsXMLToJavaBuilder =
+			new ActionsXMLToJavaBuilder(_context);
+		FunctionsXMLToJavaBuilder functionsXMLToJavaBuilder =
+			new FunctionsXMLToJavaBuilder(_context);
+		MacrosXMLToJavaBuilder macrosXMLToJavaBuilder =
+			new MacrosXMLToJavaBuilder(_context);
+		PathsXMLToJavaBuilder pathsXMLToJavaBuilder = new PathsXMLToJavaBuilder(
+			_context);
+		TestCasesXMLToJavaBuilder testCasesXMLToJavaBuilder =
+			new TestCasesXMLToJavaBuilder(_context);
+		TestPlansJavaBuilder testPlansJavaBuilder = new TestPlansJavaBuilder(
+			_context);
+
+		List<String> fileTypes = Arrays.asList(type.split(","));
 
 		for (String fileName : _fileNameSet) {
-			if (fileName.endsWith("/" + simpleFileName)) {
-				return fileName;
+			if (fileName.endsWith(".case") &&
+				fileTypes.contains("test-cases")) {
+
+				testCasesXMLToJavaBuilder.generateTestCase(fileName);
+			}
+			else if (fileName.endsWith(".functions") &&
+					 fileTypes.contains("functions")) {
+
+				functionsXMLToJavaBuilder.generateFunctions(fileName);
+			}
+			else if (fileName.endsWith(".macros") &&
+					 fileTypes.contains("macros")) {
+
+				macrosXMLToJavaBuilder.generateMacros(fileName);
+			}
+			else if (fileName.endsWith(".paths")) {
+				if (fileTypes.contains("actions")) {
+					actionsXMLToJavaBuilder.generateActions(fileName);
+				}
+
+				if (fileTypes.contains("paths")) {
+					pathsXMLToJavaBuilder.generatePaths(fileName);
+				}
 			}
 		}
 
-		return "";
+		for (String directoryName : _directoryNameSet) {
+			if (fileTypes.contains("test-plans")) {
+				testPlansJavaBuilder.generateTestPlan(directoryName);
+			}
+		}
 	}
 
 	private Set<String> _initClassNameSetAvailable() throws Exception {
@@ -412,6 +167,38 @@ public class SeleniumBuilder {
 		return classNameSet;
 	}
 
+	private Map<String, Object> _initContext() throws Exception {
+		Map<String, Object> hashMap = new HashMap<String, Object>();
+
+		hashMap.put("basedir", _basedir);
+		hashMap.put("classNameSetAvailable", _classNameSetAvailable);
+		hashMap.put("directoryNameSet", _directoryNameSet);
+		hashMap.put("fileNameSet", _fileNameSet);
+		hashMap.put("fileNameSetActions", _fileNameSetActions);
+		hashMap.put("fileNameSetFunctions", _fileNameSetFunctions);
+		hashMap.put("fileNameSetMacros", _fileNameSetMacros);
+		hashMap.put("fileNameSetPaths", _fileNameSetPaths);
+		hashMap.put("fileNameSetTestCases", _fileNameSetTestCases);
+		hashMap.put("functionMethodParamListMap", _functionMethodParamListMap);
+		hashMap.put(
+			"functionMethodReturnTypeMap", _functionMethodReturnTypeMap);
+		hashMap.put("seleniumMethodParamMap", _seleniumMethodParamMap);
+
+		return hashMap;
+	}
+
+	private Set<String> _initDirectoryNameSet() throws Exception {
+		Set<String> treeSet = new TreeSet<String>();
+
+		for (String fileName : _fileNameSetTestCases) {
+			int x = fileName.lastIndexOf("/");
+
+			treeSet.add(fileName.substring(0, x));
+		}
+
+		return treeSet;
+	}
+
 	private Set<String> _initFileNameSet() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -428,7 +215,7 @@ public class SeleniumBuilder {
 		Set<String> fileNames = new TreeSet<String>();
 
 		for (String fileName : directoryScanner.getIncludedFiles()) {
-			fileName = _normalizeFileName(fileName);
+			fileName = _seleniumFileUtil.normalizeFileName(fileName);
 
 			fileNames.add(fileName);
 		}
@@ -474,7 +261,7 @@ public class SeleniumBuilder {
 		Map<String, List<String>> hashMap = new HashMap<String, List<String>>();
 
 		for (String fileName : _fileNameSetFunctions) {
-			Element functions = getRootElement(fileName);
+			Element functions = _seleniumFileUtil.getRootElement(fileName);
 
 			String functionsObject = functions.attributeValue("object");
 			String functionsParams = functions.attributeValue("params");
@@ -505,7 +292,7 @@ public class SeleniumBuilder {
 		Map<String, String> hashMap = new HashMap<String, String>();
 
 		for (String fileName : _fileNameSetFunctions) {
-			Element functions = getRootElement(fileName);
+			Element functions = _seleniumFileUtil.getRootElement(fileName);
 
 			String functionsObject = functions.attributeValue("object");
 			String functionsReturn = functions.attributeValue("return");
@@ -542,399 +329,10 @@ public class SeleniumBuilder {
 		return hashMap;
 	}
 
-	private String _normalizeFileName(String fileName) {
-		return StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-	}
-
-	private String _processCommand(Element command, Set<String> validCommands)
-		throws Exception {
-
-		String commandName = command.getName();
-		String fileName = _getFileNameByElement(command);
-
-		if (validCommands.contains(commandName)) {
-			if (commandName.equals("action")) {
-				return _processCommandActions(command);
-			}
-			else if (commandName.equals("else")) {
-				return _processCommandElse(command, validCommands);
-			}
-			else if (commandName.equals("function")) {
-				return _processCommandFunctions(command);
-			}
-			else if (commandName.equals("if")) {
-				return _processCommandIf(command, validCommands);
-			}
-			else if (commandName.equals("macro")) {
-				return _processCommandMacros(command);
-			}
-			else if (commandName.equals("selenium")) {
-				return _processCommandSelenium(command);
-			}
-			else if (commandName.equals("while")) {
-				return _processCommandWhile(command, validCommands);
-			}
-			else if (commandName.equals("window")) {
-				return _processCommandWindow(command, validCommands);
-			}
-			else {
-				StringBundler message = new StringBundler();
-
-				message.append("Command '" + commandName + "'");
-				message.append(" used in " + fileName);
-				message.append(" does not exist in vocabulary");
-
-				throw new Exception(message.toString());
-			}
-		}
-		else {
-			StringBundler message = new StringBundler();
-
-			message.append("Invalid command '" + commandName + "'");
-			message.append(" used in " + fileName);
-
-			throw new Exception(message.toString());
-		}
-	}
-
-	private String _processCommandActions(Element action) {
-		String actionCommandName = action.attributeValue("command");
-		String actionObjectName = action.attributeValue("object");
-
-		String actionClassName = actionObjectName + "Actions";
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringUtil.lowerCaseFirstLetter(actionClassName));
-		sb.append(StringPool.PERIOD);
-		sb.append(actionCommandName);
-		sb.append("(");
-
-		String functionObjectName = StringUtil.upperCaseFirstLetter(
-			actionCommandName);
-
-		List<String> paramSuffixList = _functionMethodParamListMap.get(
-			functionObjectName);
-
-		String parameters = "";
-
-		for (String paramSuffix : paramSuffixList) {
-			String locator = "locator" + paramSuffix;
-			String target = "target" + paramSuffix;
-
-			String actionLocator = action.attributeValue(locator);
-			String actionTarget = action.attributeValue(target);
-
-			if (!(actionLocator == null)) {
-				parameters += _replaceVariables("\"" + actionLocator + "\"");
-			}
-			else if (!(actionTarget == null)) {
-				parameters += _replaceVariables("\"" + actionTarget + "\"");
-			}
-			else {
-				parameters += "\"\"";
-			}
-
-			parameters += ", ";
-
-			String value = "value" + paramSuffix;
-
-			String actionValue = action.attributeValue(value);
-
-			if (!(actionValue == null)) {
-				parameters += _getElementValue(action, value);
-			}
-			else {
-				parameters += "\"\"";
-			}
-
-			parameters += ", ";
-		}
-
-		parameters = parameters.substring(0, parameters.length() - 2);
-
-		sb.append(parameters);
-
-		sb.append(");\n");
-
-		return sb.toString();
-	}
-
-	private String _processCommandConditional(Element conditional) {
-		String conditionalObjectName = conditional.attributeValue("object");
-		String conditionalCommandName = conditional.attributeValue("command");
-
-		StringBundler sb = new StringBundler();
-
-		if (conditionalCommandName.contains("Not")) {
-			sb.append("!");
-
-			conditionalCommandName = StringUtil.replace(
-				conditionalCommandName, "Not", "");
-		}
-
-		if (conditionalObjectName == null) {
-			String seleniumCommand = _processCommandSelenium(conditional);
-
-			seleniumCommand = StringUtil.replace(seleniumCommand, "Not", "");
-			seleniumCommand = StringUtil.replace(seleniumCommand, ";\n", "");
-
-			sb.append(seleniumCommand);
-		}
-		else {
-			String actionClassName = conditionalObjectName + "Actions";
-			String actionCommandName = conditionalCommandName;
-
-			sb.append(StringUtil.lowerCaseFirstLetter(actionClassName));
-			sb.append(StringPool.PERIOD);
-			sb.append(actionCommandName);
-
-			String actionLocator = conditional.attributeValue("locator");
-			String actionTarget = conditional.attributeValue("target");
-
-			if (!(actionLocator == null)) {
-				sb.append("(");
-				sb.append(_replaceVariables("\"" + actionLocator + "\""));
-			}
-			else if (!(actionTarget == null)) {
-				sb.append("(");
-				sb.append(_replaceVariables("\"" + actionTarget + "\""));
-			}
-			else {
-				sb.append("(\"\"");
-			}
-
-			sb.append(", ");
-
-			String actionValue = conditional.attributeValue("value");
-
-			if (!(actionValue == null)) {
-				sb.append(_getElementValue(conditional));
-			}
-			else {
-				sb.append("\"\"");
-			}
-
-			sb.append(")");
-		}
-
-		return sb.toString();
-	}
-
-	private String _processCommandElse(
-		Element command, Set<String> validCommands) throws Exception {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("else {");
-		sb.append(processBlockCommands(command, validCommands));
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _processCommandFunctions(Element function) throws Exception {
-		String functionCommandName = function.attributeValue("command");
-		String functionObjectName = function.attributeValue("object");
-
-		String functionClassName = functionObjectName + "Functions";
-
-		StringBundler sb = new StringBundler();
-
-		String functionReturnType = _functionMethodReturnTypeMap.get(
-			functionObjectName);
-
-		if (!functionReturnType.equals("void")) {
-			sb.append("return ");
-		}
-
-		sb.append(StringUtil.lowerCaseFirstLetter(functionClassName));
-		sb.append(StringPool.PERIOD);
-		sb.append(functionCommandName);
-
-		Element parentElement = function.getParent();
-
-		String parentElementName = parentElement.getName();
-
-		List<String> paramSuffixList = _functionMethodParamListMap.get(
-			functionObjectName);
-
-		String paramList = "";
-
-		if (parentElementName.equals("conditional")) {
-			for (String paramSuffix : paramSuffixList) {
-				String paramPair = "params[0], params[1], ";
-
-				paramPair = StringUtil.replace(
-					paramPair, "params", "params" + paramSuffix);
-
-				paramList += paramPair;
-			}
-		}
-		else {
-			for (String paramSuffix : paramSuffixList) {
-				String paramPair = "target, value, ";
-
-				paramPair = StringUtil.replace(
-					paramPair, "target", "target" + paramSuffix);
-				paramPair = StringUtil.replace(
-					paramPair, "value", "value" + paramSuffix);
-
-				paramList += paramPair;
-			}
-		}
-
-		paramList = paramList.substring(0, paramList.length() - 2);
-
-		sb.append("(");
-		sb.append(paramList);
-		sb.append(");\n");
-
-		return sb.toString();
-	}
-
-	private String _processCommandIf(Element command, Set<String> validCommands)
-		throws Exception {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("if (");
-		sb.append(_processCommandConditional(command));
-		sb.append(") {");
-		sb.append(processBlockCommands(command, validCommands));
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _processCommandMacros(Element command) {
-		String macroDefCommand = command.attributeValue("command");
-		String macroObjectName = command.attributeValue("object");
-
-		String macroClassName = macroObjectName + "Macros";
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringUtil.lowerCaseFirstLetter(macroClassName));
-		sb.append(StringPool.PERIOD);
-		sb.append(macroDefCommand);
-
-		List<Element> macroParams = command.elements("param");
-
-		String paramList = "";
-
-		for (Element macroParam : macroParams) {
-			paramList += _getElementValue(macroParam) + ", ";
-		}
-
-		if (paramList.endsWith(", ")) {
-			paramList = paramList.substring(0, paramList.length() - 2);
-		}
-
-		sb.append("(");
-		sb.append(paramList);
-		sb.append(");\n");
-
-		return sb.toString();
-	}
-
-	private String _processCommandSelenium(Element command) {
-		String seleniumCommandName = command.attributeValue("command");
-		String seleniumCommandReturn = command.attributeValue("return");
-
-		int numParams = 0;
-
-		if (_seleniumMethodParamMap.containsKey(seleniumCommandName)) {
-			numParams = _seleniumMethodParamMap.get(seleniumCommandName);
-		}
-
-		StringBundler sb = new StringBundler();
-
-		if (!(seleniumCommandReturn == null)) {
-			sb.append("return ");
-		}
-
-		sb.append("selenium.");
-		sb.append(seleniumCommandName);
-		sb.append("(");
-
-		String seleniumTargetName = command.attributeValue("target");
-
-		if (!(seleniumTargetName == null)) {
-			sb.append("\"");
-			sb.append(_replaceVariables(seleniumTargetName));
-			sb.append("\"");
-		}
-		else if (seleniumCommandName.equals("assertConfirmation") ||
-				 seleniumCommandName.equals("assertTextNotPresent") ||
-				 seleniumCommandName.equals("assertTextPresent") ||
-				 seleniumCommandName.equals("waitForConfirmation") ||
-				 seleniumCommandName.equals("waitForTextNotPresent") ||
-				 seleniumCommandName.equals("waitForTextPresent")) {
-
-			sb.append("value");
-		}
-		else if (numParams > 0) {
-			sb.append("target");
-		}
-
-		String seleniumValueName = command.attributeValue("value");
-
-		if (!(seleniumValueName == null)) {
-			sb.append(", \"");
-			sb.append(_replaceVariables(seleniumValueName));
-			sb.append("\"");
-		}
-		else if (numParams > 1) {
-			sb.append(", value");
-		}
-
-		sb.append(");\n");
-
-		return sb.toString();
-	}
-
-	private String _processCommandWhile(
-		Element command, Set<String> validCommands) throws Exception {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("while (");
-		sb.append(_processCommandConditional(command));
-		sb.append(") {");
-		sb.append(processBlockCommands(command, validCommands));
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _processCommandWindow(
-		Element command, Set<String> validCommands) throws Exception {
-
-		String windowObjectName = command.attributeValue("object");
-
-		String actionClassName = windowObjectName + "Actions";
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringUtil.lowerCaseFirstLetter(actionClassName));
-		sb.append(StringPool.PERIOD);
-		sb.append("selectWindow(\"PAGE_NAME\", \"\");\n");
-
-		sb.append(processBlockCommands(command, validCommands));
-
-		sb.append(StringUtil.lowerCaseFirstLetter(actionClassName));
-		sb.append(StringPool.PERIOD);
-		sb.append("selectWindow(\"TOP\", \"\");\n");
-
-		return sb.toString();
-	}
-
 	private Map<String, Integer> _putSeleniumMethodParamMapFile(
 		Map<String, Integer> hashMap, String file) throws Exception {
 
-		String content = getNormalizedContent(file);
+		String content = _seleniumFileUtil.getNormalizedContent(file);
 
 		Pattern pattern = Pattern.compile(
 			"public (boolean|String|void) [A-Za-z0-9_]*\\(.*?\\)");
@@ -978,20 +376,10 @@ public class SeleniumBuilder {
 		return hashMap;
 	}
 
-	private String _replaceVariables(String text) {
-		if (text.startsWith("\"${") && text.endsWith("}\"")) {
-			return text.substring(3, text.length() - 2);
-		}
-		else {
-			text = StringUtil.replace(text, "${", "\" + ");
-			text = StringUtil.replace(text, "}", " + \"");
-		}
-
-		return text;
-	}
-
 	private String _basedir;
 	private Set<String> _classNameSetAvailable;
+	private Map<String, Object> _context;
+	private Set<String> _directoryNameSet;
 	private Set<String> _fileNameSet;
 	private Set<String> _fileNameSetActions;
 	private Set<String> _fileNameSetFunctions;
@@ -1000,6 +388,7 @@ public class SeleniumBuilder {
 	private Set<String> _fileNameSetTestCases;
 	private Map<String, List<String>> _functionMethodParamListMap;
 	private Map<String, String> _functionMethodReturnTypeMap;
+	private SeleniumFileUtil _seleniumFileUtil;
 	private Map<String, Integer> _seleniumMethodParamMap;
 
 }

@@ -1,0 +1,106 @@
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.tools.seleniumbuilder;
+
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
+
+import java.io.File;
+
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class SeleniumFileUtil {
+
+	public SeleniumFileUtil(String basedir) {
+		_basedir = basedir;
+	}
+
+	public String getNormalizedContent(String fileName) throws Exception {
+		String content = readFile(fileName);
+
+		if (content != null) {
+			content = content.trim();
+			content = StringUtil.replace(content, "\n", "");
+			content = StringUtil.replace(content, "\r\n", "");
+			content = StringUtil.replace(content, "\t", " ");
+			content = content.replaceAll(" +", " ");
+		}
+
+		return content;
+	}
+
+	public Element getRootElement(String fileName) throws Exception {
+		String content = getNormalizedContent(fileName);
+
+		Document document = SAXReaderUtil.read(content, true);
+
+		return document.getRootElement();
+	}
+
+	public void isValidName(String fileName, Element rootElement)
+		throws Exception {
+
+		int x = fileName.lastIndexOf(StringPool.SLASH);
+		int y = fileName.indexOf(CharPool.PERIOD);
+
+		String objectName = "";
+		String objectFileName = fileName.substring(x + 1, y);
+
+		if (fileName.endsWith(".case")) {
+			objectName = rootElement.attributeValue("name");
+		}
+		else {
+			objectName = rootElement.attributeValue("object");
+		}
+
+		if (!objectName.equals(objectFileName)) {
+			System.out.println(fileName + " has an invalid name");
+		}
+	}
+
+	public String normalizeFileName(String fileName) {
+		return StringUtil.replace(
+			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+	}
+
+	public String readFile(String fileName) throws Exception {
+		return FileUtil.read(_basedir + "/" + fileName);
+	}
+
+	public void writeFile(String fileName, String content, boolean format)
+		throws Exception {
+
+		File file = new File(_basedir + "-generated/" + fileName);
+
+		if (format) {
+			ServiceBuilder.writeFile(file, content);
+		}
+		else {
+			System.out.println("Writing " + file);
+
+			FileUtil.write(file, content);
+		}
+	}
+
+	private String _basedir;
+
+}

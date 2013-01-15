@@ -935,6 +935,15 @@
 	</target>
 
 	<target name="build-selenium-new">
+		<if>
+			<not>
+				<isset property="selenium.file.type" />
+			</not>
+			<then>
+				<property name="selenium.file.type" value="actions,functions,macros,paths,test-cases,test-plans" />
+			</then>
+		</if>
+
 		<java
 			classname="com.liferay.portal.tools.seleniumbuilder.SeleniumBuilder"
 			classpathref="project.classpath"
@@ -943,86 +952,44 @@
 			newenvironment="true"
 		>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test" />
+			<arg line="--basedir test  --type ${selenium.file.type}" />
 		</java>
 	</target>
 
 	<target name="build-selenium-new-actions">
-		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.ActionsXMLToJavaBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test" />
-		</java>
+		<antcall target="build-selenium-new">
+			<param name="selenium.file.type" value="actions" />
+		</antcall>
 	</target>
 
 	<target name="build-selenium-new-functions">
-		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.FunctionsXMLToJavaBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test" />
-		</java>
+		<antcall target="build-selenium-new">
+			<param name="selenium.file.type" value="functions" />
+		</antcall>
 	</target>
 
 	<target name="build-selenium-new-macros">
-		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.MacrosXMLToJavaBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test" />
-		</java>
+		<antcall target="build-selenium-new">
+			<param name="selenium.file.type" value="macros" />
+		</antcall>
 	</target>
 
 	<target name="build-selenium-new-paths">
-		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.PathsXMLToJavaBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test" />
-		</java>
+		<antcall target="build-selenium-new">
+			<param name="selenium.file.type" value="paths" />
+		</antcall>
 	</target>
 
 	<target name="build-selenium-new-test-cases">
-		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.TestCasesXMLToJavaBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test" />
-		</java>
+		<antcall target="build-selenium-new">
+			<param name="selenium.file.type" value="test-cases" />
+		</antcall>
 	</target>
 
 	<target name="build-selenium-new-test-plans">
-		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.TestPlanBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg line="--basedir test" />
-		</java>
+		<antcall target="build-selenium-new">
+			<param name="selenium.file.type" value="test-plans" />
+		</antcall>
 	</target>
 
 	<target name="build-themes">

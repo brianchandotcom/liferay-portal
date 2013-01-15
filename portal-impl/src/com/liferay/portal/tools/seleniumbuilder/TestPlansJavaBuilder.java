@@ -14,40 +14,28 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.InitUtil;
 
+import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class TestPlanBuilder extends SeleniumBuilder {
+public class TestPlansJavaBuilder extends BaseJavaBuilder {
 
-	public static void main(String[] args) throws Exception {
-		InitUtil.initWithSpring();
+	public TestPlansJavaBuilder(Map<String, Object> context) throws Exception {
+		super(context);
 
-		new TestPlanBuilder(args);
+		_basedir = (String)context.get("basedir");
+		_seleniumDataUtil = new SeleniumDataUtil(context);
+		_seleniumFileUtil = new SeleniumFileUtil(_basedir);
 	}
 
-	public TestPlanBuilder(String[] args) throws Exception {
-		super(args);
-
-		_basedir = getBasedir();
-
-		Set<String> directoryNames = _getDirectoryNames();
-
-		for (String directoryName : directoryNames) {
-			generateTestPlan(directoryName);
-		}
-	}
-
-	protected void generateTestPlan(String directoryName) throws Exception {
+	public void generateTestPlan(String directoryName) throws Exception {
 		if (!FileUtil.exists(_basedir + "/" + directoryName)) {
 			return;
 		}
@@ -80,8 +68,8 @@ public class TestPlanBuilder extends SeleniumBuilder {
 		sb.append("public static Test suite() {\n");
 		sb.append("TestSuite testSuite = new TestSuite();\n\n");
 
-		Set<String> testCaseSimpleClassNameSet = _getTestSimpleClassNames(
-			directoryName);
+		Set<String> testCaseSimpleClassNameSet =
+			_seleniumDataUtil.getTestCaseSimpleClassNames(directoryName);
 
 		for (String testCaseSimpleClassName : testCaseSimpleClassNameSet) {
 			sb.append("testSuite.addTestSuite(");
@@ -94,45 +82,11 @@ public class TestPlanBuilder extends SeleniumBuilder {
 
 		sb.append("}\n");
 
-		writeFile(testPlanFileName, sb.toString(), true);
-	}
-
-	private Set<String> _getDirectoryNames() throws Exception {
-		Set<String> treeSet = new TreeSet<String>();
-
-		Set<String> fileNameSetTestCases = getFileNameSetTestCases();
-
-		for (String fileName : fileNameSetTestCases) {
-			int x = fileName.lastIndexOf("/");
-
-			treeSet.add(fileName.substring(0, x));
-		}
-
-		return treeSet;
-	}
-
-	private Set<String> _getTestSimpleClassNames(String directoryName)
-		throws Exception {
-
-		Set<String> treeSet = new TreeSet<String>();
-
-		Set<String> fileNameSetTestCases = getFileNameSetTestCases();
-
-		for (String fileName : fileNameSetTestCases) {
-			if (fileName.startsWith(directoryName)) {
-				int x = fileName.lastIndexOf(StringPool.SLASH);
-				int y = fileName.indexOf(CharPool.PERIOD);
-
-				String testCaseSimpleClassName =
-					fileName.substring(x + 1, y) + "TestCase";
-
-				treeSet.add(testCaseSimpleClassName);
-			}
-		}
-
-		return treeSet;
+		_seleniumFileUtil.writeFile(testPlanFileName, sb.toString(), true);
 	}
 
 	private String _basedir;
+	private SeleniumDataUtil _seleniumDataUtil;
+	private SeleniumFileUtil _seleniumFileUtil;
 
 }

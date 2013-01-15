@@ -20,27 +20,25 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.util.InitUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
+public class MacrosXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 
-	public static void main(String[] args) throws Exception {
-		InitUtil.initWithSpring();
+	public MacrosXMLToJavaBuilder(Map<String, Object> context)
+		throws Exception {
 
-		new MacrosXMLToJavaBuilder(args);
-	}
+		super(context);
 
-	public MacrosXMLToJavaBuilder(String[] args) throws Exception {
-		super(args);
+		_basedir = (String)context.get("basedir");
 
-		_basedir = getBasedir();
+		_seleniumFileUtil = new SeleniumFileUtil(_basedir);
 
 		_validCommands = new TreeSet<String>();
 
@@ -50,20 +48,14 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		_validCommands.add("macro");
 		_validCommands.add("while");
 		_validCommands.add("window");
-
-		Set<String> fileNameSetMacros = getFileNameSetMacros();
-
-		for (String fileName : fileNameSetMacros) {
-			if (fileName.length() > 161) {
-				System.out.println(
-					"Exceeds 177 characters: portal-web/test/" + fileName);
-			}
-
-			generateMacros(fileName);
-		}
 	}
 
-	protected void generateMacros(String fileName) throws Exception {
+	public void generateMacros(String fileName) throws Exception {
+		if (fileName.length() > 161) {
+			System.out.println(
+				"Exceeds 177 characters: portal-web/test/" + fileName);
+		}
+
 		if (!FileUtil.exists(_basedir + "/" + fileName)) {
 			return;
 		}
@@ -79,9 +71,9 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 		String macrosPackagePath = StringUtil.replace(
 			macrosFilePath, StringPool.SLASH, StringPool.PERIOD);
 
-		isValidName(fileName);
+		Element rootElement = _seleniumFileUtil.getRootElement(fileName);
 
-		Element rootElement = getRootElement(fileName);
+		_seleniumFileUtil.isValidName(fileName, rootElement);
 
 		StringBundler sb = new StringBundler();
 
@@ -113,7 +105,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 
 		sb.append("}");
 
-		writeFile(macrosFileName, sb.toString(), true);
+		_seleniumFileUtil.writeFile(macrosFileName, sb.toString(), true);
 	}
 
 	private String _processMacroDefs(Element rootElement) throws Exception {
@@ -168,6 +160,7 @@ public class MacrosXMLToJavaBuilder extends SeleniumBuilder {
 	}
 
 	private String _basedir;
+	private SeleniumFileUtil _seleniumFileUtil;
 	private Set<String> _validCommands = new TreeSet<String>();
 
 }

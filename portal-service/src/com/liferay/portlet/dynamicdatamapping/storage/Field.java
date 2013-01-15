@@ -84,6 +84,12 @@ public class Field implements Serializable {
 		values.add(value);
 	}
 
+	public void addValues(Locale locale, List<Serializable> values) {
+		for (Serializable value : values) {
+			addValue(locale, value);
+		}
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Field)) {
@@ -276,6 +282,10 @@ public class Field implements Serializable {
 
 		if (!availableLocales.contains(locale)) {
 			locale = getDefaultLocale();
+		}
+
+		if (locale == null) {
+			locale = LocaleUtil.getDefault();
 		}
 
 		return _valuesMap.get(locale);

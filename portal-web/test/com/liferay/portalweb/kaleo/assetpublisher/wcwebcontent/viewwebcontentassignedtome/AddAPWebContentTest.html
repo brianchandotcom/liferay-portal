@@ -14,18 +14,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Asset Publisher Page</td>
-	<td>Asset Publisher Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Asset Publisher Page</td>
-	<td>Asset Publisher Page</td>
+	<td>link=Asset Publisher Test Page</td>
+	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,18 +35,33 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]</td>
 	<td>Web Content</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/lang/en.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -67,11 +77,6 @@
 	<td>waitForElementPresent</td>
 	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
 	<td>Text Area</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -135,6 +140,21 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/lang/en.js')]</td>
+	<td>CK Editor Script</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//input[@value='Submit for Publication']</td>
 	<td>Submit for Publication</td>
 </tr>
@@ -142,6 +162,11 @@
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Submit for Publication']</td>
 	<td>Submit for Publication</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

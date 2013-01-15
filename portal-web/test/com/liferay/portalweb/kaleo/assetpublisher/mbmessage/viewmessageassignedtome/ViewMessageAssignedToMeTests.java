@@ -16,6 +16,8 @@ package com.liferay.portalweb.kaleo.assetpublisher.mbmessage.viewmessageassigned
 
 import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPortletAPTest;
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrydefaultnoworkflow.TearDownWorkflowConfigurationTest;
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configurembmessagesingleapprover.ConfigureMBMessageSingleApproverTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
@@ -32,7 +34,7 @@ import junit.framework.TestSuite;
 public class ViewMessageAssignedToMeTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(ConfigureMessageSingleApproverTest.class);
+		testSuite.addTestSuite(ConfigureMBMessageSingleApproverTest.class);
 		testSuite.addTestSuite(AddPageAPTest.class);
 		testSuite.addTestSuite(AddPortletAPTest.class);
 		testSuite.addTestSuite(AddPageMBTest.class);

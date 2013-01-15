@@ -14,7 +14,13 @@
 
 package com.liferay.portalweb.kaleo.assetpublisher.blogsentry.viewblogsentryassignedtomyroles;
 
+import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPageAPTest;
+import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPortletAPTest;
+import com.liferay.portalweb.kaleo.assetpublisher.blogsentry.viewblogsentryassignedtome.AddAPBlogsEntryTest;
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrydefaultnoworkflow.TearDownWorkflowConfigurationTest;
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrysingleapprover.ConfigureBlogsEntrySingleApproverTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.addblogsentrycp.TearDownBlogsEntryCPTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
@@ -36,7 +42,7 @@ public class ViewBlogsEntryAssignedToMyRolesTests extends BaseTestSuite {
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(ViewBlogsEntryAssignedToMyRolesGuestTest.class);
 		testSuite.addTestSuite(SignInTest.class);
-		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
+		testSuite.addTestSuite(TearDownBlogsEntryCPTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
 

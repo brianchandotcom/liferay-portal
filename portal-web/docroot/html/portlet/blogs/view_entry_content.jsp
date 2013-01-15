@@ -178,7 +178,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						boolean inlineEditEnabled = BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) && !WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, BlogsEntry.class.getName());
 						%>
 
-						<div <c:if test="<%= inlineEditEnabled %>">contenteditable="true" id="<%= entryContentId %>" spellcheck="false"</c:if>>
+						<div <%= inlineEditEnabled ? "contenteditable=\"true\" id=\"" + entryContentId + "\" spellcheck=\"false\"" : StringPool.BLANK %>>
 							<%= entry.getContent() %>
 						</div>
 

@@ -1,18 +1,25 @@
 AUI.add(
 	'inline-editor-ckeditor',
 	function(A) {
-		var PositionAlign = A.WidgetPositionAlign,
+		var PositionAlign = A.WidgetPositionAlign;
 
-			CKCONFIG = CKEDITOR.config,
+		var CKCONFIG = CKEDITOR.config;
 
-			ALIGN = 'align',
-			BODY_SCROLL_LISTENER = 'bodyScrollListener',
-			BOUNDING_BOX = 'boundingBox',
-			EDITOR = 'editor',
-			EDITOR_NAME = 'editorName',
-			EDITOR_PREFIX = 'editorPrefix',
-			EDITOR_SUFFIX = 'editorSuffix',
-			VISIBLE = 'visible';
+		var ALIGN = 'align';
+
+		var BODY_SCROLL_LISTENER = 'bodyScrollListener';
+
+		var BOUNDING_BOX = 'boundingBox';
+
+		var EDITOR = 'editor';
+
+		var EDITOR_NAME = 'editorName';
+
+		var EDITOR_PREFIX = 'editorPrefix';
+
+		var EDITOR_SUFFIX = 'editorSuffix';
+
+		var VISIBLE = 'visible';
 
 		var CKEditorInline = A.Component.create(
 			{
@@ -29,10 +36,10 @@ AUI.add(
 						var editor = instance.get(EDITOR);
 
 						instance._eventHandles = [
-							editor.on('blur', A.bind(instance._onEditorBlur, instance)),
-							editor.on('focus', A.bind(instance._onEditorFocus, instance)),
-							editor.on('restoreContent', A.bind(instance._restoreContent, instance)),
-							editor.on('saveContent', A.bind(instance.saveContent, instance, false))
+							editor.on('blur', instance._onEditorBlur, instance),
+							editor.on('focus', instance._onEditorFocus, instance),
+							editor.on('restoreContent', instance._restoreContent, instance),
+							editor.on('saveContent', instance.saveContent, instance, false)
 						];
 
 						instance.after('destroy', instance._destructor, instance);
@@ -64,7 +71,7 @@ AUI.add(
 
 							body.plug(A.Plugin.ScrollInfo);
 
-							instance._scrollListener = body.scrollInfo.on('scroll', A.bind(instance._updateNoticePosition, instance));
+							instance._scrollListener = body.scrollInfo.on('scroll', instance._updateNoticePosition, instance);
 
 							noticeNode.setData(BODY_SCROLL_LISTENER, instance._scrollListener);
 						}
@@ -72,8 +79,6 @@ AUI.add(
 
 					_destructor: function() {
 						var instance = this;
-
-						debugger;
 
 						A.Array.invoke(instance._eventHandles, 'detach');
 
@@ -116,7 +121,7 @@ AUI.add(
 						var noticeNode = notice.get(BOUNDING_BOX);
 
 						if (notice.get(VISIBLE) && noticeNode.getData(EDITOR) !== instance.get(EDITOR_NAME)) {
-							notice.set(VISIBLE, false);
+							notice.hide();
 
 							noticeNode.setData(BODY_SCROLL_LISTENER, null);
 
@@ -124,8 +129,6 @@ AUI.add(
 								instance._scrollListener.detach();
 							}
 						}
-
-						instance._setNoticeEditor();
 
 						instance.startSaveContentTask();
 
@@ -146,16 +149,6 @@ AUI.add(
 						if (instance.isContentDirty()) {
 							instance.saveContent();
 						}
-					},
-
-					_setNoticeEditor: function() {
-						var instance = this;
-
-						var notice = instance.getEditNotice();
-
-						var noticeNode = notice.get(BOUNDING_BOX);
-
-						noticeNode.setData(EDITOR, instance.get(EDITOR_NAME));
 					},
 
 					_updateNoticePosition: function() {
@@ -203,6 +196,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-invoke', 'yui-later', 'overlay', 'node-scroll-info', 'liferay-inline-editor-base']
+		requires: ['array-invoke', 'liferay-inline-editor-base', 'node-scroll-info', 'overlay', 'yui-later']
 	}
 );

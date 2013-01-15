@@ -1,23 +1,27 @@
 AUI.add(
 	'liferay-inline-editor-base',
 	function(A) {
-		var Lang = A.Lang,
+		var Lang = A.Lang;
 
-			SELECTOR_NOTICE_INLINE_EDIT_TEXT = '.lfr-notice-inline-edit-text',
+		var TPL_NOTICE =
+			'<div class="lfr-notice-inline-edit" id="{id}">' +
+				'<span class="lfr-notice-inline-edit-text"></span>' +
+				'<span class="lfr-notice-inline-edit-close" tab-index="0">{close}</span>' +
+			'</div>';
 
-			TPL_NOTICE =
-				'<div id={id} class="lfr-notice-inline-edit">' +
-					'<span class="lfr-notice-inline-edit-text"></span>' +
-					'<span class="lfr-notice-inline-edit-close" tab-index="0">{close}</span>' +
-				'</div>',
+		var BOUNDING_BOX = 'boundingBox';
 
-			BOUNDING_BOX = 'boundingBox',
-			EDITOR = 'editor',
-			EDITOR_NAME = 'editorName',
-			EDITOR_PREFIX = 'editorPrefix',
-			EDITOR_SUFFIX = 'editorSuffix',
-			NOTICE_INSTANCE = 'noticeInstance',
-			RESPONSE_DATA = 'responseData';
+		var EDITOR = 'editor';
+
+		var EDITOR_NAME = 'editorName';
+
+		var EDITOR_PREFIX = 'editorPrefix';
+
+		var EDITOR_SUFFIX = 'editorSuffix';
+
+		var NOTICE_INSTANCE = 'noticeInstance';
+
+		var RESPONSE_DATA = 'responseData';
 
 		function InlineEditorBase(config) {
 			var instance = this;
@@ -96,12 +100,12 @@ AUI.add(
 			getEditNotice: function() {
 				var instance = this;
 
-				var triggerNode = A.one(instance.get(EDITOR_PREFIX) + instance.get(EDITOR_NAME));
+				var editNotice = instance._editNotice;
 
-				var editNotice;
+				if (!editNotice) {
+					var triggerNode = A.one(instance.get(EDITOR_PREFIX) + instance.get(EDITOR_NAME));
 
-				if (!instance._inlineEditorNoticeId) {
-					instance._inlineEditorNoticeId = A.guid();
+					var inlineEditorNoticeId = A.guid();
 
 					editNotice = new A.Overlay(
 						{
@@ -109,7 +113,7 @@ AUI.add(
 								TPL_NOTICE,
 								{
 									close: Liferay.Language.get('close'),
-									id: instance._inlineEditorNoticeId
+									id: inlineEditorNoticeId
 								}
 							),
 							visible: false,
@@ -117,12 +121,15 @@ AUI.add(
 						}
 					).render();
 
-					A.one('#' + instance._inlineEditorNoticeId).setData(NOTICE_INSTANCE, editNotice);
+					var editNoticeBoundingBox = editNotice.get('boundingBox');
+
+					instance._editNoticeNode = editNoticeBoundingBox.one('#' + inlineEditorNoticeId);
+
+					instance._editNoticeTextNode = editNoticeBoundingBox.one('.lfr-notice-inline-edit-text');
+
+					instance._editNotice = editNotice;
 
 					instance._attachCloseListener();
-				}
-				else {
-					editNotice = A.one('#' + instance._inlineEditorNoticeId).getData(NOTICE_INSTANCE);
 				}
 
 				return editNotice;
@@ -162,19 +169,23 @@ AUI.add(
 			startCloseNoticeTask: function() {
 				var instance = this;
 
-				if (instance._closeNoticeTask) {
-					instance._closeNoticeTask.cancel();
+				var closeNoticeTask = instance._closeNoticeTask;
+
+				if (closeNoticeTask) {
+					closeNoticeTask.cancel();
 				}
 
-				instance._closeNoticeTask = A.later(instance.get('closeNoticeTimeout'), instance, instance._closeNoticeTaskImpl);
+				closeNoticeTask = A.later(instance.get('closeNoticeTimeout'), instance, instance._closeNoticeFn);
 
-				return instance._closeNoticeTask;
+				instance._closeNoticeTask = closeNoticeTask;
+
+				return closeNoticeTask;
 			},
 
 			startSaveContentTask: function() {
 				var instance = this;
 
-				instance._saveContentTask = A.later(instance.get('autoSaveTimeout'), instance, instance._saveContentTaskImpl, [true], true);
+				instance._saveContentTask = A.later(instance.get('autoSaveTimeout'), instance, instance._saveContentFn, [true], true);
 
 				return instance._saveContentTask;
 			},
@@ -189,7 +200,7 @@ AUI.add(
 				boundingBox.one('.lfr-notice-inline-edit-close').on('click', A.bind(notice.hide, notice));
 			},
 
-			_closeNoticeTaskImpl: function() {
+			_closeNoticeFn: function() {
 				var instance = this;
 
 				instance.getEditNotice().hide();
@@ -204,9 +215,9 @@ AUI.add(
 
 				var boundingBox = notice.get(BOUNDING_BOX);
 
-				A.one('#' + instance._inlineEditorNoticeId).replaceClass('lfr-notice-inline-edit', 'lfr-notice-inline-edit-error');
+				instance._editNoticeNode.replaceClass('lfr-notice-inline-edit', 'lfr-notice-inline-edit-error');
 
-				boundingBox.one(SELECTOR_NOTICE_INLINE_EDIT_TEXT).html(Liferay.Language.get('the-draft-was-not-saved-successfully'));
+				instance._editNoticeTextNode.html(Liferay.Language.get('the-draft-was-not-saved-successfully'));
 
 				notice.show();
 
@@ -220,7 +231,7 @@ AUI.add(
 
 				var notice = instance.getEditNotice();
 				
-				A.one('#' + instance._inlineEditorNoticeId).replaceClass('lfr-notice-inline-edit-error', 'lfr-notice-inline-edit');
+				instance._editNoticeNode.replaceClass('lfr-notice-inline-edit-error', 'lfr-notice-inline-edit');
 
 				var message = Liferay.Language.get('the-draft-was-saved-successfully-at-x');
 
@@ -233,14 +244,14 @@ AUI.add(
 					[new Date().toLocaleTimeString()]
 				);
 
-				notice.get(BOUNDING_BOX).one(SELECTOR_NOTICE_INLINE_EDIT_TEXT).html(message);
+				instance._editNoticeTextNode.html(message);
 
 				notice.show();
 
 				instance.startCloseNoticeTask();
 			},
 
-			_saveContentTaskImpl: function(autosaved) {
+			_saveContentFn: function(autosaved) {
 				var instance = this;
 
 				if (instance.isContentDirty()) {

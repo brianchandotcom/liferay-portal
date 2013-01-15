@@ -15,6 +15,11 @@
 package com.liferay.portlet.blogs.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -27,8 +32,11 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.util.ContentUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -180,6 +188,31 @@ public class BlogsUtil {
 			preferences, companyId, PropsValues.BLOGS_EMAIL_FROM_NAME);
 	}
 
+	public static List<BlogsEntry> getEntries(Hits hits) {
+		List<BlogsEntry> entries = new ArrayList<BlogsEntry>();
+
+		for (Document document : hits.getDocs()) {
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			try {
+				BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(
+					entryClassPK);
+
+				entries.add(entry);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Blogs search index is stale and contains entry " +
+							entryClassPK);
+				}
+			}
+		}
+
+		return entries;
+	}
+
 	public static String getUrlTitle(long entryId, String title) {
 		if (title == null) {
 			return String.valueOf(entryId);
@@ -204,5 +237,7 @@ public class BlogsUtil {
 	private static final char[] _URL_TITLE_REPLACE_CHARS = new char[] {
 		'.', '/'
 	};
+
+	private static Log _log = LogFactoryUtil.getLog(BlogsUtil.class);
 
 }

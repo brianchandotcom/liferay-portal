@@ -18,7 +18,12 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.DiffHtmlUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -47,6 +52,7 @@ import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageDisplay;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiNodePermission;
 import com.liferay.portlet.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.portlet.wiki.util.comparator.PageTitleComparator;
@@ -285,6 +291,31 @@ public class WikiUtil {
 				PropsUtil.get(
 					PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT_PREFIX));
 		}
+	}
+
+	public static List<WikiPage> getEntries(Hits hits) {
+		List<WikiPage> pages = new ArrayList<WikiPage>();
+
+		for (Document document : hits.getDocs()) {
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+			long nodeId = GetterUtil.getLong(document.get(Field.NODE_ID));
+
+			try {
+				WikiNodeLocalServiceUtil.getNode(nodeId);
+
+				WikiPage page = WikiPageLocalServiceUtil.getPage(entryClassPK);
+
+				pages.add(page);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Wiki search index is stale");
+				}
+			}
+		}
+
+		return pages;
 	}
 
 	public static WikiNode getFirstNode(PortletRequest portletRequest)
@@ -654,6 +685,8 @@ public class WikiUtil {
 
 		return _getEngine(format).validate(nodeId, content);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(WikiUtil.class);
 
 	private static WikiUtil _instance = new WikiUtil();
 

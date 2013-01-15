@@ -65,18 +65,14 @@ String keywords = ParamUtil.getString(request, "keywords");
 	portletURL.setParameter("searchCategoryId", String.valueOf(searchCategoryId));
 	portletURL.setParameter("threadId", String.valueOf(threadId));
 	portletURL.setParameter("keywords", keywords);
+	%>
 
-	List<String> headerNames = new ArrayList<String>();
+	<liferay-ui:search-container
+		emptyResultsMessage='<%= LanguageUtil.format(pageContext, "no-messages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>") %>'
+		iteratorURL="<%= portletURL %>"
+	>
 
-	headerNames.add("#");
-	headerNames.add("category");
-	headerNames.add("message");
-	headerNames.add("thread-posts");
-	headerNames.add("thread-views");
-
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(pageContext, "no-messages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
-
-	try {
+		<%
 		Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
 
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
@@ -87,94 +83,71 @@ String keywords = ParamUtil.getString(request, "keywords");
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(searchContainer.getStart());
 
-		Hits results = indexer.search(searchContext);
+		Hits hits = indexer.search(searchContext);
 
-		int total = results.getLength();
+		List<MBMessage> messages = MBUtil.getEntries(hits);
+		%>
 
-		searchContainer.setTotal(total);
+		<liferay-ui:search-container-results
+			results="<%= messages %>"
+			total="<%= hits.getLength() %>"
+		/>
 
-		List resultRows = searchContainer.getResultRows();
+		<liferay-ui:search-container-row
+			className="com.liferay.portlet.messageboards.model.MBMessage"
+			modelVar="message"
+		>
 
-		for (int i = 0; i < results.getDocs().length; i++) {
-			Document doc = results.doc(i);
-
-			ResultRow row = new ResultRow(doc, i, i);
-
-			// Position
-
-			row.addText(searchContainer.getStart() + i + 1 + StringPool.PERIOD);
-
-			// Category
-
-			long categoryId = GetterUtil.getLong(doc.get("categoryId"));
-
-			MBCategory category = null;
-
-			try {
-				category = MBCategoryLocalServiceUtil.getCategory(categoryId);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Message boards search index is stale and contains category " + categoryId);
-				}
-
-				continue;
-			}
+			<%
+			MBCategory category = message.getCategory();
 
 			PortletURL categoryUrl = renderResponse.createRenderURL();
 
 			categoryUrl.setParameter("struts_action", "/message_boards/view");
 			categoryUrl.setParameter("redirect", currentURL);
-			categoryUrl.setParameter("mbCategoryId", String.valueOf(categoryId));
-
-			row.addText(HtmlUtil.escape(category.getName()), categoryUrl);
+			categoryUrl.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
 
 			// Thread and message
 
-			long curThreadId = GetterUtil.getLong(doc.get("threadId"));
-			long messageId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-
-			MBThread thread = null;
-
-			try {
-				thread = MBThreadLocalServiceUtil.getThread(curThreadId);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Message boards search index is stale and contains thread " + curThreadId);
-				}
-
-				continue;
-			}
-
-			MBMessage message = null;
-
-			try {
-				message = MBMessageLocalServiceUtil.getMessage(messageId);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Message boards search index is stale and contains message " + messageId);
-				}
-
-				continue;
-			}
+			MBThread thread = message.getThread();
 
 			PortletURL rowURL = renderResponse.createRenderURL();
 
 			rowURL.setParameter("struts_action", "/message_boards/view_message");
 			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("messageId", String.valueOf(messageId));
+			rowURL.setParameter("messageId", String.valueOf(message.getMessageId()));
+			%>
 
-			row.addText(HtmlUtil.escape(message.getSubject()), rowURL);
-			row.addText(String.valueOf(thread.getMessageCount()), rowURL);
-			row.addText(String.valueOf(thread.getViewCount()), rowURL);
+			<liferay-ui:search-container-column-text
+				name="#"
+				value="<%= (index + 1) + StringPool.PERIOD %>"
+			/>
 
-			// Add result row
+			<liferay-ui:search-container-column-text
+				href="<%= categoryUrl %>"
+				name="category"
+				value="<%= HtmlUtil.escape(category.getName()) %>"
+			/>
 
-			resultRows.add(row);
-		}
-	%>
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="message"
+				value="<%= HtmlUtil.escape(message.getSubject()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="thread-posts"
+				value="<%= String.valueOf(thread.getMessageCount()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="thread-views"
+				value="<%= String.valueOf(thread.getViewCount()) %>"
+			/>
+
+		</liferay-ui:search-container-row>
 
 		<span class="aui-search-bar">
 			<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-messages" type="text" value="<%= keywords %>" />
@@ -184,14 +157,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		<br /><br />
 
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" type="more" />
-
-	<%
-	}
-	catch (Exception e) {
-		_log.error(e.getMessage());
-	}
-	%>
+		<liferay-ui:search-iterator type="more" />
+	</liferay-ui:search-container>
 
 </aui:form>
 
@@ -207,8 +174,4 @@ if (breadcrumbsCategoryId > 0) {
 }
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);
-%>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.message_boards.search_jsp");
 %>

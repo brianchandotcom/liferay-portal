@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -69,6 +72,7 @@ import com.liferay.util.mail.JavaMailUtil;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -473,6 +477,65 @@ public class MBUtil {
 				PropsValues.
 					MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT_PREFIX);
 		}
+	}
+
+	public static List<MBMessage> getEntries(Hits hits) {
+		List<MBMessage> messages = new ArrayList<MBMessage>();
+
+		for (Document document : hits.getDocs()) {
+			long categoryId = GetterUtil.getLong(
+				document.get(Field.CATEGORY_ID));
+
+			try {
+				MBCategoryLocalServiceUtil.getCategory(categoryId);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Message boards search index is stale and contains " +
+							"category " + categoryId);
+				}
+
+				continue;
+			}
+
+			long threadId = GetterUtil.getLong(document.get("threadId"));
+
+			try {
+				MBThreadLocalServiceUtil.getThread(threadId);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Message boards search index is stale and contains " +
+							"thread " + threadId);
+				}
+
+				continue;
+			}
+
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			MBMessage message = null;
+
+			try {
+				message = MBMessageLocalServiceUtil.getMessage(entryClassPK);
+
+				messages.add(message);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Message boards search index is stale and contains " +
+							"message " + entryClassPK);
+				}
+
+				continue;
+			}
+		}
+
+		return messages;
 	}
 
 	public static String getMailingListAddress(

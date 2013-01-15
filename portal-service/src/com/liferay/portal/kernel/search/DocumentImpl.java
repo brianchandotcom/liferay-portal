@@ -51,6 +51,10 @@ import java.util.Set;
 public class DocumentImpl implements Document {
 
 	public static String getLocalizedName(Locale locale, String name) {
+		if (locale == null) {
+			return name;
+		}
+
 		String languageId = LocaleUtil.toLanguageId(locale);
 
 		String localizedName = name.concat(StringPool.UNDERLINE).concat(

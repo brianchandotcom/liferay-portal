@@ -14,6 +14,11 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +34,14 @@ public class DelegatingQuerySuggester implements QuerySuggester {
 	public String spellCheckKeywords(SearchContext searchContext)
 		throws SearchException {
 
+		if (_querySuggester == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No query suggester available");
+			}
+
+			return StringPool.BLANK;
+		}
+
 		return _querySuggester.spellCheckKeywords(searchContext);
 	}
 
@@ -36,14 +49,36 @@ public class DelegatingQuerySuggester implements QuerySuggester {
 			SearchContext searchContext, int max)
 		throws SearchException {
 
+		if (_querySuggester == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No query suggester available");
+			}
+
+			return _EMPTY_MAP;
+		}
+
 		return _querySuggester.spellCheckKeywords(searchContext, max);
 	}
 
 	public String[] suggestKeywordQueries(SearchContext searchContext, int max)
 		throws SearchException {
 
+		if (_querySuggester == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No query suggester available");
+			}
+
+			return StringPool.EMPTY_ARRAY;
+		}
+
 		return _querySuggester.suggestKeywordQueries(searchContext, max);
 	}
+
+	private static final Map<String, List<String>> _EMPTY_MAP =
+		new HashMap<String, List<String>>();
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DelegatingQuerySuggester.class);
 
 	private QuerySuggester _querySuggester;
 

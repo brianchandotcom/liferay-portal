@@ -38,9 +38,11 @@ public class ViewSitesPublicPageDropDownTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Site Name"),
 			selenium.getText("//h1[@class='site-title']/span"));
 		assertEquals(RuntimeVariables.replace("Public Page"),
-			selenium.getText("//nav/ul/li/a/span"));
+			selenium.getText(
+				"//nav[@id='navigation']/ul/li/a/span[contains(.,'Public Page')]"));
 		assertEquals(RuntimeVariables.replace("Public Page"),
-			selenium.getText("//nav/ul/li[3]/span/a"));
+			selenium.getText(
+				"//nav[@class='site-breadcrumbs']/ul/li/span/a[contains(.,'Public Page')]"));
 		assertEquals(RuntimeVariables.replace(
 				"http://localhost:8080/web/site-name/public-page"),
 			selenium.getLocation());

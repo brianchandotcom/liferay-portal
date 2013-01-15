@@ -61,7 +61,10 @@ public class ImportLARTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]",
 					RuntimeVariables.replace("Manage Pages"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("//button[3]",
+				assertEquals(RuntimeVariables.replace("Import"),
+					selenium.getText(
+						"//div[@class='lfr-header-row-content']/div/span/button/span[contains(.,'Import')]"));
+				selenium.clickAt("//div[@class='lfr-header-row-content']/div/span/button/span[contains(.,'Import')]",
 					RuntimeVariables.replace("Import"));
 				selenium.waitForVisible("//iframe");
 				selenium.selectFrame("//iframe");

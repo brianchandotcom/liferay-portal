@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.plugins.vimeo.portlet.addportletvimeomultiple;
 
+import com.liferay.portalweb.plugins.vimeo.portlet.addportletvimeo.AddPageVimeoTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

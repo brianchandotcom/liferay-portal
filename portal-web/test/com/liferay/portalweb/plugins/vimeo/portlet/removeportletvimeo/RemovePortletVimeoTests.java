@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.vimeo.portlet.removeportletvimeo;
 
+import com.liferay.portalweb.plugins.vimeo.portlet.addportletvimeo.AddPageVimeoTest;
+import com.liferay.portalweb.plugins.vimeo.portlet.addportletvimeo.AddPortletVimeoTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

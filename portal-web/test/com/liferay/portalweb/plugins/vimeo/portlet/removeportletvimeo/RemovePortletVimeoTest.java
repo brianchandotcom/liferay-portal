@@ -25,13 +25,13 @@ public class RemovePortletVimeoTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Vimeo Test Page");
 		selenium.clickAt("link=Vimeo Test Page",
 			RuntimeVariables.replace("Vimeo Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//img[@alt='Remove']");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
-		assertTrue(selenium.isElementNotPresent("//div/section"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to remove this component?");
+		selenium.waitForElementNotPresent("//section");
+		assertTrue(selenium.isElementNotPresent("//section"));
 	}
 }

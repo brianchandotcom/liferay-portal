@@ -34,7 +34,7 @@ Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {th
 	</span>
 
 	<c:choose>
-		<c:when test="<%= classTypes == null || classTypes.isEmpty() %>">
+		<c:when test="<%= (classTypes == null) || classTypes.isEmpty() %>">
 
 			<%
 			PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, typeSelection, 0, null, null, portletURL.toString());
@@ -81,7 +81,6 @@ Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {th
 						url='<%= addPortletURLString %>'
 					/>
 				</c:if>
-
 
 				<%
 				for (long classTypeId : classTypes.keySet()) {

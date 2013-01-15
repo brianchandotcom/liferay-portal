@@ -78,7 +78,7 @@ public class RangeFacet extends BaseFacet {
 		}
 
 		if (Validator.isNotNull(start) && Validator.isNotNull(end) &&
-			(start.compareTo(end) >= 0)) {
+			(start.compareTo(end) > 0)) {
 
 			throw new IllegalArgumentException(
 				"End value must be greater than start value");

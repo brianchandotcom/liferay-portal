@@ -20,6 +20,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
@@ -65,22 +66,33 @@ public class BookmarksFolderPermission {
 			while (folderId !=
 					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				folder = BookmarksFolderLocalServiceUtil.getFolder(folderId);
+				try {
+					folder = BookmarksFolderLocalServiceUtil.getFolder(
+						folderId);
 
-				folderId = folder.getParentFolderId();
+					folderId = folder.getParentFolderId();
 
-				if (!permissionChecker.hasOwnerPermission(
-						folder.getCompanyId(), BookmarksFolder.class.getName(),
-						folder.getFolderId(), folder.getUserId(), actionId) &&
-					!permissionChecker.hasPermission(
-						folder.getGroupId(), BookmarksFolder.class.getName(),
-						folder.getFolderId(), actionId)) {
+					if (!permissionChecker.hasOwnerPermission(
+							folder.getCompanyId(),
+							BookmarksFolder.class.getName(),
+							folder.getFolderId(), folder.getUserId(),
+							actionId) &&
+						!permissionChecker.hasPermission(
+							folder.getGroupId(),
+							BookmarksFolder.class.getName(),
+							folder.getFolderId(), actionId)) {
 
-					return false;
+						return false;
+					}
+
+					if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+						break;
+					}
 				}
-
-				if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-					break;
+				catch (NoSuchFolderException nsfe) {
+					if (!folder.isInTrash()) {
+						throw nsfe;
+					}
 				}
 			}
 

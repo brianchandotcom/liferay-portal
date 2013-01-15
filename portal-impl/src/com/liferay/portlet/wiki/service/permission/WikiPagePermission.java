@@ -22,6 +22,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.wiki.NoSuchPageException;
+import com.liferay.portlet.wiki.NoSuchPageResourceException;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
@@ -74,10 +75,15 @@ public class WikiPagePermission {
 			String actionId)
 		throws PortalException, SystemException {
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(
-			resourcePrimKey, (Boolean)null);
+		try {
+			WikiPage page = WikiPageLocalServiceUtil.getPage(
+				resourcePrimKey, (Boolean)null);
 
-		return contains(permissionChecker, page, actionId);
+			return contains(permissionChecker, page, actionId);
+		}
+		catch (NoSuchPageResourceException nspre) {
+			return false;
+		}
 	}
 
 	public static boolean contains(

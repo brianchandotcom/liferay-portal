@@ -51,6 +51,11 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	public void testTrashParentAndDeleteTrashEntries() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
 	public void testTrashParentAndRestoreModel() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}

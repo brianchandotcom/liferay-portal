@@ -20,10 +20,12 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -58,14 +60,23 @@ public class BookmarksEntryPermission {
 			if (entry.getFolderId() !=
 					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				BookmarksFolder folder = entry.getFolder();
+				try {
+					BookmarksFolder folder =
+						BookmarksFolderLocalServiceUtil.getFolder(
+							entry.getFolderId());
 
-				if (!BookmarksFolderPermission.contains(
-						permissionChecker, folder, ActionKeys.ACCESS) &&
-					!BookmarksFolderPermission.contains(
-						permissionChecker, folder, ActionKeys.VIEW)) {
+					if (!BookmarksFolderPermission.contains(
+							permissionChecker, folder, ActionKeys.ACCESS) &&
+						!BookmarksFolderPermission.contains(
+							permissionChecker, folder, ActionKeys.VIEW)) {
 
-					return false;
+						return false;
+					}
+				}
+				catch (NoSuchFolderException nsfe) {
+					if (!entry.isInTrash()) {
+						throw nsfe;
+					}
 				}
 			}
 		}

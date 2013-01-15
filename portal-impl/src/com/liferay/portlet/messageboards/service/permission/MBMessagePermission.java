@@ -21,6 +21,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -92,14 +93,21 @@ public class MBMessagePermission {
 		if ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
 			(categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-				categoryId);
+			try {
+				MBCategory category = MBCategoryLocalServiceUtil.getCategory(
+					categoryId);
 
-			if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-				if (!MBCategoryPermission.contains(
-						permissionChecker, category, ActionKeys.VIEW)) {
+				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+					if (!MBCategoryPermission.contains(
+							permissionChecker, category, ActionKeys.VIEW)) {
 
-					return false;
+						return false;
+					}
+				}
+			}
+			catch (NoSuchCategoryException nsce) {
+				if (!message.isInTrashThread()) {
+					throw nsce;
 				}
 			}
 		}

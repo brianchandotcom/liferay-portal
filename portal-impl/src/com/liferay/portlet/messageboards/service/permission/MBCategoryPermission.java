@@ -20,6 +20,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
@@ -111,23 +112,31 @@ public class MBCategoryPermission {
 			while (categoryId !=
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-				category = MBCategoryLocalServiceUtil.getCategory(categoryId);
+				try {
+					category = MBCategoryLocalServiceUtil.getCategory(
+						categoryId);
 
-				categoryId = category.getParentCategoryId();
+					categoryId = category.getParentCategoryId();
 
-				if (!permissionChecker.hasOwnerPermission(
-						category.getCompanyId(), MBCategory.class.getName(),
-						category.getCategoryId(), category.getUserId(),
-						actionId) &&
-					!permissionChecker.hasPermission(
-						category.getGroupId(), MBCategory.class.getName(),
-						category.getCategoryId(), actionId)) {
+					if (!permissionChecker.hasOwnerPermission(
+							category.getCompanyId(), MBCategory.class.getName(),
+							category.getCategoryId(), category.getUserId(),
+							actionId) &&
+						!permissionChecker.hasPermission(
+							category.getGroupId(), MBCategory.class.getName(),
+							category.getCategoryId(), actionId)) {
 
-					return false;
+						return false;
+					}
+
+					if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+						break;
+					}
 				}
-
-				if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-					break;
+				catch (NoSuchCategoryException nsce) {
+					if (!category.isInTrash()) {
+						throw nsce;
+					}
 				}
 			}
 

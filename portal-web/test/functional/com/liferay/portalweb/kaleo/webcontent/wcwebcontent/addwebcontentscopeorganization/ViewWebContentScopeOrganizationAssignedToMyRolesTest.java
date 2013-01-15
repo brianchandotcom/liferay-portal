@@ -34,7 +34,7 @@ public class ViewWebContentScopeOrganizationAssignedToMyRolesTest
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -42,11 +42,11 @@ public class ViewWebContentScopeOrganizationAssignedToMyRolesTest
 		selenium.clickAt("//span[@title='Liferay']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Scope Selector"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a[contains(.,'Organization Name')]");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]");
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a[contains(.,'Organization Name')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a[contains(.,'Organization Name')]",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]",
 			RuntimeVariables.replace("Organization Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//span[@title='Organization Name']/ul/li/strong/a/span",

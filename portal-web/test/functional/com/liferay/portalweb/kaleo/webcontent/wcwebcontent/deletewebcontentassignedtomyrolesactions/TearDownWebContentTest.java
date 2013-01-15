@@ -30,7 +30,14 @@ public class TearDownWebContentTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Control Panel");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -38,100 +45,83 @@ public class TearDownWebContentTest extends BaseTestCase {
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean webContent1Present = selenium.isElementPresent(
-						"_15_rowIds");
+				boolean webContentPresent = selenium.isElementPresent(
+						"//div[@class='entry-thumbnail']");
 
-				if (!webContent1Present) {
+				if (!webContentPresent) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_15_allRowIdsCheckbox']"));
+				selenium.clickAt("//input[@id='_15_allRowIdsCheckbox']",
+					RuntimeVariables.replace("Select All"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_15_allRowIdsCheckbox']"));
+				selenium.waitForVisible(
+					"//span[@title='Actions']/ul/li/strong/a/span");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
 
 			case 2:
+				assertEquals(RuntimeVariables.replace(
+						"No Web Content was found."),
+					selenium.getText(
+						"//div[@class='entries-empty portlet-msg-info']"));
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Recycle Bin",
+					RuntimeVariables.replace("Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
 
-				boolean webContent2Present = selenium.isElementPresent(
-						"_15_rowIds");
+				boolean recycleBinNotEmpty = selenium.isElementPresent(
+						"//a[@class='trash-empty-link']");
 
-				if (!webContent2Present) {
+				if (!recycleBinNotEmpty) {
 					label = 3;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
+					selenium.getText("//a[@class='trash-empty-link']"));
+				selenium.clickAt("//a[@class='trash-empty-link']",
+					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to empty the Recycle Bin?");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 3:
+				assertEquals(RuntimeVariables.replace(
+						"The Recycle Bin is empty."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
 
-				boolean webContent3Present = selenium.isElementPresent(
-						"_15_rowIds");
-
-				if (!webContent3Present) {
-					label = 4;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-
-			case 4:
-
-				boolean webContent4Present = selenium.isElementPresent(
-						"_15_rowIds");
-
-				if (!webContent4Present) {
-					label = 5;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-
-			case 5:
-
-				boolean webContent5Present = selenium.isElementPresent(
-						"_15_rowIds");
-
-				if (!webContent5Present) {
-					label = 6;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-
-			case 6:
 			case 100:
 				label = -1;
 			}

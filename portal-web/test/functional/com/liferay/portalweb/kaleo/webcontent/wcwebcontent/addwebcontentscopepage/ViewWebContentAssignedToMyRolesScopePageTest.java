@@ -33,7 +33,7 @@ public class ViewWebContentAssignedToMyRolesScopePageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -42,14 +42,15 @@ public class ViewWebContentAssignedToMyRolesScopePageTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Scope: Default']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Scope: Default"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content Display Page')]");
 		assertEquals(RuntimeVariables.replace("Web Content Display Page"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content Display Page')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content Display Page')]",
 			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a/span",
+		assertTrue(selenium.isPartialText(
+				"//span[@title='Scope: Web Content Display Page']/ul/li/strong/a/span",
 				"Web Content Display Page"));
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));

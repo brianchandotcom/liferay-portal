@@ -47,7 +47,7 @@ public class WCWebContentTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddWebContentTests.suite());
+/*		testSuite.addTest(AddWebContentTests.suite());
 		testSuite.addTest(AddWebContentDraftTests.suite());
 		testSuite.addTest(AddWebContentNoWorkflowTests.suite());
 		testSuite.addTest(AddWebContentNoWorkflowScopePageTests.suite());
@@ -56,9 +56,9 @@ public class WCWebContentTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddWebContentScopeGuestTests.suite());
 		testSuite.addTest(AddWebContentScopeMyCommunityTests.suite());
 		testSuite.addTest(AddWebContentScopeOrganizationTests.suite());
-		testSuite.addTest(AddWebContentScopePageTests.suite());
+		testSuite.addTest(AddWebContentScopePageTests.suite());*/
 		testSuite.addTest(DeleteWebContentAssignedToMeActionsTests.suite());
-		testSuite.addTest(
+/*		testSuite.addTest(
 			DeleteWebContentAssignedToMyRolesActionsTests.suite());
 		testSuite.addTest(DeleteWebContentCompletedActionsTests.suite());
 		testSuite.addTest(
@@ -69,7 +69,7 @@ public class WCWebContentTestPlan extends BaseTestSuite {
 		testSuite.addTest(EditWebContentAssignedToMyRolesActionsTests.suite());
 		testSuite.addTest(EditWebContentCompletedActionsTests.suite());
 		testSuite.addTest(EditWebContentCompletedDraftActionsTests.suite());
-
+*/
 		return testSuite;
 	}
 

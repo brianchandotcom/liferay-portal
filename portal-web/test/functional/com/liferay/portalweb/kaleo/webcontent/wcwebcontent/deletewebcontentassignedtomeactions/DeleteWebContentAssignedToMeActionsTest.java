@@ -31,7 +31,6 @@ public class DeleteWebContentAssignedToMeActionsTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(
@@ -39,7 +38,7 @@ public class DeleteWebContentAssignedToMeActionsTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-				selenium.waitForElementPresent("link=Control Panel");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -75,12 +74,12 @@ public class DeleteWebContentAssignedToMeActionsTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
-				assertEquals(RuntimeVariables.replace("Delete"),
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
-					RuntimeVariables.replace("Delete"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
 			case 2:
@@ -88,6 +87,46 @@ public class DeleteWebContentAssignedToMeActionsTest extends BaseTestCase {
 						"No Web Content was found."),
 					selenium.getText(
 						"//div[@class='entries-empty portlet-msg-info']"));
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Recycle Bin",
+					RuntimeVariables.replace("Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean recycleBinNotEmpty = selenium.isElementPresent(
+						"//a[@class='trash-empty-link']");
+
+				if (!recycleBinNotEmpty) {
+					label = 3;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
+					selenium.getText("//a[@class='trash-empty-link']"));
+				selenium.clickAt("//a[@class='trash-empty-link']",
+					RuntimeVariables.replace("Empty the Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
+				selenium.waitForConfirmation(
+					"Are you sure you want to empty the Recycle Bin?");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+
+			case 3:
+				assertEquals(RuntimeVariables.replace(
+						"The Recycle Bin is empty."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
 
 			case 100:
 				label = -1;

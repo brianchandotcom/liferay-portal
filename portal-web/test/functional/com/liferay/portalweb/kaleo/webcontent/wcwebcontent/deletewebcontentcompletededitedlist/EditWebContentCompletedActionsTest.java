@@ -32,7 +32,7 @@ public class EditWebContentCompletedActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -72,7 +72,6 @@ public class EditWebContentCompletedActionsTest extends BaseTestCase {
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Web Content Content Edited"));
-		selenium.selectFrame("relative=top");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Submit for Publication']",
 			RuntimeVariables.replace("Submit for Publication"));

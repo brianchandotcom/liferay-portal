@@ -32,7 +32,7 @@ public class AssignToMeWebContentActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -56,11 +56,12 @@ public class AssignToMeWebContentActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign to Me')]");
 		assertEquals(RuntimeVariables.replace("Assign to Me"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign to Me')]"));
+		selenium.click(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign to Me')]");
 		assertEquals(RuntimeVariables.replace("OK"),
 			selenium.getText("//div[3]/span/span/button"));
 		selenium.clickAt("//div[3]/span/span/button",
@@ -79,8 +80,10 @@ public class AssignToMeWebContentActionsTest extends BaseTestCase {
 				"//tr[contains(.,'Review')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
+		System.out.println("HHHHHHHHHHHHHHHHHHHHHHH");
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
+		System.out.println("IIIIIIIIIIIIIIIIIIIIIII");
 	}
 }

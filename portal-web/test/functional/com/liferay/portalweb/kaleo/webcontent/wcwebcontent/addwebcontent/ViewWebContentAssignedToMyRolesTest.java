@@ -32,7 +32,7 @@ public class ViewWebContentAssignedToMyRolesTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -41,7 +41,6 @@ public class ViewWebContentAssignedToMyRolesTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -57,10 +56,10 @@ public class ViewWebContentAssignedToMyRolesTest extends BaseTestCase {
 			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace("There are no completed tasks."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.click(RuntimeVariables.replace("link=My Submissions"));
+		selenium.clickAt("link=My Submissions",
+			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
@@ -80,7 +79,6 @@ public class ViewWebContentAssignedToMyRolesTest extends BaseTestCase {
 			selenium.getText("//tr[contains(.,'Single Approver')]/td[7]/span"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace(
 				"There are no completed publications requested by me."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -111,7 +109,6 @@ public class ViewWebContentAssignedToMyRolesTest extends BaseTestCase {
 			selenium.getText("//tr[contains(.,'Single Approver')]/td[6]/a"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace(
 				"There are no completed publication requests."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

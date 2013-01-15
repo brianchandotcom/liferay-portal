@@ -48,7 +48,7 @@ public class ConfigureWebContentSingleApproverScopeMyCommunityTest
 		selenium.waitForVisible(
 			"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']");
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']",
-			RuntimeVariables.replace("label=Single Approver (Version 1)"));
+			RuntimeVariables.replace("Single Approver (Version 1)"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

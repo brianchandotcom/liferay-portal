@@ -25,7 +25,6 @@ public class TearDownWorkflowConfigurationTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 		selenium.waitForElementPresent(
@@ -33,26 +32,25 @@ public class TearDownWorkflowConfigurationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("link=Default Configuration");
 		selenium.clickAt("link=Default Configuration",
 			RuntimeVariables.replace("Default Configuration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']",
-			RuntimeVariables.replace("label=No Workflow"));
+			RuntimeVariables.replace("No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']",
-			RuntimeVariables.replace("label=No Workflow"));
+			RuntimeVariables.replace("No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']",
-			RuntimeVariables.replace("label=No Workflow"));
+			RuntimeVariables.replace("No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']",
-			RuntimeVariables.replace("label=No Workflow"));
+			RuntimeVariables.replace("No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']",
-			RuntimeVariables.replace("label=No Workflow"));
+			RuntimeVariables.replace("No Workflow"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -63,15 +61,15 @@ public class TearDownWorkflowConfigurationTest extends BaseTestCase {
 			RuntimeVariables.replace("Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']",
-			RuntimeVariables.replace("label=Default: No Workflow"));
+			RuntimeVariables.replace("Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']",
-			RuntimeVariables.replace("label=Default: No Workflow"));
+			RuntimeVariables.replace("Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']",
-			RuntimeVariables.replace("label=Default: No Workflow"));
+			RuntimeVariables.replace("Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']",
-			RuntimeVariables.replace("label=Default: No Workflow"));
+			RuntimeVariables.replace("Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']",
-			RuntimeVariables.replace("label=Default: No Workflow"));
+			RuntimeVariables.replace("Default: No Workflow"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

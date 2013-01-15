@@ -33,21 +33,21 @@ public class ViewWebContentNoWorkflowScopePageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible(
-			"//span[@title='Scope: Default']/ul/li/strong/a");
+		assertEquals(RuntimeVariables.replace("Scope: Default"),
+			selenium.getText("//span[@title='Scope: Default']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Scope: Default']/ul/li/strong/a",
 			RuntimeVariables.replace("Scope: Default"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content Display Page')]");
 		assertEquals(RuntimeVariables.replace("Web Content Display Page"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
-			RuntimeVariables.replace("Web Content Display Page"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content Display Page')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content Display Page')]"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText(
 				"//span[@title='Scope: Web Content Display Page']/ul/li/strong/a",
@@ -59,7 +59,7 @@ public class ViewWebContentNoWorkflowScopePageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to you."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
@@ -67,7 +67,8 @@ public class ViewWebContentNoWorkflowScopePageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("There are no completed tasks."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.click(RuntimeVariables.replace("link=My Submissions"));
+		selenium.clickAt("link=My Submissions",
+			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");

@@ -37,21 +37,21 @@ public class TearDownWebContentScopePageTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForElementPresent("link=Control Panel");
 				selenium.waitForVisible(
 					"//span[@title='Scope: Default']/ul/li/strong/a/span");
 				selenium.clickAt("//span[@title='Scope: Default']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Scope: Default"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content Display Page')]");
 				assertEquals(RuntimeVariables.replace(
 						"Web Content Display Page"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content Display Page')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content Display Page')]",
 					RuntimeVariables.replace("Web Content Display Page"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isPartialText(
@@ -84,12 +84,12 @@ public class TearDownWebContentScopePageTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
-				assertEquals(RuntimeVariables.replace("Delete"),
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
-					RuntimeVariables.replace("Delete"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
 			case 2:

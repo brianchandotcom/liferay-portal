@@ -34,7 +34,7 @@ public class ViewWebContentScopeCommunityAssignedToMyRolesTest
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -42,12 +42,12 @@ public class ViewWebContentScopeCommunityAssignedToMyRolesTest
 		selenium.clickAt("//span[@title='Liferay']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Scope Selector"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]");
 		assertEquals(RuntimeVariables.replace("Community Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//span[@title='Community Name']/ul/li/strong/a/span",
 			"Community Name");

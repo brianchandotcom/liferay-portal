@@ -55,6 +55,7 @@ public class AddWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
+		selenium.waitForVisible("//span[.='Source']");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -64,6 +65,7 @@ public class AddWebContentTest extends BaseTestCase {
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea");
 		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
 			RuntimeVariables.replace("Web Content Content"));
+		selenium.waitForVisible("//span[.='Source']");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",

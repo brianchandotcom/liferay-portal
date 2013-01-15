@@ -86,8 +86,6 @@ public class HotDeployEvent {
 		if (is != null) {
 			String propertiesString = StringUtil.read(is);
 
-			is.close();
-
 			Properties properties = PropertiesUtil.load(propertiesString);
 
 			String[] requiredDeploymentContexts = StringUtil.split(

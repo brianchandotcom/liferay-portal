@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -90,28 +89,20 @@ public class LiferayPackageAutoDeployer implements AutoDeployer {
 							file.getName());
 				}
 
-				InputStream inputStream = null;
+				InputStream inputStream = zipFile.getInputStream(zipEntry);
 
-				try {
+				if (zipEntryFileName.equals("liferay-marketplace.properties")) {
+
 					inputStream = zipFile.getInputStream(zipEntry);
 
-					if (zipEntryFileName.equals(
-							"liferay-marketplace.properties")) {
-
-						inputStream = zipFile.getInputStream(zipEntry);
-
-						propertiesString = StringUtil.read(inputStream);
-					}
-					else {
-						fileNames.add(zipEntryFileName);
-
-						FileUtil.write(
-							_baseDir + StringPool.SLASH + zipEntryFileName,
-							inputStream);
-					}
+					propertiesString = StringUtil.read(inputStream);
 				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
+				else {
+					fileNames.add(zipEntryFileName);
+
+					FileUtil.write(
+						_baseDir + StringPool.SLASH + zipEntryFileName,
+						inputStream);
 				}
 			}
 

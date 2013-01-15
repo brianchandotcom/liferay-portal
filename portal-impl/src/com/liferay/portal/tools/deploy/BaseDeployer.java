@@ -1685,8 +1685,6 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				_log.info("Process output: " + line);
 			}
 
-			inputStream.close();
-
 			int exitValue = process.exitValue();
 
 			if (exitValue == 0) {

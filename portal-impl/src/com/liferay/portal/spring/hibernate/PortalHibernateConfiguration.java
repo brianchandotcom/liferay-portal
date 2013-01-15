@@ -196,8 +196,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		if (_hibernateConfigurationConverter != null) {
 			String configurationString = StringUtil.read(inputStream);
 
-			inputStream.close();
-
 			configurationString = _hibernateConfigurationConverter.convert(
 				configurationString);
 

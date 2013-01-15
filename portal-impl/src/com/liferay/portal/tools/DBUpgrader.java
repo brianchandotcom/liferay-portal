@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
@@ -133,7 +132,7 @@ public class DBUpgrader {
 		}
 
 		_checkPermissionAlgorithm();
-		_checkReleaseState();
+		_checkReleaseState(_getReleaseState());
 
 		if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
 			_disableTransactions();
@@ -202,19 +201,16 @@ public class DBUpgrader {
 
 		// Check release
 
-		Release release = null;
+		Release release = ReleaseLocalServiceUtil.fetchRelease(
+			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
-		try {
-			release = ReleaseLocalServiceUtil.getRelease(
-				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-		}
-		catch (PortalException pe) {
+		if (release == null) {
 			release = ReleaseLocalServiceUtil.addRelease(
 				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
 				ReleaseInfo.getParentBuildNumber());
 		}
 
-		_checkReleaseState();
+		_checkReleaseState(release.getState());
 
 		// Update indexes
 
@@ -293,9 +289,7 @@ public class DBUpgrader {
 		throw new IllegalStateException(sb.toString());
 	}
 
-	private static void _checkReleaseState() throws Exception {
-		int state = _getReleaseState();
-
+	private static void _checkReleaseState(int state) throws Exception {
 		if (state == ReleaseConstants.STATE_GOOD) {
 			return;
 		}

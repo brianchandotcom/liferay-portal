@@ -104,6 +104,30 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		}
 	}
 
+	public Release fetchRelease(String servletContextName)
+		throws SystemException {
+
+		if (Validator.isNull(servletContextName)) {
+			throw new IllegalArgumentException(
+				"Servlet context name cannot be null");
+		}
+
+		Release release = null;
+
+		if (servletContextName.equals(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME)) {
+
+			release = releasePersistence.fetchByPrimaryKey(
+				ReleaseConstants.DEFAULT_ID);
+		}
+		else {
+			release = releasePersistence.fetchByServletContextName(
+				servletContextName);
+		}
+
+		return release;
+	}
+
 	public int getBuildNumberOrCreate()
 		throws PortalException, SystemException {
 
@@ -163,7 +187,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 			testSupportsStringCaseSensitiveQuery();
 
-			Release release = getRelease(
+			Release release = fetchRelease(
 				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 			return release.getBuildNumber();
@@ -172,30 +196,6 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 			throw new NoSuchReleaseException(
 				"The database needs to be populated");
 		}
-	}
-
-	public Release getRelease(String servletContextName)
-		throws PortalException, SystemException {
-
-		if (Validator.isNull(servletContextName)) {
-			throw new IllegalArgumentException(
-				"Servlet context name cannot be null");
-		}
-
-		Release release = null;
-
-		if (servletContextName.equals(
-				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME)) {
-
-			release = releasePersistence.findByPrimaryKey(
-				ReleaseConstants.DEFAULT_ID);
-		}
-		else {
-			release = releasePersistence.findByServletContextName(
-				servletContextName);
-		}
-
-		return release;
 	}
 
 	public Release updateRelease(

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.events.InvokerSessionAction;
 import com.liferay.portal.kernel.events.InvokerSimpleAction;
 import com.liferay.portal.kernel.events.SessionAction;
 import com.liferay.portal.kernel.events.SimpleAction;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.format.PhoneNumberFormat;
 import com.liferay.portal.kernel.format.PhoneNumberFormatUtil;
 import com.liferay.portal.kernel.format.PhoneNumberFormatWrapper;
@@ -2466,12 +2465,10 @@ public class HookHotDeployListener
 			return;
 		}
 
-		Release release = null;
+		Release release = ReleaseLocalServiceUtil.fetchRelease(
+			servletContextName);
 
-		try {
-			release = ReleaseLocalServiceUtil.getRelease(servletContextName);
-		}
-		catch (PortalException pe) {
+		if (release == null) {
 			int previousBuildNumber = GetterUtil.getInteger(
 				unfilteredPortalProperties.getProperty(
 					PropsKeys.RELEASE_INFO_PREVIOUS_BUILD_NUMBER),

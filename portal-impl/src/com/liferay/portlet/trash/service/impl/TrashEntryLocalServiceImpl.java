@@ -318,7 +318,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<TrashVersion> getVersions(long entryId) throws SystemException {
-		return trashEntryPersistence.getTrashVersions(entryId);
+		return trashVersionPersistence.findByEntryId(entryId);
 	}
 
 	/**

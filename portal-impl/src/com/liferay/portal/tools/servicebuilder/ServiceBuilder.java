@@ -4514,7 +4514,6 @@ public class ServiceBuilder {
 			boolean filterPrimary = GetterUtil.getBoolean(
 				columnElement.attributeValue("filter-primary"));
 			String collectionEntity = columnElement.attributeValue("entity");
-			String mappingKey = columnElement.attributeValue("mapping-key");
 
 			String mappingTable = columnElement.attributeValue("mapping-table");
 
@@ -4546,9 +4545,9 @@ public class ServiceBuilder {
 
 			EntityColumn col = new EntityColumn(
 				columnName, columnDBName, columnType, primary, accessor,
-				filterPrimary, collectionEntity, mappingKey, mappingTable,
-				idType, idParam, convertNull, lazy, localized, colJsonEnabled,
-				containerModel, parentContainerModel);
+				filterPrimary, collectionEntity, mappingTable, idType, idParam,
+				convertNull, lazy, localized, colJsonEnabled, containerModel,
+				parentContainerModel);
 
 			if (primary) {
 				pkList.add(col);

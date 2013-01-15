@@ -777,11 +777,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Update new thread
 
-		MBUtil.updateThreadMessagesCount(thread);
+		MBUtil.updateThreadMessageCount(thread);
 
 		// Update old thread
 
-		MBUtil.updateThreadMessagesCount(oldThread);
+		MBUtil.updateThreadMessageCount(oldThread);
 
 		// Category
 
@@ -790,7 +790,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			(message.getCategoryId() !=
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-			MBUtil.updateCategoryThreadsCount(category);
+			MBUtil.updateCategoryThreadCount(category);
 		}
 
 		return thread;

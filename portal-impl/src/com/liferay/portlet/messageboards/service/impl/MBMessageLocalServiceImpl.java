@@ -633,10 +633,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			// Thread
 
 			if (message.isApproved()) {
-				MBUtil.updateThreadMessagesCount(thread);
+				MBUtil.updateThreadMessageCount(thread);
 			}
-
-			if (!message.isApproved()) {
+			else {
 				mbThreadPersistence.update(thread);
 			}
 
@@ -651,7 +650,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 					message.getCategoryId());
 
-				MBUtil.updateCategoryMessagesCount(category);
+				MBUtil.updateCategoryMessageCount(category);
 			}
 		}
 
@@ -2138,34 +2137,31 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			thread.setStatusDate(modifiedDate);
 		}
 
-		boolean statusApprovedChanges =
-			(status == WorkflowConstants.STATUS_APPROVED) &&
-			(oldStatus != WorkflowConstants.STATUS_APPROVED) ||
-			(oldStatus == WorkflowConstants.STATUS_APPROVED) &&
-			(status != WorkflowConstants.STATUS_APPROVED);
+		if (status == oldStatus) {
+			return;
+		}
 
-		if (statusApprovedChanges) {
-
-			if ((status == WorkflowConstants.STATUS_APPROVED) &&
-				(oldStatus != WorkflowConstants.STATUS_APPROVED)) {
-
-				if (message.isAnonymous()) {
-					thread.setLastPostByUserId(0);
-				}
-				else {
-					thread.setLastPostByUserId(message.getUserId());
-				}
-
-				thread.setLastPostDate(modifiedDate);
-
-				if (category != null) {
-					category.setLastPostDate(modifiedDate);
-				}
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			if (message.isAnonymous()) {
+				thread.setLastPostByUserId(0);
 			}
+			else {
+				thread.setLastPostByUserId(message.getUserId());
+			}
+
+			thread.setLastPostDate(modifiedDate);
+
+			if (category != null) {
+				category.setLastPostDate(modifiedDate);
+			}
+		}
+
+		if ((oldStatus == WorkflowConstants.STATUS_APPROVED) ||
+			(status == WorkflowConstants.STATUS_APPROVED)) {
 
 			// Thread
 
-			MBUtil.updateThreadMessagesCount(thread);
+			MBUtil.updateThreadMessageCount(thread);
 
 			// Category
 
@@ -2178,11 +2174,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			if ((category != null) &&
 				!(thread.getRootMessageId() == message.getMessageId())) {
 
-				MBUtil.updateCategoryMessagesCount(category);
+				MBUtil.updateCategoryMessageCount(category);
 			}
 		}
-
-		if (!statusApprovedChanges && (status != oldStatus)) {
+		else {
 			mbThreadPersistence.update(thread);
 		}
 	}

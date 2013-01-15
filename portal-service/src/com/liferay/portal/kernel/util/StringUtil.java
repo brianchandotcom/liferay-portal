@@ -1241,8 +1241,6 @@ public class StringUtil {
 					sb.append(s);
 					sb.append(StringPool.NEW_LINE);
 				}
-
-				is.close();
 			}
 
 			return sb.toString().trim();
@@ -1257,8 +1255,6 @@ public class StringUtil {
 
 			String s = read(is);
 
-			is.close();
-
 			return s;
 		}
 	}
@@ -1271,12 +1267,15 @@ public class StringUtil {
 
 		String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			sb.append(line);
-			sb.append(CharPool.NEW_LINE);
+		try {
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				sb.append(line);
+				sb.append(CharPool.NEW_LINE);
+			}
 		}
-
-		unsyncBufferedReader.close();
+		finally {
+			unsyncBufferedReader.close();
+		}
 
 		return sb.toString().trim();
 	}

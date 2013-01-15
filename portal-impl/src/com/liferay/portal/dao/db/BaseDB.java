@@ -324,8 +324,6 @@ public abstract class BaseDB implements DB {
 
 		String template = StringUtil.read(is);
 
-		is.close();
-
 		boolean evaluate = path.endsWith(".vm");
 
 		runSQLTemplateString(template, evaluate, failOnError);
@@ -370,8 +368,6 @@ public abstract class BaseDB implements DB {
 					}
 
 					String include = StringUtil.read(is);
-
-					is.close();
 
 					if (includeFileName.endsWith(".vm")) {
 						try {

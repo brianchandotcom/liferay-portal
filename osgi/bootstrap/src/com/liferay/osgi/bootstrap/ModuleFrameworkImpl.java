@@ -16,6 +16,7 @@ package com.liferay.osgi.bootstrap;
 
 import aQute.libg.header.OSGiHeader;
 
+import com.liferay.osgi.bootstrap.ModuleFrameworkConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,8 +27,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.module.framework.LogBridge;
-import com.liferay.portal.module.framework.ModuleFrameworkConstants;
 import com.liferay.portal.module.framework.ModuleFrameworkException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
@@ -285,8 +284,6 @@ public class ModuleFrameworkImpl
 
 		_framework.init();
 
-		_setupLogBridge();
-
 		_framework.start();
 	}
 
@@ -330,10 +327,6 @@ public class ModuleFrameworkImpl
 		if (_framework == null) {
 			return;
 		}
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		_logBridge.stop(bundleContext);
 
 		_framework.stop();
 	}
@@ -537,17 +530,8 @@ public class ModuleFrameworkImpl
 			properties);
 	}
 
-	private void _setupLogBridge() throws Exception {
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		_logBridge = new LogBridge();
-
-		_logBridge.start(bundleContext);
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkUtil.class);
 
 	private Framework _framework;
-	private LogBridge _logBridge;
 
 }

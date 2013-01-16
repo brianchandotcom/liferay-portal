@@ -900,7 +900,10 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		incrementViewCounter(dlFileEntry, incrementCounter, increment);
+		if (incrementCounter) {
+			dlFileEntryLocalService.incrementViewCounter(
+				dlFileEntry, increment);
+		}
 
 		dlAppHelperLocalService.getFileAsStream(
 			userId, new LiferayFileEntry(dlFileEntry), incrementCounter);
@@ -934,7 +937,10 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		incrementViewCounter(dlFileEntry, incrementCounter, increment);
+		if (incrementCounter) {
+			dlFileEntryLocalService.incrementViewCounter(
+				dlFileEntry, increment);
+		}
 
 		dlAppHelperLocalService.getFileAsStream(
 			userId, new LiferayFileEntry(dlFileEntry), incrementCounter);
@@ -1177,13 +1183,10 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@BufferedIncrement(incrementClass = NumberIncrement.class)
-	public void incrementViewCounter(
-			DLFileEntry dlFileEntry, boolean incrementCounter, int increment)
+	public void incrementViewCounter(DLFileEntry dlFileEntry, int increment)
 		throws SystemException {
 
-		if (!PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED ||
-			!incrementCounter) {
-
+		if (!PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED) {
 			return;
 		}
 

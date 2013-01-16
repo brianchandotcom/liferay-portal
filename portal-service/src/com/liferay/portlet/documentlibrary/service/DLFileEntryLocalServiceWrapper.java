@@ -627,10 +627,9 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 
 	public void incrementViewCounter(
 		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
-		boolean incrementCounter, int increment)
+		int increment)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_dlFileEntryLocalService.incrementViewCounter(dlFileEntry,
-			incrementCounter, increment);
+		_dlFileEntryLocalService.incrementViewCounter(dlFileEntry, increment);
 	}
 
 	public boolean isFileEntryCheckedOut(long fileEntryId)

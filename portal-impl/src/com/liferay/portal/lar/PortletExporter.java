@@ -1474,6 +1474,41 @@ public class PortletExporter {
 		jxPreferences.setValues(key, newValues);
 	}
 
+	protected void updateAssetPublisherGlobalScopeId(
+			javax.portlet.PortletPreferences jxPreferences, String key,
+			long plid)
+		throws Exception {
+
+		String[] oldScopeIds = jxPreferences.getValues(key, null);
+
+		if (oldScopeIds == null) {
+			return;
+		}
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			layout.getCompanyId());
+
+		Group companyGroup = company.getGroup();
+
+		String groupScopeId =
+			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
+				companyGroup.getGroupId();
+
+		String[] newScopeIds = new String[oldScopeIds.length];
+
+		for (int i = 0; i < oldScopeIds.length; i++) {
+			String oldValue = oldScopeIds[i];
+
+			newScopeIds[i] = StringUtil.replace(
+				oldValue, new String[] {groupScopeId},
+				new String[] {"[$GROUP_SCOPE_ID$]"});
+		}
+
+		jxPreferences.setValues(key, newScopeIds);
+	}
+
 	protected String updateAssetPublisherPortletPreferences(
 			String xml, long plid)
 		throws Exception {
@@ -1518,41 +1553,6 @@ public class PortletExporter {
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
-	}
-
-	protected void updateAssetPublisherGlobalScopeId(
-			javax.portlet.PortletPreferences jxPreferences, String key,
-			long plid)
-		throws Exception {
-
-		String[] oldScopeIds = jxPreferences.getValues(key, null);
-
-		if (oldScopeIds == null) {
-			return;
-		}
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			layout.getCompanyId());
-
-		Group companyGroup = company.getGroup();
-
-		String groupScopeId =
-			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
-				companyGroup.getGroupId();
-
-		String[] newScopeIds = new String[oldScopeIds.length];
-
-		for (int i = 0; i < oldScopeIds.length; i++) {
-			String oldValue = oldScopeIds[i];
-
-			newScopeIds[i] = StringUtil.replace(
-				oldValue, new String[] {groupScopeId},
-				new String[] {"[$GROUP_SCOPE_ID$]"});
-		}
-
-		jxPreferences.setValues(key, newScopeIds);
 	}
 
 	protected void updatePreferencesClassPKs(

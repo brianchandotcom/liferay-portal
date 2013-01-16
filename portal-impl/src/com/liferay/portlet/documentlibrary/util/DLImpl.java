@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -67,6 +70,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelReadCo
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeComparator;
 import com.liferay.util.ContentUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -538,6 +542,30 @@ public class DLImpl implements DL {
 
 		return PortalUtil.getEmailFromName(
 			preferences, companyId, PropsValues.DL_EMAIL_FROM_NAME);
+	}
+
+	public List<FileEntry> getEntries(Hits hits) {
+		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
+
+		for (Document document : hits.getDocs()) {
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			try {
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					entryClassPK);
+
+				fileEntries.add(fileEntry);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Documents and Media search index is stale and " +
+						"contains file entry {" + entryClassPK + "}");
+				}
+			}
+		}
+
+		return fileEntries;
 	}
 
 	public String getFileEntryImage(

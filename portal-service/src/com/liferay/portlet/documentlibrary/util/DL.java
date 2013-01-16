@@ -20,11 +20,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -116,6 +118,8 @@ public interface DL {
 	public String getEmailFromName(
 			PortletPreferences preferences, long companyId)
 		throws SystemException;
+
+	public List<FileEntry> getEntries(Hits hits);
 
 	public String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay);

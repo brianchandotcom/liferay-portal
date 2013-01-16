@@ -148,20 +148,57 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 						<liferay-ui:icon
 							label="<%= true %>"
 							message="<%= _getName(themeDisplay, group, locale) %>"
-					        src="<%= group.getGroupIcon(themeDisplay) %>"
-					    />
+							src="<%= group.getGroupIcon(themeDisplay) %>"
+						/>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						name="type"
 						value="<%= LanguageUtil.get(pageContext, _getGroupType(themeDisplay, group)) %>"
 					/>
+
+					<liferay-ui:search-container-column-text
+						align="right"
+					>
+						<liferay-portlet:actionURL portletConfiguration="true" var="deleteURL">
+							<portlet:param name="<%= Constants.CMD %>" value="remove-scope" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="scopeId" value="<%= AssetPublisherUtil.getScopeId(group, scopeGroupId) %>" />
+						</liferay-portlet:actionURL>
+
+						<liferay-ui:icon-delete
+							url="<%= deleteURL %>"
+						/>
+					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator paginate="<%= false %>" />
 			</liferay-ui:search-container>
 
+			<div class="select-asset-selector">
+				<liferay-ui:icon-menu align="left" cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="select" showWhenSingleIcon="<%= true %>">
 
+					<%
+					for (Group group : availableGroups) {
+						if (ArrayUtil.contains(groupIds, group.getGroupId())) {
+							continue;
+						}
+					%>
+
+						<liferay-portlet:actionURL portletConfiguration="true" var="addScopeURL">
+							<portlet:param name="<%= Constants.CMD %>" value="add-scope" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="scopeId" value="<%= AssetPublisherUtil.getScopeId(group, scopeGroupId) %>" />
+						</liferay-portlet:actionURL>
+
+						<liferay-ui:icon id='<%= "scope" + group.getGroupId() %>' message="<%= _getName(themeDisplay, group, locale) %>" method="post" src="<%= group.getGroupIcon(themeDisplay) %>" url="<%= addScopeURL %>" />
+
+					<%
+					}
+					%>
+
+				</liferay-ui:icon-menu>
+			</div>
 		</div>
 	</liferay-util:buffer>
 

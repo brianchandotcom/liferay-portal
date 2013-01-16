@@ -18,13 +18,16 @@ import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -37,6 +40,9 @@ import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -80,7 +86,10 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 		else {
 			try {
-				if (cmd.equals("add-selection")) {
+				if (cmd.equals("add-scope")) {
+					addScope(actionRequest, preferences);
+				}
+				else if (cmd.equals("add-selection")) {
 					AssetPublisherUtil.addSelection(actionRequest, preferences);
 				}
 				else if (cmd.equals("move-selection-down")) {
@@ -91,6 +100,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				}
 				else if (cmd.equals("remove-selection")) {
 					removeSelection(actionRequest, preferences);
+				}
+				else if (cmd.equals("remove-scope")) {
+					removeScope(actionRequest, preferences);
 				}
 				else if (cmd.equals("select-scope")) {
 					setScopes(actionRequest, preferences);
@@ -133,6 +145,28 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				}
 			}
 		}
+	}
+
+	protected void addScope(
+			ActionRequest actionRequest, PortletPreferences preferences)
+		throws Exception {
+
+		String scopeId = ParamUtil.getString(actionRequest, "scopeId");
+
+		String[] scopeIdsPreferences = preferences.getValues(
+			"scopeIds", new String[] {
+				AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
+					GroupConstants.DEFAULT});
+
+		Set<String> scopeIds = new HashSet<String>();
+
+		scopeIds.addAll(ListUtil.toList(scopeIdsPreferences));
+
+		scopeIds.add(scopeId);
+
+		scopeIdsPreferences = ArrayUtil.toStringArray(scopeIds.toArray());
+
+		preferences.setValues("scopeIds", scopeIdsPreferences);
 	}
 
 	protected String[] getClassTypeIds(
@@ -246,6 +280,28 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		manualEntries[assetEntryOrder] = temp;
 
 		preferences.setValues("assetEntryXml", manualEntries);
+	}
+
+	protected void removeScope(
+			ActionRequest actionRequest, PortletPreferences preferences)
+		throws Exception {
+
+		String scopeId = ParamUtil.getString(actionRequest, "scopeId");
+
+		String[] scopeIdsPreferences = preferences.getValues(
+			"scopeIds", new String[] {
+				AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
+					GroupConstants.DEFAULT});
+
+		Set<String> scopeIds = new HashSet<String>();
+
+		scopeIds.addAll(ListUtil.toList(scopeIdsPreferences));
+
+		scopeIds.remove(scopeId);
+
+		scopeIdsPreferences = ArrayUtil.toStringArray(scopeIds.toArray());
+
+		preferences.setValues("scopeIds", scopeIdsPreferences);
 	}
 
 	protected void removeSelection(
@@ -363,13 +419,10 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			getParameter(actionRequest, "classNameIds"));
 		String[] classTypeIds = getClassTypeIds(actionRequest, classNameIds);
 		String[] extensions = actionRequest.getParameterValues("extensions");
-		String[] scopeIds = StringUtil.split(
-			getParameter(actionRequest, "scopeIds"));
 
 		setPreference(actionRequest, "classNameIds", classNameIds);
 		setPreference(actionRequest, "classTypeIds", classTypeIds);
 		setPreference(actionRequest, "extensions", extensions);
-		setPreference(actionRequest, "scopeIds", scopeIds);
 	}
 
 	protected void updateQueryLogic(

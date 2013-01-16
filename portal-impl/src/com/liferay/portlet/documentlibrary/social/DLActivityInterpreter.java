@@ -15,13 +15,15 @@
 package com.liferay.portlet.documentlibrary.social;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
@@ -36,6 +38,21 @@ public class DLActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
+	}
+
+	protected String _getFolderLink(
+		ThemeDisplay themeDisplay, FileEntry fileEntry) {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(themeDisplay.getPortalURL());
+		sb.append(themeDisplay.getPathMain());
+		sb.append("/document_library/find_folder?groupId=");
+		sb.append(fileEntry.getRepositoryId());
+		sb.append("&folderId=");
+		sb.append(fileEntry.getFolderId());
+
+		return sb.toString();
 	}
 
 	@Override
@@ -69,12 +86,14 @@ public class DLActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		// Link
 
-		String link =
-			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-				"/document_library/get_file?groupId=" +
-					fileEntry.getRepositoryId() + "&folderId=" +
-						fileEntry.getFolderId() + "&title=" +
-							HttpUtil.encodeURL(fileEntry.getTitle());
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(themeDisplay.getPortalURL());
+		sb.append(themeDisplay.getPathMain());
+		sb.append("/document_library/find_file_entry?fileEntryId=");
+		sb.append(fileEntry.getFileEntryId());
+
+		String link =sb.toString();
 
 		// Title
 
@@ -108,23 +127,24 @@ public class DLActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		// Body
 
-		StringBundler sb = new StringBundler(3);
+		sb = new StringBundler(3);
 
-		String fileEntryLink =
-			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-				"/document_library/find_file_entry?fileEntryId=" +
-					fileEntry.getFileEntryId();
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				DLFileEntry.class.getName());
 
-		sb.append(wrapLink(fileEntryLink, "view-document", themeDisplay));
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+			fileEntry.getFileEntryId());
+
+		String fileEntryLink = assetRenderer.getURLDownload(themeDisplay);
+
+		sb.append(wrapLink(fileEntryLink, "download-file", themeDisplay));
 		sb.append(StringPool.SPACE);
 
-		String folderLink =
-			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-				"/document_library/find_folder?groupId=" +
-					fileEntry.getRepositoryId() + "&folderId=" +
-						fileEntry.getFolderId();
-
-		sb.append(wrapLink(folderLink, "go-to-folder", themeDisplay));
+		sb.append(
+			wrapLink(
+				_getFolderLink(themeDisplay, fileEntry), "go-to-folder",
+				themeDisplay));
 
 		String body = sb.toString();
 

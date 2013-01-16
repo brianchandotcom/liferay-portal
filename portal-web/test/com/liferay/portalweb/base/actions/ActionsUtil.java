@@ -14,12 +14,20 @@
 
 package com.liferay.portalweb.base.actions;
 
+import com.liferay.portalweb.portal.util.TestPropsValues;
+
+import com.thoughtworks.selenium.Selenium;
+
 import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class ActionsUtil {
+
+	public static String firstLetter(String s) {
+		return s.substring(0, 1);
+	}
 
 	public static String[] getParams(
 		Map<String, String> pathMap, String param1, String param2) {
@@ -41,6 +49,12 @@ public class ActionsUtil {
 		}
 
 		return params;
+	}
+
+	public static boolean isSelenium() {
+		String seleniumImplementation = TestPropsValues.SELENIUM_IMPLEMENTATION;
+
+		return seleniumImplementation.equals(Selenium.class.getName());
 	}
 
 }

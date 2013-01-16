@@ -84,10 +84,9 @@ public class TestCasesXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		sb.append(testCasePackagePath);
 		sb.append(";\n");
 
+		sb.append("import com.liferay.portalweb.base.actions.ActionsUtil;\n");
 		sb.append("import com.liferay.portalweb.portal.BaseTestCase;\n");
 		sb.append("import com.liferay.portalweb.portal.util.SeleniumUtil;\n");
-		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
-		sb.append("LiferaySeleniumHelper;\n");
 
 		sb.append(processBlocksImports(rootElement));
 

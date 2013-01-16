@@ -115,7 +115,7 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 			if (!(firstLetterValue == null) &&
 				firstLetterValue.equals("true")) {
 
-				sb.append("LiferaySeleniumHelper.firstLetter(");
+				sb.append("ActionsUtil.firstLetter(");
 				sb.append(_replaceVariables("\"" + attributeValue + "\""));
 				sb.append(")");
 			}

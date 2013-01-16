@@ -81,13 +81,11 @@ public class MacrosXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		sb.append(macrosPackagePath);
 		sb.append(";\n");
 
+		sb.append("import com.liferay.portalweb.base.actions.ActionsUtil;\n");
 		sb.append("import com.liferay.portalweb.base.macros.BaseMacros;\n");
 
 		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
 		sb.append("LiferaySelenium;\n");
-
-		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
-		sb.append("LiferaySeleniumHelper;\n");
 
 		sb.append(processBlocksImports(rootElement));
 

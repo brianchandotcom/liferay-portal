@@ -91,15 +91,11 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		sb.append(";\n\n");
 
 		sb.append("import com.liferay.portalweb.base.actions.ActionsUtil;\n");
-
 		sb.append("import com.liferay.portalweb.base.actions.");
 		sb.append("BaseLiferayActions;\n");
 
 		sb.append("import com.liferay.portalweb.portal.util.");
 		sb.append("liferayselenium.LiferaySelenium;\n");
-
-		sb.append("import com.liferay.portalweb.portal.util.");
-		sb.append("liferayselenium.LiferaySeleniumHelper;\n");
 
 		if (!(rootElement == null)) {
 			sb.append(processBlocksImports(rootElement));
@@ -324,7 +320,7 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		if (!(isselenium == null) && isselenium.equals("true")) {
 			StringBundler sbConditional = new StringBundler();
 
-			sbConditional.append("LiferaySeleniumHelper.isSelenium()");
+			sbConditional.append("ActionsUtil.isSelenium()");
 
 			clauseList.add(sbConditional.toString());
 		}

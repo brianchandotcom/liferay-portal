@@ -67,6 +67,7 @@ public class SeleniumBuilder {
 		_fileNameSetMacros = _initFileNameSetMacros();
 		_fileNameSetPaths = _initFileNameSetPaths();
 		_fileNameSetTestCases = _initFileNameSetTestCases();
+		_fileNameSetTestSuites = _initFileNameSetTestSuites();
 
 		_classNameSetAvailable = _initClassNameSetAvailable();
 		_directoryNameSet = _initDirectoryNameSet();
@@ -90,6 +91,8 @@ public class SeleniumBuilder {
 			new TestCasesXMLToJavaBuilder(_context);
 		TestPlansJavaBuilder testPlansJavaBuilder = new TestPlansJavaBuilder(
 			_context);
+		TestSuitesXMLToJavaBuilder testSuitesXMLToJavaBuilder =
+			new TestSuitesXMLToJavaBuilder(_context);
 
 		List<String> fileTypes = Arrays.asList(type.split(","));
 
@@ -117,6 +120,11 @@ public class SeleniumBuilder {
 				if (fileTypes.contains("paths")) {
 					pathsXMLToJavaBuilder.generatePaths(fileName);
 				}
+			}
+			else if (fileName.endsWith(".suite") &&
+					 fileTypes.contains("test-suites")) {
+
+				testSuitesXMLToJavaBuilder.generateTestSuite(fileName);
 			}
 		}
 
@@ -207,7 +215,7 @@ public class SeleniumBuilder {
 			new String[] {
 				"**\\portalweb\\**\\*.actions", "**\\portalweb\\**\\*.case",
 				"**\\portalweb\\**\\*.functions", "**\\portalweb\\**\\*.macros",
-				"**\\portalweb\\**\\*.paths"
+				"**\\portalweb\\**\\*.paths", "**\\portalweb\\**\\*.suite"
 			});
 
 		directoryScanner.scan();
@@ -241,6 +249,10 @@ public class SeleniumBuilder {
 
 	private Set<String> _initFileNameSetTestCases() throws Exception {
 		return _initFileNameSetType(".case");
+	}
+
+	private Set<String> _initFileNameSetTestSuites() throws Exception {
+		return _initFileNameSetType(".suite");
 	}
 
 	private Set<String> _initFileNameSetType(String suffix) throws Exception {
@@ -386,6 +398,7 @@ public class SeleniumBuilder {
 	private Set<String> _fileNameSetMacros;
 	private Set<String> _fileNameSetPaths;
 	private Set<String> _fileNameSetTestCases;
+	private Set<String> _fileNameSetTestSuites;
 	private Map<String, List<String>> _functionMethodParamListMap;
 	private Map<String, String> _functionMethodReturnTypeMap;
 	private SeleniumFileUtil _seleniumFileUtil;

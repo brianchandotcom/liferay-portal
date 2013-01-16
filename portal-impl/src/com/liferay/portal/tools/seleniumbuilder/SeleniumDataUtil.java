@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -118,6 +119,36 @@ public class SeleniumDataUtil {
 		}
 
 		return treeSet;
+	}
+
+	public Set<String> getTestPlanClassNameSet(Element element) {
+		Set<String> treeSet = new TreeSet<String>();
+
+		List<Element> testPlanList = element.elements("testplan");
+
+		for (Element testPlan : testPlanList) {
+			String testPlaneClassName = testPlan.attributeValue("class");
+
+			treeSet.add(testPlaneClassName);
+		}
+
+		return treeSet;
+	}
+
+	public List<String> getTestPlanSimpleClassNameList(Element element) {
+		List<String> arrayList = new ArrayList<String>();
+
+		List<Element> testPlanList = element.elements("testplan");
+
+		for (Element testPlan : testPlanList) {
+			String testPlaneClassName = testPlan.attributeValue("class");
+
+			int x = testPlaneClassName.lastIndexOf(CharPool.PERIOD) + 1;
+
+			arrayList.add(testPlaneClassName.substring(x));
+		}
+
+		return arrayList;
 	}
 
 	private Set<String> _getChildSimpleClassNameSet(

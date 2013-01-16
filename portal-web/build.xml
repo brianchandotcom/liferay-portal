@@ -940,7 +940,7 @@
 				<isset property="selenium.file.type" />
 			</not>
 			<then>
-				<property name="selenium.file.type" value="actions,functions,macros,paths,test-cases,test-plans" />
+				<property name="selenium.file.type" value="actions,functions,macros,paths,test-cases,test-plans,test-suites" />
 			</then>
 		</if>
 
@@ -989,6 +989,12 @@
 	<target name="build-selenium-new-test-plans">
 		<antcall target="build-selenium-new">
 			<param name="selenium.file.type" value="test-plans" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-new-test-suites">
+		<antcall target="build-selenium-new">
+			<param name="selenium.file.type" value="test-suites" />
 		</antcall>
 	</target>
 

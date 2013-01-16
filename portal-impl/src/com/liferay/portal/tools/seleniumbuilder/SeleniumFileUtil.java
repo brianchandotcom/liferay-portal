@@ -65,7 +65,7 @@ public class SeleniumFileUtil {
 		String objectName = "";
 		String objectFileName = fileName.substring(x + 1, y);
 
-		if (fileName.endsWith(".case")) {
+		if (fileName.endsWith(".case") || fileName.endsWith(".suite")) {
 			objectName = rootElement.attributeValue("name");
 		}
 		else {

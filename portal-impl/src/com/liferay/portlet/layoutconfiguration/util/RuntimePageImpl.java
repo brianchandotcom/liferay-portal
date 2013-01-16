@@ -48,6 +48,7 @@ import com.liferay.portlet.layoutconfiguration.util.xml.ActionURLLogic;
 import com.liferay.portlet.layoutconfiguration.util.xml.PortletLogic;
 import com.liferay.portlet.layoutconfiguration.util.xml.RenderURLLogic;
 import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
+import com.liferay.taglib.util.DummyVelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;
 
@@ -293,8 +294,6 @@ public class RuntimePageImpl implements RuntimePage {
 
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
-		HttpServletResponse response =
-			(HttpServletResponse)pageContext.getResponse();
 
 		CustomizationSettingsProcessor processor =
 			new CustomizationSettingsProcessor(pageContext);
@@ -310,9 +309,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 		// liferay:include tag library
 
-		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
-			pageContext.getServletContext(), request, response, pageContext,
-			template);
+		VelocityTaglib velocityTaglib = new DummyVelocityTaglib();
 
 		template.put("taglibLiferay", velocityTaglib);
 		template.put("theme", velocityTaglib);

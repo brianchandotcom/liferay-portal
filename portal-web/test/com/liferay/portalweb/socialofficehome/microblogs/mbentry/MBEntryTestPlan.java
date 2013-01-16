@@ -29,6 +29,7 @@ import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousdeleterepos
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousreplymicroblogscontentprofile.SOUs_ReplyMicroblogsContentProfileTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousreplymicroblogscontenttagprofile.SOUs_ReplyMicroblogsContentTagProfileTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousrepostmicroblogscontentprofile.SOUs_RepostMicroblogsContentProfileTests;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousviewmbcontentmultiple.SOUs_ViewMBContentMultipleTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.viewmicroblogsmentions.ViewMicroblogsMentionsTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.viewmicroblogstimeline.ViewMicroblogsTimelineTests;
 
@@ -61,6 +62,7 @@ public class MBEntryTestPlan extends BaseTestSuite {
 		testSuite.addTest(SOUs_ReplyMicroblogsContentProfileTests.suite());
 		testSuite.addTest(SOUs_ReplyMicroblogsContentTagProfileTests.suite());
 		testSuite.addTest(SOUs_RepostMicroblogsContentProfileTests.suite());
+		testSuite.addTest(SOUs_ViewMBContentMultipleTests.suite());
 		testSuite.addTest(ViewMicroblogsMentionsTests.suite());
 		testSuite.addTest(ViewMicroblogsTimelineTests.suite());
 

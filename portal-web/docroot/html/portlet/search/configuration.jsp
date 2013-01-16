@@ -38,6 +38,8 @@
 
 			<aui:input name="preferences--displayAssetCategoriesFacet--" type="checkbox" value="<%= displayAssetCategoriesFacet %>" />
 
+			<aui:input name="preferences--displayUserFacet--" type="checkbox" value="<%= displayUserFacet %>" />
+
 			<aui:input name="preferences--displayModifiedRangeFacet--" type="checkbox" value="<%= displayModifiedRangeFacet %>" />
 		</div>
 

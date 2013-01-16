@@ -58,7 +58,7 @@ String[] queryTerms = hits.getQueryTerms();
 
 request.setAttribute("search.jsp-queryTerms", queryTerms);
 
-boolean showMenu = displayAssetTypeFacet || displayAssetTagsFacet || displayAssetCategoriesFacet || displayModifiedRangeFacet;
+boolean showMenu = displayAssetTypeFacet || displayAssetTagsFacet || displayAssetCategoriesFacet || displayUserFacet || displayModifiedRangeFacet;
 %>
 
 <aui:layout cssClass='<%= "search-layout" + (showMenu ? " menu-column" : StringPool.BLANK) %>'>

@@ -53,6 +53,20 @@
 			weight: 1.3
 		},
 		{
+			className: 'com.liferay.portal.kernel.search.facet.MultiValueFacet',
+			data: {
+				frequencyThreshold: 1,
+				maxTerms: 10,
+				showAssetCount: true
+			},
+			displayStyle: 'users',
+			fieldName: 'userId',
+			label: 'user',
+			order: 'OrderHitsDesc',
+			static: false,
+			weight: 1.2
+		},
+		{
 			className: 'com.liferay.portal.kernel.search.facet.ModifiedFacet',
 			data: {
 				frequencyThreshold: 0,

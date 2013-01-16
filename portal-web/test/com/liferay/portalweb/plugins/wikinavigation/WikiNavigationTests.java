@@ -15,6 +15,7 @@
 package com.liferay.portalweb.plugins.wikinavigation;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +29,7 @@ public class WikiNavigationTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageTest.class);
 		testSuite.addTestSuite(AddPortletPageMenuTest.class);
 		testSuite.addTestSuite(AddPortletTreeMenuTest.class);
-		testSuite.addTestSuite(DeletePageTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

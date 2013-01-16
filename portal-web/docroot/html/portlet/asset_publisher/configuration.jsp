@@ -96,30 +96,6 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 			}
 		}
 
-		// Left list
-
-		List<KeyValuePair> scopesLeftList = new ArrayList<KeyValuePair>();
-
-		for (long groupId : groupIds) {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			scopesLeftList.add(new KeyValuePair(AssetPublisherUtil.getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
-		}
-
-		// Right list
-
-		List<KeyValuePair> scopesRightList = new ArrayList<KeyValuePair>();
-
-		Arrays.sort(groupIds);
-
-		for (Group group : availableGroups) {
-			if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
-				scopesRightList.add(new KeyValuePair(AssetPublisherUtil.getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
-			}
-		}
-
-		scopesRightList = ListUtil.sort(scopesRightList, new KeyValuePairComparator(false, true));
-
 		List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(groupIds);
 		%>
 
@@ -261,10 +237,6 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 		window,
 		'<portlet:namespace />saveSelectBoxes',
 		function() {
-			if (document.<portlet:namespace />fm.<portlet:namespace />scopeIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />scopeIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentScopeIds);
-			}
-
 			if (document.<portlet:namespace />fm.<portlet:namespace />classNameIds) {
 				document.<portlet:namespace />fm.<portlet:namespace />classNameIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentClassNameIds);
 			}
@@ -289,34 +261,10 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 		['liferay-util-list-fields']
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectScopes',
-		function() {
-			if (document.<portlet:namespace />fm.<portlet:namespace />scopeIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />scopeIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentScopeIds);
-			}
-
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'select-scope';
-
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
-
 	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType','false','<portlet:namespace />classNamesBoxes');
 	Liferay.Util.toggleSelectBox('<portlet:namespace />defaultScope','false','<portlet:namespace />scopesBoxes');
 
 	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />selectionStyle);
-
-	Liferay.after(
-		'inputmoveboxes:moveItem',
-		function(event) {
-			if ((event.fromBox.get('id') == '<portlet:namespace />currentScopeIds') || ( event.toBox.get('id') == '<portlet:namespace />currentScopeIds')) {
-				<portlet:namespace />selectScopes();
-			}
-		}
-	);
 </aui:script>
 
 <%!

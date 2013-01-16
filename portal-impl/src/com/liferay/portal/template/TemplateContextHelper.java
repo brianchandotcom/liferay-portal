@@ -78,7 +78,7 @@ import com.liferay.portlet.expando.service.ExpandoRowLocalService;
 import com.liferay.portlet.expando.service.ExpandoTableLocalService;
 import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
-import com.liferay.taglib.util.VelocityTaglib;
+import com.liferay.taglib.util.VelocityTaglibImpl;
 import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.lang.reflect.Method;
@@ -626,7 +626,7 @@ public class TemplateContextHelper {
 		// VelocityTaglib methods
 
 		try {
-			Class<?> clazz = VelocityTaglib.class;
+			Class<?> clazz = VelocityTaglibImpl.class;
 
 			Method method = clazz.getMethod(
 				"layoutIcon", new Class[] {Layout.class});

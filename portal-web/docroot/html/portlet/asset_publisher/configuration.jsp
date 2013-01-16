@@ -85,14 +85,14 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 		</aui:select>
 
 		<%
-		Set<Group> groups = new HashSet<Group>();
+		Set<Group> availableGroups = new HashSet<Group>();
 
-		groups.add(company.getGroup());
-		groups.add(themeDisplay.getScopeGroup());
+		availableGroups.add(company.getGroup());
+		availableGroups.add(themeDisplay.getScopeGroup());
 
 		for (Layout curLayout : LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), layout.isPrivateLayout())) {
 			if (curLayout.hasScopeGroup()) {
-				groups.add(curLayout.getScopeGroup());
+				availableGroups.add(curLayout.getScopeGroup());
 			}
 		}
 
@@ -112,27 +112,56 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 
 		Arrays.sort(groupIds);
 
-		for (Group group : groups) {
+		for (Group group : availableGroups) {
 			if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
 				scopesRightList.add(new KeyValuePair(AssetPublisherUtil.getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
 			}
 		}
 
 		scopesRightList = ListUtil.sort(scopesRightList, new KeyValuePairComparator(false, true));
+
+		List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(groupIds);
 		%>
 
-		<aui:input name="preferences--scopeIds--" type="hidden" />
-
 		<div class="<%= defaultScope ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />scopesBoxes">
-			<liferay-ui:input-move-boxes
-				leftBoxName="currentScopeIds"
-				leftList="<%= scopesLeftList %>"
-				leftReorder="true"
-				leftTitle="selected"
-				rightBoxName="availableScopeIds"
-				rightList="<%= scopesRightList %>"
-				rightTitle="available"
-			/>
+			<liferay-ui:search-container
+				emptyResultsMessage="no-groups-were-found"
+				iteratorURL="<%= configurationRenderURL %>"
+			>
+				<liferay-ui:search-container-results
+					results="<%= selectedGroups %>"
+					total="<%= selectedGroups.size() %>"
+				/>
+
+				<liferay-ui:search-container-row
+					className="com.liferay.portal.model.Group"
+					modelVar="group"
+				>
+
+					<%
+					group = group.toEscapedModel();
+					%>
+
+					<liferay-ui:search-container-column-text
+						name="name"
+					>
+						<liferay-ui:icon
+							label="<%= true %>"
+							message="<%= _getName(themeDisplay, group, locale) %>"
+					        src="<%= group.getGroupIcon(themeDisplay) %>"
+					    />
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						value="<%= LanguageUtil.get(pageContext, _getGroupType(themeDisplay, group)) %>"
+					/>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator paginate="<%= false %>" />
+			</liferay-ui:search-container>
+
+
 		</div>
 	</liferay-util:buffer>
 
@@ -254,6 +283,19 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 </aui:script>
 
 <%!
+private String _getGroupType (ThemeDisplay themeDisplay, Group group) {
+	String name = "site";
+
+	if (group.getGroupId() == themeDisplay.getCompanyGroupId()) {
+		name = "global";
+	}
+	else if (group.isLayout()) {
+		name = "page";
+	}
+
+	return name;
+}
+
 private String _getName(ThemeDisplay themeDisplay, Group group, Locale locale) throws Exception {
 	String name = null;
 

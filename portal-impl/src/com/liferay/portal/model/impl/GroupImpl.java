@@ -142,6 +142,28 @@ public class GroupImpl extends GroupBaseImpl {
 		return GroupLocalServiceUtil.getGroupDescriptiveName(this, locale);
 	}
 
+	public String getGroupIcon(ThemeDisplay themeDisplay) {
+		String image = themeDisplay.getPathThemeImages() + "/common/";
+
+		if (isCompany()) {
+			image = image.concat("global.png");
+		}
+		else if (isOrganization()) {
+			image = image.concat("organization_icon.png");
+		}
+		else if (isUser()) {
+			image = image.concat("user_icon.png");
+		}
+		else if (isLayout()) {
+			image = image.concat("page.png");
+		}
+		else {
+			image = image.concat("site_icon.png");
+		}
+
+		return image;
+	}
+
 	public Group getLiveGroup() {
 		if (!isStagingGroup()) {
 			return null;

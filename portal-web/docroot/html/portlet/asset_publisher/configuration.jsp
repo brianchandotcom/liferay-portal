@@ -74,10 +74,10 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 				layoutScopeGroupId = layoutScopeGroup.getGroupId();
 				%>
 
-				<aui:option label="<%= _getName(themeDisplay, layoutScopeGroup, locale) %>" selected="<%= (groupIds.length == 1) && (layoutScopeGroupId == groupIds[0]) %>" value="<%= _getScopeId(layoutScopeGroup, themeDisplay.getScopeGroupId()) %>" />
+				<aui:option label="<%= _getName(themeDisplay, layoutScopeGroup, locale) %>" selected="<%= (groupIds.length == 1) && (layoutScopeGroupId == groupIds[0]) %>" value="<%= AssetPublisherUtil.getScopeId(layoutScopeGroup, themeDisplay.getScopeGroupId()) %>" />
 			</c:if>
 
-			<aui:option label="<%= _getName(themeDisplay, company.getGroup(), locale) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getCompanyGroupId() == groupIds[0]) %>" value="<%= _getScopeId(company.getGroup(), themeDisplay.getScopeGroupId()) %>" />
+			<aui:option label="<%= _getName(themeDisplay, company.getGroup(), locale) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getCompanyGroupId() == groupIds[0]) %>" value="<%= AssetPublisherUtil.getScopeId(company.getGroup(), themeDisplay.getScopeGroupId()) %>" />
 
 			<optgroup label="----------"></optgroup>
 
@@ -85,54 +85,96 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 		</aui:select>
 
 		<%
-		Set<Group> groups = new HashSet<Group>();
+		Set<Group> availableGroups = new HashSet<Group>();
 
-		groups.add(company.getGroup());
-		groups.add(themeDisplay.getScopeGroup());
+		availableGroups.add(company.getGroup());
+		availableGroups.add(themeDisplay.getScopeGroup());
 
 		for (Layout curLayout : LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), layout.isPrivateLayout())) {
 			if (curLayout.hasScopeGroup()) {
-				groups.add(curLayout.getScopeGroup());
+				availableGroups.add(curLayout.getScopeGroup());
 			}
 		}
 
-		// Left list
-
-		List<KeyValuePair> scopesLeftList = new ArrayList<KeyValuePair>();
-
-		for (long groupId : groupIds) {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			scopesLeftList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
-		}
-
-		// Right list
-
-		List<KeyValuePair> scopesRightList = new ArrayList<KeyValuePair>();
-
-		Arrays.sort(groupIds);
-
-		for (Group group : groups) {
-			if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
-				scopesRightList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
-			}
-		}
-
-		scopesRightList = ListUtil.sort(scopesRightList, new KeyValuePairComparator(false, true));
+		List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(groupIds);
 		%>
 
-		<aui:input name="preferences--scopeIds--" type="hidden" />
-
 		<div class="<%= defaultScope ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />scopesBoxes">
-			<liferay-ui:input-move-boxes
-				leftBoxName="currentScopeIds"
-				leftList="<%= scopesLeftList %>"
-				leftReorder="true"
-				leftTitle="selected"
-				rightBoxName="availableScopeIds"
-				rightList="<%= scopesRightList %>"
-				rightTitle="available"
-			/>
+			<liferay-ui:search-container
+				emptyResultsMessage="no-groups-were-found"
+				iteratorURL="<%= configurationRenderURL %>"
+			>
+				<liferay-ui:search-container-results
+					results="<%= selectedGroups %>"
+					total="<%= selectedGroups.size() %>"
+				/>
+
+				<liferay-ui:search-container-row
+					className="com.liferay.portal.model.Group"
+					modelVar="group"
+				>
+
+					<%
+					group = group.toEscapedModel();
+					%>
+
+					<liferay-ui:search-container-column-text
+						name="name"
+					>
+						<liferay-ui:icon
+							label="<%= true %>"
+							message="<%= _getName(themeDisplay, group, locale) %>"
+							src="<%= group.getGroupIcon(themeDisplay) %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						value="<%= LanguageUtil.get(pageContext, _getGroupType(themeDisplay, group)) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						align="right"
+					>
+						<liferay-portlet:actionURL portletConfiguration="true" var="deleteURL">
+							<portlet:param name="<%= Constants.CMD %>" value="remove-scope" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="scopeId" value="<%= AssetPublisherUtil.getScopeId(group, scopeGroupId) %>" />
+						</liferay-portlet:actionURL>
+
+						<liferay-ui:icon-delete
+							url="<%= deleteURL %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator paginate="<%= false %>" />
+			</liferay-ui:search-container>
+
+			<div class="select-asset-selector">
+				<liferay-ui:icon-menu align="left" cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="select" showWhenSingleIcon="<%= true %>">
+
+					<%
+					for (Group group : availableGroups) {
+						if (ArrayUtil.contains(groupIds, group.getGroupId())) {
+							continue;
+						}
+					%>
+
+						<liferay-portlet:actionURL portletConfiguration="true" var="addScopeURL">
+							<portlet:param name="<%= Constants.CMD %>" value="add-scope" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="scopeId" value="<%= AssetPublisherUtil.getScopeId(group, scopeGroupId) %>" />
+						</liferay-portlet:actionURL>
+
+						<liferay-ui:icon id='<%= "scope" + group.getGroupId() %>' message="<%= _getName(themeDisplay, group, locale) %>" method="post" src="<%= group.getGroupIcon(themeDisplay) %>" url="<%= addScopeURL %>" />
+
+					<%
+					}
+					%>
+
+				</liferay-ui:icon-menu>
+			</div>
 		</div>
 	</liferay-util:buffer>
 
@@ -195,10 +237,6 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 		window,
 		'<portlet:namespace />saveSelectBoxes',
 		function() {
-			if (document.<portlet:namespace />fm.<portlet:namespace />scopeIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />scopeIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentScopeIds);
-			}
-
 			if (document.<portlet:namespace />fm.<portlet:namespace />classNameIds) {
 				document.<portlet:namespace />fm.<portlet:namespace />classNameIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentClassNameIds);
 			}
@@ -223,37 +261,26 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 		['liferay-util-list-fields']
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectScopes',
-		function() {
-			if (document.<portlet:namespace />fm.<portlet:namespace />scopeIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />scopeIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentScopeIds);
-			}
-
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'select-scope';
-
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
-
 	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType','false','<portlet:namespace />classNamesBoxes');
 	Liferay.Util.toggleSelectBox('<portlet:namespace />defaultScope','false','<portlet:namespace />scopesBoxes');
 
 	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />selectionStyle);
-
-	Liferay.after(
-		'inputmoveboxes:moveItem',
-		function(event) {
-			if ((event.fromBox.get('id') == '<portlet:namespace />currentScopeIds') || ( event.toBox.get('id') == '<portlet:namespace />currentScopeIds')) {
-				<portlet:namespace />selectScopes();
-			}
-		}
-	);
 </aui:script>
 
 <%!
+private String _getGroupType(ThemeDisplay themeDisplay, Group group) {
+	String name = "site";
+
+	if (group.getGroupId() == themeDisplay.getCompanyGroupId()) {
+		name = "global";
+	}
+	else if (group.isLayout()) {
+		name = "page";
+	}
+
+	return name;
+}
+
 private String _getName(ThemeDisplay themeDisplay, Group group, Locale locale) throws Exception {
 	String name = null;
 
@@ -287,23 +314,5 @@ private String _getName(ThemeDisplay themeDisplay, Group group, Locale locale) t
 	}
 
 	return name;
-}
-
-private String _getScopeId(Group group, long scopeGroupId) throws Exception {
-	String key = null;
-
-	if (group.isLayout()) {
-		Layout layout = LayoutLocalServiceUtil.getLayout(group.getClassPK());
-
-		key = AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX + layout.getLayoutId();
-	}
-	else if (group.isLayoutPrototype() || (group.getGroupId() == scopeGroupId)) {
-		key = AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + GroupConstants.DEFAULT;
-	}
-	else {
-		key = AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + group.getGroupId();
-	}
-
-	return key;
 }
 %>

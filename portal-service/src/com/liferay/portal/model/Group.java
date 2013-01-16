@@ -56,6 +56,9 @@ public interface Group extends GroupModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public java.lang.String getGroupIcon(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+
 	public com.liferay.portal.model.Group getLiveGroup();
 
 	public java.lang.String getLiveParentTypeSettingsProperty(

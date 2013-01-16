@@ -28,15 +28,15 @@
 		buffer.append("<img align=\"left\" alt=\"");
 		buffer.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", LanguageUtil.get(pageContext, organization.getType())));
 		buffer.append("\" border=\"0\" style=\"margin: 0px 5px 0px 0px;\" src=\"");
-		buffer.append(themeDisplay.getPathThemeImages());
-		buffer.append("/common/organization_icon.png\" title=\"");
+		buffer.append(curGroup.getGroupIcon(themeDisplay));
+		buffer.append("\" title=\"");
 		buffer.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", LanguageUtil.get(pageContext, organization.getType())));
 		buffer.append("\">");
 	}
 	else {
 		buffer.append("<img align=\"left\" border=\"0\" style=\"margin: 0px 5px 0px 0px;\" src=\"");
-		buffer.append(themeDisplay.getPathThemeImages());
-		buffer.append("/common/site_icon.png\">");
+		buffer.append(curGroup.getGroupIcon(themeDisplay));
+		buffer.append("\">");
 	}
 
 	buffer.append(HtmlUtil.escape(curGroup.getDescriptiveName(locale)));

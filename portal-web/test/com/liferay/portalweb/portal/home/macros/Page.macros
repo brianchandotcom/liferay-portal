@@ -12,7 +12,7 @@
 			<action object="Home" command="click" target="ADD_LINK_PAGE" />
 			<action object="Home" command="type" target="NEW_PAGE_FIELD" value="${portlet} Page" />
 			<action object="Home" command="click" target="NEW_PAGE_LINK_SAVE" />
-			<action object="Home" command="type" locator="link=${portlet} Page" value="${portlet} Page" />
+			<action object="Home" command="type" target="link=${portlet} Page" value="${portlet} Page" />
 		</steps>
 	</macrodef>
 </macros>

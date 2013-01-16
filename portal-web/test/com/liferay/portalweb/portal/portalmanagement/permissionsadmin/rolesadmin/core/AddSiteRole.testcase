@@ -1,0 +1,31 @@
+<testcase
+	name="AddSiteRole"
+	description="In the &lt;strong&gt;Control Panel Roles Portlet&lt;/strong&gt;, add a Site Role."
+>
+	<setup>
+	</setup>
+	<steps>
+		<macro object="CPRoles" command="addSiteRole">
+			<param name="name" value="Siterole Name " />
+			<param name="title" value="Siterole Title" />
+			<param name="description" value="Siterole Description" />
+		</macro>
+
+		<macro object="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Roles" />
+		</macro>
+
+		<action object="CPRolesHome" command="type" target="SEARCH_FILED" value="Siterole Title" />
+		<action object="CPRolesHome" command="click" target="SEARCH_BUTTON" value="Search" />
+		<action object="CPRolesHome" command="assertTextEquals" target="ROLES_NAME" value="Siterole Title" />
+		<action object="CPRolesHome" command="click" target="ROLES_NAME" value="Siterole Title" />
+
+		<action object="CPRolesEditRole" command="assertTextEquals" target="ROLE_TYPE" value="Site" />
+		<action object="CPRolesEditRole" command="assertTextEquals" target="ROLE_NAME" value="Siterole Name" />
+		<action object="CPRolesEditRole" command="assertTextEquals" target="ROLE_TITLE" value="Siterole Title" />
+		<action object="CPRolesEditRole" command="assertTextEquals" target="ROLE_DESCRIPTION" value="Siterole Description" />
+	</steps>
+	<teardown>
+		<macro object="CPRoles" command="tearDown" />
+	</teardown>
+</testcase>

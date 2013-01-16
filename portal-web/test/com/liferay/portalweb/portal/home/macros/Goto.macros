@@ -10,7 +10,7 @@
 			<action object="Home" command="open" target="URL_GUEST" value="http://localhost:8080/web/guest/home/" />
 			<action object="Home" command="mouseOver" target="GOTO_LINK" value="Go to" />
 			<action object="Home" command="click" target="GOTO_LINK_CONTROL_PANEL" value="Control Panel" />
-			<action object="Home" command="click" locator="link=${portlet}" value="${portlet}" />
+			<action object="Home" command="click" target="link=${portlet}" value="${portlet}" />
 		</steps>
 	</macrodef>
 
@@ -23,7 +23,7 @@
 		</params>
 		<steps>
 			<action object="Home" command="open" target="URL_GUEST" value="http://localhost:8080/web/guest/home/" />
-			<action object="Home" command="click" locator="link=${portlet} Page" value="${portlet} Page" />
+			<action object="Home" command="click" target="link=${portlet} Page" value="${portlet} Page" />
 		</steps>
 	</macrodef>
 
@@ -36,7 +36,7 @@
 		</params>
 		<steps>
 			<action object="Home" command="open" target="URL_GUEST" value="http://localhost:8080/web/guest/home/" />
-			<action object="Home" command="click" locator="link=${portlet} Page" value="${portlet} Page" />
+			<action object="Home" command="click" target="link=${portlet} Page" value="${portlet} Page" />
 		</steps>
 	</macrodef>
 </macros>

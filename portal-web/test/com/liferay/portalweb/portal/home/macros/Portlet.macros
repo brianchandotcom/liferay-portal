@@ -14,7 +14,7 @@
 			<action object="Home" command="mouseOver" target="ADD_LINK" />
 			<action object="Home" command="click" target="ADD_LINK_APPLICATION" />
 			<action object="Home" command="type" target="PORTLET_FIELD_SEARCH" value="${portlet}" value-first-letter="true" />
-			<action object="Home" command="click" locator="//div[@title='${portlet}']/p/a" />
+			<action object="Home" command="click" target="//div[@title='${portlet}']/p/a" />
 			<action object="Home" command="assertTextEquals" target="PORTLET_TEXT_TITLE" value="${portlet}" />
 		</steps>
 	</macrodef>

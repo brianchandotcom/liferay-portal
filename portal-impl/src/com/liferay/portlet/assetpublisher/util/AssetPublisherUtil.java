@@ -477,19 +477,15 @@ public class AssetPublisherUtil {
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 				group.getClassPK());
 
-			key =
-				AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX +
-					layout.getLayoutId();
+			key = SCOPE_ID_LAYOUT_PREFIX + layout.getLayoutId();
 		}
 		else if (group.isLayoutPrototype() ||
 				(group.getGroupId() == scopeGroupId)) {
 
-			key =
-				AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
-					GroupConstants.DEFAULT;
+			key = SCOPE_ID_GROUP_PREFIX + GroupConstants.DEFAULT;
 		}
 		else {
-			key = AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + group.getGroupId();
+			key = SCOPE_ID_GROUP_PREFIX + group.getGroupId();
 		}
 
 		return key;

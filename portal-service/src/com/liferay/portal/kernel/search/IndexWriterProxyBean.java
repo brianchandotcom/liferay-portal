@@ -63,6 +63,14 @@ public class IndexWriterProxyBean extends BaseMultiDestinationProxyBean
 		return SearchEngineUtil.getSearchWriterDestinationName(searchEngineId);
 	}
 
+	public void indexDictionaries(SearchContext searchContext) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void indexDictionary(SearchContext searchContext) {
+		throw new UnsupportedOperationException();
+	}
+
 	public void updateDocument(SearchContext searchContext, Document document) {
 		throw new UnsupportedOperationException();
 	}

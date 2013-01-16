@@ -98,11 +98,11 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				else if (cmd.equals("move-selection-up")) {
 					moveSelectionUp(actionRequest, preferences);
 				}
-				else if (cmd.equals("remove-selection")) {
-					removeSelection(actionRequest, preferences);
-				}
 				else if (cmd.equals("remove-scope")) {
 					removeScope(actionRequest, preferences);
+				}
+				else if (cmd.equals("remove-selection")) {
+					removeSelection(actionRequest, preferences);
 				}
 				else if (cmd.equals("select-scope")) {
 					setScopes(actionRequest, preferences);

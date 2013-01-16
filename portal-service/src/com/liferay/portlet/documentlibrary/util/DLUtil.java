@@ -208,7 +208,7 @@ public class DLUtil {
 		return getDL().getEmailFromName(preferences, companyId);
 	}
 
-	public static List<FileEntry> getEntries(Hits hits) {
+	public static List<Object> getEntries(Hits hits) {
 		return getDL().getEntries(hits);
 	}
 

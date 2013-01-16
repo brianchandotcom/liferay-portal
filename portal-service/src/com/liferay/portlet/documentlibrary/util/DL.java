@@ -119,7 +119,7 @@ public interface DL {
 			PortletPreferences preferences, long companyId)
 		throws SystemException;
 
-	public List<FileEntry> getEntries(Hits hits);
+	public List<Object> getEntries(Hits hits);
 
 	public String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay);

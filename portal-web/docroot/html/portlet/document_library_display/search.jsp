@@ -101,41 +101,107 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.repository.model.FileEntry"
-			modelVar="fileEntry"
+			className="java.lang.Object"
+			modelVar="obj"
 		>
 
-			<%
-			Folder folder = fileEntry.getFolder();
+			<c:choose>
+				<c:when test="<%= obj instanceof MBMessage %>">
 
-			PortletURL rowURL = renderResponse.createRenderURL();
+					<%
+					MBMessage message = (MBMessage)obj;
 
-			rowURL.setParameter("struts_action", "/document_library_display/view_file_entry");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
-			%>
+					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(message.getClassPK());
 
-			<liferay-ui:search-container-column-text
-				name="#"
-				value="<%= (index + 1) + StringPool.PERIOD %>"
-			/>
+					Folder folder = fileEntry.getFolder();
+					%>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="folder"
-				value="<%= folder.getName() %>"
-			/>
+					<portlet:renderURL var="rowURL">
+						<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+					</portlet:renderURL>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="document"
-				value="<%= fileEntry.getTitle() %>"
-			/>
+					<liferay-ui:search-container-column-text
+						name="title"
+					>
+						<liferay-ui:icon
+							image="message"
+							label="<%= true %>"
+							message="<%= StringUtil.shorten(message.getBody(), 50) %>"
+							url="<%= rowURL %>"
+						/>
 
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				path="/html/portlet/document_library/file_entry_action.jsp"
-			/>
+						<liferay-util:buffer var="rootEntryIcon">
+							<liferay-ui:icon
+								image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
+								label="<%= true %>"
+								message="<%= fileEntry.getTitle() %>"
+								url="<%= rowURL %>"
+							/>
+						</liferay-util:buffer>
+
+						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="found-comment-in-document-x" />)</span>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="folder"
+						value="<%= folder.getName() %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						value='<%= LanguageUtil.get(locale, "comment") %>'
+					/>
+
+					<liferay-ui:search-container-column-text
+						name=""
+						value=""
+					/>
+				</c:when>
+				<c:when test="<%= obj instanceof FileEntry %>">
+
+					<%
+					FileEntry fileEntry = (FileEntry)obj;
+
+					Folder folder = fileEntry.getFolder();
+					%>
+
+					<portlet:renderURL var="rowURL">
+						<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+					</portlet:renderURL>
+
+					<liferay-ui:search-container-column-text
+						name="title"
+					>
+						<liferay-ui:icon
+							image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
+							label="<%= true %>"
+							message="<%= fileEntry.getTitle() %>"
+							url="<%= rowURL %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="folder"
+						value="<%= folder.getName() %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						value='<%= LanguageUtil.get(locale, "document") %>'
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						align="right"
+						path="/html/portlet/document_library/file_entry_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<span class="aui-search-bar">

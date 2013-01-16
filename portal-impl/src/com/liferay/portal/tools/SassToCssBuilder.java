@@ -36,6 +36,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsImpl;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -150,6 +151,89 @@ public class SassToCssBuilder {
 		return fileName.substring(0, pos + 4);
 	}
 
+	private List<String> _getFilesURLsWhereFileIsImported(
+		String fileURLToFind, List<String> fileURLsWhereSearching)
+			throws Exception {
+
+		List<String> filesWhereImported = new ArrayList<String>();
+
+		for (String fileURL : fileURLsWhereSearching) {
+			File file = new File (fileURL);
+
+			String content = FileUtil.read(file);
+
+			if (_isImportedFile(fileURLToFind, content, file.getParent())) {
+				filesWhereImported.add(fileURL);
+			}
+		}
+
+		return filesWhereImported;
+	}
+
+	private String[] _getFileURLsToParse(
+		String CSSFilesDirName, String[] CSSFileNames) throws Exception {
+
+		List<String> modifiedFileURLs = new ArrayList<String>();
+		List<String> unModifiedFileURLs = new ArrayList<String>();
+
+		for (String fileName : CSSFileNames) {
+			String fileURL = StringUtil.replace(
+				CSSFilesDirName + StringPool.SLASH + fileName,
+				StringPool.BACK_SLASH, StringPool.SLASH);
+
+			long lastModifiedFile = (new File(fileURL)).lastModified();
+			long lastModifiedCacheFile = getCacheFile(fileURL).lastModified();
+
+			if (lastModifiedFile == lastModifiedCacheFile) {
+				unModifiedFileURLs.add(fileURL);
+			}
+			else {
+				modifiedFileURLs.add(fileURL);
+			}
+		}
+
+		if ((modifiedFileURLs.size() > 0) && (unModifiedFileURLs.size() > 0)) {
+			List<String> indirectlyModifiedFiles =
+				_getIndirectlyModifiedFileURLs(
+					modifiedFileURLs, unModifiedFileURLs);
+
+			modifiedFileURLs.addAll(indirectlyModifiedFiles);
+		}
+
+		return modifiedFileURLs.toArray(new String[modifiedFileURLs.size()]);
+	}
+
+	private List<String> _getIndirectlyModifiedFileURLs(
+		List<String> modifiedFileURLs, List<String> unmodifiedFileURLs)
+			throws Exception {
+
+		List<String> indirectlyModifiedFiles = new ArrayList<String>();
+
+		for (String modifiedFileURL : modifiedFileURLs) {
+			List<String> filesWhereFileIsImported =
+				_getFilesURLsWhereFileIsImported(
+					modifiedFileURL, unmodifiedFileURLs);
+
+			indirectlyModifiedFiles.addAll(filesWhereFileIsImported);
+
+			unmodifiedFileURLs.removeAll(filesWhereFileIsImported);
+
+			if (unmodifiedFileURLs.size() == 0) {
+				break;
+			}
+		}
+
+		if ((indirectlyModifiedFiles.size() > 0) &&
+			(unmodifiedFileURLs.size() > 0)) {
+
+			indirectlyModifiedFiles.addAll(
+				_getIndirectlyModifiedFileURLs(
+					indirectlyModifiedFiles, unmodifiedFileURLs));
+		}
+
+		return indirectlyModifiedFiles;
+	}
+
 	private void _initUtil(ClassLoader classLoader) {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
@@ -170,6 +254,59 @@ public class SassToCssBuilder {
 		PropsUtil.setProps(new PropsImpl());
 	}
 
+	private boolean _isImportedFile(
+		String fileURLtoFind, String contentWhereSearching, String contentDir)
+			throws IOException {
+
+		int pos = 0;
+
+		while (true) {
+			int commentX = contentWhereSearching.indexOf(
+				_CSS_COMMENT_BEGIN, pos);
+			int commentY = contentWhereSearching.indexOf(
+				_CSS_COMMENT_END, commentX + _CSS_COMMENT_BEGIN.length());
+
+			int importX = contentWhereSearching.indexOf(_CSS_IMPORT_BEGIN, pos);
+			int importY = contentWhereSearching.indexOf(
+				StringPool.CLOSE_PARENTHESIS,
+				importX + _CSS_IMPORT_BEGIN.length());
+
+			if ((importX == -1) || (importY == -1)) {
+				break;
+			}
+			else if ((commentX != -1) && (commentY != -1) &&
+					 (commentX < importX) && (commentY > importX)) {
+
+				commentY += _CSS_COMMENT_END.length();
+
+				pos = commentY;
+			}
+			else {
+				String importedFileName = null;
+
+				importedFileName = contentWhereSearching.substring(
+					importX + _CSS_IMPORT_BEGIN.length(), importY).trim();
+
+				String importedFileURL = StringUtil.replace(
+					contentDir + StringPool.SLASH + importedFileName,
+					StringPool.BACK_SLASH, StringPool.SLASH);
+
+				File importedFile = new File(importedFileURL);
+
+				String canonicalPath = importedFile.getCanonicalPath().replace(
+					StringPool.BACK_SLASH, StringPool.SLASH);
+
+				if (canonicalPath.equals(fileURLtoFind)) {
+					return true;
+				}
+
+				pos = importY + StringPool.CLOSE_PARENTHESIS.length();
+			}
+		}
+
+		return false;
+	}
+
 	private void _parseSassDirectory(String dirName) throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -186,36 +323,30 @@ public class SassToCssBuilder {
 
 		String[] fileNames = directoryScanner.getIncludedFiles();
 
-		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(
-				dirName + StringPool.SLASH + fileName, StringPool.BACK_SLASH,
-				StringPool.SLASH);
+		String[] fileURLsToParse = _getFileURLsToParse(dirName, fileNames);
 
+		for (String fileURL : fileURLsToParse) {
 			try {
 				long start = System.currentTimeMillis();
 
-				if (_parseSassFile(fileName)) {
-					long end = System.currentTimeMillis();
+				_parseSassFile(fileURL);
 
-					System.out.println(
-						"Parsed " + fileName + " in " + (end - start) + " ms");
-				}
+				long end = System.currentTimeMillis();
+
+				System.out.println(
+					"Parsed " + fileURL + " in " + (end - start) + " ms");
 			}
 			catch (Exception e) {
-				System.out.println("Unable to parse " + fileName);
+				System.out.println("Unable to parse " + fileURL);
 
 				e.printStackTrace();
 			}
 		}
 	}
 
-	private boolean _parseSassFile(String fileName) throws Exception {
+	private void _parseSassFile(String fileName) throws Exception {
 		File file = new File(fileName);
 		File cacheFile = getCacheFile(fileName);
-
-		if (file.lastModified() == cacheFile.lastModified()) {
-			return false;
-		}
 
 		Map<String, Object> inputObjects = new HashMap<String, Object>();
 
@@ -241,9 +372,13 @@ public class SassToCssBuilder {
 		FileUtil.write(cacheFile, parsedContent);
 
 		cacheFile.setLastModified(file.lastModified());
-
-		return true;
 	}
+
+	private static final String _CSS_COMMENT_BEGIN = "/*";
+
+	private static final String _CSS_COMMENT_END = "*/";
+
+	private static final String _CSS_IMPORT_BEGIN = "@import url(";
 
 	private RubyExecutor _rubyExecutor;
 	private String _rubyScript;

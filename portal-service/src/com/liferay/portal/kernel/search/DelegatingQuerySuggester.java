@@ -18,8 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
-import edu.emory.mathcs.backport.java.util.Collections;
-
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 

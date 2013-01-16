@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.messaging.proxy.BaseMultiDestinationProxyBean;
 import com.liferay.portal.kernel.messaging.proxy.ProxyRequest;
 
 import java.util.Collection;
+import java.util.Locale;
 
 /**
  * @author Bruno Farache
@@ -61,6 +62,14 @@ public class IndexWriterProxyBean extends BaseMultiDestinationProxyBean
 		String searchEngineId = searchContext.getSearchEngineId();
 
 		return SearchEngineUtil.getSearchWriterDestinationName(searchEngineId);
+	}
+
+	public void indexDictionaries(long companyId) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void indexDictionary(long companyId, Locale locale) {
+		throw new UnsupportedOperationException();
 	}
 
 	public void updateDocument(SearchContext searchContext, Document document) {

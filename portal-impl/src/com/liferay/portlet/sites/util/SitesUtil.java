@@ -805,6 +805,8 @@ public class SitesUtil {
 			new LinkedHashMap<String, Object>();
 
 		organizationParams.put(
+			"groupOrganization", new Long(group.getGroupId()));
+		organizationParams.put(
 			"organizationsGroups", new Long(group.getGroupId()));
 
 		List<Organization> organizationsGroups =

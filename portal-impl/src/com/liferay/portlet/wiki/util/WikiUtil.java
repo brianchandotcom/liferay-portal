@@ -45,6 +45,8 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.WikiFormatException;
 import com.liferay.portlet.wiki.engines.WikiEngine;
@@ -293,20 +295,31 @@ public class WikiUtil {
 		}
 	}
 
-	public static List<WikiPage> getEntries(Hits hits) {
-		List<WikiPage> pages = new ArrayList<WikiPage>();
+	public static List<Object> getEntries(Hits hits) {
+		List<Object> entries = new ArrayList<Object>();
 
 		for (Document document : hits.getDocs()) {
+			String entryClassName = GetterUtil.getString(
+				document.get(Field.ENTRY_CLASS_NAME));
 			long entryClassPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
-			long nodeId = GetterUtil.getLong(document.get(Field.NODE_ID));
 
 			try {
-				WikiNodeLocalServiceUtil.getNode(nodeId);
+				Object obj = null;
 
-				WikiPage page = WikiPageLocalServiceUtil.getPage(entryClassPK);
+				if (entryClassName.equals(MBMessage.class.getName())) {
+					long classPK = GetterUtil.getLong(
+						document.get(Field.CLASS_PK));
 
-				pages.add(page);
+					WikiPageLocalServiceUtil.getPage(classPK);
+
+					obj = MBMessageLocalServiceUtil.getMessage(entryClassPK);
+				}
+				else if (entryClassName.equals(WikiPage.class.getName())) {
+					obj = WikiPageLocalServiceUtil.getPage(entryClassPK);
+				}
+
+				entries.add(obj);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -315,7 +328,7 @@ public class WikiUtil {
 			}
 		}
 
-		return pages;
+		return entries;
 	}
 
 	public static WikiNode getFirstNode(PortletRequest portletRequest)

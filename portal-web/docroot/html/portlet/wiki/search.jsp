@@ -80,36 +80,100 @@ portletURL.setParameter("keywords", keywords);
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.wiki.model.WikiPage"
-			modelVar="wikiPage"
+			className="java.lang.Object"
+			modelVar="obj"
 		>
 
-			<%
-			WikiNode curNode = wikiPage.getNode();
-			%>
+			<c:choose>
+				<c:when test="<%= obj instanceof MBMessage %>">
 
-			<liferay-ui:search-container-column-text
-				name="#"
-				value="<%= (index + 1) + StringPool.PERIOD %>"
-			/>
+					<%
+					MBMessage message = (MBMessage)obj;
 
-			<portlet:actionURL var="rowURL">
-				<portlet:param name="struts_action" value="/wiki/view" />
-				<portlet:param name="nodeName" value="<%= node.getName() %>" />
-				<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-			</portlet:actionURL>
+					WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(message.getClassPK());
+					%>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="wiki"
-				value="<%= curNode.getName() %>"
-			/>
+					<portlet:renderURL var="rowURL">
+						<portlet:param name="struts_action" value="/wiki/view" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="nodeName" value="<%= wikiPage.getNode().getName() %>" />
+						<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+					</portlet:renderURL>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="page"
-				value="<%= wikiPage.getTitle() %>"
-			/>
+					<liferay-ui:search-container-column-text
+						name="title"
+					>
+						<liferay-ui:icon
+							image="message"
+							label="<%= true %>"
+							message="<%= StringUtil.shorten(message.getBody(), 50) %>"
+							url="<%= rowURL %>"
+						/>
+
+						<liferay-util:buffer var="rootEntryIcon">
+							<liferay-ui:icon
+								image="page"
+								label="<%= true %>"
+								message="<%= wikiPage.getTitle() %>"
+								url="<%= rowURL %>"
+							/>
+						</liferay-util:buffer>
+
+						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="found-comment-in-wiki-page-x" />)</span>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						value='<%= LanguageUtil.get(locale, "comment") %>'
+					/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="wiki"
+						value="<%= wikiPage.getNode().getName() %>"
+					/>
+				</c:when>
+				<c:when test="<%= obj instanceof WikiPage %>">
+
+					<%
+					WikiPage wikiPage = (WikiPage)obj;
+
+					String title = wikiPage.getTitle();
+
+					if (title.equalsIgnoreCase(keywords)) {
+						createNewPage = false;
+					}
+					%>
+
+					<portlet:renderURL var="rowURL">
+						<portlet:param name="struts_action" value="/wiki/view" />
+						<portlet:param name="nodeName" value="<%= wikiPage.getNode().getName() %>" />
+						<portlet:param name="title" value="<%= title %>" />
+					</portlet:renderURL>
+
+					<liferay-ui:search-container-column-text
+						name="title"
+					>
+						<liferay-ui:icon
+							image="page"
+							label="<%= true %>"
+							message="<%= title %>"
+							url="<%= rowURL %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						value='<%= LanguageUtil.get(locale, "page") %>'
+					/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="wiki"
+						value="<%= wikiPage.getNode().getName() %>"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<span class="aui-search-bar">

@@ -32,11 +32,14 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -115,6 +118,17 @@ public class MBMessageIndexer extends BaseIndexer {
 			searchContext.getAttribute("discussion"), false);
 
 		contextQuery.addRequiredTerm("discussion", discussion);
+
+		String relatedClassName = (String)searchContext.getAttribute(
+			"relatedClassName");
+
+		if (Validator.isNotNull(relatedClassName)) {
+			Indexer indexer = IndexerRegistryUtil.getIndexer(relatedClassName);
+
+			if (indexer != null) {
+				indexer.postProcessContextQuery(contextQuery, searchContext);
+			}
+		}
 
 		long threadId = GetterUtil.getLong(
 			(String)searchContext.getAttribute("threadId"));
@@ -245,6 +259,15 @@ public class MBMessageIndexer extends BaseIndexer {
 
 		document.addKeyword("threadId", message.getThreadId());
 
+		if (message.isDiscussion()) {
+			Indexer indexer = IndexerRegistryUtil.getIndexer(
+				message.getClassName());
+
+			if (indexer != null) {
+				indexer.addRelatedEntityFields(document, obj);
+			}
+		}
+
 		if (!message.isInTrash() && message.isInTrashThread()) {
 			addTrashFields(
 				document, MBThread.class.getName(), message.getThreadId(), null,
@@ -295,9 +318,7 @@ public class MBMessageIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		MBMessage message = (MBMessage)obj;
 
-		if (message.isDiscussion() ||
-			(message.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
-
+		if (message.getStatus() != WorkflowConstants.STATUS_APPROVED) {
 			return;
 		}
 
@@ -333,6 +354,7 @@ public class MBMessageIndexer extends BaseIndexer {
 
 		reindexCategories(companyId);
 		reindexRoot(companyId);
+		reindexDiscussions(companyId);
 	}
 
 	@Override
@@ -373,6 +395,30 @@ public class MBMessageIndexer extends BaseIndexer {
 
 				reindexMessages(
 					companyId, category.getGroupId(), category.getCategoryId());
+			}
+
+		};
+
+		actionableDynamicQuery.setCompanyId(companyId);
+
+		actionableDynamicQuery.performActions();
+	}
+
+	protected void reindexDiscussions(final long companyId)
+		throws PortalException, SystemException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			new GroupActionableDynamicQuery() {
+
+			@Override
+			protected void performAction(Object object)
+				throws PortalException, SystemException {
+
+				Group group = (Group)object;
+
+				reindexMessages(
+					companyId, group.getGroupId(),
+					MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 			}
 
 		};

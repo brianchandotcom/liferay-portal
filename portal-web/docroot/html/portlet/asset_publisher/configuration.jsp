@@ -283,7 +283,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 </aui:script>
 
 <%!
-private String _getGroupType (ThemeDisplay themeDisplay, Group group) {
+private String _getGroupType(ThemeDisplay themeDisplay, Group group) {
 	String name = "site";
 
 	if (group.getGroupId() == themeDisplay.getCompanyGroupId()) {

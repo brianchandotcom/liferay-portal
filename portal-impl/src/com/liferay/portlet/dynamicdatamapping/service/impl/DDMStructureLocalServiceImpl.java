@@ -423,7 +423,7 @@ public class DDMStructureLocalServiceImpl
 			companyGroup.getGroupId(), structureKey);
 	}
 
-	public List<DDMStructure> getStructure(
+	public List<DDMStructure> getStructures(
 			long groupId, String name, String description)
 		throws SystemException {
 

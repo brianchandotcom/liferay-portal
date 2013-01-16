@@ -22,7 +22,6 @@ import com.liferay.portal.util.InitUtil;
 
 import jargs.gnu.CmdLineParser;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -71,9 +70,9 @@ public class SeleniumBuilder {
 
 		_classNameSetAvailable = _initClassNameSetAvailable();
 		_directoryNameSet = _initDirectoryNameSet();
-		_functionMethodParamListMap = _initFunctionMethodParamListMap();
-		_functionMethodReturnTypeMap = _initFunctionMethodReturnTypeMap();
-		_seleniumMethodParamMap = _initSeleniumMethodParamMap();
+		_functionParamsMap = _initFunctionParamsMap();
+		_functionReturnTypeMap = _initFunctionReturnTypeMap();
+		_seleniumParamsMap = _initSeleniumParamsMap();
 
 		_context = _initContext();
 
@@ -187,10 +186,9 @@ public class SeleniumBuilder {
 		hashMap.put("fileNameSetMacros", _fileNameSetMacros);
 		hashMap.put("fileNameSetPaths", _fileNameSetPaths);
 		hashMap.put("fileNameSetTestCases", _fileNameSetTestCases);
-		hashMap.put("functionMethodParamListMap", _functionMethodParamListMap);
-		hashMap.put(
-			"functionMethodReturnTypeMap", _functionMethodReturnTypeMap);
-		hashMap.put("seleniumMethodParamMap", _seleniumMethodParamMap);
+		hashMap.put("functionParamsMap", _functionParamsMap);
+		hashMap.put("functionReturnTypeMap", _functionReturnTypeMap);
+		hashMap.put("seleniumParamsMap", _seleniumParamsMap);
 
 		return hashMap;
 	}
@@ -267,10 +265,8 @@ public class SeleniumBuilder {
 		return fileNameTypeSet;
 	}
 
-	private Map<String, List<String>> _initFunctionMethodParamListMap()
-		throws Exception {
-
-		Map<String, List<String>> hashMap = new HashMap<String, List<String>>();
+	private Map<String, Integer> _initFunctionParamsMap() throws Exception {
+		Map<String, Integer> hashMap = new HashMap<String, Integer>();
 
 		for (String fileName : _fileNameSetFunctions) {
 			Element functions = _seleniumFileUtil.getRootElement(fileName);
@@ -278,29 +274,20 @@ public class SeleniumBuilder {
 			String functionsObject = functions.attributeValue("object");
 			String functionsParams = functions.attributeValue("params");
 
-			List<String> arrayList = new ArrayList<String>();
+			int functionsParamsInteger = GetterUtil.getInteger(functionsParams);
 
-			if (!(functionsParams == null)) {
-				int functionsParamsInteger = GetterUtil.getInteger(
-					functionsParams);
-
-				for (int i = 1; i <= functionsParamsInteger; i++) {
-					arrayList.add(String.valueOf(i));
-				}
+			if (functionsParamsInteger == 0) {
+				hashMap.put(functionsObject, 1);
 			}
 			else {
-				arrayList.add("");
+				hashMap.put(functionsObject, functionsParamsInteger);
 			}
-
-			hashMap.put(functionsObject, arrayList);
 		}
 
 		return hashMap;
 	}
 
-	private Map<String, String> _initFunctionMethodReturnTypeMap()
-		throws Exception {
-
+	private Map<String, String> _initFunctionReturnTypeMap() throws Exception {
 		Map<String, String> hashMap = new HashMap<String, String>();
 
 		for (String fileName : _fileNameSetFunctions) {
@@ -320,16 +307,14 @@ public class SeleniumBuilder {
 		return hashMap;
 	}
 
-	private Map<String, Integer> _initSeleniumMethodParamMap()
-		throws Exception {
-
+	private Map<String, Integer> _initSeleniumParamsMap() throws Exception {
 		Map<String, Integer> hashMap = new HashMap<String, Integer>();
 
-		hashMap = _putSeleniumMethodParamMapFile(
+		hashMap = _putSeleniumParamsMapFile(
 			hashMap, "com/liferay/portalweb/portal/util/liferayselenium/" +
 				"SeleniumWrapper.java");
 
-		hashMap = _putSeleniumMethodParamMapFile(
+		hashMap = _putSeleniumParamsMapFile(
 			hashMap, "com/liferay/portalweb/portal/util/liferayselenium/" +
 				"LiferaySelenium.java");
 
@@ -341,7 +326,7 @@ public class SeleniumBuilder {
 		return hashMap;
 	}
 
-	private Map<String, Integer> _putSeleniumMethodParamMapFile(
+	private Map<String, Integer> _putSeleniumParamsMapFile(
 		Map<String, Integer> hashMap, String file) throws Exception {
 
 		String content = _seleniumFileUtil.getNormalizedContent(file);
@@ -399,9 +384,9 @@ public class SeleniumBuilder {
 	private Set<String> _fileNameSetPaths;
 	private Set<String> _fileNameSetTestCases;
 	private Set<String> _fileNameSetTestSuites;
-	private Map<String, List<String>> _functionMethodParamListMap;
-	private Map<String, String> _functionMethodReturnTypeMap;
+	private Map<String, Integer> _functionParamsMap;
+	private Map<String, String> _functionReturnTypeMap;
 	private SeleniumFileUtil _seleniumFileUtil;
-	private Map<String, Integer> _seleniumMethodParamMap;
+	private Map<String, Integer> _seleniumParamsMap;
 
 }

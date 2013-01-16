@@ -38,10 +38,11 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		super(context);
 
 		_basedir = (String)context.get("basedir");
-		_functionMethodParamListMap = (Map<String, List<String>>)context.get(
-			"functionMethodParamListMap");
-		_functionMethodReturnTypeMap = (Map<String, String>)context.get(
-			"functionMethodReturnTypeMap");
+		_functionParamsMap = (Map<String, Integer>)context.get(
+			"functionParamsMap");
+		_functionReturnTypeMap = (Map<String, String>)context.get(
+			"functionReturnTypeMap");
+		_seleniumDataUtil = new SeleniumDataUtil(context);
 
 		_seleniumFileUtil = new SeleniumFileUtil(_basedir);
 
@@ -223,7 +224,7 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 			String functionObjectName = StringUtil.upperCaseFirstLetter(
 				actionDefCommand);
 
-			String functionReturnType = _functionMethodReturnTypeMap.get(
+			String functionReturnType = _functionReturnTypeMap.get(
 				functionObjectName);
 
 			sb.append("public ");
@@ -231,18 +232,20 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 			sb.append(" ");
 			sb.append(actionDefCommand);
 
-			List<String> paramSuffixList = _functionMethodParamListMap.get(
-				functionObjectName);
+			int functionParams = _functionParamsMap.get(functionObjectName);
+
+			List<String> functionSuffixList =
+				_seleniumDataUtil.getFunctionSuffixList(functionParams);
 
 			String paramList = "";
 
-			for (String paramSuffix : paramSuffixList) {
+			for (String suffix : functionSuffixList) {
 				String paramPair = "String target, String value, ";
 
 				paramPair = StringUtil.replace(
-					paramPair, "target", "target" + paramSuffix);
+					paramPair, "target", "target" + suffix);
 				paramPair = StringUtil.replace(
-					paramPair, "value", "value" + paramSuffix);
+					paramPair, "value", "value" + suffix);
 
 				paramList += paramPair;
 			}
@@ -253,17 +256,17 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 			sb.append(paramList);
 			sb.append(") throws Exception {\n");
 
-			for (String paramSuffix : paramSuffixList) {
+			for (String suffix : functionSuffixList) {
 				String paramsDeclaration =
 					"String[] params = ActionsUtil.getParams(paths, target, " +
 						"value);\n";
 
 				paramsDeclaration = StringUtil.replace(
-					paramsDeclaration, "params", "params" + paramSuffix);
+					paramsDeclaration, "params", "params" + suffix);
 				paramsDeclaration = StringUtil.replace(
-					paramsDeclaration, "target", "target" + paramSuffix);
+					paramsDeclaration, "target", "target" + suffix);
 				paramsDeclaration = StringUtil.replace(
-					paramsDeclaration, "value", "value" + paramSuffix);
+					paramsDeclaration, "value", "value" + suffix);
 
 				sb.append(paramsDeclaration);
 			}
@@ -352,7 +355,7 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		String functionObjectName = StringUtil.upperCaseFirstLetter(
 			actionDefCommand);
 
-		String functionReturnType = _functionMethodReturnTypeMap.get(
+		String functionReturnType = _functionReturnTypeMap.get(
 			functionObjectName);
 
 		if (!functionReturnType.equals("void")) {
@@ -362,16 +365,18 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		sb.append("super.");
 		sb.append(actionDefCommand);
 
-		List<String> paramSuffixList = _functionMethodParamListMap.get(
-			functionObjectName);
+		Integer functionParams = _functionParamsMap.get(functionObjectName);
+
+		List<String> functionSuffixList =
+			_seleniumDataUtil.getFunctionSuffixList(functionParams);
 
 		String paramList = "";
 
-		for (String paramSuffix : paramSuffixList) {
+		for (String suffix : functionSuffixList) {
 			String paramPair = "params[0], params[1], ";
 
 			paramPair = StringUtil.replace(
-				paramPair, "params", "params" + paramSuffix);
+				paramPair, "params", "params" + suffix);
 
 			paramList += paramPair;
 		}
@@ -386,8 +391,9 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 	}
 
 	private String _basedir;
-	private Map<String, List<String>> _functionMethodParamListMap;
-	private Map<String, String> _functionMethodReturnTypeMap;
+	private Map<String, Integer> _functionParamsMap;
+	private Map<String, String> _functionReturnTypeMap;
+	private SeleniumDataUtil _seleniumDataUtil;
 	private SeleniumFileUtil _seleniumFileUtil;
 	private Set<String> _validCommands;
 

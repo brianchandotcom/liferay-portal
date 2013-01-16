@@ -92,6 +92,21 @@ public class SeleniumDataUtil {
 		return "";
 	}
 
+	public List<String> getFunctionSuffixList(int params) throws Exception {
+		List<String> arrayList = new ArrayList<String>();
+
+		if (params == 0 || params == 1) {
+			arrayList.add("");
+		}
+		else {
+			for (int i = 1; i <= params; i++) {
+				arrayList.add(String.valueOf(i));
+			}
+		}
+
+		return arrayList;
+	}
+
 	public Element getRootElementByElement(Element element) throws Exception {
 		if (element.isRootElement()) {
 			return element;

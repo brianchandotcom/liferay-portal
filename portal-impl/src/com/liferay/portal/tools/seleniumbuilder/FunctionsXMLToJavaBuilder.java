@@ -37,10 +37,11 @@ public class FunctionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		super(context);
 
 		_basedir = (String)context.get("basedir");
-		_functionMethodParamListMap = (Map<String, List<String>>)context.get(
-			"functionMethodParamListMap");
-		_functionMethodReturnTypeMap = (Map<String, String>)context.get(
-			"functionMethodReturnTypeMap");
+		_functionParamsMap = (Map<String, Integer>)context.get(
+			"functionParamsMap");
+		_functionReturnTypeMap = (Map<String, String>)context.get(
+			"functionReturnTypeMap");
+		_seleniumDataUtil = new SeleniumDataUtil(context);
 
 		_seleniumFileUtil = new SeleniumFileUtil(_basedir);
 
@@ -114,8 +115,7 @@ public class FunctionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 
 		String functionsObject = functions.attributeValue("object");
 
-		String functionReturnType = _functionMethodReturnTypeMap.get(
-			functionsObject);
+		String functionReturnType = _functionReturnTypeMap.get(functionsObject);
 
 		for (Element functionDef : functionDefs) {
 			String functionDefCommand = functionDef.attributeValue("command");
@@ -126,18 +126,20 @@ public class FunctionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 
 			sb.append(functionDefCommand);
 
-			List<String> paramSuffixList = _functionMethodParamListMap.get(
-				functionsObject);
+			int functionParams = _functionParamsMap.get(functionsObject);
+
+			List<String> functionSuffixList =
+				_seleniumDataUtil.getFunctionSuffixList(functionParams);
 
 			String paramList = "";
 
-			for (String paramSuffix : paramSuffixList) {
+			for (String suffix : functionSuffixList) {
 				String paramPair = "String target, String value, ";
 
 				paramPair = StringUtil.replace(
-					paramPair, "target", "target" + paramSuffix);
+					paramPair, "target", "target" + suffix);
 				paramPair = StringUtil.replace(
-					paramPair, "value", "value" + paramSuffix);
+					paramPair, "value", "value" + suffix);
 
 				paramList += paramPair;
 			}
@@ -159,8 +161,9 @@ public class FunctionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 	}
 
 	private String _basedir;
-	private Map<String, List<String>> _functionMethodParamListMap;
-	private Map<String, String> _functionMethodReturnTypeMap;
+	private Map<String, Integer> _functionParamsMap;
+	private Map<String, String> _functionReturnTypeMap;
+	private SeleniumDataUtil _seleniumDataUtil;
 	private SeleniumFileUtil _seleniumFileUtil;
 	private Set<String> _validCommands;
 

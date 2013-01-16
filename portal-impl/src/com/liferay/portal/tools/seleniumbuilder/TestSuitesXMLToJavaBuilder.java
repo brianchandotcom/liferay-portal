@@ -38,6 +38,7 @@ public class TestSuitesXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 
 		_basedir = (String)context.get("basedir");
 		_seleniumDataUtil = new SeleniumDataUtil(context);
+
 		_seleniumFileUtil = new SeleniumFileUtil(_basedir);
 	}
 

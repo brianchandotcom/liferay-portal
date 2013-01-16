@@ -32,19 +32,13 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 		super(context);
 
 		_basedir = (String)context.get("basedir");
-		_classNameSetAvailable = (Set<String>)context.get(
-			"classNameSetAvailable");
-		_fileNameSet = (Set<String>)context.get("fileNameSet");
-		_functionMethodParamListMap = (Map<String, List<String>>)context.get(
-			"functionMethodParamListMap");
-		_functionMethodReturnTypeMap = (Map<String, String>)context.get(
-			"functionMethodReturnTypeMap");
-		_seleniumMethodParamMap = (Map<String, Integer>)context.get(
-			"seleniumMethodParamMap");
-
+		_functionParamsMap = (Map<String, Integer>)context.get(
+			"functionParamsMap");
+		_functionReturnTypeMap = (Map<String, String>)context.get(
+			"functionReturnTypeMap");
+		_seleniumParamsMap = (Map<String, Integer>)context.get(
+			"seleniumParamsMap");
 		_seleniumDataUtil = new SeleniumDataUtil(context);
-
-		_seleniumFileUtil = new SeleniumFileUtil(_basedir);
 	}
 
 	protected String processBlockCommands(
@@ -93,35 +87,6 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 			sb.append("import ");
 			sb.append(className);
 			sb.append(";\n");
-		}
-
-		return sb.toString();
-	}
-
-	private String _getElementValue(Element element) {
-		return _getElementValue(element, "value");
-	}
-
-	private String _getElementValue(Element element, String attribute) {
-		StringBundler sb = new StringBundler();
-
-		String attributeValue = element.attributeValue(attribute);
-
-		if (!(attributeValue == null)) {
-			String firstLetter = attribute + "-first-letter";
-
-			String firstLetterValue = element.attributeValue(firstLetter);
-
-			if (!(firstLetterValue == null) &&
-				firstLetterValue.equals("true")) {
-
-				sb.append("ActionsUtil.firstLetter(");
-				sb.append(_replaceVariables("\"" + attributeValue + "\""));
-				sb.append(")");
-			}
-			else {
-				sb.append(_replaceVariables("\"" + attributeValue + "\""));
-			}
 		}
 
 		return sb.toString();
@@ -178,7 +143,7 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 		}
 	}
 
-	private String _processCommandActions(Element action) {
+	private String _processCommandActions(Element action) throws Exception {
 		String actionCommandName = action.attributeValue("command");
 		String actionObjectName = action.attributeValue("object");
 
@@ -194,14 +159,16 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 		String functionObjectName = StringUtil.upperCaseFirstLetter(
 			actionCommandName);
 
-		List<String> paramSuffixList = _functionMethodParamListMap.get(
-			functionObjectName);
+		int functionParams = _functionParamsMap.get(functionObjectName);
+
+		List<String> functionSuffixList =
+			_seleniumDataUtil.getFunctionSuffixList(functionParams);
 
 		String parameters = "";
 
-		for (String paramSuffix : paramSuffixList) {
-			String locator = "locator" + paramSuffix;
-			String target = "target" + paramSuffix;
+		for (String suffix : functionSuffixList) {
+			String locator = "locator" + suffix;
+			String target = "target" + suffix;
 
 			String actionLocator = action.attributeValue(locator);
 			String actionTarget = action.attributeValue(target);
@@ -218,12 +185,12 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 
 			parameters += ", ";
 
-			String value = "value" + paramSuffix;
+			String value = "value" + suffix;
 
 			String actionValue = action.attributeValue(value);
 
 			if (!(actionValue == null)) {
-				parameters += _getElementValue(action, value);
+				parameters += _processElementValue(action, value);
 			}
 			else {
 				parameters += "\"\"";
@@ -290,7 +257,7 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 			String actionValue = conditional.attributeValue("value");
 
 			if (!(actionValue == null)) {
-				sb.append(_getElementValue(conditional));
+				sb.append(_processElementValue(conditional));
 			}
 			else {
 				sb.append("\"\"");
@@ -322,7 +289,7 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 
 		StringBundler sb = new StringBundler();
 
-		String functionReturnType = _functionMethodReturnTypeMap.get(
+		String functionReturnType = _functionReturnTypeMap.get(
 			functionObjectName);
 
 		if (!functionReturnType.equals("void")) {
@@ -337,29 +304,31 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 
 		String parentElementName = parentElement.getName();
 
-		List<String> paramSuffixList = _functionMethodParamListMap.get(
-			functionObjectName);
+		int functionParams = _functionParamsMap.get(functionObjectName);
+
+		List<String> functionSuffixList =
+			_seleniumDataUtil.getFunctionSuffixList(functionParams);
 
 		String paramList = "";
 
 		if (parentElementName.equals("conditional")) {
-			for (String paramSuffix : paramSuffixList) {
+			for (String suffix : functionSuffixList) {
 				String paramPair = "params[0], params[1], ";
 
 				paramPair = StringUtil.replace(
-					paramPair, "params", "params" + paramSuffix);
+					paramPair, "params", "params" + suffix);
 
 				paramList += paramPair;
 			}
 		}
 		else {
-			for (String paramSuffix : paramSuffixList) {
+			for (String suffix : functionSuffixList) {
 				String paramPair = "target, value, ";
 
 				paramPair = StringUtil.replace(
-					paramPair, "target", "target" + paramSuffix);
+					paramPair, "target", "target" + suffix);
 				paramPair = StringUtil.replace(
-					paramPair, "value", "value" + paramSuffix);
+					paramPair, "value", "value" + suffix);
 
 				paramList += paramPair;
 			}
@@ -405,7 +374,7 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 		String paramList = "";
 
 		for (Element macroParam : macroParams) {
-			paramList += _getElementValue(macroParam) + ", ";
+			paramList += _processElementValue(macroParam) + ", ";
 		}
 
 		if (paramList.endsWith(", ")) {
@@ -425,8 +394,8 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 
 		int numParams = 0;
 
-		if (_seleniumMethodParamMap.containsKey(seleniumCommandName)) {
-			numParams = _seleniumMethodParamMap.get(seleniumCommandName);
+		if (_seleniumParamsMap.containsKey(seleniumCommandName)) {
+			numParams = _seleniumParamsMap.get(seleniumCommandName);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -511,6 +480,35 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 		return sb.toString();
 	}
 
+	private String _processElementValue(Element element) {
+		return _processElementValue(element, "value");
+	}
+
+	private String _processElementValue(Element element, String attribute) {
+		StringBundler sb = new StringBundler();
+
+		String attributeValue = element.attributeValue(attribute);
+
+		if (!(attributeValue == null)) {
+			String firstLetter = attribute + "-first-letter";
+
+			String firstLetterValue = element.attributeValue(firstLetter);
+
+			if (!(firstLetterValue == null) &&
+				firstLetterValue.equals("true")) {
+
+				sb.append("ActionsUtil.firstLetter(");
+				sb.append(_replaceVariables("\"" + attributeValue + "\""));
+				sb.append(")");
+			}
+			else {
+				sb.append(_replaceVariables("\"" + attributeValue + "\""));
+			}
+		}
+
+		return sb.toString();
+	}
+
 	private String _replaceVariables(String text) {
 		if (text.startsWith("\"${") && text.endsWith("}\"")) {
 			return text.substring(3, text.length() - 2);
@@ -524,12 +522,9 @@ public class BaseXMLToJavaBuilder extends BaseJavaBuilder {
 	}
 
 	private String _basedir;
-	private Set<String> _classNameSetAvailable;
-	private Set<String> _fileNameSet;
-	private Map<String, List<String>> _functionMethodParamListMap;
-	private Map<String, String> _functionMethodReturnTypeMap;
+	private Map<String, Integer> _functionParamsMap;
+	private Map<String, String> _functionReturnTypeMap;
 	private SeleniumDataUtil _seleniumDataUtil;
-	private SeleniumFileUtil _seleniumFileUtil;
-	private Map<String, Integer> _seleniumMethodParamMap;
+	private Map<String, Integer> _seleniumParamsMap;
 
 }

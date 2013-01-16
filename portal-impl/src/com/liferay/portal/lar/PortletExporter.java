@@ -1504,7 +1504,7 @@ public class PortletExporter {
 				updateAssetPublisherClassNameIds(jxPreferences, name);
 			}
 			else if (name.equals("defaultScope") || name.equals("scopeIds")) {
-				updateAssetPublisherScopeIds(jxPreferences, name, plid);
+				updateAssetPublisherGlobalScopeId(jxPreferences, name, plid);
 			}
 			else if (name.startsWith("queryName") &&
 					 value.equalsIgnoreCase("assetCategories")) {
@@ -1520,14 +1520,14 @@ public class PortletExporter {
 		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
 	}
 
-	protected void updateAssetPublisherScopeIds(
+	protected void updateAssetPublisherGlobalScopeId(
 			javax.portlet.PortletPreferences jxPreferences, String key,
 			long plid)
 		throws Exception {
 
-		String[] oldValues = jxPreferences.getValues(key, null);
+		String[] oldScopeIds = jxPreferences.getValues(key, null);
 
-		if (oldValues == null) {
+		if (oldScopeIds == null) {
 			return;
 		}
 
@@ -1542,20 +1542,17 @@ public class PortletExporter {
 			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
 				companyGroup.getGroupId();
 
-		String layoutScopeId =
-			AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX + layout.getLayoutId();
+		String[] newScopeIds = new String[oldScopeIds.length];
 
-		String[] newValues = new String[oldValues.length];
+		for (int i = 0; i < oldScopeIds.length; i++) {
+			String oldValue = oldScopeIds[i];
 
-		for (int i = 0; i < oldValues.length; i++) {
-			String oldValue = oldValues[i];
-
-			newValues[i] = StringUtil.replace(
-				oldValue, new String[] {groupScopeId, layoutScopeId},
-				new String[] {"[$GROUP_SCOPE_ID$]", "[$LAYOUT_SCOPE_ID$]"});
+			newScopeIds[i] = StringUtil.replace(
+				oldValue, new String[] {groupScopeId},
+				new String[] {"[$GROUP_SCOPE_ID$]"});
 		}
 
-		jxPreferences.setValues(key, newValues);
+		jxPreferences.setValues(key, newScopeIds);
 	}
 
 	protected void updatePreferencesClassPKs(

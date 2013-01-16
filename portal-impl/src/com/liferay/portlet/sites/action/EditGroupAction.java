@@ -536,6 +536,17 @@ public class EditGroupAction extends PortletAction {
 			typeSettingsProperties.remove("trashEntriesMaxAge");
 		}
 
+		int contentSharingWithChildrenEnabled = ParamUtil.getInteger(
+			actionRequest, "contentSharingWithChildrenEnabled",
+			GetterUtil.getInteger(
+				typeSettingsProperties.getProperty(
+					"contentSharingWithChildrenEnabled"),
+				SitesUtil.CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE));
+
+		typeSettingsProperties.setProperty(
+			"contentSharingWithChildrenEnabled",
+			String.valueOf(contentSharingWithChildrenEnabled));
+
 		// Virtual hosts
 
 		LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();

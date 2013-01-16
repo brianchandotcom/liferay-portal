@@ -96,6 +96,12 @@ if ((trashEnabled == 0) && ArrayUtil.contains(advancedSections, "recycle-bin")) 
 	advancedSections = ArrayUtil.remove(advancedSections, "recycle-bin");
 }
 
+int contentSharingWithChildrenEnabledEnabled = PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
+
+if ((contentSharingWithChildrenEnabledEnabled == 0) && ArrayUtil.contains(advancedSections, "content-sharing")) {
+	advancedSections = ArrayUtil.remove(advancedSections, "content-sharing");
+}
+
 String[][] categorySections = {mainSections, seoSections, advancedSections, miscellaneousSections};
 %>
 

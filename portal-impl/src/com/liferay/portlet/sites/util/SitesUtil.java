@@ -121,6 +121,18 @@ public class SitesUtil {
 
 	public static final String ANALYTICS_PREFIX = "analytics_";
 
+	public static final int CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE = -1;
+
+	public static final int CONTENT_SHARING_WITH_CHILDREN_DISABLED = 0;
+
+	public static final int CONTENT_SHARING_WITH_CHILDREN_DISABLED_BY_DEFAULT =
+		1;
+
+	public static final int CONTENT_SHARING_WITH_CHILDREN_ENABLED = 3;
+
+	public static final int CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT =
+		2;
+
 	public static final String LAST_MERGE_TIME = "last-merge-time";
 
 	public static final String LAST_RESET_TIME = "last-reset-time";

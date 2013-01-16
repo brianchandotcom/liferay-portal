@@ -118,21 +118,25 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			_log.error(e, e);
 		}
 
-		try {
-			ModuleFrameworkUtilAdapter.stopRuntime();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+		if (PropsValues.MODULE_FRAMEWORK_ENABLED) {
+			try {
+				ModuleFrameworkUtilAdapter.stopRuntime();
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
 
 		try {
 			super.contextDestroyed(servletContextEvent);
 
-			try {
-				ModuleFrameworkUtilAdapter.stopFramework();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
+			if (PropsValues.MODULE_FRAMEWORK_ENABLED) {
+				try {
+					ModuleFrameworkUtilAdapter.stopFramework();
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
 			}
 		}
 		finally {

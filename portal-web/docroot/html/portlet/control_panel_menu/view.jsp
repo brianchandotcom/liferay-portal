@@ -143,38 +143,15 @@
 				<liferay-util:buffer var="groupSelectorIconMenu">
 					<c:choose>
 						<c:when test="<%= !manageableSites.isEmpty() %>">
-
-							<%
-							String icon = themeDisplay.getPathThemeImages() + "/common/site_icon.png";
-
-							if (curGroup.isCompany()) {
-								icon = themeDisplay.getPathThemeImages() + "/common/folder.png";
-							}
-							else if (curGroup.isOrganization()) {
-								icon = themeDisplay.getPathThemeImages() + "/common/organization_icon.png";
-							}
-							else if (curGroup.isUser()) {
-								icon = themeDisplay.getPathThemeImages() + "/common/user_icon.png";
-							}
-							%>
-
-							<liferay-ui:icon-menu align="left" direction="down" icon="<%= icon %>" id="groupSelector" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(StringUtil.shorten(curGroupName, 25)) %>">
+							<liferay-ui:icon-menu align="left" direction="down" icon="<%= curGroup.getGroupIcon(themeDisplay) %>" id="groupSelector" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(StringUtil.shorten(curGroupName, 25)) %>">
 
 								<%
 								for (int i = 0; i < manageableSites.size(); i++) {
 									Group group = manageableSites.get(i);
 
-									String image = "site_icon";
 									String message = group.getDescriptiveName(locale);
 
-									if (group.isCompany()) {
-										image = "folder";
-									}
-									else if (group.isOrganization()) {
-										image = "organization_icon";
-									}
-									else if (group.isUser()) {
-										image = "user_icon";
+									if (group.isUser()) {
 										message = LanguageUtil.format(pageContext, "x-personal-site", group.getDescriptiveName(locale));
 									}
 
@@ -186,9 +163,9 @@
 								%>
 
 									<liferay-ui:icon
-										image="<%= image %>"
 										localizeMessage="<%= false %>"
 										message="<%= HtmlUtil.escape(message) %>"
+										src="<%= group.getGroupIcon(themeDisplay) %>"
 										url="<%= url %>"
 									/>
 
@@ -203,26 +180,11 @@
 							</c:if>
 						</c:when>
 						<c:otherwise>
-
-							<%
-							String image = "site";
-
-							if (curGroup.isCompany()) {
-								image = "folder";
-							}
-							else if (curGroup.isOrganization()) {
-								image = "organization_icon";
-							}
-							else if (curGroup.isUser()) {
-								image = "user_icon";
-							}
-							%>
-
 							<liferay-ui:icon
 								cssClass="lfr-panel-title-single"
-								image="<%= image %>"
 								label="<%= true %>"
 								message="<%= HtmlUtil.escape(StringUtil.shorten(curGroupName, 25)) %>"
+								src="<%= curGroup.getGroupIcon(themeDisplay) %>"
 							/>
 						</c:otherwise>
 					</c:choose>
@@ -261,19 +223,20 @@
 					<div class="nobr lfr-title-scope-selector">
 						<liferay-ui:icon-menu align="left" direction="down" icon="" message='<%= LanguageUtil.get(pageContext, "scope") + StringPool.COLON + StringPool.SPACE + curGroupLabel %>'>
 							<liferay-ui:icon
-								image="folder"
 								message="default"
+								src="<%= curGroup.getGroupIcon(themeDisplay) %>"
 								url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", curGroup.getGroupId()) %>'
 							/>
 
 							<%
 							for (Layout curScopeLayout : scopeLayouts) {
+								Group scopeGroup = curScopeLayout.getScopeGroup();
 							%>
 
 								<liferay-ui:icon
-									image="folder"
 									message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
-									url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", curScopeLayout.getScopeGroup().getGroupId()) %>'
+									src="<%= scopeGroup.getGroupIcon(themeDisplay) %>"
+									url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", scopeGroup.getGroupId()) %>'
 								/>
 
 							<%

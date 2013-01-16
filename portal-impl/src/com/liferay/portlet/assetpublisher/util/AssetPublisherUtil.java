@@ -468,6 +468,33 @@ public class AssetPublisherUtil {
 		}
 	}
 
+	public static String getScopeId(Group group, long scopeGroupId)
+		throws Exception {
+
+		String key = null;
+
+		if (group.isLayout()) {
+			Layout layout = LayoutLocalServiceUtil.getLayout(
+				group.getClassPK());
+
+			key =
+				AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX +
+					layout.getLayoutId();
+		}
+		else if (group.isLayoutPrototype() ||
+				(group.getGroupId() == scopeGroupId)) {
+
+			key =
+				AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
+					GroupConstants.DEFAULT;
+		}
+		else {
+			key = AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + group.getGroupId();
+		}
+
+		return key;
+	}
+
 	public static void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {

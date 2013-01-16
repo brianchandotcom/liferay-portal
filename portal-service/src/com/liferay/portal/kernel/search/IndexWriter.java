@@ -19,7 +19,7 @@ import java.util.Collection;
 /**
  * @author Bruno Farache
  */
-public interface IndexWriter {
+public interface IndexWriter extends SpellCheckIndexWriter {
 
 	public void addDocument(SearchContext searchContext, Document document)
 		throws SearchException;

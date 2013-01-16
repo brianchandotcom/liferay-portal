@@ -89,6 +89,20 @@ public interface DL {
 			PortletRequest portletRequest, long folderId)
 		throws PortalException, SystemException;
 
+	public boolean getEmailFileEntryAddedEnabled(
+		PortletPreferences preferences);
+
+	public boolean getEmailFileEntryUpdatedEnabled(
+		PortletPreferences preferences);
+
+	public String getEmailFromAddress(
+			PortletPreferences preferences, long companyId)
+		throws SystemException;
+
+	public String getEmailFromName(
+			PortletPreferences preferences, long companyId)
+		throws SystemException;
+
 	public String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay);
 

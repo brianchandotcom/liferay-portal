@@ -404,6 +404,50 @@ public class DLImpl implements DL {
 		return portletURL.toString();
 	}
 
+	public boolean getEmailFileEntryAddedEnabled(
+		PortletPreferences preferences) {
+
+		String emailFileEntryAddedEnabled = preferences.getValue(
+			"emailFileEntryAddedEnabled", StringPool.BLANK);
+
+		if (Validator.isNotNull(emailFileEntryAddedEnabled)) {
+			return GetterUtil.getBoolean(emailFileEntryAddedEnabled);
+		}
+		else {
+			return PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_ENABLED;
+		}
+	}
+
+	public boolean getEmailFileEntryUpdatedEnabled(
+		PortletPreferences preferences) {
+
+		String emailFileEntryUpdatedEnabled = preferences.getValue(
+			"emailFileEntryUpdatedEnabled", StringPool.BLANK);
+
+		if (Validator.isNotNull(emailFileEntryUpdatedEnabled)) {
+			return GetterUtil.getBoolean(emailFileEntryUpdatedEnabled);
+		}
+		else {
+			return PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_ENABLED;
+		}
+	}
+
+	public String getEmailFromAddress(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return PortalUtil.getEmailFromAddress(
+			preferences, companyId, PropsValues.DL_EMAIL_FROM_ADDRESS);
+	}
+
+	public String getEmailFromName(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return PortalUtil.getEmailFromName(
+			preferences, companyId, PropsValues.DL_EMAIL_FROM_NAME);
+	}
+
 	public String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay) {
 

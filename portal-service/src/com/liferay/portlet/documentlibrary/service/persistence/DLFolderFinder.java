@@ -60,6 +60,9 @@ public interface DLFolderFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByNoAssets()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<java.lang.Object> findF_FE_FS_ByG_F_M_M(
 		long groupId, long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,

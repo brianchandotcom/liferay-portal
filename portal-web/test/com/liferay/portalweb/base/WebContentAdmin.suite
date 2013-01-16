@@ -1,0 +1,4 @@
+<testsuite name="WebContentAdmin">
+	<testplan class="com.liferay.portalweb.portal.login.LoginTests" />
+	<testplan class="com.liferay.portalweb.portal.contentmanagement.webcontent.webcontentadmin.core.CoreTestPlan" />
+</testsuite>

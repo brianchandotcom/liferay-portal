@@ -358,8 +358,40 @@ public class Creole10Parser]]></replacevalue>
 		<delete dir="${tstamp.value}" />
 	</target>
 
-	<target name="build-selenium">
-		<ant dir="../portal-web" target="build-selenium" />
+	<target name="build-selenium-old">
+		<ant dir="../portal-web" target="build-selenium-old" />
+	</target>
+
+	<target name="build-selenium-new">
+		<ant dir="../portal-web" target="build-selenium-new" />
+	</target>
+
+	<target name="build-selenium-new-actions">
+		<ant dir="../portal-web" target="build-selenium-new-actions" />
+	</target>
+
+	<target name="build-selenium-new-functions">
+		<ant dir="../portal-web" target="build-selenium-new-functions" />
+	</target>
+
+	<target name="build-selenium-new-macros">
+		<ant dir="../portal-web" target="build-selenium-new-macros" />
+	</target>
+
+	<target name="build-selenium-new-paths">
+		<ant dir="../portal-web" target="build-selenium-new-paths" />
+	</target>
+
+	<target name="build-selenium-new-test-cases">
+		<ant dir="../portal-web" target="build-selenium-new-test-cases" />
+	</target>
+
+	<target name="build-selenium-new-test-plans">
+		<ant dir="../portal-web" target="build-selenium-new-test-plans" />
+	</target>
+
+	<target name="build-selenium-new-test-suites">
+		<ant dir="../portal-web" target="build-selenium-new-test-suites" />
 	</target>
 
 	<target name="build-selenium-server">

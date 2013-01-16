@@ -1,0 +1,26 @@
+<testcase
+	name="DeleteUser"
+	description="In the &lt;strong&gt;Control Panel Users and Organizations Portlet&lt;/strong&gt;, delete a User."
+>
+	<setup>
+		<macro object="CPUsersAndOrganizationsUsers" command="add">
+			<param name="screenName" value="usersn" />
+			<param name="emailAddress" value="userea@liferay.com" />
+			<param name="firstName" value="userfn" />
+			<param name="lastName" value="userln" />
+		</macro>
+	</setup>
+	<steps>
+		<macro object="CPUsersAndOrganizationsUsers" command="deactivate">
+			<param name="firstName" value="userfn" />
+		</macro>
+
+		<macro object="CPUsersAndOrganizationsUsers" command="delete">
+			<param name="firstName" value="userfn" />
+		</macro>
+	</steps>
+	<teardown>
+		<macro object="CPUsersAndOrganizationsUsers" command="tearDown">
+		</macro>
+	</teardown>
+</testcase>

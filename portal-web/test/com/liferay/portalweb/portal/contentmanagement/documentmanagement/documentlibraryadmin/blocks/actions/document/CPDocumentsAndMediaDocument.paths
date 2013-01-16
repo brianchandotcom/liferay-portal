@@ -1,0 +1,377 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPDocumentsAndMediaDocument</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPDocumentsAndMediaDocument</td></tr>
+</thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Documents and Media Document Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMB-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>//div[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td>1st Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>//div[@id='breadcrumbs']/ul/li[2]/span/a</td>
+	<td>2nd Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>//div[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td>3rd Breadcrumb</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>HEADER_PORTLET_TITLE</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Portlet Title Header</td>
+</tr>
+<tr>
+	<td>HEADER_PORTLET_INFO</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Portlet Information Header</td>
+</tr>
+<tr>
+	<td>HEADER_OPTIONS_ICON</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options Icon</td>
+</tr>
+<tr>
+	<td>HEADER_PAGE_TITLE</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Page Title</td>
+</tr>
+<tr>
+	<td>HEADER_BACK_BUTTON</td>
+	<td>//a[@id='_20_TabsBack']</td>
+	<td>Back Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_DOWNLOAD</td>
+	<td>//button/span[.='Download']</td>
+	<td>Document Download Button</td>
+</tr>
+<tr>
+	<td>TOOLBAR_EDIT</td>
+	<td>//button/span[.='Edit']</td>
+	<td>Document Edit Button</td>
+</tr>
+<tr>
+	<td>TOOLBAR_MOVE</td>
+	<td>//button/span[.='Move']</td>
+	<td>Document Move Button</td>
+</tr>
+<tr>
+	<td>TOOLBAR_CANCEL_CHECKOUT</td>
+	<td>//button/span[.='Cancel Checkout']</td>
+	<td>Document Cancel Checkout Button</td>
+</tr>
+<tr>
+	<td>TOOLBAR_CHECKOUT</td>
+	<td>//button/span[.='Checkout']</td>
+	<td>Document Checkout Button</td>
+</tr>
+<tr>
+	<td>TOOLBAR_CHECKIN</td>
+	<td>//button/span[.='Checkin']</td>
+	<td>Document Checkin Button</td>
+</tr>
+<tr>
+	<td>TOOLBAR_PERMISSIONS</td>
+	<td>//button/span[.='Permissions']</td>
+	<td>Document Permissions Button</td>
+</tr>
+<tr>
+	<td>TOOLBAR_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//button/span[.='Move to the Recycle Bin']</td>
+	<td>Document Move to the Recycle Bin Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_INFO-->
+<tr>
+	<td>DOCUMENT_LOCK_MESSAGE</td>
+	<td>//div[@class='portlet-msg-lock portlet-msg-success']</td>
+	<td>Document Lock Message</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_TITLE</td>
+	<td>//h2[@class='document-title']</td>
+	<td>Document Title</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_DATE_UPLOADED</td>
+	<td>//span[@class='user-date']/span/span</td>
+	<td>Document Upload Date</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_UPLOADER</td>
+	<td>//span[@class='user-date']/span/span/a</td>
+	<td>Document Uploader</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_AVERAGE_RATING</td>
+	<td>//div[contains(@id,'_ratingScoreContent')]/div[contains(.,'Average')]</td>
+	<td>Average Document Rating</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_YOUR_RATING</td>
+	<td>//div[contains(@id,'_ratingStarContent')]/div[contains(.,'Your Rating')]</td>
+	<td>Your Document Rating</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VERSION_INFO-->
+<tr>
+	<td>VERSION_INFO_HEADER</td>
+	<td>//h3[contains(@class,'version')]</td>
+	<td>Document Version Header</td>
+</tr>
+<tr>
+	<td>VERSION_INFO_UPDATER</td>
+	<td>//div[contains(@class,'lfr-asset-author')]</td>
+	<td>Document's Last Updater</td>
+</tr>
+<tr>
+	<td>VERSION_INFO_UPDATE_DATE</td>
+	<td>//div[contains(@class,'lfr-asset-date')]</td>
+	<td>Document's Last Update Date</td>
+</tr>
+<tr>
+	<td>VERSION_INFO_WORKFLOW_STATUS</td>
+	<td>//span[@class='workflow-status']</td>
+	<td>Document's Current Status</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOWNLOAD-->
+<tr>
+	<td>DOWNLOAD_LINK</td>
+	<td>//span[@class='download-document']/span/a/span</td>
+	<td>Document Download Link</td>
+</tr>
+<tr>
+	<td>DOWNLOAD_URL_LINK</td>
+	<td>//a[@class='show-url-file']</td>
+	<td>Document 'URL' Link</td>
+</tr>
+<tr>
+	<td>DOWNLOAD_URL_FIELD</td>
+	<td>//label[.='URL']/following-sibling::input</td>
+	<td>Document 'URL' Field</td>
+</tr>
+<tr>
+	<td>DOWNLOAD_WEBDAV_LINK</td>
+	<td>//a[@class='show-webdav-url-file']</td>
+	<td>Document 'WebDAV URL' Link</td>
+</tr>
+<tr>
+	<td>DOWNLOAD_WEBDAV_FIELD</td>
+	<td>//label[contains(.,'WebDAV URL')]/following-sibling::input</td>
+	<td>Document 'WebDAV URL' Field</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VERSION_HISTORY-->
+<tr>
+	<td>VERSION_HISTORY_COMPARE_VERSIONS</td>
+	<td>//input[@value='Compare Versions']</td>
+	<td>Compare Versions Button</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_CHECKBOX_1</td>
+	<td>//tr[3]/td/input[@name='_20_rowIds']</td>
+	<td>1st Table Checkbox</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_VERSION_1</td>
+	<td>//tr[3]/td[contains(@class,'col-version')]</td>
+	<td>1st Table 'Version' Entry</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_DATE_1</td>
+	<td>//tr[3]/td[contains(@class,'col-date')]</td>
+	<td>1st Table 'Date' Entry</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_SIZE_1</td>
+	<td>//tr[3]/td[contains(@class,'col-size')]</td>
+	<td>1st Table 'Size' Entry</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_STATUS_1</td>
+	<td>//tr[3]/td[contains(@class,'col-status')]</td>
+	<td>1st Table 'Status' Entry</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_ACTIONS_BUTTON_1</td>
+	<td>//tr[3]/td/span/ul/li/strong/a</td>
+	<td>1st Table Actions Button</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_CHECKBOX_2</td>
+	<td>//tr[4]/td/input[@name='_20_rowIds']</td>
+	<td>2nd Version Checkbox</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_VERSION_2</td>
+	<td>//tr[4]/td[contains(@class,'col-version')]</td>
+	<td>2nd Table 'Version' Entry</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_DATE_2</td>
+	<td>//tr[4]/td[contains(@class,'col-date')]</td>
+	<td>2nd Table 'Date' Entry</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_SIZE_2</td>
+	<td>//tr[4]/td[contains(@class,'col-size')]</td>
+	<td>2nd Table 'Size' Entry</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_STATUS_2</td>
+	<td>//tr[4]/td[contains(@class,'col-status')]</td>
+	<td>2nd Table 'Status' Entry</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_ACTIONS_BUTTON_2</td>
+	<td>//tr[4]/td/span/ul/li/strong/a</td>
+	<td>2nd Table Actions Button</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_CHECKBOX_3</td>
+	<td>//tr[5]/td/input[@name='_20_rowIds']</td>
+	<td>3rd Table Checkbox</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_VERSION_3</td>
+	<td>//tr[5]/td[contains(@class,'col-version')]</td>
+	<td>3rd Table 'Version' Entry</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_DATE_3</td>
+	<td>//tr[5]/td[contains(@class,'col-date')]</td>
+	<td>3rd Table 'Date' Entry</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_SIZE_3</td>
+	<td>//tr[5]/td[contains(@class,'col-size')]</td>
+	<td>3rd Table 'Size' Entry</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_STATUS_3</td>
+	<td>//tr[5]/td[contains(@class,'col-status')]</td>
+	<td>3rd Table 'Status' Entry</td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_ACTIONS_BUTTON_3</td>
+	<td>//tr[5]/td/span/ul/li/strong/a</td>
+	<td>3rd Table Actions Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENT-->
+<tr>
+	<td>COMMENT_MESSAGE_SUCCESS</td>
+	<td>//div[@id='_20_discussion-status-messages']</td>
+	<td>Document Comment Success Message</td>
+</tr>
+<tr>
+	<td>COMMENT_MESSAGE_INFO</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div</td>
+	<td>Document Comment Information Message</td>
+</tr>
+<tr>
+	<td>COMMENT_LINK_ADD</td>
+	<td>//a[contains(@href,'_postReplyBody0')]</td>
+	<td>Add Comment Link</td>
+</tr>
+<tr>
+	<td>COMMENT_LINK_SUBSCRIBE</td>
+	<td>//span[@class='subscribe-link']/a/span[.='Subscribe to Comments']</td>
+	<td>Document's Subscribe to Comments Link</td>
+</tr>
+<tr>
+	<td>COMMENT_LINK_UNSUBSCRIBE</td>
+	<td>//span[@class='subscribe-link']/a/span[.='Unsubscribe from Comments']</td>
+	<td>Document's Unsubscribe from Comments Link</td>
+</tr>
+<tr>
+	<td>COMMENT_TEXTAREA</td>
+	<td>//textarea[contains(@id,'_postReplyBody0')]</td>
+	<td>Document Comment Textarea</td>
+</tr>
+<tr>
+	<td>COMMENT_BUTTON_REPLY</td>
+	<td>//input[@value='Reply']</td>
+	<td>Document Comment Reply Button</td>
+</tr>
+<tr>
+	<td>COMMENT_BUTTON_CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Document Comment Cancel Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENT_VIEW-->
+<tr>
+	<td>COMMENT_VIEW_MESSAGE_1</td>
+	<td>xpath=(//div[@class='lfr-discussion-message'])[1]</td>
+	<td>1st Document Comment Message</td>
+</tr>
+<tr>
+	<td>COMMENT_VIEW_MESSAGE_2</td>
+	<td>xpath=(//div[@class='lfr-discussion-message'])[2]</td>
+	<td>2nd Document Comment Message</td>
+</tr>
+<tr>
+	<td>COMMENT_VIEW_MESSAGE_3</td>
+	<td>xpath=(//div[@class='lfr-discussion-message'])[3]</td>
+	<td>3rd Document Comment Message</td>
+</tr>
+</tbody></table>
+</body>
+</html>

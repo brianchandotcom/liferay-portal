@@ -1,0 +1,242 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ControlPanelSettingsMailServer</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ControlPanelSettingsMailServer</td></tr>
+</thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Recycle Bin Home Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMBS-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td>First Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[2]/span/a</td>
+	<td>Second Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td>Third Breadcrumb</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//h1[@id='cpPortletTitle']/span</td>
+	<td>Portlet Title</td>
+</tr>
+<tr>
+	<td>HEADER_DESCRIPTION</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Portlet Description</td>
+</tr>
+<tr>
+	<td>HEADER_INFO_EMPTY</td>
+	<td>//form[@id='_182_emptyForm']</td>
+	<td>Entries that have been in Recycle Bin for more than 30 days will be automatically deleted.</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PORTLET-->
+<tr>
+	<td>PORTLET_SUCCESS</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Portlet Success Message</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EMPTY_RECYCLE_BIN-->
+<tr>
+	<td>EMPTY_RECYCLE_BIN_LINK</td>
+	<td>//a[@id='_182_empty']</td>
+	<td>Empty Recycle Bin Link</td>
+</tr>
+<tr>
+	<td>EMPTY_RECYCLE_BIN_CONFIRM</td>
+	<td></td>
+	<td>Empty Recycle Bin Confirmation</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='_182_keywords']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//input[@value='Search']</td>
+	<td>Search Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TABLE_EMPTY-->
+<tr>
+	<td>TABLE_EMPTY_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>Portlet Info Message</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TABLE_HEADER-->
+<tr>
+	<td>TABLE_HEADER_NAME</td>
+	<td>//th[1]</td>
+	<td>Name</td>
+</tr>
+<tr>
+	<td>TABLE_HEADER_TYPE</td>
+	<td>//th[2]/span/a</td>
+	<td>Type</td>
+</tr>
+<tr>
+	<td>TABLE_HEADER_REMOVED_DATE</td>
+	<td>//th[3]/span/a</td>
+	<td>Removed Date</td>
+</tr>
+<tr>
+	<td>TABLE_HEADER_REMOVED_BY</td>
+	<td>//th[4]/span/a</td>
+	<td>Removed By</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TABLE-->
+<tr>
+	<td>TABLE_NAME_1</td>
+	<td>//tr[3]/td[1]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_NAME_2</td>
+	<td>//tr[4]/td[1]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_NAME_3</td>
+	<td>//tr[5]/td[1]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_TYPE_1</td>
+	<td>//tr[3]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_TYPE_2</td>
+	<td>//tr[4]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_TYPE_3</td>
+	<td>//tr[5]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_REMOVED_DATE_1</td>
+	<td>//tr[3]/td[3]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_REMOVED_DATE_2</td>
+	<td>//tr[4]/td[3]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_REMOVED_DATE_3</td>
+	<td>//tr[5]/td[3]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_REMOVED_BY_1</td>
+	<td>//tr[3]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_REMOVED_BY_2</td>
+	<td>//tr[4]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_REMOVED_BY_3</td>
+	<td>//tr[5]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ACTIONS_1</td>
+	<td>//tr[3]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>TABLE_ACTIONS_2</td>
+	<td>//tr[4]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>TABLE_ACTIONS_3</td>
+	<td>//tr[5]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS MENU-->
+<tr>
+	<td>ACTIONS_RESTORE</td>
+	<td>//a[@role='menuitem' and contains(.,'Restore')]</td>
+	<td>Restore</td>
+</tr>
+<tr>
+	<td>ACTIONS_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

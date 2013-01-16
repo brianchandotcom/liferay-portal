@@ -1,0 +1,44 @@
+<macros object="CPWebContentArticle">
+	<macrodef
+		command="add"
+		description="In the &lt;strong&gt;Control Panel Web Content Portlet&lt;/strong&gt;, add a Web Content Article with title: &lt;strong&gt;${title}&lt;/strong&gt; and content: &lt;strong&gt;${content}&lt;/strong&gt;."
+	>
+		<params>
+			<param name="title" description="Title of the Web Content Article" example="WC Article Title" />
+			<param name="content" description="Content of the Web Content Article" example="WC Article Content" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Web Content" />
+			</macro>
+
+			<action object="CPWebContentHome" command="click" target="BUTTONS_ADD" value="Add" />
+			<action object="CPWebContentHome" command="click" target="ADD_BASIC_WEB_CONTENT" value="Basic Web Content" />
+
+			<action object="CPWebContentAddArticle" command="type" target="ARTICLE_TITLE" value="${title}" />
+			<action object="CPWebContentAddArticle" command="type" target="ARTICLE_CONTENT" value="${content}" />
+			<action object="CPWebContentAddArticle" command="click" target="SIDEBAR_PUBLISH" value="Publish" />
+
+			<action object="CPWebContentHome" command="assertTextEquals" target="HEADER_PORTLET_SUCCESS" value="Your request completed successfully." />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="tearDown"
+		description="In the &lt;strong&gt;Control Panel Web Content Portlet&lt;/strong&gt;, delete all Web Content Articles."
+	>
+		<params>
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Web Content" />
+			</macro>
+
+			<while object="CPWebContentHome" command="isElementPresent" target="ENTRIES_ARTICLE_1">
+				<action object="CPWebContentHome" command="check" target="ENTRIES_ARTICLE_1_CHECKBOX" />
+				<action object="CPWebContentHome" command="click" target="BUTTONS_ACTIONS" value="Actions" />
+				<action object="CPWebContentHome" command="click" target="ACTIONS_DELETE" value="Delete" />
+			</while>
+		</steps>
+	</macrodef>
+</macros>

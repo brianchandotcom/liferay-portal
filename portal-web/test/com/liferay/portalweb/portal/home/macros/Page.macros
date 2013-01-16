@@ -1,0 +1,18 @@
+<macros object="Page">
+	<macrodef
+		command="add"
+		description="Add a page called &lt;strong&gt;${portlet} Page&lt;/strong&gt; in the &lt;strong&gt;Guest Community&lt;/strong&gt;."
+	>
+		<params>
+			<param name="portlet" description="Name of the Portlet for the Page" example="Blogs" />
+		</params>
+		<steps>
+			<action object="Home" command="open" target="URL_GUEST" />
+			<action object="Home" command="mouseOver" target="ADD_LINK" />
+			<action object="Home" command="click" target="ADD_LINK_PAGE" />
+			<action object="Home" command="type" target="NEW_PAGE_FIELD" value="${portlet} Page" />
+			<action object="Home" command="click" target="NEW_PAGE_LINK_SAVE" />
+			<action object="Home" command="type" target="link=${portlet} Page" value="${portlet} Page" />
+		</steps>
+	</macrodef>
+</macros>

@@ -1,0 +1,19 @@
+<actions object="CPBlogsAddEntry">
+	<actiondef command="assertTextEquals">
+		<conditional elements="CONTENT_TEXT_SAVE_STATUS">
+			<function object="AssertTextEquals" command="assertPartialTextPause" />
+		</conditional>
+	</actiondef>
+
+	<actiondef command="click">
+		<conditional elements="CONTENT_LINK_DRAFT,CONTENT_LINK_PREVIEW,CONTENT_LINK_SAVE,CONTENT_LINK_CANCEL">
+			<function object="Click" command="valueClickAtAndWaitCPBlogsCKEditor" />
+		</conditional>
+	</actiondef>
+
+	<actiondef command="type">
+		<conditional elements="CONTENT_FIELD_CONTENT">
+			<function object="Type" command="typeCPBlogsCKEditor" />
+		</conditional>
+	</actiondef>
+</actions>

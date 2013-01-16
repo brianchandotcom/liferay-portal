@@ -1,0 +1,113 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>PortletSignInHome</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PortletSignInHome</td></tr>
+</thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Portlet Sign In Home Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANSWER_FIELD</td>
+	<td>//input[@id='reminderQueryAnswer']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANSWER_TEXT</td>
+	<td>//label[@for='reminderQueryAnswer']</td>
+	<td>Answer</td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS_FIELD</td>
+	<td>//input[@id='_58_login']</td>
+	<td>test@liferay.com</td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS_TEXT</td>
+	<td>//label[@for='_58_login']</td>
+	<td>Email Address</td>
+</tr>
+<tr>
+	<td>I_AGREE_LINK</td>
+	<td>//input[@value='I Agree']</td>
+	<td>I Agree</td>
+</tr>
+<tr>
+	<td>I_DISAGREE_LINK</td>
+	<td>//input[@value='I Disagree']</td>
+	<td>I Disagree</td>
+</tr>
+<tr>
+	<td>NEW_PASSWORD_ENTER_AGAIN_FIELD</td>
+	<td>//input[@id='password2']</td>
+	<td>Enter New Password Again</td>
+</tr>
+<tr>
+	<td>NEW_PASSWORD_FIELD</td>
+	<td>//input[@id='password1']</td>
+	<td>New Password</td>
+</tr>
+<tr>
+	<td>PASSWORD_FIELD</td>
+	<td>//input[@id='_58_password']</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>PASSWORD_TEXT</td>
+	<td>//label[@for='_58_password']</td>
+	<td>Password</td>
+</tr>
+<tr>
+	<td>QUESTION_FIELD</td>
+	<td>//select[@id='reminderQueryQuestion']</td>
+	<td>What is your father's middle name?</td>
+</tr>
+<tr>
+	<td>QUESTION_TEXT</td>
+	<td>//label[@for='reminderQueryQuestion']</td>
+	<td>Question</td>
+</tr>
+<tr>
+	<td>REMEMBER_ME_LINK</td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMEMBER_ME_TEXT</td>
+	<td>//label[@for='_58_rememberMeCheckbox']</td>
+	<td>Remember Me</td>
+</tr>
+<tr>
+	<td>SAVE_LINK</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>SIGN_IN_LINK</td>
+	<td>//input[@value='Sign In']</td>
+	<td>Sign In</td>
+</tr>
+<tr>
+	<td>SIGN_OUT_LINK</td>
+	<td>//span[@class='sign-out']/a</td>
+	<td>Sign Out</td>
+</tr>
+<tr>
+	<td>USER_NAME</td>
+	<td>//span[@class='user-full-name']</td>
+	<td>Sign In</td>
+</tr>
+</tbody></table>
+</body>
+</html>

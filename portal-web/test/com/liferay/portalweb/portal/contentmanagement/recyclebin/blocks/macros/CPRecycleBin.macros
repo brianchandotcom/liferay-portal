@@ -1,0 +1,22 @@
+<macros object="CPRecycleBin">
+	<macrodef
+		command="empty"
+		description="In the &lt;strong&gt;Control Panel Recycle Bin Portlet&lt;/strong&gt;, delete all the &lt;em&gt;Entries&lt;/em&gt;."
+	>
+		<params>
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Recycle Bin" />
+			</macro>
+
+			<while object="CPRecycleBinPortlet" command="isElementPresent" target="EMPTY_RECYCLE_BIN_LINK" value="Empty the Recycle Bin">
+				<action object="CPRecycleBinPortlet" command="click" target="EMPTY_RECYCLE_BIN_LINK" value="Empty the Recycle Bin" />
+				<action object="CPRecycleBinPortlet" command="confirm" target="EMPTY_RECYCLE_BIN_CONFIRM" value="Are you sure you want to empty the Recycle Bin?" />
+				<action object="CPRecycleBinPortlet" command="assertTextEquals" target="PORTLET_SUCCESS" value="Your request completed successfully." />
+			</while>
+
+			<action object="CPRecycleBinPortlet" command="assertTextEquals" target="TABLE_EMPTY_MESSAGE" value="The Recycle Bin is empty." />
+		</steps>
+	</macrodef>
+</macros>

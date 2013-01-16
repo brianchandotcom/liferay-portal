@@ -1,0 +1,183 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPRolesHome</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPRolesHome</td></tr></thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Roles Home Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMB-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>//div[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td>1st Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>//div[@id='breadcrumbs']/ul/li[2]/span/a</td>
+	<td>2nd Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>//div[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td>3rd Breadcrumb</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>HEADER_PORTLET_TITLE</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Portlet Title Header</td>
+</tr>
+<tr>
+	<td>HEADER_PORTLET_INFO</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Portlet Information Header</td>
+</tr>
+<tr>
+	<td>HEADER_SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Success Message</td>
+</tr>
+<tr>
+	<td>HEADER_CONFIRMATION</td>
+	<td></td>
+	<td>Confirmation Message</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_VIEW_ALL</td>
+	<td>//a[contains(.,'View All')]</td>
+	<td>View All Button</td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD_BUTTON</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add Drop Down Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD-->
+<tr>
+	<td>ADD_REGULAR_ROLE</td>
+	<td>//a[contains(.,'Regular Role') and @role='menuitem']</td>
+	<td>Add Regular Role Link</td>
+</tr>
+<tr>
+	<td>ADD_SITE_ROLE</td>
+	<td>//a[contains(.,'Site Role') and @role='menuitem']</td>
+	<td>Add Site Role Link</td>
+</tr>
+<tr>
+	<td>ADD_ORGANIZATION_ROLE</td>
+	<td>//a[contains(.,'Organization Role') and @role='menuitem']</td>
+	<td>Add Organization Role Link</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_FILED</td>
+	<td>//input[@id='_128_keywords']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//input[@value='Search']</td>
+	<td>Search Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ROLES-->
+<tr>
+	<td>ROLES_NAME</td>
+	<td>//tr[contains(@class,'lfr-role')]/td[1]/a</td>
+	<td>Role Name</td>
+</tr>
+<tr>
+	<td>ROLES_TYPE</td>
+	<td>//tr[contains(@class,'lfr-role')]/td[2]/a</td>
+	<td>Role Type</td>
+</tr>
+<tr>
+	<td>ROLES_DESCRIPTION</td>
+	<td>//tr[contains(@class,'lfr-role')]/td[3]/a</td>
+	<td>Role Description</td>
+</tr>
+<tr>
+	<td>ROLES_ACTIONS</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Roles Actions Button</td>
+</tr>
+<tr>
+	<td>ROLES_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>Roles Message</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS-->
+<tr>
+	<td>ACTIONS_EDIT</td>
+	<td>//a[contains(.,'Edit') and @role='menuitem']</td>
+	<td>Actions Edit Link</td>
+</tr>
+<tr>
+	<td>ACTIONS_PERMISSIONS</td>
+	<td>//a[contains(.,'Permissions') and @role='menuitem']</td>
+	<td>Actions Permissions Link</td>
+</tr>
+<tr>
+	<td>ACTIONS_DEFINE_PERMISSIONS</td>
+	<td>//a[contains(.,'Define Permissions') and @role='menuitem']</td>
+	<td>Actions Define Permissions Link</td>
+</tr>
+<tr>
+	<td>ACTIONS_ASSIGN_MEMBERS</td>
+	<td>//a[contains(.,'Assign Members') and @role='menuitem']</td>
+	<td>Actions Assign Members Link</td>
+</tr>
+<tr>
+	<td>ACTIONS_VIEW_USERS</td>
+	<td>//a[contains(.,'View Users') and @role='menuitem']</td>
+	<td>Actions View Users Link</td>
+</tr>
+<tr>
+	<td>ACTIONS_DELETE</td>
+	<td>//a[contains(.,'Delete') and @role='menuitem']</td>
+	<td>Actions Delete Link</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

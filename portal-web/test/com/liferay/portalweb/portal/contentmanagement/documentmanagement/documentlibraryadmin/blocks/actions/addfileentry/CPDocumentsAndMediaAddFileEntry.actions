@@ -1,0 +1,7 @@
+<actions object="CPDocumentsAndMediaAddFileEntry">
+	<actiondef command="type">
+		<conditional elements="CONTENT_FILE">
+			<function object="Type" command="uploadCommonFile" />
+		</conditional>
+	</actiondef>
+</actions>

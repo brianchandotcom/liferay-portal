@@ -1,0 +1,158 @@
+<macros object="CPDocumentsAndMediaDocument">
+	<macrodef
+		command="add"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, add a &lt;em&gt;Document&lt;/em&gt; with a name of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt; and the file &lt;strong&gt;&quot;${file}&quot;&lt;/strong&gt;."
+	>
+		<params>
+			<param name="title" description="Title of the Document" example="DM Document Title" />
+			<param name="file" description="File of the Document" example="Document_1.doc" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
+
+			<action object="CPDocumentsAndMediaHome" command="click" target="TOOLBAR_ADD_BUTTON" value="Add" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="ADD_BASIC_DOCUMENT" value="Basic Document" />
+
+			<action object="CPDocumentsAndMediaAddFileEntry" command="type" target="CONTENT_FILE" value="${file}" />
+			<action object="CPDocumentsAndMediaAddFileEntry" command="type" target="CONTENT_TITLE" value="${title}" />
+			<action object="CPDocumentsAndMediaAddFileEntry" command="click" target="BUTTON_PUBLISH" value="Publish" />
+
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${title}" />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="checkin"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, checkin the &lt;em&gt;Document&lt;/em&gt; with a name of &lt;strong&gt;&quot;${newTitle}&quot;&lt;/strong&gt; that before the checkin had a name &lt;strong&gt;&quot;${oldTitle}&quot;&lt;/strong&gt;."
+	>
+		<params>
+			<param name="oldTitle" description="Old Title of the Document" example="DM Document Title" />
+			<param name="newTitle" description="New File of the Document" example="DM Document Title Edit" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
+
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${oldTitle} (Draft)" />
+			<action object="CPDocumentsAndMediaHome" command="assertElementPresent" target="DOCUMENT_IMAGE_LOCK" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS_CHECKIN" value="Checkin" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${newTitle}" />
+			<action object="CPDocumentsAndMediaHome" command="assertElementNotPresent" target="DOCUMENT_IMAGE_LOCK" />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="checkout"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, checkout the &lt;em&gt;Document&lt;/em&gt; with a name of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt;."
+	>
+		<params>
+			<param name="title" description="Title of the Document" example="DM Document Title" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
+
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${title}" />
+			<action object="CPDocumentsAndMediaHome" command="assertElementNotPresent" target="DOCUMENT_IMAGE_LOCK" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS_CHECKOUT" value="Checkout" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${title} (Draft)" />
+			<action object="CPDocumentsAndMediaHome" command="assertElementPresent" target="DOCUMENT_IMAGE_LOCK" />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="delete"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, delete a &lt;em&gt;Document&lt;/em&gt; with a name of &lt;strong&gt;&quot;${title}&quot;&lt;/strong&gt;."
+	>
+		<params>
+			<param name="title" description="Title of the Document" example="DM Document Title" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
+
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${title}" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE_UNDO" value="The selected item was moved to the Recycle Bin. Undo" />
+			<action object="CPDocumentsAndMediaHome" command="assertTextNotPresent" value="${title}" />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="edit"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, edit a &lt;em&gt;Document&lt;/em&gt; with a name of &lt;strong&gt;&quot;${oldTitle}&quot;&lt;/strong&gt; to a new name of &lt;strong&gt;&quot;${newTitle}&quot;&lt;/strong&gt;."
+	>
+		<params>
+			<param name="oldTitle" description="Old Title of the Document" example="DM Document Title" />
+			<param name="newTitle" description="New Title of the Document" example="DM Document Title Edit" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
+
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${oldTitle}" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS_EDIT" value="Edit" />
+
+			<action object="CPDocumentsAndMediaDocumentEdit" command="type" target="CONTENT_TITLE" value="${newTitle}" />
+			<action object="CPDocumentsAndMediaDocumentEdit" command="click" target="BUTTON_PUBLISH" value="Publish" />
+
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${newTitle}" />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="editCheckout"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, edit a checked out &lt;em&gt;Document&lt;/em&gt; with a name of &lt;strong&gt;&quot;${oldTitle}&quot;&lt;/strong&gt; to a new name of &lt;strong&gt;&quot;${newTitle}&quot;&lt;/strong&gt;."
+	>
+		<params>
+			<param name="oldTitle" description="Old Title of the Document" example="DM Document Title" />
+			<param name="newTitle" description="New Title of the Document" example="DM Document Title Edit" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
+
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${oldTitle} (Draft)" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS" />
+			<action object="CPDocumentsAndMediaHome" command="click" target="DOCUMENT_ACTIONS_EDIT" value="Edit" />
+
+			<action object="CPDocumentsAndMediaDocumentEdit" command="type" target="CONTENT_TITLE" value="${newTitle}" />
+			<action object="CPDocumentsAndMediaDocumentEdit" command="click" target="BUTTON_SAVE" value="Save" />
+
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="HEADER_SUCCESS_MESSAGE" value="Your request completed successfully." />
+			<action object="CPDocumentsAndMediaHome" command="assertTextEquals" target="DOCUMENT_NAME" value="${oldTitle} (Draft)" />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="tearDown"
+		description="In the &lt;strong&gt;Control Panel Documents and Media Portlet&lt;/strong&gt;, delete all the &lt;em&gt;Entries&lt;/em&gt;."
+	>
+		<params>
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Documents and Media" />
+			</macro>
+
+			<while object="CPDocumentsAndMediaHome" command="isElementPresent" target="DOCUMENT_NAME">
+				<action object="CPDocumentsAndMediaHome" command="check" target="TOOLBAR_ALL_ROWS" />
+				<action object="CPDocumentsAndMediaHome" command="click" target="TOOLBAR_ACTIONS_BUTTON" value="Actions" />
+				<action object="CPDocumentsAndMediaHome" command="click" target="ALL_ACTIONS_MOVE_TO_THE_RECYCLE_BIN" value="Move to the Recycle Bin" />
+			</while>
+		</steps>
+	</macrodef>
+</macros>

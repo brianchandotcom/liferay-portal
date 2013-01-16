@@ -1,0 +1,164 @@
+<macros object="CPUsersAndOrganizationsUsers">
+	<macrodef
+		command="add"
+		description="In the &lt;strong&gt;Control Panel Users and Organizations portlet&lt;/strong&gt;, add a User with Screen Name: &lt;strong&gt;${screenName}&lt;/strong&gt;, Email Address: &lt;strong&gt;${emailAddress}&lt;/strong&gt;, First Name: &lt;strong&gt;${firstName}&lt;/strong&gt;, and Last Name: &lt;strong&gt;${lastName}&lt;/strong&gt;"
+	>
+		<params>
+			<param name="screenName" description="User's Screen Name" example="usersn" />
+			<param name="emailAddress" description="User's Email Address" example="userea@liferay.com" />
+			<param name="firstName" description="User's First Name" example="userfn" />
+			<param name="lastName" description="User's Last Name" example="userln" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Users and Organizations" />
+			</macro>
+
+			<action object="CPUsersAndOrganizationsHome" command="click" target="TOOLBAR_ADD" value="Add" />
+			<action object="CPUsersAndOrganizationsHome" command="click" target="ADD_USER" value="User" />
+
+			<action object="CPUsersAndOrganizationsAddUser" command="type" target="USER_SCREEN_NAME" value="${screenName}" />
+			<action object="CPUsersAndOrganizationsAddUser" command="type" target="USER_EMAIL_ADDRESS" value="${emailAddress}" />
+			<action object="CPUsersAndOrganizationsAddUser" command="type" target="USER_FIRST_NAME" value="${firstName}" />
+			<action object="CPUsersAndOrganizationsAddUser" command="type" target="USER_LAST_NAME" value="${lastName}" />
+			<action object="CPUsersAndOrganizationsAddUser" command="click" target="BUTTONS_SAVE" value="Save" />
+
+			<action object="CPUsersAndOrganizationsEditUser" command="assertTextEquals" target="HEADER_PORTLET_SUCCESS" value="Your request completed successfully." />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="advancedSearch"
+		description="In the &lt;strong&gt;Control Panel Users and Organizations portlet&lt;/strong&gt;, open Advanced Search."
+	>
+		<params>
+		</params>
+		<steps>
+			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="BASIC_SEARCH_ADVANCED_LINK" >
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_ADVANCED_LINK" value="Advanced »" />
+			</if>
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="basicSearch"
+		description="In the &lt;strong&gt;Control Panel Users and Organizations portlet&lt;/strong&gt;, open Basic Search."
+	>
+		<params>
+		</params>
+		<steps>
+			<if object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isVisible" target="ADVANCED_SEARCH_BASIC_LINK" >
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="ADVANCED_SEARCH_BASIC_LINK" value="« Basic" />
+			</if>
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="changePassword"
+		description="In the &lt;strong&gt;Control Panel Users and Organizations portlet&lt;/strong&gt;, change the User's with First Name: &lt;strong&gt;${firstName}&lt;/strong&gt; Password to : &lt;strong&gt;${password}&lt;/strong&gt;."
+	>
+		<params>
+			<param name="firstName" description="User's First Name" example="userfn" />
+			<param name="password" description="User's Password" example="password" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Users and Organizations" />
+			</macro>
+
+			<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
+
+			<macro object="CPUsersAndOrganizationsUsers" command="basicSearch" />
+
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" target="BASIC_SEARCH_FIELD" value="${firstName}" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="BASIC_SEARCH_BUTTON" value="Search" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="USERS_USER_1_FIRST_NAME" value="userfn" />
+
+			<action object="CPUsersAndOrganizationsEditUser" command="click" target="USER_INFORMATION_PASSWORD" value="Password" />
+
+			<action object="CPUsersAndOrganizationsEditUserPassword" command="type" target="PASSWORD_NEW_PASSWORD" value="${password}" />
+			<action object="CPUsersAndOrganizationsEditUserPassword" command="type" target="PASSWORD_ENTER_AGAIN" value="${password}" />
+			<action object="CPUsersAndOrganizationsEditUserPassword" command="click" target="BUTTONS_SAVE" value="Save" />
+
+			<action object="CPUsersAndOrganizationsEditUserPassword" command="assertTextEquals" target="HEADER_PORTLET_SUCCESS" value="Your request completed successfully." />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="deactivate"
+		description="In the &lt;strong&gt;Control Panel Users and Organizations porttlet&lt;/strong&gt;, deactivate the User with First Name:&lt;strong&gt;${firstName}&lt;/strong&gt;."
+	>
+		<params>
+			<param name="firstName" description="User's First Name" example="userfn" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Users and Organizations" />
+			</macro>
+
+			<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
+
+			<macro object="CPUsersAndOrganizationsUsers" command="advancedSearch" />
+
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" target="ADVANCED_SEARCH_FIRST_NAME" value="${firstName}" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="select" target="ADVANCED_SEARCH_STATUS" value="Active" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="ADVANCED_SEARCH_BUTTON" value="Search" />
+
+			<while object="CPUsersAndOrganizationsSearchAllActiveUsers" command="isElementPresent" target="USERS_USER_1_CHECK">
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="check" target="USERS_USER_1_CHECK" value="Flag First User" />
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="USERS_DEACTIVATE" value="Deactivate" />
+				<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="confirm" target="HEADER_CONFIRMATION" value="Are you sure you want to deactivate the selected users?" />
+			</while>
+
+		<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="assertTextEquals" target="USERS_MESSAGE" value="No users were found." />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="delete"
+		description="In the &lt;strong&gt;Control Panel Users and Organizations porttlet&lt;/strong&gt;, delete the User with First Name:&lt;strong&gt;${firstName}&lt;/strong&gt;."
+	>
+		<params>
+			<param name="firstName" description="User's First Name" example="userfn" />
+		</params>
+		<steps>
+			<macro object="Goto" command="controlPanelPortlet">
+				<param name="portlet" value="Users and Organizations" />
+			</macro>
+
+			<action object="CPUsersAndOrganizationsHome" command="click" target="USERS_SEARCH_ALL" value="Search All Users" />
+
+			<macro object="CPUsersAndOrganizationsUsers" command="basicSearch" />
+
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="type" target="ADVANCED_SEARCH_FIRST_NAME" value="${firstName}" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="select" target="ADVANCED_SEARCH_STATUS" value="Inactive" />
+			<action object="CPUsersAndOrganizationsSearchAllActiveUsers" command="click" target="ADVANCED_SEARCH_BUTTON" value="Search" />
+
+			<while object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="isElementPresent" target="USERS_USER_1_CHECK">
+				<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="check" target="USERS_USER_1_CHECK" value="Flag First User" />
+				<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="click" target="USERS_DELETE" value="Delete" />
+				<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="confirm" target="HEADER_CONFIRMATION" value="Are you sure you want to permanently delete the selected users?" />
+			</while>
+
+			<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="assertTextEquals" target="USERS_MESSAGE" value="No users were found." />
+			<action object="CPUsersAndOrganizationsSearchAllInactiveUsers" command="assertElementNotPresent" target="USERS_USER_1_FIRST_NAME" value="${firstName}" />
+		</steps>
+	</macrodef>
+
+	<macrodef
+		command="tearDown"
+		description="In the &lt;strong&gt;Control Panel Users and Organizations portlet&lt;/strong&gt;, delete all users."
+	>
+		<params>
+		</params>
+		<steps>
+			<macro object="CPUsersAndOrganizationsUsers" command="deactivate">
+				<param name="firstName" value="user*" />
+			</macro>
+
+			<macro object="CPUsersAndOrganizationsUsers" command="delete">
+				<param name="firstName" value="user*" />
+			</macro>
+		</steps>
+	</macrodef>
+</macros>

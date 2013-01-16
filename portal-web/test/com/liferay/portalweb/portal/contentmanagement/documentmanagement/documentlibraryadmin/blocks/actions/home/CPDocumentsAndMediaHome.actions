@@ -1,0 +1,10 @@
+<actions object="CPDocumentsAndMediaHome">
+	<actiondef command="click">
+		<conditional elements="ALL_ACTIONS_MOVE_TO_THE_RECYCLE_BIN">
+			<function object="Click" command="textClickAtAndWait" />
+		</conditional>
+		<conditional elements="DOCUMENT_ACTIONS,FOLDER_ACTIONS">
+			<function object="Click" command="clickAt" />
+		</conditional>
+	</actiondef>
+</actions>

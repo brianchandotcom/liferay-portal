@@ -1,0 +1,21 @@
+<testcase
+	name="AddWCWebContentCP"
+	description="In the &lt;strong&gt;Control Panel Web Content Portlet&lt;/strong&gt;, add a Web Content Article."
+>
+	<setup>
+	</setup>
+	<steps>
+		<macro object="CPWebContentArticle" command="add">
+			<param name="title" value="WC Article Title" />
+			<param name="content" value="WC Article Content" />
+		</macro>
+
+		<action object="CPWebContentHome" command="click" target="ENTRIES_ARTICLE_1" value="WC Article Title" />
+
+		<action object="CPWebContentEditArticle" command="assertTextEquals" target="ARTICLE_TITLE" value="WC Article Title" />
+		<action object="CPWebContentEditArticle" command="assertTextEquals" target="ARTICLE_CONTENT" value="WC Article Content" />
+	</steps>
+	<teardown>
+		<macro object="CPWebContentArticle" command="tearDown" />
+	</teardown>
+</testcase>

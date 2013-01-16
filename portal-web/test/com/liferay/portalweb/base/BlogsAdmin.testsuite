@@ -1,0 +1,5 @@
+<testsuite name="BlogsAdmin">
+	<testplan class="com.liferay.portalweb.portal.login.LoginTests" />
+	<testplan class="com.liferay.portalweb.portal.collaboration.blogs.blogsadmin.core.CoreTestPlan" />
+	<testplan class="com.liferay.portalweb.portal.collaboration.blogs.blogsadmin.entry.EntryTestPlan" />
+</testsuite>

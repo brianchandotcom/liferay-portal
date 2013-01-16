@@ -1,0 +1,93 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>HomeBot</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Home</td></tr>
+</thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Portal Home Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_LINK</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Dockbar Add Link</td>
+</tr>
+<tr>
+	<td>ADD_LINK_APPLICATION</td>
+	<td>_145_addApplication</td>
+	<td>More Applications Link</td>
+</tr>
+<tr>
+	<td>ADD_LINK_PAGE</td>
+	<td>addPage</td>
+	<td>Add Page Link</td>
+</tr>
+<tr>
+	<td>PORTLET_FIELD_SEARCH</td>
+	<td>layout_configuration_content</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GOTO_LINK</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Dockbar Go to Link</td>
+</tr>
+<tr>
+	<td>GOTO_LINK_CONTROL_PANEL</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>MANAGE_LINK</td>
+	<td>//li[@id='_145_manageContent']/a/span</td>
+	<td>Dockbar Manage Link</td>
+</tr>
+<tr>
+	<td>NEW_PAGE_FIELD</td>
+	<td>//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PAGE_LINK_SAVE</td>
+	<td>//button[contains(@id,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_GUEST</td>
+	<td>/web/guest/home/</td>
+	<td>Portal Guest URL</td>
+</tr>
+<tr>
+	<td>URL_SITE</td>
+	<td>/web/site-name/home/</td>
+	<td>Site URL</td>
+</tr>
+<tr>
+	<td>URL_SITE_1</td>
+	<td>/web/site1-name/home/</td>
+	<td>Site URL</td>
+</tr>
+<tr>
+	<td>URL_SITE_2</td>
+	<td>/web/site2-name/home/</td>
+	<td>Site URL</td>
+</tr>
+<tr>
+	<td>URL_SITE_3</td>
+	<td>/web/site3-name/home/</td>
+	<td>Site URL</td>
+</tr>
+</tbody></table>
+</body>
+</html>

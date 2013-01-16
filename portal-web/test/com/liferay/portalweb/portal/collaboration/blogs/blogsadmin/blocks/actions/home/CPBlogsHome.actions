@@ -1,0 +1,7 @@
+<actions object="CPBlogsHome">
+	<actiondef command="assertTextEquals">
+		<conditional elements="BLOGS_ENTRY_TEXT_RATING_AVERAGE">
+			<function object="AssertTextEquals" command="assertPartialText" />
+		</conditional>
+	</actiondef>
+</actions>

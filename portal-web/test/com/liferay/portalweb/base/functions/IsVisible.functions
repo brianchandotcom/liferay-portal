@@ -1,0 +1,6 @@
+<functions object="IsVisible" return="boolean">
+	<functiondef command="isVisible" default="true">
+		<selenium command="pause" target="1000" />
+		<selenium command="isVisible" return="boolean" />
+	</functiondef>
+</functions>

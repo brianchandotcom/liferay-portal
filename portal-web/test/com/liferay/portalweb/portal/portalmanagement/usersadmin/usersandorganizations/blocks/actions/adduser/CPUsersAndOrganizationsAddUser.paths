@@ -1,0 +1,202 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPUsersAndOrganizationsAddUser</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">CPUsersAndOrganizationsAddUser</td></tr></thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Users and Organizations Add User Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMBS-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td>Breadcrumb 1</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[2]/span</td>
+	<td>Breadcrumb 2</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td>Breadcrumb 3</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_4</td>
+	<td>//nav[@id='breadcrumbs']/ul/li[4]/span/a</td>
+	<td>Breadcrumb 4</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>HEADER_PORTLET_TITLE</td>
+	<td>//h1[@id='cpPortletTitle']/span</td>
+	<td>Portlet Title</td>
+</tr>
+<tr>
+	<td>HEADER_PORTLET_DESCRIPTION</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Portlet Description</td>
+</tr>
+<tr>
+	<td>HEADER_PORTLET_SUCCESS</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Portlet Succes Message</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_BROWSE</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][1])/a</td>
+	<td>Browse</td>
+</tr>
+<tr>
+	<td>TOOLBAR_VIEW_ORGANIZATIONS</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][2])/a</td>
+	<td>View Organizations</td>
+</tr>
+<tr>
+	<td>TOOLBAR_VIEW_USERS</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][3])/a</td>
+	<td>View Users</td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>TOOLBAR_EXPORT_USERS</td>
+	<td>xpath=(//span[contains(@class,'lfr-toolbar-button')][4])/a</td>
+	<td>Export Users</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER-->
+<tr>
+	<td>USER_SCREEN_NAME</td>
+	<td>//input[@id='_125_screenName']</td>
+	<td>User's Screen Name</td>
+</tr>
+<tr>
+	<td>USER_EMAIL_ADDRESS</td>
+	<td>//input[@id='_125_emailAddress']</td>
+	<td>User's Email Address</td>
+</tr>
+<tr>
+	<td>USER_PREFIX</td>
+	<td>//select[@id='_125_prefixId']</td>
+	<td>User's Prefix Title</td>
+</tr>
+<tr>
+	<td>USER_FIRST_NAME</td>
+	<td>//input[@id='_125_firstName']</td>
+	<td>User's First Name</td>
+</tr>
+<tr>
+	<td>USER_MIDDLE_NAME</td>
+	<td>//input[@id='_125_middleName']</td>
+	<td>User's Middle Name</td>
+</tr>
+<tr>
+	<td>USER_LAST_NAME</td>
+	<td>//input[@id='_125_lastName']</td>
+	<td>User's Last Name</td>
+</tr>
+<tr>
+	<td>USER_SUFFIX</td>
+	<td>//select[@id='_125_suffixId']</td>
+	<td>User's Suffix</td>
+</tr>
+<tr>
+	<td>USER_BIRTHDAY_MONTH</td>
+	<td>//select[@id='_125_birthdayMonth']</td>
+	<td>User's Birthday Month</td>
+</tr>
+<tr>
+	<td>USER_BIRTHDAY_DAY</td>
+	<td>//select[@id='_125_birthdayDay']</td>
+	<td>User's Birthday Day</td>
+</tr>
+<tr>
+	<td>USER_BIRTHDAY_YEAR</td>
+	<td>//select[@id='_125_birthdayYear']</td>
+	<td>User's Birthday Year</td>
+</tr>
+<tr>
+	<td>USER_BIRTHDAY_CALENDAR</td>
+	<td>//button[@id='buttonTest']</td>
+	<td>Birthday Calendar</td>
+</tr>
+<tr>
+	<td>USER_GENDER</td>
+	<td>//select[@id='_125_male']</td>
+	<td>User's Gender</td>
+</tr>
+<tr>
+	<td>USER_JOB_TITLE</td>
+	<td>//input[@id='_125_jobTitle']</td>
+	<td>User's Job Title</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER INFORMATION-->
+<tr>
+	<td>USER_INFORMATION_DETAILS</td>
+	<td>//a[@id='_125_detailsLink']</td>
+	<td>Details</td>
+</tr>
+<tr>
+	<td>USER_INFORMATION_ORGANIZATIONS</td>
+	<td>//a[@id='_125_organizationsLink']</td>
+	<td>Organizations</td>
+</tr>
+<tr>
+	<td>USER_INFORMATION_PERSONAL_SITE</td>
+	<td>//a[@id='_125_personalSiteLink']</td>
+	<td>Personal site</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BUTTONS-->
+<tr>
+	<td>BUTTONS_SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>BUTTONS_CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

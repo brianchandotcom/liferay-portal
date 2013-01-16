@@ -104,6 +104,7 @@ _sass_cache_*.css
 /portal-web/ROOT.war
 /portal-web/test-ant-scripts
 /portal-web/test-classes
+/portal-web/test-generated
 /portal-web/test-output
 /portal-web/test-results
 

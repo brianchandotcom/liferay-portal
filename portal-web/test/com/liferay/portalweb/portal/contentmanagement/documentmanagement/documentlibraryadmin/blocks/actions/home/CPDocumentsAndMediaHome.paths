@@ -1,0 +1,374 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPDocumentsAndMediaHome</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPDocumentsAndMediaHome</td></tr>
+</thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Documents and Media Home Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMB-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>//div[@id='breadcrumbs']/ul/li[1]/span/a</td>
+	<td>1st Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>//div[@id='breadcrumbs']/ul/li[2]/span/a</td>
+	<td>2nd Breadcrumb</td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>//div[@id='breadcrumbs']/ul/li[3]/span/a</td>
+	<td>3rd Breadcrumb</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HEADER-->
+<tr>
+	<td>HEADER_PORTLET_TITLE</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Portlet Title Header</td>
+</tr>
+<tr>
+	<td>HEADER_PORTLET_INFO</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Portlet Information Header</td>
+</tr>
+<tr>
+	<td>HEADER_OPTIONS_ICON</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options Icon</td>
+</tr>
+<tr>
+	<td>HEADER_SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Success Message</td>
+</tr>
+<tr>
+	<td>HEADER_SUCCESS_MESSAGE_UNDO</td>
+	<td>//form[@id='_20_undoForm']</td>
+	<td>Success Message for 'Move to the Recycle Bin'</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS-->
+<tr>
+	<td>OPTIONS_EXPORT_IMPORT</td>
+	<td>//a[contains(.,'Export / Import') and @role='menuitem']</td>
+	<td>Options 'Export / Import' Link</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_ALL_ROWS</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
+	<td>All Entries Checkbox</td>
+</tr>
+<tr>
+	<td>TOOLBAR_ACTIONS_BUTTON</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions Drop Down Button</td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD_BUTTON</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add Drop Down Button</td>
+</tr>
+<tr>
+	<td>TOOLBAR_SORT_BY_BUTTON</td>
+	<td>//span[@title='Sort By']/ul/li/strong/a/span</td>
+	<td>Sort By Drop Down Button</td>
+</tr>
+<tr>
+	<td>TOOLBAR_MANAGE_BUTTON</td>
+	<td>//span[@title='Manage']/ul/li/strong/a/span</td>
+	<td>Manage Drop Down Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ALL_ACTIONS-->
+<tr>
+	<td>ALL_ACTIONS_CANCEL_CHECKOUT</td>
+	<td>//a[contains(.,'Cancel Checkout') and @role='menuitem']</td>
+	<td>Actions Cancel Checkout Link</td>
+</tr>
+<tr>
+	<td>ALL_ACTIONS_CHECKIN</td>
+	<td>//a[contains(.,'Checkin') and @role='menuitem']</td>
+	<td>Actions Checkin Link</td>
+</tr>
+<tr>
+	<td>ALL_ACTIONS_CHECKOUT</td>
+	<td>//a[contains(.,'Checkout') and @role='menuitem']</td>
+	<td>Actions Checkout Link</td>
+</tr>
+<tr>
+	<td>ALL_ACTIONS_MOVE</td>
+	<td>//a[contains(.,'Move') and @role='menuitem']</td>
+	<td>Actions Move Link</td>
+</tr>
+<tr>
+	<td>ALL_ACTIONS_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[contains(.,'Move to the Recycle Bin') and @role='menuitem']</td>
+	<td>Actions Move to the Recycle Bin Link</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD-->
+<tr>
+	<td>ADD_FOLDER</td>
+	<td>//a[contains(.,'Folder') and @role='menuitem']</td>
+	<td>Add Folder Link</td>
+</tr>
+<tr>
+	<td>ADD_SUBFOLDER</td>
+	<td>//a[contains(.,'Subfolder') and @role='menuitem']</td>
+	<td>Add Subfolder Link</td>
+</tr>
+<tr>
+	<td>ADD_SHORTCUT</td>
+	<td>//a[contains(.,'Shortcut') and @role='menuitem']</td>
+	<td>Add Shortcut Link</td>
+</tr>
+<tr>
+	<td>ADD_REPOSITORY</td>
+	<td>//a[contains(.,'Repository') and @role='menuitem']</td>
+	<td>Add Repository Link</td>
+</tr>
+<tr>
+	<td>ADD_MULTIPLE_DOCUMENTS</td>
+	<td>//a[contains(.,'Multiple Documents') and @role='menuitem']</td>
+	<td>Add Multiple Documents Link</td>
+</tr>
+<tr>
+	<td>ADD_BASIC_DOCUMENT</td>
+	<td>//a[contains(.,'Basic Document') and @role='menuitem']</td>
+	<td>Add Basic Document Link</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MANAGE-->
+<tr>
+	<td>MANAGE_DOCUMENT_TYPES</td>
+	<td>//a[contains(.,'Document Types') and @role='menuitem']</td>
+	<td>Manage Document Types Link</td>
+</tr>
+<tr>
+	<td>MANAGE_METADATA_SET</td>
+	<td>//a[contains(.,'Metadata Set') and @role='menuitem']</td>
+	<td>Manage Metadata Set Link</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER-->
+<tr>
+	<td>FOLDER_NAME</td>
+	<td>//div[@id='_20_entriesContainer']//a[@data-folder='true']/span[@class='entry-title']</td>
+	<td>Folder Name's Link</td>
+</tr>
+<tr>
+	<td>FOLDER_NAME_1</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/span[@class='entry-title'])[1]</td>
+	<td>1st Folder Name's Link</td>
+</tr>
+<tr>
+	<td>FOLDER_NAME_2</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/span[@class='entry-title'])[2]</td>
+	<td>2nd Folder Name's Link</td>
+</tr>
+<tr>
+	<td>FOLDER_NAME_3</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/span[@class='entry-title'])[3]</td>
+	<td>3rd Folder Name's Link</td>
+</tr>
+<tr>
+	<td>FOLDER_ACTIONS</td>
+	<td>//div[@id='_20_entriesContainer']//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a</td>
+	<td>Folder Actions Button</td>
+</tr>
+<tr>
+	<td>FOLDER_ACTIONS_1</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[1]</td>
+	<td>1st Folder Actions Button</td>
+</tr>
+<tr>
+	<td>FOLDER_ACTIONS_2</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[2]</td>
+	<td>2nd Folder Actions Button</td>
+</tr>
+<tr>
+	<td>FOLDER_ACTIONS_3</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='true']/parent::div/span[contains(@class,'entry-action')]//a)[3]</td>
+	<td>3rd Folder Actions Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_ACTIONS-->
+<tr>
+	<td>FOLDER_ACTIONS_EDIT</td>
+	<td>//a[contains(.,'Edit') and @role='menuitem']</td>
+	<td>Folder Actions Edit Link</td>
+</tr>
+<tr>
+	<td>FOLDER_ACTIONS_MOVE</td>
+	<td>//a[contains(.,'Move') and @role='menuitem']</td>
+	<td>Folder Actions Move Link</td>
+</tr>
+<tr>
+	<td>FOLDER_ACTIONS_PERMISSIONS</td>
+	<td>//a[contains(.,'Permissions') and @role='menuitem']</td>
+	<td>Folder Actions Permissions Link</td>
+</tr>
+<tr>
+	<td>FOLDER_ACTIONS_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[contains(.,'Move to the Recycle Bin') and @role='menuitem']</td>
+	<td>Folder Actions Move to the Recycle Bin Link</td>
+</tr>
+<tr>
+	<td>FOLDER_ACTIONS_ADD_SUBFOLDER</td>
+	<td>//a[contains(.,'Add Subfolder') and @role='menuitem']</td>
+	<td>Folder Actions Add Subfolder Link</td>
+</tr>
+<tr>
+	<td>FOLDER_ACTIONS_ACCESS_FROM_DESKTOP</td>
+	<td>//a[contains(.,'Access from Desktop') and @role='menuitem']</td>
+	<td>Folder Actions Access from Desktop Link</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT-->
+<tr>
+	<td>DOCUMENT_ACTIONS</td>
+	<td>//div[@id='_20_entriesContainer']//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a</td>
+	<td>Document Actions Button</td>
+</tr>
+<tr>
+	<td>DOCUMENT_ACTIONS_1</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[1]</td>
+	<td>1st Document Actions Button</td>
+</tr>
+<tr>
+	<td>DOCUMENT_ACTIONS_2</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[2]</td>
+	<td>2nd Document Actions Button</td>
+</tr>
+<tr>
+	<td>DOCUMENT_ACTIONS_3</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/parent::div/span[contains(@class,'entry-action')]//a)[3]</td>
+	<td>3rd Document Actions Button</td>
+</tr>
+<tr>
+	<td>DOCUMENT_IMAGE_LOCK</td>
+	<td>//div[@id='_20_entriesContainer']//a[@data-folder='false']/div/img[@alt='Locked']</td>
+	<td>Document Lock Image</td>
+</tr>
+<tr>
+	<td>DOCUMENT_NAME</td>
+	<td>//div[@id='_20_entriesContainer']//a[@data-folder='false']/span[@class='entry-title']</td>
+	<td>Document Name's Link</td>
+</tr>
+<tr>
+	<td>DOCUMENT_NAME_1</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/span[@class='entry-title'])[1]</td>
+	<td>1st Document Name's Link</td>
+</tr>
+<tr>
+	<td>DOCUMENT_NAME_2</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/span[@class='entry-title'])[2]</td>
+	<td>2nd Document Name's Link</td>
+</tr>
+<tr>
+	<td>DOCUMENT_NAME_3</td>
+	<td>xpath=(//div[@id='_20_entriesContainer']//a[@data-folder='false']/span[@class='entry-title'])[3]</td>
+	<td>3rd Document Name's Link</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_ACTIONS-->
+<tr>
+	<td>DOCUMENT_ACTIONS_DOWNLOAD</td>
+	<td>//a[contains(.,'Download') and @role='menuitem']</td>
+	<td>Document Actions Download Link</td>
+</tr>
+<tr>
+	<td>DOCUMENT_ACTIONS_EDIT</td>
+	<td>//a[contains(.,'Edit') and @role='menuitem']</td>
+	<td>Document Actions Edit Link</td>
+</tr>
+<tr>
+	<td>DOCUMENT_ACTIONS_MOVE</td>
+	<td>//a[contains(.,'Move') and @role='menuitem']</td>
+	<td>Document Actions Move Link</td>
+</tr>
+<tr>
+	<td>DOCUMENT_ACTIONS_CANCEL_CHECKOUT</td>
+	<td>//a[contains(.,'Cancel Checkout') and @role='menuitem']</td>
+	<td>Document Actions Cancel Checkout Link</td>
+</tr>
+<tr>
+	<td>DOCUMENT_ACTIONS_CHECKOUT</td>
+	<td>//a[contains(.,'Checkout') and @role='menuitem']</td>
+	<td>Document Actions Checkout Link</td>
+</tr>
+<tr>
+	<td>DOCUMENT_ACTIONS_CHECKIN</td>
+	<td>//a[contains(.,'Checkin') and @role='menuitem']</td>
+	<td>Document Actions Checkin Link</td>
+</tr>
+<tr>
+	<td>DOCUMENT_ACTIONS_PERMISSIONS</td>
+	<td>//a[contains(.,'Permissions') and @role='menuitem']</td>
+	<td>Document Actions Permissions Link</td>
+</tr>
+<tr>
+	<td>DOCUMENT_ACTIONS_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[contains(.,'Move to the Recycle Bin') and @role='menuitem']</td>
+	<td>Document Actions Move to the Recycle Bin Link</td>
+</tr>
+</tbody></table>
+</body>
+</html>

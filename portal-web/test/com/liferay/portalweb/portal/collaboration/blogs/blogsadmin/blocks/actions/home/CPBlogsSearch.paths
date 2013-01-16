@@ -1,0 +1,126 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CPBlogsSearch</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPBlogsSearch</td></tr>
+</thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Blogs Search Page</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PORTLET-->
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Portlet Title</td>
+</tr>
+<tr>
+	<td>PORTLET_DESCRIPTION</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Portlet Description</td>
+</tr>
+<tr>
+	<td>PORTLET_PAGE_TITLE</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Portlet Search Title</td>
+</tr>
+<tr>
+	<td>PORTLET_INFO</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>Portlet Info</td>
+</tr>
+<tr>
+	<td>PORTLET_BACK_LINK</td>
+	<td>//a[@id='_161_TabsBack']</td>
+	<td>Back Link</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='_161_keywords']</td>
+	<td>Search Input Field</td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//input[@value='Search']</td>
+	<td>Search Submit Button</td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS</td>
+	<td>//div[@class='search-results']</td>
+	<td>Search Results Message</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RESULTS TABLE-->
+<tr>
+	<td>TABLE_NUMBER_HEADER</td>
+	<td>//tr[1]/th[1]</td>
+	<td>Table Number Header</td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_HEADER</td>
+	<td>//tr[1]/th[2]</td>
+	<td>Table Entry Header</td>
+</tr>
+<tr>
+	<td>TABLE_NUMBER</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[1]</td>
+	<td>Table Number</td>
+</tr>
+<tr>
+	<td>TABLE_NUMBER_1</td>
+	<td>//tr[3]/td[1]</td>
+	<td>Table Entry 1 Number</td>
+</tr>
+<tr>
+	<td>TABLE_NUMBER_2</td>
+	<td>//tr[3]/td[1]</td>
+	<td>Table Entry 2 Number</td>
+</tr>
+<tr>
+	<td>TABLE_NUMBER_3</td>
+	<td>//tr[3]/td[1]</td>
+	<td>Table Entry 3 Number</td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[2]/a</td>
+	<td>Table Entry Title</td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_1</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td>Table Entry 1 Title</td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_2</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td>Table Entry 2 Title</td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_3</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td>Table Entry 3 Title</td>
+</tr>
+</tbody></table>
+</body>
+</html>

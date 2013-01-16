@@ -1,0 +1,45 @@
+<testcase
+	name="EditBlogsEntryContentActionsCP"
+	description="In the Control Panel Blogs Portlet, edit a Blogs Entry's content."
+>
+	<setup>
+		<macro object="CPBlogsEntry" command="add">
+			<param name="title" value="Blogs Entry Title" />
+			<param name="content" value="Blogs Entry Content" />
+		</macro>
+	</setup>
+	<steps>
+		`<macro object="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Blogs" />
+		</macro>
+
+		<action object="CPBlogsHome" command="assertTextEquals" target="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+		<action object="CPBlogsHome" command="click" target="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+
+		<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_TITLE" value="Blogs Entry Title" />
+		<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_CONTENT" value="Blogs Entry Content" />
+
+		`<macro object="Goto" command="controlPanelPortlet">
+			<param name="portlet" value="Blogs" />
+		</macro>
+
+		<action object="CPBlogsHome" command="assertTextEquals" target="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+		<action object="CPBlogsHome" command="click" target="BLOGS_ENTRY_LINK_ACTIONS" value="Actions" />
+		<action object="CPBlogsHome" command="click" target="BLOGS_ENTRY_LINK_ACTIONS_EDIT" value="Edit" />
+
+		<action object="CPBlogsEntryEdit" command="type" target="CONTENT_FIELD_CONTENT" value="Blogs Entry Content Edit" />
+		<action object="CPBlogsEntryEdit" command="click" target="CONTENT_LINK_SAVE" value="Publish" />
+		<action object="CPBlogsEntryEdit" command="assertTextEquals" target="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
+
+		<action object="CPBlogsHome" command="assertTextEquals" target="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+		<action object="CPBlogsHome" command="click" target="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
+
+		<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_TITLE" value="Blogs Entry Title" />
+		<action object="CPBlogsEntryView" command="assertTextEquals" target="BLOGS_ENTRY_TEXT_CONTENT" value="Blogs Entry Content Edit" />
+		<action object="CPBlogsEntryView" command="assertTextNotEquals" target="BLOGS_ENTRY_TEXT_CONTENT" value="Blogs Entry Content" />
+	</steps>
+	<teardown>
+		<macro object="CPBlogsEntry" command="tearDown" />
+		<macro object="CPRecycleBin" command="empty" />
+	</teardown>
+</testcase>

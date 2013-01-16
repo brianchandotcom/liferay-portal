@@ -1,0 +1,12 @@
+<actions object="CPRolesAssignMembersUsers">
+	<actiondef command="click">
+		<conditional elements="BASIC_SEARCH_ADVANCED_LINK,ADVANCED_SEARCH_BASIC_LINK">
+			<function object="Click" command="clickAt" />
+		</conditional>
+
+		<conditional elements="STATUS_AVAILABLE">
+			<function object="Click" command="textClickAtAndWait" />
+		</conditional>
+	</actiondef>
+</actions>
+

@@ -25,6 +25,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
@@ -89,10 +91,22 @@ public interface DL {
 			PortletRequest portletRequest, long folderId)
 		throws PortalException, SystemException;
 
+	public Map<Locale, String> getEmailFileEntryAddedBodyMap(
+		PortletPreferences preferences);
+
 	public boolean getEmailFileEntryAddedEnabled(
 		PortletPreferences preferences);
 
+	public Map<Locale, String> getEmailFileEntryAddedSubjectMap(
+		PortletPreferences preferences);
+
+	public Map<Locale, String> getEmailFileEntryUpdatedBodyMap(
+		PortletPreferences preferences);
+
 	public boolean getEmailFileEntryUpdatedEnabled(
+		PortletPreferences preferences);
+
+	public Map<Locale, String> getEmailFileEntryUpdatedSubjectMap(
 		PortletPreferences preferences);
 
 	public String getEmailFromAddress(

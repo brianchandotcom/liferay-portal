@@ -688,7 +688,9 @@ public class ServiceContext implements Cloneable, Serializable {
 	 *         command; <code>false</code> otherwise
 	 */
 	public boolean isCommandAdd() {
-		if (Validator.equals(_command, Constants.ADD)) {
+		if (Validator.equals(_command, Constants.ADD) ||
+			Validator.equals(_command, Constants.ADD_MULTIPLE)) {
+
 			return true;
 		}
 		else {

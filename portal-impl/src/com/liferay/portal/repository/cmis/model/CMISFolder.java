@@ -86,6 +86,22 @@ public class CMISFolder extends CMISModel implements Folder {
 		}
 	}
 
+	public List<Long> getAncestorFolderIds()
+		throws PortalException, SystemException {
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		Folder folder = this;
+
+		while (!folder.isRoot()) {
+			folder = folder.getParentFolder();
+
+			folderIds.add(folder.getFolderId());
+		}
+
+		return folderIds;
+	}
+
 	public List<Folder> getAncestors() throws PortalException, SystemException {
 		List<Folder> folders = new ArrayList<Folder>();
 

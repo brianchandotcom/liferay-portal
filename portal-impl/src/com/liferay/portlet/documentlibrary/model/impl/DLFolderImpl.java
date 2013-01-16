@@ -36,6 +36,31 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 	public DLFolderImpl() {
 	}
 
+	public List<Long> getAncestorFolderIds()
+		throws PortalException, SystemException {
+
+		List<Long> ancestorFolderIds = new ArrayList<Long>();
+
+		DLFolder folder = this;
+
+		while (!folder.isRoot()) {
+			try {
+				folder = folder.getParentFolder();
+
+				ancestorFolderIds.add(folder.getFolderId());
+			}
+			catch (NoSuchFolderException nsfe) {
+				if (folder.isInTrash()) {
+					break;
+				}
+
+				throw nsfe;
+			}
+		}
+
+		return ancestorFolderIds;
+	}
+
 	public List<DLFolder> getAncestors()
 		throws PortalException, SystemException {
 

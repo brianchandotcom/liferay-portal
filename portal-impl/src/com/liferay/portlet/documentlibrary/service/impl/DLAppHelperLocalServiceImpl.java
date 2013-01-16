@@ -19,12 +19,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,7 +41,10 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -55,6 +60,7 @@ import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceB
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -63,12 +69,16 @@ import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * The implementation the document library application helper local service.
@@ -977,7 +987,7 @@ public class DLAppHelperLocalServiceImpl
 
 	public void updateStatus(
 			long userId, FileEntry fileEntry, FileVersion latestFileVersion,
-			int oldStatus, int newStatus,
+			int oldStatus, int newStatus, ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 
@@ -1070,10 +1080,10 @@ public class DLAppHelperLocalServiceImpl
 				}
 			}
 
-			// Social
-
 			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
 				!latestFileVersion.isInTrashContainer()) {
+
+				// Social
 
 				Date activityDate = latestFileVersion.getModifiedDate();
 
@@ -1091,6 +1101,10 @@ public class DLAppHelperLocalServiceImpl
 					DLFileEntryConstants.getClassName(),
 					fileEntry.getFileEntryId(), activityType, StringPool.BLANK,
 					0);
+
+				// Subscriptions
+
+				notifySubscribers(latestFileVersion, serviceContext);
 			}
 		}
 		else {
@@ -1332,6 +1346,121 @@ public class DLAppHelperLocalServiceImpl
 		catch (Exception e) {
 			return false;
 		}
+	}
+
+	protected void notifySubscribers(
+			FileVersion fileVersion, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		if (!fileVersion.isApproved()) {
+			return;
+		}
+
+		PortletPreferences preferences =
+			ServiceContextUtil.getPortletPreferences(serviceContext);
+
+		if (preferences == null) {
+			long ownerId = fileVersion.getGroupId();
+			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
+			long plid = PortletKeys.PREFS_PLID_SHARED;
+			String portletId = PortletKeys.DOCUMENT_LIBRARY;
+			String defaultPreferences = null;
+
+			preferences = portletPreferencesLocalService.getPreferences(
+				fileVersion.getCompanyId(), ownerId, ownerType, plid, portletId,
+				defaultPreferences);
+		}
+
+		if (serviceContext.isCommandAdd() &&
+			DLUtil.getEmailFileEntryAddedEnabled(preferences)) {
+		}
+		else if (serviceContext.isCommandUpdate() &&
+			DLUtil.getEmailFileEntryUpdatedEnabled(preferences)) {
+		}
+		else {
+			return;
+		}
+
+		String fromName = DLUtil.getEmailFromName(
+			preferences, fileVersion.getCompanyId());
+		String fromAddress = DLUtil.getEmailFromAddress(
+			preferences, fileVersion.getCompanyId());
+
+		Map<Locale, String> localizedSubjectMap = null;
+		Map<Locale, String> localizedBodyMap = null;
+
+		if (serviceContext.isCommandUpdate()) {
+			localizedSubjectMap = DLUtil.getEmailFileEntryUpdatedSubjectMap(
+				preferences);
+			localizedBodyMap = DLUtil.getEmailFileEntryUpdatedBodyMap(
+				preferences);
+		}
+		else {
+			localizedSubjectMap = DLUtil.getEmailFileEntryAddedSubjectMap(
+				preferences);
+			localizedBodyMap = DLUtil.getEmailFileEntryAddedBodyMap(
+				preferences);
+		}
+
+		Folder folder = null;
+
+		try {
+			FileEntry fileEntry = fileVersion.getFileEntry();
+
+			long folderId = fileEntry.getFolderId();
+
+			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				folder = dlAppLocalService.getFolder(folderId);
+			}
+		}
+		catch (Exception e) {
+			return;
+		}
+
+		String folderName = LanguageUtil.get(
+			serviceContext.getLocale(), "home");
+
+		if (folder != null) {
+			folderName = folder.getName();
+		}
+
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
+
+		subscriptionSender.setCompanyId(fileVersion.getCompanyId());
+		subscriptionSender.setContextAttributes(
+			"[$DOCUMENT_STATUS_BY_USER_NAME$]",
+			fileVersion.getStatusByUserName(), "[$DOCUMENT_TITLE$]",
+			fileVersion.getTitle(), "[$FOLDER_NAME$]", folderName);
+		subscriptionSender.setContextUserPrefix("DOCUMENT");
+		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
+		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
+		subscriptionSender.setMailId(
+			"file_entry", fileVersion.getFileEntryId());
+		subscriptionSender.setPortletId(PortletKeys.DOCUMENT_LIBRARY);
+		subscriptionSender.setReplyToAddress(fromAddress);
+		subscriptionSender.setScopeGroupId(fileVersion.getGroupId());
+		subscriptionSender.setServiceContext(serviceContext);
+		subscriptionSender.setUserId(fileVersion.getUserId());
+
+		subscriptionSender.addPersistedSubscribers(
+			Folder.class.getName(), fileVersion.getGroupId());
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		if (folder != null) {
+			folderIds.add(folder.getFolderId());
+
+			folderIds.addAll(folder.getAncestorFolderIds());
+		}
+
+		for (long folderId : folderIds) {
+			subscriptionSender.addPersistedSubscribers(
+				Folder.class.getName(), folderId);
+		}
+
+		subscriptionSender.flushNotificationsAsync();
 	}
 
 	protected void registerDLProcessorCallback(

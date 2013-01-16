@@ -41,6 +41,9 @@ public interface Folder extends RepositoryModel<Folder> {
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException, SystemException;
 
+	public List<Long> getAncestorFolderIds()
+		throws PortalException, SystemException;
+
 	public List<Folder> getAncestors()
 		throws PortalException, SystemException;
 

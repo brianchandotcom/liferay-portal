@@ -27,6 +27,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
@@ -154,16 +156,40 @@ public class DLUtil {
 		return getDL().getDLControlPanelLink(portletRequest, folderId);
 	}
 
+	public static Map<Locale, String> getEmailFileEntryAddedBodyMap(
+		PortletPreferences preferences) {
+
+		return getDL().getEmailFileEntryAddedBodyMap(preferences);
+	}
+
 	public static boolean getEmailFileEntryAddedEnabled(
 		PortletPreferences preferences) {
 
 		return getDL().getEmailFileEntryAddedEnabled(preferences);
 	}
 
+	public static Map<Locale, String> getEmailFileEntryAddedSubjectMap(
+		PortletPreferences preferences) {
+
+		return getDL().getEmailFileEntryAddedSubjectMap(preferences);
+	}
+
+	public static Map<Locale, String> getEmailFileEntryUpdatedBodyMap(
+		PortletPreferences preferences) {
+
+		return getDL().getEmailFileEntryUpdatedBodyMap(preferences);
+	}
+
 	public static boolean getEmailFileEntryUpdatedEnabled(
 		PortletPreferences preferences) {
 
 		return getDL().getEmailFileEntryUpdatedEnabled(preferences);
+	}
+
+	public static Map<Locale, String> getEmailFileEntryUpdatedSubjectMap(
+		PortletPreferences preferences) {
+
+		return getDL().getEmailFileEntryUpdatedSubjectMap(preferences);
 	}
 
 	public static String getEmailFromAddress(

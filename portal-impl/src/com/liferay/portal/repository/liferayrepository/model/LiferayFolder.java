@@ -50,6 +50,12 @@ public class LiferayFolder extends LiferayModel implements Folder {
 			permissionChecker, _dlFolder, actionId);
 	}
 
+	public List<Long> getAncestorFolderIds()
+		throws PortalException, SystemException {
+
+		return _dlFolder.getAncestorFolderIds();
+	}
+
 	public List<Folder> getAncestors() throws PortalException, SystemException {
 		return toFolders(_dlFolder.getAncestors());
 	}

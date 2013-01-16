@@ -337,12 +337,13 @@ public class DLAppHelperLocalServiceUtil {
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion latestFileVersion,
 		int oldStatus, int newStatus,
+		com.liferay.portal.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.updateStatus(userId, fileEntry, latestFileVersion, oldStatus,
-			newStatus, workflowContext);
+			newStatus, serviceContext, workflowContext);
 	}
 
 	public static DLAppHelperLocalService getService() {

@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -63,6 +65,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifi
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeComparator;
+import com.liferay.util.ContentUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -70,6 +73,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -404,6 +408,28 @@ public class DLImpl implements DL {
 		return portletURL.toString();
 	}
 
+	public Map<Locale, String> getEmailFileEntryAddedBodyMap(
+		PortletPreferences preferences) {
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailFileEntryAddedBody");
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_BODY)));
+
+		return map;
+	}
+
 	public boolean getEmailFileEntryAddedEnabled(
 		PortletPreferences preferences) {
 
@@ -418,6 +444,50 @@ public class DLImpl implements DL {
 		}
 	}
 
+	public Map<Locale, String> getEmailFileEntryAddedSubjectMap(
+		PortletPreferences preferences) {
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailFileEntryAddedSubject");
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT)));
+
+		return map;
+	}
+
+	public Map<Locale, String> getEmailFileEntryUpdatedBodyMap(
+		PortletPreferences preferences) {
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailFileEntryUpdatedBody");
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_BODY)));
+
+		return map;
+	}
+
 	public boolean getEmailFileEntryUpdatedEnabled(
 		PortletPreferences preferences) {
 
@@ -430,6 +500,28 @@ public class DLImpl implements DL {
 		else {
 			return PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_ENABLED;
 		}
+	}
+
+	public Map<Locale, String> getEmailFileEntryUpdatedSubjectMap(
+		PortletPreferences preferences) {
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailFileEntryUpdatedSubject");
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT)));
+
+		return map;
 	}
 
 	public String getEmailFromAddress(

@@ -399,7 +399,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructure(
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructures(
 		long groupId, java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

@@ -474,10 +474,10 @@ public class DDMStructureLocalServiceUtil {
 				   .getStructure(groupId, structureKey, includeGlobalStructures);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructure(
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructures(
 		long groupId, java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getStructure(groupId, name, description);
+		return getService().getStructures(groupId, name, description);
 	}
 
 	/**

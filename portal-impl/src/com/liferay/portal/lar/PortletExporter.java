@@ -1499,10 +1499,10 @@ public class PortletExporter {
 		String[] newScopeIds = new String[oldScopeIds.length];
 
 		for (int i = 0; i < oldScopeIds.length; i++) {
-			String oldValue = oldScopeIds[i];
+			String oldScopeId = oldScopeIds[i];
 
 			newScopeIds[i] = StringUtil.replace(
-				oldValue, new String[] {groupScopeId},
+				oldScopeId, new String[] {groupScopeId},
 				new String[] {"[$GROUP_SCOPE_ID$]"});
 		}
 

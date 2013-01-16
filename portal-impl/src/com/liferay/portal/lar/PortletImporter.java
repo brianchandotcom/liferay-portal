@@ -1874,10 +1874,11 @@ public class PortletImporter {
 
 				long oldLayoutId = GetterUtil.getLong(oldScopeIdSuffix);
 
-				long newLayoutId = newLayoutMap.get(oldLayoutId).getLayoutId();
+				Layout newLayout = newLayoutMap.get(oldLayoutId);
 
 				newScopeIds[i] =
-					AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX + newLayoutId;
+					AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX +
+						newLayout.getLayoutId();
 			}
 			else {
 				newScopeIds[i] = StringUtil.replace(

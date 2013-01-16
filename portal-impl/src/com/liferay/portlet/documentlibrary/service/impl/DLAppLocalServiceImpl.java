@@ -29,6 +29,8 @@ import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -704,6 +706,20 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		dlAppHelperLocalService.restoreFileEntryFromTrash(userId, fileEntry);
 	}
 
+	public void subscribeFileEntryType(
+			long userId, long groupId, long fileEntryTypeId)
+		throws PortalException, SystemException {
+
+		if (fileEntryTypeId ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+			fileEntryTypeId = groupId;
+		}
+
+		subscriptionLocalService.addSubscription(
+			userId, groupId, DLFileEntryType.class.getName(), fileEntryTypeId);
+	}
+
 	public void subscribeFolder(long userId, long groupId, long folderId)
 		throws PortalException, SystemException {
 
@@ -713,6 +729,20 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		subscriptionLocalService.addSubscription(
 			userId, groupId, Folder.class.getName(), folderId);
+	}
+
+	public void unsubscribeFileEntryType(
+			long userId, long groupId, long fileEntryTypeId)
+		throws PortalException, SystemException {
+
+		if (fileEntryTypeId ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+			fileEntryTypeId = groupId;
+		}
+
+		subscriptionLocalService.deleteSubscription(
+			userId, DLFileEntryType.class.getName(), fileEntryTypeId);
 	}
 
 	public void unsubscribeFolder(long userId, long groupId, long folderId)

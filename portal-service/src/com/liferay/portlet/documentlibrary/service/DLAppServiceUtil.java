@@ -2046,6 +2046,12 @@ public class DLAppServiceUtil {
 		return getService().search(repositoryId, searchContext, query);
 	}
 
+	public static void subscribeFileEntryType(long groupId, long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().subscribeFileEntryType(groupId, fileEntryTypeId);
+	}
+
 	public static void subscribeFolder(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -2103,6 +2109,13 @@ public class DLAppServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().unlockFolder(repositoryId, parentFolderId, name, lockUuid);
+	}
+
+	public static void unsubscribeFileEntryType(long groupId,
+		long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsubscribeFileEntryType(groupId, fileEntryTypeId);
 	}
 
 	public static void unsubscribeFolder(long groupId, long folderId)

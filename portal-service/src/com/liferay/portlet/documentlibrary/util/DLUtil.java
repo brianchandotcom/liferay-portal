@@ -186,6 +186,12 @@ public class DLUtil {
 		return getDL().getFileEntryImage(fileEntry, themeDisplay);
 	}
 
+	public static Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId)
+		throws SystemException {
+
+		return getDL().getFileEntryTypeSubscriptionClassPKs(userId);
+	}
+
 	public static String getFileIcon(String extension) {
 		return getDL().getFileIcon(extension);
 	}

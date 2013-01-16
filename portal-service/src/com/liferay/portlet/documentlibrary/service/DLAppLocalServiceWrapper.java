@@ -563,10 +563,26 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		_dlAppLocalService.restoreFileEntryFromTrash(userId, fileEntryId);
 	}
 
+	public void subscribeFileEntryType(long userId, long groupId,
+		long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppLocalService.subscribeFileEntryType(userId, groupId,
+			fileEntryTypeId);
+	}
+
 	public void subscribeFolder(long userId, long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_dlAppLocalService.subscribeFolder(userId, groupId, folderId);
+	}
+
+	public void unsubscribeFileEntryType(long userId, long groupId,
+		long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppLocalService.unsubscribeFileEntryType(userId, groupId,
+			fileEntryTypeId);
 	}
 
 	public void unsubscribeFolder(long userId, long groupId, long folderId)

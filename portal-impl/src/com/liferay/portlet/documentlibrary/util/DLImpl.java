@@ -462,6 +462,22 @@ public class DLImpl implements DL {
 		return sb.toString();
 	}
 
+	public Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId)
+		throws SystemException {
+
+		List<Subscription> subscriptions =
+			SubscriptionLocalServiceUtil.getUserSubscriptions(
+				userId, DLFileEntryType.class.getName());
+
+		Set<Long> classPKs = new HashSet<Long>(subscriptions.size());
+
+		for (Subscription subscription : subscriptions) {
+			classPKs.add(subscription.getClassPK());
+		}
+
+		return classPKs;
+	}
+
 	public String getFileIcon(String extension) {
 		if (!_fileIcons.contains(extension)) {
 			extension = _DEFAULT_FILE_ICON;

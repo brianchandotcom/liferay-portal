@@ -106,6 +106,9 @@ public interface DL {
 	public String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay);
 
+	public Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId)
+		throws SystemException;
+
 	public String getFileIcon(String extension);
 
 	public Set<Long> getFolderSubscriptionClassPKs(long userId)

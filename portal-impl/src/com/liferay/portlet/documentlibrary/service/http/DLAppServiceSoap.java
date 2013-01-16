@@ -2222,6 +2222,18 @@ public class DLAppServiceSoap {
 		}
 	}
 
+	public static void subscribeFileEntryType(long groupId, long fileEntryTypeId)
+		throws RemoteException {
+		try {
+			DLAppServiceUtil.subscribeFileEntryType(groupId, fileEntryTypeId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void subscribeFolder(long groupId, long folderId)
 		throws RemoteException {
 		try {
@@ -2302,6 +2314,18 @@ public class DLAppServiceSoap {
 		try {
 			DLAppServiceUtil.unlockFolder(repositoryId, parentFolderId, name,
 				lockUuid);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void unsubscribeFileEntryType(long groupId,
+		long fileEntryTypeId) throws RemoteException {
+		try {
+			DLAppServiceUtil.unsubscribeFileEntryType(groupId, fileEntryTypeId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

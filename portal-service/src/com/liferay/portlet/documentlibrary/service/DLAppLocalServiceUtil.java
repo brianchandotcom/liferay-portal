@@ -576,10 +576,24 @@ public class DLAppLocalServiceUtil {
 		getService().restoreFileEntryFromTrash(userId, fileEntryId);
 	}
 
+	public static void subscribeFileEntryType(long userId, long groupId,
+		long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().subscribeFileEntryType(userId, groupId, fileEntryTypeId);
+	}
+
 	public static void subscribeFolder(long userId, long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().subscribeFolder(userId, groupId, folderId);
+	}
+
+	public static void unsubscribeFileEntryType(long userId, long groupId,
+		long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsubscribeFileEntryType(userId, groupId, fileEntryTypeId);
 	}
 
 	public static void unsubscribeFolder(long userId, long groupId,

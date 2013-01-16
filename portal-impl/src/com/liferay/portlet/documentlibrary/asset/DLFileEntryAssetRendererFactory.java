@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -104,6 +105,15 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public String getType() {
 		return TYPE;
+	}
+
+	@Override
+	public String getTypeName(Locale locale, boolean hasSubtypes) {
+		if (hasSubtypes) {
+			return LanguageUtil.get(locale, "basic-document");
+		}
+
+		return super.getTypeName(locale, hasSubtypes);
 	}
 
 	@Override

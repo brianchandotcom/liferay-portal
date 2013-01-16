@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -140,6 +141,15 @@ public class JournalArticleAssetRendererFactory
 
 	public String getType() {
 		return TYPE;
+	}
+
+	@Override
+	public String getTypeName(Locale locale, boolean hasSubtypes) {
+		if (hasSubtypes) {
+			return LanguageUtil.get(locale, "basic-web-content");
+		}
+
+		return super.getTypeName(locale, hasSubtypes);
 	}
 
 	@Override

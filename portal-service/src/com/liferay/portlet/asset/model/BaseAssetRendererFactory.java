@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -82,6 +83,10 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 
 	public String getPortletId() {
 		return _portletId;
+	}
+
+	public String getTypeName(Locale locale, boolean hasSubtypes) {
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
 	@SuppressWarnings("unused")

@@ -120,7 +120,7 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 
 				// Type
 
-				row.addText(ResourceActionsUtil.getModelResource(locale, assetEntryClassName));
+				row.addText(assetRendererFactory.getTypeName(locale, false));
 
 				// Modified Date
 
@@ -156,24 +156,33 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 			for (long groupId : groupIds) {
 			%>
 
-				<div class="add-asset-selector">
+				<div class="select-asset-selector">
 					<div class="lfr-meta-actions edit-controls">
-						<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
-
 						<liferay-ui:icon-menu align="left" cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "select" : "select-in-x", new Object[] {(GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)}) %>' showWhenSingleIcon="<%= true %>">
 
 							<%
+							PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
+
+							assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+							assetBrowserURL.setPortletMode(PortletMode.VIEW);
+
+							assetBrowserURL.setParameter("struts_action", "/asset_browser/view");
+							assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
+							assetBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectAsset");
+
 							for (AssetRendererFactory curRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {
-								if (curRendererFactory.isSelectable()) {
-									String taglibURL = "javascript:" + renderResponse.getNamespace() + "selectionForType('" + groupId + "', '" + curRendererFactory.getClassName() + "')";
-								%>
-
-									<liferay-ui:icon
-										message="<%= ResourceActionsUtil.getModelResource(locale, curRendererFactory.getClassName()) %>" src="<%= curRendererFactory.getIconPath(renderRequest) %>" url="<%= taglibURL %>"
-									/>
-
-								<%
+								if (!curRendererFactory.isSelectable()) {
+									continue;
 								}
+
+								assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
+
+								String taglibURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "selectAsset', title: '" + LanguageUtil.format(pageContext, "select-x", curRendererFactory.getTypeName(locale, false)) + "', uri:'" + HtmlUtil.escapeURL(assetBrowserURL.toString()) + "'});";
+							%>
+
+								<liferay-ui:icon message="<%= curRendererFactory.getTypeName(locale, false) %>" src="<%= curRendererFactory.getIconPath(renderRequest) %>" url="<%= taglibURL %>" />
+
+							<%
 							}
 							%>
 
@@ -195,13 +204,3 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 <aui:button-row>
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
 </aui:button-row>
-
-<aui:script>
-	function <portlet:namespace />selectionForType(groupId, type) {
-		document.<portlet:namespace />fm.<portlet:namespace />groupId.value = groupId;
-		document.<portlet:namespace />fm.<portlet:namespace />typeSelection.value = type;
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryOrder.value = -1;
-
-		submitForm(document.<portlet:namespace />fm, '<%= configurationRenderURL.toString() %>');
-	}
-</aui:script>

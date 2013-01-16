@@ -274,12 +274,17 @@
 		margin-bottom: 1em;
 	}
 
-	.lfr-actions.select-existing-selector {
-		margin: 0 0 1em 1em;
-	}
-
 	.asset-subtype {
 		margin-left: 2em;
+	}
+
+	.select-asset-selector {
+		margin: 1em 0;
+		overflow: auto;
+
+		.select-existing-selector {
+			margin: 0;
+		}
 	}
 }
 

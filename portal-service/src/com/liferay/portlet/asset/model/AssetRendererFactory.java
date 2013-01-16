@@ -66,6 +66,8 @@ public interface AssetRendererFactory {
 
 	public String getType();
 
+	public String getTypeName(Locale locale, boolean hasSubtypes);
+
 	public PortletURL getURLAdd(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)

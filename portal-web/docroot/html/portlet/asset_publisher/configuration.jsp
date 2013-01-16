@@ -36,132 +36,125 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 	<aui:input name="groupId" type="hidden" />
-	<aui:input name="assetEntryType" type="hidden" value="<%= typeSelection %>" />
+	<aui:input name="assetEntryType" type="hidden" />
 	<aui:input name="typeSelection" type="hidden" />
 	<aui:input name="assetEntryId" type="hidden" />
 	<aui:input name="assetParentId" type="hidden" />
 	<aui:input name="preferences--assetTitle--" type="hidden" />
 	<aui:input name="assetEntryOrder" type="hidden" value="-1" />
 
-	<c:if test="<%= typeSelection.equals(StringPool.BLANK) %>">
+	<%
+	String rootPortletId = PortletConstants.getRootPortletId(portletResource);
+	%>
 
-		<%
-		String rootPortletId = PortletConstants.getRootPortletId(portletResource);
-		%>
-
-		<c:choose>
-			<c:when test="<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
-				<aui:input name="preferences--selectionStyle--" type="hidden" value="dynamic" />
-			</c:when>
-			<c:otherwise>
-				<aui:select label="asset-selection" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>'>
-					<aui:option label="dynamic" selected='<%= selectionStyle.equals("dynamic") %>'/>
-					<aui:option label="manual" selected='<%= selectionStyle.equals("manual") %>'/>
-				</aui:select>
-			</c:otherwise>
-		</c:choose>
-
-		<liferay-util:buffer var="selectScope">
-			<aui:select label="" name="preferences--defaultScope--" onChange='<%= renderResponse.getNamespace() + "selectScope();" %>'>
-
-				<%
-				long layoutScopeGroupId = 0;
-				%>
-
-				<aui:option label="<%= _getName(themeDisplay, themeDisplay.getScopeGroup(), locale) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getScopeGroupId() == groupIds[0]) %>" value="<%= themeDisplay.getScopeGroupId() %>" />
-
-				<c:if test="<%= layout.hasScopeGroup() %>">
-
-					<%
-					Group layoutScopeGroup = layout.getScopeGroup();
-
-					layoutScopeGroupId = layoutScopeGroup.getGroupId();
-					%>
-
-					<aui:option label="<%= _getName(themeDisplay, layoutScopeGroup, locale) %>" selected="<%= (groupIds.length == 1) && (layoutScopeGroupId == groupIds[0]) %>" value="<%= _getScopeId(layoutScopeGroup, themeDisplay.getScopeGroupId()) %>" />
-				</c:if>
-
-				<aui:option label="<%= _getName(themeDisplay, company.getGroup(), locale) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getCompanyGroupId() == groupIds[0]) %>" value="<%= _getScopeId(company.getGroup(), themeDisplay.getScopeGroupId()) %>" />
-
-				<optgroup label="----------"></optgroup>
-
-				<aui:option cssClass="advanced-options" label='<%= LanguageUtil.get(pageContext,"advanced-options") + "..." %>' selected="<%= (groupIds.length > 1) || ((groupIds.length == 1) && (groupIds[0] != themeDisplay.getScopeGroupId()) && (groupIds[0] != layoutScopeGroupId) && (groupIds[0] != themeDisplay.getCompanyGroupId())) %>" value="<%= false %>" />
+	<c:choose>
+		<c:when test="<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+			<aui:input name="preferences--selectionStyle--" type="hidden" value="dynamic" />
+		</c:when>
+		<c:otherwise>
+			<aui:select label="asset-selection" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>'>
+				<aui:option label="dynamic" selected='<%= selectionStyle.equals("dynamic") %>'/>
+				<aui:option label="manual" selected='<%= selectionStyle.equals("manual") %>'/>
 			</aui:select>
+		</c:otherwise>
+	</c:choose>
+
+	<liferay-util:buffer var="selectScope">
+		<aui:select label="" name="preferences--defaultScope--" onChange='<%= renderResponse.getNamespace() + "selectScope();" %>'>
 
 			<%
-			Set<Group> groups = new HashSet<Group>();
-
-			groups.add(company.getGroup());
-			groups.add(themeDisplay.getScopeGroup());
-
-			for (Layout curLayout : LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), layout.isPrivateLayout())) {
-				if (curLayout.hasScopeGroup()) {
-					groups.add(curLayout.getScopeGroup());
-				}
-			}
-
-			// Left list
-
-			List<KeyValuePair> scopesLeftList = new ArrayList<KeyValuePair>();
-
-			for (long groupId : groupIds) {
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-				scopesLeftList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
-			}
-
-			// Right list
-
-			List<KeyValuePair> scopesRightList = new ArrayList<KeyValuePair>();
-
-			Arrays.sort(groupIds);
-
-			for (Group group : groups) {
-				if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
-					scopesRightList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
-				}
-			}
-
-			scopesRightList = ListUtil.sort(scopesRightList, new KeyValuePairComparator(false, true));
+			long layoutScopeGroupId = 0;
 			%>
 
-			<aui:input name="preferences--scopeIds--" type="hidden" />
+			<aui:option label="<%= _getName(themeDisplay, themeDisplay.getScopeGroup(), locale) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getScopeGroupId() == groupIds[0]) %>" value="<%= themeDisplay.getScopeGroupId() %>" />
 
-			<div class="<%= defaultScope ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />scopesBoxes">
-				<liferay-ui:input-move-boxes
-					leftBoxName="currentScopeIds"
-					leftList="<%= scopesLeftList %>"
-					leftReorder="true"
-					leftTitle="selected"
-					rightBoxName="availableScopeIds"
-					rightList="<%= scopesRightList %>"
-					rightTitle="available"
-				/>
-			</div>
-		</liferay-util:buffer>
+			<c:if test="<%= layout.hasScopeGroup() %>">
+
+				<%
+				Group layoutScopeGroup = layout.getScopeGroup();
+
+				layoutScopeGroupId = layoutScopeGroup.getGroupId();
+				%>
+
+				<aui:option label="<%= _getName(themeDisplay, layoutScopeGroup, locale) %>" selected="<%= (groupIds.length == 1) && (layoutScopeGroupId == groupIds[0]) %>" value="<%= _getScopeId(layoutScopeGroup, themeDisplay.getScopeGroupId()) %>" />
+			</c:if>
+
+			<aui:option label="<%= _getName(themeDisplay, company.getGroup(), locale) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getCompanyGroupId() == groupIds[0]) %>" value="<%= _getScopeId(company.getGroup(), themeDisplay.getScopeGroupId()) %>" />
+
+			<optgroup label="----------"></optgroup>
+
+			<aui:option cssClass="advanced-options" label='<%= LanguageUtil.get(pageContext,"advanced-options") + "..." %>' selected="<%= (groupIds.length > 1) || ((groupIds.length == 1) && (groupIds[0] != themeDisplay.getScopeGroupId()) && (groupIds[0] != layoutScopeGroupId) && (groupIds[0] != themeDisplay.getCompanyGroupId())) %>" value="<%= false %>" />
+		</aui:select>
 
 		<%
-		request.setAttribute("configuration.jsp-classTypesAssetRendererFactories", classTypesAssetRendererFactories);
-		request.setAttribute("configuration.jsp-configurationRenderURL", configurationRenderURL);
-		request.setAttribute("configuration.jsp-redirect", redirect);
-		request.setAttribute("configuration.jsp-rootPortletId", rootPortletId);
-		request.setAttribute("configuration.jsp-selectScope", selectScope);
+		Set<Group> groups = new HashSet<Group>();
+
+		groups.add(company.getGroup());
+		groups.add(themeDisplay.getScopeGroup());
+
+		for (Layout curLayout : LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), layout.isPrivateLayout())) {
+			if (curLayout.hasScopeGroup()) {
+				groups.add(curLayout.getScopeGroup());
+			}
+		}
+
+		// Left list
+
+		List<KeyValuePair> scopesLeftList = new ArrayList<KeyValuePair>();
+
+		for (long groupId : groupIds) {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			scopesLeftList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
+		}
+
+		// Right list
+
+		List<KeyValuePair> scopesRightList = new ArrayList<KeyValuePair>();
+
+		Arrays.sort(groupIds);
+
+		for (Group group : groups) {
+			if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
+				scopesRightList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
+			}
+		}
+
+		scopesRightList = ListUtil.sort(scopesRightList, new KeyValuePairComparator(false, true));
 		%>
 
-		<c:choose>
-			<c:when test='<%= selectionStyle.equals("manual") %>'>
-				<liferay-util:include page="/html/portlet/asset_publisher/configuration_manual.jsp" />
-			</c:when>
-			<c:when test='<%= selectionStyle.equals("dynamic") %>'>
-				<liferay-util:include page="/html/portlet/asset_publisher/configuration_dynamic.jsp" />
-			</c:when>
-		</c:choose>
-	</c:if>
-</aui:form>
+		<aui:input name="preferences--scopeIds--" type="hidden" />
 
-<c:if test="<%= Validator.isNotNull(typeSelection) %>">
-	<%@ include file="/html/portlet/asset_publisher/select_asset.jspf" %>
-</c:if>
+		<div class="<%= defaultScope ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />scopesBoxes">
+			<liferay-ui:input-move-boxes
+				leftBoxName="currentScopeIds"
+				leftList="<%= scopesLeftList %>"
+				leftReorder="true"
+				leftTitle="selected"
+				rightBoxName="availableScopeIds"
+				rightList="<%= scopesRightList %>"
+				rightTitle="available"
+			/>
+		</div>
+	</liferay-util:buffer>
+
+	<%
+	request.setAttribute("configuration.jsp-classTypesAssetRendererFactories", classTypesAssetRendererFactories);
+	request.setAttribute("configuration.jsp-configurationRenderURL", configurationRenderURL);
+	request.setAttribute("configuration.jsp-redirect", redirect);
+	request.setAttribute("configuration.jsp-rootPortletId", rootPortletId);
+	request.setAttribute("configuration.jsp-selectScope", selectScope);
+	%>
+
+	<c:choose>
+		<c:when test='<%= selectionStyle.equals("manual") %>'>
+			<liferay-util:include page="/html/portlet/asset_publisher/configuration_manual.jsp" />
+		</c:when>
+		<c:when test='<%= selectionStyle.equals("dynamic") %>'>
+			<liferay-util:include page="/html/portlet/asset_publisher/configuration_dynamic.jsp" />
+		</c:when>
+	</c:choose>
+</aui:form>
 
 <aui:script>
 	function <portlet:namespace />chooseSelectionStyle() {
@@ -184,10 +177,10 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	function <portlet:namespace />selectAsset(assetEntryId, assetEntryOrder) {
+	function <portlet:namespace />selectAsset(assetEntryId, assetClassName, assetType, assetEntryTitle, groupName) {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-selection';
 		document.<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = assetEntryId;
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
+		document.<portlet:namespace />fm.<portlet:namespace />assetEntryType.value = assetClassName;
 
 		submitForm(document.<portlet:namespace />fm);
 	}

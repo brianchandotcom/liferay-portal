@@ -28,12 +28,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,9 +42,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.sanitizer.SanitizerProcessorUtil;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.calendar.NoSuchEventException;
 import com.liferay.portlet.calendar.model.CalEvent;
@@ -7535,14 +7537,16 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			}
 
 			try {
-				calEvent.setTitle(SanitizerUtil.sanitize(companyId, groupId,
-						userId,
+				calEvent.setTitle(SanitizerProcessorUtil.process(
+						PropsKeys.SANITIZER_IMPL, PropsValues.SANITIZER_IMPL,
+						companyId, groupId, userId,
 						com.liferay.portlet.calendar.model.CalEvent.class.getName(),
 						eventId, ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
 						calEvent.getTitle(), null));
 
-				calEvent.setDescription(SanitizerUtil.sanitize(companyId,
-						groupId, userId,
+				calEvent.setDescription(SanitizerProcessorUtil.process(
+						PropsKeys.SANITIZER_IMPL, PropsValues.SANITIZER_IMPL,
+						companyId, groupId, userId,
 						com.liferay.portlet.calendar.model.CalEvent.class.getName(),
 						eventId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
 						calEvent.getDescription(), null));

@@ -258,11 +258,6 @@
 			<bean class="com.liferay.portal.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.sanitizer.SanitizerUtil" class="com.liferay.portal.kernel.sanitizer.SanitizerUtil">
-		<property name="sanitizer">
-			<bean class="com.liferay.portal.sanitizer.SanitizerImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.search.IndexerRegistryUtil" class="com.liferay.portal.kernel.search.IndexerRegistryUtil">
 		<property name="indexerRegistry">
 			<bean class="com.liferay.portal.search.IndexerRegistryImpl" />

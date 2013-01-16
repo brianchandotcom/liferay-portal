@@ -17,7 +17,6 @@ package com.liferay.portlet.wiki.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.util.MathUtil;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.sanitizer.SanitizerProcessorUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.Portal;
@@ -118,7 +119,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		long pageId = counterLocalService.increment();
 
-		content = SanitizerUtil.sanitize(
+		content = SanitizerProcessorUtil.process(
+			PropsKeys.SANITIZER_IMPL, PropsValues.SANITIZER_IMPL,
 			user.getCompanyId(), node.getGroupId(), userId,
 			WikiPage.class.getName(), pageId, "text/" + format, content);
 
@@ -1351,7 +1353,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			pageId = oldPage.getPageId();
 		}
 
-		content = SanitizerUtil.sanitize(
+		content = SanitizerProcessorUtil.process(
+			PropsKeys.SANITIZER_IMPL, PropsValues.SANITIZER_IMPL,
 			user.getCompanyId(), oldPage.getGroupId(), userId,
 			WikiPage.class.getName(), pageId, "text/" + format, content);
 

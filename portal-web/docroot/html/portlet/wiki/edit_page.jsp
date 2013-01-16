@@ -149,7 +149,7 @@ if (Validator.isNull(redirect)) {
 	}
 
 	try {
-		content = SanitizerUtil.sanitize(themeDisplay.getCompanyId(), scopeGroupId, themeDisplay.getUserId(), WikiPage.class.getName(), 0, "text/" + format, content);
+		content = SanitizerProcessorUtil.process(PropsKeys.SANITIZER_IMPL, PropsValues.SANITIZER_IMPL, themeDisplay.getCompanyId(), scopeGroupId, themeDisplay.getUserId(), WikiPage.class.getName(), 0, "text/" + format, content);
 	}
 	catch (SanitizerException se) {
 		content = StringPool.BLANK;

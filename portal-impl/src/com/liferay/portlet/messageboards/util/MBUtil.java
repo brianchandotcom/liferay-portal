@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -41,6 +42,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.sanitizer.SanitizerProcessorUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -241,11 +243,17 @@ public class MBUtil {
 				collectMultipartContent(mimeMultipart, mbMailMessage);
 			}
 			else if (partContent instanceof String) {
+				String messageBody = SanitizerProcessorUtil.process(
+					PropsKeys.MESSAGE_BOARDS_EMAIL_REPLY_SANITIZERS,
+					PropsValues.MESSAGE_BOARDS_EMAIL_REPLY_SANITIZERS,
+					MBMessage.class.getName(), 0L, contentType,
+					(String)partContent);
+
 				if (contentType.startsWith("text/html")) {
-					mbMailMessage.setHtmlBody((String)partContent);
+					mbMailMessage.setHtmlBody(messageBody);
 				}
 				else {
-					mbMailMessage.setPlainBody((String)partContent);
+					mbMailMessage.setPlainBody(messageBody);
 				}
 			}
 		}

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -66,6 +65,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.sanitizer.SanitizerProcessorUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -3107,8 +3107,10 @@ public class JournalArticleLocalServiceImpl
 					String dynamicContent = dynamicContentElement.getText();
 
 					if (Validator.isNotNull(dynamicContent)) {
-						dynamicContent = SanitizerUtil.sanitize(
-							user.getCompanyId(), groupId, user.getUserId(),
+						dynamicContent = SanitizerProcessorUtil.process(
+							PropsKeys.SANITIZER_IMPL,
+							PropsValues.SANITIZER_IMPL, user.getCompanyId(),
+							groupId, user.getUserId(),
 							JournalArticle.class.getName(), 0,
 							ContentTypes.TEXT_HTML, dynamicContent);
 
@@ -3150,7 +3152,8 @@ public class JournalArticleLocalServiceImpl
 				for (Element staticContentElement : staticContentElements) {
 					String staticContent = staticContentElement.getText();
 
-					staticContent = SanitizerUtil.sanitize(
+					staticContent = SanitizerProcessorUtil.process(
+						PropsKeys.SANITIZER_IMPL, PropsValues.SANITIZER_IMPL,
 						user.getCompanyId(), groupId, user.getUserId(),
 						JournalArticle.class.getName(), 0,
 						ContentTypes.TEXT_HTML, staticContent);

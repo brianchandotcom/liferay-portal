@@ -64,7 +64,8 @@ public class TestSuitesXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		String testSuitePackagePath = StringUtil.replace(
 			testSuiteFilePath, StringPool.SLASH, StringPool.PERIOD);
 
-		Element rootElement = _seleniumFileUtil.getRootElement(fileName);
+		Element rootElement = _seleniumFileUtil.getRootElementByFileName(
+			fileName);
 
 		_seleniumFileUtil.isValidName(fileName, rootElement);
 
@@ -78,7 +79,7 @@ public class TestSuitesXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		sb.append("import com.liferay.portalweb.portal.StopSeleniumTest;\n\n");
 
 		Set<String> testPlanClassNameSet =
-			_seleniumDataUtil.getTestPlanClassNameSet(rootElement);
+			_seleniumDataUtil.getTestPlanClassNameSetByElement(rootElement);
 
 		for (String testPlanClassName : testPlanClassNameSet) {
 			sb.append("import ");
@@ -98,7 +99,8 @@ public class TestSuitesXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		sb.append("TestSuite testSuite = new TestSuite();\n\n");
 
 		List<String> testPlanSimpleClassNameList =
-			_seleniumDataUtil.getTestPlanSimpleClassNameList(rootElement);
+			_seleniumDataUtil.getTestPlanSimpleClassNameListByElement(
+				rootElement);
 
 		for (String testPlanSimpleClassName : testPlanSimpleClassNameList) {
 			sb.append("testSuite.addTest(");

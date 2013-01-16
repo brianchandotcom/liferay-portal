@@ -71,7 +71,8 @@ public class MacrosXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		String macrosPackagePath = StringUtil.replace(
 			macrosFilePath, StringPool.SLASH, StringPool.PERIOD);
 
-		Element rootElement = _seleniumFileUtil.getRootElement(fileName);
+		Element rootElement = _seleniumFileUtil.getRootElementByFileName(
+			fileName);
 
 		_seleniumFileUtil.isValidName(fileName, rootElement);
 

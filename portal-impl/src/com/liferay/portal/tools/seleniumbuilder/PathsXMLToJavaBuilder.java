@@ -58,7 +58,8 @@ public class PathsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		String pathsPackagePath = StringUtil.replace(
 			pathsFilePath, StringPool.SLASH, StringPool.PERIOD);
 
-		Element rootElement = _seleniumFileUtil.getRootElement(fileName);
+		Element rootElement = _seleniumFileUtil.getRootElementByFileName(
+			fileName);
 
 		StringBundler sb = new StringBundler();
 

@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -28,7 +28,7 @@ import java.util.Set;
 public class TestPlansJavaBuilder extends BaseJavaBuilder {
 
 	public TestPlansJavaBuilder(Map<String, Object> context) throws Exception {
-		super(context);
+		super();
 
 		_basedir = (String)context.get("basedir");
 		_seleniumDataUtil = new SeleniumDataUtil(context);
@@ -43,14 +43,15 @@ public class TestPlansJavaBuilder extends BaseJavaBuilder {
 
 		int x = directoryName.lastIndexOf(StringPool.SLASH);
 
-		String testPlanFilePath = directoryName;
-		String testPlanName = StringUtil.upperCaseFirstLetter(
-			directoryName.substring(x + 1)) + "TestPlan";
+		String objectName = StringUtil.upperCaseFirstLetter(
+			directoryName.substring(x + 1));
+		String testPackagePath = StringUtil.replace(
+			directoryName, StringPool.SLASH, StringPool.PERIOD);
+
+		String testPlanSimpleClassName = objectName + "TestPlan";
 
 		String testPlanFileName =
-			testPlanFilePath + "/" + testPlanName + ".java";
-		String testPackagePath = StringUtil.replace(
-			testPlanFilePath, StringPool.SLASH, StringPool.PERIOD);
+			directoryName + "/" + testPlanSimpleClassName + ".java";
 
 		StringBundler sb = new StringBundler();
 
@@ -63,16 +64,17 @@ public class TestPlansJavaBuilder extends BaseJavaBuilder {
 		sb.append("import junit.framework.Test;\n");
 		sb.append("import junit.framework.TestSuite;\n");
 
-		sb.append("public class " + testPlanName);
+		sb.append("public class " + testPlanSimpleClassName);
 		sb.append(" extends BaseTestSuite {\n");
 
 		sb.append("public static Test suite() {\n");
 		sb.append("TestSuite testSuite = new TestSuite();\n\n");
 
-		Set<String> testCaseSimpleClassNameSet =
-			_seleniumDataUtil.getTestCaseSimpleClassNames(directoryName);
+		List<String> testCaseSimpleClassNameList =
+			_seleniumDataUtil.getTestCaseSimpleClassNameListByDirectory(
+				directoryName);
 
-		for (String testCaseSimpleClassName : testCaseSimpleClassNameSet) {
+		for (String testCaseSimpleClassName : testCaseSimpleClassNameList) {
 			sb.append("testSuite.addTestSuite(");
 			sb.append(testCaseSimpleClassName);
 			sb.append(".class);");

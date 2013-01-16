@@ -55,12 +55,16 @@ public class SeleniumBuilder {
 
 		String type = (String)cmdLineParser.getOptionValue(typeOption);
 
+		List<String> fileTypes = Arrays.asList(type.split(","));
+
 		_basedir = (String)cmdLineParser.getOptionValue(basedirOption);
 
 		_seleniumFileUtil = new SeleniumFileUtil(_basedir);
 
 		_fileNameSet = _initFileNameSet();
+		_seleniumParameterNumberMap = _initSeleniumParameterNumberMap();
 
+		_classNameSetAvailable = _initClassNameSetAvailable();
 		_fileNameSetActions = _initFileNameSetActions();
 		_fileNameSetFunctions = _initFileNameSetFunctions();
 		_fileNameSetMacros = _initFileNameSetMacros();
@@ -68,11 +72,9 @@ public class SeleniumBuilder {
 		_fileNameSetTestCases = _initFileNameSetTestCases();
 		_fileNameSetTestSuites = _initFileNameSetTestSuites();
 
-		_classNameSetAvailable = _initClassNameSetAvailable();
 		_directoryNameSet = _initDirectoryNameSet();
-		_functionParamsMap = _initFunctionParamsMap();
+		_functionParameterNumberMap = _initFunctionParameterNumberMap();
 		_functionReturnTypeMap = _initFunctionReturnTypeMap();
-		_seleniumParamsMap = _initSeleniumParamsMap();
 
 		_context = _initContext();
 
@@ -93,16 +95,9 @@ public class SeleniumBuilder {
 		TestSuitesXMLToJavaBuilder testSuitesXMLToJavaBuilder =
 			new TestSuitesXMLToJavaBuilder(_context);
 
-		List<String> fileTypes = Arrays.asList(type.split(","));
-
 		for (String fileName : _fileNameSet) {
-			if (fileName.endsWith(".case") &&
-				fileTypes.contains("test-cases")) {
-
-				testCasesXMLToJavaBuilder.generateTestCase(fileName);
-			}
-			else if (fileName.endsWith(".functions") &&
-					 fileTypes.contains("functions")) {
+			if (fileName.endsWith(".functions") &&
+				fileTypes.contains("functions")) {
 
 				functionsXMLToJavaBuilder.generateFunctions(fileName);
 			}
@@ -120,15 +115,20 @@ public class SeleniumBuilder {
 					pathsXMLToJavaBuilder.generatePaths(fileName);
 				}
 			}
-			else if (fileName.endsWith(".suite") &&
-					 fileTypes.contains("test-suites")) {
+			else if (fileName.endsWith(".testcase") &&
+					 fileTypes.contains("testcases")) {
+
+				testCasesXMLToJavaBuilder.generateTestCase(fileName);
+			}
+			else if (fileName.endsWith(".testsuite") &&
+					 fileTypes.contains("testsuites")) {
 
 				testSuitesXMLToJavaBuilder.generateTestSuite(fileName);
 			}
 		}
 
 		for (String directoryName : _directoryNameSet) {
-			if (fileTypes.contains("test-plans")) {
+			if (fileTypes.contains("testplans")) {
 				testPlansJavaBuilder.generateTestPlan(directoryName);
 			}
 		}
@@ -186,9 +186,10 @@ public class SeleniumBuilder {
 		hashMap.put("fileNameSetMacros", _fileNameSetMacros);
 		hashMap.put("fileNameSetPaths", _fileNameSetPaths);
 		hashMap.put("fileNameSetTestCases", _fileNameSetTestCases);
-		hashMap.put("functionParamsMap", _functionParamsMap);
+		hashMap.put("fileNameSetTestSuite", _fileNameSetTestSuites);
+		hashMap.put("functionParameterNumberMap", _functionParameterNumberMap);
 		hashMap.put("functionReturnTypeMap", _functionReturnTypeMap);
-		hashMap.put("seleniumParamsMap", _seleniumParamsMap);
+		hashMap.put("seleniumParameterNumberMap", _seleniumParameterNumberMap);
 
 		return hashMap;
 	}
@@ -211,9 +212,10 @@ public class SeleniumBuilder {
 		directoryScanner.setBasedir(_basedir);
 		directoryScanner.setIncludes(
 			new String[] {
-				"**\\portalweb\\**\\*.actions", "**\\portalweb\\**\\*.case",
+				"**\\portalweb\\**\\*.actions",
 				"**\\portalweb\\**\\*.functions", "**\\portalweb\\**\\*.macros",
-				"**\\portalweb\\**\\*.paths", "**\\portalweb\\**\\*.suite"
+				"**\\portalweb\\**\\*.paths", "**\\portalweb\\**\\*.testcase",
+				"**\\portalweb\\**\\*.testsuite"
 			});
 
 		directoryScanner.scan();
@@ -246,11 +248,11 @@ public class SeleniumBuilder {
 	}
 
 	private Set<String> _initFileNameSetTestCases() throws Exception {
-		return _initFileNameSetType(".case");
+		return _initFileNameSetType(".testcase");
 	}
 
 	private Set<String> _initFileNameSetTestSuites() throws Exception {
-		return _initFileNameSetType(".suite");
+		return _initFileNameSetType(".testsuite");
 	}
 
 	private Set<String> _initFileNameSetType(String suffix) throws Exception {
@@ -265,11 +267,14 @@ public class SeleniumBuilder {
 		return fileNameTypeSet;
 	}
 
-	private Map<String, Integer> _initFunctionParamsMap() throws Exception {
+	private Map<String, Integer> _initFunctionParameterNumberMap()
+		throws Exception {
+
 		Map<String, Integer> hashMap = new HashMap<String, Integer>();
 
 		for (String fileName : _fileNameSetFunctions) {
-			Element functions = _seleniumFileUtil.getRootElement(fileName);
+			Element functions = _seleniumFileUtil.getRootElementByFileName(
+				fileName);
 
 			String functionsObject = functions.attributeValue("object");
 			String functionsParams = functions.attributeValue("params");
@@ -291,7 +296,8 @@ public class SeleniumBuilder {
 		Map<String, String> hashMap = new HashMap<String, String>();
 
 		for (String fileName : _fileNameSetFunctions) {
-			Element functions = _seleniumFileUtil.getRootElement(fileName);
+			Element functions = _seleniumFileUtil.getRootElementByFileName(
+				fileName);
 
 			String functionsObject = functions.attributeValue("object");
 			String functionsReturn = functions.attributeValue("return");
@@ -307,14 +313,16 @@ public class SeleniumBuilder {
 		return hashMap;
 	}
 
-	private Map<String, Integer> _initSeleniumParamsMap() throws Exception {
+	private Map<String, Integer> _initSeleniumParameterNumberMap()
+		throws Exception {
+
 		Map<String, Integer> hashMap = new HashMap<String, Integer>();
 
-		hashMap = _putSeleniumParamsMapFile(
+		hashMap = _putSeleniumParameterNumberMapFile(
 			hashMap, "com/liferay/portalweb/portal/util/liferayselenium/" +
 				"SeleniumWrapper.java");
 
-		hashMap = _putSeleniumParamsMapFile(
+		hashMap = _putSeleniumParameterNumberMapFile(
 			hashMap, "com/liferay/portalweb/portal/util/liferayselenium/" +
 				"LiferaySelenium.java");
 
@@ -326,7 +334,7 @@ public class SeleniumBuilder {
 		return hashMap;
 	}
 
-	private Map<String, Integer> _putSeleniumParamsMapFile(
+	private Map<String, Integer> _putSeleniumParameterNumberMapFile(
 		Map<String, Integer> hashMap, String file) throws Exception {
 
 		String content = _seleniumFileUtil.getNormalizedContent(file);
@@ -384,9 +392,9 @@ public class SeleniumBuilder {
 	private Set<String> _fileNameSetPaths;
 	private Set<String> _fileNameSetTestCases;
 	private Set<String> _fileNameSetTestSuites;
-	private Map<String, Integer> _functionParamsMap;
+	private Map<String, Integer> _functionParameterNumberMap;
 	private Map<String, String> _functionReturnTypeMap;
 	private SeleniumFileUtil _seleniumFileUtil;
-	private Map<String, Integer> _seleniumParamsMap;
+	private Map<String, Integer> _seleniumParameterNumberMap;
 
 }

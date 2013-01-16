@@ -37,7 +37,7 @@ public class SeleniumDataUtil {
 			"fileNameSetTestCases");
 	}
 
-	public Set<String> addClassName(
+	public Set<String> addSimpleClassNameToClassNameSet(
 		Set<String> classNameSet, String simpleClassName) throws Exception {
 
 		for (String className : _classNameSetAvailable) {
@@ -56,7 +56,8 @@ public class SeleniumDataUtil {
 			element);
 
 		for (String childSimpleClassName : childSimpleClassNameSet) {
-			classNameSet = addClassName(classNameSet, childSimpleClassName);
+			classNameSet = addSimpleClassNameToClassNameSet(
+				classNameSet, childSimpleClassName);
 		}
 
 		return classNameSet;
@@ -65,11 +66,11 @@ public class SeleniumDataUtil {
 	public Set<String> getChildSimpleClassNameSet(Element element)
 		throws Exception {
 
-		return _getChildSimpleClassNameSet(element, new TreeSet<String>());
+		return _getChildSimpleClassNameSet(new TreeSet<String>(), element);
 	}
 
-	public String getFileNameByElement(Element command) throws Exception {
-		Element rootElement = getRootElementByElement(command);
+	public String getFileNameByElement(Element element) throws Exception {
+		Element rootElement = getRootElementByElement(element);
 
 		String rootElementName = rootElement.getName();
 		String objectName = "";
@@ -92,14 +93,14 @@ public class SeleniumDataUtil {
 		return "";
 	}
 
-	public List<String> getFunctionSuffixList(int params) throws Exception {
+	public List<String> getNumberListByInteger(int integer) throws Exception {
 		List<String> arrayList = new ArrayList<String>();
 
-		if (params == 0 || params == 1) {
+		if ((integer == 0) || (integer == 1)) {
 			arrayList.add("");
 		}
 		else {
-			for (int i = 1; i <= params; i++) {
+			for (int i = 1; i <= integer; i++) {
 				arrayList.add(String.valueOf(i));
 			}
 		}
@@ -116,10 +117,10 @@ public class SeleniumDataUtil {
 		}
 	}
 
-	public Set<String> getTestCaseSimpleClassNames(String directoryName)
-		throws Exception {
+	public List<String> getTestCaseSimpleClassNameListByDirectory(
+		String directoryName) throws Exception {
 
-		Set<String> treeSet = new TreeSet<String>();
+		List<String> arrayList = new ArrayList<String>();
 
 		for (String fileName : _fileNameSetTestCases) {
 			if (fileName.startsWith(directoryName)) {
@@ -129,17 +130,17 @@ public class SeleniumDataUtil {
 				String testCaseSimpleClassName =
 					fileName.substring(x + 1, y) + "TestCase";
 
-				treeSet.add(testCaseSimpleClassName);
+				arrayList.add(testCaseSimpleClassName);
 			}
 		}
 
-		return treeSet;
+		return arrayList;
 	}
 
-	public Set<String> getTestPlanClassNameSet(Element element) {
+	public Set<String> getTestPlanClassNameSetByElement(Element testSuite) {
 		Set<String> treeSet = new TreeSet<String>();
 
-		List<Element> testPlanList = element.elements("testplan");
+		List<Element> testPlanList = testSuite.elements("testplan");
 
 		for (Element testPlan : testPlanList) {
 			String testPlaneClassName = testPlan.attributeValue("class");
@@ -150,10 +151,12 @@ public class SeleniumDataUtil {
 		return treeSet;
 	}
 
-	public List<String> getTestPlanSimpleClassNameList(Element element) {
+	public List<String> getTestPlanSimpleClassNameListByElement(
+		Element testSuite) {
+
 		List<String> arrayList = new ArrayList<String>();
 
-		List<Element> testPlanList = element.elements("testplan");
+		List<Element> testPlanList = testSuite.elements("testplan");
 
 		for (Element testPlan : testPlanList) {
 			String testPlaneClassName = testPlan.attributeValue("class");
@@ -167,7 +170,7 @@ public class SeleniumDataUtil {
 	}
 
 	private Set<String> _getChildSimpleClassNameSet(
-		Element element, Set<String> simpleClassNameSet) {
+		Set<String> simpleClassNameSet, Element element) {
 
 		List<Element> children = element.elements();
 
@@ -193,7 +196,7 @@ public class SeleniumDataUtil {
 					}
 				}
 
-				_getChildSimpleClassNameSet(child, simpleClassNameSet);
+				_getChildSimpleClassNameSet(simpleClassNameSet, child);
 			}
 		}
 

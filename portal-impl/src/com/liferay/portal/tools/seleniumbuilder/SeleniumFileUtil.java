@@ -48,7 +48,7 @@ public class SeleniumFileUtil {
 		return content;
 	}
 
-	public Element getRootElement(String fileName) throws Exception {
+	public Element getRootElementByFileName(String fileName) throws Exception {
 		String content = getNormalizedContent(fileName);
 
 		Document document = SAXReaderUtil.read(content, true);
@@ -65,7 +65,7 @@ public class SeleniumFileUtil {
 		String objectName = "";
 		String objectFileName = fileName.substring(x + 1, y);
 
-		if (fileName.endsWith(".case") || fileName.endsWith(".suite")) {
+		if (fileName.endsWith(".testcase") || fileName.endsWith(".testsuite")) {
 			objectName = rootElement.attributeValue("name");
 		}
 		else {

@@ -37,8 +37,8 @@ public class FunctionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		super(context);
 
 		_basedir = (String)context.get("basedir");
-		_functionParamsMap = (Map<String, Integer>)context.get(
-			"functionParamsMap");
+		_functionParameterNumberMap = (Map<String, Integer>)context.get(
+			"functionParameterNumberMap");
 		_functionReturnTypeMap = (Map<String, String>)context.get(
 			"functionReturnTypeMap");
 		_seleniumDataUtil = new SeleniumDataUtil(context);
@@ -76,7 +76,8 @@ public class FunctionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		String functionsPackagePath = StringUtil.replace(
 			functionsFilePath, StringPool.SLASH, StringPool.PERIOD);
 
-		Element rootElement = _seleniumFileUtil.getRootElement(fileName);
+		Element rootElement = _seleniumFileUtil.getRootElementByFileName(
+			fileName);
 
 		_seleniumFileUtil.isValidName(fileName, rootElement);
 
@@ -113,9 +114,10 @@ public class FunctionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 
 		List<Element> functionDefs = functions.elements("functiondef");
 
-		String functionsObject = functions.attributeValue("object");
+		String functionObjectName = functions.attributeValue("object");
 
-		String functionReturnType = _functionReturnTypeMap.get(functionsObject);
+		String functionReturnType = _functionReturnTypeMap.get(
+			functionObjectName);
 
 		for (Element functionDef : functionDefs) {
 			String functionDefCommand = functionDef.attributeValue("command");
@@ -126,10 +128,11 @@ public class FunctionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 
 			sb.append(functionDefCommand);
 
-			int functionParams = _functionParamsMap.get(functionsObject);
+			int functionParams = _functionParameterNumberMap.get(
+				functionObjectName);
 
 			List<String> functionSuffixList =
-				_seleniumDataUtil.getFunctionSuffixList(functionParams);
+				_seleniumDataUtil.getNumberListByInteger(functionParams);
 
 			String paramList = "";
 
@@ -161,7 +164,7 @@ public class FunctionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 	}
 
 	private String _basedir;
-	private Map<String, Integer> _functionParamsMap;
+	private Map<String, Integer> _functionParameterNumberMap;
 	private Map<String, String> _functionReturnTypeMap;
 	private SeleniumDataUtil _seleniumDataUtil;
 	private SeleniumFileUtil _seleniumFileUtil;

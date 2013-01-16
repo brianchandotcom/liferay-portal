@@ -16,14 +16,12 @@ package com.liferay.portal.tools.seleniumbuilder;
 
 import com.liferay.portal.util.InitUtil;
 
-import java.util.Map;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class BaseJavaBuilder {
 
-	public BaseJavaBuilder(Map<String, Object> context) throws Exception {
+	public BaseJavaBuilder() throws Exception {
 		InitUtil.initWithSpring();
 	}
 

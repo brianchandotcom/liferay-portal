@@ -69,7 +69,8 @@ public class TestCasesXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		String testCasePackagePath = StringUtil.replace(
 			testCaseFilePath, StringPool.SLASH, StringPool.PERIOD);
 
-		Element rootElement = _seleniumFileUtil.getRootElement(fileName);
+		Element rootElement = _seleniumFileUtil.getRootElementByFileName(
+			fileName);
 
 		Element setupBlock = rootElement.element("setup");
 		Element stepsBlock = rootElement.element("steps");
@@ -138,7 +139,7 @@ public class TestCasesXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		Set<String> classNameImportSet = _seleniumDataUtil.getChildClassNameSet(
 			rootElement);
 
-		classNameImportSet = _seleniumDataUtil.addClassName(
+		classNameImportSet = _seleniumDataUtil.addSimpleClassNameToClassNameSet(
 			classNameImportSet, "SignInUserMacros");
 
 		for (String className : classNameImportSet) {

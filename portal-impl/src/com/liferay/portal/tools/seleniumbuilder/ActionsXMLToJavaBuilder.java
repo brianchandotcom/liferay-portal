@@ -38,8 +38,8 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		super(context);
 
 		_basedir = (String)context.get("basedir");
-		_functionParamsMap = (Map<String, Integer>)context.get(
-			"functionParamsMap");
+		_functionParameterNumberMap = (Map<String, Integer>)context.get(
+			"functionParameterNumberMap");
 		_functionReturnTypeMap = (Map<String, String>)context.get(
 			"functionReturnTypeMap");
 		_seleniumDataUtil = new SeleniumDataUtil(context);
@@ -80,7 +80,8 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		Element rootElement = null;
 
 		if (FileUtil.exists(_basedir + "/" + actionsXMLFileName)) {
-			rootElement = _seleniumFileUtil.getRootElement(actionsXMLFileName);
+			rootElement = _seleniumFileUtil.getRootElementByFileName(
+				actionsXMLFileName);
 
 			_seleniumFileUtil.isValidName(actionsXMLFileName, rootElement);
 		}
@@ -133,7 +134,7 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		_seleniumFileUtil.writeFile(actionsFileName, sb.toString(), true);
 	}
 
-	private String _combineConditionals(
+	private String _combineConditionalsFromList(
 		List<String> conditionalList, String delimiter) {
 
 		boolean isFirstConditional = true;
@@ -171,7 +172,7 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		for (Element conditional : conditionals) {
 			boolean isDefaultConditional = _isDefaultConditional(conditional);
 
-			if (isFirstConditional && isDefaultConditional) {
+			if (isDefaultConditional && isFirstConditional) {
 				hasDefaultConditional = true;
 				isFirstConditional = false;
 
@@ -206,7 +207,7 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 
 		if (!hasDefaultConditional) {
 			sb.append("else {");
-			sb.append(_writeCommandSuper(actionDef));
+			sb.append(_processCommandSuper(actionDef));
 			sb.append("}");
 		}
 
@@ -232,14 +233,15 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 			sb.append(" ");
 			sb.append(actionDefCommand);
 
-			int functionParams = _functionParamsMap.get(functionObjectName);
+			int functionParamNumber = _functionParameterNumberMap.get(
+				functionObjectName);
 
-			List<String> functionSuffixList =
-				_seleniumDataUtil.getFunctionSuffixList(functionParams);
+			List<String> functionNumberSuffixList =
+				_seleniumDataUtil.getNumberListByInteger(functionParamNumber);
 
 			String paramList = "";
 
-			for (String suffix : functionSuffixList) {
+			for (String suffix : functionNumberSuffixList) {
 				String paramPair = "String target, String value, ";
 
 				paramPair = StringUtil.replace(
@@ -256,7 +258,7 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 			sb.append(paramList);
 			sb.append(") throws Exception {\n");
 
-			for (String suffix : functionSuffixList) {
+			for (String suffix : functionNumberSuffixList) {
 				String paramsDeclaration =
 					"String[] params = ActionsUtil.getParams(paths, target, " +
 						"value);\n";
@@ -283,71 +285,7 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String _processConditional(Element conditional) throws Exception {
-		List<String> clauseList = new ArrayList<String>();
-
-		String contains = conditional.attributeValue("contains");
-
-		if (!(contains == null) && !contains.equals("")) {
-			StringBundler sbConditional = new StringBundler();
-
-			sbConditional.append("params[0].contains(\"");
-			sbConditional.append(contains);
-			sbConditional.append("\")");
-
-			clauseList.add(sbConditional.toString());
-		}
-
-		String elements = conditional.attributeValue("elements");
-
-		if (!(elements == null) && !elements.equals("")) {
-			StringBundler sbConditional = new StringBundler();
-
-			String[] elementArray = elements.split(",");
-
-			List<String> elementList = new ArrayList<String>();
-
-			for (String element : elementArray) {
-				elementList.add("target.equals(\"" + element + "\")");
-			}
-
-			sbConditional.append("(");
-			sbConditional.append(_combineConditionals(elementList, "||"));
-			sbConditional.append(")");
-
-			clauseList.add(sbConditional.toString());
-		}
-
-		String isselenium = conditional.attributeValue("isselenium");
-
-		if (!(isselenium == null) && isselenium.equals("true")) {
-			StringBundler sbConditional = new StringBundler();
-
-			sbConditional.append("ActionsUtil.isSelenium()");
-
-			clauseList.add(sbConditional.toString());
-		}
-
-		String startswith = conditional.attributeValue("startswith");
-
-		if (!(startswith == null) && !startswith.equals("")) {
-			StringBundler sbConditional = new StringBundler();
-
-			sbConditional.append("params[0].startsWith(\"");
-			sbConditional.append(startswith);
-			sbConditional.append("\")");
-
-			clauseList.add(sbConditional.toString());
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(_combineConditionals(clauseList, "&&"));
-
-		return sb.toString();
-	}
-
-	private String _writeCommandSuper(Element actionDef) throws Exception {
+	private String _processCommandSuper(Element actionDef) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		String actionDefCommand = actionDef.attributeValue("command");
@@ -365,14 +303,15 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		sb.append("super.");
 		sb.append(actionDefCommand);
 
-		Integer functionParams = _functionParamsMap.get(functionObjectName);
+		int functionParamNumber = _functionParameterNumberMap.get(
+			functionObjectName);
 
-		List<String> functionSuffixList =
-			_seleniumDataUtil.getFunctionSuffixList(functionParams);
+		List<String> functionNumberSuffixList =
+			_seleniumDataUtil.getNumberListByInteger(functionParamNumber);
 
 		String paramList = "";
 
-		for (String suffix : functionSuffixList) {
+		for (String suffix : functionNumberSuffixList) {
 			String paramPair = "params[0], params[1], ";
 
 			paramPair = StringUtil.replace(
@@ -390,8 +329,68 @@ public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
 		return sb.toString();
 	}
 
+	private String _processConditional(Element conditional) throws Exception {
+		List<String> clauseList = new ArrayList<String>();
+
+		String contains = conditional.attributeValue("contains");
+
+		if (!(contains == null) && !contains.equals("")) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("params[0].contains(\"");
+			sb.append(contains);
+			sb.append("\")");
+
+			clauseList.add(sb.toString());
+		}
+
+		String elements = conditional.attributeValue("elements");
+
+		if (!(elements == null) && !elements.equals("")) {
+			StringBundler sb = new StringBundler();
+
+			String[] elementArray = elements.split(",");
+
+			List<String> elementList = new ArrayList<String>();
+
+			for (String element : elementArray) {
+				elementList.add("target.equals(\"" + element + "\")");
+			}
+
+			sb.append("(");
+			sb.append(_combineConditionalsFromList(elementList, "||"));
+			sb.append(")");
+
+			clauseList.add(sb.toString());
+		}
+
+		String isselenium = conditional.attributeValue("isselenium");
+
+		if (!(isselenium == null) && isselenium.equals("true")) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("ActionsUtil.isSelenium()");
+
+			clauseList.add(sb.toString());
+		}
+
+		String startswith = conditional.attributeValue("startswith");
+
+		if (!(startswith == null) && !startswith.equals("")) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("params[0].startsWith(\"");
+			sb.append(startswith);
+			sb.append("\")");
+
+			clauseList.add(sb.toString());
+		}
+
+		return _combineConditionalsFromList(clauseList, "&&");
+	}
+
 	private String _basedir;
-	private Map<String, Integer> _functionParamsMap;
+	private Map<String, Integer> _functionParameterNumberMap;
 	private Map<String, String> _functionReturnTypeMap;
 	private SeleniumDataUtil _seleniumDataUtil;
 	private SeleniumFileUtil _seleniumFileUtil;

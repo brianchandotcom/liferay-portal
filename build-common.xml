@@ -39,10 +39,23 @@
 
 	<property name="liferay.home" value="${app.server.parent.dir}" />
 
+	<property name="module.framework.base.dir" value="${liferay.home}/data/osgi" />
+	<property name="module.framework.core.dir" value="${module.framework.base.dir}/core" />
+	<property name="module.framework.lib.dir" value="${module.framework.base.dir}/lib" />
+
 	<path id="lib.classpath">
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+
+		<!--
+			 All other libs should take precedence over these, explicitely
+			 excluding the jars under:
+
+			   ${project.dir}/osgi/lib/${module.framework.implementation}/
+		  -->
+
+		<fileset dir="${project.dir}/osgi/lib" includes="*.jar" />
 	</path>
 
 	<path id="project.classpath">

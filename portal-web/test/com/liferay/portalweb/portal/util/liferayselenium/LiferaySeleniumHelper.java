@@ -104,7 +104,15 @@ public class LiferaySeleniumHelper {
 	public static void assertNotText(
 		LiferaySelenium liferaySelenium, String locator, String pattern) {
 
-		BaseTestCase.assertNotEquals(pattern, liferaySelenium.getText(locator));
+		liferaySelenium.assertElementPresent(locator);
+
+		if (liferaySelenium.isText(locator, pattern)) {
+			String text = liferaySelenium.getText(locator);
+
+			BaseTestCase.fail(
+				"Expected \"" + pattern + "\" to not match \"" + text +
+					"\" found at \"" + locator + "\"");
+		}
 	}
 
 	public static void assertNotValue(
@@ -137,7 +145,15 @@ public class LiferaySeleniumHelper {
 	public static void assertText(
 		LiferaySelenium liferaySelenium, String locator, String pattern) {
 
-		BaseTestCase.assertEquals(pattern, liferaySelenium.getText(locator));
+		liferaySelenium.assertElementPresent(locator);
+
+		if (liferaySelenium.isNotText(locator, pattern)) {
+			String text = liferaySelenium.getText(locator);
+
+			BaseTestCase.fail(
+				"Expected \"" + pattern + "\" to match \"" + text +
+					"\" found at \"" + locator + "\"");
+		}
 	}
 
 	public static void assertTextNotPresent(
@@ -203,10 +219,38 @@ public class LiferaySeleniumHelper {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
 	}
 
+	public static boolean isNotText(
+		LiferaySelenium liferaySelenium, String locator, String value) {
+
+		if (liferaySelenium.isElementNotPresent(locator)) {
+			return false;
+		}
+		else {
+			liferaySelenium.setTimeoutImplicit("1");
+
+			boolean isNotText = !value.equals(liferaySelenium.getText(locator));
+
+			liferaySelenium.setDefaultTimeoutImplicit();
+
+			return isNotText;
+		}
+	}
+
 	public static boolean isText(
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
-		return value.equals(liferaySelenium.getText(locator));
+		if (liferaySelenium.isElementNotPresent(locator)) {
+			return false;
+		}
+		else {
+			liferaySelenium.setTimeoutImplicit("1");
+
+			boolean isText = value.equals(liferaySelenium.getText(locator));
+
+			liferaySelenium.setDefaultTimeoutImplicit();
+
+			return isText;
+		}
 	}
 
 	public static void pause(String waitTime) throws Exception {
@@ -336,11 +380,11 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail("Timeout");
+				liferaySelenium.assertNotText(locator, value);
 			}
 
 			try {
-				if (!value.equals(liferaySelenium.getText(locator))) {
+				if (liferaySelenium.isNotText(locator, value)) {
 					break;
 				}
 			}
@@ -451,11 +495,11 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail("Timeout");
+				liferaySelenium.assertText(locator, value);
 			}
 
 			try {
-				if (value.equals(liferaySelenium.getText(locator))) {
+				if (liferaySelenium.isText(locator, value)) {
 					break;
 				}
 			}

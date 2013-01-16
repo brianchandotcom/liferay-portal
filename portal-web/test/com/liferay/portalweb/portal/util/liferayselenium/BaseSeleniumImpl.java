@@ -191,6 +191,10 @@ public abstract class BaseSeleniumImpl
 		return !isElementPresent(locator);
 	}
 
+	public boolean isNotText(String locator, String value) {
+		return LiferaySeleniumHelper.isNotText(this, locator, value);
+	}
+
 	public boolean isPartialText(String locator, String value) {
 		value = RuntimeVariables.replace(value);
 

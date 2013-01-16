@@ -93,6 +93,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isElementNotPresent(String locator);
 
+	public boolean isNotText(String locator, String value);
+
 	public boolean isPartialText(String locator, String value);
 
 	public boolean isText(String locator, String value);

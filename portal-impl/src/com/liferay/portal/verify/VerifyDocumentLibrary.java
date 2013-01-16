@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -34,14 +35,17 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryActionableDynamicQuery;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionActionableDynamicQuery;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
@@ -334,7 +338,8 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		checkMimeTypes();
 		checkTitles();
 		removeOrphanedDLFileEntries();
-		updateAssets();
+		updateFileEntryAssets();
+		updateFolderAssets();
 	}
 
 	protected void removeOrphanedDLFileEntries() throws Exception {
@@ -367,7 +372,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		}
 	}
 
-	protected void updateAssets() throws Exception {
+	protected void updateFileEntryAssets() throws Exception {
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getNoAssetFileEntries();
 
@@ -399,6 +404,35 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Assets verified for file entries");
+		}
+	}
+
+	protected void updateFolderAssets() throws Exception {
+		List<DLFolder> dlFolders = DLFolderLocalServiceUtil.getNoAssetFolders();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Processing " + dlFolders.size() + " folders with no asset");
+		}
+
+		for (DLFolder dlFolder : dlFolders) {
+			Folder folder = new LiferayFolder(dlFolder);
+
+			try {
+				DLAppHelperLocalServiceUtil.updateAsset(
+					dlFolder.getUserId(), folder, null, null, null);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to update asset for folder " +
+							dlFolder.getFolderId() + ": " + e.getMessage());
+				}
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Assets verified for folders");
 		}
 	}
 

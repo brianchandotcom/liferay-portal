@@ -229,7 +229,8 @@
 		<icon>/html/icons/document_library.png</icon>
 		<struts-path>document_library</struts-path>
 		<configuration-action-class>com.liferay.portlet.documentlibrary.action.ConfigurationActionImpl</configuration-action-class>
-		<indexer-class>com.liferay.portlet.documentlibrary.util.DLIndexer</indexer-class>
+		<indexer-class>com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer</indexer-class>
+		<indexer-class>com.liferay.portlet.documentlibrary.util.DLFolderIndexer</indexer-class>
 		<open-search-class>com.liferay.portlet.documentlibrary.util.DLOpenSearchImpl</open-search-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl</portlet-data-handler-class>
@@ -239,6 +240,7 @@
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>12.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory</asset-renderer-factory>
+		<asset-renderer-factory>com.liferay.portlet.documentlibrary.asset.DLFolderAssetRendererFactory</asset-renderer-factory>
 		<atom-collection-adapter>com.liferay.portlet.documentlibrary.atom.FileEntryAtomCollectionAdapter</atom-collection-adapter>
 		<atom-collection-adapter>com.liferay.portlet.documentlibrary.atom.FolderAtomCollectionAdapter</atom-collection-adapter>
 		<custom-attributes-display>com.liferay.portlet.documentlibrary.DLFileEntryCustomAttributesDisplay</custom-attributes-display>

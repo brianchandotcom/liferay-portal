@@ -30,6 +30,7 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -57,6 +58,9 @@ public class DLFolderFinderImpl
 
 	public static final String COUNT_FS_BY_G_F_A_S =
 		DLFolderFinder.class.getName() + ".countFS_ByG_F_A_S";
+
+	public static final String FIND_BY_NO_ASSETS =
+		DLFolderFinder.class.getName() + ".findByNoAssets";
 
 	public static final String FIND_F_BY_G_M_F =
 		DLFolderFinder.class.getName() + ".findF_ByG_M_F";
@@ -153,6 +157,28 @@ public class DLFolderFinderImpl
 		throws SystemException {
 
 		return doFindFE_FS_ByG_F(groupId, folderId, queryDefinition, true);
+	}
+
+	public List<DLFolder> findByNoAssets() throws SystemException {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("DLFolder", DLFolderImpl.class);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	public List<Object> findF_FE_FS_ByG_F_M_M(

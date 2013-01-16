@@ -144,8 +144,14 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
-	public void addFolder(Folder folder, ServiceContext serviceContext)
+	public void addFolder(
+			long userId, Folder folder, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		updateAsset(
+			userId, folder, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		if (!isStagingGroup(folder.getGroupId())) {
 			dlSyncLocalService.addSync(
@@ -794,6 +800,40 @@ public class DLAppHelperLocalServiceImpl
 		return assetEntry;
 	}
 
+	public AssetEntry updateAsset(
+			long userId, Folder folder, long[] assetCategoryIds,
+			String[] assetTagNames, long[] assetLinkEntryIds)
+		throws PortalException, SystemException {
+
+		AssetEntry assetEntry = null;
+
+		boolean visible = false;
+
+		if (folder instanceof LiferayFolder) {
+			DLFolder dlFolder = (DLFolder)folder.getModel();
+
+			if (dlFolder.isApproved()) {
+				visible = true;
+			}
+		}
+		else {
+			visible = true;
+		}
+
+		assetEntry = assetEntryLocalService.updateEntry(
+			userId, folder.getGroupId(), folder.getCreateDate(),
+			folder.getModifiedDate(), DLFolderConstants.getClassName(),
+			folder.getFolderId(), folder.getUuid(), 0, assetCategoryIds,
+			assetTagNames, visible, null, null, null, null, folder.getName(),
+			folder.getDescription(), null, null, null, 0, 0, null, false);
+
+		assetLinkLocalService.updateLinks(
+			userId, assetEntry.getEntryId(), assetLinkEntryIds,
+			AssetLinkConstants.TYPE_RELATED);
+
+		return assetEntry;
+	}
+
 	public void updateDependentStatus(
 			User user, List<Object> dlFileEntriesAndDLFolders, int status)
 		throws PortalException, SystemException {
@@ -975,8 +1015,14 @@ public class DLAppHelperLocalServiceImpl
 		registerDLProcessorCallback(fileEntry, sourceFileVersion);
 	}
 
-	public void updateFolder(Folder folder, ServiceContext serviceContext)
+	public void updateFolder(
+			long userId, Folder folder, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		updateAsset(
+			userId, folder, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		if (!isStagingGroup(folder.getGroupId())) {
 			dlSyncLocalService.updateSync(

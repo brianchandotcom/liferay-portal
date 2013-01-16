@@ -253,7 +253,8 @@ public class DLFileEntryAssetRenderer
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);
 			}
 
-			return "/html/portlet/document_library/asset/" + template + ".jsp";
+			return "/html/portlet/document_library/asset/file_entry" +
+				template + ".jsp";
 		}
 		else {
 			return null;

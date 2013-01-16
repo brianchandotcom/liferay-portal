@@ -188,48 +188,46 @@ public class AUIUtil {
 			}
 		}
 
-		if (scriptData == null) {
-			return;
-		}
+		if (scriptData != null) {
+			writer.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
 
-		writer.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
+			StringBundler rawSB = scriptData.getRawSB();
 
-		StringBundler rawSB = scriptData.getRawSB();
+			rawSB.writeTo(writer);
 
-		rawSB.writeTo(writer);
+			StringBundler callbackSB = scriptData.getCallbackSB();
 
-		StringBundler callbackSB = scriptData.getCallbackSB();
+			if (callbackSB.index() > 0) {
+				String loadMethod = "use";
 
-		if (callbackSB.index() > 0) {
-			String loadMethod = "use";
+				if (BrowserSnifferUtil.isIe(request) &&
+					(BrowserSnifferUtil.getMajorVersion(request) < 8)) {
 
-			if (BrowserSnifferUtil.isIe(request) &&
-				(BrowserSnifferUtil.getMajorVersion(request) < 8)) {
+					loadMethod = "ready";
+				}
 
-				loadMethod = "ready";
+				writer.write("AUI().");
+				writer.write( loadMethod );
+				writer.write("(");
+
+				Set<String> useSet = scriptData.getUseSet();
+
+				for (String use : useSet) {
+					writer.write(StringPool.APOSTROPHE);
+					writer.write(use);
+					writer.write(StringPool.APOSTROPHE);
+					writer.write(StringPool.COMMA_AND_SPACE);
+				}
+
+				writer.write("function(A) {");
+
+				callbackSB.writeTo(writer);
+
+				writer.write("});");
 			}
 
-			writer.write("AUI().");
-			writer.write( loadMethod );
-			writer.write("(");
-
-			Set<String> useSet = scriptData.getUseSet();
-
-			for (String use : useSet) {
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(use);
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(StringPool.COMMA_AND_SPACE);
-			}
-
-			writer.write("function(A) {");
-
-			callbackSB.writeTo(writer);
-
-			writer.write("});");
+			writer.write("\n// ]]>\n</script>");
 		}
-
-		writer.write("\n// ]]>\n</script>");
 	}
 
 }

@@ -393,6 +393,13 @@ public class LayoutServiceWrapper implements LayoutService,
 			privateLayout);
 	}
 
+	public java.util.List<com.liferay.portal.model.Layout> getAncestorLayouts(
+		long plid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.getAncestorLayouts(plid);
+	}
+
 	/**
 	* Returns the name of the layout.
 	*
@@ -444,6 +451,15 @@ public class LayoutServiceWrapper implements LayoutService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutService.getLayouts(groupId, privateLayout, parentLayoutId);
+	}
+
+	public java.util.List<com.liferay.portal.model.Layout> getLayouts(
+		long groupId, boolean privateLayout, long parentLayoutId,
+		boolean incomplete, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.getLayouts(groupId, privateLayout,
+			parentLayoutId, incomplete, start, end);
 	}
 
 	/**

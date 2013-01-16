@@ -259,16 +259,16 @@ public class ReleaseLocalServiceUtil {
 		getService().createTablesAndPopulate();
 	}
 
-	public static int getBuildNumberOrCreate()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getBuildNumberOrCreate();
-	}
-
 	public static com.liferay.portal.model.Release fetchRelease(
 		java.lang.String servletContextName)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchRelease(servletContextName);
+	}
+
+	public static int getBuildNumberOrCreate()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getBuildNumberOrCreate();
 	}
 
 	public static com.liferay.portal.model.Release updateRelease(

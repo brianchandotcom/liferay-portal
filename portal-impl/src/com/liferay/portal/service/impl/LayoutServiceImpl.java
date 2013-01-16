@@ -414,6 +414,26 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
+	 * Returns a list with all the ancestors of the of the layout matching the
+	 * primary key
+	 *
+	 * @param  plid the primary key of the layout
+	 *
+	 * @return the list of ancestor layouts
+	 * @throws PortalException if a matching layout could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Layout> getAncestorLayouts(long plid)
+		throws PortalException, SystemException {
+
+		Layout layout = layoutLocalService.getLayout(plid);
+
+		List<Layout> ancestors = layout.getAncestors();
+
+		return filterLayouts(ancestors);
+	}
+
+	/**
 	 * Returns the primary key of the default layout for the group.
 	 *
 	 * @param  groupId the primary key of the group
@@ -588,18 +608,24 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public List<Layout> getLayouts(long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
-		List<Layout> layouts = layoutLocalService.getLayouts(
-			groupId, privateLayout);
-
-		return filterLayouts(layouts);
+		return layoutPersistence.filterFindByG_P(groupId, privateLayout);
 	}
 
 	public List<Layout> getLayouts(
 			long groupId, boolean privateLayout, long parentLayoutId)
 		throws PortalException, SystemException {
 
-		List<Layout> layouts = layoutLocalService.getLayouts(
+		return layoutPersistence.filterFindByG_P_P(
 			groupId, privateLayout, parentLayoutId);
+	}
+
+	public List<Layout> getLayouts(
+			long groupId, boolean privateLayout, long parentLayoutId,
+			boolean incomplete, int start, int end)
+		throws PortalException, SystemException {
+
+		List<Layout> layouts = layoutLocalService.getLayouts(
+			groupId, privateLayout, parentLayoutId, incomplete, start, end);
 
 		return filterLayouts(layouts);
 	}

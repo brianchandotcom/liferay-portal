@@ -67,30 +67,85 @@ String keywords = ParamUtil.getString(request, "keywords");
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.blogs.model.BlogsEntry"
-			modelVar="entry"
+			className="java.lang.Object"
+			modelVar="obj"
 		>
 
-			<%
-			entry = entry.toEscapedModel();
+			<c:choose>
+				<c:when test="<%= obj instanceof BlogsEntry %>">
 
-			PortletURL rowURL = renderResponse.createRenderURL();
+					<%
+					BlogsEntry entry = (BlogsEntry)obj;
 
-			rowURL.setParameter("struts_action", "/blogs/view_entry");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("urlTitle", entry.getUrlTitle());
-			%>
+					entry = entry.toEscapedModel();
+					%>
 
-			<liferay-ui:search-container-column-text
-				name="#"
-				value="<%= (index + 1) + StringPool.PERIOD %>"
-			/>
+					<portlet:renderURL var="rowURL">
+						<portlet:param name="struts_action" value="/blogs/view_entry" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+					</portlet:renderURL>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="entry"
-				value="<%= entry.getTitle() %>"
-			/>
+					<liferay-ui:search-container-column-text
+						name="title"
+					>
+						<liferay-ui:icon
+							image="../blogs/blogs"
+							label="<%= true %>"
+							message="<%= entry.getTitle() %>"
+							url="<%= rowURL %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						value='<%= LanguageUtil.get(locale, "blog") %>'
+					/>
+				</c:when>
+				<c:when test="<%= obj instanceof MBMessage %>">
+
+					<%
+					MBMessage message = (MBMessage)obj;
+
+					BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(message.getClassPK());
+
+					entry = entry.toEscapedModel();
+					%>
+
+					<portlet:renderURL var="rowURL">
+						<portlet:param name="struts_action" value="/blogs/view_entry" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+					</portlet:renderURL>
+
+					<liferay-ui:search-container-column-text
+						name="title"
+					>
+						<liferay-ui:icon
+							image="message"
+							label="<%= true %>"
+							message="<%= StringUtil.shorten(message.getBody(), 50) %>"
+							url="<%= rowURL %>"
+						/>
+
+						<liferay-util:buffer var="rootEntryIcon">
+							<liferay-ui:icon
+								image="../blogs/blogs"
+								label="<%= true %>"
+								message="<%= entry.getTitle() %>"
+								url="<%= rowURL %>"
+							/>
+						</liferay-util:buffer>
+
+						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="found-comment-in-blog-entry-x" />)</span>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						value='<%= LanguageUtil.get(locale, "comment") %>'
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<span class="aui-search-bar">

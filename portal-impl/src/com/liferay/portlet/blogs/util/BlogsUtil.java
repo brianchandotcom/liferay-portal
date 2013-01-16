@@ -33,6 +33,8 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.util.ContentUtil;
 
 import java.util.ArrayList;
@@ -188,18 +190,31 @@ public class BlogsUtil {
 			preferences, companyId, PropsValues.BLOGS_EMAIL_FROM_NAME);
 	}
 
-	public static List<BlogsEntry> getEntries(Hits hits) {
-		List<BlogsEntry> entries = new ArrayList<BlogsEntry>();
+	public static List<Object> getEntries(Hits hits) {
+		List<Object> entries = new ArrayList<Object>();
 
 		for (Document document : hits.getDocs()) {
+			String entryClassName = GetterUtil.getString(
+				document.get(Field.ENTRY_CLASS_NAME));
 			long entryClassPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
 			try {
-				BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(
-					entryClassPK);
+				Object obj = null;
 
-				entries.add(entry);
+				if (entryClassName.equals(BlogsEntry.class.getName())) {
+					obj = BlogsEntryLocalServiceUtil.getEntry(entryClassPK);
+				}
+				else if (entryClassName.equals(MBMessage.class.getName())) {
+					long classPK = GetterUtil.getLong(
+						document.get(Field.CLASS_PK));
+
+					BlogsEntryLocalServiceUtil.getEntry(classPK);
+
+					obj = MBMessageLocalServiceUtil.getMessage(entryClassPK);
+				}
+
+				entries.add(obj);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

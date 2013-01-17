@@ -34,6 +34,8 @@ serverURL.setParameter("struts_action", "/admin/view");
 serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
 serverURL.setParameter("tabs3", tabs3);
+
+String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <liferay-ui:message key="uptime" />:
@@ -95,11 +97,6 @@ serverURL.setParameter("tabs3", tabs3);
 						</aui:button-row>
 					</c:when>
 					<c:otherwise>
-
-						<%
-						String keywords = ParamUtil.getString(request, "keywords");
-						%>
-
 						<span class="aui-search-bar">
 							<aui:input inlineField="<%= true %>" label="" name="keywords" title="search-categories" type="text" value="<%= keywords %>" />
 
@@ -223,104 +220,78 @@ serverURL.setParameter("tabs3", tabs3);
 					portletURL="<%= serverURL %>"
 				/>
 
-				<c:choose>
-					<c:when test='<%= tabs3.equals("portal-properties") %>'>
+				<span class="aui-search-bar">
+					<aui:input inlineField="<%= true %>" label="" name="keywords" title="search-properties" type="text" value="<%= keywords %>" />
 
-						<%
-						List<String> headerNames = new ArrayList<String>();
+					<aui:button type="submit" value="search" />
+				</span>
 
-						headerNames.add("property");
-						headerNames.add("value");
+				<br /><br />
 
-						SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, serverURL, headerNames, null);
+				<%
+				String emptyResultsMessage = null;
+				Properties properties = null;
 
-						Map portalProps = new TreeMap();
+				if (tabs3.equals("portal-properties")) {
+					emptyResultsMessage = "no-portal-properties-were-found-that-matched-the-keywords";
+					properties = PropsUtil.getProperties();
+				}
+				else {
+					emptyResultsMessage = "no-system-properties-were-found-that-matched-the-keywords";
+					properties = System.getProperties();
+				}
 
-						portalProps.putAll(PropsUtil.getProperties());
+				List<String> headerNames = new ArrayList<String>();
 
-						List results = ListUtil.fromCollection(portalProps.entrySet());
+				headerNames.add("property");
+				headerNames.add("value");
 
-						searchContainer.setTotal(results.size());
+				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, serverURL, headerNames, emptyResultsMessage);
 
-						results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
+				Map<String, String> portalProperties = new TreeMap<String, String>();
 
-						searchContainer.setResults(results);
+				for (Object key : properties.keySet()) {
+					String propKey = (String)key;
+					String propValue = properties.getProperty(propKey, StringPool.BLANK);
 
-						List resultRows = searchContainer.getResultRows();
+					if (Validator.isNull(keywords) || propKey.contains(keywords) || propValue.contains(keywords)) {
+						portalProperties.put(propKey, propValue);
+					}
+				}
 
-						for (int i = 0; i < results.size(); i++) {
-							Map.Entry entry = (Map.Entry)results.get(i);
+				List results = ListUtil.fromCollection(portalProperties.entrySet());
 
-							String property = (String)entry.getKey();
-							String value = (String)entry.getValue();
+				searchContainer.setTotal(results.size());
 
-							ResultRow row = new ResultRow(entry, property, i);
+				results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
 
-							// Property
+				searchContainer.setResults(results);
 
-							row.addText(StringUtil.shorten(property, 80));
+				List resultRows = searchContainer.getResultRows();
 
-							// Value
+				for (int i = 0; i < results.size(); i++) {
+					Map.Entry entry = (Map.Entry)results.get(i);
 
-							row.addText(StringUtil.shorten(value, 80));
+					String property = (String)entry.getKey();
+					String value = (String)entry.getValue();
 
-							// Add result row
+					ResultRow row = new ResultRow(entry, property, i);
 
-							resultRows.add(row);
-						}
-						%>
+					// Property
 
-						<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
-					</c:when>
-					<c:otherwise>
+					row.addText(StringUtil.shorten(property, 80));
 
-						<%
-						List<String> headerNames = new ArrayList<String>();
+					// Value
 
-						headerNames.add("property");
-						headerNames.add("value");
+					row.addText(StringUtil.shorten(value, 80));
 
-						SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, serverURL, headerNames, null);
+					// Add result row
 
-						Map portalProps = new TreeMap();
+					resultRows.add(row);
+				}
+				%>
 
-						portalProps.putAll(System.getProperties());
-
-						List results = ListUtil.fromCollection(portalProps.entrySet());
-
-						searchContainer.setTotal(results.size());
-
-						results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
-
-						searchContainer.setResults(results);
-
-						List resultRows = searchContainer.getResultRows();
-
-						for (int i = 0; i < results.size(); i++) {
-							Map.Entry entry = (Map.Entry)results.get(i);
-
-							String property = (String)entry.getKey();
-							String value = (String)entry.getValue();
-
-							ResultRow row = new ResultRow(entry, property, i);
-
-							// Property
-
-							row.addText(StringUtil.shorten(property, 80));
-
-							// Value
-
-							row.addText(StringUtil.shorten(value, 80));
-
-							// Add result row
-
-							resultRows.add(row);
-						}
-						%>
-
-						<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
-					</c:otherwise>
-				</c:choose>
+				<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 			</c:when>
 			<c:when test='<%= tabs2.equals("captcha") %>'>
 				<liferay-ui:error key="reCaptchaPrivateKey" message="the-recaptcha-private-key-is-not-valid" />

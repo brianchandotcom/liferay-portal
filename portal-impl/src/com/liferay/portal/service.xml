@@ -1857,11 +1857,11 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="C_U_C_C" return-type="Subscription" unique="true">
+		<finder name="C_U_C_C" return-type="Collection" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
 			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column name="classPK" arrayable-operator="OR" />
 		</finder>
 
 		<!-- References -->

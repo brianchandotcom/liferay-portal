@@ -125,9 +125,6 @@ public interface DL {
 
 	public String getFileIcon(String extension);
 
-	public Set<Long> getFolderSubscriptionClassPKs(long userId)
-		throws SystemException;
-
 	public String getGenericName(String extension);
 
 	public String[] getMediaGalleryMimeTypes(
@@ -197,5 +194,18 @@ public interface DL {
 		String ddmStructureKey);
 
 	public abstract boolean isOfficeExtension(String extension);
+
+	public boolean isSubscribedToFileEntryType(
+			long companyId, long groupId, long userId, long fileEntryTypeId)
+		throws SystemException;
+
+	public boolean isSubscribedToFolder(
+			long companyId, long groupId, long userId, long folderId)
+		throws PortalException, SystemException;
+
+	public boolean isSubscribedToFolder(
+			long companyId, long groupId, long userId, long folderId,
+			boolean recursive)
+		throws PortalException, SystemException;
 
 }

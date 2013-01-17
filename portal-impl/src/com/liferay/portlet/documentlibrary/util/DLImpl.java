@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -67,6 +68,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelReadCo
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeComparator;
 import com.liferay.util.ContentUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -578,22 +580,6 @@ public class DLImpl implements DL {
 		return extension;
 	}
 
-	public Set<Long> getFolderSubscriptionClassPKs(long userId)
-		throws SystemException {
-
-		List<Subscription> subscriptions =
-			SubscriptionLocalServiceUtil.getUserSubscriptions(
-				userId, Folder.class.getName());
-
-		Set<Long> classPKs = new HashSet<Long>(subscriptions.size());
-
-		for (Subscription subscription : subscriptions) {
-			classPKs.add(subscription.getClassPK());
-		}
-
-		return classPKs;
-	}
-
 	public String getGenericName(String extension) {
 		String genericName = _genericNames.get(extension);
 
@@ -1007,6 +993,73 @@ public class DLImpl implements DL {
 		}
 
 		return false;
+	}
+
+	public boolean isSubscribedToFileEntryType(
+			long companyId, long groupId, long userId, long fileEntryTypeId)
+		throws SystemException {
+
+		if (fileEntryTypeId ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+			fileEntryTypeId = groupId;
+		}
+
+		int subscriptionsCount =
+			SubscriptionLocalServiceUtil.getSubscriptionsCount(
+				companyId, userId, DLFileEntryType.class.getName(),
+				fileEntryTypeId);
+
+		if (subscriptionsCount != 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isSubscribedToFolder(
+			long companyId, long groupId, long userId, long folderId)
+		throws PortalException, SystemException {
+
+		return isSubscribedToFolder(companyId, groupId, userId, folderId, true);
+	}
+
+	public boolean isSubscribedToFolder(
+			long companyId, long groupId, long userId, long folderId,
+			boolean recursive)
+		throws PortalException, SystemException {
+
+		List<Long> ancestorFolderIds = new ArrayList<Long>();
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
+
+			if (recursive) {
+				ancestorFolderIds = folder.getAncestorFolderIds();
+
+				ancestorFolderIds.add(groupId);
+			}
+
+			ancestorFolderIds.add(0, folderId);
+		}
+		else {
+			ancestorFolderIds.add(groupId);
+		}
+
+		long[] folderIdsArray = ArrayUtil.toArray(
+			ArrayUtil.toLongArray(ancestorFolderIds.toArray()));
+
+		int subscriptionsCount =
+			SubscriptionLocalServiceUtil.getSubscriptionsCount(
+				companyId, userId, Folder.class.getName(), folderIdsArray);
+
+		if (subscriptionsCount != 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	protected long getDefaultFolderId(HttpServletRequest request)

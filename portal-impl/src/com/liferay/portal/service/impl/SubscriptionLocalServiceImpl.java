@@ -207,6 +207,16 @@ public class SubscriptionLocalServiceImpl
 	}
 
 	public List<Subscription> getSubscriptions(
+			long companyId, long userId, String className, long[] classPKs)
+		throws PortalException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return subscriptionPersistence.findByC_U_C_C(
+			companyId, userId, classNameId, classPKs);
+	}
+
+	public List<Subscription> getSubscriptions(
 			long companyId, String className, long classPK)
 		throws SystemException {
 
@@ -214,6 +224,26 @@ public class SubscriptionLocalServiceImpl
 
 		return subscriptionPersistence.findByC_C_C(
 			companyId, classNameId, classPK);
+	}
+
+	public int getSubscriptionsCount(
+			long companyId, long userId, String className, long classPK)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return subscriptionPersistence.countByC_U_C_C(
+			companyId, userId, classNameId, classPK);
+	}
+
+	public int getSubscriptionsCount(
+			long companyId, long userId, String className, long[] classPKs)
+		throws PortalException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return subscriptionPersistence.countByC_U_C_C(
+			companyId, userId, classNameId, classPKs);
 	}
 
 	public List<Subscription> getUserSubscriptions(

@@ -30,6 +30,13 @@
 		border-bottom: none;
 	}
 
+	.subscribe-action {
+		margin-bottom: 5px;
+		margin-right: 10px;
+		margin-top:5px;
+		text-align: right;
+	}
+
 	.document-container .search-info {
 		background-color: #D3E8F1;
 		min-height: 40px;

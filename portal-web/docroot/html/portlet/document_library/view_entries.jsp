@@ -203,6 +203,87 @@ searchContainer.setTotal(total);
 request.setAttribute("view.jsp-total", String.valueOf(total));
 %>
 
+<div class="subscribe-action">
+	<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && ((folder == null) || folder.isSupportsSubscribing()) %>">
+
+		<%
+		boolean isSubscribed = false;
+		boolean unsubscribable = true;
+
+		if (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) {
+			isSubscribed = DLUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
+
+			if (isSubscribed) {
+				if (!DLUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId, false)) {
+					unsubscribable = false;
+				}
+			}
+		}
+		else {
+			isSubscribed = DLUtil.isSubscribedToFileEntryType(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), fileEntryTypeId);
+		}
+		%>
+
+		<c:choose>
+			<c:when test="<%= isSubscribed %>">
+				<c:choose>
+					<c:when test="<%= unsubscribable %>">
+						<portlet:actionURL var="unsubscribeURL">
+							<portlet:param name="struts_action" value='<%= (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) ? "/document_library/edit_folder" : "/document_library/edit_file_entry_type" %>' />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+
+							<c:choose>
+								<c:when test="<%= fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL %>">
+									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+								</c:when>
+								<c:otherwise>
+									<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
+								</c:otherwise>
+							</c:choose>
+						</portlet:actionURL>
+
+						<liferay-ui:icon
+							image="unsubscribe"
+							label="<%= true %>"
+							url="<%= unsubscribeURL %>"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:icon
+							image="unsubscribe"
+							label="<%= true %>"
+							message="subscribed-to-a-parent-folder"
+						/>
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+				<portlet:actionURL var="subscribeURL">
+					<portlet:param name="struts_action" value='<%= (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) ? "/document_library/edit_folder" : "/document_library/edit_file_entry_type" %>' />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+
+					<c:choose>
+						<c:when test="<%= fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL %>">
+							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+						</c:when>
+						<c:otherwise>
+							<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
+						</c:otherwise>
+					</c:choose>
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					image="subscribe"
+					label="<%= true %>"
+					url="<%= subscribeURL %>"
+				/>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+</div>
+
 <c:if test="<%= results.isEmpty() %>">
 	<div class="entries-empty portlet-msg-info">
 		<c:choose>

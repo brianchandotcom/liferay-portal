@@ -59,7 +59,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
-import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
@@ -265,8 +264,7 @@ public class ModuleFrameworkImpl
 			FrameworkStartLevel.class);
 
 		frameworkStartLevel.setStartLevel(
-			PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL,
-			(FrameworkListener)null);
+			PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL);
 	}
 
 	public void stopBundle(long bundleId) throws PortalException {
@@ -309,8 +307,7 @@ public class ModuleFrameworkImpl
 			FrameworkStartLevel.class);
 
 		frameworkStartLevel.setStartLevel(
-			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
-			(FrameworkListener)null);
+			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL);
 	}
 
 	public void uninstallBundle(long bundleId) throws PortalException {

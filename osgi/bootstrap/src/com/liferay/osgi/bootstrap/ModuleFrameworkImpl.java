@@ -20,8 +20,10 @@ import aQute.libg.version.Version;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServiceLoader;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -33,6 +35,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -41,6 +44,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -59,10 +63,13 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkEvent;
+import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
+import org.osgi.framework.wiring.FrameworkWiring;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.context.ApplicationContext;
@@ -81,7 +88,31 @@ public class ModuleFrameworkImpl
 	public Object addBundle(String location, InputStream inputStream)
 		throws PortalException {
 
-		return _addBundle(location, inputStream, true);
+		return addBundle(location, inputStream, true);
+	}
+
+	public Object addBundle(
+			String location, InputStream inputStream, boolean checkPermissions)
+		throws PortalException {
+
+		if (_framework == null) {
+			return null;
+		}
+
+		if (checkPermissions) {
+			_checkPermission();
+		}
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		try {
+			return bundleContext.installBundle(location, inputStream);
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new PortalException(be);
+		}
 	}
 
 	public Bundle getBundle(
@@ -228,12 +259,36 @@ public class ModuleFrameworkImpl
 		bundleStartLevel.setStartLevel(startLevel);
 	}
 
+	public void startBundle(
+			Bundle bundle, int options, boolean checkPermissions)
+		throws PortalException {
+
+		if (checkPermissions) {
+			_checkPermission();
+		}
+
+		try {
+			bundle.start(options);
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new PortalException(be);
+		}
+	}
+
 	public void startBundle(long bundleId) throws PortalException {
 		startBundle(bundleId, 0);
 	}
 
 	public void startBundle(long bundleId, int options) throws PortalException {
-		_startBundle(bundleId, 0, true);
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new PortalException("No bundle with ID " + bundleId);
+		}
+
+		startBundle(bundle, 0, true);
 	}
 
 	public void startFramework() throws Exception {
@@ -253,6 +308,8 @@ public class ModuleFrameworkImpl
 		_framework.init();
 
 		_framework.start();
+
+		_setupInitialBundles();
 	}
 
 	public void startRuntime() throws Exception {
@@ -346,30 +403,6 @@ public class ModuleFrameworkImpl
 
 		try {
 			bundle.update(inputStream);
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new PortalException(be);
-		}
-	}
-
-	private Object _addBundle(
-			String location, InputStream inputStream, boolean checkPermissions)
-		throws PortalException {
-
-		if (_framework == null) {
-			return null;
-		}
-
-		if (checkPermissions) {
-			_checkPermission();
-		}
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		try {
-			return bundleContext.installBundle(location, inputStream);
 		}
 		catch (BundleException be) {
 			_log.error(be, be);
@@ -521,6 +554,119 @@ public class ModuleFrameworkImpl
 		return interfaces;
 	}
 
+	private boolean _hasLazyActivationPolicy(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders();
+
+		String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
+
+		if (fragmentHost != null) {
+			return false;
+		}
+
+		String activationPolicy = headers.get(
+			Constants.BUNDLE_ACTIVATIONPOLICY);
+
+		if (activationPolicy != null) {
+			Map<String, Map<String, String>> header = OSGiHeader.parseHeader(
+				activationPolicy);
+
+			if ((header.size() > 0) &&
+				header.containsKey(Constants.ACTIVATION_LAZY)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private void _installInitialBundle(
+		String location, List<Bundle> lazyActivationBundles,
+		List<Bundle> startBundles, List<Bundle> refreshBundles) {
+
+		int defaultStartLevel =
+			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL;
+		boolean start = false;
+		int startLevel = defaultStartLevel;
+
+		int pos = location.lastIndexOf(StringPool.AT);
+
+		if (pos != -1) {
+			String[] attributes = StringUtil.split(
+				location.substring(pos + 1), StringPool.COLON);
+
+			for (String attribute : attributes) {
+				if (attribute.equals("start")) {
+					start = true;
+				}
+				else {
+					startLevel = GetterUtil.getInteger(attribute);
+				}
+			}
+
+			location = location.substring(0, pos);
+		}
+
+		InputStream inputStream = null;
+
+		try {
+			if (!location.startsWith("file:")) {
+				location = "file:".concat(
+					PropsValues.LIFERAY_LIB_PORTAL_DIR.concat(location));
+			}
+
+			URL initialBundleURL = new URL(location);
+
+			try {
+				inputStream = new BufferedInputStream(
+					initialBundleURL.openStream());
+			}
+			catch (IOException ioe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(ioe.getMessage());
+				}
+
+				return;
+			}
+
+			Bundle bundle = (Bundle)addBundle(
+				initialBundleURL.toString(), inputStream, false);
+
+			if (bundle == null) {
+				return;
+			}
+
+			if (_hasLazyActivationPolicy(bundle)) {
+				lazyActivationBundles.add(bundle);
+
+				return;
+			}
+
+			if (((bundle.getState() & Bundle.UNINSTALLED) == 0) &&
+				(startLevel > 0)) {
+
+				BundleStartLevel bundleStartLevel = bundle.adapt(
+					BundleStartLevel.class);
+
+				bundleStartLevel.setStartLevel(startLevel);
+			}
+
+			if (start) {
+				startBundles.add(bundle);
+			}
+
+			if ((bundle.getState() & Bundle.INSTALLED) != 0) {
+				refreshBundles.add(bundle);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+	}
+
 	private void _registerApplicationContext(
 		ApplicationContext applicationContext) {
 
@@ -586,32 +732,77 @@ public class ModuleFrameworkImpl
 			properties);
 	}
 
-	private void _startBundle(
-			long bundleId, int options, boolean checkPermissions)
-		throws PortalException {
+	private void _setupInitialBundles() throws Exception {
+		FrameworkWiring frameworkWiring = getFramework().adapt(
+			FrameworkWiring.class);
 
-		if (checkPermissions) {
-			_checkPermission();
+		List<Bundle> lazyActivationBundles = new ArrayList<Bundle>();
+		List<Bundle> startBundles = new ArrayList<Bundle>();
+		List<Bundle> refreshBundles = new ArrayList<Bundle>();
+
+		for (String initialBundle :
+				PropsValues.MODULE_FRAMEWORK_INITIAL_BUNDLES) {
+
+			_installInitialBundle(
+				initialBundle, lazyActivationBundles, startBundles,
+				refreshBundles);
 		}
 
-		Bundle bundle = getBundle(bundleId);
+		FrameworkListener frameworkListener = new StartupFrameworkListener(
+			startBundles, lazyActivationBundles);
 
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.start(options);
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new PortalException(be);
-		}
+		frameworkWiring.refreshBundles(refreshBundles, frameworkListener);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkUtil.class);
 
 	private Framework _framework;
+
+	private class StartupFrameworkListener implements FrameworkListener {
+		public StartupFrameworkListener(
+			List<Bundle> startBundles, List<Bundle> lazyActivationBundles) {
+
+			_lazyActivationBundles = lazyActivationBundles;
+			_startBundles = startBundles;
+		}
+
+		public void frameworkEvent(FrameworkEvent event) {
+			if (event.getType() != FrameworkEvent.PACKAGES_REFRESHED) {
+				return;
+			}
+
+			for (Bundle bundle : _startBundles) {
+				try {
+					startBundle(bundle, 0, false);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+			}
+
+			for (Bundle bundle : _lazyActivationBundles) {
+				try {
+					startBundle(bundle, Bundle.START_ACTIVATION_POLICY, false);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+			}
+
+			try {
+				BundleContext bundleContext =
+					event.getBundle().getBundleContext();
+
+				bundleContext.removeFrameworkListener(this);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		List<Bundle> _lazyActivationBundles;
+		List<Bundle> _startBundles;
+
+	}
 
 }

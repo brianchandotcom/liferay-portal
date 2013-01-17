@@ -19,6 +19,8 @@ import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
@@ -106,6 +108,7 @@ import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.portlet.journal.service.base.JournalArticleLocalServiceBaseImpl;
+import com.liferay.portlet.journal.social.JournalActivityKeys;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleIDComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
@@ -142,21 +145,21 @@ public class JournalArticleLocalServiceImpl
 	extends JournalArticleLocalServiceBaseImpl {
 
 	public JournalArticle addArticle(
-			long userId, long groupId, long folderId, long classNameId,
-			long classPK, String articleId, boolean autoArticleId,
-			double version, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String content, String type,
-			String structureId, String templateId, String layoutUuid,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
-			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
-			boolean neverReview, boolean indexable, boolean smallImage,
-			String smallImageURL, File smallImageFile,
-			Map<String, byte[]> images, String articleURL,
-			ServiceContext serviceContext)
+		long userId, long groupId, long folderId, long classNameId,
+		long classPK, String articleId, boolean autoArticleId,
+		double version, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, String content, String type,
+		String structureId, String templateId, String layoutUuid,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute,
+		boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+		int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+		boolean neverReview, boolean indexable, boolean smallImage,
+		String smallImageURL, File smallImageFile,
+		Map<String, byte[]> images, String articleURL,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Article
@@ -334,7 +337,7 @@ public class JournalArticleLocalServiceImpl
 				serviceContext);
 
 			if (serviceContext.getWorkflowAction() !=
-					WorkflowConstants.ACTION_PUBLISH) {
+				WorkflowConstants.ACTION_PUBLISH) {
 
 				// Indexer
 
@@ -351,10 +354,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle addArticle(
-			long userId, long groupId, long folderId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String content, String structureId, String templateId,
-			ServiceContext serviceContext)
+		long userId, long groupId, long folderId,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		String content, String structureId, String templateId,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar();
@@ -375,8 +378,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public void addArticleResources(
-			JournalArticle article, boolean addGroupPermissions,
-			boolean addGuestPermissions)
+		JournalArticle article, boolean addGroupPermissions,
+		boolean addGuestPermissions)
 		throws PortalException, SystemException {
 
 		resourceLocalService.addResources(
@@ -386,8 +389,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public void addArticleResources(
-			JournalArticle article, String[] groupPermissions,
-			String[] guestPermissions)
+		JournalArticle article, String[] groupPermissions,
+		String[] guestPermissions)
 		throws PortalException, SystemException {
 
 		resourceLocalService.addModelResources(
@@ -397,8 +400,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public void addArticleResources(
-			long groupId, String articleId, boolean addGroupPermissions,
-			boolean addGuestPermissions)
+		long groupId, String articleId, boolean addGroupPermissions,
+		boolean addGuestPermissions)
 		throws PortalException, SystemException {
 
 		JournalArticle article = getLatestArticle(groupId, articleId);
@@ -407,8 +410,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public void addArticleResources(
-			long groupId, String articleId, String[] groupPermissions,
-			String[] guestPermissions)
+		long groupId, String articleId, String[] groupPermissions,
+		String[] guestPermissions)
 		throws PortalException, SystemException {
 
 		JournalArticle article = getLatestArticle(groupId, articleId);
@@ -417,7 +420,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle checkArticleResourcePrimKey(
-			long groupId, String articleId, double version)
+		long groupId, String articleId, double version)
 		throws PortalException, SystemException {
 
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
@@ -534,8 +537,8 @@ public class JournalArticleLocalServiceImpl
 
 		if (content.contains("\\n")) {
 			content = StringUtil.replace(
-				content, new String[] {"\\n", "\\r"},
-				new String[] {"\n", "\r"});
+				content, new String[]{"\\n", "\\r"},
+				new String[]{"\n", "\r"});
 
 			article.setContent(content);
 
@@ -557,8 +560,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle copyArticle(
-			long userId, long groupId, String oldArticleId, String newArticleId,
-			boolean autoArticleId, double version)
+		long userId, long groupId, String oldArticleId, String newArticleId,
+		boolean autoArticleId, double version)
 		throws PortalException, SystemException {
 
 		// Article
@@ -578,7 +581,7 @@ public class JournalArticleLocalServiceImpl
 			validate(newArticleId);
 
 			if (journalArticlePersistence.countByG_A(
-					groupId, newArticleId) > 0) {
+				groupId, newArticleId) > 0) {
 
 				throw new DuplicateArticleIdException();
 			}
@@ -661,8 +664,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public void deleteArticle(
-			JournalArticle article, String articleURL,
-			ServiceContext serviceContext)
+		JournalArticle article, String articleURL,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (article.isApproved() &&
@@ -776,8 +779,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public void deleteArticle(
-			long groupId, String articleId, double version, String articleURL,
-			ServiceContext serviceContext)
+		long groupId, String articleId, double version, String articleURL,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
@@ -787,7 +790,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public void deleteArticle(
-			long groupId, String articleId, ServiceContext serviceContext)
+		long groupId, String articleId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
@@ -803,7 +806,7 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		for (JournalArticle article :
-				journalArticlePersistence.findByGroupId(groupId)) {
+			journalArticlePersistence.findByGroupId(groupId)) {
 
 			deleteArticle(article, null, null);
 		}
@@ -813,7 +816,7 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		for (JournalArticle article :
-				journalArticlePersistence.findByG_F(groupId, folderId)) {
+			journalArticlePersistence.findByG_F(groupId, folderId)) {
 
 			deleteArticle(article, null, null);
 		}
@@ -833,8 +836,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle expireArticle(
-			long userId, long groupId, String articleId, double version,
-			String articleURL, ServiceContext serviceContext)
+		long userId, long groupId, String articleId, double version,
+		String articleURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return updateStatus(
@@ -844,8 +847,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public void expireArticle(
-			long userId, long groupId, String articleId, String articleURL,
-			ServiceContext serviceContext)
+		long userId, long groupId, String articleId, String articleURL,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (PropsValues.JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
@@ -898,7 +901,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle getArticle(
-			long groupId, String articleId, double version)
+		long groupId, String articleId, double version)
 		throws PortalException, SystemException {
 
 		return journalArticlePersistence.findByG_A_V(
@@ -906,7 +909,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle getArticle(
-			long groupId, String className, long classPK)
+		long groupId, String className, long classPK)
 		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
@@ -918,7 +921,7 @@ public class JournalArticleLocalServiceImpl
 			throw new NoSuchArticleException(
 				"No approved JournalArticle exists with the key {groupId=" +
 					groupId + ", className=" + className + ", classPK=" +
-						classPK + "}");
+					classPK + "}");
 		}
 
 		return articles.get(0);
@@ -941,8 +944,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public String getArticleContent(
-			JournalArticle article, String templateId, String viewMode,
-			String languageId, ThemeDisplay themeDisplay)
+		JournalArticle article, String templateId, String viewMode,
+		String languageId, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		JournalArticleDisplay articleDisplay = getArticleDisplay(
@@ -957,8 +960,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public String getArticleContent(
-			long groupId, String articleId, double version, String viewMode,
-			String templateId, String languageId, ThemeDisplay themeDisplay)
+		long groupId, String articleId, double version, String viewMode,
+		String templateId, String languageId, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		JournalArticleDisplay articleDisplay = getArticleDisplay(
@@ -974,8 +977,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public String getArticleContent(
-			long groupId, String articleId, double version, String viewMode,
-			String languageId, ThemeDisplay themeDisplay)
+		long groupId, String articleId, double version, String viewMode,
+		String languageId, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		return getArticleContent(
@@ -984,8 +987,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public String getArticleContent(
-			long groupId, String articleId, String viewMode, String templateId,
-			String languageId, ThemeDisplay themeDisplay)
+		long groupId, String articleId, String viewMode, String templateId,
+		String languageId, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		JournalArticleDisplay articleDisplay = getArticleDisplay(
@@ -995,8 +998,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public String getArticleContent(
-			long groupId, String articleId, String viewMode, String languageId,
-			ThemeDisplay themeDisplay)
+		long groupId, String articleId, String viewMode, String languageId,
+		ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		return getArticleContent(
@@ -1004,9 +1007,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticleDisplay getArticleDisplay(
-			JournalArticle article, String templateId, String viewMode,
-			String languageId, int page, String xmlRequest,
-			ThemeDisplay themeDisplay)
+		JournalArticle article, String templateId, String viewMode,
+		String languageId, int page, String xmlRequest,
+		ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		String content = null;
@@ -1074,7 +1077,7 @@ public class JournalArticleLocalServiceImpl
 						XPath xPathSelector = SAXReaderUtil.createXPath(
 							"/root/page[@id = " + targetPage + "]");
 
-						pageElement = (Element)xPathSelector.selectSingleNode(
+						pageElement = (Element) xPathSelector.selectSingleNode(
 							document);
 					}
 
@@ -1201,9 +1204,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticleDisplay getArticleDisplay(
-			long groupId, String articleId, double version, String templateId,
-			String viewMode, String languageId, int page, String xmlRequest,
-			ThemeDisplay themeDisplay)
+		long groupId, String articleId, double version, String templateId,
+		String viewMode, String languageId, int page, String xmlRequest,
+		ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		Date now = new Date();
@@ -1229,8 +1232,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticleDisplay getArticleDisplay(
-			long groupId, String articleId, double version, String templateId,
-			String viewMode, String languageId, ThemeDisplay themeDisplay)
+		long groupId, String articleId, double version, String templateId,
+		String viewMode, String languageId, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		return getArticleDisplay(
@@ -1239,8 +1242,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticleDisplay getArticleDisplay(
-			long groupId, String articleId, String viewMode, String languageId,
-			int page, String xmlRequest, ThemeDisplay themeDisplay)
+		long groupId, String articleId, String viewMode, String languageId,
+		int page, String xmlRequest, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		return getArticleDisplay(
@@ -1249,9 +1252,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticleDisplay getArticleDisplay(
-			long groupId, String articleId, String templateId, String viewMode,
-			String languageId, int page, String xmlRequest,
-			ThemeDisplay themeDisplay)
+		long groupId, String articleId, String templateId, String viewMode,
+		String languageId, int page, String xmlRequest,
+		ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		JournalArticle article = getDisplayArticle(groupId, articleId);
@@ -1262,8 +1265,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticleDisplay getArticleDisplay(
-			long groupId, String articleId, String templateId, String viewMode,
-			String languageId, ThemeDisplay themeDisplay)
+		long groupId, String articleId, String templateId, String viewMode,
+		String languageId, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		JournalArticle article = getDisplayArticle(groupId, articleId);
@@ -1274,8 +1277,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticleDisplay getArticleDisplay(
-			long groupId, String articleId, String viewMode, String languageId,
-			ThemeDisplay themeDisplay)
+		long groupId, String articleId, String viewMode, String languageId,
+		ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		return getArticleDisplay(
@@ -1299,7 +1302,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public List<JournalArticle> getArticles(
-			long groupId, int start, int end, OrderByComparator obc)
+		long groupId, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
 		return journalArticlePersistence.findByGroupId(
@@ -1313,7 +1316,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public List<JournalArticle> getArticles(
-			long groupId, long folderId, int start, int end)
+		long groupId, long folderId, int start, int end)
 		throws SystemException {
 
 		return journalArticlePersistence.findByG_F(
@@ -1321,8 +1324,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public List<JournalArticle> getArticles(
-			long groupId, long folderId, int start, int end,
-			OrderByComparator orderByComparator)
+		long groupId, long folderId, int start, int end,
+		OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return journalArticlePersistence.findByG_F(
@@ -1352,7 +1355,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public List<JournalArticle> getCompanyArticles(
-			long companyId, double version, int status, int start, int end)
+		long companyId, double version, int status, int start, int end)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
@@ -1367,7 +1370,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public List<JournalArticle> getCompanyArticles(
-			long companyId, int status, int start, int end)
+		long companyId, int status, int start, int end)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
@@ -1381,7 +1384,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public int getCompanyArticlesCount(
-			long companyId, double version, int status, int start, int end)
+		long companyId, double version, int status, int start, int end)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
@@ -1435,7 +1438,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle getDisplayArticleByUrlTitle(
-			long groupId, String urlTitle)
+		long groupId, String urlTitle)
 		throws PortalException, SystemException {
 
 		List<JournalArticle> articles = null;
@@ -1480,7 +1483,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle getLatestArticle(
-			long resourcePrimKey, int status, boolean preferApproved)
+		long resourcePrimKey, int status, boolean preferApproved)
 		throws PortalException, SystemException {
 
 		List<JournalArticle> articles = null;
@@ -1521,7 +1524,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle getLatestArticle(
-			long groupId, String articleId, int status)
+		long groupId, String articleId, int status)
 		throws PortalException, SystemException {
 
 		List<JournalArticle> articles = null;
@@ -1547,7 +1550,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle getLatestArticle(
-			long groupId, String className, long classPK)
+		long groupId, String className, long classPK)
 		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
@@ -1566,7 +1569,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle getLatestArticleByUrlTitle(
-			long groupId, String urlTitle, int status)
+		long groupId, String urlTitle, int status)
 		throws PortalException, SystemException {
 
 		List<JournalArticle> articles = null;
@@ -1615,15 +1618,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public List<JournalArticle> getStructureArticles(
-			long groupId, String structureId)
+		long groupId, String structureId)
 		throws SystemException {
 
 		return journalArticlePersistence.findByG_S(groupId, structureId);
 	}
 
 	public List<JournalArticle> getStructureArticles(
-			long groupId, String structureId, int start, int end,
-			OrderByComparator obc)
+		long groupId, String structureId, int start, int end,
+		OrderByComparator obc)
 		throws SystemException {
 
 		return journalArticlePersistence.findByG_S(
@@ -1637,15 +1640,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public List<JournalArticle> getTemplateArticles(
-			long groupId, String templateId)
+		long groupId, String templateId)
 		throws SystemException {
 
 		return journalArticlePersistence.findByG_T(groupId, templateId);
 	}
 
 	public List<JournalArticle> getTemplateArticles(
-			long groupId, String templateId, int start, int end,
-			OrderByComparator obc)
+		long groupId, String templateId, int start, int end,
+		OrderByComparator obc)
 		throws SystemException {
 
 		return journalArticlePersistence.findByG_T(
@@ -1672,7 +1675,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public boolean isLatestVersion(
-			long groupId, String articleId, double version)
+		long groupId, String articleId, double version)
 		throws PortalException, SystemException {
 
 		if (getLatestVersion(groupId, articleId) == version) {
@@ -1684,7 +1687,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public boolean isLatestVersion(
-			long groupId, String articleId, double version, int status)
+		long groupId, String articleId, double version, int status)
 		throws PortalException, SystemException {
 
 		if (getLatestVersion(groupId, articleId, status) == version) {
@@ -1709,7 +1712,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle moveArticleToTrash(
-			long userId, JournalArticle article)
+		long userId, JournalArticle article)
 		throws PortalException, SystemException {
 
 		List<JournalArticle> articleVersions =
@@ -1722,7 +1725,7 @@ public class JournalArticleLocalServiceImpl
 		Map<String, Serializable> workflowContext =
 			new HashMap<String, Serializable>();
 
-		workflowContext.put("articleVersions", (Serializable)articleVersions);
+		workflowContext.put("articleVersions", (Serializable) articleVersions);
 
 		article = updateStatus(
 			userId, article.getId(), WorkflowConstants.STATUS_IN_TRASH,
@@ -1765,7 +1768,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle moveArticleToTrash(
-			long userId, long groupId, String articleId)
+		long userId, long groupId, String articleId)
 		throws PortalException, SystemException {
 
 		List<JournalArticle> articles =
@@ -1780,7 +1783,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle removeArticleLocale(
-			long groupId, String articleId, double version, String languageId)
+		long groupId, String articleId, double version, String languageId)
 		throws PortalException, SystemException {
 
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
@@ -1863,7 +1866,7 @@ public class JournalArticleLocalServiceImpl
 		List<TrashVersion> trashVersions = trashEntryLocalService.getVersions(
 			trashEntry.getEntryId());
 
-		workflowContext.put("trashVersions", (Serializable)trashVersions);
+		workflowContext.put("trashVersions", (Serializable) trashVersions);
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -1875,11 +1878,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public List<JournalArticle> search(
-			long companyId, long groupId, List<Long> folderIds,
-			long classNameId, String keywords, Double version, String type,
-			String structureId, String templateId, Date displayDateGT,
-			Date displayDateLT, int status, Date reviewDate, int start, int end,
-			OrderByComparator obc)
+		long companyId, long groupId, List<Long> folderIds,
+		long classNameId, String keywords, Double version, String type,
+		String structureId, String templateId, Date displayDateGT,
+		Date displayDateLT, int status, Date reviewDate, int start, int end,
+		OrderByComparator obc)
 		throws SystemException {
 
 		return journalArticleFinder.findByKeywords(
@@ -1889,12 +1892,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public List<JournalArticle> search(
-			long companyId, long groupId, List<Long> folderIds,
-			long classNameId, String articleId, Double version, String title,
-			String description, String content, String type, String structureId,
-			String templateId, Date displayDateGT, Date displayDateLT,
-			int status, Date reviewDate, boolean andOperator, int start,
-			int end, OrderByComparator obc)
+		long companyId, long groupId, List<Long> folderIds,
+		long classNameId, String articleId, Double version, String title,
+		String description, String content, String type, String structureId,
+		String templateId, Date displayDateGT, Date displayDateLT,
+		int status, Date reviewDate, boolean andOperator, int start,
+		int end, OrderByComparator obc)
 		throws SystemException {
 
 		return journalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
@@ -1905,12 +1908,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public List<JournalArticle> search(
-			long companyId, long groupId, List<Long> folderIds,
-			long classNameId, String articleId, Double version, String title,
-			String description, String content, String type,
-			String[] structureIds, String[] templateIds, Date displayDateGT,
-			Date displayDateLT, int status, Date reviewDate,
-			boolean andOperator, int start, int end, OrderByComparator obc)
+		long companyId, long groupId, List<Long> folderIds,
+		long classNameId, String articleId, Double version, String title,
+		String description, String content, String type,
+		String[] structureIds, String[] templateIds, Date displayDateGT,
+		Date displayDateLT, int status, Date reviewDate,
+		boolean andOperator, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
 		return journalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
@@ -1921,10 +1924,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public Hits search(
-			long companyId, long groupId, List<Long> folderIds,
-			long classNameId, String structureId, String templateId,
-			String keywords, LinkedHashMap<String, Object> params, int start,
-			int end, Sort sort)
+		long companyId, long groupId, List<Long> folderIds,
+		long classNameId, String structureId, String templateId,
+		String keywords, LinkedHashMap<String, Object> params, int start,
+		int end, Sort sort)
 		throws SystemException {
 
 		String articleId = null;
@@ -1956,12 +1959,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public Hits search(
-			long companyId, long groupId, List<Long> folderIds,
-			long classNameId, String articleId, String title,
-			String description, String content, String type, String status,
-			String structureId, String templateId,
-			LinkedHashMap<String, Object> params, boolean andSearch, int start,
-			int end, Sort sort)
+		long companyId, long groupId, List<Long> folderIds,
+		long classNameId, String articleId, String title,
+		String description, String content, String type, String status,
+		String structureId, String templateId,
+		LinkedHashMap<String, Object> params, boolean andSearch, int start,
+		int end, Sort sort)
 		throws SystemException {
 
 		try {
@@ -1988,10 +1991,10 @@ public class JournalArticleLocalServiceImpl
 			searchContext.setCompanyId(companyId);
 			searchContext.setEnd(end);
 			searchContext.setFolderIds(folderIds);
-			searchContext.setGroupIds(new long[] {groupId});
+			searchContext.setGroupIds(new long[]{groupId});
 
 			if (params != null) {
-				String keywords = (String)params.remove("keywords");
+				String keywords = (String) params.remove("keywords");
 
 				if (Validator.isNotNull(keywords)) {
 					searchContext.setKeywords(keywords);
@@ -2006,7 +2009,7 @@ public class JournalArticleLocalServiceImpl
 			searchContext.setQueryConfig(queryConfig);
 
 			if (sort != null) {
-				searchContext.setSorts(new Sort[] {sort});
+				searchContext.setSorts(new Sort[]{sort});
 			}
 
 			searchContext.setStart(start);
@@ -2022,10 +2025,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public int searchCount(
-			long companyId, long groupId, List<Long> folderIds,
-			long classNameId, String keywords, Double version, String type,
-			String structureId, String templateId, Date displayDateGT,
-			Date displayDateLT, int status, Date reviewDate)
+		long companyId, long groupId, List<Long> folderIds,
+		long classNameId, String keywords, Double version, String type,
+		String structureId, String templateId, Date displayDateGT,
+		Date displayDateLT, int status, Date reviewDate)
 		throws SystemException {
 
 		return journalArticleFinder.countByKeywords(
@@ -2035,11 +2038,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public int searchCount(
-			long companyId, long groupId, List<Long> folderIds,
-			long classNameId, String articleId, Double version, String title,
-			String description, String content, String type, String structureId,
-			String templateId, Date displayDateGT, Date displayDateLT,
-			int status, Date reviewDate, boolean andOperator)
+		long companyId, long groupId, List<Long> folderIds,
+		long classNameId, String articleId, Double version, String title,
+		String description, String content, String type, String structureId,
+		String templateId, Date displayDateGT, Date displayDateLT,
+		int status, Date reviewDate, boolean andOperator)
 		throws SystemException {
 
 		return journalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
@@ -2049,12 +2052,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public int searchCount(
-			long companyId, long groupId, List<Long> folderIds,
-			long classNameId, String articleId, Double version, String title,
-			String description, String content, String type,
-			String[] structureIds, String[] templateIds, Date displayDateGT,
-			Date displayDateLT, int status, Date reviewDate,
-			boolean andOperator)
+		long companyId, long groupId, List<Long> folderIds,
+		long classNameId, String articleId, Double version, String title,
+		String description, String content, String type,
+		String[] structureIds, String[] templateIds, Date displayDateGT,
+		Date displayDateLT, int status, Date reviewDate,
+		boolean andOperator)
 		throws SystemException {
 
 		return journalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
@@ -2078,10 +2081,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle updateArticle(
-			long userId, long groupId, long folderId, String articleId,
-			double version, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String content,
-			String layoutUuid, ServiceContext serviceContext)
+		long userId, long groupId, long folderId, String articleId,
+		double version, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, String content,
+		String layoutUuid, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -2182,20 +2185,20 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle updateArticle(
-			long userId, long groupId, long folderId, String articleId,
-			double version, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String content, String type,
-			String structureId, String templateId, String layoutUuid,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
-			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
-			boolean neverReview, boolean indexable, boolean smallImage,
-			String smallImageURL, File smallImageFile,
-			Map<String, byte[]> images, String articleURL,
-			ServiceContext serviceContext)
+		long userId, long groupId, long folderId, String articleId,
+		double version, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, String content, String type,
+		String structureId, String templateId, String layoutUuid,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute,
+		boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+		int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+		boolean neverReview, boolean indexable, boolean smallImage,
+		String smallImageURL, File smallImageFile,
+		Map<String, byte[]> images, String articleURL,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Article
@@ -2259,7 +2262,7 @@ public class JournalArticleLocalServiceImpl
 		Date reviewDate = null;
 
 		if (article.getClassNameId() ==
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 
 			displayDate = PortalUtil.getDate(
 				displayDateMonth, displayDateDay, displayDateYear,
@@ -2406,7 +2409,7 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_PUBLISH) {
+			WorkflowConstants.ACTION_PUBLISH) {
 
 			sendEmail(
 				article, articleURL, preferences, "requested", serviceContext);
@@ -2417,7 +2420,7 @@ public class JournalArticleLocalServiceImpl
 				serviceContext);
 		}
 		else if (article.getVersion() ==
-					JournalArticleConstants.VERSION_DEFAULT) {
+			JournalArticleConstants.VERSION_DEFAULT) {
 
 			// Indexer
 
@@ -2428,8 +2431,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle updateArticle(
-			long userId, long groupId, long folderId, String articleId,
-			double version, String content, ServiceContext serviceContext)
+		long userId, long groupId, long folderId, String articleId,
+		double version, String content, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
@@ -2446,9 +2449,9 @@ public class JournalArticleLocalServiceImpl
 	 *             Locale, String, String, String, Map, ServiceContext)}
 	 */
 	public JournalArticle updateArticleTranslation(
-			long groupId, String articleId, double version, Locale locale,
-			String title, String description, String content,
-			Map<String, byte[]> images)
+		long groupId, String articleId, double version, Locale locale,
+		String title, String description, String content,
+		Map<String, byte[]> images)
 		throws PortalException, SystemException {
 
 		return updateArticleTranslation(
@@ -2457,9 +2460,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle updateArticleTranslation(
-			long groupId, String articleId, double version, Locale locale,
-			String title, String description, String content,
-			Map<String, byte[]> images, ServiceContext serviceContext)
+		long groupId, String articleId, double version, Locale locale,
+		String title, String description, String content,
+		Map<String, byte[]> images, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		validateContent(content);
@@ -2561,14 +2564,14 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public void updateAsset(
-			long userId, JournalArticle article, long[] assetCategoryIds,
-			String[] assetTagNames, long[] assetLinkEntryIds)
+		long userId, JournalArticle article, long[] assetCategoryIds,
+		String[] assetTagNames, long[] assetLinkEntryIds)
 		throws PortalException, SystemException {
 
 		boolean visible = article.isApproved();
 
 		if (article.getClassNameId() !=
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 
 			visible = false;
 		}
@@ -2621,7 +2624,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle updateContent(
-			long groupId, String articleId, double version, String content)
+		long groupId, String articleId, double version, String content)
 		throws PortalException, SystemException {
 
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
@@ -2635,9 +2638,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle updateStatus(
-			long userId, JournalArticle article, int status, String articleURL,
-			Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
+		long userId, JournalArticle article, int status, String articleURL,
+		Map<String, Serializable> workflowContext,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Article
@@ -2653,7 +2656,7 @@ public class JournalArticleLocalServiceImpl
 			new ArrayList<ObjectValuePair<Long, Integer>>();
 
 		List<JournalArticle> articleVersions =
-			(List<JournalArticle>)workflowContext.get("articleVersions");
+			(List<JournalArticle>) workflowContext.get("articleVersions");
 
 		if ((articleVersions != null) && !articleVersions.isEmpty()) {
 			JournalArticle oldArticleVersion = articleVersions.get(0);
@@ -2689,9 +2692,14 @@ public class JournalArticleLocalServiceImpl
 
 		journalArticlePersistence.update(article);
 
+		Locale locale = serviceContext.getLocale();
+
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+		extraDataJSONObject.put("title", article.getTitle(locale));
+
 		if (hasModifiedLatestApprovedVersion(
-				article.getGroupId(), article.getArticleId(),
-				article.getVersion())) {
+			article.getGroupId(), article.getArticleId(),
+			article.getVersion())) {
 
 			if (status == WorkflowConstants.STATUS_APPROVED) {
 				updateUrlTitles(
@@ -2751,7 +2759,7 @@ public class JournalArticleLocalServiceImpl
 				}
 
 				if (article.getClassNameId() ==
-						JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+					JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 
 					// Get the earliest display date and latest expiration date
 					// among all article versions
@@ -2776,6 +2784,24 @@ public class JournalArticleLocalServiceImpl
 				// Indexer
 
 				reindex(article);
+
+				// Social
+
+				if (serviceContext.isCommandUpdate()) {
+					socialActivityLocalService.addActivity(
+						user.getUserId(), article.getGroupId(),
+						JournalArticle.class.getName(), article.getId(),
+						JournalActivityKeys.UPDATE_JOURNAL_ARTICLE,
+						extraDataJSONObject.toString(), 0);
+				}
+				else {
+					socialActivityLocalService.addUniqueActivity(
+						user.getUserId(), article.getGroupId(),
+						JournalArticle.class.getName(), article.getId(),
+						JournalActivityKeys.ADD_JOURNAL_ARTICLE,
+						extraDataJSONObject.toString(), 0);
+				}
+
 			}
 			else if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
 				updatePreviousApprovedArticle(article);
@@ -2787,7 +2813,7 @@ public class JournalArticleLocalServiceImpl
 			// Trash
 
 			List<TrashVersion> trashVersions =
-				(List<TrashVersion>)workflowContext.get("trashVersions");
+				(List<TrashVersion>) workflowContext.get("trashVersions");
 
 			for (TrashVersion trashVersion : trashVersions) {
 				JournalArticle trashArticleVersion =
@@ -2813,6 +2839,24 @@ public class JournalArticleLocalServiceImpl
 
 				indexer.delete(article);
 			}
+
+			//Social
+
+			if (serviceContext.isCommandUpdate()) {
+				socialActivityLocalService.addActivity(
+					user.getUserId(), article.getGroupId(),
+					JournalArticle.class.getName(), article.getId(),
+					JournalActivityKeys.UPDATE_JOURNAL_ARTICLE,
+					extraDataJSONObject.toString(), 0);
+			}
+			else {
+				socialActivityLocalService.addUniqueActivity(
+					user.getUserId(), article.getGroupId(),
+					JournalArticle.class.getName(), article.getId(),
+					JournalActivityKeys.ADD_JOURNAL_ARTICLE,
+					extraDataJSONObject.toString(), 0);
+			}
+
 		}
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
 			assetEntryLocalService.updateVisible(
@@ -2842,7 +2886,7 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		if ((article.getClassNameId() ==
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
 			(oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
 			(status != WorkflowConstants.STATUS_IN_TRASH)) {
 
@@ -2850,7 +2894,7 @@ public class JournalArticleLocalServiceImpl
 
 			if ((oldStatus == WorkflowConstants.STATUS_PENDING) &&
 				((status == WorkflowConstants.STATUS_APPROVED) ||
-				 (status == WorkflowConstants.STATUS_DENIED))) {
+					(status == WorkflowConstants.STATUS_DENIED))) {
 
 				String msg = "granted";
 
@@ -2870,7 +2914,7 @@ public class JournalArticleLocalServiceImpl
 					_log.error(
 						"Unable to send email to notify the change of status " +
 							" to " + msg + " for article " + article.getId() +
-								": " + e.getMessage());
+							": " + e.getMessage());
 				}
 			}
 
@@ -2883,9 +2927,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle updateStatus(
-			long userId, long classPK, int status,
-			Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
+		long userId, long classPK, int status,
+		Map<String, Serializable> workflowContext,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalArticle article = getArticle(classPK);
@@ -2895,10 +2939,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public JournalArticle updateStatus(
-			long userId, long groupId, String articleId, double version,
-			int status, String articleURL,
-			Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
+		long userId, long groupId, String articleId, double version,
+		int status, String articleURL,
+		Map<String, Serializable> workflowContext,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
@@ -2910,8 +2954,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public void updateTemplateId(
-			long groupId, long classNameId, String oldTemplateId,
-			String newTemplateId)
+		long groupId, long classNameId, String oldTemplateId,
+		String newTemplateId)
 		throws SystemException {
 
 		List<JournalArticle> articles = journalArticlePersistence.findByG_C_T(
@@ -2971,8 +3015,8 @@ public class JournalArticleLocalServiceImpl
 				_log.warn(
 					"Article {groupId=" + groupId + ", articleId=" +
 						articleId + ", version=" + version +
-							"} has content that does not match its " +
-								"structure: " + sxsde.getMessage());
+						"} has content that does not match its " +
+						"structure: " + sxsde.getMessage());
 			}
 		}
 	}
@@ -2986,7 +3030,7 @@ public class JournalArticleLocalServiceImpl
 
 		Element elParent = el.getParent();
 
-		for (;;) {
+		for (; ; ) {
 			if ((elParent == null) || elParent.getName().equals("root")) {
 				break;
 			}
@@ -3006,7 +3050,7 @@ public class JournalArticleLocalServiceImpl
 
 			for (Element tempEl : contentEl.elements()) {
 				if (_elPathName.equals(
-						tempEl.attributeValue("name", StringPool.BLANK))) {
+					tempEl.attributeValue("name", StringPool.BLANK))) {
 
 					contentEl = tempEl;
 					foundEl = true;
@@ -3029,7 +3073,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void copyArticleImages(
-			JournalArticle oldArticle, JournalArticle newArticle)
+		JournalArticle oldArticle, JournalArticle newArticle)
 		throws Exception {
 
 		Document contentDoc = SAXReaderUtil.read(oldArticle.getContent());
@@ -3040,7 +3084,7 @@ public class JournalArticleLocalServiceImpl
 		List<Node> imageNodes = xPathSelector.selectNodes(contentDoc);
 
 		for (Node imageNode : imageNodes) {
-			Element imageEl = (Element)imageNode;
+			Element imageEl = (Element) imageNode;
 
 			String instanceId = imageEl.attributeValue("instance-id");
 			String name = imageEl.attributeValue("name");
@@ -3082,8 +3126,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void format(
-			User user, long groupId, String articleId, double version,
-			boolean incrementVersion, Element root, Map<String, byte[]> images)
+		User user, long groupId, String articleId, double version,
+		boolean incrementVersion, Element root, Map<String, byte[]> images)
 		throws PortalException, SystemException {
 
 		for (Element element : root.elements()) {
@@ -3098,7 +3142,7 @@ public class JournalArticleLocalServiceImpl
 					elInstanceId, elName, images);
 			}
 			else if (elType.equals("text_area") || elType.equals("text") ||
-					 elType.equals("text_box")) {
+				elType.equals("text_box")) {
 
 				List<Element> dynamicContentElements = element.elements(
 					"dynamic-content");
@@ -3126,9 +3170,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected String format(
-			User user, long groupId, String articleId, double version,
-			boolean incrementVersion, String content, String structureId,
-			Map<String, byte[]> images)
+		User user, long groupId, String articleId, double version,
+		boolean incrementVersion, String content, String structureId,
+		Map<String, byte[]> images)
 		throws PortalException, SystemException {
 
 		Document document = null;
@@ -3173,9 +3217,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void formatImage(
-			long groupId, String articleId, double version,
-			boolean incrementVersion, Element el, String elInstanceId,
-			String elName, Map<String, byte[]> images)
+		long groupId, String articleId, double version,
+		boolean incrementVersion, Element el, String elInstanceId,
+		String elName, Map<String, byte[]> images)
 		throws PortalException, SystemException {
 
 		List<Element> imageContents = el.elements("dynamic-content");
@@ -3369,8 +3413,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected Date[] getDateInterval(
-			long groupId, String articleId, Date earliestDisplayDate,
-			Date latestExpirationDate)
+		long groupId, String articleId, Date earliestDisplayDate,
+		Date latestExpirationDate)
 		throws SystemException {
 
 		Date[] dateInterval = new Date[2];
@@ -3387,15 +3431,15 @@ public class JournalArticleLocalServiceImpl
 		for (JournalArticle article : articles) {
 			if ((earliestDisplayDate == null) ||
 				((article.getDisplayDate() != null) &&
-				 earliestDisplayDate.after(article.getDisplayDate()))) {
+					earliestDisplayDate.after(article.getDisplayDate()))) {
 
 				earliestDisplayDate = article.getDisplayDate();
 			}
 
 			if (expiringArticle &&
 				((latestExpirationDate == null) ||
-				 ((article.getExpirationDate() != null) &&
-				  latestExpirationDate.before(article.getExpirationDate())))) {
+					((article.getExpirationDate() != null) &&
+						latestExpirationDate.before(article.getExpirationDate())))) {
 
 				latestExpirationDate = article.getExpirationDate();
 			}
@@ -3414,12 +3458,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected String getUniqueUrlTitle(
-			long id, long groupId, String articleId, String title)
+		long id, long groupId, String articleId, String title)
 		throws PortalException, SystemException {
 
 		String urlTitle = JournalUtil.getUrlTitle(id, title);
 
-		for (int i = 1;; i++) {
+		for (int i = 1; ; i++) {
 			JournalArticle article = null;
 
 			try {
@@ -3449,8 +3493,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected String getUniqueUrlTitle(
-			long id, String articleId, String title, String oldUrlTitle,
-			ServiceContext serviceContext)
+		long id, String articleId, String title, String oldUrlTitle,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String serviceContextUrlTitle = ParamUtil.getString(
@@ -3490,7 +3534,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected boolean hasModifiedLatestApprovedVersion(
-			long groupId, String articleId, double version)
+		long groupId, String articleId, double version)
 		throws PortalException, SystemException {
 
 		double latestApprovedVersion;
@@ -3512,7 +3556,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			JournalArticle article, ServiceContext serviceContext)
+		JournalArticle article, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (!article.isApproved()) {
@@ -3545,7 +3589,7 @@ public class JournalArticleLocalServiceImpl
 			JournalUtil.getEmailArticleAddedEnabled(preferences)) {
 		}
 		else if ((article.getVersion() != 1.0) &&
-				 JournalUtil.getEmailArticleUpdatedEnabled(preferences)) {
+			JournalUtil.getEmailArticleUpdatedEnabled(preferences)) {
 		}
 		else {
 			return;
@@ -3601,8 +3645,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void saveImages(
-			boolean smallImage, long smallImageId, File smallImageFile,
-			byte[] smallImageBytes)
+		boolean smallImage, long smallImageId, File smallImageFile,
+		byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
 		if (smallImage) {
@@ -3616,28 +3660,28 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void sendEmail(
-			JournalArticle article, String articleURL,
-			PortletPreferences preferences, String emailType,
-			ServiceContext serviceContext)
+		JournalArticle article, String articleURL,
+		PortletPreferences preferences, String emailType,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (preferences == null) {
 			return;
 		}
 		else if (emailType.equals("denied") &&
-				 JournalUtil.getEmailArticleApprovalDeniedEnabled(
-					 preferences)) {
+			JournalUtil.getEmailArticleApprovalDeniedEnabled(
+				preferences)) {
 		}
 		else if (emailType.equals("granted") &&
-				 JournalUtil.getEmailArticleApprovalGrantedEnabled(
-					 preferences)) {
+			JournalUtil.getEmailArticleApprovalGrantedEnabled(
+				preferences)) {
 		}
 		else if (emailType.equals("requested") &&
-				 JournalUtil.getEmailArticleApprovalRequestedEnabled(
-					 preferences)) {
+			JournalUtil.getEmailArticleApprovalRequestedEnabled(
+				preferences)) {
 		}
 		else if (emailType.equals("review") &&
-				 JournalUtil.getEmailArticleReviewEnabled(preferences)) {
+			JournalUtil.getEmailArticleReviewEnabled(preferences)) {
 		}
 		else {
 			return;
@@ -3729,7 +3773,7 @@ public class JournalArticleLocalServiceImpl
 
 		if (approvedArticles.isEmpty() ||
 			((approvedArticles.size() == 1) &&
-			 (article.getStatus() == WorkflowConstants.STATUS_APPROVED))) {
+				(article.getStatus() == WorkflowConstants.STATUS_APPROVED))) {
 
 			if (article.isIndexable()) {
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -3774,7 +3818,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void updateUrlTitles(
-			long groupId, String articleId, String urlTitle)
+		long groupId, String articleId, String urlTitle)
 		throws SystemException {
 
 		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
@@ -3790,11 +3834,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void validate(
-			long companyId, long groupId, long classNameId,
-			Map<Locale, String> titleMap, String content, String type,
-			String structureId, String templateId, Date expirationDate,
-			boolean smallImage, String smallImageURL, File smallImageFile,
-			byte[] smallImageBytes)
+		long companyId, long groupId, long classNameId,
+		Map<Locale, String> titleMap, String content, String type,
+		String structureId, String templateId, Date expirationDate,
+		boolean smallImage, String smallImageURL, File smallImageFile,
+		byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
 		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
@@ -3817,7 +3861,7 @@ public class JournalArticleLocalServiceImpl
 
 		if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
 			(titleMap.isEmpty() ||
-			 Validator.isNull(titleMap.get(articleDefaultLocale)))) {
+				Validator.isNull(titleMap.get(articleDefaultLocale)))) {
 
 			throw new ArticleTitleException();
 		}
@@ -3852,7 +3896,7 @@ public class JournalArticleLocalServiceImpl
 				}
 			}
 			else if (classNameId ==
-						JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 
 				throw new NoSuchTemplateException();
 			}
@@ -3895,7 +3939,7 @@ public class JournalArticleLocalServiceImpl
 
 			if ((smallImageMaxSize > 0) &&
 				((smallImageBytes == null) ||
-				 (smallImageBytes.length > smallImageMaxSize))) {
+					(smallImageBytes.length > smallImageMaxSize))) {
 
 				throw new ArticleSmallImageSizeException();
 			}
@@ -3903,11 +3947,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void validate(
-			long companyId, long groupId, long classNameId, String articleId,
-			boolean autoArticleId, double version, Map<Locale, String> titleMap,
-			String content, String type, String structureId, String templateId,
-			Date expirationDate, boolean smallImage, String smallImageURL,
-			File smallImageFile, byte[] smallImageBytes)
+		long companyId, long groupId, long classNameId, String articleId,
+		boolean autoArticleId, double version, Map<Locale, String> titleMap,
+		String content, String type, String structureId, String templateId,
+		Date expirationDate, boolean smallImage, String smallImageURL,
+		File smallImageFile, byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
 		if (!autoArticleId) {

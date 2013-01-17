@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -868,8 +869,8 @@ public class SitesUtil {
 		userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
 
 		List<UserGroup> userGroupsGroups = UserGroupLocalServiceUtil.search(
-			companyId, null, null, userGroupParams, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+			companyId, null, userGroupParams, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, (OrderByComparator)null);
 
 		for (UserGroup userGroup : userGroupsGroups) {
 			for (long userGroupId : user.getUserGroupIds()) {

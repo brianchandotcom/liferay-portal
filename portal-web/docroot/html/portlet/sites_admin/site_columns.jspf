@@ -115,7 +115,7 @@
 
 	userGroupParams.put("userGroupsGroups", new Long(curGroup.getGroupId()));
 
-	int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, null, userGroupParams);
+	int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, userGroupParams);
 
 	if (userGroupsCount > 0) {
 		buffer.append("<div class=\"user-group-count\">");

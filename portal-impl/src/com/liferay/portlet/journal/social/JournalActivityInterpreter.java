@@ -58,11 +58,13 @@ public class JournalActivityInterpreter extends BaseSocialActivityInterpreter {
 			!JournalPermission.contains(
 				permissionChecker, activity.getGroupId(),
 				ActionKeys.ADD_ARTICLE)) {
+
 			return null;
 		}
 		else if ((activityType == JournalActivityKeys.UPDATE_JOURNAL_ARTICLE) &&
 			!JournalArticlePermission.contains(
 				permissionChecker, article, ActionKeys.UPDATE)) {
+
 			return null;
 		}
 
@@ -86,10 +88,8 @@ public class JournalActivityInterpreter extends BaseSocialActivityInterpreter {
 		if (Validator.isNotNull(lastestArticle.getLayoutUuid()) &&
 			!article.isInTrash()) {
 
-			Group group = themeDisplay.getScopeGroup();
-
 			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-				group, false, themeDisplay);
+				themeDisplay.getScopeGroup(), false, themeDisplay);
 
 			link =
 				groupFriendlyURL.concat(
@@ -102,12 +102,18 @@ public class JournalActivityInterpreter extends BaseSocialActivityInterpreter {
 		String titlePattern = null;
 
 		if (activityType == JournalActivityKeys.ADD_JOURNAL_ARTICLE) {
-			if (Validator.isNull(groupName)) {
+			if (Validator.isNotNull(groupName)) {
+				titlePattern = "activity-journal-add-article-in";
+			}
+			else {
 				titlePattern = "activity-journal-add-article";
 			}
 		}
 		else if (activityType == JournalActivityKeys.UPDATE_JOURNAL_ARTICLE) {
-			if (Validator.isNull(groupName)) {
+			if (Validator.isNotNull(groupName)) {
+				titlePattern = "activity-journal-update-article-in";
+			}
+			else {
 				titlePattern = "activity-journal-update-article";
 			}
 		}

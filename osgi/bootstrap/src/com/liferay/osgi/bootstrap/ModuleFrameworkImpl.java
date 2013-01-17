@@ -78,22 +78,7 @@ public class ModuleFrameworkImpl
 	public Object addBundle(String location, InputStream inputStream)
 		throws PortalException {
 
-		if (_framework == null) {
-			return null;
-		}
-
-		_checkPermission();
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		try {
-			return bundleContext.installBundle(location, inputStream);
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new PortalException(be);
-		}
+		return _addBundle(location, inputStream, true);
 	}
 
 	public void getBundleExportPackages(
@@ -248,22 +233,7 @@ public class ModuleFrameworkImpl
 	}
 
 	public void startBundle(long bundleId, int options) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.start(options);
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new PortalException(be);
-		}
+		_startBundle(bundleId, 0, true);
 	}
 
 	public void startFramework() throws Exception {
@@ -378,6 +348,30 @@ public class ModuleFrameworkImpl
 
 		try {
 			bundle.update(inputStream);
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new PortalException(be);
+		}
+	}
+
+	private Object _addBundle(
+			String location, InputStream inputStream, boolean checkPermissions)
+		throws PortalException {
+
+		if (_framework == null) {
+			return null;
+		}
+
+		if (checkPermissions) {
+			_checkPermission();
+		}
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		try {
+			return bundleContext.installBundle(location, inputStream);
 		}
 		catch (BundleException be) {
 			_log.error(be, be);
@@ -529,6 +523,30 @@ public class ModuleFrameworkImpl
 		bundleContext.registerService(
 			new String[] {ServletContext.class.getName()}, servletContext,
 			properties);
+	}
+
+	private void _startBundle(
+			long bundleId, int options, boolean checkPermissions)
+		throws PortalException {
+
+		if (checkPermissions) {
+			_checkPermission();
+		}
+
+		Bundle bundle = _getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new PortalException("No bundle with ID " + bundleId);
+		}
+
+		try {
+			bundle.start(options);
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new PortalException(be);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkUtil.class);

@@ -51,6 +51,25 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * The DDM Template local service is responsible for accessing, creating,
+ * modifying and deleting templates.
+ *
+ * <p>
+ * Templates are used in Liferay to render templated content like web contents,
+ * dynamic data lists, applications or forms.
+ * </p>
+ *
+ * <p>
+ * Templates can be written in a variety of templating languages, like Velocity
+ * or Freemarker. They can have multi-language name and description.
+ * </p>
+ *
+ * <p>
+ * Templates can be related to many models in the portal, for instance
+ * Structures, Dynamic Data Lists or Applications. This relationship can be
+ * defined using the classNameId - classPK pattern.
+ * </p>
+ *
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  * @author Marcellus Tavares
@@ -58,6 +77,31 @@ import java.util.Map;
 public class DDMTemplateLocalServiceImpl
 	extends DDMTemplateLocalServiceBaseImpl {
 
+	/**
+	 * Adds a template
+	 *
+	 * @param  userId the primary key of the template's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the entity's class this template
+	 *         is related to
+	 * @param  classPK the primary key of entity the template is related to
+	 * @param  nameMap the template's locales and localized names
+	 * @param  descriptionMap the template's locales and localized descriptions
+	 * @param  type the template's type. For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  mode the template's mode. For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  language the template's script language. For more information see
+	 *         {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  script the template's script
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         UUID, creation date, modification date, guest permissions and
+	 *         group permissions for the template.
+	 * @return the template
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMTemplate addTemplate(
 			long userId, long groupId, long classNameId, long classPK,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -71,6 +115,39 @@ public class DDMTemplateLocalServiceImpl
 			null, serviceContext);
 	}
 
+	/**
+	 * Adds a template
+	 *
+	 * @param  userId the primary key of the template's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the entity's class this template
+	 *         is related to
+	 * @param  classPK the primary key of entity the template is related to
+	 * @param  templateKey unique string identifying the template (optionally
+	 *         <code>null</code>)
+	 * @param  nameMap the template's locales and localized names
+	 * @param  descriptionMap the template's locales and localized descriptions
+	 * @param  type the template's type. For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  mode the template's mode. For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  language the template's script language. For more information see
+	 *         {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  script the template's script
+	 * @param  cacheable whether the template is cacheable
+	 * @param  smallImage whether the template has a small image
+	 * @param  smallImageURL the template's small image URL (optionally
+	 *         <code>null</code>)
+	 * @param  smallImageFile the template's small image file (optionally
+	 *         <code>null</code>)
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         UUID, creation date, modification date, guest permissions and
+	 *         group permissions for the template.
+	 * @return the template
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMTemplate addTemplate(
 			long userId, long groupId, long classNameId, long classPK,
 			String templateKey, Map<Locale, String> nameMap,
@@ -161,6 +238,17 @@ public class DDMTemplateLocalServiceImpl
 		return template;
 	}
 
+	/**
+	 * Adds the resources of a template
+	 *
+	 * @param  template the template we are adding resources to
+	 * @param  addGroupPermissions set to <code>true</code> to add group
+	 *         permissions
+	 * @param  addGuestPermissions set to <code>true</code> to add guest
+	 *         permissions
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addTemplateResources(
 			DDMTemplate template, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -173,6 +261,15 @@ public class DDMTemplateLocalServiceImpl
 			addGuestPermissions);
 	}
 
+	/**
+	 * Adds the resources of a template
+	 *
+	 * @param  template the template we are adding resources to
+	 * @param  groupPermissions group permissions to be added
+	 * @param  guestPermissions guest permissions to be added
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addTemplateResources(
 			DDMTemplate template, String[] groupPermissions,
 			String[] guestPermissions)
@@ -184,6 +281,22 @@ public class DDMTemplateLocalServiceImpl
 			template.getTemplateId(), groupPermissions, guestPermissions);
 	}
 
+	/**
+	 * Copies a template: creates a new template extracting all the values from
+	 * the original one. Supports defining the new name and description.
+	 *
+	 * @param  userId the primary key of the template's creator/owner
+	 * @param  templateId the primary key of the template to be copied
+	 * @param  nameMap the new template's locales and localized names
+	 * @param  descriptionMap the new template's locales and localized
+	 *         descriptions
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         UUID, creation date, modification date, guest permissions and
+	 *         group permissions for the template.
+	 * @return the template
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMTemplate copyTemplate(
 			long userId, long templateId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
@@ -221,6 +334,27 @@ public class DDMTemplateLocalServiceImpl
 			template.getSmallImageURL(), smallImageFile, serviceContext);
 	}
 
+	/**
+	 * Copies a list of templates with matching class Name IDs, class PKs and
+	 * type. It creates new templates extracting all the values from the
+	 * original ones and updating their class PKs to new class PK.
+	 *
+	 * @param  userId the primary key of the template's creator/owner
+	 * @param  classNameId the primary key of the entity's class the template is
+	 *         related to
+	 * @param  oldClassPK the primary key of entity the original template is
+	 *         related to
+	 * @param  newClassPK the primary key of entity the new templates will be
+	 *         related to
+	 * @param  type the template's type. For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         creation date, modification date, guest permissions and group
+	 *         permissions for the new templates.
+	 * @return the template
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMTemplate> copyTemplates(
 			long userId, long classNameId, long oldClassPK, long newClassPK,
 			String type, ServiceContext serviceContext)
@@ -241,6 +375,13 @@ public class DDMTemplateLocalServiceImpl
 		return newTemplates;
 	}
 
+	/**
+	 * Deletes a template and its resources.
+	 *
+	 * @param  template the template that will be deleted
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteTemplate(DDMTemplate template)
 		throws PortalException, SystemException {
 
@@ -255,6 +396,13 @@ public class DDMTemplateLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL, template.getTemplateId());
 	}
 
+	/**
+	 * Deletes a template and its resources.
+	 *
+	 * @param  templateId the primary key of the template that will be deleted
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteTemplate(long templateId)
 		throws PortalException, SystemException {
 
@@ -264,6 +412,13 @@ public class DDMTemplateLocalServiceImpl
 		deleteTemplate(template);
 	}
 
+	/**
+	 * Deletes all the templates of a group
+	 *
+	 * @param  groupId the primary key of the group
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteTemplates(long groupId)
 		throws PortalException, SystemException {
 
@@ -275,6 +430,16 @@ public class DDMTemplateLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns the template with the matching templateKey that belongs to the
+	 * group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  templateKey unique string identifying the template
+	 * @return the template with the templateKey, or <code>null</code> if a
+	 *         matching template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMTemplate fetchTemplate(long groupId, String templateKey)
 		throws SystemException {
 
@@ -283,6 +448,24 @@ public class DDMTemplateLocalServiceImpl
 		return ddmTemplatePersistence.fetchByG_T(groupId, templateKey);
 	}
 
+	/**
+	 * Returns the template with the matching templateKey in a given group and
+	 * optionally in the global scope.
+	 *
+	 * This method first searches in the given group and in case the template is
+	 * not found and includeGlobalTemplates is set to <code>true</code>, then
+	 * searches the
+	 * global group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  templateKey unique string identifying the template
+	 * @param  includeGlobalTemplates whether to include the global scope in the
+	 *         search
+	 * @return the template or <code>null</code> if a matching template could
+	 *         not be found
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMTemplate fetchTemplate(
 			long groupId, String templateKey, boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
@@ -305,18 +488,44 @@ public class DDMTemplateLocalServiceImpl
 			companyGroup.getGroupId(), templateKey);
 	}
 
+	/**
+	 * Returns the template with the matching UUID that belongs to the group.
+	 *
+	 * @param  uuid unique string identifying the template
+	 * @param  groupId the primary key of the group
+	 * @return the template with the templateKey, or <code>null</code> if a
+	 *         matching template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMTemplate fetchTemplate(String uuid, long groupId)
 		throws SystemException {
 
 		return ddmTemplatePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	/**
+	 * Returns a template that has a matching primary key
+	 *
+	 * @param  templateId the primary key of the template
+	 * @return the matching template
+	 * @throws PortalException if the template was not found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMTemplate getTemplate(long templateId)
 		throws PortalException, SystemException {
 
 		return ddmTemplatePersistence.findByPrimaryKey(templateId);
 	}
 
+	/**
+	 * Returns a template that has a matching template key in a given group
+	 *
+	 * @param  groupId the primary key of the template's group
+	 * @param  templateKey unique string identifying the template
+	 * @return the matching template
+	 * @throws PortalException if the template was not found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMTemplate getTemplate(long groupId, String templateKey)
 		throws PortalException, SystemException {
 
@@ -325,6 +534,22 @@ public class DDMTemplateLocalServiceImpl
 		return ddmTemplatePersistence.findByG_T(groupId, templateKey);
 	}
 
+	/**
+	 * Returns a template that has a matching template key in a given group and
+	 * optionally in the global scope.
+	 *
+	 * This method first searches in the give group and in case the template is
+	 * not found and includeGlobalTemplates is set to <code>true</code>, then
+	 * searches the global group.
+	 *
+	 * @param  groupId the primary key of the template's group
+	 * @param  templateKey unique string identifying the template
+	 * @param  includeGlobalTemplates whether to include the global scope in the
+	 *         search
+	 * @return the matching template
+	 * @throws PortalException if the template was not found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMTemplate getTemplate(
 			long groupId, String templateKey, boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
@@ -352,16 +577,44 @@ public class DDMTemplateLocalServiceImpl
 			companyGroup.getGroupId(), templateKey);
 	}
 
+	/**
+	 * Returns a list with all the templates that matches the given classPK
+	 *
+	 * @param  classPK the primary key of entity the templates are related to
+	 * @return the list of all matching templates
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMTemplate> getTemplates(long classPK) throws SystemException {
 		return ddmTemplatePersistence.findByClassPK(classPK);
 	}
 
+	/**
+	 * Returns a list of templates that has a matching classNameId in a given
+	 * group
+	 *
+	 * @param  groupId the primary key of the template's group
+	 * @param  classNameId the primary key of the entity's class this template
+	 *         is related to
+	 * @return a list of matching templates
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMTemplate> getTemplates(long groupId, long classNameId)
 		throws SystemException {
 
 		return ddmTemplatePersistence.findByG_C(groupId, classNameId);
 	}
 
+	/**
+	 * Returns a list of templates that has a matching classNameId and classPK
+	 * in a given group
+	 *
+	 * @param  groupId the primary key of the template's group
+	 * @param  classNameId the primary key of the entity's class this template
+	 *         is related to
+	 * @param  classPK the primary key of entity the templates are related to
+	 * @return a list of matching templates
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMTemplate> getTemplates(
 			long groupId, long classNameId, long classPK)
 		throws SystemException {
@@ -370,6 +623,18 @@ public class DDMTemplateLocalServiceImpl
 			groupId, classNameId, classPK);
 	}
 
+	/**
+	 * Returns a list of templates that has a matching classNameId, classPK and
+	 * type
+	 *
+	 * @param  classNameId the primary key of the entity's class this template
+	 *         is related to
+	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  type the template's type. For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @return a list of matching templates
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMTemplate> getTemplates(
 			long groupId, long classNameId, long classPK, String type)
 		throws SystemException {
@@ -378,6 +643,20 @@ public class DDMTemplateLocalServiceImpl
 			groupId, classNameId, classPK, type);
 	}
 
+	/**
+	 * Returns a list of templates that has a matching classNameId, classPK,
+	 * type and mode
+	 *
+	 * @param  classNameId the primary key of the entity's class this template
+	 *         is related to
+	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  type the template's type. For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  mode the template's mode. For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @return a list of matching templates
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMTemplate> getTemplates(
 			long groupId, long classNameId, long classPK, String type,
 			String mode)
@@ -387,16 +666,70 @@ public class DDMTemplateLocalServiceImpl
 			groupId, classNameId, classPK, type, mode);
 	}
 
+	/**
+	 * Returns the number of templates that belong to the group
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the number of templates that belong to the group
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getTemplatesCount(long groupId) throws SystemException {
 		return ddmTemplatePersistence.countByGroupId(groupId);
 	}
 
+	/**
+	 * Returns the number of templates that belong to the group and matches the
+	 * classNameId
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the entity's class the templates
+	 *         are related to
+	 * @return the number of templates that belong to the group and matches the
+	 *         classNameId
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getTemplatesCount(long groupId, long classNameId)
 		throws SystemException {
 
 		return ddmTemplatePersistence.countByG_C(groupId, classNameId);
 	}
 
+	/**
+	 * Returns an ordered range of all the templates belonging to the company
+	 * and group that matches the classNameId, classPk type, mode and include
+	 * the keywords on its names or descriptions
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the templates company
+	 * @param  groupId the primary keys of the group
+	 * @param  classNameId the primary key of the entity's class the templates
+	 *         are related to
+	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         template's name, or description (optionally <code>null</code>)
+	 * @param  type the template's type (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  mode the template's mode (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  start the lower bound of the range of templates
+	 * @param  end the upper bound of the range of templates (not inclusive)
+	 * @param  orderByComparator the comparator to order the results by
+	 *         (optionally <code>null</code>)
+	 * @return the matching templates ordered by comparator
+	 *         <code>orderByComparator</code>
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMTemplate> search(
 			long companyId, long groupId, long classNameId, long classPK,
 			String keywords, String type, String mode, int start, int end,
@@ -408,6 +741,47 @@ public class DDMTemplateLocalServiceImpl
 			start, end, orderByComparator);
 	}
 
+	/**
+	 * Returns an ordered range of all the templates belonging to the company
+	 * and group that matches the classNameId, classPk, type, mode and language
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the templates company
+	 * @param  groupId the primary keys of the group
+	 * @param  classNameId the primary key of the entity's class the templates
+	 *         are related to
+	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  name the template's name (optionally <code>null</code>)
+	 * @param  description the template's description (optionally
+	 *         <code>null</code>)
+	 * @param  type the template's type (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  mode the template's mode (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  language the template's script language (optionally
+	 *         <code>null</code>) For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field.
+	 * @param  start the lower bound of the range of templates
+	 * @param  end the upper bound of the range of templates (not inclusive)
+	 * @param  orderByComparator the comparator to order the results by
+	 *         (optionally <code>null</code>)
+	 * @return the matching templates ordered by comparator
+	 *         <code>orderByComparator</code>
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMTemplate> search(
 			long companyId, long groupId, long classNameId, long classPK,
 			String name, String description, String type, String mode,
@@ -420,6 +794,42 @@ public class DDMTemplateLocalServiceImpl
 			mode, language, andOperator, start, end, orderByComparator);
 	}
 
+	/**
+	 * Returns an ordered range of all the templates belonging to the company
+	 * that matches the groupIds, classNameIds, classPk, type, mode and include
+	 * the keywords on its names or descriptions
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the templates company
+	 * @param  groupIds the primary keys of the groups
+	 * @param  classNameIds the primary keys of the entity's class the templates
+	 *         are related to
+	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         template's name, or description (optionally <code>null</code>)
+	 * @param  type the template's type (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  mode the template's mode (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  start the lower bound of the range of templates
+	 * @param  end the upper bound of the range of templates (not inclusive)
+	 * @param  orderByComparator the comparator to order the results by
+	 *         (optionally <code>null</code>)
+	 * @return the matching templates ordered by comparator
+	 *         <code>orderByComparator</code>
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMTemplate> search(
 			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String keywords, String type, String mode, int start, int end,
@@ -431,6 +841,48 @@ public class DDMTemplateLocalServiceImpl
 			start, end, orderByComparator);
 	}
 
+	/**
+	 * Returns an ordered range of all the templates belonging to the company
+	 * that matches the groupIds, classNameIds, classPk, name, description,
+	 * type, mode and language
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the templates company
+	 * @param  groupIds the primary keys of the groups
+	 * @param  classNameIds the primary keys of the entity's class the templates
+	 *         are related to
+	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  name the template's name (optionally <code>null</code>)
+	 * @param  description the template's description (optionally
+	 *         <code>null</code>)
+	 * @param  type the template's type (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  mode the template's mode (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  language the template's script language (optionally
+	 *         <code>null</code>) For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field.
+	 * @param  start the lower bound of the range of templates
+	 * @param  end the upper bound of the range of templates (not inclusive)
+	 * @param  orderByComparator the comparator to order the results by
+	 *         (optionally <code>null</code>)
+	 * @return the matching templates ordered by comparator
+	 *         <code>orderByComparator</code>
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMTemplate> search(
 			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String name, String description, String type, String mode,
@@ -443,6 +895,27 @@ public class DDMTemplateLocalServiceImpl
 			mode, language, andOperator, start, end, orderByComparator);
 	}
 
+	/**
+	 * Returns the number of templates belonging to the company and group that
+	 * matches the classNameId, classPk, type, mode and include the keywords on
+	 * its names or descriptions
+	 *
+	 * @param  companyId the primary key of the template's company
+	 * @param  groupId the primary keys of the group
+	 * @param  classNameId the primary key of the entity's class the templates
+	 *         are related to
+	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         template's name, or description (optionally <code>null</code>)
+	 * @param  type the template's type (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  mode the template's mode (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @return the number of matching templates
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int searchCount(
 			long companyId, long groupId, long classNameId, long classPK,
 			String keywords, String type, String mode)
@@ -452,6 +925,33 @@ public class DDMTemplateLocalServiceImpl
 			companyId, groupId, classNameId, classPK, keywords, type, mode);
 	}
 
+	/**
+	 * Returns the number of templates belonging to the company and group that
+	 * matches the classNameId, classPk, name, description, type, mode and
+	 * language
+	 *
+	 * @param  companyId the primary key of the templates company
+	 * @param  groupId the primary keys of the group
+	 * @param  classNameId the primary key of the entity's class the templates
+	 *         are related to
+	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  name the template's name (optionally <code>null</code>)
+	 * @param  description the template's description (optionally
+	 *         <code>null</code>)
+	 * @param  type the template's type (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  mode the template's mode (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  language the template's script language (optionally
+	 *         <code>null</code>) For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field.
+	 * @return the number of matching templates
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int searchCount(
 			long companyId, long groupId, long classNameId, long classPK,
 			String name, String description, String type, String mode,
@@ -463,6 +963,27 @@ public class DDMTemplateLocalServiceImpl
 			mode, language, andOperator);
 	}
 
+	/**
+	 * Returns the number of templates belonging to the company that matches the
+	 * groupIds, classNameIds, classPk, type, mode and include the keywords on
+	 * its names or descriptions
+	 *
+	 * @param  companyId the primary key of the templates company
+	 * @param  groupIds the primary keys of the groups
+	 * @param  classNameIds the primary keys of the entity's class the templates
+	 *         are related to
+	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         template's name, or description (optionally <code>null</code>)
+	 * @param  type the template's type (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  mode the template's mode (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @return the number of matching templates
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int searchCount(
 			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String keywords, String type, String mode)
@@ -472,6 +993,33 @@ public class DDMTemplateLocalServiceImpl
 			companyId, groupIds, classNameIds, classPK, keywords, type, mode);
 	}
 
+	/**
+	 * Returns the number of templates belonging to the company that matches the
+	 * groupIds, classNameIds, classPks, name, description, type, mode and
+	 * language
+	 *
+	 * @param  companyId the primary key of the templates company
+	 * @param  groupIds the primary keys of the groups
+	 * @param  classNameIds the primary keys of the entity's class the templates
+	 *         are related to
+	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  name the template's name (optionally <code>null</code>)
+	 * @param  description the template's description (optionally
+	 *         <code>null</code>)
+	 * @param  type the template's type (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  mode the template's mode (optionally <code>null</code>) For more
+	 *         information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  language the template's script language (optionally
+	 *         <code>null</code>) For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field.
+	 * @return the number of matching templates
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int searchCount(
 			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String name, String description, String type, String mode,
@@ -483,6 +1031,33 @@ public class DDMTemplateLocalServiceImpl
 			mode, language, andOperator);
 	}
 
+	/**
+	 * Updates the template matching the templateId
+	 *
+	 * @param  templateId the primary key of the template
+	 * @param  nameMap the template's new locales and localized names
+	 * @param  descriptionMap the template's new locales and localized
+	 *         description
+	 * @param  type the template's type. For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  mode the template's mode. For more information see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  language the template's script language. For more information see
+	 *         {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  script the template's script
+	 * @param  cacheable whether the template is cacheable
+	 * @param  smallImage whether the template has a small image
+	 * @param  smallImageURL the template's small image URL (optionally
+	 *         <code>null</code>)
+	 * @param  smallImageFile the template's small image file (optionally
+	 *         <code>null</code>)
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date
+	 * @return the updated template
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMTemplate updateTemplate(
 			long templateId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type, String mode,

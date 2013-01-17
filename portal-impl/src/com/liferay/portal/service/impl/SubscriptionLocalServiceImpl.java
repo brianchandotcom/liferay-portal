@@ -41,7 +41,7 @@ public class SubscriptionLocalServiceImpl
 	extends SubscriptionLocalServiceBaseImpl {
 
 	public Subscription addSubscription(
-			long userId, long groupId, String className, long classPK)
+		long userId, long groupId, String className, long classPK)
 		throws PortalException, SystemException {
 
 		return addSubscription(
@@ -50,8 +50,8 @@ public class SubscriptionLocalServiceImpl
 	}
 
 	public Subscription addSubscription(
-			long userId, long groupId, String className, long classPK,
-			String frequency)
+		long userId, long groupId, String className, long classPK,
+		String frequency)
 		throws PortalException, SystemException {
 
 		// Subscription
@@ -183,7 +183,7 @@ public class SubscriptionLocalServiceImpl
 	}
 
 	public void deleteSubscriptions(
-			long companyId, String className, long classPK)
+		long companyId, String className, long classPK)
 		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
@@ -197,7 +197,7 @@ public class SubscriptionLocalServiceImpl
 	}
 
 	public Subscription getSubscription(
-			long companyId, long userId, String className, long classPK)
+		long companyId, long userId, String className, long classPK)
 		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
@@ -207,7 +207,7 @@ public class SubscriptionLocalServiceImpl
 	}
 
 	public List<Subscription> getSubscriptions(
-			long companyId, long userId, String className, long[] classPKs)
+		long companyId, long userId, String className, long[] classPKs)
 		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
@@ -217,7 +217,7 @@ public class SubscriptionLocalServiceImpl
 	}
 
 	public List<Subscription> getSubscriptions(
-			long companyId, String className, long classPK)
+		long companyId, String className, long classPK)
 		throws SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
@@ -226,29 +226,9 @@ public class SubscriptionLocalServiceImpl
 			companyId, classNameId, classPK);
 	}
 
-	public int getSubscriptionsCount(
-			long companyId, long userId, String className, long classPK)
-		throws SystemException {
-
-		long classNameId = PortalUtil.getClassNameId(className);
-
-		return subscriptionPersistence.countByC_U_C_C(
-			companyId, userId, classNameId, classPK);
-	}
-
-	public int getSubscriptionsCount(
-			long companyId, long userId, String className, long[] classPKs)
-		throws PortalException, SystemException {
-
-		long classNameId = PortalUtil.getClassNameId(className);
-
-		return subscriptionPersistence.countByC_U_C_C(
-			companyId, userId, classNameId, classPKs);
-	}
-
 	public List<Subscription> getUserSubscriptions(
-			long userId, int start, int end,
-			OrderByComparator orderByComparator)
+		long userId, int start, int end,
+		OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return subscriptionPersistence.findByUserId(
@@ -256,7 +236,7 @@ public class SubscriptionLocalServiceImpl
 	}
 
 	public List<Subscription> getUserSubscriptions(
-			long userId, String className)
+		long userId, String className)
 		throws SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
@@ -269,7 +249,7 @@ public class SubscriptionLocalServiceImpl
 	}
 
 	public boolean isSubscribed(
-			long companyId, long userId, String className, long classPK)
+		long companyId, long userId, String className, long classPK)
 		throws SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
@@ -278,6 +258,23 @@ public class SubscriptionLocalServiceImpl
 			companyId, userId, classNameId, classPK);
 
 		if (subscription != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isSubscribed(
+		long companyId, long userId, String className, long[] classPKs)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		int count = subscriptionPersistence.countByC_U_C_C(
+			companyId, userId, classNameId, classPKs);
+
+		if (count > 0) {
 			return true;
 		}
 		else {

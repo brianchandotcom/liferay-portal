@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.module.framework.ModuleFrameworkException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -93,7 +92,7 @@ public class ModuleFrameworkImpl
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new ModuleFrameworkException(be);
+			throw new PortalException(be);
 		}
 	}
 
@@ -180,7 +179,7 @@ public class ModuleFrameworkImpl
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+			throw new PortalException("No bundle with ID " + bundleId);
 		}
 
 		int state = bundle.getState();
@@ -235,7 +234,7 @@ public class ModuleFrameworkImpl
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+			throw new PortalException("No bundle with ID " + bundleId);
 		}
 
 		BundleStartLevel bundleStartLevel = bundle.adapt(
@@ -254,7 +253,7 @@ public class ModuleFrameworkImpl
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+			throw new PortalException("No bundle with ID " + bundleId);
 		}
 
 		try {
@@ -263,7 +262,7 @@ public class ModuleFrameworkImpl
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new ModuleFrameworkException(be);
+			throw new PortalException(be);
 		}
 	}
 
@@ -309,7 +308,7 @@ public class ModuleFrameworkImpl
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+			throw new PortalException("No bundle with ID " + bundleId);
 		}
 
 		try {
@@ -318,7 +317,7 @@ public class ModuleFrameworkImpl
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new ModuleFrameworkException(be);
+			throw new PortalException(be);
 		}
 	}
 
@@ -349,7 +348,7 @@ public class ModuleFrameworkImpl
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+			throw new PortalException("No bundle with ID " + bundleId);
 		}
 
 		try {
@@ -358,7 +357,7 @@ public class ModuleFrameworkImpl
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new ModuleFrameworkException(be);
+			throw new PortalException(be);
 		}
 	}
 
@@ -374,7 +373,7 @@ public class ModuleFrameworkImpl
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+			throw new PortalException("No bundle with ID " + bundleId);
 		}
 
 		try {
@@ -383,7 +382,7 @@ public class ModuleFrameworkImpl
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new ModuleFrameworkException(be);
+			throw new PortalException(be);
 		}
 	}
 

@@ -107,7 +107,7 @@ portletURL.setParameter("keywords", keywords);
 						<liferay-ui:icon
 							image="message"
 							label="<%= true %>"
-							message="<%= StringUtil.shorten(message.getBody(), 50) %>"
+							message="<%= StringUtil.shorten(message.getBody()) %>"
 							url="<%= rowURL %>"
 						/>
 
@@ -144,11 +144,13 @@ portletURL.setParameter("keywords", keywords);
 					if (title.equalsIgnoreCase(keywords)) {
 						createNewPage = false;
 					}
+
+					WikiNode curNode = wikiPage.getNode();
 					%>
 
 					<portlet:renderURL var="rowURL">
 						<portlet:param name="struts_action" value="/wiki/view" />
-						<portlet:param name="nodeName" value="<%= wikiPage.getNode().getName() %>" />
+						<portlet:param name="nodeName" value="<%= curNode.getName() %>" />
 						<portlet:param name="title" value="<%= title %>" />
 					</portlet:renderURL>
 
@@ -171,7 +173,7 @@ portletURL.setParameter("keywords", keywords);
 					<liferay-ui:search-container-column-text
 						href="<%= rowURL %>"
 						name="wiki"
-						value="<%= wikiPage.getNode().getName() %>"
+						value="<%= curNode.getName() %>"
 					/>
 				</c:when>
 			</c:choose>

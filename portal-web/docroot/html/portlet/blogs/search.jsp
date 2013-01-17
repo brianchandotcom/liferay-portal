@@ -125,7 +125,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 						<liferay-ui:icon
 							image="message"
 							label="<%= true %>"
-							message="<%= StringUtil.shorten(message.getBody(), 50) %>"
+							message="<%= StringUtil.shorten(message.getBody()) %>"
 							url="<%= rowURL %>"
 						/>
 

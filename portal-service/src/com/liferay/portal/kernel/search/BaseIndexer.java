@@ -99,6 +99,10 @@ public abstract class BaseIndexer implements Indexer {
 	public static final int INDEX_FILTER_SEARCH_LIMIT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.INDEX_FILTER_SEARCH_LIMIT));
 
+	public void addRelatedEntityFields(Document document, Object obj)
+		throws Exception {
+	}
+
 	public void delete(long companyId, String uid) throws SearchException {
 		try {
 			SearchEngineUtil.deleteDocument(
@@ -186,8 +190,12 @@ public abstract class BaseIndexer implements Indexer {
 		try {
 			searchContext.setSearchEngineId(getSearchEngineId());
 
-			searchContext.setEntryClassNames(
-				new String[] {getClassName(searchContext)});
+			String[] entryClassNames = searchContext.getEntryClassNames();
+
+			if (entryClassNames.length == 0) {
+				searchContext.setEntryClassNames(
+					new String[] {getClassName(searchContext)});
+			}
 
 			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
 				searchContext);

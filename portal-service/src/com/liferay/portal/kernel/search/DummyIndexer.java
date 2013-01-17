@@ -26,6 +26,10 @@ import javax.portlet.PortletURL;
  */
 public class DummyIndexer implements Indexer {
 
+	public void addRelatedEntityFields(Document document, Object obj)
+		throws Exception {
+	}
+
 	public void delete(long companyId, String uid) {
 	}
 

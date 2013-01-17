@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -37,6 +38,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.portlet.blogs.service.persistence.BlogsEntryActionableDynamicQuery;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,6 +65,21 @@ public class BlogsIndexer extends BaseIndexer {
 
 	public String[] getClassNames() {
 		return CLASS_NAMES;
+	}
+
+	@Override
+	public BooleanQuery getFullQuery(SearchContext searchContext)
+		throws SearchException {
+
+		searchContext.setEntryClassNames(
+			new String[] {
+				getClassName(searchContext), MBMessage.class.getName()});
+
+		searchContext.setAttribute("discussion", true);
+		searchContext.setAttribute(
+			"relatedClassName", BlogsEntry.class.getName());
+
+		return super.getFullQuery(searchContext);
 	}
 
 	public String getPortletId() {

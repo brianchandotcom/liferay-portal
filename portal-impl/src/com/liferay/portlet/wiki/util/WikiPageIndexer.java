@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRendererFactory;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -71,8 +73,34 @@ public class WikiPageIndexer extends BaseIndexer {
 		setPermissionAware(true);
 	}
 
+	@Override
+	public void addRelatedEntityFields(Document document, Object obj)
+		throws Exception {
+
+		MBMessage message = (MBMessage)obj;
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(message.getClassPK());
+
+		document.addKeyword(Field.NODE_ID, page.getNodeId());
+	}
+
 	public String[] getClassNames() {
 		return CLASS_NAMES;
+	}
+
+	@Override
+	public BooleanQuery getFullQuery(SearchContext searchContext)
+		throws SearchException {
+
+		searchContext.setEntryClassNames(
+			new String[] {
+				getClassName(searchContext), MBMessage.class.getName()});
+
+		searchContext.setAttribute("discussion", true);
+		searchContext.setAttribute(
+			"relatedClassName", WikiPage.class.getName());
+
+		return super.getFullQuery(searchContext);
 	}
 
 	public String getPortletId() {

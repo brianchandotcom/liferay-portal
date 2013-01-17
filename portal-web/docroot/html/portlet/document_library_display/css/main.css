@@ -29,6 +29,11 @@
 		margin: 0 0 0.5em 0.5em;
 	}
 
+	.search-root-entry {
+		color: #999;
+		float: right;
+	}
+
 	.entry-thumbnail {
 		float: left;
 		margin-right: 1em;

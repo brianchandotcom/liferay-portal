@@ -323,7 +323,9 @@ public class WikiUtil {
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Wiki search index is stale");
+					_log.warn("Wiki search index is stale and contains " +
+						"entity {className=" + entryClassName + ", classPK=" +
+						entryClassPK + "}");
 				}
 			}
 		}

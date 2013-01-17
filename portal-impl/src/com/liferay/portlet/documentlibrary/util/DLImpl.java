@@ -576,7 +576,8 @@ public class DLImpl implements DL {
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Documents and Media search index is stale and " +
-						"contains file entry {" + entryClassPK + "}");
+						"contains entity {className=" + entryClassName +
+						", classPK=" + entryClassPK + "}");
 				}
 			}
 		}

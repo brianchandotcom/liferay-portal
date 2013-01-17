@@ -219,8 +219,9 @@ public class BlogsUtil {
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Blogs search index is stale and contains entry " +
-							entryClassPK);
+						"Blogs search index is stale and contains entity " +
+							"{className=" + entryClassName + ", classPK=" +
+							entryClassPK + "}");
 				}
 			}
 		}

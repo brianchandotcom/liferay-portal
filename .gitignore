@@ -51,7 +51,7 @@ _sass_cache_*.css
 /nbproject/private
 
 /osgi/bootstrap/classes
-/osgi/bootstrap/bootstrap*.jar
+/osgi/bootstrap/osgi-bootstrap.jar
 
 /portal-client/*.iml
 /portal-client/*.ipr

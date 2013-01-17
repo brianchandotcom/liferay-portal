@@ -316,12 +316,5 @@
 	<classpathentry kind="lib" path="lib/portal/xuggle-xuggler-noarch.jar"/>
 	<classpathentry kind="lib" path="osgi/lib/common/core/osgi.cmpn.jar"/>
 	<classpathentry kind="lib" path="osgi/lib/common/core/osgi.core.jar"/>
-	<classpathentry kind="lib" path="osgi/lib/common/portal/osgi.enterprise.jar"/>
-	<classpathentry kind="lib" path="osgi/lib/equinox/core/org.eclipse.osgi.jar"/>
-	<classpathentry kind="lib" path="osgi/lib/equinox/portal/org.eclipse.osgi.services.jar"/>
-	<classpathentry kind="lib" path="osgi/lib/equinox/portal/org.eclipse.osgi.util.jar"/>
-	<classpathentry kind="lib" path="osgi/lib/felix/core/org.apache.felix.framework.jar"/>
-	<classpathentry kind="lib" path="osgi/lib/felix/portal/org.apache.felix.framework.security.jar"/>
-	<classpathentry kind="lib" path="osgi/lib/felix/portal/org.apache.felix.log.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

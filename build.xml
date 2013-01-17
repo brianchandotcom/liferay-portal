@@ -222,7 +222,6 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		</copy>
 
 		<copy todir="${liferay.home}/data/osgi/core">
-			<fileset dir="osgi/lib/common/core" includes="*.jar" />
 			<fileset dir="osgi/lib/${module.framework.implementation}/core" includes="*.jar" />
 		</copy>
 

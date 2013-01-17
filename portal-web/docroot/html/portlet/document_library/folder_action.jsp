@@ -291,48 +291,6 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 					</c:if>
 				</c:otherwise>
 			</c:choose>
-
-			<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && ((folder == null) || folder.isSupportsSubscribing()) %>">
-
-				<%
-				Set<Long> folderSubscriptionClassPKs = (Set<Long>)request.getAttribute("folder_action.jsp-folderSubscriptionClassPKs");
-
-				if (themeDisplay.isSignedIn() && (folderSubscriptionClassPKs == null)) {
-					folderSubscriptionClassPKs = DLUtil.getFolderSubscriptionClassPKs(user.getUserId());
-
-					request.setAttribute("folder_action.jsp-folderSubscriptionClassPKs", folderSubscriptionClassPKs);
-				}
-				%>
-
-				<c:choose>
-					<c:when test="<%= (folderSubscriptionClassPKs != null) && (folderSubscriptionClassPKs.contains(folderId) || ((folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && folderSubscriptionClassPKs.contains(scopeGroupId))) %>">
-						<portlet:actionURL var="unsubscribeURL">
-							<portlet:param name="struts_action" value="/document_library/edit_folder" />
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-						</portlet:actionURL>
-
-						<liferay-ui:icon
-							image="unsubscribe"
-							url="<%= unsubscribeURL %>"
-						/>
-					</c:when>
-					<c:otherwise>
-						<portlet:actionURL var="subscribeURL">
-							<portlet:param name="struts_action" value="/document_library/edit_folder" />
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-						</portlet:actionURL>
-
-						<liferay-ui:icon
-							image="subscribe"
-							url="<%= subscribeURL %>"
-						/>
-					</c:otherwise>
-				</c:choose>
-			</c:if>
 		</c:if>
 
 		<%

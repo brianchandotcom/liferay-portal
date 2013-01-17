@@ -45,17 +45,18 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.journal.NoSuchStructureException;
+import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
-import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.service.persistence.JournalArticleActionableDynamicQuery;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -274,18 +275,21 @@ public class JournalIndexer extends BaseIndexer {
 		document.addKeyword("structureId", article.getStructureId());
 		document.addKeyword("templateId", article.getTemplateId());
 
-		JournalStructure structure = null;
+		DDMStructure ddmStructure = null;
 
 		if (Validator.isNotNull(article.getStructureId())) {
 			try {
-				structure = JournalStructureLocalServiceUtil.getStructure(
-					article.getGroupId(), article.getStructureId(), true);
+				ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+					article.getGroupId(), article.getStructureId());
+
+				Fields ddmFields = JournalConverterUtil.getDDMFields(
+					ddmStructure, article.getContent());
+
+				DDMIndexerUtil.addAttributes(document, ddmStructure, ddmFields);
 			}
 			catch (NoSuchStructureException nsse) {
 			}
 		}
-
-		processStructure(structure, document, article.getContent());
 
 		return document;
 	}
@@ -547,70 +551,6 @@ public class JournalIndexer extends BaseIndexer {
 						StringUtil.merge(value, StringPool.SPACE));
 				}
 			}
-		}
-	}
-
-	protected void processStructure(
-			com.liferay.portal.kernel.xml.Document structureDocument,
-			Document document, Element rootElement)
-		throws Exception {
-
-		LinkedList<Element> queue = new LinkedList<Element>(
-			rootElement.elements());
-
-		Element element = null;
-
-		while ((element = queue.poll()) != null) {
-			String elName = element.attributeValue("name", StringPool.BLANK);
-			String elType = element.attributeValue("type", StringPool.BLANK);
-			String elIndexType = element.attributeValue(
-				"index-type", StringPool.BLANK);
-
-			if (structureDocument != null) {
-				String path = element.getPath();
-
-				path = path.concat("[@name=").concat(
-					HtmlUtil.escapeXPathAttribute(elName)).concat("]");
-
-				Node structureNode = structureDocument.selectSingleNode(path);
-
-				if (structureNode != null) {
-					Element structureElement = (Element)structureNode;
-
-					elType = structureElement.attributeValue(
-						"type", StringPool.BLANK);
-					elIndexType = structureElement.attributeValue(
-						"index-type", StringPool.BLANK);
-				}
-			}
-
-			if (Validator.isNotNull(elType)) {
-				indexField(document, element, elType, elIndexType);
-			}
-
-			queue.addAll(element.elements());
-		}
-	}
-
-	protected void processStructure(
-		JournalStructure structure, Document document, String content) {
-
-		try {
-			com.liferay.portal.kernel.xml.Document structureDocument = null;
-
-			if (structure != null) {
-				structureDocument = SAXReaderUtil.read(structure.getXsd());
-			}
-
-			com.liferay.portal.kernel.xml.Document contentDocument =
-				SAXReaderUtil.read(content);
-
-			Element rootElement = contentDocument.getRootElement();
-
-			processStructure(structureDocument, document, rootElement);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
 		}
 	}
 

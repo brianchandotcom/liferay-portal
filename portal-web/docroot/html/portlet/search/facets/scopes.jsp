@@ -22,35 +22,35 @@ if (termCollectors.isEmpty()) {
 }
 
 int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
-int maxTerms = dataJSONObject.getInt("maxTerms", 10);
+int maxTerms = dataJSONObject.getInt("maxTerms");
 boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 %>
 
 <div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldName() %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= fieldParam %>" />
 
-	<ul class="lfr-component users">
-		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
-			<a data-value="" href="javascript:;"><img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/user_icon.png" %>' /><liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
+	<ul class="lfr-component scopes">
+		<li class="facet-value default <%= fieldParam.equals("0") ? "current-term" : StringPool.BLANK %>">
+			<a data-value="0" href="javascript:;"><img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/site_icon.png" %>' /><liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
 		</li>
 
 		<%
-		long userId = GetterUtil.getLong(fieldParam);
+		long groupId = GetterUtil.getInteger(fieldParam);
 
 		for (int i = 0; i < termCollectors.size(); i++) {
 			TermCollector termCollector = termCollectors.get(i);
 
-			long curUserId = GetterUtil.getLong(termCollector.getTerm());
+			long curGroupId = GetterUtil.getInteger(termCollector.getTerm());
 
-			User curUser = UserLocalServiceUtil.getUser(curUserId);
+			Group group = GroupLocalServiceUtil.getGroup(curGroupId);
 		%>
 
-			<c:if test="<%= userId == curUserId %>">
+			<c:if test="<%= groupId == curGroupId %>">
 				<aui:script use="liferay-token-list">
 					Liferay.Search.tokenList.add(
 						{
-							clearFields: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName()) %>',
-							text: '<%= UnicodeFormatter.toString(curUser.getFullName()) %>'
+							fieldValues: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName() + "|0") %>',
+							text: '<%= UnicodeFormatter.toString(group.getDescriptiveName(locale)) %>'
 						}
 					);
 				</aui:script>
@@ -62,8 +62,12 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			}
 			%>
 
-			<li class="facet-value <%= (userId == curUserId) ? "current-term" : StringPool.BLANK %>">
-				<a data-value="<%= curUserId %>" href="javascript:;"><%= HtmlUtil.escape(curUser.getFullName()) %></a><c:if test="<%= showAssetCount %>"> <span class="frequency">(<%= termCollector.getFrequency() %>)</span></c:if>
+			<li class="facet-value <%= groupId == curGroupId ? "current-term" : StringPool.BLANK %>">
+				<a data-value="<%= curGroupId %>" href="javascript:;"><%= group.getDescriptiveName(locale) %></a>
+
+				<c:if test="<%= showAssetCount %>">
+					<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+				</c:if>
 			</li>
 
 		<%

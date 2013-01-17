@@ -1,6 +1,20 @@
 {
 	facets: [
 		{
+			className: 'com.liferay.portal.kernel.search.facet.ScopeFacet',
+			data: {
+				frequencyThreshold: 1,
+				maxTerms: 10,
+				showAssetCount: true
+			},
+			displayStyle: 'scopes',
+			fieldName: 'groupId',
+			label: 'scope',
+			order: 'OrderHitsDesc',
+			static: false,
+			weight: 1.6
+		},
+		{
 			className: 'com.liferay.portal.kernel.search.facet.AssetEntriesFacet',
 			data: {
 				frequencyThreshold: 1,

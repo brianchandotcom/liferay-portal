@@ -34,8 +34,6 @@ else {
 
 long groupId = ParamUtil.getLong(request, "groupId");
 
-Group group = themeDisplay.getScopeGroup();
-
 String keywords = ParamUtil.getString(request, "keywords");
 
 String format = ParamUtil.getString(request, "format");
@@ -64,11 +62,6 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 	<aui:fieldset>
 		<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" value="<%= HtmlUtil.escape(keywords) %>" />
-
-		<aui:select inlineField="<%= true %>" label="" name="groupId">
-			<aui:option label="everything" selected="<%= groupId == 0 %>" value="0" />
-			<aui:option label='<%= "this-" + (group.isOrganization() ? "organization" : "site") %>' selected="<%= groupId != 0 %>" value="<%= group.getGroupId() %>" />
-		</aui:select>
 
 		<aui:button align="absmiddle" border="0" name="search" onClick='<%= renderResponse.getNamespace() + "search();" %>' src='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' title="search" type="image" />
 

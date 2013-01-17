@@ -32,6 +32,8 @@
 		</div>
 
 		<div class="basic-configuration <%= (advancedConfiguration ? "aui-helper-hidden" : "") %>" id="<portlet:namespace />basicConfiguration">
+			<aui:input name="preferences--displayScopeFacet--" type="checkbox" value="<%= displayScopeFacet %>" />
+
 			<aui:input name="preferences--displayAssetTypeFacet--" type="checkbox" value="<%= displayAssetTypeFacet %>" />
 
 			<aui:input name="preferences--displayAssetTagsFacet--" type="checkbox" value="<%= displayAssetTagsFacet %>" />

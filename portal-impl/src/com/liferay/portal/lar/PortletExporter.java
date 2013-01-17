@@ -77,9 +77,9 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.journal.model.JournalStructure;
-import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.util.xml.DocUtil;
@@ -1496,7 +1496,7 @@ public class PortletExporter {
 				name.equals("classTypeIds")) {
 
 				updatePreferencesClassPKs(
-					jxPreferences, name, JournalStructure.class.getName());
+					jxPreferences, name, DDMStructure.class.getName());
 			}
 			else if (name.equals("anyAssetType") ||
 					 name.equals("classNameIds")) {
@@ -1605,13 +1605,13 @@ public class PortletExporter {
 						uuid = assetVocabulary.getUuid();
 					}
 				}
-				else if (className.equals(JournalStructure.class.getName())) {
-					JournalStructure journalStructure =
-						JournalStructureLocalServiceUtil.fetchJournalStructure(
+				else if (className.equals(DDMStructure.class.getName())) {
+					DDMStructure ddmStructure =
+						DDMStructureLocalServiceUtil.fetchStructure(
 							primaryKeyLong);
 
-					if (journalStructure != null) {
-						uuid = journalStructure.getUuid();
+					if (ddmStructure != null) {
+						uuid = ddmStructure.getUuid();
 					}
 				}
 

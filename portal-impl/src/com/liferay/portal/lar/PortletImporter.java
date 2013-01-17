@@ -95,14 +95,14 @@ import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetTagUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 import com.liferay.portlet.expando.util.ExpandoConverterUtil;
-import com.liferay.portlet.journal.model.JournalStructure;
-import com.liferay.portlet.journal.service.persistence.JournalStructureUtil;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
@@ -1817,7 +1817,7 @@ public class PortletImporter {
 
 				updatePreferencesClassPKs(
 					portletDataContext, jxPreferences, name,
-					JournalStructure.class, companyGroup.getGroupId());
+					DDMStructure.class, companyGroup.getGroupId());
 			}
 			else if (name.equals("anyAssetType") ||
 					 name.equals("classNameIds")) {
@@ -2018,21 +2018,19 @@ public class PortletImporter {
 							newPrimaryKey = assetVocabulary.getVocabularyId();
 						}
 					}
-					else if (className.equals(
-							JournalStructure.class.getName())) {
-
-						JournalStructure journalStructure =
-							JournalStructureUtil.fetchByUUID_G(
+					else if (className.equals(DDMStructure.class.getName())) {
+						DDMStructure ddmStructure =
+							DDMStructureUtil.fetchByUUID_G(
 								uuid, portletDataContext.getScopeGroupId());
 
-						if (journalStructure == null) {
-							journalStructure =
-								JournalStructureUtil.fetchByUUID_G(
+						if (ddmStructure == null) {
+							ddmStructure =
+								DDMStructureUtil.fetchByUUID_G(
 									uuid, companyGroupId);
 						}
 
-						if (journalStructure != null) {
-							newPrimaryKey = journalStructure.getId();
+						if (ddmStructure != null) {
+							newPrimaryKey = ddmStructure.getStructureId();
 						}
 					}
 				}

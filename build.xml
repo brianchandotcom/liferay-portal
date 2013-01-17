@@ -666,7 +666,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		<echo file="svn-revision">Revision: ${svn.info.revision}
 Username: ${svn.username}
 Password: ${svn.password}
-Portal: ${project.dir}
+Portal: ${lp.source.dir}
 Plugins: ${lp.plugins.dir}</echo>
 	</target>
 

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -810,10 +811,16 @@ public class SitesUtil {
 		organizationParams.put(
 			"organizationsGroups", new Long(group.getGroupId()));
 
+		String keywords = StringPool.BLANK;
+
+		if (searchTerms != null) {
+			keywords = searchTerms.getKeywords();
+		}
+
 		List<Organization> organizationsGroups =
 			OrganizationLocalServiceUtil.search(
 				companyId, OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-				searchTerms.getKeywords(), null, null, null, organizationParams,
+				keywords, null, null, null, organizationParams,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (Organization organization : organizationsGroups) {

@@ -1502,8 +1502,7 @@ public class PortletExporter {
 			String oldScopeId = oldScopeIds[i];
 
 			newScopeIds[i] = StringUtil.replace(
-				oldScopeId, new String[] {groupScopeId},
-				new String[] {"[$GROUP_SCOPE_ID$]"});
+				oldScopeId, groupScopeId, "[$GROUP_SCOPE_ID$]");
 		}
 
 		jxPreferences.setValues(key, newScopeIds);

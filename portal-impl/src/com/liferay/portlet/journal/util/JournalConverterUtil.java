@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -81,6 +79,26 @@ public class JournalConverterUtil {
 		return ddmFields;
 	}
 
+	public static String getDDMXSD(String journalXSD) throws Exception {
+		Document document = SAXReaderUtil.read(journalXSD);
+
+		Element rootElement = document.getRootElement();
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		rootElement.addAttribute("available-locales", defaultLocale.toString());
+		rootElement.addAttribute("default-locale", defaultLocale.toString());
+
+		List<Element> dynamicElementElements = rootElement.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			updateXSDDynamicElement(dynamicElementElement);
+		}
+
+		return DDMXMLUtil.formatXML(document);
+	}
+
 	public static String getXML(DDMStructure ddmStructure, Fields ddmFields)
 		throws Exception {
 
@@ -109,43 +127,13 @@ public class JournalConverterUtil {
 
 				dynamicElementElement.addAttribute("name", fieldName);
 
-				updateDynamicElement(
+				updateContentDynamicElement(
 					dynamicElementElement, ddmStructure, ddmFields,
 					ddmFieldsCounter);
 			}
 		}
 
 		return DDMXMLUtil.formatXML(document.asXML());
-	}
-
-	public static String journalStructureToDDMStructure(String xsd)
-		throws SystemException {
-
-		Document document = null;
-
-		try {
-			document = SAXReaderUtil.read(xsd);
-		}
-		catch (DocumentException de) {
-			de.printStackTrace();
-
-			return xsd;
-		}
-
-		Element contentRoot = document.getRootElement();
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		contentRoot.addAttribute("available-locales", defaultLocale.toString());
-		contentRoot.addAttribute("default-locale", defaultLocale.toString());
-
-		List<Element> elements = contentRoot.elements();
-
-		for (Element element : elements) {
-			journalStructureFieldToDDMStructureField(element);
-		}
-
-		return DDMXMLUtil.formatXML(document);
 	}
 
 	protected static void addDDMFields(
@@ -174,13 +162,22 @@ public class JournalConverterUtil {
 		List<Element> childrenDynamicElementElements =
 			dynamicElementElement.elements("dynamic-element");
 
-		for (Element childrenDynamicElementElement :
+		for (Element childDynamicElementElement :
 				childrenDynamicElementElements) {
 
 			addDDMFields(
-				childrenDynamicElementElement, ddmStructure, ddmFields,
+				childDynamicElementElement, ddmStructure, ddmFields,
 				defaultLocale);
 		}
+	}
+
+	protected static void addMetaDataAttribute(
+		Element metaDataElement, String name, String value) {
+
+		Element entryElement = metaDataElement.addElement("entry");
+
+		entryElement.addAttribute("name", name);
+		entryElement.addCDATA(value);
 	}
 
 	protected static int countFieldRepetition(
@@ -331,117 +328,69 @@ public class JournalConverterUtil {
 		return serializable;
 	}
 
-	protected static void journalStructureFieldToDDMStructureField(
-		Element element) {
+	protected static void updateContentDynamicElement(
+			Element dynamicElementElement, DDMStructure ddmStructure,
+			Field ddmField, DDMFieldsCounter ddmFieldsCounter)
+		throws Exception {
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		String fieldName = ddmField.getName();
 
-		String name = element.attributeValue("name");
-		String type = element.attributeValue("type");
-		String indexType = element.attributeValue("index-type");
-		String repeatable = element.attributeValue("repeatable");
+		String fieldType = ddmStructure.getFieldType(fieldName);
+		String indexType = ddmStructure.getFieldProperty(
+			fieldName, "indexType");
 
-		// meta-data
+		dynamicElementElement.addAttribute(
+			"type", _ddmToJournalTypes.get(fieldType));
+		dynamicElementElement.addAttribute("index-type", indexType);
 
-		Element metaDataElement = element.element("meta-data");
+		for (Locale locale : ddmField.getAvailableLocales()) {
+			Element dynamicContentElement = dynamicElementElement.addElement(
+				"dynamic-content");
 
-		if (metaDataElement == null) {
-			metaDataElement = element.addElement("meta-data");
+			dynamicContentElement.addAttribute(
+				"language-id", LocaleUtil.toLanguageId(locale));
+
+			int index = ddmFieldsCounter.get(fieldName);
+
+			Serializable fieldValue = ddmField.getValue(locale, index);
+
+			updateDynamicContentValue(
+				dynamicContentElement, fieldType, String.valueOf(fieldValue));
 		}
 
-		if (type.equals("selection_break")) {
-			Element parentElement = element.getParent();
+		ddmFieldsCounter.incrementKey(fieldName);
+	}
 
-			parentElement.remove(element);
+	protected static void updateContentDynamicElement(
+			Element dynamicElementElement, DDMStructure ddmStructure,
+			Fields ddmFields, DDMFieldsCounter ddmFieldsCounter)
+		throws Exception {
 
-			return;
-		}
-		else if (type.equals("multi-list")) {
-			addMetaDataAttribute(metaDataElement, "multiple", "true");
-		}
-		else {
-			Element parentElement = element.getParent();
+		String fieldName = dynamicElementElement.attributeValue("name");
 
-			String parentType = parentElement.attributeValue("type");
+		for (String childFieldName :
+				ddmStructure.getChildrenFieldNames(fieldName)) {
 
-			if ((parentType != null) && parentType.equals("select")) {
-				metaDataElement.addAttribute(
-					"locale", defaultLocale.toString());
+			int offset = ddmFieldsCounter.get(fieldName);
 
-				addMetaDataAttribute(metaDataElement, "label", name);
+			int repetitions = countFieldRepetition(
+				ddmFields, childFieldName, fieldName, offset);
 
-				element.addAttribute(
-					"name", "option" + PwdGenerator.getPassword(4));
-				element.addAttribute("type", "option");
-				element.addAttribute("value", type);
+			for (int i = 0; i < repetitions; i++) {
+				Element childDynamicElementElement =
+					dynamicElementElement.addElement("dynamic-element");
 
-				return;
+				childDynamicElementElement.addAttribute("name", childFieldName);
+
+				updateContentDynamicElement(
+					childDynamicElementElement, ddmStructure, ddmFields,
+					ddmFieldsCounter);
 			}
 		}
 
-		element.remove(element.attribute("index-type"));
-		element.remove(element.attribute("repeatable"));
-		element.remove(element.attribute("type"));
-
-		element.addAttribute("autoGeneratedName", "false");
-		element.addAttribute("dataType", _ddmDataTypes.get(type));
-		element.addAttribute("indexType", indexType);
-
-		String newType = _journalToDDMTypes.get(type);
-
-		element.addAttribute("type", newType);
-
-		if (newType.startsWith("ddm")) {
-			element.addAttribute("fieldNamespace", "ddm");
-		}
-
-		metaDataElement.addAttribute("locale", defaultLocale.toString());
-
-		List<Element> entries = metaDataElement.elements();
-
-		if (entries.size() == 0) {
-			addMetaDataAttribute(metaDataElement, "label", name);
-		}
-		else {
-			for (Element entry : entries) {
-				String oldEntryName = entry.attributeValue("name");
-				String newEntryName = _ddmMetaDataAttributes.get(oldEntryName);
-
-				if (newEntryName == null) {
-					metaDataElement.remove(entry);
-				}
-				else {
-					entry.addAttribute("name", newEntryName);
-				}
-			}
-		}
-
-		if (newType.equals("ddm-date") ||
-			newType.equals("ddm-decimal") ||
-			newType.equals("ddm-integer") ||
-			newType.equals("ddm-link-to-page") ||
-			newType.equals("ddm-number") ||
-			newType.equals("ddm-text-html") ||
-			newType.equals("textarea") ||
-			newType.equals("text")) {
-
-			addMetaDataAttribute(metaDataElement, "fieldCssClass", "aui-w25");
-			addMetaDataAttribute(metaDataElement, "width", "25");
-		}
-
-		if (newType.equals("ddm-fileupload")) {
-			addMetaDataAttribute(metaDataElement, "acceptFiles", "*");
-			addMetaDataAttribute(metaDataElement, "readOnly", "false");
-		}
-
-		addMetaDataAttribute(metaDataElement, "repeatable", repeatable);
-		addMetaDataAttribute(metaDataElement, "showLabel", "true");
-
-		List<Element> children = element.elements("dynamic-element");
-
-		for (Element child : children) {
-			journalStructureFieldToDDMStructureField(child);
-		}
+		updateContentDynamicElement(
+			dynamicElementElement, ddmStructure, ddmFields.get(fieldName),
+			ddmFieldsCounter);
 	}
 
 	protected static void updateDynamicContentValue(
@@ -509,71 +458,6 @@ public class JournalConverterUtil {
 		}
 	}
 
-	protected static void updateDynamicElement(
-			Element dynamicElementElement, DDMStructure ddmStructure,
-			Field ddmField, DDMFieldsCounter ddmFieldsCounter)
-		throws Exception {
-
-		String fieldName = ddmField.getName();
-
-		String fieldType = ddmStructure.getFieldType(fieldName);
-		String indexType = ddmStructure.getFieldProperty(
-			fieldName, "indexType");
-
-		dynamicElementElement.addAttribute(
-			"type", _ddmToJournalTypes.get(fieldType));
-		dynamicElementElement.addAttribute("index-type", indexType);
-
-		for (Locale locale : ddmField.getAvailableLocales()) {
-			Element dynamicContentElement = dynamicElementElement.addElement(
-				"dynamic-content");
-
-			dynamicContentElement.addAttribute(
-				"language-id", LocaleUtil.toLanguageId(locale));
-
-			int index = ddmFieldsCounter.get(fieldName);
-
-			Serializable fieldValue = ddmField.getValue(locale, index);
-
-			updateDynamicContentValue(
-				dynamicContentElement, fieldType, String.valueOf(fieldValue));
-		}
-
-		ddmFieldsCounter.incrementKey(fieldName);
-	}
-
-	protected static void updateDynamicElement(
-			Element dynamicElementElement, DDMStructure ddmStructure,
-			Fields ddmFields, DDMFieldsCounter ddmFieldsCounter)
-		throws Exception {
-
-		String fieldName = dynamicElementElement.attributeValue("name");
-
-		for (String childFieldName :
-				ddmStructure.getChildrenFieldNames(fieldName)) {
-
-			int offset = ddmFieldsCounter.get(fieldName);
-
-			int repetitions = countFieldRepetition(
-				ddmFields, childFieldName, fieldName, offset);
-
-			for (int i = 0; i < repetitions; i++) {
-				Element childDynamicElementElement =
-					dynamicElementElement.addElement("dynamic-element");
-
-				childDynamicElementElement.addAttribute("name", childFieldName);
-
-				updateDynamicElement(
-					childDynamicElementElement, ddmStructure, ddmFields,
-					ddmFieldsCounter);
-			}
-		}
-
-		updateDynamicElement(
-			dynamicElementElement, ddmStructure, ddmFields.get(fieldName),
-			ddmFieldsCounter);
-	}
-
 	protected static void updateFieldsDisplay(
 		Fields ddmFields, String fieldName) {
 
@@ -592,24 +476,130 @@ public class JournalConverterUtil {
 		fieldsDisplay.setValue(StringUtil.merge(fieldsDisplayValues));
 	}
 
-	private static void addMetaDataAttribute(
-		Element metaDataElement, String name, String value) {
+	protected static void updateXSDDynamicElement(
+		Element dynamicElementElement) {
 
-		Element entryElement = metaDataElement.addElement("entry");
+		Locale defaultLocale = LocaleUtil.getDefault();
 
-		entryElement.addAttribute("name", name);
-		entryElement.addCDATA(value);
+		String name = dynamicElementElement.attributeValue("name");
+		String type = dynamicElementElement.attributeValue("type");
+		String indexType = dynamicElementElement.attributeValue("index-type");
+		String repeatable = dynamicElementElement.attributeValue("repeatable");
+
+		// meta-data
+
+		Element metaDataElement = dynamicElementElement.element("meta-data");
+
+		if (metaDataElement == null) {
+			metaDataElement = dynamicElementElement.addElement("meta-data");
+		}
+
+		if (type.equals("selection_break")) {
+			Element parentElement = dynamicElementElement.getParent();
+
+			parentElement.remove(dynamicElementElement);
+
+			return;
+		}
+		else if (type.equals("multi-list")) {
+			addMetaDataAttribute(metaDataElement, "multiple", "true");
+		}
+		else {
+			Element parentElement = dynamicElementElement.getParent();
+
+			String parentType = parentElement.attributeValue("type");
+
+			if ((parentType != null) && parentType.equals("select")) {
+				metaDataElement.addAttribute(
+					"locale", defaultLocale.toString());
+
+				addMetaDataAttribute(metaDataElement, "label", name);
+
+				dynamicElementElement.addAttribute(
+					"name", "option" + PwdGenerator.getPassword(4));
+				dynamicElementElement.addAttribute("type", "option");
+				dynamicElementElement.addAttribute("value", type);
+
+				return;
+			}
+		}
+
+		dynamicElementElement.remove(
+			dynamicElementElement.attribute("index-type"));
+		dynamicElementElement.remove(
+			dynamicElementElement.attribute("repeatable"));
+		dynamicElementElement.remove(dynamicElementElement.attribute("type"));
+
+		dynamicElementElement.addAttribute("autoGeneratedName", "false");
+		dynamicElementElement.addAttribute("dataType", _ddmDataTypes.get(type));
+		dynamicElementElement.addAttribute("indexType", indexType);
+
+		String newType = _journalToDDMTypes.get(type);
+
+		dynamicElementElement.addAttribute("type", newType);
+
+		if (newType.startsWith("ddm")) {
+			dynamicElementElement.addAttribute("fieldNamespace", "ddm");
+		}
+
+		metaDataElement.addAttribute("locale", defaultLocale.toString());
+
+		List<Element> entries = metaDataElement.elements();
+
+		if (entries.size() == 0) {
+			addMetaDataAttribute(metaDataElement, "label", name);
+		}
+		else {
+			for (Element entry : entries) {
+				String oldEntryName = entry.attributeValue("name");
+				String newEntryName = _ddmMetaDataAttributes.get(oldEntryName);
+
+				if (newEntryName == null) {
+					metaDataElement.remove(entry);
+				}
+				else {
+					entry.addAttribute("name", newEntryName);
+				}
+			}
+		}
+
+		if (newType.equals("ddm-date") ||
+			newType.equals("ddm-decimal") ||
+			newType.equals("ddm-integer") ||
+			newType.equals("ddm-link-to-page") ||
+			newType.equals("ddm-number") ||
+			newType.equals("ddm-text-html") ||
+			newType.equals("textarea") ||
+			newType.equals("text")) {
+
+			addMetaDataAttribute(metaDataElement, "fieldCssClass", "aui-w25");
+			addMetaDataAttribute(metaDataElement, "width", "25");
+		}
+
+		if (newType.equals("ddm-fileupload")) {
+			addMetaDataAttribute(metaDataElement, "acceptFiles", "*");
+			addMetaDataAttribute(metaDataElement, "readOnly", "false");
+		}
+
+		addMetaDataAttribute(metaDataElement, "repeatable", repeatable);
+		addMetaDataAttribute(metaDataElement, "showLabel", "true");
+
+		List<Element> childrenDynamicElementElements =
+			dynamicElementElement.elements("dynamic-element");
+
+		for (Element childDynamicElementElement :
+				childrenDynamicElementElements) {
+
+			updateXSDDynamicElement(childDynamicElementElement);
+		}
 	}
 
 	private static Map<String, String> _ddmDataTypes =
 		new HashMap<String, String>();
-
 	private static Map<String, String> _ddmMetaDataAttributes =
 		new HashMap<String, String>();
-
 	private static Map<String, String> _ddmToJournalTypes =
 		new HashMap<String, String>();
-
 	private static Map<String, String> _journalToDDMTypes =
 		new HashMap<String, String>();
 

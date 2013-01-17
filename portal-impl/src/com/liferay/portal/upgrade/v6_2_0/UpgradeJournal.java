@@ -62,7 +62,6 @@ public class UpgradeJournal extends UpgradeProcess {
 		templateIdsMap = new HashMap<Long, Long>();
 
 		updateJournalStructures();
-
 		updateJournalTemplates();
 
 		cleanUpTables();
@@ -107,8 +106,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			String storageType = PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE;
 			int type_ = DDMStructureConstants.TYPE_DEFAULT;
 
-			String convertedXSD =
-				JournalConverterUtil.journalStructureToDDMStructure(xsd);
+			String convertedXSD = JournalConverterUtil.getDDMXSD(xsd);
 
 			ps.setString(1, uuid_);
 			ps.setLong(2, newStructureId);

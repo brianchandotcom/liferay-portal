@@ -15,6 +15,7 @@
 package com.liferay.osgi.bootstrap;
 
 import aQute.libg.header.OSGiHeader;
+import aQute.libg.version.Version;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -32,6 +33,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -43,10 +45,12 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.Attributes;
+import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 
 import javax.servlet.ServletContext;
@@ -81,7 +85,353 @@ public class ModuleFrameworkImpl
 		return _addBundle(location, inputStream, true);
 	}
 
-	public void getBundleExportPackages(
+	public Bundle getBundle(
+			BundleContext bundleContext, InputStream inputStream)
+		throws PortalException {
+
+		try {
+			if (inputStream.markSupported()) {
+
+				// 200Kb is a very large manifest file, should be enough
+
+				inputStream.mark(1024 * 1000);
+			}
+
+			JarInputStream jarInputStream = new JarInputStream(inputStream);
+
+			Manifest manifest = jarInputStream.getManifest();
+
+			if (inputStream.markSupported()) {
+				inputStream.reset();
+			}
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			String bundleSymbolicNameAttribute = attributes.getValue(
+				Constants.BUNDLE_SYMBOLICNAME);
+
+			Map<String, Map<String, String>> bundleSymbolicNamesMap =
+				OSGiHeader.parseHeader(bundleSymbolicNameAttribute);
+
+			Set<String> bundleSymbolicNamesSet =
+				bundleSymbolicNamesMap.keySet();
+
+			Iterator<String> bundleSymbolicNamesIterator =
+				bundleSymbolicNamesSet.iterator();
+
+			String bundleSymbolicName = bundleSymbolicNamesIterator.next();
+
+			String bundleVersionAttribute = attributes.getValue(
+				Constants.BUNDLE_VERSION);
+
+			Version bundleVersion = Version.parseVersion(
+				bundleVersionAttribute);
+
+			for (Bundle bundle : bundleContext.getBundles()) {
+				Version curBundleVersion = Version.parseVersion(
+					bundle.getVersion().toString());
+
+				if (bundleSymbolicName.equals(bundle.getSymbolicName()) &&
+					bundleVersion.equals(curBundleVersion)) {
+
+					return bundle;
+				}
+			}
+
+			return null;
+		}
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
+		}
+	}
+
+	public Bundle getBundle(long bundleId) {
+		if (_framework == null) {
+			return null;
+		}
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		return bundleContext.getBundle(bundleId);
+	}
+
+	public Framework getFramework() {
+		return _framework;
+	}
+
+	public String getState(long bundleId) throws PortalException {
+		_checkPermission();
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new PortalException("No bundle with ID " + bundleId);
+		}
+
+		int state = bundle.getState();
+
+		if (state == Bundle.ACTIVE) {
+			return "active";
+		}
+		else if (state == Bundle.INSTALLED) {
+			return "installed";
+		}
+		else if (state == Bundle.RESOLVED) {
+			return "resolved";
+		}
+		else if (state == Bundle.STARTING) {
+			return "starting";
+		}
+		else if (state == Bundle.STOPPING) {
+			return "stopping";
+		}
+		else if (state == Bundle.UNINSTALLED) {
+			return "uninstalled";
+		}
+		else {
+			return StringPool.BLANK;
+		}
+	}
+
+	public void registerContext(Object context) {
+		if (context == null) {
+			return;
+		}
+
+		if ((context instanceof ApplicationContext) &&
+			PropsValues.MODULE_FRAMEWORK_REGISTER_LIFERAY_SERVICES) {
+
+			ApplicationContext applicationContext = (ApplicationContext)context;
+
+			_registerApplicationContext(applicationContext);
+		}
+		else if (context instanceof ServletContext) {
+			ServletContext servletContext = (ServletContext)context;
+
+			_registerServletContext(servletContext);
+		}
+	}
+
+	public void setBundleStartLevel(long bundleId, int startLevel)
+		throws PortalException {
+
+		_checkPermission();
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new PortalException("No bundle with ID " + bundleId);
+		}
+
+		BundleStartLevel bundleStartLevel = bundle.adapt(
+			BundleStartLevel.class);
+
+		bundleStartLevel.setStartLevel(startLevel);
+	}
+
+	public void startBundle(long bundleId) throws PortalException {
+		startBundle(bundleId, 0);
+	}
+
+	public void startBundle(long bundleId, int options) throws PortalException {
+		_startBundle(bundleId, 0, true);
+	}
+
+	public void startFramework() throws Exception {
+		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
+			FrameworkFactory.class);
+
+		if (frameworkFactories.isEmpty()) {
+			return;
+		}
+
+		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
+
+		Map<String, String> properties = _buildProperties();
+
+		_framework = frameworkFactory.newFramework(properties);
+
+		_framework.init();
+
+		_framework.start();
+	}
+
+	public void startRuntime() throws Exception {
+		if (_framework == null) {
+			return;
+		}
+
+		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+			FrameworkStartLevel.class);
+
+		frameworkStartLevel.setStartLevel(
+			PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL,
+			(FrameworkListener)null);
+	}
+
+	public void stopBundle(long bundleId) throws PortalException {
+		stopBundle(bundleId, 0);
+	}
+
+	public void stopBundle(long bundleId, int options) throws PortalException {
+		_checkPermission();
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new PortalException("No bundle with ID " + bundleId);
+		}
+
+		try {
+			bundle.stop(options);
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new PortalException(be);
+		}
+	}
+
+	public void stopFramework() throws Exception {
+		if (_framework == null) {
+			return;
+		}
+
+		_framework.stop();
+	}
+
+	public void stopRuntime() throws Exception {
+		if (_framework == null) {
+			return;
+		}
+
+		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+			FrameworkStartLevel.class);
+
+		frameworkStartLevel.setStartLevel(
+			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
+			(FrameworkListener)null);
+	}
+
+	public void uninstallBundle(long bundleId) throws PortalException {
+		_checkPermission();
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new PortalException("No bundle with ID " + bundleId);
+		}
+
+		try {
+			bundle.uninstall();
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new PortalException(be);
+		}
+	}
+
+	public void updateBundle(long bundleId) throws PortalException {
+		updateBundle(bundleId, null);
+	}
+
+	public void updateBundle(long bundleId, InputStream inputStream)
+		throws PortalException {
+
+		_checkPermission();
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new PortalException("No bundle with ID " + bundleId);
+		}
+
+		try {
+			bundle.update(inputStream);
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new PortalException(be);
+		}
+	}
+
+	private Object _addBundle(
+			String location, InputStream inputStream, boolean checkPermissions)
+		throws PortalException {
+
+		if (_framework == null) {
+			return null;
+		}
+
+		if (checkPermissions) {
+			_checkPermission();
+		}
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		try {
+			return bundleContext.installBundle(location, inputStream);
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new PortalException(be);
+		}
+	}
+
+	private Map<String, String> _buildProperties() {
+		Map<String, String> properties = new HashMap<String, String>();
+
+		properties.put(
+			Constants.BUNDLE_DESCRIPTION, ReleaseInfo.getReleaseInfo());
+		properties.put(Constants.BUNDLE_NAME, ReleaseInfo.getName());
+		properties.put(Constants.BUNDLE_VENDOR, ReleaseInfo.getVendor());
+		properties.put(Constants.BUNDLE_VERSION, ReleaseInfo.getVersion());
+		properties.put(
+			Constants.FRAMEWORK_BEGINNING_STARTLEVEL,
+			String.valueOf(PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
+		properties.put(
+			Constants.FRAMEWORK_BUNDLE_PARENT,
+			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
+		properties.put(
+			Constants.FRAMEWORK_STORAGE,
+			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
+
+		UniqueList<String> packages = new UniqueList<String>();
+
+		try {
+			_getBundleExportPackages(
+				PropsValues.MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES,
+				packages);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		packages.addAll(
+			Arrays.asList(PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA));
+
+		Collections.sort(packages);
+
+		properties.put(
+			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA,
+			StringUtil.merge(packages));
+
+		return properties;
+	}
+
+	private void _checkPermission() throws PrincipalException {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker == null) || !permissionChecker.isOmniadmin()) {
+			throw new PrincipalException();
+		}
+	}
+
+	private void _getBundleExportPackages(
 			String[] bundleSymbolicNames, List<String> packages)
 		throws Exception {
 
@@ -152,292 +502,6 @@ public class ModuleFrameworkImpl
 				break;
 			}
 		}
-	}
-
-	public Framework getFramework() {
-		return _framework;
-	}
-
-	public String getState(long bundleId) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		int state = bundle.getState();
-
-		if (state == Bundle.ACTIVE) {
-			return "active";
-		}
-		else if (state == Bundle.INSTALLED) {
-			return "installed";
-		}
-		else if (state == Bundle.RESOLVED) {
-			return "resolved";
-		}
-		else if (state == Bundle.STARTING) {
-			return "starting";
-		}
-		else if (state == Bundle.STOPPING) {
-			return "stopping";
-		}
-		else if (state == Bundle.UNINSTALLED) {
-			return "uninstalled";
-		}
-		else {
-			return StringPool.BLANK;
-		}
-	}
-
-	public void registerContext(Object context) {
-		if (context == null) {
-			return;
-		}
-
-		if ((context instanceof ApplicationContext) &&
-			PropsValues.MODULE_FRAMEWORK_REGISTER_LIFERAY_SERVICES) {
-
-			ApplicationContext applicationContext = (ApplicationContext)context;
-
-			_registerApplicationContext(applicationContext);
-		}
-		else if (context instanceof ServletContext) {
-			ServletContext servletContext = (ServletContext)context;
-
-			_registerServletContext(servletContext);
-		}
-	}
-
-	public void setBundleStartLevel(long bundleId, int startLevel)
-		throws PortalException {
-
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		BundleStartLevel bundleStartLevel = bundle.adapt(
-			BundleStartLevel.class);
-
-		bundleStartLevel.setStartLevel(startLevel);
-	}
-
-	public void startBundle(long bundleId) throws PortalException {
-		startBundle(bundleId, 0);
-	}
-
-	public void startBundle(long bundleId, int options) throws PortalException {
-		_startBundle(bundleId, 0, true);
-	}
-
-	public void startFramework() throws Exception {
-		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
-			FrameworkFactory.class);
-
-		if (frameworkFactories.isEmpty()) {
-			return;
-		}
-
-		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
-
-		Map<String, String> properties = _buildProperties();
-
-		_framework = frameworkFactory.newFramework(properties);
-
-		_framework.init();
-
-		_framework.start();
-	}
-
-	public void startRuntime() throws Exception {
-		if (_framework == null) {
-			return;
-		}
-
-		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
-			FrameworkStartLevel.class);
-
-		frameworkStartLevel.setStartLevel(
-			PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL,
-			(FrameworkListener)null);
-	}
-
-	public void stopBundle(long bundleId) throws PortalException {
-		stopBundle(bundleId, 0);
-	}
-
-	public void stopBundle(long bundleId, int options) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.stop(options);
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new PortalException(be);
-		}
-	}
-
-	public void stopFramework() throws Exception {
-		if (_framework == null) {
-			return;
-		}
-
-		_framework.stop();
-	}
-
-	public void stopRuntime() throws Exception {
-		if (_framework == null) {
-			return;
-		}
-
-		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
-			FrameworkStartLevel.class);
-
-		frameworkStartLevel.setStartLevel(
-			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
-			(FrameworkListener)null);
-	}
-
-	public void uninstallBundle(long bundleId) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.uninstall();
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new PortalException(be);
-		}
-	}
-
-	public void updateBundle(long bundleId) throws PortalException {
-		updateBundle(bundleId, null);
-	}
-
-	public void updateBundle(long bundleId, InputStream inputStream)
-		throws PortalException {
-
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.update(inputStream);
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new PortalException(be);
-		}
-	}
-
-	private Object _addBundle(
-			String location, InputStream inputStream, boolean checkPermissions)
-		throws PortalException {
-
-		if (_framework == null) {
-			return null;
-		}
-
-		if (checkPermissions) {
-			_checkPermission();
-		}
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		try {
-			return bundleContext.installBundle(location, inputStream);
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new PortalException(be);
-		}
-	}
-
-	private Map<String, String> _buildProperties() {
-		Map<String, String> properties = new HashMap<String, String>();
-
-		properties.put(
-			Constants.BUNDLE_DESCRIPTION, ReleaseInfo.getReleaseInfo());
-		properties.put(Constants.BUNDLE_NAME, ReleaseInfo.getName());
-		properties.put(Constants.BUNDLE_VENDOR, ReleaseInfo.getVendor());
-		properties.put(Constants.BUNDLE_VERSION, ReleaseInfo.getVersion());
-		properties.put(
-			Constants.FRAMEWORK_BEGINNING_STARTLEVEL,
-			String.valueOf(PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
-		properties.put(
-			Constants.FRAMEWORK_BUNDLE_PARENT,
-			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
-		properties.put(
-			Constants.FRAMEWORK_STORAGE,
-			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
-
-		UniqueList<String> packages = new UniqueList<String>();
-
-		try {
-			getBundleExportPackages(
-				PropsValues.MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES,
-				packages);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		packages.addAll(
-			Arrays.asList(PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA));
-
-		Collections.sort(packages);
-
-		properties.put(
-			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA,
-			StringUtil.merge(packages));
-
-		return properties;
-	}
-
-	private void _checkPermission() throws PrincipalException {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if ((permissionChecker == null) || !permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
-		}
-	}
-
-	private Bundle _getBundle(long bundleId) {
-		if (_framework == null) {
-			return null;
-		}
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		return bundleContext.getBundle(bundleId);
 	}
 
 	private Set<Class<?>> _getInterfaces(Object bean) {
@@ -533,7 +597,7 @@ public class ModuleFrameworkImpl
 			_checkPermission();
 		}
 
-		Bundle bundle = _getBundle(bundleId);
+		Bundle bundle = getBundle(bundleId);
 
 		if (bundle == null) {
 			throw new PortalException("No bundle with ID " + bundleId);

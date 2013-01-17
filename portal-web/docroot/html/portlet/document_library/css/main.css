@@ -1,8 +1,9 @@
-@import "compass";
+@import "compass"
+	;
 
 .portlet-document-library, .portlet-document-library-display {
 	.file-entry-list-description {
-		font-style: italic;
+		font-style:italic;
 		margin-left: 10px;
 	}
 
@@ -16,48 +17,41 @@
 		}
 
 		.select-metadata-set {
-			display: block;
+			display:block;
 			margin-bottom: 2em;
 		}
 	}
 
 	.repository-settings-display dt {
-		font-weight: bold;
+		font-weight:bold;
 		margin-top: 1em;
 	}
 
 	.lfr-asset-panels .lfr-panel.lfr-extended {
-		border-bottom: none;
-	}
-
-	.subscribe-action {
-		margin-bottom: 5px;
-		margin-right: 10px;
-		margin-top:5px;
-		text-align: right;
+		border-bottom:none;
 	}
 
 	.document-container .search-info {
 		background-color: #D3E8F1;
 		min-height: 40px;
-		position: relative;
+		position:relative;
 
 		.keywords {
-			float: none;
+			float:none;
 			font-size: 1.4em;
-			font-weight: bold;
-			position: absolute;
+			font-weight:bold;
+			position:absolute;
 			top: 7px;
 		}
 
 		.change-search-folder {
-			position: absolute;
+			position:absolute;
 			right: 60px;
 			top: 7px;
 		}
 
 		.close-search {
-			position: absolute;
+			position:absolute;
 			right: 20px;
 			top: 10px;
 		}
@@ -71,12 +65,12 @@
 		.move-file, .move-folder {
 			background: #F0FAF0 url() no-repeat 5px 50%;
 			border-bottom: 1px solid #CCC;
-			display: block;
-			font-weight: bold;
+			display:block;
+			font-weight:bold;
 			margin-bottom: 1px;
 			padding: 5px;
 			padding-left: 25px;
-			position: relative;
+			position:relative;
 		}
 
 		.move-file {
@@ -90,12 +84,12 @@
 		.move-error {
 			background-color: #FDD;
 			background-image: url(@theme_image_path@/messages/error.png);
-			font-weight: normal;
+			font-weight:normal;
 
 			@include opacity(0.6);
 
 			.error-message {
-				position: absolute;
+				position:absolute;
 				right: 5px;
 			}
 		}
@@ -114,11 +108,11 @@
 	}
 
 	.document-container {
-		overflow: auto;
+		overflow:auto;
 	}
 
 	.document-container, .document-entries-paginator {
-		clear: both;
+		clear:both;
 	}
 
 	.folder.error:hover {
@@ -126,17 +120,17 @@
 	}
 
 	.expand-folder {
-		float: right;
+		float:right;
 	}
 
 	.folder-search {
-		float: right;
+		float:right;
 		margin: 0 0 0.5em 0.5em;
 	}
 
 	img.locked-icon, img.shortcut-icon {
 		bottom: 10px;
-		position: absolute;
+		position:absolute;
 		z-index: 10;
 	}
 
@@ -150,24 +144,24 @@
 
 	.lfr-menu-list ul {
 		background: #F0F0F0;
-		position: relative;
+		position:relative;
 
 		&:after {
 			border: 10px solid transparent;
 			border-bottom-color: #F0F0F0;
 			content: '';
-			position: absolute;
+			position:absolute;
 			right: 5px;
 			top: -10px;
 		}
 	}
 
 	.taglib-search-iterator .results-header input {
-		display: none;
+		display:none;
 	}
 
 	.aui-button-holder.toolbar {
-		display: inline;
+		display:inline;
 		margin: 0;
 	}
 
@@ -176,7 +170,7 @@
 			margin-left: 5px;
 
 			.download-document, .conversions, .lfr-asset-author, .webdav-url {
-				display: block;
+				display:block;
 				margin: 0.7em 0;
 			}
 
@@ -189,9 +183,9 @@
 			}
 
 			.version {
-				display: block;
+				display:block;
 				font-size: 1.4em;
-				font-weight: bold;
+				font-weight:bold;
 			}
 		}
 
@@ -260,37 +254,37 @@
 	}
 
 	.context-pane {
-		overflow: hidden;
+		overflow:hidden;
 
 		.context-pane-content {
 			border-left: 1px solid #7B7B7B;
-			position: relative;
+			position:relative;
 		}
 	}
 
 	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container, .document-library-breadcrumb {
 		background: #D9D9D9 url(@theme_image_path@/application/subheader_bg.png) 0 0 repeat-x;
-		clear: both;
+		clear:both;
 		padding: 5px;
-		position: relative;
+		position:relative;
 	}
 
 	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container {
-		text-align: center;
+		text-align:center;
 	}
 
 	.taglib-search-iterator-page-iterator-top.page-iterator-bottom, .lfr-app-column-view .taglib-search-iterator-page-iterator-bottom {
 		bottom: 0;
 		left: 0;
-		position: absolute;
+		position:absolute;
 		right: 0;
 	}
 
 	.taglib-search-iterator {
-		table-layout: fixed;
+		table-layout:fixed;
 
 		.align-left {
-			word-wrap: break-word;
+			word-wrap:break-word;
 		}
 	}
 
@@ -303,11 +297,11 @@
 	}
 
 	.workflow-status-draft, .workflow-status-draft a {
-		color: blue;
+		color:blue;
 	}
 
 	.workflow-status-pending, .workflow-status-pending a {
-		color: orange;
+		color:orange;
 	}
 
 	.document-library-breadcrumb {
@@ -320,18 +314,25 @@
 	}
 
 	.show-sync-message-icon-container {
-		position: relative;
+		position:relative;
 	}
 
 	.show-sync-message {
-		position: absolute;
+		position:absolute;
 		right: 5px;
 		top: 5px;
 		z-index: 1;
 	}
 
+	.subscribe-action {
+		margin-bottom: 5px;
+		margin-right: 10px;
+		margin-top:5px;
+			text-align:right;
+	}
+
 	.sync-message-hidden {
-		display: none;
+		display:none;
 	}
 
 	.lfr-document-library-comments.lfr-panel.lfr-extended {
@@ -354,7 +355,7 @@
 		padding: 1em;
 
 		.aui-field-element {
-			display: block;
+			display:block;
 
 			textarea {
 				width: 100% !important;
@@ -370,9 +371,9 @@
 			border-bottom: 1px solid #C8C9CA;
 			color: #555;
 			font-size: 1.8em;
-			font-weight: bold;
+			font-weight:bold;
 			margin-bottom: 10px;
-			overflow: hidden;
+			overflow:hidden;
 		}
 
 		.document-type .lfr-panel-content {
@@ -380,15 +381,16 @@
 		}
 
 		.document-type-fields {
-			clear: left;
+			clear:left;
 			padding-top: 0.5em;
 		}
 
 		.categorization-panel {
-			clear: left;
+			clear:left;
 		}
 	}
-}
+
+	}
 
 .portlet-document-library, .portlet-document-library-display, .portlet-trash {
 	.document-info {
@@ -397,10 +399,10 @@
 		padding: 10px;
 
 		&:after {
-			clear: both;
+			clear:both;
 			content: "";
 			display:block;
-			height: 0;
+				height: 0;
 		}
 
 		.document-title {
@@ -409,21 +411,21 @@
 		}
 
 		.user-date, .taglib-asset-tags-summary {
-			font-weight: bold;
+			font-weight:bold;
 		}
 
 		.document-description {
 			margin: 8px 0;
-			display: block;
+			display:block;
 		}
 
 		.document-thumbnail {
-			float: left;
+			float:left;
 			margin: 0 10px 0 0;
 		}
 
 		.clear {
-			clear: both;
+			clear:both;
 		}
 	}
 
@@ -445,9 +447,9 @@
 
 			.lfr-asset-icon {
 				background-position: 0 2px;
-				background-repeat: no-repeat;
+				background-repeat:no-repeat;
 				border-right-width: 0;
-				float: none;
+				float:none;
 				padding: 2px 0 2px 20px;
 			}
 
@@ -472,17 +474,17 @@
 
 	.taglib-ratings.stars {
 		border: 1px solid transparent;
-		display: inline-block;
+		display:inline-block;
 		margin: 0 3px;
 		padding: 4px;
-		position: relative;
-		vertical-align: middle;
+		position:relative;
+		vertical-align:middle;
 
 		.liferay-rating-vote {
-			display: none;
+			display:none;
 			left: -1px;
 			padding: 4px;
-			position: absolute;
+			position:absolute;
 			right: -1px;
 			top: -1px;
 		}
@@ -493,11 +495,11 @@
 		}
 
 		&:hover .liferay-rating-vote {
-			display: block;
+			display:block;
 		}
 
 		.aui-rating-content, .aui-rating-label-element {
-			display: inline;
+			display:inline;
 		}
 
 		.aui-rating-label-element {
@@ -513,7 +515,7 @@
 
 	.lfr-actions {
 		&.lfr-extended .lfr-trigger {
-			min-width: auto;
+			min-width:auto;
 
 			strong {
 				min-width: 10px;
@@ -524,7 +526,8 @@
 			background: url(@theme_image_path@/arrows/08_down.png) 100% -5px no-repeat;
 		}
 	}
-}
+
+	}
 
 .portlet-document-library {
 	.lfr-asset-column-details .lfr-panel {
@@ -539,13 +542,15 @@
 			}
 		}
 	}
-}
+
+	}
 
 .active-area-proxy {
 	background: #FFFFE0 url(@theme_image_path@/portlet/pop_up.png) no-repeat 10px 50%;
 	font-size: 1.2em;
 	padding: 0.3em 0.3em 0.3em 2em;
-}
+
+	}
 
 .ie6, .ie7 {
 	.portlet-document-library, .portlet-document-library-display {
@@ -556,13 +561,14 @@
 		.show-sync-message-icon-container {
 			background-image: url(@theme_image_path@/application/button_bg_selected.png);
 			height: 21px;
-			position: absolute;
+			position:absolute;
 			right: 0px;
 			width: 21px;
 			z-index: 1;
 		}
 	}
-}
+
+	}
 
 .ie7 {
 	.portlet-document-library {
@@ -570,7 +576,8 @@
 			min-width: 0px;
 		}
 	}
-}
+
+	}
 
 .ie6 {
 	.portlet-document-library {
@@ -590,7 +597,8 @@
 			}
 		}
 	}
-}
+
+	}
 
 .firefox {
 	.portlet-document-library, .portlet-document-library-display {
@@ -598,4 +606,5 @@
 			height: 28px;
 		}
 	}
-}
+
+	}

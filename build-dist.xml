@@ -1509,22 +1509,22 @@ rerun this task.
 		<mkdir dir="${tstamp.value}" />
 
 		<echo file="${tstamp.value}/create-weblogic-domain.py">
-			readTemplate('${app.server.weblogic.wlserver.dir}/common/templates/domains/wls.jar')
+readTemplate('${app.server.weblogic.wlserver.dir}/common/templates/domains/wls.jar')
 
-			set('Name', '${app.server.weblogic.instance.name}')
+set('Name', '${app.server.weblogic.instance.name}')
 
-			cd('/Security/%s/User/%s' % ('${app.server.weblogic.instance.name}', 'weblogic'))
+cd('/Security/%s/User/%s' % ('${app.server.weblogic.instance.name}', 'weblogic'))
 
-			set('UserPassword', 'testing123')
+set('UserPassword', 'testing123')
 
-			cd('/Servers/AdminServer')
+cd('/Servers/AdminServer')
 
-			set('ListenAddress', '')
-			set('ListenPort', 8080)
+set('ListenAddress', '')
+set('ListenPort', 8080)
 
-			writeDomain('${app.server.weblogic.instance.dir}')
+writeDomain('${app.server.weblogic.instance.dir}')
 
-			closeTemplate()
+closeTemplate()
 		</echo>
 
 		<if>

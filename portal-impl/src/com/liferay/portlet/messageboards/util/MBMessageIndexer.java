@@ -45,6 +45,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory;
@@ -119,14 +120,22 @@ public class MBMessageIndexer extends BaseIndexer {
 
 		contextQuery.addRequiredTerm("discussion", discussion);
 
-		String relatedClassName = (String)searchContext.getAttribute(
-			"relatedClassName");
+		if (discussion) {
+			String relatedClassName = (String)searchContext.getAttribute(
+				"relatedClassName");
 
-		if (Validator.isNotNull(relatedClassName)) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(relatedClassName);
+			if (Validator.isNotNull(relatedClassName)) {
+				contextQuery.addRequiredTerm(
+					Field.CLASS_NAME_ID,
+					PortalUtil.getClassNameId(relatedClassName));
 
-			if (indexer != null) {
-				indexer.postProcessContextQuery(contextQuery, searchContext);
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					relatedClassName);
+
+				if (indexer != null) {
+					indexer.postProcessContextQuery(
+						contextQuery, searchContext);
+				}
 			}
 		}
 

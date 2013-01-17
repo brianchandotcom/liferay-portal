@@ -57,6 +57,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(searchContainer.getStart());
+		searchContext.setIncludeDiscussions(true);
 
 		Hits hits = indexer.search(searchContext);
 		%>

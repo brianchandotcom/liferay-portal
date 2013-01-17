@@ -22,12 +22,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -39,7 +37,6 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.portlet.blogs.service.persistence.BlogsEntryActionableDynamicQuery;
-import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -73,42 +70,6 @@ public class BlogsIndexer extends BaseIndexer {
 
 	public String[] getClassNames() {
 		return CLASS_NAMES;
-	}
-
-	@Override
-	public BooleanQuery getFullQuery(SearchContext searchContext)
-			throws SearchException {
-
-		try {
-			searchContext.setSearchEngineId(getSearchEngineId());
-
-			searchContext.setEntryClassNames(
-				new String[] {
-					getClassName(searchContext), MBMessage.class.getName()});
-
-			searchContext.setAttribute("discussion", true);
-
-			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			addSearchAssetCategoryIds(contextQuery, searchContext);
-			addSearchAssetTagNames(contextQuery, searchContext);
-			addSearchEntryClassNames(contextQuery, searchContext);
-			addSearchGroupId(contextQuery, searchContext);
-
-			BooleanQuery fullQuery = createFullQuery(
-				contextQuery, searchContext);
-
-			fullQuery.setQueryConfig(searchContext.getQueryConfig());
-
-			return fullQuery;
-		}
-		catch (SearchException se) {
-			throw se;
-		}
-		catch (Exception e) {
-			throw new SearchException(e);
-		}
 	}
 
 	public String getPortletId() {

@@ -70,6 +70,7 @@ portletURL.setParameter("keywords", keywords);
 		searchContext.setKeywords(keywords);
 		searchContext.setNodeIds(nodeIds);
 		searchContext.setStart(searchContainer.getStart());
+		searchContext.setIncludeDiscussions(true);
 
 		Hits hits = indexer.search(searchContext);
 		%>

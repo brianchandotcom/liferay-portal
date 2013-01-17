@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -84,6 +82,26 @@ public class JournalConverterUtil {
 		return ddmFields;
 	}
 
+	public static String getDDMXSD(String journalXSD) throws Exception {
+		Document document = SAXReaderUtil.read(journalXSD);
+
+		Element rootElement = document.getRootElement();
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		rootElement.addAttribute("available-locales", defaultLocale.toString());
+		rootElement.addAttribute("default-locale", defaultLocale.toString());
+
+		List<Element> dynamicElementElements = rootElement.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			updateXSDDynamicElement(dynamicElementElement);
+		}
+
+		return DDMXMLUtil.formatXML(document);
+	}
+
 	public static String getXML(DDMStructure ddmStructure, Fields ddmFields)
 		throws Exception {
 
@@ -112,43 +130,13 @@ public class JournalConverterUtil {
 
 				dynamicElementElement.addAttribute("name", fieldName);
 
-				updateDynamicElement(
+				updateContentDynamicElement(
 					dynamicElementElement, ddmStructure, ddmFields,
 					ddmFieldsCounter);
 			}
 		}
 
 		return DDMXMLUtil.formatXML(document.asXML());
-	}
-
-	public static String journalStructureToDDMStructure(String xsd)
-		throws SystemException {
-
-		Document document = null;
-
-		try {
-			document = SAXReaderUtil.read(xsd);
-		}
-		catch (DocumentException de) {
-			de.printStackTrace();
-
-			return xsd;
-		}
-
-		Element contentRoot = document.getRootElement();
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		contentRoot.addAttribute("available-locales", defaultLocale.toString());
-		contentRoot.addAttribute("default-locale", defaultLocale.toString());
-
-		List<Element> elements = contentRoot.elements();
-
-		for (Element element : elements) {
-			journalStructureFieldToDDMStructureField(element);
-		}
-
-		return DDMXMLUtil.formatXML(document);
 	}
 
 	protected static void addDDMFields(
@@ -338,9 +326,155 @@ public class JournalConverterUtil {
 		return serializable;
 	}
 
-	protected static void journalStructureFieldToDDMStructureField(
-		Element element) {
+	protected static void updateContentDynamicElement(
+			Element dynamicElementElement, DDMStructure ddmStructure,
+			Field ddmField, DDMFieldsCounter ddmFieldsCounter)
+		throws Exception {
 
+		String fieldName = ddmField.getName();
+
+		String fieldType = ddmStructure.getFieldType(fieldName);
+		String indexType = ddmStructure.getFieldProperty(
+			fieldName, "indexType");
+
+		dynamicElementElement.addAttribute(
+			"type", _ddmToJournalTypes.get(fieldType));
+		dynamicElementElement.addAttribute("index-type", indexType);
+
+		for (Locale locale : ddmField.getAvailableLocales()) {
+			Element dynamicContentElement = dynamicElementElement.addElement(
+				"dynamic-content");
+
+			dynamicContentElement.addAttribute(
+				"language-id", LocaleUtil.toLanguageId(locale));
+
+			int index = ddmFieldsCounter.get(fieldName);
+
+			Serializable fieldValue = ddmField.getValue(locale, index);
+
+			updateDynamicContentValue(
+				dynamicContentElement, fieldType, String.valueOf(fieldValue));
+		}
+
+		ddmFieldsCounter.incrementKey(fieldName);
+	}
+
+	protected static void updateContentDynamicElement(
+			Element dynamicElementElement, DDMStructure ddmStructure,
+			Fields ddmFields, DDMFieldsCounter ddmFieldsCounter)
+		throws Exception {
+
+		String fieldName = dynamicElementElement.attributeValue("name");
+
+		for (String childFieldName :
+				ddmStructure.getChildrenFieldNames(fieldName)) {
+
+			int offset = ddmFieldsCounter.get(fieldName);
+
+			int repetitions = countFieldRepetition(
+				ddmFields, childFieldName, fieldName, offset);
+
+			for (int i = 0; i < repetitions; i++) {
+				Element childDynamicElementElement =
+					dynamicElementElement.addElement("dynamic-element");
+
+				childDynamicElementElement.addAttribute("name", childFieldName);
+
+				updateContentDynamicElement(
+					childDynamicElementElement, ddmStructure, ddmFields,
+					ddmFieldsCounter);
+			}
+		}
+
+		updateContentDynamicElement(
+			dynamicElementElement, ddmStructure, ddmFields.get(fieldName),
+			ddmFieldsCounter);
+	}
+
+	protected static void updateDynamicContentValue(
+			Element dynamicContentElement, String fieldType, String fieldValue)
+		throws Exception {
+
+		if (DDMImpl.TYPE_CHECKBOX.equals(fieldType)) {
+			if (fieldValue.equals(Boolean.FALSE.toString())) {
+				fieldValue = StringPool.BLANK;
+			}
+
+			dynamicContentElement.addCDATA(fieldValue);
+		}
+		else if (DDMImpl.TYPE_DDM_DOCUMENTLIBRARY.equals(fieldType)) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				fieldValue);
+
+			String uuid = jsonObject.getString("uuid");
+			long groupId = jsonObject.getLong("groupId");
+
+			FileEntry fileEntry =
+				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+					uuid, groupId);
+
+			fieldValue = DLUtil.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+				false, true);
+
+			dynamicContentElement.addCDATA(fieldValue);
+		}
+		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(fieldType)) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				fieldValue);
+
+			String layoutId = jsonObject.getString("layoutId");
+
+			boolean privateLayout = jsonObject.getBoolean("privateLayout");
+
+			if (privateLayout) {
+				fieldValue = layoutId.concat(StringPool.AT).concat("private");
+			}
+			else {
+				fieldValue = layoutId.concat(StringPool.AT).concat("public");
+			}
+
+			dynamicContentElement.addCDATA(fieldValue);
+		}
+		else if (DDMImpl.TYPE_SELECT.equals(fieldType)) {
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(fieldValue);
+
+			if (jsonArray.length() > 1) {
+				for (int i = 0; i <jsonArray.length(); i++) {
+					Element optionElement = dynamicContentElement.addElement(
+						"option");
+
+					optionElement.addCDATA(jsonArray.getString(i));
+				}
+			}
+			else {
+				dynamicContentElement.addCDATA(jsonArray.getString(0));
+			}
+		}
+		else {
+			dynamicContentElement.addCDATA(fieldValue);
+		}
+	}
+
+	protected static void updateFieldsDisplay(
+		Fields ddmFields, String fieldName) {
+
+		String fieldsDisplayValue =
+			fieldName.concat(DDMImpl.INSTANCE_SEPARATOR).concat(
+				PwdGenerator.getPassword());
+
+		Field fieldsDisplayField = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+		String[] fieldsDisplayValues = StringUtil.split(
+			(String)fieldsDisplayField.getValue());
+
+		fieldsDisplayValues = ArrayUtil.append(
+			fieldsDisplayValues, fieldsDisplayValue);
+
+		fieldsDisplayField.setValue(StringUtil.merge(fieldsDisplayValues));
+	}
+
+	protected static void updateXSDDynamicElement(Element element) {
 		Locale defaultLocale = LocaleUtil.getDefault();
 
 		String name = element.attributeValue("name");
@@ -447,156 +581,8 @@ public class JournalConverterUtil {
 		List<Element> children = element.elements("dynamic-element");
 
 		for (Element child : children) {
-			journalStructureFieldToDDMStructureField(child);
+			updateXSDDynamicElement(child);
 		}
-	}
-
-	protected static void updateDynamicContentValue(
-			Element dynamicContentElement, String fieldType, String fieldValue)
-		throws Exception {
-
-		if (DDMImpl.TYPE_CHECKBOX.equals(fieldType)) {
-			if (fieldValue.equals(Boolean.FALSE.toString())) {
-				fieldValue = StringPool.BLANK;
-			}
-
-			dynamicContentElement.addCDATA(fieldValue);
-		}
-		else if (DDMImpl.TYPE_DDM_DOCUMENTLIBRARY.equals(fieldType)) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fieldValue);
-
-			String uuid = jsonObject.getString("uuid");
-			long groupId = jsonObject.getLong("groupId");
-
-			FileEntry fileEntry =
-				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-					uuid, groupId);
-
-			fieldValue = DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, true);
-
-			dynamicContentElement.addCDATA(fieldValue);
-		}
-		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(fieldType)) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fieldValue);
-
-			String layoutId = jsonObject.getString("layoutId");
-
-			boolean privateLayout = jsonObject.getBoolean("privateLayout");
-
-			if (privateLayout) {
-				fieldValue = layoutId.concat(StringPool.AT).concat("private");
-			}
-			else {
-				fieldValue = layoutId.concat(StringPool.AT).concat("public");
-			}
-
-			dynamicContentElement.addCDATA(fieldValue);
-		}
-		else if (DDMImpl.TYPE_SELECT.equals(fieldType)) {
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(fieldValue);
-
-			if (jsonArray.length() > 1) {
-				for (int i = 0; i <jsonArray.length(); i++) {
-					Element optionElement = dynamicContentElement.addElement(
-						"option");
-
-					optionElement.addCDATA(jsonArray.getString(i));
-				}
-			}
-			else {
-				dynamicContentElement.addCDATA(jsonArray.getString(0));
-			}
-		}
-		else {
-			dynamicContentElement.addCDATA(fieldValue);
-		}
-	}
-
-	protected static void updateDynamicElement(
-			Element dynamicElementElement, DDMStructure ddmStructure,
-			Field ddmField, DDMFieldsCounter ddmFieldsCounter)
-		throws Exception {
-
-		String fieldName = ddmField.getName();
-
-		String fieldType = ddmStructure.getFieldType(fieldName);
-		String indexType = ddmStructure.getFieldProperty(
-			fieldName, "indexType");
-
-		dynamicElementElement.addAttribute(
-			"type", _ddmToJournalTypes.get(fieldType));
-		dynamicElementElement.addAttribute("index-type", indexType);
-
-		for (Locale locale : ddmField.getAvailableLocales()) {
-			Element dynamicContentElement = dynamicElementElement.addElement(
-				"dynamic-content");
-
-			dynamicContentElement.addAttribute(
-				"language-id", LocaleUtil.toLanguageId(locale));
-
-			int index = ddmFieldsCounter.get(fieldName);
-
-			Serializable fieldValue = ddmField.getValue(locale, index);
-
-			updateDynamicContentValue(
-				dynamicContentElement, fieldType, String.valueOf(fieldValue));
-		}
-
-		ddmFieldsCounter.incrementKey(fieldName);
-	}
-
-	protected static void updateDynamicElement(
-			Element dynamicElementElement, DDMStructure ddmStructure,
-			Fields ddmFields, DDMFieldsCounter ddmFieldsCounter)
-		throws Exception {
-
-		String fieldName = dynamicElementElement.attributeValue("name");
-
-		for (String childFieldName :
-				ddmStructure.getChildrenFieldNames(fieldName)) {
-
-			int offset = ddmFieldsCounter.get(fieldName);
-
-			int repetitions = countFieldRepetition(
-				ddmFields, childFieldName, fieldName, offset);
-
-			for (int i = 0; i < repetitions; i++) {
-				Element childDynamicElementElement =
-					dynamicElementElement.addElement("dynamic-element");
-
-				childDynamicElementElement.addAttribute("name", childFieldName);
-
-				updateDynamicElement(
-					childDynamicElementElement, ddmStructure, ddmFields,
-					ddmFieldsCounter);
-			}
-		}
-
-		updateDynamicElement(
-			dynamicElementElement, ddmStructure, ddmFields.get(fieldName),
-			ddmFieldsCounter);
-	}
-
-	protected static void updateFieldsDisplay(
-		Fields ddmFields, String fieldName) {
-
-		String fieldsDisplayValue =
-			fieldName.concat(DDMImpl.INSTANCE_SEPARATOR).concat(
-				PwdGenerator.getPassword());
-
-		Field fieldsDisplayField = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
-
-		String[] fieldsDisplayValues = StringUtil.split(
-			(String)fieldsDisplayField.getValue());
-
-		fieldsDisplayValues = ArrayUtil.append(
-			fieldsDisplayValues, fieldsDisplayValue);
-
-		fieldsDisplayField.setValue(StringUtil.merge(fieldsDisplayValues));
 	}
 
 	private static void addMetaDataAttribute(
@@ -610,13 +596,10 @@ public class JournalConverterUtil {
 
 	private static Map<String, String> _ddmDataTypes =
 		new HashMap<String, String>();
-
 	private static Map<String, String> _ddmMetaDataAttributes =
 		new HashMap<String, String>();
-
 	private static Map<String, String> _ddmToJournalTypes =
 		new HashMap<String, String>();
-
 	private static Map<String, String> _journalToDDMTypes =
 		new HashMap<String, String>();
 

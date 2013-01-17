@@ -35,6 +35,7 @@ import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
 import com.liferay.portlet.dynamicdatamapping.service.BaseDDMServiceTestCase;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -81,6 +82,27 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		_ddmStructure = addStructure(
 			classNameId, null, "Test Structure", xsd,
 			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+	}
+
+	@Test
+	public void testGetDDMXSD() throws Exception {
+		String expectedDDMXSD = readText("sample-ddm-structure-all-fields.xml");
+
+		DDMStructure expectedDDMStructure = new DDMStructureImpl();
+
+		expectedDDMStructure.setXsd(expectedDDMXSD);
+
+		String journalXSD = readText("sample-journal-structure-all-fields.xml");
+
+		String actualDDMXSD = JournalConverterUtil.getDDMXSD(journalXSD);
+
+		DDMStructure actualDDMStructure = new DDMStructureImpl();
+
+		actualDDMStructure.setXsd(actualDDMXSD);
+
+		Assert.assertEquals(
+			expectedDDMStructure.getFieldsMap(),
+			actualDDMStructure.getFieldsMap());
 	}
 
 	@Test
@@ -419,28 +441,6 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		String actualXML = JournalConverterUtil.getXML(_ddmStructure, fields);
 
 		assertEquals(expectedXML, actualXML);
-	}
-
-	@Test
-	public void testJournalStructureToDDMStructure() throws Exception {
-		String expectedDDMXSD = readText("sample-ddm-structure-all-fields.xml");
-
-		DDMStructure expectedDDMStructure = new DDMStructureImpl();
-
-		expectedDDMStructure.setXsd(expectedDDMXSD);
-
-		String journalXSD = readText("sample-journal-structure-all-fields.xml");
-
-		String actualDDMXSD =
-			JournalConverterUtil.journalStructureToDDMStructure(journalXSD);
-
-		DDMStructure actualDDMStructure = new DDMStructureImpl();
-
-		actualDDMStructure.setXsd(actualDDMXSD);
-
-		Assert.assertEquals(
-			expectedDDMStructure.getFieldsMap(),
-			actualDDMStructure.getFieldsMap());
 	}
 
 	protected void assertEquals(Fields expectedFields, Fields actualFields) {

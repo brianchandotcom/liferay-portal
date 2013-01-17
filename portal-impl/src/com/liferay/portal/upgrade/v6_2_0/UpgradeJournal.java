@@ -78,8 +78,7 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 
 			ps = con.prepareStatement(sql);
 
-			String convertedXSD =
-				JournalConverterUtil.journalStructureToDDMStructure(xsd);
+			String convertedXSD = JournalConverterUtil.getDDMXSD(xsd);
 
 			ps.setString(1, uuid_);
 			ps.setLong(2, ddmStructureId);

@@ -222,12 +222,6 @@ public class DLUtil {
 		return getDL().getFileIcon(extension);
 	}
 
-	public static Set<Long> getFolderSubscriptionClassPKs(long userId)
-		throws SystemException {
-
-		return getDL().getFolderSubscriptionClassPKs(userId);
-	}
-
 	public static String getGenericName(String extension) {
 		return getDL().getGenericName(extension);
 	}
@@ -363,6 +357,31 @@ public class DLUtil {
 
 	public static boolean isOfficeExtension(String extension) {
 		return getDL().isOfficeExtension(extension);
+	}
+
+	public static boolean isSubscribedToFileEntryType(
+			long companyId, long groupId, long userId, long fileEntryTypeId)
+		throws SystemException {
+
+		return getDL().isSubscribedToFileEntryType(
+			companyId, groupId, userId, fileEntryTypeId);
+	}
+
+	public static boolean isSubscribedToFolder(
+			long companyId, long groupId, long userId, long folderId)
+		throws PortalException, SystemException {
+
+		return getDL().isSubscribedToFolder(
+			companyId, groupId, userId, folderId);
+	}
+
+	public static boolean isSubscribedToFolder(
+			long companyId, long groupId, long userId, long folderId,
+			boolean recursive)
+		throws PortalException, SystemException {
+
+		return getDL().isSubscribedToFolder(
+			companyId, groupId, userId, folderId, recursive);
 	}
 
 	public void setDL(DL dl) {

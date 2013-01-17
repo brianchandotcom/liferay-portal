@@ -82,6 +82,7 @@ public class WikiPageIndexer extends BaseIndexer {
 		WikiPage page = WikiPageLocalServiceUtil.getPage(message.getClassPK());
 
 		document.addKeyword(Field.NODE_ID, page.getNodeId());
+		document.addKeyword("isRelatedEntity", true);
 	}
 
 	public String[] getClassNames() {

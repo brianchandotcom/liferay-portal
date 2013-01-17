@@ -64,6 +64,13 @@ public class BlogsIndexer extends BaseIndexer {
 		setPermissionAware(true);
 	}
 
+	@Override
+	public void addRelatedEntityFields(Document document, Object obj)
+		throws Exception {
+
+		document.addKeyword("isRelatedEntity", true);
+	}
+
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}

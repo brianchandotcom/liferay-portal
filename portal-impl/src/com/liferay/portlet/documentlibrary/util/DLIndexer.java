@@ -114,6 +114,7 @@ public class DLIndexer extends BaseIndexer {
 			message.getClassPK());
 
 		document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
+		document.addKeyword("isRelatedEntity", true);
 	}
 
 	public String[] getClassNames() {

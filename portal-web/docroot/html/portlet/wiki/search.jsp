@@ -120,7 +120,7 @@ portletURL.setParameter("keywords", keywords);
 							/>
 						</liferay-util:buffer>
 
-						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="found-comment-in-wiki-page-x" />)</span>
+						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="comment-found-in-wiki-page-x" />)</span>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

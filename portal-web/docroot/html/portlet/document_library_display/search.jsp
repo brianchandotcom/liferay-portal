@@ -142,7 +142,7 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 							/>
 						</liferay-util:buffer>
 
-						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="found-comment-in-document-x" />)</span>
+						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="comment-found-in-document-x" />)</span>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

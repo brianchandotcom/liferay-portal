@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRendererFactory;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -69,6 +70,18 @@ public class WikiPageIndexer extends BaseIndexer {
 	public WikiPageIndexer() {
 		setFilterSearch(true);
 		setPermissionAware(true);
+	}
+
+	@Override
+	public void addRelatedEntityFields(Document document, Object obj)
+		throws Exception {
+
+		MBMessage message = (MBMessage)obj;
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(message.getClassPK());
+
+		document.addKeyword(Field.NODE_ID, page.getNodeId());
+		document.addKeyword("isRelatedEntity", true);
 	}
 
 	public String[] getClassNames() {

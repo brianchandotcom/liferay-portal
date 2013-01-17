@@ -1638,9 +1638,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Indexer
 
-			if (!message.isDiscussion()) {
-				indexer.reindex(message);
-			}
+			indexer.reindex(message);
 
 			// Ping
 
@@ -1653,12 +1651,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			assetEntryLocalService.updateVisible(
 				message.getWorkflowClassName(), message.getMessageId(), false);
 
-			if (!message.isDiscussion()) {
+			// Indexer
 
-				// Indexer
-
-				indexer.delete(message);
-			}
+			indexer.delete(message);
 		}
 
 		// Statistics

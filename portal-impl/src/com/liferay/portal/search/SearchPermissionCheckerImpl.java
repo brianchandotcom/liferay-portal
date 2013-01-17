@@ -52,6 +52,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +73,16 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 			String className = document.get(Field.ENTRY_CLASS_NAME);
 
+			boolean isRelatedEntity = GetterUtil.getBoolean(
+				document.get("isRelatedEntity"));
+
+			if (isRelatedEntity) {
+				long classNameId = GetterUtil.getLong(
+					document.get(Field.CLASS_NAME_ID));
+
+				className = PortalUtil.getClassName(classNameId);
+			}
+
 			if (Validator.isNull(className)) {
 				return;
 			}
@@ -80,6 +91,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 			if (Validator.isNull(classPK)) {
 				classPK = document.get(Field.ENTRY_CLASS_PK);
+			}
+
+			if (isRelatedEntity) {
+				classPK = document.get(Field.CLASS_PK);
 			}
 
 			if (Validator.isNull(classPK)) {

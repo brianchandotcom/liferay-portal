@@ -71,6 +71,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -101,6 +102,19 @@ public class DLIndexer extends BaseIndexer {
 	public DLIndexer() {
 		setFilterSearch(true);
 		setPermissionAware(true);
+	}
+
+	@Override
+	public void addRelatedEntityFields(Document document, Object obj)
+		throws Exception {
+
+		MBMessage message = (MBMessage)obj;
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+			message.getClassPK());
+
+		document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
+		document.addKeyword("isRelatedEntity", true);
 	}
 
 	public String[] getClassNames() {

@@ -76,19 +76,14 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 	portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
 	portletURL.setParameter("searchFolderIds", String.valueOf(searchFolderIds));
 	portletURL.setParameter("keywords", keywords);
+	%>
 
-	List<String> headerNames = new ArrayList<String>();
+	<liferay-ui:search-container
+		emptyResultsMessage='<%= LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>") %>'
+		iteratorURL="<%= portletURL %>"
+	>
 
-	headerNames.add("#");
-	headerNames.add("folder");
-	headerNames.add("document");
-	headerNames.add(StringPool.BLANK);
-
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
-
-	try {
-		Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntryConstants.getClassName());
-
+		<%
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 		searchContext.setAttribute("paginationType", "more");
@@ -96,65 +91,119 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 		searchContext.setFolderIds(folderIdsArray);
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(searchContainer.getStart());
+		searchContext.setIncludeDiscussions(true);
 
-		Hits results = DLAppServiceUtil.search(repositoryId, searchContext);
+		Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
+		%>
 
-		int total = results.getLength();
+		<liferay-ui:search-container-results
+			results="<%= DLUtil.getEntries(hits) %>"
+			total="<%= hits.getLength() %>"
+		/>
 
-		searchContainer.setTotal(total);
+		<liferay-ui:search-container-row
+			className="java.lang.Object"
+			modelVar="obj"
+		>
 
-		List resultRows = searchContainer.getResultRows();
+			<c:choose>
+				<c:when test="<%= obj instanceof MBMessage %>">
 
-		for (int i = 0; i < results.getDocs().length; i++) {
-			Document doc = results.doc(i);
+					<%
+					MBMessage message = (MBMessage)obj;
 
-			ResultRow row = new ResultRow(doc, i, i);
+					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(message.getClassPK());
 
-			// Position
+					Folder folder = fileEntry.getFolder();
+					%>
 
-			row.addText(searchContainer.getStart() + i + 1 + StringPool.PERIOD);
+					<portlet:renderURL var="rowURL">
+						<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+					</portlet:renderURL>
 
-			// Folder and document
+					<liferay-ui:search-container-column-text
+						name="title"
+					>
+						<liferay-ui:icon
+							image="message"
+							label="<%= true %>"
+							message="<%= StringUtil.shorten(message.getBody()) %>"
+							url="<%= rowURL %>"
+						/>
 
-			long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+						<liferay-util:buffer var="rootEntryIcon">
+							<liferay-ui:icon
+								image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
+								label="<%= true %>"
+								message="<%= fileEntry.getTitle() %>"
+								url="<%= rowURL %>"
+							/>
+						</liferay-util:buffer>
 
-			FileEntry fileEntry = null;
+						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="comment-found-in-document-x" />)</span>
+					</liferay-ui:search-container-column-text>
 
-			try {
-				fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
-				}
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="folder"
+						value="<%= folder.getName() %>"
+					/>
 
-				continue;
-			}
+					<liferay-ui:search-container-column-text
+						name="type"
+						value='<%= LanguageUtil.get(locale, "comment") %>'
+					/>
 
-			row.setObject(fileEntry);
+					<liferay-ui:search-container-column-text
+						name=""
+						value=""
+					/>
+				</c:when>
+				<c:when test="<%= obj instanceof FileEntry %>">
 
-			Folder folder = fileEntry.getFolder();
+					<%
+					FileEntry fileEntry = (FileEntry)obj;
 
-			PortletURL rowURL = renderResponse.createRenderURL();
+					Folder folder = fileEntry.getFolder();
+					%>
 
-			rowURL.setParameter("struts_action", "/document_library_display/view_file_entry");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+					<portlet:renderURL var="rowURL">
+						<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+					</portlet:renderURL>
 
-			String rowHREF = rowURL.toString();
+					<liferay-ui:search-container-column-text
+						name="title"
+					>
+						<liferay-ui:icon
+							image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
+							label="<%= true %>"
+							message="<%= fileEntry.getTitle() %>"
+							url="<%= rowURL %>"
+						/>
+					</liferay-ui:search-container-column-text>
 
-			row.addText(folder.getName(), rowHREF);
-			row.addText(fileEntry.getTitle(), rowHREF);
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="folder"
+						value="<%= folder.getName() %>"
+					/>
 
-			// Action
+					<liferay-ui:search-container-column-text
+						name="type"
+						value='<%= LanguageUtil.get(locale, "document") %>'
+					/>
 
-			row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/document_library/file_entry_action.jsp");
-
-			// Add result row
-
-			resultRows.add(row);
-		}
-	%>
+					<liferay-ui:search-container-column-jsp
+						align="right"
+						path="/html/portlet/document_library/file_entry_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
+		</liferay-ui:search-container-row>
 
 		<span class="aui-search-bar">
 			<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-documents" type="text" value="<%= keywords %>" />
@@ -202,15 +251,8 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 			</span>
 		</c:if>
 
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" type="more" />
-
-	<%
-	}
-	catch (Exception e) {
-		_log.error(e.getMessage());
-	}
-	%>
-
+		<liferay-ui:search-iterator type="more" />
+	</liferay-ui:search-container>
 </aui:form>
 
 <c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
@@ -225,8 +267,4 @@ if (searchFolderId > 0) {
 }
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);
-%>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library_display.search_jsp");
 %>

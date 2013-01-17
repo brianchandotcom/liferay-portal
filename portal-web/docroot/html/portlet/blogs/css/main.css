@@ -105,6 +105,11 @@
 		float: right
 	}
 
+	.search-root-entry {
+		color: #999;
+		float: right;
+	}
+
 	.stats {
 		color: #999;
 		float: left;

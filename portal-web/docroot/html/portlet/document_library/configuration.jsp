@@ -355,6 +355,12 @@ String editorContent = emailBody;
 						<liferay-ui:message key="the-document-title" />
 					</dd>
 					<dt>
+						[$DOCUMENT_TYPE$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-document-type" />
+					</dd>
+					<dt>
 						[$DOCUMENT_USER_ADDRESS$]
 					</dt>
 					<dd>

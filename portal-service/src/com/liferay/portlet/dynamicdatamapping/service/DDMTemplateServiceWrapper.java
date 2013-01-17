@@ -82,6 +82,14 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate copyTemplate(
 		long templateId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateService.copyTemplate(templateId, serviceContext);
+	}
+
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate copyTemplate(
+		long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)

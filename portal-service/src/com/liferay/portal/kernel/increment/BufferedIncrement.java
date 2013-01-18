@@ -28,8 +28,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface BufferedIncrement {
 
-	public Class<? extends Increment<?>> incrementClass();
+	public String configuration() default "default";
 
-	public boolean parallel() default true;
+	public Class<? extends Increment<?>> incrementClass();
 
 }

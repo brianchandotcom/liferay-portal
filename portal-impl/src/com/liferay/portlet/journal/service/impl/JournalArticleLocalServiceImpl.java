@@ -1131,10 +1131,10 @@ public class JournalArticleLocalServiceImpl
 				// default one. If the default one does not exist, throw an
 				// exception.
 
-				DDMTemplate ddmTtemplate = null;
+				DDMTemplate ddmTemplate = null;
 
 				try {
-					ddmTtemplate = ddmTemplatePersistence.findByG_T(
+					ddmTemplate = ddmTemplatePersistence.findByG_T(
 						article.getGroupId(), templateId);
 				}
 				catch (NoSuchTemplateException nste1) {
@@ -1142,7 +1142,7 @@ public class JournalArticleLocalServiceImpl
 						Group companyGroup = groupLocalService.getCompanyGroup(
 							article.getCompanyId());
 
-						ddmTtemplate = ddmTemplatePersistence.findByG_T(
+						ddmTemplate = ddmTemplatePersistence.findByG_T(
 							companyGroup.getGroupId(), templateId);
 
 						tokens.put(
@@ -1151,7 +1151,7 @@ public class JournalArticleLocalServiceImpl
 					}
 					catch (NoSuchTemplateException nste2) {
 						if (!defaultTemplateId.equals(templateId)) {
-							ddmTtemplate = ddmTemplatePersistence.findByG_T(
+							ddmTemplate = ddmTemplatePersistence.findByG_T(
 								article.getGroupId(), defaultTemplateId);
 						}
 						else {
@@ -1160,9 +1160,9 @@ public class JournalArticleLocalServiceImpl
 					}
 				}
 
-				script = ddmTtemplate.getScript();
-				langType = ddmTtemplate.getLanguage();
-				cacheable = ddmTtemplate.isCacheable();
+				script = ddmTemplate.getScript();
+				langType = ddmTemplate.getLanguage();
+				cacheable = ddmTemplate.isCacheable();
 			}
 
 			content = JournalUtil.transform(

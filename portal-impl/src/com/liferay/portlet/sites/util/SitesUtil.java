@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -92,7 +91,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
-import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 
 import java.io.File;
 import java.io.InputStream;
@@ -798,7 +796,7 @@ public class SitesUtil {
 
 	public static boolean isOrganizationUser(
 			long companyId, Group group, User user,
-			GroupSearchTerms searchTerms, List<String> organizationNames)
+			List<String> organizationNames)
 		throws Exception {
 
 		boolean organizationUser = false;
@@ -811,17 +809,11 @@ public class SitesUtil {
 		organizationParams.put(
 			"organizationsGroups", new Long(group.getGroupId()));
 
-		String keywords = StringPool.BLANK;
-
-		if (searchTerms != null) {
-			keywords = searchTerms.getKeywords();
-		}
-
 		List<Organization> organizationsGroups =
 			OrganizationLocalServiceUtil.search(
 				companyId, OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-				keywords, null, null, null, organizationParams,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				null, null, null, null, organizationParams, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		for (Organization organization : organizationsGroups) {
 			for (long userOrganizationId : user.getOrganizationIds()) {

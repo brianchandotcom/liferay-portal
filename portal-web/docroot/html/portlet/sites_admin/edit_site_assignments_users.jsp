@@ -106,7 +106,7 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 
 			List<String> names = new ArrayList<String>();
 
-			boolean organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), group, user2, null, names);
+			boolean organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), group, user2, names);
 
 			row.setParameter("organizationUser", organizationUser);
 

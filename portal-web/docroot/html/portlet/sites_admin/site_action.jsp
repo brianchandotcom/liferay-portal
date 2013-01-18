@@ -35,7 +35,7 @@ else {
 
 	GroupSearchTerms searchTerms = (GroupSearchTerms)request.getAttribute("view_tree.jspf-searchTerms");
 
-	organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), group, user, searchTerms, new ArrayList<String>());
+	organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), group, user, new ArrayList<String>());
 	userGroupUser = SitesUtil.isUserGroupUser(company.getCompanyId(), group, user, new ArrayList<String>());
 }
 

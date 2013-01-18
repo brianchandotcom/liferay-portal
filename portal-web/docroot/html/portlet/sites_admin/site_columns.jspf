@@ -43,7 +43,7 @@
 
 	List<String> names = new ArrayList<String>();
 
-	boolean organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), curGroup, user, searchTerms, names);
+	boolean organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), curGroup, user, names);
 
 	row.setParameter("organizationUser", organizationUser);
 

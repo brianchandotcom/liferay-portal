@@ -638,10 +638,16 @@ public class EditArticleAction extends PortletAction {
 
 		Layout targetLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layoutUuid, groupId, privateLayout);
+				layoutUuid, groupId, false);
 
 		if (targetLayout == null) {
-			layoutUuid = null;
+			targetLayout =
+				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+					layoutUuid, groupId, true);
+
+			if (targetLayout == null) {
+				layoutUuid = null;
+			}
 		}
 
 		int displayDateMonth = ParamUtil.getInteger(

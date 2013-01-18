@@ -30,11 +30,21 @@ String layoutBreadcrumb = StringPool.BLANK;
 
 if (Validator.isNotNull(layoutUuid)) {
 	try {
-		selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getParentGroupId(), layout.isPrivateLayout());
+		selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getParentGroupId(), false);
 
 		layoutBreadcrumb = _getLayoutBreadcrumb(selLayout, locale);
 	}
 	catch (NoSuchLayoutException nsle) {
+	}
+
+	if (selLayout == null) {
+		try {
+			selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getParentGroupId(), true);
+
+			layoutBreadcrumb = _getLayoutBreadcrumb(selLayout, locale);
+		}
+		catch (NoSuchLayoutException nsle) {
+		}
 	}
 }
 
@@ -544,7 +554,14 @@ Group parentGroup = themeDisplay.getParentGroup();
 <c:if test="<%= (article != null) && Validator.isNotNull(layoutUuid) %>">
 
 	<%
-	Layout defaultDisplayLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, scopeGroupId, layout.isPrivateLayout());
+	Layout defaultDisplayLayout = null;
+
+	try {
+		defaultDisplayLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, scopeGroupId, false);
+	}
+	catch (NoSuchLayoutException nsle) {
+		defaultDisplayLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, scopeGroupId, true);
+	}
 
 	defaultDisplayLayout = defaultDisplayLayout.toEscapedModel();
 

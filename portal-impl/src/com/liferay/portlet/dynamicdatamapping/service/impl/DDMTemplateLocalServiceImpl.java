@@ -386,6 +386,14 @@ public class DDMTemplateLocalServiceImpl
 		return ddmTemplatePersistence.findByC_C_T(classNameId, classPK, type);
 	}
 
+	public List<DDMTemplate> getTemplates(
+			long classNameId, long classPK, String type, String mode)
+		throws SystemException {
+
+		return ddmTemplatePersistence.findByC_C_T_M(
+			classNameId, classPK, type, mode);
+	}
+
 	public int getTemplatesCount(long groupId) throws SystemException {
 		return ddmTemplatePersistence.countByGroupId(groupId);
 	}

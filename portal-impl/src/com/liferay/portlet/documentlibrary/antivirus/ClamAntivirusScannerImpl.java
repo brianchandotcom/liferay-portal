@@ -15,11 +15,9 @@
 package com.liferay.portlet.documentlibrary.antivirus;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author Michael C. Han
@@ -39,23 +37,18 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 		try {
 			process = processBuilder.start();
 
-			InputStream inputStream = process.getInputStream();
-
-			String scanResult = StringUtil.read(inputStream);
-
 			process.waitFor();
 
 			int exitValue = process.exitValue();
 
-			if (exitValue != 0) {
+			if (exitValue == 1) {
+				throw new AntivirusScannerException(
+					"Virus detected in " + file.getAbsolutePath());
+			}
+			else if (exitValue >= 2) {
 				throw new AntivirusScannerException(
 					"Unable to scan file due to inability to execute " +
 						"antivirus process");
-			}
-
-			if (scanResult.contains("FOUND")) {
-				throw new AntivirusScannerException(
-					"Virus detected in " + file.getAbsolutePath());
 			}
 		}
 		catch (IOException ioe) {

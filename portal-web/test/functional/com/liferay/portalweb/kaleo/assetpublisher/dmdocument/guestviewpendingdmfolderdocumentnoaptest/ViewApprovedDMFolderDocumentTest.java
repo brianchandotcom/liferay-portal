@@ -34,7 +34,7 @@ public class ViewApprovedDMFolderDocumentTest extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='DM Folder Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//li[contains(@class,'folder selected')]/a"));
 		assertEquals(RuntimeVariables.replace("Add"),

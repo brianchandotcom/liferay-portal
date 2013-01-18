@@ -594,45 +594,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	}
 
 	/**
-	* Returns an ordered range of all the user groups that match the name and
-	* description.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the user group's company
-	* @param name the user group's name (optionally <code>null</code>)
-	* @param description the user group's description (optionally
-	<code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). For more
-	information see {@link
-	com.liferay.portal.service.persistence.UserGroupFinder}
-	* @param start the lower bound of the range of user groups to return
-	* @param end the upper bound of the range of user groups to return (not
-	inclusive)
-	* @param obc the comparator to order the user groups (optionally
-	<code>null</code>)
-	* @return the matching user groups ordered by comparator <code>obc</code>
-	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portal.service.persistence.UserGroupFinder
-	*/
-	public java.util.List<com.liferay.portal.model.UserGroup> search(
-		long companyId, java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userGroupLocalService.search(companyId, name, description,
-			params, start, end, obc);
-	}
-
-	/**
 	* Returns the number of user groups that match the keywords
 	*
 	* @param companyId the primary key of the user group's company
@@ -649,28 +610,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _userGroupLocalService.searchCount(companyId, keywords, params);
-	}
-
-	/**
-	* Returns the number of user groups that match the name and description.
-	*
-	* @param companyId the primary key of the user group's company
-	* @param name the user group's name (optionally <code>null</code>)
-	* @param description the user group's description (optionally
-	<code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). For more
-	information see {@link
-	com.liferay.portal.service.persistence.UserGroupFinder}
-	* @return the number of matching user groups
-	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portal.service.persistence.UserGroupFinder
-	*/
-	public int searchCount(long companyId, java.lang.String name,
-		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userGroupLocalService.searchCount(companyId, name, description,
-			params);
 	}
 
 	/**

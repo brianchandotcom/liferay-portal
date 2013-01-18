@@ -37,6 +37,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil;
 import com.liferay.portlet.blogs.service.persistence.BlogsEntryUtil;
+import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandlerImpl;
 import com.liferay.portlet.journal.lar.JournalPortletDataHandlerImpl;
 
 import java.io.InputStream;
@@ -232,7 +233,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			entryElement = entriesElement.addElement("entry");
 		}
 
-		String content = JournalPortletDataHandlerImpl.exportReferencedContent(
+		String content = DDMPortletDataHandlerImpl.exportReferencedContent(
 			portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
 			dlFileEntriesElement, dlFileRanksElement, dlRepositoriesElement,
 			dlRepositoryEntriesElement, entryElement, entry.getContent());

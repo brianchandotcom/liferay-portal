@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl;
+import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandlerImpl;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.lar.JournalPortletDataHandlerImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -273,14 +274,14 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 		List<Element> structureElements = rootElement.elements("structure");
 
 		for (Element structureElement : structureElements) {
-			JournalPortletDataHandlerImpl.importStructure(
+			DDMPortletDataHandlerImpl.importStructure(
 				portletDataContext, structureElement);
 		}
 
 		List<Element> templateElements = rootElement.elements("template");
 
 		for (Element templateElement : templateElements) {
-			JournalPortletDataHandlerImpl.importTemplate(
+			DDMPortletDataHandlerImpl.importTemplate(
 				portletDataContext, templateElement);
 		}
 

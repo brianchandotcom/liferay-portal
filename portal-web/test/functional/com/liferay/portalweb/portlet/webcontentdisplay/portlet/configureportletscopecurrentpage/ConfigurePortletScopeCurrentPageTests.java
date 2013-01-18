@@ -16,6 +16,10 @@ package com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportlet
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCD1Test;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCD2Test;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCD1Test;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCD2Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,9 +34,9 @@ public class ConfigurePortletScopeCurrentPageTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletWCD1Test.class);
 		testSuite.addTestSuite(AddPageWCD2Test.class);
 		testSuite.addTestSuite(AddPortletWCD2Test.class);
-		testSuite.addTestSuite(ConfigurePortletScopeCurrentPageTest.class);
-		testSuite.addTestSuite(ViewConfigurePortletScopeCurrentPageTest.class);
-		testSuite.addTestSuite(TearDownPortletScopeTest.class);
+		testSuite.addTestSuite(ConfigurePortletWCD2ScopeCurrentPageTest.class);
+		testSuite.addTestSuite(ViewPortletWCD2ScopeCurrentPageTest.class);
+		testSuite.addTestSuite(TearDownPortletWCD2ScopeTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

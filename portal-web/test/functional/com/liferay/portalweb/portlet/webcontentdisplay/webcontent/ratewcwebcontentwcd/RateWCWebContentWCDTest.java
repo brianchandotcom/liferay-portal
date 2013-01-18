@@ -25,20 +25,19 @@ public class RateWCWebContentWCDTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Display Test Page");
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText("//div/div[4]/div/div[1]/div/div"));
+			selenium.getText("//div[contains(@id,'ratingStarContent')]/div"));
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText("//div/div[4]/div/div[2]/div/div"));
-		assertTrue(selenium.isVisible("//a[5]"));
-		selenium.clickAt("//a[5]",
-			RuntimeVariables.replace("Rate this 5 stars out of 5."));
-		selenium.waitForText("//div/div[4]/div/div[2]/div/div",
+			selenium.getText("//div[contains(@id,'ratingScoreContent')]/div"));
+		assertTrue(selenium.isVisible("//a[4]"));
+		selenium.clickAt("//a[4]",
+			RuntimeVariables.replace("Rate this 4 stars out of 5."));
+		selenium.waitForText("//div[contains(@id,'ratingScoreContent')]/div",
 			"Average (1 Vote)");
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText("//div/div[4]/div/div[2]/div/div"));
+			selenium.getText("//div[contains(@id,'ratingScoreContent')]/div"));
 	}
 }

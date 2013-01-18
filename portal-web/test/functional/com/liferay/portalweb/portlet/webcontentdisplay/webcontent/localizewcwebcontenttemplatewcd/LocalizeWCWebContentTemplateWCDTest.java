@@ -22,117 +22,63 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class LocalizeWCWebContentTemplateWCDTest extends BaseTestCase {
 	public void testLocalizeWCWebContentTemplateWCD() throws Exception {
-		int label = 1;
-
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.selectWindow("null");
-				selenium.selectFrame("relative=top");
-				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Web Content Display Test Page");
-				selenium.clickAt("link=Web Content Display Test Page",
-					RuntimeVariables.replace("Web Content Display Test Page"));
-				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible("//img[@alt='Edit Web Content']");
-				selenium.clickAt("//img[@alt='Edit Web Content']",
-					RuntimeVariables.replace("Edit Web Content"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(
-						"Hello World Localized Article"),
-					selenium.getText("//h1[@class='header-title']"));
-				assertEquals(RuntimeVariables.replace(
-						"Web Content Localized Structure Name"),
-					selenium.getText("//span[@class='structure-name-label']"));
-				assertEquals(RuntimeVariables.replace(
-						"Web Content Localized Template Name"),
-					selenium.getText("//span[@class='template-name-label']"));
-				assertTrue(selenium.isElementPresent(
-						"//span[2]/div/span/span/span/input[2]"));
-
-				boolean localizablePageNameChecked = selenium.isChecked(
-						"//span[2]/div/span/span/span/input[2]");
-
-				if (localizablePageNameChecked) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("//span[2]/div/span/span/span/input[2]",
-					RuntimeVariables.replace(""));
-
-			case 2:
-				assertTrue(selenium.isElementPresent(
-						"//li[2]/span[2]/div/span/span/span/input[2]"));
-
-				boolean localizablePageDescriptionChecked = selenium.isChecked(
-						"//li[2]/span[2]/div/span/span/span/input[2]");
-
-				if (localizablePageDescriptionChecked) {
-					label = 3;
-
-					continue;
-				}
-
-				selenium.clickAt("//li[2]/span[2]/div/span/span/span/input[2]",
-					RuntimeVariables.replace(""));
-
-			case 3:
-				assertTrue(selenium.isChecked(
-						"//span[2]/div/span/span/span/input[2]"));
-				assertTrue(selenium.isChecked(
-						"//li[2]/span[2]/div/span/span/span/input[2]"));
-				Thread.sleep(5000);
-				selenium.clickAt("//input[@value='Save as Draft']",
-					RuntimeVariables.replace("Save as Draft"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Status: Draft"),
-					selenium.getText("//span[@class='workflow-status']"));
-				assertEquals("Hello World Page Name",
-					selenium.getValue("//input[@id='page-name']"));
-				assertEquals("Hello World Page Description",
-					selenium.getValue("//input[@id='page-description']"));
-				assertEquals(RuntimeVariables.replace("Add Translation"),
-					selenium.getText("//strong/a/span"));
-				selenium.clickAt("//strong/a/span",
-					RuntimeVariables.replace("Add Translation"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
-				assertEquals(RuntimeVariables.replace("Chinese (China)"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.click(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
-				selenium.waitForVisible("//iframe[@id='_15_zh_CN']");
-				selenium.selectFrame("//iframe[@id='_15_zh_CN']");
-				selenium.waitForVisible("//input[@id='page-name']");
-				selenium.type("//input[@id='page-name']",
-					RuntimeVariables.replace(
-						"\u4e16\u754c\u60a8\u597d Page Name"));
-				selenium.type("//input[@id='page-description']",
-					RuntimeVariables.replace(
-						"\u4e16\u754c\u60a8\u597d Page Description"));
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace("Save"));
-				selenium.waitForPageToLoad("30000");
-				selenium.selectFrame("relative=top");
-				assertEquals(RuntimeVariables.replace("Chinese (China)"),
-					selenium.getText(
-						"//a[@class='lfr-token journal-article-translation-zh_CN']"));
-				Thread.sleep(5000);
-				selenium.clickAt("//input[@value='Publish']",
-					RuntimeVariables.replace("Publish"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Hello World Page Name"),
-					selenium.getText("//td[@class='page-name']"));
-				assertEquals(RuntimeVariables.replace(
-						"Hello World Page Description"),
-					selenium.getText("//td[@class='page-description']"));
-
-			case 100:
-				label = -1;
-			}
-		}
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Web Content Display Test Page",
+			RuntimeVariables.replace("Web Content Display Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//span[@class='icon-action icon-action-edit']/a/span"));
+		selenium.clickAt("//span[@class='icon-action icon-action-edit']/a/span",
+			RuntimeVariables.replace("Edit"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Hello World Localized Article"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("WC Structure Name"),
+			selenium.getText("//span[@class='structure-name-label']"));
+		assertEquals(RuntimeVariables.replace("WC Template Name"),
+			selenium.getText("//span[@class='template-name-label']"));
+		assertEquals(RuntimeVariables.replace("Add Translation"),
+			selenium.getText("//strong/a/span"));
+		selenium.clickAt("//strong/a/span",
+			RuntimeVariables.replace("Add Translation"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]");
+		assertEquals(RuntimeVariables.replace("Chinese (China)"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]",
+			RuntimeVariables.replace("Chinese (China)"));
+		selenium.waitForElementPresent("//iframe[@id='_15_zh_CN']");
+		selenium.selectFrame("//iframe[@id='_15_zh_CN']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible(
+			"//div[@id='_15_availableTranslationContainer']");
+		assertEquals(RuntimeVariables.replace(
+				"Translating Web Content to Chinese (China)"),
+			selenium.getText("//div[@id='_15_availableTranslationContainer']"));
+		selenium.type("//input[@id='_15_page_name']",
+			RuntimeVariables.replace("\u4e16\u754c\u60a8\u597d Page Name"));
+		selenium.type("//input[@id='_15_page_description']",
+			RuntimeVariables.replace(
+				"\u4e16\u754c\u60a8\u597d Page Description"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		selenium.selectFrame("relative=top");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Chinese (China)"),
+			selenium.getText(
+				"//a[@class='lfr-token journal-article-translation-zh_CN']"));
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Hello World Page Name"),
+			selenium.getText("//td[@class='page_name']"));
+		assertEquals(RuntimeVariables.replace("Hello World Page Description"),
+			selenium.getText("//td[@class='page_description']"));
 	}
 }

@@ -75,27 +75,22 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe[@id='_15_openStructuresView']</td>
+	<td>//iframe[contains(@src,'scopeStructureType')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[@id='_15_openStructuresView']</td>
+	<td>//iframe[contains(@src,'scopeStructureType')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Add Structure']</td>
-	<td>Add Structure</td>
-</tr>
-<tr>
 	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/liferay/store.js')]</td>
-	<td>Store</td>
+	<td>//script[contains(@src,'/liferay/search_container.js')]</td>
+	<td>Search Container</td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//input[@name='_15_rowIds']</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>structurePresent</td>
 </tr>
 <tr>
@@ -104,28 +99,23 @@
 	<td>StructureNotPresent</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td>All Rows</td>
-</tr>
-<tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
+	<td>//input[@name='_166_allRowIds']</td>
 	<td>All Rows</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@name='_15_allRowIds']</td>
+	<td>//input[@name='_166_allRowIds']</td>
 	<td>All Rows</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected structures?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,7 +131,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-info']</td>
-	<td>No structures were found.</td>
+	<td>There are no results.</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

@@ -32,10 +32,13 @@ public class AddPortletScopeCurrentPageWCWebContentWCDTest extends BaseTestCase 
 		assertEquals(RuntimeVariables.replace(
 				"Web Content Display (Web Content Display Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
-		selenium.clickAt("//img[@alt='Add Web Content']",
-			RuntimeVariables.replace("Add Web Content"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText(
+				"//span[@class='icon-action icon-action-add']/a/span"));
+		selenium.clickAt("//span[@class='icon-action icon-action-add']/a/span",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		selenium.sendKeys("//input[@id='_15_title_en_US']",
+		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");

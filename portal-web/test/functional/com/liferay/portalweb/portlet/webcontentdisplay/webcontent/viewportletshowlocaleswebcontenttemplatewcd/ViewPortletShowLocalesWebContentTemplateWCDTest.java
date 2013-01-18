@@ -27,28 +27,44 @@ public class ViewPortletShowLocalesWebContentTemplateWCDTest
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Display Test Page");
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//img[@title='English (United States)']");
-		selenium.clickAt("//img[@title='English (United States)']",
-			RuntimeVariables.replace("English (United States)"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Hello World Page Name"),
-			selenium.getText("//td[@class='page-name']"));
+			selenium.getText("//td[@class='page_name']"));
 		assertEquals(RuntimeVariables.replace("Hello World Page Description"),
-			selenium.getText("//td[@class='page-description']"));
-		assertTrue(selenium.isElementPresent(
-				"//img[@title='\u4e2d\u6587 (\u4e2d\u56fd)']"));
+			selenium.getText("//td[@class='page_description']"));
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Language Test Page",
+			RuntimeVariables.replace("Language Test Page"));
+		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//img[@title='\u4e2d\u6587 (\u4e2d\u56fd)']",
 			RuntimeVariables.replace("\u4e2d\u6587 (\u4e2d\u56fd)"));
 		selenium.waitForPageToLoad("30000");
+		selenium.open("/zh/home/");
+		selenium.clickAt("link=Web Content Display Test Page",
+			RuntimeVariables.replace("Web Content Display Test Page"));
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"\u4e16\u754c\u60a8\u597d Page Name"),
-			selenium.getText("//td[@class='page-name']"));
+			selenium.getText("//td[@class='page_name']"));
 		assertEquals(RuntimeVariables.replace(
 				"\u4e16\u754c\u60a8\u597d Page Description"),
-			selenium.getText("//td[@class='page-description']"));
+			selenium.getText("//td[@class='page_description']"));
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Language Test Page",
+			RuntimeVariables.replace("Language Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//img[@title='English (United States)']",
+			RuntimeVariables.replace("English (United States)"));
+		selenium.waitForPageToLoad("30000");
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Web Content Display Test Page",
+			RuntimeVariables.replace("Web Content Display Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Hello World Page Name"),
+			selenium.getText("//td[@class='page_name']"));
+		assertEquals(RuntimeVariables.replace("Hello World Page Description"),
+			selenium.getText("//td[@class='page_description']"));
 	}
 }

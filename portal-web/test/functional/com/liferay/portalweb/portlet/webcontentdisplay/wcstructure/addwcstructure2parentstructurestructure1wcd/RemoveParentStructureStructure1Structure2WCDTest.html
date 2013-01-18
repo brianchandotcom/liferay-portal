@@ -75,48 +75,58 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe[@id='_15_openStructuresView']</td>
+	<td>//iframe[contains(@src,'scopeStructureType')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[@id='_15_openStructuresView']</td>
+	<td>//iframe[contains(@src,'scopeStructureType')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/search_container.js')]</td>
+	<td>Search Container</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//tr[4]/td[2]/a</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[2]/a</td>
 	<td>Structure ID</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//tr[4]/td[2]/a</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[2]/a</td>
 	<td>Structure ID</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[3]/a</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[3]/a</td>
+	<td>WC Structure2 Name</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[4]/a</td>
+	<td>Modified Date</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[3]/a</td>
 	<td>WC Structure2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[4]/a</td>
-	<td>WC Structure2 Description</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[3]/a</td>
-	<td>WC Structure2 Name</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Remove']</td>
-	<td>Remove</td>
+	<td>//a[@id='_166_parentStructureName']</td>
+	<td>WC Structure1 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Remove']</td>
 	<td>Remove</td>
+</tr>
+<tr>
+	<td>waitForTextNotPresent</td>
+	<td>//a[@id='_166_parentStructureName']</td>
+	<td>WC Structure1 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -130,18 +140,18 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//tr[4]/td[2]/a</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[2]/a</td>
 	<td>Structure ID</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[3]/a</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[3]/a</td>
 	<td>WC Structure2 Name</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//tr[4]/td[4]/a</td>
-	<td>WC Structure2 Description</td>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[4]/a</td>
+	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

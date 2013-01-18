@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Web Content Display Test Page3</td>
-	<td>Web Content Display Test Page3</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Display Test Page3</td>
 	<td>Web Content Display Test Page3</td>
@@ -29,18 +24,48 @@
 	<td>Select existing web content or add some web content to be displayed in this portlet.</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//img[@alt='Select Web Content']</td>
+	<td>waitForVisible</td>
+	<td>//span[@class='icon-action icon-action-configuration']/a/span</td>
 	<td>Select Web Content</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@class='icon-action icon-action-configuration']/a/span</td>
+	<td>Select Web Content</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@class='icon-action icon-action-configuration']/a/span</td>
+	<td>Select Web Content</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Web Content Display - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Web Content Display - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>link=WC WebContent Title</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[2]/a</td>
+	<td>WC WebContent Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[2]/a</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=WC WebContent Title</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[2]/a</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
@@ -67,6 +92,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

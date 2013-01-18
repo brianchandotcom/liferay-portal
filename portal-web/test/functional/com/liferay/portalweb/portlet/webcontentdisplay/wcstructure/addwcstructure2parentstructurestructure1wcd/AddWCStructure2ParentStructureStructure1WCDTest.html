@@ -19,29 +19,34 @@
 	<td>Web Content Display Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//img[@alt='Add Web Content']</td>
-	<td>Add Web Content</td>
+	<td>assertText</td>
+	<td>//span[@class='icon-action icon-action-add']/a/span</td>
+	<td>Add</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//a[@id='_15_changeStructureButton']</td>
-	<td>Change</td>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='icon-action icon-action-add']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@class=' taglib-icon']/span[contains(.,'Select')]</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_15_changeStructureButton']</td>
-	<td>Change</td>
+	<td>//a[@class=' taglib-icon']/span[contains(.,'Select')]</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe[@name='_15_changeStruture']</td>
-	<td>Change Structure</td>
+	<td>//iframe[contains(@src,'selectStructure')]</td>
+	<td>Structures</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[@name='_15_changeStruture']</td>
-	<td>Change Structure</td>
+	<td>//iframe[contains(@src,'selectStructure')]</td>
+	<td>Structures</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -50,18 +55,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@value='Add Structure']</td>
-	<td>Add Structure</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Add Structure']</td>
-	<td>Add Structure</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Select']</td>
-	<td>Select</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -75,13 +80,13 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe[@name='_15_parentStructureSelector']</td>
-	<td>Structure</td>
+	<td>//iframe[contains(@src,'selectParentStructure')]</td>
+	<td>Parent Structures</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[@name='_15_parentStructureSelector']</td>
-	<td>Structure</td>
+	<td>//iframe[contains(@src,'selectParentStructure')]</td>
+	<td>Parent Structures</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -90,27 +95,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[1]/a</td>
-	<td>Structure ID</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//td[1]/a</td>
-	<td>Structure ID</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'WC Structure1 Name')]/td[2]/a</td>
 	<td>WC Structure1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>WC Structure1 Description</td>
+	<td>//tr[contains(.,'WC Structure1 Name')]/td[2]/a</td>
+	<td>WC Structure1 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'WC Structure1 Name')]/td[2]/a</td>
 	<td>WC Structure1 Name</td>
 </tr>
 <tr>
@@ -120,38 +115,43 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe[@name='_15_changeStruture']</td>
-	<td>Change Structure</td>
+	<td>//iframe[contains(@src,'selectStructure')]</td>
+	<td>Structures</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[@name='_15_changeStruture']</td>
-	<td>Change Structure</td>
+	<td>//iframe[contains(@src,'selectStructure')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//a[@id='_166_parentStructureName']</td>
+	<td>WC Structure1 Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_15_name_en_US']</td>
+	<td>//input[@id='_166_name_en_US']</td>
 	<td>WC Structure2 Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//textarea[@id='_15_description_en_US']</td>
+	<td>//textarea[@id='_166_description_en_US']</td>
 	<td>WC Structure2 Description</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Add Row']</td>
-	<td>Add Row</td>
+	<td>assertText</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li/div[contains(.,'HTML')]</td>
+	<td>HTML</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>//select[@id='_15_structure_el0_type']</td>
-	<td>Text Area (HTML)</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@id='_15_structure_el0_name']</td>
-	<td>text 1</td>
+	<td>dragAndDropToObject</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li/div[contains(.,'HTML')]</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -165,23 +165,18 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[2]/a</td>
 	<td>Structure ID</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[2]/a</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[3]/a</td>
 	<td>WC Structure2 Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[4]/td[3]/a</td>
-	<td>WC Structure2 Description</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
-	<td>top</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

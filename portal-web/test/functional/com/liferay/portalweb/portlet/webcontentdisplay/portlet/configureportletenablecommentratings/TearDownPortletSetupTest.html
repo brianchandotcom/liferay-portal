@@ -14,68 +14,63 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Web Content Display Test Page</td>
-	<td>Web Content Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Display Test Page</td>
 	<td>Web Content Display Test Page</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//img[@alt='Select Web Content']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//strong/a</td>
-	<td>Options</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Web Content Display - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Web Content Display - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Setup</td>
-	<td>Setup</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Setup</td>
-	<td>Setup</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
 	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
-	<td></td>
+	<td>Show Available Locales</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_86_showAvailableLocalesCheckbox'))</td>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
 	<td>showAvailableLocalesChecked</td>
 </tr>
 <tr>
@@ -86,7 +81,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
-	<td></td>
+	<td>Show Available Locales</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -94,13 +89,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//input[@id='_86_enablePrintCheckbox']</td>
-	<td></td>
+	<td>Enable Print</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_86_enablePrintCheckbox'))</td>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_enablePrintCheckbox']</td>
 	<td>enablePrintChecked</td>
 </tr>
 <tr>
@@ -111,7 +106,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_86_enablePrintCheckbox']</td>
-	<td></td>
+	<td>Enable Print</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -119,13 +114,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>waitForVisible</td>
+	<td>//input[@id='_86_enableRelatedAssetsCheckbox']</td>
+	<td>Enable Related Assets</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_enableRelatedAssetsCheckbox']</td>
+	<td>enableRelatedAssetsNotChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${enableRelatedAssetsNotChecked}</td>
+	<td>enableRelatedAssetsChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_86_enableRelatedAssetsCheckbox']</td>
+	<td>Enable Related Assets</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>enableRelatedAssetsChecked</td>
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_86_enableRatingsCheckbox'))</td>
+	<td>waitForVisible</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>Enable Ratings</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
 	<td>enableRatingsChecked</td>
 </tr>
 <tr>
@@ -136,7 +156,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_86_enableRatingsCheckbox']</td>
-	<td></td>
+	<td>Enable Ratings</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -144,13 +164,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//input[@id='_86_enableCommentsCheckbox']</td>
-	<td></td>
+	<td>Enable Comments</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_86_enableCommentsCheckbox'))</td>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_enableCommentsCheckbox']</td>
 	<td>enableCommentsChecked</td>
 </tr>
 <tr>
@@ -161,7 +181,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_86_enableCommentsCheckbox']</td>
-	<td></td>
+	<td>Enable Comments</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -169,13 +189,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
-	<td></td>
+	<td>Enable Comment Ratings</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_86_enableCommentRatingsCheckbox'))</td>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
 	<td>enableCommentRatingsChecked</td>
 </tr>
 <tr>
@@ -186,11 +206,36 @@
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
-	<td></td>
+	<td>Enable Comment Ratings</td>
 </tr>
 <tr>
 	<td>label</td>
 	<td>enableCommentRatingsNotChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_86_enableViewCountIncrementCheckbox']</td>
+	<td>Enable View Count Increment</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_enableViewCountIncrementCheckbox']</td>
+	<td>enableViewCountIncrementNotChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${enableViewCountIncrementNotChecked}</td>
+	<td>enableViewCountIncrementChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_86_enableViewCountIncrementCheckbox']</td>
+	<td>Enable View Count Increment</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>enableViewCountIncrementChecked</td>
 	<td></td>
 </tr>
 <tr>
@@ -202,6 +247,46 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
+	<td>Show Available Locales</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_enablePrintCheckbox']</td>
+	<td>Enable Print</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableRelatedAssetsCheckbox']</td>
+	<td>Enable Related Assets</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>Enable Ratings</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_enableCommentsCheckbox']</td>
+	<td>Enable Comments</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td>Enable Comment Ratings</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableViewCountIncrementCheckbox']</td>
+	<td>Enable View Count Increment</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

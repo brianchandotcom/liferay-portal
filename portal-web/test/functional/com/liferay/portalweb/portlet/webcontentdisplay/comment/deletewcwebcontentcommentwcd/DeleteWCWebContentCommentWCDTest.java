@@ -25,7 +25,6 @@ public class DeleteWCWebContentCommentWCDTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Display Test Page");
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -33,17 +32,19 @@ public class DeleteWCWebContentCommentWCDTest extends BaseTestCase {
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
+		selenium.mouseOver("//li[@class='lfr-discussion-delete']/span/a/span");
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//li[4]/span/a/span"));
-		selenium.clickAt("//li[4]/span/a/span",
+			selenium.getText("//li[@class='lfr-discussion-delete']/span/a/span"));
+		selenium.clickAt("//li[@class='lfr-discussion-delete']/span/a/span",
 			RuntimeVariables.replace("Delete"));
-		selenium.waitForConfirmation("Are you sure you want to delete this?");
-		selenium.waitForVisible(
-			"//div[@class='lfr-message-response portlet-msg-success']");
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
+		selenium.waitForVisible("//div[contains(@class,'portlet-msg-success')]");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
-			selenium.getText(
-				"//div[@class='lfr-message-response portlet-msg-success']"));
+			selenium.getText("//div[contains(@class,'portlet-msg-success')]"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-discussion-message']"));
 		assertFalse(selenium.isTextPresent("WC WebContent Comment"));
 	}
 }

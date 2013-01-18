@@ -52,31 +52,38 @@ public class RemoveParentStructureStructure1Structure2WCDTest
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
-		selenium.waitForVisible("//iframe[@id='_15_openStructuresView']");
-		selenium.selectFrame("//iframe[@id='_15_openStructuresView']");
-		selenium.waitForVisible("//tr[4]/td[2]/a");
-		assertTrue(selenium.isVisible("//tr[4]/td[2]/a"));
+		selenium.waitForVisible("//iframe[contains(@src,'scopeStructureType')]");
+		selenium.selectFrame("//iframe[contains(@src,'scopeStructureType')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
+		selenium.waitForVisible(
+			"//tr[contains(.,'WC Structure2 Name')]/td[2]/a");
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC Structure2 Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure2 Name"),
-			selenium.getText("//tr[4]/td[3]/a"));
-		assertEquals(RuntimeVariables.replace("WC Structure2 Description"),
-			selenium.getText("//tr[4]/td[4]/a"));
-		selenium.clickAt("//tr[4]/td[3]/a",
+			selenium.getText("//tr[contains(.,'WC Structure2 Name')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC Structure2 Name')]/td[4]/a"));
+		selenium.clickAt("//tr[contains(.,'WC Structure2 Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure2 Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//input[@value='Remove']");
+		assertEquals(RuntimeVariables.replace("WC Structure1 Name"),
+			selenium.getText("//a[@id='_166_parentStructureName']"));
 		selenium.clickAt("//input[@value='Remove']",
 			RuntimeVariables.replace("Remove"));
+		selenium.waitForTextNotPresent("//a[@id='_166_parentStructureName']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isVisible("//tr[4]/td[2]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC Structure2 Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure2 Name"),
-			selenium.getText("//tr[4]/td[3]/a"));
-		assertEquals(RuntimeVariables.replace("WC Structure2 Description"),
-			selenium.getText("//tr[4]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'WC Structure2 Name')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC Structure2 Name')]/td[4]/a"));
 		selenium.selectFrame("relative=top");
 	}
 }

@@ -18,6 +18,7 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCDTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCDTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletenablecommentratings.TearDownPortletSetupTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,8 +32,8 @@ public class ConfigurePortletScopeDefaultTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
 		testSuite.addTestSuite(ConfigurePortletScopeDefaultTest.class);
-		testSuite.addTestSuite(ViewConfigurePortletScopeDefaultTest.class);
-		testSuite.addTestSuite(TearDownPortletScopeTest.class);
+		testSuite.addTestSuite(ViewPortletScopeDefaultTest.class);
+		testSuite.addTestSuite(TearDownPortletSetupTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

@@ -14,39 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Web Content Display Test Page</td>
-	<td>Web Content Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Display Test Page</td>
 	<td>Web Content Display Test Page</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//img[@title='English (United States)']</td>
-	<td>English (United States)</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//img[@title='English (United States)']</td>
-	<td>English (United States)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@class='page-name']</td>
+	<td>//td[@class='page_name']</td>
 	<td>Hello World Page Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@class='page-description']</td>
+	<td>//td[@class='page_description']</td>
 	<td>Hello World Page Description</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//img[@title='中文 (中国)']</td>
-	<td>中文 (中国)</td>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Language Test Page</td>
+	<td>Language Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -54,16 +44,60 @@
 	<td>中文 (中国)</td>
 </tr>
 <tr>
+	<td>open</td>
+	<td>/zh/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Web Content Display Test Page</td>
+	<td>Web Content Display Test Page</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//td[@class='page-name']</td>
+	<td>//td[@class='page_name']</td>
 	<td>世界您好 Page Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@class='page-description']</td>
+	<td>//td[@class='page_description']</td>
 	<td>世界您好 Page Description</td>
 </tr>
-
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Language Test Page</td>
+	<td>Language Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//img[@title='English (United States)']</td>
+	<td>English (United States)</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Web Content Display Test Page</td>
+	<td>Web Content Display Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[@class='page_name']</td>
+	<td>Hello World Page Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[@class='page_description']</td>
+	<td>Hello World Page Description</td>
+</tr>
 </tbody></table>
 </body>
 </html>

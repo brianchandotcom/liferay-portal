@@ -34,7 +34,7 @@ public class SelectWCWebContentWCDTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletWCDTest.class);
 		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
 		testSuite.addTestSuite(SelectWCWebContentWCDTest.class);
-		testSuite.addTestSuite(AssertSelectWCWebContentWCDTest.class);
+		testSuite.addTestSuite(ViewSelectWCWebContentWCDTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

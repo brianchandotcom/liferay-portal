@@ -14,44 +14,54 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Web Content Display Test Page</td>
-	<td>Web Content Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Display Test Page</td>
 	<td>Web Content Display Test Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//strong/a</td>
-	<td>Options</td>
-</tr>
-<tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Web Content Display - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Web Content Display - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -59,9 +69,14 @@
 	<td>Show Available Locales</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
-	<td>Show Available Locales</td>
+	<td>showAvailableLocalesNotChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${showAvailableLocalesNotChecked}</td>
+	<td>showAvailableLocalesChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -69,9 +84,9 @@
 	<td>Show Available Locales</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
-	<td>Show Available Locales</td>
+	<td>label</td>
+	<td>showAvailableLocalesChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -87,6 +102,11 @@
 	<td>assertChecked</td>
 	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
 	<td>Show Available Locales</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

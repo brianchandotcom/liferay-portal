@@ -23,11 +23,9 @@ import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.expirethisvers
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.localizewcwebcontenttemplatewcd.LocalizeWCWebContentTemplateWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.localizewcwebcontentwcd.LocalizeWCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.ratewcwebcontentwcd.RateWCWebContentWCDTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.searchwcwebcontentwcd.SearchWCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.selectportletscopepage2wcwebcontentwcd.SelectPortletScopePage2WCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.selectwcwebcontentwcd.SelectWCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewlocalizewebcontentlanguagewcd.ViewLocalizeWebContentLanguageWCDTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewlocalizewebcontenttemplatelanguagewcd.ViewLocalizeWebContentTemplateLanguageWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewportletshowlocaleswebcontenttemplatewcd.ViewPortletShowLocalesWebContentTemplateWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewportletshowlocaleswebcontentwcd.ViewPortletShowLocalesWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewwcwebcontentscopeglobalwcd.ViewWCWebContentScopeGlobalWCDTests;
@@ -52,12 +50,9 @@ public class WebContentTestPlan extends BaseTestSuite {
 		testSuite.addTest(LocalizeWCWebContentTemplateWCDTests.suite());
 		testSuite.addTest(LocalizeWCWebContentWCDTests.suite());
 		testSuite.addTest(RateWCWebContentWCDTests.suite());
-		testSuite.addTest(SearchWCWebContentWCDTests.suite());
 		testSuite.addTest(SelectPortletScopePage2WCWebContentWCDTests.suite());
 		testSuite.addTest(SelectWCWebContentWCDTests.suite());
 		testSuite.addTest(ViewLocalizeWebContentLanguageWCDTests.suite());
-		testSuite.addTest(
-			ViewLocalizeWebContentTemplateLanguageWCDTests.suite());
 		testSuite.addTest(
 			ViewPortletShowLocalesWebContentTemplateWCDTests.suite());
 		testSuite.addTest(ViewPortletShowLocalesWebContentWCDTests.suite());

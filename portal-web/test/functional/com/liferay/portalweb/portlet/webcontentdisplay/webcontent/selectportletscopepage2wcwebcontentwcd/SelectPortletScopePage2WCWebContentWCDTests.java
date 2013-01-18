@@ -16,6 +16,20 @@ package com.liferay.portalweb.portlet.webcontentdisplay.webcontent.selectportlet
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCD1Test;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCD2Test;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCD3Test;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCD1Test;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCD2Test;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCD3Test;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletscopecurrentpage.ConfigurePortletWCD2ScopeCurrentPageTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletscopedefault.ConfigurePortletWCD1ScopeDefaultTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletscopedefault.TearDownPortletWCD1ScopeTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletscopepage2.ConfigurePortletWCD3ScopePageWCD2Test;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addportletscopecurrentpagewcwebcontentwcd.AddPortletScopeCurrentPageWCWebContentWCDTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addportletscopecurrentpagewcwebcontentwcd.TearDownScopeWebContentTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addportletscopecurrentpagewcwebcontentwcd.ViewScopeCurrentPageWCWebContentListCurrentPageCPTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addportletscopecurrentpagewcwebcontentwcd.ViewScopeCurrentPageWCWebContentListDefaultCPTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,9 +46,9 @@ public class SelectPortletScopePage2WCWebContentWCDTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletWCD2Test.class);
 		testSuite.addTestSuite(AddPageWCD3Test.class);
 		testSuite.addTestSuite(AddPortletWCD3Test.class);
-		testSuite.addTestSuite(ConfigurePortletScopeDefaultTest.class);
-		testSuite.addTestSuite(ConfigurePortletScopeCurrentPageTest.class);
-		testSuite.addTestSuite(ConfigurePortletScopePage2Test.class);
+		testSuite.addTestSuite(ConfigurePortletWCD1ScopeDefaultTest.class);
+		testSuite.addTestSuite(ConfigurePortletWCD2ScopeCurrentPageTest.class);
+		testSuite.addTestSuite(ConfigurePortletWCD3ScopePageWCD2Test.class);
 		testSuite.addTestSuite(AddPortletScopeCurrentPageWCWebContentWCDTest.class);
 		testSuite.addTestSuite(SelectPortletScopePage2WCWebContentWCDTest.class);
 		testSuite.addTestSuite(ViewSelectScopePage2WCWebContentNullDefaultTest.class);
@@ -45,7 +59,7 @@ public class SelectPortletScopePage2WCWebContentWCDTests extends BaseTestSuite {
 		testSuite.addTestSuite(ViewSelectScopePage2WebContentListPage2Test.class);
 		testSuite.addTestSuite(ViewScopeCurrentPageWCWebContentListDefaultCPTest.class);
 		testSuite.addTestSuite(ViewScopeCurrentPageWCWebContentListCurrentPageCPTest.class);
-		testSuite.addTestSuite(TearDownPortletScopeTest.class);
+		testSuite.addTestSuite(TearDownPortletWCD1ScopeTest.class);
 		testSuite.addTestSuite(TearDownScopeWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

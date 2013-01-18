@@ -22,17 +22,41 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class TearDownLanguageTest extends BaseTestCase {
 	public void testTearDownLanguage() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Language Test Page");
-		selenium.clickAt("link=Language Test Page",
-			RuntimeVariables.replace("Language Test Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//img[@title='English (United States)']",
-			RuntimeVariables.replace("English (United States)"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Language"),
-			selenium.getText("//span[@class='portlet-title-text']"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+
+				String currentURL = selenium.getLocation();
+				RuntimeVariables.setValue("currentURL", currentURL);
+				selenium.open(RuntimeVariables.getValue("currentURL"));
+				selenium.clickAt("link=Web Content Display Test Page",
+					RuntimeVariables.replace("Web Content Display Test Page"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean englishLocaleVisible = selenium.isElementPresent(
+						"//div[@class='locale-actions']/span/a/img[@title='English (United States)']");
+
+				if (!englishLocaleVisible) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//div[@class='locale-actions']/span/a/img[@title='English (United States)']",
+					RuntimeVariables.replace("English (United States)"));
+				selenium.waitForPageToLoad("30000");
+
+			case 2:
+				assertEquals(RuntimeVariables.replace("Web Content Display"),
+					selenium.getText("//span[@class='portlet-title-text']"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

@@ -31,8 +31,11 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Content Edit"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
-		selenium.clickAt("//img[@title='Edit Web Content']",
-			RuntimeVariables.replace("Edit Web Content"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//span[@class='icon-action icon-action-edit']/a/span"));
+		selenium.clickAt("//span[@class='icon-action icon-action-edit']/a/span",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Version: 1.1"),
 			selenium.getText("//span[@class='workflow-version']"));
@@ -46,11 +49,11 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Expire')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]");
 		assertEquals(RuntimeVariables.replace("Expire"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Expire')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Expire')]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]",
 			RuntimeVariables.replace("Expire"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),

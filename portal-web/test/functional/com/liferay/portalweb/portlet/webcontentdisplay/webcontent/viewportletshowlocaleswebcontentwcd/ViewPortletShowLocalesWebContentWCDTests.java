@@ -17,11 +17,12 @@ package com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewportletsh
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.language.AddPageLanguageTest;
-import com.liferay.portalweb.portlet.language.AddPortletLanguageTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCDTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCDTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletenablecommentratings.TearDownPortletSetupTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletshowavailablelocales.ConfigurePortletShowAvailableLocalesTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent.addwcwebcontentwcd.AddWCWebContentWCDTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.localizewcwebcontentwcd.LocalizeWCWebContentWCDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -34,8 +35,6 @@ public class ViewPortletShowLocalesWebContentWCDTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
-		testSuite.addTestSuite(AddPageLanguageTest.class);
-		testSuite.addTestSuite(AddPortletLanguageTest.class);
 		testSuite.addTestSuite(ConfigurePortletShowAvailableLocalesTest.class);
 		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
 		testSuite.addTestSuite(LocalizeWCWebContentWCDTest.class);

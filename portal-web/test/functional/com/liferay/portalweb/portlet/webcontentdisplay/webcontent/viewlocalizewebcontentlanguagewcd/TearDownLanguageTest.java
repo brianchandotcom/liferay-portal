@@ -24,14 +24,16 @@ public class TearDownLanguageTest extends BaseTestCase {
 	public void testTearDownLanguage() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Language Test Page");
+
+		String currentURL = selenium.getLocation();
+		RuntimeVariables.setValue("currentURL", currentURL);
+		selenium.open(RuntimeVariables.getValue("currentURL"));
 		selenium.clickAt("link=Language Test Page",
 			RuntimeVariables.replace("Language Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//img[@title='English (United States)']",
 			RuntimeVariables.replace("English (United States)"));
-		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//span[@class='portlet-title-text']", "Language");
 		assertEquals(RuntimeVariables.replace("Language"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 	}

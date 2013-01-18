@@ -26,30 +26,30 @@ public class ViewScopeDefaultWebContentListPage2Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Display Test Page3");
 		selenium.clickAt("link=Web Content Display Test Page3",
 			RuntimeVariables.replace("Web Content Display Test Page3"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		Thread.sleep(5000);
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		selenium.waitForVisible("link=Setup");
-		selenium.clickAt("link=Setup", RuntimeVariables.replace("Setup"));
-		selenium.waitForPageToLoad("30000");
-		selenium.selectFrame("//iframe");
-		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='portlet-msg-info'])[1]",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForElementPresent(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//div[@class='portlet-msg-info']");
+		assertTrue(selenium.isPartialText("//div[@class='portlet-msg-info']",
 				"Please select a web content from the list below."));
-		assertEquals(RuntimeVariables.replace("No Web Content was found."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
 		selenium.selectFrame("relative=top");
-		selenium.click("//button[@id='closethick']");
 	}
 }

@@ -23,47 +23,78 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 	public void testConfigurePortletEnableCommentRatings()
 		throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Display Test Page");
-		selenium.clickAt("link=Web Content Display Test Page",
-			RuntimeVariables.replace("Web Content Display Test Page"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		Thread.sleep(5000);
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		selenium.waitForVisible(
-			"//input[@id='_86_enableCommentRatingsCheckbox']");
-		assertFalse(selenium.isChecked(
-				"//input[@id='_86_enableCommentRatingsCheckbox']"));
-		selenium.clickAt("//input[@id='_86_enableCommentRatingsCheckbox']",
-			RuntimeVariables.replace("Enable Comment Ratings"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_86_enableCommentRatingsCheckbox']"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"You have successfully updated the setup."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_86_enableCommentRatingsCheckbox']"));
-		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Display Test Page");
-		selenium.clickAt("link=Web Content Display Test Page",
-			RuntimeVariables.replace("Web Content Display Test Page"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("WC WebContent Comment"),
-			selenium.getText("//div[@class='lfr-discussion-message']"));
-		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Web Content Display Test Page",
+					RuntimeVariables.replace("Web Content Display Test Page"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+					RuntimeVariables.replace("Options"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+				assertEquals(RuntimeVariables.replace("Configuration"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+					RuntimeVariables.replace("Configuration"));
+				selenium.waitForElementPresent(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+				selenium.waitForVisible(
+					"//input[@id='_86_enableCommentRatingsCheckbox']");
+
+				boolean enableCommentRatings = selenium.isChecked(
+						"//input[@id='_86_enableCommentRatingsCheckbox']");
+
+				if (enableCommentRatings) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='_86_enableCommentRatingsCheckbox']",
+					RuntimeVariables.replace("Enable Comment Ratings"));
+
+			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_enableCommentRatingsCheckbox']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"You have successfully updated the setup."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_enableCommentRatingsCheckbox']"));
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Web Content Display Test Page",
+					RuntimeVariables.replace("Web Content Display Test Page"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("WC WebContent Comment"),
+					selenium.getText("//div[@class='lfr-discussion-message']"));
+				assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
+					selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
+				assertTrue(selenium.isVisible(
+						"//div[contains(@id, 'ratingThumbContent')]/a[contains(@class,'rating-thumb-up')]"));
+				assertTrue(selenium.isVisible(
+						"//div[contains(@id, 'ratingThumbContent')]/a[contains(@class,'rating-thumb-down')]"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

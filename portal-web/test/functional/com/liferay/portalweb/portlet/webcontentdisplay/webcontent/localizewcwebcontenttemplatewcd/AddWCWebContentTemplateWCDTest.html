@@ -14,59 +14,84 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Web Content Display Test Page</td>
-	<td>Web Content Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Display Test Page</td>
 	<td>Web Content Display Test Page</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//img[@alt='Add Web Content']</td>
-	<td>Add Web Content</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//a[@id='_15_selectTemplateLink']</td>
-	<td>Select Template</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[2]/a</td>
-	<td>Web Content Localized Template Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>Web Content Localized Template Name</td>
+	<td>//span[@class='icon-action icon-action-add']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='icon-action icon-action-add']/a/span</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[2]/a</td>
-	<td>Web Content Localized Template Name</td>
+	<td>//a[contains(.,'Select')]</td>
+	<td>Select Structure</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@src,'_15_selectStructure')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@src,'_15_selectStructure')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
+	<td>WC Structure Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
+	<td>WC Structure Name</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
+	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>waitForConfirmation</td>
-	<td>Selecting a template will change the structure, available input fields, and available templates? Do you want to proceed?</td>
+	<td>Selecting a new structure will change the available input fields and available templates? Do you want to proceed?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>//span[@class='structure-name-label']</td>
-	<td>Web Content Localized Structure Name</td>
+	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='structure-name-label']</td>
-	<td>Web Content Localized Structure Name</td>
+	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='template-name-label']</td>
-	<td>Web Content Localized Template Name</td>
+	<td>WC Template Name</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -75,12 +100,12 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='page-name']</td>
+	<td>//input[@id='_15_page_name']</td>
 	<td>Hello World Page Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='page-description']</td>
+	<td>//input[@id='_15_page_description']</td>
 	<td>Hello World Page Description</td>
 </tr>
 <tr>
@@ -90,15 +115,14 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@class='page-name']</td>
+	<td>//td[@class='page_name']</td>
 	<td>Hello World Page Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@class='page-description']</td>
+	<td>//td[@class='page_description']</td>
 	<td>Hello World Page Description</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

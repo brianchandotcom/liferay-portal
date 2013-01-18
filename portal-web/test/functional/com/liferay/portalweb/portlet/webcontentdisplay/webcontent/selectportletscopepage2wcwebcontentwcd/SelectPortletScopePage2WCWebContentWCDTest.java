@@ -26,17 +26,30 @@ public class SelectPortletScopePage2WCWebContentWCDTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Display Test Page3");
 		selenium.clickAt("link=Web Content Display Test Page3",
 			RuntimeVariables.replace("Web Content Display Test Page3"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Select existing web content or add some web content to be displayed in this portlet."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.clickAt("//img[@alt='Select Web Content']",
+		selenium.waitForVisible(
+			"//span[@class='icon-action icon-action-configuration']/a/span");
+		assertEquals(RuntimeVariables.replace("Select Web Content"),
+			selenium.getText(
+				"//span[@class='icon-action icon-action-configuration']/a/span"));
+		selenium.clickAt("//span[@class='icon-action icon-action-configuration']/a/span",
 			RuntimeVariables.replace("Select Web Content"));
-		selenium.waitForVisible("link=WC WebContent Title");
-		selenium.clickAt("link=WC WebContent Title",
+		selenium.waitForElementPresent(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible(
+			"//tr[contains(.,'WC WebContent Title')]/td[2]/a");
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'WC WebContent Title')]/td[2]/a",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPartialText("//form[@id='_86_fm1']/div[1]/span[2]",
 			"Displaying Content: WC WebContent Title");
@@ -49,5 +62,6 @@ public class SelectPortletScopePage2WCWebContentWCDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 	}
 }

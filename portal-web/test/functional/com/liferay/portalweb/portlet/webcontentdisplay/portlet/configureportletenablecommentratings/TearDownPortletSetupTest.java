@@ -30,32 +30,32 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Web Content Display Test Page");
 				selenium.clickAt("link=Web Content Display Test Page",
 					RuntimeVariables.replace("Web Content Display Test Page"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(""),
-					selenium.getText("//img[@alt='Select Web Content']"));
+				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace("Options"),
-					selenium.getText("//strong/a"));
-				Thread.sleep(5000);
-				selenium.clickAt("//strong/a",
+					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-				selenium.waitForVisible("link=Setup");
-				selenium.clickAt("link=Setup", RuntimeVariables.replace("Setup"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.isElementPresent(
-						"//input[@id='_86_showAvailableLocalesCheckbox']"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+					RuntimeVariables.replace("Configuration"));
+				selenium.waitForElementPresent(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+				selenium.waitForVisible(
+					"//input[@id='_86_showAvailableLocalesCheckbox']");
 
 				boolean showAvailableLocalesChecked = selenium.isChecked(
-						"_86_showAvailableLocalesCheckbox");
+						"//input[@id='_86_showAvailableLocalesCheckbox']");
 
 				if (!showAvailableLocalesChecked) {
 					label = 2;
@@ -64,14 +64,14 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@id='_86_showAvailableLocalesCheckbox']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Show Available Locales"));
 
 			case 2:
-				assertTrue(selenium.isElementPresent(
-						"//input[@id='_86_enablePrintCheckbox']"));
+				selenium.waitForVisible(
+					"//input[@id='_86_enablePrintCheckbox']");
 
 				boolean enablePrintChecked = selenium.isChecked(
-						"_86_enablePrintCheckbox");
+						"//input[@id='_86_enablePrintCheckbox']");
 
 				if (!enablePrintChecked) {
 					label = 3;
@@ -80,63 +80,110 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@id='_86_enablePrintCheckbox']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Enable Print"));
 
 			case 3:
-				assertTrue(selenium.isElementPresent(
-						"//input[@id='_86_enableRatingsCheckbox']"));
+				selenium.waitForVisible(
+					"//input[@id='_86_enableRelatedAssetsCheckbox']");
 
-				boolean enableRatingsChecked = selenium.isChecked(
-						"_86_enableRatingsCheckbox");
+				boolean enableRelatedAssetsNotChecked = selenium.isChecked(
+						"//input[@id='_86_enableRelatedAssetsCheckbox']");
 
-				if (!enableRatingsChecked) {
+				if (enableRelatedAssetsNotChecked) {
 					label = 4;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_86_enableRatingsCheckbox']",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@id='_86_enableRelatedAssetsCheckbox']",
+					RuntimeVariables.replace("Enable Related Assets"));
 
 			case 4:
-				assertTrue(selenium.isElementPresent(
-						"//input[@id='_86_enableCommentsCheckbox']"));
+				selenium.waitForVisible(
+					"//input[@id='_86_enableRatingsCheckbox']");
 
-				boolean enableCommentsChecked = selenium.isChecked(
-						"_86_enableCommentsCheckbox");
+				boolean enableRatingsChecked = selenium.isChecked(
+						"//input[@id='_86_enableRatingsCheckbox']");
 
-				if (!enableCommentsChecked) {
+				if (!enableRatingsChecked) {
 					label = 5;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_86_enableCommentsCheckbox']",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@id='_86_enableRatingsCheckbox']",
+					RuntimeVariables.replace("Enable Ratings"));
 
 			case 5:
-				assertTrue(selenium.isElementPresent(
-						"//input[@id='_86_enableCommentRatingsCheckbox']"));
+				selenium.waitForVisible(
+					"//input[@id='_86_enableCommentsCheckbox']");
 
-				boolean enableCommentRatingsChecked = selenium.isChecked(
-						"_86_enableCommentRatingsCheckbox");
+				boolean enableCommentsChecked = selenium.isChecked(
+						"//input[@id='_86_enableCommentsCheckbox']");
 
-				if (!enableCommentRatingsChecked) {
+				if (!enableCommentsChecked) {
 					label = 6;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_86_enableCommentRatingsCheckbox']",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@id='_86_enableCommentsCheckbox']",
+					RuntimeVariables.replace("Enable Comments"));
 
 			case 6:
+				selenium.waitForVisible(
+					"//input[@id='_86_enableCommentRatingsCheckbox']");
+
+				boolean enableCommentRatingsChecked = selenium.isChecked(
+						"//input[@id='_86_enableCommentRatingsCheckbox']");
+
+				if (!enableCommentRatingsChecked) {
+					label = 7;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='_86_enableCommentRatingsCheckbox']",
+					RuntimeVariables.replace("Enable Comment Ratings"));
+
+			case 7:
+				selenium.waitForVisible(
+					"//input[@id='_86_enableViewCountIncrementCheckbox']");
+
+				boolean enableViewCountIncrementNotChecked = selenium.isChecked(
+						"//input[@id='_86_enableViewCountIncrementCheckbox']");
+
+				if (enableViewCountIncrementNotChecked) {
+					label = 8;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='_86_enableViewCountIncrementCheckbox']",
+					RuntimeVariables.replace("Enable View Count Increment"));
+
+			case 8:
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_showAvailableLocalesCheckbox']"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_enablePrintCheckbox']"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_enableRelatedAssetsCheckbox']"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_enableRatingsCheckbox']"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_enableCommentsCheckbox']"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_enableCommentRatingsCheckbox']"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_enableViewCountIncrementCheckbox']"));
+				selenium.selectFrame("relative=top");
 
 			case 100:
 				label = -1;

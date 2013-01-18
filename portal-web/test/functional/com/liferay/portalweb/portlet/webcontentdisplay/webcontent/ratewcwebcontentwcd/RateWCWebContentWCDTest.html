@@ -14,43 +14,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Web Content Display Test Page</td>
-	<td>Web Content Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Display Test Page</td>
 	<td>Web Content Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div[4]/div/div[1]/div/div</td>
+	<td>//div[contains(@id,'ratingStarContent')]/div</td>
 	<td>Your Rating</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div[4]/div/div[2]/div/div</td>
+	<td>//div[contains(@id,'ratingScoreContent')]/div</td>
 	<td>Average (0 Votes)</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//a[5]</td>
-	<td>Rate this 5 stars out of 5.</td>
+	<td>//a[4]</td>
+	<td>Rate this 4 stars out of 5.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[5]</td>
-	<td>Rate this 5 stars out of 5.</td>
+	<td>//a[4]</td>
+	<td>Rate this 4 stars out of 5.</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div/div[4]/div/div[2]/div/div</td>
+	<td>//div[contains(@id,'ratingScoreContent')]/div</td>
 	<td>Average (1 Vote)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div[4]/div/div[2]/div/div</td>
+	<td>//div[contains(@id,'ratingScoreContent')]/div</td>
 	<td>Average (1 Vote)</td>
 </tr>
 </tbody></table>

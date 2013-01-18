@@ -27,7 +27,14 @@ public class ViewScopeCurrentPageWCWebContentListDefaultCPTest
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -45,6 +52,6 @@ public class ViewScopeCurrentPageWCWebContentListDefaultCPTest
 		assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a",
 				"Scope: Default"));
 		assertEquals(RuntimeVariables.replace("No Web Content was found."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+			selenium.getText("//div[@class='entries-empty portlet-msg-info']"));
 	}
 }

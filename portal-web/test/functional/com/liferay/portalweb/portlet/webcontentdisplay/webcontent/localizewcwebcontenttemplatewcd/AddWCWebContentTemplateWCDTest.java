@@ -25,43 +25,49 @@ public class AddWCWebContentTemplateWCDTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Display Test Page");
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//img[@alt='Add Web Content']",
-			RuntimeVariables.replace("Add Web Content"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText(
+				"//span[@class='icon-action icon-action-add']/a/span"));
+		selenium.clickAt("//span[@class='icon-action icon-action-add']/a/span",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a[@id='_15_selectTemplateLink']",
-			RuntimeVariables.replace("Select Template"));
-		selenium.waitForVisible("//td[2]/a");
-		assertEquals(RuntimeVariables.replace(
-				"Web Content Localized Template Name"),
-			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("Web Content Localized Template Name"));
+		selenium.clickAt("//a[contains(.,'Select')]",
+			RuntimeVariables.replace("Select Structure"));
+		selenium.waitForElementPresent(
+			"//iframe[contains(@src,'_15_selectStructure')]");
+		selenium.selectFrame("//iframe[contains(@src,'_15_selectStructure')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[3]/a");
+		assertEquals(RuntimeVariables.replace("WC Structure Name"),
+			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[3]/a"));
+		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[3]/a",
+			RuntimeVariables.replace("WC Structure Name"));
 		selenium.waitForConfirmation(
-			"Selecting a template will change the structure, available input fields, and available templates? Do you want to proceed?");
+			"Selecting a new structure will change the available input fields and available templates? Do you want to proceed?");
+		selenium.selectFrame("relative=top");
+		Thread.sleep(5000);
 		selenium.waitForText("//span[@class='structure-name-label']",
-			"Web Content Localized Structure Name");
-		assertEquals(RuntimeVariables.replace(
-				"Web Content Localized Structure Name"),
+			"WC Structure Name");
+		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText("//span[@class='structure-name-label']"));
-		assertEquals(RuntimeVariables.replace(
-				"Web Content Localized Template Name"),
+		assertEquals(RuntimeVariables.replace("WC Template Name"),
 			selenium.getText("//span[@class='template-name-label']"));
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Hello World Localized Article"));
-		selenium.type("//input[@id='page-name']",
+		selenium.type("//input[@id='_15_page_name']",
 			RuntimeVariables.replace("Hello World Page Name"));
-		selenium.type("//input[@id='page-description']",
+		selenium.type("//input[@id='_15_page_description']",
 			RuntimeVariables.replace("Hello World Page Description"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Hello World Page Name"),
-			selenium.getText("//td[@class='page-name']"));
+			selenium.getText("//td[@class='page_name']"));
 		assertEquals(RuntimeVariables.replace("Hello World Page Description"),
-			selenium.getText("//td[@class='page-description']"));
+			selenium.getText("//td[@class='page_description']"));
 	}
 }

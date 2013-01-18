@@ -14,24 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Web Content Display Test Page</td>
-	<td>Web Content Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Display Test Page</td>
 	<td>Web Content Display Test Page</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//img[@alt='Edit Web Content']</td>
-	<td>Edit Web Content</td>
+	<td>assertText</td>
+	<td>//span[@class='icon-action icon-action-edit']/a/span</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//img[@alt='Edit Web Content']</td>
-	<td>Edit Web Content</td>
+	<td>//span[@class='icon-action icon-action-edit']/a/span</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -41,97 +36,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='structure-name-label']</td>
-	<td>Web Content Localized Structure Name</td>
+	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='template-name-label']</td>
-	<td>Web Content Localized Template Name</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//span[2]/div/span/span/span/input[2]</td>
-	<td>Localizable</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('//span[2]/div/span/span/span/input[2]'))</td>
-	<td>localizablePageNameChecked</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${localizablePageNameChecked}</td>
-	<td>LocalizablePageNameChecked</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[2]/div/span/span/span/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>LocalizablePageNameChecked</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//li[2]/span[2]/div/span/span/span/input[2]</td>
-	<td>Localizable</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('//li[2]/span[2]/div/span/span/span/input[2]'))</td>
-	<td>localizablePageDescriptionChecked</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${localizablePageDescriptionChecked}</td>
-	<td>LocalizablePageDescriptionChecked</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//li[2]/span[2]/div/span/span/span/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>LocalizablePageDescriptionChecked</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//span[2]/div/span/span/span/input[2]</td>
-	<td>Localizable</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//li[2]/span[2]/div/span/span/span/input[2]</td>
-	<td>Localizable</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save as Draft']</td>
-	<td>Save as Draft</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@class='workflow-status']</td>
-	<td>Status: Draft</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>//input[@id='page-name']</td>
-	<td>Hello World Page Name</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>//input[@id='page-description']</td>
-	<td>Hello World Page Description</td>
+	<td>WC Template Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -145,21 +55,21 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]</td>
 	<td>Chinese (China)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]</td>
 	<td>Chinese (China)</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]</td>
 	<td>Chinese (China)</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForElementPresent</td>
 	<td>//iframe[@id='_15_zh_CN']</td>
 	<td>Web Content Translation</td>
 </tr>
@@ -169,18 +79,28 @@
 	<td>Web Content Translation</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='page-name']</td>
+	<td>//div[@id='_15_availableTranslationContainer']</td>
+	<td>Translating Web Content to Chinese (China)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='_15_availableTranslationContainer']</td>
 	<td>Translating Web Content to Chinese (China)</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='page-name']</td>
+	<td>//input[@id='_15_page_name']</td>
 	<td>世界您好 Page Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='page-description']</td>
+	<td>//input[@id='_15_page_description']</td>
 	<td>世界您好 Page Description</td>
 </tr>
 <tr>
@@ -194,14 +114,14 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//a[@class='lfr-token journal-article-translation-zh_CN']</td>
-	<td>Chinese (China)</td>
-</tr>
-<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@class='lfr-token journal-article-translation-zh_CN']</td>
+	<td>Chinese (China)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -210,15 +130,14 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@class='page-name']</td>
+	<td>//td[@class='page_name']</td>
 	<td>Hello World Page Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@class='page-description']</td>
+	<td>//td[@class='page_description']</td>
 	<td>Hello World Page Description</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

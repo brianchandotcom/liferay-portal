@@ -19,6 +19,7 @@ import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwe
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCDTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCDTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletenablecommentratings.TearDownPortletSetupTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent.addwcwebcontentwcd.AddWCWebContentWCDTest;
 
 import junit.framework.Test;

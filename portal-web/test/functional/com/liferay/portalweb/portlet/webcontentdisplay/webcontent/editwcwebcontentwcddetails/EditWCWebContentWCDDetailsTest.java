@@ -30,8 +30,11 @@ public class EditWCWebContentWCDDetailsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
-		selenium.clickAt("//img[@alt='Edit Web Content']",
-			RuntimeVariables.replace("Edit Web Content"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//span[@class='icon-action icon-action-edit']/a/span"));
+		selenium.clickAt("//span[@class='icon-action icon-action-edit']/a/span",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Version: 1.0"),
 			selenium.getText("//span[@class='workflow-version']"));

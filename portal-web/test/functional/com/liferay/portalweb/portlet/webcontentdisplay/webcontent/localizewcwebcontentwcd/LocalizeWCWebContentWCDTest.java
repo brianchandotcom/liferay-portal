@@ -28,9 +28,11 @@ public class LocalizeWCWebContentWCDTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//img[@alt='Edit Web Content']");
-		selenium.clickAt("//img[@alt='Edit Web Content']",
-			RuntimeVariables.replace("Edit Web Content"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//span[@class='icon-action icon-action-edit']/a/span"));
+		selenium.clickAt("//span[@class='icon-action icon-action-edit']/a/span",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//h1[@class='header-title']"));
@@ -58,6 +60,8 @@ public class LocalizeWCWebContentWCDTest extends BaseTestCase {
 		selenium.waitForVisible("//iframe[@id='_15_zh_CN']");
 		selenium.selectFrame("//iframe[@id='_15_zh_CN']");
 		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForElementPresent(
 			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
 		selenium.waitForVisible("//span[.='Source']");
 		assertEquals(RuntimeVariables.replace("Source"),
@@ -74,6 +78,7 @@ public class LocalizeWCWebContentWCDTest extends BaseTestCase {
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
+		selenium.waitForVisible("//a[@class='cke_button_source cke_off']");
 		selenium.waitForElementPresent(
 			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
 		selenium.waitForVisible(
@@ -83,9 +88,14 @@ public class LocalizeWCWebContentWCDTest extends BaseTestCase {
 		selenium.waitForText("//body",
 			"\u4e16\u754c\u60a8\u597d Page Description");
 		selenium.selectFrame("relative=top");
+		selenium.waitForVisible("//iframe[@id='_15_zh_CN']");
+		selenium.selectFrame("//iframe[@id='_15_zh_CN']");
 		selenium.clickAt("//input[@id='_15_translateButton']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.selectFrame("relative=top");
+		selenium.waitForVisible(
+			"//a[@class='lfr-token journal-article-translation-zh_CN']");
 		assertEquals(RuntimeVariables.replace("Chinese (China)"),
 			selenium.getText(
 				"//a[@class='lfr-token journal-article-translation-zh_CN']"));

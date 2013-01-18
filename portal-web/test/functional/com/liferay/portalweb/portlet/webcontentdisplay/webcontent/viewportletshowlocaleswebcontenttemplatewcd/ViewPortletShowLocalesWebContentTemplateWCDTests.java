@@ -15,12 +15,20 @@
 package com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewportletshowlocaleswebcontenttemplatewcd;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.TearDownWCStructureTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplate.addwctemplate.TearDownWCTemplateTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcstructurewebcontentlocalized.AddStructureLocalizedTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcstructurewebcontentlocalized.AddTemplateLocalizedTest;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.language.AddPageLanguageTest;
 import com.liferay.portalweb.portlet.language.AddPortletLanguageTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCDTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCDTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletenablecommentratings.TearDownPortletSetupTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletshowavailablelocales.ConfigurePortletShowAvailableLocalesTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.localizewcwebcontenttemplatewcd.AddWCWebContentTemplateWCDTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.localizewcwebcontenttemplatewcd.LocalizeWCWebContentTemplateWCDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -45,8 +53,8 @@ public class ViewPortletShowLocalesWebContentTemplateWCDTests
 		testSuite.addTestSuite(TearDownLanguageTest.class);
 		testSuite.addTestSuite(TearDownPortletSetupTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
-		testSuite.addTestSuite(TearDownTemplateTest.class);
-		testSuite.addTestSuite(TearDownStructureTest.class);
+		testSuite.addTestSuite(TearDownWCTemplateTest.class);
+		testSuite.addTestSuite(TearDownWCStructureTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

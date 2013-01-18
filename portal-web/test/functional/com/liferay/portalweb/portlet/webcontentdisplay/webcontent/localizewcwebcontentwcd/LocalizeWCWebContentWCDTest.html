@@ -19,14 +19,14 @@
 	<td>Web Content Display Test Page</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//img[@alt='Edit Web Content']</td>
-	<td>Edit Web Content</td>
+	<td>assertText</td>
+	<td>//span[@class='icon-action icon-action-edit']/a/span</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//img[@alt='Edit Web Content']</td>
-	<td>Edit Web Content</td>
+	<td>//span[@class='icon-action icon-action-edit']/a/span</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -95,6 +95,11 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
 	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
 	<td>Text Area</td>
 </tr>
@@ -139,6 +144,11 @@
 	<td>Source</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_off']</td>
+	<td>Source Button Off</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
 	<td>Text Area</td>
@@ -161,12 +171,32 @@
 <tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
-	<td>top</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='_15_zh_CN']</td>
+	<td>Web Content Translation</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_15_zh_CN']</td>
+	<td>Web Content Translation</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@id='_15_translateButton']</td>
 	<td>Save</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='lfr-token journal-article-translation-zh_CN']</td>
+	<td>Chinese (China)</td>
 </tr>
 <tr>
 	<td>assertText</td>

@@ -57,14 +57,14 @@ public class TearDownWCStructureTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
 					RuntimeVariables.replace("Structures"));
 				selenium.waitForVisible(
-					"//iframe[@id='_15_openStructuresView']");
-				selenium.selectFrame("//iframe[@id='_15_openStructuresView']");
-				selenium.waitForVisible("//input[@value='Add Structure']");
+					"//iframe[contains(@src,'scopeStructureType')]");
+				selenium.selectFrame(
+					"//iframe[contains(@src,'scopeStructureType')]");
 				selenium.waitForElementPresent(
-					"//script[contains(@src,'/liferay/store.js')]");
+					"//script[contains(@src,'/liferay/search_container.js')]");
 
 				boolean structurePresent = selenium.isElementPresent(
-						"//input[@name='_15_rowIds']");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!structurePresent) {
 					label = 2;
@@ -72,22 +72,20 @@ public class TearDownWCStructureTest extends BaseTestCase {
 					continue;
 				}
 
-				assertFalse(selenium.isChecked("//input[@name='_15_allRowIds']"));
-				selenium.clickAt("//input[@name='_15_allRowIds']",
+				selenium.clickAt("//input[@name='_166_allRowIds']",
 					RuntimeVariables.replace("All Rows"));
-				assertTrue(selenium.isChecked("//input[@name='_15_allRowIds']"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				assertTrue(selenium.isChecked("//input[@name='_166_allRowIds']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected structures[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
-				assertEquals(RuntimeVariables.replace(
-						"No structures were found."),
+				assertEquals(RuntimeVariables.replace("There are no results."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 				selenium.selectFrame("relative=top");
 

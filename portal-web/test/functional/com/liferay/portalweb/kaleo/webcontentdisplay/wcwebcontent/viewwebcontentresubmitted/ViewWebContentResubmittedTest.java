@@ -33,14 +33,21 @@ public class ViewWebContentResubmittedTest extends BaseTestCase {
 				"WC Web Content Title is not approved."),
 			selenium.getText("//div[@class='portlet-msg-alert']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to you."),
@@ -57,22 +64,22 @@ public class ViewWebContentResubmittedTest extends BaseTestCase {
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("link=Review"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
-			selenium.getText("//tr[3]/td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//tr[3]/td[3]/a"));
-		assertTrue(selenium.isElementPresent("//tr[3]/td[4]/a"));
-		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[3]/td[5]/a"));
-		assertEquals(RuntimeVariables.replace("Update"),
-			selenium.getText("link=Update"));
+			selenium.getText("//tr[4]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
 			selenium.getText("//tr[4]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[4]/td[3]/a"));
-		assertTrue(selenium.isVisible("//tr[4]/td[4]/a"));
+		assertTrue(selenium.isElementPresent("//tr[4]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//tr[4]/td[5]/a"));
+		assertEquals(RuntimeVariables.replace("Update"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
+			selenium.getText("//tr[3]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Web Content"),
+			selenium.getText("//tr[3]/td[3]/a"));
+		assertTrue(selenium.isVisible("//tr[3]/td[4]/a"));
+		assertEquals(RuntimeVariables.replace("Never"),
+			selenium.getText("//tr[3]/td[5]/a"));
 	}
 }

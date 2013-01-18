@@ -34,7 +34,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -50,7 +70,7 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Pending</td>
+	<td>//a/strong</td>
 	<td>Pending</td>
 </tr>
 <tr>
@@ -90,33 +110,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Review</td>
+	<td>//tr[4]/td[1]/a</td>
 	<td>Review</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[3]/td[2]/a</td>
-	<td>WC Web Content Title</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[3]/td[3]/a</td>
-	<td>Web Content</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//tr[3]/td[4]/a</td>
-	<td>Last Activity Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[3]/td[5]/a</td>
-	<td>Never</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>link=Update</td>
-	<td>Update</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -129,7 +124,7 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>assertElementPresent</td>
 	<td>//tr[4]/td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>
@@ -138,7 +133,31 @@
 	<td>//tr[4]/td[5]/a</td>
 	<td>Never</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a</td>
+	<td>Update</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td>WC Web Content Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[3]/a</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[3]/td[4]/a</td>
+	<td>Last Activity Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[5]/a</td>
+	<td>Never</td>
+</tr>
 </tbody></table>
 </body>
 </html>

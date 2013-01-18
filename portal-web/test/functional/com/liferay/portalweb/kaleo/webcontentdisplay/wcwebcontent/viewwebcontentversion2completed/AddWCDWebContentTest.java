@@ -28,7 +28,7 @@ public class AddWCDWebContentTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//img[@alt='Add Web Content']",
+		selenium.clickAt("//div/span[2]/a",
 			RuntimeVariables.replace("Add Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_title_en_US']",

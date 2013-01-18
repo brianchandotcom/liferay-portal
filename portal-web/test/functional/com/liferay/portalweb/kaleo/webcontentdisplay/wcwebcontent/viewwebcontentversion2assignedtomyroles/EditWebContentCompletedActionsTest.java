@@ -25,6 +25,10 @@ public class EditWebContentCompletedActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -36,17 +40,14 @@ public class EditWebContentCompletedActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isVisible("//td[5]/a"));
-		assertTrue(selenium.isVisible("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Actions"));
+			selenium.getText("//a[@class='entry-link']/span"));
+		assertFalse(selenium.isChecked("//input[@id='_15_allRowIdsCheckbox']"));
+		selenium.clickAt("//input[@id='_15_allRowIdsCheckbox']",
+			RuntimeVariables.replace("Select All"));
+		assertTrue(selenium.isChecked("//input[@id='_15_allRowIdsCheckbox']"));
+		selenium.waitForVisible("//a[@id='_15_dhec_menuButton']");
+		selenium.clickAt("//a[@id='_15_dhec_menuButton']",
+			RuntimeVariables.replace("Menu Button"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
@@ -86,13 +87,8 @@ public class EditWebContentCompletedActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title Edit"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Pending"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isVisible("//td[5]/a"));
-		assertTrue(selenium.isVisible("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
+		assertEquals(RuntimeVariables.replace(
+				"WC Web Content Title Edit (Pending)"),
+			selenium.getText("//a[@class='entry-link']/span"));
 	}
 }

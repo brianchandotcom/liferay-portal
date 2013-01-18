@@ -49,7 +49,7 @@ Group group = (Group)row.getParameter("group");
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			image="assign_user_roles"
+			image="unassign_user_group"
 			message="remove-membership"
 			url="<%= removeURL %>"
 		/>

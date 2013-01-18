@@ -97,9 +97,44 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 		/>
 
 		<liferay-ui:search-container-column-text
+			buffer="buffer"
 			name="name"
-			property="fullName"
-		/>
+		>
+
+			<%
+			buffer.append(HtmlUtil.escape(user2.getFullName()));
+
+			List<String> names = new ArrayList<String>();
+
+			boolean organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), group, user2, null, names);
+
+			row.setParameter("organizationUser", organizationUser);
+
+			boolean userGroupUser = SitesUtil.isUserGroupUser(company.getCompanyId(), group, user2, names);
+
+			row.setParameter("userGroupUser", userGroupUser);
+
+			String message = StringPool.BLANK;
+
+			if (organizationUser || userGroupUser) {
+				if (names.size() == 1) {
+					message = LanguageUtil.format(pageContext, "this-user-is-a-member-of-x-because-he-belongs-to-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), names.get(0)});
+				}
+				else {
+					message = LanguageUtil.format(pageContext, "this-user-is-a-member-of-x-because-he-belongs-to-x-and-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), StringUtil.merge(names.subList(0, names.size() - 1).toArray(new String[names.size() - 1]), ", "), names.get(names.size() - 1)});
+				}
+			%>
+
+				<liferay-util:buffer var="iconHelp">
+					<liferay-ui:icon-help message="<%= message %>" />
+				</liferay-util:buffer>
+
+			<%
+				buffer.append(iconHelp);
+			}
+			%>
+
+		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
 			name="screen-name"

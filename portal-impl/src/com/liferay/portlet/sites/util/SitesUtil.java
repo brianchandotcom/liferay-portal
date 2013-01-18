@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -805,12 +807,20 @@ public class SitesUtil {
 			new LinkedHashMap<String, Object>();
 
 		organizationParams.put(
+			"groupOrganization", new Long(group.getGroupId()));
+		organizationParams.put(
 			"organizationsGroups", new Long(group.getGroupId()));
+
+		String keywords = StringPool.BLANK;
+
+		if (searchTerms != null) {
+			keywords = searchTerms.getKeywords();
+		}
 
 		List<Organization> organizationsGroups =
 			OrganizationLocalServiceUtil.search(
 				companyId, OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-				searchTerms.getKeywords(), null, null, null, organizationParams,
+				keywords, null, null, null, organizationParams,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (Organization organization : organizationsGroups) {
@@ -866,8 +876,8 @@ public class SitesUtil {
 		userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
 
 		List<UserGroup> userGroupsGroups = UserGroupLocalServiceUtil.search(
-			companyId, null, null, userGroupParams, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+			companyId, null, userGroupParams, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, (OrderByComparator)null);
 
 		for (UserGroup userGroup : userGroupsGroups) {
 			for (long userGroupId : user.getUserGroupIds()) {

@@ -276,11 +276,14 @@ public class EditPageAction extends PortletAction {
 					page = WikiPageServiceUtil.getPage(nodeId, title, version);
 				}
 			}
-			catch (NoSuchPageException nspe1) {
+			catch (NoSuchPageException nspe) {
+			}
+
+			if (page == null) {
 				try {
 					page = WikiPageServiceUtil.getPage(nodeId, title, false);
 				}
-				catch (NoSuchPageException nspe2) {
+				catch (NoSuchPageException nspe) {
 					if (title.equals(WikiPageConstants.FRONT_PAGE) &&
 						(version == 0)) {
 
@@ -291,7 +294,7 @@ public class EditPageAction extends PortletAction {
 							serviceContext);
 					}
 					else {
-						throw nspe2;
+						throw nspe;
 					}
 				}
 			}

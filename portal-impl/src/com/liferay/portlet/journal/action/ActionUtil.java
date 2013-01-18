@@ -183,7 +183,10 @@ public class ActionUtil {
 				ddmStructure = DDMStructureServiceUtil.getStructure(
 					groupId, structureId);
 			}
-			catch (NoSuchStructureException nsse1) {
+			catch (NoSuchStructureException nsse) {
+			}
+
+			if (ddmStructure == null) {
 				if (groupId == themeDisplay.getCompanyGroupId()) {
 					return;
 				}
@@ -192,7 +195,7 @@ public class ActionUtil {
 					ddmStructure = DDMStructureServiceUtil.getStructure(
 						themeDisplay.getCompanyGroupId(), structureId);
 				}
-				catch (NoSuchStructureException nsse2) {
+				catch (NoSuchStructureException nsse) {
 					return;
 				}
 			}

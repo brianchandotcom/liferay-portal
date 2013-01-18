@@ -69,7 +69,7 @@ if (ddmStructureId > 0) {
 
 		ddmStructureGroupId = ddmStructure.getGroupId();
 	}
-	catch (NoSuchStructureException nsse2) {
+	catch (NoSuchStructureException nsse) {
 	}
 }
 else if (Validator.isNotNull(structureId)) {

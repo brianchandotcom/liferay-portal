@@ -304,7 +304,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 		try {
 			directory = _getDirectory(path);
 		}
-		catch (IOException ioe1) {
+		catch (IOException ioe) {
 			if (directory != null) {
 				try {
 					directory.close();

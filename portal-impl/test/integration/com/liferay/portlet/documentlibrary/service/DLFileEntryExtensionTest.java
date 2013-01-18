@@ -317,7 +317,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe2) {
+		catch (DuplicateFileException dfe) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(
@@ -377,7 +377,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe2) {
+		catch (DuplicateFileException dfe) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(
@@ -407,7 +407,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe2) {
+		catch (DuplicateFileException dfe) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(
@@ -445,7 +445,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe2) {
+		catch (DuplicateFileException dfe) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(

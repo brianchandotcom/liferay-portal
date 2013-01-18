@@ -209,6 +209,8 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 
 				int index = 0;
 
+				request.setAttribute("configuration.jsp-categorizableGroupIds", _getCategorizableGroupIds(groupIds));
+
 				for (int queryLogicIndex : queryLogicIndexes) {
 					String queryValues = StringUtil.merge(preferences.getValues("queryValues" + queryLogicIndex , new String[0]));
 					String tagNames = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
@@ -442,3 +444,23 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 		}
 	);
 </aui:script>
+
+<%!
+	private long[] _getCategorizableGroupIds(long[] groupIds) throws Exception {
+		long[] categorizableGroupIds = new long[groupIds.length];
+
+		for (long groupId : groupIds) {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			if (group.isLayout()) {
+				groupId = group.getParentGroupId();
+			}
+
+			if (!ArrayUtil.contains(categorizableGroupIds, groupId)) {
+				categorizableGroupIds = ArrayUtil.append(categorizableGroupIds, groupId);
+			}
+		}
+
+		return categorizableGroupIds;
+	}
+%>

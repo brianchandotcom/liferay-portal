@@ -116,7 +116,8 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(
 		long groupId, java.lang.String templateKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateService.fetchTemplate(groupId, templateKey);
 	}
 
@@ -156,10 +157,11 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		long classNameId, long classPK, java.lang.String type,
+		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateService.getTemplates(classNameId, classPK, type, mode);
+		return _ddmTemplateService.getTemplates(groupId, classNameId, classPK,
+			type, mode);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(

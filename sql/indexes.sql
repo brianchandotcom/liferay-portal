@@ -194,6 +194,7 @@ create index IX_32F83D16 on DDMTemplate (classPK);
 create index IX_DB24DDDD on DDMTemplate (groupId);
 create index IX_BD9A4A91 on DDMTemplate (groupId, classNameId);
 create index IX_824ADC72 on DDMTemplate (groupId, classNameId, classPK);
+create index IX_F0C3449 on DDMTemplate (groupId, classNameId, classPK, type_, mode_);
 create unique index IX_233D3B8 on DDMTemplate (groupId, templateKey);
 create index IX_33BEF579 on DDMTemplate (language);
 create index IX_CAE41A28 on DDMTemplate (templateKey);

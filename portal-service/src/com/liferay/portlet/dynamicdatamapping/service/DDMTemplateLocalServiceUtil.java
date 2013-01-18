@@ -432,16 +432,17 @@ public class DDMTemplateLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		long classNameId, long classPK, java.lang.String type)
+		long groupId, long classNameId, long classPK, java.lang.String type,
+		java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getTemplates(classNameId, classPK, type);
+		return getService()
+				   .getTemplates(groupId, classNameId, classPK, type, mode);
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode)
+		long classNameId, long classPK, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getTemplates(classNameId, classPK, type, mode);
+		return getService().getTemplates(classNameId, classPK, type);
 	}
 
 	public static int getTemplatesCount(long groupId)

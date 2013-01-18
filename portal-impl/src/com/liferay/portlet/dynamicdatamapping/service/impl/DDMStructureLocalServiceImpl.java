@@ -437,13 +437,6 @@ public class DDMStructureLocalServiceImpl
 			companyGroup.getGroupId(), structureKey);
 	}
 
-	public List<DDMStructure> getStructure(
-			long groupId, String name, String description)
-		throws SystemException {
-
-		return ddmStructurePersistence.findByG_N_D(groupId, name, description);
-	}
-
 	/**
 	 * @deprecated {@link #getStructures}
 	 */
@@ -507,6 +500,13 @@ public class DDMStructureLocalServiceImpl
 
 		return ddmStructurePersistence.findByG_C(
 			groupId, classNameId, start, end, orderByComparator);
+	}
+
+	public List<DDMStructure> getStructures(
+			long groupId, String name, String description)
+		throws SystemException {
+
+		return ddmStructurePersistence.findByG_N_D(groupId, name, description);
 	}
 
 	public List<DDMStructure> getStructures(long[] groupIds)

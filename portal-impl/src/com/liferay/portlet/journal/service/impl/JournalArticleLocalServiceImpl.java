@@ -1107,7 +1107,7 @@ public class JournalArticleLocalServiceImpl
 				rootElement.add(requestDocument.getRootElement().createCopy());
 
 				JournalUtil.addAllReservedEls(
-					rootElement, tokens, article, languageId);
+					rootElement, tokens, article, languageId, themeDisplay);
 
 				xml = DDMXMLUtil.formatXML(document);
 			}

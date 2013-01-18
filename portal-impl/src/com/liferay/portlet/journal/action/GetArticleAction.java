@@ -82,7 +82,8 @@ public class GetArticleAction extends Action {
 
 			addProcessingInstructions(doc, request, themeDisplay, article);
 
-			JournalUtil.addAllReservedEls(root, tokens, article, languageId);
+			JournalUtil.addAllReservedEls(
+				root, tokens, article, languageId, themeDisplay);
 
 			xml = DDMXMLUtil.formatXML(doc);
 

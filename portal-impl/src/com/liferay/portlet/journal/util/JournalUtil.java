@@ -116,7 +116,7 @@ public class JournalUtil {
 
 	public static void addAllReservedEls(
 		Element rootElement, Map<String, String> tokens, JournalArticle article,
-		String languageId) {
+		String languageId, ThemeDisplay themeDisplay) {
 
 		JournalUtil.addReservedEl(
 			rootElement, tokens, JournalStructureConstants.RESERVED_ARTICLE_ID,
@@ -163,10 +163,26 @@ public class JournalUtil {
 				article.getDisplayDate());
 		}
 
-		JournalUtil.addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
-			article.getSmallImageURL());
+		if (Validator.isNotNull(article.getSmallImageURL())) {
+			JournalUtil.addReservedEl(
+				rootElement, tokens,
+				JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
+				article.getSmallImageURL());
+		}
+		else {
+			String imageURL = StringPool.BLANK;
+
+			if ((themeDisplay != null) && article.getSmallImage()) {
+				imageURL =
+					themeDisplay.getPathImage() + "/journal/article?img_id=" +
+						article.getSmallImageId();
+			}
+
+			JournalUtil.addReservedEl(
+				rootElement, tokens,
+				JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
+				imageURL);
+		}
 
 		String[] assetTagNames = new String[0];
 

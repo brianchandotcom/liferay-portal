@@ -371,19 +371,19 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public List<DDMTemplate> getTemplates(
-			long classNameId, long classPK, String type)
-		throws SystemException {
-
-		return ddmTemplatePersistence.findByC_C_T(classNameId, classPK, type);
-	}
-
-	public List<DDMTemplate> getTemplates(
 			long groupId, long classNameId, long classPK, String type,
 			String mode)
 		throws SystemException {
 
 		return ddmTemplatePersistence.findByG_C_C_T_M(
 			groupId, classNameId, classPK, type, mode);
+	}
+
+	public List<DDMTemplate> getTemplates(
+			long classNameId, long classPK, String type)
+		throws SystemException {
+
+		return ddmTemplatePersistence.findByC_C_T(classNameId, classPK, type);
 	}
 
 	public int getTemplatesCount(long groupId) throws SystemException {

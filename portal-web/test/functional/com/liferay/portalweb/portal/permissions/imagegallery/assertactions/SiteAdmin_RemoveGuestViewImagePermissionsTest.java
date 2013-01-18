@@ -49,6 +49,7 @@ public class SiteAdmin_RemoveGuestViewImagePermissionsTest extends BaseTestCase 
 			selenium.getText("//a[@title='Permissions Image Test Edited - ']"));
 		selenium.clickAt("//a[@title='Permissions Image Test Edited - ']",
 			RuntimeVariables.replace("Permissions Image Test Edited"));
+		selenium.waitForVisible("//img[@title='Permissions']");
 		selenium.clickAt("//img[@title='Permissions']",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForVisible("//input[@name='16_ACTION_VIEW']");

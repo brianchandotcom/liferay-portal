@@ -22,82 +22,124 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DefineMemberRoleTest extends BaseTestCase {
 	public void testDefineMemberRole() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
-		assertEquals(RuntimeVariables.replace("Go to"),
-			selenium.getText("//li[@id='_145_mySites']/a/span"));
-		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForVisible("link=Control Panel");
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_128_keywords']",
-			RuntimeVariables.replace("Member"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Member"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a", RuntimeVariables.replace("Member"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Define Permissions",
-			RuntimeVariables.replace("Define Permissions"));
-		selenium.waitForPageToLoad("30000");
-		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("label=Media Gallery"));
-		selenium.waitForPageToLoad("30000");
-		selenium.check(
-			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_DOCUMENT']");
-		selenium.uncheck(
-			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_DOCUMENT_TYPE']");
-		selenium.uncheck(
-			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_FOLDER']");
-		selenium.uncheck(
-			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_SHORTCUT']");
-		selenium.uncheck(
-			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryPERMISSIONS']");
-		selenium.uncheck(
-			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryUPDATE']");
-		selenium.check(
-			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryVIEW']");
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"The role permissions were updated."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("label=Media Gallery"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isChecked("//tr[3]/td/input"));
-		assertTrue(selenium.isChecked("//tr[11]/td/input"));
-		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("index=55"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Media Gallery"),
-			selenium.getText("//h3"));
-		selenium.uncheck("//input[@value='31ADD_TO_PAGE']");
-		selenium.uncheck("//input[@value='31CONFIGURATION']");
-		selenium.uncheck("//input[@value='31PERMISSIONS']");
-		selenium.check("//input[@value='31VIEW']");
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"The role permissions were updated."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("index=55"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Media Gallery"),
-			selenium.getText("//h3"));
-		assertTrue(selenium.isChecked("//tr[6]/td/input"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
+				selenium.waitForPageToLoad("30000");
+				selenium.type("//input[@id='_128_keywords']",
+					RuntimeVariables.replace("Member"));
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Member"),
+					selenium.getText("//tr[3]/td/a"));
+				selenium.clickAt("//tr[3]/td/a",
+					RuntimeVariables.replace("Member"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Define Permissions",
+					RuntimeVariables.replace("Define Permissions"));
+				selenium.waitForPageToLoad("30000");
+				selenium.select("//select[@id='_128_add-permissions']",
+					RuntimeVariables.replace("label=Media Gallery"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean addDocumentChecked = selenium.isChecked(
+						"//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT']");
+
+				if (addDocumentChecked) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT']",
+					RuntimeVariables.replace("Media Gallery Add Document"));
+
+			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT']"));
+
+				boolean viewChecked = selenium.isChecked(
+						"//input[@value='com.liferay.portlet.documentlibraryVIEW']");
+
+				if (viewChecked) {
+					label = 3;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@value='com.liferay.portlet.documentlibraryVIEW']",
+					RuntimeVariables.replace("Media Gallery View"));
+
+			case 3:
+				assertTrue(selenium.isChecked(
+						"//input[@value='com.liferay.portlet.documentlibraryVIEW']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"The role permissions were updated."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				selenium.select("//select[@id='_128_add-permissions']",
+					RuntimeVariables.replace("label=Media Gallery"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.isChecked(
+						"//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT']"));
+				assertTrue(selenium.isChecked(
+						"//input[@value='com.liferay.portlet.documentlibraryVIEW']"));
+				selenium.select("//select[@id='_128_add-permissions']",
+					RuntimeVariables.replace("index=55"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Media Gallery"),
+					selenium.getText("//h3"));
+
+				boolean viewMediaGallery = selenium.isChecked(
+						"//input[@value='31VIEW']");
+
+				if (viewMediaGallery) {
+					label = 4;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@value='31VIEW']",
+					RuntimeVariables.replace("Media Gallery View"));
+
+			case 4:
+				assertTrue(selenium.isChecked("//input[@value='31VIEW']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"The role permissions were updated."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				selenium.select("//select[@id='_128_add-permissions']",
+					RuntimeVariables.replace("index=55"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Media Gallery"),
+					selenium.getText("//h3"));
+				assertTrue(selenium.isChecked("//input[@value='31VIEW']"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

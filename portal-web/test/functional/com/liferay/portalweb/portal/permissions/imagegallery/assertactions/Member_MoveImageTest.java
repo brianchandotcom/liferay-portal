@@ -60,14 +60,17 @@ public class Member_MoveImageTest extends BaseTestCase {
 		selenium.waitForVisible("link=Home");
 		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//td[1]/a");
+		selenium.waitForVisible(
+			"//td/a[.='Media Gallery Permissions Test Folder'] ");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
+			selenium.getText(
+				"//td/a[.='Media Gallery Permissions Test Folder'] "));
+		selenium.clickAt("//td/a[.='Media Gallery Permissions Test Folder'] ",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li[2]/span/a");
+		selenium.waitForVisible(
+			"//span/a[.='Media Gallery Permissions Test Folder'] ");
 		selenium.click("//input[@value='Choose This Folder']");
 		selenium.selectWindow("null");
 		selenium.waitForText("//a[@id='_31_folderName']",

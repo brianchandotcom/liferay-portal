@@ -30,6 +30,66 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='member_ACTION_ADD_DOCUMENT']</td>
+	<td>folderAddDocumentChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${folderAddDocumentChecked}</td>
+	<td>FolderAddDocumentChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='member_ACTION_ADD_DOCUMENT']</td>
+	<td>Member Folder Add Document</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>FolderAddDocumentChecked</td>
+	<td>Member Folder Add Document</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='member_ACTION_ADD_DOCUMENT']</td>
+	<td>Member Folder Add Document</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='member_ACTION_ADD_DOCUMENT']</td>
+	<td>Member Folder Add Document</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span/a[@id='_86_TabsBack']</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span/a[@id='_86_TabsBack']</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//a[@title='Media Gallery Permissions Test Subfolder - ']</td>
 	<td>Media Gallery Permissions Test Subfolder</td>
 </tr>
@@ -49,13 +109,23 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='member_ACTION_ADD_DOCUMENT']</td>
-	<td>Member Subfolder Add Document</td>
+	<td>subfolderAddDocumentChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${subfolderAddDocumentChecked}</td>
+	<td>SubfolderAddDocumentChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='member_ACTION_ADD_DOCUMENT']</td>
+	<td>Member Subfolder Add Document</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SubfolderAddDocumentChecked</td>
 	<td>Member Subfolder Add Document</td>
 </tr>
 <tr>

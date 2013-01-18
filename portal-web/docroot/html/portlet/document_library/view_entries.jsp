@@ -504,7 +504,6 @@ for (int i = 0; i < results.size(); i++) {
 							data="<%= data %>"
 							displayStyle="list"
 							folder="<%= true %>"
-							locked="<%= fileEntry.isCheckedOut() %>"
 							showCheckbox="<%= false %>"
 							thumbnailSrc="<%= folderImage %>"
 							title="<%= curFolder.getName() %>"

@@ -1,584 +1,614 @@
 <?xml version="1.0"?>
-<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN"
+	"http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
 <service-builder package-path="com.liferay.portlet.journal">
 	<namespace>Journal</namespace>
-	<entity name="JournalArticle" uuid="true" local-service="true" remote-service="true">
+	<entity name="JournalArticle" uuid="true" local-service="true"
+			remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="id" type="long" primary="true" />
+		<column name="id" type="long" primary="true"/>
 
 		<!-- Resource -->
 
-		<column name="resourcePrimKey" type="long" filter-primary="true" />
+		<column name="resourcePrimKey" type="long" filter-primary="true"/>
 
 		<!-- Group instance -->
 
-		<column name="groupId" type="long" />
+		<column name="groupId" type="long"/>
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
+		<column name="companyId" type="long"/>
+		<column name="userId" type="long"/>
+		<column name="userName" type="String"/>
+		<column name="createDate" type="Date"/>
+		<column name="modifiedDate" type="Date"/>
 
 		<!-- Other fields -->
 
-		<column name="folderId" type="long" />
-		<column name="classNameId" type="long" />
-		<column name="classPK" type="long" />
-		<column name="articleId" type="String" accessor="true" />
-		<column name="version" type="double" />
-		<column name="title" type="String" localized="true" />
-		<column name="urlTitle" type="String" />
-		<column name="description" type="String" localized="true" />
-		<column name="content" type="String" />
-		<column name="type" type="String" />
-		<column name="structureId" type="String" />
-		<column name="templateId" type="String" />
-		<column name="layoutUuid" type="String" />
-		<column name="displayDate" type="Date" />
-		<column name="expirationDate" type="Date" />
-		<column name="reviewDate" type="Date" />
-		<column name="indexable" type="boolean" />
-		<column name="smallImage" type="boolean" />
-		<column name="smallImageId" type="long" />
-		<column name="smallImageURL" type="String" />
-		<column name="status" type="int" />
-		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
-		<column name="statusDate" type="Date" />
+		<column name="folderId" type="long"/>
+		<column name="classNameId" type="long"/>
+		<column name="classPK" type="long"/>
+		<column name="articleId" type="String" accessor="true"/>
+		<column name="version" type="double"/>
+		<column name="title" type="String" localized="true"/>
+		<column name="urlTitle" type="String"/>
+		<column name="description" type="String" localized="true"/>
+		<column name="content" type="String"/>
+		<column name="type" type="String"/>
+		<column name="structureId" type="String"/>
+		<column name="templateId" type="String"/>
+		<column name="layoutUuid" type="String"/>
+		<column name="displayDate" type="Date"/>
+		<column name="expirationDate" type="Date"/>
+		<column name="reviewDate" type="Date"/>
+		<column name="indexable" type="boolean"/>
+		<column name="smallImage" type="boolean"/>
+		<column name="smallImageId" type="long"/>
+		<column name="smallImageURL" type="String"/>
+		<column name="status" type="int"/>
+		<column name="statusByUserId" type="long"/>
+		<column name="statusByUserName" type="String"/>
+		<column name="statusDate" type="Date"/>
 
 		<!-- Order -->
 
 		<order>
-			<order-column name="articleId" order-by="asc" />
-			<order-column name="version" order-by="desc" />
+			<order-column name="articleId" order-by="asc"/>
+			<order-column name="version" order-by="desc"/>
 		</order>
 
 		<!-- Finder methods -->
 
 		<finder name="ResourcePrimKey" return-type="Collection">
-			<finder-column name="resourcePrimKey" />
+			<finder-column name="resourcePrimKey"/>
 		</finder>
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="groupId"/>
 		</finder>
 		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
+			<finder-column name="companyId"/>
 		</finder>
 		<finder name="StructureId" return-type="Collection">
-			<finder-column name="structureId" />
+			<finder-column name="structureId"/>
 		</finder>
 		<finder name="TemplateId" return-type="Collection">
-			<finder-column name="templateId" />
+			<finder-column name="templateId"/>
 		</finder>
 		<finder name="LayoutUuid" return-type="Collection">
-			<finder-column name="layoutUuid" />
+			<finder-column name="layoutUuid"/>
 		</finder>
 		<finder name="SmallImageId" return-type="Collection">
-			<finder-column name="smallImageId" />
+			<finder-column name="smallImageId"/>
 		</finder>
 		<finder name="R_ST" return-type="Collection">
-			<finder-column name="resourcePrimKey" />
-			<finder-column name="status" />
+			<finder-column name="resourcePrimKey"/>
+			<finder-column name="status"/>
 		</finder>
 		<finder name="G_U" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="userId" />
+			<finder-column name="groupId"/>
+			<finder-column name="userId"/>
 		</finder>
 		<finder name="G_F" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="folderId" arrayable-operator="OR" />
+			<finder-column name="groupId"/>
+			<finder-column name="folderId" arrayable-operator="OR"/>
 		</finder>
 		<finder name="G_A" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="articleId" />
+			<finder-column name="groupId"/>
+			<finder-column name="articleId"/>
 		</finder>
 		<finder name="G_UT" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="urlTitle" />
+			<finder-column name="groupId"/>
+			<finder-column name="urlTitle"/>
 		</finder>
 		<finder name="G_S" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="structureId" />
+			<finder-column name="groupId"/>
+			<finder-column name="structureId"/>
 		</finder>
 		<finder name="G_T" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="templateId" />
+			<finder-column name="groupId"/>
+			<finder-column name="templateId"/>
 		</finder>
 		<finder name="G_L" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="layoutUuid" />
+			<finder-column name="groupId"/>
+			<finder-column name="layoutUuid"/>
 		</finder>
 		<finder name="G_ST" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="status" />
+			<finder-column name="groupId"/>
+			<finder-column name="status"/>
 		</finder>
 		<finder name="C_V" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="version" />
+			<finder-column name="companyId"/>
+			<finder-column name="version"/>
 		</finder>
 		<finder name="C_ST" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="status" />
+			<finder-column name="companyId"/>
+			<finder-column name="status"/>
 		</finder>
 		<finder name="G_F_ST" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="folderId" />
-			<finder-column name="status" arrayable-operator="OR" />
+			<finder-column name="groupId"/>
+			<finder-column name="folderId"/>
+			<finder-column name="status" arrayable-operator="OR"/>
 		</finder>
 		<finder name="G_F_NotST" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="folderId" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column name="groupId"/>
+			<finder-column name="folderId"/>
+			<finder-column name="status" comparator="!="/>
 		</finder>
 		<finder name="G_C_C" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column name="groupId"/>
+			<finder-column name="classNameId"/>
+			<finder-column name="classPK"/>
 		</finder>
 		<finder name="G_C_S" return-type="JournalArticle">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="structureId" />
+			<finder-column name="groupId"/>
+			<finder-column name="classNameId"/>
+			<finder-column name="structureId"/>
 		</finder>
 		<finder name="G_C_T" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="templateId" />
+			<finder-column name="groupId"/>
+			<finder-column name="classNameId"/>
+			<finder-column name="templateId"/>
 		</finder>
 		<finder name="G_C_L" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="layoutUuid" />
+			<finder-column name="groupId"/>
+			<finder-column name="classNameId"/>
+			<finder-column name="layoutUuid"/>
 		</finder>
 		<finder name="G_U_C" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="userId" />
-			<finder-column name="classNameId" />
+			<finder-column name="groupId"/>
+			<finder-column name="userId"/>
+			<finder-column name="classNameId"/>
 		</finder>
 		<finder name="G_A_V" return-type="JournalArticle" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="articleId" />
-			<finder-column name="version" />
+			<finder-column name="groupId"/>
+			<finder-column name="articleId"/>
+			<finder-column name="version"/>
 		</finder>
 		<finder name="G_A_ST" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="articleId" />
-			<finder-column name="status" arrayable-operator="OR" />
+			<finder-column name="groupId"/>
+			<finder-column name="articleId"/>
+			<finder-column name="status" arrayable-operator="OR"/>
 		</finder>
 		<finder name="G_UT_ST" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="urlTitle" />
-			<finder-column name="status" />
+			<finder-column name="groupId"/>
+			<finder-column name="urlTitle"/>
+			<finder-column name="status"/>
 		</finder>
 		<finder name="C_V_ST" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="version" />
-			<finder-column name="status" />
+			<finder-column name="companyId"/>
+			<finder-column name="version"/>
+			<finder-column name="status"/>
 		</finder>
 		<finder name="G_U_C_NotS" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="userId" />
-			<finder-column name="classNameId" />
+			<finder-column name="groupId"/>
+			<finder-column name="userId"/>
+			<finder-column name="classNameId"/>
 			<finder-column name="status" comparator="!="/>
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.mail" entity="Mail" />
-		<reference package-path="com.liferay.portal" entity="Company" />
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Image" />
-		<reference package-path="com.liferay.portal" entity="PortletPreferences" />
-		<reference package-path="com.liferay.portal" entity="Subscription" />
-		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetCategory" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplate" />
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
-		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
-		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
-		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference package-path="com.liferay.mail" entity="Mail"/>
+		<reference package-path="com.liferay.portal" entity="Company"/>
+		<reference package-path="com.liferay.portal" entity="Group"/>
+		<reference package-path="com.liferay.portal" entity="Image"/>
+		<reference package-path="com.liferay.portal"
+				   entity="PortletPreferences"/>
+		<reference package-path="com.liferay.portal" entity="Subscription"/>
+		<reference package-path="com.liferay.portal"
+				   entity="WorkflowInstanceLink"/>
+		<reference package-path="com.liferay.portlet.asset"
+				   entity="AssetCategory"/>
+		<reference package-path="com.liferay.portlet.asset"
+				   entity="AssetEntry"/>
+		<reference package-path="com.liferay.portlet.asset" entity="AssetLink"/>
+		<reference package-path="com.liferay.portlet.asset" entity="AssetTag"/>
+		<reference package-path="com.liferay.portlet.dynamicdatamapping"
+				   entity="DDMStructure"/>
+		<reference package-path="com.liferay.portlet.dynamicdatamapping"
+				   entity="DDMTemplate"/>
+		<reference package-path="com.liferay.portlet.expando"
+				   entity="ExpandoValue"/>
+		<reference package-path="com.liferay.portlet.messageboards"
+				   entity="MBMessage"/>
+		<reference package-path="com.liferay.portlet.ratings"
+				   entity="RatingsStats"/>
+		<reference package-path="com.liferay.portlet.social"
+				   entity="SocialActivity"/>
+		<reference package-path="com.liferay.portlet.social"
+				   entity="SocialActivityCounter"/>
+		<reference package-path="com.liferay.portlet.trash"
+				   entity="TrashEntry"/>
 	</entity>
-	<entity name="JournalArticleImage" local-service="true" remote-service="false">
+	<entity name="JournalArticleImage" local-service="true"
+			remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="articleImageId" type="long" primary="true" />
+		<column name="articleImageId" type="long" primary="true"/>
 
 		<!-- Group instance -->
 
-		<column name="groupId" type="long" />
+		<column name="groupId" type="long"/>
 
 		<!-- Other fields -->
 
-		<column name="articleId" type="String" />
-		<column name="version" type="double" />
-		<column name="elInstanceId" type="String" />
-		<column name="elName" type="String" />
-		<column name="languageId" type="String" />
-		<column name="tempImage" type="boolean" />
+		<column name="articleId" type="String"/>
+		<column name="version" type="double"/>
+		<column name="elInstanceId" type="String"/>
+		<column name="elName" type="String"/>
+		<column name="languageId" type="String"/>
+		<column name="tempImage" type="boolean"/>
 
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="groupId"/>
 		</finder>
 		<finder name="TempImage" return-type="Collection">
-			<finder-column name="tempImage" />
+			<finder-column name="tempImage"/>
 		</finder>
 		<finder name="G_A_V" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="articleId" />
-			<finder-column name="version" />
+			<finder-column name="groupId"/>
+			<finder-column name="articleId"/>
+			<finder-column name="version"/>
 		</finder>
-		<finder name="G_A_V_E_E_L" return-type="JournalArticleImage" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="articleId" />
-			<finder-column name="version" />
-			<finder-column name="elInstanceId" />
-			<finder-column name="elName" />
-			<finder-column name="languageId" />
+		<finder name="G_A_V_E_E_L" return-type="JournalArticleImage"
+				unique="true">
+			<finder-column name="groupId"/>
+			<finder-column name="articleId"/>
+			<finder-column name="version"/>
+			<finder-column name="elInstanceId"/>
+			<finder-column name="elName"/>
+			<finder-column name="languageId"/>
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Image" />
+		<reference package-path="com.liferay.portal" entity="Image"/>
 	</entity>
-	<entity name="JournalArticleResource" uuid="true" local-service="true" remote-service="false">
+	<entity name="JournalArticleResource" uuid="true" local-service="true"
+			remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="resourcePrimKey" type="long" primary="true" />
+		<column name="resourcePrimKey" type="long" primary="true"/>
 
 		<!-- Other fields -->
 
-		<column name="groupId" type="long" />
-		<column name="articleId" type="String" />
+		<column name="groupId" type="long"/>
+		<column name="articleId" type="String"/>
 
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="groupId"/>
 		</finder>
 		<finder name="G_A" return-type="JournalArticleResource" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="articleId" />
+			<finder-column name="groupId"/>
+			<finder-column name="articleId"/>
 		</finder>
 	</entity>
-	<entity name="JournalContentSearch" local-service="true" remote-service="false">
+	<entity name="JournalContentSearch" local-service="true"
+			remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="contentSearchId" type="long" primary="true" />
+		<column name="contentSearchId" type="long" primary="true"/>
 
 		<!-- Group instance -->
 
-		<column name="groupId" type="long" />
+		<column name="groupId" type="long"/>
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
+		<column name="companyId" type="long"/>
 
 		<!-- Other fields -->
 
-		<column name="privateLayout" type="boolean" />
-		<column name="layoutId" type="long" />
-		<column name="portletId" type="String" />
-		<column name="articleId" type="String" />
+		<column name="privateLayout" type="boolean"/>
+		<column name="layoutId" type="long"/>
+		<column name="portletId" type="String"/>
+		<column name="articleId" type="String"/>
 
 		<!-- Finder methods -->
 
 		<finder name="PortletId" return-type="Collection">
-			<finder-column name="portletId" />
+			<finder-column name="portletId"/>
 		</finder>
 		<finder name="ArticleId" return-type="Collection">
-			<finder-column name="articleId" />
+			<finder-column name="articleId"/>
 		</finder>
 		<finder name="G_P" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
+			<finder-column name="groupId"/>
+			<finder-column name="privateLayout"/>
 		</finder>
 		<finder name="G_A" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="articleId" />
+			<finder-column name="groupId"/>
+			<finder-column name="articleId"/>
 		</finder>
 		<finder name="G_P_L" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
-			<finder-column name="layoutId" />
+			<finder-column name="groupId"/>
+			<finder-column name="privateLayout"/>
+			<finder-column name="layoutId"/>
 		</finder>
 		<finder name="G_P_A" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
-			<finder-column name="articleId" />
+			<finder-column name="groupId"/>
+			<finder-column name="privateLayout"/>
+			<finder-column name="articleId"/>
 		</finder>
 		<finder name="G_P_L_P" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
-			<finder-column name="layoutId" />
-			<finder-column name="portletId" />
+			<finder-column name="groupId"/>
+			<finder-column name="privateLayout"/>
+			<finder-column name="layoutId"/>
+			<finder-column name="portletId"/>
 		</finder>
-		<finder name="G_P_L_P_A" return-type="JournalContentSearch" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
-			<finder-column name="layoutId" />
-			<finder-column name="portletId" />
-			<finder-column name="articleId" />
+		<finder name="G_P_L_P_A" return-type="JournalContentSearch"
+				unique="true">
+			<finder-column name="groupId"/>
+			<finder-column name="privateLayout"/>
+			<finder-column name="layoutId"/>
+			<finder-column name="portletId"/>
+			<finder-column name="articleId"/>
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Layout" />
-		<reference package-path="com.liferay.portal" entity="PortletPreferences" />
+		<reference package-path="com.liferay.portal" entity="Group"/>
+		<reference package-path="com.liferay.portal" entity="Layout"/>
+		<reference package-path="com.liferay.portal"
+				   entity="PortletPreferences"/>
 	</entity>
-	<entity name="JournalFeed" uuid="true" local-service="true" remote-service="true">
+	<entity name="JournalFeed" uuid="true" local-service="true"
+			remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="id" type="long" primary="true" />
+		<column name="id" type="long" primary="true"/>
 
 		<!-- Group instance -->
 
-		<column name="groupId" type="long" />
+		<column name="groupId" type="long"/>
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
+		<column name="companyId" type="long"/>
+		<column name="userId" type="long"/>
+		<column name="userName" type="String"/>
+		<column name="createDate" type="Date"/>
+		<column name="modifiedDate" type="Date"/>
 
 		<!-- Other fields -->
 
-		<column name="feedId" type="String" />
-		<column name="name" type="String" />
-		<column name="description" type="String" />
-		<column name="type" type="String" />
-		<column name="structureId" type="String" />
-		<column name="templateId" type="String" />
-		<column name="rendererTemplateId" type="String" />
-		<column name="delta" type="int" />
-		<column name="orderByCol" type="String" />
-		<column name="orderByType" type="String" />
-		<column name="targetLayoutFriendlyUrl" type="String" />
-		<column name="targetPortletId" type="String" />
-		<column name="contentField" type="String" />
-		<column name="feedFormat" type="String" />
-		<column name="feedVersion" type="double" />
+		<column name="feedId" type="String"/>
+		<column name="name" type="String"/>
+		<column name="description" type="String"/>
+		<column name="type" type="String"/>
+		<column name="structureId" type="String"/>
+		<column name="templateId" type="String"/>
+		<column name="rendererTemplateId" type="String"/>
+		<column name="delta" type="int"/>
+		<column name="orderByCol" type="String"/>
+		<column name="orderByType" type="String"/>
+		<column name="targetLayoutFriendlyUrl" type="String"/>
+		<column name="targetPortletId" type="String"/>
+		<column name="contentField" type="String"/>
+		<column name="feedFormat" type="String"/>
+		<column name="feedVersion" type="double"/>
 
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="feedId" />
+			<order-column name="feedId"/>
 		</order>
 
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="groupId"/>
 		</finder>
 		<finder name="G_F" return-type="JournalFeed" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="feedId" />
+			<finder-column name="groupId"/>
+			<finder-column name="feedId"/>
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
+		<reference package-path="com.liferay.portlet.expando"
+				   entity="ExpandoValue"/>
 	</entity>
-	<entity name="JournalFolder" uuid="true" local-service="true" remote-service="true">
+	<entity name="JournalFolder" uuid="true" local-service="true"
+			remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="folderId" type="long" primary="true" accessor="true" />
+		<column name="folderId" type="long" primary="true" accessor="true"/>
 
 		<!-- Group instance -->
 
-		<column name="groupId" type="long" />
+		<column name="groupId" type="long"/>
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
+		<column name="companyId" type="long"/>
+		<column name="userId" type="long"/>
+		<column name="userName" type="String"/>
+		<column name="createDate" type="Date"/>
+		<column name="modifiedDate" type="Date"/>
 
 		<!-- Other fields -->
 
-		<column name="parentFolderId" type="long" />
-		<column name="name" type="String" />
-		<column name="description" type="String" />
+		<column name="parentFolderId" type="long"/>
+		<column name="name" type="String"/>
+		<column name="description" type="String"/>
 
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="parentFolderId" />
-			<order-column name="name" case-sensitive="false" />
+			<order-column name="parentFolderId"/>
+			<order-column name="name" case-sensitive="false"/>
 		</order>
 
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="groupId"/>
 		</finder>
 		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
+			<finder-column name="companyId"/>
 		</finder>
 		<finder name="G_P" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="parentFolderId" />
+			<finder-column name="groupId"/>
+			<finder-column name="parentFolderId"/>
 		</finder>
 		<finder name="G_N" return-type="JournalFolder">
-			<finder-column name="groupId" />
-			<finder-column name="name" />
+			<finder-column name="groupId"/>
+			<finder-column name="name"/>
 		</finder>
 		<finder name="G_P_N" return-type="JournalFolder" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="parentFolderId" />
-			<finder-column name="name" />
+			<finder-column name="groupId"/>
+			<finder-column name="parentFolderId"/>
+			<finder-column name="name"/>
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
+		<reference package-path="com.liferay.portal" entity="Group"/>
+		<reference package-path="com.liferay.portlet.expando"
+				   entity="ExpandoValue"/>
 	</entity>
-	<entity name="JournalStructure" uuid="true" local-service="true" remote-service="true">
+	<entity name="JournalStructure" uuid="true" local-service="true"
+			remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="id" type="long" primary="true" />
+		<column name="id" type="long" primary="true"/>
 
 		<!-- Group instance -->
 
-		<column name="groupId" type="long" />
+		<column name="groupId" type="long"/>
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
+		<column name="companyId" type="long"/>
+		<column name="userId" type="long"/>
+		<column name="userName" type="String"/>
+		<column name="createDate" type="Date"/>
+		<column name="modifiedDate" type="Date"/>
 
 		<!-- Other fields -->
 
-		<column name="structureId" type="String" />
-		<column name="parentStructureId" type="String" />
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
-		<column name="xsd" type="String" />
+		<column name="structureId" type="String"/>
+		<column name="parentStructureId" type="String"/>
+		<column name="name" type="String" localized="true"/>
+		<column name="description" type="String" localized="true"/>
+		<column name="xsd" type="String"/>
 
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="structureId" />
+			<order-column name="structureId"/>
 		</order>
 
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" arrayable-operator="OR" />
+			<finder-column name="groupId" arrayable-operator="OR"/>
 		</finder>
 		<finder name="StructureId" return-type="Collection">
-			<finder-column name="structureId" />
+			<finder-column name="structureId"/>
 		</finder>
 		<finder name="ParentStructureId" return-type="Collection">
-			<finder-column name="parentStructureId" />
+			<finder-column name="parentStructureId"/>
 		</finder>
 		<finder name="G_S" return-type="JournalStructure" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="structureId" />
+			<finder-column name="groupId"/>
+			<finder-column name="structureId"/>
 		</finder>
 		<finder name="G_P" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="parentStructureId" />
+			<finder-column name="groupId"/>
+			<finder-column name="parentStructureId"/>
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="WebDAVProps" />
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
+		<reference package-path="com.liferay.portal" entity="Group"/>
+		<reference package-path="com.liferay.portal" entity="WebDAVProps"/>
+		<reference package-path="com.liferay.portlet.expando"
+				   entity="ExpandoValue"/>
 	</entity>
-	<entity name="JournalTemplate" uuid="true" local-service="true" remote-service="true">
+	<entity name="JournalTemplate" uuid="true" local-service="true"
+			remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="id" type="long" primary="true" />
+		<column name="id" type="long" primary="true"/>
 
 		<!-- Group instance -->
 
-		<column name="groupId" type="long" />
+		<column name="groupId" type="long"/>
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
+		<column name="companyId" type="long"/>
+		<column name="userId" type="long"/>
+		<column name="userName" type="String"/>
+		<column name="createDate" type="Date"/>
+		<column name="modifiedDate" type="Date"/>
 
 		<!-- Other fields -->
 
-		<column name="templateId" type="String" />
-		<column name="structureId" type="String" />
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
-		<column name="xsl" type="String" />
-		<column name="langType" type="String" />
-		<column name="cacheable" type="boolean" />
-		<column name="smallImage" type="boolean" />
-		<column name="smallImageId" type="long" />
-		<column name="smallImageURL" type="String" />
+		<column name="templateId" type="String"/>
+		<column name="structureId" type="String"/>
+		<column name="name" type="String" localized="true"/>
+		<column name="description" type="String" localized="true"/>
+		<column name="xsl" type="String"/>
+		<column name="langType" type="String"/>
+		<column name="cacheable" type="boolean"/>
+		<column name="smallImage" type="boolean"/>
+		<column name="smallImageId" type="long"/>
+		<column name="smallImageURL" type="String"/>
 
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="templateId" />
+			<order-column name="templateId"/>
 		</order>
 
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="groupId"/>
 		</finder>
 		<finder name="TemplateId" return-type="Collection">
-			<finder-column name="templateId" />
+			<finder-column name="templateId"/>
 		</finder>
 		<finder name="StructureId" return-type="Collection">
-			<finder-column name="structureId" />
+			<finder-column name="structureId"/>
 		</finder>
 		<finder name="SmallImageId" return-type="JournalTemplate">
-			<finder-column name="smallImageId" />
+			<finder-column name="smallImageId"/>
 		</finder>
 		<finder name="G_T" return-type="JournalTemplate" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="templateId" />
+			<finder-column name="groupId"/>
+			<finder-column name="templateId"/>
 		</finder>
 		<finder name="G_S" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="structureId" />
+			<finder-column name="groupId"/>
+			<finder-column name="structureId"/>
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Image" />
-		<reference package-path="com.liferay.portal" entity="WebDAVProps" />
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
+		<reference package-path="com.liferay.portal" entity="Group"/>
+		<reference package-path="com.liferay.portal" entity="Image"/>
+		<reference package-path="com.liferay.portal" entity="WebDAVProps"/>
+		<reference package-path="com.liferay.portlet.expando"
+				   entity="ExpandoValue"/>
 	</entity>
 	<exceptions>
 		<exception>ArticleContent</exception>

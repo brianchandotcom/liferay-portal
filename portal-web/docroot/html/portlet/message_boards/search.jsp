@@ -80,6 +80,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		searchContext.setAttribute("paginationType", "more");
 		searchContext.setCategoryIds(categoryIdsArray);
 		searchContext.setEnd(searchContainer.getEnd());
+		searchContext.setIncludeAttachments(true);
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(searchContainer.getStart());
 
@@ -92,58 +93,143 @@ String keywords = ParamUtil.getString(request, "keywords");
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.messageboards.model.MBMessage"
-			modelVar="message"
+			className="Object"
+			modelVar="obj"
 		>
 
-			<%
-			MBCategory category = message.getCategory();
+			<c:choose>
+				<c:when test="<%= obj instanceof DLFileEntry %>">
 
-			PortletURL categoryURL = renderResponse.createRenderURL();
+					<%
+					DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
-			categoryURL.setParameter("struts_action", "/message_boards/view");
-			categoryURL.setParameter("redirect", currentURL);
-			categoryURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
+					MBMessage message = MBMessageAttachmentsUtil.getMessage(dlFileEntry.getFileEntryId());
 
-			// Thread and message
+					MBCategory category = message.getCategory();
 
-			MBThread thread = message.getThread();
+					PortletURL categoryURL = renderResponse.createRenderURL();
 
-			PortletURL rowURL = renderResponse.createRenderURL();
+					categoryURL.setParameter("struts_action", "/message_boards/view");
+					categoryURL.setParameter("redirect", currentURL);
+					categoryURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
+					%>
 
-			rowURL.setParameter("struts_action", "/message_boards/view_message");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("messageId", String.valueOf(message.getMessageId()));
-			%>
+					<portlet:actionURL var="rowURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+						<portlet:param name="struts_action" value="/message_boards/get_message_attachment" />
+						<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+						<portlet:param name="attachment" value="<%= dlFileEntry.getTitle() %>" />
+					</portlet:actionURL>
 
-			<liferay-ui:search-container-column-text
-				name="#"
-				value="<%= (index + 1) + StringPool.PERIOD %>"
-			/>
+					<portlet:renderURL var="messageURL">
+						<portlet:param name="struts_action" value="/message_boards/view_message" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+					</portlet:renderURL>
 
-			<liferay-ui:search-container-column-text
-				href="<%= categoryURL %>"
-				name="category"
-				value="<%= HtmlUtil.escape(category.getName()) %>"
-			/>
+					<liferay-ui:search-container-column-text
+						name="title"
+					>
+						<liferay-ui:icon
+							image='<%= "../file_system/small/" + DLUtil.getFileIcon(dlFileEntry.getExtension()) %>'
+							label="<%= true %>"
+							message="<%= dlFileEntry.getTitle() %>"
+							url="<%= rowURL %>"
+						/>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="message"
-				value="<%= HtmlUtil.escape(message.getSubject()) %>"
-			/>
+						<liferay-util:buffer var="rootEntryIcon">
+							<liferay-ui:icon
+								image="message"
+								label="<%= true %>"
+								message="<%= HtmlUtil.escape(message.getSubject()) %>"
+								url="<%= messageURL %>"
+							/>
+						</liferay-util:buffer>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="thread-posts"
-				value="<%= String.valueOf(thread.getMessageCount()) %>"
-			/>
+						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="attachment-found-in-message-x" />)</span>
+					</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="thread-views"
-				value="<%= String.valueOf(thread.getViewCount()) %>"
-			/>
+					<liferay-ui:search-container-column-text
+						name="type"
+						value='<%= LanguageUtil.get(locale, "attachment") %>'
+					/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= categoryURL %>"
+						name="category"
+						value="<%= HtmlUtil.escape(category.getName()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="thread-posts"
+						value="<%= StringPool.BLANK %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="thread-views"
+						value="<%= StringPool.BLANK %>"
+					/>
+				</c:when>
+				<c:when test="<%= obj instanceof MBMessage %>">
+
+					<%
+					MBMessage message = (MBMessage)obj;
+
+					MBCategory category = message.getCategory();
+
+					PortletURL categoryURL = renderResponse.createRenderURL();
+
+					categoryURL.setParameter("struts_action", "/message_boards/view");
+					categoryURL.setParameter("redirect", currentURL);
+					categoryURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
+
+					// Thread and message
+
+					MBThread thread = message.getThread();
+					%>
+
+					<portlet:renderURL var="rowURL">
+						<portlet:param name="struts_action" value="/message_boards/view_message" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+					</portlet:renderURL>
+
+					<liferay-ui:search-container-column-text
+						name="title"
+					>
+						<liferay-ui:icon
+							image="message"
+							label="<%= true %>"
+							message="<%= HtmlUtil.escape(message.getSubject()) %>"
+							url="<%= rowURL %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						value='<%= LanguageUtil.get(locale, "message") %>'
+					/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= categoryURL %>"
+						name="category"
+						value="<%= HtmlUtil.escape(category.getName()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="thread-posts"
+						value="<%= String.valueOf(thread.getMessageCount()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="thread-views"
+						value="<%= String.valueOf(thread.getViewCount()) %>"
+					/>
+				</c:when>
+			</c:choose>
 
 		</liferay-ui:search-container-row>
 

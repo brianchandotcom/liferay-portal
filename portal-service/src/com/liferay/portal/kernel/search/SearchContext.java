@@ -167,6 +167,10 @@ public class SearchContext implements Serializable {
 		return _andSearch;
 	}
 
+	public boolean isIncludeAttachments() {
+		return _includeAttachments;
+	}
+
 	public boolean isIncludeDiscussions() {
 		return _includeDiscussions;
 	}
@@ -252,6 +256,10 @@ public class SearchContext implements Serializable {
 		_groupIds = groupIds;
 	}
 
+	public void setIncludeAttachments(boolean includeAttachments) {
+		_includeAttachments = includeAttachments;
+	}
+
 	public void setIncludeDiscussions(boolean includeDiscussions) {
 		_includeDiscussions = includeDiscussions;
 	}
@@ -328,6 +336,7 @@ public class SearchContext implements Serializable {
 	private Map<String, Facet> _facets = new ConcurrentHashMap<String, Facet>();
 	private long[] _folderIds;
 	private long[] _groupIds;
+	private boolean _includeAttachments = false;
 	private boolean _includeDiscussions = false;
 	private boolean _includeLiveGroups = true;
 	private boolean _includeStagingGroups = true;

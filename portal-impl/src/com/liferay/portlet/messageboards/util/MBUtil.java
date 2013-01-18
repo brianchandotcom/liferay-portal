@@ -57,6 +57,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -492,8 +494,8 @@ public class MBUtil {
 		}
 	}
 
-	public static List<MBMessage> getEntries(Hits hits) {
-		List<MBMessage> messages = new ArrayList<MBMessage>();
+	public static List<Object> getEntries(Hits hits) {
+		List<Object> entries = new ArrayList<Object>();
 
 		for (Document document : hits.getDocs()) {
 			long categoryId = GetterUtil.getLong(
@@ -527,28 +529,41 @@ public class MBUtil {
 				continue;
 			}
 
+			String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
 			long entryClassPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
-			MBMessage message = null;
+			Object obj = null;
 
 			try {
-				message = MBMessageLocalServiceUtil.getMessage(entryClassPK);
+				if (entryClassName.equals(DLFileEntry.class.getName())) {
+					long classPK = GetterUtil.getLong(
+						document.get(Field.CLASS_PK));
 
-				messages.add(message);
+					MBMessageLocalServiceUtil.getMessage(classPK);
+
+					obj = DLFileEntryLocalServiceUtil.getDLFileEntry(
+						entryClassPK);
+				}
+				else if (entryClassName.equals(MBMessage.class.getName())) {
+					obj = MBMessageLocalServiceUtil.getMessage(entryClassPK);
+				}
+
+				entries.add(obj);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Message boards search index is stale and contains " +
-							"message " + entryClassPK);
+							"entry {className=" + entryClassName + ", " +
+							"classPK=" + entryClassPK + "}");
 				}
 
 				continue;
 			}
 		}
 
-		return messages;
+		return entries;
 	}
 
 	public static String getMailingListAddress(

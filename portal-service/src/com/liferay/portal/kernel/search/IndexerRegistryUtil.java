@@ -31,6 +31,10 @@ public class IndexerRegistryUtil {
 		return getIndexerRegistry().getIndexer(className);
 	}
 
+	public static Indexer getIndexerByPortletId(String portletId) {
+		return getIndexerRegistry().getIndexerByPortletId(portletId);
+	}
+
 	public static IndexerRegistry getIndexerRegistry() {
 		PortalRuntimePermission.checkGetBeanProperty(IndexerRegistryUtil.class);
 

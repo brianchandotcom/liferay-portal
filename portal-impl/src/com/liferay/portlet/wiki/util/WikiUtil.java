@@ -45,6 +45,8 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.wiki.PageContentException;
@@ -307,7 +309,16 @@ public class WikiUtil {
 			try {
 				Object obj = null;
 
-				if (entryClassName.equals(MBMessage.class.getName())) {
+				if (entryClassName.equals(DLFileEntry.class.getName())) {
+					long classPK = GetterUtil.getLong(
+						document.get(Field.CLASS_PK));
+
+					WikiPageLocalServiceUtil.getPage(classPK);
+
+					obj = DLFileEntryLocalServiceUtil.getDLFileEntry(
+						entryClassPK);
+				}
+				else if (entryClassName.equals(MBMessage.class.getName())) {
 					long classPK = GetterUtil.getLong(
 						document.get(Field.CLASS_PK));
 

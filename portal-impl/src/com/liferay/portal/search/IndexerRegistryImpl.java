@@ -35,6 +35,18 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		return _indexers.get(className);
 	}
 
+	public Indexer getIndexerByPortletId(String portletId) {
+		List<Indexer> indexers = getIndexers();
+
+		for (Indexer indexer : indexers) {
+			if (portletId.equals(indexer.getPortletId())) {
+				return indexer;
+			}
+		}
+
+		return null;
+	}
+
 	public List<Indexer> getIndexers() {
 		return ListUtil.fromMapValues(_indexers);
 	}

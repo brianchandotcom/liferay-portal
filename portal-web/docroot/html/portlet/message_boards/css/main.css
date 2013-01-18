@@ -395,6 +395,11 @@
 		float: right;
 		margin: 0 0 0.5em 0.5em;
 	}
+
+	.search-root-entry {
+		color: #999;
+		float: right;
+	}
 }
 
 .ie {

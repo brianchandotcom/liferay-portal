@@ -38,7 +38,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRendererFactory;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -76,9 +78,24 @@ public class WikiPageIndexer extends BaseIndexer {
 	public void addRelatedEntryFields(Document document, Object obj)
 		throws Exception {
 
-		MBMessage message = (MBMessage)obj;
+		WikiPage page = null;
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(message.getClassPK());
+		if (obj instanceof DLFileEntry) {
+			DLFileEntry dlFileEntry = (DLFileEntry)obj;
+
+			page = WikiPageAttachmentsUtil.getPage(
+				dlFileEntry.getFileEntryId());
+
+			document.addKeyword(
+				Field.CLASS_NAME_ID,
+				PortalUtil.getClassNameId(WikiPage.class.getName()));
+			document.addKeyword(Field.CLASS_PK, page.getResourcePrimKey());
+		}
+		else if (obj instanceof MBMessage) {
+			MBMessage message = (MBMessage)obj;
+
+			page = WikiPageLocalServiceUtil.getPage(message.getClassPK());
+		}
 
 		document.addKeyword(Field.NODE_ID, page.getNodeId());
 		document.addKeyword(Field.RELATED_ENTRY, true);

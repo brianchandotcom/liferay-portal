@@ -1471,6 +1471,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_xStream.alias("RatingsEntry", RatingsEntryImpl.class);
 		_xStream.alias("WikiNode", WikiNodeImpl.class);
 		_xStream.alias("WikiPage", WikiPageImpl.class);
+
 		_xStream.omitField(HashMap.class, "cache_bitmask");
 	}
 

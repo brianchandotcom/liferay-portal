@@ -31,12 +31,8 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalContentSearch;
-import com.liferay.portlet.journal.model.JournalStructure;
-import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalTemplateLocalServiceUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,37 +58,6 @@ public class VerifyJournal extends VerifyProcess {
 		// Oracle new line
 
 		verifyOracleNewLine();
-
-		// Structures
-
-		List<JournalStructure> structures =
-			JournalStructureLocalServiceUtil.getStructures();
-
-		for (JournalStructure structure : structures) {
-			ResourceLocalServiceUtil.addResources(
-				structure.getCompanyId(), 0, 0,
-				JournalStructure.class.getName(), structure.getId(), false,
-				false, false);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Permissions verified for structures");
-		}
-
-		// Templates
-
-		List<JournalTemplate> templates =
-			JournalTemplateLocalServiceUtil.getTemplates();
-
-		for (JournalTemplate template : templates) {
-			ResourceLocalServiceUtil.addResources(
-				template.getCompanyId(), 0, 0, JournalTemplate.class.getName(),
-				template.getId(), false, false, false);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Permissions verified for templates");
-		}
 
 		// Articles
 
@@ -308,49 +273,6 @@ public class VerifyJournal extends VerifyProcess {
 			}
 		}
 
-		List<JournalStructure> structures =
-			JournalStructureLocalServiceUtil.getStructures(
-				DEFAULT_GROUP_ID, 0, 1);
-
-		if (structures.size() == 1) {
-			JournalStructure structure = structures.get(0);
-
-			String xsd = structure.getXsd();
-
-			if ((xsd != null) && xsd.contains("\\n")) {
-				structures = JournalStructureLocalServiceUtil.getStructures(
-					DEFAULT_GROUP_ID);
-
-				for (int i = 0; i < structures.size(); i++) {
-					structure = structures.get(i);
-
-					JournalStructureLocalServiceUtil.checkNewLine(
-						structure.getGroupId(), structure.getStructureId());
-				}
-			}
-		}
-
-		List<JournalTemplate> templates =
-			JournalTemplateLocalServiceUtil.getTemplates(
-				DEFAULT_GROUP_ID, 0, 1);
-
-		if (templates.size() == 1) {
-			JournalTemplate template = templates.get(0);
-
-			String xsl = template.getXsl();
-
-			if ((xsl != null) && xsl.contains("\\n")) {
-				templates = JournalTemplateLocalServiceUtil.getTemplates(
-					DEFAULT_GROUP_ID);
-
-				for (int i = 0; i < templates.size(); i++) {
-					template = templates.get(i);
-
-					JournalTemplateLocalServiceUtil.checkNewLine(
-						template.getGroupId(), template.getTemplateId());
-				}
-			}
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyJournal.class);

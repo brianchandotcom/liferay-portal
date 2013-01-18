@@ -331,6 +331,10 @@ public class MBMessageIndexer extends BaseIndexer {
 			return;
 		}
 
+		if (message.isDiscussion() && message.isRoot()) {
+			return;
+		}
+
 		Document document = getDocument(message);
 
 		SearchEngineUtil.updateDocument(

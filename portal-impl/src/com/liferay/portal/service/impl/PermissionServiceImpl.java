@@ -54,8 +54,6 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalFeedPermission;
-import com.liferay.portlet.journal.service.permission.JournalStructurePermission;
-import com.liferay.portlet.journal.service.permission.JournalTemplatePermission;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
@@ -88,12 +86,12 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 	/**
 	 * Checks to see if the group has permission to the service.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  name the service name
-	 * @param  primKey the primary key of the service
+	 * @param groupId the primary key of the group
+	 * @param name    the service name
+	 * @param primKey the primary key of the service
 	 * @throws PortalException if the group did not have permission to the
-	 *         service, if a group with the primary key could not be found or if
-	 *         the permission information was invalid
+	 *                         service, if a group with the primary key could not be found or if
+	 *                         the permission information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void checkPermission(long groupId, String name, long primKey)
@@ -106,12 +104,12 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 	/**
 	 * Checks to see if the group has permission to the service.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  name the service name
-	 * @param  primKey the primary key of the service
+	 * @param groupId the primary key of the group
+	 * @param name    the service name
+	 * @param primKey the primary key of the service
 	 * @throws PortalException if the group did not have permission to the
-	 *         service, if a group with the primary key could not be found or if
-	 *         the permission information was invalid
+	 *                         service, if a group with the primary key could not be found or if
+	 *                         the permission information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void checkPermission(long groupId, String name, String primKey)
@@ -121,8 +119,8 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 	}
 
 	protected void checkPermission(
-			PermissionChecker permissionChecker, long groupId, String name,
-			String primKey)
+		PermissionChecker permissionChecker, long groupId, String name,
+		String primKey)
 		throws PortalException, SystemException {
 
 		if (name.equals(BlogsEntry.class.getName())) {
@@ -238,7 +236,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 				ActionKeys.PERMISSIONS);
 		}
 		else if ((primKey != null) &&
-				 primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
+			primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
 
 			int pos = primKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
 
@@ -251,7 +249,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 				permissionChecker, plid, portletId, ActionKeys.CONFIGURATION);
 		}
 		else if (!permissionChecker.hasPermission(
-					groupId, name, primKey, ActionKeys.PERMISSIONS)) {
+			groupId, name, primKey, ActionKeys.PERMISSIONS)) {
 
 			long ownerId = 0;
 
@@ -261,12 +259,12 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 						name, GetterUtil.getLong(primKey));
 
 				if (permissionedModel instanceof GroupedModel) {
-					GroupedModel groupedModel = (GroupedModel)permissionedModel;
+					GroupedModel groupedModel = (GroupedModel) permissionedModel;
 
 					ownerId = groupedModel.getUserId();
 				}
 				else if (permissionedModel instanceof AuditedModel) {
-					AuditedModel auditedModel = (AuditedModel)permissionedModel;
+					AuditedModel auditedModel = (AuditedModel) permissionedModel;
 
 					ownerId = auditedModel.getUserId();
 				}
@@ -282,8 +280,8 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 			}
 
 			if (permissionChecker.hasOwnerPermission(
-					permissionChecker.getCompanyId(), name, primKey, ownerId,
-					ActionKeys.PERMISSIONS)) {
+				permissionChecker.getCompanyId(), name, primKey, ownerId,
+				ActionKeys.PERMISSIONS)) {
 
 				return;
 			}

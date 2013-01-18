@@ -49,6 +49,7 @@ public class AddMessageTest extends BaseTestCase {
 			selenium.getText("//span[@id='cke_33_label' and .='Source']"));
 		selenium.clickAt("//span[@id='cke_33_label' and .='Source']",
 			RuntimeVariables.replace("Source"));
+		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible("//td[@id='cke_contents__162_editor']/textarea");
 		selenium.type("//td[@id='cke_contents__162_editor']/textarea",
 			RuntimeVariables.replace("Message Boards Message Body"));

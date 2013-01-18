@@ -59,10 +59,10 @@ public class DDMTemplateLocalServiceImpl
 	extends DDMTemplateLocalServiceBaseImpl {
 
 	public DDMTemplate addTemplate(
-			long userId, long groupId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String type, String mode, String language, String script,
-			ServiceContext serviceContext)
+		long userId, long groupId, long classNameId, long classPK,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String type, String mode, String language, String script,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return addTemplate(
@@ -72,12 +72,12 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public DDMTemplate addTemplate(
-			long userId, long groupId, long classNameId, long classPK,
-			String templateKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String type, String mode,
-			String language, String script, boolean cacheable,
-			boolean smallImage, String smallImageURL, File smallImageFile,
-			ServiceContext serviceContext)
+		long userId, long groupId, long classNameId, long classPK,
+		String templateKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type, String mode,
+		String language, String script, boolean cacheable,
+		boolean smallImage, String smallImageURL, File smallImageFile,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Template
@@ -162,8 +162,8 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public void addTemplateResources(
-			DDMTemplate template, boolean addGroupPermissions,
-			boolean addGuestPermissions)
+		DDMTemplate template, boolean addGroupPermissions,
+		boolean addGuestPermissions)
 		throws PortalException, SystemException {
 
 		resourceLocalService.addResources(
@@ -174,8 +174,8 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public void addTemplateResources(
-			DDMTemplate template, String[] groupPermissions,
-			String[] guestPermissions)
+		DDMTemplate template, String[] groupPermissions,
+		String[] guestPermissions)
 		throws PortalException, SystemException {
 
 		resourceLocalService.addModelResources(
@@ -185,26 +185,8 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public DDMTemplate copyTemplate(
-			long userId, long templateId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
-			templateId);
-
-		File smallImageFile = copySmallImage(template);
-
-		return addTemplate(
-			userId, template.getGroupId(), template.getClassNameId(),
-			template.getClassPK(), null, template.getNameMap(),
-			template.getDescriptionMap(), template.getType(),
-			template.getMode(), template.getLanguage(), template.getScript(),
-			template.isCacheable(), template.isSmallImage(),
-			template.getSmallImageURL(), smallImageFile, serviceContext);
-	}
-
-	public DDMTemplate copyTemplate(
-			long userId, long templateId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		long userId, long templateId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
@@ -221,9 +203,27 @@ public class DDMTemplateLocalServiceImpl
 			smallImageFile, serviceContext);
 	}
 
+	public DDMTemplate copyTemplate(
+		long userId, long templateId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
+			templateId);
+
+		File smallImageFile = copySmallImage(template);
+
+		return addTemplate(
+			userId, template.getGroupId(), template.getClassNameId(),
+			template.getClassPK(), null, template.getNameMap(),
+			template.getDescriptionMap(), template.getType(),
+			template.getMode(), template.getLanguage(), template.getScript(),
+			template.isCacheable(), template.isSmallImage(),
+			template.getSmallImageURL(), smallImageFile, serviceContext);
+	}
+
 	public List<DDMTemplate> copyTemplates(
-			long userId, long classNameId, long oldClassPK, long newClassPK,
-			String type, ServiceContext serviceContext)
+		long userId, long classNameId, long oldClassPK, long newClassPK,
+		String type, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		List<DDMTemplate> newTemplates = new ArrayList<DDMTemplate>();
@@ -284,7 +284,7 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public DDMTemplate fetchTemplate(
-			long groupId, String templateKey, boolean includeGlobalTemplates)
+		long groupId, String templateKey, boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
 
 		templateKey = templateKey.trim().toUpperCase();
@@ -326,7 +326,7 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public DDMTemplate getTemplate(
-			long groupId, String templateKey, boolean includeGlobalTemplates)
+		long groupId, String templateKey, boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
 
 		templateKey = templateKey.trim().toUpperCase();
@@ -363,7 +363,7 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public List<DDMTemplate> getTemplates(
-			long groupId, long classNameId, long classPK)
+		long groupId, long classNameId, long classPK)
 		throws SystemException {
 
 		return ddmTemplatePersistence.findByG_C_C(
@@ -371,14 +371,14 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public List<DDMTemplate> getTemplates(
-			long classNameId, long classPK, String type)
+		long classNameId, long classPK, String type)
 		throws SystemException {
 
 		return ddmTemplatePersistence.findByC_C_T(classNameId, classPK, type);
 	}
 
 	public List<DDMTemplate> getTemplates(
-			long classNameId, long classPK, String type, String mode)
+		long classNameId, long classPK, String type, String mode)
 		throws SystemException {
 
 		return ddmTemplatePersistence.findByC_C_T_M(
@@ -396,9 +396,9 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public List<DDMTemplate> search(
-			long companyId, long groupId, long classNameId, long classPK,
-			String keywords, String type, String mode, int start, int end,
-			OrderByComparator orderByComparator)
+		long companyId, long groupId, long classNameId, long classPK,
+		String keywords, String type, String mode, int start, int end,
+		OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmTemplateFinder.findByKeywords(
@@ -407,10 +407,10 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public List<DDMTemplate> search(
-			long companyId, long groupId, long classNameId, long classPK,
-			String name, String description, String type, String mode,
-			String language, boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
+		long companyId, long groupId, long classNameId, long classPK,
+		String name, String description, String type, String mode,
+		String language, boolean andOperator, int start, int end,
+		OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmTemplateFinder.findByC_G_C_C_N_D_T_M_L(
@@ -419,9 +419,9 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public List<DDMTemplate> search(
-			long companyId, long[] groupIds, long[] classNameIds, long classPK,
-			String keywords, String type, String mode, int start, int end,
-			OrderByComparator orderByComparator)
+		long companyId, long[] groupIds, long[] classNameIds, long classPK,
+		String keywords, String type, String mode, int start, int end,
+		OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmTemplateFinder.findByKeywords(
@@ -430,10 +430,10 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public List<DDMTemplate> search(
-			long companyId, long[] groupIds, long[] classNameIds, long classPK,
-			String name, String description, String type, String mode,
-			String language, boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
+		long companyId, long[] groupIds, long[] classNameIds, long classPK,
+		String name, String description, String type, String mode,
+		String language, boolean andOperator, int start, int end,
+		OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmTemplateFinder.findByC_G_C_C_N_D_T_M_L(
@@ -442,8 +442,8 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public int searchCount(
-			long companyId, long groupId, long classNameId, long classPK,
-			String keywords, String type, String mode)
+		long companyId, long groupId, long classNameId, long classPK,
+		String keywords, String type, String mode)
 		throws SystemException {
 
 		return ddmTemplateFinder.countByKeywords(
@@ -451,9 +451,9 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public int searchCount(
-			long companyId, long groupId, long classNameId, long classPK,
-			String name, String description, String type, String mode,
-			String language, boolean andOperator)
+		long companyId, long groupId, long classNameId, long classPK,
+		String name, String description, String type, String mode,
+		String language, boolean andOperator)
 		throws SystemException {
 
 		return ddmTemplateFinder.countByC_G_C_C_N_D_T_M_L(
@@ -462,8 +462,8 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public int searchCount(
-			long companyId, long[] groupIds, long[] classNameIds, long classPK,
-			String keywords, String type, String mode)
+		long companyId, long[] groupIds, long[] classNameIds, long classPK,
+		String keywords, String type, String mode)
 		throws SystemException {
 
 		return ddmTemplateFinder.countByKeywords(
@@ -471,9 +471,9 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public int searchCount(
-			long companyId, long[] groupIds, long[] classNameIds, long classPK,
-			String name, String description, String type, String mode,
-			String language, boolean andOperator)
+		long companyId, long[] groupIds, long[] classNameIds, long classPK,
+		String name, String description, String type, String mode,
+		String language, boolean andOperator)
 		throws SystemException {
 
 		return ddmTemplateFinder.countByC_G_C_C_N_D_T_M_L(
@@ -482,11 +482,11 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	public DDMTemplate updateTemplate(
-			long templateId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String type, String mode,
-			String language, String script, boolean cacheable,
-			boolean smallImage, String smallImageURL, File smallImageFile,
-			ServiceContext serviceContext)
+		long templateId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String type, String mode,
+		String language, String script, boolean cacheable,
+		boolean smallImage, String smallImageURL, File smallImageFile,
+		ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		byte[] smallImageBytes = null;
@@ -551,8 +551,8 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	protected void saveImages(
-			boolean smallImage, long smallImageId, File smallImageFile,
-			byte[] smallImageBytes)
+		boolean smallImage, long smallImageId, File smallImageFile,
+		byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
 		if (smallImage) {
@@ -566,9 +566,9 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	protected void validate(
-			long groupId, String templateKey, Map<Locale, String> nameMap,
-			String script, boolean smallImage, String smallImageURL,
-			File smallImageFile, byte[] smallImageBytes)
+		long groupId, String templateKey, Map<Locale, String> nameMap,
+		String script, boolean smallImage, String smallImageURL,
+		File smallImageFile, byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
 		templateKey = templateKey.trim().toUpperCase();
@@ -586,8 +586,8 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	protected void validate(
-			Map<Locale, String> nameMap, String script, boolean smallImage,
-			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
+		Map<Locale, String> nameMap, String script, boolean smallImage,
+		String smallImageURL, File smallImageFile, byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
 		validateName(nameMap);
@@ -628,7 +628,7 @@ public class DDMTemplateLocalServiceImpl
 
 			if ((smallImageMaxSize > 0) &&
 				((smallImageBytes == null) ||
-				 (smallImageBytes.length > smallImageMaxSize))) {
+					(smallImageBytes.length > smallImageMaxSize))) {
 
 				throw new TemplateSmallImageSizeException();
 			}

@@ -20,6 +20,7 @@ import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmess
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessageattachment.AddPMMessageAttachmentTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessagemultiple.AddPMMessageMultipleTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessagenonuser.AddPMMessageNonUserTests;
+import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessageportal.AddPMMessagePortalTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.backtomessagespmmessagedetails.BackToMessagesPMMessageDetailsTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.deletepmmessage.DeletePMMessageTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.deletepmmessageall.DeletePMMessageAllTests;
@@ -30,6 +31,7 @@ import com.liferay.portalweb.socialofficehome.privatemessaging.message.selectnon
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.sous2deletepmmessage.SOUs2_DeletePMMessageTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.sousaddpmmessagereply.SOUs_AddPMMessageReplyTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.sousaddpmmessagereplyattachment.SOUs_AddPMMessageReplyAttachmentTests;
+import com.liferay.portalweb.socialofficehome.privatemessaging.message.sousaddpmmessagereplyattachmentportal.SOUs_AddPMMessageReplyAttachmentPortalTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.sousdeletepmmessage.SOUs_DeletePMMessageTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.sousmarkasunreadpmmessage.SOUs_MarkAsUnreadPMMessageTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.sousmarkasunreadpmmessagedetails.SOUs_MarkAsUnreadPMMessageDetailsTests;
@@ -51,6 +53,7 @@ public class MessageTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddPMMessageAttachmentTests.suite());
 		testSuite.addTest(AddPMMessageMultipleTests.suite());
 		testSuite.addTest(AddPMMessageNonUserTests.suite());
+		testSuite.addTest(AddPMMessagePortalTests.suite());
 		testSuite.addTest(BackToMessagesPMMessageDetailsTests.suite());
 		testSuite.addTest(DeletePMMessageTests.suite());
 		testSuite.addTest(DeletePMMessageAllTests.suite());
@@ -62,6 +65,7 @@ public class MessageTestPlan extends BaseTestSuite {
 		testSuite.addTest(SOUs2_DeletePMMessageTests.suite());
 		testSuite.addTest(SOUs_AddPMMessageReplyTests.suite());
 		testSuite.addTest(SOUs_AddPMMessageReplyAttachmentTests.suite());
+		testSuite.addTest(SOUs_AddPMMessageReplyAttachmentPortalTests.suite());
 		testSuite.addTest(SOUs_DeletePMMessageTests.suite());
 		testSuite.addTest(SOUs_MarkAsUnreadPMMessageTests.suite());
 		testSuite.addTest(SOUs_MarkAsUnreadPMMessageDetailsTests.suite());

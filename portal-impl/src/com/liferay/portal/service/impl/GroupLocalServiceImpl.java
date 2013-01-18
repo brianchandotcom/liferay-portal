@@ -2972,14 +2972,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			try {
 				user = userPersistence.findByPrimaryKey(
 					group.getCreatorUserId());
-
 			}
-			catch (NoSuchUserException nsue1) {
+			catch (NoSuchUserException nsue) {
+			}
+
+			if (user == null) {
 				try {
 					user = userPersistence.findByPrimaryKey(
 						serviceContext.getUserId());
 				}
-				catch (NoSuchUserException nsue2) {
+				catch (NoSuchUserException nsue) {
 					user = userLocalService.getDefaultUser(
 						group.getCompanyId());
 				}

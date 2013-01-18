@@ -412,20 +412,25 @@ public class OpenIdAction extends PortletAction {
 		AuthRequest authRequest = manager.authenticate(
 			discovered, portletURL.toString(), themeDisplay.getPortalURL());
 
+		User user = null;
+
 		try {
-			UserLocalServiceUtil.getUserByOpenId(
+			user = UserLocalServiceUtil.getUserByOpenId(
 				themeDisplay.getCompanyId(), openId);
 		}
 		catch (NoSuchUserException nsue) {
+		}
+
+		if (user == null) {
 			String screenName = OpenIdUtil.getScreenName(openId);
 
 			try {
-				User user = UserLocalServiceUtil.getUserByScreenName(
+				user = UserLocalServiceUtil.getUserByScreenName(
 					themeDisplay.getCompanyId(), screenName);
 
 				UserLocalServiceUtil.updateOpenId(user.getUserId(), openId);
 			}
-			catch (NoSuchUserException nsue2) {
+			catch (NoSuchUserException nsue) {
 				FetchRequest fetchRequest = FetchRequest.createFetchRequest();
 
 				String openIdProvider = getOpenIdProvider(

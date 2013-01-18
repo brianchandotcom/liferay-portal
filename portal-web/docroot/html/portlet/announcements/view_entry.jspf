@@ -28,7 +28,7 @@ else {
 
 		readEntry = true;
 	}
-	catch (NoSuchFlagException nsfe1) {
+	catch (NoSuchFlagException nsfe) {
 		AnnouncementsFlagLocalServiceUtil.addFlag(user.getUserId(), entry.getEntryId(), AnnouncementsFlagConstants.READ);
 	}
 }

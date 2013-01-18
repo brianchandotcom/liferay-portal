@@ -28,7 +28,7 @@
 			headerContent: '<liferay-ui:message key="<%= label %>" />'
 
 			<c:if test="<%= toolTags != null %>">
-				,tools: [
+				,icons: [
 
 				<%
 				for (int i = 0; i < toolTags.size(); i++) {

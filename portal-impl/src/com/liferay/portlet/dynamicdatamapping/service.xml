@@ -213,6 +213,12 @@
 			<finder-column name="classPK" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="C_C_T_M" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="type" />
+			<finder-column name="mode" />
+		</finder>
 		<finder name="G_C_C_T_M" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />

@@ -218,6 +218,14 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			groupId, classNameId, classPK, type, mode);
 	}
 
+	public List<DDMTemplate> getTemplates(
+			long classNameId, long classPK, String type, String mode)
+		throws SystemException {
+
+		return ddmTemplatePersistence.findByC_C_T_M(
+			classNameId, classPK, type, mode);
+	}
+
 	public List<DDMTemplate> search(
 			long companyId, long groupId, long classNameId, long classPK,
 			String keywords, String type, String mode, int start, int end,

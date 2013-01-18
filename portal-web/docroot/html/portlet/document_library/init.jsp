@@ -166,7 +166,7 @@ boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enable
 
 String defaultEntryColumns = "name,size";
 
-if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED) {
+if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
 	defaultEntryColumns += ",downloads";
 }
 

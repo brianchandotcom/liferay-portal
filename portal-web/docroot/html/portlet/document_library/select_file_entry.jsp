@@ -127,7 +127,7 @@ if (folder != null) {
 	headerNames.add("document");
 	headerNames.add("size");
 
-	if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED) {
+	if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
 		headerNames.add("downloads");
 	}
 
@@ -182,7 +182,7 @@ if (folder != null) {
 
 		row.addText(TextFormatter.formatStorageSize(fileEntry.getSize(), locale), rowHREF);
 
-		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED) {
+		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
 			row.addText(String.valueOf(fileEntry.getReadCount()), rowHREF);
 		}
 

@@ -182,7 +182,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 	headerNames.add("document");
 	headerNames.add("size");
 
-	if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED) {
+	if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
 		headerNames.add("downloads");
 	}
 

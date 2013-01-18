@@ -1182,13 +1182,10 @@ public class DLFileEntryLocalServiceImpl
 		return hasLock;
 	}
 
-	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	@BufferedIncrement(
+		configuration = "dlfileentry", incrementClass = NumberIncrement.class)
 	public void incrementViewCounter(DLFileEntry dlFileEntry, int increment)
 		throws SystemException {
-
-		if (!PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED) {
-			return;
-		}
 
 		dlFileEntry.setReadCount(dlFileEntry.getReadCount() + increment);
 

@@ -37,9 +37,9 @@ import java.util.Map;
 public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 	public DDMStructure addStructure(
-			long userId, long groupId, long classNameId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String xsd, ServiceContext serviceContext)
+		long userId, long groupId, long classNameId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String xsd, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
@@ -54,10 +54,10 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public DDMStructure addStructure(
-			long groupId, long parentStructureId, long classNameId,
-			String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String xsd, String storageType,
-			int type, ServiceContext serviceContext)
+		long groupId, long parentStructureId, long classNameId,
+		String structureKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String xsd, String storageType,
+		int type, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
@@ -72,10 +72,10 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public DDMStructure addStructure(
-			long userId, long groupId, String parentStructureKey,
-			long classNameId, String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String xsd, String storageType,
-			int type, ServiceContext serviceContext)
+		long userId, long groupId, String parentStructureKey,
+		long classNameId, String structureKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String xsd, String storageType,
+		int type, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
@@ -90,22 +90,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public DDMStructure copyStructure(
-			long structureId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
-
-		DDMPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ActionKeys.ADD_STRUCTURE);
-
-		return ddmStructureLocalService.copyStructure(
-			getUserId(), structureId, serviceContext);
-	}
-
-	public DDMStructure copyStructure(
-			long structureId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		long structureId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
@@ -116,6 +102,20 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 		return ddmStructureLocalService.copyStructure(
 			getUserId(), structureId, nameMap, descriptionMap, serviceContext);
+	}
+
+	public DDMStructure copyStructure(
+		long structureId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
+
+		DDMPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ddmResource, ActionKeys.ADD_STRUCTURE);
+
+		return ddmStructureLocalService.copyStructure(
+			getUserId(), structureId, serviceContext);
 	}
 
 	public void deleteStructure(long structureId)
@@ -160,7 +160,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public DDMStructure getStructure(
-			long groupId, String structureKey, boolean includeGlobalStructures)
+		long groupId, String structureKey, boolean includeGlobalStructures)
 		throws PortalException, SystemException {
 
 		DDMStructurePermission.check(
@@ -183,9 +183,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public List<DDMStructure> search(
-			long companyId, long[] groupIds, long[] classNameIds,
-			String keywords, int start, int end,
-			OrderByComparator orderByComparator)
+		long companyId, long[] groupIds, long[] classNameIds,
+		String keywords, int start, int end,
+		OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmStructureFinder.filterFindByKeywords(
@@ -194,10 +194,10 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public List<DDMStructure> search(
-			long companyId, long[] groupIds, long[] classNameIds, String name,
-			String description, String storageType, int type,
-			boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
+		long companyId, long[] groupIds, long[] classNameIds, String name,
+		String description, String storageType, int type,
+		boolean andOperator, int start, int end,
+		OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmStructureFinder.filterFindByC_G_C_N_D_S_T(
@@ -206,8 +206,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public int searchCount(
-			long companyId, long[] groupIds, long[] classNameIds,
-			String keywords)
+		long companyId, long[] groupIds, long[] classNameIds,
+		String keywords)
 		throws SystemException {
 
 		return ddmStructureFinder.filterCountByKeywords(
@@ -215,9 +215,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public int searchCount(
-			long companyId, long[] groupIds, long[] classNameIds, String name,
-			String description, String storageType, int type,
-			boolean andOperator)
+		long companyId, long[] groupIds, long[] classNameIds, String name,
+		String description, String storageType, int type,
+		boolean andOperator)
 		throws SystemException {
 
 		return ddmStructureFinder.filterCountByC_G_C_N_D_S_T(
@@ -226,9 +226,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public DDMStructure updateStructure(
-			long structureId, long parentStructureId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String xsd, ServiceContext serviceContext)
+		long structureId, long parentStructureId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String xsd, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMStructurePermission.check(
@@ -240,9 +240,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public DDMStructure updateStructure(
-			long groupId, long parentStructureId, String structureKey,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String xsd, ServiceContext serviceContext)
+		long groupId, long parentStructureId, String structureKey,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		String xsd, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMStructurePermission.check(

@@ -361,17 +361,11 @@
 		_handleLink: function(element, listTagsIn, listTagsOut) {
 			var hrefAttribute = element.getAttribute('href');
 
-			if (CKEDITOR.env.ie && (CKEDITOR.env.version <= 8)) {
-				var location = window.location;
+			if (CKEDITOR.env.ie && (CKEDITOR.env.version < 8)) {
+				var ckeSavedHREF = element.getAttribute('data-cke-saved-href');
 
-				var protocolHostPathname = location.protocol + '//' + location.host + location.pathname;
-
-				protocolHostPathname = protocolHostPathname.substr(0, protocolHostPathname.lastIndexOf('/') + 1);
-
-				var hostPrefix = hrefAttribute.indexOf(protocolHostPathname);
-
-				if (hostPrefix == 0) {
-					hrefAttribute = hrefAttribute.substr(protocolHostPathname.length);
+				if (ckeSavedHREF) {
+					hrefAttribute = ckeSavedHREF;
 				}
 			}
 

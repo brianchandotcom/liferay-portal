@@ -115,7 +115,7 @@ int fileEntriesPerPage = PrefsParamUtil.getInteger(preferences, request, "fileEn
 
 String defaultFileEntryColumns = "name,size";
 
-if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED) {
+if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
 	defaultFileEntryColumns += ",downloads";
 }
 

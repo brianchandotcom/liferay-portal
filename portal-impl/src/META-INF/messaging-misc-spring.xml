@@ -14,24 +14,6 @@
 	<bean id="destination.async_service" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="name" value="liferay/async_service" />
 	</bean>
-	<bean id="destination.buffered_increment_parallel" class="com.liferay.portal.kernel.messaging.ParallelDestination">
-		<property name="maximumQueueSize">
-			<util:constant static-field="com.liferay.portal.util.PropsValues.BUFFERED_INCREMENT_PARALLEL_QUEUE_SIZE" />
-		</property>
-		<property name="name" value="liferay/buffered_increment_parallel" />
-		<property name="rejectedExecutionHandler">
-			<bean class="com.liferay.portal.increment.BufferedIncrementDiscardPolicy" />
-		</property>
-	</bean>
-	<bean id="destination.buffered_increment_serial" class="com.liferay.portal.kernel.messaging.SerialDestination">
-		<property name="maximumQueueSize">
-			<util:constant static-field="com.liferay.portal.util.PropsValues.BUFFERED_INCREMENT_SERIAL_QUEUE_SIZE" />
-		</property>
-		<property name="name" value="liferay/buffered_increment_serial" />
-		<property name="rejectedExecutionHandler">
-			<bean class="com.liferay.portal.increment.BufferedIncrementDiscardPolicy" />
-		</property>
-	</bean>
 	<bean id="destination.convert_process" class="com.liferay.portal.kernel.messaging.SerialDestination">
 		<property name="name" value="liferay/convert_process" />
 	</bean>
@@ -78,7 +60,6 @@
 	<!-- Listeners -->
 
 	<bean id="messageListener.async_service" class="com.liferay.portal.messaging.async.AsyncMessageListener" />
-	<bean id="messageListener.buffered_increment" class="com.liferay.portal.increment.BufferedIncrementMessageListener" />
 	<bean id="messageListener.convert_process" class="com.liferay.portal.convert.messaging.ConvertProcessMessageListener" />
 	<bean id="messageListener.document_library_audio_processor" class="com.liferay.portlet.documentlibrary.messaging.AudioProcessorMessageListener" />
 	<bean id="messageListener.document_library_image_processor" class="com.liferay.portlet.documentlibrary.messaging.ImageProcessorMessageListener" />
@@ -128,8 +109,6 @@
 		<property name="destinations">
 			<list>
 				<ref bean="destination.async_service" />
-				<ref bean="destination.buffered_increment_parallel" />
-				<ref bean="destination.buffered_increment_serial" />
 				<ref bean="destination.convert_process" />
 				<ref bean="destination.document_library_audio_processor" />
 				<ref bean="destination.document_library_image_processor" />
@@ -154,16 +133,6 @@
 				<entry key="liferay/async_service">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.async_service" />
-					</list>
-				</entry>
-				<entry key="liferay/buffered_increment_parallel">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.buffered_increment" />
-					</list>
-				</entry>
-				<entry key="liferay/buffered_increment_serial">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.buffered_increment" />
 					</list>
 				</entry>
 				<entry key="liferay/convert_process">

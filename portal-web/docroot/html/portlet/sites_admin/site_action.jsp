@@ -35,10 +35,8 @@ else {
 
 	GroupSearchTerms searchTerms = (GroupSearchTerms)request.getAttribute("view_tree.jspf-searchTerms");
 
-	if (!group.isOrganization()) {
-		organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), group, user, searchTerms, new ArrayList<String>());
-		userGroupUser = SitesUtil.isUserGroupUser(company.getCompanyId(), group, user, new ArrayList<String>());
-	}
+	organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), group, user, new ArrayList<String>());
+	userGroupUser = SitesUtil.isUserGroupUser(company.getCompanyId(), group, user, new ArrayList<String>());
 }
 
 boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.UPDATE);

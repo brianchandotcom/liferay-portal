@@ -642,8 +642,9 @@ public class EditArticleAction extends PortletAction {
 
 		if (targetLayout == null) {
 			targetLayout =
-					LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-						layoutUuid, groupId, true);
+				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+					layoutUuid, groupId, true);
+
 			if (targetLayout == null) {
 				layoutUuid = null;
 			}

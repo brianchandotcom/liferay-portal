@@ -35,11 +35,16 @@ if (Validator.isNotNull(layoutUuid)) {
 		layoutBreadcrumb = _getLayoutBreadcrumb(selLayout, locale);
 	}
 	catch (NoSuchLayoutException nsle) {
+	}
+
+	if (selLayout == null) {
 		try {
 			selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getParentGroupId(), true);
 
 			layoutBreadcrumb = _getLayoutBreadcrumb(selLayout, locale);
-		} catch (NoSuchLayoutException nslee) {}
+		}
+		catch (NoSuchLayoutException nsle) {
+		}
 	}
 }
 
@@ -549,10 +554,12 @@ Group parentGroup = themeDisplay.getParentGroup();
 <c:if test="<%= (article != null) && Validator.isNotNull(layoutUuid) %>">
 
 	<%
-	Layout defaultDisplayLayout;
+	Layout defaultDisplayLayout = null;
+
 	try {
 		defaultDisplayLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, scopeGroupId, false);
-	} catch (NoSuchLayoutException nsle) {
+	}
+	catch (NoSuchLayoutException nsle) {
 		defaultDisplayLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, scopeGroupId, true);
 	}
 

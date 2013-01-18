@@ -6976,39 +6976,42 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	private static final String _FINDER_COLUMN_C_C_T_TYPE_1 = "ddmTemplate.type IS NULL";
 	private static final String _FINDER_COLUMN_C_C_T_TYPE_2 = "ddmTemplate.type = ?";
 	private static final String _FINDER_COLUMN_C_C_T_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_T_M = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_T_M =
+		new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T_M",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_T_M",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_T_M =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_T_M =
 		new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_T_M",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_T_M",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			},
+			DDMTemplateModelImpl.GROUPID_COLUMN_BITMASK |
 			DDMTemplateModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			DDMTemplateModelImpl.CLASSPK_COLUMN_BITMASK |
 			DDMTemplateModelImpl.TYPE_COLUMN_BITMASK |
 			DDMTemplateModelImpl.MODE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_C_T_M = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_T_M = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_T_M",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_T_M",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			});
 
 	/**
-	 * Returns all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 * Returns all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
@@ -7016,19 +7019,20 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @return the matching d d m templates
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<DDMTemplate> findByC_C_T_M(long classNameId, long classPK,
-		String type, String mode) throws SystemException {
-		return findByC_C_T_M(classNameId, classPK, type, mode,
+	public List<DDMTemplate> findByG_C_C_T_M(long groupId, long classNameId,
+		long classPK, String type, String mode) throws SystemException {
+		return findByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 * Returns a range of all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
@@ -7038,18 +7042,21 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @return the range of matching d d m templates
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<DDMTemplate> findByC_C_T_M(long classNameId, long classPK,
-		String type, String mode, int start, int end) throws SystemException {
-		return findByC_C_T_M(classNameId, classPK, type, mode, start, end, null);
+	public List<DDMTemplate> findByG_C_C_T_M(long groupId, long classNameId,
+		long classPK, String type, String mode, int start, int end)
+		throws SystemException {
+		return findByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
+			start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 * Returns an ordered range of all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
@@ -7060,8 +7067,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @return the ordered range of matching d d m templates
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<DDMTemplate> findByC_C_T_M(long classNameId, long classPK,
-		String type, String mode, int start, int end,
+	public List<DDMTemplate> findByG_C_C_T_M(long groupId, long classNameId,
+		long classPK, String type, String mode, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7070,13 +7077,13 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_T_M;
-			finderArgs = new Object[] { classNameId, classPK, type, mode };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_T_M;
+			finderArgs = new Object[] { groupId, classNameId, classPK, type, mode };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_T_M;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_T_M;
 			finderArgs = new Object[] {
-					classNameId, classPK, type, mode,
+					groupId, classNameId, classPK, type, mode,
 					
 					start, end, orderByComparator
 				};
@@ -7087,7 +7094,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (DDMTemplate ddmTemplate : list) {
-				if ((classNameId != ddmTemplate.getClassNameId()) ||
+				if ((groupId != ddmTemplate.getGroupId()) ||
+						(classNameId != ddmTemplate.getClassNameId()) ||
 						(classPK != ddmTemplate.getClassPK()) ||
 						!Validator.equals(type, ddmTemplate.getType()) ||
 						!Validator.equals(mode, ddmTemplate.getMode())) {
@@ -7102,45 +7110,47 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(6 +
+				query = new StringBundler(7 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(6);
+				query = new StringBundler(7);
 			}
 
 			query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
 
-			query.append(_FINDER_COLUMN_C_C_T_M_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_G_C_C_T_M_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_C_C_T_M_CLASSPK_2);
+			query.append(_FINDER_COLUMN_G_C_C_T_M_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_T_M_CLASSPK_2);
 
 			boolean bindType = false;
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_C_C_T_M_TYPE_1);
+				query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_1);
 			}
 			else if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_T_M_TYPE_3);
+				query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_3);
 			}
 			else {
 				bindType = true;
 
-				query.append(_FINDER_COLUMN_C_C_T_M_TYPE_2);
+				query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_2);
 			}
 
 			boolean bindMode = false;
 
 			if (mode == null) {
-				query.append(_FINDER_COLUMN_C_C_T_M_MODE_1);
+				query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_1);
 			}
 			else if (mode.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_T_M_MODE_3);
+				query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_3);
 			}
 			else {
 				bindMode = true;
 
-				query.append(_FINDER_COLUMN_C_C_T_M_MODE_2);
+				query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_2);
 			}
 
 			if (orderByComparator != null) {
@@ -7162,6 +7172,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
 
 				qPos.add(classNameId);
 
@@ -7206,8 +7218,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	/**
-	 * Returns the first d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 * Returns the first d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
@@ -7217,21 +7230,25 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDMTemplate findByC_C_T_M_First(long classNameId, long classPK,
-		String type, String mode, OrderByComparator orderByComparator)
+	public DDMTemplate findByG_C_C_T_M_First(long groupId, long classNameId,
+		long classPK, String type, String mode,
+		OrderByComparator orderByComparator)
 		throws NoSuchTemplateException, SystemException {
-		DDMTemplate ddmTemplate = fetchByC_C_T_M_First(classNameId, classPK,
-				type, mode, orderByComparator);
+		DDMTemplate ddmTemplate = fetchByG_C_C_T_M_First(groupId, classNameId,
+				classPK, type, mode, orderByComparator);
 
 		if (ddmTemplate != null) {
 			return ddmTemplate;
 		}
 
-		StringBundler msg = new StringBundler(10);
+		StringBundler msg = new StringBundler(12);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("classNameId=");
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
 		msg.append(classNameId);
 
 		msg.append(", classPK=");
@@ -7249,8 +7266,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	/**
-	 * Returns the first d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 * Returns the first d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
@@ -7259,11 +7277,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDMTemplate fetchByC_C_T_M_First(long classNameId, long classPK,
-		String type, String mode, OrderByComparator orderByComparator)
-		throws SystemException {
-		List<DDMTemplate> list = findByC_C_T_M(classNameId, classPK, type,
-				mode, 0, 1, orderByComparator);
+	public DDMTemplate fetchByG_C_C_T_M_First(long groupId, long classNameId,
+		long classPK, String type, String mode,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<DDMTemplate> list = findByG_C_C_T_M(groupId, classNameId, classPK,
+				type, mode, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7273,8 +7291,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	/**
-	 * Returns the last d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 * Returns the last d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
@@ -7284,21 +7303,25 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDMTemplate findByC_C_T_M_Last(long classNameId, long classPK,
-		String type, String mode, OrderByComparator orderByComparator)
+	public DDMTemplate findByG_C_C_T_M_Last(long groupId, long classNameId,
+		long classPK, String type, String mode,
+		OrderByComparator orderByComparator)
 		throws NoSuchTemplateException, SystemException {
-		DDMTemplate ddmTemplate = fetchByC_C_T_M_Last(classNameId, classPK,
-				type, mode, orderByComparator);
+		DDMTemplate ddmTemplate = fetchByG_C_C_T_M_Last(groupId, classNameId,
+				classPK, type, mode, orderByComparator);
 
 		if (ddmTemplate != null) {
 			return ddmTemplate;
 		}
 
-		StringBundler msg = new StringBundler(10);
+		StringBundler msg = new StringBundler(12);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("classNameId=");
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
 		msg.append(classNameId);
 
 		msg.append(", classPK=");
@@ -7316,8 +7339,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	/**
-	 * Returns the last d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 * Returns the last d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
@@ -7326,13 +7350,13 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDMTemplate fetchByC_C_T_M_Last(long classNameId, long classPK,
-		String type, String mode, OrderByComparator orderByComparator)
-		throws SystemException {
-		int count = countByC_C_T_M(classNameId, classPK, type, mode);
+	public DDMTemplate fetchByG_C_C_T_M_Last(long groupId, long classNameId,
+		long classPK, String type, String mode,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
 
-		List<DDMTemplate> list = findByC_C_T_M(classNameId, classPK, type,
-				mode, count - 1, count, orderByComparator);
+		List<DDMTemplate> list = findByG_C_C_T_M(groupId, classNameId, classPK,
+				type, mode, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7342,9 +7366,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	/**
-	 * Returns the d d m templates before and after the current d d m template in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 * Returns the d d m templates before and after the current d d m template in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
 	 *
 	 * @param templateId the primary key of the current d d m template
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
@@ -7354,8 +7379,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDMTemplate[] findByC_C_T_M_PrevAndNext(long templateId,
-		long classNameId, long classPK, String type, String mode,
+	public DDMTemplate[] findByG_C_C_T_M_PrevAndNext(long templateId,
+		long groupId, long classNameId, long classPK, String type, String mode,
 		OrderByComparator orderByComparator)
 		throws NoSuchTemplateException, SystemException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
@@ -7367,13 +7392,15 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			DDMTemplate[] array = new DDMTemplateImpl[3];
 
-			array[0] = getByC_C_T_M_PrevAndNext(session, ddmTemplate,
-					classNameId, classPK, type, mode, orderByComparator, true);
+			array[0] = getByG_C_C_T_M_PrevAndNext(session, ddmTemplate,
+					groupId, classNameId, classPK, type, mode,
+					orderByComparator, true);
 
 			array[1] = ddmTemplate;
 
-			array[2] = getByC_C_T_M_PrevAndNext(session, ddmTemplate,
-					classNameId, classPK, type, mode, orderByComparator, false);
+			array[2] = getByG_C_C_T_M_PrevAndNext(session, ddmTemplate,
+					groupId, classNameId, classPK, type, mode,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -7385,9 +7412,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		}
 	}
 
-	protected DDMTemplate getByC_C_T_M_PrevAndNext(Session session,
-		DDMTemplate ddmTemplate, long classNameId, long classPK, String type,
-		String mode, OrderByComparator orderByComparator, boolean previous) {
+	protected DDMTemplate getByG_C_C_T_M_PrevAndNext(Session session,
+		DDMTemplate ddmTemplate, long groupId, long classNameId, long classPK,
+		String type, String mode, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7400,36 +7428,38 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 		query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
 
-		query.append(_FINDER_COLUMN_C_C_T_M_CLASSNAMEID_2);
+		query.append(_FINDER_COLUMN_G_C_C_T_M_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_C_C_T_M_CLASSPK_2);
+		query.append(_FINDER_COLUMN_G_C_C_T_M_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_M_CLASSPK_2);
 
 		boolean bindType = false;
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_C_C_T_M_TYPE_1);
+			query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_1);
 		}
 		else if (type.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_C_C_T_M_TYPE_3);
+			query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_3);
 		}
 		else {
 			bindType = true;
 
-			query.append(_FINDER_COLUMN_C_C_T_M_TYPE_2);
+			query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_2);
 		}
 
 		boolean bindMode = false;
 
 		if (mode == null) {
-			query.append(_FINDER_COLUMN_C_C_T_M_MODE_1);
+			query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_1);
 		}
 		else if (mode.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_C_C_T_M_MODE_3);
+			query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_3);
 		}
 		else {
 			bindMode = true;
 
-			query.append(_FINDER_COLUMN_C_C_T_M_MODE_2);
+			query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_2);
 		}
 
 		if (orderByComparator != null) {
@@ -7500,6 +7530,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
+		qPos.add(groupId);
+
 		qPos.add(classNameId);
 
 		qPos.add(classPK);
@@ -7531,25 +7563,450 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	/**
-	 * Removes all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63; from the database.
+	 * Returns all the d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
 	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param type the type
+	 * @param mode the mode
+	 * @return the matching d d m templates that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DDMTemplate> filterFindByG_C_C_T_M(long groupId,
+		long classNameId, long classPK, String type, String mode)
+		throws SystemException {
+		return filterFindByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param type the type
+	 * @param mode the mode
+	 * @param start the lower bound of the range of d d m templates
+	 * @param end the upper bound of the range of d d m templates (not inclusive)
+	 * @return the range of matching d d m templates that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DDMTemplate> filterFindByG_C_C_T_M(long groupId,
+		long classNameId, long classPK, String type, String mode, int start,
+		int end) throws SystemException {
+		return filterFindByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d m templates that the user has permissions to view where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param type the type
+	 * @param mode the mode
+	 * @param start the lower bound of the range of d d m templates
+	 * @param end the upper bound of the range of d d m templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching d d m templates that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DDMTemplate> filterFindByG_C_C_T_M(long groupId,
+		long classNameId, long classPK, String type, String mode, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
+				start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_T_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_M_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_M_CLASSPK_2);
+
+		boolean bindType = false;
+
+		if (type == null) {
+			query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_1);
+		}
+		else if (type.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_3);
+		}
+		else {
+			bindType = true;
+
+			query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_2);
+		}
+
+		boolean bindMode = false;
+
+		if (mode == null) {
+			query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_1);
+		}
+		else if (mode.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_3);
+		}
+		else {
+			bindMode = true;
+
+			query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(DDMTemplateModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DDMTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, DDMTemplateImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, DDMTemplateImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classPK);
+
+			if (bindType) {
+				qPos.add(type);
+			}
+
+			if (bindMode) {
+				qPos.add(mode);
+			}
+
+			return (List<DDMTemplate>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the d d m templates before and after the current d d m template in the ordered set of d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 *
+	 * @param templateId the primary key of the current d d m template
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param type the type
+	 * @param mode the mode
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next d d m template
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMTemplate[] filterFindByG_C_C_T_M_PrevAndNext(long templateId,
+		long groupId, long classNameId, long classPK, String type, String mode,
+		OrderByComparator orderByComparator)
+		throws NoSuchTemplateException, SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_C_C_T_M_PrevAndNext(templateId, groupId,
+				classNameId, classPK, type, mode, orderByComparator);
+		}
+
+		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DDMTemplate[] array = new DDMTemplateImpl[3];
+
+			array[0] = filterGetByG_C_C_T_M_PrevAndNext(session, ddmTemplate,
+					groupId, classNameId, classPK, type, mode,
+					orderByComparator, true);
+
+			array[1] = ddmTemplate;
+
+			array[2] = filterGetByG_C_C_T_M_PrevAndNext(session, ddmTemplate,
+					groupId, classNameId, classPK, type, mode,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DDMTemplate filterGetByG_C_C_T_M_PrevAndNext(Session session,
+		DDMTemplate ddmTemplate, long groupId, long classNameId, long classPK,
+		String type, String mode, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_T_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_M_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_M_CLASSPK_2);
+
+		boolean bindType = false;
+
+		if (type == null) {
+			query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_1);
+		}
+		else if (type.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_3);
+		}
+		else {
+			bindType = true;
+
+			query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_2);
+		}
+
+		boolean bindMode = false;
+
+		if (mode == null) {
+			query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_1);
+		}
+		else if (mode.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_3);
+		}
+		else {
+			bindMode = true;
+
+			query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(DDMTemplateModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DDMTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, DDMTemplateImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, DDMTemplateImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classPK);
+
+		if (bindType) {
+			qPos.add(type);
+		}
+
+		if (bindMode) {
+			qPos.add(mode);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(ddmTemplate);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DDMTemplate> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
 	 * @param mode the mode
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_C_T_M(long classNameId, long classPK, String type,
-		String mode) throws SystemException {
-		for (DDMTemplate ddmTemplate : findByC_C_T_M(classNameId, classPK,
-				type, mode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+	public void removeByG_C_C_T_M(long groupId, long classNameId, long classPK,
+		String type, String mode) throws SystemException {
+		for (DDMTemplate ddmTemplate : findByG_C_C_T_M(groupId, classNameId,
+				classPK, type, mode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
 		}
 	}
 
 	/**
-	 * Returns the number of d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 * Returns the number of d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
@@ -7557,50 +8014,54 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @return the number of matching d d m templates
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByC_C_T_M(long classNameId, long classPK, String type,
-		String mode) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C_T_M;
+	public int countByG_C_C_T_M(long groupId, long classNameId, long classPK,
+		String type, String mode) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_T_M;
 
-		Object[] finderArgs = new Object[] { classNameId, classPK, type, mode };
+		Object[] finderArgs = new Object[] {
+				groupId, classNameId, classPK, type, mode
+			};
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(5);
+			StringBundler query = new StringBundler(6);
 
 			query.append(_SQL_COUNT_DDMTEMPLATE_WHERE);
 
-			query.append(_FINDER_COLUMN_C_C_T_M_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_G_C_C_T_M_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_C_C_T_M_CLASSPK_2);
+			query.append(_FINDER_COLUMN_G_C_C_T_M_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_T_M_CLASSPK_2);
 
 			boolean bindType = false;
 
 			if (type == null) {
-				query.append(_FINDER_COLUMN_C_C_T_M_TYPE_1);
+				query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_1);
 			}
 			else if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_T_M_TYPE_3);
+				query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_3);
 			}
 			else {
 				bindType = true;
 
-				query.append(_FINDER_COLUMN_C_C_T_M_TYPE_2);
+				query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_2);
 			}
 
 			boolean bindMode = false;
 
 			if (mode == null) {
-				query.append(_FINDER_COLUMN_C_C_T_M_MODE_1);
+				query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_1);
 			}
 			else if (mode.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_T_M_MODE_3);
+				query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_3);
 			}
 			else {
 				bindMode = true;
 
-				query.append(_FINDER_COLUMN_C_C_T_M_MODE_2);
+				query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_2);
 			}
 
 			String sql = query.toString();
@@ -7613,6 +8074,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
 
 				qPos.add(classNameId);
 
@@ -7643,14 +8106,112 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_T_M_CLASSNAMEID_2 = "ddmTemplate.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_T_M_CLASSPK_2 = "ddmTemplate.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_T_M_TYPE_1 = "ddmTemplate.type IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_C_T_M_TYPE_2 = "ddmTemplate.type = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_T_M_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = '') AND ";
-	private static final String _FINDER_COLUMN_C_C_T_M_MODE_1 = "ddmTemplate.mode IS NULL";
-	private static final String _FINDER_COLUMN_C_C_T_M_MODE_2 = "ddmTemplate.mode = ?";
-	private static final String _FINDER_COLUMN_C_C_T_M_MODE_3 = "(ddmTemplate.mode IS NULL OR ddmTemplate.mode = '')";
+	/**
+	 * Returns the number of d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param type the type
+	 * @param mode the mode
+	 * @return the number of matching d d m templates that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int filterCountByG_C_C_T_M(long groupId, long classNameId,
+		long classPK, String type, String mode) throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
+		}
+
+		StringBundler query = new StringBundler(6);
+
+		query.append(_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_M_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_M_CLASSPK_2);
+
+		boolean bindType = false;
+
+		if (type == null) {
+			query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_1);
+		}
+		else if (type.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_3);
+		}
+		else {
+			bindType = true;
+
+			query.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_2);
+		}
+
+		boolean bindMode = false;
+
+		if (mode == null) {
+			query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_1);
+		}
+		else if (mode.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_3);
+		}
+		else {
+			bindMode = true;
+
+			query.append(_FINDER_COLUMN_G_C_C_T_M_MODE_2);
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DDMTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classPK);
+
+			if (bindType) {
+				qPos.add(type);
+			}
+
+			if (bindMode) {
+				qPos.add(mode);
+			}
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_C_C_T_M_GROUPID_2 = "ddmTemplate.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_T_M_CLASSNAMEID_2 = "ddmTemplate.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_T_M_CLASSPK_2 = "ddmTemplate.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_T_M_TYPE_1 = "ddmTemplate.type IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_C_C_T_M_TYPE_2 = "ddmTemplate.type = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_T_M_TYPE_3 = "(ddmTemplate.type IS NULL OR ddmTemplate.type = '') AND ";
+	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_1 = "ddmTemplate.mode IS NULL";
+	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_2 = "ddmTemplate.mode = ?";
+	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_3 = "(ddmTemplate.mode IS NULL OR ddmTemplate.mode = '')";
 
 	/**
 	 * Caches the d d m template in the entity cache if it is enabled.
@@ -8173,27 +8734,31 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			}
 
 			if ((ddmTemplateModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_T_M.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_T_M.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
+						ddmTemplateModelImpl.getOriginalGroupId(),
 						ddmTemplateModelImpl.getOriginalClassNameId(),
 						ddmTemplateModelImpl.getOriginalClassPK(),
 						ddmTemplateModelImpl.getOriginalType(),
 						ddmTemplateModelImpl.getOriginalMode()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_T_M, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_T_M,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C_T_M,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_T_M,
 					args);
 
 				args = new Object[] {
+						ddmTemplateModelImpl.getGroupId(),
 						ddmTemplateModelImpl.getClassNameId(),
 						ddmTemplateModelImpl.getClassPK(),
 						ddmTemplateModelImpl.getType(),
 						ddmTemplateModelImpl.getMode()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_T_M, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_T_M,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_C_T_M,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_T_M,
 					args);
 			}
 		}

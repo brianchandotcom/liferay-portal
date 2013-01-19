@@ -23,7 +23,7 @@ import javax.servlet.jsp.JspException;
  * @author Julio Camarero
  * @generated
  */
-public class BaseToolTag extends javax.servlet.jsp.tagext.TagSupport {
+public class BaseToolTagImpl extends javax.servlet.jsp.tagext.TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {

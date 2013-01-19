@@ -1787,7 +1787,7 @@
 	</tag>
 	<tag>
 		<name>tool</name>
-		<tag-class>com.liferay.taglib.aui.ToolTag</tag-class>
+		<tag-class>com.liferay.taglib.aui.ToolTagImpl</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>handler</name>

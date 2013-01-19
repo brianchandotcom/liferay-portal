@@ -2038,6 +2038,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="social-office-home-my-documents" />
+			<param name="test.ant.script.social.office" value="true" />
+			<param name="test.ant.script.suite" value="SocialOfficeHomeMyDocumentsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="social-office-home-navigation" />
 			<param name="test.ant.script.social.office" value="true" />
 			<param name="test.ant.script.suite" value="SocialOfficeHomeNavigationTestSuite" />

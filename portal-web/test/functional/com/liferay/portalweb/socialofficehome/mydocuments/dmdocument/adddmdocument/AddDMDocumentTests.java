@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficesite.documents;
+package com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.adddmdocument;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficesite.documents.dmdocument.DMDocumentTestPlan;
-import com.liferay.portalweb.socialofficesite.documents.dmlar.DMLARTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,15 +22,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DocumentsTestPlan extends BaseTestSuite {
-
+public class AddDMDocumentTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(DMDocumentTestPlan.suite());
-		testSuite.addTest(DMLARTestPlan.suite());
+		testSuite.addTestSuite(AddDMDocumentTest.class);
+		testSuite.addTestSuite(ViewDMDocumentTest.class);
+		testSuite.addTestSuite(TearDownDMDocumentTest.class);
 
 		return testSuite;
 	}
-
 }

@@ -140,7 +140,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 
 			return folder.isDefaultRepository();
 		}
-		catch (NoSuchModelException nsfe) {
+		catch (NoSuchModelException nsme) {
 		}
 
 		try {
@@ -148,7 +148,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 
 			return folder.isDefaultRepository();
 		}
-		catch (NoSuchModelException nsfe) {
+		catch (NoSuchModelException nsme) {
 		}
 
 		FileEntry fileEntry = dlAppLocalService.getFileEntry(fileId);

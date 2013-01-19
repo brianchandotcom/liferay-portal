@@ -141,18 +141,20 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 			return folder.isDefaultRepository();
 		}
 		catch (NoSuchModelException nsfe) {
-			try {
-				Folder folder = dlAppLocalService.getFolder(fileId);
+		}
 
-				return folder.isDefaultRepository();
-			}
-			catch (NoSuchModelException nsfe2) {
-				FileEntry fileEntry = dlAppLocalService.getFileEntry(fileId);
+		try {
+			Folder folder = dlAppLocalService.getFolder(fileId);
 
-				if (fileEntry instanceof LiferayFileEntry) {
-					return true;
-				}
-			}
+			return folder.isDefaultRepository();
+		}
+		catch (NoSuchModelException nsfe) {
+		}
+
+		FileEntry fileEntry = dlAppLocalService.getFileEntry(fileId);
+
+		if (fileEntry instanceof LiferayFileEntry) {
+			return true;
 		}
 
 		return false;

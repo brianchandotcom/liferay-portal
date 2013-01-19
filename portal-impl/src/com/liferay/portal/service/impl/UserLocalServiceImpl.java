@@ -1207,16 +1207,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user = getUserByEmailAddress(companyId, username);
 		}
 		catch (NoSuchUserException nsue) {
+		}
+
+		if (user == null) {
 			try {
 				user = getUserByScreenName(companyId, username);
 			}
-			catch (NoSuchUserException nsue2) {
-				try {
-					user = getUserById(GetterUtil.getLong(username));
-				}
-				catch (NoSuchUserException nsue3) {
-					return 0;
-				}
+			catch (NoSuchUserException nsue) {
+			}
+		}
+
+		if (user == null) {
+			try {
+				user = getUserById(GetterUtil.getLong(username));
+			}
+			catch (NoSuchUserException nsue) {
+				return 0;
 			}
 		}
 

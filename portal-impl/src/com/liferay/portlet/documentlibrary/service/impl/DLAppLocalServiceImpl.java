@@ -506,18 +506,19 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			return localRepository.getFileEntryByUuid(uuid);
 		}
 		catch (NoSuchFileEntryException nsfee) {
-			List<com.liferay.portal.model.Repository> repositories =
-				repositoryPersistence.findByGroupId(groupId);
+		}
 
-			for (Repository repository : repositories) {
-				try {
-					LocalRepository localRepository = getLocalRepository(
-						repository.getRepositoryId());
+		List<com.liferay.portal.model.Repository> repositories =
+			repositoryPersistence.findByGroupId(groupId);
 
-					return localRepository.getFileEntryByUuid(uuid);
-				}
-				catch (NoSuchFileEntryException nsfee2) {
-				}
+		for (Repository repository : repositories) {
+			try {
+				LocalRepository localRepository = getLocalRepository(
+					repository.getRepositoryId());
+
+				return localRepository.getFileEntryByUuid(uuid);
+			}
+			catch (NoSuchFileEntryException nsfee) {
 			}
 		}
 

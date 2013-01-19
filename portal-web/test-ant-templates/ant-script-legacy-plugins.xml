@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-${test.ant.script.command}" basedir="../../." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="../../build-test.xml" />
+
+	<target name="test-${test.ant.script.command}-tomcat-mysql-firefox">
+		<antcall target="print-scm-revision" />
+
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
+			${test.ant.script.file.evaluate.logs}
+			${test.ant.script.file.legacy.plugins}
+			${test.ant.script.file.legacy.version}
+			${test.ant.script.file.selenium.implementation}
+			<property name="test.name" value="${test.ant.script.suite}" />
+		</ant>
+	</target>
+</project>

@@ -118,6 +118,44 @@
 		</if>
 
 		<if>
+			<isset property="test.ant.script.legacy.plugins" />
+			<then>
+				<var name="first" value="true" />
+
+				<for list="${test.ant.script.legacy.plugins}" param="test.ant.script.legacy.plugin">
+					<sequential>
+						<if>
+							<equals arg1="${first}" arg2="true" />
+							<then>
+								<var name="first" value="false" />
+
+								<var name="legacy.plugin.list" value="@{test.ant.script.legacy.plugin}**.war" />
+							</then>
+							<else>
+								<var name="legacy.plugin.list" value="${legacy.plugin.list},@{test.ant.script.legacy.plugin}**.war" />
+							</else>
+						</if>
+					</sequential>
+				</for>
+
+				<property name="test.ant.script.file.legacy.plugins" value="&lt;property name=&quot;plugins.version.includes&quot; value=&quot;${legacy.plugin.list}&quot; /&gt;" />
+			</then>
+			<else>
+				<property name="test.ant.script.file.legacy.plugins" value=" " />
+			</else>
+		</if>
+
+		<if>
+			<isset property="test.ant.script.legacy.version" />
+			<then>
+				<property name="test.ant.script.file.legacy.version" value= "&lt;property name=&quot;lp.version&quot; value=&quot;${test.ant.script.legacy.version}&quot; /&gt;" />
+			</then>
+			<else>
+				<property name="test.ant.script.file.legacy.version" value= " " />
+			</else>
+		</if>
+
+		<if>
 			<isset property="test.ant.script.plugin.hooks" />
 			<then>
 				<property name="test.ant.script.file.plugin.hooks" value="&lt;property name=&quot;hook.plugins.includes&quot; value=&quot;${test.ant.script.plugin.hooks}&quot; /&gt;" />
@@ -288,7 +326,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="9" />
+		<property name="build-test-ant-scripts.version" value="0" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -960,6 +998,38 @@
 			<param name="test.ant.script.command" value="ldap-smoke" />
 			<param name="test.ant.script.suite" value="LDAPSmokeTestSuite" />
 			<param name="test.ant.script.template" value="ant-script-ldap.xml" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="legacy-plugins-chat" />
+			<param name="test.ant.script.legacy.plugins" value="chat-portlet" />
+			<param name="test.ant.script.legacy.version" value="6.1.20" />
+			<param name="test.ant.script.suite" value="PluginsChatTestSuite" />
+			<param name="test.ant.script.template" value="ant-script-legacy-plugins.xml" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="legacy-plugins-kaleo" />
+			<param name="test.ant.script.legacy.plugins" value="kaleo-upgrade-hook,kaleo-web" />
+			<param name="test.ant.script.legacy.version" value="6.1.20" />
+			<param name="test.ant.script.suite" value="KaleoWebContentTestSuite" />
+			<param name="test.ant.script.template" value="ant-script-legacy-plugins.xml" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="legacy-plugins-layouttpl" />
+			<param name="test.ant.script.legacy.plugins" value="1-2-1-columns-layouttpl" />
+			<param name="test.ant.script.legacy.version" value="6.1.20" />
+			<param name="test.ant.script.suite" value="SmokeTestSuite" />
+			<param name="test.ant.script.template" value="ant-script-legacy-plugins.xml" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="legacy-plugins-theme" />
+			<param name="test.ant.script.legacy.plugins" value="zoe-brochure-theme" />
+			<param name="test.ant.script.legacy.version" value="6.1.20" />
+			<param name="test.ant.script.suite" value="SmokeTestSuite" />
+			<param name="test.ant.script.template" value="ant-script-legacy-plugins.xml" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

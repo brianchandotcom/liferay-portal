@@ -14,27 +14,28 @@
 
 package com.liferay.taglib.aui;
 
-import com.liferay.taglib.aui.base.BaseToolTag;
+import com.liferay.portal.kernel.servlet.taglib.aui.ToolTag;
+import com.liferay.taglib.aui.base.BaseToolTagImpl;
 
 /**
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
-public class ToolTag extends BaseToolTag {
+public class ToolTagImpl extends BaseToolTagImpl implements ToolTag {
+
+	@Override
+	public void cleanUp() {
+		super.cleanUp();
+	}
 
 	@Override
 	public int doStartTag() {
 		PanelTag panelTag = (PanelTag)findAncestorWithClass(
 			this, PanelTag.class);
 
-		panelTag.addToolTag(this);
+		panelTag.addToolTag(new ToolTagImpl());
 
 		return EVAL_PAGE;
-	}
-
-	@Override
-	protected void cleanUp() {
-		super.cleanUp();
 	}
 
 }

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ page import="com.liferay.portal.kernel.servlet.taglib.aui.ToolTag" %>
+package com.liferay.portal.kernel.servlet.taglib.aui;
 
-<%
-List<ToolTag> toolTags = (List<ToolTag>)request.getAttribute("aui:panel:toolTags");
-%>
+/**
+ * @author Brian Wing Shun Chan
+ */
+public interface ToolTag {
+
+	public void cleanUp();
+
+	public java.lang.String getHandler();
+
+	public java.lang.String getIcon();
+
+	public java.lang.String getId();
+
+}

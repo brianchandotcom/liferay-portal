@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.servlet.taglib.aui.ToolTag;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BasePanelTag;
 import com.liferay.util.PwdGenerator;

@@ -161,21 +161,17 @@ public class ThemeUtil {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		TemplateContextType templateContextType = TemplateContextType.STANDARD;
-
 		if ((pluginClassLoader != null) &&
 			(pluginClassLoader != contextClassLoader)) {
 
 			currentThread.setContextClassLoader(pluginClassLoader);
-
-			templateContextType = TemplateContextType.CLASS_LOADER;
 		}
 
 		try {
 			if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_FTL)) {
 				return doIncludeFTL(
 					servletContext, request, pageContext, path, theme,
-					templateContextType, write);
+					TemplateContextType.STANDARD, write);
 			}
 			else if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_JSP)) {
 				doIncludeJSP(servletContext, request, response, path, theme);
@@ -183,7 +179,7 @@ public class ThemeUtil {
 			else if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_VM)) {
 				return doIncludeVM(
 					servletContext, request, pageContext, path, theme,
-					templateContextType, write);
+					TemplateContextType.STANDARD, write);
 			}
 
 			return null;

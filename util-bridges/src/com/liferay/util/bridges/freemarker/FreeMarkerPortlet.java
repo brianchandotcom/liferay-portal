@@ -106,7 +106,7 @@ public class FreeMarkerPortlet extends MVCPortlet {
 
 				Template template = TemplateManagerUtil.getTemplate(
 					TemplateManager.FREEMARKER, templateResource,
-					TemplateContextType.CLASS_LOADER);
+					TemplateContextType.STANDARD);
 
 				TemplateTaglibSupportProvider templateTaglibSupportProvider =
 					getTaglibSupportProvider();

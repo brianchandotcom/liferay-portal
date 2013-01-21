@@ -178,7 +178,7 @@ else {
 				%>
 
 				<c:if test="<%= !ddmStructures.isEmpty() %>">
-					<liferay-portlet:renderURL varImpl="viewBasicJournalStructureArticlesURL">
+					<liferay-portlet:renderURL varImpl="viewBasicDDMStructureArticlesURL">
 						<portlet:param name="struts_action" value="/journal/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 						<portlet:param name="structureId" value="0" />
@@ -200,7 +200,7 @@ else {
 						entryTitle='<%= LanguageUtil.get(pageContext, "basic-web-content") %>'
 						iconImage="copy"
 						selected='<%= (structureId == "0") %>'
-						viewURL="<%= viewBasicJournalStructureArticlesURL.toString() %>"
+						viewURL="<%= viewBasicDDMStructureArticlesURL.toString() %>"
 					/>
 				</c:if>
 
@@ -208,7 +208,7 @@ else {
 				for (DDMStructure ddmStructure : ddmStructures) {
 				%>
 
-					<liferay-portlet:renderURL varImpl="viewJournalStructureArticlesURL">
+					<liferay-portlet:renderURL varImpl="viewDDMStructureArticlesURL">
 						<portlet:param name="struts_action" value="/journal/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 						<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
@@ -230,7 +230,7 @@ else {
 						entryTitle="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
 						iconImage="copy"
 						selected="<%= structureId.equals(ddmStructure.getStructureKey()) %>"
-						viewURL="<%= viewJournalStructureArticlesURL.toString() %>"
+						viewURL="<%= viewDDMStructureArticlesURL.toString() %>"
 					/>
 
 				<%

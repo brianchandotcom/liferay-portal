@@ -28,12 +28,12 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.model.JournalTemplateConstants;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
-import com.liferay.portlet.journal.service.JournalTemplateServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
 import java.util.LinkedHashMap;
@@ -144,14 +144,14 @@ public class GetArticleAction extends Action {
 		String templateId = article.getTemplateId();
 
 		if (Validator.isNotNull(templateId)) {
-			JournalTemplate template = null;
+			DDMTemplate ddmTemplate = null;
 
 			try {
-				template = JournalTemplateServiceUtil.getTemplate(
+				ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 					article.getGroupId(), templateId);
 
 				if (Validator.equals(
-						template.getLangType(),
+						ddmTemplate.getLanguage(),
 						JournalTemplateConstants.LANG_TYPE_XSL)) {
 
 					url =

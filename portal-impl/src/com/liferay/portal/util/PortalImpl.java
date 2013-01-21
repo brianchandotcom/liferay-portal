@@ -5806,15 +5806,15 @@ public class PortalImpl implements Portal {
 			return;
 		}
 
-		if (layout.isTypeControlPanel()) {
+		if (portletActions) {
 			ResourceLocalServiceUtil.addResources(
 				companyId, groupId, 0, name, primaryKey, portletActions, true,
-				true);
+				!layout.isPrivateLayout());
 		}
 		else {
 			ResourceLocalServiceUtil.addResources(
 				companyId, groupId, 0, name, primaryKey, portletActions, true,
-				!layout.isPrivateLayout());
+				true);
 		}
 	}
 

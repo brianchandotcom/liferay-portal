@@ -1,0 +1,25 @@
+<functions object="Paste">
+	<functiondef command="paste">
+		<selenium command="waitForVisible" />
+		<selenium command="paste" />
+	</functiondef>
+
+	<functiondef command="pasteCpBlogsCkeditor">
+		<selenium command="waitForElementPresent" target="//textarea[@id='_161_editor' and @style='display: none;']" />
+		<selenium command="waitForVisible" target="//span[.='Source']" />
+		<selenium command="assertText" target="//span[.='Source']" value="Source" />
+		<selenium command="click" target="//span[.='Source']" />
+		<selenium command="waitForVisible" target="//a[@class='cke_button_source cke_on']" />
+		<selenium command="waitForVisible" target="//td[@id='cke_contents__161_editor']/textarea" />
+		<selenium command="paste" target="//td[@id='cke_contents__161_editor']/textarea" />
+		<selenium command="waitForVisible" target="//span[.='Source']" />
+		<selenium command="assertText" target="//span[.='Source']" value="Source" />
+		<selenium command="click" target="//span[.='Source']" />
+		<selenium command="waitForElementPresent" target="//textarea[@id='_161_editor' and @style='display: none;']" />
+		<selenium command="waitForVisible" target="//td[@id='cke_contents__161_editor']/iframe" />
+		<selenium command="selectFrame" target="//td[@id='cke_contents__161_editor']/iframe" />
+		<selenium command="waitForText" target="//body"  />
+		<selenium command="assertText" target="//body"  />
+		<selenium command="selectFrame" target="relative=top"  />
+	</functiondef>
+</functions>

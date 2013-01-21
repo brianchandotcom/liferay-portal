@@ -332,7 +332,7 @@
 				AssetTag
 			[$JOIN$]
 			WHERE
-				(AssetTag.groupId = ?) AND
+				[$GROUP_ID$]
 				(AssetTag.name LIKE ? OR ? IS NULL)
 			ORDER BY
 				AssetTag.name ASC

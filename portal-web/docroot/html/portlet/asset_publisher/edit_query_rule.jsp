@@ -19,6 +19,7 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_asset_publisher_edit_query_rule") + StringPool.UNDERLINE;
 
+long[] categorizableGroupIds = (long[])request.getAttribute("configuration.jsp-categorizableGroupIds");
 int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-index")));
 int queryLogicIndex = GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-queryLogicIndex"));
 
@@ -31,7 +32,7 @@ if (queryLogicIndex >= 0) {
 	queryContains = PrefsParamUtil.getBoolean(preferences, request, "queryContains" + queryLogicIndex, true);
 	queryAndOperator = PrefsParamUtil.getBoolean(preferences, request, "queryAndOperator" + queryLogicIndex);
 	queryName = PrefsParamUtil.getString(preferences, request, "queryName" + queryLogicIndex, "assetTags");
-	queryValues = StringUtil.merge(preferences.getValues("queryValues" + queryLogicIndex , new String[0]));
+	queryValues = StringUtil.merge(preferences.getValues("queryValues" + queryLogicIndex, new String[0]));
 
 	if (Validator.equals(queryName, "assetTags")) {
 		queryValues = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
@@ -62,6 +63,7 @@ if (queryLogicIndex >= 0) {
 		<liferay-ui:asset-tags-selector
 			curTags='<%= Validator.equals(queryName, "assetTags") ? queryValues : null %>'
 			focus="<%= false %>"
+			groupIds="<%= categorizableGroupIds %>"
 			hiddenInput='<%= "queryTagNames" + index %>'
 		/>
 	</div>

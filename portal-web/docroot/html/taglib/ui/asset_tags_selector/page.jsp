@@ -22,6 +22,7 @@ long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset
 String hiddenInput = (String)request.getAttribute("liferay-ui:asset-tags-selector:hiddenInput");
 String curTags = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:curTags"));
 boolean focus = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:asset-tags-selector:focus"));
+long[] groupIds = (long[])request.getAttribute("liferay-ui:asset-tags-selector:groupIds");
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:id"));
 String contentCallback = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:contentCallback"));
 
@@ -60,6 +61,11 @@ if (curTagsParam != null) {
 
 			curEntries: '<%= HtmlUtil.escapeJS(curTags) %>',
 			focused: <%= focus %>,
+
+			<c:if test="<%= groupIds != null %>">
+				groupIds: '<%= StringUtil.merge(groupIds) %>',
+			</c:if>
+
 			hiddenInput: '#<%= namespace + hiddenInput %>',
 			input: '#<%= id %>assetTagNames',
 			instanceVar: '<%= namespace + id %>',

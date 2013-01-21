@@ -22,6 +22,7 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 String redirect = (String)request.getAttribute("configuration.jsp-redirect");
 String rootPortletId = (String)request.getAttribute("configuration.jsp-rootPortletId");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
+String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle");
 %>
 
 <liferay-ui:tabs
@@ -29,7 +30,7 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 	refresh="<%= false %>"
 >
 	<liferay-ui:section>
-		<liferay-util:include page="/html/portlet/asset_publisher/asset_selection_type.jsp" />
+		<%= selectStyle %>
 
 		<aui:fieldset label="scope">
 			<%= selectScope %>

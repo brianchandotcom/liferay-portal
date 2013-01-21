@@ -12,29 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.module.framework;
+package com.liferay.osgi.bootstrap;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ServiceLoaderCondition;
+import com.liferay.portal.util.PropsValues;
+
+import java.net.URL;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class ModuleFrameworkException extends PortalException {
+public class ModuleFrameworkServiceLoaderCondition implements
+	ServiceLoaderCondition {
 
-	public ModuleFrameworkException() {
-		super();
-	}
-
-	public ModuleFrameworkException(String msg) {
-		super(msg);
-	}
-
-	public ModuleFrameworkException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public ModuleFrameworkException(Throwable cause) {
-		super(cause);
+	@Override
+	public boolean isLoad(URL url) {
+		return url.getPath().contains(PropsValues.MODULE_FRAMEWORK_CORE_DIR);
 	}
 
 }

@@ -1569,6 +1569,8 @@ public interface PropsKeys {
 
 	public static final String MODULE_FRAMEWORK_ENABLED = "module.framework.enabled";
 
+	public static final String MODULE_FRAMEWORK_INITIAL_BUNDLES = "module.framework.initial.bundles";
+
 	public static final String MODULE_FRAMEWORK_LIB_DIR = "module.framework.lib.dir";
 
 	public static final String MODULE_FRAMEWORK_REGISTER_LIFERAY_SERVICES = "module.framework.register.liferay.services";

@@ -461,8 +461,16 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 			int end)
 		throws SystemException {
 
+		return search(new long[] {groupId}, name, tagProperties, start, end);
+	}
+
+	public List<AssetTag> search(
+			long[] groupIds, String name, String[] tagProperties, int start,
+			int end)
+		throws SystemException {
+
 		return assetTagFinder.findByG_N_P(
-			groupId, name, tagProperties, start, end, null);
+			groupIds, name, tagProperties, start, end, null);
 	}
 
 	public AssetTag updateTag(

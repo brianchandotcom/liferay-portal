@@ -175,8 +175,16 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 			int end)
 		throws SystemException {
 
+		return getTags(new long[] {groupId}, name, tagProperties, start, end);
+	}
+
+	public List<AssetTag> getTags(
+			long[] groupIds, String name, String[] tagProperties, int start,
+			int end)
+		throws SystemException {
+
 		return assetTagFinder.filterFindByG_N_P(
-			groupId, name, tagProperties, start, end, null);
+			groupIds, name, tagProperties, start, end, null);
 	}
 
 	public List<AssetTag> getTags(String className, long classPK)
@@ -228,9 +236,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 			int end)
 		throws SystemException {
 
-		List<AssetTag> tags = getTags(groupId, name, tagProperties, start, end);
-
-		return Autocomplete.listToJson(tags, "name", "name");
+		return search(new long[] {groupId}, name, tagProperties, start, end);
 	}
 
 	public JSONArray search(
@@ -238,11 +244,8 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 			int end)
 		throws SystemException {
 
-		List<AssetTag> tags = new ArrayList<AssetTag>();
-
-		for (int i = 0; i < groupIds.length; i++) {
-			tags.addAll(getTags(groupIds[i], name, tagProperties, start, end));
-		}
+		List<AssetTag> tags = getTags(
+			groupIds, name, tagProperties, start, end);
 
 		return Autocomplete.listToJson(tags, "name", "name");
 	}

@@ -119,12 +119,12 @@ public class AssetTagFinderImpl
 	}
 
 	public List<AssetTag> filterFindByG_N_P(
-			long groupId, String name, String[] tagProperties, int start,
+			long[] groupIds, String name, String[] tagProperties, int start,
 			int end, OrderByComparator obc)
 		throws SystemException {
 
 		return doFindByG_N_P(
-			groupId, name, tagProperties, start, end, obc, true);
+			groupIds, name, tagProperties, start, end, obc, true);
 	}
 
 	public List<AssetTag> findByEntryId(long entryId) throws SystemException {
@@ -205,12 +205,12 @@ public class AssetTagFinderImpl
 	}
 
 	public List<AssetTag> findByG_N_P(
-			long groupId, String name, String[] tagProperties, int start,
+			long[] groupIds, String name, String[] tagProperties, int start,
 			int end, OrderByComparator obc)
 		throws SystemException {
 
 		return doFindByG_N_P(
-			groupId, name, tagProperties, start, end, obc, false);
+			groupIds, name, tagProperties, start, end, obc, false);
 	}
 
 	public List<AssetTag> findByG_N_S_E(
@@ -498,7 +498,7 @@ public class AssetTagFinderImpl
 	}
 
 	protected List<AssetTag> doFindByG_N_P(
-			long groupId, String name, String[] tagProperties, int start,
+			long[] groupIds, String name, String[] tagProperties, int start,
 			int end, OrderByComparator obc, boolean inlineSQLHelper)
 		throws SystemException {
 
@@ -510,11 +510,13 @@ public class AssetTagFinderImpl
 			String sql = CustomSQLUtil.get(FIND_BY_G_N_P);
 
 			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(tagProperties));
+			sql = StringUtil.replace(
+				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, AssetTag.class.getName(), "AssetTag.tagId", groupId);
+					sql, AssetTag.class.getName(), "AssetTag.tagId", groupIds);
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -525,7 +527,7 @@ public class AssetTagFinderImpl
 
 			setJoin(qPos, tagProperties);
 
-			qPos.add(groupId);
+			qPos.add(groupIds);
 			qPos.add(name);
 			qPos.add(name);
 
@@ -537,6 +539,28 @@ public class AssetTagFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	protected String getGroupIds(long[] groupIds) {
+		if (groupIds.length == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(groupIds.length * 2);
+
+		sb.append("(");
+
+		for (int i = 0; i < groupIds.length; i++) {
+			sb.append("groupId = ?");
+
+			if ((i + 1) < groupIds.length) {
+				sb.append(" OR ");
+			}
+		}
+
+		sb.append(") AND");
+
+		return sb.toString();
 	}
 
 	protected String getJoin(String[] tagProperties) {

@@ -48,8 +48,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
-import com.liferay.portlet.journal.model.JournalStructure;
-import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.polls.model.PollsQuestion;
@@ -228,12 +226,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		},
 		new String[] {
 			JournalFeed.class.getName(), "JournalFeed", "id_"
-		},
-		new String[] {
-			JournalStructure.class.getName(), "JournalStructure", "id_"
-		},
-		new String[] {
-			JournalTemplate.class.getName(), "JournalTemplate", "id_"
 		},
 		new String[] {
 			LayoutSetBranch.class.getName(), "LayoutSetBranch",

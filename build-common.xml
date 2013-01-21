@@ -718,6 +718,15 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</if>
 
 		<if>
+			<available file="test/functional-generated" type="dir" />
+			<then>
+				<resourcecount property="test.functional-generated.count">
+					<fileset dir="test-classes/functional-generated" includes="**/${class}.class" />
+				</resourcecount>
+			</then>
+		</if>
+
+		<if>
 			<available file="test/integration" type="dir" />
 			<then>
 				<resourcecount property="test.integration.count">
@@ -740,6 +749,12 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<then>
 				<var name="test.type" value="functional" />
 			</then>
+			<elseif>
+				<equals arg1="${test.functional-generated.count}" arg2="1" />
+				<then>
+					<var name="test.type" value="functional-generated" />
+				</then>
+			</elseif>
 			<elseif>
 				<equals arg1="${test.integration.count}" arg2="1" />
 				<then>

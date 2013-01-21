@@ -132,37 +132,37 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 					<div class="aui-menu-content">
 						<ul>
 							<c:if test="<%= themeDisplay.isShowPageSettingsIcon() %>">
-								<li class="first manage-page use-dialog full-dialog">
+								<li class="first manage-page">
 									<aui:a href='<%= themeDisplay.getURLPageSettings().toString() + "#details" %>' label="page" title="manage-page" />
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowLayoutTemplatesIcon() && !themeDisplay.isStateMaximized() %>">
-								<li class="page-layout use-dialog full-dialog">
+							<c:if test="<%= themeDisplay.isShowLayoutTemplatesIcon()%>">
+								<li class="page-layout">
 									<aui:a href='<%= themeDisplay.getURLPageSettings().toString() + "#layout" %>' label="page-layout" title="manage-page" />
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowPageCustomizationIcon() %>">
+							<c:if test="<%= themeDisplay.isShowPageCustomizationIcon() && !themeDisplay.isStateMaximized() %>">
 								<li class="manage-page-customization">
 									<aui:a cssClass='<%= themeDisplay.isFreeformLayout() ? "disabled" : StringPool.BLANK %>' href='<%= themeDisplay.isFreeformLayout() ? null : "javascript:;" %>' id="manageCustomization" label='<%= group.isLayoutPrototype() ? "page-modifications" : "page-customizations" %>' title='<%= themeDisplay.isFreeformLayout() ? "it-is-not-possible-to-specify-customization-settings-for-freeform-layouts" : null %>' />
 								</li>
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowSiteSettingsIcon() %>">
-								<li class="settings use-dialog full-dialog">
+								<li class="settings">
 									<aui:a href="<%= themeDisplay.getURLSiteSettings().toString() %>" label="site-settings" title="edit-site-settings" />
 								</li>
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowSiteMapSettingsIcon() %>">
-								<li class="sitemap use-dialog full-dialog">
+								<li class="sitemap">
 									<aui:a href="<%= themeDisplay.getURLSiteMapSettings().toString() %>" label="site-pages" title="manage-site-pages" />
 								</li>
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowManageSiteMembershipsIcon() %>">
-								<li class="manage-site-memberships use-dialog full-dialog">
+								<li class="manage-site-memberships">
 									<aui:a href="<%= themeDisplay.getURLManageSiteMemberships().toString() %>" label="site-memberships" title="manage-site-memberships" />
 								</li>
 							</c:if>

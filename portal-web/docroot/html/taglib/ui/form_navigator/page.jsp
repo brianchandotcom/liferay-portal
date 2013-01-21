@@ -19,6 +19,8 @@
 <portlet:defineObjects />
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 String backURL = (String)request.getAttribute("liferay-ui:form-navigator:backURL");
 String[][] categorySections = (String[][])request.getAttribute("liferay-ui:form-navigator:categorySections");
 String[] categoryNames = (String[])request.getAttribute("liferay-ui:form-navigator:categoryNames");
@@ -27,6 +29,10 @@ String htmlBottom = (String)request.getAttribute("liferay-ui:form-navigator:html
 String htmlTop = (String)request.getAttribute("liferay-ui:form-navigator:htmlTop");
 String jspPath = (String)request.getAttribute("liferay-ui:form-navigator:jspPath");
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:form-navigator:showButtons"));
+
+if (Validator.isNull(backURL)) {
+	backURL = redirect;
+}
 
 if (Validator.isNull(backURL)) {
 	PortletURL portletURL = liferayPortletResponse.createRenderURL();

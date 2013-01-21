@@ -45,17 +45,19 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 	String rootPortletId = PortletConstants.getRootPortletId(portletResource);
 	%>
 
-	<c:choose>
-		<c:when test="<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
-			<aui:input name="preferences--selectionStyle--" type="hidden" value="dynamic" />
-		</c:when>
-		<c:otherwise>
-			<aui:select label="asset-selection" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>'>
-				<aui:option label="dynamic" selected='<%= selectionStyle.equals("dynamic") %>'/>
-				<aui:option label="manual" selected='<%= selectionStyle.equals("manual") %>'/>
-			</aui:select>
-		</c:otherwise>
-	</c:choose>
+	<liferay-util:buffer var="selectStyle">
+		<c:choose>
+			<c:when test="<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+				<aui:input name="preferences--selectionStyle--" type="hidden" value="dynamic" />
+			</c:when>
+			<c:otherwise>
+				<aui:select label="asset-selection" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>'>
+					<aui:option label="dynamic" selected='<%= selectionStyle.equals("dynamic") %>'/>
+					<aui:option label="manual" selected='<%= selectionStyle.equals("manual") %>'/>
+				</aui:select>
+			</c:otherwise>
+		</c:choose>
+	</liferay-util:buffer>
 
 	<liferay-util:buffer var="selectScope">
 		<aui:select label="" name="preferences--defaultScope--" onChange='<%= renderResponse.getNamespace() + "selectScope();" %>'>
@@ -184,6 +186,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 	request.setAttribute("configuration.jsp-redirect", redirect);
 	request.setAttribute("configuration.jsp-rootPortletId", rootPortletId);
 	request.setAttribute("configuration.jsp-selectScope", selectScope);
+	request.setAttribute("configuration.jsp-selectStyle", selectStyle);
 	%>
 
 	<c:choose>

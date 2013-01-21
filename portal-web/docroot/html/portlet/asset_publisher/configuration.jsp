@@ -64,7 +64,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 			long layoutScopeGroupId = 0;
 			%>
 
-			<aui:option label="<%= _getName(themeDisplay, themeDisplay.getScopeGroup()) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getScopeGroupId() == groupIds[0]) %>" value="<%= themeDisplay.getScopeGroupId() %>" />
+			<aui:option label="<%= _getName(themeDisplay, themeDisplay.getScopeGroup()) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getScopeGroupId() == groupIds[0]) %>" value="<%= true %>" />
 
 			<c:if test="<%= layout.hasScopeGroup() %>">
 

@@ -31,13 +31,13 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchTemplateException;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalTemplateLocalServiceUtil;
 import com.liferay.portlet.layoutconfiguration.util.xml.PortletLogic;
 
 import java.util.List;
@@ -169,18 +169,18 @@ public class JournalContentPortletLayoutListener
 		List<String> portletIds = getRuntimePortletIds(article.getContent());
 
 		if (Validator.isNotNull(article.getTemplateId())) {
-			JournalTemplate journalTemplate = null;
+			DDMTemplate ddmTemplate = null;
 
 			try {
-				journalTemplate = JournalTemplateLocalServiceUtil.getTemplate(
+				ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 					scopeGroupId, article.getTemplateId());
 			}
 			catch (NoSuchTemplateException nste) {
-				journalTemplate = JournalTemplateLocalServiceUtil.getTemplate(
+				ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 					group.getGroupId(), article.getTemplateId());
 			}
 
-			portletIds.addAll(getRuntimePortletIds(journalTemplate.getXsl()));
+			portletIds.addAll(getRuntimePortletIds(ddmTemplate.getScript()));
 		}
 
 		return portletIds.toArray(new String[portletIds.size()]);

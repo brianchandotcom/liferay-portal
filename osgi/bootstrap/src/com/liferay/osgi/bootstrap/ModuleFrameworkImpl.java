@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServiceLoader;
+import com.liferay.portal.kernel.util.ServiceLoaderCondition;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -292,8 +293,11 @@ public class ModuleFrameworkImpl
 	}
 
 	public void startFramework() throws Exception {
+		ServiceLoaderCondition serviceLoaderCondition =
+			new ModuleFrameworkServiceLoaderCondition();
+
 		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
-			FrameworkFactory.class);
+			FrameworkFactory.class, serviceLoaderCondition);
 
 		if (frameworkFactories.isEmpty()) {
 			return;
@@ -757,6 +761,16 @@ public class ModuleFrameworkImpl
 	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkUtil.class);
 
 	private Framework _framework;
+
+	private class ModuleFrameworkServiceLoaderCondition implements
+		ServiceLoaderCondition {
+
+		public boolean isLoad(URL url) {
+			return url.getPath().contains(
+				PropsValues.MODULE_FRAMEWORK_CORE_DIR);
+		}
+
+	}
 
 	private class StartupFrameworkListener implements FrameworkListener {
 		public StartupFrameworkListener(

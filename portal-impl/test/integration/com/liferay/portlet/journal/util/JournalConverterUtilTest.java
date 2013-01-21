@@ -53,6 +53,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
+ * @author Bruno Basto
  * @author Marcellus Tavares
  */
 @ExecutionTestListeners(
@@ -74,6 +75,27 @@ public class JournalConverterUtilTest {
 
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
 		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");
+	}
+
+	@Test
+	public void testGetDDMXSD() throws Exception {
+		String expectedDDMXSD = readText("sample-ddm-structure-all-fields.xml");
+
+		DDMStructure expectedDDMStructure = new DDMStructureImpl();
+
+		expectedDDMStructure.setXsd(expectedDDMXSD);
+
+		String journalXSD = readText("sample-journal-structure-all-fields.xml");
+
+		String actualDDMXSD = JournalConverterUtil.getDDMXSD(journalXSD);
+
+		DDMStructure actualDDMStructure = new DDMStructureImpl();
+
+		actualDDMStructure.setXsd(actualDDMXSD);
+
+		Assert.assertEquals(
+			expectedDDMStructure.getFieldsMap(),
+			actualDDMStructure.getFieldsMap());
 	}
 
 	@Test

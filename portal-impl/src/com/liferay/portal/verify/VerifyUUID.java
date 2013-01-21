@@ -86,12 +86,6 @@ public class VerifyUUID extends VerifyProcess {
 			"JournalFeed", "id_"
 		},
 		new String[] {
-			"JournalStructure", "id_"
-		},
-		new String[] {
-			"JournalTemplate", "id_"
-		},
-		new String[] {
 			"Layout", "plid"
 		},
 		new String[] {

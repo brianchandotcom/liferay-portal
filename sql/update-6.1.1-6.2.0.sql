@@ -387,6 +387,7 @@ drop index IX_88705859 on ResourcePermission;
 drop index IX_C94C7708 on ResourcePermission;
 drop index IX_4A1F4402 on ResourcePermission;
 drop index IX_8DB864A9 on ResourcePermission;
+drop index IX_8D83D0CE on ResourcePermission;
 
 drop table Roles_Permissions;
 

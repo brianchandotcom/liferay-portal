@@ -67,6 +67,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				actionRequest, portletResource);
 
 		if (cmd.equals(Constants.UPDATE)) {
+			validateEmailAssetEntryAdded(actionRequest);
+			validateEmailFrom(actionRequest);
+
 			updateDisplaySettings(actionRequest);
 
 			String selectionStyle = getParameter(
@@ -78,6 +81,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 			updateDefaultAssetPublisher(actionRequest);
 
+			super.processAction(portletConfig, actionRequest, actionResponse);
+		}
+		else if (cmd.equals(Constants.TRANSLATE)) {
 			super.processAction(portletConfig, actionRequest, actionResponse);
 		}
 		else {
@@ -480,6 +486,39 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			i++;
 
 			values = preferences.getValues("queryValues" + i, new String[0]);
+		}
+	}
+
+	protected void validateEmailAssetEntryAdded(ActionRequest actionRequest)
+		throws Exception {
+
+		String emailAssetEntryAddedSubject = getLocalizedParameter(
+			actionRequest, "emailAssetEntryAddedSubject");
+		String emailAssetEntryAddedBody = getLocalizedParameter(
+			actionRequest, "emailAssetEntryAddedBody");
+
+		if (Validator.isNull(emailAssetEntryAddedSubject)) {
+			SessionErrors.add(actionRequest, "emailAssetEntryAddedSubject");
+		}
+		else if (Validator.isNull(emailAssetEntryAddedBody)) {
+			SessionErrors.add(actionRequest, "emailAssetEntryAddedBody");
+		}
+	}
+
+	protected void validateEmailFrom(ActionRequest actionRequest)
+		throws Exception {
+
+		String emailFromName = getParameter(actionRequest, "emailFromName");
+		String emailFromAddress = getParameter(
+			actionRequest, "emailFromAddress");
+
+		if (Validator.isNull(emailFromName)) {
+			SessionErrors.add(actionRequest, "emailFromName");
+		}
+		else if (!Validator.isEmailAddress(emailFromAddress) &&
+			!Validator.isVariableTerm(emailFromAddress)) {
+
+			SessionErrors.add(actionRequest, "emailFromAddress");
 		}
 	}
 

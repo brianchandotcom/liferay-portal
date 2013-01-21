@@ -387,6 +387,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				nameEnabled="<%= true %>"
 			/>
 		</c:if>
+
+		<%@ include file="/html/portlet/asset_publisher/email_subscription_settings.jspf" %>
 	</liferay-ui:section>
 </liferay-ui:tabs>
 

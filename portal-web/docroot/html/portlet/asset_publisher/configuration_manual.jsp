@@ -26,7 +26,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 %>
 
 <liferay-ui:tabs
-	names="asset-selection,display-settings"
+	names="asset-selection,display-settings,subscriptions"
 	refresh="<%= false %>"
 >
 	<liferay-ui:section>
@@ -203,6 +203,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	</liferay-ui:section>
 	<liferay-ui:section>
 		<%@ include file="/html/portlet/asset_publisher/display_settings.jspf" %>
+	</liferay-ui:section>
+	<liferay-ui:section>
+		<liferay-util:include page="/html/portlet/asset_publisher/email_subscription_settings.jsp" />
 	</liferay-ui:section>
 </liferay-ui:tabs>
 

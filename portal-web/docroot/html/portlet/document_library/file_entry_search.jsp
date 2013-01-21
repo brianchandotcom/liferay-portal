@@ -34,11 +34,11 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 	<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1" onSubmit="event.preventDefault();">
 
 		<aui:layout>
-			<aui:column columnWidth="70">
+			<aui:column>
 				<aui:input cssClass="keywords lfr-search-combobox-item" id="keywords" label="" name="keywords" type="text" />
 			</aui:column>
 
-			<aui:column columnWidth="30">
+			<aui:column>
 				<aui:button cssClass="lfr-search-combobox-item" name="search" type="submit" value="search" />
 			</aui:column>
 		</aui:layout>

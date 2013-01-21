@@ -34,7 +34,7 @@ import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.test.Sync;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -250,10 +250,7 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	protected boolean isIndexableBaseModel() {
-
-		// See LPS-32381
-
-		return false;
+		return true;
 	}
 
 	protected boolean isInTrashContainer(ClassedModel classedModel)
@@ -280,8 +277,6 @@ public abstract class BaseTrashHandlerTestCase {
 	protected int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
-		Thread.sleep(2000 * TestPropsValues.JUNIT_DELAY_FACTOR);
-
 		Indexer indexer = IndexerRegistryUtil.getIndexer(clazz);
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext();
@@ -296,8 +291,6 @@ public abstract class BaseTrashHandlerTestCase {
 	protected int searchTrashEntriesCount(
 			String keywords, ServiceContext serviceContext)
 		throws Exception {
-
-		Thread.sleep(2000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		Hits results = TrashEntryLocalServiceUtil.search(
 			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),

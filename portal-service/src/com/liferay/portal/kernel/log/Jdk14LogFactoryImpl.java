@@ -14,12 +14,31 @@
 
 package com.liferay.portal.kernel.log;
 
+import java.io.InputStream;
+
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class Jdk14LogFactoryImpl implements LogFactory {
+
+	public Jdk14LogFactoryImpl() {
+		LogManager logManager = LogManager.getLogManager();
+
+		try {
+			InputStream inputStream = getClass().getResourceAsStream(
+				"/logging.properties");
+
+			if (inputStream != null) {
+				logManager.readConfiguration(inputStream);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public Log getLog(Class<?> c) {
 		return getLog(c.getName());

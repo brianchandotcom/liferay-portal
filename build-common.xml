@@ -463,7 +463,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<mkdir dir="test-results/${test.type}" />
 
 				<copy todir="test-classes/${test.type}">
-					<fileset dir="test" includes="*.properties" />
+					<fileset dir="test" includes="*.properties,META-INF/*.xml" />
 					<fileset dir="test/${test.type}" includes="**/*.properties,**/dependencies/**,META-INF/*.xml" />
 				</copy>
 

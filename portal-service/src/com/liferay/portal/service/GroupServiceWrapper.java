@@ -313,16 +313,25 @@ public class GroupServiceWrapper implements GroupService,
 	* entity class names, including the Control Panel group if the user is
 	* permitted to view the Control Panel.
 	*
-	* <p>
-	* <ul> <li> Class name &quot;User&quot; includes the user's layout set
-	* group. </li> <li> Class name &quot;Organization&quot; includes the user's
-	* immediate organization groups and inherited organization groups. </li>
-	* <li> Class name &quot;Group&quot; includes the user's immediate
-	* organization groups and site groups. </li> <li> A <code>classNames</code>
+	* <ul>
+	* <li>
+	* Class name &quot;User&quot; includes the user's layout set
+	* group.
+	* </li>
+	* <li>
+	* Class name &quot;Organization&quot; includes the user's
+	* immediate organization groups and inherited organization groups.
+	* </li>
+	* <li>
+	* Class name &quot;Group&quot; includes the user's immediate
+	* organization groups and site groups.
+	* </li>
+	* <li>
+	* A <code>classNames</code>
 	* value of <code>null</code> includes the user's layout set group,
 	* organization groups, inherited organization groups, and site groups.
-	* </li> </ul>
-	* </p>
+	* </li>
+	* </ul>
 	*
 	* @param userId the primary key of the user
 	* @param classNames the group entity class names (optionally
@@ -354,16 +363,25 @@ public class GroupServiceWrapper implements GroupService,
 	* with the group entity class names, including the Control Panel group if
 	* the user is permitted to view the Control Panel.
 	*
-	* <p>
-	* <ul> <li> Class name &quot;User&quot; includes the user's layout set
-	* group. </li> <li> Class name &quot;Organization&quot; includes the user's
-	* immediate organization groups and inherited organization groups. </li>
-	* <li> Class name &quot;Group&quot; includes the user's immediate
-	* organization groups and site groups. </li> <li> A <code>classNames</code>
+	* <ul>
+	* <li>
+	* Class name &quot;User&quot; includes the user's layout set
+	* group.
+	* </li>
+	* <li>
+	* Class name &quot;Organization&quot; includes the user's
+	* immediate organization groups and inherited organization groups.
+	* </li>
+	* <li>
+	* Class name &quot;Group&quot; includes the user's immediate
+	* organization groups and site groups.
+	* </li>
+	* <li>
+	* A <code>classNames</code>
 	* value of <code>null</code> includes the user's layout set group,
 	* organization groups, inherited organization groups, and site groups.
-	* </li> </ul>
-	* </p>
+	* </li>
+	* </ul>
 	*
 	* @param classNames the group entity class names (optionally
 	<code>null</code>). For more information see {@link

@@ -606,8 +606,6 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* This method is usually called to determine if the user has view access to
 	* a resource belonging to the organization.
 	*
-	* <p>
-	*
 	* <ol>
 	* <li>
 	* If <code>inheritSuborganizations=<code>false</code></code>:
@@ -636,8 +634,6 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* its child organizations.
 	* </li>
 	* </ol>
-	*
-	* <p>
 	*
 	* @param userId the primary key of the organization's user
 	* @param organizationId the primary key of the organization

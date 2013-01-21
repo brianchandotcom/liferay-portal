@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.test;
 
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Handler;
@@ -68,6 +70,14 @@ public class JDKLoggerTestUtil {
 		private List<LogRecord> _logRecords =
 			new CopyOnWriteArrayList<LogRecord>();
 
+	}
+
+	static {
+
+		// Force to initialize java.util.logging.LogManager before configuring
+		// any java.util.logging.Logger, see LPS-32051 for the cause.
+
+		LogFactoryUtil.getLog(JDKLoggerTestUtil.class);
 	}
 
 }

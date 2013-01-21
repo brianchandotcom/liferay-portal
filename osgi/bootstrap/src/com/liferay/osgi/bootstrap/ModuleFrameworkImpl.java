@@ -106,6 +106,14 @@ public class ModuleFrameworkImpl
 
 		BundleContext bundleContext = _framework.getBundleContext();
 
+		if (inputStream != null) {
+			Bundle bundle = getBundle(bundleContext, inputStream);
+
+			if (bundle != null) {
+				return bundle;
+			}
+		}
+
 		try {
 			return bundleContext.installBundle(location, inputStream);
 		}
@@ -114,6 +122,16 @@ public class ModuleFrameworkImpl
 
 			throw new PortalException(be);
 		}
+	}
+
+	public Bundle getBundle(long bundleId) {
+		if (_framework == null) {
+			return null;
+		}
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		return bundleContext.getBundle(bundleId);
 	}
 
 	public Bundle getBundle(
@@ -174,16 +192,6 @@ public class ModuleFrameworkImpl
 		catch (IOException ioe) {
 			throw new PortalException(ioe);
 		}
-	}
-
-	public Bundle getBundle(long bundleId) {
-		if (_framework == null) {
-			return null;
-		}
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		return bundleContext.getBundle(bundleId);
 	}
 
 	public Framework getFramework() {

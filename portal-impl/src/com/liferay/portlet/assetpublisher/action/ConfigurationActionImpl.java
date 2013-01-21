@@ -161,6 +161,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 
 		preferences.setValues("scopeIds", scopeIds);
+		preferences.setValue("defaultScope", Boolean.FALSE.toString());
 	}
 
 	protected String[] getClassTypeIds(

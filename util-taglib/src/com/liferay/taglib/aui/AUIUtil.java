@@ -14,20 +14,11 @@
 
 package com.liferay.taglib.aui;
 
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
-import java.io.Writer;
 
 import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Shuyang Zhou
@@ -170,66 +161,6 @@ public class AUIUtil {
 		}
 
 		return sb.toString();
-	}
-
-	public static void outputScriptData(
-			HttpServletRequest request, Writer writer)
-		throws IOException {
-
-		ScriptData scriptData = (ScriptData)request.getAttribute(
-			ScriptTag.class.getName());
-
-		if (scriptData == null) {
-			scriptData = (ScriptData)request.getAttribute(
-				WebKeys.AUI_SCRIPT_DATA);
-
-			if (scriptData != null) {
-				request.removeAttribute(WebKeys.AUI_SCRIPT_DATA);
-			}
-		}
-
-		if (scriptData == null) {
-			return;
-		}
-
-		writer.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
-
-		StringBundler rawSB = scriptData.getRawSB();
-
-		rawSB.writeTo(writer);
-
-		StringBundler callbackSB = scriptData.getCallbackSB();
-
-		if (callbackSB.index() > 0) {
-			String loadMethod = "use";
-
-			if (BrowserSnifferUtil.isIe(request) &&
-				(BrowserSnifferUtil.getMajorVersion(request) < 8)) {
-
-				loadMethod = "ready";
-			}
-
-			writer.write("AUI().");
-			writer.write( loadMethod );
-			writer.write("(");
-
-			Set<String> useSet = scriptData.getUseSet();
-
-			for (String use : useSet) {
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(use);
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(StringPool.COMMA_AND_SPACE);
-			}
-
-			writer.write("function(A) {");
-
-			callbackSB.writeTo(writer);
-
-			writer.write("});");
-		}
-
-		writer.write("\n// ]]>\n</script>");
 	}
 
 }

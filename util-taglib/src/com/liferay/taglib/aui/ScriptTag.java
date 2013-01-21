@@ -15,17 +15,22 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.servlet.BodyContentWrapper;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.PortalIncludeUtil;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.aui.base.BaseScriptTag;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
 
@@ -84,7 +89,25 @@ public class ScriptTag extends BaseScriptTag {
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 
-		AUIUtil.outputScriptData(request, pageContext.getOut());
+		ScriptData scriptData = (ScriptData)request.getAttribute(
+			ScriptTag.class.getName());
+
+		if (scriptData == null) {
+			scriptData = (ScriptData)request.getAttribute(
+				WebKeys.AUI_SCRIPT_DATA);
+
+			if (scriptData != null) {
+				request.removeAttribute(WebKeys.AUI_SCRIPT_DATA);
+			}
+		}
+
+		if (scriptData != null) {
+			ScriptTag scriptTag = new ScriptTag();
+
+			scriptTag.setPageContext(pageContext);
+
+			scriptTag.processEndTag(scriptData);
+		}
 	}
 
 	@Override
@@ -123,7 +146,7 @@ public class ScriptTag extends BaseScriptTag {
 					PortalIncludeUtil.include(pageContext, page);
 				}
 				else {
-					AUIUtil.outputScriptData(request, pageContext.getOut());
+					processEndTag(scriptData);
 				}
 			}
 			else {
@@ -171,6 +194,52 @@ public class ScriptTag extends BaseScriptTag {
 	protected void cleanUp() {
 		setPosition(null);
 		setUse(null);
+	}
+
+	protected void processEndTag(ScriptData scriptData) throws Exception {
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
+
+		StringBundler rawSB = scriptData.getRawSB();
+
+		rawSB.writeTo(jspWriter);
+
+		StringBundler callbackSB = scriptData.getCallbackSB();
+
+		if (callbackSB.index() > 0) {
+			String loadMethod = "use";
+
+			HttpServletRequest request =
+				(HttpServletRequest)pageContext.getRequest();
+
+			if (BrowserSnifferUtil.isIe(request) &&
+				(BrowserSnifferUtil.getMajorVersion(request) < 8)) {
+
+				loadMethod = "ready";
+			}
+
+			jspWriter.write("AUI().");
+			jspWriter.write( loadMethod );
+			jspWriter.write("(");
+
+			Set<String> useSet = scriptData.getUseSet();
+
+			for (String use : useSet) {
+				jspWriter.write(StringPool.APOSTROPHE);
+				jspWriter.write(use);
+				jspWriter.write(StringPool.APOSTROPHE);
+				jspWriter.write(StringPool.COMMA_AND_SPACE);
+			}
+
+			jspWriter.write("function(A) {");
+
+			callbackSB.writeTo(jspWriter);
+
+			jspWriter.write("});");
+		}
+
+		jspWriter.write("\n// ]]>\n</script>");
 	}
 
 }

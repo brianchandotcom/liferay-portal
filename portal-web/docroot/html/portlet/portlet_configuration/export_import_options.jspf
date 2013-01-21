@@ -250,7 +250,7 @@
 
 			<ul id="<portlet:namespace />permissionsUl">
 				<li class="tree-item">
-					<aui:input label="permissions-assigned-to-roles" name="permissinsAssignedToRoles" type="checkbox" value="<%= true %>" />
+					<aui:input label="permissions-assigned-to-roles" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
 				</li>
 			</ul>
 		</li>

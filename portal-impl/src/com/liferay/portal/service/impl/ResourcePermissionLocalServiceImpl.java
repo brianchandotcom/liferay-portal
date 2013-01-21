@@ -172,14 +172,12 @@ public class ResourcePermissionLocalServiceImpl
 				role.getCompanyId(), resourceName, scope);
 
 			for (String primKey : primKeys) {
-				List<ResourcePermission> resourcePermissions =
-					resourcePermissionPersistence.findByC_N_S_P_R(
+				ResourcePermission resourcePermission =
+					resourcePermissionPersistence.fetchByC_N_S_P_R(
 						role.getCompanyId(), resourceName, scope, primKey,
 						role.getRoleId());
 
-				ResourcePermission resourcePermission = null;
-
-				if (resourcePermissions.isEmpty()) {
+				if (resourcePermission == null) {
 					long resourcePermissionId = counterLocalService.increment(
 						ResourcePermission.class.getName());
 
@@ -191,9 +189,6 @@ public class ResourcePermissionLocalServiceImpl
 					resourcePermission.setScope(scope);
 					resourcePermission.setPrimKey(primKey);
 					resourcePermission.setRoleId(role.getRoleId());
-				}
-				else {
-					resourcePermission = resourcePermissions.get(0);
 				}
 
 				long actionIdsLong = resourcePermission.getActionIds();
@@ -297,15 +292,13 @@ public class ResourcePermissionLocalServiceImpl
 			Collection<String> actionIds)
 		throws PortalException, SystemException {
 
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionPersistence.findByC_N_S_P_R(
+		ResourcePermission resourcePermission =
+			resourcePermissionPersistence.fetchByC_N_S_P_R(
 				companyId, name, scope, primKey, roleId);
 
-		if (resourcePermissions.isEmpty()) {
+		if (resourcePermission == null) {
 			return Collections.emptyList();
 		}
-
-		ResourcePermission resourcePermission = resourcePermissions.get(0);
 
 		List<String> availableActionIds = new ArrayList<String>(
 			actionIds.size());
@@ -384,29 +377,8 @@ public class ResourcePermissionLocalServiceImpl
 			long companyId, String name, int scope, String primKey, long roleId)
 		throws PortalException, SystemException {
 
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionPersistence.findByC_N_S_P_R(
+		return resourcePermissionPersistence.findByC_N_S_P_R(
 				companyId, name, scope, primKey, roleId);
-
-		if (!resourcePermissions.isEmpty()) {
-			return resourcePermissions.get(0);
-		}
-
-		StringBundler sb = new StringBundler(11);
-
-		sb.append("No ResourcePermission exists with the key {companyId=");
-		sb.append(companyId);
-		sb.append(", name=");
-		sb.append(name);
-		sb.append(", scope=");
-		sb.append(scope);
-		sb.append(", primKey=");
-		sb.append(primKey);
-		sb.append(", roleId=");
-		sb.append(roleId);
-		sb.append("}");
-
-		throw new NoSuchResourcePermissionException(sb.toString());
 	}
 
 	/**
@@ -1064,13 +1036,8 @@ public class ResourcePermissionLocalServiceImpl
 			resourcePermission = resourcePermissionsMap.get(roleId);
 		}
 		else {
-			List<ResourcePermission> resourcePermissions =
-				resourcePermissionPersistence.findByC_N_S_P_R(
-					companyId, name, scope, primKey, roleId);
-
-			if (!resourcePermissions.isEmpty()) {
-				resourcePermission = resourcePermissions.get(0);
-			}
+			resourcePermission = resourcePermissionPersistence.fetchByC_N_S_P_R(
+				companyId, name, scope, primKey, roleId);
 		}
 
 		if (resourcePermission == null) {

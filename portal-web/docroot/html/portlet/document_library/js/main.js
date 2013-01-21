@@ -531,6 +531,16 @@ AUI.add(
 							resultsContainer.append(repositorySearchResults);
 						}
 
+						if (searchResults || repositorySearchResults) {
+							var addButtonContainer = instance.byId('addButtonContainer');
+
+							addButtonContainer.hide();
+
+							var sortButtonContainer = instance.byId('sortButtonContainer');
+
+							sortButtonContainer.hide();
+						}
+
 						var repositoryName = instance._getRepositoryName(repositoryId);
 
 						if (repositoryName) {

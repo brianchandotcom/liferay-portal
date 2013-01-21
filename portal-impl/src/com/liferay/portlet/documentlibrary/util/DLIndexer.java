@@ -157,15 +157,15 @@ public class DLIndexer extends BaseIndexer {
 			"relatedEntryClassName");
 
 		if (Validator.isNotNull(relatedEntryClassName)) {
-			contextQuery.addRequiredTerm(
-				Field.CLASS_NAME_ID,
-				PortalUtil.getClassNameId(relatedEntryClassName));
-
 			Indexer indexer = IndexerRegistryUtil.getIndexer(
 				relatedEntryClassName);
 
-			if (indexer != null) {
+			if ((indexer != null) && !(indexer instanceof DLIndexer)) {
 				indexer.postProcessContextQuery(contextQuery, searchContext);
+
+				contextQuery.addRequiredTerm(
+					Field.CLASS_NAME_ID,
+					PortalUtil.getClassNameId(relatedEntryClassName));
 			}
 		}
 

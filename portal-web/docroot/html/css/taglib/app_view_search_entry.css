@@ -1,0 +1,169 @@
+.app-view-search-entry-taglib {
+	display: block;
+	margin: 5px;
+	padding: 5px 0 5px 20px;
+	position: relative;
+	text-align: left;
+
+	a {
+		color: #333;
+	}
+
+	.aui-tabview-list {
+		margin-bottom: 0;
+	}
+
+	.entry-thumbnail {
+		img {
+			background: #EAEAEA;
+			border: 1px solid #CCC;
+			margin: 0;
+			padding: 5px;
+		}
+	}
+
+	.entry-description {
+		display: block;
+		overflow: hidden;
+		word-wrap: break-word;
+	}
+
+	.entry-discussion {
+		border-top: 1px solid #CCC;
+		display: block;
+		margin-bottom: 1em;
+		margin-left: 4em;
+		overflow: hidden;
+
+		a {
+			display: block;
+			overflow: hidden;
+			text-decoration: none;
+		}
+
+		.entry-discussion-image {
+			float: left;
+			padding: 5px;
+
+			img.avatar {
+				width: 35px;
+			}
+		}
+
+		.entry-discussion-title {
+			display: block;
+		}
+
+		&:hover {
+			background-color: #D3E8F1;
+		}
+	}
+
+	.entry-folder {
+		color: #999;
+	}
+
+	.entry-link {
+		display: block;
+		overflow: hidden;
+		text-align: left;
+		text-decoration: none;
+
+		.entry-thumbnail-image {
+			border-width: 0;
+			text-decoration: none;
+		}
+	}
+
+	.entry-selector {
+		left: 5px;
+		position: absolute;
+		top: 10px;
+	}
+
+	.entry-thumbnail {
+		display: inline-block;
+		float: left;
+		margin: 5px 10px 5px 5px;
+		position: relative;
+		text-align: center;
+	}
+
+	.entry-title {
+		display: block;
+		font-size: 1.15em;
+		font-weight: bold;
+		padding: 5px 0 0;
+		word-wrap: break-word;
+	}
+
+	.folder-action, .entry-action {
+		height: 20px;
+		overflow: hidden;
+		position: absolute;
+		right: 6px;
+		top: 10px;
+		width: 22px;
+	}
+
+	.folder-action .direction-down, .entry-action .direction-down {
+		height: 20px;
+	}
+
+	.overlay {
+		clip: rect(0, 0, 0, 0);
+	}
+
+	.overlay.folder-action a, .overlay.entry-action a {
+		display: block;
+		float: right;
+		min-height: 15px;
+	}
+
+	&.active-area, &.active-area.hover, &.active-area td {
+		background-color: #5AD300 !important;
+	}
+
+	&.alt {
+		background-color: #EDF0F3;
+	}
+
+	&.selected a {
+		color: #FFF;
+	}
+
+	&.selected .entry-thumbnail img {
+		background-color: #B0D2E1;
+		border-color: #057CB0;
+	}
+
+	&.selected, &.selected:hover {
+		background-color: #00A2EA;
+	}
+
+	&:after {
+		clear: both;
+		content: ".";
+		display: block;
+		height: 0;
+		visibility: hidden;
+	}
+
+	&:hover, &.hover {
+		background-color: #D3E8F1;
+	}
+
+	&:hover .entry-selector, &.selected .entry-selector {
+		clip: rect(auto auto auto auto);
+		position: absolute;
+	}
+
+	&:hover .entry-thumbnail img {
+		background-color: #B0D2E1;
+		border-color: #7ABFDD;
+	}
+
+	&:hover .overlay, &.hover .overlay {
+		clip: rect(auto auto auto auto);
+	}
+}

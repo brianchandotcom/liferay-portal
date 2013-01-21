@@ -146,16 +146,18 @@ public class MBMessageIndexer extends BaseIndexer {
 				"relatedEntryClassName");
 
 			if (Validator.isNotNull(relatedEntryClassName)) {
-				contextQuery.addRequiredTerm(
-					Field.CLASS_NAME_ID,
-					PortalUtil.getClassNameId(relatedEntryClassName));
-
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					relatedEntryClassName);
 
-				if (indexer != null) {
+				if ((indexer != null) &&
+						!(indexer instanceof MBMessageIndexer)) {
+
 					indexer.postProcessContextQuery(
 						contextQuery, searchContext);
+
+					contextQuery.addRequiredTerm(
+						Field.CLASS_NAME_ID,
+						PortalUtil.getClassNameId(relatedEntryClassName));
 				}
 			}
 		}

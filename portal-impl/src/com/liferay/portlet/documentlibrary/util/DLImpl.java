@@ -416,6 +416,61 @@ public class DLImpl implements DL {
 		return portletURL.toString();
 	}
 
+	public Map<Long, List<MBMessage>> getDLEntries(Hits hits) {
+		Map<Long, List<MBMessage>> entries =
+			new HashMap<Long, List<MBMessage>>();
+
+		for (Document document : hits.getDocs()) {
+			String entryClassName = GetterUtil.getString(
+				document.get(Field.ENTRY_CLASS_NAME));
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			try {
+				FileEntry fileEntry = null;
+
+				MBMessage message = null;
+
+				if (entryClassName.equals(MBMessage.class.getName())) {
+					long classPK = GetterUtil.getLong(
+						document.get(Field.CLASS_PK));
+
+					fileEntry = DLAppLocalServiceUtil.getFileEntry(classPK);
+
+					message = MBMessageLocalServiceUtil.getMessage(
+						entryClassPK);
+				}
+				else if (entryClassName.equals(DLFileEntry.class.getName())) {
+					fileEntry = DLAppLocalServiceUtil.getFileEntry(
+						entryClassPK);
+				}
+
+				long fileEntryId = fileEntry.getFileEntryId();
+
+				List<MBMessage> messages = entries.get(fileEntryId);
+
+				if (messages == null) {
+					messages = new ArrayList<MBMessage>();
+				}
+
+				if (message != null) {
+					messages.add(message);
+				}
+
+				entries.put(fileEntryId, messages);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Documents and Media search index is stale and " +
+							"contains file entry {" + entryClassPK + "}");
+				}
+			}
+		}
+
+		return entries;
+	}
+
 	public Map<Locale, String> getEmailFileEntryAddedBodyMap(
 		PortletPreferences preferences) {
 

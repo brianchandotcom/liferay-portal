@@ -580,6 +580,14 @@ AUI.add(
 
 							Liferay.fire('liferay-app-view-folders:setEntries');
 						}
+
+						var addButtonContainer = instance.byId('addButtonContainer');
+
+						addButtonContainer.show();
+
+						var sortButtonContainer = instance.byId('sortButtonContainer');
+
+						sortButtonContainer.show();
 					},
 
 					_setFolders: function(content) {

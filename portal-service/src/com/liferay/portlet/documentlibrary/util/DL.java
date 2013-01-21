@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.List;
 import java.util.Locale;
@@ -92,6 +93,8 @@ public interface DL {
 	public String getDLControlPanelLink(
 			PortletRequest portletRequest, long folderId)
 		throws PortalException, SystemException;
+
+	public Map<Long, List<MBMessage>> getDLEntries(Hits hits);
 
 	public Map<Locale, String> getEmailFileEntryAddedBodyMap(
 		PortletPreferences preferences);

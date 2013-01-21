@@ -17,12 +17,14 @@ package com.liferay.portal.deploy;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,6 +44,7 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
+import jodd.util.ContextUtil;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -137,7 +140,14 @@ public class DeployUtil {
 	}
 
 	public static void redeployTomcat(String context) throws Exception {
-		File webXml = new File(getAutoDeployDestDir(), "/" + context + "/WEB-INF/web.xml");
+		if (context.length() == 0 || context.equals(StringPool.SLASH)) {
+			context = "/ROOT";
+		}
+
+		String fileName =
+			StringPool.SLASH.concat(context).concat("/WEB-INF/web.xml");
+
+		File webXml = new File(getAutoDeployDestDir(), fileName);
 
 		FileUtils.touch(webXml);
 	}

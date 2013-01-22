@@ -15,6 +15,7 @@
 package com.liferay.portlet.assetpublisher.util;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -409,6 +411,38 @@ public class AssetPublisherUtil {
 		else {
 			return availableClassTypeIds;
 		}
+	}
+
+	public static boolean getEmailAssetEntryAddedEnabled(
+		PortletPreferences preferences) {
+
+		String emailAssetEntryAddedEnabled = preferences.getValue(
+			"emailAssetEntryAddedEnabled", StringPool.BLANK);
+
+		if (Validator.isNotNull(emailAssetEntryAddedEnabled)) {
+			return GetterUtil.getBoolean(emailAssetEntryAddedEnabled);
+		}
+		else {
+			return PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_ENABLED;
+		}
+	}
+
+	public static String getEmailFromAddress(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return PortalUtil.getEmailFromAddress(
+			preferences, companyId,
+			PropsValues.ASSET_PUBLISHER_EMAIL_FROM_ADDRESS);
+	}
+
+	public static String getEmailFromName(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return PortalUtil.getEmailFromName(
+			preferences, companyId,
+			PropsValues.ASSET_PUBLISHER_EMAIL_FROM_NAME);
 	}
 
 	public static long[] getGroupIds(

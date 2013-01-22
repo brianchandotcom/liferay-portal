@@ -22,10 +22,20 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 String redirect = (String)request.getAttribute("configuration.jsp-redirect");
 String rootPortletId = (String)request.getAttribute("configuration.jsp-rootPortletId");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
+String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle");
 %>
 
-<liferay-ui:panel-container extended="<%= true %>" id="assetPublisherSelectionStylePanelContainer" persistState="<%= true %>">
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherSelectionStylePanel" persistState="<%= true %>" title="selection">
+<liferay-ui:tabs
+	formName="fm"
+	names="asset-selection,display-settings,subscriptions"
+	param="tabs2"
+	refresh="<%= false %>"
+>
+	<liferay-ui:section>
+		<liferay-ui:error-marker key="errorSection" value="asset-selection" />
+
+		<%= selectStyle %>
+
 		<aui:fieldset label="scope">
 			<%= selectScope %>
 		</aui:fieldset>
@@ -194,11 +204,18 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 			%>
 
 		</aui:fieldset>
-	</liferay-ui:panel>
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherSelectionDisplaySettingsPanel" persistState="<%= true %>" title="display-settings">
+	</liferay-ui:section>
+	<liferay-ui:section>
+		<liferay-ui:error-marker key="errorSection" value="display-settings" />
+
 		<%@ include file="/html/portlet/asset_publisher/display_settings.jspf" %>
-	</liferay-ui:panel>
-</liferay-ui:panel-container>
+	</liferay-ui:section>
+	<liferay-ui:section>
+		<liferay-ui:error-marker key="errorSection" value="subscriptions" />
+
+		<liferay-util:include page="/html/portlet/asset_publisher/email_subscription_settings.jsp" />
+	</liferay-ui:section>
+</liferay-ui:tabs>
 
 <aui:button-row>
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />

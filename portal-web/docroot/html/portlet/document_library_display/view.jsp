@@ -218,24 +218,24 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 				title="<%= topLink %>"
 			/>
 
-			<liferay-ui:search-container
-				delta="<%= fileEntriesPerPage %>"
-				deltaConfigurable="<%= false %>"
-				emptyResultsMessage="there-are-no-documents"
-				iteratorURL="<%= portletURL %>"
-			>
-
-				<%
+			<%
 				long groupFileEntriesUserId = 0;
 
 				if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
 					groupFileEntriesUserId = user.getUserId();
 				}
-				%>
+			%>
+
+			<liferay-ui:search-container
+				delta="<%= fileEntriesPerPage %>"
+				deltaConfigurable="<%= false %>"
+				emptyResultsMessage="there-are-no-documents"
+				iteratorURL="<%= portletURL %>"
+				total="<%= DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, defaultFolderId, null, status) %>"
+			>
 
 				<liferay-ui:search-container-results
 					results="<%= DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, defaultFolderId, null, status, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
-					total="<%= DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, defaultFolderId, null, status) %>"
 				/>
 
 				<liferay-ui:search-container-row

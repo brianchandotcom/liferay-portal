@@ -16,6 +16,7 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,19 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
+			SearchContainerTag<R> searchContainerTag =
+				(SearchContainerTag<R>)findAncestorWithClass(
+					this, SearchContainerTag.class);
+
+			SearchContainer<R> searchContainer =
+				searchContainerTag.getSearchContainer();
+
+			int total = searchContainer.getTotal();
+
+			if (Validator.isNull(_total)) {
+				_total = total;
+			}
+
 			if (_results == null) {
 				_results = (List<R>)pageContext.getAttribute(_resultsVar);
 				_total = (Integer)pageContext.getAttribute(_totalVar);
@@ -47,15 +61,10 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 				}
 			}
 
-			SearchContainerTag<R> searchContainerTag =
-				(SearchContainerTag<R>)findAncestorWithClass(
-					this, SearchContainerTag.class);
-
-			SearchContainer<R> searchContainer =
-				searchContainerTag.getSearchContainer();
-
 			searchContainer.setResults(_results);
-			searchContainer.setTotal(_total);
+			if (total == 0) {
+				searchContainer.setTotal(_total);
+			}
 
 			searchContainerTag.setHasResults(true);
 

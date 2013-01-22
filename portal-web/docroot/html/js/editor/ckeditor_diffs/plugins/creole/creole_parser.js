@@ -282,6 +282,9 @@ Parse.Simple.Creole = function(options) {
                 link.href = options && options.linkFormat
                     ? formatLink(r[1].replace(/~(.)/g, '$1'), options.linkFormat)
                     : r[1].replace(/~(.)/g, '$1');
+
+                link.setAttribute('data-cke-saved-href', link.href);
+
                 this.apply(link, r[2], options);
                 
                 node.appendChild(link);

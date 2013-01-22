@@ -543,6 +543,9 @@
 
 				creoleParserContent = creoleParserContent.replace("for (i in this.options) {", "for (var i in this.options) {");
 
+				// Add data-cke-saved-href attribute to named links
+				creoleParserContent = creoleParserContent.replace(": r[1].replace(/~(.)/g, '$1');", ": r[1].replace(/~(.)/g, '$1');\nlink.setAttribute('data-cke-saved-href', link.href);\n");
+
 				// Fix image
 
 				x = creoleParserContent.indexOf("regex: rx.img,");

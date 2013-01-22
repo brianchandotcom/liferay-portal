@@ -187,11 +187,13 @@ if (folder != null) {
 	<portlet:namespace />toggleActionsButton();
 </aui:script>
 
-<c:if test='<%= !strutsAction.equals("/document_library/search") %>'>
 	<span id="<portlet:namespace />displayStyleButtonsContainer">
-		<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
+
+		<c:if test='<%= !strutsAction.equals("/document_library/search") %>'>
+			<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
+		</c:if>
+
 	</span>
-</c:if>
 
 <aui:script use="liferay-document-library">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />

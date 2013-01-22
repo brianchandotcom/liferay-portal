@@ -110,14 +110,11 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 			</span>
 
 			<c:if test="<%= folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
-				<span class="change-search-folder">
+				<%
+				String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "changeSearchFolder', {searchEverywhere: " + (folder != null) + "});";
+				%>
 
-					<%
-					String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "changeSearchFolder', {searchEverywhere: " + (folder != null) + "});";
-					%>
-
-					<aui:button onClick="<%= taglibOnClick %>" value='<%= (folder != null) ? "search-everywhere" : "search-in-the-current-folder" %>' />
-				</span>
+				<aui:button cssClass="change-search-folder" onClick="<%= taglibOnClick %>" value='<%= (folder != null) ? "search-everywhere" : "search-in-the-current-folder" %>' />
 			</c:if>
 
 			<liferay-ui:icon cssClass="close-search" id="closeSearch" image="../aui/closethick" url="javascript:;" />
@@ -421,8 +418,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 %>
 
-<span id="<portlet:namespace />displayStyleButtons">
-</span>
+<span id="<portlet:namespace />displayStyleButtons"></span>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.search_resources_jsp");

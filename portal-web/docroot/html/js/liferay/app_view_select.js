@@ -137,10 +137,12 @@ AUI.add(
 						if (length > 1) {
 							var displayStyleToolbar = instance._displayStyleToolbar.getData(DISPLAY_STYLE_TOOLBAR);
 
-							var displayStyle = instance._getDisplayStyle(instance._displayStyle);
+							if (displayStyleToolbar) {
+								var displayStyle = instance._getDisplayStyle(instance._displayStyle);
 
-							for (var i = 0; i < length; i++) {
-								displayStyleToolbar.item(i).StateInteraction.set(STR_ACTIVE, displayStyle === displayViews[i]);
+								for (var i = 0; i < length; i++) {
+									displayStyleToolbar.item(i).StateInteraction.set(STR_ACTIVE, displayStyle === displayViews[i]);
+								}
 							}
 						}
 					},

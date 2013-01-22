@@ -32,6 +32,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	refresh="<%= false %>"
 >
 	<liferay-ui:section>
+		<liferay-ui:error-marker key="errorSection" value="asset-selection" />
+
 		<%= selectStyle %>
 
 		<liferay-ui:panel-container extended="<%= true %>" id="assetPublisherDynamicSelectionAssetSelectionPanelContainer" persistState="<%= true %>">
@@ -375,10 +377,14 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	</liferay-ui:section>
 
 	<liferay-ui:section>
+		<liferay-ui:error-marker key="errorSection" value="display-settings" />
+
 		<%@ include file="/html/portlet/asset_publisher/display_settings.jspf" %>
 	</liferay-ui:section>
 
 	<liferay-ui:section>
+		<liferay-ui:error-marker key="errorSection" value="subscriptions" />
+
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 			<liferay-ui:rss-settings
 				delta="<%= rssDelta %>"

@@ -32,6 +32,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	refresh="<%= false %>"
 >
 	<liferay-ui:section>
+		<liferay-ui:error-marker key="errorSection" value="asset-selection" />
+
 		<%= selectStyle %>
 
 		<aui:fieldset label="scope">
@@ -204,9 +206,13 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		</aui:fieldset>
 	</liferay-ui:section>
 	<liferay-ui:section>
+		<liferay-ui:error-marker key="errorSection" value="display-settings" />
+
 		<%@ include file="/html/portlet/asset_publisher/display_settings.jspf" %>
 	</liferay-ui:section>
 	<liferay-ui:section>
+		<liferay-ui:error-marker key="errorSection" value="subscriptions" />
+
 		<liferay-util:include page="/html/portlet/asset_publisher/email_subscription_settings.jsp" />
 	</liferay-ui:section>
 </liferay-ui:tabs>

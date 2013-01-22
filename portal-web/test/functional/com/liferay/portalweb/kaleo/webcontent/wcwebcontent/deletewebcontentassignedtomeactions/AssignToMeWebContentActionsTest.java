@@ -80,10 +80,8 @@ public class AssignToMeWebContentActionsTest extends BaseTestCase {
 				"//tr[contains(.,'Review')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
-		System.out.println("HHHHHHHHHHHHHHHHHHHHHHH");
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		System.out.println("IIIIIIIIIIIIIIIIIIIIIII");
 	}
 }

@@ -47,7 +47,7 @@ public class TearDownGuestWebContentTest extends BaseTestCase {
 					selenium.getText(
 						"//span[@title='Liferay']/ul/li/strong/a/span"));
 				selenium.clickAt("link=Web Content",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean webContentPresent = selenium.isElementPresent(

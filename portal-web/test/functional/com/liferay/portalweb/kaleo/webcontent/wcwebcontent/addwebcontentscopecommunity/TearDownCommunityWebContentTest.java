@@ -110,6 +110,23 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible(
+					"//span[@title='Liferay']/ul/li/strong/a/span");
+				selenium.clickAt("//span[@title='Liferay']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Scope Selector"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]");
+				assertEquals(RuntimeVariables.replace("Community Name"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]"));
+				selenium.waitForPageToLoad("30000");
+				selenium.waitForText("//span[@title='Community Name']/ul/li/strong/a/span",
+					"Community Name");
+				assertEquals(RuntimeVariables.replace("Community Name"),
+					selenium.getText(
+						"//span[@title='Community Name']/ul/li/strong/a/span"));
 				selenium.clickAt("link=Recycle Bin",
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");

@@ -86,7 +86,7 @@ public class TearDownMyCommunityWebContentTest extends BaseTestCase {
 						"No Web Content was found."),
 					selenium.getText(
 						"//div[@class='entries-empty portlet-msg-info']"));
-				selenium.open("/web/guest/home/");
+				selenium.open("/user/joebloggs/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(
@@ -98,6 +98,11 @@ public class TearDownMyCommunityWebContentTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible(
+					"//li[@class='lfr-trigger']/strong/a/span");
+				assertTrue(selenium.isPartialText(
+						"//li[@class='lfr-trigger']/strong/a/span",
+						"Joe Bloggs's Personal"));
 				selenium.clickAt("link=Recycle Bin",
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");

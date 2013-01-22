@@ -30,8 +30,6 @@ public class WebDriverHelper {
 		int timeout = TestPropsValues.TIMEOUT_IMPLICIT_WAIT * 1000;
 
 		WebDriverHelper.setTimeoutImplicit(webDriver, String.valueOf(timeout));
-
-		System.out.println("" + timeout);
 	}
 
 	public static void setTimeoutImplicit(WebDriver webDriver, String timeout) {
@@ -41,8 +39,6 @@ public class WebDriverHelper {
 
 		timeouts.implicitlyWait(
 			GetterUtil.getInteger(timeout), TimeUnit.MILLISECONDS);
-
-		System.out.println(timeout);
 	}
 
 }

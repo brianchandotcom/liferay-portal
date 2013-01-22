@@ -110,6 +110,23 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible(
+					"//span[@title='Liferay']/ul/li/strong/a");
+				selenium.clickAt("//span[@title='Liferay']/ul/li/strong/a",
+					RuntimeVariables.replace("Scope Selector"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]");
+				assertEquals(RuntimeVariables.replace("Global"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
+				selenium.waitForPageToLoad("30000");
+				selenium.waitForText("//span[@title='Global']/ul/li/strong/a/span",
+					"Global");
+				assertEquals(RuntimeVariables.replace("Global"),
+					selenium.getText(
+						"//span[@title='Global']/ul/li/strong/a/span"));
 				selenium.clickAt("link=Recycle Bin",
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");

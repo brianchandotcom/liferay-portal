@@ -1587,6 +1587,8 @@ public interface PropsKeys {
 
 	public static final String MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES = "module.framework.system.bundle.export.packages";
 
+	public static final String MODULE_FRAMEWORK_SYSTEM_BUNDLE_IGNORED_FRAGMENTS = "module.framework.system.bundle.ignored.fragments";
+
 	public static final String MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA = "module.framework.system.packages.extra";
 
 	public static final String MONITORING_DATA_SAMPLE_THREAD_LOCAL = "monitoring.data.sample.thread.local";

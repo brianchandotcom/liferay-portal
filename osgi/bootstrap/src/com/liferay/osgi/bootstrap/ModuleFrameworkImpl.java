@@ -14,6 +14,11 @@
 
 package com.liferay.osgi.bootstrap;
 
+import aQute.lib.osgi.Analyzer;
+import aQute.lib.osgi.Builder;
+import aQute.lib.osgi.Jar;
+import aQute.lib.osgi.Verifier;
+
 import aQute.libg.header.OSGiHeader;
 import aQute.libg.version.Version;
 
@@ -21,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServiceLoader;
@@ -29,19 +35,28 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UniqueList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.util.PropsValues;
 
+import edu.emory.mathcs.backport.java.util.Collections;
+
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.JarURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -50,9 +65,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.jar.Attributes;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 
@@ -188,6 +208,34 @@ public class ModuleFrameworkImpl
 		BundleContext bundleContext = _framework.getBundleContext();
 
 		return bundleContext.getBundle(bundleId);
+	}
+
+	public List<URL> getExtraPackageLocations() {
+		if (_extraPackageLocations != null) {
+				return _extraPackageLocations;
+		}
+
+		_locationsLock.lock();
+
+		try {
+			List<URL> extraPackageLocations = new ArrayList<URL>();
+
+			for (List<URL> urls : getExtraPackageMap().values()) {
+				extraPackageLocations.addAll(urls);
+			}
+
+			_extraPackageLocations = Collections.unmodifiableList(
+				extraPackageLocations);
+		}
+		finally {
+			_locationsLock.unlock();
+		}
+
+		return _extraPackageLocations;
+	}
+
+	public Map<String, List<URL>> getExtraPackageMap() {
+		return _extraPackageMap;
 	}
 
 	public Framework getFramework() {
@@ -474,7 +522,81 @@ public class ModuleFrameworkImpl
 			properties.put(propertyKey, value);
 		}
 
+		String systemPackagesExtra = _prepareSystemPackagesExtra();
+
+		properties.put(
+			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA, systemPackagesExtra);
+
 		return properties;
+	}
+
+	private Manifest _calculateLibraryManifest(URL url, Manifest manifest) {
+		Analyzer analyzer = new Analyzer();
+		Jar jar = null;
+
+		try {
+			URLConnection connection = url.openConnection();
+
+			String fileName = url.getFile();
+
+			if (connection instanceof JarURLConnection) {
+				JarURLConnection jarConnection = (JarURLConnection)connection;
+
+				fileName = jarConnection.getJarFileURL().getFile();
+			}
+
+			File file = new File(fileName);
+
+			if (!file.exists() || !file.canRead()) {
+				return manifest;
+			}
+
+			fileName = file.getName();
+
+			Jar inputJar = new Jar(fileName, file);
+
+			analyzer.setJar(inputJar);
+
+			jar = analyzer.getJar();
+
+			String bsn = fileName;
+
+			Matcher matcher = _bsnPattern.matcher(bsn);
+
+			if (matcher.matches()) {
+				bsn = matcher.group(1);
+			}
+
+			analyzer.setProperty(Analyzer.BUNDLE_SYMBOLICNAME, bsn);
+
+			String exportPackage = analyzer.calculateExportsFromContents(jar);
+
+			analyzer.setProperty(Analyzer.EXPORT_PACKAGE, exportPackage);
+
+			analyzer.mergeManifest(manifest);
+
+			String version = analyzer.getProperty(Analyzer.BUNDLE_VERSION);
+
+			if (version != null) {
+				version = Builder.cleanupVersion(version);
+
+				analyzer.setProperty(Analyzer.BUNDLE_VERSION, version);
+			}
+
+			return analyzer.calcManifest();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return manifest;
+		}
+		finally {
+			if (jar != null) {
+				jar.close();
+			}
+
+			analyzer.close();
+		}
 	}
 
 	private void _checkPermission() throws PrincipalException {
@@ -640,6 +762,159 @@ public class ModuleFrameworkImpl
 		}
 	}
 
+	private String _prepareSystemPackagesExtra() {
+		_extraPackageMap = new TreeMap<String, List<URL>>();
+
+		StringBundler sb = new StringBundler();
+
+		for (String extraPackage :
+				PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA) {
+
+			sb.append(extraPackage);
+			sb.append(StringPool.COMMA);
+		}
+
+		List<URL> list = new UniqueList<URL>();
+
+		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+
+		Enumeration<URL> enumeration = Collections.enumeration(
+			Collections.emptyList());
+
+		try {
+			enumeration = classLoader.getResources(MANIFEST_PATH);
+		}
+		catch (IOException ie) {
+			_log.error(ie, ie);
+		}
+
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
+
+			list.add(url);
+		}
+
+		List<String> ignoredFragments = ListUtil.fromArray(
+			PropsValues.MODULE_FRAMEWORK_SYSTEM_BUNDLE_IGNORED_FRAGMENTS);
+
+		for (URL url : list) {
+			_processURL(sb, url, ignoredFragments);
+		}
+
+		// This should become read-only after initialization
+
+		_extraPackageMap = Collections.unmodifiableMap(_extraPackageMap);
+
+		sb.setIndex(sb.index() - 1);
+
+		if (_log.isTraceEnabled()) {
+			_log.trace(
+				"The portal's system bundle is exporting the following " +
+					"packages: \n" + sb.toString().replace(",", "\n"));
+		}
+
+		return sb.toString();
+	}
+
+	private void _processURL(
+		StringBundler sb, URL url, List<String> ignoredFragments) {
+
+		Manifest manifest;
+
+		try {
+			manifest = new Manifest(url.openStream());
+		}
+		catch (IOException ie) {
+
+			// Can't really happen because all these urls were loaded by a
+			// search for MANIFEST.MF resources
+
+			_log.error(ie, ie);
+
+			return;
+		}
+
+		Attributes attributes = manifest.getMainAttributes();
+
+		String bundleSymbolicName = attributes.getValue(
+			Constants.BUNDLE_SYMBOLICNAME);
+
+		if (Validator.isNull(bundleSymbolicName)) {
+			if (url.toString().contains(PropsValues.LIFERAY_LIB_PORTAL_DIR)) {
+				manifest = _calculateLibraryManifest(url, manifest);
+
+				attributes = manifest.getMainAttributes();
+
+				bundleSymbolicName = attributes.getValue(
+					new Attributes.Name(Constants.BUNDLE_SYMBOLICNAME));
+
+				if (Validator.isNull(bundleSymbolicName)) {
+					return;
+				}
+			}
+			else {
+				return;
+			}
+		}
+
+		String rootBundleSymbolicName = bundleSymbolicName;
+
+		int pos = rootBundleSymbolicName.indexOf(StringPool.SEMICOLON);
+
+		if (pos != -1) {
+			rootBundleSymbolicName = rootBundleSymbolicName.substring(0, pos);
+		}
+
+		for (String ignoredFragment : ignoredFragments) {
+			int fragmentLength = ignoredFragment.length();
+
+			boolean endsWithStar = ignoredFragment.endsWith(StringPool.STAR);
+			boolean isIgnoredFragment = rootBundleSymbolicName.equals(
+				ignoredFragment);
+			boolean startsWithFragment =
+				rootBundleSymbolicName.startsWith(
+					ignoredFragment.substring(0, fragmentLength - 1));
+
+			if (isIgnoredFragment || (endsWithStar && startsWithFragment)) {
+				return;
+			}
+		}
+
+		String exportPackageHeader = GetterUtil.getString(
+			attributes.getValue(Constants.EXPORT_PACKAGE));
+
+		Map<String, Map<String, String>> exportPackageHeaderMap =
+			OSGiHeader.parseHeader(exportPackageHeader);
+
+		for (Map.Entry<String, Map<String, String>> entry :
+				exportPackageHeaderMap.entrySet()) {
+
+			String key = entry.getKey();
+
+			List<URL> list = _extraPackageMap.get(key);
+
+			if (list == null) {
+				list = new ArrayList<URL>();
+
+				_extraPackageMap.put(key, list);
+			}
+
+			list.add(url);
+
+			sb.append(key);
+
+			Map<String, String> value = entry.getValue();
+
+			if (value.containsKey("version")) {
+				sb.append(";version=\"");
+				sb.append(value.get("version"));
+				sb.append("\"");
+			}
+
+			sb.append(StringPool.COMMA);
+		}
+	}
+
 	private void _registerApplicationContext(
 		ApplicationContext applicationContext) {
 
@@ -727,9 +1002,17 @@ public class ModuleFrameworkImpl
 		frameworkWiring.refreshBundles(refreshBundles, frameworkListener);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkUtil.class);
+	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkImpl.class);
+
+	private final Pattern _bsnPattern = Pattern.compile(
+		"(" + Verifier.SYMBOLICNAME.pattern() + ")(-[0-9])?.*\\.jar");
+
+	private List<URL> _extraPackageLocations;
+
+	private Map<String, List<URL>> _extraPackageMap;
 
 	private Framework _framework;
+	private final Lock _locationsLock = new ReentrantLock();
 
 	private class ModuleFrameworkServiceLoaderCondition
 		implements ServiceLoaderCondition {

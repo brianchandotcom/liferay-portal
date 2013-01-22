@@ -30,6 +30,8 @@ public interface ModuleFrameworkConstants {
 	public static final String FELIX_FILEINSTALL_TMPDIR =
 		"felix.fileinstall.tmpdir";
 
+	public static final String MANIFEST_PATH = "META-INF/MANIFEST.MF";
+
 	public static final String SERVICE_PROPERTY_KEY_BEAN_ID = "bean.id";
 
 	public static final String SERVICE_PROPERTY_KEY_ORIGINAL_BEAN =

@@ -1563,6 +1563,12 @@ public interface PropsKeys {
 
 	public static final String MODEL_HINTS_CONFIGS = "model.hints.configs";
 
+	public static final String MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS = "module.framework.auto.deploy.dirs";
+
+	public static final String MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL = "module.framework.auto.deploy.interval";
+
+	public static final String MODULE_FRAMEWORK_BASE_DIR = "module.framework.base.dir";
+
 	public static final String MODULE_FRAMEWORK_BEGINNING_START_LEVEL = "module.framework.beginning.start.level";
 
 	public static final String MODULE_FRAMEWORK_CORE_DIR = "module.framework.core.dir";

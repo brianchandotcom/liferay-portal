@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServiceLoader;
 import com.liferay.portal.kernel.util.ServiceLoaderCondition;
@@ -28,10 +29,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UniqueList;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.util.PropsValues;
@@ -43,16 +41,14 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarInputStream;
@@ -441,25 +437,42 @@ public class ModuleFrameworkImpl
 			Constants.FRAMEWORK_STORAGE,
 			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
 
-		UniqueList<String> packages = new UniqueList<String>();
+		// File install
 
-		try {
-			_getBundleExportPackages(
-				PropsValues.MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES,
-				packages);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		StringBundler sb = new StringBundler(3);
 
-		packages.addAll(
-			Arrays.asList(PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA));
+		sb.append(PropsValues.MODULE_FRAMEWORK_LIB_DIR);
+		sb.append(StringPool.COMMA);
+		sb.append(
+			StringUtil.merge(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS));
 
-		Collections.sort(packages);
-
+		properties.put(FELIX_FILEINSTALL_DIR, sb.toString());
+		properties.put(FELIX_FILEINSTALL_LOG_LEVEL, _getFileInstallLogLevel());
 		properties.put(
-			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA,
-			StringUtil.merge(packages));
+			FELIX_FILEINSTALL_POLL,
+			String.valueOf(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL));
+		properties.put(
+			FELIX_FILEINSTALL_TMPDIR, System.getProperty("java.io.tmpdir"));
+
+		Properties extraProperties = PropsUtil.getProperties(
+			"module.framework.properties.", true);
+
+		for (Object key : extraProperties.keySet()) {
+			String propertyKey = (String)key;
+
+			String value = (String)extraProperties.get(propertyKey);
+
+			// We need to support BLANK and null distinctly. This is due to some
+			// different behaviors between OSGi implementations. So, if a value
+			// is passed as property= it will be treated as BLANK. Otherwise,
+			// property=null will be treated as an explicit 'null' reference.
+
+			if (StringPool.NULL.equals(value)) {
+				value = null;
+			}
+
+			properties.put(propertyKey, value);
+		}
 
 		return properties;
 	}
@@ -473,77 +486,27 @@ public class ModuleFrameworkImpl
 		}
 	}
 
-	private void _getBundleExportPackages(
-			String[] bundleSymbolicNames, List<String> packages)
-		throws Exception {
+	private String _getFileInstallLogLevel() {
 
-		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+		// Felix file install uses a logging level scheme as follows:
+		// NONE=0, ERROR=1, WARNING=2, INFO=3, DEBUG=4
 
-		Enumeration<URL> enu = classLoader.getResources("META-INF/MANIFEST.MF");
+		int fileInstallLogLevel = 0;
 
-		while (enu.hasMoreElements()) {
-			URL url = enu.nextElement();
-
-			Manifest manifest = new Manifest(url.openStream());
-
-			Attributes attributes = manifest.getMainAttributes();
-
-			String bundleSymbolicName = attributes.getValue(
-				Constants.BUNDLE_SYMBOLICNAME);
-
-			if (Validator.isNull(bundleSymbolicName)) {
-				continue;
-			}
-
-			for (String curBundleSymbolicName : bundleSymbolicNames) {
-				if (!bundleSymbolicName.startsWith(curBundleSymbolicName)) {
-					continue;
-				}
-
-				String exportPackage = attributes.getValue(
-					Constants.EXPORT_PACKAGE);
-
-				Map<String, Map<String, String>> exportPackageMap =
-					OSGiHeader.parseHeader(exportPackage);
-
-				for (Map.Entry<String, Map<String, String>> entry :
-						exportPackageMap.entrySet()) {
-
-					String javaPackage = entry.getKey();
-					Map<String, String> javaPackageMap = entry.getValue();
-
-					StringBundler sb = new StringBundler(6);
-
-					sb.append(javaPackage);
-					sb.append(";");
-					sb.append(Constants.VERSION_ATTRIBUTE);
-					sb.append("=\"");
-
-					if (javaPackageMap.containsKey(
-							Constants.VERSION_ATTRIBUTE)) {
-
-						String version = javaPackageMap.get(
-							Constants.VERSION_ATTRIBUTE);
-
-						sb.append(version);
-					}
-					else {
-						String bundleVersionString = attributes.getValue(
-							Constants.BUNDLE_VERSION);
-
-						sb.append(bundleVersionString);
-					}
-
-					sb.append("\"");
-
-					javaPackage = sb.toString();
-
-					packages.add(javaPackage);
-				}
-
-				break;
-			}
+		if (_log.isDebugEnabled()) {
+			fileInstallLogLevel = 4;
 		}
+		else if (_log.isErrorEnabled()) {
+			fileInstallLogLevel = 1;
+		}
+		else if (_log.isInfoEnabled()) {
+			fileInstallLogLevel = 3;
+		}
+		else if (_log.isWarnEnabled()) {
+			fileInstallLogLevel = 2;
+		}
+
+		return String.valueOf(fileInstallLogLevel);
 	}
 
 	private Set<Class<?>> _getInterfaces(Object bean) {

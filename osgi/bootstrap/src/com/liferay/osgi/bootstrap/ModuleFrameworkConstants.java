@@ -19,6 +19,17 @@ package com.liferay.osgi.bootstrap;
  */
 public interface ModuleFrameworkConstants {
 
+	public static final String FELIX_FILEINSTALL_DIR = "felix.fileinstall.dir";
+
+	public static final String FELIX_FILEINSTALL_LOG_LEVEL =
+		"felix.fileinstall.log.level";
+
+	public static final String FELIX_FILEINSTALL_POLL =
+		"felix.fileinstall.poll";
+
+	public static final String FELIX_FILEINSTALL_TMPDIR =
+		"felix.fileinstall.tmpdir";
+
 	public static final String SERVICE_PROPERTY_KEY_BEAN_ID = "bean.id";
 
 	public static final String SERVICE_PROPERTY_KEY_ORIGINAL_BEAN =

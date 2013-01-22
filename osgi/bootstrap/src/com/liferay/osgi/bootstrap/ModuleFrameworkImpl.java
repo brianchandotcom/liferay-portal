@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServiceLoader;
@@ -503,7 +504,7 @@ public class ModuleFrameworkImpl
 			FELIX_FILEINSTALL_TMPDIR, System.getProperty("java.io.tmpdir"));
 
 		Properties extraProperties = PropsUtil.getProperties(
-			"module.framework.properties.", true);
+			PropsKeys.MODULE_FRAMEWORK_PROPERTIES, true);
 
 		for (Object key : extraProperties.keySet()) {
 			String propertyKey = (String)key;

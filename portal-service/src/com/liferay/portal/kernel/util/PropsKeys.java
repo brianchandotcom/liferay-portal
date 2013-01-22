@@ -1579,6 +1579,8 @@ public interface PropsKeys {
 
 	public static final String MODULE_FRAMEWORK_LIB_DIR = "module.framework.lib.dir";
 
+	public static final String MODULE_FRAMEWORK_PROPERTIES = "module.framework.properties.";
+
 	public static final String MODULE_FRAMEWORK_REGISTER_LIFERAY_SERVICES = "module.framework.register.liferay.services";
 
 	public static final String MODULE_FRAMEWORK_RUNTIME_START_LEVEL = "module.framework.runtime.start.level";

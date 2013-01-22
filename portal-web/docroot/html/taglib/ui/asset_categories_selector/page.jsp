@@ -30,15 +30,24 @@ List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
 
 Group group = themeDisplay.getScopeGroup();
 
+StringBundler vocabularyGroupIds = new StringBundler(3);
+
 if (group.isLayout()) {
 	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(group.getParentGroupId(), false));
+
+	vocabularyGroupIds.append(group.getParentGroupId());
 }
 else {
 	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, false));
+
+	vocabularyGroupIds.append(scopeGroupId);
 }
 
 if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(themeDisplay.getCompanyGroupId(), false));
+
+	vocabularyGroupIds.append(StringPool.COMMA);
+	vocabularyGroupIds.append(themeDisplay.getCompanyGroupId());
 }
 
 if (Validator.isNotNull(className)) {
@@ -143,7 +152,7 @@ else {
 				instanceVar: '<%= namespace + randomNamespace %>',
 				maxEntries: <%= maxEntries %>,
 				portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
-				vocabularyGroupIds: '<%= scopeGroupId %>',
+				vocabularyGroupIds: '<%= vocabularyGroupIds.toString() %>',
 				vocabularyIds: '<%= ListUtil.toString(vocabularies, "vocabularyId") %>'
 			}
 		).render();

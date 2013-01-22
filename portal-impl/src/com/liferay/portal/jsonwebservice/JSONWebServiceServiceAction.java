@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceConfigurator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServiceLoader;
@@ -90,8 +91,8 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		Exception uploadException =
-			(Exception) request.getAttribute(WebKeys.UPLOAD_EXCEPTION);
+		UploadException uploadException = (UploadException)request.getAttribute(
+			WebKeys.UPLOAD_EXCEPTION);
 
 		if (uploadException != null) {
 			return JSONFactoryUtil.serializeException(uploadException);

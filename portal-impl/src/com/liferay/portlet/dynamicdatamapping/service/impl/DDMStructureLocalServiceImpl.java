@@ -609,6 +609,57 @@ public class DDMStructureLocalServiceImpl
 			structure.getDescriptionMap(), xsd, structure);
 	}
 
+	public void updateXSDFieldMetadataEntryValue(
+			long structureId, String fieldName, String metadataEntryName,
+			String metadataEntryValue, Locale locale)
+		throws SystemException, PortalException {
+
+		DDMStructure ddmStructure = fetchDDMStructure(structureId);
+
+		if (ddmStructure == null) {
+			return;
+		}
+
+		String xsd = ddmStructure.getXsd();
+
+		try {
+			Document document = SAXReaderUtil.read(xsd);
+
+			Element rootElement = document.getRootElement();
+
+			List<Element> dynamicElementElements = rootElement.elements(
+				"dynamic-element");
+
+			for (Element dynamicElementElement : dynamicElementElements) {
+				String name = dynamicElementElement.attributeValue(
+					"name", StringPool.BLANK);
+
+				if (name.equals(fieldName)) {
+					List<Element> metadataElements =
+						dynamicElementElement.elements("meta-data");
+
+					for (Element metadataElement : metadataElements) {
+						for (Element metadataEntryElement :
+							metadataElement.elements()) {
+
+							String attributeName =
+								metadataEntryElement.attributeValue("name");
+
+							if (attributeName.equals(metadataEntryName)) {
+								metadataEntryElement.setText(
+									metadataEntryValue);
+							}
+						}
+					}
+				}
+			}
+
+			updateStructureXsd(structureId, document.asXML());
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
+	}
+
 	protected void appendNewStructureRequiredFields(
 		DDMStructure structure, Document templateDocument) {
 

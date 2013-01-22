@@ -33,6 +33,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.taglib.util.VelocityTaglib;
+import com.liferay.taglib.util.VelocityTaglibImpl;
 import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
 
 import freemarker.ext.servlet.HttpRequestHashModel;
@@ -332,7 +333,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		HttpServletResponse response =
 			(HttpServletResponse)pageContext.getResponse();
 
-		VelocityTaglib velocityTaglib = new VelocityTaglib(
+		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
 			servletContext, request,
 			new PipingServletResponse(response, pageContext.getOut()),
 			pageContext, null);

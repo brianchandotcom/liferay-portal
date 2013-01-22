@@ -282,7 +282,7 @@ public class ThemeUtil {
 			writer = new UnsyncStringWriter();
 		}
 
-		VelocityTaglib velocityTaglib = new VelocityTaglib(
+		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
 			servletContext, request,
 			new PipingServletResponse(response, writer), pageContext, template);
 
@@ -501,7 +501,7 @@ public class ThemeUtil {
 			writer = new UnsyncStringWriter();
 		}
 
-		VelocityTaglib velocityTaglib = new VelocityTaglib(
+		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
 			servletContext, request,
 			new PipingServletResponse(response, writer), pageContext, template);
 

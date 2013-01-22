@@ -15,6 +15,7 @@
 package com.liferay.taglib.util;
 
 import com.liferay.portal.kernel.templateparser.TemplateContext;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.aui.ColumnTag;
@@ -39,13 +40,15 @@ import javax.servlet.ServletContext;
 /**
  * @author Daniel Reuther
  */
-public interface VelocityTaglib {
+public class DummyVelocityTaglib implements VelocityTaglib {
 
 	public void actionURL(long plid, String portletName, String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void actionURL(String portletName, String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
 	/**
 	 * @deprecated {@link #actionURL(String, String, Boolean, Boolean, Boolean,
@@ -58,7 +61,8 @@ public interface VelocityTaglib {
 			long plid, long refererPlid, String portletName, Boolean anchor,
 			Boolean encrypt, long doAsUserId, Boolean portletConfiguration,
 			String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void actionURL(
 			String windowState, String portletMode, Boolean secure,
@@ -66,165 +70,252 @@ public interface VelocityTaglib {
 			long plid, long refererPlid, String portletName, Boolean anchor,
 			Boolean encrypt, long doAsGroupId, long doAsUserId,
 			Boolean portletConfiguration, String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void actionURL(
 			String windowState, String portletMode, long plid,
 			String portletName, String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void actionURL(
 			String windowState, String portletMode, String portletName,
 			String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void assetCategoriesSummary(
 			String className, long classPK, String message,
 			PortletURL portletURL)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void assetLinks(long assetEntryId, String className, long classPK)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void assetTagsSummary(
 			String className, long classPK, String message,
 			String assetTagNames, PortletURL portletURL)
-		throws Exception;
+		throws Exception {
+	}
 
-	public void breadcrumb() throws Exception;
+	public void breadcrumb() throws Exception {
+	}
 
 	public void breadcrumb(
 			String displayStyle, boolean showGuestGroup,
 			boolean showParentGroups, boolean showLayout,
 			boolean showPortletBreadcrumb)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void discussion(
 			String className, long classPK, String formAction, String formName,
 			boolean hideControls, boolean ratingsEnabled, String redirect,
 			String subject, long userId)
-		throws Exception;
+		throws Exception {
+	}
 
-	public void doAsURL(long doAsUserId) throws Exception;
+	public void doAsURL(long doAsUserId) throws Exception {
+	}
 
 	public void flags(
 			String className, long classPK, String contentTitle, boolean label,
 			String message, long reportedUserId)
-		throws Exception;
+		throws Exception {
+	}
 
 	public AssetCategoriesSummaryTag getAssetCategoriesSummaryTag()
-		throws Exception;
+		throws Exception {
 
-	public AssetLinksTag getAssetLinksTag() throws Exception;
+		return null;
+	}
 
-	public AssetTagsSummaryTag getAssetTagsSummaryTag() throws Exception;
+	public AssetLinksTag getAssetLinksTag() throws Exception {
 
-	public BreadcrumbTag getBreadcrumbTag() throws Exception;
+		return null;
+	}
 
-	public ColumnTag getColumnTag() throws Exception;
+	public AssetTagsSummaryTag getAssetTagsSummaryTag() throws Exception {
 
-	public DiscussionTag getDiscussionTag() throws Exception;
+		return null;
+	}
 
-	public FlagsTag getFlagsTag() throws Exception;
+	public BreadcrumbTag getBreadcrumbTag() throws Exception {
 
-	public IconTag getIconTag() throws Exception;
+		return null;
+	}
 
-	public JournalArticleTag getJournalArticleTag() throws Exception;
+	public ColumnTag getColumnTag() throws Exception {
 
-	public LayoutTag getLayoutTag() throws Exception;
+		return null;
+	}
 
-	public MySitesTag getMySitesTag() throws Exception;
+	public DiscussionTag getDiscussionTag() throws Exception {
 
-	public PngImageTag getPngImageTag() throws Exception;
+		return null;
+	}
 
-	public RatingsTag getRatingsTag() throws Exception;
+	public FlagsTag getFlagsTag() throws Exception {
 
-	public String getSetting(String name);
+		return null;
+	}
 
-	public WindowState getWindowState(String windowState);
+	public IconTag getIconTag() throws Exception {
+
+		return null;
+	}
+
+	public JournalArticleTag getJournalArticleTag() throws Exception {
+
+		return null;
+	}
+
+	public LayoutTag getLayoutTag() throws Exception {
+
+		return null;
+	}
+
+	public MySitesTag getMySitesTag() throws Exception {
+
+		return null;
+	}
+
+	public PngImageTag getPngImageTag() throws Exception {
+
+		return null;
+	}
+
+	public RatingsTag getRatingsTag() throws Exception {
+
+		return null;
+	}
+
+	public String getSetting(String name) {
+
+		return null;
+	}
+
+	public WindowState getWindowState(String windowState) {
+
+		return null;
+	}
 
 	public void icon(String image, boolean label, String message, String url)
-		throws Exception;
+		throws Exception {
+	}
 
-	public void iconBack() throws Exception;
+	public void iconBack() throws Exception {
+	}
 
-	public void iconClose() throws Exception;
+	public void iconClose() throws Exception {
+	}
 
-	public void iconConfiguration() throws Exception;
+	public void iconConfiguration() throws Exception {
+	}
 
-	public void iconEdit() throws Exception;
+	public void iconEdit() throws Exception {
+	}
 
-	public void iconEditDefaults() throws Exception;
+	public void iconEditDefaults() throws Exception {
+	}
 
-	public void iconEditGuest() throws Exception;
+	public void iconEditGuest() throws Exception {
+	}
 
-	public void iconHelp() throws Exception;
+	public void iconHelp() throws Exception {
+	}
 
-	public void iconMaximize() throws Exception;
+	public void iconMaximize() throws Exception {
+	}
 
-	public void iconMinimize() throws Exception;
+	public void iconMinimize() throws Exception {
+	}
 
-	public void iconOptions() throws Exception;
+	public void iconOptions() throws Exception {
+	}
 
-	public void iconPortlet() throws Exception;
+	public void iconPortlet() throws Exception {
+	}
 
-	public void iconPortlet(Portlet portlet) throws Exception;
+	public void iconPortlet(Portlet portlet) throws Exception {
+	}
 
-	public void iconPortletCss() throws Exception;
+	public void iconPortletCss() throws Exception {
+	}
 
-	public void iconPrint() throws Exception;
+	public void iconPrint() throws Exception {
+	}
 
-	public void iconRefresh() throws Exception;
+	public void iconRefresh() throws Exception {
+	}
 
 	public void include(ServletContext servletContext, String page)
-		throws Exception;
+		throws Exception {
+	}
 
-	public void include(String page) throws Exception;
+	public void include(String page) throws Exception {
+	}
 
 	public void journalArticle(
 			String articleId, long groupId, String templateId)
-		throws Exception;
+		throws Exception {
+	}
 
-	public void journalContentSearch() throws Exception;
+	public void journalContentSearch() throws Exception {
+	}
 
 	public void journalContentSearch(
 			boolean showListed, String targetPortletId, String type)
-		throws Exception;
+		throws Exception {
+	}
 
-	public void language() throws Exception;
+	public void language() throws Exception {
+	}
 
 	public void language(
 			String formName, String formAction, String name, int displayStyle)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void language(
 			String formName, String formAction, String name,
 			String[] languageIds, int displayStyle)
-		throws Exception;
+		throws Exception {
+	}
 
-	public void layoutIcon(Layout layout) throws Exception;
+	public void layoutIcon(Layout layout) throws Exception {
+	}
 
-	public void metaTags() throws Exception;
+	public void metaTags() throws Exception {
+	}
 
 	/**
 	 * @deprecated {@link #mySites}
 	 */
-	public void myPlaces() throws Exception;
+	public void myPlaces() throws Exception {
+	}
 
 	/**
 	 * @deprecated {@link #mySites(int)}
 	 */
-	public void myPlaces(int max) throws Exception;
+	public void myPlaces(int max) throws Exception {
+	}
 
-	public void mySites() throws Exception;
+	public void mySites() throws Exception {
+	}
 
-	public void mySites(int max) throws Exception;
+	public void mySites(int max) throws Exception {
+	}
 
 	public void permissionsURL(
 			String redirect, String modelResource,
 			String modelResourceDescription, Object resourceGroupId,
 			String resourcePrimKey, String windowState, int[] roleTypes)
-		throws Exception;
+		throws Exception {
+	}
 
 	/**
 	 * @deprecated {@link #permissionsURL(String, String, String, long, String,
@@ -234,18 +325,22 @@ public interface VelocityTaglib {
 			String redirect, String modelResource,
 			String modelResourceDescription, String resourcePrimKey,
 			String windowState, int[] roleTypes)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void ratings(
 			String className, long classPK, int numberOfStars, String type,
 			String url)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void renderURL(long plid, String portletName, String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void renderURL(String portletName, String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void renderURL(
 			String windowState, String portletMode, Boolean secure,
@@ -253,7 +348,8 @@ public interface VelocityTaglib {
 			long refererPlid, String portletName, Boolean anchor,
 			Boolean encrypt, long doAsGroupId, long doAsUserId,
 			Boolean portletConfiguration, String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
 	/**
 	 * @deprecated {@link #renderURL(String, String, Boolean, Boolean, Boolean,
@@ -265,49 +361,65 @@ public interface VelocityTaglib {
 			Boolean copyCurrentRenderParameters, Boolean escapeXml, long plid,
 			String portletName, Boolean anchor, Boolean encrypt,
 			long doAsUserId, Boolean portletConfiguration, String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void renderURL(
 			String windowState, String portletMode, long plid,
 			String portletName, String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void renderURL(
 			String windowState, String portletMode, String portletName,
 			String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
-	public void runtime(String portletName) throws Exception;
+	public void runtime(String portletName) throws Exception {
+	}
 
 	public void runtime(String portletName, String queryString)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void runtime(
 			String portletName, String queryString, String defaultPreferences)
-		throws Exception;
+		throws Exception {
+	}
 
-	public void search() throws Exception;
+	public void search() throws Exception {
+	}
 
-	public void setTemplateContext(TemplateContext templateContext);
+	public void setTemplateContext(TemplateContext templateContext) {
+	}
 
-	public void sitesDirectory() throws Exception;
+	public void sitesDirectory() throws Exception {
+	}
 
 	public void sitesDirectory(String displayStyle, String sites)
-		throws Exception;
+		throws Exception {
+	}
 
 	public void socialBookmarks(
 			String displayStyle, String target, String types, String title,
 			String url)
-		throws Exception;
+		throws Exception {
+	}
 
-	public void staging() throws Exception;
+	public void staging() throws Exception {
+	}
 
 	public void toggle(
 			String id, String showImage, String hideImage, String showMessage,
 			String hideMessage, boolean defaultShowContent)
-		throws Exception;
+		throws Exception {
+	}
 
 	public String wrapPortlet(String wrapPage, String portletPage)
-		throws Exception;
+		throws Exception {
+
+		return StringPool.BLANK;
+	}
 
 }

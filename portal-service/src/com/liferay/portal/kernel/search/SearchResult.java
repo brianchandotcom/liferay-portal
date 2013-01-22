@@ -31,15 +31,6 @@ public class SearchResult {
 		_messages = new ArrayList<MBMessage>();
 	}
 
-	public SearchResult(String className, long classPK, MBMessage message) {
-		_className = className;
-		_classPK = classPK;
-
-		_messages = new ArrayList<MBMessage>();
-
-		_messages.add(message);
-	}
-
 	public void addMessage(MBMessage message) {
 		_messages.add(message);
 	}
@@ -56,9 +47,13 @@ public class SearchResult {
 
 		SearchResult searchResult = (SearchResult)obj;
 
-		return
-			((_classPK == searchResult.getClassPK()) &&
-				_className.equals(searchResult.getClassName()));
+		if ((_classPK == searchResult.getClassPK()) &&
+			_className.equals(searchResult.getClassName())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getClassName() {

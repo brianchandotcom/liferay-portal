@@ -683,25 +683,27 @@ public class ModuleFrameworkImpl
 		String location, List<Bundle> lazyActivationBundles,
 		List<Bundle> startBundles, List<Bundle> refreshBundles) {
 
+		int defaultStartLevel =
+			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL;
 		boolean start = false;
-		int startLevel = PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL;
+		int startLevel = defaultStartLevel;
 
-		int index = location.lastIndexOf(StringPool.AT);
+		int pos = location.lastIndexOf(StringPool.AT);
 
-		if (index != -1) {
-			String[] parts = StringUtil.split(
-				location.substring(index + 1), StringPool.COLON);
+		if (pos != -1) {
+			String[] attributes = StringUtil.split(
+				location.substring(pos + 1), StringPool.COLON);
 
-			for (String part : parts) {
-				if (part.equals("start")) {
+			for (String attribute : attributes) {
+				if (attribute.equals("start")) {
 					start = true;
 				}
 				else {
-					startLevel = GetterUtil.getInteger(part);
+					startLevel = GetterUtil.getInteger(attribute);
 				}
 			}
 
-			location = location.substring(0, index);
+			location = location.substring(0, pos);
 		}
 
 		InputStream inputStream = null;

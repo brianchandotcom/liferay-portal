@@ -37,7 +37,7 @@ public class ViewUserStatisticsAddWikiPageAttachment1Test extends BaseTestCase {
 			selenium.getText("//div[@class='user-rank']"));
 		assertEquals(RuntimeVariables.replace("Contribution Score: 0"),
 			selenium.getText("//div[@class='contribution-score']"));
-		assertEquals(RuntimeVariables.replace("Participation Score: 22"),
+		assertEquals(RuntimeVariables.replace("Participation Score: 20"),
 			selenium.getText("//div[@class='participation-score']"));
 		assertEquals(RuntimeVariables.replace("User's Wiki Pages: 1"),
 			selenium.getText("//div[@class='social-counter-user.wikis']"));

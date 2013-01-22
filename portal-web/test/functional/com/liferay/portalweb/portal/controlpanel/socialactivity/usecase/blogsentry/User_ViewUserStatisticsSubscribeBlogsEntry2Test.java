@@ -37,7 +37,7 @@ public class User_ViewUserStatisticsSubscribeBlogsEntry2Test
 			selenium.getText("xPath=(//span[@class='user-name'])[1]"));
 		assertEquals(RuntimeVariables.replace("Rank: 1"),
 			selenium.getText("xPath=(//div[@class='user-rank'])[1]"));
-		assertEquals(RuntimeVariables.replace("Contribution Score: 2"),
+		assertEquals(RuntimeVariables.replace("Contribution Score: 0"),
 			selenium.getText("xPath=(//div[@class='contribution-score'])[1]"));
 		assertEquals(RuntimeVariables.replace("Participation Score: 5"),
 			selenium.getText("xPath=(//div[@class='participation-score'])[1]"));
@@ -49,9 +49,9 @@ public class User_ViewUserStatisticsSubscribeBlogsEntry2Test
 			selenium.getText("xPath=(//div[@class='user-rank'])[2]"));
 		assertEquals(RuntimeVariables.replace("Contribution Score: 0"),
 			selenium.getText("xPath=(//div[@class='contribution-score'])[2]"));
-		assertEquals(RuntimeVariables.replace("Participation Score: 3"),
+		assertEquals(RuntimeVariables.replace("Participation Score: 1"),
 			selenium.getText("xPath=(//div[@class='participation-score'])[2]"));
-		assertEquals(RuntimeVariables.replace("User's Subscriptions: 1"),
+		assertEquals(RuntimeVariables.replace("User's Subscriptions: 0"),
 			selenium.getText(
 				"//div[@class='social-counter-user.subscriptions']"));
 	}

@@ -53,7 +53,7 @@ public class User_ViewUserStatisticsReplyMessageBoardThreadTest
 		assertEquals(RuntimeVariables.replace("User's Message Board Posts: 1"),
 			selenium.getText(
 				"xPath=(//div[@class='social-counter-user.message-posts'])[2]"));
-		assertEquals(RuntimeVariables.replace("User's Votes: 1"),
+		assertEquals(RuntimeVariables.replace("Votes by User: 1"),
 			selenium.getText("//div[@class='social-counter-user.votes']"));
 		assertEquals(RuntimeVariables.replace("User's Subscriptions: 1"),
 			selenium.getText(

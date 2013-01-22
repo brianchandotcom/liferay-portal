@@ -58,6 +58,7 @@ public class ConfigurePortletShowTotalsOffTest extends BaseTestCase {
 
 				boolean showTotalsChecked = selenium.isChecked(
 						"//input[@id='_86_showTotalsCheckbox']");
+				Thread.sleep(1000);
 
 				if (!showTotalsChecked) {
 					label = 2;

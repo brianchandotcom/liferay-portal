@@ -60,6 +60,7 @@ public class ConfigurePortletShowHeaderTextOffTest extends BaseTestCase {
 
 				boolean showHeaderTextChecked = selenium.isChecked(
 						"//input[@id='_86_showHeaderTextCheckbox']");
+				Thread.sleep(1000);
 
 				if (!showHeaderTextChecked) {
 					label = 2;

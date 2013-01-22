@@ -52,14 +52,14 @@ public class ConfigurePortletAddCounter1WikiPageUpdatesTest extends BaseTestCase
 		selenium.waitForVisible(
 			"//select[@id='_86_displayActivityCounterName0']");
 		selenium.select("//select[@id='_86_displayActivityCounterName0']",
-			RuntimeVariables.replace("User's Wiki Page Updates"));
+			RuntimeVariables.replace("Wiki Page Updates by User"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("User's Wiki Page Updates",
+		assertEquals("Wiki Page Updates by User",
 			selenium.getSelectedLabel(
 				"//select[@id='_86_displayActivityCounterName0']"));
 		selenium.selectFrame("relative=top");

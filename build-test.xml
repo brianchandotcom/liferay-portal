@@ -1634,6 +1634,11 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-categoriesnavigation" />
+			<param name="test.ant.script.suite" value="PortalWebCategoriesNavigationTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="portal-web-currency-converter" />
 			<param name="test.ant.script.suite" value="PortalWebCurrencyConverterTestSuite" />
 		</antcall>

@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td/a</td>
+	<td>//tr[contains(.,'Member')]/td[1]/a</td>
 	<td>Member</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[3]/td/a</td>
+	<td>//tr[contains(.,'Member')]/td[1]/a</td>
 	<td>Member</td>
 </tr>
 <tr>
@@ -76,40 +76,40 @@
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>label=Message Boards</td>
+	<td>Message Boards</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_FILE']</td>
 	<td>MBCategory Add File</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_MESSAGE']</td>
 	<td>MBCategory Add Message</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryREPLY_TO_MESSAGE']</td>
 	<td>MBCategory Reply to Message</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategorySUBSCRIBE']</td>
 	<td>MBCategory Subscribe</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryVIEW']</td>
 	<td>MBCategory View</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portlet.messageboards.model.MBMessageSUBSCRIBE']</td>
 	<td>MBMessage Subscribe</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portlet.messageboards.model.MBMessageVIEW']</td>
 	<td>MBMessage View</td>
 </tr>

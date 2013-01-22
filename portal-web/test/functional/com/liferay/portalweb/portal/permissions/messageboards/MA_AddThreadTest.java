@@ -29,8 +29,9 @@ public class MA_AddThreadTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
+			selenium.getText("//tr[contains(.,'Category Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Category Name')]/td[1]/a",
+			RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Post New Thread']",
 			RuntimeVariables.replace("Post New Thread"));

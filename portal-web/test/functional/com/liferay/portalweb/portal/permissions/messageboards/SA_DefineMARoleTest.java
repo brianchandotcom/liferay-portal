@@ -44,15 +44,16 @@ public class SA_DefineMARoleTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Message Boards Administrator"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a",
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Administrator')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Message Boards Administrator')]/td[1]/a",
 			RuntimeVariables.replace("Message Boards Administrator"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Define Permissions",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("label=Message Boards"));
+			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isChecked(
 				"xPath=(//input[@name='_128_allRowIds'])[1]"));

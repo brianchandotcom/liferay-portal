@@ -40,6 +40,6 @@ public class MA_AddCategoryTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//a/strong"));
+			selenium.getText("//tr[contains(.,'Category Name')]/td[1]/a"));
 	}
 }

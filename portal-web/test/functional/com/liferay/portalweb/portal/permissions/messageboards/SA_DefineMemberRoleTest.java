@@ -44,29 +44,30 @@ public class SA_DefineMemberRoleTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Member"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a", RuntimeVariables.replace("Member"));
+			selenium.getText("//tr[contains(.,'Member')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Member')]/td[1]/a",
+			RuntimeVariables.replace("Member"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Define Permissions",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("label=Message Boards"));
+			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
-		selenium.check(
-			"//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_FILE']");
-		selenium.check(
-			"//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_MESSAGE']");
-		selenium.check(
-			"//input[@value='com.liferay.portlet.messageboards.model.MBCategoryREPLY_TO_MESSAGE']");
-		selenium.check(
-			"//input[@value='com.liferay.portlet.messageboards.model.MBCategorySUBSCRIBE']");
-		selenium.check(
-			"//input[@value='com.liferay.portlet.messageboards.model.MBCategoryVIEW']");
-		selenium.check(
-			"//input[@value='com.liferay.portlet.messageboards.model.MBMessageSUBSCRIBE']");
-		selenium.check(
-			"//input[@value='com.liferay.portlet.messageboards.model.MBMessageVIEW']");
+		selenium.clickAt("//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_FILE']",
+			RuntimeVariables.replace("MBCategory Add File"));
+		selenium.clickAt("//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_MESSAGE']",
+			RuntimeVariables.replace("MBCategory Add Message"));
+		selenium.clickAt("//input[@value='com.liferay.portlet.messageboards.model.MBCategoryREPLY_TO_MESSAGE']",
+			RuntimeVariables.replace("MBCategory Reply to Message"));
+		selenium.clickAt("//input[@value='com.liferay.portlet.messageboards.model.MBCategorySUBSCRIBE']",
+			RuntimeVariables.replace("MBCategory Subscribe"));
+		selenium.clickAt("//input[@value='com.liferay.portlet.messageboards.model.MBCategoryVIEW']",
+			RuntimeVariables.replace("MBCategory View"));
+		selenium.clickAt("//input[@value='com.liferay.portlet.messageboards.model.MBMessageSUBSCRIBE']",
+			RuntimeVariables.replace("MBMessage Subscribe"));
+		selenium.clickAt("//input[@value='com.liferay.portlet.messageboards.model.MBMessageVIEW']",
+			RuntimeVariables.replace("MBMessage View"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

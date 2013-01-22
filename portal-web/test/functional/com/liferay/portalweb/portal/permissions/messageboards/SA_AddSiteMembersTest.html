@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_134_name']</td>
+	<td>//input[@name='_134_keywords']</td>
 	<td>Site Name</td>
 </tr>
 <tr>
@@ -60,52 +60,57 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Add Members']/ul/li/strong/a/span</td>
+	<td>Add Members</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>link=Add Members</td>
+	<td>//span[@title='Add Members']/ul/li/strong/a/span</td>
 	<td>Add Members</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
@@ -119,19 +124,29 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@name='_174_allRowIds']</td>
-	<td>Check All</td>
+	<td>check1AllCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${check1AllCheckbox}</td>
+	<td>Check1AllCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_174_allRowIds']</td>
-	<td>Check All</td>
+	<td>Check All Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Check1AllCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@name='_174_allRowIds']</td>
-	<td>Check All</td>
+	<td>Check All Checkbox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -144,23 +159,28 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Add Members']/ul/li/strong/a/span</td>
+	<td>Add Members</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>link=Add Members</td>
+	<td>//span[@title='Add Members']/ul/li/strong/a/span</td>
 	<td>Add Members</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
@@ -174,19 +194,29 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@name='_174_allRowIds']</td>
-	<td>Check All</td>
+	<td>check2AllCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${check2AllCheckbox}</td>
+	<td>Check2AllCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_174_allRowIds']</td>
-	<td>Check All</td>
+	<td>Check All Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Check2AllCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@name='_174_allRowIds']</td>
-	<td>Check All</td>
+	<td>Check All Checkbox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

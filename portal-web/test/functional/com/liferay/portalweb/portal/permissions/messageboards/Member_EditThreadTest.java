@@ -29,12 +29,13 @@ public class Member_EditThreadTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
+			selenium.getText("//tr[contains(.,'Category Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Category Name')]/td[1]/a",
+			RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Thread Subject 2"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a",
+			selenium.getText("//tr[contains(.,'Thread Subject 2')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Thread Subject 2')]/td[1]/a",
 			RuntimeVariables.replace("Thread Subject 2"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible(

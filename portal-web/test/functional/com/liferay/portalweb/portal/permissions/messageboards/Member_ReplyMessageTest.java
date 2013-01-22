@@ -29,12 +29,13 @@ public class Member_ReplyMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
+			selenium.getText("//tr[contains(.,'Category Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Category Name')]/td[1]/a",
+			RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Thread Subject"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a",
+			selenium.getText("//tr[contains(.,'Thread Subject')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Thread Subject')]/td[1]/a",
 			RuntimeVariables.replace("Thread Subject"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Reply"),
@@ -67,12 +68,15 @@ public class Member_ReplyMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//div[5]/table/tbody/tr[2]/td/ul/li[2]/span/a"));
+			selenium.getText(
+				"//ul[@class='edit-controls lfr-component']/li[contains(.,'Edit')]/span/a"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
-			selenium.getText("//div[5]/table/tbody/tr[2]/td/ul/li[3]/span/a"));
+			selenium.getText(
+				"//ul[@class='edit-controls lfr-component']/li[contains(.,'Permissions')]/span/a"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//div[5]/table/tbody/tr[2]/td/ul/li[4]/span/a"));
+			selenium.getText(
+				"//ul[@class='edit-controls lfr-component']/li[contains(.,'Delete')]/span/a"));
 		assertEquals(RuntimeVariables.replace("Thread Body Reply"),
-			selenium.getText("//div[5]/table/tbody/tr/td[2]/div[2]"));
+			selenium.getText("xPath=(//div[@class='thread-body'])[2]"));
 	}
 }

@@ -1134,6 +1134,8 @@ public class PropsValues {
 
 	public static final int MODULE_FRAMEWORK_RUNTIME_START_LEVEL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_RUNTIME_START_LEVEL));
 
+	public static final String[] MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES = PropsUtil.getArray(PropsKeys.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES);
+
 	public static final String MODULE_FRAMEWORK_STATE_DIR = PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_STATE_DIR);
 
 	public static final String[] MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES = PropsUtil.getArray(PropsKeys.MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES);

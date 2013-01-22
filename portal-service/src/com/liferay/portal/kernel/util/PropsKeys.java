@@ -1585,6 +1585,8 @@ public interface PropsKeys {
 
 	public static final String MODULE_FRAMEWORK_RUNTIME_START_LEVEL = "module.framework.runtime.start.level";
 
+	public static final String MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES = "module.framework.services.ignored.interfaces";
+
 	public static final String MODULE_FRAMEWORK_STATE_DIR = "module.framework.state.dir";
 
 	public static final String MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES = "module.framework.system.bundle.export.packages";

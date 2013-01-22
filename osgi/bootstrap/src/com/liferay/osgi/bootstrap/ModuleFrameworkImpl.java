@@ -25,6 +25,7 @@ import aQute.libg.version.Version;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -951,7 +952,18 @@ public class ModuleFrameworkImpl
 		List<String> names = new ArrayList<String>(interfaces.size());
 
 		for (Class<?> interfaceClass : interfaces) {
+			if (ArrayUtil.contains(
+					PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES,
+					interfaceClass.getName())) {
+
+				continue;
+			}
+
 			names.add(interfaceClass.getName());
+		}
+
+		if (names.isEmpty()) {
+			return;
 		}
 
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();

@@ -1101,7 +1101,9 @@ public abstract class BaseIndexer implements Indexer {
 			catch (Exception e) {
 			}
 
-			if (paginationType.equals("more") && (docs.size() > end)) {
+			if (paginationType.equals("more") && (end > 0) &&
+				(docs.size() > end)) {
+
 				hasMore = true;
 
 				break;

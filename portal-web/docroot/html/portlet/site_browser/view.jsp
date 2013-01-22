@@ -14,16 +14,17 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/html/portlet/site_browser/init.jsp" %>
 
 <%
 String target = ParamUtil.getString(request, "target");
+String callback = ParamUtil.getString(request, "callback");
 boolean includeCompany = ParamUtil.getBoolean(request, "includeCompany");
 boolean includeUserPersonalSite = ParamUtil.getBoolean(request, "includeUserPersonalSite");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/sites_admin/select_site");
+portletURL.setParameter("struts_action", "/site_browser/view");
 portletURL.setParameter("target", target);
 portletURL.setParameter("includeCompany", String.valueOf(includeCompany));
 portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
@@ -118,15 +119,17 @@ portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPer
 			<%
 			StringBundler sb = new StringBundler(9);
 
-			sb.append("javascript:opener.");
-			sb.append(renderResponse.getNamespace());
-			sb.append("selectGroup('");
+			sb.append("javascript:Liferay.Util.getOpener().");
+			sb.append(callback);
+			sb.append("('");
 			sb.append(group.getGroupId());
 			sb.append("', '");
 			sb.append(UnicodeFormatter.toString(group.getDescriptiveName(locale)));
 			sb.append("', '");
+			sb.append(AssetPublisherUtil.getScopeId(group, scopeGroupId));
+			sb.append("', '");
 			sb.append(target);
-			sb.append("'); window.close();");
+			sb.append("'); Liferay.Util.getWindow().close();");
 
 			String rowHREF = sb.toString();
 			%>

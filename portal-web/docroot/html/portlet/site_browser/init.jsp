@@ -17,3 +17,15 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ include file="/html/portlet/site_browser/init-ext.jsp" %>
+
+<%@ page import="com.liferay.portlet.assetpublisher.util.AssetPublisherUtil" %><%@
+page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
+page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
+
+<%
+boolean filterManageableGroups = true;
+
+if (permissionChecker.isCompanyAdmin()) {
+	filterManageableGroups = false;
+}
+%>

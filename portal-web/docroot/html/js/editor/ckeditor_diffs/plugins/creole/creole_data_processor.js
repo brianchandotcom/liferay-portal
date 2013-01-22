@@ -362,10 +362,10 @@
 			var hrefAttribute = element.getAttribute('href');
 
 			if (CKEDITOR.env.ie && (CKEDITOR.env.version < 8)) {
-				var ckeSavedHREF = element.getAttribute('data-cke-saved-href');
+				var ckeSavedHref = element.getAttribute('data-cke-saved-href');
 
-				if (ckeSavedHREF) {
-					hrefAttribute = ckeSavedHREF;
+				if (ckeSavedHref) {
+					hrefAttribute = ckeSavedHref;
 				}
 			}
 

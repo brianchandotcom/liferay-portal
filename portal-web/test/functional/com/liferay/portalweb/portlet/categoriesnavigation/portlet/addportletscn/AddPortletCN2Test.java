@@ -25,7 +25,6 @@ public class AddPortletCN2Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Categories Navigation Test Page");
 		selenium.clickAt("link=Categories Navigation Test Page",
 			RuntimeVariables.replace("Categories Navigation Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -49,7 +48,9 @@ public class AddPortletCN2Test extends BaseTestCase {
 		selenium.waitForVisible("//li[@title='Categories Navigation']/p/a");
 		selenium.clickAt("//li[@title='Categories Navigation']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//section");
-		assertTrue(selenium.isVisible("//section"));
+		selenium.waitForVisible("//div[1]/section");
+		assertTrue(selenium.isVisible("//div[1]/section"));
+		selenium.waitForVisible("//div[2]/section");
+		assertTrue(selenium.isVisible("//div[2]/section"));
 	}
 }

@@ -25,7 +25,6 @@ public class AddPortletCN1Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Categories Navigation Test Page");
 		selenium.clickAt("link=Categories Navigation Test Page",
 			RuntimeVariables.replace("Categories Navigation Test Page"));
 		selenium.waitForPageToLoad("30000");

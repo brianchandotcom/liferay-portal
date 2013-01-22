@@ -555,9 +555,16 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public boolean isChecked(String locator) {
-		WebElement webElement = getWebElement(locator);
+		WebDriverHelper.setTimeoutImplicit(this, "1");
 
-		return webElement.isSelected();
+		try {
+			WebElement webElement = getWebElement(locator);
+
+			return webElement.isSelected();
+		}
+		finally {
+			WebDriverHelper.setDefaultTimeoutImplicit(this);
+		}
 	}
 
 	public boolean isConfirmationPresent() {

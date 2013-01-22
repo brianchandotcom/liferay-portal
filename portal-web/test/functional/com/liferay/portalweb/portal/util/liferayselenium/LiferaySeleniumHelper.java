@@ -34,7 +34,11 @@ public class LiferaySeleniumHelper {
 	public static void assertChecked(
 		LiferaySelenium liferaySelenium, String locator) {
 
-		BaseTestCase.assertTrue(liferaySelenium.isChecked(locator));
+		liferaySelenium.assertElementPresent(locator);
+
+		if (liferaySelenium.isNotChecked(locator)) {
+			BaseTestCase.fail("Element is not checked at " + locator);
+		}
 	}
 
 	public static void assertConfirmation(
@@ -78,7 +82,11 @@ public class LiferaySeleniumHelper {
 	public static void assertNotChecked(
 		LiferaySelenium liferaySelenium, String locator) {
 
-		BaseTestCase.assertFalse(liferaySelenium.isChecked(locator));
+		liferaySelenium.assertElementPresent(locator);
+
+		if (liferaySelenium.isChecked(locator)) {
+			BaseTestCase.fail("Element is checked at " + locator);
+		}
 	}
 
 	public static void assertNotLocation(
@@ -216,6 +224,19 @@ public class LiferaySeleniumHelper {
 
 	public static String getNumberIncrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
+	}
+
+	public static boolean isNotChecked(
+		LiferaySelenium liferaySelenium, String locator) {
+
+		liferaySelenium.setTimeoutImplicit("1");
+
+		try {
+			return !liferaySelenium.isChecked(locator);
+		}
+		finally {
+			liferaySelenium.setDefaultTimeoutImplicit();
+		}
 	}
 
 	public static boolean isNotText(

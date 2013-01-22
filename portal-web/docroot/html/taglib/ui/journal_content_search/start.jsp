@@ -21,7 +21,7 @@ boolean showListed = GetterUtil.getBoolean((String)request.getAttribute("liferay
 String targetPortletId = (String)request.getAttribute("liferay-ui:journal-content-search:targetPortletId");
 String type = (String)request.getAttribute("liferay-ui:journal-content-search:type");
 
-String defaultKeywords = LanguageUtil.get(pageContext, "search") + "...";
+String defaultKeywords = LanguageUtil.get(pageContext, "search") + StringPool.TRIPLE_PERIOD;
 String unicodeDefaultKeywords = UnicodeFormatter.toString(defaultKeywords);
 
 String keywords = ParamUtil.getString(request, namespace + "keywords", defaultKeywords);

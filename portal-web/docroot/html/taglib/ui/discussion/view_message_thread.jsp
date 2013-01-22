@@ -51,7 +51,7 @@ if (treeWalker.isOdd()) {
 		String rowHREF = "#" + renderResponse.getNamespace() + "message_" + message.getMessageId();
 		%>
 
-		<a href="<%= rowHREF %>"><%= HtmlUtil.escape(StringUtil.shorten(message.getBody(), 50, "...")) %></a>
+		<a href="<%= rowHREF %>"><%= HtmlUtil.escape(StringUtil.shorten(message.getBody(), 50, StringPool.TRIPLE_PERIOD)) %></a>
 	</td>
 	<td></td>
 	<td nowrap="nowrap">

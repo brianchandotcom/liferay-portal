@@ -49,19 +49,19 @@ public class DeleteEntryTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
-		assertEquals(RuntimeVariables.replace("Delete"),
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForConfirmation(
-			"Are you sure you want to delete this? It will be deleted immediately.");
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
+		selenium.waitForVisible(
+			"//div[@class='portlet-msg-success taglib-trash-undo']/form");
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+				"The selected item was moved to the Recycle Bin. Undo"),
+			selenium.getText(
+				"//div[@class='portlet-msg-success taglib-trash-undo']/form"));
 		assertTrue(selenium.isElementNotPresent("link=http://www.digg.com"));
 	}
 }

@@ -49,47 +49,47 @@ searchContainer.setResults(results);
 List resultRows = searchContainer.getResultRows();
 
 for (int i = 0; i < results.size(); i++) {
-	Company company2 = (Company)results.get(i);
+	Company curCompany = (Company)results.get(i);
 
-	ResultRow row = new ResultRow(company2, company2.getCompanyId(), i);
+	ResultRow row = new ResultRow(curCompany, curCompany.getCompanyId(), i);
 
 	PortletURL rowURL = renderResponse.createRenderURL();
 
 	rowURL.setParameter("struts_action", "/admin/edit_instance");
 	rowURL.setParameter("redirect", currentURL);
-	rowURL.setParameter("companyId", String.valueOf(company2.getCompanyId()));
+	rowURL.setParameter("companyId", String.valueOf(curCompany.getCompanyId()));
 
 	// Company ID
 
-	row.addText(String.valueOf(company2.getCompanyId()), rowURL);
+	row.addText(String.valueOf(curCompany.getCompanyId()), rowURL);
 
 	// Web ID
 
-	row.addText(company2.getWebId(), rowURL);
+	row.addText(HtmlUtil.escape(curCompany.getWebId()), rowURL);
 
 	// Virtual Host
 
-	row.addText(company2.getVirtualHostname(), rowURL);
+	row.addText(curCompany.getVirtualHostname(), rowURL);
 
 	// Mail Domain
 
-	row.addText(company2.getMx(), rowURL);
+	row.addText(curCompany.getMx(), rowURL);
 
 	// Shard Name
 
 	if (showShardSelector) {
-		row.addText(LanguageUtil.get(pageContext, company2.getShardName()), rowURL);
+		row.addText(LanguageUtil.get(pageContext, curCompany.getShardName()), rowURL);
 	}
 
 	// # of Users
 
-	int usersCount = UserLocalServiceUtil.searchCount(company2.getCompanyId(), null, WorkflowConstants.STATUS_ANY, null);
+	int usersCount = UserLocalServiceUtil.searchCount(curCompany.getCompanyId(), null, WorkflowConstants.STATUS_ANY, null);
 
 	row.addText(String.valueOf(usersCount), rowURL);
 
 	// Max # of Users
 
-	int maxUsers = company2.getMaxUsers();
+	int maxUsers = curCompany.getMaxUsers();
 
 	if (maxUsers > 0) {
 		row.addText(String.valueOf(maxUsers), rowURL);
@@ -100,7 +100,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Active
 
-	row.addText(LanguageUtil.get(pageContext, company2.isActive() ? "yes" : "no"), rowURL);
+	row.addText(LanguageUtil.get(pageContext, curCompany.isActive() ? "yes" : "no"), rowURL);
 
 	// Add result row
 

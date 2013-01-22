@@ -27,11 +27,13 @@ searchURL.setParameter("struts_action", "/search/search");
 searchURL.setParameter("groupId", String.valueOf(groupId));
 
 response.setContentType(ContentTypes.TEXT_XML_UTF8);
+
+String companyNameEscaped = HtmlUtil.escape(company.getName());
 %>
 
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-	<ShortName><%= LanguageUtil.format(pageContext, "x-search", company.getName(), false) %></ShortName>
-	<Description><%= LanguageUtil.format(pageContext, "x-search-provider", company.getName(), false) %></Description>
+	<ShortName><%= LanguageUtil.format(pageContext, "x-search", companyNameEscaped, false) %></ShortName>
+	<Description><%= LanguageUtil.format(pageContext, "x-search-provider", companyNameEscaped, false) %></Description>
 	<Url template="<%= searchURL.toString() %>&amp;keywords={searchTerms}" type="text/html" />
 	<Url template="<%= themeDisplay.getPortalURL() %><%= PortalUtil.getPathMain() %>/search/open_search?keywords={searchTerms}&amp;p={startPage?}&amp;c={count?}&amp;format=atom" type="application/atom+xml" />
 	<Url template="<%= themeDisplay.getPortalURL() %><%= PortalUtil.getPathMain() %>/search/open_search?keywords={searchTerms}&amp;p={startPage?}&amp;c={count?}&amp;format=rss" type="application/rss+xml" />

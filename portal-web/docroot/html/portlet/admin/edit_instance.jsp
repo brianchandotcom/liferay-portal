@@ -19,9 +19,9 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-Company company2 = (Company)request.getAttribute(WebKeys.SEL_COMPANY);
+Company selCompany = (Company)request.getAttribute(WebKeys.SEL_COMPANY);
 
-long companyId = BeanParamUtil.getLong(company2, request, "companyId");
+long companyId = BeanParamUtil.getLong(selCompany, request, "companyId");
 
 VirtualHost virtualHost = null;
 
@@ -34,8 +34,9 @@ catch (Exception e) {
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
-	localizeTitle="<%= (company2 == null) %>"
-	title='<%= (company2 == null) ? "new-portal-instance" : company2.getName() %>'
+	escapeXml="<%= false %>"
+	localizeTitle="<%= (selCompany == null) %>"
+	title='<%= (escapedCompany2 == null) ? "new-portal-instance" : HtmlUtil.escape(selCompany.getName()) %>'
 />
 
 <portlet:actionURL var="editInstanceURL">
@@ -51,20 +52,20 @@ catch (Exception e) {
 	<liferay-ui:error exception="<%= CompanyVirtualHostException.class %>" message="please-enter-a-valid-virtual-host" />
 	<liferay-ui:error exception="<%= CompanyWebIdException.class %>" message="please-enter-a-valid-web-id" />
 
-	<aui:model-context bean="<%= company2 %>" model="<%= Company.class %>" />
+	<aui:model-context bean="<%= selCompany %>" model="<%= Company.class %>" />
 
 	<aui:fieldset>
-		<c:if test="<%= company2 != null %>">
+		<c:if test="<%= selCompany != null %>">
 			<aui:field-wrapper label="id">
 				<%= companyId %>
 			</aui:field-wrapper>
 
 			<aui:field-wrapper label="web-id">
-				<%= company2.getWebId() %>
+				<%= HtmlUtil.escape(selCompany.getWebId()) %>
 			</aui:field-wrapper>
 		</c:if>
 
-		<c:if test="<%= company2 == null %>">
+		<c:if test="<%= selCompany == null %>">
 			<aui:input name="webId" />
 		</c:if>
 
@@ -74,8 +75,8 @@ catch (Exception e) {
 
 		<c:if test="<%= showShardSelector %>">
 			<c:choose>
-				<c:when test="<%= company2 != null %>">
-					<%= company2.getShardName() %>
+				<c:when test="<%= selCompany != null %>">
+					<%= selCompany.getShardName() %>
 				</c:when>
 				<c:otherwise>
 					<aui:select name="shardName">
@@ -97,7 +98,7 @@ catch (Exception e) {
 
 		<aui:input name="maxUsers" />
 
-		<aui:input disabled="<%= (company2 != null) && (company2.getCompanyId() == PortalInstances.getDefaultCompanyId()) %>" name="active" type="checkbox" value="<%= (company2 != null) ? company2.isActive() : true %>" />
+		<aui:input disabled="<%= (selCompany != null) && (selCompany.getCompanyId() == PortalInstances.getDefaultCompanyId()) %>" name="active" type="checkbox" value="<%= (selCompany != null) ? selCompany.isActive() : true %>" />
 	</aui:fieldset>
 
 	<aui:button-row>
@@ -109,7 +110,7 @@ catch (Exception e) {
 
 <aui:script>
 	function <portlet:namespace />saveCompany() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (company2 == null) ? Constants.ADD : Constants.UPDATE %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (selCompany == null) ? Constants.ADD : Constants.UPDATE %>";
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

@@ -46,6 +46,7 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 	<aui:input name="assetEntryId" type="hidden" />
 	<aui:input name="assetEntryOrder" type="hidden" value="-1" />
 	<aui:input name="assetEntryType" type="hidden" />
+	<aui:input name="scopeId" type="hidden" />
 
 	<%
 	String rootPortletId = PortletConstants.getRootPortletId(portletResource);
@@ -181,6 +182,20 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 					}
 					%>
 
+					<%
+					PortletURL siteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
+
+					siteBrowserURL.setParameter("struts_action", "/site_browser/view");
+					siteBrowserURL.setPortletMode(PortletMode.VIEW);
+					siteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+					siteBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
+
+					String siteBrowserURLString = HttpUtil.addParameter(siteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
+
+					String taglibURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-site") + "', uri:'" + HtmlUtil.escapeURL(siteBrowserURLString.toString()) + "'});";
+					%>
+
+					<liferay-ui:icon cssClass="highlited" image="add" message='<%= LanguageUtil.get(pageContext, "site") + StringPool.TRIPLE_PERIOD %>' url="<%= taglibURL %>" />
 				</liferay-ui:icon-menu>
 			</div>
 		</div>
@@ -235,6 +250,14 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 
 		submitForm(document.<portlet:namespace />fm);
 	}
+
+	function <portlet:namespace />selectGroup(groupId, name, scopeId, target) {
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
+		document.<portlet:namespace />fm.<portlet:namespace />scopeId.value = scopeId;
+
+		submitForm(document.<portlet:namespace />fm);
+	}
+
 
 	function <portlet:namespace />selectScope() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'select-scope';

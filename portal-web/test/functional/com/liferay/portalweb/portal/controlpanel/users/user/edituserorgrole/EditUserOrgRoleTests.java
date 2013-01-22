@@ -17,6 +17,7 @@ package com.liferay.portalweb.portal.controlpanel.users.user.edituserorgrole;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.AddOrganizationTest;
 import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownOrganizationTest;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.assignmembersorganizationuser.AssignMembersOrganizationUserTest;
 import com.liferay.portalweb.portal.controlpanel.roles.role.addorgrole.AddOrgRoleTest;
 import com.liferay.portalweb.portal.controlpanel.roles.role.addregrole.TearDownRoleTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
@@ -34,7 +35,7 @@ public class EditUserOrgRoleTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddUserTest.class);
 		testSuite.addTestSuite(AddOrganizationTest.class);
 		testSuite.addTestSuite(AddOrgRoleTest.class);
-		testSuite.addTestSuite(AssignUsersOrganizationTest.class);
+		testSuite.addTestSuite(AssignMembersOrganizationUserTest.class);
 		testSuite.addTestSuite(EditUserOrgRoleTest.class);
 		testSuite.addTestSuite(ViewUserOrgRoleTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

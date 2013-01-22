@@ -25,6 +25,10 @@ public class EditUserSiteRoleTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -69,14 +73,13 @@ public class EditUserSiteRoleTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_125_rolesLink']",
 			RuntimeVariables.replace("Roles"));
 		selenium.waitForVisible(
-			"//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]");
+			"//span[contains(.,'Select')]/a[contains(@href,'openSiteRoleSelector')]");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]"));
-		selenium.clickAt("//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]",
+				"//span[contains(.,'Select')]/a[contains(@href,'openSiteRoleSelector')]"));
+		selenium.clickAt("//span[contains(.,'Select')]/a[contains(@href,'openSiteRoleSelector')]",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
-		selenium.waitForPopUp("role", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("title=Users and Organizations");
 		selenium.waitForVisible(
 			"//tr[contains(.,'Roles Siterole Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a");
@@ -86,10 +89,10 @@ public class EditUserSiteRoleTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Roles Siterole Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a",
 			RuntimeVariables.replace("Roles Siterole Name"));
 		selenium.selectWindow("null");
-		selenium.waitForPartialText("//div[@id='_125_communityRolesSearchContainerSearchContainer']",
+		selenium.waitForPartialText("//div[@id='_125_siteRolesSearchContainerSearchContainer']",
 			"Roles Siterole Name");
 		assertTrue(selenium.isPartialText(
-				"//div[@id='_125_communityRolesSearchContainerSearchContainer']",
+				"//div[@id='_125_siteRolesSearchContainerSearchContainer']",
 				"Roles Siterole Name"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -99,9 +102,9 @@ public class EditUserSiteRoleTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Roles Siterole Name"),
 			selenium.getText(
-				"//td[@id='_125_communityRolesSearchContainer_col-title_row-1']"));
+				"//td[@id='_125_siteRolesSearchContainer_col-title_row-1']"));
 		assertEquals(RuntimeVariables.replace("Site Name"),
 			selenium.getText(
-				"//td[@id='_125_communityRolesSearchContainer_col-site_row-1']"));
+				"//td[@id='_125_siteRolesSearchContainer_col-site_row-1']"));
 	}
 }

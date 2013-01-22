@@ -59,7 +59,7 @@ public class TearDownUserTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//a[.='\u00ab Basic']",
-					RuntimeVariables.replace("\u00ab Basic"));
+					RuntimeVariables.replace("Basic"));
 				selenium.waitForVisible("//input[@name='_125_keywords']");
 
 			case 2:
@@ -87,8 +87,8 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Deactivate']",
 					RuntimeVariables.replace("Deactivate"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForConfirmation(
-					"Are you sure you want to deactivate the selected users?");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
 				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
@@ -144,8 +144,8 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForConfirmation(
-					"Are you sure you want to permanently delete the selected users?");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
 				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),

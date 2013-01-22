@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -30,8 +50,8 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=View All</td>
-	<td>View All</td>
+	<td>link=View Organizations</td>
+	<td>View Organizations</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -45,7 +65,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[2]/strong</td>
+	<td>//td[2]/a</td>
 	<td>Organization 18</td>
 </tr>
 <tr>
@@ -74,8 +94,8 @@
 	<td>Available</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>storeVisible</td>
+	<td>//a[.='« Basic']</td>
 	<td>basicVisible</td>
 </tr>
 <tr>
@@ -85,7 +105,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=« Basic</td>
+	<td>//a[.='« Basic']</td>
 	<td>Basic</td>
 </tr>
 <tr>

@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.controlpanel.users.userwebsite.adduserwebsiteurlinvalid;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

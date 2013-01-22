@@ -30,7 +30,14 @@ public class DeleteUserTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Control Panel");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -38,13 +45,13 @@ public class DeleteUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Search All Users"),
-					selenium.getText("//span/a/span"));
-				selenium.clickAt("//span/a/span",
+					selenium.getText("//a[@id='_125_allUsersLink']"));
+				selenium.clickAt("//a[@id='_125_allUsersLink']",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean AdvancedPresent = selenium.isVisible(
-						"link=Advanced \u00bb");
+						"//a[.='Advanced \u00bb']");
 
 				if (!AdvancedPresent) {
 					label = 2;
@@ -79,14 +86,15 @@ public class DeleteUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Search All Users"),
-					selenium.getText("//span/a/span"));
-				selenium.clickAt("//span/a/span",
+					selenium.getText(
+						"//a[@class=' taglib-icon']/span[contains(.,'Search All Users')]"));
+				selenium.clickAt("//a[@class=' taglib-icon']/span[contains(.,'Search All Users')]",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.select("//select[@name='_125_status']",
 					RuntimeVariables.replace("label=Any Status"));
-				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace("\u00ab Basic"));
+				selenium.clickAt("//a[.='\u00ab Basic']",
+					RuntimeVariables.replace("Basic"));
 
 			case 100:
 				label = -1;

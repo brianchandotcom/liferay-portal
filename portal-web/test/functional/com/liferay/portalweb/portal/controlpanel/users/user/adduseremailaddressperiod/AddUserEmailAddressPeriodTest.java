@@ -25,7 +25,14 @@ public class AddUserEmailAddressPeriodTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -42,13 +49,13 @@ public class AddUserEmailAddressPeriodTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_125_screenName']",
-			RuntimeVariables.replace("testA"));
+			RuntimeVariables.replace("usersn"));
 		selenium.type("//input[@id='_125_emailAddress']",
-			RuntimeVariables.replace("test.@selenium.com"));
+			RuntimeVariables.replace("userea.@liferay.com"));
 		selenium.type("//input[@id='_125_firstName']",
-			RuntimeVariables.replace("testA"));
+			RuntimeVariables.replace("userfn"));
 		selenium.type("//input[@id='_125_lastName']",
-			RuntimeVariables.replace("testA"));
+			RuntimeVariables.replace("userln"));
 		selenium.click("//input[@value='Save']");
 		selenium.waitForText("//label/div",
 			"Please enter a valid email address.");
@@ -56,7 +63,14 @@ public class AddUserEmailAddressPeriodTest extends BaseTestCase {
 				"Please enter a valid email address."),
 			selenium.getText("//label/div"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -73,13 +87,13 @@ public class AddUserEmailAddressPeriodTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_125_screenName']",
-			RuntimeVariables.replace("testA"));
+			RuntimeVariables.replace("usersn"));
 		selenium.type("//input[@id='_125_emailAddress']",
-			RuntimeVariables.replace("test.test@selenium.com"));
+			RuntimeVariables.replace("userea.userea@liferay.com"));
 		selenium.type("//input[@id='_125_firstName']",
-			RuntimeVariables.replace("testA"));
+			RuntimeVariables.replace("userfn"));
 		selenium.type("//input[@id='_125_lastName']",
-			RuntimeVariables.replace("testA"));
+			RuntimeVariables.replace("userln"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

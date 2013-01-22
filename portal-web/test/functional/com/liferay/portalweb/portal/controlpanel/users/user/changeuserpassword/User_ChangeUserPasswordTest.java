@@ -25,10 +25,15 @@ public class User_ChangeUserPasswordTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=selen01 lenn nium01");
-		selenium.clickAt("link=selen01 lenn nium01",
-			RuntimeVariables.replace("selen01 lenn nium01"));
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		assertEquals(RuntimeVariables.replace("userfn userln"),
+			selenium.getText("//li[@id='_145_userAvatar']/span/a/span"));
+		selenium.clickAt("//li[@id='_145_userAvatar']/span/a/span",
+			RuntimeVariables.replace("userfn userln"));
 		Thread.sleep(5000);
+		selenium.waitForElementPresent("//iframe");
+		selenium.selectFrame("//iframe");
 		selenium.waitForVisible("//a[@id='_2_passwordLink']");
 		assertTrue(selenium.isPartialText("//a[@id='_2_passwordLink']",
 				"Password"));
@@ -36,7 +41,7 @@ public class User_ChangeUserPasswordTest extends BaseTestCase {
 			RuntimeVariables.replace("Password"));
 		selenium.waitForVisible("//input[@id='_2_password0']");
 		selenium.type("//input[@id='_2_password0']",
-			RuntimeVariables.replace("asdf"));
+			RuntimeVariables.replace("test"));
 		selenium.type("//input[@id='_2_password1']",
 			RuntimeVariables.replace("test2"));
 		selenium.type("//input[@id='_2_password2']",
@@ -48,5 +53,6 @@ public class User_ChangeUserPasswordTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 	}
 }

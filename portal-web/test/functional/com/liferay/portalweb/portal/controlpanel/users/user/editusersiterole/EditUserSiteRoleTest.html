@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -105,28 +115,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]</td>
+	<td>//span[contains(.,'Select')]/a[contains(@href,'openSiteRoleSelector')]</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]</td>
+	<td>//span[contains(.,'Select')]/a[contains(@href,'openSiteRoleSelector')]</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]</td>
+	<td>//span[contains(.,'Select')]/a[contains(@href,'openSiteRoleSelector')]</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForPopUp</td>
-	<td>role</td>
-	<td>30000</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -155,12 +160,12 @@
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>//div[@id='_125_communityRolesSearchContainerSearchContainer']</td>
+	<td>//div[@id='_125_siteRolesSearchContainerSearchContainer']</td>
 	<td>Roles Siterole Name</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//div[@id='_125_communityRolesSearchContainerSearchContainer']</td>
+	<td>//div[@id='_125_siteRolesSearchContainerSearchContainer']</td>
 	<td>Roles Siterole Name</td>
 </tr>
 <tr>
@@ -175,12 +180,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_communityRolesSearchContainer_col-title_row-1']</td>
+	<td>//td[@id='_125_siteRolesSearchContainer_col-title_row-1']</td>
 	<td>Roles Siterole Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_communityRolesSearchContainer_col-site_row-1']</td>
+	<td>//td[@id='_125_siteRolesSearchContainer_col-site_row-1']</td>
 	<td>Site Name</td>
 </tr>
 </tbody></table>

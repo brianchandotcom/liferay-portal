@@ -31,9 +31,9 @@ public class SearchUserQuotesTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddUser4Test.class);
 		testSuite.addTestSuite(AddUser5Test.class);
 		testSuite.addTestSuite(SearchUserTest.class);
-		testSuite.addTestSuite(SearchMultipleUserTest.class);
+		testSuite.addTestSuite(SearchUsersTest.class);
 		testSuite.addTestSuite(SearchUserQuotesTest.class);
-		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(TearDownUsersTest.class);
 
 		return testSuite;
 	}

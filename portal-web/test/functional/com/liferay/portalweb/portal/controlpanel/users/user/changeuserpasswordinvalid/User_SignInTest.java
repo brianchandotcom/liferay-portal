@@ -32,12 +32,12 @@ public class User_SignInTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 				selenium.waitForVisible("//input[@id='_58_login']");
 				selenium.type("//input[@id='_58_login']",
-					RuntimeVariables.replace("test01@selenium.com"));
+					RuntimeVariables.replace("userea@liferay.com"));
 				selenium.type("//input[@id='_58_password']",
 					RuntimeVariables.replace("test"));
 
 				boolean rememberMeCheckboxChecked = selenium.isChecked(
-						"_58_rememberMeCheckbox");
+						"//input[@id='_58_rememberMeCheckbox']");
 
 				if (rememberMeCheckboxChecked) {
 					label = 2;

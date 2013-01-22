@@ -30,6 +30,10 @@ public class ViewUserSiteRoleTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -43,8 +47,10 @@ public class ViewUserSiteRoleTest extends BaseTestCase {
 				selenium.clickAt("link=Search All Users",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForElementPresent("//a[.='\u00ab Basic']");
 
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
+				boolean basicVisible = selenium.isVisible(
+						"//a[.='\u00ab Basic']");
 
 				if (!basicVisible) {
 					label = 2;
@@ -52,8 +58,8 @@ public class ViewUserSiteRoleTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace("\u00ab Basic"));
+				selenium.clickAt("//a[.='\u00ab Basic']",
+					RuntimeVariables.replace("Basic"));
 				selenium.waitForVisible("//input[@name='_125_keywords']");
 
 			case 2:
@@ -94,19 +100,19 @@ public class ViewUserSiteRoleTest extends BaseTestCase {
 					selenium.getText("//div[@id='_125_roles']/h3[4]"));
 				assertEquals(RuntimeVariables.replace("Title"),
 					selenium.getText(
-						"//th[@id='_125_communityRolesSearchContainer_col-title']"));
+						"//th[@id='_125_siteRolesSearchContainer_col-title']"));
 				assertEquals(RuntimeVariables.replace("Site"),
 					selenium.getText(
-						"//th[@id='_125_communityRolesSearchContainer_col-site']"));
+						"//th[@id='_125_siteRolesSearchContainer_col-site']"));
 				assertEquals(RuntimeVariables.replace("Roles Siterole Name"),
 					selenium.getText(
-						"//td[@id='_125_communityRolesSearchContainer_col-title_row-1']"));
+						"//td[@id='_125_siteRolesSearchContainer_col-title_row-1']"));
 				assertEquals(RuntimeVariables.replace("Site Name"),
 					selenium.getText(
-						"//td[@id='_125_communityRolesSearchContainer_col-site_row-1']"));
+						"//td[@id='_125_siteRolesSearchContainer_col-site_row-1']"));
 				assertEquals(RuntimeVariables.replace("Remove"),
 					selenium.getText(
-						"//td[@id='_125_communityRolesSearchContainer_col-3_row-1']/a"));
+						"//td[@id='_125_siteRolesSearchContainer_col-3_row-1']/a"));
 
 			case 100:
 				label = -1;

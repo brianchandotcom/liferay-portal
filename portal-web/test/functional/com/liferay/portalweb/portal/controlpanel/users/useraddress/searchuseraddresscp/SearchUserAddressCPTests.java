@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portal.controlpanel.users.useraddress.searchuseraddresscp;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.useraddress.adduseraddress.AddUserAddressTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,7 +29,7 @@ public class SearchUserAddressCPTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUserTest.class);
-		testSuite.addTestSuite(AddUserAddressCPTest.class);
+		testSuite.addTestSuite(AddUserAddressTest.class);
 		testSuite.addTestSuite(SearchUserAddressCityCPTest.class);
 		testSuite.addTestSuite(SearchUserAddressCountryCPTest.class);
 		testSuite.addTestSuite(SearchUserAddressRegionCPTest.class);

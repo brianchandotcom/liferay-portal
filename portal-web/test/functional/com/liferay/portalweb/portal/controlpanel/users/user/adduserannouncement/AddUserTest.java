@@ -30,7 +30,14 @@ public class AddUserTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Control Panel");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -115,7 +122,7 @@ public class AddUserTest extends BaseTestCase {
 					RuntimeVariables.replace("password"));
 
 				boolean rememberMeCheckboxChecked1 = selenium.isChecked(
-						"_58_rememberMeCheckbox");
+						"//input[@id='_58_rememberMeCheckbox']");
 
 				if (rememberMeCheckboxChecked1) {
 					label = 2;
@@ -196,7 +203,7 @@ public class AddUserTest extends BaseTestCase {
 					RuntimeVariables.replace("test"));
 
 				boolean rememberMeCheckboxChecked2 = selenium.isChecked(
-						"_58_rememberMeCheckbox");
+						"//input[@id='_58_rememberMeCheckbox']");
 
 				if (rememberMeCheckboxChecked2) {
 					label = 6;

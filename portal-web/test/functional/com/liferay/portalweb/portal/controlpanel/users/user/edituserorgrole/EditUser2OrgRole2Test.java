@@ -25,6 +25,10 @@ public class EditUser2OrgRole2Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -79,7 +83,6 @@ public class EditUser2OrgRole2Test extends BaseTestCase {
 		selenium.clickAt("//span[contains(.,'Select')]/a[contains(@href,'openOrganizationRoleSelector')]",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
-		selenium.waitForPopUp("role", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("title=Users and Organizations");
 		selenium.waitForVisible(
 			"//tr[contains(.,'Roles Orgrole2 Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a");

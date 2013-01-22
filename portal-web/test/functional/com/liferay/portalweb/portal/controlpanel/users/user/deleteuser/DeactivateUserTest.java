@@ -25,7 +25,14 @@ public class DeactivateUserTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -33,14 +40,14 @@ public class DeactivateUserTest extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_125_keywords']",
-			RuntimeVariables.replace("selen01"));
+			RuntimeVariables.replace("usersn"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("selen01"),
+		assertEquals(RuntimeVariables.replace("userfn"),
 			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//input[@name='_125_rowIds']",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//th[@id='_125_usersSearchContainer_col-rowChecker']/input",
+			RuntimeVariables.replace("Check All"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Deactivate']"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
@@ -49,6 +56,6 @@ public class DeactivateUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isElementNotPresent("link=selen01"));
+		assertTrue(selenium.isElementNotPresent("//input[@value='Deactivate']"));
 	}
 }

@@ -44,11 +44,10 @@ public class EditUserPasswordGmailTest extends BaseTestCase {
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Search All Users"),
-					selenium.getText("//a[@id='_125_allUsersLink']"));
-				selenium.clickAt("//a[@id='_125_allUsersLink']",
+				selenium.clickAt("link=Search All Users",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForElementPresent("//a[.='\u00ab Basic']");
 
 				boolean basicVisible = selenium.isVisible(
 						"//a[.='\u00ab Basic']");
@@ -60,7 +59,7 @@ public class EditUserPasswordGmailTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//a[.='\u00ab Basic']",
-					RuntimeVariables.replace("\u00ab Basic"));
+					RuntimeVariables.replace("Basic"));
 				selenium.waitForVisible("//input[@name='_125_keywords']");
 
 			case 2:

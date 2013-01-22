@@ -126,6 +126,15 @@ public class AssetCategoryServiceUtil {
 				   .getJSONSearch(groupId, name, vocabularyIds, start, end);
 	}
 
+	public static com.liferay.portal.kernel.json.JSONArray getJSONSearch(
+		long[] groupIds, java.lang.String name, long[] vocabularyIds,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getJSONSearch(groupIds, name, vocabularyIds, start, end);
+	}
+
 	public static com.liferay.portal.kernel.json.JSONObject getJSONVocabularyCategories(
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)

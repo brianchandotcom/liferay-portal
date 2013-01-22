@@ -103,7 +103,9 @@ public abstract class DLAppTestUtil {
 			long groupId, long folderId, String sourceFileName, String title)
 		throws Exception {
 
-		return addFileEntry(groupId, folderId, sourceFileName, title, null);
+		return addFileEntry(
+			groupId, folderId, sourceFileName, title, null,
+			WorkflowConstants.ACTION_PUBLISH);
 	}
 
 	public static FileEntry addFileEntry(
@@ -136,6 +138,27 @@ public abstract class DLAppTestUtil {
 			byte[] bytes, int workflowAction)
 		throws Exception {
 
+		return addFileEntry(
+			groupId, folderId, ContentTypes.TEXT_PLAIN, sourceFileName, title,
+			bytes, workflowAction);
+	}
+
+	public static FileEntry addFileEntry(
+			long groupId, long folderId, String mimeType, String fileName,
+			String title)
+		throws Exception {
+
+		return addFileEntry(
+			groupId, folderId, mimeType, fileName, title, null,
+			WorkflowConstants.ACTION_PUBLISH);
+
+	}
+
+	public static FileEntry addFileEntry(
+			long groupId, long folderId, String mimeType, String sourceFileName,
+			String title, byte[] bytes, int workflowAction)
+		throws Exception {
+
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
 
@@ -152,8 +175,7 @@ public abstract class DLAppTestUtil {
 
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), groupId, folderId, sourceFileName,
-			ContentTypes.TEXT_PLAIN, title, description, changeLog, bytes,
-			serviceContext);
+			mimeType, title, description, changeLog, bytes, serviceContext);
 	}
 
 	public static Folder addFolder(
@@ -214,6 +236,16 @@ public abstract class DLAppTestUtil {
 			boolean majorVersion)
 		throws Exception {
 
+		return updateFileEntry(
+			groupId, fileEntryId, ContentTypes.TEXT_PLAIN, sourceFileName,
+			title, majorVersion);
+	}
+
+	public static FileEntry updateFileEntry(
+			long groupId, long fileEntryId, String mimeType,
+			String sourceFileName, String title, boolean majorVersion)
+		throws Exception {
+
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
 
@@ -232,8 +264,8 @@ public abstract class DLAppTestUtil {
 		serviceContext.setScopeGroupId(groupId);
 
 		return DLAppServiceUtil.updateFileEntry(
-			fileEntryId, sourceFileName, ContentTypes.TEXT_PLAIN, title,
-			description, changeLog, majorVersion, bytes, serviceContext);
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, bytes, serviceContext);
 	}
 
 	private static final String _CONTENT =

@@ -445,6 +445,38 @@ public class AssetPublisherUtil {
 			PropsValues.ASSET_PUBLISHER_EMAIL_FROM_NAME);
 	}
 
+	public static long getGroupIdFromScopeId(
+			String scopeId, long scopeGroupId, boolean privateLayout)
+		throws Exception {
+
+		if (scopeId.startsWith(SCOPE_ID_GROUP_PREFIX)) {
+			String scopeIdSuffix = scopeId.substring(
+				SCOPE_ID_GROUP_PREFIX.length());
+
+			if (scopeIdSuffix.equals(GroupConstants.DEFAULT)) {
+				return scopeGroupId;
+			}
+
+			return GetterUtil.getLong(scopeIdSuffix);
+		}
+		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_PREFIX)) {
+			String scopeIdSuffix = scopeId.substring(
+				SCOPE_ID_LAYOUT_PREFIX.length());
+
+			long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
+
+			Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
+				scopeGroupId, privateLayout, scopeIdLayoutId);
+
+			Group scopeIdGroup = scopeIdLayout.getScopeGroup();
+
+			return scopeIdGroup.getGroupId();
+		}
+		else {
+			throw new IllegalArgumentException("Invalid scope ID " + scopeId);
+		}
+	}
+
 	public static long[] getGroupIds(
 		PortletPreferences portletPreferences, long scopeGroupId,
 		Layout layout) {
@@ -463,7 +495,7 @@ public class AssetPublisherUtil {
 
 			for (int i = 0; i < scopeIds.length; i++) {
 				try {
-					groupIds[i] = _getGroupId(
+					groupIds[i] = getGroupIdFromScopeId(
 						scopeIds[i], scopeGroupId, layout.isPrivateLayout());
 				}
 				catch (Exception e) {
@@ -479,7 +511,7 @@ public class AssetPublisherUtil {
 		}
 
 		try {
-			long groupId = _getGroupId(
+			long groupId = getGroupIdFromScopeId(
 				defaultScopeId, scopeGroupId, layout.isPrivateLayout());
 
 			return new long[] {groupId};
@@ -602,38 +634,6 @@ public class AssetPublisherUtil {
 		}
 
 		return xml;
-	}
-
-	private static long _getGroupId(
-			String scopeId, long scopeGroupId, boolean privateLayout)
-		throws Exception {
-
-		if (scopeId.startsWith(SCOPE_ID_GROUP_PREFIX)) {
-			String scopeIdSuffix = scopeId.substring(
-				SCOPE_ID_GROUP_PREFIX.length());
-
-			if (scopeIdSuffix.equals(GroupConstants.DEFAULT)) {
-				return scopeGroupId;
-			}
-
-			return GetterUtil.getLong(scopeIdSuffix);
-		}
-		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_PREFIX)) {
-			String scopeIdSuffix = scopeId.substring(
-				SCOPE_ID_LAYOUT_PREFIX.length());
-
-			long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
-
-			Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
-				scopeGroupId, privateLayout, scopeIdLayoutId);
-
-			Group scopeIdGroup = scopeIdLayout.getScopeGroup();
-
-			return scopeIdGroup.getGroupId();
-		}
-		else {
-			throw new IllegalArgumentException("Invalid scope ID " + scopeId);
-		}
 	}
 
 	private static Map<String, Long> _getRecentFolderIds(

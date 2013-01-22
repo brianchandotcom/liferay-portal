@@ -510,6 +510,11 @@ public class DLFileEntryIndexer extends BaseIndexer {
 	}
 
 	@Override
+	protected String getFolderClassName() {
+		return DLFolderConstants.getClassName();
+	}
+
+	@Override
 	protected String getPortletId(SearchContext searchContext) {
 		return PORTLET_ID;
 	}

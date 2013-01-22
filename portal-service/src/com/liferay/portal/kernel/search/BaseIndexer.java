@@ -207,6 +207,13 @@ public abstract class BaseIndexer implements Indexer {
 				searchContext.setAttribute("discussion", true);
 			}
 
+			if (searchContext.isIncludeFolders() &&
+					Validator.isNotNull(getFolderClassName())) {
+
+				entryClassNames = ArrayUtil.append(
+					entryClassNames, getFolderClassName());
+			}
+
 			searchContext.setEntryClassNames(entryClassNames);
 
 			if (searchContext.isIncludeAttachments() ||
@@ -1252,6 +1259,10 @@ public abstract class BaseIndexer implements Indexer {
 		}
 
 		return classNames[0];
+	}
+
+	protected String getFolderClassName() {
+		return null;
 	}
 
 	protected Set<String> getLocalizedCountryNames(Country country) {

@@ -323,6 +323,23 @@
 				[$FILE_SHORTCUT_FOLDER_ID$]
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findByNoAssets">
+		<![CDATA[
+			SELECT
+				{DLFolder.*}
+			FROM
+				DLFolder
+			WHERE
+				(folderId NOT IN (
+					SELECT
+						classPK
+					FROM
+						AssetEntry
+					WHERE
+						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFOLDER$]
+				))
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findF_ByG_M_F">
 		<![CDATA[
 			SELECT

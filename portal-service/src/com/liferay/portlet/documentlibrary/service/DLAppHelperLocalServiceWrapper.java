@@ -60,12 +60,12 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 			serviceContext);
 	}
 
-	public void addFolder(
+	public void addFolder(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlAppHelperLocalService.addFolder(folder, serviceContext);
+		_dlAppHelperLocalService.addFolder(userId, folder, serviceContext);
 	}
 
 	public void cancelCheckOut(long userId,
@@ -288,6 +288,16 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 			fileVersion, assetCategoryIds, assetTagNames, assetLinkEntryIds);
 	}
 
+	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,
+		com.liferay.portal.kernel.repository.model.Folder folder,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppHelperLocalService.updateAsset(userId, folder,
+			assetCategoryIds, assetTagNames, assetLinkEntryIds);
+	}
+
 	public void updateDependentStatus(com.liferay.portal.model.User user,
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -318,12 +328,12 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 			sourceFileVersion, destinationFileVersion, serviceContext);
 	}
 
-	public void updateFolder(
+	public void updateFolder(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlAppHelperLocalService.updateFolder(folder, serviceContext);
+		_dlAppHelperLocalService.updateFolder(userId, folder, serviceContext);
 	}
 
 	public void updateStatus(long userId,

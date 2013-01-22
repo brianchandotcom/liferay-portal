@@ -27,6 +27,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.asset.DLFolderAssetRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -140,7 +141,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 		Folder folder = DLAppLocalServiceUtil.getFolder(classPK);
 
-		return new DLFolderTrashRenderer(folder);
+		return new DLFolderAssetRenderer(folder);
 	}
 
 	@Override

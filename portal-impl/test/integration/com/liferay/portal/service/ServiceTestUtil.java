@@ -70,7 +70,8 @@ import com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory
 import com.liferay.portlet.documentlibrary.trash.DLFileEntryTrashHandler;
 import com.liferay.portlet.documentlibrary.trash.DLFileShortcutTrashHandler;
 import com.liferay.portlet.documentlibrary.trash.DLFolderTrashHandler;
-import com.liferay.portlet.documentlibrary.util.DLIndexer;
+import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
+import com.liferay.portlet.documentlibrary.util.DLFolderIndexer;
 import com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler;
 import com.liferay.portlet.journal.trash.JournalArticleTrashHandler;
 import com.liferay.portlet.journal.util.JournalIndexer;
@@ -415,7 +416,8 @@ public class ServiceTestUtil {
 		IndexerRegistryUtil.register(new ContactIndexer());
 		IndexerRegistryUtil.register(new UserIndexer());
 		IndexerRegistryUtil.register(new BookmarksIndexer());
-		IndexerRegistryUtil.register(new DLIndexer());
+		IndexerRegistryUtil.register(new DLFolderIndexer());
+		IndexerRegistryUtil.register(new DLFileEntryIndexer());
 		IndexerRegistryUtil.register(new MBMessageIndexer());
 		IndexerRegistryUtil.register(new TrashIndexer());
 		IndexerRegistryUtil.register(new WikiNodeIndexer());

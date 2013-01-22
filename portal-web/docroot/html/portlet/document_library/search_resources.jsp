@@ -244,22 +244,41 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 
 						// Folder and document
 
-						long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+						String className = GetterUtil.getString(doc.get(Field.ENTRY_CLASS_NAME));
+						long classPK = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
-						FileEntry fileEntry = null;
+						if (className.equals(DLFileEntryConstants.getClassName())) {
+							FileEntry fileEntry = null;
 
-						try {
-							fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-						}
-						catch (Exception e) {
-							if (_log.isWarnEnabled()) {
-								_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
+							try {
+								fileEntry = DLAppLocalServiceUtil.getFileEntry(classPK);
+							}
+							catch (Exception e) {
+								if (_log.isWarnEnabled()) {
+									_log.warn("Documents and Media search index is stale and contains file entry {" + classPK + "}");
+								}
+
+								continue;
 							}
 
-							continue;
+							results.add(fileEntry);
 						}
+						else if (className.equals(DLFolderConstants.getClassName())) {
+							Folder curFolder = null;
 
-						results.add(fileEntry);
+							try {
+								curFolder = DLAppLocalServiceUtil.getFolder(classPK);
+							}
+							catch (Exception e) {
+								if (_log.isWarnEnabled()) {
+									_log.warn("Documents and Media search index is stale and contains folder {" + classPK + "}");
+								}
+
+								continue;
+							}
+
+							results.add(curFolder);
+						}
 					}
 				}
 
@@ -279,7 +298,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 					<c:choose>
 						<c:when test='<%= !displayStyle.equals("list") %>'>
 							<c:choose>
-								<c:when test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+								<c:when test="<%= (fileEntry != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 
 									<%
 									PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
@@ -299,6 +318,50 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 
 										<c:otherwise>
 											<liferay-util:include page="/html/portlet/document_library/view_file_entry_descriptive.jsp" />
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+
+								<c:when test="<%= (curFolder != null) && DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.VIEW) %>">
+
+									<%
+									int status = WorkflowConstants.STATUS_APPROVED;
+
+									if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(curFolder.getGroupId())) {
+										status = WorkflowConstants.STATUS_ANY;
+									}
+
+									int foldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
+									int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status);
+
+									String folderImage = "folder_empty";
+
+									if ((foldersCount + fileEntriesCount) > 0) {
+										folderImage = "folder_full_document";
+									}
+
+									PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
+
+									tempRowURL.setParameter("struts_action", "/document_library/view");
+									tempRowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
+									tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+
+									request.setAttribute("view_entries.jsp-folder", curFolder);
+									request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
+									request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(curFolder.getRepositoryId()));
+
+									request.setAttribute("view_entries.jsp-folderImage", folderImage);
+
+									request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
+									%>
+
+									<c:choose>
+										<c:when test='<%= displayStyle.equals("icon") %>'>
+											<liferay-util:include page="/html/portlet/document_library/view_folder_icon.jsp" />
+										</c:when>
+
+										<c:otherwise>
+											<liferay-util:include page="/html/portlet/document_library/view_folder_descriptive.jsp" />
 										</c:otherwise>
 									</c:choose>
 								</c:when>

@@ -303,6 +303,21 @@ public class DLFolderLocalServiceUtil {
 		getService().deleteAll(groupId);
 	}
 
+	public static void deleteFolder(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFolder(dlFolder);
+	}
+
+	public static void deleteFolder(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFolder(dlFolder, includeTrashedEntries);
+	}
+
 	public static void deleteFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -530,6 +545,11 @@ public class DLFolderLocalServiceUtil {
 		return getService().getMountFoldersCount(groupId, parentFolderId);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getNoAssetFolders()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getNoAssetFolders();
+	}
+
 	public static void getSubfolderIds(
 		java.util.List<java.lang.Long> folderIds, long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -545,7 +565,7 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
+		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
@@ -553,27 +573,27 @@ public class DLFolderLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateFolder(folderId, parentFolderId, name, description,
-			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
-			serviceContext);
+				   .updateFolder(userId, folderId, parentFolderId, name,
+			description, defaultFileEntryTypeId, fileEntryTypeIds,
+			overrideFileEntryTypes, serviceContext);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
-		long defaultFileEntryTypeId,
+		long userId, long folderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateFolder(folderId, name, description,
+				   .updateFolder(userId, folderId, name, description,
 			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
 			serviceContext);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolderAndFileEntryTypes(
-		long folderId, long parentFolderId, java.lang.String name,
+		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
@@ -581,9 +601,9 @@ public class DLFolderLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateFolderAndFileEntryTypes(folderId, parentFolderId,
-			name, description, defaultFileEntryTypeId, fileEntryTypeIds,
-			overrideFileEntryTypes, serviceContext);
+				   .updateFolderAndFileEntryTypes(userId, folderId,
+			parentFolderId, name, description, defaultFileEntryTypeId,
+			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 	}
 
 	/**

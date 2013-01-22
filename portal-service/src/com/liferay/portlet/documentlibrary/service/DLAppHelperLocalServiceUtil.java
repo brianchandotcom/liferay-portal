@@ -64,12 +64,12 @@ public class DLAppHelperLocalServiceUtil {
 		getService().addFileEntry(userId, fileEntry, fileVersion, serviceContext);
 	}
 
-	public static void addFolder(
+	public static void addFolder(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().addFolder(folder, serviceContext);
+		getService().addFolder(userId, folder, serviceContext);
 	}
 
 	public static void cancelCheckOut(long userId,
@@ -292,6 +292,17 @@ public class DLAppHelperLocalServiceUtil {
 			assetCategoryIds, assetTagNames, assetLinkEntryIds);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetEntry updateAsset(
+		long userId, com.liferay.portal.kernel.repository.model.Folder folder,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateAsset(userId, folder, assetCategoryIds,
+			assetTagNames, assetLinkEntryIds);
+	}
+
 	public static void updateDependentStatus(
 		com.liferay.portal.model.User user,
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders, int status)
@@ -325,12 +336,12 @@ public class DLAppHelperLocalServiceUtil {
 			destinationFileVersion, serviceContext);
 	}
 
-	public static void updateFolder(
+	public static void updateFolder(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateFolder(folder, serviceContext);
+		getService().updateFolder(userId, folder, serviceContext);
 	}
 
 	public static void updateStatus(long userId,

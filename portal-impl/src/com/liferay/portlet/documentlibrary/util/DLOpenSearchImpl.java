@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 /**
@@ -35,7 +36,7 @@ public class DLOpenSearchImpl extends HitsOpenSearchImpl {
 
 	@Override
 	public String getPortletId() {
-		return DLIndexer.PORTLET_ID;
+		return PortletKeys.DOCUMENT_LIBRARY;
 	}
 
 	@Override

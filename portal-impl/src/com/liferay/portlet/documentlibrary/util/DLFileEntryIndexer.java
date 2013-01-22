@@ -98,13 +98,13 @@ import javax.portlet.WindowStateException;
  * @author Raymond Augé
  * @author Alexander Chow
  */
-public class DLIndexer extends BaseIndexer {
+public class DLFileEntryIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {DLFileEntry.class.getName()};
 
 	public static final String PORTLET_ID = PortletKeys.DOCUMENT_LIBRARY;
 
-	public DLIndexer() {
+	public DLFileEntryIndexer() {
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -612,6 +612,6 @@ public class DLIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DLIndexer.class);
+	private static Log _log = LogFactoryUtil.getLog(DLFileEntryIndexer.class);
 
 }

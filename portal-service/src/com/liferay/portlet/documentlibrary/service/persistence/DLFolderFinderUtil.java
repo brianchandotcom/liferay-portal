@@ -92,6 +92,11 @@ public class DLFolderFinderUtil {
 				   .filterFindFE_FS_ByG_F(groupId, folderId, queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findByNoAssets()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByNoAssets();
+	}
+
 	public static java.util.List<java.lang.Object> findF_FE_FS_ByG_F_M_M(
 		long groupId, long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,

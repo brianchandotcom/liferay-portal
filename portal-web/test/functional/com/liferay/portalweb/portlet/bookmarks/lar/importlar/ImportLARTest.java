@@ -28,7 +28,7 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -45,7 +45,7 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.uploadFile("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\bookmarks\\lar\\importlar\\dependencies\\Selenium-Bookmarks.portlet.lar"));
+				"L:\\portal\\build\\portal-web\\test\\functional\\com\\liferay\\portalweb\\portlet\\bookmarks\\lar\\importlar\\dependencies\\Selenium-Bookmarks.portlet.lar"));
 		selenium.check("//input[@id='_86_DELETE_PORTLET_DATACheckbox']");
 		selenium.check("//input[@id='_86_PORTLET_DATACheckbox']");
 		selenium.clickAt("//input[@value='Import']",

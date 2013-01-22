@@ -25,7 +25,6 @@ public class BA_AddEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Blogs Permissions Page");
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
@@ -53,13 +52,13 @@ public class BA_AddEntryTest extends BaseTestCase {
 		selenium.waitForVisible("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.waitForText("//body", "This is a permissions blogs test entry");
+		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isElementPresent(
-				"link=Permissions Blogs Test Entry"));
+		assertTrue(selenium.isElementPresent("//div[@class='entry-title']/h2/a"));
 	}
 }

@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -29,8 +49,58 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Search All Users</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//a[.='« Basic']</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//a[.='« Basic']</td>
+	<td>basicVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${basicVisible}</td>
+	<td>BasicNotVisible</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[.='« Basic']</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>BasicNotVisible</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td>portlet*</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
+	<td>//input[@name='_125_allRowIds']</td>
 	<td>usersPresent</td>
 </tr>
 <tr>
@@ -39,19 +109,39 @@
 	<td>UsersNotPresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
 	<td>Select All</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Deactivate']</td>
 	<td>Deactivate</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to deactivate the selected users?</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -59,29 +149,64 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No users were found.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No users were found.</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Search All Users</td>
 	<td>Search All Users</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=Advanced »'))</td>
-	<td>advancedVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${advancedVisible}</td>
-	<td>AdvancedNotVisible</td>
-</tr>
-<tr>
 	<td>clickAt</td>
-	<td>link=Advanced »</td>
+	<td>//a[.='Advanced »']</td>
 	<td>Advanced</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>AdvancedNotVisible</td>
-	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -95,21 +220,36 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
+	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
 	<td>//input[@name='_125_allRowIds']</td>
-	<td>users2Present</td>
+	<td>usersNotDeleted</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${users2Present}</td>
-	<td>Users2NotPresent</td>
+	<td>!${usersNotDeleted}</td>
+	<td>UsersDeleted</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
 	<td>//input[@name='_125_allRowIds']</td>
 	<td>Select All</td>
 </tr>
@@ -119,19 +259,39 @@
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to permanently delete the selected users?</td>
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
-	<td>Users2NotPresent</td>
+	<td>UsersDeleted</td>
 	<td></td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No users were found.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No users were found.</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td>« Basic</td>
+	<td>//a[.='« Basic']</td>
+	<td>Basic</td>
 </tr>
 </tbody></table>
 </body>

@@ -25,21 +25,21 @@ public class Portlet_DeleteEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Blogs Permissions Page");
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry Title Edited"));
 		selenium.waitForPageToLoad("30000");
-		selenium.click(RuntimeVariables.replace("link=Delete"));
+		selenium.clickAt("link=Move to the Recycle Bin",
+			RuntimeVariables.replace("Move to the Recycle Bin"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
+		selenium.waitForVisible(
+			"//div[@class='portlet-msg-success taglib-trash-undo']");
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+				"The selected item was moved to the Recycle Bin. Undo"),
+			selenium.getText(
+				"//div[@class='portlet-msg-success taglib-trash-undo']"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Title Edited"));
 		assertTrue(selenium.isElementNotPresent("//div[@class='entry-title']"));
 	}

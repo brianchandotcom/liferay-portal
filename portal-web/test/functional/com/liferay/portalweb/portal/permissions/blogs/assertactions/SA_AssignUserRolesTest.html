@@ -14,6 +14,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
@@ -29,9 +49,19 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//input[@id='_125_keywords']</td>
-	<td>BA@liferay.com</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td>BA</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -243,7 +273,6 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

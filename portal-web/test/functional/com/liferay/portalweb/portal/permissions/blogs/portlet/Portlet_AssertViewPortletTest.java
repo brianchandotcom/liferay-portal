@@ -32,7 +32,7 @@ public class Portlet_AssertViewPortletTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent(
 				"You do not have the roles required to access this portlet."));
 		assertEquals(RuntimeVariables.replace("RSS"),
-			selenium.getText("//span/a/span[1]"));
+			selenium.getText("//span[@class='taglib-text']"));
 		assertEquals(RuntimeVariables.replace("Showing 0 results."),
 			selenium.getText("//div[@class='search-results']"));
 	}

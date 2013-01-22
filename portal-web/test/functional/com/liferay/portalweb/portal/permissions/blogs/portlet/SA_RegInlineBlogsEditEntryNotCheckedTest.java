@@ -23,19 +23,51 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SA_RegInlineBlogsEditEntryNotCheckedTest extends BaseTestCase {
 	public void testSA_RegInlineBlogsEditEntryNotChecked()
 		throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Blogs Permissions Page");
-		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace("Blogs Permissions Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[@class='entry-title']/h2/a",
-			RuntimeVariables.replace("Blogs Entry Title"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Permissions",
-			RuntimeVariables.replace("Permissions"));
-		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isChecked("//input[@id='portlet_ACTION_UPDATE']"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Blogs Permissions Page",
+					RuntimeVariables.replace("Blogs Permissions Page"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("//div[@class='entry-title']/h2/a",
+					RuntimeVariables.replace("Blogs Entry Title"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Permissions",
+					RuntimeVariables.replace("Permissions"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean portletUpdateChecked = selenium.isChecked(
+						"//input[@id='portlet_ACTION_UPDATE']");
+
+				if (!portletUpdateChecked) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='portlet_ACTION_UPDATE']",
+					RuntimeVariables.replace("Portlet Permissions"));
+
+			case 2:
+				assertFalse(selenium.isChecked(
+						"//input[@id='portlet_ACTION_UPDATE']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='portlet_ACTION_UPDATE']"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

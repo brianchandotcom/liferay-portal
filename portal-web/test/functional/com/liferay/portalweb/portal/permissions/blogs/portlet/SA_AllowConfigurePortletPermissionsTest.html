@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Permissions Page</td>
 	<td>Blogs Permissions Page</td>
@@ -69,6 +64,11 @@
 	<td>iframe - Blogs - Configuration</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>link=Permissions</td>
 	<td>Permissions</td>
@@ -79,14 +79,24 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
+	<td>//input[@id='portlet_ACTION_CONFIGURATION']</td>
+	<td>portletConfigurationChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${portletConfigurationChecked}</td>
+	<td>PortletConfigurationChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@id='portlet_ACTION_CONFIGURATION']</td>
 	<td>Portlet Configuration</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@id='portlet_ACTION_CONFIGURATION']</td>
-	<td>Portlet Configuration</td>
+	<td>label</td>
+	<td>PortletConfigurationChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>

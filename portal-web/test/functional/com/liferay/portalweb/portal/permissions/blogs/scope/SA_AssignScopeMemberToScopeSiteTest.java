@@ -30,6 +30,13 @@ public class SA_AssignScopeMemberToScopeSiteTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 				selenium.waitForElementPresent("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
@@ -37,7 +44,7 @@ public class SA_AssignScopeMemberToScopeSiteTest extends BaseTestCase {
 				selenium.waitForElementPresent("link=Sites");
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
-				selenium.type("//input[@id='_134_name']",
+				selenium.type("//input[@name='_134_keywords']",
 					RuntimeVariables.replace("Scope Site"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
@@ -64,11 +71,12 @@ public class SA_AssignScopeMemberToScopeSiteTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("User"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+					RuntimeVariables.replace("User"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean basic1Visible = selenium.isVisible("link=\u00ab Basic");
+				boolean basic1Visible = selenium.isVisible(
+						"//a[.='\u00ab Basic']");
 
 				if (!basic1Visible) {
 					label = 2;

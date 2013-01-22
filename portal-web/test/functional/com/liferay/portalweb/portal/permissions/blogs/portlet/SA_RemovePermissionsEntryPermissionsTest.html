@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Permissions Page</td>
 	<td>Blogs Permissions Page</td>
@@ -29,19 +24,34 @@
 	<td>Blogs Entry Title Temporary</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Permissions</td>
+	<td>assertText</td>
+	<td>//span[@class='taglib-text' and contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='taglib-text' and contains(.,'Permissions')]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='portlet_ACTION_PERMISSIONS']</td>
+	<td>portletPermissionsChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${portletPermissionsChecked}</td>
+	<td>PortletPermissionsNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@id='portlet_ACTION_PERMISSIONS']</td>
 	<td>Portlet Permissions</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//input[@id='portlet_ACTION_PERMISSIONS']</td>
-	<td>Portlet Permissions</td>
+	<td>label</td>
+	<td>PortletPermissionsNotChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>

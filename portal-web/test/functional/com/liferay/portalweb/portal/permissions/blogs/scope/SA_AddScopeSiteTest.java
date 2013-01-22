@@ -25,20 +25,30 @@ public class SA_AddScopeSiteTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]");
 		assertEquals(RuntimeVariables.replace("Blank Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]",
+			RuntimeVariables.replace("Blank Site"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Scope Site"));
@@ -48,5 +58,41 @@ public class SA_AddScopeSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Scope Site"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
+		selenium.waitForPageToLoad("30000");
+		selenium.type("//input[@name='_134_keywords']",
+			RuntimeVariables.replace("Scope"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Scope Site"),
+			selenium.getText("//tr[contains(.,'Scope Site')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Open"),
+			selenium.getText("//tr[contains(.,'Scope Site')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("1 User"),
+			selenium.getText("//tr[contains(.,'Scope Site')]/td[4]"));
+		assertEquals(RuntimeVariables.replace("Yes"),
+			selenium.getText("//tr[contains(.,'Scope Site')]/td[5]"));
+		assertEquals(RuntimeVariables.replace(""),
+			selenium.getText("//tr[contains(.,'Scope Site')]/td[6]"));
+		assertEquals(RuntimeVariables.replace(""),
+			selenium.getText("//tr[contains(.,'Scope Site')]/td[7]"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'Scope Site')]/td[8]/span[@title='Actions']/ul/li/strong/a/span"));
 	}
 }

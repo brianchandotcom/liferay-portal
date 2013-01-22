@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Permissions Page</td>
 	<td>Blogs Permissions Page</td>
@@ -30,7 +25,7 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=Permissions Blogs Test Entry</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Permissions Blogs Test Entry</td>
 </tr>
 <tr>
@@ -55,7 +50,7 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Permissions Blogs Test Entry</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Permissions Blogs Test Entry</td>
 </tr>
 <tr>
@@ -105,12 +100,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe[@id='_33_']</td>
+	<td>//iframe[@id='_33_signInDialog']</td>
 	<td>Sign In</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[@id='_33_']</td>
+	<td>//iframe[@id='_33_signInDialog']</td>
 	<td>Sign In</td>
 </tr>
 <tr>
@@ -160,7 +155,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//button[@id='closethick']</td>
+	<td>//button[@title='Close dialog']</td>
 	<td></td>
 </tr>
 </tbody></table>

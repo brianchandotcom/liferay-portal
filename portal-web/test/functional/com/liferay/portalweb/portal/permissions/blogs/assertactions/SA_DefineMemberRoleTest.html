@@ -14,6 +14,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
@@ -59,12 +79,52 @@
 	<td>label=Blogs</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryADD_DISCUSSION']</td>
+	<td>blogsEntryAddDiscussionChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${blogsEntryAddDiscussionChecked}</td>
+	<td>blogsEntryAddDiscussionChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryADD_DISCUSSION']</td>
 	<td>Blogs Entry Add Discussion</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>label</td>
+	<td>blogsEntryAddDiscussionChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryADD_DISCUSSION']</td>
+	<td>Blogs Entry Add Discussion</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryVIEW']</td>
+	<td>blogsEntryViewChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${blogsEntryViewChecked}</td>
+	<td>blogsEntryViewChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryVIEW']</td>
+	<td>Blogs Entry View</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>blogsEntryViewChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
 	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryVIEW']</td>
 	<td>Blogs Entry View</td>
 </tr>
@@ -78,7 +138,21 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>The role permissions were updated.</td>
 </tr>
-
+<tr>
+	<td>selectAndWait</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>label=Blogs</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryADD_DISCUSSION']</td>
+	<td>Blogs Entry Add Discussion</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryVIEW']</td>
+	<td>Blogs Entry View</td>
+</tr>
 </tbody></table>
 </body>
 </html>

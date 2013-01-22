@@ -25,10 +25,10 @@ public class Scope_AddGuestSiteScopeEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Blogs Permissions Page");
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isElementPresent("//input[@value='Add Blog Entry']"));
 		selenium.clickAt("//input[@value='Add Blog Entry']",
 			RuntimeVariables.replace("Add Blog Entry"));
 		selenium.waitForPageToLoad("30000");
@@ -56,6 +56,7 @@ public class Scope_AddGuestSiteScopeEntryTest extends BaseTestCase {
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.waitForText("//body",
 			"Guest Site Scope Permissions Blogs Entry Content");
+		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

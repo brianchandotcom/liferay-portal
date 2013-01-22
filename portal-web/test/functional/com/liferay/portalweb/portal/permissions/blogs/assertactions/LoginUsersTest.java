@@ -83,5 +83,6 @@ public class LoginUsersTest extends BaseTestCase {
 				"You are signed in as Member Liferay."));
 		selenium.waitForVisible("link=Sign Out");
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
+		selenium.waitForPageToLoad("30000");
 	}
 }

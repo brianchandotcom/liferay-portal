@@ -25,7 +25,7 @@ public class Scope_AddScopeSiteScopeEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/scope-site/scope-site-test-page/");
-		selenium.waitForElementPresent("//input[@value='Add Blog Entry']");
+		selenium.waitForVisible("//input[@value='Add Blog Entry']");
 		selenium.clickAt("//input[@value='Add Blog Entry']",
 			RuntimeVariables.replace("Add Blog Entry"));
 		selenium.waitForPageToLoad("30000");
@@ -53,6 +53,7 @@ public class Scope_AddScopeSiteScopeEntryTest extends BaseTestCase {
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.waitForText("//body",
 			"Scope Site Scope Permissions Blogs Content2");
+		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

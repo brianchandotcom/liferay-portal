@@ -25,7 +25,6 @@ public class Portlet_EditEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Blogs Permissions Page");
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
@@ -55,6 +54,7 @@ public class Portlet_EditEntryTest extends BaseTestCase {
 		selenium.waitForVisible("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.waitForText("//body", "Blogs Entry Content Edited");
+		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

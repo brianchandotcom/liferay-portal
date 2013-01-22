@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.blogs.scope;
+package com.liferay.portalweb.portal.permissions.blogs.assertactions;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TearDownUserTest extends BaseTestCase {
-	public void testTearDownUser() throws Exception {
+public class TearDownBAUserTest extends BaseTestCase {
+	public void testTearDownBAUser() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -44,7 +44,9 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Search All Users",
+				assertEquals(RuntimeVariables.replace("Search All Users"),
+					selenium.getText("//a[@id='_125_allUsersLink']"));
+				selenium.clickAt("//a[@id='_125_allUsersLink']",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForElementPresent("//a[.='\u00ab Basic']");
@@ -64,7 +66,7 @@ public class TearDownUserTest extends BaseTestCase {
 
 			case 2:
 				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("scope*"));
+					RuntimeVariables.replace("BA"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
@@ -114,7 +116,9 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Search All Users",
+				assertEquals(RuntimeVariables.replace("Search All Users"),
+					selenium.getText("//a[@id='_125_allUsersLink']"));
+				selenium.clickAt("//a[@id='_125_allUsersLink']",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("//a[.='Advanced \u00bb']",

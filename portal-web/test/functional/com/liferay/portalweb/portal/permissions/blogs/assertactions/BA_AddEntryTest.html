@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Permissions Page</td>
 	<td>Blogs Permissions Page</td>
@@ -94,6 +89,11 @@
 	<td>This is a permissions blogs test entry</td>
 </tr>
 <tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=Permissions Blogs Test Entry</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Permissions Blogs Test Entry</td>
 </tr>
 </tbody></table>

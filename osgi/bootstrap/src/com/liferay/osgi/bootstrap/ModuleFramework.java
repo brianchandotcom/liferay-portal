@@ -18,6 +18,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.InputStream;
 
+import java.net.URL;
+
+import java.util.List;
+import java.util.Map;
+
 import org.osgi.framework.launch.Framework;
 
 /**
@@ -30,6 +35,10 @@ public interface ModuleFramework {
 
 	public Object addBundle(String location, InputStream inputStream)
 		throws PortalException;
+
+	public List<URL> getExtraPackageLocations();
+
+	public Map<String, List<URL>> getExtraPackageMap();
 
 	public Framework getFramework();
 

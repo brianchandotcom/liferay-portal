@@ -144,24 +144,37 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			long groupId, String name, long[] vocabularyIds, int start, int end)
 		throws PortalException, SystemException {
 
+		return getJSONSearch(
+			new long[]{groupId}, name, vocabularyIds, start, end);
+	}
+
+	public JSONArray getJSONSearch(
+			long[] groupIds, String name, long[] vocabularyIds, int start,
+			int end)
+		throws PortalException, SystemException {
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (AssetVocabulary vocabulary :
 				assetVocabularyService.getVocabularies(vocabularyIds)) {
 
-			List<AssetCategory> vocabularyCategory =
-				assetCategoryFinder.findByG_N_V(
-					groupId, name, vocabulary.getVocabularyId(), start, end,
-					null);
+			for (int i = 0; i < groupIds.length; i++) {
+				List<AssetCategory> vocabularyCategory =
+					assetCategoryFinder.findByG_N_V(
+						groupIds[i], name, vocabulary.getVocabularyId(), start,
+						end, null);
 
-			JSONArray vocabularyCategoryJSONArray = toJSONArray(
-				vocabularyCategory);
+				JSONArray vocabularyCategoryJSONArray = toJSONArray(
+					vocabularyCategory);
 
-			for (int i = 0; i < vocabularyCategoryJSONArray.length(); ++i) {
-				JSONObject vocabularyCategoryJSONObject =
-					vocabularyCategoryJSONArray.getJSONObject(i);
+				for (int j = 0; j < vocabularyCategoryJSONArray.length();
+						j++) {
 
-				jsonArray.put(vocabularyCategoryJSONObject);
+					JSONObject vocabularyCategoryJSONObject =
+						vocabularyCategoryJSONArray.getJSONObject(j);
+
+					jsonArray.put(vocabularyCategoryJSONObject);
+				}
 			}
 		}
 

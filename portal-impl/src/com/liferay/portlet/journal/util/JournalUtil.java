@@ -62,6 +62,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -163,26 +164,28 @@ public class JournalUtil {
 				article.getDisplayDate());
 		}
 
+		String smallImageURL = StringPool.BLANK;
+
 		if (Validator.isNotNull(article.getSmallImageURL())) {
-			JournalUtil.addReservedEl(
-				rootElement, tokens,
-				JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
-				article.getSmallImageURL());
+			smallImageURL = article.getSmallImageURL();
 		}
-		else {
-			String imageURL = StringPool.BLANK;
+		else if ((themeDisplay != null) && article.isSmallImage()) {
+			StringBundler sb = new StringBundler(5);
 
-			if ((themeDisplay != null) && article.getSmallImage()) {
-				imageURL =
-					themeDisplay.getPathImage() + "/journal/article?img_id=" +
-						article.getSmallImageId();
-			}
+			sb.append(themeDisplay.getPathImage());
+			sb.append("/journal/article?img_id=");
+			sb.append(article.getSmallImageId());
+			sb.append("&t=");
+			sb.append(
+				WebServerServletTokenUtil.getToken(article.getSmallImageId()));
 
-			JournalUtil.addReservedEl(
-				rootElement, tokens,
-				JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
-				imageURL);
+			smallImageURL = sb.toString();
 		}
+
+		JournalUtil.addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
+			smallImageURL);
 
 		String[] assetTagNames = new String[0];
 

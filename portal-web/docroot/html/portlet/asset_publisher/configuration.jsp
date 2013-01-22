@@ -89,7 +89,7 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 
 			<optgroup label="----------"></optgroup>
 
-			<aui:option cssClass="advanced-options" label='<%= LanguageUtil.get(pageContext,"advanced-options") + StringPool.TRIPLE_PERIOD %>' selected="<%= (groupIds.length > 1) || ((groupIds.length == 1) && (groupIds[0] != themeDisplay.getScopeGroupId()) && (groupIds[0] != layoutScopeGroupId) && (groupIds[0] != themeDisplay.getCompanyGroupId())) %>" value="<%= false %>" />
+			<aui:option label='<%= LanguageUtil.get(pageContext,"advanced-selection") + StringPool.TRIPLE_PERIOD %>' selected="<%= (groupIds.length > 1) || ((groupIds.length == 1) && (groupIds[0] != themeDisplay.getScopeGroupId()) && (groupIds[0] != layoutScopeGroupId) && (groupIds[0] != themeDisplay.getCompanyGroupId())) %>" value="<%= false %>" />
 		</aui:select>
 
 		<%

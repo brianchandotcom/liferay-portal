@@ -144,8 +144,7 @@ public class DeployUtil {
 			context = "/ROOT";
 		}
 
-		String fileName =
-			StringPool.SLASH.concat(context).concat("/WEB-INF/web.xml");
+		String fileName = context.concat("/WEB-INF/web.xml");
 
 		File webXml = new File(getAutoDeployDestDir(), fileName);
 

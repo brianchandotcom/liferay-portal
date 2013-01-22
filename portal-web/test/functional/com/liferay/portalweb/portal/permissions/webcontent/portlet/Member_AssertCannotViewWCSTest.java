@@ -31,7 +31,7 @@ public class Member_AssertCannotViewWCSTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//section"));
 		assertTrue(selenium.isElementNotPresent("//input[@value='Search...']"));
 		assertTrue(selenium.isElementNotPresent(
-				"//input[contains(@name,'search')]"));
+				"//div[@class='portlet-body']/form/span[2]/span/span/input"));
 		assertEquals(RuntimeVariables.replace(
 				"You do not have the roles required to access this portlet."),
 			selenium.getText("//div[@class='portlet-msg-error']"));

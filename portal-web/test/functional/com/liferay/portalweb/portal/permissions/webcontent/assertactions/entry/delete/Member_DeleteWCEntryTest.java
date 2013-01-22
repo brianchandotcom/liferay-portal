@@ -45,18 +45,13 @@ public class Member_DeleteWCEntryTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
-		assertEquals(RuntimeVariables.replace("Delete"),
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
-			RuntimeVariables.replace("Delete"));
-		selenium.waitForConfirmation(
-			"Are you sure you want to delete this? It will be deleted immediately.");
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+			RuntimeVariables.replace("Move to the Recycle Bin"));
+		selenium.waitForConfirmation("//form[@id='_15_undoForm']");
 		assertEquals(RuntimeVariables.replace("No Web Content was found."),
 			selenium.getText("//div[@class='entries-empty portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("WC WebContent Title"));

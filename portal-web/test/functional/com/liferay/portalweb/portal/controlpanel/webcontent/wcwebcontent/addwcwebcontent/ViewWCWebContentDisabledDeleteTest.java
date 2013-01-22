@@ -47,7 +47,7 @@ public class ViewWCWebContentDisabledDeleteTest extends BaseTestCase {
 		assertFalse(selenium.isVisible(
 				"//span[@title='Actions']/ul/li/strong/a/span"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 		selenium.clickAt("//input[@id='_15_rowIdsJournalArticleCheckbox']",
 			RuntimeVariables.replace("WC WebContent Title CheckBox"));
 		assertTrue(selenium.isChecked(

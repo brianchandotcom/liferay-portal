@@ -56,7 +56,6 @@ public class AddPermissionPermissionsTest extends BaseTestCase {
 				selenium.clickAt("link=Define Permissions",
 					RuntimeVariables.replace("Define Permissions"));
 				selenium.waitForPageToLoad("30000");
-				selenium.selectWindow("null");
 				selenium.select("//select[@id='_128_add-permissions']",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");

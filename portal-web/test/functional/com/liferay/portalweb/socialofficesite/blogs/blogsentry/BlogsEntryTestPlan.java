@@ -15,6 +15,15 @@
 package com.liferay.portalweb.socialofficesite.blogs.blogsentry;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.addblogsentrycategorysite.AddBlogsEntryCategorySiteTests;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.addblogsentrycommentsite.AddBlogsEntryCommentSiteTests;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.addblogsentrymultiplesite.AddBlogsEntryMultipleSiteTests;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.addblogsentrysite.AddBlogsEntrySiteTests;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.addblogsentrytagssite.AddBlogsEntryTagsSiteTests;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.deleteblogsentrysite.DeleteBlogsEntrySiteTests;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.editblogsentrysite.EditBlogsEntrySiteTests;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.editpermissionsblogsentry2guestnoview.EditPermissionsBlogsEntry2GuestNoViewTests;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.rateblogsentrysite.RateBlogsEntrySiteTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,6 +35,16 @@ public class BlogsEntryTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+
+		testSuite.addTest(AddBlogsEntryCategorySiteTests.suite());
+		testSuite.addTest(AddBlogsEntryCommentSiteTests.suite());
+		testSuite.addTest(AddBlogsEntryMultipleSiteTests.suite());
+		testSuite.addTest(AddBlogsEntrySiteTests.suite());
+		testSuite.addTest(AddBlogsEntryTagsSiteTests.suite());
+		testSuite.addTest(DeleteBlogsEntrySiteTests.suite());
+		testSuite.addTest(EditBlogsEntrySiteTests.suite());
+		testSuite.addTest(EditPermissionsBlogsEntry2GuestNoViewTests.suite());
+		testSuite.addTest(RateBlogsEntrySiteTests.suite());
 
 		return testSuite;
 	}

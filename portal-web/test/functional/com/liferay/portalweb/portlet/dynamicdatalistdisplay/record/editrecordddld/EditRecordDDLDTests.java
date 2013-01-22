@@ -15,9 +15,17 @@
 package com.liferay.portalweb.portlet.dynamicdatalistdisplay.record.editrecordddld;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinition.AddDataDefinitionTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinition.TearDownDataDefinitionTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.list.addlist.AddListTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.list.addlist.TearDownListTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.dynamicdatalistdisplay.list.addlistddld.AddPageDDLDTest;
-import com.liferay.portalweb.portlet.dynamicdatalistdisplay.list.addlistddld.AddPortletDDLDTest;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.list.selectlistddld.SelectListDDLDTest;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet.addportletddld.AddPageDDLDTest;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet.addportletddld.AddPortletDDLDTest;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.record.addrecordddld.AddDMDocumentTest;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.record.addrecordddld.AddRecordDDLDTest;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.record.addrecordddld.TearDownDMDocumentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -34,13 +42,13 @@ public class EditRecordDDLDTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddListTest.class);
 		testSuite.addTestSuite(AddDMDocumentTest.class);
 		testSuite.addTestSuite(AddDMDocumentEditedTest.class);
-		testSuite.addTestSuite(AddRecordTest.class);
 		testSuite.addTestSuite(SelectListDDLDTest.class);
+		testSuite.addTestSuite(AddRecordDDLDTest.class);
 		testSuite.addTestSuite(EditRecordDDLDTest.class);
 		testSuite.addTestSuite(ViewEditRecordDDLDTest.class);
+		testSuite.addTestSuite(TearDownDMDocumentTest.class);
 		testSuite.addTestSuite(TearDownListTest.class);
 		testSuite.addTestSuite(TearDownDataDefinitionTest.class);
-		testSuite.addTestSuite(TearDownDMContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

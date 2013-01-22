@@ -24,96 +24,97 @@ public class AddRecordDDLDTest extends BaseTestCase {
 	public void testAddRecordDDLD() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Dynamic Data List Display Test Page");
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("List Name"),
-			selenium.getText("//h1[@class='header-title']/span"));
+		assertTrue(selenium.isVisible("//input[@value='Add Record']"));
 		selenium.clickAt("//input[@value='Add Record']",
 			RuntimeVariables.replace("Add Record"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[1]/span/span/label"));
-		selenium.click(
-			"//div[@class='aui-fieldset-content ']/div[1]/span/span/span/input[2]");
+				"//div[@class='lfr-ddm-container']/div[1]/div/span/span/label"));
+		selenium.clickAt("//div[@class='lfr-ddm-container']/div[1]/div/span/span/span/input[2]",
+			RuntimeVariables.replace("checkbox"));
 		assertEquals(RuntimeVariables.replace("Date"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[2]/span/span/label"));
-		selenium.type("//div[@class='aui-fieldset-content ']/div[2]/span/span/span/input",
-			RuntimeVariables.replace("01/02/03"));
+				"//div[@class='lfr-ddm-container']/div[2]/div/label"));
+		selenium.select("//div[@class='lfr-ddm-container']/div[2]/div/div/div/div/select[1]",
+			RuntimeVariables.replace("January"));
+		selenium.select("//div[@class='lfr-ddm-container']/div[2]/div/div/div/div/select[2]",
+			RuntimeVariables.replace("2"));
+		selenium.select("//div[@class='lfr-ddm-container']/div[2]/div/div/div/div/select[3]",
+			RuntimeVariables.replace("2003"));
 		assertEquals(RuntimeVariables.replace("Decimal"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[3]/span/span/label"));
-		selenium.type("//div[@class='aui-fieldset-content ']/div[3]/span/span/span/input",
+				"//div[@class='lfr-ddm-container']/div[3]/div/span/span/label"));
+		selenium.type("//div[@class='lfr-ddm-container']/div[3]/div/span/span/span/input",
 			RuntimeVariables.replace("1.23"));
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[4]/div/span/span/label"));
+				"//div[@class='lfr-ddm-container']/div[4]/div/span/span/label"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'selectDocumentLibrary')]");
+		selenium.selectFrame("//iframe[contains(@id,'selectDocumentLibrary')]");
 		selenium.waitForVisible("//input[@value='Choose']");
 		selenium.clickAt("//input[@value='Choose']",
 			RuntimeVariables.replace("Choose"));
 		selenium.selectFrame("relative=top");
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[5]/span/span/label",
+				"//div[@class='lfr-ddm-container']/div[5]/div/span/span/label",
 				"File Upload"));
-		selenium.type("//div[@class='aui-fieldset-content ']/div[5]/span/span/span/input",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\dynamicdatalistdisplay\\dependencies\\document2.txt"));
+		selenium.uploadCommonFile("//div[@class='lfr-ddm-container']/div[5]/div/span/span/span/input",
+			RuntimeVariables.replace("Document_3.txt"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[6]/span/span/label"));
-		selenium.type("//div[@class='aui-fieldset-content ']/div[6]/span/span/span/input",
+				"//div[@class='lfr-ddm-container']/div[6]/div/span/span/label"));
+		selenium.type("//div[@class='lfr-ddm-container']/div[6]/div/span/span/span/input",
 			RuntimeVariables.replace("123"));
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[7]/span/span/label"));
-		selenium.type("//div[@class='aui-fieldset-content ']/div[7]/span/span/span/input",
+				"//div[@class='lfr-ddm-container']/div[7]/div/span/span/label"));
+		selenium.type("//div[@class='lfr-ddm-container']/div[7]/div/span/span/span/input",
 			RuntimeVariables.replace("456"));
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[8]/div/label"));
+				"//div[@class='lfr-ddm-container']/div[8]/div/label"));
 		assertEquals(RuntimeVariables.replace("option 1"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[8]/div/span[1]/span"));
+				"//div[@class='lfr-ddm-container']/div[8]/div/span[1]/span"));
 		assertEquals(RuntimeVariables.replace("option 2"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[8]/div/span[2]/span"));
+				"//div[@class='lfr-ddm-container']/div[8]/div/span[2]/span"));
 		assertEquals(RuntimeVariables.replace("option 3"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[8]/div/span[3]/span"));
-		selenium.clickAt("//div[@class='aui-fieldset-content ']/div[8]/div/span[2]/span/span/input",
+				"//div[@class='lfr-ddm-container']/div[8]/div/span[3]/span"));
+		selenium.clickAt("//div[@class='lfr-ddm-container']/div[8]/div/span[2]/span/span/input",
 			RuntimeVariables.replace("option 2"));
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/span[1]/span/label"));
+				"//div[@class='lfr-ddm-container']/div[9]/div/span/span/label"));
 		assertEquals(RuntimeVariables.replace("option 1"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/span[1]/span/span/select/option[1]"));
+				"//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/select/option[1]"));
 		assertEquals(RuntimeVariables.replace("option 2"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/span[1]/span/span/select/option[2]"));
+				"//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/select/option[2]"));
 		assertEquals(RuntimeVariables.replace("option 3"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/span[1]/span/span/select/option[3]"));
-		selenium.select("//div[@class='aui-fieldset-content ']/span[1]/span/span/select",
+				"//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/select/option[3]"));
+		selenium.select("//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/select",
 			RuntimeVariables.replace("label=option 3"));
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[9]/span/span/label"));
-		selenium.type("//div[@class='aui-fieldset-content ']/div[9]/span/span/span/input",
+				"//div[@class='lfr-ddm-container']/div[10]/div/span/span/label"));
+		selenium.type("//div[@class='lfr-ddm-container']/div[10]/div/span/span/span/input",
 			RuntimeVariables.replace("Text Field"));
 		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[10]/span/span/label"));
-		selenium.type("//div[@class='aui-fieldset-content ']/div[10]/span/span/span/textarea",
+				"//div[@class='lfr-ddm-container']/div[11]/div/span/span/label"));
+		selenium.type("//div[@class='lfr-ddm-container']/div[11]/div/span/span/span/textarea",
 			RuntimeVariables.replace("Text\nBox"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));

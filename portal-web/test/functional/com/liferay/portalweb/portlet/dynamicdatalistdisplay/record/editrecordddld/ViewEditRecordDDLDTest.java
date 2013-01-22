@@ -25,7 +25,6 @@ public class ViewEditRecordDDLDTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Dynamic Data List Display Test Page");
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -43,11 +42,11 @@ public class ViewEditRecordDDLDTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//tr[1]/th[4]"));
-		assertEquals(RuntimeVariables.replace("document_edited.txt"),
+		assertEquals(RuntimeVariables.replace("Document_2.txt"),
 			selenium.getText("//tr[3]/td[4]"));
 		assertEquals(RuntimeVariables.replace("File Upload"),
 			selenium.getText("//tr[1]/th[5]"));
-		assertEquals(RuntimeVariables.replace("document.txt"),
+		assertEquals(RuntimeVariables.replace("Document_1.txt"),
 			selenium.getText("//tr[3]/td[5]"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText("//tr[1]/th[6]"));
@@ -78,36 +77,59 @@ public class ViewEditRecordDDLDTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]");
 		assertEquals(RuntimeVariables.replace("View"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]",
+			RuntimeVariables.replace("View"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Boolean false"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]"));
-		assertEquals(RuntimeVariables.replace("Date 8/9/10"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[2]"));
-		assertEquals(RuntimeVariables.replace("Decimal 8.91"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[3]"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[1]", "Boolean"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[1]", "false"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[2]", "Date"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[2]", "8/9/10"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[3]", "Decimal"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[3]", "8.91"));
 		assertTrue(selenium.isPartialText(
 				"//div[@class='aui-fieldset-content ']/div[4]",
-				"Documents and Media document_edited.txt"));
+				"Documents and Media"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[5]",
-				"File Upload document.txt"));
-		assertEquals(RuntimeVariables.replace("Integer 8910"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[6]"));
-		assertEquals(RuntimeVariables.replace("Number 111213"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[7]"));
-		assertEquals(RuntimeVariables.replace("Radio option 3"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[8]"));
-		assertEquals(RuntimeVariables.replace("Select option 1"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[9]"));
-		assertEquals(RuntimeVariables.replace("Text Text Field Edited"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[10]"));
-		assertEquals(RuntimeVariables.replace("Text Box Text Box Edited"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[11]"));
+				"//div[@class='aui-fieldset-content ']/div[4]", "Document_2.txt"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[5]", "File Upload"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[5]", "Document_1.txt"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[6]", "Integer"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[6]", "8910"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[7]", "Number"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[7]", "111213"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[8]", "Radio"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[8]", "option 3"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[9]", "Select"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[9]", "option 1"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[10]", "Text"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[10]",
+				"Text Field Edited"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[11]", "Text Box"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='aui-fieldset-content ']/div[11]",
+				"Text Box Edited"));
 	}
 }

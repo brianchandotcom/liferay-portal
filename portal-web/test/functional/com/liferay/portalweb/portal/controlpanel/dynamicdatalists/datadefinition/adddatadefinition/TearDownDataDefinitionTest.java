@@ -44,150 +44,41 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 				selenium.clickAt("link=Dynamic Data Lists",
 					RuntimeVariables.replace("Dynamic Data Lists"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible(
-					"//a[@id='_167_manageDDMStructuresLink']");
 				assertEquals(RuntimeVariables.replace("Manage Data Definitions"),
 					selenium.getText("//a[@id='_167_manageDDMStructuresLink']"));
 				selenium.clickAt("//a[@id='_167_manageDDMStructuresLink']",
 					RuntimeVariables.replace("Manage Data Definitions"));
-				selenium.waitForVisible("//iframe");
-				selenium.selectFrame("//iframe");
-				Thread.sleep(1000);
+				selenium.waitForVisible(
+					"//iframe[contains(@src,'dynamicdatalists')]");
+				selenium.selectFrame(
+					"//iframe[contains(@src,'dynamicdatalists')]");
+				Thread.sleep(5000);
+				selenium.waitForVisible("//input[@name='_166_keywords']");
+				selenium.type("//input[@name='_166_keywords']",
+					RuntimeVariables.replace("Data Definition"));
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
 
-				boolean actionsVisible1 = selenium.isElementPresent(
-						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span");
+				boolean allRowsCheckbox = selenium.isElementPresent(
+						"//input[@name='_166_allRowIds']");
 
-				if (!actionsVisible1) {
+				if (!allRowsCheckbox) {
 					label = 2;
 
 					continue;
 				}
 
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				Thread.sleep(1000);
-
-				boolean actionsVisible2 = selenium.isElementPresent(
-						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span");
-
-				if (!actionsVisible2) {
-					label = 3;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				Thread.sleep(1000);
-
-				boolean actionsVisible3 = selenium.isElementPresent(
-						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span");
-
-				if (!actionsVisible3) {
-					label = 4;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				Thread.sleep(1000);
-
-				boolean actionsVisible4 = selenium.isElementPresent(
-						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span");
-
-				if (!actionsVisible4) {
-					label = 5;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				Thread.sleep(1000);
-
-				boolean actionsVisible5 = selenium.isElementPresent(
-						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span");
-
-				if (!actionsVisible5) {
-					label = 6;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.clickAt("//input[@name='_166_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_166_allRowIds']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6:
 				selenium.selectFrame("relative=top");
 
 			case 100:

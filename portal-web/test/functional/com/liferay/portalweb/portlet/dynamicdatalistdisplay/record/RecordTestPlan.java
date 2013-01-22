@@ -18,7 +18,6 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.dynamicdatalistdisplay.record.addrecordddld.AddRecordDDLDTests;
 import com.liferay.portalweb.portlet.dynamicdatalistdisplay.record.deleterecordddld.DeleteRecordDDLDTests;
 import com.liferay.portalweb.portlet.dynamicdatalistdisplay.record.editrecordddld.EditRecordDDLDTests;
-import com.liferay.portalweb.portlet.dynamicdatalistdisplay.record.viewrecordddld.ViewRecordDDLDTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -34,7 +33,6 @@ public class RecordTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddRecordDDLDTests.suite());
 		testSuite.addTest(DeleteRecordDDLDTests.suite());
 		testSuite.addTest(EditRecordDDLDTests.suite());
-		testSuite.addTest(ViewRecordDDLDTests.suite());
 
 		return testSuite;
 	}

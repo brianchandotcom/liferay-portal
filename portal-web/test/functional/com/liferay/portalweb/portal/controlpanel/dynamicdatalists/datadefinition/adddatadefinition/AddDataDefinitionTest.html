@@ -49,11 +49,6 @@
 	<td>Dynamic Data Lists</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//a[@id='_167_manageDDMStructuresLink']</td>
-	<td>Manage Data Definitions</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//a[@id='_167_manageDDMStructuresLink']</td>
 	<td>Manage Data Definitions</td>
@@ -65,22 +60,27 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe</td>
+	<td>//iframe[contains(@src,'dynamicdatalists')]</td>
 	<td>Data Definitions</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
+	<td>//iframe[contains(@src,'dynamicdatalists')]</td>
 	<td>Data Definitions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Add</td>
+	<td>//span[contains(@class,'add-button')]/a</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[contains(@class,'add-button')]/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Add</td>
+	<td>//span[contains(@class,'add-button')]/a</td>
 	<td>Add</td>
 </tr>
 <tr>

@@ -30,8 +30,10 @@ public class EditListDDLDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//img[@title='Select List']",
 			RuntimeVariables.replace("Select List"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//input[@name='_86_keywords']");
@@ -54,8 +56,8 @@ public class EditListDDLDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_167_name_en_US']",
 			RuntimeVariables.replace("List Name Edited"));
@@ -64,9 +66,12 @@ public class EditListDDLDTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Displaying List: List Name Edited"),
-			selenium.getText("//div[@class='portlet-msg-info']/span[2]"));
+		assertEquals(RuntimeVariables.replace("List Name Edited"),
+			selenium.getText("//tr[contains(.,'List Name Edited')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'List Name Edited')]/td[2]/a",
+			RuntimeVariables.replace("List Name Edited"));
+		selenium.waitForText("//div[@class='portlet-msg-info']/span[2]",
+			"Displaying List: List Name Edited (Modified)");
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'List Name Edited')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("List Name Edited"),

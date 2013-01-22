@@ -19,24 +19,44 @@
 	<td>Dynamic Data List Display Test Page</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//img[@title='Select List']</td>
-	<td>Select List</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe</td>
-	<td></td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>List Name - Configuration</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
-	<td>Navigation Interaction</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>List Name - Configuration</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -54,13 +74,18 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'List Name')]/td[2]/a</td>
+	<td>List Name</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>link=List Name</td>
+	<td>//tr[contains(.,'List Name')]/td[2]/a</td>
 	<td>List Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//span[@class='displaying-record-set-id-holder']</td>
+	<td>//span[contains(@class,'displaying-record')]</td>
 	<td>Displaying List: List Name (Modified)</td>
 </tr>
 <tr>

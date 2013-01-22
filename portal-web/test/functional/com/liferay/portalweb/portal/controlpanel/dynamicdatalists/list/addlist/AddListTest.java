@@ -39,15 +39,18 @@ public class AddListTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data Lists",
 			RuntimeVariables.replace("Dynamic Data Lists"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[contains(@class,'add-button')]/a"));
+		selenium.clickAt("//span[contains(@class,'add-button')]/a",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_167_name_en_US']",
 			RuntimeVariables.replace("List Name"));
 		selenium.type("//textarea[@id='_167_description_en_US']",
 			RuntimeVariables.replace("List Description"));
 		selenium.clickAt("link=Select", RuntimeVariables.replace("Select"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible("//iframe[contains(@src,'dynamicdatalists')]");
+		selenium.selectFrame("//iframe[contains(@src,'dynamicdatalists')]");
 		selenium.waitForVisible("//tr[contains(.,'Data Definition')]/td[3]/a");
 		assertTrue(selenium.isPartialText(
 				"//tr[contains(.,'Data Definition')]/td[3]/a", "Data Definition"));

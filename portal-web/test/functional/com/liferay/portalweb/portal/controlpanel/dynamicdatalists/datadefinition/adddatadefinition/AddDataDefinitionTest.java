@@ -39,15 +39,17 @@ public class AddDataDefinitionTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data Lists",
 			RuntimeVariables.replace("Dynamic Data Lists"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//a[@id='_167_manageDDMStructuresLink']");
 		assertEquals(RuntimeVariables.replace("Manage Data Definitions"),
 			selenium.getText("//a[@id='_167_manageDDMStructuresLink']"));
 		selenium.clickAt("//a[@id='_167_manageDDMStructuresLink']",
 			RuntimeVariables.replace("Manage Data Definitions"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
-		selenium.waitForVisible("link=Add");
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		selenium.waitForVisible("//iframe[contains(@src,'dynamicdatalists')]");
+		selenium.selectFrame("//iframe[contains(@src,'dynamicdatalists')]");
+		selenium.waitForVisible("//span[contains(@class,'add-button')]/a");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[contains(@class,'add-button')]/a"));
+		selenium.clickAt("//span[contains(@class,'add-button')]/a",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_166_name_en_US']",
 			RuntimeVariables.replace("Data Definition"));

@@ -15,11 +15,14 @@
 package com.liferay.portalweb.portlet.dynamicdatalistdisplay.list.editlistddld;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinition.AddDataDefinitionTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinition.TearDownDataDefinitionTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.list.addlist.AddListTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.list.addlist.TearDownListTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.dynamicdatalistdisplay.list.addlistddld.AddPageDDLDTest;
-import com.liferay.portalweb.portlet.dynamicdatalistdisplay.list.addlistddld.AddPortletDDLDTest;
-import com.liferay.portalweb.portlet.dynamicdatalistdisplay.list.addlistddld.TearDownDataDefinitionTest;
-import com.liferay.portalweb.portlet.dynamicdatalistdisplay.list.addlistddld.TearDownListTest;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.list.selectlistddld.SelectListDDLDTest;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet.addportletddld.AddPageDDLDTest;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet.addportletddld.AddPortletDDLDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

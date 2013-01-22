@@ -25,38 +25,46 @@ public class AddDMDocumentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Documents and Media",
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible("link=Add"));
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]",
 			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertTrue(selenium.isVisible("//input[@id='_20_file']"));
-		selenium.type("//input[@id='_20_file']",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\dynamicdatalistdisplay\\dependencies\\document.txt"));
+		selenium.uploadCommonFile("//input[@id='_20_file']",
+			RuntimeVariables.replace("Document_1.txt"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.waitForVisible(
-			"//a[contains(@class,'document-link')]/span[@class='entry-title']");
-		assertEquals(RuntimeVariables.replace("document.txt"),
+			"//a[contains(@class,'entry-link')]/span[@class='entry-title']");
+		assertEquals(RuntimeVariables.replace("Document_1.txt"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 	}
 }

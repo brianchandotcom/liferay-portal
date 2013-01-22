@@ -15,8 +15,10 @@
 package com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet.editable.EditableTests;
-import com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet.spreadsheetview.SpreadsheetViewTests;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet.addportletddld.AddPortletDDLDTests;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet.addportletsddld.AddPortletsDDLDTests;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet.configureportletddldeditable.ConfigurePortletDDLDEditableTests;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet.configureportletddldspreadsheetview.ConfigurePortletDDLDSpreadsheetViewTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,8 +31,10 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(EditableTests.suite());
-		testSuite.addTest(SpreadsheetViewTests.suite());
+		testSuite.addTest(AddPortletDDLDTests.suite());
+		testSuite.addTest(AddPortletsDDLDTests.suite());
+		testSuite.addTest(ConfigurePortletDDLDEditableTests.suite());
+		testSuite.addTest(ConfigurePortletDDLDSpreadsheetViewTests.suite());
 
 		return testSuite;
 	}

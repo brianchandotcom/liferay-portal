@@ -172,8 +172,8 @@ public class DLImpl implements DL {
 		data.put("folder-id", getDefaultFolderId(request));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("home"), portletURL.toString(),
-				data);
+			request, themeDisplay.translate("home"), portletURL.toString(),
+			data);
 
 		addPortletBreadcrumbEntries(folder, request, portletURL);
 	}
@@ -418,7 +418,7 @@ public class DLImpl implements DL {
 	}
 
 	public List<SearchResult> getDLEntries(Hits hits) {
-		List<SearchResult> entries = new ArrayList<SearchResult>();
+		List<SearchResult> searchResults = new ArrayList<SearchResult>();
 
 		for (Document document : hits.getDocs()) {
 			String entryClassName = GetterUtil.getString(
@@ -446,13 +446,13 @@ public class DLImpl implements DL {
 				SearchResult searchResult = new SearchResult(
 					className, classPK);
 
-				int index = entries.indexOf(searchResult);
+				int index = searchResults.indexOf(searchResult);
 
 				if (index < 0) {
-					entries.add(searchResult);
+					searchResults.add(searchResult);
 				}
 				else {
-					searchResult = entries.get(index);
+					searchResult = searchResults.get(index);
 				}
 
 				if (message != null) {
@@ -468,7 +468,7 @@ public class DLImpl implements DL {
 			}
 		}
 
-		return entries;
+		return searchResults;
 	}
 
 	public Map<Locale, String> getEmailFileEntryAddedBodyMap(

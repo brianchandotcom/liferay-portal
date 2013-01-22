@@ -26,7 +26,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 %>
 
 <liferay-ui:tabs
+	formName="fm"
 	names="asset-selection,display-settings,subscriptions"
+	param="tabs2"
 	refresh="<%= false %>"
 >
 	<liferay-ui:section>

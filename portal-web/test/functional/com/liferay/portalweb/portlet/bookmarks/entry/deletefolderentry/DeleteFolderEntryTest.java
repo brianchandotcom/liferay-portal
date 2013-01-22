@@ -38,26 +38,51 @@ public class DeleteFolderEntryTest extends BaseTestCase {
 			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
 			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[2]/a"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"//td[5]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//td[5]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
-		assertEquals(RuntimeVariables.replace("Delete"),
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
-			RuntimeVariables.replace("Delete"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+			RuntimeVariables.replace("Move to the Recycle Bin"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='portlet-msg-success taglib-trash-undo']",
+				"The selected item was moved to the Recycle Bin."));
+		assertFalse(selenium.isTextPresent("Bookmark Name"));
+		assertFalse(selenium.isTextPresent("http://www.liferay.com"));
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("link=Recycle Bin",
+			RuntimeVariables.replace("Recycle Bin"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
+			selenium.getText("//a[@class='trash-empty-link']"));
+		selenium.clickAt("//a[@class='trash-empty-link']",
+			RuntimeVariables.replace("Empty the Recycle Bin"));
+		selenium.waitForPageToLoad("30000");
+		selenium.waitForConfirmation(
+			"Are you sure you want to empty the Recycle Bin?");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isTextPresent("Bookmark Name"));
-		assertFalse(selenium.isTextPresent("http://www.liferay.com"));
+		assertEquals(RuntimeVariables.replace("The Recycle Bin is empty."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

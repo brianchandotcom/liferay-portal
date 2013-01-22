@@ -35,7 +35,7 @@ public class TearDownMBThreadTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean thread1Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+						"//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!thread1Present) {
 					label = 2;
@@ -43,11 +43,123 @@ public class TearDownMBThreadTest extends BaseTestCase {
 					continue;
 				}
 
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+						"//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a");
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"The selected item was moved to the Recycle Bin. Undo"),
+					selenium.getText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']"));
+
+				boolean thread2Present = selenium.isElementPresent(
+						"//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!thread2Present) {
+					label = 3;
+
+					continue;
+				}
+
+				Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a");
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"The selected item was moved to the Recycle Bin. Undo"),
+					selenium.getText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']"));
+
+				boolean thread3Present = selenium.isElementPresent(
+						"//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!thread3Present) {
+					label = 4;
+
+					continue;
+				}
+
+				Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a");
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"The selected item was moved to the Recycle Bin. Undo"),
+					selenium.getText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']"));
+
+				boolean thread4Present = selenium.isElementPresent(
+						"//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!thread4Present) {
+					label = 5;
+
+					continue;
+				}
+
+				Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a");
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"The selected item was moved to the Recycle Bin. Undo"),
+					selenium.getText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']"));
+
+				boolean thread5Present = selenium.isElementPresent(
+						"//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!thread5Present) {
+					label = 6;
+
+					continue;
+				}
+
+				Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a");
@@ -63,126 +175,47 @@ public class TearDownMBThreadTest extends BaseTestCase {
 						"//div[@class='portlet-msg-success taglib-trash-undo']"));
 
 			case 2:
-
-				boolean thread2Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
-
-				if (!thread2Present) {
-					label = 3;
-
-					continue;
-				}
-
-				Thread.sleep(5000);
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a");
-				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(
-						"The selected item was moved to the Recycle Bin. Undo"),
-					selenium.getText(
-						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-
 			case 3:
-
-				boolean thread3Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
-
-				if (!thread3Present) {
-					label = 4;
-
-					continue;
-				}
-
-				Thread.sleep(5000);
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a");
-				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(
-						"The selected item was moved to the Recycle Bin. Undo"),
-					selenium.getText(
-						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-
 			case 4:
-
-				boolean thread4Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
-
-				if (!thread4Present) {
-					label = 5;
-
-					continue;
-				}
-
-				Thread.sleep(5000);
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a");
-				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(
-						"The selected item was moved to the Recycle Bin. Undo"),
-					selenium.getText(
-						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-
 			case 5:
+			case 6:
+				assertEquals(RuntimeVariables.replace(
+						"There are no threads in this category."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Recycle Bin",
+					RuntimeVariables.replace("Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
 
-				boolean thread5Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+				boolean recycleBinPresent = selenium.isElementPresent(
+						"//form[@id='_182_emptyForm']/a");
 
-				if (!thread5Present) {
-					label = 6;
+				if (!recycleBinPresent) {
+					label = 7;
 
 					continue;
 				}
 
-				Thread.sleep(5000);
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a");
-				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
+					selenium.getText("//form[@id='_182_emptyForm']/a"));
+				selenium.clickAt("//form[@id='_182_emptyForm']/a",
+					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(
-						"The selected item was moved to the Recycle Bin. Undo"),
-					selenium.getText(
-						"//div[@class='portlet-msg-success taglib-trash-undo']"));
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
 
-			case 6:
+			case 7:
 			case 100:
 				label = -1;
 			}

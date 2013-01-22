@@ -128,16 +128,17 @@ public class ViewMBCategoryThreadPostCountTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText(
 				"//table[@class='taglib-search-iterator']/tbody/tr[5]/td[4]"));
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//td[7]/span/ul/li/strong/a"));
 		selenium.clickAt("//td[7]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
 		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 			RuntimeVariables.replace("Move to the Recycle Bin"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

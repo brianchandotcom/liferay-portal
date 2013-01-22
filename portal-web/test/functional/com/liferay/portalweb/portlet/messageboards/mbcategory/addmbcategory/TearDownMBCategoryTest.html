@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>category1Present</td>
 </tr>
 <tr>
@@ -30,17 +30,197 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>category2Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${category2Present}</td>
+	<td>Category2NotPresent</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>category3Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${category3Present}</td>
+	<td>Category3NotPresent</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>category4Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${category4Present}</td>
+	<td>Category4NotPresent</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>category5Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${category5Present}</td>
+	<td>Category5NotPresent</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -69,99 +249,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
-	<td>category2Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${category2Present}</td>
-	<td>Category2NotPresent</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
-	<td>The selected item was moved to the Recycle Bin. Undo</td>
-</tr>
-<tr>
 	<td>label</td>
 	<td>Category2NotPresent</td>
 	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
-	<td>category3Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${category3Present}</td>
-	<td>Category3NotPresent</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
-	<td>The selected item was moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -169,104 +259,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
-	<td>category4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${category4Present}</td>
-	<td>Category4NotPresent</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
-	<td>The selected item was moved to the Recycle Bin. Undo</td>
-</tr>
-<tr>
 	<td>label</td>
 	<td>Category4NotPresent</td>
 	<td></td>
 </tr>
 <tr>
-	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
-	<td>category5Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${category5Present}</td>
-	<td>Category5NotPresent</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
-	<td>The selected item was moved to the Recycle Bin. Undo</td>
-</tr>
-<tr>
 	<td>label</td>
 	<td>Category5NotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]</td>
+	<td>Message Board Categories Table</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -310,33 +315,43 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//form[@id='_182_emptyForm']/a</td>
-	<td>recycleBinPresent</td>
+	<td>//a[@class='trash-empty-link']</td>
+	<td>recycleBinEmpty</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${recycleBinPresent}</td>
-	<td>RecycleBinNotPresent</td>
+	<td>!${recycleBinEmpty}</td>
+	<td>RecycleBinEmpty</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form[@id='_182_emptyForm']/a</td>
+	<td>//a[@class='trash-empty-link']</td>
 	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//form[@id='_182_emptyForm']/a</td>
+	<td>//a[@class='trash-empty-link']</td>
 	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to empty the Recycle Bin?</td>
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
-	<td>RecycleBinNotPresent</td>
+	<td>RecycleBinEmpty</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>The Recycle Bin is empty.</td>
 </tr>
 </tbody></table>
 </body>

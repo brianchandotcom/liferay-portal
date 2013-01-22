@@ -36,7 +36,7 @@ public class DeleteMBCategoryThreadTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
 			selenium.getText("//td[1]/a"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -54,5 +54,8 @@ public class DeleteMBCategoryThreadTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='portlet-msg-success taglib-trash-undo']"));
 		assertFalse(selenium.isTextPresent("MB Category Thread Message Subject"));
+		assertEquals(RuntimeVariables.replace(
+				"There are no threads in this category."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

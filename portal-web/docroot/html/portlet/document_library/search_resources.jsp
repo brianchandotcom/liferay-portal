@@ -183,67 +183,34 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 				searchContext.setAttribute("paginationType", "regular");
 				searchContext.setEnd(entryEnd);
 				searchContext.setFolderIds(folderIdsArray);
+				searchContext.setIncludeDiscussions(true);
+				searchContext.setIncludeFolders(true);
 				searchContext.setKeywords(keywords);
 				searchContext.setStart(entryStart);
 
 				Hits hits = DLAppServiceUtil.search(searchRepositoryId, searchContext);
 
-				List results = new ArrayList();
-
-				Document[] docs = hits.getDocs();
-
-				if (docs != null) {
-					for (Document doc : docs) {
-
-						// Folder and document
-
-						String className = GetterUtil.getString(doc.get(Field.ENTRY_CLASS_NAME));
-						long classPK = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-
-						if (className.equals(DLFileEntryConstants.getClassName())) {
-							FileEntry fileEntry = null;
-
-							try {
-								fileEntry = DLAppLocalServiceUtil.getFileEntry(classPK);
-							}
-							catch (Exception e) {
-								if (_log.isWarnEnabled()) {
-									_log.warn("Documents and Media search index is stale and contains file entry {" + classPK + "}");
-								}
-
-								continue;
-							}
-
-							results.add(fileEntry);
-						}
-						else if (className.equals(DLFolderConstants.getClassName())) {
-							Folder curFolder = null;
-
-							try {
-								curFolder = DLAppLocalServiceUtil.getFolder(classPK);
-							}
-							catch (Exception e) {
-								if (_log.isWarnEnabled()) {
-									_log.warn("Documents and Media search index is stale and contains folder {" + classPK + "}");
-								}
-
-								continue;
-							}
-
-							results.add(curFolder);
-						}
-					}
-				}
-
 				total = hits.getLength();
 
 				request.setAttribute("view.jsp-total", String.valueOf(total));
 
-				for (int i = 0; i < results.size(); i++) {
-					Object result = results.get(i);
-				%>
+				List<SearchResult> results = DLUtil.getDLEntries(hits);
 
-					<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
+				for (int i = 0; i < results.size(); i++) {
+					SearchResult searchResult = results.get(i);
+
+					FileEntry fileEntry = null;
+					Folder curFolder = null;
+
+					String className = searchResult.getClassName();
+
+					if (className.equals(DLFileEntry.class.getName())) {
+						fileEntry = DLAppLocalServiceUtil.getFileEntry(searchResult.getClassPK());
+					}
+					else if (className.equals(DLFolder.class.getName())) {
+						curFolder = DLAppLocalServiceUtil.getFolder(searchResult.getClassPK());
+					}
+				%>
 
 					<c:choose>
 						<c:when test="<%= (fileEntry != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
@@ -255,11 +222,31 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 							tempRowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 							tempRowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
+							FileVersion latestFileVersion = fileEntry.getFileVersion();
+
+							if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+								latestFileVersion = fileEntry.getLatestFileVersion();
+							}
+
 							request.setAttribute("view_entries.jsp-fileEntry", fileEntry);
-							request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
 							%>
 
-							<liferay-util:include page="/html/portlet/document_library/view_file_entry_descriptive.jsp" />
+							<liferay-ui:app-view-search-entry
+								actionJsp="/html/portlet/document_library/file_entry_action.jsp"
+								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
+								description="<%= fileEntry.getDescription() %>"
+								folderName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, fileEntry.getFolderId()) %>"
+								locked="<%= fileEntry.isCheckedOut() %>"
+								messages="<%= searchResult.getMessages() %>"
+								queryTerms="<%= hits.getQueryTerms() %>"
+								rowCheckerId="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
+								rowCheckerName="<%= FileEntry.class.getSimpleName() %>"
+								showCheckbox="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>"
+								status="<%= latestFileVersion.getStatus() %>"
+								thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>"
+								title="<%= fileEntry.getTitle() %>"
+								url="<%= tempRowURL.toString() %>"
+							/>
 						</c:when>
 
 						<c:when test="<%= (curFolder != null) && DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.VIEW) %>">
@@ -289,13 +276,21 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 							request.setAttribute("view_entries.jsp-folder", curFolder);
 							request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
 							request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(curFolder.getRepositoryId()));
-
-							request.setAttribute("view_entries.jsp-folderImage", folderImage);
-
-							request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
 							%>
 
-							<liferay-util:include page="/html/portlet/document_library/view_folder_descriptive.jsp" />
+							<liferay-ui:app-view-search-entry
+								actionJsp="/html/portlet/document_library/folder_action.jsp"
+								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
+								description="<%= curFolder.getDescription() %>"
+								folderName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
+								queryTerms="<%= hits.getQueryTerms() %>"
+								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
+								rowCheckerName="<%= Folder.class.getSimpleName() %>"
+								showCheckbox="<%= DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
+								thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
+								title="<%= curFolder.getName() %>"
+								url="<%= tempRowURL.toString() %>"
+							/>
 						</c:when>
 
 						<c:otherwise>

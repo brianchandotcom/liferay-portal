@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -171,8 +172,8 @@ public class DLImpl implements DL {
 		data.put("folder-id", getDefaultFolderId(request));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, themeDisplay.translate("home"), portletURL.toString(),
-			data);
+				request, themeDisplay.translate("home"), portletURL.toString(),
+				data);
 
 		addPortletBreadcrumbEntries(folder, request, portletURL);
 	}
@@ -414,6 +415,60 @@ public class DLImpl implements DL {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();
+	}
+
+	public List<SearchResult> getDLEntries(Hits hits) {
+		List<SearchResult> entries = new ArrayList<SearchResult>();
+
+		for (Document document : hits.getDocs()) {
+			String entryClassName = GetterUtil.getString(
+				document.get(Field.ENTRY_CLASS_NAME));
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			try {
+				String className = entryClassName;
+				long classPK = entryClassPK;
+
+				MBMessage message = null;
+
+				if (entryClassName.equals(MBMessage.class.getName())) {
+					classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
+					long classNameId = GetterUtil.getLong(
+						document.get(Field.CLASS_NAME_ID));
+
+					className = PortalUtil.getClassName(classNameId);
+
+					message = MBMessageLocalServiceUtil.getMessage(
+						entryClassPK);
+				}
+
+				SearchResult searchResult = new SearchResult(
+					className, classPK);
+
+				int index = entries.indexOf(searchResult);
+
+				if (index < 0) {
+					entries.add(searchResult);
+				}
+				else {
+					searchResult = entries.get(index);
+				}
+
+				if (message != null) {
+					searchResult.addMessage(message);
+				}
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Documents and Media search index is stale and " +
+							"contains file entry {" + entryClassPK + "}");
+				}
+			}
+		}
+
+		return entries;
 	}
 
 	public Map<Locale, String> getEmailFileEntryAddedBodyMap(

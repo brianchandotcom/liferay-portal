@@ -22,16 +22,13 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.search.FacetedSearcher;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
@@ -51,7 +48,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
@@ -662,21 +658,10 @@ public class LiferayRepository
 	}
 
 	public Hits search(SearchContext searchContext) throws SearchException {
-		Indexer indexer = FacetedSearcher.getInstance();
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			DLFileEntryConstants.getClassName());
 
-		Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
-
-		assetEntriesFacet.setStatic(true);
-
-		searchContext.addFacet(assetEntriesFacet);
-
-		Facet scopeFacet = new ScopeFacet(searchContext);
-
-		scopeFacet.setStatic(true);
-
-		searchContext.addFacet(scopeFacet);
-
-		searchContext.setEntryClassNames(_ENTRY_CLASS_NAMES);
+		searchContext.setSearchEngineId(indexer.getSearchEngineId());
 
 		return indexer.search(searchContext);
 	}
@@ -859,10 +844,6 @@ public class LiferayRepository
 		catch (Exception e) {
 		}
 	}
-
-	private static final String[] _ENTRY_CLASS_NAMES = {
-		DLFileEntryConstants.getClassName(), DLFolderConstants.getClassName()
-	};
 
 	private static Log _log = LogFactoryUtil.getLog(LiferayRepository.class);
 

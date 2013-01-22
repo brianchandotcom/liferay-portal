@@ -1805,6 +1805,11 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-tags-navigation" />
+			<param name="test.ant.script.suite" value="PortalWebTagsNavigationTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="portal-web-translator" />
 			<param name="test.ant.script.suite" value="PortalWebTranslatorTestSuite" />
 		</antcall>

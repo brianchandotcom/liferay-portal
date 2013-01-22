@@ -598,6 +598,17 @@ public class DDMStructureLocalServiceImpl
 			structure);
 	}
 
+	public DDMStructure updateStructureXsd(long structureId, String xsd)
+		throws PortalException, SystemException {
+
+		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
+			structureId);
+
+		return doUpdateStructure(
+			structure.getParentStructureId(), structure.getNameMap(),
+			structure.getDescriptionMap(), xsd, structure);
+	}
+
 	protected void appendNewStructureRequiredFields(
 		DDMStructure structure, Document templateDocument) {
 
@@ -643,8 +654,31 @@ public class DDMStructureLocalServiceImpl
 	protected DDMStructure doUpdateStructure(
 			long parentStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String xsd,
+			DDMStructure structure)
+		throws PortalException, SystemException {
+
+		return doUpdateStructure(
+			parentStructureId, nameMap, descriptionMap, xsd, new Date(),
+			structure);
+	}
+
+	protected DDMStructure doUpdateStructure(
+			long parentStructureId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String xsd,
 			ServiceContext serviceContext, DDMStructure structure)
 		throws PortalException, SystemException {
+
+		return doUpdateStructure(
+			parentStructureId, nameMap, descriptionMap,  xsd,
+			serviceContext.getModifiedDate(null), structure);
+	}
+
+	protected DDMStructure doUpdateStructure(
+			long parentStructureId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String xsd,
+			Date modifiedDate, DDMStructure structure)
+		throws PortalException, SystemException {
+
 
 		try {
 			xsd = DDMXMLUtil.formatXML(xsd);
@@ -655,7 +689,7 @@ public class DDMStructureLocalServiceImpl
 
 		validate(nameMap, xsd);
 
-		structure.setModifiedDate(serviceContext.getModifiedDate(null));
+		structure.setModifiedDate(modifiedDate);
 		structure.setParentStructureId(parentStructureId);
 		structure.setNameMap(nameMap);
 		structure.setDescriptionMap(descriptionMap);

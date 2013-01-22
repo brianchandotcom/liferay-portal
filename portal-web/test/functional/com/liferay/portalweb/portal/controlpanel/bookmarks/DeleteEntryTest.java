@@ -56,8 +56,6 @@ public class DeleteEntryTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible(
-			"//div[@class='portlet-msg-success taglib-trash-undo']/form");
 		assertEquals(RuntimeVariables.replace(
 				"The selected item was moved to the Recycle Bin. Undo"),
 			selenium.getText(

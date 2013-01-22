@@ -175,6 +175,10 @@ public class SearchContext implements Serializable {
 		return _includeDiscussions;
 	}
 
+	public boolean isIncludeFolders() {
+		return _includeFolders;
+	}
+
 	public boolean isIncludeLiveGroups() {
 		return _includeLiveGroups;
 	}
@@ -264,6 +268,10 @@ public class SearchContext implements Serializable {
 		_includeDiscussions = includeDiscussions;
 	}
 
+	public void setIncludeFolders(boolean includeFolders) {
+		_includeFolders = includeFolders;
+	}
+
 	public void setIncludeLiveGroups(boolean includeLiveGroups) {
 		_includeLiveGroups = includeLiveGroups;
 	}
@@ -338,6 +346,7 @@ public class SearchContext implements Serializable {
 	private long[] _groupIds;
 	private boolean _includeAttachments;
 	private boolean _includeDiscussions;
+	private boolean _includeFolders;
 	private boolean _includeLiveGroups = true;
 	private boolean _includeStagingGroups = true;
 	private String _keywords;

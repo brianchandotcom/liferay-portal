@@ -1,0 +1,64 @@
+.app-view-search-entry-taglib {
+	display: block;
+	margin: 5px;
+	padding: 5px 0 5px 20px;
+	position: relative;
+	text-align: left;
+
+
+	.aui-tabview-list {
+		margin-bottom: 0;
+	}
+
+	.entry-discussion {
+		border-top: 1px solid #CCC;
+		display: block;
+		margin-bottom: 1em;
+		margin-left: 4em;
+		overflow: hidden;
+
+		a {
+			display: block;
+			overflow: hidden;
+			text-decoration: none;
+		}
+
+		.entry-discussion-image {
+			float: left;
+			padding: 5px;
+
+			img.avatar {
+				width: 35px;
+			}
+		}
+
+		.entry-discussion-title {
+			display: block;
+		}
+
+		&:hover {
+			background-color: #D3E8F1;
+		}
+	}
+
+	.entry-folder {
+		color: #999;
+	}
+
+	.entry-link .entry-thumbnail-image {
+		border-width: 0;
+		text-decoration: none;
+	}
+
+	&.alt {
+		background-color: #EDF0F3;
+	}
+
+	&:after {
+		clear: both;
+		content: ".";
+		display: block;
+		height: 0;
+		visibility: hidden;
+	}
+}

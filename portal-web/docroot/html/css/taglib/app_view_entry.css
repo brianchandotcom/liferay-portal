@@ -1,57 +1,4 @@
 .app-view-entry-taglib.entry-display-style {
-	a {
-		color: #333;
-	}
-
-	.entry-thumbnail {
-		img {
-			background: #EAEAEA;
-			border: 1px solid #CCC;
-			margin: 0;
-			padding: 5px;
-		}
-	}
-
-	&:hover .entry-thumbnail img {
-		background-color: #B0D2E1;
-		border-color: #7ABFDD;
-	}
-
-	&.selected .entry-thumbnail img {
-		background-color: #B0D2E1;
-		border-color: #057CB0;
-	}
-
-	.folder-action .direction-down, .entry-action .direction-down {
-		height: 20px;
-	}
-
-	&.selected a {
-		color: #FFF;
-	}
-
-	&.active-area, &.active-area.hover, &.active-area td {
-		background-color: #5AD300 !important;
-	}
-
-	.overlay.folder-action a, .overlay.entry-action a {
-		display: block;
-		float: right;
-		min-height: 15px;
-	}
-
-	&:hover, &.hover {
-		background-color: #D3E8F1;
-	}
-
-	&:hover .overlay, &.hover .overlay, &.selected .entry-selector {
-		clip: rect(auto auto auto auto);
-	}
-
-	.overlay {
-		clip: rect(0, 0, 0, 0);
-	}
-
 	&.display-icon {
 		display: inline-block;
 		float: left;
@@ -64,42 +11,29 @@
 
 		.entry-title {
 			clear: both;
-			display: block;
+			font-size: 1em;
+			font-weight: normal;
 			padding: 0 10px;
-			word-wrap: break-word;
 		}
 
 		.entry-link {
-			display: block;
+			overflow: visible;
 			text-align: center;
-			text-decoration: none;
 		}
 
 		.folder-action, .entry-action {
-			overflow: hidden;
-			position: absolute;
+			height: auto;
 			right: 5px;
-			width: 22px;
+			top: auto;
 		}
 
 		.entry-selector {
 			left: 10px;
-			position: absolute;
-			top: 10px;
 		}
 
 		.entry-thumbnail {
-			display: inline-block;
-			position: relative;
-			text-align: center;
-		}
-
-		&.selected, &.selected:hover {
-			background-color: #00A2EA;
-		}
-
-		.entry-selector, &:hover .entry-selector, &.selected .entry-selector {
-			position: absolute;
+			float: none;
+			margin: 0;
 		}
 	}
 
@@ -120,61 +54,7 @@
 		}
 
 		.entry-title {
-			display: block;
-			font-size: 1.15em;
-			font-weight: bold;
-			padding: 5px 0 0;
-		}
-
-		.entry-description {
-			display: block;
-			overflow: hidden;
-			word-wrap: break-word;
-		}
-
-		.entry-link {
-			display: block;
-			overflow: hidden;
-			text-align: center;
-			text-decoration: none;
-		}
-
-		.folder-action, .entry-action {
-			height: 20px;
-			overflow: hidden;
-			position: absolute;
-			right: 6px;
-			top: 10px;
-			width: 22px;
-		}
-
-		.entry-selector {
-			left: 5px;
-			position: absolute;
-			top: 10px;
-		}
-
-		.entry-thumbnail {
-			display: inline-block;
-			float: left;
-			margin: 5px 10px 5px 5px;
-			position: relative;
-			text-align: center;
-		}
-
-		.entry-link {
-			display: block;
-			text-align: left;
-			text-decoration: none;
-		}
-
-		&:hover .entry-selector, &.selected .entry-selector {
-			clip: rect(auto auto auto auto);
-			position: absolute;
-		}
-
-		&.selected, .selected:hover {
-			background-color: #00A2EA;
+			word-wrap: normal;
 		}
 	}
 

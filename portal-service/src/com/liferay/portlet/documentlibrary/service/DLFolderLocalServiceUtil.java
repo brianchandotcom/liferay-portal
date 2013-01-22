@@ -303,31 +303,33 @@ public class DLFolderLocalServiceUtil {
 		getService().deleteAll(groupId);
 	}
 
-	public static void deleteFolder(
+	public static com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
 		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteFolder(dlFolder);
+		return getService().deleteFolder(dlFolder);
 	}
 
-	public static void deleteFolder(
+	public static com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
 		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
 		boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteFolder(dlFolder, includeTrashedEntries);
+		return getService().deleteFolder(dlFolder, includeTrashedEntries);
 	}
 
-	public static void deleteFolder(long folderId)
+	public static com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteFolder(folderId);
+		return getService().deleteFolder(folderId);
 	}
 
-	public static void deleteFolder(long folderId, boolean includeTrashedEntries)
+	public static com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long folderId, boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteFolder(folderId, includeTrashedEntries);
+		return getService().deleteFolder(folderId, includeTrashedEntries);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(

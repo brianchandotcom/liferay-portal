@@ -181,14 +181,15 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Indexable(type = IndexableType.DELETE)
-	public void deleteFolder(DLFolder dlFolder)
+	public DLFolder deleteFolder(DLFolder dlFolder)
 		throws PortalException, SystemException {
 
-		deleteFolder(dlFolder, true);
+		return deleteFolder(dlFolder, true);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
-	public void deleteFolder(DLFolder dlFolder, boolean includeTrashedEntries)
+	public DLFolder deleteFolder(
+			DLFolder dlFolder, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
 
 		// Folders
@@ -256,22 +257,24 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				_log.debug(nsde.getMessage());
 			}
 		}
+
+		return dlFolder;
 	}
 
 	@Indexable(type = IndexableType.DELETE)
-	public void deleteFolder(long folderId)
+	public DLFolder deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
-		deleteFolder(folderId, true);
+		return deleteFolder(folderId, true);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
-	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+	public DLFolder deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
 
 		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
 
-		deleteFolder(dlFolder, includeTrashedEntries);
+		return deleteFolder(dlFolder, includeTrashedEntries);
 	}
 
 	public DLFolder fetchFolder(long groupId, long parentFolderId, String name)

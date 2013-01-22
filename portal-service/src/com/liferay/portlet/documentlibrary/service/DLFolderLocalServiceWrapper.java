@@ -297,31 +297,35 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		_dlFolderLocalService.deleteAll(groupId);
 	}
 
-	public void deleteFolder(
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
 		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlFolderLocalService.deleteFolder(dlFolder);
+		return _dlFolderLocalService.deleteFolder(dlFolder);
 	}
 
-	public void deleteFolder(
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
 		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
 		boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlFolderLocalService.deleteFolder(dlFolder, includeTrashedEntries);
+		return _dlFolderLocalService.deleteFolder(dlFolder,
+			includeTrashedEntries);
 	}
 
-	public void deleteFolder(long folderId)
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlFolderLocalService.deleteFolder(folderId);
+		return _dlFolderLocalService.deleteFolder(folderId);
 	}
 
-	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long folderId, boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlFolderLocalService.deleteFolder(folderId, includeTrashedEntries);
+		return _dlFolderLocalService.deleteFolder(folderId,
+			includeTrashedEntries);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(

@@ -1230,6 +1230,10 @@
 			ddmURL.setParameter('scopeTemplateType', config.templateType);
 			ddmURL.setParameter('scopeTitle', config.title);
 
+			if ('refererPortletName' in config) {
+				ddmURL.setParameter('refererPortletName', config.refererPortletName);
+			}
+
 			if ('showGlobalScope' in config) {
 				ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
 			}

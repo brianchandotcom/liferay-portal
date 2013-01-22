@@ -17,7 +17,6 @@ package com.liferay.portal.deploy;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -44,7 +43,6 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
-import jodd.util.ContextUtil;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -123,7 +121,13 @@ public class DeployUtil {
 	public static void redeployJetty(String context) throws Exception {
 		String contextsDirName = System.getProperty("jetty.home") + "/contexts";
 
-		File contextXml = new File(contextsDirName + "/" + context + ".xml");
+		if ((context.length() == 0) || context.equals(StringPool.SLASH)) {
+			context = "root";
+		}
+
+		String contextFileName = context.concat(".xml");
+
+		File contextXml = new File(contextsDirName, contextFileName);
 
 		if (contextXml.exists()) {
 			FileUtils.touch(contextXml);
@@ -134,13 +138,13 @@ public class DeployUtil {
 			filterMap.put("context", context);
 
 			copyDependencyXml(
-				"jetty-context-configure.xml", contextsDirName,
-				context + ".xml", filterMap, true);
+				"jetty-context-configure.xml", contextsDirName, contextFileName,
+				filterMap, true);
 		}
 	}
 
 	public static void redeployTomcat(String context) throws Exception {
-		if (context.length() == 0 || context.equals(StringPool.SLASH)) {
+		if ((context.length() == 0) || context.equals(StringPool.SLASH)) {
 			context = "/ROOT";
 		}
 

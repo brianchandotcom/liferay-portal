@@ -52,7 +52,9 @@ public class JournalContentImpl implements JournalContent {
 		portalCache.removeAll();
 	}
 
-	public void clearCache(long groupId, String articleId, String templateId) {
+	public void clearCache(
+		long groupId, String articleId, String ddmTemplateKey) {
+
 		clearCache();
 	}
 
@@ -65,30 +67,30 @@ public class JournalContentImpl implements JournalContent {
 	}
 
 	public String getContent(
-		long groupId, String articleId, String templateId, String viewMode,
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, String xmlRequest) {
 
 		return getContent(
-			groupId, articleId, templateId, viewMode, languageId, null,
+			groupId, articleId, ddmTemplateKey, viewMode, languageId, null,
 			xmlRequest);
 	}
 
 	public String getContent(
-		long groupId, String articleId, String templateId, String viewMode,
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, ThemeDisplay themeDisplay) {
 
 		return getContent(
-			groupId, articleId, templateId, viewMode, languageId, themeDisplay,
-			null);
+			groupId, articleId, ddmTemplateKey, viewMode, languageId,
+			themeDisplay, null);
 	}
 
 	public String getContent(
-		long groupId, String articleId, String templateId, String viewMode,
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, ThemeDisplay themeDisplay, String xmlRequest) {
 
 		JournalArticleDisplay articleDisplay = getDisplay(
-			groupId, articleId, templateId, viewMode, languageId, themeDisplay,
-			1, xmlRequest);
+			groupId, articleId, ddmTemplateKey, viewMode, languageId,
+			themeDisplay, 1, xmlRequest);
 
 		if (articleDisplay != null) {
 			return articleDisplay.getContent();
@@ -107,7 +109,7 @@ public class JournalContentImpl implements JournalContent {
 	}
 
 	public JournalArticleDisplay getDisplay(
-		long groupId, String articleId, double version, String templateId,
+		long groupId, String articleId, double version, String ddmTemplateKey,
 		String viewMode, String languageId, ThemeDisplay themeDisplay, int page,
 		String xmlRequest) {
 
@@ -120,7 +122,7 @@ public class JournalContentImpl implements JournalContent {
 		}
 
 		articleId = GetterUtil.getString(articleId).toUpperCase();
-		templateId = GetterUtil.getString(templateId).toUpperCase();
+		ddmTemplateKey = GetterUtil.getString(ddmTemplateKey).toUpperCase();
 
 		long layoutSetId = 0;
 		boolean secure = false;
@@ -140,7 +142,7 @@ public class JournalContentImpl implements JournalContent {
 		}
 
 		String key = encodeKey(
-			groupId, articleId, version, templateId, layoutSetId, viewMode,
+			groupId, articleId, version, ddmTemplateKey, layoutSetId, viewMode,
 			languageId, page, secure);
 
 		JournalArticleDisplay articleDisplay = portalCache.get(key);
@@ -149,7 +151,7 @@ public class JournalContentImpl implements JournalContent {
 
 		if ((articleDisplay == null) || !lifecycleRender) {
 			articleDisplay = getArticleDisplay(
-				groupId, articleId, templateId, viewMode, languageId, page,
+				groupId, articleId, ddmTemplateKey, viewMode, languageId, page,
 				xmlRequest, themeDisplay);
 
 			if ((articleDisplay != null) && articleDisplay.isCacheable() &&
@@ -175,8 +177,8 @@ public class JournalContentImpl implements JournalContent {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"getDisplay for {" + groupId + ", " + articleId + ", " +
-					templateId + ", " + viewMode + ", " + languageId + ", " +
-						page + "} takes " + stopWatch.getTime() + " ms");
+					ddmTemplateKey + ", " + viewMode + ", " + languageId +
+						", " + page + "} takes " + stopWatch.getTime() + " ms");
 		}
 
 		return articleDisplay;
@@ -192,30 +194,30 @@ public class JournalContentImpl implements JournalContent {
 	}
 
 	public JournalArticleDisplay getDisplay(
-		long groupId, String articleId, String templateId, String viewMode,
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, String xmlRequest) {
 
 		return getDisplay(
-			groupId, articleId, templateId, viewMode, languageId, null, 1,
+			groupId, articleId, ddmTemplateKey, viewMode, languageId, null, 1,
 			xmlRequest);
 	}
 
 	public JournalArticleDisplay getDisplay(
-		long groupId, String articleId, String templateId, String viewMode,
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, ThemeDisplay themeDisplay) {
 
 		return getDisplay(
-			groupId, articleId, templateId, viewMode, languageId, themeDisplay,
-			1, null);
+			groupId, articleId, ddmTemplateKey, viewMode, languageId,
+			themeDisplay, 1, null);
 	}
 
 	public JournalArticleDisplay getDisplay(
-		long groupId, String articleId, String templateId, String viewMode,
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, ThemeDisplay themeDisplay, int page,
 		String xmlRequest) {
 
 		return getDisplay(
-			groupId, articleId, 0, templateId, viewMode, languageId,
+			groupId, articleId, 0, ddmTemplateKey, viewMode, languageId,
 			themeDisplay, 1, xmlRequest);
 	}
 
@@ -237,7 +239,7 @@ public class JournalContentImpl implements JournalContent {
 	}
 
 	protected String encodeKey(
-		long groupId, String articleId, double version, String templateId,
+		long groupId, String articleId, double version, String ddmTemplateKey,
 		long layoutSetId, String viewMode, String languageId, int page,
 		boolean secure) {
 
@@ -249,7 +251,7 @@ public class JournalContentImpl implements JournalContent {
 		sb.append(VERSION_SEPARATOR);
 		sb.append(version);
 		sb.append(TEMPLATE_SEPARATOR);
-		sb.append(templateId);
+		sb.append(ddmTemplateKey);
 
 		if (layoutSetId > 0) {
 			sb.append(LAYOUT_SET_SEPARATOR);
@@ -278,7 +280,7 @@ public class JournalContentImpl implements JournalContent {
 	}
 
 	protected JournalArticleDisplay getArticleDisplay(
-		long groupId, String articleId, String templateId, String viewMode,
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, int page, String xmlRequest,
 		ThemeDisplay themeDisplay) {
 
@@ -286,11 +288,11 @@ public class JournalContentImpl implements JournalContent {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Get article display {" + groupId + ", " + articleId +
-						", " + templateId + "}");
+						", " + ddmTemplateKey + "}");
 			}
 
 			return JournalArticleLocalServiceUtil.getArticleDisplay(
-				groupId, articleId, templateId, viewMode, languageId, page,
+				groupId, articleId, ddmTemplateKey, viewMode, languageId, page,
 				xmlRequest, themeDisplay);
 		}
 		catch (Exception e) {

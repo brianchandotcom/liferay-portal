@@ -255,22 +255,23 @@ if (parentOrganization != null) {
 		</c:otherwise>
 	</c:choose>
 
+	var Util = Liferay.Util;
+
 	var selectOrganizationDialog;
 
 	function <portlet:namespace />openOrganizationSelector() {
 		AUI().use('aui-dialog', function(A) {
-			Liferay.Util.openWindow(
+			Util.openWindow(
 				{
-				 dialog:
-					   {
-					   align: Liferay.Util.Window.ALIGN_CENTER,
-					   constrain: true,
-					   modal: true,
-					   width: 600
-					   },
-				 id: '<portlet:namespace />selectOrganizationDialog',
-				 title: '<%= UnicodeLanguageUtil.get(pageContext, "select").concat(" ").concat(UnicodeLanguageUtil.get(pageContext, "parent-organization")) %>',
-				 uri: '<%= organizationSelectorURL.toString() %>'
+					 dialog:{
+						align: Util.Window.ALIGN_CENTER,
+						constrain: true,
+						modal: true,
+						width: 600
+					},
+					id: '<portlet:namespace />selectOrganizationDialog',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "select").concat(" ").concat(UnicodeLanguageUtil.get(pageContext, "parent-organization")) %>',
+					uri: '<%= organizationSelectorURL.toString() %>'
 				},
 				function (dialogInstance) {
 					selectOrganizationDialog = dialogInstance;
@@ -278,7 +279,7 @@ if (parentOrganization != null) {
 			);
 
 			Liferay.provide(
-				Liferay.Util.getTop(),
+				Util.getTop(),
 				'<portlet:namespace />selectOrganization',
 				function(organizationId, groupId, name, type) {
 					var A = AUI();

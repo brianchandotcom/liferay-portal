@@ -106,19 +106,20 @@ if (organizationId > 0) {
 </portlet:renderURL>
 
 <aui:script>
+	var Util = Liferay.Util;
+
 	var selectOrganizationDialog;
 
 	function <portlet:namespace />openOrganizationSelector() {
 		AUI().use('aui-dialog', function(A) {
-			Liferay.Util.openWindow(
+			Util.openWindow(
 				{
-					dialog:
-						{
-						align: Liferay.Util.Window.ALIGN_CENTER,
+					dialog: {
+						align: Util.Window.ALIGN_CENTER,
 						constrain: true,
 						modal: true,
 						width: 600
-						},
+					},
 					id: '<portlet:namespace />selectOrganizationDialog',
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "select").concat(" ").concat(UnicodeLanguageUtil.get(pageContext, "organization")) %>',
 					uri: '<%= organizationSelectorURL.toString() %>'
@@ -130,16 +131,16 @@ if (organizationId > 0) {
 		});
 
 		Liferay.provide(
-			Liferay.Util.getTop(),
+			Util.getTop(),
 			'<portlet:namespace />selectOrganization',
 			function(organizationId, groupId, name, type) {
 				document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = organizationId;
 
-				var nameEl = document.getElementById("<portlet:namespace />organizationName");
+				var nameEl = document.getElementById('<portlet:namespace />organizationName');
 
-				nameEl.innerHTML = name + "&nbsp;";
+				nameEl.innerHTML = name + '&nbsp;';
 
-				document.getElementById("<portlet:namespace />removeOrganizationButton").disabled = false;
+				document.getElementById('<portlet:namespace />removeOrganizationButton').disabled = false;
 
 				selectOrganizationDialog.hide();
 			}
@@ -147,24 +148,23 @@ if (organizationId > 0) {
 	}
 
 	function <portlet:namespace />removeOrganization() {
-		document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = "";
+		document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = '';
 
-		var nameEl = document.getElementById("<portlet:namespace />organizationName");
+		var nameEl = document.getElementById('<portlet:namespace />organizationName');
 
-		nameEl.innerHTML = "";
+		nameEl.innerHTML = '';
 
-		document.getElementById("<portlet:namespace />removeOrganizationButton").disabled = true;
+		document.getElementById('<portlet:namespace />removeOrganizationButton').disabled = true;
 	}
 
 	function <portlet:namespace />selectOrganization(organizationId, groupId, name) {
 		document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = organizationId;
 
-		var nameEl = document.getElementById("<portlet:namespace />organizationName");
+		var nameEl = document.getElementById('<portlet:namespace />organizationName');
 
-		nameEl.innerHTML = name + "&nbsp;";
+		nameEl.innerHTML = name + '&nbsp;';
 
-		document.getElementById("<portlet:namespace />removeOrganizationButton").disabled = false;
-
+		document.getElementById('<portlet:namespace />removeOrganizationButton').disabled = false;
 	}
 </aui:script>
 

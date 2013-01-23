@@ -272,7 +272,6 @@ public class VerifyJournal extends VerifyProcess {
 				_log.info("Fix oracle new line");
 			}
 		}
-
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyJournal.class);

@@ -50,5 +50,7 @@ public class DeleteKBAArticleSectionsPortletsKBDTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertFalse(selenium.isTextPresent("KBA Article Portlets Title"));
+		assertEquals(RuntimeVariables.replace("No articles were found."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

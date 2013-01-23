@@ -29,11 +29,6 @@
 	<td>Please configure this portlet to make it visible to all users.</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForElementPresent</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
 	<td>iFrame</td>
@@ -42,6 +37,11 @@
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
 	<td>iFrame</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -70,17 +70,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[5]/td[1]/a</td>
+	<td>//tr[contains(.,'Knowledge Base Article 1')]/td[1]/a</td>
 	<td>Knowledge Base Article 1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[5]/td[1]/a</td>
+	<td>//tr[contains(.,'Knowledge Base Article 1')]/td[1]/a</td>
 	<td>Knowledge Base Article 1</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//tr[5]/td[7]/span/span/input[@value='Choose']</td>
+	<td>//tr[contains(.,'Knowledge Base Article 1')]/td[7]/span/span/input[@value='Choose']</td>
 	<td>Knowledge Base Article 1</td>
 </tr>
 <tr>

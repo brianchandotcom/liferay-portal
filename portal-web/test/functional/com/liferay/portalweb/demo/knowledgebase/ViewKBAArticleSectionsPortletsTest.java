@@ -40,7 +40,7 @@ public class ViewKBAArticleSectionsPortletsTest extends BaseTestCase {
 			selenium.getText("//tr[contains(.,'KB Admin Article')]/td[6]/a"));
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'KB Admin Article')]/td[7]/a"));
-		selenium.clickAt("//tr[contains(.,'KB Admin Article')]/td[7]/a",
+		selenium.clickAt("//tr[contains(.,'KB Admin Article')]/td[2]/a",
 			RuntimeVariables.replace("KB Admin Article"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("KB Admin Article"),

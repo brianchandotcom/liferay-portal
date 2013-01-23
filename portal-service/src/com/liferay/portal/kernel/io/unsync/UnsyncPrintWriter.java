@@ -308,6 +308,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 		_writer = writer;
 
 		out = _writer;
+		lock = _writer;
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.portlet.assetpublisher.util;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,10 +34,16 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -529,6 +536,21 @@ public class AssetPublisherUtil {
 		return key;
 	}
 
+	public static boolean isSubscribed(
+			long companyId, long userId, long plid, String portletId)
+		throws Exception {
+
+		com.liferay.portal.model.PortletPreferences portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
+
+		return SubscriptionLocalServiceUtil.isSubscribed(
+			companyId, userId,
+			com.liferay.portal.model.PortletPreferences.class.getName(),
+			portletPreferences.getPortletPreferencesId());
+	}
+
 	public static void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {
@@ -571,6 +593,33 @@ public class AssetPublisherUtil {
 		if (getRecentFolderId(portletRequest, className) == classPK) {
 			_getRecentFolderIds(portletRequest).remove(className);
 		}
+	}
+
+	public static void subscribe(
+			long userId, long groupId, long portletPreferencesId,
+			String portletId, PermissionChecker permissionChecker)
+		throws PortalException, SystemException {
+
+		PortletPermissionUtil.check(
+			permissionChecker, portletId, ActionKeys.SUBSCRIBE);
+
+		SubscriptionLocalServiceUtil.addSubscription(
+			userId, groupId,
+			com.liferay.portal.model.PortletPreferences.class.getName(),
+			portletPreferencesId);
+	}
+
+	public static void unsubscribe(
+			long userId, long portletPreferencesId, String portletId,
+			PermissionChecker permissionChecker)
+		throws PortalException, SystemException {
+
+		PortletPermissionUtil.check(
+			permissionChecker, portletId, ActionKeys.SUBSCRIBE);
+
+		SubscriptionLocalServiceUtil.deleteSubscription(
+			userId, com.liferay.portal.model.PortletPreferences.class.getName(),
+			portletPreferencesId);
 	}
 
 	private static String _getAssetEntryXml(

@@ -269,6 +269,8 @@
 
 		<action path="/asset_publisher/edit_query_rule" forward="portlet.asset_publisher.edit_query_rule" />
 
+		<action path="/asset_publisher/edit_subscription" type="com.liferay.portlet.assetpublisher.action.EditSubscriptionAction" />
+
 		<action path="/asset_publisher/export_journal_article" type="com.liferay.portlet.journalcontent.action.ExportArticleAction" />
 
 		<action path="/asset_publisher/export_wiki_page" type="com.liferay.portlet.wiki.action.ExportPageAction" />

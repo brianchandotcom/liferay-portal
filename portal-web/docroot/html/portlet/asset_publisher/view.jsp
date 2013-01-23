@@ -97,6 +97,44 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 </c:if>
 
+<div class="subscribe-action">
+	<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, portletDisplay.getId(), ActionKeys.SUBSCRIBE) %>">
+
+		<%
+		boolean subscribed = AssetPublisherUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), themeDisplay.getPlid(), portletDisplay.getId());
+		%>
+
+		<c:choose>
+			<c:when test="<%= subscribed %>">
+				<portlet:actionURL var="unsubscribeURL">
+					<portlet:param name="struts_action" value='<%= "/asset_publisher/edit_subscription" %>' />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					image="unsubscribe"
+					label="<%= true %>"
+					url="<%= unsubscribeURL %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<portlet:actionURL var="subscribeURL">
+					<portlet:param name="struts_action" value='<%= "/asset_publisher/edit_subscription" %>' />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					image="subscribe"
+					label="<%= true %>"
+					url="<%= subscribeURL %>"
+				/>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+</div>
+
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 

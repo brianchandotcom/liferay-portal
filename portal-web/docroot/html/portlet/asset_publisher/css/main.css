@@ -177,6 +177,13 @@
 		margin: 25px 25px;
 	}
 
+    .subscribe-action {
+        float: right;
+        margin-right: 10px;
+        margin-top: -30px;
+        text-align: right
+    }
+
 	.taglib-asset-categories-summary {
 		float: left;
 	}

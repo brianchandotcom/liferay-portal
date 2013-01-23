@@ -121,13 +121,13 @@ public class DeployUtil {
 	public static void redeployJetty(String context) throws Exception {
 		String contextsDirName = System.getProperty("jetty.home") + "/contexts";
 
-		if ((context.length() == 0) || context.equals(StringPool.SLASH)) {
+		if (Validator.isNull(context) || context.equals(StringPool.SLASH)) {
 			context = "root";
 		}
 
-		String contextFileName = context.concat(".xml");
+		String fileName = context.concat(".xml");
 
-		File contextXml = new File(contextsDirName, contextFileName);
+		File contextXml = new File(contextsDirName, fileName);
 
 		if (contextXml.exists()) {
 			FileUtils.touch(contextXml);
@@ -138,13 +138,13 @@ public class DeployUtil {
 			filterMap.put("context", context);
 
 			copyDependencyXml(
-				"jetty-context-configure.xml", contextsDirName, contextFileName,
+				"jetty-context-configure.xml", contextsDirName, fileName,
 				filterMap, true);
 		}
 	}
 
 	public static void redeployTomcat(String context) throws Exception {
-		if ((context.length() == 0) || context.equals(StringPool.SLASH)) {
+		if (Validator.isNull(context) || context.equals(StringPool.SLASH)) {
 			context = "/ROOT";
 		}
 

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.activities;
+package com.liferay.portalweb.socialofficehome.activities.activitiesblockedsouser;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficehome.activities.activitiesblockedsouser.ActivitiesBlockedSOUserTestPlan;
-import com.liferay.portalweb.socialofficehome.activities.mbentryactivity.MBEntryActivityTestPlan;
+import com.liferay.portalweb.socialofficehome.activities.activitiesblockedsouser.adminuserviewactivitiesblockedsouser3.AdminUser_ViewActivitiesBlockedSOUser3Tests;
+import com.liferay.portalweb.socialofficehome.activities.activitiesblockedsouser.sousviewactivitiesblockedsouser3.SOUs_ViewActivitiesBlockedSOUser3Tests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,13 +24,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ActivitiesTestPlan extends BaseTestSuite {
+public class ActivitiesBlockedSOUserTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(ActivitiesBlockedSOUserTestPlan.suite());
-		testSuite.addTest(MBEntryActivityTestPlan.suite());
+		testSuite.addTest(AdminUser_ViewActivitiesBlockedSOUser3Tests.suite());
+		testSuite.addTest(SOUs_ViewActivitiesBlockedSOUser3Tests.suite());
 
 		return testSuite;
 	}

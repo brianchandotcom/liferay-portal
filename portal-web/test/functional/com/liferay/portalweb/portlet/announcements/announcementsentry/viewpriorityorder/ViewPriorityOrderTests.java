@@ -16,6 +16,9 @@ package com.liferay.portalweb.portlet.announcements.announcementsentry.viewprior
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.announcements.announcementsentry.addannouncementsentrygeneral.TearDownAnnouncementsEntryTest;
+import com.liferay.portalweb.portlet.announcements.announcementsentry.addannouncementsentrypriorityimportant.AddAnnouncementsEntryPriorityImportantTest;
+import com.liferay.portalweb.portlet.announcements.announcementsentry.addannouncementsentryprioritynormal.AddAnnouncementsEntryPriorityNormalTest;
 import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncements.AddPageAnnouncementsTest;
 import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncements.AddPortletAnnouncementsTest;
 
@@ -28,14 +31,12 @@ import junit.framework.TestSuite;
 public class ViewPriorityOrderTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(SelectTimeZonePacificStandardTimeCPMATest.class);
 		testSuite.addTestSuite(AddPageAnnouncementsTest.class);
 		testSuite.addTestSuite(AddPortletAnnouncementsTest.class);
 		testSuite.addTestSuite(AddAnnouncementsEntryPriorityImportantTest.class);
 		testSuite.addTestSuite(AddAnnouncementsEntryPriorityNormalTest.class);
 		testSuite.addTestSuite(ViewPriorityOrderTest.class);
 		testSuite.addTestSuite(TearDownAnnouncementsEntryTest.class);
-		testSuite.addTestSuite(TearDownTimeZoneTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

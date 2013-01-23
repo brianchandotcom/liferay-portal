@@ -37,7 +37,8 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 					RuntimeVariables.replace("Entries"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean entry1Present = selenium.isElementPresent("link=Delete");
+				boolean entry1Present = selenium.isElementPresent(
+						"//td[@class='delete-entry']/span/a/span");
 
 				if (!entry1Present) {
 					label = 2;
@@ -45,14 +46,16 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//td[@class='delete-entry']/span/a/span"));
+				selenium.click(RuntimeVariables.replace(
+						"//td[@class='delete-entry']/span/a/span"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
-			case 2:
-
-				boolean entry2Present = selenium.isElementPresent("link=Delete");
+				boolean entry2Present = selenium.isElementPresent(
+						"//td[@class='delete-entry']/span/a/span");
 
 				if (!entry2Present) {
 					label = 3;
@@ -60,14 +63,16 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//td[@class='delete-entry']/span/a/span"));
+				selenium.click(RuntimeVariables.replace(
+						"//td[@class='delete-entry']/span/a/span"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
-			case 3:
-
-				boolean entry3Present = selenium.isElementPresent("link=Delete");
+				boolean entry3Present = selenium.isElementPresent(
+						"//td[@class='delete-entry']/span/a/span");
 
 				if (!entry3Present) {
 					label = 4;
@@ -75,14 +80,16 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//td[@class='delete-entry']/span/a/span"));
+				selenium.click(RuntimeVariables.replace(
+						"//td[@class='delete-entry']/span/a/span"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
-			case 4:
-
-				boolean entry4Present = selenium.isElementPresent("link=Delete");
+				boolean entry4Present = selenium.isElementPresent(
+						"//td[@class='delete-entry']/span/a/span");
 
 				if (!entry4Present) {
 					label = 5;
@@ -90,14 +97,16 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//td[@class='delete-entry']/span/a/span"));
+				selenium.click(RuntimeVariables.replace(
+						"//td[@class='delete-entry']/span/a/span"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
-			case 5:
-
-				boolean entry5Present = selenium.isElementPresent("link=Delete");
+				boolean entry5Present = selenium.isElementPresent(
+						"//td[@class='delete-entry']/span/a/span");
 
 				if (!entry5Present) {
 					label = 6;
@@ -105,11 +114,18 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//td[@class='delete-entry']/span/a/span"));
+				selenium.click(RuntimeVariables.replace(
+						"//td[@class='delete-entry']/span/a/span"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6:
 			case 100:
 				label = -1;

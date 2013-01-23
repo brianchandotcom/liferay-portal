@@ -26,7 +26,6 @@ public class AddAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Announcements Test Page");
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -65,6 +64,7 @@ public class AddAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 		selenium.waitForText("//body",
 			"Announcements Entry Content Priority Important");
 		selenium.selectFrame("relative=top");
+		selenium.waitForVisible("//select[@id='_84_priority']");
 		selenium.select("//select[@id='_84_priority']",
 			RuntimeVariables.replace("Important"));
 		assertEquals("Important",
@@ -77,37 +77,5 @@ public class AddAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[1]/a",
-			RuntimeVariables.replace(
-				"Announcements Entry Title Priority Important"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals("Announcements Entry Title Priority Important",
-			selenium.getValue("//input[@id='_84_title']"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_84_editor' and @style='display: none;']");
-		selenium.waitForVisible("//td[@id='cke_contents__84_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__84_editor']/iframe");
-		selenium.waitForText("//body",
-			"Announcements Entry Content Priority Important");
-		assertEquals(RuntimeVariables.replace(
-				"Announcements Entry Content Priority Important"),
-			selenium.getText("//body"));
-		selenium.selectFrame("relative=top");
-		assertEquals("Important",
-			selenium.getSelectedLabel("//select[@id='_84_priority']"));
-		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Announcements Test Page");
-		selenium.clickAt("link=Announcements Test Page",
-			RuntimeVariables.replace("Announcements Test Page"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Announcements Entry Title Priority Important"),
-			selenium.getText("//h3[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("General"),
-			selenium.getText("//span[@class='entry-scope']"));
-		assertEquals(RuntimeVariables.replace(
-				"Announcements Entry Content Priority Important"),
-			selenium.getText(
-				"//div[@class=' entry-content entry-type-general']/p"));
 	}
 }

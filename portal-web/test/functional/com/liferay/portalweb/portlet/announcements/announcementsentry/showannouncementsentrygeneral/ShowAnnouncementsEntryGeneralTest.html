@@ -14,14 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>clickAtAndWait</td>
 	<td>link=Announcements Test Page</td>
 	<td>Announcements Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Announcements Test Page</td>
-	<td>Announcements Test Page</td>
+	<td>assertNotVisible</td>
+	<td>//span[@class='entry-scope']</td>
+	<td>General</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//p</td>
+	<td>Announcements Entry Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -45,10 +50,14 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//p</td>
-	<td>General Announcements Entry Content</td>
+	<td>//span[@class='entry-scope']</td>
+	<td>General</td>
 </tr>
-
+<tr>
+	<td>assertVisible</td>
+	<td>//p</td>
+	<td>Announcements Entry Content</td>
+</tr>
 </tbody></table>
 </body>
 </html>

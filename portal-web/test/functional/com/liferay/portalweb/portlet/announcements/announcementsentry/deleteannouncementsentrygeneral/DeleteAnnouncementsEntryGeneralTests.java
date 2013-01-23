@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.announcements.announcementsentry.deleteann
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.announcements.announcementsentry.addannouncementsentrygeneral.AddAnnouncementsEntryGeneralTest;
+import com.liferay.portalweb.portlet.announcements.announcementsentry.addannouncementsentrygeneral.TearDownAnnouncementsEntryTest;
 import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncements.AddPageAnnouncementsTest;
 import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncements.AddPortletAnnouncementsTest;
 
@@ -28,13 +30,11 @@ import junit.framework.TestSuite;
 public class DeleteAnnouncementsEntryGeneralTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(SelectTimeZonePacificStandardTimeCPMATest.class);
 		testSuite.addTestSuite(AddPageAnnouncementsTest.class);
 		testSuite.addTestSuite(AddPortletAnnouncementsTest.class);
 		testSuite.addTestSuite(AddAnnouncementsEntryGeneralTest.class);
 		testSuite.addTestSuite(DeleteAnnouncementsEntryGeneralTest.class);
 		testSuite.addTestSuite(TearDownAnnouncementsEntryTest.class);
-		testSuite.addTestSuite(TearDownTimeZoneTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

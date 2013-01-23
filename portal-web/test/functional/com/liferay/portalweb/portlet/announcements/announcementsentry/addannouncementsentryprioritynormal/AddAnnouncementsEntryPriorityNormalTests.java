@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.announcements.announcementsentry.addannoun
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.announcements.announcementsentry.addannouncementsentrygeneral.TearDownAnnouncementsEntryTest;
 import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncements.AddPageAnnouncementsTest;
 import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncements.AddPortletAnnouncementsTest;
 
@@ -28,12 +29,11 @@ import junit.framework.TestSuite;
 public class AddAnnouncementsEntryPriorityNormalTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(SelectTimeZonePacificStandardTimeCPMATest.class);
 		testSuite.addTestSuite(AddPageAnnouncementsTest.class);
 		testSuite.addTestSuite(AddPortletAnnouncementsTest.class);
 		testSuite.addTestSuite(AddAnnouncementsEntryPriorityNormalTest.class);
+		testSuite.addTestSuite(ViewAnnouncementsEntryPriorityNormalTest.class);
 		testSuite.addTestSuite(TearDownAnnouncementsEntryTest.class);
-		testSuite.addTestSuite(TearDownTimeZoneTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

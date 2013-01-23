@@ -102,7 +102,6 @@ import javax.portlet.PortletException;
  * @author Jorge Ferrer
  * @author Bruno Farache
  * @author Vilmos Papp
- * @author James Lefeu
  */
 public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
@@ -828,18 +827,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the layout matching the UUID and group.
+	 *
 	 * @param  uuid the layout's UUID
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @return the layout, or <code>null</code> if a matching layout could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout fetchLayoutByUuidAndGroupId(
-			String uuid, long groupId, boolean privateLayout)
+	public Layout fetchLayoutByUuidAndGroupId(String uuid, long groupId)
 		throws SystemException {
 
-		return layoutPersistence.fetchByUUID_G_P(uuid, groupId, privateLayout);
+		return layoutPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -1354,20 +1353,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	public boolean hasLayoutSetPrototypeLayout(
-			long layoutSetPrototypeId, String layoutUuid, boolean privateLayout)
-		throws PortalException, SystemException {
-
-		LayoutSetPrototype layoutSetPrototype =
-			layoutSetPrototypeLocalService.getLayoutSetPrototype(
-				layoutSetPrototypeId);
-
-		return layoutLocalServiceHelper.hasLayoutSetPrototypeLayout(
-			layoutSetPrototype, layoutUuid, privateLayout);
-	}
-
-	public boolean hasLayoutSetPrototypeLayout(
-			String layoutSetPrototypeUuid, long companyId, String layoutUuid,
-			boolean privateLayout)
+			String layoutSetPrototypeUuid, String layoutUuid, long companyId)
 		throws PortalException, SystemException {
 
 		LayoutSetPrototype layoutSetPrototype =
@@ -1376,7 +1362,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					layoutSetPrototypeUuid, companyId);
 
 		return layoutLocalServiceHelper.hasLayoutSetPrototypeLayout(
-			layoutSetPrototype, layoutUuid, privateLayout);
+			layoutSetPrototype, layoutUuid);
 	}
 
 	/**

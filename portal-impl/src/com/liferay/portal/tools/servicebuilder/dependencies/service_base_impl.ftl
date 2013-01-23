@@ -280,46 +280,25 @@ import javax.sql.DataSource;
 		}
 
 		<#if entity.hasUuid() && entity.hasColumn("groupId")>
-			<#if entity.name == "Layout">
-				/**
-				 * @param uuid the UUID of ${entity.humanName}
-				 * @param groupId the group id of the ${entity.humanName}
-				 * @param privateLayout whether the ${entity.humanName} is private to the group
-				 * @return the ${entity.humanName}
-				<#list serviceBaseExceptions as exception>
-				<#if exception == "PortalException">
-				 * @throws PortalException if a ${entity.humanName} with the UUID in the group and privateLayout could not be found
-				<#elseif exception == "SystemException">
-				 * @throws SystemException if a system exception occurred
-				<#else>
-				 * @throws ${exception}
-				</#if>
-				</#list>
-				 */
-				public ${entity.name} get${entity.name}ByUuidAndGroupId(String uuid, long groupId, boolean privateLayout) throws ${stringUtil.merge(serviceBaseExceptions)} {
-					return ${entity.varName}Persistence.findByUUID_G_P(uuid, groupId, privateLayout);
-				}
+			/**
+			 * Returns the ${entity.humanName} with the UUID in the group.
+			 *
+			 * @param uuid the UUID of ${entity.humanName}
+			 * @param groupId the group id of the ${entity.humanName}
+			 * @return the ${entity.humanName}
+			<#list serviceBaseExceptions as exception>
+			<#if exception == "PortalException">
+			 * @throws PortalException if a ${entity.humanName} with the UUID in the group could not be found
+			<#elseif exception == "SystemException">
+			 * @throws SystemException if a system exception occurred
 			<#else>
-				/**
-				 * Returns the ${entity.humanName} with the UUID in the group.
-				 *
-				 * @param uuid the UUID of ${entity.humanName}
-				 * @param groupId the group id of the ${entity.humanName}
-				 * @return the ${entity.humanName}
-				<#list serviceBaseExceptions as exception>
-				<#if exception == "PortalException">
-				 * @throws PortalException if a ${entity.humanName} with the UUID in the group could not be found
-				<#elseif exception == "SystemException">
-				 * @throws SystemException if a system exception occurred
-				<#else>
-				 * @throws ${exception}
-				</#if>
-				</#list>
-				 */
-				public ${entity.name} get${entity.name}ByUuidAndGroupId(String uuid, long groupId) throws ${stringUtil.merge(serviceBaseExceptions)} {
-					return ${entity.varName}Persistence.findByUUID_G(uuid, groupId);
-				}
+			 * @throws ${exception}
 			</#if>
+			</#list>
+			 */
+			public ${entity.name} get${entity.name}ByUuidAndGroupId(String uuid, long groupId) throws ${stringUtil.merge(serviceBaseExceptions)} {
+				return ${entity.varName}Persistence.findByUUID_G(uuid, groupId);
+			}
 		</#if>
 
 		/**

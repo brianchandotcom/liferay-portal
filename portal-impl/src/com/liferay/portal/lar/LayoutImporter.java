@@ -605,9 +605,9 @@ public class LayoutImporter {
 					continue;
 				}
 
-				Layout sourcePrototypeLayout = LayoutUtil.fetchByUUID_G_P(
+				Layout sourcePrototypeLayout = LayoutUtil.fetchByUUID_G(
 					sourcePrototypeLayoutUuid,
-					layoutSetPrototypeGroup.getGroupId(), privateLayout);
+					layoutSetPrototypeGroup.getGroupId());
 
 				if (sourcePrototypeLayout == null) {
 					LayoutLocalServiceUtil.deleteLayout(
@@ -979,7 +979,7 @@ public class LayoutImporter {
 
 		if (deleteLayout) {
 			Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layoutUuid, groupId, privateLayout);
+				layoutUuid, groupId);
 
 			if (layout != null) {
 				newLayoutsMap.put(oldLayoutId, layout);
@@ -1055,8 +1055,8 @@ public class LayoutImporter {
 			// The default behaviour of import mode is
 			// PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID
 
-			existingLayout = LayoutUtil.fetchByUUID_G_P(
-				layout.getUuid(), groupId, privateLayout);
+			existingLayout = LayoutUtil.fetchByUUID_G(
+				layout.getUuid(), groupId);
 
 			if (existingLayout == null) {
 				existingLayout = LayoutUtil.fetchByG_P_F(
@@ -1170,7 +1170,7 @@ public class LayoutImporter {
 		else if (Validator.isNotNull(parentLayoutUuid)) {
 			Layout parentLayout =
 				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-					parentLayoutUuid, groupId, privateLayout);
+					parentLayoutUuid, groupId);
 
 			parentLayoutId = parentLayout.getLayoutId();
 		}

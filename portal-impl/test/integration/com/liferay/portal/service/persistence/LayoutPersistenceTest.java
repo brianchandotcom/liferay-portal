@@ -348,8 +348,6 @@ public class LayoutPersistenceTest {
 				existingLayoutModelImpl.getOriginalUuid()));
 		Assert.assertEquals(existingLayoutModelImpl.getGroupId(),
 			existingLayoutModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingLayoutModelImpl.getPrivateLayout(),
-			existingLayoutModelImpl.getOriginalPrivateLayout());
 
 		Assert.assertEquals(existingLayoutModelImpl.getIconImageId(),
 			existingLayoutModelImpl.getOriginalIconImageId());

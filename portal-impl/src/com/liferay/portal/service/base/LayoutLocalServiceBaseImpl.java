@@ -400,16 +400,17 @@ public abstract class LayoutLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the layout with the UUID in the group.
+	 *
 	 * @param uuid the UUID of layout
 	 * @param groupId the group id of the layout
-	 * @param privateLayout whether the layout is private to the group
 	 * @return the layout
-	 * @throws PortalException if a layout with the UUID in the group and privateLayout could not be found
+	 * @throws PortalException if a layout with the UUID in the group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout getLayoutByUuidAndGroupId(String uuid, long groupId,
-		boolean privateLayout) throws PortalException, SystemException {
-		return layoutPersistence.findByUUID_G_P(uuid, groupId, privateLayout);
+	public Layout getLayoutByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException, SystemException {
+		return layoutPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

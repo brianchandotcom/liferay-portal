@@ -619,14 +619,12 @@ public class PortalUtil {
 	}
 
 	public static String getJournalArticleActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
-			Map<String, Object> requestContext)
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException, SystemException {
 
 		return getPortal().getJournalArticleActualURL(
-			groupId, privateLayout, mainPath, friendlyURL, params,
-			requestContext);
+			groupId, mainPath, friendlyURL, params, requestContext);
 	}
 
 	public static String getJsSafePortletId(String portletId) {

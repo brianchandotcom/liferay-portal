@@ -1662,13 +1662,9 @@ public class PortletImporter {
 					portletDataContext.getCompanyId());
 			}
 			else if (Validator.isNotNull(scopeLayoutUuid)) {
-				boolean privateLayout = GetterUtil.getBoolean(
-					portletElement.attributeValue("private-layout"));
-
 				Layout scopeLayout =
 					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						scopeLayoutUuid, portletDataContext.getGroupId(),
-						privateLayout);
+						scopeLayoutUuid, portletDataContext.getGroupId());
 
 				if (scopeLayout.hasScopeGroup()) {
 					scopeGroup = scopeLayout.getScopeGroup();
@@ -1691,8 +1687,7 @@ public class PortletImporter {
 						Layout oldLayout =
 							LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 								scopeLayoutUuid,
-								portletDataContext.getSourceGroupId(),
-								privateLayout);
+								portletDataContext.getSourceGroupId());
 
 						Group oldScopeGroup = oldLayout.getScopeGroup();
 

@@ -58,7 +58,6 @@ PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getP
 PortletPreferences portletPreferences = null;
 
 Group group = null;
-boolean privateLayout = false;
 
 if (layout instanceof VirtualLayout) {
 	VirtualLayout virtualLayout = (VirtualLayout)layout;
@@ -66,11 +65,9 @@ if (layout instanceof VirtualLayout) {
 	Layout sourceLayout = virtualLayout.getSourceLayout();
 
 	group = sourceLayout.getGroup();
-	privateLayout = sourceLayout.isPrivateLayout();
 }
 else {
 	group = layout.getGroup();
-	privateLayout = layout.isPrivateLayout();
 }
 
 if (allowAddPortletDefaultResource) {
@@ -79,7 +76,7 @@ if (allowAddPortletDefaultResource) {
 	String scopeLayoutUuid = portletPreferences.getValue("lfrScopeLayoutUuid", null);
 
 	if (Validator.isNotNull(scopeLayoutUuid)) {
-		Layout scopeLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(scopeLayoutUuid, group.getGroupId(), privateLayout);
+		Layout scopeLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(scopeLayoutUuid, group.getGroupId());
 
 		if (scopeLayout != null) {
 			portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, scopeLayout, portletId);

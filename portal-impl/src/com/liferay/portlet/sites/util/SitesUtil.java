@@ -512,7 +512,7 @@ public class SitesUtil {
 
 		if (newPlid <= 0) {
 			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+				layoutSet.getGroupId(), layoutSet.getPrivateLayout(),
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if (firstLayout != null) {
@@ -567,8 +567,7 @@ public class SitesUtil {
 			Group group = layoutSetPrototype.getGroup();
 
 			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layout.getSourcePrototypeLayoutUuid(), group.getGroupId(),
-				layout.isPrivateLayout());
+				layout.getSourcePrototypeLayoutUuid(), group.getGroupId());
 		}
 		catch (Exception e) {
 			_log.error(
@@ -678,9 +677,8 @@ public class SitesUtil {
 
 			if (LayoutLocalServiceUtil.hasLayoutSetPrototypeLayout(
 					layoutSet.getLayoutSetPrototypeUuid(),
-					layout.getCompanyId(),
 					layout.getSourcePrototypeLayoutUuid(),
-					layout.isPrivateLayout())) {
+					layout.getCompanyId())) {
 
 				return false;
 			}
@@ -900,7 +898,7 @@ public class SitesUtil {
 			Layout sourcePrototypeLayout =
 				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 					sourcePrototypeLayoutUuid,
-					layoutSetPrototypeGroup.getGroupId(), true);
+					layoutSetPrototypeGroup.getGroupId());
 
 			doMergeLayoutPrototypeLayout(
 				layoutSetPrototypeGroup, sourcePrototypeLayout);
@@ -1091,8 +1089,7 @@ public class SitesUtil {
 
 		Layout targetScopeLayout =
 			LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-				targetLayout.getUuid(), targetLayout.getGroupId(),
-				targetLayout.isPrivateLayout());
+				targetLayout.getUuid(), targetLayout.getGroupId());
 
 		if (!targetScopeLayout.hasScopeGroup()) {
 			GroupLocalServiceUtil.addGroup(

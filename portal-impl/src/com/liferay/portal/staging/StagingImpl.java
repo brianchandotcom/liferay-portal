@@ -181,8 +181,7 @@ public class StagingImpl implements Staging {
 		Group liveGroup = stagingGroup.getLiveGroup();
 
 		Layout sourceLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-			targetLayout.getUuid(), liveGroup.getGroupId(),
-			targetLayout.isPrivateLayout());
+			targetLayout.getUuid(), liveGroup.getGroupId());
 
 		copyPortlet(
 			portletRequest, liveGroup.getGroupId(), stagingGroup.getGroupId(),
@@ -629,8 +628,7 @@ public class StagingImpl implements Staging {
 
 			try {
 				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-					parentLayout.getUuid(), liveGroupId,
-					parentLayout.isPrivateLayout());
+					parentLayout.getUuid(), liveGroupId);
 
 				// If one parent is found all others are assumed to exist
 
@@ -1095,8 +1093,7 @@ public class StagingImpl implements Staging {
 			liveGroup = stagingGroup.getLiveGroup();
 
 			targetLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-				sourceLayout.getUuid(), liveGroup.getGroupId(),
-				sourceLayout.isPrivateLayout());
+				sourceLayout.getUuid(), liveGroup.getGroupId());
 		}
 
 		copyPortlet(
@@ -1590,8 +1587,7 @@ public class StagingImpl implements Staging {
 
 			try {
 				LayoutServiceHttp.getLayoutByUuidAndGroupId(
-					httpPrincipal, parentLayout.getUuid(), remoteGroupId,
-					parentLayout.getPrivateLayout());
+					httpPrincipal, parentLayout.getUuid(), remoteGroupId);
 
 				// If one parent is found all others are assumed to exist
 

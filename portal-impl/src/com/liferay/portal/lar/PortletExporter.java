@@ -802,8 +802,6 @@ public class PortletExporter {
 			"scope-layout-type", portletDataContext.getScopeType());
 		portletElement.addAttribute(
 			"scope-layout-uuid", portletDataContext.getScopeLayoutUuid());
-		portletElement.addAttribute(
-			"private-layout", String.valueOf(layout.isPrivateLayout()));
 
 		// Data
 

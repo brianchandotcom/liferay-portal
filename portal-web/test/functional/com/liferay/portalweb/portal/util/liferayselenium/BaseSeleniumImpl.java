@@ -195,6 +195,10 @@ public abstract class BaseSeleniumImpl
 		return LiferaySeleniumHelper.isNotChecked(this, locator);
 	}
 
+	public boolean isNotPartialText(String locator, String value) {
+		return LiferaySeleniumHelper.isNotPartialText(this, locator, value);
+	}
+
 	public boolean isNotText(String locator, String value) {
 		return LiferaySeleniumHelper.isNotText(this, locator, value);
 	}

@@ -50,7 +50,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -153,20 +152,8 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			contextQuery.addRequiredTerm(Field.STATUS, status);
 		}
 
-		String relatedEntryClassName = (String)searchContext.getAttribute(
-			"relatedEntryClassName");
-
-		if (Validator.isNotNull(relatedEntryClassName)) {
-			contextQuery.addRequiredTerm(
-				Field.CLASS_NAME_ID,
-				PortalUtil.getClassNameId(relatedEntryClassName));
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
-				relatedEntryClassName);
-
-			if (indexer != null) {
-				indexer.postProcessContextQuery(contextQuery, searchContext);
-			}
+		if (searchContext.isIncludeAttachments()) {
+			addRelatedClassNames(contextQuery, searchContext);
 		}
 
 		long[] folderIds = searchContext.getFolderIds();

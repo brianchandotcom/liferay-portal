@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -141,23 +140,8 @@ public class MBMessageIndexer extends BaseIndexer {
 
 		contextQuery.addRequiredTerm("discussion", discussion);
 
-		if (discussion) {
-			String relatedEntryClassName = (String)searchContext.getAttribute(
-				"relatedEntryClassName");
-
-			if (Validator.isNotNull(relatedEntryClassName)) {
-				contextQuery.addRequiredTerm(
-					Field.CLASS_NAME_ID,
-					PortalUtil.getClassNameId(relatedEntryClassName));
-
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					relatedEntryClassName);
-
-				if (indexer != null) {
-					indexer.postProcessContextQuery(
-						contextQuery, searchContext);
-				}
-			}
+		if (searchContext.isIncludeDiscussions()) {
+			addRelatedClassNames(contextQuery, searchContext);
 		}
 
 		long threadId = GetterUtil.getLong(

@@ -1139,8 +1139,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		boolean passwordReset = ldapUser.isPasswordReset();
 
 		if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.LDAP_EXPORT_ENABLED,
-				PropsValues.LDAP_EXPORT_ENABLED)) {
+			companyId, PropsKeys.LDAP_EXPORT_ENABLED,
+			PropsValues.LDAP_EXPORT_ENABLED)) {
 
 			passwordReset = user.isPasswordReset();
 		}
@@ -1160,9 +1160,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			}
 
 			if (ldapUserModifiedDate.equals(user.getModifiedDate())) {
-
 				if (!ldapUser.isAutoPassword()) {
-
 					UserLocalServiceUtil.updatePassword(
 						user.getUserId(), password, password, passwordReset,
 						true);

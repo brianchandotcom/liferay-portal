@@ -1,3 +1,4 @@
+<%@ page import="com.liferay.portlet.journal.model.JournalArticle" %>
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -46,12 +47,13 @@ String language = BeanParamUtil.getString(template, request, "language", DDMTemp
 String script = BeanParamUtil.getString(template, request, "script");
 
 if (Validator.isNull(script)) {
-	if (classNameId > 0) {
-		PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
+	PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
 
-		if (portletDisplayTemplateHandler != null) {
-			script = ContentUtil.get(portletDisplayTemplateHandler.getTemplatesHelpPath(language));
-		}
+	if (portletDisplayTemplateHandler != null) {
+		script = ContentUtil.get(portletDisplayTemplateHandler.getTemplatesHelpPath(language));
+	}
+	else if (structure.getClassNameId() == PortalUtil.getClassNameId(JournalArticle.class)) {
+		script = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT, new Filter(DDMTemplateConstants.LANG_TYPE_VM)));
 	}
 	else if (!type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 		script = ContentUtil.get(PropsUtil.get(PropsKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT, new Filter(DDMTemplateConstants.LANG_TYPE_VM)));

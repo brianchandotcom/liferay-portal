@@ -60,7 +60,7 @@ List<AssetCategoryProperty> categoryProperties = AssetCategoryPropertyServiceUti
 
 	<c:if test="<%= Validator.isNotNull(category.getDescription(locale)) %>">
 		<div class="category-field">
-			<label><liferay-ui:message key="description" />:</label> <%= category.getDescription(locale) %>
+			<label><liferay-ui:message key="description" />:</label> <%= HtmlUtil.escape(category.getDescription(locale)) %>
 		</div>
 	</c:if>
 

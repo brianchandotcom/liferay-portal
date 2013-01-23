@@ -16,7 +16,7 @@
 
 $theme.include($body_top_include)
 
-#if ($control_panel_category == "")
+#if (($control_panel_category == "") || !$getterUtil.getBoolean($propsUtil.get("dockbar.manage.links.window.state.popup")))
 	#dockbar()
 #end
 

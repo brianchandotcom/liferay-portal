@@ -105,70 +105,66 @@ if ((trashEnabled == 0) && ArrayUtil.contains(advancedSections, "recycle-bin")) 
 
 String[][] categorySections = {mainSections, seoSections, advancedSections, miscellaneousSections};
 %>
-<table class="lfr-table" id="<portlet:namespace />siteSettingsWrapper" width="100%">
-<tr>
-	<td class="lfr-top">
-		<c:if test="<%= portletName.equals(PortletKeys.SITES_ADMIN) %>">
-			<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp">
-				<liferay-util:param name="toolbarItem" value='<%= (group == null) ? "add" : "browse" %>' />
-			</liferay-util:include>
-		</c:if>
 
-		<%
-		boolean localizeTitle = true;
-		String title = "new-site";
+<c:if test="<%= portletName.equals(PortletKeys.SITES_ADMIN) %>">
+	<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp">
+		<liferay-util:param name="toolbarItem" value='<%= (group == null) ? "add" : "browse" %>' />
+	</liferay-util:include>
+</c:if>
 
-		if (group != null) {
-			localizeTitle= false;
-			title = group.getDescriptiveName(locale);
-		}
-		else if (layoutSetPrototype != null) {
-			localizeTitle= false;
-			title = layoutSetPrototype.getName(locale);
-		}
-		%>
+<%
+boolean localizeTitle = true;
+String title = "new-site";
 
-		<liferay-ui:header
-			backURL="<%= backURL %>"
-			localizeTitle="<%= localizeTitle %>"
-			title="<%= title %>"
-		/>
+if (group != null) {
+	localizeTitle= false;
+	title = group.getDescriptiveName(locale);
+}
+else if (layoutSetPrototype != null) {
+	localizeTitle= false;
+	title = layoutSetPrototype.getName(locale);
+}
+%>
 
-		<portlet:actionURL var="editSiteURL">
-			<portlet:param name="struts_action" value="/sites_admin/edit_site" />
-		</portlet:actionURL>
+<liferay-ui:header
+	backURL="<%= backURL %>"
+	localizeTitle="<%= localizeTitle %>"
+	showBackURL="<%= showBackURL %>"
+	title="<%= title %>"
+/>
 
-		<aui:form action="<%= editSiteURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
-			<aui:input name="<%= Constants.CMD %>" type="hidden" />
-			<aui:input name="redirect" type="hidden" />
-			<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
-			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-			<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-			<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
-			<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
+<portlet:actionURL var="editSiteURL">
+	<portlet:param name="struts_action" value="/sites_admin/edit_site" />
+</portlet:actionURL>
 
-			<%
-			request.setAttribute("site.group", group);
-			request.setAttribute("site.liveGroup", liveGroup);
-			request.setAttribute("site.liveGroupId", new Long(liveGroupId));
-			request.setAttribute("site.stagingGroup", stagingGroup);
-			request.setAttribute("site.stagingGroupId", new Long(stagingGroupId));
-			request.setAttribute("site.liveGroupTypeSettings", liveGroupTypeSettings);
-			request.setAttribute("site.layoutSetPrototype", layoutSetPrototype);
-			request.setAttribute("site.showPrototypes", String.valueOf(showPrototypes));
-			%>
+<aui:form action="<%= editSiteURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" />
+	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
+	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
 
-			<liferay-ui:form-navigator
-				backURL="<%= backURL %>"
-				categoryNames="<%= _CATEGORY_NAMES %>"
-				categorySections="<%= categorySections %>"
-				jspPath="/html/portlet/sites_admin/site/"
-				showButtons="<%= true %>"
-			/>
-		</aui:form>
-	</td>
-</tr>
-</table>
+	<%
+	request.setAttribute("site.group", group);
+	request.setAttribute("site.liveGroup", liveGroup);
+	request.setAttribute("site.liveGroupId", new Long(liveGroupId));
+	request.setAttribute("site.stagingGroup", stagingGroup);
+	request.setAttribute("site.stagingGroupId", new Long(stagingGroupId));
+	request.setAttribute("site.liveGroupTypeSettings", liveGroupTypeSettings);
+	request.setAttribute("site.layoutSetPrototype", layoutSetPrototype);
+	request.setAttribute("site.showPrototypes", String.valueOf(showPrototypes));
+	%>
+
+	<liferay-ui:form-navigator
+		backURL="<%= backURL %>"
+		categoryNames="<%= _CATEGORY_NAMES %>"
+		categorySections="<%= categorySections %>"
+		jspPath="/html/portlet/sites_admin/site/"
+		showButtons="<%= true %>"
+	/>
+</aui:form>
 
 <aui:script>
 	function <portlet:namespace />saveGroup() {

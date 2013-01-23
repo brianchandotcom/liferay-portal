@@ -616,6 +616,8 @@ public class PropsValues {
 
 	public static String[] DOCKBAR_ADD_PORTLETS = PropsUtil.getArray(PropsKeys.DOCKBAR_ADD_PORTLETS);
 
+	public static final boolean DOCKBAR_MANAGE_LINKS_WINDOW_STATE_POPUP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DOCKBAR_MANAGE_LINKS_WINDOW_STATE_POPUP));
+
 	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER = PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER);
 
 	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_VELOCITY = PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_VELOCITY);

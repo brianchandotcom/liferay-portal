@@ -1,4 +1,13 @@
 .taglib-form-navigator {
+	zoom: 1;
+
+	&:after {
+		clear: both;
+		content: "";
+		display: block;
+		height: 0;
+	}
+
 	.form-navigator {
 		border: 1px solid transparent;
 		float: right;

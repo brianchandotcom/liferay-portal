@@ -131,14 +131,23 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 				<div class="aui-menu manage-content-menu aui-overlaycontext-hidden" id="<portlet:namespace />manageContentContainer">
 					<div class="aui-menu-content">
 						<ul>
+
+							<%
+							String useDialogFullDialog = StringPool.BLANK;
+
+							if (PropsValues.DOCKBAR_MANAGE_LINKS_WINDOW_STATE_POPUP) {
+								useDialogFullDialog = " use-dialog full-dialog";
+							}
+							%>
+
 							<c:if test="<%= themeDisplay.isShowPageSettingsIcon() %>">
-								<li class="first manage-page">
+								<li class='<%= "first manage-page" + useDialogFullDialog %>'>
 									<aui:a href='<%= themeDisplay.getURLPageSettings().toString() + "#details" %>' label="page" title="manage-page" />
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowLayoutTemplatesIcon()%>">
-								<li class="page-layout">
+							<c:if test="<%= themeDisplay.isShowLayoutTemplatesIcon() %>">
+								<li class='<%= "page-layout" + useDialogFullDialog %>'>
 									<aui:a href='<%= themeDisplay.getURLPageSettings().toString() + "#layout" %>' label="page-layout" title="manage-page" />
 								</li>
 							</c:if>
@@ -150,25 +159,25 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowSiteSettingsIcon() %>">
-								<li class="settings">
+								<li class='<%= "settings" + useDialogFullDialog %>'>
 									<aui:a href="<%= themeDisplay.getURLSiteSettings().toString() %>" label="site-settings" title="edit-site-settings" />
 								</li>
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowSiteMapSettingsIcon() %>">
-								<li class="sitemap">
+								<li class='<%= "sitemap" + useDialogFullDialog %>'>
 									<aui:a href="<%= themeDisplay.getURLSiteMapSettings().toString() %>" label="site-pages" title="manage-site-pages" />
 								</li>
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowManageSiteMembershipsIcon() %>">
-								<li class="manage-site-memberships">
+								<li class='<%= "manage-site-memberships" + useDialogFullDialog %>'>
 									<aui:a href="<%= themeDisplay.getURLManageSiteMemberships().toString() %>" label="site-memberships" title="manage-site-memberships" />
 								</li>
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowSiteContentIcon() %>">
-								<li class="manage-site-content use-dialog full-dialog">
+								<li class='<%= "manage-site-content" + useDialogFullDialog %>'>
 									<aui:a href="<%= themeDisplay.getURLSiteContent() %>" label="site-content" title="manage-site-content" />
 								</li>
 							</c:if>
@@ -286,16 +295,24 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 			<span class="user-links <%= themeDisplay.isImpersonated() ? "menu-button": "" %>">
 
 				<%
-				String controlPanelCategory = StringPool.BLANK;
 				String useDialog = StringPool.BLANK;
+
+				if (!group.isControlPanel() && PropsValues.DOCKBAR_MANAGE_LINKS_WINDOW_STATE_POPUP) {
+					useDialog = StringPool.SPACE + "use-dialog";
+				}
+
+				String controlPanelCategory = StringPool.BLANK;
 
 				if (!group.isControlPanel()) {
 					controlPanelCategory = PortletCategoryKeys.MY;
-					useDialog = StringPool.SPACE + "use-dialog";
 				}
+
+				String myAccountURL = themeDisplay.getURLMyAccount().toString();
+
+				myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", controlPanelCategory);
 				%>
 
-				<aui:a cssClass='<%= "user-portrait" + useDialog %>' data-controlPanelCategory="<%= controlPanelCategory %>" href="<%= themeDisplay.getURLMyAccount().toString() %>" title="manage-my-account">
+				<aui:a cssClass='<%= "user-portrait" + useDialog %>' href="<%= myAccountURL %>" title="manage-my-account">
 					<img alt="<liferay-ui:message key="manage-my-account" />" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
 
 					<span class="user-full-name">

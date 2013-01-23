@@ -282,8 +282,8 @@ catch (NoSuchArticleException nsae) {
 
 DDMTemplate ddmTemplate = null;
 
-if ((articleDisplay != null) && Validator.isNotNull(articleDisplay.getTemplateId())) {
-	ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(articleDisplay.getGroupId(), articleDisplay.getTemplateId());
+if ((articleDisplay != null) && Validator.isNotNull(articleDisplay.getDDMTemplateKey())) {
+	ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(articleDisplay.getGroupId(), articleDisplay.getDDMTemplateKey());
 }
 
 boolean showEditArticleIcon = (latestArticle != null) && JournalArticlePermission.contains(permissionChecker, latestArticle.getGroupId(), latestArticle.getArticleId(), ActionKeys.UPDATE);

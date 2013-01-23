@@ -26,10 +26,10 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 		long companyId, long id, long resourcePrimKey, long groupId,
 		long userId, String articleId, double version, String title,
 		String urlTitle, String description, String[] availableLocales,
-		String content, String type, String structureId, String templateId,
-		boolean smallImage, long smallImageId, String smallImageURL,
-		int numberOfPages, int currentPage, boolean paginate,
-		boolean cacheable) {
+		String content, String type, String ddmStructureKey,
+		String ddmTemplateKey, boolean smallImage, long smallImageId,
+		String smallImageURL, int numberOfPages, int currentPage,
+		boolean paginate, boolean cacheable) {
 
 		_companyId = companyId;
 		_id = id;
@@ -44,8 +44,8 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 		_availableLocales = availableLocales;
 		_content = content;
 		_type = type;
-		_structureId = structureId;
-		_templateId = templateId;
+		_ddmStructureKey = ddmStructureKey;
+		_ddmTemplateKey = ddmTemplateKey;
 		_smallImage = smallImage;
 		_smallImageId = smallImageId;
 		_smallImageURL = smallImageURL;
@@ -75,6 +75,14 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 		return _currentPage;
 	}
 
+	public String getDDMStructureKey() {
+		return _ddmStructureKey;
+	}
+
+	public String getDDMTemplateKey() {
+		return _ddmTemplateKey;
+	}
+
 	public String getDescription() {
 		return _description;
 	}
@@ -101,14 +109,6 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 
 	public String getSmallImageURL() {
 		return _smallImageURL;
-	}
-
-	public String getStructureId() {
-		return _structureId;
-	}
-
-	public String getTemplateId() {
-		return _templateId;
 	}
 
 	public String getTitle() {
@@ -155,6 +155,14 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 		_currentPage = currentPage;
 	}
 
+	public void setDDMStructureKey(String ddmStructureKey) {
+		_ddmStructureKey = ddmStructureKey;
+	}
+
+	public void setDDMTemplateKey(String ddmTemplateKey) {
+		_ddmTemplateKey = ddmTemplateKey;
+	}
+
 	public void setNumberOfPages(int numberOfPages) {
 		_numberOfPages = numberOfPages;
 	}
@@ -175,20 +183,14 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 		_smallImageURL = smallImageURL;
 	}
 
-	public void setStructureId(String structureId) {
-		_structureId = structureId;
-	}
-
-	public void setTemplateId(String templateId) {
-		_templateId = templateId;
-	}
-
 	private String _articleId;
 	private String[] _availableLocales;
 	private boolean _cacheable;
 	private long _companyId;
 	private String _content;
 	private int _currentPage;
+	private String _ddmStructureKey;
+	private String _ddmTemplateKey;
 	private String _description;
 	private long _groupId;
 	private long _id;
@@ -198,8 +200,6 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 	private boolean _smallImage;
 	private long _smallImageId;
 	private String _smallImageURL;
-	private String _structureId;
-	private String _templateId;
 	private String _title;
 	private String _type;
 	private String _urlTitle;

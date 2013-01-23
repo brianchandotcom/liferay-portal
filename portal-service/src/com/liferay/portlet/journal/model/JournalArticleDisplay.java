@@ -32,6 +32,10 @@ public interface JournalArticleDisplay extends Serializable {
 
 	public int getCurrentPage();
 
+	public String getDDMStructureKey();
+
+	public String getDDMTemplateKey();
+
 	public String getDescription();
 
 	public long getGroupId();
@@ -45,10 +49,6 @@ public interface JournalArticleDisplay extends Serializable {
 	public long getSmallImageId();
 
 	public String getSmallImageURL();
-
-	public String getStructureId();
-
-	public String getTemplateId();
 
 	public String getTitle();
 
@@ -72,6 +72,10 @@ public interface JournalArticleDisplay extends Serializable {
 
 	public void setCurrentPage(int currentPage);
 
+	public void setDDMStructureKey(String ddmStructureKey);
+
+	public void setDDMTemplateKey(String ddmTemplateKey);
+
 	public void setNumberOfPages(int numberOfPages);
 
 	public void setPaginate(boolean paginate);
@@ -81,9 +85,5 @@ public interface JournalArticleDisplay extends Serializable {
 	public void setSmallImageId(long smallImageId);
 
 	public void setSmallImageURL(String smallImageURL);
-
-	public void setStructureId(String structureId);
-
-	public void setTemplateId(String templateId);
 
 }

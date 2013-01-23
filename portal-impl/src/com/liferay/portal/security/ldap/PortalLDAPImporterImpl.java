@@ -1136,6 +1136,15 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 		Date ldapUserModifiedDate = null;
 
+		boolean passwordReset = ldapUser.isPasswordReset();
+
+		if (PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.LDAP_EXPORT_ENABLED,
+				PropsValues.LDAP_EXPORT_ENABLED)) {
+
+			passwordReset = user.isPasswordReset();
+		}
+
 		try {
 			if (Validator.isNull(modifiedDate)) {
 				if (_log.isInfoEnabled()) {
@@ -1146,17 +1155,29 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 				return user;
 			}
-			else {
-				ldapUserModifiedDate = LDAPUtil.parseDate(modifiedDate);
-			}
 
-			if (ldapUserModifiedDate.equals(user.getModifiedDate()) &&
-				ldapUser.isAutoPassword()) {
+			ldapUserModifiedDate = LDAPUtil.parseDate(modifiedDate);
+
+			if (ldapUserModifiedDate.equals(user.getModifiedDate())) {
+				if (ldapUser.isAutoPassword()) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"User " + user.getEmailAddress() +
+								" is already synchronized, skipping");
+					}
+
+					return user;
+				}
+
+				UserLocalServiceUtil.updatePassword(
+					user.getUserId(), password, password, passwordReset,
+					true);
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"User is already synchronized, skipping user " +
-							user.getEmailAddress());
+						"User " + user.getEmailAddress() +
+							" is already synchronized, but updated password " +
+								"to avoid a blank value");
 				}
 
 				return user;
@@ -1168,15 +1189,6 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 					"Unable to parse LDAP modify timestamp " + modifiedDate,
 					pe);
 			}
-		}
-
-		boolean passwordReset = ldapUser.isPasswordReset();
-
-		if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.LDAP_EXPORT_ENABLED,
-				PropsValues.LDAP_EXPORT_ENABLED)) {
-
-			passwordReset = user.isPasswordReset();
 		}
 
 		if (!PropsValues.LDAP_IMPORT_USER_PASSWORD_ENABLED) {

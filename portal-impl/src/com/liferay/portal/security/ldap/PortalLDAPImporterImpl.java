@@ -1139,8 +1139,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		boolean passwordReset = ldapUser.isPasswordReset();
 
 		if (PrefsPropsUtil.getBoolean(
-			companyId, PropsKeys.LDAP_EXPORT_ENABLED,
-			PropsValues.LDAP_EXPORT_ENABLED)) {
+				companyId, PropsKeys.LDAP_EXPORT_ENABLED,
+				PropsValues.LDAP_EXPORT_ENABLED)) {
 
 			passwordReset = user.isPasswordReset();
 		}
@@ -1155,27 +1155,29 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 				return user;
 			}
-			else {
-				ldapUserModifiedDate = LDAPUtil.parseDate(modifiedDate);
-			}
+
+			ldapUserModifiedDate = LDAPUtil.parseDate(modifiedDate);
 
 			if (ldapUserModifiedDate.equals(user.getModifiedDate())) {
-				if (!ldapUser.isAutoPassword()) {
-					UserLocalServiceUtil.updatePassword(
-						user.getUserId(), password, password, passwordReset,
-						true);
-
+				if (ldapUser.isAutoPassword()) {
 					if (_log.isDebugEnabled()) {
-						_log.debug("Password updated in DB for user " +
-							user.getEmailAddress() + " to provided " +
-							"non-blank value.");
+						_log.debug(
+							"User " + user.getEmailAddress() +
+								" is already synchronized, skipping");
 					}
+
+					return user;
 				}
+
+				UserLocalServiceUtil.updatePassword(
+					user.getUserId(), password, password, passwordReset,
+					true);
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"User is already synchronized, skipping user " +
-							user.getEmailAddress());
+						"User " + user.getEmailAddress() +
+							" is already synchronized, but updated password " +
+								"to avoid a blank value");
 				}
 
 				return user;

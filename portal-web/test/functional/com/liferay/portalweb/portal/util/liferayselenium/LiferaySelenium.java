@@ -95,6 +95,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isNotChecked(String locator);
 
+	public boolean isNotPartialText(String locator, String value);
+
 	public boolean isNotText(String locator, String value);
 
 	public boolean isPartialText(String locator, String value);

@@ -98,8 +98,13 @@ public class LiferaySeleniumHelper {
 	public static void assertNotPartialText(
 		LiferaySelenium liferaySelenium, String locator, String pattern) {
 
-		BaseTestCase.assertFalse(
-			liferaySelenium.isPartialText(locator, pattern));
+		liferaySelenium.assertElementPresent(locator);
+
+		if (liferaySelenium.isPartialText(locator, pattern)) {
+			String text = liferaySelenium.getText(locator);
+
+			BaseTestCase.fail(text + " contains " + pattern + " at " + locator);
+		}
 	}
 
 	public static void assertNotSelectedLabel(
@@ -139,8 +144,14 @@ public class LiferaySeleniumHelper {
 	public static void assertPartialText(
 		LiferaySelenium liferaySelenium, String locator, String pattern) {
 
-		BaseTestCase.assertTrue(
-			liferaySelenium.isPartialText(locator, pattern));
+		liferaySelenium.assertElementPresent(locator);
+
+		if (liferaySelenium.isNotPartialText(locator, pattern)) {
+			String text = liferaySelenium.getText(locator);
+
+			BaseTestCase.fail(
+				text + " does not contain " + pattern + " at " + locator);
+		}
 	}
 
 	public static void assertSelectedLabel(
@@ -233,6 +244,19 @@ public class LiferaySeleniumHelper {
 
 		try {
 			return !liferaySelenium.isChecked(locator);
+		}
+		finally {
+			liferaySelenium.setDefaultTimeoutImplicit();
+		}
+	}
+
+	public static boolean isNotPartialText(
+		LiferaySelenium liferaySelenium, String locator, String value) {
+
+		liferaySelenium.setTimeoutImplicit("1");
+
+		try {
+			return !liferaySelenium.isPartialText(locator, value);
 		}
 		finally {
 			liferaySelenium.setDefaultTimeoutImplicit();
@@ -353,11 +377,11 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail("Timeout");
+				liferaySelenium.assertNotPartialText(locator, value);
 			}
 
 			try {
-				if (!liferaySelenium.isPartialText(locator, value)) {
+				if (liferaySelenium.isNotPartialText(locator, value)) {
 					break;
 				}
 			}
@@ -468,7 +492,7 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail("Timeout");
+				liferaySelenium.assertPartialText(locator, value);
 			}
 
 			try {

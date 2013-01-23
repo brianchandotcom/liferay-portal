@@ -229,16 +229,27 @@ public abstract class BaseWebDriverImpl
 		return LiferaySeleniumHelper.isNotChecked(this, locator);
 	}
 
+	public boolean isNotPartialText(String locator, String value) {
+		return LiferaySeleniumHelper.isNotPartialText(this, locator, value);
+	}
+
 	public boolean isNotText(String locator, String value) {
 		return LiferaySeleniumHelper.isNotText(this, locator, value);
 	}
 
 	public boolean isPartialText(String locator, String value) {
-		WebElement webElement = getWebElement(locator);
+		setTimeoutImplicit("1");
 
-		String text = webElement.getText();
+		try {
+			WebElement webElement = getWebElement(locator);
 
-		return text.contains(value);
+			String text = webElement.getText();
+
+			return text.contains(value);
+		}
+		finally {
+			setDefaultTimeoutImplicit();
+		}
 	}
 
 	public boolean isText(String locator, String value) {

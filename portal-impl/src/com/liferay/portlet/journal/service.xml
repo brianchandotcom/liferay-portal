@@ -181,12 +181,6 @@
 			<finder-column name="version" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_U_C_NotS" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="userId" />
-			<finder-column name="classNameId" />
-			<finder-column name="status" comparator="!="/>
-		</finder>
 
 		<!-- References -->
 

@@ -18,19 +18,21 @@ package com.liferay.portlet.journal.service.persistence;
  * @author Brian Wing Shun Chan
  */
 public interface JournalFolderFinder {
-	public int countF_A_ByG_F(long groupId, long folderId)
+	public int countF_A_ByG_F(long groupId, long folderId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int filterCountF_A_ByG_F(long groupId, long folderId)
+	public int filterCountF_A_ByG_F(long groupId, long folderId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<java.lang.Object> filterFindF_AByG_F(long groupId,
-		long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		long folderId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<java.lang.Object> findF_AByG_F(long groupId,
-		long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		long folderId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

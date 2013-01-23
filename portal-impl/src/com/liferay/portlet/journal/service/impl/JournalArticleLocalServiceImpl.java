@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.service.impl;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchImageException;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -1900,11 +1901,14 @@ public class JournalArticleLocalServiceImpl
 			int end, OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return journalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, structureId, templateId,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator,
-			start, end, obc);
+			displayDateGT, displayDateLT, reviewDate, andOperator,
+			queryDefinition);
 	}
 
 	public List<JournalArticle> search(
@@ -1916,11 +1920,14 @@ public class JournalArticleLocalServiceImpl
 			boolean andOperator, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return journalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, structureIds, templateIds,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator,
-			start, end, obc);
+			displayDateGT, displayDateLT, reviewDate, andOperator,
+			queryDefinition);
 	}
 
 	public Hits search(
@@ -2045,10 +2052,11 @@ public class JournalArticleLocalServiceImpl
 			int status, Date reviewDate, boolean andOperator)
 		throws SystemException {
 
-		return journalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+		return journalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, structureId, templateId,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+			displayDateGT, displayDateLT, reviewDate, andOperator,
+			new QueryDefinition(status));
 	}
 
 	public int searchCount(
@@ -2060,10 +2068,11 @@ public class JournalArticleLocalServiceImpl
 			boolean andOperator)
 		throws SystemException {
 
-		return journalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+		return journalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, structureIds, templateIds,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+			displayDateGT, displayDateLT, reviewDate, andOperator,
+			new QueryDefinition(status));
 	}
 
 	public void subscribe(long userId, long groupId)

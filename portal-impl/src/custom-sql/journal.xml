@@ -8,7 +8,8 @@
 			FROM
 				JournalArticle
 			WHERE
-				(JournalArticle.groupId = ?)
+				(groupId = ?) AND
+				([$STATUS$])
 				[$FOLDER_ID$]
 		]]>
 	</sql>
@@ -21,35 +22,11 @@
 			WHERE
 				(groupId = ?) AND
 				(userId = ?) AND
-				(classNameId = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_F_S">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
-			FROM
-				JournalArticle
-			WHERE
-				(JournalArticle.groupId = ?) AND
-				(JournalArticle.status = ?)
-				[$FOLDER_ID$]
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_U_C_S">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
-			FROM
-				JournalArticle
-			WHERE
-				(groupId = ?) AND
-				(userId = ?) AND
 				(classNameId = ?) AND
-				(status = ?)
+				([$STATUS$])
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_C_S_S">
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_C_S">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
@@ -59,10 +36,10 @@
 				(groupId = ?) AND
 				(classNameId = ?) AND
 				(structureId = ?) AND
-				(status = ?)
+				([$STATUS$])
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R">
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_R">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -77,7 +54,7 @@
 						(groupId = ?) AND
 						([$FOLDER_ID$]) AND
 						(classNameId = ?) AND
-						(status != ?) AND
+						([$STATUS$]) AND
 						(
 							(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(version = ?) [$AND_OR_CONNECTOR$]
@@ -86,10 +63,7 @@
 							(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(
-								(status = ?) AND
-								(reviewDate <= ? [$AND_OR_NULL_CHECK$])
-							)
+							(reviewDate <= ? [$AND_OR_NULL_CHECK$])
 						)
 					GROUP BY
 						groupId, articleId
@@ -167,40 +141,13 @@
 						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
 						(TEMP_TABLE.tempVersion = JournalArticle.version)
 			WHERE
-				(userId = ?)
-			ORDER BY
-				id_ ASC
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_U_C_S">
-		<![CDATA[
-			SELECT
-				JournalArticle.*
-			FROM
-				(
-					SELECT
-						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
-					FROM
-						JournalArticle
-					WHERE
-						(groupId = ?) AND
-						(classNameId = ?)
-					GROUP BY
-						groupId, articleId
-				) TEMP_TABLE
-				INNER JOIN
-					JournalArticle ON
-						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
-						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
-						(TEMP_TABLE.tempVersion = JournalArticle.version)
-			WHERE
 				(userId = ?) AND
-				(status = ?)
+				([$STATUS$])
 			ORDER BY
 				id_ ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_C_S_S">
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_C_S">
 		<![CDATA[
 			SELECT
 				JournalArticle.*
@@ -223,12 +170,12 @@
 						(TEMP_TABLE.tempVersion = JournalArticle.version)
 			WHERE
 				(structureId = ?) AND
-				(status = ?)
+				([$STATUS$])
 			ORDER BY
 				id_ ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R">
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_R">
 		<![CDATA[
 			SELECT
 				JournalArticle.*
@@ -243,7 +190,7 @@
 						(groupId = ?) AND
 						([$FOLDER_ID$]) AND
 						(classNameId = ?) AND
-						(status != ?) AND
+						([$STATUS$]) AND
 						(
 							(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(version = ?) [$AND_OR_CONNECTOR$]
@@ -252,10 +199,7 @@
 							(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(
-								(status = ?) AND
-								(reviewDate <= ? [$AND_OR_NULL_CHECK$])
-							)
+							(reviewDate <= ? [$AND_OR_NULL_CHECK$])
 						)
 					GROUP BY
 						groupId, articleId
@@ -308,7 +252,7 @@
 				feedId ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.countA_ByG_F_NotS">
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.countA_ByG_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
@@ -317,7 +261,7 @@
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = 0) AND
-				(JournalArticle.status != ?)
+				([$STATUS$])
 				[$ARTICLE_FOLDER_ID$]
 		]]>
 	</sql>
@@ -332,7 +276,7 @@
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findA_ByG_F_NotS">
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findA_ByG_F">
 		<![CDATA[
 			SELECT
 				DISTINCT JournalArticle.folderId AS modelFolderId, JournalArticle.articleId as articleId, MAX(JournalArticle.version) AS version, 0 AS modelFolder
@@ -341,7 +285,7 @@
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = 0) AND
-				(JournalArticle.status != ?)
+				([$STATUS$])
 				[$ARTICLE_FOLDER_ID$]
 			GROUP BY
 				JournalArticle.folderId, JournalArticle.articleId

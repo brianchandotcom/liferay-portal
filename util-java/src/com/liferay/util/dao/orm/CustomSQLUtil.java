@@ -14,6 +14,7 @@
 
 package com.liferay.util.dao.orm;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -33,6 +34,16 @@ public class CustomSQLUtil {
 
 	public static String get(String id) {
 		return _instance._customSQL.get(id);
+	}
+
+	public static String get(String id, QueryDefinition queryDefinition) {
+		return _instance._customSQL.get(id, queryDefinition);
+	}
+
+	public static String get(
+		String id, QueryDefinition queryDefinition, String table) {
+
+		return _instance._customSQL.get(id, queryDefinition, table);
 	}
 
 	public static boolean isVendorDB2() {

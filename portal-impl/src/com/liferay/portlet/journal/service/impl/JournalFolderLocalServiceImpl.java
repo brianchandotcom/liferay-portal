@@ -14,11 +14,13 @@
 
 package com.liferay.portlet.journal.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -177,24 +179,29 @@ public class JournalFolderLocalServiceImpl
 			OrderByComparator obc)
 		throws SystemException {
 
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY, start, end, obc);
+
 		return journalFolderFinder.findF_AByG_F(
-			groupId, folderId, start, end, obc);
+			groupId, folderId, queryDefinition);
 	}
 
 	public int getFoldersAndArticlesCount(
 			long groupId, List<Long> folderIds, int status)
 		throws SystemException {
 
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
 		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
-			return journalArticleFinder.countByG_F_S(
-				groupId, folderIds, status);
+			return journalArticleFinder.countByG_F(
+				groupId, folderIds, queryDefinition);
 		}
 		else {
 			int start = 0;
 			int end = PropsValues.SQL_DATA_MAX_PARAMETERS;
 
-			int articlesCount = journalArticleFinder.countByG_F_S(
-				groupId, folderIds.subList(start, end), status);
+			int articlesCount = journalArticleFinder.countByG_F(
+				groupId, folderIds.subList(start, end), queryDefinition);
 
 			folderIds.subList(start, end).clear();
 
@@ -208,7 +215,9 @@ public class JournalFolderLocalServiceImpl
 	public int getFoldersAndArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
-		return journalFolderFinder.countF_A_ByG_F(groupId, folderId);
+		return journalFolderFinder.countF_A_ByG_F(
+			groupId, folderId,
+			new QueryDefinition(WorkflowConstants.STATUS_ANY));
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)

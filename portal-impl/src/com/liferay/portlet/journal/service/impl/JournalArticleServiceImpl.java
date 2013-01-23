@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -292,8 +293,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.filterFindByG_C_S_S(
-			groupId, classNameId, structureId, status, start, end, obc);
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return journalArticleFinder.filterFindByG_C_S(
+			groupId, classNameId, structureId, queryDefinition);
 	}
 
 	public List<JournalArticle> getArticlesByStructureId(
@@ -301,9 +305,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.filterFindByG_C_S_S(
-			groupId, JournalArticleConstants.CLASSNAME_ID_DEFAULT, structureId,
+		QueryDefinition queryDefinition = new QueryDefinition(
 			WorkflowConstants.STATUS_ANY, start, end, obc);
+
+		return journalArticleFinder.filterFindByG_C_S(
+			groupId, JournalArticleConstants.CLASSNAME_ID_DEFAULT, structureId,
+			queryDefinition);
 	}
 
 	public List<JournalArticle> getArticlesByUserId(
@@ -311,9 +318,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticlePersistence.filterFindByG_U_C_NotS(
-			groupId, userId, classNameId, WorkflowConstants.STATUS_IN_TRASH,
-			start, end, obc);
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY, start, end, obc);
+
+		return journalArticleFinder.filterFindByG_U_C(
+			groupId, userId, classNameId, queryDefinition);
 	}
 
 	public int getArticlesCount(long groupId, long folderId)
@@ -333,8 +342,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			long groupId, long classNameId, String structureId, int status)
 		throws SystemException {
 
-		return journalArticleFinder.filterCountByG_C_S_S(
-			groupId, classNameId, structureId, status);
+		return journalArticleFinder.filterCountByG_C_S(
+			groupId, classNameId, structureId, new QueryDefinition(status));
 	}
 
 	public int getArticlesCountByStructureId(long groupId, String structureId)
@@ -349,8 +358,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			long groupId, long userId, long classNameId)
 		throws SystemException {
 
-		return journalArticlePersistence.filterCountByG_U_C_NotS(
-			groupId, userId, classNameId, WorkflowConstants.STATUS_IN_TRASH);
+		return journalArticleFinder.filterCountByG_U_C(
+			groupId, userId, classNameId,
+			new QueryDefinition(WorkflowConstants.STATUS_ANY));
 	}
 
 	public JournalArticle getDisplayArticleByUrlTitle(
@@ -503,11 +513,14 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			int end, OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return journalArticleFinder.filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, structureId, templateId,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator,
-			start, end, obc);
+			displayDateGT, displayDateLT, reviewDate, andOperator,
+			queryDefinition);
 	}
 
 	public List<JournalArticle> search(
@@ -519,11 +532,14 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			boolean andOperator, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		return journalArticleFinder.filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, structureIds, templateIds,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator,
-			start, end, obc);
+			displayDateGT, displayDateLT, reviewDate, andOperator,
+			queryDefinition);
 	}
 
 	public int searchCount(
@@ -547,10 +563,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			int status, Date reviewDate, boolean andOperator)
 		throws SystemException {
 
-		return journalArticleFinder.filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+		return journalArticleFinder.filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, structureId, templateId,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+			displayDateGT, displayDateLT, reviewDate, andOperator,
+			new QueryDefinition(status));
 	}
 
 	public int searchCount(
@@ -562,10 +579,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			boolean andOperator)
 		throws SystemException {
 
-		return journalArticleFinder.filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+		return journalArticleFinder.filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, structureIds, templateIds,
-			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+			displayDateGT, displayDateLT, reviewDate, andOperator,
+			new QueryDefinition(status));
 	}
 
 	public void subscribe(long groupId)

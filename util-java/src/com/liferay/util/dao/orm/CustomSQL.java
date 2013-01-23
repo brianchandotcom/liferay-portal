@@ -15,6 +15,7 @@
 package com.liferay.util.dao.orm;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -110,6 +112,36 @@ public class CustomSQL {
 
 	public String get(String id) {
 		return _sqlPool.get(id);
+	}
+
+	public String get(String id, QueryDefinition queryDefinition) {
+		return get(id, queryDefinition, StringPool.BLANK);
+	}
+
+	public String get(
+		String id, QueryDefinition queryDefinition, String table) {
+
+		String sql = get(id);
+
+		if (!Validator.isBlank(table) && !table.endsWith(StringPool.PERIOD)) {
+			table = table.concat(StringPool.PERIOD);
+		}
+
+		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
+			sql = sql.replace(_STATUS_KEYWORD, _STATUS_CONDITION_EMPTY);
+		}
+		else {
+			if (queryDefinition.isExcludeStatus()) {
+				sql = sql.replace(
+					_STATUS_KEYWORD, table.concat(_STATUS_CONDITION_INVERSE));
+			}
+			else {
+				sql = sql.replace(
+					_STATUS_KEYWORD, table.concat(_STATUS_CONDITION_DEFAULT));
+			}
+		}
+
+		return sql;
 	}
 
 	/**
@@ -734,6 +766,15 @@ public class CustomSQL {
 	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";
 
 	private static final String _ORDER_BY_CLAUSE = " ORDER BY ";
+
+	private static final String _STATUS_CONDITION_DEFAULT = "status = ?";
+
+	private static final String _STATUS_CONDITION_EMPTY = String.valueOf(
+		WorkflowConstants.STATUS_ANY).concat(" = ?");
+
+	private static final String _STATUS_CONDITION_INVERSE = "status != ?";
+
+	private static final String _STATUS_KEYWORD = "[$STATUS$]";
 
 	private static Log _log = LogFactoryUtil.getLog(CustomSQL.class);
 

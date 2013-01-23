@@ -66,7 +66,8 @@ public class WCA_RemoveGuestWCLViewPermissionsTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.uncheck("//input[@id='guest_ACTION_VIEW']");
+				selenium.clickAt("//input[@id='guest_ACTION_VIEW']",
+					RuntimeVariables.replace("View"));
 
 			case 2:
 				assertFalse(selenium.isChecked(

@@ -38,7 +38,10 @@ public class AddMemberRoleTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Role')]");
 		assertEquals(RuntimeVariables.replace("Regular Role"),

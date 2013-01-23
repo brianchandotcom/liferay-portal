@@ -44,8 +44,9 @@ public class DefineWCARoleTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content Administrator"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a",
+			selenium.getText(
+				"//tr[contains(.,'Web Content Administrator')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Web Content Administrator')]/td[1]/a",
 			RuntimeVariables.replace("Web Content Administrator"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Define Permissions",

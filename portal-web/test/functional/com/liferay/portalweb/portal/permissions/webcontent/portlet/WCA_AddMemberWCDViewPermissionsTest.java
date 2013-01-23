@@ -65,7 +65,8 @@ public class WCA_AddMemberWCDViewPermissionsTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.check("//input[@id='member_ACTION_VIEW']");
+				selenium.clickAt("//input[@id='member_ACTION_VIEW']",
+					RuntimeVariables.replace("Configuration"));
 
 			case 2:
 				assertTrue(selenium.isChecked(

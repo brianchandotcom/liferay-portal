@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td/a</td>
+	<td>//tr[contains(.,'Member')]/td[1]/a</td>
 	<td>Member</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[3]/td/a</td>
+	<td>//tr[contains(.,'Member')]/td[1]/a</td>
 	<td>Member</td>
 </tr>
 <tr>
@@ -76,11 +76,11 @@
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>value=regexp:.*portletResource=15\&amp;.*showModelResources=0</td>
+	<td>index=112</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h3</td>
+	<td>//h3[contains(.,'Web Content')]</td>
 	<td>Web Content</td>
 </tr>
 <tr>
@@ -94,7 +94,7 @@
 	<td>WebContentControlPanelAccess</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>clickAt</td>
 	<td>//input[@value='15ACCESS_IN_CONTROL_PANEL']</td>
 	<td>Access in Control Panel</td>
 </tr>
@@ -120,27 +120,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]/a</td>
+	<td>//tr[contains(.,'Web Content')]/td[1]/a</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
+	<td>//tr[contains(.,'Web Content')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]</td>
+	<td>//tr[contains(.,'Web Content')]/td[3]</td>
 	<td>Access in Control Panel</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[4]</td>
+	<td>//tr[contains(.,'Web Content')]/td[4]</td>
 	<td>Portal</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[5]/span/a</td>
+	<td>//tr[contains(.,'Web Content')]/td[5]/span/a</td>
 	<td>Delete</td>
 </tr>
 </tbody></table>

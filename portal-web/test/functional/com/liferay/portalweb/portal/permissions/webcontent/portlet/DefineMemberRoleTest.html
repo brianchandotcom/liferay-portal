@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td/a</td>
+	<td>//tr[contains(.,'Member')]/td[1]/a</td>
 	<td>Member</td>
 </tr>
 <tr>
@@ -79,9 +79,9 @@
 	<td>WCAViewChecked</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>clickAt</td>
 	<td>//input[@id='web-content-administrator_ACTION_VIEW']</td>
-	<td>WCA View</td>
+	<td>WCA View Checkbox</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -91,7 +91,7 @@
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@id='web-content-administrator_ACTION_VIEW']</td>
-	<td>WCA View</td>
+	<td>WCA View Checkbox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

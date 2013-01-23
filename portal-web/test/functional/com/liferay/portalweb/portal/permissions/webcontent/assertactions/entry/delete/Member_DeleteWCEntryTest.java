@@ -39,7 +39,7 @@ public class Member_DeleteWCEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//a[@class='entry-link']/span"));
 		selenium.clickAt("//span[@class='entry-action overlay']/span/ul/li/strong/a",
@@ -51,7 +51,10 @@ public class Member_DeleteWCEntryTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 			RuntimeVariables.replace("Move to the Recycle Bin"));
-		selenium.waitForConfirmation("//form[@id='_15_undoForm']");
+		assertEquals(RuntimeVariables.replace(
+				"The selected item was moved to the Recycle Bin. Undo"),
+			selenium.getText(
+				"//div[@class='portlet-msg-success taglib-trash-undo']"));
 		assertEquals(RuntimeVariables.replace("No Web Content was found."),
 			selenium.getText("//div[@class='entries-empty portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("WC WebContent Title"));

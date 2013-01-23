@@ -42,7 +42,7 @@ public class DefineMemberRoleTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Member"),
-					selenium.getText("//tr[3]/td/a"));
+					selenium.getText("//tr[contains(.,'Member')]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -65,8 +65,8 @@ public class DefineMemberRoleTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.check(
-					"//input[@id='web-content-administrator_ACTION_VIEW']");
+				selenium.clickAt("//input[@id='web-content-administrator_ACTION_VIEW']",
+					RuntimeVariables.replace("WCA View Checkbox"));
 
 			case 2:
 				assertTrue(selenium.isChecked(

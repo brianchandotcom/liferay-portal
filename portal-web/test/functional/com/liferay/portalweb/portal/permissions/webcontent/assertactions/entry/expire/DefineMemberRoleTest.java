@@ -49,19 +49,18 @@ public class DefineMemberRoleTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Member"),
-					selenium.getText("//tr[3]/td/a"));
-				selenium.clickAt("//tr[3]/td/a",
+					selenium.getText("//tr[contains(.,'Member')]/td[1]/a"));
+				selenium.clickAt("//tr[contains(.,'Member')]/td[1]/a",
 					RuntimeVariables.replace("Member"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Define Permissions",
 					RuntimeVariables.replace("Define Permissions"));
 				selenium.waitForPageToLoad("30000");
 				selenium.select("//select[@id='_128_add-permissions']",
-					RuntimeVariables.replace(
-						"value=regexp:.*portletResource=15\\&amp;.*showModelResources=0"));
+					RuntimeVariables.replace("index=112"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//h3"));
+					selenium.getText("//h3[contains(.,'Web Content')]"));
 
 				boolean webContentControlPanelAccess = selenium.isChecked(
 						"//input[@value='15ACCESS_IN_CONTROL_PANEL']");
@@ -72,7 +71,8 @@ public class DefineMemberRoleTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.check("//input[@value='15ACCESS_IN_CONTROL_PANEL']");
+				selenium.clickAt("//input[@value='15ACCESS_IN_CONTROL_PANEL']",
+					RuntimeVariables.replace("Access in Control Panel"));
 
 			case 2:
 				assertTrue(selenium.isChecked(
@@ -84,15 +84,16 @@ public class DefineMemberRoleTest extends BaseTestCase {
 						"The role permissions were updated."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//tr[3]/td[1]/a"));
+					selenium.getText("//tr[contains(.,'Web Content')]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace(""),
-					selenium.getText("//tr[3]/td[2]"));
+					selenium.getText("//tr[contains(.,'Web Content')]/td[2]"));
 				assertEquals(RuntimeVariables.replace("Access in Control Panel"),
-					selenium.getText("//tr[3]/td[3]"));
+					selenium.getText("//tr[contains(.,'Web Content')]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Portal"),
-					selenium.getText("//tr[3]/td[4]"));
+					selenium.getText("//tr[contains(.,'Web Content')]/td[4]"));
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//tr[3]/td[5]/span/a"));
+					selenium.getText(
+						"//tr[contains(.,'Web Content')]/td[5]/span/a"));
 
 			case 100:
 				label = -1;

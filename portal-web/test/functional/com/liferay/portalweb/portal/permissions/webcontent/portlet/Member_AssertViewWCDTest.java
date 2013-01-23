@@ -28,6 +28,7 @@ public class Member_AssertViewWCDTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertTrue(selenium.isVisible("//section"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));

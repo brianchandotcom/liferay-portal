@@ -67,7 +67,8 @@ public class WCA_RemoveMemberWCSConfigurationPermissionsTest
 					continue;
 				}
 
-				selenium.uncheck("//input[@id='member_ACTION_CONFIGURATION']");
+				selenium.clickAt("//input[@id='member_ACTION_CONFIGURATION']",
+					RuntimeVariables.replace("Configuration"));
 
 			case 2:
 				assertFalse(selenium.isChecked(

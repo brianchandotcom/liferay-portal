@@ -40,7 +40,7 @@ public class Member_AssertCannotAccessPermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertTrue(selenium.isElementNotPresent(
 				"//li[@class='app-view-navigation-entry folder selected']/span/span/ul/li/strong/a"));
 		assertTrue(selenium.isElementNotPresent(

@@ -39,7 +39,7 @@ public class Member_AssertCannotDeleteEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//a[@class='entry-link']/span"));
 		selenium.clickAt("//span[@class='entry-action overlay']/span/ul/li/strong/a",

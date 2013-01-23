@@ -40,7 +40,7 @@ public class Member_AssertAccessInControlPanelTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//h1[@class='portlet-title']/span"));
 		assertEquals(RuntimeVariables.replace("No Web Content was found."),

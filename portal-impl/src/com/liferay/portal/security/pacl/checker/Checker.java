@@ -20,12 +20,15 @@ import java.security.Permission;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public interface Checker {
 
 	public void afterPropertiesSet();
 
 	public void checkPermission(Permission permission);
+
+	public String[] generateRuleFromCondition(Object... conditions);
 
 	public ClassLoader getClassLoader();
 

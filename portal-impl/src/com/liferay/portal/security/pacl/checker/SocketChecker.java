@@ -32,6 +32,7 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class SocketChecker extends BaseChecker {
 
@@ -46,6 +47,14 @@ public class SocketChecker extends BaseChecker {
 
 		String name = permission.getName();
 
+		if (actions.equals(SOCKET_PERMISSION_RESOLVE)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Always allow resolving of host " + name);
+			}
+
+			return;
+		}
+
 		int pos = name.indexOf(StringPool.COLON);
 
 		String host = "localhost";
@@ -55,16 +64,6 @@ public class SocketChecker extends BaseChecker {
 		}
 
 		int port = GetterUtil.getInteger(name.substring(pos + 1));
-
-		// resolve
-
-		if (port == -1) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Always allow resolving of host " + host);
-			}
-
-			return;
-		}
 
 		if (actions.contains(SOCKET_PERMISSION_ACCEPT)) {
 			if (!hasAccept(host, port)) {
@@ -88,6 +87,47 @@ public class SocketChecker extends BaseChecker {
 					_log, "Attempted to listen on port " + port);
 			}
 		}
+	}
+
+	@Override
+	public String[] generateRuleFromCondition(Object... conditions) {
+		String[] rule = new String[2];
+
+		if ((conditions != null) && (conditions.length == 1) &&
+			(conditions[0] instanceof Permission)) {
+
+			Permission permission = (Permission)conditions[0];
+
+			String actions = permission.getActions();
+
+			if (actions.equals(SOCKET_PERMISSION_RESOLVE)) {
+
+				// This should not happen, since resolving host names is always
+				// allowed
+
+				return rule;
+			}
+
+			String name = permission.getName();
+
+			int pos = name.indexOf(StringPool.COLON);
+			int port = GetterUtil.getInteger(name.substring(pos + 1));
+
+			if (actions.contains(SOCKET_PERMISSION_ACCEPT)) {
+				rule[0] = "security-manager-sockets-accept";
+				rule[1] = name;
+			}
+			else if (actions.contains(SOCKET_PERMISSION_CONNECT)) {
+				rule[0] = "security-manager-sockets-connect";
+				rule[1] = name;
+			}
+			else if (actions.contains(SOCKET_PERMISSION_LISTEN)) {
+				rule[0] = "security-manager-sockets-listen";
+				rule[1] = String.valueOf(port);
+			}
+		}
+
+		return rule;
 	}
 
 	protected boolean hasAccept(String host, int port) {

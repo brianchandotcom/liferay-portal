@@ -66,7 +66,7 @@ public class MoveEntryTest extends BaseTestCase {
 			selenium.getText("//a[@id='_28_folderName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		selenium.waitForPopUp("Bookmarks", RuntimeVariables.replace("30000"));
+		Thread.sleep(1000);
 		selenium.selectPopUp("");
 		selenium.waitForElementPresent("//span[contains(.,'Home')]/a");
 		selenium.clickAt("//span[contains(.,'Home')]/a",
@@ -77,7 +77,7 @@ public class MoveEntryTest extends BaseTestCase {
 		selenium.waitForVisible("//a[@id='_28_folderName']");
 		assertEquals(RuntimeVariables.replace("Test Folder"),
 			selenium.getText("//a[@id='_28_folderName']"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

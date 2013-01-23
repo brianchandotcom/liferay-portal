@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.BaseModel;
@@ -58,13 +57,11 @@ public abstract class BaseSearchTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testSearchAttachments() throws Exception {
 		searchAttachments();
 	}
 
 	@Test
-	@Transactional
 	public void testSearchComments() throws Exception {
 		searchComments();
 	}
@@ -155,17 +152,19 @@ public abstract class BaseSearchTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
+		int expectedSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), searchContext);
+
 		Assert.assertEquals(
-			initialBaseModelsSearchCount + 1,
-			searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId(), searchContext));
+			initialBaseModelsSearchCount + 1, expectedSearchCount);
 
 		addAttachment(baseModel);
 
+		expectedSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), searchContext);
+
 		Assert.assertEquals(
-			initialBaseModelsSearchCount + 2,
-			searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId(), searchContext));
+			initialBaseModelsSearchCount + 2, expectedSearchCount);
 	}
 
 	protected int searchBaseModelsCount(
@@ -198,17 +197,19 @@ public abstract class BaseSearchTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
+		int expectedSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), searchContext);
+
 		Assert.assertEquals(
-			initialBaseModelsSearchCount + 1,
-			searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId(), searchContext));
+			initialBaseModelsSearchCount + 1, expectedSearchCount);
 
 		addComment(baseModel, getSearchKeywords(), serviceContext);
 
+		expectedSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), searchContext);
+
 		Assert.assertEquals(
-			initialBaseModelsSearchCount + 2,
-			searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId(), searchContext));
+			initialBaseModelsSearchCount + 2, expectedSearchCount);
 	}
 
 	protected BaseModel<?> baseModel;

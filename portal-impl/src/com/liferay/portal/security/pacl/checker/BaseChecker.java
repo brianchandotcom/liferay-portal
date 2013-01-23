@@ -93,6 +93,22 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 		return _paclPolicy.getPropertySet(key);
 	}
 
+	protected boolean hasClassInCallTree(String className) {
+		for (int i = 7;; i++) {
+			Class<?> callerClass = Reflection.getCallerClass(i);
+
+			if (callerClass == null) {
+				return false;
+			}
+
+			String callerClassName = callerClass.getName();
+
+			if (callerClassName.equals(className)) {
+				return true;
+			}
+		}
+	}
+
 	protected boolean isJSPCompiler(String subject, String actions) {
 		for (int i = 7;; i++) {
 			Class<?> callerClass = Reflection.getCallerClass(i);

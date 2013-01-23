@@ -93,6 +93,9 @@ public interface PACLConstants {
 	public static final String RUNTIME_PERMISSION_CREATE_CLASS_LOADER =
 		"createClassLoader";
 
+	public static final String RUNTIME_PERMISSION_CREATE_SECURITY_MANAGER =
+		"createSecurityManager";
+
 	public static final String RUNTIME_PERMISSION_GET_CLASSLOADER =
 		"getClassLoader";
 
@@ -100,6 +103,8 @@ public interface PACLConstants {
 
 	public static final String RUNTIME_PERMISSION_GET_PROTECTION_DOMAIN =
 		"getProtectionDomain";
+
+	public static final String RUNTIME_PERMISSION_LOAD_LIBRARY = "loadLibrary";
 
 	public static final String RUNTIME_PERMISSION_READ_FILE_DESCRIPTOR =
 		"readFileDescriptor";

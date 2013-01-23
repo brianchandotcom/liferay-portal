@@ -579,6 +579,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return dlFolder;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder updateFolder(
 			long userId, long folderId, long parentFolderId, String name,
 			String description, long defaultFileEntryTypeId,

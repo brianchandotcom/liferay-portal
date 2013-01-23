@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletscn;
+package com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletcn;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletCN2Test extends BaseTestCase {
-	public void testAddPortletCN2() throws Exception {
+public class AddPortletCN1Test extends BaseTestCase {
+	public void testAddPortletCN1() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -48,9 +48,7 @@ public class AddPortletCN2Test extends BaseTestCase {
 		selenium.waitForVisible("//li[@title='Categories Navigation']/p/a");
 		selenium.clickAt("//li[@title='Categories Navigation']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//div[1]/section");
-		assertTrue(selenium.isVisible("//div[1]/section"));
-		selenium.waitForVisible("//div[2]/section");
-		assertTrue(selenium.isVisible("//div[2]/section"));
+		selenium.waitForVisible("//section");
+		assertTrue(selenium.isVisible("//section"));
 	}
 }

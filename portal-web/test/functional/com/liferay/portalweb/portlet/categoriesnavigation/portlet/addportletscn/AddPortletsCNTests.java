@@ -17,6 +17,9 @@ package com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletscn
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletcn.AddPageCNTest;
+import com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletcn.AddPortletCN1Test;
+import com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletcn.AddPortletCN2Test;
+import com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletcn.AddPortletCN3Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

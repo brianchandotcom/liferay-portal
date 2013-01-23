@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletscn;
+package com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletcn;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

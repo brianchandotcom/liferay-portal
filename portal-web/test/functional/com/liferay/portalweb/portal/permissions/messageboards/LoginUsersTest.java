@@ -50,7 +50,7 @@ public class LoginUsersTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertTrue(selenium.isTextPresent("You are signed in as MA Liferay."));
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 		selenium.waitForPageToLoad("30000");
@@ -76,7 +76,7 @@ public class LoginUsersTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertTrue(selenium.isTextPresent(
 				"You are signed in as Member Liferay."));
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));

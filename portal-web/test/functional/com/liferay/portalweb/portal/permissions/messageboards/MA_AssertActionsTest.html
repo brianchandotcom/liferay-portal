@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
+	<td>//tr[contains(.,'Category Name')]/td[1]/a</td>
 	<td>Category Name</td>
 </tr>
 <tr>
@@ -30,32 +30,32 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -85,32 +85,32 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/span/a/span[1]</td>
+	<td>//div[@class='category-subscription-types']/span/a/span[contains(.,'RSS')]</td>
 	<td>RSS</td>
 </tr>
 <tr>
@@ -160,72 +160,72 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
+	<td>//tr[contains(.,'Category Name')]/td[1]/a</td>
 	<td>Category Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>//tr[contains(.,'Category Name')]/td[1]/a</td>
 	<td>Category Name</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Unsubscribe')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Unsubscribe')]</td>
 	<td>Unsubscribe</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Lock Thread')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Lock Thread')]</td>
 	<td>Lock Thread</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a</td>
-	<td>Move Thread</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]</td>
+	<td>Move</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
-	<td>Delete</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td/a</td>
+	<td>//tr[contains(.,'Thread Subject')]/td[1]/a</td>
 	<td>Thread Subject</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[3]/td/a</td>
+	<td>//tr[contains(.,'Thread Subject')]/td[1]/a</td>
 	<td>Thread Subject</td>
 </tr>
 <tr>

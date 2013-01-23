@@ -36,8 +36,9 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 		assertTrue(selenium.isElementNotPresent("link=Banned Users"));
 		assertTrue(selenium.isElementNotPresent("link=Delete"));
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
+			selenium.getText("//tr[contains(.,'Category Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Category Name')]/td[1]/a",
+			RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Add Subcategory']"));
@@ -48,8 +49,8 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Post New Thread']"));
 		assertEquals(RuntimeVariables.replace("Thread Subject"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a",
+			selenium.getText("//tr[contains(.,'Thread Subject')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Thread Subject')]/td[1]/a",
 			RuntimeVariables.replace("Thread Subject"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Thread Body"),

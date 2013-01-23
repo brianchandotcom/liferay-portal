@@ -29,18 +29,22 @@ public class Member_ViewMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
+			selenium.getText("//tr[contains(.,'Category Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Category Name')]/td[1]/a",
+			RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Thread Subject"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a",
+			selenium.getText("//tr[contains(.,'Thread Subject')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Thread Subject')]/td[1]/a",
 			RuntimeVariables.replace("Thread Subject"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Thread Body"),
 			selenium.getText("//div[@class='thread-body']"));
-		assertTrue(selenium.isElementNotPresent("link=Edit"));
-		assertTrue(selenium.isElementNotPresent("link=Delete"));
-		assertTrue(selenium.isElementNotPresent("link=Permissions"));
+		assertTrue(selenium.isElementNotPresent(
+				"//ul[@class='edit-controls lfr-component']/li[contains(.,'Delete')]/span/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//ul[@class='edit-controls lfr-component']/li[contains(.,'Edit')]/span/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//ul[@class='edit-controls lfr-component']/li[contains(.,'Permissions')]/span/a"));
 	}
 }

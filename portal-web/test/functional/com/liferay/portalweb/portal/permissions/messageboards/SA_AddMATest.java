@@ -39,17 +39,20 @@ public class SA_AddMATest extends BaseTestCase {
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
 		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_125_prefixId']",
-			RuntimeVariables.replace("label=Mrs."));
+			RuntimeVariables.replace("Mrs."));
 		selenium.type("//input[@id='_125_screenName']",
 			RuntimeVariables.replace("MA"));
 		selenium.type("//input[@id='_125_emailAddress']",
@@ -59,15 +62,15 @@ public class SA_AddMATest extends BaseTestCase {
 		selenium.type("//input[@id='_125_lastName']",
 			RuntimeVariables.replace("Liferay"));
 		selenium.select("//select[@id='_125_suffixId']",
-			RuntimeVariables.replace("label=Phd."));
+			RuntimeVariables.replace("Phd."));
 		selenium.select("//select[@id='_125_birthdayMonth']",
-			RuntimeVariables.replace("label=July"));
+			RuntimeVariables.replace("July"));
 		selenium.select("//select[@id='_125_birthdayDay']",
-			RuntimeVariables.replace("label=26"));
+			RuntimeVariables.replace("26"));
 		selenium.select("//select[@id='_125_birthdayYear']",
-			RuntimeVariables.replace("label=1987"));
+			RuntimeVariables.replace("1987"));
 		selenium.select("//select[@id='_125_male']",
-			RuntimeVariables.replace("label=Female"));
+			RuntimeVariables.replace("Female"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

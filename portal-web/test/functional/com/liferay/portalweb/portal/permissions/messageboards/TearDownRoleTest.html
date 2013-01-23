@@ -60,17 +60,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]/a</td>
+	<td>//tr[contains(.,'Message Boards Administrator')]/td[1]/a</td>
 	<td>Message Boards Administrator</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>//tr[contains(.,'Message Boards Administrator')]/td[2]/a</td>
 	<td>Regular</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]/a</td>
+	<td>//tr[contains(.,'Message Boards Administrator')]/td[3]/a</td>
 	<td>This is the Message Boards Administrator Role.</td>
 </tr>
 <tr>
@@ -95,21 +95,21 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
@@ -135,17 +135,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]/a</td>
+	<td>//tr[contains(.,'Member')]/td[1]/a</td>
 	<td>Member</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>//tr[contains(.,'Member')]/td[2]/a</td>
 	<td>Regular</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]/a</td>
+	<td>//tr[contains(.,'Member')]/td[3]/a</td>
 	<td>This is the Member Role.</td>
 </tr>
 <tr>
@@ -170,21 +170,21 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>

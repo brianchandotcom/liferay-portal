@@ -29,20 +29,20 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//a/strong"));
+			selenium.getText("//tr[contains(.,'Category Name')]/td[1]/a"));
 		assertTrue(selenium.isElementPresent("//input[@value='Add Category']"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//input[@id='_19_name']"));
 		assertTrue(selenium.isVisible("//textarea[@id='_19_description']"));
@@ -51,17 +51,17 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]");
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Category Name"),
@@ -72,7 +72,8 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("RSS"),
-			selenium.getText("//div[2]/div/span/a/span[1]"));
+			selenium.getText(
+				"//div[@class='category-subscription-types']/span/a/span[contains(.,'RSS')]"));
 		assertEquals(RuntimeVariables.replace("Banned Users"),
 			selenium.getText(
 				"//ul[@class='top-links-navigation']/li[contains(.,'Banned Users')]/span/a"));
@@ -85,37 +86,38 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Home"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
+			selenium.getText("//tr[contains(.,'Category Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Category Name')]/td[1]/a",
+			RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]"));
 		assertEquals(RuntimeVariables.replace("Unsubscribe"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Unsubscribe')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Unsubscribe')]"));
 		assertEquals(RuntimeVariables.replace("Lock Thread"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Lock Thread')]/a"));
-		assertEquals(RuntimeVariables.replace("Move Thread"),
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Lock Thread')]"));
+		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a"));
-		assertEquals(RuntimeVariables.replace("Delete"),
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]"));
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
 		assertEquals(RuntimeVariables.replace("Thread Subject"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a",
+			selenium.getText("//tr[contains(.,'Thread Subject')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Thread Subject')]/td[1]/a",
 			RuntimeVariables.replace("Thread Subject"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Reply"),

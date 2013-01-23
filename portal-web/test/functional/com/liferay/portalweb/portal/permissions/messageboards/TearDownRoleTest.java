@@ -50,12 +50,15 @@ public class TearDownRoleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"Message Boards Administrator"),
-					selenium.getText("//tr[3]/td[1]/a"));
+					selenium.getText(
+						"//tr[contains(.,'Message Boards Administrator')]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Regular"),
-					selenium.getText("//tr[3]/td[2]/a"));
+					selenium.getText(
+						"//tr[contains(.,'Message Boards Administrator')]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace(
 						"This is the Message Boards Administrator Role."),
-					selenium.getText("//tr[3]/td[3]/a"));
+					selenium.getText(
+						"//tr[contains(.,'Message Boards Administrator')]/td[3]/a"));
 
 				boolean role1Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
@@ -72,15 +75,15 @@ public class TearDownRoleTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -92,12 +95,12 @@ public class TearDownRoleTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Member"),
-					selenium.getText("//tr[3]/td[1]/a"));
+					selenium.getText("//tr[contains(.,'Member')]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Regular"),
-					selenium.getText("//tr[3]/td[2]/a"));
+					selenium.getText("//tr[contains(.,'Member')]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace(
 						"This is the Member Role."),
-					selenium.getText("//tr[3]/td[3]/a"));
+					selenium.getText("//tr[contains(.,'Member')]/td[3]/a"));
 
 				boolean role2Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
@@ -114,15 +117,15 @@ public class TearDownRoleTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

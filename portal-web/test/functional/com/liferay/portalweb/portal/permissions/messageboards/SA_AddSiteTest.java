@@ -38,15 +38,17 @@ public class SA_AddSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Blank Site')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]");
 		assertEquals(RuntimeVariables.replace("Blank Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Blank Site')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Blank Site')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Site Name"));
@@ -72,12 +74,12 @@ public class SA_AddSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_134_name']",
+		selenium.type("//input[@name='_134_keywords']",
 			RuntimeVariables.replace("Site Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site Name"),
-			selenium.getText("//tr[3]/td[1]"));
+			selenium.getText("//tr[contains(.,'Site Name')]/td[2]/a"));
 	}
 }

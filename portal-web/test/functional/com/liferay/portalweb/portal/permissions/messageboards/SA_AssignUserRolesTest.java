@@ -45,8 +45,9 @@ public class SA_AssignUserRolesTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MA"),
-			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("MA"));
+			selenium.getText("//tr[contains(.,'MA')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'MA')]/td[2]/a",
+			RuntimeVariables.replace("MA"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));
 		selenium.clickAt("//a[@id='_125_rolesLink']",
@@ -58,15 +59,17 @@ public class SA_AssignUserRolesTest extends BaseTestCase {
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");
-		selenium.waitForVisible("link=Message Boards Administrator");
+		selenium.waitForVisible(
+			"//tr[contains(.,'Message Boards Administrator')]/td[1]/a");
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("Message Boards"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Message Boards Administrator"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a",
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Administrator')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Message Boards Administrator')]/td[1]/a",
 			RuntimeVariables.replace("Message Boards Administrator"));
 		selenium.selectWindow("null");
 		selenium.waitForPartialText("//div[@id='_125_rolesSearchContainer']",
@@ -101,8 +104,9 @@ public class SA_AssignUserRolesTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Member"),
-			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Member"));
+			selenium.getText("//tr[contains(.,'Member')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'Member')]/td[2]/a",
+			RuntimeVariables.replace("Member"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));
 		selenium.clickAt("//a[@id='_125_rolesLink']",
@@ -114,15 +118,16 @@ public class SA_AssignUserRolesTest extends BaseTestCase {
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");
-		selenium.waitForVisible("link=Member");
+		selenium.waitForVisible("//tr[contains(.,'Member')]/td[1]/a");
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("Member"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Member"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a", RuntimeVariables.replace("Member"));
+			selenium.getText("//tr[contains(.,'Member')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Member')]/td[1]/a",
+			RuntimeVariables.replace("Member"));
 		selenium.selectWindow("null");
 		selenium.waitForPartialText("//div[@id='_125_rolesSearchContainer']",
 			"Member");

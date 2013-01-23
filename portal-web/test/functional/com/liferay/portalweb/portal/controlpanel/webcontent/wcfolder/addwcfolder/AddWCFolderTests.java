@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.webcontent;
+package com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcfolder;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.WCFolderTestPlan;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.WCStructureTestPlan;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplate.WCTemplateTestPlan;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.WCWebContentTestPlan;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,17 +23,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WebContentTestPlan extends BaseTestSuite {
-
+public class AddWCFolderTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(WCFolderTestPlan.suite());
-		testSuite.addTest(WCStructureTestPlan.suite());
-		testSuite.addTest(WCTemplateTestPlan.suite());
-		testSuite.addTest(WCWebContentTestPlan.suite());
+		testSuite.addTestSuite(AddWCFolderTest.class);
+		testSuite.addTestSuite(ViewWCFolderTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 
 		return testSuite;
 	}
-
 }

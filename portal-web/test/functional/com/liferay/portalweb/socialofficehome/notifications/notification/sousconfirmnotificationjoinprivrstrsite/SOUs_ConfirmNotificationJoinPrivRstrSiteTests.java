@@ -26,8 +26,8 @@ import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.ConfirmNotificationsAddConnectionTest;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.SOUs_AddAsConnectionCCUserTest;
 import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinsite.TearDownNotificationsTest;
+import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.addsitessitetypeprivaterestricted.AddSitesSiteTypePrivateRestrictedTest;
 import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.TearDownSOSitesTest;
-import com.liferay.portalweb.socialofficehome.sites.site.addsitessitetypeprivaterestricted.AddSitesSiteTypePrivateRestrictedTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

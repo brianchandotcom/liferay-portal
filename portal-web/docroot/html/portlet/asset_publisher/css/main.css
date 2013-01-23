@@ -171,12 +171,6 @@
 		margin-right: 10px;
 	}
 
-	.separator {
-		border-right: 1px solid #999;
-		clear: both;
-		margin: 25px 25px;
-	}
-
 	.taglib-asset-categories-summary {
 		float: left;
 	}

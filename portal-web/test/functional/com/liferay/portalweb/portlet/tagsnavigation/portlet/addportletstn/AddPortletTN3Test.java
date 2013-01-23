@@ -25,7 +25,6 @@ public class AddPortletTN3Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Tags Navigation Test Page");
 		selenium.clickAt("link=Tags Navigation Test Page",
 			RuntimeVariables.replace("Tags Navigation Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -49,7 +48,11 @@ public class AddPortletTN3Test extends BaseTestCase {
 		selenium.waitForVisible("//li[@title='Tags Navigation']/p/a");
 		selenium.clickAt("//li[@title='Tags Navigation']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//section");
-		assertTrue(selenium.isVisible("//section"));
+		selenium.waitForVisible("//div[1]/section");
+		assertTrue(selenium.isVisible("//div[1]/section"));
+		selenium.waitForVisible("//div[2]/section");
+		assertTrue(selenium.isVisible("//div[2]/section"));
+		selenium.waitForVisible("//div[3]/section");
+		assertTrue(selenium.isVisible("//div[3]/section"));
 	}
 }

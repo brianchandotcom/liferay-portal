@@ -15,8 +15,8 @@
 package com.liferay.portalweb.portlet.tagsnavigation.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.tagsnavigation.portlet.addportlettn.AddPortletTNTests;
 import com.liferay.portalweb.portlet.tagsnavigation.portlet.addportletstn.AddPortletsTNTests;
+import com.liferay.portalweb.portlet.tagsnavigation.portlet.addportlettn.AddPortletTNTests;
 import com.liferay.portalweb.portlet.tagsnavigation.portlet.removeportlettn.RemovePortletTNTests;
 
 import junit.framework.Test;

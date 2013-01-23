@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -120,7 +121,13 @@ public class DeployUtil {
 	public static void redeployJetty(String context) throws Exception {
 		String contextsDirName = System.getProperty("jetty.home") + "/contexts";
 
-		File contextXml = new File(contextsDirName + "/" + context + ".xml");
+		if (Validator.isNull(context) || context.equals(StringPool.SLASH)) {
+			context = "root";
+		}
+
+		String fileName = context.concat(".xml");
+
+		File contextXml = new File(contextsDirName, fileName);
 
 		if (contextXml.exists()) {
 			FileUtils.touch(contextXml);
@@ -131,13 +138,19 @@ public class DeployUtil {
 			filterMap.put("context", context);
 
 			copyDependencyXml(
-				"jetty-context-configure.xml", contextsDirName,
-				context + ".xml", filterMap, true);
+				"jetty-context-configure.xml", contextsDirName, fileName,
+				filterMap, true);
 		}
 	}
 
 	public static void redeployTomcat(String context) throws Exception {
-		File webXml = new File(getAutoDeployDestDir(), "/WEB-INF/web.xml");
+		if (Validator.isNull(context) || context.equals(StringPool.SLASH)) {
+			context = "/ROOT";
+		}
+
+		String fileName = context.concat("/WEB-INF/web.xml");
+
+		File webXml = new File(getAutoDeployDestDir(), fileName);
 
 		FileUtils.touch(webXml);
 	}

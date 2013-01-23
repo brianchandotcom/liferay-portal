@@ -152,6 +152,7 @@ public class RuntimeChecker extends BaseReflectChecker {
 		}
 	}
 
+	@Override
 	public String[] generateRuleFromCondition(Object... conditions) {
 		String[] rule = new String[2];
 
@@ -174,9 +175,15 @@ public class RuntimeChecker extends BaseReflectChecker {
 				}
 			}
 			else if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
-				rule[0] = "security-manager-get-environment-variable";
+				rule[0] = "security-manager-environment-variables";
 				rule[1] = name.substring(
 					RUNTIME_PERMISSION_GET_ENV.length() + 1);
+
+				// Since we're using regex, we can't allow a lone * as the rule
+
+				if (rule[1].equals(StringPool.STAR)) {
+					rule[1] = StringPool.DOUBLE_BACK_SLASH + rule[1];
+				}
 			}
 		}
 

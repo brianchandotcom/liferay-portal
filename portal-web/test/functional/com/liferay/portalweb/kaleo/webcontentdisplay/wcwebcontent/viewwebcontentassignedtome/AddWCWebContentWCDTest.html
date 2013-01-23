@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddWCDWebContentTest</title>
+<title>AddWCWebContentWCDTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddWCDWebContentTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddWCWebContentWCDTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -19,14 +19,19 @@
 	<td>Web Content Display Test Page</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@class='icon-action icon-action-add']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//div/span[2]/a</td>
-	<td>Add Web Content</td>
+	<td>//span[@class='icon-action icon-action-add']/a/span</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_title_en_US']</td>
-	<td>WC Web Content Title</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -56,7 +61,7 @@
 <tr>
 	<td>type</td>
 	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
-	<td>WC Web Content Content</td>
+	<td>WC WebContent Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -86,7 +91,7 @@
 <tr>
 	<td>waitForText</td>
 	<td>//body</td>
-	<td>WC Web Content Content</td>
+	<td>WC WebContent Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -101,7 +106,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-alert']</td>
-	<td>WC Web Content Title is not approved.</td>
+	<td>WC WebContent Title is not approved.</td>
 </tr>
 </tbody></table>
 </body>

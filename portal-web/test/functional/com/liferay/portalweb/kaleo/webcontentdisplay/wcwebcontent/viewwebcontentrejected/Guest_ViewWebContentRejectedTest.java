@@ -25,10 +25,9 @@ public class Guest_ViewWebContentRejectedTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Display Test Page");
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("WC Web Content Content"));
+		assertFalse(selenium.isTextPresent("WC WebContent Content"));
 	}
 }

@@ -34,7 +34,7 @@ public class ViewWebContentAssignedToMeTests extends BaseTestSuite {
 		testSuite.addTestSuite(ConfigureWebContentSingleApproverTest.class);
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
-		testSuite.addTestSuite(AddWCDWebContentTest.class);
+		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
 		testSuite.addTestSuite(AssignToMeWebContentActionsTest.class);
 		testSuite.addTestSuite(ViewWebContentAssignedToMeTest.class);
 		testSuite.addTestSuite(SignOutTest.class);

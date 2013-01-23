@@ -26,11 +26,10 @@ public class ViewWebContentVersion2ResubmittedTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Display Test Page");
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("WC Web Content Content"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
@@ -54,7 +53,7 @@ public class ViewWebContentVersion2ResubmittedTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title Edit"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//td[3]/a"));
@@ -65,8 +64,8 @@ public class ViewWebContentVersion2ResubmittedTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("xPath=(//a[.='Review'])[2]"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
-			selenium.getText("xPath=(//a[.='WC Web Content Title'])[1]"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("xPath=(//a[.='WC WebContent Title'])[1]"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[5]/td[3]/a"));
 		assertTrue(selenium.isVisible("//tr[5]/td[4]/a"));
@@ -74,8 +73,8 @@ public class ViewWebContentVersion2ResubmittedTest extends BaseTestCase {
 			selenium.getText("//tr[5]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("xPath=(//a[.='Review'])[1]"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title Edit"),
-			selenium.getText("xPath=(//a[.='WC Web Content Title Edit'])[2]"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
+			selenium.getText("xPath=(//a[.='WC WebContent Title Edit'])[2]"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[4]/td[3]/a"));
 		assertTrue(selenium.isVisible("//tr[4]/td[4]/a"));
@@ -83,8 +82,8 @@ public class ViewWebContentVersion2ResubmittedTest extends BaseTestCase {
 			selenium.getText("//tr[4]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Update"),
 			selenium.getText("xPath=(//a[.='Update'])[1]"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title Edit"),
-			selenium.getText("xPath=(//a[.='WC Web Content Title Edit'])[1]"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
+			selenium.getText("xPath=(//a[.='WC WebContent Title Edit'])[1]"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[3]/td[3]/a"));
 		assertTrue(selenium.isVisible("//tr[3]/td[4]/a"));

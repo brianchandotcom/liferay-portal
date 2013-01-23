@@ -14,6 +14,9 @@
 
 package com.liferay.portalweb.kaleo.webcontentdisplay.wcwebcontent.viewwebcontentcompleted;
 
+import com.liferay.portalweb.kaleo.webcontentdisplay.wcwebcontent.viewwebcontentassignedtome.AddWCWebContentWCDTest;
+import com.liferay.portalweb.kaleo.webcontentdisplay.wcwebcontent.viewwebcontentassignedtome.AssignToMeWebContentActionsTest;
+import com.liferay.portalweb.kaleo.webcontentdisplay.wcwebcontent.viewwebcontentassignedtome.TearDownWorkflowConfigurationTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
@@ -34,7 +37,7 @@ public class ViewWebContentCompletedTests extends BaseTestSuite {
 		testSuite.addTestSuite(ConfigureWebContentSingleApproverTest.class);
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
-		testSuite.addTestSuite(AddWCDWebContentTest.class);
+		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
 		testSuite.addTestSuite(AssignToMeWebContentActionsTest.class);
 		testSuite.addTestSuite(ApproveWebContentActionsTest.class);
 		testSuite.addTestSuite(ViewWebContentCompletedTest.class);

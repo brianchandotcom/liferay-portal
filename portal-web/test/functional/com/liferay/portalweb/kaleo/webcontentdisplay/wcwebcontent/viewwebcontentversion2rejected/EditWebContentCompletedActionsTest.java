@@ -39,7 +39,7 @@ public class EditWebContentCompletedActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//a[@class='entry-link']/span"));
 		assertFalse(selenium.isChecked("//input[@id='_15_allRowIdsCheckbox']"));
 		selenium.clickAt("//input[@id='_15_allRowIdsCheckbox']",
@@ -49,15 +49,15 @@ public class EditWebContentCompletedActionsTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_15_dhec_menuButton']",
 			RuntimeVariables.replace("Menu Button"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_title_en_US']",
-			RuntimeVariables.replace("WC Web Content Title Edit"));
+			RuntimeVariables.replace("WC WebContent Title Edit"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
@@ -68,7 +68,7 @@ public class EditWebContentCompletedActionsTest extends BaseTestCase {
 		selenium.waitForVisible(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea");
 		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
-			RuntimeVariables.replace("WC Web Content Content Edit"));
+			RuntimeVariables.replace("WC WebContent Content Edit"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -79,7 +79,7 @@ public class EditWebContentCompletedActionsTest extends BaseTestCase {
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.selectFrame(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.waitForText("//body", "WC Web Content Content Edit");
+		selenium.waitForText("//body", "WC WebContent Content Edit");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Submit for Publication']",
 			RuntimeVariables.replace("Submit for Publication"));
@@ -88,7 +88,7 @@ public class EditWebContentCompletedActionsTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
-				"WC Web Content Title Edit (Pending)"),
+				"WC WebContent Title Edit (Pending)"),
 			selenium.getText("//a[@class='entry-link']/span"));
 	}
 }

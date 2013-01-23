@@ -1,4 +1,3 @@
-<%@ page import="com.liferay.portlet.journal.model.JournalArticle" %>
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -52,7 +51,7 @@ if (Validator.isNull(script)) {
 	if (portletDisplayTemplateHandler != null) {
 		script = ContentUtil.get(portletDisplayTemplateHandler.getTemplatesHelpPath(language));
 	}
-	else if (structure.getClassNameId() == PortalUtil.getClassNameId(JournalArticle.class)) {
+	else if (structure.getClassName().equals(JournalArticle.class)) {
 		script = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT, new Filter(DDMTemplateConstants.LANG_TYPE_VM)));
 	}
 	else if (!type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {

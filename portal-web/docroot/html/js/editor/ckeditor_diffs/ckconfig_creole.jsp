@@ -78,8 +78,6 @@ CKEDITOR.config.removePlugins = [
 
 CKEDITOR.config.resize_enabled = '<%= resizable %>';
 
-CKEDITOR.config.skin = 'kama';
-
 CKEDITOR.config.toolbar_creole = [
 	['Cut','Copy','Paste','PasteText','PasteFromWord'],
 	['Undo','Redo'],

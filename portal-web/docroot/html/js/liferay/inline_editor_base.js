@@ -2,14 +2,14 @@ AUI.add(
 	'liferay-inline-editor-base',
 	function(A) {
 		var Lang = A.Lang;
+		var isNumber = Lang.isNumber;
+		var isString = Lang.isString;
 
-		var TPL_NOTICE =
-			'<div class="lfr-notice-inline-edit" id="{id}">' +
-				'<span class="lfr-notice-inline-edit-text"></span>' +
-				'<span class="lfr-notice-inline-edit-close" tab-index="0">{close}</span>' +
-			'</div>';
+		var BODY_CONTENT = 'bodyContent';
 
-		var BOUNDING_BOX = 'boundingBox';
+		var CSS_SUCCESS = 'portlet-msg-success';
+
+		var CSS_ERROR = 'portlet-msg-error';
 
 		var EDITOR = 'editor';
 
@@ -23,20 +23,26 @@ AUI.add(
 
 		var RESPONSE_DATA = 'responseData';
 
+		var TPL_NOTICE =
+			'<div class="lfr-editable-notice portlet-msg-success">' +
+				'<span class="lfr-editable-notice-text yui3-widget-bd"></span>' +
+				'<a class="lfr-editable-notice-close yui3-widget-ft" href="javascript:;" tabindex="0"></a>' +
+			'</div>';
+
 		function InlineEditorBase(config) {
 			var instance = this;
 
 			instance.publish(
-				'saveContentFailure',
+				'saveFailure',
 				{
-					defaultFn: instance._defaultSaveContentFailure
+					defaultFn: instance._defSaveFailureFn
 				}
 			);
 
 			instance.publish(
-				'saveContentSuccess',
+				'saveSuccess',
 				{
-					defaultFn: instance._defaultSaveContentSuccess
+					defaultFn: instance._defSaveSuccessFn
 				}
 			);
 		}
@@ -44,23 +50,23 @@ AUI.add(
 		InlineEditorBase.ATTRS = {
 			autoSaveTimeout: {
 				getter: '_getAutoSaveTimeout',
-				validator: Lang.isNumber,
+				validator: isNumber,
 				value: 3000
 			},
 
 			closeNoticeTimeout: {
 				getter: '_getCloseNoticeTimeout',
-				validator: Lang.isNumber,
+				validator: isNumber,
 				value: 8000
 			},
 
 			editorPrefix: {
-				validator: Lang.isString,
+				validator: isString,
 				value: '#cke_'
 			},
 
 			editorSuffix: {
-				validator: Lang.isString,
+				validator: isString,
 				value: '_original'
 			},
 
@@ -69,16 +75,16 @@ AUI.add(
 			},
 
 			editorName: {
-				validator: Lang.isString
+				validator: isString
 			},
 
 			toolbarTopOffset: {
-				validator: Lang.isNumber,
+				validator: isNumber,
 				value: 30
 			},
 
 			saveURL: {
-				validator: Lang.isString
+				validator: isString
 			}
 		};
 
@@ -92,8 +98,27 @@ AUI.add(
 					instance._closeNoticeTask.cancel();
 				}
 
-				if (instance._saveContentTask) {
-					instance._saveContentTask.cancel();
+				if (instance._saveTask) {
+					instance._saveTask.cancel();
+				}
+			},
+
+			closeNotice: function(delay) {
+				var instance = this;
+
+				var closeNoticeTask = instance._closeNoticeTask;
+
+				if (!closeNoticeTask) {
+					closeNoticeTask = A.debounce(instance._closeNoticeFn, instance.get('closeNoticeTimeout'), instance);
+
+					instance._closeNoticeTask = closeNoticeTask;
+				}
+
+				if (Lang.isNumber(delay)) {
+					closeNoticeTask.delay(delay);
+				}
+				else {
+					closeNoticeTask();
 				}
 			},
 
@@ -107,26 +132,18 @@ AUI.add(
 
 					var inlineEditorNoticeId = A.guid();
 
-					editNotice = new A.Overlay(
+					var editNoticeNode = A.Node.create(TPL_NOTICE);
+
+					editNotice = new A.OverlayBase(
 						{
-							bodyContent: Lang.sub(
-								TPL_NOTICE,
-								{
-									close: Liferay.Language.get('close'),
-									id: inlineEditorNoticeId
-								}
-							),
+							contentBox: editNoticeNode,
+							footerContent: Liferay.Language.get('close'),
 							visible: false,
 							zIndex: triggerNode.getStyle('zIndex') + 2
 						}
 					).render();
 
-					var editNoticeBoundingBox = editNotice.get('boundingBox');
-
-					instance._editNoticeNode = editNoticeBoundingBox.one('#' + inlineEditorNoticeId);
-
-					instance._editNoticeTextNode = editNoticeBoundingBox.one('.lfr-notice-inline-edit-text');
-
+					instance._editNoticeNode = editNoticeNode;
 					instance._editNotice = editNotice;
 
 					instance._attachCloseListener();
@@ -135,7 +152,7 @@ AUI.add(
 				return editNotice;
 			},
 
-			saveContent: function(autosaved) {
+			save: function(autosaved) {
 				var instance = this;
 
 				A.io.request(
@@ -145,16 +162,16 @@ AUI.add(
 							failure: function() {
 								var responseData = this.get(RESPONSE_DATA);
 
-								instance.fire('saveContentFailure', responseData, autosaved);
+								instance.fire('saveFailure', responseData, autosaved);
 							},
 							success: function() {
 								var responseData = this.get(RESPONSE_DATA);
 
 								if (responseData.success) {
-									instance.fire('saveContentSuccess', responseData, autosaved);
+									instance.fire('saveSuccess', responseData, autosaved);
 								}
 								else {
-									instance.fire('saveContentFailure', responseData, autosaved);
+									instance.fire('saveFailure', responseData, autosaved);
 								}
 							}
 						},
@@ -166,28 +183,32 @@ AUI.add(
 				);
 			},
 
-			startCloseNoticeTask: function() {
+			startSaveTask: function() {
 				var instance = this;
 
-				var closeNoticeTask = instance._closeNoticeTask;
+				var saveTask = instance._saveTask;
 
-				if (closeNoticeTask) {
-					closeNoticeTask.cancel();
+				if (saveTask) {
+					saveTask.cancel();
 				}
 
-				closeNoticeTask = A.later(instance.get('closeNoticeTimeout'), instance, instance._closeNoticeFn);
+				saveTask = A.later(instance.get('autoSaveTimeout'), instance, instance._saveFn, [true], true);
 
-				instance._closeNoticeTask = closeNoticeTask;
+				instance._saveTask = saveTask;
 
-				return closeNoticeTask;
+				return saveTask;
 			},
 
-			startSaveContentTask: function() {
+			stopSaveTask: function() {
 				var instance = this;
 
-				instance._saveContentTask = A.later(instance.get('autoSaveTimeout'), instance, instance._saveContentFn, [true], true);
+				var saveTask = instance._saveTask;
 
-				return instance._saveContentTask;
+				if (saveTask) {
+					saveTask.cancel();
+				}
+
+				return saveTask;
 			},
 
 			_attachCloseListener: function() {
@@ -195,9 +216,7 @@ AUI.add(
 
 				var notice = instance.getEditNotice();
 
-				var boundingBox = notice.get(BOUNDING_BOX);
-
-				boundingBox.one('.lfr-notice-inline-edit-close').on('click', A.bind(notice.hide, notice));
+				notice.footerNode.on('click', A.bind('hide', notice));
 			},
 
 			_closeNoticeFn: function() {
@@ -206,32 +225,30 @@ AUI.add(
 				instance.getEditNotice().hide();
 			},
 
-			_defaultSaveContentFailure: function(responseData, autosaved) {
+			_defSaveFailureFn: function(responseData, autosaved) {
 				var instance = this;
 
 				instance.resetDirty();
 
 				var notice = instance.getEditNotice();
 
-				var boundingBox = notice.get(BOUNDING_BOX);
+				instance._editNoticeNode.replaceClass(CSS_SUCCESS, CSS_ERROR);
 
-				instance._editNoticeNode.replaceClass('lfr-notice-inline-edit', 'lfr-notice-inline-edit-error');
-
-				instance._editNoticeTextNode.html(Liferay.Language.get('the-draft-was-not-saved-successfully'));
+				notice.set(BODY_CONTENT, Liferay.Language.get('the-draft-was-not-saved-successfully'));
 
 				notice.show();
 
-				instance.startCloseNoticeTask();
+				instance.closeNotice();
 			},
 
-			_defaultSaveContentSuccess: function(responseData, autosaved) {
+			_defSaveSuccessFn: function(responseData, autosaved) {
 				var instance = this;
 
 				instance.resetDirty();
 
 				var notice = instance.getEditNotice();
-				
-				instance._editNoticeNode.replaceClass('lfr-notice-inline-edit-error', 'lfr-notice-inline-edit');
+
+				instance._editNoticeNode.replaceClass(CSS_ERROR, CSS_SUCCESS);
 
 				var message = Liferay.Language.get('the-draft-was-saved-successfully-at-x');
 
@@ -239,23 +256,20 @@ AUI.add(
 					message = Liferay.Language.get('the-draft-was-autosaved-successfully-at-x');
 				}
 
-				message = Lang.sub(
-					message,
-					[new Date().toLocaleTimeString()]
-				);
+				message = Lang.sub(message, [new Date().toLocaleTimeString()]);
 
-				instance._editNoticeTextNode.html(message);
+				notice.set(BODY_CONTENT, message);
 
 				notice.show();
 
-				instance.startCloseNoticeTask();
+				instance.closeNotice();
 			},
 
-			_saveContentFn: function(autosaved) {
+			_saveFn: function(autosaved) {
 				var instance = this;
 
 				if (instance.isContentDirty()) {
-					instance.saveContent(autosaved);
+					instance.save(autosaved);
 				}
 			}
 		};
@@ -264,6 +278,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'overlay']
+		requires: ['aui-base', 'aui-overlay-base']
 	}
 );

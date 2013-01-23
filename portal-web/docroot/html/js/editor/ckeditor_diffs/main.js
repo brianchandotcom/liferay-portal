@@ -1,13 +1,12 @@
 AUI.add(
 	'inline-editor-ckeditor',
 	function(A) {
+		var Lang = A.Lang;
 		var PositionAlign = A.WidgetPositionAlign;
 
 		var CKCONFIG = CKEDITOR.config;
 
 		var ALIGN = 'align';
-
-		var BODY_SCROLL_LISTENER = 'bodyScrollListener';
 
 		var BOUNDING_BOX = 'boundingBox';
 
@@ -19,7 +18,15 @@ AUI.add(
 
 		var EDITOR_SUFFIX = 'editorSuffix';
 
+		var POINT_BL = PositionAlign.BL;
+
+		var POINT_TL = PositionAlign.TL;
+
+		var POINTS_WINDOW_CENTER = [POINT_TL, PositionAlign.TC];
+
 		var VISIBLE = 'visible';
+
+		var WIN = A.config.win;
 
 		var CKEditorInline = A.Component.create(
 			{
@@ -39,12 +46,12 @@ AUI.add(
 							editor.on('blur', instance._onEditorBlur, instance),
 							editor.on('focus', instance._onEditorFocus, instance),
 							editor.on('restoreContent', instance._restoreContent, instance),
-							editor.on('saveContent', instance.saveContent, instance, false)
+							editor.on('saveContent', instance.save, instance, false)
 						];
 
 						instance.after('destroy', instance._destructor, instance);
 
-						instance.after(['saveContentFailure', 'saveContentSuccess'], instance._updateNoticePosition, instance);
+						instance.after(['saveFailure', 'saveSuccess'], instance._updateNoticePosition, instance);
 					},
 
 					isContentDirty: function() {
@@ -64,28 +71,18 @@ AUI.add(
 
 						var notice = instance.getEditNotice();
 
-						var noticeNode = notice.get(BOUNDING_BOX);
-
-						if (!noticeNode.getData(BODY_SCROLL_LISTENER)) {
-							var body = A.getBody();
-
-							body.plug(A.Plugin.ScrollInfo);
-
-							instance._scrollListener = body.scrollInfo.on('scroll', instance._updateNoticePosition, instance);
-
-							noticeNode.setData(BODY_SCROLL_LISTENER, instance._scrollListener);
+						if (!instance._scrollHandle) {
+							instance._scrollHandle = A.getWin().on('scroll', instance._updateNoticePosition, instance);
 						}
 					},
 
 					_destructor: function() {
 						var instance = this;
 
-						A.Array.invoke(instance._eventHandles, 'detach');
+						A.Array.invoke(instance._eventHandles, 'removeListener');
 
-						A.getBody().unplug(A.Plugin.ScrollInfo);
-
-						if (instance._scrollListener) {
-							instance._scrollListener.detach();
+						if (instance._scrollHandle) {
+							instance._scrollHandle.detach();
 						}
 					},
 
@@ -100,10 +97,10 @@ AUI.add(
 					_onEditorBlur: function() {
 						var instance = this;
 
-						instance._saveContentTask.cancel();
+						instance.stopSaveTask();
 
 						if (instance.isContentDirty()) {
-							instance.saveContent();
+							instance.save();
 						}
 					},
 
@@ -118,19 +115,17 @@ AUI.add(
 
 						var notice = instance.getEditNotice();
 
-						var noticeNode = notice.get(BOUNDING_BOX);
-
-						if (notice.get(VISIBLE) && noticeNode.getData(EDITOR) !== instance.get(EDITOR_NAME)) {
+						if (notice.get(VISIBLE) && notice.get(BOUNDING_BOX).getData(EDITOR) !== instance.get(EDITOR_NAME)) {
 							notice.hide();
 
-							noticeNode.setData(BODY_SCROLL_LISTENER, null);
+							if (instance._scrollHandle) {
+								instance._scrollHandle.detach();
 
-							if (instance._scrollListener) {
-								instance._scrollListener.detach();
+								instance._scrollHandle = null;
 							}
 						}
 
-						instance.startSaveContentTask();
+						instance.startSaveTask();
 
 						instance._attachScrollListener();
 
@@ -147,7 +142,7 @@ AUI.add(
 						instance.get(EDITOR).setData(originalContent);
 
 						if (instance.isContentDirty()) {
-							instance.saveContent();
+							instance.save();
 						}
 					},
 
@@ -161,31 +156,25 @@ AUI.add(
 
 							var editorToolbarVisible = editorToolbarNode.getStyle('display') !== 'none';
 
-							var alignNode;
+							var align = {
+								node: WIN,
+								points: POINTS_WINDOW_CENTER
+							};
 
 							if (editorToolbarVisible) {
-								var noticePosition = PositionAlign.TL;
-								var containerPostion = PositionAlign.BL;
+								var noticePosition = POINT_TL;
+								var containerPostion = POINT_BL;
 
-								if (parseInt(editorToolbarNode.getStyle('top'), 10) > instance.get('toolbarTopOffset')) {
-									noticePosition = PositionAlign.BL;
-									containerPostion = PositionAlign.TL;
+								if (Lang.toInt(editorToolbarNode.getStyle('top')) > instance.get('toolbarTopOffset')) {
+									noticePosition = POINT_BL;
+									containerPostion = POINT_TL;
 								}
 
-								alignNode = {
-									node: editorToolbarNode,
-									points: [noticePosition, containerPostion]
-								};
-
-								notice.set(ALIGN, alignNode);
+								align.node = editorToolbarNode;
+								align.points = [noticePosition, containerPostion];
 							}
-							else {
-								notice.set(ALIGN, null);
 
-								var viewport = A.DOM.viewportRegion();
-
-								notice.set('xy', [(viewport.right - viewport.left) / 2, viewport.top]);
-							}
+							notice.set(ALIGN, align);
 						}
 					}
 				}
@@ -196,6 +185,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-invoke', 'liferay-inline-editor-base', 'node-scroll-info', 'overlay', 'yui-later']
+		requires: ['array-invoke', 'liferay-inline-editor-base', 'overlay', 'yui-later']
 	}
 );

@@ -56,10 +56,8 @@
 	}
 }
 
-.lfr-upload-container {
-	 .progress-bar, .progress {
-		@include border-radius(10px);
-	 }
+.lfr-upload-container .progress-bar, .lfr-upload-container .progress, .lfr-editable:after {
+	@include border-radius(10px);
 }
 
 body > .lfr-menu-list, body > .lfr-menu-list ul, button, input[type="button"], input[type="submit"], input[type="reset"], .active-area-proxy, .aui-dialog .yui3-widget-hd, .aui-dialog-content, .aui-paginator-link, .entry-display-style .entry-thumbnail img, .lfr-actions, .lfr-api-results, .lfr-header-row .aui-toolbar-only, .lfr-translation-manager, .lfr-translation-manager-translation, .lfr-upload-container .cancel-button .modify-pages .delete-tab, .portlet-image-gallery-display .image-thumbnail img, .portlet-journal .lfr-table .journal-metadata, .portlet-search .search-facet .facet-value, .rule-group-instance-container .rule-group-instance, .select-documents, .select-files, .staging-icon-menu-container.staging-icon-menu.lfr-actions .lfr-trigger strong a, .taglib-logo-selector .lfr-change-logo.show-background, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote, .tags-search-combobox .aui-field-input-text {

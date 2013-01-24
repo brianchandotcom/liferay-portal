@@ -54,11 +54,11 @@ if (groupId <= 0) {
 }
 
 String articleId = ParamUtil.getString(renderRequest, "articleId");
-String templateId = ParamUtil.getString(renderRequest, "templateId");
+String ddmTemplateKey = ParamUtil.getString(renderRequest, "ddmTemplateKey");
 
 if (Validator.isNull(articleId)) {
 	articleId = GetterUtil.getString(preferences.getValue("articleId", StringPool.BLANK));
-	templateId = GetterUtil.getString(preferences.getValue("templateId", StringPool.BLANK));
+	ddmTemplateKey = GetterUtil.getString(preferences.getValue("ddmTemplateKey", StringPool.BLANK));
 }
 
 boolean showAvailableLocales = GetterUtil.getBoolean(preferences.getValue("showAvailableLocales", StringPool.BLANK));

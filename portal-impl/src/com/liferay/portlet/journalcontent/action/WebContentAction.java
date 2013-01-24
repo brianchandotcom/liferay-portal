@@ -62,13 +62,14 @@ public class WebContentAction extends PortletAction {
 		}
 
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
-		String templateId = ParamUtil.getString(actionRequest, "templateId");
+		String ddmTemplateKey = ParamUtil.getString(
+			actionRequest, "ddmTemplateKey");
 
 		if (Validator.isNull(articleId)) {
 			articleId = GetterUtil.getString(
 				preferences.getValue("articleId", StringPool.BLANK));
-			templateId = GetterUtil.getString(
-				preferences.getValue("templateId", StringPool.BLANK));
+			ddmTemplateKey = GetterUtil.getString(
+				preferences.getValue("ddmTemplateKey", StringPool.BLANK));
 		}
 
 		String viewMode = ParamUtil.getString(actionRequest, "viewMode");
@@ -80,7 +81,7 @@ public class WebContentAction extends PortletAction {
 
 		if ((groupId > 0) && Validator.isNotNull(articleId)) {
 			JournalContentUtil.getDisplay(
-				groupId, articleId, templateId, viewMode, languageId,
+				groupId, articleId, ddmTemplateKey, viewMode, languageId,
 				themeDisplay, page, xmlRequest);
 		}
 	}
@@ -119,14 +120,14 @@ public class WebContentAction extends PortletAction {
 
 			String articleId = ParamUtil.getString(
 				resourceRequest, "articleId");
-			String templateId = ParamUtil.getString(
-				resourceRequest, "templateId");
+			String ddmTemplateKey = ParamUtil.getString(
+				resourceRequest, "ddmTemplateKey");
 
 			if (Validator.isNull(articleId)) {
 				articleId = GetterUtil.getString(
 					preferences.getValue("articleId", StringPool.BLANK));
-				templateId = GetterUtil.getString(
-					preferences.getValue("templateId", StringPool.BLANK));
+				ddmTemplateKey = GetterUtil.getString(
+					preferences.getValue("ddmTemplateKey", StringPool.BLANK));
 			}
 
 			String viewMode = ParamUtil.getString(resourceRequest, "viewMode");
@@ -139,7 +140,7 @@ public class WebContentAction extends PortletAction {
 
 			if ((groupId > 0) && Validator.isNotNull(articleId)) {
 				articleDisplay = JournalContentUtil.getDisplay(
-					groupId, articleId, templateId, viewMode, languageId,
+					groupId, articleId, ddmTemplateKey, viewMode, languageId,
 					themeDisplay, page, xmlRequest);
 			}
 

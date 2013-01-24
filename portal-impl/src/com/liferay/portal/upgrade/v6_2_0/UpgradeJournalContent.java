@@ -22,17 +22,15 @@ import java.util.Map;
 /**
  * @author Marcellus Tavares
  */
-public class UpgradeDynamicDataListDisplay
-	extends RenameUpgradePortletPreferences {
+public class UpgradeJournalContent extends RenameUpgradePortletPreferences {
 
-	public UpgradeDynamicDataListDisplay() {
-		_preferenceNamesMap.put("detailDDMTemplateId", "formDDMTemplateId");
-		_preferenceNamesMap.put("listDDMTemplateId", "displayDDMTemplateId");
+	public UpgradeJournalContent() {
+		_preferenceNamesMap.put("templateId", "ddmTemplateKey");
 	}
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {"169_INSTANCE_%"};
+		return new String[] {"56_INSTANCE_%"};
 	}
 
 	@Override

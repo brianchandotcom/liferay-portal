@@ -86,8 +86,8 @@ type = ParamUtil.getString(request, "type", type);
 			}
 
 			if (!ddmTemplates.isEmpty()) {
-				if (Validator.isNull(templateId)) {
-					templateId = article.getTemplateId();
+				if (Validator.isNull(ddmTemplateKey)) {
+					ddmTemplateKey = article.getTemplateId();
 				}
 		%>
 
@@ -104,11 +104,11 @@ type = ParamUtil.getString(request, "type", type);
 						<%
 						boolean templateChecked = false;
 
-						if (templateId.equals(tableIteratorObj.getTemplateKey())) {
+						if (ddmTemplateKey.equals(tableIteratorObj.getTemplateKey())) {
 							templateChecked = true;
 						}
 
-						if ((tableIteratorPos.intValue() == 0) && Validator.isNull(templateId)) {
+						if ((tableIteratorPos.intValue() == 0) && Validator.isNull(ddmTemplateKey)) {
 							templateChecked = true;
 						}
 						%>
@@ -124,7 +124,7 @@ type = ParamUtil.getString(request, "type", type);
 							<aui:a href="<%= editTemplateURL %>" id="tableIteratorObjName"><%= tableIteratorObj.getName() %></aui:a>
 						</liferay-util:buffer>
 
-						<aui:input checked="<%= templateChecked %>" label="<%= linkContent %>" name="overideTemplateId" onChange='<%= "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "templateId.value = this.value;}" %>' type="radio" value="<%= tableIteratorObj.getTemplateKey() %>" />
+						<aui:input checked="<%= templateChecked %>" label="<%= linkContent %>" name="overideTemplateId" onChange='<%= "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "ddmTemplateKey.value = this.value;}" %>' type="radio" value="<%= tableIteratorObj.getTemplateKey() %>" />
 
 						<c:if test="<%= tableIteratorObj.isSmallImage() %>">
 							<br />
@@ -242,7 +242,7 @@ type = ParamUtil.getString(request, "type", type);
 	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
 	<aui:input name="preferences--groupId--" type="hidden" value="<%= groupId %>" />
 	<aui:input name="preferences--articleId--" type="hidden" value="<%= articleId %>" />
-	<aui:input name="preferences--templateId--" type="hidden" value="<%= templateId %>" />
+	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
 
 	<aui:fieldset cssClass="aui-helper-hidden">
 		<aui:field-wrapper label="portlet-id">
@@ -299,7 +299,7 @@ type = ParamUtil.getString(request, "type", type);
 			var A = AUI();
 
 			document.<portlet:namespace />fm.<portlet:namespace />articleId.value = articleId;
-			document.<portlet:namespace />fm.<portlet:namespace />templateId.value = "";
+			document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value = "";
 
 			A.one('.displaying-article-id-holder').show();
 			A.one('.displaying-help-message-holder').hide();

@@ -213,7 +213,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	<liferay-ui:section>
 		<liferay-ui:error-marker key="errorSection" value="subscriptions" />
 
-		<liferay-util:include page="/html/portlet/asset_publisher/email_subscription_settings.jsp" />
+		<%@ include file="/html/portlet/asset_publisher/email_subscription_settings.jspf" %>
 	</liferay-ui:section>
 </liferay-ui:tabs>
 

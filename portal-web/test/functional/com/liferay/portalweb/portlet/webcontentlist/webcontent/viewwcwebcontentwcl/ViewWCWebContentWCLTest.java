@@ -25,7 +25,6 @@ public class ViewWCWebContentWCLTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content List Test Page");
 		selenium.clickAt("link=Web Content List Test Page",
 			RuntimeVariables.replace("Web Content List Test Page"));
 		selenium.waitForPageToLoad("30000");

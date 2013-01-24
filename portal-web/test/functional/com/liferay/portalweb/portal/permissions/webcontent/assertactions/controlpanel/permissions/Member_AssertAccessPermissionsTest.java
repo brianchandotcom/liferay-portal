@@ -39,7 +39,7 @@ public class Member_AssertAccessPermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//li[@class='app-view-navigation-entry folder selected']/span/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForElementNotPresent(

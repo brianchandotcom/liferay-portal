@@ -28,8 +28,11 @@ public class Member_AssertViewWCSTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Search Test Page",
 			RuntimeVariables.replace("Web Content Search Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertTrue(selenium.isVisible("//section"));
 		assertTrue(selenium.isVisible("//input[@value='Search...']"));
+		assertTrue(selenium.isElementPresent(
+				"//div[@class='portlet-body']/form/span[2]/span/span/input"));
 		assertTrue(selenium.isVisible("//input[contains(@name,'search')]"));
 		assertFalse(selenium.isTextPresent(
 				"You do not have the roles required to access this portlet."));

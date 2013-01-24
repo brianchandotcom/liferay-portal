@@ -54,8 +54,12 @@ public class TearDownWCWebContentTest extends BaseTestCase {
 					continue;
 				}
 
+				assertFalse(selenium.isChecked(
+						"//input[@id='_15_allRowIdsCheckbox']"));
 				selenium.clickAt("//input[@id='_15_allRowIdsCheckbox']",
 					RuntimeVariables.replace("Select All"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_15_allRowIdsCheckbox']"));
 				selenium.waitForVisible(
 					"//span[@title='Actions']/ul/li/strong/a/span");
 				assertEquals(RuntimeVariables.replace("Actions"),
@@ -71,9 +75,6 @@ public class TearDownWCWebContentTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.isPartialText(
-						"//div[@class='portlet-msg-success taglib-trash-undo']",
-						"moved to the Recycle Bin. Undo"));
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(
@@ -96,10 +97,10 @@ public class TearDownWCWebContentTest extends BaseTestCase {
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean recycleBinEmpty = selenium.isElementPresent(
+				boolean recycleBinNotEmpty = selenium.isElementPresent(
 						"//a[@class='trash-empty-link']");
 
-				if (!recycleBinEmpty) {
+				if (!recycleBinNotEmpty) {
 					label = 3;
 
 					continue;

@@ -49,8 +49,8 @@ public class AddRolePermissionUpdateTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Member"),
-					selenium.getText("//tr[3]/td/a"));
-				selenium.clickAt("//tr[3]/td/a",
+					selenium.getText("//tr[contains(.,'Member')]/td[1]/a"));
+				selenium.clickAt("//tr[contains(.,'Member')]/td[1]/a",
 					RuntimeVariables.replace("Member"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Define Permissions",
@@ -60,7 +60,7 @@ public class AddRolePermissionUpdateTest extends BaseTestCase {
 					RuntimeVariables.replace("label=Web Content"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//h3"));
+					selenium.getText("//h3[contains(.,'Web Content')]"));
 
 				boolean webContentUpdateChecked = selenium.isChecked(
 						"//input[@value='com.liferay.portlet.journal.model.JournalArticleUPDATE']");
@@ -71,12 +71,12 @@ public class AddRolePermissionUpdateTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.check(
-					"//input[@value='com.liferay.portlet.journal.model.JournalArticleUPDATE']");
+				selenium.clickAt("//input[@value='com.liferay.portlet.journal.model.JournalArticleUPDATE']",
+					RuntimeVariables.replace("Web Content Update Checkbox"));
 
 			case 2:
-				selenium.check(
-					"//input[@value='com.liferay.portlet.journal.model.JournalArticleUPDATE']");
+				assertTrue(selenium.isChecked(
+						"//input[@value='com.liferay.portlet.journal.model.JournalArticleUPDATE']"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
@@ -84,47 +84,57 @@ public class AddRolePermissionUpdateTest extends BaseTestCase {
 						"The role permissions were updated."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace("Summary"),
-					selenium.getText("//h3"));
+					selenium.getText("//h3[contains(.,'Summary')]"));
 				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//tr[3]/td[1]/a"));
+					selenium.getText(
+						"//tr[contains(.,'Access in Control Panel')]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace(""),
-					selenium.getText("//tr[3]/td[2]"));
+					selenium.getText(
+						"//tr[contains(.,'Access in Control Panel')]/td[2]"));
 				assertEquals(RuntimeVariables.replace("Access in Control Panel"),
-					selenium.getText("//tr[3]/td[3]"));
+					selenium.getText(
+						"//tr[contains(.,'Access in Control Panel')]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Portal"),
-					selenium.getText("//tr[3]/td[4]"));
+					selenium.getText(
+						"//tr[contains(.,'Access in Control Panel')]/td[4]"));
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//tr[3]/td[5]/span/a"));
+					selenium.getText(
+						"//tr[contains(.,'Access in Control Panel')]/td[5]/span/a"));
 				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//tr[4]/td[1]/a"));
+					selenium.getText("//tr[contains(.,'View')]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace(""),
-					selenium.getText("//tr[4]/td[2]"));
+					selenium.getText("//tr[contains(.,'View')]/td[2]"));
 				assertEquals(RuntimeVariables.replace("View"),
-					selenium.getText("//tr[4]/td[3]"));
+					selenium.getText("//tr[contains(.,'View')]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Portal"),
-					selenium.getText("//tr[4]/td[4]"));
+					selenium.getText("//tr[contains(.,'View')]/td[4]"));
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//tr[4]/td[5]/span/a"));
+					selenium.getText("//tr[contains(.,'View')]/td[5]/span/a"));
 				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//tr[5]/td[1]/a"));
+					selenium.getText("//tr[contains(.,'Update')]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//tr[5]/td[2]"));
+					selenium.getText("//tr[contains(.,'Update')]/td[2]"));
 				assertEquals(RuntimeVariables.replace("Update"),
-					selenium.getText("//tr[5]/td[3]"));
+					selenium.getText("//tr[contains(.,'Update')]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Portal"),
-					selenium.getText("//tr[5]/td[4]"));
+					selenium.getText("//tr[contains(.,'Update')]/td[4]"));
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//tr[5]/td[5]/span/a"));
+					selenium.getText("//tr[contains(.,'Update')]/td[5]/span/a"));
 				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//tr[6]/td[1]/a"));
+					selenium.getText(
+						"//tr[contains(.,'Web Content Management')]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Web Content Management"),
-					selenium.getText("//tr[6]/td[2]"));
+					selenium.getText(
+						"//tr[contains(.,'Web Content Management')]/td[2]"));
 				assertEquals(RuntimeVariables.replace("View"),
-					selenium.getText("//tr[6]/td[3]"));
+					selenium.getText(
+						"//tr[contains(.,'Web Content Management')]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Portal"),
-					selenium.getText("//tr[6]/td[4]"));
+					selenium.getText(
+						"//tr[contains(.,'Web Content Management')]/td[4]"));
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//tr[6]/td[5]/span/a"));
+					selenium.getText(
+						"//tr[contains(.,'Web Content Management')]/td[5]/span/a"));
 
 			case 100:
 				label = -1;

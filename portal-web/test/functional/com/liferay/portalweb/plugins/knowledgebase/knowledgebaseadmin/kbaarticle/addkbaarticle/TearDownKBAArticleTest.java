@@ -60,8 +60,8 @@ public class TearDownKBAArticleTest extends BaseTestCase {
 					RuntimeVariables.replace("Single Row"));
 				assertTrue(selenium.isChecked(
 						"//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']"));
-				selenium.waitForVisible(
-					"//tr[contains(@class,'results-row last selected')]");
+				selenium.waitForElementPresent(
+					"//tr[contains(@class,'selected')]");
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");

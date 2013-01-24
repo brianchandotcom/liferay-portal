@@ -25,16 +25,17 @@ public class DeleteKBAArticleSectionsCMKBArTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Knowledge Base Article Test Page");
 		selenium.clickAt("link=Knowledge Base Article Test Page",
 			RuntimeVariables.replace("Knowledge Base Article Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Knowledge Base Article 1"),
 			selenium.getText("//div[@class='kb-title']"));
+		selenium.waitForVisible(
+			"//div[@class='kb-article-icons']/table/tbody/tr/td/span/a[contains(.,'Delete')]");
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='kb-article-icons']/table/tbody/tr/td[4]/span/a"));
-		selenium.clickAt("//div[@class='kb-article-icons']/table/tbody/tr/td[4]/span/a",
+				"//div[@class='kb-article-icons']/table/tbody/tr/td/span/a[contains(.,'Delete')]"));
+		selenium.clickAt("//div[@class='kb-article-icons']/table/tbody/tr/td/span/a[contains(.,'Delete')]",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()

@@ -26,7 +26,6 @@ public class DeleteKBAArticleSectionsPortletsKBDTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Knowledge Base Display Test Page");
 		selenium.clickAt("link=Knowledge Base Display Test Page",
 			RuntimeVariables.replace("Knowledge Base Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -37,10 +36,12 @@ public class DeleteKBAArticleSectionsPortletsKBDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("KB Admin Article"),
 			selenium.getText("//div[@class='kb-title']"));
+		selenium.waitForVisible(
+			"//div[@class='kb-article-icons']/table/tbody/tr/td/span/a[contains(.,'Delete')]");
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='kb-article-icons']/table/tbody/tr/td[5]/span/a"));
-		selenium.clickAt("//div[@class='kb-article-icons']/table/tbody/tr/td[5]/span/a",
+				"//div[@class='kb-article-icons']/table/tbody/tr/td/span/a[contains(.,'Delete')]"));
+		selenium.clickAt("//div[@class='kb-article-icons']/table/tbody/tr/td/span/a[contains(.,'Delete')]",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
@@ -49,5 +50,7 @@ public class DeleteKBAArticleSectionsPortletsKBDTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertFalse(selenium.isTextPresent("KBA Article Portlets Title"));
+		assertEquals(RuntimeVariables.replace("No articles were found."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

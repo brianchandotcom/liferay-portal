@@ -79,7 +79,7 @@ public class JournalTransformerTest {
 
 		String xml = document.asXML();
 
-		JournalArticle article = JournalTestUtil.addArticle(
+		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
 			xml, ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
 
 		Map<String, String> tokens = getTokens();

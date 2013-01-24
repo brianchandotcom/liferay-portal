@@ -15,11 +15,6 @@
 package com.liferay.portlet.journal.trash;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
@@ -31,11 +26,11 @@ import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
+import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -80,73 +75,9 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
-
-		titleMap.put(Locale.US, "Test Article");
-
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
-
-		descriptionMap.put(Locale.US, "Description");
-
-		Document document = createDocument("en_US", "en_US");
-
-		Element dynamicElement = addDynamicElement(
-			document.getRootElement(), "text", "name");
-
-		addDynamicContent(dynamicElement, "en_US", "Joe Bloggs");
-
-		String content = document.asXML();
-
-		serviceContext = (ServiceContext)serviceContext.clone();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		if (approved) {
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-		}
-
-		return JournalArticleLocalServiceUtil.addArticle(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(), 0,
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, 0, StringPool.BLANK,
-			true, JournalArticleConstants.VERSION_DEFAULT, titleMap, null,
-			content, "general", null, null, null, 1, 1, 1965, 0, 0, 0, 0, 0, 0,
-			0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null, null,
-			serviceContext);
-	}
-
-	protected void addDynamicContent(
-		Element dynamicElement, String languageId, String value) {
-
-		Element dynamicContent = dynamicElement.addElement("dynamic-content");
-
-		dynamicContent.addAttribute("language-id", languageId);
-
-		dynamicContent.setText(value);
-	}
-
-	protected Element addDynamicElement(
-		Element element, String type, String name) {
-
-		Element dynamicElement = element.addElement("dynamic-element");
-
-		dynamicElement.addAttribute("name", name);
-		dynamicElement.addAttribute("type", type);
-
-		return dynamicElement;
-	}
-
-	protected Document createDocument(
-		String availableLocales, String defaultLocale) {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		rootElement.addAttribute("available-locales", availableLocales);
-		rootElement.addAttribute("default-locale", defaultLocale);
-		rootElement.addElement("request");
-
-		return document;
+		return JournalTestUtil.addArticleWithWorkflow(
+			serviceContext.getScopeGroupId(), getSearchKeywords(),
+			getSearchKeywords(), approved);
 	}
 
 	@Override

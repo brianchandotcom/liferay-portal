@@ -59,6 +59,7 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 			<c:otherwise>
 				<aui:fieldset label="asset-selection">
 					<aui:input checked='<%= selectionStyle.equals("dynamic") %>' id="selectionStyleDynamic" label="dynamic" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="dynamic" />
+
 					<aui:input checked='<%= selectionStyle.equals("manual") %>' id="selectionStyleManual" label="manual" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="manual" />
 				</aui:fieldset>
 			</c:otherwise>

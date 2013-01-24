@@ -557,14 +557,9 @@ public class WebDriverToSeleniumBridge
 	public boolean isChecked(String locator) {
 		WebDriverHelper.setTimeoutImplicit(this, "1");
 
-		try {
-			WebElement webElement = getWebElement(locator);
+		WebElement webElement = getWebElement(locator);
 
-			return webElement.isSelected();
-		}
-		finally {
-			WebDriverHelper.setDefaultTimeoutImplicit(this);
-		}
+		return webElement.isSelected();
 	}
 
 	public boolean isConfirmationPresent() {
@@ -583,8 +578,6 @@ public class WebDriverToSeleniumBridge
 		WebDriverHelper.setTimeoutImplicit(this, "1");
 
 		List<WebElement> webElements = getWebElements(locator);
-
-		WebDriverHelper.setDefaultTimeoutImplicit(this);
 
 		return !webElements.isEmpty();
 	}
@@ -1281,41 +1274,48 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected List<WebElement> getWebElements(String locator) {
-		if (locator.startsWith("//")) {
-			return findElements(By.xpath(locator));
-		}
-		else if (locator.startsWith("class=")) {
-			locator = locator.substring(6);
+		try {
+			if (locator.startsWith("//")) {
+				return findElements(By.xpath(locator));
+			}
+			else if (locator.startsWith("class=")) {
+				locator = locator.substring(6);
 
-			return findElements(By.className(locator));
-		}
-		else if (locator.startsWith("css=")) {
-			locator = locator.substring(4);
+				return findElements(By.className(locator));
+			}
+			else if (locator.startsWith("css=")) {
+				locator = locator.substring(4);
 
-			return findElements(By.cssSelector(locator));
-		}
-		else if (locator.startsWith("link=")) {
-			locator = locator.substring(5);
+				return findElements(By.cssSelector(locator));
+			}
+			else if (locator.startsWith("link=")) {
+				locator = locator.substring(5);
 
-			return findElements(By.linkText(locator));
-		}
-		else if (locator.startsWith("name=")) {
-			locator = locator.substring(5);
+				return findElements(By.linkText(locator));
+			}
+			else if (locator.startsWith("name=")) {
+				locator = locator.substring(5);
 
-			return findElements(By.name(locator));
-		}
-		else if (locator.startsWith("tag=")) {
-			locator = locator.substring(4);
+				return findElements(By.name(locator));
+			}
+			else if (locator.startsWith("tag=")) {
+				locator = locator.substring(4);
 
-			return findElements(By.tagName(locator));
-		}
-		else if (locator.startsWith("xpath=") || locator.startsWith("xPath=")) {
-			locator = locator.substring(6);
+				return findElements(By.tagName(locator));
+			}
+			else if (locator.startsWith("xpath=") ||
+					 locator.startsWith("xPath=")) {
 
-			return findElements(By.xpath(locator));
+				locator = locator.substring(6);
+
+				return findElements(By.xpath(locator));
+			}
+			else {
+				return findElements(By.id(locator));
+			}
 		}
-		else {
-			return findElements(By.id(locator));
+		finally {
+			WebDriverHelper.setDefaultTimeoutImplicit(this);
 		}
 	}
 

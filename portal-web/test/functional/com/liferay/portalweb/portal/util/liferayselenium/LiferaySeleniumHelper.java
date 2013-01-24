@@ -123,8 +123,7 @@ public class LiferaySeleniumHelper {
 			String text = liferaySelenium.getText(locator);
 
 			BaseTestCase.fail(
-				"Pattern " + pattern + " does not match " + text + " at " +
-					locator);
+				"Pattern " + pattern + " matches " + text + " at " + locator);
 		}
 	}
 
@@ -170,7 +169,8 @@ public class LiferaySeleniumHelper {
 			String text = liferaySelenium.getText(locator);
 
 			BaseTestCase.fail(
-				"Pattern " + pattern + " matches " + text + " at " + locator);
+				"Pattern " + pattern + " does not match " + text + " at " +
+					locator);
 		}
 	}
 
@@ -237,64 +237,36 @@ public class LiferaySeleniumHelper {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
 	}
 
+	public static boolean isElementNotPresent(
+		LiferaySelenium liferaySelenium, String locator) {
+
+		return !liferaySelenium.isElementPresent(locator);
+	}
+
 	public static boolean isNotChecked(
 		LiferaySelenium liferaySelenium, String locator) {
 
-		liferaySelenium.setTimeoutImplicit("1");
-
-		try {
-			return !liferaySelenium.isChecked(locator);
-		}
-		finally {
-			liferaySelenium.setDefaultTimeoutImplicit();
-		}
+		return !liferaySelenium.isChecked(locator);
 	}
 
 	public static boolean isNotPartialText(
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
-		liferaySelenium.setTimeoutImplicit("1");
-
-		try {
-			return !liferaySelenium.isPartialText(locator, value);
-		}
-		finally {
-			liferaySelenium.setDefaultTimeoutImplicit();
-		}
+		return !liferaySelenium.isPartialText(locator, value);
 	}
 
 	public static boolean isNotText(
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
-		if (liferaySelenium.isElementNotPresent(locator)) {
-			return false;
-		}
-
-		liferaySelenium.setTimeoutImplicit("1");
-
-		try {
-			return !value.equals(liferaySelenium.getText(locator));
-		}
-		finally {
-			liferaySelenium.setDefaultTimeoutImplicit();
-		}
+		return !liferaySelenium.isText(locator, value);
 	}
 
 	public static boolean isText(
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
-		if (liferaySelenium.isElementNotPresent(locator)) {
-			return false;
-		}
-
 		liferaySelenium.setTimeoutImplicit("1");
 
-		try {
-			return value.equals(liferaySelenium.getText(locator));
-		}
-		finally {
-			liferaySelenium.setDefaultTimeoutImplicit();
-		}
+		return value.equals(liferaySelenium.getText(locator));
 	}
 
 	public static void pause(String waitTime) throws Exception {

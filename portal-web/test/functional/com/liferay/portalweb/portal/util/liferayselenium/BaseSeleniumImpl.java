@@ -188,7 +188,7 @@ public abstract class BaseSeleniumImpl
 	}
 
 	public boolean isElementNotPresent(String locator) {
-		return !isElementPresent(locator);
+		return LiferaySeleniumHelper.isElementNotPresent(this, locator);
 	}
 
 	public boolean isNotChecked(String locator) {

@@ -190,9 +190,7 @@ public class ResourceActionLocalServiceImpl
 	}
 
 	protected String encodeKey(String name, String actionId) {
-		String key = name.concat(StringPool.POUND).concat(actionId);
-
-		return key.toLowerCase();
+		return name.concat(StringPool.POUND).concat(actionId);
 	}
 
 	private static Map<String, ResourceAction> _resourceActions =

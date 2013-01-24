@@ -167,9 +167,9 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 				JSONArray vocabularyCategoryJSONArray = toJSONArray(
 					vocabularyCategory);
 
-				for (int j = 0; j < vocabularyCategoryJSONArray.length();
-						j++) {
+				int length = vocabularyCategoryJSONArray.length();
 
+				for (int j = 0; j < length; j++) {
 					JSONObject vocabularyCategoryJSONObject =
 						vocabularyCategoryJSONArray.getJSONObject(j);
 

@@ -11,6 +11,10 @@
 
 	${finderCol.name}${serviceBuilder.getPrimitiveObjValue("${finderCol.type}")}
 
+	<#if finderCol.type == "String" && !finderCol.isCaseSensitive()>
+		.toLowerCase()
+	</#if>
+
 	<#if finderCol.type == "Date">
 		)
 	</#if>

@@ -46,7 +46,7 @@ AUI.add(
 							editor.on('blur', instance._onEditorBlur, instance),
 							editor.on('focus', instance._onEditorFocus, instance),
 							editor.on('restoreContent', instance._restoreContent, instance),
-							editor.on('saveContent', instance.save, instance, false)
+							editor.on('saveContent', instance._saveContent, instance)
 						];
 
 						instance.after('destroy', instance._destructor, instance);
@@ -144,6 +144,12 @@ AUI.add(
 						if (instance.isContentDirty()) {
 							instance.save();
 						}
+					},
+
+					_saveContent: function() {
+						var instance = this;
+
+						instance.save();
 					},
 
 					_updateNoticePosition: function() {

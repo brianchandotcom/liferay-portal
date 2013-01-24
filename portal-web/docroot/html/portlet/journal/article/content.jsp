@@ -311,8 +311,8 @@ if (Validator.isNotNull(content)) {
 														data-img="<%= imageURL != null ? imageURL : StringPool.BLANK %>"
 														data-url="<%= editTemplateURL %>"
 														label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
-														selected="<%= templateId.equals(ddmTemplate.getTemplateId()) %>"
-														value="<%= ddmTemplate.getTemplateId() %>"
+														selected="<%= templateId.equals(ddmTemplate.getTemplateKey()) %>"
+														value="<%= ddmTemplate.getTemplateKey() %>"
 													/>
 
 												<%

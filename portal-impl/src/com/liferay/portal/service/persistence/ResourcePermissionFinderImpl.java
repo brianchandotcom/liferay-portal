@@ -53,9 +53,6 @@ public class ResourcePermissionFinderImpl
 	public static final String FIND_BY_R_S =
 		ResourcePermissionFinder.class.getName() + ".findByR_S";
 
-	public static final String FIND_BY_C_N_S =
-		ResourcePermissionFinder.class.getName() + ".findByC_N_S";
-
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_N_S_P_R_A =
 		new FinderPath(
 			ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
@@ -236,36 +233,6 @@ public class ResourcePermissionFinderImpl
 
 			return (List<ResourcePermission>)QueryUtil.list(
 				q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	public List<String> findByC_N_S(long companyId, String name, int scope)
-		throws SystemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_C_N_S);
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addScalar("primKey", Type.STRING);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-			qPos.add(name);
-			qPos.add(scope);
-
-			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

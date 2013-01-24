@@ -40,6 +40,7 @@ page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" 
 page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
+page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
 page import="com.liferay.portlet.journal.search.FileEntryDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.FileEntrySearch" %><%@

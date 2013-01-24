@@ -89,6 +89,10 @@
 		margin-right: 10px;
 	}
 
+	.lfr-document-library-add-menu {
+		margin-bottom: 10px;
+	}
+
 	.lfr-template-editor {
 		.aui-field-element, .aui-field-content, .aui-field-input-text {
 			display: block;

@@ -28,6 +28,7 @@ public class AddPortletTNTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageTNTest.class);
 		testSuite.addTestSuite(AddPortletTNTest.class);
+		testSuite.addTestSuite(ViewPortletTNTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

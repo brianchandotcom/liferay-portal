@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.tagsnavigation.portlet.addportletstn;
+package com.liferay.portalweb.portlet.tagsnavigation.portlet.addportlettn;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletTN3Test extends BaseTestCase {
-	public void testAddPortletTN3() throws Exception {
+public class AddPortletTN1Test extends BaseTestCase {
+	public void testAddPortletTN1() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -48,11 +48,7 @@ public class AddPortletTN3Test extends BaseTestCase {
 		selenium.waitForVisible("//li[@title='Tags Navigation']/p/a");
 		selenium.clickAt("//li[@title='Tags Navigation']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//div[1]/section");
-		assertTrue(selenium.isVisible("//div[1]/section"));
-		selenium.waitForVisible("//div[2]/section");
-		assertTrue(selenium.isVisible("//div[2]/section"));
-		selenium.waitForVisible("//div[3]/section");
-		assertTrue(selenium.isVisible("//div[3]/section"));
+		selenium.waitForVisible("//section");
+		assertTrue(selenium.isVisible("//section"));
 	}
 }

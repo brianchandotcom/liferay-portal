@@ -26,6 +26,7 @@ import com.thoughtworks.selenium.Selenium;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -1091,7 +1092,9 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void setDefaultTimeoutImplicit() {
-		WebDriverHelper.setDefaultTimeoutImplicit(this);
+		int timeout = TestPropsValues.TIMEOUT_IMPLICIT_WAIT * 1000;
+
+		setTimeoutImplicit(String.valueOf(timeout));
 	}
 
 	public void setExtensionJs(String extensionJs) {
@@ -1110,7 +1113,12 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void setTimeoutImplicit(String timeout) {
-		WebDriverHelper.setTimeoutImplicit(this, timeout);
+		WebDriver.Options options = manage();
+
+		WebDriver.Timeouts timeouts = options.timeouts();
+
+		timeouts.implicitlyWait(
+			GetterUtil.getInteger(timeout), TimeUnit.MILLISECONDS);
 	}
 
 	public void shiftKeyDown() {

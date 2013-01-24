@@ -439,6 +439,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="control-panel-organizations" />
+			<param name="test.ant.script.properties" value="phone.number.format.impl=com.liferay.portal.format.USAPhoneNumberFormatImpl" />
 			<param name="test.ant.script.suite" value="ControlPanelOrganizationsTestSuite" />
 		</antcall>
 

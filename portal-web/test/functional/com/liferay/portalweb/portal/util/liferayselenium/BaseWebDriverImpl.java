@@ -222,7 +222,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public boolean isElementNotPresent(String locator) {
-		return !isElementPresent(locator);
+		return LiferaySeleniumHelper.isElementNotPresent(this, locator);
 	}
 
 	public boolean isNotChecked(String locator) {
@@ -240,16 +240,11 @@ public abstract class BaseWebDriverImpl
 	public boolean isPartialText(String locator, String value) {
 		setTimeoutImplicit("1");
 
-		try {
-			WebElement webElement = getWebElement(locator);
+		WebElement webElement = getWebElement(locator);
 
-			String text = webElement.getText();
+		String text = webElement.getText();
 
-			return text.contains(value);
-		}
-		finally {
-			setDefaultTimeoutImplicit();
-		}
+		return text.contains(value);
 	}
 
 	public boolean isText(String locator, String value) {

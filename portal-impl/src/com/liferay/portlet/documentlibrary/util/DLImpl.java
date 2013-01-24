@@ -253,10 +253,11 @@ public class DLImpl implements DL {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		if (strutsAction.equals("/journal/select_document_library") ||
-			strutsAction.equals("/document_library/select_file_entry") ||
+		if (strutsAction.equals("/document_library/select_file_entry") ||
 			strutsAction.equals("/document_library/select_folder") ||
 			strutsAction.equals("/document_library_display/select_folder") ||
+			strutsAction.equals(
+				"/dynamic_data_mapping/select_document_library") ||
 			strutsAction.equals("/image_gallery_display/select_folder")) {
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

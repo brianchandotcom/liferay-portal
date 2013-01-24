@@ -61,7 +61,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/journal/select_document_library");
+portletURL.setParameter("struts_action", "/dynamic_data_mapping/select_document_library");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("folderId", String.valueOf(folderId));
 %>
@@ -77,7 +77,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 	%>
 
 	<liferay-ui:search-form
-		page="/html/portlet/journal/file_entry_search.jsp"
+		page="/html/portlet/dynamic_data_mapping/file_entry_search.jsp"
 		searchContainer="<%= fileEntrySearchContainer %>"
 	/>
 
@@ -114,7 +114,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("struts_action", "/journal/select_document_library");
+			rowURL.setParameter("struts_action", "/dynamic_data_mapping/select_document_library");
 			rowURL.setParameter("groupId", String.valueOf(groupId));
 			rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 
@@ -165,7 +165,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			<%
 			PortletURL backURL = renderResponse.createRenderURL();
 
-			backURL.setParameter("struts_action", "/journal/select_document_library");
+			backURL.setParameter("struts_action", "/dynamic_data_mapping/select_document_library");
 			backURL.setParameter("groupId", String.valueOf(groupId));
 			%>
 
@@ -203,7 +203,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 		List resultRows = searchContainer.getResultRows();
 	%>
 
-		<%@ include file="/html/portlet/journal/select_document_library_search_results.jspf" %>
+		<%@ include file="/html/portlet/dynamic_data_mapping/select_document_library_search_results.jspf" %>
 
 		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 
@@ -212,7 +212,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 	else {
 		PortletURL iteratorURL = renderResponse.createRenderURL();
 
-		iteratorURL.setParameter("struts_action", "/journal/select_document_library");
+		iteratorURL.setParameter("struts_action", "/dynamic_data_mapping/select_document_library");
 		iteratorURL.setParameter("groupId", String.valueOf(groupId));
 		iteratorURL.setParameter("folderId", String.valueOf(folderId));
 
@@ -269,7 +269,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			List resultRows = fileEntrySearchContainer.getResultRows();
 	%>
 
-			<%@ include file="/html/portlet/journal/select_document_library_search_results.jspf" %>
+			<%@ include file="/html/portlet/dynamic_data_mapping/select_document_library_search_results.jspf" %>
 
 	<%
 		}
@@ -287,5 +287,5 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 </aui:form>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.journal.select_document_library_jsp");
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.dynamic_data_mapping.select_document_library_jsp");
 %>

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
@@ -252,10 +251,7 @@ public class QuartzSchedulerEngineTest {
 
 			Assert.fail();
 		}
-		catch (SchedulerException se) {
-			Assert.assertEquals(
-				"Unable to parse cron text " + wrongCronTriggerContent,
-				se.getMessage());
+		catch (Exception se) {
 		}
 	}
 

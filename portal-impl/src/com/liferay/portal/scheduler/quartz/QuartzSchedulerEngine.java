@@ -51,8 +51,6 @@ import com.liferay.portal.service.QuartzLocalService;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.text.ParseException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -632,27 +630,20 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		TriggerType triggerType = trigger.getTriggerType();
 
 		if (triggerType.equals(TriggerType.CRON)) {
-			try {
-				TriggerBuilder<Trigger>triggerBuilder =
-					TriggerBuilder.newTrigger();
+			TriggerBuilder<Trigger>triggerBuilder = TriggerBuilder.newTrigger();
 
-				triggerBuilder.endAt(endDate);
-				triggerBuilder.forJob(jobName, groupName);
-				triggerBuilder.startAt(startDate);
-				triggerBuilder.withIdentity(jobName, groupName);
+			triggerBuilder.endAt(endDate);
+			triggerBuilder.forJob(jobName, groupName);
+			triggerBuilder.startAt(startDate);
+			triggerBuilder.withIdentity(jobName, groupName);
 
-				CronScheduleBuilder cronScheduleBuilder =
-					CronScheduleBuilder.cronSchedule(
-						(String)trigger.getTriggerContent());
+			CronScheduleBuilder cronScheduleBuilder =
+				CronScheduleBuilder.cronSchedule(
+					(String)trigger.getTriggerContent());
 
-				triggerBuilder.withSchedule(cronScheduleBuilder);
+			triggerBuilder.withSchedule(cronScheduleBuilder);
 
-				quartzTrigger = triggerBuilder.build();
-			}
-			catch (ParseException pe) {
-				throw new SchedulerException(
-					"Unable to parse cron text " + trigger.getTriggerContent());
-			}
+			quartzTrigger = triggerBuilder.build();
 		}
 		else if (triggerType.equals(TriggerType.SIMPLE)) {
 			long interval = (Long)trigger.getTriggerContent();

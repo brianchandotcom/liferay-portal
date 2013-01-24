@@ -52,6 +52,10 @@ _sass_cache_*.css
 
 /osgi/bootstrap/classes
 /osgi/bootstrap/osgi-bootstrap.jar
+/osgi/modules/*/*.jar
+/osgi/modules/*/classes
+/osgi/modules/*/docroot/WEB-INF/classes
+/osgi/modules/*/lib/*.jar
 
 /portal-client/*.iml
 /portal-client/*.ipr

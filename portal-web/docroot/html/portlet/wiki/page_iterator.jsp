@@ -251,10 +251,12 @@ for (int i = 0; i < results.size(); i++) {
 
 	if (!curWikiPage.isNew() && !type.equals("draft_pages") && !type.equals("pending_pages")) {
 		rowURL.setParameter("struts_action", "/wiki/view");
+		rowURL.setParameter("redirect", currentURL);
 		rowURL.setParameter("nodeName", curWikiPage.getNode().getName());
 	}
 	else {
 		rowURL.setParameter("struts_action", "/wiki/edit_page");
+		rowURL.setParameter("redirect", currentURL);
 		rowURL.setParameter("nodeId", String.valueOf(curWikiPage.getNodeId()));
 	}
 

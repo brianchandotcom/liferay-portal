@@ -278,9 +278,11 @@ hr, .separator {
 			}
 		}
 
-		&.first a {
-			color: #369;
-			font-weight: bold;
+		&.first, &.only {
+			a {
+				color: #369;
+				font-weight: bold;
+			}
 		}
 
 		&.last a {

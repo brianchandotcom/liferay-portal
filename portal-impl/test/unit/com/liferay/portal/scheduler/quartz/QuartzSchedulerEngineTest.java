@@ -251,7 +251,7 @@ public class QuartzSchedulerEngineTest {
 
 			Assert.fail();
 		}
-		catch (Exception se) {
+		catch (Exception e) {
 		}
 	}
 

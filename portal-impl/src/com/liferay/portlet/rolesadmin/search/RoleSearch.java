@@ -44,7 +44,7 @@ public class RoleSearch extends SearchContainer<Role> {
 	static Map<String, String> orderableHeaders = new HashMap<String, String>();
 
 	static {
-		headerNames.add("name");
+		headerNames.add("title");
 		headerNames.add("type");
 
 		if ((PropsValues.ROLES_ORGANIZATION_SUBTYPES.length > 0) ||
@@ -56,7 +56,7 @@ public class RoleSearch extends SearchContainer<Role> {
 
 		headerNames.add("description");
 
-		orderableHeaders.put("name", "name");
+		orderableHeaders.put("title", "title");
 		orderableHeaders.put("type", "type");
 		orderableHeaders.put("description", "description");
 	}
@@ -98,7 +98,7 @@ public class RoleSearch extends SearchContainer<Role> {
 			}
 			else {
 				orderByCol = preferences.getValue(
-					PortletKeys.ROLES_ADMIN, "roles-order-by-col", "name");
+					PortletKeys.ROLES_ADMIN, "roles-order-by-col", "title");
 				orderByType = preferences.getValue(
 					PortletKeys.ROLES_ADMIN, "roles-order-by-type", "asc");
 			}

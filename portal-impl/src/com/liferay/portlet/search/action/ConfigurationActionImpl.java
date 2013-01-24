@@ -63,6 +63,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			getParameter(actionRequest, "displayAssetTagsFacet"));
 		boolean displayAssetTypeFacet = GetterUtil.getBoolean(
 			getParameter(actionRequest, "displayAssetTypeFacet"));
+		boolean displayFolderFacet = GetterUtil.getBoolean(
+			getParameter(actionRequest, "displayFolderFacet"));
 		boolean displayUserFacet = GetterUtil.getBoolean(
 			getParameter(actionRequest, "displayUserFacet"));
 		boolean displayModifiedRangeFacet = GetterUtil.getBoolean(
@@ -97,6 +99,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 					fieldName.equals("assetCategoryTitles")) ||
 				(displayAssetTagsFacet && fieldName.equals("assetTagNames")) ||
 				(displayAssetTypeFacet && fieldName.equals("entryClassName")) ||
+				(displayFolderFacet && fieldName.equals("folderId")) ||
 				(displayUserFacet && fieldName.equals("userId")) ||
 				(displayModifiedRangeFacet && fieldName.equals("modified"))) {
 

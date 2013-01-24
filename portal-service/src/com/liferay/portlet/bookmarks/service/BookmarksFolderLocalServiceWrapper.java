@@ -276,31 +276,34 @@ public class BookmarksFolderLocalServiceWrapper
 			name, description, serviceContext);
 	}
 
-	public void deleteFolder(
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder deleteFolder(
 		com.liferay.portlet.bookmarks.model.BookmarksFolder folder)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_bookmarksFolderLocalService.deleteFolder(folder);
+		return _bookmarksFolderLocalService.deleteFolder(folder);
 	}
 
-	public void deleteFolder(
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder deleteFolder(
 		com.liferay.portlet.bookmarks.model.BookmarksFolder folder,
 		boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_bookmarksFolderLocalService.deleteFolder(folder, includeTrashedEntries);
+		return _bookmarksFolderLocalService.deleteFolder(folder,
+			includeTrashedEntries);
 	}
 
-	public void deleteFolder(long folderId)
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder deleteFolder(
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_bookmarksFolderLocalService.deleteFolder(folderId);
+		return _bookmarksFolderLocalService.deleteFolder(folderId);
 	}
 
-	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder deleteFolder(
+		long folderId, boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_bookmarksFolderLocalService.deleteFolder(folderId,
+		return _bookmarksFolderLocalService.deleteFolder(folderId,
 			includeTrashedEntries);
 	}
 

@@ -279,17 +279,18 @@ public class JournalFolderLocalServiceUtil {
 			description, serviceContext);
 	}
 
-	public static void deleteFolder(
+	public static com.liferay.portlet.journal.model.JournalFolder deleteFolder(
 		com.liferay.portlet.journal.model.JournalFolder folder)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteFolder(folder);
+		return getService().deleteFolder(folder);
 	}
 
-	public static void deleteFolder(long folderId)
+	public static com.liferay.portlet.journal.model.JournalFolder deleteFolder(
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteFolder(folderId);
+		return getService().deleteFolder(folderId);
 	}
 
 	public static void deleteFolders(long groupId)

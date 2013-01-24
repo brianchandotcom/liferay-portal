@@ -74,12 +74,26 @@
 				maxTerms: 10,
 				showAssetCount: true
 			},
+			displayStyle: 'folders',
+			fieldName: 'folderId',
+			label: 'folder',
+			order: 'OrderHitsDesc',
+			static: false,
+			weight: 1.2
+		},
+		{
+			className: 'com.liferay.portal.kernel.search.facet.MultiValueFacet',
+			data: {
+				frequencyThreshold: 1,
+				maxTerms: 10,
+				showAssetCount: true
+			},
 			displayStyle: 'users',
 			fieldName: 'userId',
 			label: 'user',
 			order: 'OrderHitsDesc',
 			static: false,
-			weight: 1.2
+			weight: 1.1
 		},
 		{
 			className: 'com.liferay.portal.kernel.search.facet.ModifiedFacet',
@@ -113,7 +127,7 @@
 			label: 'modified',
 			order: 'OrderHitsDesc',
 			static: false,
-			weight: 1.1
+			weight: 1.0
 		}
 	]
 }

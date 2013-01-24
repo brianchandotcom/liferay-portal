@@ -279,31 +279,33 @@ public class BookmarksFolderLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static void deleteFolder(
+	public static com.liferay.portlet.bookmarks.model.BookmarksFolder deleteFolder(
 		com.liferay.portlet.bookmarks.model.BookmarksFolder folder)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteFolder(folder);
+		return getService().deleteFolder(folder);
 	}
 
-	public static void deleteFolder(
+	public static com.liferay.portlet.bookmarks.model.BookmarksFolder deleteFolder(
 		com.liferay.portlet.bookmarks.model.BookmarksFolder folder,
 		boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteFolder(folder, includeTrashedEntries);
+		return getService().deleteFolder(folder, includeTrashedEntries);
 	}
 
-	public static void deleteFolder(long folderId)
+	public static com.liferay.portlet.bookmarks.model.BookmarksFolder deleteFolder(
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteFolder(folderId);
+		return getService().deleteFolder(folderId);
 	}
 
-	public static void deleteFolder(long folderId, boolean includeTrashedEntries)
+	public static com.liferay.portlet.bookmarks.model.BookmarksFolder deleteFolder(
+		long folderId, boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteFolder(folderId, includeTrashedEntries);
+		return getService().deleteFolder(folderId, includeTrashedEntries);
 	}
 
 	public static void deleteFolders(long groupId)

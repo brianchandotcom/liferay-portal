@@ -27,6 +27,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalContentSearch;
@@ -54,7 +55,7 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 
 	@Override
 	public String getPortletId() {
-		return JournalIndexer.PORTLET_ID;
+		return PortletKeys.JOURNAL;
 	}
 
 	@Override

@@ -222,6 +222,7 @@ public abstract class BaseIndexer implements Indexer {
 			addSearchAssetCategoryIds(contextQuery, searchContext);
 			addSearchAssetTagNames(contextQuery, searchContext);
 			addSearchEntryClassNames(contextQuery, searchContext);
+			addSearchFolderId(contextQuery, searchContext);
 			addSearchGroupId(contextQuery, searchContext);
 			addSearchUserId(contextQuery, searchContext);
 
@@ -759,6 +760,18 @@ public abstract class BaseIndexer implements Indexer {
 				}
 			}
 		}
+	}
+
+	protected void addSearchFolderId(
+			BooleanQuery contextQuery, SearchContext searchContext)
+		throws Exception {
+
+		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
+
+		multiValueFacet.setFieldName(Field.FOLDER_ID);
+		multiValueFacet.setStatic(true);
+
+		searchContext.addFacet(multiValueFacet);
 	}
 
 	protected void addSearchGroupId(

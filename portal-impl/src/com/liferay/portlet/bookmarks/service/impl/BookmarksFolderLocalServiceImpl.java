@@ -17,6 +17,8 @@ package com.liferay.portlet.bookmarks.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -81,13 +83,15 @@ public class BookmarksFolderLocalServiceImpl
 		return folder;
 	}
 
-	public void deleteFolder(BookmarksFolder folder)
+	@Indexable(type = IndexableType.DELETE)
+	public BookmarksFolder deleteFolder(BookmarksFolder folder)
 		throws PortalException, SystemException {
 
-		deleteFolder(folder, true);
+		return deleteFolder(folder, true);
 	}
 
-	public void deleteFolder(
+	@Indexable(type = IndexableType.DELETE)
+	public BookmarksFolder deleteFolder(
 			BookmarksFolder folder, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
 
@@ -132,24 +136,29 @@ public class BookmarksFolderLocalServiceImpl
 
 		trashEntryLocalService.deleteEntry(
 			BookmarksFolder.class.getName(), folder.getFolderId());
+
+		return folder;
 	}
 
-	public void deleteFolder(long folderId)
+	@Indexable(type = IndexableType.DELETE)
+	public BookmarksFolder deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
 		BookmarksFolder folder = bookmarksFolderPersistence.findByPrimaryKey(
 			folderId);
 
-		deleteFolder(folder);
+		return deleteFolder(folder);
 	}
 
-	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+	@Indexable(type = IndexableType.DELETE)
+	public BookmarksFolder deleteFolder(
+			long folderId, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
 
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		deleteFolder(folder, includeTrashedEntries);
+		return deleteFolder(folder, includeTrashedEntries);
 	}
 
 	public void deleteFolders(long groupId)
@@ -159,7 +168,7 @@ public class BookmarksFolderLocalServiceImpl
 			groupId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		for (BookmarksFolder folder : folders) {
-			deleteFolder(folder);
+			bookmarksFolderLocalService.deleteFolder(folder);
 		}
 	}
 
@@ -277,6 +286,7 @@ public class BookmarksFolderLocalServiceImpl
 		}
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
 		throws PortalException, SystemException {
 
@@ -299,6 +309,7 @@ public class BookmarksFolderLocalServiceImpl
 		return moveFolder(folderId, parentFolderId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	public void moveFolderToTrash(long userId, long folderId)
 		throws PortalException, SystemException {
 
@@ -308,6 +319,7 @@ public class BookmarksFolderLocalServiceImpl
 		updateStatus(userId, folder, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	public void restoreFolderFromTrash(long userId, long folderId)
 		throws PortalException, SystemException {
 
@@ -342,6 +354,7 @@ public class BookmarksFolderLocalServiceImpl
 			userId, BookmarksFolder.class.getName(), folderId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
 			boolean mergeWithParentFolder, ServiceContext serviceContext)
@@ -409,6 +422,13 @@ public class BookmarksFolderLocalServiceImpl
 				userId, folder.getGroupId(), BookmarksFolder.class.getName(),
 				folder.getFolderId(), oldStatus, null, null);
 		}
+
+		// Index
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			BookmarksFolder.class);
+
+		indexer.reindex(folder);
 
 		return folder;
 	}
@@ -493,7 +513,7 @@ public class BookmarksFolderLocalServiceImpl
 			indexer.reindex(entry);
 		}
 
-		deleteFolder(fromFolder);
+		bookmarksFolderLocalService.deleteFolder(fromFolder);
 	}
 
 	protected void updateDependentStatus(

@@ -54,13 +54,13 @@ import javax.portlet.PortletURL;
  * @author Bruno Farache
  * @author Raymond Augé
  */
-public class BookmarksIndexer extends BaseIndexer {
+public class BookmarksEntryIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {BookmarksEntry.class.getName()};
 
 	public static final String PORTLET_ID = PortletKeys.BOOKMARKS;
 
-	public BookmarksIndexer() {
+	public BookmarksEntryIndexer() {
 		setPermissionAware(true);
 	}
 

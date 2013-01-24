@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -75,13 +75,13 @@ import javax.portlet.PortletURL;
  * @author Raymond Augé
  * @author Hugo Huijser
  */
-public class JournalIndexer extends BaseIndexer {
+public class JournalArticleIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {JournalArticle.class.getName()};
 
 	public static final String PORTLET_ID = PortletKeys.JOURNAL;
 
-	public JournalIndexer() {
+	public JournalArticleIndexer() {
 		setPermissionAware(true);
 	}
 
@@ -693,6 +693,7 @@ public class JournalIndexer extends BaseIndexer {
 
 	private static final String _FIELD_NAMESPACE = "web_content";
 
-	private static Log _log = LogFactoryUtil.getLog(JournalIndexer.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		JournalArticleIndexer.class);
 
 }

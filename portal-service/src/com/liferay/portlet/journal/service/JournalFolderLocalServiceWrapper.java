@@ -275,17 +275,18 @@ public class JournalFolderLocalServiceWrapper
 			parentFolderId, name, description, serviceContext);
 	}
 
-	public void deleteFolder(
+	public com.liferay.portlet.journal.model.JournalFolder deleteFolder(
 		com.liferay.portlet.journal.model.JournalFolder folder)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_journalFolderLocalService.deleteFolder(folder);
+		return _journalFolderLocalService.deleteFolder(folder);
 	}
 
-	public void deleteFolder(long folderId)
+	public com.liferay.portlet.journal.model.JournalFolder deleteFolder(
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_journalFolderLocalService.deleteFolder(folderId);
+		return _journalFolderLocalService.deleteFolder(folderId);
 	}
 
 	public void deleteFolders(long groupId)

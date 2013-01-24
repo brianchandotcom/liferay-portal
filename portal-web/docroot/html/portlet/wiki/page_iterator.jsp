@@ -264,6 +264,8 @@ for (int i = 0; i < results.size(); i++) {
 		rowURL.setParameter("version", String.valueOf(curWikiPage.getVersion()));
 	}
 
+	rowURL.setParameter("redirect", currentURL);
+
 	// Title
 
 	row.addText(curWikiPage.getTitle(), rowURL);

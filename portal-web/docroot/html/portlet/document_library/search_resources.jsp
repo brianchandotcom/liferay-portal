@@ -168,47 +168,47 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 			<aui:input name="searchFolderIds" type="hidden" value="<%= searchFolderIds %>" />
 
 			<%
-				PortletURL portletURL = liferayPortletResponse.createRenderURL();
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-				portletURL.setParameter("struts_action", "/document_library/search");
-				portletURL.setParameter("redirect", redirect);
-				portletURL.setParameter("breadcrumbsFolderId", String.valueOf(breadcrumbsFolderId));
-				portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
-				portletURL.setParameter("searchFolderIds", String.valueOf(searchFolderIds));
-				portletURL.setParameter("keywords", keywords);
+			portletURL.setParameter("struts_action", "/document_library/search");
+			portletURL.setParameter("redirect", redirect);
+			portletURL.setParameter("breadcrumbsFolderId", String.valueOf(breadcrumbsFolderId));
+			portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
+			portletURL.setParameter("searchFolderIds", String.valueOf(searchFolderIds));
+			portletURL.setParameter("keywords", keywords);
 
-				try {
-					SearchContext searchContext = SearchContextFactory.getInstance(request);
+			try {
+				SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-					searchContext.setAttribute("paginationType", "regular");
-					searchContext.setEnd(entryEnd);
-					searchContext.setFolderIds(folderIdsArray);
-					searchContext.setIncludeDiscussions(true);
-					searchContext.setKeywords(keywords);
-					searchContext.setStart(entryStart);
+				searchContext.setAttribute("paginationType", "regular");
+				searchContext.setEnd(entryEnd);
+				searchContext.setFolderIds(folderIdsArray);
+				searchContext.setIncludeDiscussions(true);
+				searchContext.setKeywords(keywords);
+				searchContext.setStart(entryStart);
 
-					Hits hits = DLAppServiceUtil.search(searchRepositoryId, searchContext);
+				Hits hits = DLAppServiceUtil.search(searchRepositoryId, searchContext);
 
-					total = hits.getLength();
+				total = hits.getLength();
 
-					request.setAttribute("view.jsp-total", String.valueOf(total));
+				request.setAttribute("view.jsp-total", String.valueOf(total));
 
-					List<SearchResult> searchResults = DLUtil.getSearchResults(hits);
+				List<SearchResult> searchResults = SearchResultUtil.getSearchResults(hits);
 
-					for (int i = 0; i < searchResults.size(); i++) {
-						SearchResult searchResult = searchResults.get(i);
+				for (int i = 0; i < searchResults.size(); i++) {
+					SearchResult searchResult = searchResults.get(i);
 
-						FileEntry fileEntry = null;
-						Folder curFolder = null;
+					FileEntry fileEntry = null;
+					Folder curFolder = null;
 
-						String className = searchResult.getClassName();
+					String className = searchResult.getClassName();
 
-						if (className.equals(DLFileEntry.class.getName())) {
-							fileEntry = DLAppLocalServiceUtil.getFileEntry(searchResult.getClassPK());
-						}
-						else if (className.equals(DLFolder.class.getName())) {
-							curFolder = DLAppLocalServiceUtil.getFolder(searchResult.getClassPK());
-						}
+					if (className.equals(DLFileEntry.class.getName())) {
+						fileEntry = DLAppLocalServiceUtil.getFileEntry(searchResult.getClassPK());
+					}
+					else if (className.equals(DLFolder.class.getName())) {
+						curFolder = DLAppLocalServiceUtil.getFolder(searchResult.getClassPK());
+					}
 			%>
 
 					<c:choose>

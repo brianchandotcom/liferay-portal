@@ -487,9 +487,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		try {
 			return dlFolderLocalService.updateFolder(
-				getUserId(), folderId, name, description,
-				defaultFileEntryTypeId, fileEntryTypeIds,
-				overrideFileEntryTypes, serviceContext);
+				folderId, name, description, defaultFileEntryTypeId,
+				fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 		}
 		finally {
 			if (!hasLock) {

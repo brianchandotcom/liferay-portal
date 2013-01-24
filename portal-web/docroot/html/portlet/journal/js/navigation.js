@@ -469,6 +469,10 @@ AUI.add(
 
 							entriesContainer.append(searchResultsContainer);
 						}
+
+						if (searchResultsContainer || fragmentSearchResults) {
+							instance.all('#addButtonContainer, #sortButtonContainer').hide();
+						}
 					}
 				}
 			}

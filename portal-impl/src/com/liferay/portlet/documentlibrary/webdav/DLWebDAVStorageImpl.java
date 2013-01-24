@@ -510,6 +510,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			ServiceContext serviceContext = new ServiceContext();
 
+			serviceContext.setUserId(webDavRequest.getUserId());
+
 			int status = HttpServletResponse.SC_CREATED;
 
 			if (overwrite) {

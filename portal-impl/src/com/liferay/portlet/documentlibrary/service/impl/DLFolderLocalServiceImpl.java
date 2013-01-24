@@ -581,10 +581,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder updateFolder(
-			long userId, long folderId, long parentFolderId, String name,
-			String description, long defaultFileEntryTypeId,
-			List<Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
-			ServiceContext serviceContext)
+			long folderId, long parentFolderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			boolean overrideFileEntryTypes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// File entry types
@@ -593,8 +592,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		if (folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			dlFolder = dlFolderLocalService.updateFolderAndFileEntryTypes(
-				userId, folderId, parentFolderId, name, description,
-				defaultFileEntryTypeId, fileEntryTypeIds,
+				serviceContext.getUserId(), folderId, parentFolderId, name,
+				description, defaultFileEntryTypeId, fileEntryTypeIds,
 				overrideFileEntryTypes, serviceContext);
 
 			dlFileEntryTypeLocalService.cascadeFileEntryTypes(
@@ -635,15 +634,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	public DLFolder updateFolder(
-			long userId, long folderId, String name, String description,
+			long folderId, String name, String description,
 			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
 			boolean overrideFileEntryTypes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return updateFolder(
-			userId, folderId, folderId, name, description,
-			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
-			serviceContext);
+			folderId, folderId, name, description, defaultFileEntryTypeId,
+			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 	}
 
 	public DLFolder updateFolderAndFileEntryTypes(

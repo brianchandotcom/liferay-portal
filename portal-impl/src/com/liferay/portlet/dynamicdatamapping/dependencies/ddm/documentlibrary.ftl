@@ -114,11 +114,11 @@
 				var portletURL = Liferay.PortletURL.createRenderURL();
 
 				portletURL.setParameter('groupId', ${scopeGroupId?c});
-				portletURL.setParameter('struts_action', '/journal/select_document_library');
+				portletURL.setParameter('struts_action', '/dynamic_data_mapping/select_document_library');
 
 				portletURL.setPlid(${controlPanelPlid?c});
 
-				portletURL.setPortletId('15');
+				portletURL.setPortletId('166');
 
 				portletURL.setWindowState('pop_up');
 
@@ -129,7 +129,7 @@
 					}
 				);
 
-				window['${portalUtil.getPortletNamespace("15")}selectDocumentLibrary'] = window['${portletNamespace}${namespacedFieldName}setFileEntry'];
+				window['${portalUtil.getPortletNamespace("166")}selectDocumentLibrary'] = window['${portletNamespace}${namespacedFieldName}setFileEntry'];
 			}
 		);
 	}

@@ -297,8 +297,6 @@ if (parentOrganization != null) {
 					searchContainer.deleteRow(1, searchContainer.getData());
 					searchContainer.addRow(rowColumns, organizationId);
 					searchContainer.updateDataStore(organizationId);
-
-					selectOrganizationDialog.hide();
 				},
 				['liferay-search-container']
 			);

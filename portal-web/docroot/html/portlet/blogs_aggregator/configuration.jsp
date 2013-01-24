@@ -141,8 +141,6 @@ if (organizationId > 0) {
 				nameEl.innerHTML = name + '&nbsp;';
 
 				document.getElementById('<portlet:namespace />removeOrganizationButton').disabled = false;
-
-				selectOrganizationDialog.hide();
 			}
 		);
 	}

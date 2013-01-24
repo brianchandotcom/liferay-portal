@@ -88,7 +88,7 @@ if (Validator.isNotNull(target)) {
 				sb.append(UnicodeLanguageUtil.get(pageContext, organization.getType()));
 				sb.append("', '");
 				sb.append(target);
-				sb.append("');");
+				sb.append("');Liferay.Util.getWindow().close();");
 
 				rowHREF = sb.toString();
 			}

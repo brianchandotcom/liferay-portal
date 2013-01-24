@@ -276,8 +276,10 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 			InputStream inputStream = TempFileUtil.getTempFileAsStream(
 				tempFileName);
 
+			String mimeType = null;
+			
 			WikiPageServiceUtil.addPageAttachment(
-				nodeId, title, selectedFileName, inputStream);
+				nodeId, title, selectedFileName, inputStream, mimeType);
 
 			validFileNames.add(selectedFileName);
 		}

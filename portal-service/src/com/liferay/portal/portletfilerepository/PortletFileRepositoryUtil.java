@@ -30,6 +30,7 @@ import java.util.List;
 
 /**
  * @author Eudaldo Alonso
+ * @author Alexander Chow
  */
 public class PortletFileRepositoryUtil {
 
@@ -46,23 +47,24 @@ public class PortletFileRepositoryUtil {
 
 	public static FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
-			String portletId, long folderId, File file, String fileName)
+			String portletId, long folderId, File file, String fileName,
+			String mimeType)
 		throws PortalException, SystemException {
 
 		return getPortletFileRepository().addPortletFileEntry(
 			groupId, userId, className, classPK, portletId, folderId, file,
-			fileName);
+			fileName, mimeType);
 	}
 
 	public static FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, InputStream inputStream,
-			String fileName)
+			String fileName, String mimeType)
 		throws PortalException, SystemException {
 
 		return getPortletFileRepository().addPortletFileEntry(
 			groupId, userId, className, classPK, portletId, folderId,
-			inputStream, fileName);
+			inputStream, fileName, mimeType);
 	}
 
 	public static void deleteFolder(long folderId)

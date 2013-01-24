@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MathUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -78,6 +80,7 @@ import com.liferay.portlet.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Calendar;
@@ -222,7 +225,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	public void addPageAttachment(
-			long userId, long nodeId, String title, String fileName, File file)
+			long userId, long nodeId, String title, String fileName, File file,
+			String mimeType)
 		throws PortalException, SystemException {
 
 		WikiPage page = getPage(nodeId, title);
@@ -230,7 +234,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
 			page.getResourcePrimKey(), PortletKeys.WIKI,
-			page.getAttachmentsFolderId(), file, fileName);
+			page.getAttachmentsFolderId(), file, fileName, mimeType);
 
 		if (userId == 0) {
 			userId = page.getUserId();
@@ -250,7 +254,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	public void addPageAttachment(
 			long userId, long nodeId, String title, String fileName,
-			InputStream inputStream)
+			InputStream inputStream, String mimeType)
 		throws PortalException, SystemException {
 
 		WikiPage page = getPage(nodeId, title);
@@ -258,7 +262,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
 			page.getResourcePrimKey(), PortletKeys.WIKI,
-			page.getAttachmentsFolderId(), inputStream, fileName);
+			page.getAttachmentsFolderId(), inputStream, fileName,
+			mimeType);
 
 		if (userId == 0) {
 			userId = page.getUserId();
@@ -290,9 +295,25 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				inputStreamOVPs.get(i);
 
 			String fileName = inputStreamOVP.getKey();
-			InputStream inputStream = inputStreamOVP.getValue();
+			InputStream is = inputStreamOVP.getValue();
 
-			addPageAttachment(userId, nodeId, title, fileName, inputStream);
+			File file = null;
+
+			try {
+				file = FileUtil.createTempFile(is);
+
+				String mimeType = MimeTypesUtil.getContentType(file, fileName);
+
+				addPageAttachment(
+					userId, nodeId, title, fileName, file, mimeType);
+			}
+			catch (IOException ioe) {
+				throw new SystemException(
+					"Unable to write temporary file", ioe);
+			}
+			finally {
+				FileUtil.delete(file);
+			}
 		}
 	}
 

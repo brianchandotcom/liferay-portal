@@ -160,7 +160,7 @@ public class EditCompanyLogoAction extends PortletAction {
 		try {
 			inputStream = uploadPortletRequest.getFileAsStream("fileName");
 
-			String mimeType = MimeTypesUtil.getContentType(inputStream, null);
+			String mimeType = uploadPortletRequest.getContentType("fileName");
 
 			if (!MimeTypesUtil.isWebImage(mimeType)) {
 				throw new ImageTypeException();

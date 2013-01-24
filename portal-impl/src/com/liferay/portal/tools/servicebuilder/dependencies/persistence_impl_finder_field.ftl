@@ -25,9 +25,9 @@
 
 	<#if finderCol.type == "String" && !finderCol.isCaseSensitive()>
 		<#if entity.hasCompoundPK() && finderCol.isPrimary()>
-			<#assign finderColExpression = "lower(" + entity.alias + ".id." + finderCol.name + ") " + finderCol.comparator + " lower(CAST_TEXT(?))">
+			<#assign finderColExpression = "lower(" + entity.alias + ".id." + finderCol.name + ") " + finderCol.comparator + " ?">
 		<#else>
-			<#assign finderColExpression = "lower(" + entity.alias + "." + finderCol.name + ") " + finderCol.comparator + " lower(CAST_TEXT(?))">
+			<#assign finderColExpression = "lower(" + entity.alias + "." + finderCol.name + ") " + finderCol.comparator + " ?">
 		</#if>
 	<#else>
 		<#if entity.hasCompoundPK() && finderCol.isPrimary()>

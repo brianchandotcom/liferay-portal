@@ -748,8 +748,7 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 			return value;
 		}
 
-		value = getName().toLowerCase()
-					.compareTo(bookmarksFolder.getName().toLowerCase());
+		value = getName().compareToIgnoreCase(bookmarksFolder.getName());
 
 		if (value != 0) {
 			return value;

@@ -511,8 +511,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 			return value;
 		}
 
-		value = getName().toLowerCase()
-					.compareTo(journalFolder.getName().toLowerCase());
+		value = getName().compareToIgnoreCase(journalFolder.getName());
 
 		if (value != 0) {
 			return value;

@@ -2444,11 +2444,11 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindRepoGroupId) {
-					qPos.add(repoGroupId);
+					qPos.add(repoGroupId.toLowerCase());
 				}
 
 				if (bindRepoArtifactId) {
-					qPos.add(repoArtifactId);
+					qPos.add(repoArtifactId.toLowerCase());
 				}
 
 				List<SCProductEntry> list = q.list();
@@ -2578,11 +2578,11 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindRepoGroupId) {
-					qPos.add(repoGroupId);
+					qPos.add(repoGroupId.toLowerCase());
 				}
 
 				if (bindRepoArtifactId) {
-					qPos.add(repoArtifactId);
+					qPos.add(repoArtifactId.toLowerCase());
 				}
 
 				count = (Long)q.uniqueResult();
@@ -2603,10 +2603,10 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	}
 
 	private static final String _FINDER_COLUMN_RG_RA_REPOGROUPID_1 = "scProductEntry.repoGroupId IS NULL AND ";
-	private static final String _FINDER_COLUMN_RG_RA_REPOGROUPID_2 = "lower(scProductEntry.repoGroupId) = lower(CAST_TEXT(?)) AND ";
+	private static final String _FINDER_COLUMN_RG_RA_REPOGROUPID_2 = "lower(scProductEntry.repoGroupId) = ? AND ";
 	private static final String _FINDER_COLUMN_RG_RA_REPOGROUPID_3 = "(scProductEntry.repoGroupId IS NULL OR scProductEntry.repoGroupId = '') AND ";
 	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_1 = "scProductEntry.repoArtifactId IS NULL";
-	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_2 = "lower(scProductEntry.repoArtifactId) = lower(CAST_TEXT(?))";
+	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_2 = "lower(scProductEntry.repoArtifactId) = ?";
 	private static final String _FINDER_COLUMN_RG_RA_REPOARTIFACTID_3 = "(scProductEntry.repoArtifactId IS NULL OR scProductEntry.repoArtifactId = '')";
 
 	/**

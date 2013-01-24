@@ -695,8 +695,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	public int compareTo(WikiNode wikiNode) {
 		int value = 0;
 
-		value = getName().toLowerCase()
-					.compareTo(wikiNode.getName().toLowerCase());
+		value = getName().compareToIgnoreCase(wikiNode.getName());
 
 		if (value != 0) {
 			return value;

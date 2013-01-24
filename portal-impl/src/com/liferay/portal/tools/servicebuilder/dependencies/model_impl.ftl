@@ -861,7 +861,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 						<#if column.isCaseSensitive()>
 							value = get${column.methodName}().compareTo(${entity.varName}.get${column.methodName}());
 						<#else>
-							value = get${column.methodName}().toLowerCase().compareTo(${entity.varName}.get${column.methodName}().toLowerCase());
+							value = get${column.methodName}().compareToIgnoreCase(${entity.varName}.get${column.methodName}());
 						</#if>
 					</#if>
 				</#if>

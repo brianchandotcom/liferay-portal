@@ -261,8 +261,7 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	public int compareTo(ListType listType) {
 		int value = 0;
 
-		value = getName().toLowerCase()
-					.compareTo(listType.getName().toLowerCase());
+		value = getName().compareToIgnoreCase(listType.getName());
 
 		if (value != 0) {
 			return value;

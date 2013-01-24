@@ -972,8 +972,7 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 			return value;
 		}
 
-		value = getTitle().toLowerCase()
-					.compareTo(wikiPage.getTitle().toLowerCase());
+		value = getTitle().compareToIgnoreCase(wikiPage.getTitle());
 
 		if (value != 0) {
 			return value;

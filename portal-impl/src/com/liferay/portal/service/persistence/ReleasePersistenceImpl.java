@@ -193,7 +193,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindServletContextName) {
-					qPos.add(servletContextName);
+					qPos.add(servletContextName.toLowerCase());
 				}
 
 				List<Release> list = q.list();
@@ -297,7 +297,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindServletContextName) {
-					qPos.add(servletContextName);
+					qPos.add(servletContextName.toLowerCase());
 				}
 
 				count = (Long)q.uniqueResult();
@@ -320,7 +320,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	private static final String _FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_1 =
 		"release.servletContextName IS NULL";
 	private static final String _FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_2 =
-		"lower(release.servletContextName) = lower(CAST_TEXT(?))";
+		"lower(release.servletContextName) = ?";
 	private static final String _FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_3 =
 		"(release.servletContextName IS NULL OR release.servletContextName = '')";
 

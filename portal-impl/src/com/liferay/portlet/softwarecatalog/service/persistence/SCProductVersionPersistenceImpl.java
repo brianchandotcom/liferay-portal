@@ -696,7 +696,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindDirectDownloadURL) {
-					qPos.add(directDownloadURL);
+					qPos.add(directDownloadURL.toLowerCase());
 				}
 
 				List<SCProductVersion> list = q.list();
@@ -807,7 +807,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindDirectDownloadURL) {
-					qPos.add(directDownloadURL);
+					qPos.add(directDownloadURL.toLowerCase());
 				}
 
 				count = (Long)q.uniqueResult();
@@ -830,7 +830,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	private static final String _FINDER_COLUMN_DIRECTDOWNLOADURL_DIRECTDOWNLOADURL_1 =
 		"scProductVersion.directDownloadURL IS NULL";
 	private static final String _FINDER_COLUMN_DIRECTDOWNLOADURL_DIRECTDOWNLOADURL_2 =
-		"lower(scProductVersion.directDownloadURL) = lower(CAST_TEXT(?))";
+		"lower(scProductVersion.directDownloadURL) = ?";
 	private static final String _FINDER_COLUMN_DIRECTDOWNLOADURL_DIRECTDOWNLOADURL_3 =
 		"(scProductVersion.directDownloadURL IS NULL OR scProductVersion.directDownloadURL = '')";
 

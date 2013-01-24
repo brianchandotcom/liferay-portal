@@ -1358,7 +1358,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 				qPos.add(groupId);
 
 				if (bindName) {
-					qPos.add(name);
+					qPos.add(name.toLowerCase());
 				}
 
 				if (bindPortletId) {
@@ -1506,7 +1506,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 				qPos.add(groupId);
 
 				if (bindName) {
-					qPos.add(name);
+					qPos.add(name.toLowerCase());
 				}
 
 				if (bindPortletId) {
@@ -1534,7 +1534,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 	private static final String _FINDER_COLUMN_G_N_P_C_GROUPID_2 = "portletItem.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_P_C_NAME_1 = "portletItem.name IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_N_P_C_NAME_2 = "lower(portletItem.name) = lower(CAST_TEXT(?)) AND ";
+	private static final String _FINDER_COLUMN_G_N_P_C_NAME_2 = "lower(portletItem.name) = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_P_C_NAME_3 = "(portletItem.name IS NULL OR portletItem.name = '') AND ";
 	private static final String _FINDER_COLUMN_G_N_P_C_PORTLETID_1 = "portletItem.portletId IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_N_P_C_PORTLETID_2 = "portletItem.portletId = ? AND ";

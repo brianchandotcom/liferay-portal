@@ -1,0 +1,3 @@
+<testsuite name="Login">
+	<testplan class="com.liferay.portalweb.portal.login.acceptance.AcceptanceTestPlan" />
+</testsuite>

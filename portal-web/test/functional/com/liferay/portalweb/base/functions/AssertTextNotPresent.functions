@@ -1,0 +1,6 @@
+<functions object="AssertTextNotPresent">
+	<functiondef command="assertTextNotPresent">
+		<selenium command="waitForTextNotPresent" />
+		<selenium command="assertTextNotPresent" />
+	</functiondef>
+</functions>

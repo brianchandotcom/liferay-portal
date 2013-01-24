@@ -1,0 +1,10 @@
+<actions object="PgSignin">
+	<actiondef command="click">
+		<conditional elements="HOME_REMEMBER_ME_CHECKBOX">
+			<function object="Click" command="textClickAt" />
+		</conditional>
+		<conditional elements="SIGN_OUT_LINK">
+			<function object="Click" command="textClickAtAndWait" />
+		</conditional>
+	</actiondef>
+</actions>

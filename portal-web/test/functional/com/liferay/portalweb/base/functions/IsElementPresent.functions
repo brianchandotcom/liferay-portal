@@ -1,0 +1,9 @@
+<functions object="IsElementPresent" return="boolean">
+	<functiondef command="isElementPresent">
+		<selenium command="isElementPresent" return="boolean" />
+	</functiondef>
+
+	<functiondef command="isVisible">
+		<selenium command="isVisible" return="boolean" />
+	</functiondef>
+</functions>

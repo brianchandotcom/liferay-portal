@@ -1,0 +1,16 @@
+<testcase
+	name="Login"
+	description="In the Sign In Portlet, login and logout as the super admin."
+>
+	<setup>
+	</setup>
+	<steps>
+		<macro object="User" command="pgSignOut" />
+		<macro object="User" command="pgSignIn">
+			<param name="email" value="test@liferay.com" />
+			<param name="password" value="test" />
+		</macro>
+	</steps>
+	<teardown>
+	</teardown>
+</testcase>

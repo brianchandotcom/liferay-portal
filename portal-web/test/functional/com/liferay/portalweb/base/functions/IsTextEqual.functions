@@ -1,0 +1,5 @@
+<functions object="IsTextEqual" return="boolean">
+	<functiondef command="isText">
+		<selenium command="isText" return="boolean" />
+	</functiondef>
+</functions>

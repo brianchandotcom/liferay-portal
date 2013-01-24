@@ -1,0 +1,123 @@
+<functions object="Click">
+	<functiondef command="click">
+		<selenium command="waitForVisible" />
+		<selenium command="click" />
+	</functiondef>
+
+	<functiondef command="clickAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="clickAndWait" />
+	</functiondef>
+
+	<functiondef command="clickAt">
+		<selenium command="waitForVisible" />
+		<selenium command="clickAt" />
+	</functiondef>
+
+	<functiondef command="clickAtAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="clickAtAndWait" />
+	</functiondef>
+
+	<functiondef command="partialTextClick">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForPartialText" />
+		<selenium command="assertPartialText" />
+		<selenium command="click" />
+	</functiondef>
+
+	<functiondef command="partialTextClickAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForPartialText" />
+		<selenium command="assertPartialText" />
+		<selenium command="clickAndWait" />
+	</functiondef>
+
+	<functiondef command="partialTextClickAt">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForPartialText" />
+		<selenium command="assertPartialText" />
+		<selenium command="clickAt" />
+	</functiondef>
+
+	<functiondef command="partialTextClickAtAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForPartialText" />
+		<selenium command="assertPartialText" />
+		<selenium command="clickAtAndWait" />
+	</functiondef>
+
+	<functiondef command="textClick">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForText" />
+		<selenium command="assertText" />
+		<selenium command="click" />
+	</functiondef>
+
+	<functiondef command="textClickAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForText" />
+		<selenium command="assertText" />
+		<selenium command="clickAndWait" />
+	</functiondef>
+
+	<functiondef command="textClickAt">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForText" />
+		<selenium command="assertText" />
+		<selenium command="clickAt" />
+	</functiondef>
+
+	<functiondef command="textClickAtAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForText" />
+		<selenium command="assertText" />
+		<selenium command="clickAtAndWait" />
+	</functiondef>
+
+	<functiondef command="textClickAtClickDockbar">
+		<selenium command="pause" target="1000" />
+		<selenium command="clickAt" target="//div[@id='dockbar']" value="" />
+		<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
+
+		<function object="Click" command="textClickAt" />
+	</functiondef>
+
+	<functiondef command="textClickAtPause">
+		<selenium command="pause" target="1000" />
+		<function object="Click" command="textClickAt" />
+	</functiondef>
+
+	<functiondef command="valueClick">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForValue" />
+		<selenium command="assertValue" />
+		<selenium command="click" />
+	</functiondef>
+
+	<functiondef command="valueClickAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForValue" />
+		<selenium command="assertValue" />
+		<selenium command="clickAndWait" />
+	</functiondef>
+
+	<functiondef command="valueClickAt">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForValue" />
+		<selenium command="assertValue" />
+		<selenium command="clickAt" />
+	</functiondef>
+
+	<functiondef command="valueClickAtAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForValue" />
+		<selenium command="assertValue" />
+		<selenium command="clickAtAndWait" />
+	</functiondef>
+
+	<functiondef command="valueClickAtAndWaitCpBlogsCkeditor">
+		<selenium command="waitForElementPresent" target="//textarea[@id='_161_editor' and @style='display: none;']" />
+		<function object="Click" command="valueClickAtAndWait" />
+	</functiondef>
+</functions>

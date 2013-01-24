@@ -1,0 +1,8 @@
+<functions object="DragAndDrop" params="2">
+	<functiondef command="dragAndDrop">
+		<selenium command="waitForVisible" target="${target1}" />
+		<selenium command="waitForText" target="${target1}" value="${value1}" />
+		<selenium command="waitForVisible" target="${target2}" />
+		<selenium command="dragAndDropToObject" target="${target1}" value="${target2}" />
+	</functiondef>
+</functions>

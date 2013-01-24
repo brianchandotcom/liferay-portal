@@ -1,0 +1,11 @@
+<functions object="Copy">
+	<functiondef command="textCopy">
+		<selenium command="waitForVisible" />
+		<selenium command="copyText" />
+	</functiondef>
+
+	<functiondef command="valueCopy">
+		<selenium command="waitForVisible" />
+		<selenium command="copyValue" />
+	</functiondef>
+</functions>

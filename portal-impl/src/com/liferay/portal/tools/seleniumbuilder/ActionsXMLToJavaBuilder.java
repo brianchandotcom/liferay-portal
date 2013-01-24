@@ -1,0 +1,401 @@
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.tools.seleniumbuilder;
+
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Element;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
+/**
+ * @author Michael Hashimoto
+ */
+public class ActionsXMLToJavaBuilder extends BaseXMLToJavaBuilder {
+
+	public ActionsXMLToJavaBuilder(Map<String, Object> context)
+		throws Exception {
+
+		super(context);
+
+		_basedir = (String)context.get("basedir");
+		_functionParameterNumberMap = (Map<String, Integer>)context.get(
+			"functionParameterNumberMap");
+		_functionReturnTypeMap = (Map<String, String>)context.get(
+			"functionReturnTypeMap");
+		_seleniumDataUtil = new SeleniumDataUtil(context);
+
+		_seleniumFileUtil = new SeleniumFileUtil(_basedir);
+
+		_validCommands = new TreeSet<String>();
+
+		_validCommands.add("function");
+	}
+
+	public void generateActions(String fileName) throws Exception {
+		if (fileName.length() > 161) {
+			System.out.println(
+				"Exceeds 177 characters: portal-web/test/" + fileName);
+		}
+
+		if (!FileUtil.exists(_basedir + "/" + fileName)) {
+			return;
+		}
+
+		int x = fileName.lastIndexOf(StringPool.SLASH);
+		int y = fileName.indexOf(CharPool.PERIOD);
+
+		String objectFilePath = fileName.substring(0, x);
+		String objectName = fileName.substring(x + 1, y);
+
+		String actionsSimpleClassName = objectName + "Actions";
+		String actionsXMLFileName =
+			objectFilePath + "/" + objectName + ".actions";
+		String objectPackagePath = StringUtil.replace(
+			objectFilePath, StringPool.SLASH, StringPool.PERIOD);
+		String pathsSimpleClassName = objectName + "Paths";
+
+		String actionsFileName =
+			objectFilePath + "/" + actionsSimpleClassName + ".java";
+
+		Element rootElement = null;
+
+		if (FileUtil.exists(_basedir + "/" + actionsXMLFileName)) {
+			rootElement = _seleniumFileUtil.getRootElementByFileName(
+				actionsXMLFileName);
+
+			_seleniumFileUtil.isValidName(actionsXMLFileName, rootElement);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("package ");
+		sb.append(objectPackagePath);
+		sb.append(";\n\n");
+
+		sb.append("import com.liferay.portalweb.base.actions.");
+		sb.append("LiferayActions;\n");
+
+		sb.append("import com.liferay.portalweb.base.actions.");
+		sb.append("LiferayActionsHelper;\n");
+
+		sb.append("import com.liferay.portalweb.portal.util.");
+		sb.append("liferayselenium.LiferaySelenium;\n");
+
+		if (!(rootElement == null)) {
+			sb.append(processBlockImports(rootElement));
+		}
+
+		sb.append("public class ");
+		sb.append(actionsSimpleClassName);
+
+		if (objectName.equals("Liferay")) {
+			sb.append(" extends BaseActions {\n\n");
+		}
+		else {
+			sb.append(" extends LiferayActions {\n\n");
+		}
+
+		sb.append("public ");
+		sb.append(actionsSimpleClassName);
+		sb.append("(LiferaySelenium liferaySelenium) {\n");
+
+		sb.append("super(liferaySelenium);\n");
+
+		sb.append("paths = ");
+		sb.append(pathsSimpleClassName);
+		sb.append(".getPaths();\n");
+
+		sb.append("}\n");
+
+		if (!(rootElement == null)) {
+			sb.append(_processActionDefs(rootElement));
+		}
+
+		sb.append("}");
+
+		_seleniumFileUtil.writeFile(actionsFileName, sb.toString(), true);
+	}
+
+	private String _combineConditionalsFromList(
+		List<String> conditionalList, String delimiter) {
+
+		boolean isFirstConditional = true;
+
+		StringBundler sb = new StringBundler();
+
+		for (String conditional : conditionalList) {
+			if (!isFirstConditional) {
+				sb.append(" " + delimiter + " ");
+			}
+
+			sb.append(conditional);
+
+			isFirstConditional = false;
+		}
+
+		return sb.toString();
+	}
+
+	private boolean _isDefaultConditional(Element conditional) {
+		String defaultConditional = conditional.attributeValue("default");
+
+		return (!(defaultConditional == null) &&
+				defaultConditional.equals("true"));
+	}
+
+	private String _processActionDef(Element actionDef) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		List<Element> conditionals = actionDef.elements("conditional");
+
+		boolean isFirstConditional = true;
+		boolean hasDefaultConditional = false;
+
+		for (Element conditional : conditionals) {
+			boolean isDefaultConditional = _isDefaultConditional(conditional);
+
+			if (isDefaultConditional && isFirstConditional) {
+				hasDefaultConditional = true;
+				isFirstConditional = false;
+
+				sb.append(processBlockCommands(conditional, _validCommands));
+
+				break;
+			}
+			else if (isDefaultConditional) {
+				hasDefaultConditional = true;
+
+				sb.append("else {");
+				sb.append(processBlockCommands(conditional, _validCommands));
+				sb.append("}");
+			}
+			else if (isFirstConditional) {
+				isFirstConditional = false;
+
+				sb.append("if (");
+				sb.append(_processConditional(conditional));
+				sb.append(") {");
+				sb.append(processBlockCommands(conditional, _validCommands));
+				sb.append("}");
+			}
+			else {
+				sb.append("else if (");
+				sb.append(_processConditional(conditional));
+				sb.append(") {");
+				sb.append(processBlockCommands(conditional, _validCommands));
+				sb.append("}");
+			}
+		}
+
+		if (!hasDefaultConditional) {
+			sb.append("else {");
+			sb.append(_processCommandSuper(actionDef));
+			sb.append("}");
+		}
+
+		return sb.toString();
+	}
+
+	private String _processActionDefs(Element rootElement) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		List<Element> actionDefs = rootElement.elements("actiondef");
+
+		for (Element actionDef : actionDefs) {
+			String actionDefCommand = actionDef.attributeValue("command");
+
+			String functionObjectName = StringUtil.upperCaseFirstLetter(
+				actionDefCommand);
+
+			String functionReturnType = _functionReturnTypeMap.get(
+				functionObjectName);
+
+			sb.append("public ");
+			sb.append(functionReturnType);
+			sb.append(" ");
+			sb.append(actionDefCommand);
+
+			int functionParamNumber = _functionParameterNumberMap.get(
+				functionObjectName);
+
+			List<String> functionNumberSuffixList =
+				_seleniumDataUtil.getNumberListByInteger(functionParamNumber);
+
+			String paramList = "";
+
+			for (String suffix : functionNumberSuffixList) {
+				String paramPair = "String target, String value, ";
+
+				paramPair = StringUtil.replace(
+					paramPair, "target", "target" + suffix);
+				paramPair = StringUtil.replace(
+					paramPair, "value", "value" + suffix);
+
+				paramList += paramPair;
+			}
+
+			paramList = paramList.substring(0, paramList.length() - 2);
+
+			sb.append("(");
+			sb.append(paramList);
+			sb.append(") throws Exception {\n");
+
+			for (String suffix : functionNumberSuffixList) {
+				String paramsDeclaration =
+					"String[] params = LiferayActionsHelper.getParams(" +
+						"paths, target, value);\n";
+
+				paramsDeclaration = StringUtil.replace(
+					paramsDeclaration, "params", "params" + suffix);
+				paramsDeclaration = StringUtil.replace(
+					paramsDeclaration, "target", "target" + suffix);
+				paramsDeclaration = StringUtil.replace(
+					paramsDeclaration, "value", "value" + suffix);
+
+				sb.append(paramsDeclaration);
+			}
+
+			sb.append("\n");
+
+			sb.append(processBlockObjectDeclaractions(actionDef));
+
+			sb.append(_processActionDef(actionDef));
+
+			sb.append("}\n");
+		}
+
+		return sb.toString();
+	}
+
+	private String _processCommandSuper(Element actionDef) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		String actionDefCommand = actionDef.attributeValue("command");
+
+		String functionObjectName = StringUtil.upperCaseFirstLetter(
+			actionDefCommand);
+
+		String functionReturnType = _functionReturnTypeMap.get(
+			functionObjectName);
+
+		if (!functionReturnType.equals("void")) {
+			sb.append("return ");
+		}
+
+		sb.append("super.");
+		sb.append(actionDefCommand);
+
+		int functionParamNumber = _functionParameterNumberMap.get(
+			functionObjectName);
+
+		List<String> functionNumberSuffixList =
+			_seleniumDataUtil.getNumberListByInteger(functionParamNumber);
+
+		String paramList = "";
+
+		for (String suffix : functionNumberSuffixList) {
+			String paramPair = "params[0], params[1], ";
+
+			paramPair = StringUtil.replace(
+				paramPair, "params", "params" + suffix);
+
+			paramList += paramPair;
+		}
+
+		paramList = paramList.substring(0, paramList.length() - 2);
+
+		sb.append("(");
+		sb.append(paramList);
+		sb.append(");\n");
+
+		return sb.toString();
+	}
+
+	private String _processConditional(Element conditional) throws Exception {
+		List<String> clauseList = new ArrayList<String>();
+
+		String contains = conditional.attributeValue("contains");
+
+		if (!(contains == null) && !contains.equals("")) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("params[0].contains(\"");
+			sb.append(contains);
+			sb.append("\")");
+
+			clauseList.add(sb.toString());
+		}
+
+		String elements = conditional.attributeValue("elements");
+
+		if (!(elements == null) && !elements.equals("")) {
+			StringBundler sb = new StringBundler();
+
+			String[] elementArray = elements.split(",");
+
+			List<String> elementList = new ArrayList<String>();
+
+			for (String element : elementArray) {
+				elementList.add("target.equals(\"" + element + "\")");
+			}
+
+			sb.append("(");
+			sb.append(_combineConditionalsFromList(elementList, "||"));
+			sb.append(")");
+
+			clauseList.add(sb.toString());
+		}
+
+		String isselenium = conditional.attributeValue("isselenium");
+
+		if (!(isselenium == null) && isselenium.equals("true")) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("LiferayActionsHelper.isSelenium()");
+
+			clauseList.add(sb.toString());
+		}
+
+		String startswith = conditional.attributeValue("startswith");
+
+		if (!(startswith == null) && !startswith.equals("")) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("params[0].startsWith(\"");
+			sb.append(startswith);
+			sb.append("\")");
+
+			clauseList.add(sb.toString());
+		}
+
+		return _combineConditionalsFromList(clauseList, "&&");
+	}
+
+	private String _basedir;
+	private Map<String, Integer> _functionParameterNumberMap;
+	private Map<String, String> _functionReturnTypeMap;
+	private SeleniumDataUtil _seleniumDataUtil;
+	private SeleniumFileUtil _seleniumFileUtil;
+	private Set<String> _validCommands;
+
+}

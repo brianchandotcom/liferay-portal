@@ -23,6 +23,7 @@
 		<ant dir="portal-impl" target="clean" inheritAll="false" />
 
 		<ant dir="osgi/bootstrap" target="clean" inheritAll="false" />
+		<ant dir="osgi/modules" target="clean" inheritAll="false" />
 
 		<ant dir="portal-web" target="clean" inheritAll="false" />
 
@@ -146,6 +147,7 @@
 		<ant dir="portal-impl" target="compile" inheritAll="false" />
 
 		<ant dir="osgi/bootstrap" target="compile" inheritAll="false" />
+		<ant dir="osgi/modules" target="compile" inheritAll="false" />
 	</target>
 
 	<target name="deploy">
@@ -188,6 +190,7 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		<ant dir="portal-impl" target="deploy" inheritAll="false" />
 
 		<ant dir="osgi/bootstrap" target="deploy" inheritAll="false" />
+		<ant dir="osgi/modules" target="deploy" inheritAll="false" />
 
 		<ant dir="portal-web" target="deploy" inheritAll="false" />
 
@@ -554,6 +557,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		<ant dir="portal-impl" target="jar" inheritAll="false" />
 
 		<ant dir="osgi/bootstrap" target="jar" inheritAll="false" />
+		<ant dir="osgi/modules" target="jar" inheritAll="false" />
 
 		<ant dir="portal-web" target="war" inheritAll="false" />
 

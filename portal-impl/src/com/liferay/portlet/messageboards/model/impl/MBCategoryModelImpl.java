@@ -796,8 +796,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 			return value;
 		}
 
-		value = getName().toLowerCase()
-					.compareTo(mbCategory.getName().toLowerCase());
+		value = getName().compareToIgnoreCase(mbCategory.getName());
 
 		if (value != 0) {
 			return value;

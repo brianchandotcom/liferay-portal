@@ -802,8 +802,7 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 			return value;
 		}
 
-		value = getName().toLowerCase()
-					.compareTo(bookmarksEntry.getName().toLowerCase());
+		value = getName().compareToIgnoreCase(bookmarksEntry.getName());
 
 		if (value != 0) {
 			return value;

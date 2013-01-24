@@ -901,8 +901,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			return value;
 		}
 
-		value = getName().toLowerCase()
-					.compareTo(dlFolder.getName().toLowerCase());
+		value = getName().compareToIgnoreCase(dlFolder.getName());
 
 		if (value != 0) {
 			return value;

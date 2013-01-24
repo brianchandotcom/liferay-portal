@@ -678,7 +678,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public int compareTo(Group group) {
 		int value = 0;
 
-		value = getName().toLowerCase().compareTo(group.getName().toLowerCase());
+		value = getName().compareToIgnoreCase(group.getName());
 
 		if (value != 0) {
 			return value;

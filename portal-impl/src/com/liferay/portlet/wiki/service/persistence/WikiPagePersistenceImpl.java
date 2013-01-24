@@ -3091,7 +3091,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title);
+					qPos.add(title.toLowerCase());
 				}
 
 				if (!pagination) {
@@ -3378,7 +3378,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindTitle) {
-			qPos.add(title);
+			qPos.add(title.toLowerCase());
 		}
 
 		if (orderByComparator != null) {
@@ -3465,7 +3465,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title);
+					qPos.add(title.toLowerCase());
 				}
 
 				count = (Long)q.uniqueResult();
@@ -3487,7 +3487,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	private static final String _FINDER_COLUMN_N_T_NODEID_2 = "wikiPage.nodeId = ? AND ";
 	private static final String _FINDER_COLUMN_N_T_TITLE_1 = "wikiPage.title IS NULL";
-	private static final String _FINDER_COLUMN_N_T_TITLE_2 = "lower(wikiPage.title) = lower(CAST_TEXT(?))";
+	private static final String _FINDER_COLUMN_N_T_TITLE_2 = "lower(wikiPage.title) = ?";
 	private static final String _FINDER_COLUMN_N_T_TITLE_3 = "(wikiPage.title IS NULL OR wikiPage.title = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_N_H = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
@@ -4157,7 +4157,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle);
+					qPos.add(parentTitle.toLowerCase());
 				}
 
 				if (!pagination) {
@@ -4447,7 +4447,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindParentTitle) {
-			qPos.add(parentTitle);
+			qPos.add(parentTitle.toLowerCase());
 		}
 
 		if (orderByComparator != null) {
@@ -4535,7 +4535,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle);
+					qPos.add(parentTitle.toLowerCase());
 				}
 
 				count = (Long)q.uniqueResult();
@@ -4557,7 +4557,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	private static final String _FINDER_COLUMN_N_P_NODEID_2 = "wikiPage.nodeId = ? AND ";
 	private static final String _FINDER_COLUMN_N_P_PARENTTITLE_1 = "wikiPage.parentTitle IS NULL";
-	private static final String _FINDER_COLUMN_N_P_PARENTTITLE_2 = "lower(wikiPage.parentTitle) = lower(CAST_TEXT(?))";
+	private static final String _FINDER_COLUMN_N_P_PARENTTITLE_2 = "lower(wikiPage.parentTitle) = ?";
 	private static final String _FINDER_COLUMN_N_P_PARENTTITLE_3 = "(wikiPage.parentTitle IS NULL OR wikiPage.parentTitle = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_N_R = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
@@ -4718,7 +4718,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindRedirectTitle) {
-					qPos.add(redirectTitle);
+					qPos.add(redirectTitle.toLowerCase());
 				}
 
 				if (!pagination) {
@@ -5008,7 +5008,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindRedirectTitle) {
-			qPos.add(redirectTitle);
+			qPos.add(redirectTitle.toLowerCase());
 		}
 
 		if (orderByComparator != null) {
@@ -5096,7 +5096,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindRedirectTitle) {
-					qPos.add(redirectTitle);
+					qPos.add(redirectTitle.toLowerCase());
 				}
 
 				count = (Long)q.uniqueResult();
@@ -5118,7 +5118,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	private static final String _FINDER_COLUMN_N_R_NODEID_2 = "wikiPage.nodeId = ? AND ";
 	private static final String _FINDER_COLUMN_N_R_REDIRECTTITLE_1 = "wikiPage.redirectTitle IS NULL";
-	private static final String _FINDER_COLUMN_N_R_REDIRECTTITLE_2 = "lower(wikiPage.redirectTitle) = lower(CAST_TEXT(?))";
+	private static final String _FINDER_COLUMN_N_R_REDIRECTTITLE_2 = "lower(wikiPage.redirectTitle) = ?";
 	private static final String _FINDER_COLUMN_N_R_REDIRECTTITLE_3 = "(wikiPage.redirectTitle IS NULL OR wikiPage.redirectTitle = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_N_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
@@ -9589,7 +9589,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title);
+					qPos.add(title.toLowerCase());
 				}
 
 				qPos.add(version);
@@ -9706,7 +9706,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title);
+					qPos.add(title.toLowerCase());
 				}
 
 				qPos.add(version);
@@ -9730,7 +9730,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	private static final String _FINDER_COLUMN_N_T_V_NODEID_2 = "wikiPage.nodeId = ? AND ";
 	private static final String _FINDER_COLUMN_N_T_V_TITLE_1 = "wikiPage.title IS NULL AND ";
-	private static final String _FINDER_COLUMN_N_T_V_TITLE_2 = "lower(wikiPage.title) = lower(CAST_TEXT(?)) AND ";
+	private static final String _FINDER_COLUMN_N_T_V_TITLE_2 = "lower(wikiPage.title) = ? AND ";
 	private static final String _FINDER_COLUMN_N_T_V_TITLE_3 = "(wikiPage.title IS NULL OR wikiPage.title = '') AND ";
 	private static final String _FINDER_COLUMN_N_T_V_VERSION_2 = "wikiPage.version = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_N_T_H = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
@@ -9904,7 +9904,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title);
+					qPos.add(title.toLowerCase());
 				}
 
 				qPos.add(head);
@@ -10209,7 +10209,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindTitle) {
-			qPos.add(title);
+			qPos.add(title.toLowerCase());
 		}
 
 		qPos.add(head);
@@ -10303,7 +10303,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title);
+					qPos.add(title.toLowerCase());
 				}
 
 				qPos.add(head);
@@ -10327,7 +10327,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	private static final String _FINDER_COLUMN_N_T_H_NODEID_2 = "wikiPage.nodeId = ? AND ";
 	private static final String _FINDER_COLUMN_N_T_H_TITLE_1 = "wikiPage.title IS NULL AND ";
-	private static final String _FINDER_COLUMN_N_T_H_TITLE_2 = "lower(wikiPage.title) = lower(CAST_TEXT(?)) AND ";
+	private static final String _FINDER_COLUMN_N_T_H_TITLE_2 = "lower(wikiPage.title) = ? AND ";
 	private static final String _FINDER_COLUMN_N_T_H_TITLE_3 = "(wikiPage.title IS NULL OR wikiPage.title = '') AND ";
 	private static final String _FINDER_COLUMN_N_T_H_HEAD_2 = "wikiPage.head = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_N_T_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
@@ -10501,7 +10501,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title);
+					qPos.add(title.toLowerCase());
 				}
 
 				qPos.add(status);
@@ -10806,7 +10806,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindTitle) {
-			qPos.add(title);
+			qPos.add(title.toLowerCase());
 		}
 
 		qPos.add(status);
@@ -10900,7 +10900,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title);
+					qPos.add(title.toLowerCase());
 				}
 
 				qPos.add(status);
@@ -10924,7 +10924,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 	private static final String _FINDER_COLUMN_N_T_S_NODEID_2 = "wikiPage.nodeId = ? AND ";
 	private static final String _FINDER_COLUMN_N_T_S_TITLE_1 = "wikiPage.title IS NULL AND ";
-	private static final String _FINDER_COLUMN_N_T_S_TITLE_2 = "lower(wikiPage.title) = lower(CAST_TEXT(?)) AND ";
+	private static final String _FINDER_COLUMN_N_T_S_TITLE_2 = "lower(wikiPage.title) = ? AND ";
 	private static final String _FINDER_COLUMN_N_T_S_TITLE_3 = "(wikiPage.title IS NULL OR wikiPage.title = '') AND ";
 	private static final String _FINDER_COLUMN_N_T_S_STATUS_2 = "wikiPage.status = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_N_H_P = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
@@ -11101,7 +11101,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle);
+					qPos.add(parentTitle.toLowerCase());
 				}
 
 				if (!pagination) {
@@ -11408,7 +11408,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (bindParentTitle) {
-			qPos.add(parentTitle);
+			qPos.add(parentTitle.toLowerCase());
 		}
 
 		if (orderByComparator != null) {
@@ -11502,7 +11502,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle);
+					qPos.add(parentTitle.toLowerCase());
 				}
 
 				count = (Long)q.uniqueResult();
@@ -11525,7 +11525,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	private static final String _FINDER_COLUMN_N_H_P_NODEID_2 = "wikiPage.nodeId = ? AND ";
 	private static final String _FINDER_COLUMN_N_H_P_HEAD_2 = "wikiPage.head = ? AND ";
 	private static final String _FINDER_COLUMN_N_H_P_PARENTTITLE_1 = "wikiPage.parentTitle IS NULL";
-	private static final String _FINDER_COLUMN_N_H_P_PARENTTITLE_2 = "lower(wikiPage.parentTitle) = lower(CAST_TEXT(?))";
+	private static final String _FINDER_COLUMN_N_H_P_PARENTTITLE_2 = "lower(wikiPage.parentTitle) = ?";
 	private static final String _FINDER_COLUMN_N_H_P_PARENTTITLE_3 = "(wikiPage.parentTitle IS NULL OR wikiPage.parentTitle = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_N_H_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageModelImpl.FINDER_CACHE_ENABLED, WikiPageImpl.class,
@@ -13266,7 +13266,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title);
+					qPos.add(title.toLowerCase());
 				}
 
 				qPos.add(head);
@@ -13589,7 +13589,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindTitle) {
-			qPos.add(title);
+			qPos.add(title.toLowerCase());
 		}
 
 		qPos.add(head);
@@ -13761,7 +13761,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			qPos.add(nodeId);
 
 			if (bindTitle) {
-				qPos.add(title);
+				qPos.add(title.toLowerCase());
 			}
 
 			qPos.add(head);
@@ -13968,7 +13968,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindTitle) {
-			qPos.add(title);
+			qPos.add(title.toLowerCase());
 		}
 
 		qPos.add(head);
@@ -14068,7 +14068,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title);
+					qPos.add(title.toLowerCase());
 				}
 
 				qPos.add(head);
@@ -14151,7 +14151,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			qPos.add(nodeId);
 
 			if (bindTitle) {
-				qPos.add(title);
+				qPos.add(title.toLowerCase());
 			}
 
 			qPos.add(head);
@@ -14171,7 +14171,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	private static final String _FINDER_COLUMN_G_N_T_H_GROUPID_2 = "wikiPage.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_T_H_NODEID_2 = "wikiPage.nodeId = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_T_H_TITLE_1 = "wikiPage.title IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_N_T_H_TITLE_2 = "lower(wikiPage.title) = lower(CAST_TEXT(?)) AND ";
+	private static final String _FINDER_COLUMN_G_N_T_H_TITLE_2 = "lower(wikiPage.title) = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_T_H_TITLE_3 = "(wikiPage.title IS NULL OR wikiPage.title = '') AND ";
 	private static final String _FINDER_COLUMN_G_N_T_H_HEAD_2 = "wikiPage.head = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_N_H_S = new FinderPath(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
@@ -15360,7 +15360,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle);
+					qPos.add(parentTitle.toLowerCase());
 				}
 
 				qPos.add(status);
@@ -15683,7 +15683,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (bindParentTitle) {
-			qPos.add(parentTitle);
+			qPos.add(parentTitle.toLowerCase());
 		}
 
 		qPos.add(status);
@@ -15783,7 +15783,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle);
+					qPos.add(parentTitle.toLowerCase());
 				}
 
 				qPos.add(status);
@@ -15808,7 +15808,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	private static final String _FINDER_COLUMN_N_H_P_S_NODEID_2 = "wikiPage.nodeId = ? AND ";
 	private static final String _FINDER_COLUMN_N_H_P_S_HEAD_2 = "wikiPage.head = ? AND ";
 	private static final String _FINDER_COLUMN_N_H_P_S_PARENTTITLE_1 = "wikiPage.parentTitle IS NULL AND ";
-	private static final String _FINDER_COLUMN_N_H_P_S_PARENTTITLE_2 = "lower(wikiPage.parentTitle) = lower(CAST_TEXT(?)) AND ";
+	private static final String _FINDER_COLUMN_N_H_P_S_PARENTTITLE_2 = "lower(wikiPage.parentTitle) = ? AND ";
 	private static final String _FINDER_COLUMN_N_H_P_S_PARENTTITLE_3 = "(wikiPage.parentTitle IS NULL OR wikiPage.parentTitle = '') AND ";
 	private static final String _FINDER_COLUMN_N_H_P_S_STATUS_2 = "wikiPage.status = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_N_H_P_S =
@@ -16008,7 +16008,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle);
+					qPos.add(parentTitle.toLowerCase());
 				}
 
 				qPos.add(status);
@@ -16349,7 +16349,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (bindParentTitle) {
-			qPos.add(parentTitle);
+			qPos.add(parentTitle.toLowerCase());
 		}
 
 		qPos.add(status);
@@ -16528,7 +16528,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			qPos.add(head);
 
 			if (bindParentTitle) {
-				qPos.add(parentTitle);
+				qPos.add(parentTitle.toLowerCase());
 			}
 
 			qPos.add(status);
@@ -16743,7 +16743,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (bindParentTitle) {
-			qPos.add(parentTitle);
+			qPos.add(parentTitle.toLowerCase());
 		}
 
 		qPos.add(status);
@@ -16851,7 +16851,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle);
+					qPos.add(parentTitle.toLowerCase());
 				}
 
 				qPos.add(status);
@@ -16939,7 +16939,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			qPos.add(head);
 
 			if (bindParentTitle) {
-				qPos.add(parentTitle);
+				qPos.add(parentTitle.toLowerCase());
 			}
 
 			qPos.add(status);
@@ -16960,7 +16960,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	private static final String _FINDER_COLUMN_G_N_H_P_S_NODEID_2 = "wikiPage.nodeId = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_H_P_S_HEAD_2 = "wikiPage.head = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_H_P_S_PARENTTITLE_1 = "wikiPage.parentTitle IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_N_H_P_S_PARENTTITLE_2 = "lower(wikiPage.parentTitle) = lower(CAST_TEXT(?)) AND ";
+	private static final String _FINDER_COLUMN_G_N_H_P_S_PARENTTITLE_2 = "lower(wikiPage.parentTitle) = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_H_P_S_PARENTTITLE_3 = "(wikiPage.parentTitle IS NULL OR wikiPage.parentTitle = '') AND ";
 	private static final String _FINDER_COLUMN_G_N_H_P_S_STATUS_2 = "wikiPage.status = ?";
 

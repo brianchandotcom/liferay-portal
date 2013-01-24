@@ -736,7 +736,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindName) {
-					qPos.add(name);
+					qPos.add(name.toLowerCase());
 				}
 
 				if (bindActionId) {
@@ -861,7 +861,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindName) {
-					qPos.add(name);
+					qPos.add(name.toLowerCase());
 				}
 
 				if (bindActionId) {
@@ -886,7 +886,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	}
 
 	private static final String _FINDER_COLUMN_N_A_NAME_1 = "resourceAction.name IS NULL AND ";
-	private static final String _FINDER_COLUMN_N_A_NAME_2 = "lower(resourceAction.name) = lower(CAST_TEXT(?)) AND ";
+	private static final String _FINDER_COLUMN_N_A_NAME_2 = "lower(resourceAction.name) = ? AND ";
 	private static final String _FINDER_COLUMN_N_A_NAME_3 = "(resourceAction.name IS NULL OR resourceAction.name = '') AND ";
 	private static final String _FINDER_COLUMN_N_A_ACTIONID_1 = "resourceAction.actionId IS NULL";
 	private static final String _FINDER_COLUMN_N_A_ACTIONID_2 = "resourceAction.actionId = ?";

@@ -42,9 +42,9 @@ public class MoveDMFolderImageToFolderMGTests extends BaseTestSuite {
 		testSuite.addTestSuite(ConfigurePortletMGShowNavigationLinksTest.class);
 		testSuite.addTestSuite(ViewPortletMGShowSearchCheckedTest.class);
 		testSuite.addTestSuite(AddDMFolder1MGTest.class);
-		testSuite.addTestSuite(AddDMFolderImageMGTest.class);
+		testSuite.addTestSuite(AddDMFolder1ImageMGTest.class);
 		testSuite.addTestSuite(AddDMFolder2MGTest.class);
-		testSuite.addTestSuite(MoveDMFolderImageToFolderMGTest.class);
+		testSuite.addTestSuite(MoveDMFolder1ImageToFolder2MGTest.class);
 		testSuite.addTestSuite(ViewMoveDMFolderImageToFolderMGTest.class);
 		testSuite.addTestSuite(TearDownDMFolderMGTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

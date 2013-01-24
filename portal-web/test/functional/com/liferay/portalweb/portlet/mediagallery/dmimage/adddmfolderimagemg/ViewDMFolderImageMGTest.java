@@ -45,7 +45,7 @@ public class ViewDMFolderImageMGTest extends BaseTestCase {
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("DM Folder Image Title"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.waitForVisible("//img[@class='aui-image-viewer-image']");
 		assertEquals(RuntimeVariables.replace(
 				"DM Folder Image Title - DM Folder Image Description"),
@@ -62,8 +62,6 @@ public class ViewDMFolderImageMGTest extends BaseTestCase {
 				"//div[@class='lfr-image-gallery-actions']/div/div/span[4]/a/img[@alt='Permissions']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-image-gallery-actions']/div/div/span[5]/a/img[@alt='Move to the Recycle Bin']"));
-		assertTrue(selenium.isVisible(
-				"//span[@class='aui-image-gallery-paginator-thumb']"));
 		assertTrue(selenium.isVisible(
 				"//span[@class='aui-image-gallery-player-content']/span/span/button[@id='play']"));
 		assertTrue(selenium.isVisible(

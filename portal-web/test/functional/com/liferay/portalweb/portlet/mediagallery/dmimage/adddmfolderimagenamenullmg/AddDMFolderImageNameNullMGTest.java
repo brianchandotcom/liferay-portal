@@ -64,11 +64,10 @@ public class AddDMFolderImageNameNullMGTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+		assertEquals(RuntimeVariables.replace("Document_1.jpg"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
-			RuntimeVariables.replace("DM Folder Name"));
-		selenium.waitForPageToLoad("30000");
+			RuntimeVariables.replace("Document_1.jpg"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Document_1.jpg"),

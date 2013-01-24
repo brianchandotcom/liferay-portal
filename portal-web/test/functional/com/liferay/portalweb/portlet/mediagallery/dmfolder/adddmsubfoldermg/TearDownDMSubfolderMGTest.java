@@ -63,7 +63,7 @@ public class TearDownDMSubfolderMGTest extends BaseTestCase {
 						"The selected item was moved to the Recycle Bin. Undo"),
 					selenium.getText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean subfolder2present = selenium.isElementPresent(
 						"//span[@class='image-thumbnail']");
@@ -89,7 +89,7 @@ public class TearDownDMSubfolderMGTest extends BaseTestCase {
 						"The selected item was moved to the Recycle Bin. Undo"),
 					selenium.getText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean subfolder3present = selenium.isElementPresent(
 						"//span[@class='image-thumbnail']");
@@ -115,7 +115,7 @@ public class TearDownDMSubfolderMGTest extends BaseTestCase {
 						"The selected item was moved to the Recycle Bin. Undo"),
 					selenium.getText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean subfolder4present = selenium.isElementPresent(
 						"//span[@class='image-thumbnail']");
@@ -141,7 +141,7 @@ public class TearDownDMSubfolderMGTest extends BaseTestCase {
 						"The selected item was moved to the Recycle Bin. Undo"),
 					selenium.getText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean subfolder5present = selenium.isElementPresent(
 						"//span[@class='image-thumbnail']");
@@ -167,7 +167,6 @@ public class TearDownDMSubfolderMGTest extends BaseTestCase {
 						"The selected item was moved to the Recycle Bin. Undo"),
 					selenium.getText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-				Thread.sleep(5000);
 
 			case 2:
 			case 3:
@@ -183,35 +182,38 @@ public class TearDownDMSubfolderMGTest extends BaseTestCase {
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 				selenium.waitForVisible("link=Control Panel");
-				assertEquals(RuntimeVariables.replace("Control Panel"),
-					selenium.getText("link=Control Panel"));
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Recycle Bin"),
-					selenium.getText("link=Recycle Bin"));
 				selenium.clickAt("link=Recycle Bin",
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean recycleBinEmpty = selenium.isElementPresent(
-						"//div[@class='portlet-msg-info']");
+						"//a[@class='trash-empty-link']");
 
-				if (recycleBinEmpty) {
+				if (!recycleBinEmpty) {
 					label = 7;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
-					selenium.getText("link=Empty the Recycle Bin"));
-				selenium.clickAt("link=Empty the Recycle Bin",
+					selenium.getText("//a[@class='trash-empty-link']"));
+				selenium.clickAt("//a[@class='trash-empty-link']",
 					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to empty the Recycle Bin?");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 7:
+				assertEquals(RuntimeVariables.replace(
+						"The Recycle Bin is empty."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+
 			case 100:
 				label = -1;
 			}

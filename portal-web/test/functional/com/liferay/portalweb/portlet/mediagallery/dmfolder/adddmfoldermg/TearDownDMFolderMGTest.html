@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -165,7 +165,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -244,19 +244,9 @@
 	<td>Control Panel</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=Control Panel</td>
-	<td>Control Panel</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>link=Recycle Bin</td>
-	<td>Recycle Bin</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -265,28 +255,33 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>//a[@class='trash-empty-link']</td>
 	<td>recycleBinEmpty</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>${recycleBinEmpty}</td>
+	<td>!${recycleBinEmpty}</td>
 	<td>RecycleBinEmpty</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Empty the Recycle Bin</td>
+	<td>//a[@class='trash-empty-link']</td>
 	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Empty the Recycle Bin</td>
+	<td>//a[@class='trash-empty-link']</td>
 	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to empty the Recycle Bin?</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>

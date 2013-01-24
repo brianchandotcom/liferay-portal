@@ -71,16 +71,12 @@ public class AddDMSubfolderImageMGTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//span[@class='image-title']"));
-		selenium.clickAt("//span[@class='image-title']",
-			RuntimeVariables.replace("DM Folder Name"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DM Subfolder Name"),
+		assertEquals(RuntimeVariables.replace("DM Subfolder Image Title"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("DM Subfolder Name"));
-		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
+		selenium.waitForVisible("//img[@class='aui-image-viewer-image']");
 		assertEquals(RuntimeVariables.replace("DM Subfolder Image Title"),
 			selenium.getText("//span[@class='image-title']"));
 	}

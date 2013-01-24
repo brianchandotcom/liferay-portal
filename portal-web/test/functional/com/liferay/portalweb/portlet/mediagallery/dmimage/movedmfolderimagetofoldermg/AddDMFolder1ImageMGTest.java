@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddDMFolderImageMGTest extends BaseTestCase {
-	public void testAddDMFolderImageMG() throws Exception {
+public class AddDMFolder1ImageMGTest extends BaseTestCase {
+	public void testAddDMFolder1ImageMG() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -59,23 +59,22 @@ public class AddDMFolderImageMGTest extends BaseTestCase {
 		selenium.uploadCommonFile("//input[@id='_31_file']",
 			RuntimeVariables.replace("Document_1.jpg"));
 		selenium.type("//input[@id='_31_title']",
-			RuntimeVariables.replace("DM Folder Image Title"));
+			RuntimeVariables.replace("DM Folder1 Image Title"));
 		selenium.type("//textarea[@id='_31_description']",
-			RuntimeVariables.replace("DM Folder Image Description"));
+			RuntimeVariables.replace("DM Folder1 Image Description"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
+		assertEquals(RuntimeVariables.replace("DM Folder1 Image Title"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
-			RuntimeVariables.replace("DM Folder1 Name"));
-		selenium.waitForPageToLoad("30000");
+			RuntimeVariables.replace("DM Folder1 Image Title"));
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
+		assertEquals(RuntimeVariables.replace("DM Folder1 Image Title"),
 			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
 	}
 }

@@ -41,7 +41,11 @@ public class ViewMoveDMFolderImageToFolderMGTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertFalse(selenium.isTextPresent("DM Folder Image Title"));
+		assertEquals(RuntimeVariables.replace(
+				"There are no media files in this folder."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertTrue(selenium.isElementNotPresent("//span[@class='image-title']"));
+		assertFalse(selenium.isTextPresent("DM Folder1 Image Title"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
@@ -53,19 +57,19 @@ public class ViewMoveDMFolderImageToFolderMGTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
+		assertEquals(RuntimeVariables.replace("DM Folder1 Image Title"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
-			RuntimeVariables.replace("DM Folder Image Title"));
-		Thread.sleep(5000);
+			RuntimeVariables.replace("DM Folder1 Image Title"));
+		Thread.sleep(1000);
 		selenium.waitForVisible("//img[@class='aui-image-viewer-image']");
 		assertEquals(RuntimeVariables.replace(
-				"DM Folder Image Title - DM Folder Image Description"),
+				"DM Folder1 Image Title - DM Folder1 Image Description"),
 			selenium.getText("//div[@class='aui-image-viewer-caption']"));
 		assertEquals(RuntimeVariables.replace("Image 1 of 1"),
 			selenium.getText("//div[@class='aui-image-viewer-info']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='lfr-image-gallery-actions']/div/div/span[1]/a/img[@alt='Download (12.9k)']"));
+				"//div[@class='lfr-image-gallery-actions']/div/div/span[1]/a/img[@alt='Download (13k)']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-image-gallery-actions']/div/div/span[2]/a/img[@alt='View']"));
 		assertTrue(selenium.isVisible(
@@ -73,9 +77,7 @@ public class ViewMoveDMFolderImageToFolderMGTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-image-gallery-actions']/div/div/span[4]/a/img[@alt='Permissions']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='lfr-image-gallery-actions']/div/div/span[5]/a/img[@alt='Delete']"));
-		assertTrue(selenium.isVisible(
-				"//span[@class='aui-image-gallery-paginator-thumb']"));
+				"//div[@class='lfr-image-gallery-actions']/div/div/span[5]/a/img[@alt='Move to the Recycle Bin']"));
 		assertTrue(selenium.isVisible(
 				"//span[@class='aui-image-gallery-player-content']/span/span/button[@id='play']"));
 		assertTrue(selenium.isVisible(

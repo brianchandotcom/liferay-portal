@@ -33,8 +33,7 @@ public class SearchDMFolderImageMGTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible(
-				"//a[@class='image-thumbnail preview aui-image-viewer-link']/img"));
+		assertTrue(selenium.isVisible("//span[@class='image-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.open("/web/guest/home/");
@@ -47,7 +46,7 @@ public class SearchDMFolderImageMGTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent(
-				"//a[@class='image-thumbnail preview aui-image-viewer-link']/img"));
+				"//span[@class='image-thumbnail']/img"));
 		assertFalse(selenium.isTextPresent("DM Folder Image Title"));
 	}
 }

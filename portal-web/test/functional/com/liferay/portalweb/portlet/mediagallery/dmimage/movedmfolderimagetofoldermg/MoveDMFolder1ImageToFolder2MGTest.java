@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MoveDMFolderImageToFolderMGTest extends BaseTestCase {
-	public void testMoveDMFolderImageToFolderMG() throws Exception {
+public class MoveDMFolder1ImageToFolder2MGTest extends BaseTestCase {
+	public void testMoveDMFolder1ImageToFolder2MG() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -35,10 +35,10 @@ public class MoveDMFolderImageToFolderMGTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
+		assertEquals(RuntimeVariables.replace("DM Folder1 Image Title"),
 			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
 		selenium.clickAt("xPath=(//span[@class='image-title'])[1]",
-			RuntimeVariables.replace("DM Folder Image Title"));
+			RuntimeVariables.replace("DM Folder1 Image Title"));
 		selenium.waitForVisible(
 			"//div[contains(@class,'image-viewer-content')]/div/div[contains(@class,'image-viewer-caption')]");
 		selenium.clickAt("//img[@title='View']",
@@ -90,7 +90,7 @@ public class MoveDMFolderImageToFolderMGTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@class='image-title'])[2]",
 			RuntimeVariables.replace("DM Folder2 Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
+		assertEquals(RuntimeVariables.replace("DM Folder1 Image Title"),
 			selenium.getText("//span[@class='image-title']"));
 	}
 }

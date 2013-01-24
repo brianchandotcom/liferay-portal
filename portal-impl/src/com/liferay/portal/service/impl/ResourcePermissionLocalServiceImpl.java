@@ -18,9 +18,14 @@ import com.liferay.portal.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.concurrent.LockRegistry;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,6 +43,7 @@ import com.liferay.portal.service.base.ResourcePermissionLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.ResourcePermissionsThreadLocal;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -167,38 +173,87 @@ public class ResourcePermissionLocalServiceImpl
 
 		List<Role> roles = rolePersistence.findByName(roleName);
 
-		for (Role role : roles) {
-			List<String> primKeys = resourcePermissionFinder.findByC_N_S(
-				role.getCompanyId(), resourceName, scope);
+		if (roles.isEmpty()) {
+			return;
+		}
 
-			for (String primKey : primKeys) {
-				ResourcePermission resourcePermission =
-					resourcePermissionPersistence.fetchByC_N_S_P_R(
-						role.getCompanyId(), resourceName, scope, primKey,
-						role.getRoleId());
+		Session session = resourcePermissionPersistence.openSession();
 
-				if (resourcePermission == null) {
-					long resourcePermissionId = counterLocalService.increment(
-						ResourcePermission.class.getName());
+		try {
 
-					resourcePermission = resourcePermissionPersistence.create(
-						resourcePermissionId);
+			// 1) Update exist ResourcePermissions' actionIds
 
-					resourcePermission.setCompanyId(role.getCompanyId());
-					resourcePermission.setName(resourceName);
-					resourcePermission.setScope(scope);
-					resourcePermission.setPrimKey(primKey);
-					resourcePermission.setRoleId(role.getRoleId());
-				}
+			String sql = CustomSQLUtil.get(_UPDATE_ACTIONIDS);
 
-				long actionIdsLong = resourcePermission.getActionIds();
+			String roleIds = ListUtil.toString(roles, Role.ROLE_ID_ACCESSOR);
 
-				actionIdsLong |= resourceActionBitwiseValue;
+			sql = StringUtil.replace(sql, "[$ROLE_ID$]", roleIds);
 
-				resourcePermission.setActionIds(actionIdsLong);
+			SQLQuery sqlQuery = session.createSQLQuery(sql);
 
-				resourcePermissionPersistence.update(resourcePermission);
+			QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(resourceActionBitwiseValue);
+			qPos.add(resourceActionBitwiseValue);
+			qPos.add(resourceName);
+			qPos.add(scope);
+
+			sqlQuery.executeUpdate();
+
+			// 2) Add missing ResourcePermissions
+
+			sql = CustomSQLUtil.get(_FIND_MISSING_RESOURCEPERMISSIONS);
+
+			sqlQuery = session.createSQLQuery(sql);
+
+			sqlQuery.addScalar("temp.companyId", Type.LONG);
+			sqlQuery.addScalar("temp.name", Type.STRING);
+			sqlQuery.addScalar("temp.scope", Type.INTEGER);
+			sqlQuery.addScalar("temp.primKey", Type.STRING);
+			sqlQuery.addScalar("role.roleId", Type.LONG);
+
+			qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(resourceName);
+			qPos.add(scope);
+			qPos.add(roleName);
+
+			List<Object[]> resourcePermissionKeys = sqlQuery.list(true);
+
+			if (resourcePermissionKeys.isEmpty()) {
+				return;
 			}
+
+			for (Object[] resourcePermissionKey : resourcePermissionKeys) {
+				Long tempCompanyId = (Long)resourcePermissionKey[0];
+				String tempName = (String)resourcePermissionKey[1];
+				Integer tempScope = (Integer)resourcePermissionKey[2];
+				String tempPrimKey = (String)resourcePermissionKey[3];
+				Long tempRoleId = (Long)resourcePermissionKey[4];
+
+				long resourcePermissionId = counterLocalService.increment(
+					ResourcePermission.class.getName());
+
+				ResourcePermission resourcePermission =
+					resourcePermissionPersistence.create(resourcePermissionId);
+
+				resourcePermission.setCompanyId(tempCompanyId);
+				resourcePermission.setName(tempName);
+				resourcePermission.setScope(tempScope);
+				resourcePermission.setPrimKey(tempPrimKey);
+				resourcePermission.setRoleId(tempRoleId);
+				resourcePermission.setActionIds(resourceActionBitwiseValue);
+
+				session.save(resourcePermission);
+			}
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			resourcePermissionPersistence.closeSession(session);
+
+			resourcePermissionPersistence.clearCache();
 		}
 	}
 
@@ -1285,5 +1340,13 @@ public class ResourcePermissionLocalServiceImpl
 			LockRegistry.freeLock(groupName, key);
 		}
 	}
+
+	private static final String _FIND_MISSING_RESOURCEPERMISSIONS =
+		ResourcePermissionLocalServiceImpl.class.getName() +
+			".findMissingResourcePermissions";
+
+	private static final String _UPDATE_ACTIONIDS =
+		ResourcePermissionLocalServiceImpl.class.getName() +
+			".updateActionIds";
 
 }

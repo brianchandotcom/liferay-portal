@@ -86,6 +86,50 @@
 				(resourceBlockId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl.updateActionIds">
+		<![CDATA[
+			UPDATE
+				ResourcePermission
+			SET
+				actionIds = actionIds + ? - BITAND(CAST_LONG(ResourcePermission.actionIds), ?)
+			WHERE
+				(ResourcePermission.name = ?) AND
+				(ResourcePermission.scope = ?) AND
+				(ResourcePermission.roleId IN ([$ROLE_ID$]))
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl.findMissingResourcePermissions">
+		<![CDATA[
+			SELECT
+				temp.companyId, temp.name, temp.scope, temp.primKey, role.roleId
+			FROM (
+				SELECT
+					DISTINCT ResourcePermission.companyId, ResourcePermission.name, ResourcePermission.scope, ResourcePermission.primKey
+				FROM
+					ResourcePermission
+				WHERE
+					(ResourcePermission.name = ?) AND
+					(ResourcePermission.scope = ?)
+			) AS temp
+			CROSS JOIN
+				Role_ AS role
+			WHERE
+				(temp.companyId = role.companyId) AND
+				NOT EXISTS (
+					SELECT
+						*
+					FROM
+						ResourcePermission AS rp
+					WHERE
+						(temp.companyId = rp.companyId) AND
+						(temp.name = rp.name) AND
+						(temp.scope = rp.scope) AND
+						(temp.primKey = rp.primKey) AND
+						(role.roleId = rp.roleId)
+				) AND
+				(role.name = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByLayouts">
 		<![CDATA[
 			SELECT

@@ -65,23 +65,29 @@ import java.util.Set;
 
 /**
  * The DDM Structure local service is responsible for accessing, creating,
- * modifying and deleting structures.
+ * modifying, and deleting structures.
  *
  * <p>
- * Structures are used in Liferay to store structured content like document
- * types, dynamic data definitions or web contents
+ * DDM structures have the following qualities and relationships:
  * </p>
  *
- * <p>
- * Structures support inheritance defined by the parentStructureId field. They
- * also support multi-language name and description.
- * </p>
- *
- * <p>
- * Structures can be related to many models in the portal, for instance Journal
- * Articles, Dynamic Data Lists or Documents. This relationship can be defined
- * using the model classNameId.
- * </p>
+ * <ul>
+ * <li>
+ * Stores structured content like document types, dynamic data definitions, or
+ * web contents.
+ * </li>
+ * <li>
+ * Supports inheritance defined by the parent structure's primary key.
+ * </li>
+ * <li>
+ * Supports multi-language names and descriptions.
+ * </li>
+ * <li>
+ * Relates to many models in the portal, for instance, Journal Articles, Dynamic
+ * Data Lists, or Documents. This relationship can be defined using the model's
+ * <code>classNameId</code>.
+ * </li>
+ * </ul>
  *
  * @author Brian Wing Shun Chan
  * @author Bruno Basto
@@ -98,24 +104,24 @@ public class DDMStructureLocalServiceImpl
 	 * @param  parentStructureId the primary key of the parent structure
 	 *         (optionally {@link
 	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants#DEFAULT_PARENT_STRUCTURE_ID})
-	 * @param  classNameId the primary key of the class name of the model the
-	 *         structure is related to
-	 * @param  structureKey unique string identifying the structure (optionally
-	 *         <code>null</code>)
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  structureKey the unique string identifying the structure
+	 *         (optionally <code>null</code>)
 	 * @param  nameMap the structure's locales and localized names
 	 * @param  descriptionMap the structure's locales and localized descriptions
 	 * @param  xsd the XML schema definition of the structure
 	 * @param  storageType the storage type of the structure. It can be "xml" or
-	 *         "expando". For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.storage.StorageType}
-	 * @param  type the structure's type. For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}
+	 *         "expando". For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	 * @param  type the structure's type. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	 * @param  serviceContext the service context to be applied. Can set the
-	 *         UUID, creation date, modification date, guest permissions and
+	 *         UUID, creation date, modification date, guest permissions, and
 	 *         group permissions for the structure.
 	 * @return the structure
-	 * @throws PortalException if the creator user could not be found or if the
-	 *         xsd is not well formed
+	 * @throws PortalException if the creator user could not be found, if the
+	 *         XSD is not well formed, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMStructure addStructure(
@@ -188,22 +194,23 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Adds a structure without parent structure, using the storage type defined
-	 * by the property "dynamic.data.lists.storage.type" from the
+	 * Adds a structure without a parent structure, using the storage type
+	 * defined by the property "dynamic.data.lists.storage.type" from the
 	 * portal.properties file and using the default type.
 	 *
 	 * @param  userId the primary key of the structure's creator/owner
 	 * @param  groupId the primary key of the group
-	 * @param  classNameId the primary key of the class name of the model the
-	 *         structure is related to
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
 	 * @param  nameMap the structure's locales and localized names
 	 * @param  descriptionMap the structure's locales and localized descriptions
 	 * @param  xsd the XML schema definition of the structure
 	 * @param  serviceContext the service context to be applied. Can set the
-	 *         UUID, creation date, modification date, guest permissions and
+	 *         UUID, creation date, modification date, guest permissions, and
 	 *         group permissions for the structure.
 	 * @return the structure
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if the creator user could not be found, if the
+	 *         XSD is not well formed, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMStructure addStructure(
@@ -220,30 +227,31 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Adds a structure referencing the parent structure by its structureKey. In
-	 * case the parent structure is not found, it uses the default parent
+	 * Adds a structure referencing the parent structure by its structure key.
+	 * In case the parent structure is not found, it uses the default parent
 	 * structure ID.
 	 *
 	 * @param  userId the primary key of the structure's creator/owner
 	 * @param  groupId the primary key of the group
-	 * @param  parentStructureKey unique string identifying the structure
-	 * @param  classNameId the primary key of the class name of the model the
-	 *         structure is related to
-	 * @param  structureKey unique string identifying the structure (optionally
-	 *         <code>null</code>)
+	 * @param  parentStructureKey the unique string identifying the structure
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  structureKey the unique string identifying the structure
+	 *         (optionally <code>null</code>)
 	 * @param  nameMap the structure's locales and localized names
 	 * @param  descriptionMap the structure's locales and localized descriptions
 	 * @param  xsd the XML schema definition of the structure
-	 * @param  storageType the storage type of the structure. It can be "xml" or
-	 *         "expando". For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.storage.StorageType}
-	 * @param  type the structure's type. For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}
+	 * @param  storageType the storage type of the structure. It can be XML or
+	 *         expando. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	 * @param  type the structure's type. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         UUID, creation date, modification date, guest permissions and
 	 *         group permissions for the structure.
 	 * @return the structure
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if the creator user could not be found, if the
+	 *         XSD is not well formed, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMStructure addStructure(
@@ -269,13 +277,13 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Adds the resources of a structure
+	 * Adds the resources of a structure.
 	 *
-	 * @param  structure the structure we are adding resources to
-	 * @param  addGroupPermissions set to <code>true</code> to add group
-	 *         permissions
-	 * @param  addGuestPermissions set to <code>true</code> to add guest
-	 *         permissions
+	 * @param  structure the structure that holds added resources
+	 * @param  addGroupPermissions the permission that, if set to
+	 *         <code>true</code>, will add group permissions
+	 * @param  addGuestPermissions the permission that, if set to
+	 *         <code>true</code>, will add guest permissions
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -292,11 +300,11 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Adds the resources of a structure
+	 * Adds the resources of a structure.
 	 *
-	 * @param  structure the structure we are adding resources to
-	 * @param  groupPermissions group permissions to be added
-	 * @param  guestPermissions guest permissions to be added
+	 * @param  structure the structure that holds added resources
+	 * @param  groupPermissions the group permissions to be added
+	 * @param  guestPermissions the guest permissions to be added
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -312,8 +320,8 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Copies a structure: creates a new structure extracting all the values
-	 * from the original one. Supports defining the new name and description.
+	 * Creates a new structure extracting all the values from the original one.
+	 * The new structure supports a new name and description.
 	 *
 	 * @param  userId the primary key of the structure's creator/owner
 	 * @param  structureId the primary key of the structure to be copied
@@ -321,9 +329,9 @@ public class DDMStructureLocalServiceImpl
 	 * @param  descriptionMap the new structure's locales and localized
 	 *         descriptions
 	 * @param  serviceContext the service context to be applied. Can set the
-	 *         UUID, creation date, modification date, guest permissions and
+	 *         UUID, creation date, modification date, guest permissions, and
 	 *         group permissions for the structure.
-	 * @return the structure
+	 * @return the new structure
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -359,11 +367,12 @@ public class DDMStructureLocalServiceImpl
 	/**
 	 * Deletes a structure and its resources.
 	 *
+	 * <p>
 	 * Before deleting the structure, this method validates if the structure is
-	 * required by another entity. In case it is needed it will throw an
-	 * exception.
+	 * required by another entity. If it is needed, an exception is thrown.
+	 * </p>
 	 *
-	 * @param  structure the structure that will be deleted
+	 * @param  structure the structure to be deleted
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -401,11 +410,12 @@ public class DDMStructureLocalServiceImpl
 	/**
 	 * Deletes a structure and its resources.
 	 *
+	 * <p>
 	 * Before deleting the structure, the system validates if the structure is
-	 * required by another entity. In case it is needed it will throw an
-	 * exception.
+	 * required by another entity. If it is needed, an exception is thrown.
+	 * </p>
 	 *
-	 * @param  structureId the primary key of the structure that will be deleted
+	 * @param  structureId the primary key of the structure to be deleted
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -421,12 +431,13 @@ public class DDMStructureLocalServiceImpl
 	/**
 	 * Deletes a structure and its resources.
 	 *
+	 * <p>
 	 * Before deleting the structure, the system validates if the structure is
-	 * required by another entity. In case it is needed it will throw an
-	 * exception.
+	 * required by another entity. If it is needed, an exception is thrown.
+	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  structureKey unique string identifying the structure
+	 * @param  structureKey the unique string identifying the structure
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -442,11 +453,13 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Deletes all the structures of a group
+	 * Deletes all the structures of a group.
 	 *
+	 * <p>
 	 * Before deleting the structures, the system validates if each structure is
-	 * required by another entity. In case it is needed it will throw an
-	 * exception.
+	 * required by another entity. If any of the structures are needed, an
+	 * exception is thrown.
+	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
 	 * @throws PortalException if a portal exception occurred
@@ -464,10 +477,10 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns the structure with the matching structureId.
+	 * Returns a structure by structure ID.
 	 *
 	 * @param  structureId the primary key of the structure
-	 * @return the structure with the structureId, or <code>null</code> if a
+	 * @return the structure with the structure ID, or <code>null</code> if a
 	 *         matching structure could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -478,11 +491,11 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns the structure with the matching structureKey in a given group.
+	 * Returns a structure by structure key in a group.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  structureKey unique string identifying the structure
-	 * @return the structure with the structure key in the group, or
+	 * @param  structureKey the unique string identifying the structure
+	 * @return the structure with the structure key in the given group, or
 	 *         <code>null</code> if a matching structure could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -495,19 +508,19 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns the structure with the matching structureKey in a given group and
-	 * optionally in the global scope.
+	 * Returns a structure by structure key in a given or global group.
 	 *
-	 * This method first searches in the give group and in case the structure is
-	 * not found and includeGlobalStructures is set to <code>true</code>, then
-	 * searches the
-	 * global group.
+	 * <p>
+	 * This method first searches in the given group and, if the structure is
+	 * not found and <code>includeGlobalStructures</code> is set to
+	 * <code>true</code>, then searches the global group.
+	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  structureKey unique string identifying the structure
-	 * @param  includeGlobalStructures whether to include the global scope in
+	 * @param  structureKey the unique string identifying the structure
+	 * @param  includeGlobalStructures the option to include the global scope in
 	 *         the search
-	 * @return the structure or <code>null</code> if a matching structure could
+	 * @return the structure, or <code>null</code> if a matching structure could
 	 *         not be found
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -535,11 +548,11 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns the structure with the matching uuid in a group.
+	 * Returns a structure by UUID in a group.
 	 *
-	 * @param  uuid the structure'd UUID
+	 * @param  uuid the structure's UUID
 	 * @param  groupId the primary key of the structure's group
-	 * @return the structure with the uuid, or <code>null</code> if a matching
+	 * @return the structure with the UUID, or <code>null</code> if a matching
 	 *         structure could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -570,13 +583,11 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns a list of structures with the matching classNameId in a given
-	 * company.
+	 * Returns a list of structures by class name ID in a company.
 	 *
-	 * @param  companyId the primary key of the structures company
-	 * @param  classNameId the class name ID of the structures
-	 * @return a list of structures with the matching classNameId in a given
-	 *         company.
+	 * @param  companyId the primary key of the structures' company
+	 * @param  classNameId the class name primary key of the structures
+	 * @return the list of structures by class name ID in a given company
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DDMStructure> getClassStructures(
@@ -587,8 +598,8 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the structures belonging to a given company and
-	 * has this classNameId
+	 * Returns a range of all the structures belonging to a company by class
+	 * name ID.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -600,8 +611,8 @@ public class DDMStructureLocalServiceImpl
 	 * result set.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the structures company
-	 * @param  classNameId the class name ID of the structures
+	 * @param  companyId the primary key of the structures' company
+	 * @param  classNameId the class name primary key of the structures
 	 * @param  start the lower bound of the range of structures
 	 * @param  end the upper bound of the range of structures (not inclusive)
 	 * @return the matching structures
@@ -616,15 +627,13 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns all the structures belonging to a given company and has this
-	 * classNameId
+	 * Returns all the structures belonging to a company by class name ID.
 	 *
-	 * @param  companyId the primary key of the structures company
-	 * @param  classNameId the class name ID of the structures
-	 * @param  orderByComparator the comparator to order the results by
+	 * @param  companyId the primary key of the structures' company
+	 * @param  classNameId the class name primary key of the structures
+	 * @param  orderByComparator the comparator that orders the results
 	 *         (optionally <code>null</code>)
-	 * @return the matching structures ordered by comparator
-	 *         <code>orderByComparator</code>
+	 * @return the matching structures ordered by the comparator
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DDMStructure> getClassStructures(
@@ -650,7 +659,7 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns a list of structures for a given document library file entry type
+	 * Returns a list of structures for a document library file entry type.
 	 *
 	 * @param  dlFileEntryTypeId the primary key of the file entry type
 	 * @return the matching structures
@@ -664,7 +673,7 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns a structure that has a matching primary key
+	 * Returns a structure by structure ID.
 	 *
 	 * @param  structureId the primary key of the structure
 	 * @return the matching structure
@@ -678,10 +687,10 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns a structure that has a matching structure key in a given group
+	 * Returns a structure by structure key in a group.
 	 *
 	 * @param  groupId the primary key of the structure's group
-	 * @param  structureKey unique string identifying the structure
+	 * @param  structureKey the unique string identifying the structure
 	 * @return the matching structure
 	 * @throws PortalException if the structure was not found
 	 * @throws SystemException if a system exception occurred
@@ -695,18 +704,18 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns a structure that has a matching structure key in a given group
-	 * and optionally in the global scope.
+	 * Returns a structure by structure key in a given group or global group.
 	 *
-	 * This method first searches in the give group and in case the structure is
-	 * not found and includeGlobalStructures is set to <code>true</code>, then
-	 * searches the
-	 * global group.
+	 * <p>
+	 * This method first searches in the given group and if the structure is not
+	 * found and <code>includeGlobalStructures</code> is set to
+	 * <code>true</code>, then searches the global group.
+	 * </p>
 	 *
 	 * @param  groupId the primary key of the structure's group
-	 * @param  structureKey unique string identifying the structure
-	 * @param  includeGlobalStructures whether to include the global scope in
-	 *         the search
+	 * @param  structureKey the unique string identifying the structure
+	 * @param  includeGlobalStructures the option to include the global scope
+	 *         group search
 	 * @return the matching structure
 	 * @throws PortalException if the structure was not found
 	 * @throws SystemException if a system exception occurred
@@ -766,7 +775,7 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns a list with all the structures present in the system
+	 * Returns a list of all structures present in the system.
 	 *
 	 * @return the structures
 	 * @throws SystemException if a system exception occurred
@@ -776,7 +785,7 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns a list with all the structure present in a group
+	 * Returns a list of all structures present in a group.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the list of structures in the group
@@ -789,7 +798,7 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the structures belonging to the group.
+	 * Returns a range of all the structures belonging to a group.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -815,12 +824,11 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns all structures that matches the class name ID and belong to the
-	 * group
+	 * Returns all structures by class name ID and belong to a group.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  classNameId the primary key of the class name of the model the
-	 *         structure is related to
+	 * @param  classNameId the primary key of the class name for the structures'
+	 *         related model
 	 * @return the matching structures
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1043,7 +1051,7 @@ public class DDMStructureLocalServiceImpl
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         structure's name, or description (optionally <code>null</code>)
 	 * @return the number of matching structures
-	 * @throws
+	 * @throws SystemException if a system exception occurred
 	 */
 	public int searchCount(
 			long companyId, long[] groupIds, long[] classNameIds,

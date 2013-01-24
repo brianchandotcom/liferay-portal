@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -40,58 +50,53 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>WC Web Content Title</td>
+	<td>//a[@class='entry-link']/span</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Approved</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//td[5]/a</td>
-	<td>Modified Date</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//td[6]/a</td>
-	<td>Display Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[7]/a</td>
-	<td>Joe Bloggs</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_15_allRowIdsCheckbox']</td>
+	<td>Select All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
+	<td>//input[@id='_15_allRowIdsCheckbox']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_15_allRowIdsCheckbox']</td>
+	<td>Select All</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//a[@id='_15_dhec_menuButton']</td>
+	<td>Menu Button</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[@id='_15_dhec_menuButton']</td>
+	<td>Menu Button</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_title_en_US']</td>
-	<td>WC Web Content Title Edit</td>
+	<td>WC WebContent Title Edit</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -121,7 +126,7 @@
 <tr>
 	<td>type</td>
 	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
-	<td>WC Web Content Content Edit</td>
+	<td>WC WebContent Content Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -151,7 +156,7 @@
 <tr>
 	<td>waitForText</td>
 	<td>//body</td>
-	<td>WC Web Content Content Edit</td>
+	<td>WC WebContent Content Edit</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -170,28 +175,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>WC Web Content Title Edit</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Pending</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//td[5]/a</td>
-	<td>Modified Date</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//td[6]/a</td>
-	<td>Display Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[7]/a</td>
-	<td>Joe Bloggs</td>
+	<td>//a[@class='entry-link']/span</td>
+	<td>WC WebContent Title Edit (Pending)</td>
 </tr>
 </tbody></table>
 </body>

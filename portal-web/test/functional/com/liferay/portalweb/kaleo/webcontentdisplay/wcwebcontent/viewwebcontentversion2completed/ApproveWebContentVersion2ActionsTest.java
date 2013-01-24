@@ -26,7 +26,14 @@ public class ApproveWebContentVersion2ActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -34,7 +41,7 @@ public class ApproveWebContentVersion2ActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title Edit"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//td[3]/a"));
@@ -49,11 +56,11 @@ public class ApproveWebContentVersion2ActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]");
 		assertEquals(RuntimeVariables.replace("Approve"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]",
 			RuntimeVariables.replace("Approve"));
 		selenium.waitForVisible("//div[3]/span/span/button");
 		assertEquals(RuntimeVariables.replace("OK"),
@@ -74,8 +81,8 @@ public class ApproveWebContentVersion2ActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//tr[3]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
-			selenium.getText("link=WC Web Content Title"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
+			selenium.getText("link=WC WebContent Title Edit"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[3]/td[3]/a"));
 		assertTrue(selenium.isVisible("//tr[3]/td[4]/a"));
@@ -83,8 +90,8 @@ public class ApproveWebContentVersion2ActionsTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//tr[4]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title Edit"),
-			selenium.getText("link=WC Web Content Title Edit"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("link=WC WebContent Title"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[4]/td[3]/a"));
 		assertTrue(selenium.isVisible("//tr[4]/td[4]/a"));

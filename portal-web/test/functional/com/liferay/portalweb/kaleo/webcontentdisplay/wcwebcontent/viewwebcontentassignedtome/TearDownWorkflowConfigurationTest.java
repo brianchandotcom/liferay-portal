@@ -25,7 +25,14 @@ public class TearDownWorkflowConfigurationTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -35,83 +42,83 @@ public class TearDownWorkflowConfigurationTest extends BaseTestCase {
 			RuntimeVariables.replace("Default Configuration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']",
-			RuntimeVariables.replace("No workflow"));
+			RuntimeVariables.replace("No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.User']",
-			RuntimeVariables.replace("No workflow"));
+			RuntimeVariables.replace("No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']",
-			RuntimeVariables.replace("No workflow"));
+			RuntimeVariables.replace("No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']",
-			RuntimeVariables.replace("No workflow"));
+			RuntimeVariables.replace("No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']",
-			RuntimeVariables.replace("No workflow"));
+			RuntimeVariables.replace("No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']",
-			RuntimeVariables.replace("No workflow"));
+			RuntimeVariables.replace("No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']",
-			RuntimeVariables.replace("No workflow"));
+			RuntimeVariables.replace("No Workflow"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("No workflow",
+		assertEquals("No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']"));
-		assertEquals("No workflow",
+		assertEquals("No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.User']"));
-		assertEquals("No workflow",
+		assertEquals("No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_151_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']"));
-		assertEquals("No workflow",
+		assertEquals("No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_151_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']"));
-		assertEquals("No workflow",
+		assertEquals("No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']"));
-		assertEquals("No workflow",
+		assertEquals("No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']"));
-		assertEquals("No workflow",
+		assertEquals("No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_151_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']"));
 		selenium.clickAt("link=Workflow Configuration",
 			RuntimeVariables.replace("Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']",
-			RuntimeVariables.replace("Default: No workflow"));
+			RuntimeVariables.replace("Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']",
-			RuntimeVariables.replace("Default: No workflow"));
+			RuntimeVariables.replace("Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']",
-			RuntimeVariables.replace("Default: No workflow"));
+			RuntimeVariables.replace("Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']",
-			RuntimeVariables.replace("Default: No workflow"));
+			RuntimeVariables.replace("Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']",
-			RuntimeVariables.replace("Default: No workflow"));
+			RuntimeVariables.replace("Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']",
-			RuntimeVariables.replace("Default: No workflow"));
+			RuntimeVariables.replace("Default: No Workflow"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Default: No workflow",
+		assertEquals("Default: No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_152_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']"));
-		assertEquals("Default: No workflow",
+		assertEquals("Default: No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']"));
-		assertEquals("Default: No workflow",
+		assertEquals("Default: No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']"));
-		assertEquals("Default: No workflow",
+		assertEquals("Default: No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']"));
-		assertEquals("Default: No workflow",
+		assertEquals("Default: No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']"));
-		assertEquals("Default: No workflow",
+		assertEquals("Default: No Workflow",
 			selenium.getSelectedLabel(
 				"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']"));
 	}

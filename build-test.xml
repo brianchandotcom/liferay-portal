@@ -326,7 +326,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="0" />
+		<property name="build-test-ant-scripts.version" value="1" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1631,6 +1631,12 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="portal-web-calendar" />
 			<param name="test.ant.script.suite" value="PortalWebCalendarTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-categories-navigation" />
+			<param name="test.ant.script.selenium.implementation" value="webdriver" />
+			<param name="test.ant.script.suite" value="PortalWebCategoriesNavigationTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

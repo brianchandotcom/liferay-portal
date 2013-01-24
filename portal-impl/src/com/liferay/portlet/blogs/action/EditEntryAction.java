@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -120,6 +121,11 @@ public class EditEntryAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
 				unsubscribe(actionRequest);
+			}
+			else if (cmd.equals(Constants.UPDATE_CONTENT)) {
+				updateContent(actionRequest, actionResponse);
+
+				return;
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -380,6 +386,54 @@ public class EditEntryAction extends PortletAction {
 			WebKeys.THEME_DISPLAY);
 
 		BlogsEntryServiceUtil.unsubscribe(themeDisplay.getScopeGroupId());
+	}
+
+	protected void updateContent(
+		ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+
+		String content = ParamUtil.getString(actionRequest, "content");
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		try {
+			Calendar displayDateCal = CalendarFactoryUtil.getCalendar();
+
+			displayDateCal.setTime(entry.getDisplayDate());
+
+			int displayDateMonth = displayDateCal.get(Calendar.MONTH);
+			int displayDateDay = displayDateCal.get(Calendar.DATE);
+			int displayDateYear = displayDateCal.get(Calendar.YEAR);
+			int displayDateHour = displayDateCal.get(Calendar.HOUR);
+			int displayDateMinute = displayDateCal.get(Calendar.MINUTE);
+
+			if (displayDateCal.get(Calendar.AM_PM) == Calendar.PM) {
+				displayDateHour += 12;
+			}
+
+			BlogsEntryServiceUtil.updateEntry(
+				entryId, entry.getTitle(), entry.getDescription(), content,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, entry.getAllowPingbacks(),
+				entry.getAllowTrackbacks(), null, entry.getSmallImage(),
+				entry.getSmallImageURL(), null, null, serviceContext);
+
+			jsonObject.put("success", true);
+		}
+		catch (Exception e) {
+			jsonObject.put("success", false);
+
+			jsonObject.putException(e);
+		}
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	protected Object[] updateEntry(ActionRequest actionRequest)

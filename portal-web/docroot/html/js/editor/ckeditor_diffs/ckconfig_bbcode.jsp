@@ -38,10 +38,8 @@ CKEDITOR.config.removePlugins = [
 	'div',
 	'flash',
 	'forms',
-	'indent',
 	'keystrokes',
 	'link',
-	'menu',
 	'maximize',
 	'newpage',
 	'pagebreak',
@@ -56,7 +54,7 @@ CKEDITOR.config.removePlugins = [
 
 CKEDITOR.config.toolbar_bbcode = [
 	['Bold', 'Italic', 'Underline', 'Strike', '-', 'Link', 'Unlink'],
-	['Image', 'Smiley', '-', 'TextColor', '-', 'NumberedList', 'BulletedList'],
+	['Image', 'Smiley', '-', 'TextColor', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
 	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Blockquote', '-', 'Code'],
 	'/',
 	['Font', 'FontSize', '-', 'Format', '-', 'Undo', 'Redo', '-', 'Source']

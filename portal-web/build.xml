@@ -12,7 +12,7 @@
 	docroot/html/js/editor/ckeditor_diffs/ckeditor.js.
 	-->
 
-	<property name="ckeditor.file" value="ckeditor_3.5.3.zip" />
+	<property name="ckeditor.file" value="ckeditor-4.0-stable.zip" />
 	<property name="fckeditor.file" value="FCKeditor_2.6.3.zip" />
 	<property name="tinymce.file" value="tinymce_3.5.6.zip" />
 	<property name="vaadin.file" value="vaadin-6.7.4-liferay.zip" />
@@ -205,200 +205,33 @@
 						<available file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js" />
 					</not>
 					<then>
-						<replace file="docroot/html/js/editor/ckeditor/_source/core/dtd.js">
-							<replacefilter token="div:1," value="article:1,aside:1,audio:1,command:1,datagrid:1,datalist:1,details:1,dialog:1,div:1,figure:1,footer:1,header:1,hgroup:1,keygen:1,m:1,meter:1,nav:1,output:1,progress:1,section:1,time:1,video:1," />
-						</replace>
+						<delete
+							dir="docroot/html/js/editor/ckeditor/dev/builder/release"
+						/>
 
-						<replace file="docroot/html/js/editor/ckeditor/_source/core/dtd.js">
-							<replacetoken>div : P,</replacetoken>
-							<replacevalue>
-								article : P,
-								aside : P,
-								audio : O,
-								command : L,
-								datagrid : O,
-								datalist : O,
-								details : O,
-								dialog : P,
-								div : P,
-								figure : P,
-								footer : P,
-								header : P,
-								hgroup : P,
-								keygen : L,
-								m : L,
-								meter : L,
-								nav : P,
-								output : L,
-								progress : O,
-								section : P,
-								time : L,
-								video: O,
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/core/editor.js">
-							<replacetoken><![CDATA[throw '[CKEDITOR.editor] The instance "' + this.name + '" already exists.';]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									{
-										var previous = CKEDITOR.instances[ this.name ];
-
-										if ( previous.element.isOffline() || previous.container && previous.container.isOffline() ) {
-											previous.destroy( false );
-										}
-										else {
-											throw '[CKEDITOR.editor] The instance "' + previous.name + '" already exists.';
-										}
-									}
-								]]>
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/core/editor.js">
-							<replacetoken><![CDATA[if ( !noUpdate )]]></replacetoken>
-							<replacevalue><![CDATA[]]></replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/core/editor.js">
-							<replacetoken><![CDATA[this.updateElement();]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									var notDetached = !this.checkDetached();
-
-									notDetached && !noUpdate && this.updateElement();
-								]]>
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/core/editor.js">
-							<replacetoken><![CDATA[this.theme && this.theme.destroy( this );]]></replacetoken>
-							<replacevalue><![CDATA[notDetached && this.theme && this.theme.destroy( this );]]></replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/core/editor.js">
-							<replacetoken><![CDATA[* Destroys the editor instance]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									* Check whether the editor UI has been removed from DOM thus
-									* the editor instance is considered to be obsoleted.
-									* @since 3.6.2
-									*/
-									checkDetached : function()
-									{
-										this.element.isOffline() || this.container && this.container.isOffline();
-									},
-
-									/**
-									 * Destroys the editor instance
-								]]>
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/core/dom/element.js">
-							<replacetoken><![CDATA[return $ && new CKEDITOR.dom.document( $.contentWindow.document );]]></replacetoken>
-							<replacevalue><![CDATA[return $ && $.contentWindow && new CKEDITOR.dom.document( $.contentWindow.document );]]></replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/core/dom/element.js">
-							<replacetoken><![CDATA[disableContextMenu : function()]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									/**
-									*  Whether this element is not present in the DOM tree.
-									*/
-									isOffline : function()
-									{
-										var root = this.getDocument().getDocumentElement();
-										return !root.contains( this );
-									},
-
-									disableContextMenu : function()
-								]]>
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/core/htmlparser/fragment.js">
+						<replace file="docroot/html/js/editor/ckeditor/core/htmlparser/fragment.js">
 							<replacetoken><![CDATA[function sendPendingBRs()]]></replacetoken>
 							<replacevalue><![CDATA[function sendPendingBRs( brsToIgnore )]]></replacevalue>
 						</replace>
 
-						<replace file="docroot/html/js/editor/ckeditor/_source/core/htmlparser/fragment.js">
+						<replace file="docroot/html/js/editor/ckeditor/core/htmlparser/fragment.js">
 							<replacetoken><![CDATA[while ( pendingBRs.length )]]></replacetoken>
 							<replacevalue><![CDATA[while ( pendingBRs.length - ( brsToIgnore || 0 ) > 0 )]]></replacevalue>
 						</replace>
 
-						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/indent/plugin.js">
-							<replacetoken><![CDATA[return node.type = CKEDITOR.NODE_ELEMENT && node.is( 'li' );]]></replacetoken>
+						<replace file="docroot/html/js/editor/ckeditor/plugins/indent/plugin.js">
+							<replacetoken><![CDATA[return node.type == CKEDITOR.NODE_ELEMENT && node.is( 'li' );]]></replacetoken>
 							<replacevalue>
-								<![CDATA[return node.type = CKEDITOR.NODE_ELEMENT && node.is && node.is( 'li' );]]>
+								<![CDATA[return node.type == CKEDITOR.NODE_ELEMENT && node.is && node.is( 'li' );]]>
 							</replacevalue>
 						</replace>
 
-						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/htmldataprocessor/plugin.js">
-							<replacetoken><![CDATA[function trimFillers( block, fromSource )]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									function getNodeIndex( node ) {
-										var parent = node.parent;
-										return parent ? CKEDITOR.tools.indexOf( parent.children, node ) : -1;
-									}
-
-									function trimFillers( block, fromSource )
-								]]>
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/htmldataprocessor/plugin.js">
-							<replacetoken><![CDATA[var children = element.children;]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-
-									// Clone the array as it would become empty during the sort call
-
-									var children = element.children.slice( 0 );
-								]]>
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/htmldataprocessor/plugin.js">
-							<replacetoken><![CDATA[return node1.type == CKEDITOR.NODE_ELEMENT && node2.type == node1.type ?]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									var index1, index2;
-
-									// Compare in the predefined order
-
-									if (node1.type == CKEDITOR.NODE_ELEMENT && node2.type == node1.type) {
-										index1 = CKEDITOR.tools.indexOf( tableOrder, node1.name );
-										index2 = CKEDITOR.tools.indexOf( tableOrder, node2.name );
-									}
-
-									// Make sure the sort is stable if no order can be established above
-
-									if (!(index1 > -1 && index2 > -1 && index1 != index2)) {
-										index1 = getNodeIndex( node1 );
-										index2 = getNodeIndex( node2 );
-									}
-
-									return index1 > index2 ? 1 : -1;
-								]]>
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/htmldataprocessor/plugin.js">
-							<replacetoken><![CDATA[CKEDITOR.tools.indexOf( tableOrder, node1.name )  > CKEDITOR.tools.indexOf( tableOrder, node2.name ) ? 1 : -1 : 0;]]></replacetoken>
-							<replacevalue>
-								<![CDATA[]]>
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/popup/plugin.js">
+						<replace file="docroot/html/js/editor/ckeditor/plugins/popup/plugin.js">
 							<replacetoken><![CDATA[popupWindow.moveTo( left, top );]]></replacetoken>
 							<replacevalue><![CDATA[// Chrome is problematic, but it's not really needed here (#8855)]]></replacevalue>
 						</replace>
 
-						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/popup/plugin.js">
+						<replace file="docroot/html/js/editor/ckeditor/plugins/popup/plugin.js">
 							<replacetoken><![CDATA[popupWindow.resizeTo( width, height );]]></replacetoken>
 							<replacevalue>
 								<![CDATA[
@@ -412,7 +245,14 @@
 							</replacevalue>
 						</replace>
 
-						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/wysiwygarea/plugin.js">
+						<replace file="docroot/html/js/editor/ckeditor/plugins/indent/plugin.js">
+							<replacetoken><![CDATA[return node.type == CKEDITOR.NODE_ELEMENT && node.is( 'li' );]]></replacetoken>
+							<replacevalue>
+								<![CDATA[return node.type == CKEDITOR.NODE_ELEMENT && node.is && node.is( 'li' );]]>
+							</replacevalue>
+						</replace>
+
+						<replace file="docroot/html/js/editor/ckeditor/plugins/wysiwygarea/plugin.js">
 							<replacetoken><![CDATA[var data = fullPage]]></replacetoken>
 							<replacevalue>
 								<![CDATA[
@@ -425,52 +265,41 @@
 							</replacevalue>
 						</replace>
 
-						<replace file="docroot/html/js/editor/ckeditor/_source/themes/default/theme.js">
-							<replacetoken><![CDATA[container.clearCustomData();]]></replacetoken>
-							<replacevalue><![CDATA[]]></replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/themes/default/theme.js">
-							<replacetoken><![CDATA[editor.fireOnce( 'themeLoaded' );]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									editor.on(
-										'destroy',
-										function()
-										{
-											var container = editor.container,
-											element = editor.element;
-											container && container.clearCustomData();
-											element.clearCustomData();
-										}
-									);
-
-									editor.fireOnce( 'themeLoaded' );
-								]]>
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/themes/default/theme.js">
-							<replacetoken><![CDATA[element.clearCustomData();]]></replacetoken>
-							<replacevalue><![CDATA[]]></replacevalue>
-						</replace>
-
 						<java
-							classname="ckpackager.ckpackager"
+							classname="ckbuilder.ckbuilder"
 							classpathref="project.classpath"
-							dir="docroot/html/js/editor/ckeditor"
+							dir="${basedir}/docroot/html/js/editor/ckeditor/dev/builder"
 							fork="true"
 							newenvironment="true"
 						>
-							<arg line="ckeditor.pack" />
+							<arg line="--build ../../" />
+							<arg line="release" />
+							<arg line="--version=&quot;4.0 STABLE&quot;" />
+							<arg line="--build-config ${basedir}/docroot/html/js/editor/ckeditor/dev/builder/build-config.js" />
 						</java>
-
-						<copy
-							file="docroot/html/js/editor/ckeditor/ckeditor.js"
-							tofile="docroot/html/js/editor/ckeditor_diffs/ckeditor.js"
-						/>
 					</then>
 				</if>
+				
+				<move
+					file="docroot/html/js/editor/ckeditor/dev/builder/release/ckeditor"
+					preservelastmodified="true"
+					tofile="docroot/html/js/editor/ckeditor.tmp"
+				/>
+
+				<delete
+					dir="docroot/html/js/editor/ckeditor"
+				/>
+
+				<move
+					file="docroot/html/js/editor/ckeditor.tmp"
+					preservelastmodified="true"
+					tofile="docroot/html/js/editor/ckeditor"
+				/>
+
+				<copy
+					file="docroot/html/js/editor/ckeditor/ckeditor.js"
+					tofile="docroot/html/js/editor/ckeditor_diffs/ckeditor.js"
+				/>
 
 				<copy todir="docroot/html/js/editor/ckeditor" overwrite="true" preservelastmodified="true">
 					<fileset dir="docroot/html/js/editor/ckeditor_diffs" />
@@ -483,12 +312,12 @@
 			</else>
 		</if>
 
-		<replace file="docroot/html/js/editor/ckeditor/_source/plugins/link/dialogs/link.js">
+		<replace file="docroot/html/js/editor/ckeditor/plugins/link/dialogs/link.js">
 			<replacetoken><![CDATA[return 'mailto:' +]]></replacetoken>
 			<replacevalue><![CDATA[rest = decodeURIComponent(rest); return "mailto:" + ]]></replacevalue>
 		</replace>
 
-		<replace file="docroot/html/js/editor/ckeditor/_source/plugins/link/dialogs/link.js">
+		<replace file="docroot/html/js/editor/ckeditor/plugins/link/dialogs/link.js">
 			<replacetoken><![CDATA[body = encodeURIComponent( email.body || '' );]]></replacetoken>
 			<replacevalue><![CDATA[body = email.body || ''; body = encodeURIComponent(body).replace(/%/g, '%25');]]></replacevalue>
 		</replace>

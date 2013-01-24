@@ -55,23 +55,16 @@
 			init: function(editor) {
 				editor.dataProcessor = new CKEDITOR.htmlDataProcessor(editor);
 
-				editor.dataProcessor.writer.setRules(
-					'p',
-					{
-						breakBeforeClose: false
-					}
-				);
-
 				editor.on(
 					'paste',
 					function(event) {
 						var data = event.data;
 
-						var htmlData = data.html;
+						var htmlData = data.dataValue;
 
 						htmlData = CKEDITOR.htmlDataProcessor.prototype.toDataFormat(htmlData);
 
-						data.html = htmlData;
+						data.dataValue = htmlData;
 					},
 					editor.element.$
 				);

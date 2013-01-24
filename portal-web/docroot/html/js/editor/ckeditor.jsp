@@ -52,7 +52,7 @@ String fileBrowserParams = marshallParams(fileBrowserParamsMap);
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 String cssClasses = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClasses"));
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
-String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
+String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
 
 String onChangeMethod = (String)request.getAttribute("liferay-ui:input-editor:onChangeMethod");
@@ -61,9 +61,15 @@ if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
 
+boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:inlineEdit"));
+String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:inlineEditSaveURL"));
 boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolbarSet");
+
+if (!inlineEdit) {
+	name = namespace + name;
+}
 %>
 
 <c:if test="<%= hideImageResizing %>">
@@ -93,6 +99,12 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 		%>
 
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/editor/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
+
+		<c:if test="<%= inlineEdit && inlineEditSaveURL != null %>">
+
+		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/editor/ckeditor/main.js", javaScriptLastModified)) %>" type="text/javascript"></script>
+
+		</c:if>
 
 		<script type="text/javascript">
 			Liferay.namespace('EDITORS')['<%= editorImpl %>'] = true;
@@ -155,14 +167,32 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 	};
 </aui:script>
 
+<%
+	String textareaName = name;
+
+	String modules = StringPool.BLANK;
+%>
+
+<c:if test="<%= inlineEdit && inlineEditSaveURL != null %>">
+<%
+	textareaName = name + "_original";
+
+	modules = "inline-editor-ckeditor";
+%>
+</c:if>
+
 <div class="<%= cssClass %>">
-	<textarea id="<%= name %>" name="<%= name %>" style="display: none;"></textarea>
+	<textarea id="<%= textareaName %>" name="<%= textareaName %>" style="display: none;"></textarea>
 </div>
 
-<aui:script use="aui-base">
+<script type="text/javascript">
+	CKEDITOR.disableAutoInline = true;
+</script>
+
+<aui:script use="<%= modules %>" >
 	(function() {
 		function setData() {
-			<c:if test="<%= Validator.isNotNull(initMethod) %>">
+			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && inlineEditSaveURL != null) %>">
 				ckEditor.setData(<%= HtmlUtil.escapeJS(namespace + initMethod) %>());
 			</c:if>
 		}
@@ -184,10 +214,18 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 		String connectorURL = HttpUtil.encodeURL(sb.toString());
 		%>
 
-		CKEDITOR.replace(
+		<c:choose>
+			<c:when test="<%= inlineEdit %>">
+				CKEDITOR.inline(
+			</c:when>
+			<c:otherwise>
+				CKEDITOR.replace(
+			</c:otherwise>
+		</c:choose>
+
 			'<%= name %>',
 			{
-				customConfig: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/<%= HtmlUtil.escapeJS(ckEditorConfigFileName) %>?p_l_id=<%= plid %>&p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&imagesPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeImages()) %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %>&resizable=<%= resizable %><%= configParams %>',
+				customConfig: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/<%= HtmlUtil.escapeJS(ckEditorConfigFileName) %>?p_l_id=<%= plid %>&p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&imagesPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeImages()) %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %>&resizable=<%= resizable %>&inlineEdit=<%= inlineEdit %><%= configParams %>',
 				filebrowserBrowseUrl: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/editor/filemanager/browser/liferay/browser.html?Connector=<%= connectorURL %><%= fileBrowserParams %>',
 				filebrowserUploadUrl: null,
 				toolbar: '<%= TextFormatter.format(HtmlUtil.escapeJS(toolbarSet), TextFormatter.M) %>'
@@ -195,6 +233,16 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 		);
 
 		var ckEditor = CKEDITOR.instances['<%= name %>'];
+
+		<c:if test="<%= inlineEdit && inlineEditSaveURL != null %>">
+			new Liferay.CKEditorInline(
+				{
+					editor: ckEditor,
+					editorName: '<%= name %>',
+					saveURL: '<%= inlineEditSaveURL %>'
+				}
+			);
+		</c:if>
 
 		var customDataProcessorLoaded = false;
 
@@ -223,27 +271,22 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 			'instanceReady',
 			function() {
 
-				<%
-				if (useCustomDataProcessor) {
-				%>
-
+			<c:choose>
+				<c:when test="<%= useCustomDataProcessor %>">
 					instanceReady = true;
 
 					if (customDataProcessorLoaded) {
 						setData();
 					}
-
-				<%
-				}
-				else {
-				%>
-
+				</c:when>
+				<c:otherwise>
 					setData();
+				</c:otherwise>
+			</c:choose>
 
-				<%
-				}
+	<%
 
-				if (Validator.isNotNull(onChangeMethod)) {
+			if (Validator.isNotNull(onChangeMethod)) {
 				%>
 
 					setInterval(

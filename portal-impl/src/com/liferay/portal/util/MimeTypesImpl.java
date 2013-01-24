@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -174,6 +175,19 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		}
 
 		return ContentTypes.APPLICATION_OCTET_STREAM;
+	}
+
+	public String getContentTypeFromExtension(String extension) {
+		if (Validator.isNull(extension)) {
+			return ContentTypes.APPLICATION_OCTET_STREAM;
+		}
+
+		StringBundler sb = new StringBundler(2);
+
+		sb.append("A.");
+		sb.append(extension);
+
+		return getContentType(sb.toString());
 	}
 
 	public Set<String> getExtensions(String contentType) {

@@ -224,6 +224,14 @@ public class SQLTransformer {
 		}
 	}
 
+	private String _replaceCrossJoin(String sql) {
+		if (_vendorSybase) {
+			return StringUtil.replace(sql, "CROSS JOIN", StringPool.COMMA);
+		}
+
+		return sql;
+	}
+
 	private String _replaceIntegerDivision(String sql) {
 		Matcher matcher = _integerDivisionPattern.matcher(sql);
 
@@ -278,6 +286,7 @@ public class SQLTransformer {
 		newSQL = _replaceBoolean(newSQL);
 		newSQL = _replaceCastLong(newSQL);
 		newSQL = _replaceCastText(newSQL);
+		newSQL = _replaceCrossJoin(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
 
 		if (_vendorDB2) {

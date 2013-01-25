@@ -86,7 +86,7 @@
 					SELECT
 						*
 					FROM
-						ResourcePermission AS ResourcePermission
+						ResourcePermission
 					WHERE
 						(TEMP_TABLE.companyId = ResourcePermission.companyId) AND
 						(TEMP_TABLE.name = ResourcePermission.name) AND

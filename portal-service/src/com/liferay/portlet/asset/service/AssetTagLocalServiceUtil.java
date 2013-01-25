@@ -458,6 +458,13 @@ public class AssetTagLocalServiceUtil {
 		return getService().search(groupId, name, tagProperties, start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> search(
+		long[] groupIds, java.lang.String name,
+		java.lang.String[] tagProperties, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().search(groupIds, name, tagProperties, start, end);
+	}
+
 	public static com.liferay.portlet.asset.model.AssetTag updateTag(
 		long userId, long tagId, java.lang.String name,
 		java.lang.String[] tagProperties,

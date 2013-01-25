@@ -54,7 +54,7 @@
 		</finder>
 		<finder name="G_V" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="vocabularyId" />
+			<finder-column name="vocabularyId" arrayable-operator="OR" />
 		</finder>
 		<finder name="P_N" return-type="Collection">
 			<finder-column name="parentCategoryId" />
@@ -67,6 +67,11 @@
 		<finder name="N_V" return-type="Collection">
 			<finder-column name="name" />
 			<finder-column name="vocabularyId" />
+		</finder>
+		<finder name="G_N_V" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="name" comparator="LIKE" />
+			<finder-column name="vocabularyId" arrayable-operator="OR" />
 		</finder>
 		<finder name="P_N_V" return-type="AssetCategory" unique="true">
 			<finder-column name="parentCategoryId" />

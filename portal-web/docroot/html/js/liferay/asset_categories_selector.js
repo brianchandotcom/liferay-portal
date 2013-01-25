@@ -494,9 +494,9 @@ AUI.add(
 							searchResults.addClass('loading-animation');
 
 							Liferay.Service(
-								'/assetcategory/get-json-search',
+								'/assetcategory/search',
 								{
-									groupId: vocabularyGroupIds[0],
+									groupIds: vocabularyGroupIds,
 									name: Lang.sub(TPL_SEARCH_QUERY, [searchValue]),
 									vocabularyIds: vocabularyIds,
 									start: -1,

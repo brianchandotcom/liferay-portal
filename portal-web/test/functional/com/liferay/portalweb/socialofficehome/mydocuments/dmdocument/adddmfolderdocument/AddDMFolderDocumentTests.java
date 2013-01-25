@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficesite.documents;
+package com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.adddmfolderdocument;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficesite.documents.dmdocument.DMDocumentTestPlan;
-import com.liferay.portalweb.socialofficesite.documents.dmlar.DMLARTestPlan;
+import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.adddmfolderdocument.TearDownDMFolderTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,15 +23,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DocumentsTestPlan extends BaseTestSuite {
-
+public class AddDMFolderDocumentTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(DMDocumentTestPlan.suite());
-		testSuite.addTest(DMLARTestPlan.suite());
+		testSuite.addTestSuite(AddDMFolderTest.class);
+		testSuite.addTestSuite(AddDMFolderDocumentTest.class);
+		testSuite.addTestSuite(ViewDMFolderDocumentTest.class);
+		testSuite.addTestSuite(TearDownDMFolderTest.class);
 
 		return testSuite;
 	}
-
 }

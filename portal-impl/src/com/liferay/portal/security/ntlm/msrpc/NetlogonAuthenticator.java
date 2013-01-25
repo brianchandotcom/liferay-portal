@@ -44,7 +44,7 @@ public class NetlogonAuthenticator extends NdrObject {
 		ndrBuffer = ndrBuffer.derive(index);
 
 		for (int i = 0; i < 8; i++) {
-			_credential[i] = (byte) ndrBuffer.dec_ndr_small();
+			_credential[i] = (byte)ndrBuffer.dec_ndr_small();
 		}
 	}
 

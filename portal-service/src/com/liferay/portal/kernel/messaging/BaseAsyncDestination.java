@@ -190,7 +190,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 					return;
 				}
 
-				MessageRunnable messageRunnable = (MessageRunnable) runnable;
+				MessageRunnable messageRunnable = (MessageRunnable)runnable;
 
 				_log.warn(
 					"Discarding message " + messageRunnable.getMessage() +

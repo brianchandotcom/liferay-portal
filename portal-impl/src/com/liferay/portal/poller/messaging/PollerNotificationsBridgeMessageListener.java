@@ -44,7 +44,7 @@ public class PollerNotificationsBridgeMessageListener
 			return;
 		}
 
-		PollerResponse pollerResponse = (PollerResponse) messagePayload;
+		PollerResponse pollerResponse = (PollerResponse)messagePayload;
 
 		if (pollerResponse.isEmpty()) {
 			return;

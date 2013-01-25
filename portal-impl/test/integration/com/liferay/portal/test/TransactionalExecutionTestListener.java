@@ -36,11 +36,11 @@ public class TransactionalExecutionTestListener
 
 	public TransactionalExecutionTestListener() {
 		_platformTransactionManager =
-			(PlatformTransactionManager) PortalBeanLocatorUtil.locate(
+			(PlatformTransactionManager)PortalBeanLocatorUtil.locate(
 				"liferayTransactionManager");
 
 		_transactionAttributeSource =
-			(TransactionAttributeSource) PortalBeanLocatorUtil.locate(
+			(TransactionAttributeSource)PortalBeanLocatorUtil.locate(
 				"transactionAttributeSource");
 	}
 

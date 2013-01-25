@@ -312,7 +312,7 @@ public class ThemeUtil {
 		GenericServlet genericServlet = null;
 
 		if (servlet instanceof GenericServlet) {
-			genericServlet = (GenericServlet) servlet;
+			genericServlet = (GenericServlet)servlet;
 		}
 		else {
 			genericServlet = new GenericServlet() {

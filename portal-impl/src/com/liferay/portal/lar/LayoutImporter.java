@@ -528,7 +528,7 @@ public class LayoutImporter {
 			}
 			else {
 				LayoutSetLocalServiceUtil.updateLogo(
-					groupId, privateLayout, false, (File) null);
+					groupId, privateLayout, false, (File)null);
 			}
 		}
 

@@ -275,7 +275,7 @@ public class PortletExportImportTest extends BaseExportImportTestCase {
 		throws Exception {
 
 		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet) layout.getLayoutType();
+			(LayoutTypePortlet)layout.getLayoutType();
 
 		String journalPortletId = layoutTypePortlet.addPortletId(
 			userId, PortletKeys.JOURNAL_CONTENT, columnId, -1);

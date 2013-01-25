@@ -44,7 +44,7 @@ public class NetrServerReqChallenge extends DcerpcMessage {
 		ndrBuffer = ndrBuffer.derive(index);
 
 		for (int i = 0; i < 8; i++) {
-			_serverChallenge[i] = (byte) ndrBuffer.dec_ndr_small();
+			_serverChallenge[i] = (byte)ndrBuffer.dec_ndr_small();
 		}
 
 		_status = ndrBuffer.dec_ndr_long();

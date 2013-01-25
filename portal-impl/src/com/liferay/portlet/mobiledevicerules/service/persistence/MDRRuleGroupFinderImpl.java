@@ -173,7 +173,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			qPos.add(groupId);
 			qPos.add(names, 2);
 
-			return (List<MDRRuleGroup>) QueryUtil.list(
+			return (List<MDRRuleGroup>)QueryUtil.list(
 				q, getDialect(), start, end);
 		}
 		catch (Exception e) {

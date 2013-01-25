@@ -121,7 +121,7 @@ public class PollerRequestHandlerImpl
 			return;
 		}
 
-		PollerResponse pollerResponse = (PollerResponse) messagePayload;
+		PollerResponse pollerResponse = (PollerResponse)messagePayload;
 
 		PollerHeader pollerHeader = pollerResponse.getPollerHeader();
 

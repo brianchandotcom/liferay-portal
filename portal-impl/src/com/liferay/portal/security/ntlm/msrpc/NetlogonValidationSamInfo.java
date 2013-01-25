@@ -154,7 +154,7 @@ public class NetlogonValidationSamInfo extends NdrObject {
 		ndrBuffer = ndrBuffer.derive(userSessionKeyI);
 
 		for (int i = 0; i < 16; i++) {
-			_userSessionKey[i] = (byte) ndrBuffer.dec_ndr_small();
+			_userSessionKey[i] = (byte)ndrBuffer.dec_ndr_small();
 		}
 
 		if (logonServerPtr > 0) {

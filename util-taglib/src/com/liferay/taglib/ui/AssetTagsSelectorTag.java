@@ -102,7 +102,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			"liferay-ui:asset-tags-selector:focus", String.valueOf(_focus));
 
 		if (_groupIds == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay) pageContext.getAttribute(
+			ThemeDisplay themeDisplay = (ThemeDisplay)pageContext.getAttribute(
 				"themeDisplay");
 
 			long[] groupIds = null;

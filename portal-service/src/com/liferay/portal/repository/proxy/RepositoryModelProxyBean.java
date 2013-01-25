@@ -72,7 +72,7 @@ public abstract class RepositoryModelProxyBean {
 		LocalRepository localRepository) {
 
 		LocalRepository localRepositoryProxy =
-			(LocalRepository) newProxyInstance(
+			(LocalRepository)newProxyInstance(
 				localRepository, LocalRepository.class);
 
 		return new LocalRepositoryProxyBean(localRepositoryProxy, _classLoader);

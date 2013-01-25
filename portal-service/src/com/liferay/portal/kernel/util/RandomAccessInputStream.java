@@ -143,7 +143,7 @@ public class RandomAccessInputStream extends InputStream {
 
 		while (lengthToRead > 0) {
 			int bytesRead = _inputStream.read(
-				buffer, 0, (int) Math.min(lengthToRead, buffer.length));
+				buffer, 0, (int)Math.min(lengthToRead, buffer.length));
 
 			if (bytesRead == -1) {
 				_foundEOF = true;

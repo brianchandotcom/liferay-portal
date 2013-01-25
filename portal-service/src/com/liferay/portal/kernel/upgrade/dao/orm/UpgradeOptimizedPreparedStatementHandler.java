@@ -60,7 +60,7 @@ public class UpgradeOptimizedPreparedStatementHandler
 
 		ResultSet resultSet = _preparedStatement.executeQuery();
 
-		return (ResultSet) ProxyUtil.newProxyInstance(
+		return (ResultSet)ProxyUtil.newProxyInstance(
 			classLoader, new Class[] {ResultSet.class},
 			new UpgradeOptimizedResultSetHandler(resultSet));
 	}

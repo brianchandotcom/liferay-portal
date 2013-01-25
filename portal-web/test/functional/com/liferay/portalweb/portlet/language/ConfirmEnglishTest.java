@@ -38,6 +38,6 @@ public class ConfirmEnglishTest extends BaseTestCase {
 			selenium.getText("//span[@class='sign-out']"));
 		assertEquals(RuntimeVariables.replace("Language Test Page"),
 			selenium.getText(
-				"//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[2]/span/a"));
+				"//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a"));
 	}
 }

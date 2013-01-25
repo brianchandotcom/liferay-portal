@@ -129,7 +129,6 @@ import com.liferay.portlet.wiki.model.WikiPageResource;
 import com.liferay.portlet.wiki.model.impl.WikiNodeImpl;
 import com.liferay.portlet.wiki.model.impl.WikiPageImpl;
 import com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl;
-import com.liferay.util.SimpleCounter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -139,6 +138,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Brian Wing Shun Chan
@@ -241,7 +241,7 @@ public class DataFactory {
 		Date date = new Date();
 
 		blogsEntry.setUuid(PortalUUIDUtil.generate());
-		blogsEntry.setEntryId(_counter.get());
+		blogsEntry.setEntryId(_counter.getAndIncrement());
 		blogsEntry.setGroupId(groupId);
 		blogsEntry.setCompanyId(_sampleUser.getCompanyId());
 		blogsEntry.setUserId(_sampleUser.getUserId());
@@ -260,7 +260,7 @@ public class DataFactory {
 	public BlogsStatsUser addBlogsStatsUser(long groupId, long userId) {
 		BlogsStatsUser blogsStatsUser = new BlogsStatsUserImpl();
 
-		blogsStatsUser.setStatsUserId(_counter.get());
+		blogsStatsUser.setStatsUserId(_counter.getAndIncrement());
 		blogsStatsUser.setGroupId(groupId);
 		blogsStatsUser.setCompanyId(_company.getCompanyId());
 		blogsStatsUser.setUserId(userId);
@@ -327,7 +327,7 @@ public class DataFactory {
 		CounterModelImpl counter = new CounterModelImpl();
 
 		counter.setName(Counter.class.getName());
-		counter.setCurrentId(_counter.get());
+		counter.setCurrentId(_counter.getAndIncrement());
 
 		counters.add(counter);
 
@@ -336,7 +336,7 @@ public class DataFactory {
 		counter = new CounterModelImpl();
 
 		counter.setName(ResourcePermission.class.getName());
-		counter.setCurrentId(_resourcePermissionCounter.get());
+		counter.setCurrentId(_resourcePermissionCounter.getAndIncrement());
 
 		counters.add(counter);
 
@@ -345,7 +345,7 @@ public class DataFactory {
 		counter = new CounterModelImpl();
 
 		counter.setName(SocialActivity.class.getName());
-		counter.setCurrentId(_socialActivityCounter.get());
+		counter.setCurrentId(_socialActivityCounter.getAndIncrement());
 
 		counters.add(counter);
 
@@ -359,7 +359,7 @@ public class DataFactory {
 		Date date = new Date();
 
 		ddlRecord.setUuid(PortalUUIDUtil.generate());
-		ddlRecord.setRecordId(_counter.get());
+		ddlRecord.setRecordId(_counter.getAndIncrement());
 		ddlRecord.setGroupId(ddlRecordSet.getGroupId());
 		ddlRecord.setCompanyId(ddlRecordSet.getCompanyId());
 		ddlRecord.setUserId(ddlRecordSet.getUserId());
@@ -368,7 +368,7 @@ public class DataFactory {
 		ddlRecord.setVersionUserName(ddlRecordSet.getUserName());
 		ddlRecord.setCreateDate(date);
 		ddlRecord.setModifiedDate(date);
-		ddlRecord.setDDMStorageId(_counter.get());
+		ddlRecord.setDDMStorageId(_counter.getAndIncrement());
 		ddlRecord.setRecordSetId(ddlRecordSet.getRecordSetId());
 		ddlRecord.setVersion(DDLRecordConstants.VERSION_DEFAULT);
 		ddlRecord.setDisplayIndex(DDLRecordConstants.DISPLAY_INDEX_DEFAULT);
@@ -384,7 +384,7 @@ public class DataFactory {
 		Date date = new Date();
 
 		ddlRecordSet.setUuid(PortalUUIDUtil.generate());
-		ddlRecordSet.setRecordSetId(_counter.get());
+		ddlRecordSet.setRecordSetId(_counter.getAndIncrement());
 		ddlRecordSet.setGroupId(ddmStructure.getGroupId());
 		ddlRecordSet.setCompanyId(ddmStructure.getCompanyId());
 		ddlRecordSet.setUserId(ddmStructure.getUserId());
@@ -409,7 +409,7 @@ public class DataFactory {
 	public DDLRecordVersion addDDLRecordVersion(DDLRecord ddlRecord) {
 		DDLRecordVersion ddlRecordVersion = new DDLRecordVersionImpl();
 
-		ddlRecordVersion.setRecordVersionId(_counter.get());
+		ddlRecordVersion.setRecordVersionId(_counter.getAndIncrement());
 		ddlRecordVersion.setGroupId(ddlRecord.getGroupId());
 		ddlRecordVersion.setCompanyId(ddlRecord.getCompanyId());
 		ddlRecordVersion.setUserId(ddlRecord.getVersionUserId());
@@ -437,7 +437,7 @@ public class DataFactory {
 
 	public DDMContent addDDMContent(DLFileEntry dlFileEntry) {
 		return newDDMContent(
-			_counter.get(), dlFileEntry.getGroupId(),
+			_counter.getAndIncrement(), dlFileEntry.getGroupId(),
 			dlFileEntry.getCompanyId(), dlFileEntry.getUserId(),
 			dlFileEntry.getUserName(), _DDM_CONTENT_FOR_DL);
 	}
@@ -448,7 +448,7 @@ public class DataFactory {
 		DDMStorageLink ddmStorageLink = new DDMStorageLinkImpl();
 
 		ddmStorageLink.setUuid(PortalUUIDUtil.generate());
-		ddmStorageLink.setStorageLinkId(_counter.get());
+		ddmStorageLink.setStorageLinkId(_counter.getAndIncrement());
 		ddmStorageLink.setClassNameId(_ddmContentClassNameId);
 		ddmStorageLink.setClassPK(ddmContent.getContentId());
 		ddmStorageLink.setStructureId(structureId);
@@ -489,7 +489,7 @@ public class DataFactory {
 		Date date = nextDate();
 
 		dlFileEntry.setUuid(PortalUUIDUtil.generate());
-		dlFileEntry.setFileEntryId(_counter.get());
+		dlFileEntry.setFileEntryId(_counter.getAndIncrement());
 		dlFileEntry.setGroupId(dlFolder.getGroupId());
 		dlFileEntry.setCompanyId(dlFolder.getCompanyId());
 		dlFileEntry.setUserId(dlFolder.getUserId());
@@ -518,7 +518,7 @@ public class DataFactory {
 		DLFileEntryMetadata dlFileEntryMetadata = new DLFileEntryMetadataImpl();
 
 		dlFileEntryMetadata.setUuid(PortalUUIDUtil.generate());
-		dlFileEntryMetadata.setFileEntryMetadataId(_counter.get());
+		dlFileEntryMetadata.setFileEntryMetadataId(_counter.getAndIncrement());
 		dlFileEntryMetadata.setDDMStorageId(ddmStorageLink.getPrimaryKey());
 		dlFileEntryMetadata.setDDMStructureId(ddmStorageLink.getStructureId());
 		dlFileEntryMetadata.setFileEntryTypeId(
@@ -535,7 +535,7 @@ public class DataFactory {
 		Date date = nextDate();
 
 		dlFileVersion.setUuid(PortalUUIDUtil.generate());
-		dlFileVersion.setFileVersionId(_counter.get());
+		dlFileVersion.setFileVersionId(_counter.getAndIncrement());
 		dlFileVersion.setGroupId(dlFileEntry.getGroupId());
 		dlFileVersion.setCompanyId(dlFileEntry.getCompanyId());
 		dlFileVersion.setUserId(dlFileEntry.getVersionUserId());
@@ -563,7 +563,7 @@ public class DataFactory {
 		Date date = nextDate();
 
 		dlFolder.setUuid(PortalUUIDUtil.generate());
-		dlFolder.setFolderId(_counter.get());
+		dlFolder.setFolderId(_counter.getAndIncrement());
 		dlFolder.setGroupId(groupId);
 		dlFolder.setCompanyId(_sampleUser.getCompanyId());
 		dlFolder.setUserId(_sampleUser.getUserId());
@@ -610,7 +610,7 @@ public class DataFactory {
 		Date date = new Date();
 
 		journalArticle.setUuid(PortalUUIDUtil.generate());
-		journalArticle.setId(_counter.get());
+		journalArticle.setId(_counter.getAndIncrement());
 		journalArticle.setResourcePrimKey(
 			journalArticleResource.getResourcePrimKey());
 		journalArticle.setGroupId(journalArticleResource.getGroupId());
@@ -638,9 +638,10 @@ public class DataFactory {
 			new JournalArticleResourceImpl();
 
 		journalArticleResource.setUuid(PortalUUIDUtil.generate());
-		journalArticleResource.setResourcePrimKey(_counter.get());
+		journalArticleResource.setResourcePrimKey(_counter.getAndIncrement());
 		journalArticleResource.setGroupId(groupId);
-		journalArticleResource.setArticleId(String.valueOf(_counter.get()));
+		journalArticleResource.setArticleId(
+			String.valueOf(_counter.getAndIncrement()));
 
 		return journalArticleResource;
 	}
@@ -651,7 +652,7 @@ public class DataFactory {
 		JournalContentSearch journalContentSearch =
 			new JournalContentSearchImpl();
 
-		journalContentSearch.setContentSearchId(_counter.get());
+		journalContentSearch.setContentSearchId(_counter.getAndIncrement());
 		journalContentSearch.setGroupId(journalArticle.getGroupId());
 		journalContentSearch.setCompanyId(journalArticle.getCompanyId());
 		journalContentSearch.setLayoutId(layoutId);
@@ -669,7 +670,7 @@ public class DataFactory {
 		Date date = new Date();
 
 		layout.setUuid(PortalUUIDUtil.generate());
-		layout.setPlid(_counter.get());
+		layout.setPlid(_counter.getAndIncrement());
 		layout.setGroupId(groupId);
 		layout.setCompanyId(_company.getCompanyId());
 		layout.setCreateDate(date);
@@ -678,15 +679,15 @@ public class DataFactory {
 		layout.setType(LayoutConstants.TYPE_PORTLET);
 		layout.setFriendlyURL(StringPool.FORWARD_SLASH + name);
 
-		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
+		AtomicLong layoutCounter = _layoutCounters.get(groupId);
 
-		if (simpleCounter == null) {
-			simpleCounter = new SimpleCounter();
+		if (layoutCounter == null) {
+			layoutCounter = new AtomicLong(1);
 
-			_layoutCounters.put(groupId, simpleCounter);
+			_layoutCounters.put(groupId, layoutCounter);
 		}
 
-		layout.setLayoutId(simpleCounter.get());
+		layout.setLayoutId(layoutCounter.getAndIncrement());
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
@@ -718,7 +719,7 @@ public class DataFactory {
 		Date date = new Date();
 
 		mbCategory.setUuid(PortalUUIDUtil.generate());
-		mbCategory.setCategoryId(_counter.get());
+		mbCategory.setCategoryId(_counter.getAndIncrement());
 		mbCategory.setGroupId(groupId);
 		mbCategory.setCompanyId(_sampleUser.getCompanyId());
 		mbCategory.setUserId(_sampleUser.getUserId());
@@ -773,7 +774,7 @@ public class DataFactory {
 		Date date = new Date();
 
 		mbMailingList.setUuid(PortalUUIDUtil.generate());
-		mbMailingList.setMailingListId(_counter.get());
+		mbMailingList.setMailingListId(_counter.getAndIncrement());
 		mbMailingList.setGroupId(mbCategory.getGroupId());
 		mbMailingList.setCompanyId(mbCategory.getCompanyId());
 		mbMailingList.setUserId(mbCategory.getUserId());
@@ -812,7 +813,7 @@ public class DataFactory {
 			body = "This is a test comment " + currentIndex + StringPool.PERIOD;
 		}
 		else {
-			threadId = _counter.get();
+			threadId = _counter.getAndIncrement();
 			subject = Long.toString(blogsEntry.getEntryId());
 			body = Long.toString(blogsEntry.getEntryId());
 		}
@@ -834,7 +835,8 @@ public class DataFactory {
 			dlFileEntry.getGroupId(), dlFileEntry.getCompanyId(),
 			dlFileEntry.getUserId(), dlFileEntry.getUserName(),
 			_dlFileEntryClassNameId, dlFileEntry.getFileEntryId(),
-			MBCategoryConstants.DISCUSSION_CATEGORY_ID, _counter.get(), 0,
+			MBCategoryConstants.DISCUSSION_CATEGORY_ID,
+			_counter.getAndIncrement(), 0,
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, dlFileEntryIDString,
 			dlFileEntryIDString);
 	}
@@ -847,7 +849,8 @@ public class DataFactory {
 			journalArticle.getGroupId(), journalArticle.getCompanyId(),
 			journalArticle.getUserId(), journalArticle.getUserName(),
 			_journalArticleClassNameId, journalArticle.getResourcePrimKey(),
-			MBCategoryConstants.DISCUSSION_CATEGORY_ID, _counter.get(), 0,
+			MBCategoryConstants.DISCUSSION_CATEGORY_ID,
+			_counter.getAndIncrement(), 0,
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			resourcePrimKeyString, resourcePrimKeyString);
 	}
@@ -869,7 +872,7 @@ public class DataFactory {
 			parentMessageId = rootMessage.getMessageId();
 		}
 		else {
-			threadId = _counter.get();
+			threadId = _counter.getAndIncrement();
 		}
 
 		String subject = "Test Message " + currentIndex;
@@ -904,7 +907,7 @@ public class DataFactory {
 			body = "This is a test comment " + currentIndex + StringPool.PERIOD;
 		}
 		else {
-			threadId = _counter.get();
+			threadId = _counter.getAndIncrement();
 			subject = Long.toString(wikiPage.getResourcePrimKey());
 			body = Long.toString(wikiPage.getResourcePrimKey());
 		}
@@ -920,7 +923,7 @@ public class DataFactory {
 	public MBStatsUser addMBStatsUser(long groupId, long userId) {
 		MBStatsUser mbStatsUser = new MBStatsUserImpl();
 
-		mbStatsUser.setStatsUserId(_counter.get());
+		mbStatsUser.setStatsUserId(_counter.getAndIncrement());
 		mbStatsUser.setGroupId(groupId);
 		mbStatsUser.setUserId(userId);
 		mbStatsUser.setMessageCount(_maxMBMessageCount);
@@ -1020,7 +1023,7 @@ public class DataFactory {
 	public SocialActivity addSocialActivity(DLFileEntry dlFileEntry) {
 		SocialActivity socialActivity = new SocialActivityImpl();
 
-		socialActivity.setActivityId(_socialActivityCounter.get());
+		socialActivity.setActivityId(_socialActivityCounter.getAndIncrement());
 		socialActivity.setGroupId(dlFileEntry.getGroupId());
 		socialActivity.setCompanyId(dlFileEntry.getCompanyId());
 		socialActivity.setUserId(dlFileEntry.getUserId());
@@ -1038,8 +1041,8 @@ public class DataFactory {
 		String[] names = nextName(currentIndex - 1);
 
 		return newUser(
-			names[0], names[1], "test" + _userScreenNameIncrementer.get(),
-			false);
+			names[0], names[1], "test" +
+			_userScreenNameIncrementer.getAndIncrement(), false);
 	}
 
 	public List<Long> addUserToGroupIds(long groupId) {
@@ -1064,7 +1067,7 @@ public class DataFactory {
 		Date date = new Date();
 
 		wikiNode.setUuid(PortalUUIDUtil.generate());
-		wikiNode.setNodeId(_counter.get());
+		wikiNode.setNodeId(_counter.getAndIncrement());
 		wikiNode.setGroupId(groupId);
 		wikiNode.setCompanyId(_sampleUser.getCompanyId());
 		wikiNode.setUserId(_sampleUser.getUserId());
@@ -1084,8 +1087,8 @@ public class DataFactory {
 		Date date = new Date();
 
 		wikiPage.setUuid(PortalUUIDUtil.generate());
-		wikiPage.setPageId(_counter.get());
-		wikiPage.setResourcePrimKey(_counter.get());
+		wikiPage.setPageId(_counter.getAndIncrement());
+		wikiPage.setResourcePrimKey(_counter.getAndIncrement());
 		wikiPage.setGroupId(wikiNode.getGroupId());
 		wikiPage.setCompanyId(wikiNode.getCompanyId());
 		wikiPage.setUserId(wikiNode.getUserId());
@@ -1198,7 +1201,7 @@ public class DataFactory {
 		List<String> models = ModelHintsUtil.getModels();
 
 		for (String model : models) {
-			long classNameId = _counter.get();
+			long classNameId = _counter.getAndIncrement();
 
 			ClassName className = new ClassNameImpl();
 
@@ -1249,8 +1252,8 @@ public class DataFactory {
 	public void initCompany() {
 		_company = new CompanyImpl();
 
-		_company.setCompanyId(_counter.get());
-		_company.setAccountId(_counter.get());
+		_company.setCompanyId(_counter.getAndIncrement());
+		_company.setAccountId(_counter.getAndIncrement());
 		_company.setWebId("liferay.com");
 		_company.setMx("liferay.com");
 		_company.setActive(true);
@@ -1408,12 +1411,12 @@ public class DataFactory {
 	}
 
 	public void initSimpleCounters() {
-		_counter = new SimpleCounter(_maxGroupsCount);
-		_dlDateCounter = new SimpleCounter();
-		_layoutCounters = new HashMap<Long, SimpleCounter>();
-		_resourcePermissionCounter = new SimpleCounter();
-		_socialActivityCounter = new SimpleCounter();
-		_userScreenNameIncrementer = new SimpleCounter();
+		_counter = new AtomicLong(_maxGroupsCount);
+		_dlDateCounter = new AtomicLong(1);
+		_layoutCounters = new HashMap<Long, AtomicLong>();
+		_resourcePermissionCounter = new AtomicLong(1);
+		_socialActivityCounter = new AtomicLong(1);
+		_userScreenNameIncrementer = new AtomicLong(1);
 	}
 
 	public void initUserNames() throws Exception {
@@ -1426,7 +1429,7 @@ public class DataFactory {
 	public void initVirtualHost() throws Exception {
 		_virtualHost = new VirtualHostImpl();
 
-		_virtualHost.setVirtualHostId(_counter.get());
+		_virtualHost.setVirtualHostId(_counter.getAndIncrement());
 		_virtualHost.setCompanyId(_company.getCompanyId());
 		_virtualHost.setHostname("localhost");
 	}
@@ -1438,7 +1441,7 @@ public class DataFactory {
 
 		AssetEntry assetEntry = new AssetEntryImpl();
 
-		assetEntry.setEntryId(_counter.get());
+		assetEntry.setEntryId(_counter.getAndIncrement());
 		assetEntry.setGroupId(groupId);
 		assetEntry.setCompanyId(_sampleUser.getCompanyId());
 		assetEntry.setUserId(_sampleUser.getUserId());
@@ -1487,7 +1490,7 @@ public class DataFactory {
 		Date date = nextDate();
 
 		ddmStructure.setUuid(PortalUUIDUtil.generate());
-		ddmStructure.setStructureId(_counter.get());
+		ddmStructure.setStructureId(_counter.getAndIncrement());
 		ddmStructure.setGroupId(groupId);
 		ddmStructure.setCompanyId(_sampleUser.getCompanyId());
 		ddmStructure.setUserId(_sampleUser.getUserId());
@@ -1515,7 +1518,7 @@ public class DataFactory {
 
 		DDMStructureLink ddmStructureLink = new DDMStructureLinkImpl();
 
-		ddmStructureLink.setStructureLinkId(_counter.get());
+		ddmStructureLink.setStructureLinkId(_counter.getAndIncrement());
 		ddmStructureLink.setClassNameId(classNameId);
 		ddmStructureLink.setClassPK(classPK);
 		ddmStructureLink.setStructureId(structureId);
@@ -1531,7 +1534,7 @@ public class DataFactory {
 
 		Date date = nextDate();
 
-		dlSync.setSyncId(_counter.get());
+		dlSync.setSyncId(_counter.getAndIncrement());
 		dlSync.setCompanyId(companyId);
 		dlSync.setCreateDate(date);
 		dlSync.setModifiedDate(date);
@@ -1561,7 +1564,7 @@ public class DataFactory {
 		group.setActive(true);
 
 		if (groupId == 0) {
-			groupId = _counter.get();
+			groupId = _counter.getAndIncrement();
 		}
 
 		group.setGroupId(groupId);
@@ -1582,7 +1585,7 @@ public class DataFactory {
 
 		Date date = new Date();
 
-		layoutSet.setLayoutSetId(_counter.get());
+		layoutSet.setLayoutSetId(_counter.getAndIncrement());
 		layoutSet.setGroupId(group.getGroupId());
 		layoutSet.setCompanyId(group.getCompanyId());
 		layoutSet.setCreateDate(date);
@@ -1602,12 +1605,12 @@ public class DataFactory {
 
 		MBDiscussion mbDiscussion = new MBDiscussionImpl();
 
-		mbDiscussion.setDiscussionId(_counter.get());
+		mbDiscussion.setDiscussionId(_counter.getAndIncrement());
 		mbDiscussion.setClassNameId(classNameId);
 		mbDiscussion.setClassPK(classPK);
 
 		if (threadId == 0) {
-			threadId = _counter.get();
+			threadId = _counter.getAndIncrement();
 		}
 
 		mbDiscussion.setThreadId(threadId);
@@ -1624,7 +1627,7 @@ public class DataFactory {
 
 		Date date = new Date();
 
-		long messageId = _counter.get();
+		long messageId = _counter.getAndIncrement();
 
 		mbMessage.setUuid(PortalUUIDUtil.generate());
 		mbMessage.setMessageId(messageId);
@@ -1657,7 +1660,7 @@ public class DataFactory {
 
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
-		portletPreferences.setPortletPreferencesId(_counter.get());
+		portletPreferences.setPortletPreferencesId(_counter.getAndIncrement());
 		portletPreferences.setOwnerId(PortletKeys.PREFS_OWNER_ID_DEFAULT);
 		portletPreferences.setOwnerType(PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
 		portletPreferences.setPlid(plid);
@@ -1673,7 +1676,7 @@ public class DataFactory {
 		ResourcePermission resourcePermission = new ResourcePermissionImpl();
 
 		resourcePermission.setResourcePermissionId(
-			_resourcePermissionCounter.get());
+			_resourcePermissionCounter.getAndIncrement());
 		resourcePermission.setCompanyId(_company.getCompanyId());
 		resourcePermission.setName(name);
 		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
@@ -1688,7 +1691,7 @@ public class DataFactory {
 	protected Role newRole(String name, int type) {
 		Role role = new RoleImpl();
 
-		long roleId = _counter.get();
+		long roleId = _counter.getAndIncrement();
 
 		role.setRoleId(roleId);
 		role.setCompanyId(_company.getCompanyId());
@@ -1709,12 +1712,12 @@ public class DataFactory {
 		Date date = new Date();
 
 		user.setUuid(PortalUUIDUtil.generate());
-		user.setUserId(_counter.get());
+		user.setUserId(_counter.getAndIncrement());
 		user.setCompanyId(_company.getCompanyId());
 		user.setCreateDate(date);
 		user.setModifiedDate(date);
 		user.setDefaultUser(defaultUser);
-		user.setContactId(_counter.get());
+		user.setContactId(_counter.getAndIncrement());
 		user.setPassword(_PASSWORD);
 		user.setReminderQueryQuestion(_QUERY_QUESTION);
 		user.setLanguageId(_DEFAULT_LANGUAGE_ID);
@@ -1738,7 +1741,8 @@ public class DataFactory {
 	}
 
 	protected Date nextDate() {
-		return new Date(_futureTime + (_dlDateCounter.get() * Time.SECOND));
+		return new Date(
+			_futureTime + (_dlDateCounter.getAndIncrement() * Time.SECOND));
 	}
 
 	protected String[] nextName(long currentIndex) {
@@ -1836,7 +1840,7 @@ public class DataFactory {
 	private long _blogsEntryClassNameId;
 	private List<ClassName> _classNames;
 	private Company _company;
-	private SimpleCounter _counter;
+	private AtomicLong _counter;
 	private long _ddlRecordSetClassNameId;
 
 	private String _ddm_structure_basic_document;
@@ -1845,7 +1849,7 @@ public class DataFactory {
 	private long _ddmContentClassNameId;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;
-	private SimpleCounter _dlDateCounter;
+	private AtomicLong _dlDateCounter;
 	private long _dlFileEntryClassNameId;
 	private long _dlFileEntryMetaDataClassNameId;
 	private List<String> _firstNames;
@@ -1858,7 +1862,7 @@ public class DataFactory {
 	private long _journalArticleClassNameId;
 	private String _journalArticleContent;
 	private List<String> _lastNames;
-	private Map<Long, SimpleCounter> _layoutCounters;
+	private Map<Long, AtomicLong> _layoutCounters;
 	private int _maxBlogsEntryCount;
 	private int _maxDLFileEntrySize;
 	private int _maxGroupsCount;
@@ -1874,17 +1878,17 @@ public class DataFactory {
 	private Role _organizationUserRole;
 	private Role _ownerRole;
 	private Role _powerUserRole;
-	private SimpleCounter _resourcePermissionCounter;
+	private AtomicLong _resourcePermissionCounter;
 	private long _roleClassNameId;
 	private List<Role> _roles;
 	private User _sampleUser;
 	private Role _siteAdministratorRole;
 	private Role _siteMemberRole;
 	private Role _siteOwnerRole;
-	private SimpleCounter _socialActivityCounter;
+	private AtomicLong _socialActivityCounter;
 	private long _userClassNameId;
 	private Role _userRole;
-	private SimpleCounter _userScreenNameIncrementer;
+	private AtomicLong _userScreenNameIncrementer;
 	private VirtualHost _virtualHost;
 	private long _wikiPageClassNameId;
 

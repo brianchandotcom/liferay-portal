@@ -43,13 +43,13 @@ public class SelectOrganizationRolePage2Test extends BaseTestCase {
 			RuntimeVariables.replace("Search All Users"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_125_keywords']",
-			RuntimeVariables.replace("\"test01@liferay.com\""));
+			RuntimeVariables.replace("\"userea@liferay.com\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test"),
+		assertEquals(RuntimeVariables.replace("userfn"),
 			selenium.getText("//tr[3]/td[2]/a"));
-		selenium.clickAt("//tr[3]/td[2]/a", RuntimeVariables.replace("Test"));
+		selenium.clickAt("//tr[3]/td[2]/a", RuntimeVariables.replace("userfn"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//a[@id='_125_rolesLink']",
 			RuntimeVariables.replace("Roles"));

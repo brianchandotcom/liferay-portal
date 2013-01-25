@@ -65,27 +65,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_usersSearchContainer_col-first-name_row-usersn3']/a</td>
+	<td>//tr[contains(.,'userfn3')]/td[2]/a</td>
 	<td>userfn3</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_usersSearchContainer_col-last-name_row-usersn3']/a</td>
+	<td>//tr[contains(.,'userfn3')]/td[3]/a</td>
 	<td>userln3</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_usersSearchContainer_col-screen-name_row-usersn3']/a</td>
+	<td>//tr[contains(.,'userfn3')]/td[4]/a</td>
 	<td>usersn3</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul[@id='_125_usersSearchContainer_usersn3_menu']/li/strong/a</td>
+	<td>//tr[contains(.,'userfn3')]/td[8]/span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul[@id='_125_usersSearchContainer_usersn3_menu']/li/strong/a</td>
+	<td>//tr[contains(.,'userfn3')]/td[8]/span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -115,17 +115,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]</td>
+	<td>//span[contains(.,'Select')]/a[contains(@href,'openSiteRoleSelector')]</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]</td>
+	<td>//span[contains(.,'Select')]/a[contains(@href,'openSiteRoleSelector')]</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]</td>
+	<td>//span[contains(.,'Select')]/a[contains(@href,'openSiteRoleSelector')]</td>
 	<td>Select</td>
 </tr>
 <tr>
@@ -140,17 +140,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[contains(.,'Roles Siterole3 Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a</td>
+	<td>//tr[contains(.,'Roles Siterole3 Name')]/td[1]/a</td>
 	<td>Roles Siterole3 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'Roles Siterole3 Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a</td>
+	<td>//tr[contains(.,'Roles Siterole3 Name')]/td[1]/a</td>
 	<td>Roles Siterole3 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[contains(.,'Roles Siterole3 Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a</td>
+	<td>//tr[contains(.,'Roles Siterole3 Name')]/td[1]/a</td>
 	<td>Roles Siterole3 Name</td>
 </tr>
 <tr>
@@ -159,13 +159,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForPartialText</td>
-	<td>//div[@id='_125_communityRolesSearchContainerSearchContainer']</td>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'Roles Siterole3 Name')]/td[1]</td>
 	<td>Roles Siterole3 Name</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@id='_125_communityRolesSearchContainerSearchContainer']</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Roles Siterole3 Name')]/td[1]</td>
 	<td>Roles Siterole3 Name</td>
 </tr>
 <tr>
@@ -180,12 +180,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_communityRolesSearchContainer_col-title_row-1']</td>
+	<td>//div[contains(@id,'siteRolesSearchContainer')]/table/tbody/tr[contains(.,'Roles Siterole3 Name')]/td[1]</td>
 	<td>Roles Siterole3 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_communityRolesSearchContainer_col-site_row-1']</td>
+	<td>//div[contains(@id,'siteRolesSearchContainer')]/table/tbody/tr[contains(.,'Roles Siterole3 Name')]/td[2]</td>
 	<td>Site Name</td>
 </tr>
 </tbody></table>

@@ -48,18 +48,15 @@ public class EditUser3SiteRole3Test extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("userfn3"),
-			selenium.getText(
-				"//td[@id='_125_usersSearchContainer_col-first-name_row-usersn3']/a"));
+			selenium.getText("//tr[contains(.,'userfn3')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("userln3"),
-			selenium.getText(
-				"//td[@id='_125_usersSearchContainer_col-last-name_row-usersn3']/a"));
+			selenium.getText("//tr[contains(.,'userfn3')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("usersn3"),
-			selenium.getText(
-				"//td[@id='_125_usersSearchContainer_col-screen-name_row-usersn3']/a"));
+			selenium.getText("//tr[contains(.,'userfn3')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//span[@title='Actions']/ul[@id='_125_usersSearchContainer_usersn3_menu']/li/strong/a"));
-		selenium.clickAt("//span[@title='Actions']/ul[@id='_125_usersSearchContainer_usersn3_menu']/li/strong/a",
+				"//tr[contains(.,'userfn3')]/td[8]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'userfn3')]/td[8]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
@@ -73,27 +70,25 @@ public class EditUser3SiteRole3Test extends BaseTestCase {
 		selenium.clickAt("//a[@id='_125_rolesLink']",
 			RuntimeVariables.replace("Roles"));
 		selenium.waitForVisible(
-			"//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]");
+			"//span[contains(.,'Select')]/a[contains(@href,'openSiteRoleSelector')]");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]"));
-		selenium.clickAt("//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]",
+				"//span[contains(.,'Select')]/a[contains(@href,'openSiteRoleSelector')]"));
+		selenium.clickAt("//span[contains(.,'Select')]/a[contains(@href,'openSiteRoleSelector')]",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");
 		selenium.waitForVisible(
-			"//tr[contains(.,'Roles Siterole3 Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a");
+			"//tr[contains(.,'Roles Siterole3 Name')]/td[1]/a");
 		assertEquals(RuntimeVariables.replace("Roles Siterole3 Name"),
-			selenium.getText(
-				"//tr[contains(.,'Roles Siterole3 Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a"));
-		selenium.clickAt("//tr[contains(.,'Roles Siterole3 Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a",
+			selenium.getText("//tr[contains(.,'Roles Siterole3 Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Roles Siterole3 Name')]/td[1]/a",
 			RuntimeVariables.replace("Roles Siterole3 Name"));
 		selenium.selectWindow("null");
-		selenium.waitForPartialText("//div[@id='_125_communityRolesSearchContainerSearchContainer']",
-			"Roles Siterole3 Name");
-		assertTrue(selenium.isPartialText(
-				"//div[@id='_125_communityRolesSearchContainerSearchContainer']",
-				"Roles Siterole3 Name"));
+		selenium.waitForVisible(
+			"//tr[contains(.,'Roles Siterole3 Name')]/td[1]");
+		assertEquals(RuntimeVariables.replace("Roles Siterole3 Name"),
+			selenium.getText("//tr[contains(.,'Roles Siterole3 Name')]/td[1]"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -102,9 +97,9 @@ public class EditUser3SiteRole3Test extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Roles Siterole3 Name"),
 			selenium.getText(
-				"//td[@id='_125_communityRolesSearchContainer_col-title_row-1']"));
+				"//div[contains(@id,'siteRolesSearchContainer')]/table/tbody/tr[contains(.,'Roles Siterole3 Name')]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Site Name"),
 			selenium.getText(
-				"//td[@id='_125_communityRolesSearchContainer_col-site_row-1']"));
+				"//div[contains(@id,'siteRolesSearchContainer')]/table/tbody/tr[contains(.,'Roles Siterole3 Name')]/td[2]"));
 	}
 }

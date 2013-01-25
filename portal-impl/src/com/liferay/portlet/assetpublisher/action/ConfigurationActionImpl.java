@@ -29,7 +29,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -162,12 +164,32 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		String scopeId = ParamUtil.getString(actionRequest, "scopeId");
 
+		checkScope(actionRequest, scopeId);
+
 		if (!ArrayUtil.contains(scopeIds, scopeId)) {
 			scopeIds = ArrayUtil.append(scopeIds, scopeId);
 		}
 
 		preferences.setValue("defaultScope", Boolean.FALSE.toString());
 		preferences.setValues("scopeIds", scopeIds);
+	}
+
+	protected void checkScope(ActionRequest actionRequest, String scopeId)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		long groupId = AssetPublisherUtil.getGroupIdFromScopeId(
+			scopeId, themeDisplay.getScopeGroupId(), layout.isPrivateLayout());
+
+		if (groupId != themeDisplay.getCompanyGroupId()) {
+			GroupPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), groupId,
+				ActionKeys.UPDATE);
+		}
 	}
 
 	protected String[] getClassTypeIds(

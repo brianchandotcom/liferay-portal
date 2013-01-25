@@ -1761,6 +1761,10 @@
 			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
 		</action>
 
+		<!-- Site Browser -->
+
+		<action path="/site_browser/view" forward="portlet.site_browser.view" />
+
 		<!-- Site Map -->
 
 		<action path="/site_map/view" forward="portlet.site_map.view" />

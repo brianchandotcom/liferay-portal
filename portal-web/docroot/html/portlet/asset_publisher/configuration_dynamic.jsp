@@ -66,7 +66,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 					<aui:select label="" name="preferences--anyAssetType--">
 						<aui:option label="any" selected="<%= anyAssetType %>" value="<%= true %>" />
-						<aui:option label='<%= LanguageUtil.get(pageContext, "select-more-than-one") + "..." %>' selected="<%= !anyAssetType && (classNameIds.length > 1) %>" value="<%= false %>" />
+						<aui:option label='<%= LanguageUtil.get(pageContext, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>' selected="<%= !anyAssetType && (classNameIds.length > 1) %>" value="<%= false %>" />
 
 						<optgroup label="<liferay-ui:message key="asset-type" />">
 
@@ -144,7 +144,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					<div class='asset-subtype <%= (assetSelectedClassTypeIds.length < 1) ? "" : "aui-helper-hidden" %>' id="<portlet:namespace /><%= className %>Options">
 						<aui:select label='<%= LanguageUtil.format(pageContext, "x-subtype", ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName())) %>' name='<%= "preferences--anyClassType" + className + "--" %>'>
 							<aui:option label="any" selected="<%= anyAssetSubType %>" value="<%= true %>" />
-							<aui:option label='<%= LanguageUtil.get(pageContext, "select-more-than-one") + "..." %>' selected="<%= !anyAssetSubType && (assetSelectedClassTypeIds.length > 1) %>" value="<%= false %>" />
+							<aui:option label='<%= LanguageUtil.get(pageContext, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>' selected="<%= !anyAssetSubType && (assetSelectedClassTypeIds.length > 1) %>" value="<%= false %>" />
 
 							<optgroup label="<liferay-ui:message key="subtype" />">
 

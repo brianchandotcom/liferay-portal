@@ -25,7 +25,7 @@
 		</style>
 
 		<%
-		String defaultKeywords = LanguageUtil.get(pageContext, "search") + "...";
+		String defaultKeywords = LanguageUtil.get(pageContext, "search") + StringPool.TRIPLE_PERIOD;
 		String unicodeDefaultKeywords = UnicodeFormatter.toString(defaultKeywords);
 
 		String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);

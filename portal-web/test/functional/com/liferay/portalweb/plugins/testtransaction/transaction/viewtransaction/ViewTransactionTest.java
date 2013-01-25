@@ -25,21 +25,21 @@ public class ViewTransactionTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Test Transaction Page");
-		selenium.clickAt("link=Test Transaction Page",
-			RuntimeVariables.replace("Test Transaction Page"));
+		selenium.clickAt("link=Test Transaction Test Page",
+			RuntimeVariables.replace("Test Transaction Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isPartialText("//p[1]", "BarLocalServiceUtil"));
+		assertTrue(selenium.isPartialText("//p[1]", "addBar_Success=PASSED"));
 		assertTrue(selenium.isPartialText("//p[1]",
-				"BarLocalServiceUtil.addBar_Success=PASSED"));
+				"addBarAndClassName_PortalRollback=PASSED"));
 		assertTrue(selenium.isPartialText("//p[1]",
-				"BarLocalServiceUtil.addBarAndClassName_PortalRollback=PASSED"));
-		assertTrue(selenium.isPartialText("//p[1]",
-				"BarLocalServiceUtil.addBarAndClassName_PortletRollback=PASSED"));
+				"addBarAndClassName_PortletRollback=PASSED"));
+		assertTrue(selenium.isPartialText("//p[2]", "PortalServiceUtil"));
 		assertTrue(selenium.isPartialText("//p[2]",
-				"PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_Success=PASSED"));
+				"testAddClassNameAndTestTransactionPortletBar_Success=PASSED"));
 		assertTrue(selenium.isPartialText("//p[2]",
-				"PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_PortalRollback=PASSED"));
+				"testAddClassNameAndTestTransactionPortletBar_PortalRollback=PASSED"));
 		assertTrue(selenium.isPartialText("//p[2]",
-				"PortletServiceUtil.testAddClassNameAndTestTransactionPortletBar_PortletRollback=PASSED"));
+				"testAddClassNameAndTestTransactionPortletBar_PortletRollback=PASSED"));
 	}
 }

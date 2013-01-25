@@ -275,6 +275,15 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Returns all the ancestor layouts of the layout.
+	*
+	* @param plid the primary key of the layout
+	* @return the ancestor layouts of the layout
+	* @throws PortalException if a matching layout could not be found or if a
+	portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.LayoutSoap[] getAncestorLayouts(
 		long plid) throws RemoteException {
 		try {

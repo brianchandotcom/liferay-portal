@@ -25,34 +25,48 @@ public class ViewPageSitePagesVariationTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
-		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
+		assertTrue(selenium.isPartialText("//span/a[contains(.,'Staging')]",
+				"Staging"));
+		selenium.clickAt("//span/a[contains(.,'Staging')]",
+			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site Pages Variation Name"),
-			selenium.getText("//li[2]/span/span/span[1]"));
+			selenium.getText(
+				"//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Site Pages Variation Name')]/span/span/span"));
 		assertTrue(selenium.isVisible("link=Test Page"));
 		assertEquals(RuntimeVariables.replace("Main Variation"),
-			selenium.getText("//li[1]/span/span/a"));
-		selenium.clickAt("//li[1]/span/span/a",
+			selenium.getText(
+				"//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Main Variation')]/span/span/a"));
+		selenium.clickAt("//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Main Variation')]/span/span/a",
 			RuntimeVariables.replace("Main Variation"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent("link=Test Page"));
 		assertEquals(RuntimeVariables.replace("Site Pages Variation Name"),
-			selenium.getText("//li[2]/span/span/a"));
-		selenium.clickAt("//li[2]/span/span/a",
+			selenium.getText(
+				"//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Site Pages Variation Name')]/span/span/a"));
+		selenium.clickAt("//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Site Pages Variation Name')]/span/span/a",
 			RuntimeVariables.replace("Site Pages Variation Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Test Page", RuntimeVariables.replace("Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Main Variation"),
-			selenium.getText("//li[1]/span/span/a"));
-		selenium.clickAt("//li[1]/span/span/a",
+			selenium.getText(
+				"//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Main Variation')]/span/span/a"));
+		selenium.clickAt("//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Main Variation')]/span/span/a",
 			RuntimeVariables.replace("Main Variation"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText(

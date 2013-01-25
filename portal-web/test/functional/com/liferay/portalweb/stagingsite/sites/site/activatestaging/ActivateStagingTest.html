@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_134_name']</td>
+	<td>//input[@name='_134_keywords']</td>
 	<td>Site Name</td>
 </tr>
 <tr>
@@ -70,17 +70,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]</td>
 	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]</td>
 	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]</td>
 	<td>Edit Settings</td>
 </tr>
 <tr>
@@ -105,8 +105,33 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span/span[contains(.,'Blogs')]/span/input[2]</td>
-	<td>Blogs</td>
+	<td>//span/span[contains(.,'Application Display Templates')]/span/input[2]</td>
+	<td>Application Display Templates</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Application Display Templates')]/span/input[2]</td>
+	<td>applicationDisplayTemplatesChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${applicationDisplayTemplatesChecked}</td>
+	<td>ApplicationDisplayTemplatesChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span/span[contains(.,'Application Display Templates')]/span/input[2]</td>
+	<td>Application Display Templates</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ApplicationDisplayTemplatesChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Application Display Templates')]/span/input[2]</td>
+	<td>Application Display Templates</td>
 </tr>
 <tr>
 	<td>storeChecked</td>
@@ -129,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Blogs')]/span/input[2]</td>
+	<td>Blogs</td>
+</tr>
+<tr>
 	<td>storeChecked</td>
 	<td>//span/span[contains(.,'Bookmarks')]/span/input[2]</td>
 	<td>bookmarksChecked</td>
@@ -147,6 +177,11 @@
 	<td>label</td>
 	<td>BookmarksChecked</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Bookmarks')]/span/input[2]</td>
+	<td>Bookmarks</td>
 </tr>
 <tr>
 	<td>storeChecked</td>
@@ -169,6 +204,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Calendar')]/span/input[2]</td>
+	<td>Calendar</td>
+</tr>
+<tr>
 	<td>storeChecked</td>
 	<td>//span/span[contains(.,'Documents and Media')]/span/input[2]</td>
 	<td>documentLibraryChecked</td>
@@ -187,6 +227,11 @@
 	<td>label</td>
 	<td>DocumentLibraryChecked</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Documents and Media')]/span/input[2]</td>
+	<td>DocumentLibrary</td>
 </tr>
 <tr>
 	<td>storeChecked</td>
@@ -209,6 +254,61 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Documents and Media Display')]/span/input[2]</td>
+	<td>DocumentLibraryDisplay</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Dynamic Data List Display')]/span/input[2]</td>
+	<td>dynamicDataListDisplayChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${dynamicDataListDisplayChecked}</td>
+	<td>DynamicDataListDisplayChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span/span[contains(.,'Dynamic Data List Display')]/span/input[2]</td>
+	<td>Dynamic Data List Display</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>DynamicDataListDisplayChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Dynamic Data List Display')]/span/input[2]</td>
+	<td>Dynamic Data List Display</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//span/span[contains(.,'Dynamic Data Lists')]/span/input[2]</td>
+	<td>dynamicDataListsChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${dynamicDataListsChecked}</td>
+	<td>DynamicDataListsChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span/span[contains(.,'Dynamic Data Lists')]/span/input[2]</td>
+	<td>Dynamic Data Lists</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>DynamicDataListsChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Dynamic Data Lists')]/span/input[2]</td>
+	<td>Dynamic Data Lists</td>
+</tr>
+<tr>
 	<td>storeChecked</td>
 	<td>//span/span[contains(.,'Dynamic Data Mapping')]/span/input[2]</td>
 	<td>dynamicDataMappingChecked</td>
@@ -227,6 +327,11 @@
 	<td>label</td>
 	<td>DynamicDataMappingChecked</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Dynamic Data Mapping')]/span/input[2]</td>
+	<td>Dynamic Data Mapping</td>
 </tr>
 <tr>
 	<td>storeChecked</td>
@@ -249,6 +354,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Message Boards')]/span/input[2]</td>
+	<td>Message Boards</td>
+</tr>
+<tr>
 	<td>storeChecked</td>
 	<td>//span/span[contains(.,'Page Comments')]/span/input[2]</td>
 	<td>pageCommentsChecked</td>
@@ -267,6 +377,11 @@
 	<td>label</td>
 	<td>PageCommentsChecked</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Page Comments')]/span/input[2]</td>
+	<td>Page Comments</td>
 </tr>
 <tr>
 	<td>storeChecked</td>
@@ -289,6 +404,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Page Ratings')]/span/input[2]</td>
+	<td>Page Ratings</td>
+</tr>
+<tr>
 	<td>storeChecked</td>
 	<td>//span/span[contains(.,'Polls')]/span/input[2]</td>
 	<td>pollsChecked</td>
@@ -307,6 +427,11 @@
 	<td>label</td>
 	<td>PollsChecked</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Polls')]/span/input[2]</td>
+	<td>Polls</td>
 </tr>
 <tr>
 	<td>storeChecked</td>
@@ -329,6 +454,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Polls Display')]/span/input[2]</td>
+	<td>Polls Display</td>
+</tr>
+<tr>
 	<td>storeChecked</td>
 	<td>//span/span[contains(.,'Web Content')]/span/input[2]</td>
 	<td>webContentChecked</td>
@@ -347,6 +477,11 @@
 	<td>label</td>
 	<td>WebContentChecked</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Web Content')]/span/input[2]</td>
+	<td>Web Content</td>
 </tr>
 <tr>
 	<td>storeChecked</td>
@@ -369,6 +504,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Web Content Display')]/span/input[2]</td>
+	<td>Web Content Display</td>
+</tr>
+<tr>
 	<td>storeChecked</td>
 	<td>//span/span[contains(.,'Wiki')]/span/input[2]</td>
 	<td>wikiChecked</td>
@@ -387,6 +527,11 @@
 	<td>label</td>
 	<td>WikiChecked</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Wiki')]/span/input[2]</td>
+	<td>Wiki</td>
 </tr>
 <tr>
 	<td>storeChecked</td>
@@ -409,6 +554,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Wiki Display')]/span/input[2]</td>
+	<td>Wiki Display Checked</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
@@ -422,6 +572,96 @@
 	<td>assertText</td>
 	<td>//h1[@class='header-title']/span</td>
 	<td>Site Name (Staging)</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Application Display Templates')]/span/input[2]</td>
+	<td>Application Display Templates</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Blogs')]/span/input[2]</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Bookmarks')]/span/input[2]</td>
+	<td>Bookmarks</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Calendar')]/span/input[2]</td>
+	<td>Calendar</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Documents and Media')]/span/input[2]</td>
+	<td>Documents and Media</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Documents and Media Display')]/span/input[2]</td>
+	<td>Documents and Media Display</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Dynamic Data List Display')]/span/input[2]</td>
+	<td>Dynamic Data List Display</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Dynamic Data Lists')]/span/input[2]</td>
+	<td>Dynamic Data Lists</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Dynamic Data Mapping')]/span/input[2]</td>
+	<td>Dynamic Data Mapping</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Message Boards')]/span/input[2]</td>
+	<td>Message Boards</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Page Comments')]/span/input[2]</td>
+	<td>Page Comments</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Page Ratings')]/span/input[2]</td>
+	<td>Page Ratings</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Polls')]/span/input[2]</td>
+	<td>Polls</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Polls Display')]/span/input[2]</td>
+	<td>Polls Display</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Web Content')]/span/input[2]</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Web Content Display')]/span/input[2]</td>
+	<td>Web Content Display</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Wiki')]/span/input[2]</td>
+	<td>Wiki</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span/span[contains(.,'Wiki Display')]/span/input[2]</td>
+	<td>Wiki Display</td>
 </tr>
 </tbody></table>
 </body>

@@ -48,12 +48,9 @@ public class AddPortletQN2Test extends BaseTestCase {
 		selenium.waitForVisible("//li[@title='Quick Note']/p/a");
 		selenium.clickAt("//li[@title='Quick Note']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//div/div/div/div/div[@class='portlet-body']");
-		assertTrue(selenium.isVisible(
-				"//div/div/div/div/div[@class='portlet-body']"));
-		selenium.waitForVisible(
-			"//div/div/div/div[2]/div[@class='portlet-body']");
-		assertTrue(selenium.isVisible(
-				"//div/div/div/div[2]/div[@class='portlet-body']"));
+		selenium.waitForVisible("xPath=(//div[@class='portlet-body'])[1]");
+		assertTrue(selenium.isVisible("xPath=(//div[@class='portlet-body'])[1]"));
+		selenium.waitForVisible("xPath=(//div[@class='portlet-body'])[2]");
+		assertTrue(selenium.isVisible("xPath=(//div[@class='portlet-body'])[2]"));
 	}
 }

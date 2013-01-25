@@ -48,8 +48,7 @@ public class AddPortletQNTest extends BaseTestCase {
 		selenium.waitForVisible("//li[@title='Quick Note']/p/a");
 		selenium.clickAt("//li[@title='Quick Note']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//div/div/div/div/div[@class='portlet-body']");
-		assertTrue(selenium.isVisible(
-				"//div/div/div/div/div[@class='portlet-body']"));
+		selenium.waitForVisible("//div[@class='portlet-body']");
+		assertTrue(selenium.isVisible("//div[@class='portlet-body']"));
 	}
 }

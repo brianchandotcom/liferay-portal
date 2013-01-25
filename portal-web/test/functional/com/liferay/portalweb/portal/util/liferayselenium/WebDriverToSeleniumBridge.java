@@ -952,21 +952,26 @@ public class WebDriverToSeleniumBridge
 
 			optionWebElement = options.get(optionIndex);
 		}
-		else if (optionLocator.startsWith("regexp:")) {
-			String label = optionLocator.substring(10);
-
-			for (WebElement option : options) {
-				String optionText = option.getText();
-
-				if (optionText.contains(label)) {
-					optionWebElement = option;
-
-					break;
-				}
-			}
-		}
 		else if (optionLocator.startsWith("value=")) {
 			String value = optionLocator.substring(6);
+
+			if (value.startsWith("regexp:")) {
+				String regex = value.substring(7);
+
+				Pattern p = Pattern.compile(regex);
+
+				for (WebElement option : options) {
+					String optionValue = option.getAttribute("value");
+
+					Matcher m = p.matcher(optionValue);
+
+					if (m.matches()) {
+						optionWebElement = option;
+
+						break;
+					}
+				}
+			}
 
 			for (WebElement option : options) {
 				String optionValue = option.getAttribute("value");

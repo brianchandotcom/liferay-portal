@@ -245,16 +245,29 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Image smallImage = ImageUtil.fetchByPrimaryKey(entry.getSmallImageId());
 
-		if (entry.isSmallImage() && (smallImage != null)) {
-			String smallImagePath = getEntrySmallImagePath(
-				portletDataContext, entry);
+		if (entry.isSmallImage()) {
+			if (Validator.isNotNull(entry.getSmallImageURL())) {
+				String smallImageURL =
+					JournalPortletDataHandlerImpl.exportReferencedContent(
+						portletDataContext, dlFileEntryTypesElement,
+						dlFoldersElement, dlFileEntriesElement,
+						dlFileRanksElement, dlRepositoriesElement,
+						dlRepositoryEntriesElement, entryElement,
+						entry.getSmallImageURL().concat(StringPool.SPACE));
 
-			entryElement.addAttribute("small-image-path", smallImagePath);
+				entry.setSmallImageURL(smallImageURL);
+			}
+			else if (smallImage != null) {
+				String smallImagePath = getEntrySmallImagePath(
+					portletDataContext, entry);
 
-			entry.setSmallImageType(smallImage.getType());
+				entryElement.addAttribute("small-image-path", smallImagePath);
 
-			portletDataContext.addZipEntry(
-				smallImagePath, smallImage.getTextObj());
+				entry.setSmallImageType(smallImage.getType());
+
+				portletDataContext.addZipEntry(
+					smallImagePath, smallImage.getTextObj());
+			}
 		}
 
 		portletDataContext.addClassedModel(
@@ -342,12 +355,25 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			String smallImagePath = entryElement.attributeValue(
 				"small-image-path");
 
-			if (entry.isSmallImage() && Validator.isNotNull(smallImagePath)) {
-				smallImageFileName = String.valueOf(
-					entry.getSmallImageId()).concat(
-						StringPool.PERIOD).concat(entry.getSmallImageType());
-				smallImageInputStream =
-					portletDataContext.getZipEntryAsInputStream(smallImagePath);
+			if (entry.isSmallImage()) {
+				if (Validator.isNotNull(entry.getSmallImageURL())) {
+
+					String smallImageURL =
+						JournalPortletDataHandlerImpl.importReferencedContent(
+							portletDataContext, entryElement,
+							entry.getSmallImageURL());
+
+					entry.setSmallImageURL(smallImageURL);
+				}
+				else if (Validator.isNotNull(smallImagePath)) {
+					smallImageFileName = String.valueOf(
+						entry.getSmallImageId()).concat(
+							StringPool.PERIOD).concat(
+								entry.getSmallImageType());
+					smallImageInputStream =
+						portletDataContext.getZipEntryAsInputStream(
+							smallImagePath);
+				}
 			}
 
 			ServiceContext serviceContext =

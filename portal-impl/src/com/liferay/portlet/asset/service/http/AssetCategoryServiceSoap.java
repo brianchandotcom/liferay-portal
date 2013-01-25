@@ -198,27 +198,14 @@ public class AssetCategoryServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated {@link #search(long[], String, long[], int, int)}
+	*/
 	public static java.lang.String getJSONSearch(long groupId,
 		java.lang.String name, long[] vocabularyIds, int start, int end)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONArray returnValue = AssetCategoryServiceUtil.getJSONSearch(groupId,
-					name, vocabularyIds, start, end);
-
-			return returnValue.toString();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static java.lang.String getJSONSearch(long[] groupIds,
-		java.lang.String name, long[] vocabularyIds, int start, int end)
-		throws RemoteException {
-		try {
-			com.liferay.portal.kernel.json.JSONArray returnValue = AssetCategoryServiceUtil.getJSONSearch(groupIds,
 					name, vocabularyIds, start, end);
 
 			return returnValue.toString();
@@ -375,6 +362,22 @@ public class AssetCategoryServiceSoap {
 					parentCategoryId, vocabularyId, serviceContext);
 
 			return com.liferay.portlet.asset.model.AssetCategorySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String search(long[] groupIds,
+		java.lang.String name, long[] vocabularyIds, int start, int end)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.json.JSONArray returnValue = AssetCategoryServiceUtil.search(groupIds,
+					name, vocabularyIds, start, end);
+
+			return returnValue.toString();
 		}
 		catch (Exception e) {
 			_log.error(e, e);

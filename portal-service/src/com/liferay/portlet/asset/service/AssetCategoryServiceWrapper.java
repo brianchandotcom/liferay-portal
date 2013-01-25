@@ -113,21 +113,15 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 			start, end, obc);
 	}
 
+	/**
+	* @deprecated {@link #search(long[], String, long[], int, int)}
+	*/
 	public com.liferay.portal.kernel.json.JSONArray getJSONSearch(
 		long groupId, java.lang.String name, long[] vocabularyIds, int start,
 		int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _assetCategoryService.getJSONSearch(groupId, name,
-			vocabularyIds, start, end);
-	}
-
-	public com.liferay.portal.kernel.json.JSONArray getJSONSearch(
-		long[] groupIds, java.lang.String name, long[] vocabularyIds,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _assetCategoryService.getJSONSearch(groupIds, name,
 			vocabularyIds, start, end);
 	}
 
@@ -204,6 +198,14 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _assetCategoryService.moveCategory(categoryId, parentCategoryId,
 			vocabularyId, serviceContext);
+	}
+
+	public com.liferay.portal.kernel.json.JSONArray search(long[] groupIds,
+		java.lang.String name, long[] vocabularyIds, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryService.search(groupIds, name, vocabularyIds,
+			start, end);
 	}
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> search(

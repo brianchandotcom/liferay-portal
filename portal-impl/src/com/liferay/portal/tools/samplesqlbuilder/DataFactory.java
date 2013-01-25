@@ -132,6 +132,7 @@ import com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -165,23 +166,23 @@ public class DataFactory {
 			_maxMBMessageCount =
 				maxMBCategoryCount * _maxMBMessageCountPerCategory;
 
-			initSimpleCounters();
+			_initSimpleCounters();
 
-			initClassNames();
-			initDDMStructures();
-			initDLFileEntryType();
-			initJournalArticle();
-			initUserNames();
+			_initClassNames();
+			_initDDMStructures();
+			_initDLFileEntryType();
+			_initJournalArticle();
+			_initUserNames();
 
-			initCompany();
-			initAccount();
-			initDefaultUsers();
-			initGroups();
-			initRoles();
-			initVirtualHost();
+			_initCompany();
+			_initAccount();
+			_initDefaultUsers();
+			_initGroups();
+			_initRoles();
+			_initVirtualHost();
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (IOException ioe) {
+			ioe.printStackTrace();
 		}
 	}
 
@@ -353,7 +354,6 @@ public class DataFactory {
 	}
 
 	public DDLRecord addDDLRecord(DDLRecordSet ddlRecordSet) {
-
 		DDLRecord ddlRecord = new DDLRecordImpl();
 
 		Date date = new Date();
@@ -1178,262 +1178,6 @@ public class DataFactory {
 		return _virtualHost;
 	}
 
-	public void initAccount() {
-		_account = new AccountImpl();
-
-		Date date = new Date();
-
-		_account.setAccountId(_company.getAccountId());
-		_account.setCompanyId(_company.getCompanyId());
-		_account.setCreateDate(date);
-		_account.setModifiedDate(date);
-		_account.setName("Liferay");
-		_account.setLegalName("Liferay, Inc.");
-	}
-
-	public void initClassNames() {
-		if (_classNames != null) {
-			return;
-		}
-
-		_classNames = new ArrayList<ClassName>();
-
-		List<String> models = ModelHintsUtil.getModels();
-
-		for (String model : models) {
-			long classNameId = _counter.getAndIncrement();
-
-			ClassName className = new ClassNameImpl();
-
-			className.setClassNameId(classNameId);
-			className.setValue(model);
-
-			_classNames.add(className);
-
-			if (model.equals(BlogsEntry.class.getName())) {
-				_blogsEntryClassNameId = classNameId;
-			}
-			else if (model.equals(DDLRecordSet.class.getName())) {
-				_ddlRecordSetClassNameId = classNameId;
-			}
-			else if (model.equals(DDMContent.class.getName())) {
-				_ddmContentClassNameId = classNameId;
-			}
-			else if (model.equals(DLFileEntry.class.getName())) {
-				_dlFileEntryClassNameId = classNameId;
-			}
-			else if (model.equals(DLFileEntryMetadata.class.getName())) {
-				_dlFileEntryMetaDataClassNameId = classNameId;
-			}
-			else if (model.equals(Group.class.getName())) {
-				_groupClassNameId = classNameId;
-			}
-			else if (model.equals(JournalArticle.class.getName())) {
-				_journalArticleClassNameId = classNameId;
-			}
-			else if (model.equals(MBMessage.class.getName())) {
-				_mbMessageClassNameId = classNameId;
-			}
-			else if (model.equals(MBDiscussion.class.getName())) {
-				_mbDiscussionClassNameId = classNameId;
-			}
-			else if (model.equals(Role.class.getName())) {
-				_roleClassNameId = classNameId;
-			}
-			else if (model.equals(User.class.getName())) {
-				_userClassNameId = classNameId;
-			}
-			else if (model.equals(WikiPage.class.getName())) {
-				_wikiPageClassNameId = classNameId;
-			}
-		}
-	}
-
-	public void initCompany() {
-		_company = new CompanyImpl();
-
-		_company.setCompanyId(_counter.getAndIncrement());
-		_company.setAccountId(_counter.getAndIncrement());
-		_company.setWebId("liferay.com");
-		_company.setMx("liferay.com");
-		_company.setActive(true);
-	}
-
-	public void initDDMStructures() throws Exception {
-		_ddm_structure_ddl = StringUtil.read(
-			new FileInputStream(
-				new File(
-					_baseDir, _DEPENDENCIES_DIR + "ddm_structure_ddl.xml")));
-		_ddm_structure_basic_document = StringUtil.read(
-			new FileInputStream(
-				new File(
-					_baseDir,
-					_DEPENDENCIES_DIR + "ddm_structure_basic_document.xml")));
-	}
-
-	public void initDefaultUsers() {
-		_defaultUser = newUser(
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, true);
-		_guestUser = newUser("Test", "Test", "Test", false);
-		_sampleUser = newUser("Test0", "Test0", "Test0", false);
-	}
-
-	public void initDLFileEntryType() {
-		_defaultDLFileEntryType = new DLFileEntryTypeImpl();
-
-		Date date = new Date();
-
-		_defaultDLFileEntryType.setUuid(PortalUUIDUtil.generate());
-		_defaultDLFileEntryType.setFileEntryTypeId(
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-		_defaultDLFileEntryType.setCreateDate(date);
-		_defaultDLFileEntryType.setModifiedDate(date);
-		_defaultDLFileEntryType.setName(
-			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
-	}
-
-	public void initGroups() {
-		_guestGroup = newGroup(
-			0, _groupClassNameId, 0, GroupConstants.GUEST, "/guest", true);
-
-		_groups = new ArrayList<Group>(_maxGroupsCount);
-
-		for (int i = 1; i <= _maxGroupsCount; i++) {
-			String name = "community" + Long.toString(i);
-
-			Group group = newGroup(
-				i, _groupClassNameId, i, name, StringPool.FORWARD_SLASH + name,
-				true);
-
-			_groups.add(group);
-		}
-	}
-
-	public void initJournalArticle() throws Exception {
-		int articleSize = _maxJournalArticleSize;
-
-		if (_maxJournalArticleSize <= 0) {
-			articleSize = 1;
-		}
-
-		char[] chars = new char[articleSize];
-
-		for (int i = 0; i < articleSize; i++) {
-			chars[i] = (char)(CharPool.LOWER_CASE_A + (i % 26));
-		}
-
-		_journalArticleContent = _replaceToken(
-			_JOURNAL_ARTICLE_CONTENT, _JOURNAL_ARTICLE_CONTENT_TOKEN,
-			new String(chars));
-	}
-
-	public void initRoles() {
-		if (_roles != null) {
-			return;
-		}
-
-		_roles = new ArrayList<Role>();
-
-		// Administrator
-
-		_administratorRole = newRole(
-			RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
-
-		_roles.add(_administratorRole);
-
-		// Guest
-
-		_guestRole = newRole(RoleConstants.GUEST, RoleConstants.TYPE_REGULAR);
-
-		_roles.add(_guestRole);
-
-		// Organization Administrator
-
-		_organizationAdministratorRole = newRole(
-			RoleConstants.ORGANIZATION_ADMINISTRATOR,
-			RoleConstants.TYPE_ORGANIZATION);
-
-		_roles.add(_organizationAdministratorRole);
-
-		// Organization Owner
-
-		_organizationOwnerRole = newRole(
-			RoleConstants.ORGANIZATION_OWNER, RoleConstants.TYPE_ORGANIZATION);
-
-		_roles.add(_organizationOwnerRole);
-
-		// Organization User
-
-		_organizationUserRole = newRole(
-			RoleConstants.ORGANIZATION_USER, RoleConstants.TYPE_ORGANIZATION);
-
-		_roles.add(_organizationUserRole);
-
-		// Owner
-
-		_ownerRole = newRole(RoleConstants.OWNER, RoleConstants.TYPE_REGULAR);
-
-		_roles.add(_ownerRole);
-
-		// Power User
-
-		_powerUserRole = newRole(
-			RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR);
-
-		_roles.add(_powerUserRole);
-
-		// Site Administrator
-
-		_siteAdministratorRole = newRole(
-			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE);
-
-		_roles.add(_siteAdministratorRole);
-
-		// Site Member
-
-		_siteMemberRole = newRole(
-			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
-
-		_roles.add(_siteMemberRole);
-
-		// Site Owner
-
-		_siteOwnerRole = newRole(
-			RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE);
-
-		_roles.add(_siteOwnerRole);
-
-		// User
-
-		_userRole = newRole(RoleConstants.USER, RoleConstants.TYPE_REGULAR);
-
-		_roles.add(_userRole);
-	}
-
-	public void initSimpleCounters() {
-		_counter = new AtomicLong(_maxGroupsCount);
-		_dlDateCounter = new AtomicLong(1);
-		_layoutCounters = new HashMap<Long, AtomicLong>();
-		_resourcePermissionCounter = new AtomicLong(1);
-		_socialActivityCounter = new AtomicLong(1);
-		_userScreenNameIncrementer = new AtomicLong(1);
-	}
-
-	public void initUserNames() throws Exception {
-		_firstNames = ListUtil.fromFile(
-			new File(_baseDir, _DEPENDENCIES_DIR + "first_names.txt"));
-		_lastNames = ListUtil.fromFile(
-			new File(_baseDir, _DEPENDENCIES_DIR + "last_names.txt"));
-	}
-
-	public void initVirtualHost() throws Exception {
-		_virtualHost = new VirtualHostImpl();
-
-		_virtualHost.setVirtualHostId(_counter.getAndIncrement());
-		_virtualHost.setCompanyId(_company.getCompanyId());
-		_virtualHost.setHostname("localhost");
-	}
-
 	protected AssetEntry newAssetEntry(
 		long groupId, Date createDate, Date modifiedDate, long classNameId,
 		long classPK, String uuid, long classTypeId, String mimeType,
@@ -1757,6 +1501,262 @@ public class DataFactory {
 		names[1] = _lastNames.get(indexForLastName);
 
 		return names;
+	}
+
+	private void _initAccount() {
+		_account = new AccountImpl();
+
+		Date date = new Date();
+
+		_account.setAccountId(_company.getAccountId());
+		_account.setCompanyId(_company.getCompanyId());
+		_account.setCreateDate(date);
+		_account.setModifiedDate(date);
+		_account.setName("Liferay");
+		_account.setLegalName("Liferay, Inc.");
+	}
+
+	private void _initClassNames() {
+		if (_classNames != null) {
+			return;
+		}
+
+		_classNames = new ArrayList<ClassName>();
+
+		List<String> models = ModelHintsUtil.getModels();
+
+		for (String model : models) {
+			long classNameId = _counter.getAndIncrement();
+
+			ClassName className = new ClassNameImpl();
+
+			className.setClassNameId(classNameId);
+			className.setValue(model);
+
+			_classNames.add(className);
+
+			if (model.equals(BlogsEntry.class.getName())) {
+				_blogsEntryClassNameId = classNameId;
+			}
+			else if (model.equals(DDLRecordSet.class.getName())) {
+				_ddlRecordSetClassNameId = classNameId;
+			}
+			else if (model.equals(DDMContent.class.getName())) {
+				_ddmContentClassNameId = classNameId;
+			}
+			else if (model.equals(DLFileEntry.class.getName())) {
+				_dlFileEntryClassNameId = classNameId;
+			}
+			else if (model.equals(DLFileEntryMetadata.class.getName())) {
+				_dlFileEntryMetaDataClassNameId = classNameId;
+			}
+			else if (model.equals(Group.class.getName())) {
+				_groupClassNameId = classNameId;
+			}
+			else if (model.equals(JournalArticle.class.getName())) {
+				_journalArticleClassNameId = classNameId;
+			}
+			else if (model.equals(MBMessage.class.getName())) {
+				_mbMessageClassNameId = classNameId;
+			}
+			else if (model.equals(MBDiscussion.class.getName())) {
+				_mbDiscussionClassNameId = classNameId;
+			}
+			else if (model.equals(Role.class.getName())) {
+				_roleClassNameId = classNameId;
+			}
+			else if (model.equals(User.class.getName())) {
+				_userClassNameId = classNameId;
+			}
+			else if (model.equals(WikiPage.class.getName())) {
+				_wikiPageClassNameId = classNameId;
+			}
+		}
+	}
+
+	private void _initCompany() {
+		_company = new CompanyImpl();
+
+		_company.setCompanyId(_counter.getAndIncrement());
+		_company.setAccountId(_counter.getAndIncrement());
+		_company.setWebId("liferay.com");
+		_company.setMx("liferay.com");
+		_company.setActive(true);
+	}
+
+	private void _initDDMStructures() throws IOException {
+		_ddm_structure_ddl = StringUtil.read(
+			new FileInputStream(
+				new File(
+					_baseDir, _DEPENDENCIES_DIR + "ddm_structure_ddl.xml")));
+		_ddm_structure_basic_document = StringUtil.read(
+			new FileInputStream(
+				new File(
+					_baseDir,
+					_DEPENDENCIES_DIR + "ddm_structure_basic_document.xml")));
+	}
+
+	private void _initDefaultUsers() {
+		_defaultUser = newUser(
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, true);
+		_guestUser = newUser("Test", "Test", "Test", false);
+		_sampleUser = newUser("Test0", "Test0", "Test0", false);
+	}
+
+	private void _initDLFileEntryType() {
+		_defaultDLFileEntryType = new DLFileEntryTypeImpl();
+
+		Date date = new Date();
+
+		_defaultDLFileEntryType.setUuid(PortalUUIDUtil.generate());
+		_defaultDLFileEntryType.setFileEntryTypeId(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+		_defaultDLFileEntryType.setCreateDate(date);
+		_defaultDLFileEntryType.setModifiedDate(date);
+		_defaultDLFileEntryType.setName(
+			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
+	}
+
+	private void _initGroups() {
+		_guestGroup = newGroup(
+			0, _groupClassNameId, 0, GroupConstants.GUEST, "/guest", true);
+
+		_groups = new ArrayList<Group>(_maxGroupsCount);
+
+		for (int i = 1; i <= _maxGroupsCount; i++) {
+			String name = "community" + Long.toString(i);
+
+			Group group = newGroup(
+				i, _groupClassNameId, i, name, StringPool.FORWARD_SLASH + name,
+				true);
+
+			_groups.add(group);
+		}
+	}
+
+	private void _initJournalArticle() {
+		int articleSize = _maxJournalArticleSize;
+
+		if (_maxJournalArticleSize <= 0) {
+			articleSize = 1;
+		}
+
+		char[] chars = new char[articleSize];
+
+		for (int i = 0; i < articleSize; i++) {
+			chars[i] = (char)(CharPool.LOWER_CASE_A + (i % 26));
+		}
+
+		_journalArticleContent = _replaceToken(
+			_JOURNAL_ARTICLE_CONTENT, _JOURNAL_ARTICLE_CONTENT_TOKEN,
+			new String(chars));
+	}
+
+	private void _initRoles() {
+		if (_roles != null) {
+			return;
+		}
+
+		_roles = new ArrayList<Role>();
+
+		// Administrator
+
+		_administratorRole = newRole(
+			RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
+
+		_roles.add(_administratorRole);
+
+		// Guest
+
+		_guestRole = newRole(RoleConstants.GUEST, RoleConstants.TYPE_REGULAR);
+
+		_roles.add(_guestRole);
+
+		// Organization Administrator
+
+		_organizationAdministratorRole = newRole(
+			RoleConstants.ORGANIZATION_ADMINISTRATOR,
+			RoleConstants.TYPE_ORGANIZATION);
+
+		_roles.add(_organizationAdministratorRole);
+
+		// Organization Owner
+
+		_organizationOwnerRole = newRole(
+			RoleConstants.ORGANIZATION_OWNER, RoleConstants.TYPE_ORGANIZATION);
+
+		_roles.add(_organizationOwnerRole);
+
+		// Organization User
+
+		_organizationUserRole = newRole(
+			RoleConstants.ORGANIZATION_USER, RoleConstants.TYPE_ORGANIZATION);
+
+		_roles.add(_organizationUserRole);
+
+		// Owner
+
+		_ownerRole = newRole(RoleConstants.OWNER, RoleConstants.TYPE_REGULAR);
+
+		_roles.add(_ownerRole);
+
+		// Power User
+
+		_powerUserRole = newRole(
+			RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR);
+
+		_roles.add(_powerUserRole);
+
+		// Site Administrator
+
+		_siteAdministratorRole = newRole(
+			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE);
+
+		_roles.add(_siteAdministratorRole);
+
+		// Site Member
+
+		_siteMemberRole = newRole(
+			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
+
+		_roles.add(_siteMemberRole);
+
+		// Site Owner
+
+		_siteOwnerRole = newRole(
+			RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE);
+
+		_roles.add(_siteOwnerRole);
+
+		// User
+
+		_userRole = newRole(RoleConstants.USER, RoleConstants.TYPE_REGULAR);
+
+		_roles.add(_userRole);
+	}
+
+	private void _initSimpleCounters() {
+		_counter = new AtomicLong(_maxGroupsCount);
+		_dlDateCounter = new AtomicLong(1);
+		_layoutCounters = new HashMap<Long, AtomicLong>();
+		_resourcePermissionCounter = new AtomicLong(1);
+		_socialActivityCounter = new AtomicLong(1);
+		_userScreenNameIncrementer = new AtomicLong(1);
+	}
+
+	private void _initUserNames() throws IOException {
+		_firstNames = ListUtil.fromFile(
+			new File(_baseDir, _DEPENDENCIES_DIR + "first_names.txt"));
+		_lastNames = ListUtil.fromFile(
+			new File(_baseDir, _DEPENDENCIES_DIR + "last_names.txt"));
+	}
+
+	private void _initVirtualHost() {
+		_virtualHost = new VirtualHostImpl();
+
+		_virtualHost.setVirtualHostId(_counter.getAndIncrement());
+		_virtualHost.setCompanyId(_company.getCompanyId());
+		_virtualHost.setHostname("localhost");
 	}
 
 	private String _replaceToken(String string, String token, String value) {

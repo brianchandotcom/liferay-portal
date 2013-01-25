@@ -28,4 +28,10 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 Fields fields = StorageEngineUtil.getFields(recordVersion.getDDMStorageId());
 %>
 
-<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, "", true, locale) %>
+<liferay-ddm:html
+	classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+	classPK="<%= ddmStructure.getPrimaryKey() %>"
+	fields="<%= fields %>"
+	readOnly="<%= true %>"
+	requestedLocale="<%= locale %>"
+/>

@@ -64,7 +64,13 @@ if (editable) {
 	}
 	%>
 
-	<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getCompleteXsd(), fields, "", true, locale) %>
+	<liferay-ddm:html
+		classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+		classPK="<%= ddmStructure.getPrimaryKey() %>"
+		fields="<%= fields %>"
+		readOnly="<%= true %>"
+		requestedLocale="<%= locale %>"
+	/>
 
 	<%
 	boolean pending = false;

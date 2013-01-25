@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentdisplay.comment.deletewcwebcontentcommentwcd;
+package com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontentcomment.deletewcwebcontentcommentwcd;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

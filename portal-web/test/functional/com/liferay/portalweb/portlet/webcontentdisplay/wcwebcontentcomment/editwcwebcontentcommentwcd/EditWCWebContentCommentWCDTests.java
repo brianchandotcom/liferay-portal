@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentdisplay.comment.deletewcwebcontentcommentwcd;
+package com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontentcomment.editwcwebcontentcommentwcd;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.webcontentdisplay.comment.addwcwebcontentcommentwcd.AddWCWebContentCommentWCDTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCDTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCDTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletenablecomments.ConfigurePortletEnableCommentsTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent.addwcwebcontentwcd.AddWCWebContentWCDTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontentcomment.addwcwebcontentcommentwcd.AddWCWebContentCommentWCDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DeleteWCWebContentCommentWCDTests extends BaseTestSuite {
+public class EditWCWebContentCommentWCDTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageWCDTest.class);
@@ -37,7 +37,7 @@ public class DeleteWCWebContentCommentWCDTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
 		testSuite.addTestSuite(ConfigurePortletEnableCommentsTest.class);
 		testSuite.addTestSuite(AddWCWebContentCommentWCDTest.class);
-		testSuite.addTestSuite(DeleteWCWebContentCommentWCDTest.class);
+		testSuite.addTestSuite(EditWCWebContentCommentWCDTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

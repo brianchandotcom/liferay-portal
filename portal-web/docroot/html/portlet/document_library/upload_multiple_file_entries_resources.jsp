@@ -155,7 +155,13 @@ long assetClassPK = 0;
 					%>
 
 									<div class="document-type-fields">
-										<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, String.valueOf(ddmStructure.getPrimaryKey()), locale) %>
+										<liferay-ddm:html
+											classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+											classPK="<%= ddmStructure.getPrimaryKey() %>"
+											fields="<%= fields %>"
+											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+											requestedLocale="<%= locale %>"
+										/>
 									</div>
 
 					<%

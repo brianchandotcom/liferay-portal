@@ -243,9 +243,10 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		entryElement.addAttribute("image-path", imagePath);
 
-		Image smallImage = ImageUtil.fetchByPrimaryKey(entry.getSmallImageId());
-
 		if (entry.isSmallImage()) {
+			Image smallImage = ImageUtil.fetchByPrimaryKey(
+				entry.getSmallImageId());
+
 			if (Validator.isNotNull(entry.getSmallImageURL())) {
 				String smallImageURL =
 					JournalPortletDataHandlerImpl.exportReferencedContent(
@@ -352,12 +353,11 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 		InputStream smallImageInputStream = null;
 
 		try {
-			String smallImagePath = entryElement.attributeValue(
-				"small-image-path");
-
 			if (entry.isSmallImage()) {
-				if (Validator.isNotNull(entry.getSmallImageURL())) {
+				String smallImagePath = entryElement.attributeValue(
+					"small-image-path");
 
+				if (Validator.isNotNull(entry.getSmallImageURL())) {
 					String smallImageURL =
 						JournalPortletDataHandlerImpl.importReferencedContent(
 							portletDataContext, entryElement,

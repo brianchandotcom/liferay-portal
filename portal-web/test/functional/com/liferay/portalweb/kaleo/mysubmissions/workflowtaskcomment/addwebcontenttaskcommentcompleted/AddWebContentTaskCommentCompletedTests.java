@@ -15,6 +15,7 @@
 package com.liferay.portalweb.kaleo.mysubmissions.workflowtaskcomment.addwebcontenttaskcommentcompleted;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,7 +32,7 @@ public class AddWebContentTaskCommentCompletedTests extends BaseTestSuite {
 		testSuite.addTestSuite(ApproveTaskWebContentDetailsTest.class);
 		testSuite.addTestSuite(AddWebContentTaskCommentCompletedTest.class);
 		testSuite.addTestSuite(ViewWebContentTaskCommentCompletedTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
 
 		return testSuite;

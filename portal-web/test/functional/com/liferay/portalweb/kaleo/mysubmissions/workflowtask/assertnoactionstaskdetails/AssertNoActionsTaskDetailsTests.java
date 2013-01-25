@@ -15,6 +15,7 @@
 package com.liferay.portalweb.kaleo.mysubmissions.workflowtask.assertnoactionstaskdetails;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +33,7 @@ public class AssertNoActionsTaskDetailsTests extends BaseTestSuite {
 		testSuite.addTestSuite(RejectTaskWebContentDetailsTest.class);
 		testSuite.addTestSuite(ResubmitTaskWebContentDetailsTest.class);
 		testSuite.addTestSuite(AssertNoAssignToMeTaskDetailsTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
 
 		return testSuite;

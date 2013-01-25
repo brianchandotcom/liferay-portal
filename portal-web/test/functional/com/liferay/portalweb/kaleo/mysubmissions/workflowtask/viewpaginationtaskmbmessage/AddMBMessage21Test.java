@@ -25,6 +25,10 @@ public class AddMBMessage21Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -36,8 +40,9 @@ public class AddMBMessage21Test extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
-			selenium.getText("//td[2]/a/strong"));
-		selenium.clickAt("//td[2]/a/strong",
+			selenium.getText(
+				"//tr[contains(.,'MB Category Name')]/td[2]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'MB Category Name')]/td[2]/a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Post New Thread']",
@@ -82,6 +87,9 @@ public class AddMBMessage21Test extends BaseTestCase {
 		selenium.clickAt("link=My Submissions",
 			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("link=Pending");
+		assertEquals(RuntimeVariables.replace("Pending"),
+			selenium.getText("link=Pending"));
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),

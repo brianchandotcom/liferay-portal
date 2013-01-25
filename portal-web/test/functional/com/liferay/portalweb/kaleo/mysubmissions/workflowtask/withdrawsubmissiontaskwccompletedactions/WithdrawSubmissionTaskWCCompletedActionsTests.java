@@ -15,6 +15,7 @@
 package com.liferay.portalweb.kaleo.mysubmissions.workflowtask.withdrawsubmissiontaskwccompletedactions;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,7 +31,7 @@ public class WithdrawSubmissionTaskWCCompletedActionsTests extends BaseTestSuite
 		testSuite.addTestSuite(AssignToMeTaskWebContentDetailsTest.class);
 		testSuite.addTestSuite(ApproveTaskWebContentDetailsTest.class);
 		testSuite.addTestSuite(WithdrawSubmissionTaskWCCompletedActionsTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
 
 		return testSuite;

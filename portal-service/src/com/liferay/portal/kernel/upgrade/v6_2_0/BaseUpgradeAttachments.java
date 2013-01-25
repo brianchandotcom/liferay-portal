@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -361,6 +362,10 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 	protected abstract String getPortletId();
 
+	protected String getRepositoryClassName() {
+		return LiferayRepository.class.getName();
+	}
+
 	protected long getRepositoryId(
 			long groupId, long companyId, long userId, String userName,
 			Timestamp createDate, long classNameId, String portletId)
@@ -415,7 +420,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 		Timestamp createDate = new Timestamp(System.currentTimeMillis());
 
 		long repositoryId = getRepositoryId(
-			groupId, companyId, userId, userName, createDate, getClassNameId(),
+			groupId, companyId, userId, userName, createDate,
+			PortalUtil.getClassNameId(getRepositoryClassName()),
 			getPortletId());
 		long containerModelFolderId = getContainerModelFolderId(
 			groupId, companyId, resourcePrimKey, containerModelId, userId,

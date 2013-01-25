@@ -244,11 +244,17 @@ AUI.add(
 
 						var addCategoryButton = A.one(idPrefix + 'addCategoryButton');
 
-						addCategoryButton.on(EVENT_CLICK, instance._onShowCategoryPanel, instance, ACTION_ADD);
+						if (addCategoryButton) {
+							addCategoryButton.on(EVENT_CLICK, instance._onShowCategoryPanel, instance, ACTION_ADD);
+						}
 
 						instance._addCategoryButton = addCategoryButton;
 
-						A.one(idPrefix + 'addVocabularyButton').on(EVENT_CLICK, instance._onShowVocabularyPanel, instance, ACTION_ADD);
+						var addVocabularyButton = A.one(idPrefix + 'addVocabularyButton');
+
+						if (addVocabularyButton) {
+							addVocabularyButton.on(EVENT_CLICK, instance._onShowVocabularyPanel, instance, ACTION_ADD);
+						}
 
 						var permissionButton = A.one(idPrefix + 'categoryPermissionsButton');
 

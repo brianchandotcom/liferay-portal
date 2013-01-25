@@ -16,7 +16,12 @@ package com.liferay.portalweb.portlet.webcontentlist.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPortletWCLTests;
-import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletdisplayguest.ConfigurePortletDisplayGuestTests;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwclduplicate.AddPortletWCLDuplicateTests;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletdisplayguestwcl.ConfigurePortletDisplayGuestWCLTests;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletfiltersitescopeglobalwcl.ConfigurePortletFilterSiteScopeGlobalWCLTests;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletfiltersitescopeliferaywcl.ConfigurePortletFilterSiteScopeLiferayWCLTests;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletfiltersitescopemysitewcl.ConfigurePortletFilterSiteScopeMySiteWCLTests;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletfilterstructurewcl.ConfigurePortletFilterStructureWCLTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,7 +35,12 @@ public class PortletTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddPortletWCLTests.suite());
-		testSuite.addTest(ConfigurePortletDisplayGuestTests.suite());
+		testSuite.addTest(AddPortletWCLDuplicateTests.suite());
+		testSuite.addTest(ConfigurePortletDisplayGuestWCLTests.suite());
+		testSuite.addTest(ConfigurePortletFilterSiteScopeGlobalWCLTests.suite());
+		testSuite.addTest(ConfigurePortletFilterSiteScopeLiferayWCLTests.suite());
+		testSuite.addTest(ConfigurePortletFilterSiteScopeMySiteWCLTests.suite());
+		testSuite.addTest(ConfigurePortletFilterStructureWCLTests.suite());
 
 		return testSuite;
 	}

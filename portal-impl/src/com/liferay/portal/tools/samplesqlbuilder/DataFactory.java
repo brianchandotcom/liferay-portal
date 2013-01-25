@@ -188,7 +188,7 @@ public class DataFactory {
 	public AssetEntry addAssetEntry(BlogsEntry blogsEntry) {
 		return newAssetEntry(
 			blogsEntry.getGroupId(), blogsEntry.getCreateDate(),
-			blogsEntry.getModifiedDate(), _blogsEntryClassName.getClassNameId(),
+			blogsEntry.getModifiedDate(), _blogsEntryClassNameId,
 			blogsEntry.getEntryId(), blogsEntry.getUuid(), 0,
 			ContentTypes.TEXT_HTML, blogsEntry.getTitle());
 	}
@@ -196,8 +196,7 @@ public class DataFactory {
 	public AssetEntry addAssetEntry(DLFileEntry dlFileEntry) {
 		return newAssetEntry(
 			dlFileEntry.getGroupId(), dlFileEntry.getCreateDate(),
-			dlFileEntry.getModifiedDate(),
-			_dlFileEntryClassName.getClassNameId(),
+			dlFileEntry.getModifiedDate(), _dlFileEntryClassNameId,
 			dlFileEntry.getFileEntryId(), dlFileEntry.getUuid(),
 			dlFileEntry.getFileEntryTypeId(), dlFileEntry.getMimeType(),
 			dlFileEntry.getTitle());
@@ -206,8 +205,7 @@ public class DataFactory {
 	public AssetEntry addAssetEntry(JournalArticle journalArticle) {
 		return newAssetEntry(
 			journalArticle.getGroupId(), journalArticle.getCreateDate(),
-			journalArticle.getModifiedDate(),
-			_journalArticleClassName.getClassNameId(),
+			journalArticle.getModifiedDate(), _journalArticleClassNameId,
 			journalArticle.getResourcePrimKey(), journalArticle.getUuid(), 0,
 			ContentTypes.TEXT_HTML, journalArticle.getTitle());
 	}
@@ -216,10 +214,10 @@ public class DataFactory {
 		long classNameId;
 
 		if (mbMessage.isDiscussion()) {
-			classNameId = _mbDiscussionClassName.getClassNameId();
+			classNameId = _mbDiscussionClassNameId;
 		}
 		else {
-			classNameId = _mbMessageClassName.getClassNameId();
+			classNameId = _mbMessageClassNameId;
 		}
 
 		return newAssetEntry(
@@ -232,7 +230,7 @@ public class DataFactory {
 	public AssetEntry addAssetEntry(WikiPage wikiPage) {
 		return newAssetEntry(
 			wikiPage.getGroupId(), wikiPage.getCreateDate(),
-			wikiPage.getModifiedDate(), _wikiPageClassName.getClassNameId(),
+			wikiPage.getModifiedDate(), _wikiPageClassNameId,
 			wikiPage.getResourcePrimKey(), wikiPage.getUuid(), 0,
 			ContentTypes.TEXT_HTML, wikiPage.getTitle());
 	}
@@ -309,7 +307,7 @@ public class DataFactory {
 		contact.setUserName(user.getFullName());
 		contact.setCreateDate(date);
 		contact.setModifiedDate(date);
-		contact.setClassNameId(_userClassName.getClassNameId());
+		contact.setClassNameId(_userClassNameId);
 		contact.setClassPK(user.getUserId());
 		contact.setAccountId(_company.getAccountId());
 		contact.setParentContactId(ContactConstants.DEFAULT_PARENT_CONTACT_ID);
@@ -451,7 +449,7 @@ public class DataFactory {
 
 		ddmStorageLink.setUuid(PortalUUIDUtil.generate());
 		ddmStorageLink.setStorageLinkId(_counter.get());
-		ddmStorageLink.setClassNameId(_ddmContentClassName.getClassNameId());
+		ddmStorageLink.setClassNameId(_ddmContentClassNameId);
 		ddmStorageLink.setClassPK(ddmContent.getContentId());
 		ddmStorageLink.setStructureId(structureId);
 
@@ -460,28 +458,27 @@ public class DataFactory {
 
 	public DDMStructure addDDMStructureForDDL(long groupId) {
 		return newDDMStructure(
-			groupId, _ddlRecordSetClassName.getClassNameId(),
-			"Test DDM Structure For DDL", _ddm_structure_ddl,
-			PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE);
+			groupId, _ddlRecordSetClassNameId, "Test DDM Structure For DDL",
+			_ddm_structure_ddl, PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE);
 	}
 
 	public DDMStructure addDDMStructureForDL(long groupId) {
 		return newDDMStructure(
-			groupId, _dlFileEntryClassName.getClassNameId(), "TIKARAWMETADATA",
+			groupId, _dlFileEntryClassNameId, "TIKARAWMETADATA",
 			_ddm_structure_basic_document, "xml");
 	}
 
 	public DDMStructureLink addDDMStructureLink(DDLRecordSet ddlRecordSet) {
 		return newDDMStructureLink(
-			_ddlRecordSetClassName.getClassNameId(),
-			ddlRecordSet.getRecordSetId(), ddlRecordSet.getDDMStructureId());
+			_ddlRecordSetClassNameId, ddlRecordSet.getRecordSetId(),
+			ddlRecordSet.getDDMStructureId());
 	}
 
 	public DDMStructureLink addDDMStructureLink(
 		DLFileEntryMetadata dLFileEntryMetadata) {
 
 		return newDDMStructureLink(
-			_dlFileEntryMetaDataClassName.getClassNameId(),
+			_dlFileEntryMetaDataClassNameId,
 			dLFileEntryMetadata.getFileEntryMetadataId(),
 			dLFileEntryMetadata.getDDMStructureId());
 	}
@@ -600,7 +597,7 @@ public class DataFactory {
 
 	public Group addGroup(User user) {
 		return newGroup(
-			0, _userClassName.getClassNameId(), user.getUserId(),
+			0, _userClassNameId, user.getUserId(),
 			Long.toString(user.getUserId()),
 			StringPool.FORWARD_SLASH + user.getScreenName(), false);
 	}
@@ -741,24 +738,22 @@ public class DataFactory {
 
 	public MBDiscussion addMBDiscussion(BlogsEntry blogsEntry, long threadId) {
 		return newMBDiscussion(
-			_blogsEntryClassName.getClassNameId(), blogsEntry.getEntryId(),
-			threadId);
+			_blogsEntryClassNameId, blogsEntry.getEntryId(), threadId);
 	}
 
 	public MBDiscussion addMBDiscussion(
 		DLFileEntry dlFileEntry, long threadId) {
 
 		return newMBDiscussion(
-			_dlFileEntryClassName.getClassNameId(),
-			dlFileEntry.getFileEntryId(), threadId);
+			_dlFileEntryClassNameId, dlFileEntry.getFileEntryId(), threadId);
 	}
 
 	public MBDiscussion addMBDiscussion(
 		JournalArticle journalArticle, long threadId) {
 
 		return newMBDiscussion(
-			_journalArticleClassName.getClassNameId(),
-			journalArticle.getResourcePrimKey(), threadId);
+			_journalArticleClassNameId, journalArticle.getResourcePrimKey(),
+			threadId);
 	}
 
 	public MBDiscussion addMBDiscussion(MBMessage mbMessage) {
@@ -769,8 +764,7 @@ public class DataFactory {
 
 	public MBDiscussion addMBDiscussion(WikiPage wikiPage, long threadId) {
 		return newMBDiscussion(
-			_wikiPageClassName.getClassNameId(), wikiPage.getResourcePrimKey(),
-			threadId);
+			_wikiPageClassNameId, wikiPage.getResourcePrimKey(), threadId);
 	}
 
 	public MBMailingList addMBMailingList(MBCategory mbCategory) {
@@ -826,7 +820,7 @@ public class DataFactory {
 		return newMBMessage(
 			blogsEntry.getGroupId(), blogsEntry.getCompanyId(),
 			blogsEntry.getUserId(), blogsEntry.getUserName(),
-			_blogsEntryClassName.getClassNameId(), blogsEntry.getEntryId(),
+			_blogsEntryClassNameId, blogsEntry.getEntryId(),
 			MBCategoryConstants.DISCUSSION_CATEGORY_ID, threadId, rootMessageId,
 			parentMessageId, subject, body);
 	}
@@ -839,8 +833,7 @@ public class DataFactory {
 		return newMBMessage(
 			dlFileEntry.getGroupId(), dlFileEntry.getCompanyId(),
 			dlFileEntry.getUserId(), dlFileEntry.getUserName(),
-			_dlFileEntryClassName.getClassNameId(),
-			dlFileEntry.getFileEntryId(),
+			_dlFileEntryClassNameId, dlFileEntry.getFileEntryId(),
 			MBCategoryConstants.DISCUSSION_CATEGORY_ID, _counter.get(), 0,
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, dlFileEntryIDString,
 			dlFileEntryIDString);
@@ -853,8 +846,7 @@ public class DataFactory {
 		return newMBMessage(
 			journalArticle.getGroupId(), journalArticle.getCompanyId(),
 			journalArticle.getUserId(), journalArticle.getUserName(),
-			_journalArticleClassName.getClassNameId(),
-			journalArticle.getResourcePrimKey(),
+			_journalArticleClassNameId, journalArticle.getResourcePrimKey(),
 			MBCategoryConstants.DISCUSSION_CATEGORY_ID, _counter.get(), 0,
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			resourcePrimKeyString, resourcePrimKeyString);
@@ -919,8 +911,8 @@ public class DataFactory {
 
 		return newMBMessage(
 			wikiPage.getGroupId(), wikiPage.getCompanyId(),
-			wikiPage.getUserId(), wikiPage.getUserName(),
-			_wikiPageClassName.getClassNameId(), wikiPage.getResourcePrimKey(),
+			wikiPage.getUserId(), wikiPage.getUserName(), _wikiPageClassNameId,
+			wikiPage.getResourcePrimKey(),
 			MBCategoryConstants.DISCUSSION_CATEGORY_ID, threadId, rootMessageId,
 			parentMessageId, subject, body);
 	}
@@ -1033,7 +1025,7 @@ public class DataFactory {
 		socialActivity.setCompanyId(dlFileEntry.getCompanyId());
 		socialActivity.setUserId(dlFileEntry.getUserId());
 		socialActivity.setCreateDate(System.currentTimeMillis());
-		socialActivity.setClassNameId(_dlFileEntryClassName.getClassNameId());
+		socialActivity.setClassNameId(_dlFileEntryClassNameId);
 		socialActivity.setClassPK(dlFileEntry.getFileEntryId());
 		socialActivity.setType(DLActivityKeys.ADD_FILE_ENTRY);
 		socialActivity.setExtraData(
@@ -1206,48 +1198,50 @@ public class DataFactory {
 		List<String> models = ModelHintsUtil.getModels();
 
 		for (String model : models) {
+			long classNameId = _counter.get();
+
 			ClassName className = new ClassNameImpl();
 
-			className.setClassNameId(_counter.get());
+			className.setClassNameId(classNameId);
 			className.setValue(model);
 
 			_classNames.add(className);
 
 			if (model.equals(BlogsEntry.class.getName())) {
-				_blogsEntryClassName = className;
+				_blogsEntryClassNameId = classNameId;
 			}
 			else if (model.equals(DDLRecordSet.class.getName())) {
-				_ddlRecordSetClassName = className;
+				_ddlRecordSetClassNameId = classNameId;
 			}
 			else if (model.equals(DDMContent.class.getName())) {
-				_ddmContentClassName = className;
+				_ddmContentClassNameId = classNameId;
 			}
 			else if (model.equals(DLFileEntry.class.getName())) {
-				_dlFileEntryClassName = className;
+				_dlFileEntryClassNameId = classNameId;
 			}
 			else if (model.equals(DLFileEntryMetadata.class.getName())) {
-				_dlFileEntryMetaDataClassName = className;
+				_dlFileEntryMetaDataClassNameId = classNameId;
 			}
 			else if (model.equals(Group.class.getName())) {
-				_groupClassName = className;
+				_groupClassNameId = classNameId;
 			}
 			else if (model.equals(JournalArticle.class.getName())) {
-				_journalArticleClassName = className;
+				_journalArticleClassNameId = classNameId;
 			}
 			else if (model.equals(MBMessage.class.getName())) {
-				_mbMessageClassName = className;
+				_mbMessageClassNameId = classNameId;
 			}
 			else if (model.equals(MBDiscussion.class.getName())) {
-				_mbDiscussionClassName = className;
+				_mbDiscussionClassNameId = classNameId;
 			}
 			else if (model.equals(Role.class.getName())) {
-				_roleClassName = className;
+				_roleClassNameId = classNameId;
 			}
 			else if (model.equals(User.class.getName())) {
-				_userClassName = className;
+				_userClassNameId = classNameId;
 			}
 			else if (model.equals(WikiPage.class.getName())) {
-				_wikiPageClassName = className;
+				_wikiPageClassNameId = classNameId;
 			}
 		}
 	}
@@ -1297,8 +1291,7 @@ public class DataFactory {
 
 	public void initGroups() {
 		_guestGroup = newGroup(
-			0, _groupClassName.getClassNameId(), 0, GroupConstants.GUEST,
-			"/guest", true);
+			0, _groupClassNameId, 0, GroupConstants.GUEST, "/guest", true);
 
 		_groups = new ArrayList<Group>(_maxGroupsCount);
 
@@ -1306,8 +1299,8 @@ public class DataFactory {
 			String name = "community" + Long.toString(i);
 
 			Group group = newGroup(
-				i, _groupClassName.getClassNameId(), i, name,
-				StringPool.FORWARD_SLASH + name, true);
+				i, _groupClassNameId, i, name, StringPool.FORWARD_SLASH + name,
+				true);
 
 			_groups.add(group);
 		}
@@ -1699,7 +1692,7 @@ public class DataFactory {
 
 		role.setRoleId(roleId);
 		role.setCompanyId(_company.getCompanyId());
-		role.setClassNameId(_roleClassName.getClassNameId());
+		role.setClassNameId(_roleClassNameId);
 		role.setClassPK(roleId);
 		role.setName(name);
 		role.setType(type);
@@ -1840,29 +1833,29 @@ public class DataFactory {
 	private Account _account;
 	private Role _administratorRole;
 	private String _baseDir;
-	private ClassName _blogsEntryClassName;
+	private long _blogsEntryClassNameId;
 	private List<ClassName> _classNames;
 	private Company _company;
 	private SimpleCounter _counter;
-	private ClassName _ddlRecordSetClassName;
+	private long _ddlRecordSetClassNameId;
 
 	private String _ddm_structure_basic_document;
 
 	private String _ddm_structure_ddl;
-	private ClassName _ddmContentClassName;
+	private long _ddmContentClassNameId;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;
 	private SimpleCounter _dlDateCounter;
-	private ClassName _dlFileEntryClassName;
-	private ClassName _dlFileEntryMetaDataClassName;
+	private long _dlFileEntryClassNameId;
+	private long _dlFileEntryMetaDataClassNameId;
 	private List<String> _firstNames;
 	private long _futureTime = System.currentTimeMillis() + Time.YEAR;
-	private ClassName _groupClassName;
+	private long _groupClassNameId;
 	private List<Group> _groups;
 	private Group _guestGroup;
 	private Role _guestRole;
 	private User _guestUser;
-	private ClassName _journalArticleClassName;
+	private long _journalArticleClassNameId;
 	private String _journalArticleContent;
 	private List<String> _lastNames;
 	private Map<Long, SimpleCounter> _layoutCounters;
@@ -1874,25 +1867,25 @@ public class DataFactory {
 	private int _maxMBMessageCountPerCategory;
 	private int _maxMBThreadCount;
 	private int _maxUserToGroupCount;
-	private ClassName _mbDiscussionClassName;
-	private ClassName _mbMessageClassName;
+	private long _mbDiscussionClassNameId;
+	private long _mbMessageClassNameId;
 	private Role _organizationAdministratorRole;
 	private Role _organizationOwnerRole;
 	private Role _organizationUserRole;
 	private Role _ownerRole;
 	private Role _powerUserRole;
 	private SimpleCounter _resourcePermissionCounter;
-	private ClassName _roleClassName;
+	private long _roleClassNameId;
 	private List<Role> _roles;
 	private User _sampleUser;
 	private Role _siteAdministratorRole;
 	private Role _siteMemberRole;
 	private Role _siteOwnerRole;
 	private SimpleCounter _socialActivityCounter;
-	private ClassName _userClassName;
+	private long _userClassNameId;
 	private Role _userRole;
 	private SimpleCounter _userScreenNameIncrementer;
 	private VirtualHost _virtualHost;
-	private ClassName _wikiPageClassName;
+	private long _wikiPageClassNameId;
 
 }

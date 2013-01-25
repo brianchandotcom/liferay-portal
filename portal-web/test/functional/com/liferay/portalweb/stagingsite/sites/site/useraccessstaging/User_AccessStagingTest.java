@@ -29,8 +29,8 @@ public class User_AccessStagingTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Staging"),
 			selenium.getText("//div[@class='staging-bar']/ul/li/span/span"));
 		assertEquals(RuntimeVariables.replace("Site Name (Staging)"),
-			selenium.getText("//nav[@id='breadcrumbs']/ul/li[2]/span/a"));
+			selenium.getText("//nav[@id='breadcrumbs']/ul/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("Page Name"),
-			selenium.getText("//nav[@id='breadcrumbs']/ul/li[3]/span/a"));
+			selenium.getText("//nav[@id='breadcrumbs']/ul/li[2]/span/a"));
 	}
 }

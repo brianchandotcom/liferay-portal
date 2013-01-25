@@ -30,7 +30,14 @@ public class AddEventRepeatYearlySPTLTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Site Name");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Site Name");
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
@@ -38,17 +45,25 @@ public class AddEventRepeatYearlySPTLTest extends BaseTestCase {
 						"//body[contains(@class,'live-view')]"));
 				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
-				selenium.clickAt("//li[2]/span/a",
+				assertTrue(selenium.isPartialText(
+						"//span/a[contains(.,'Staging')]", "Staging"));
+				selenium.clickAt("//span/a[contains(.,'Staging')]",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'live-view')]"));
-				assertTrue(selenium.isElementPresent(
-						"//a[@id='_170_0publishScheduleLink']"));
-				selenium.clickAt("//a[@id='_170_0publishScheduleLink']",
+				Thread.sleep(1000);
+				selenium.clickAt("//span[@class='staging-icon-menu-container']/span/ul/li/strong/a",
+					RuntimeVariables.replace("Staging Drop Down"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Schedule Publication to Live')]");
+				assertEquals(RuntimeVariables.replace(
+						"Schedule Publication to Live"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Schedule Publication to Live')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Schedule Publication to Live')]",
 					RuntimeVariables.replace("Schedule Publication to Live"));
 				selenium.waitForVisible("//div[2]/div[1]/a");
 
@@ -65,7 +80,7 @@ public class AddEventRepeatYearlySPTLTest extends BaseTestCase {
 					RuntimeVariables.replace("Plus"));
 
 			case 2:
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				selenium.waitForElementPresent(
 					"//input[@id='_88_recurrenceTypeYearly']");
 				selenium.clickAt("//input[@id='_88_recurrenceTypeYearly']",
@@ -73,9 +88,10 @@ public class AddEventRepeatYearlySPTLTest extends BaseTestCase {
 				selenium.waitForVisible("//input[@value='Add Event']");
 				selenium.clickAt("//input[@value='Add Event']",
 					RuntimeVariables.replace("Add Event"));
-				selenium.waitForVisible("//th[2]");
-				assertEquals(RuntimeVariables.replace("No end date"),
-					selenium.getText("//tr[3]/td[3]"));
+				selenium.waitForVisible(
+					"//tr[@class='portlet-section-header results-header']/th[2]");
+				assertEquals(RuntimeVariables.replace("No End Date"),
+					selenium.getText("//tr[contains(.,'No End Date')]/td[3]"));
 
 			case 100:
 				label = -1;

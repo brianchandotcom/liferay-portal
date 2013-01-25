@@ -16,6 +16,8 @@ package com.liferay.portalweb.stagingsite.sites.site.useraccessstaging;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.stagingsite.sites.site.activatestaging.ActivateStagingTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -43,7 +45,7 @@ public class User_AccessStagingTests extends BaseTestSuite {
 		testSuite.addTestSuite(SA_LoginTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownRolesTest.class);
-		testSuite.addTestSuite(TearDownSitesTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

@@ -17,6 +17,7 @@ package com.liferay.portalweb.stagingsite.sites.sitepagesvariation.addsitepagesv
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.sitepage.addsitepublicpage.AddSitesPublicPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +29,7 @@ public class AddSitePagesVariationTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSiteTest.class);
-		testSuite.addTestSuite(AddSitePublicPageTest.class);
+		testSuite.addTestSuite(AddSitesPublicPageTest.class);
 		testSuite.addTestSuite(ActivateStagingTest.class);
 		testSuite.addTestSuite(AddSitePagesVariationTest.class);
 		testSuite.addTestSuite(AddPageSitePagesVariationTest.class);

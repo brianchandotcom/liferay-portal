@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Site Name</td>
 	<td>Site Name</td>
 </tr>
@@ -35,12 +55,12 @@
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//li[2]/span/a</td>
+	<td>//span/a[contains(.,'Staging')]</td>
 	<td>Staging</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//li[2]/span/a</td>
+	<td>//span/a[contains(.,'Staging')]</td>
 	<td>Staging</td>
 </tr>
 <tr>
@@ -54,13 +74,28 @@
 	<td>Live View</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//a[@id='_170_0publishScheduleLink']</td>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@class='staging-icon-menu-container']/span/ul/li/strong/a</td>
+	<td>Staging Drop Down</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Schedule Publication to Live')]</td>
+	<td>Schedule Publication to Live</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Schedule Publication to Live')]</td>
 	<td>Schedule Publication to Live</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_170_0publishScheduleLink']</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Schedule Publication to Live')]</td>
 	<td>Schedule Publication to Live</td>
 </tr>
 <tr>
@@ -90,7 +125,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -115,13 +150,13 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//th[2]</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[2]</td>
 	<td>Start Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]</td>
-	<td>No end date</td>
+	<td>//tr[contains(.,'No End Date')]/td[3]</td>
+	<td>No End Date</td>
 </tr>
 </tbody></table>
 </body>

@@ -16,6 +16,8 @@ package com.liferay.portalweb.stagingsite.sites.site.deactivatestaging;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.stagingsite.sites.site.activatestaging.ActivateStagingTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

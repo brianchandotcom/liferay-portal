@@ -226,7 +226,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiPage page = getPage(nodeId, title);
 
 		PortletFileRepositoryUtil.addPortletFileEntry(
-			page.getGroupId(), userId, PortletKeys.WIKI,
+			page.getGroupId(), userId, WikiPage.class.getName(),
+			page.getResourcePrimKey(), PortletKeys.WIKI,
 			page.getAttachmentsFolderId(), file, fileName);
 
 		if (userId == 0) {
@@ -247,7 +248,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiPage page = getPage(nodeId, title);
 
 		PortletFileRepositoryUtil.addPortletFileEntry(
-			page.getGroupId(), userId, PortletKeys.WIKI,
+			page.getGroupId(), userId, WikiPage.class.getName(),
+			page.getResourcePrimKey(), PortletKeys.WIKI,
 			page.getAttachmentsFolderId(), inputStream, fileName);
 
 		if (userId == 0) {

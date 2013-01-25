@@ -10332,6 +10332,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		dlFileEntryImpl.setVersionUserName(dlFileEntry.getVersionUserName());
 		dlFileEntryImpl.setCreateDate(dlFileEntry.getCreateDate());
 		dlFileEntryImpl.setModifiedDate(dlFileEntry.getModifiedDate());
+		dlFileEntryImpl.setClassNameId(dlFileEntry.getClassNameId());
+		dlFileEntryImpl.setClassPK(dlFileEntry.getClassPK());
 		dlFileEntryImpl.setRepositoryId(dlFileEntry.getRepositoryId());
 		dlFileEntryImpl.setFolderId(dlFileEntry.getFolderId());
 		dlFileEntryImpl.setName(dlFileEntry.getName());

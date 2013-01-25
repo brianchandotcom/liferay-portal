@@ -128,6 +128,10 @@ public class DLFileEntryPersistenceTest {
 
 		newDLFileEntry.setModifiedDate(ServiceTestUtil.nextDate());
 
+		newDLFileEntry.setClassNameId(ServiceTestUtil.nextLong());
+
+		newDLFileEntry.setClassPK(ServiceTestUtil.nextLong());
+
 		newDLFileEntry.setRepositoryId(ServiceTestUtil.nextLong());
 
 		newDLFileEntry.setFolderId(ServiceTestUtil.nextLong());
@@ -188,6 +192,10 @@ public class DLFileEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileEntry.getModifiedDate()),
 			Time.getShortTimestamp(newDLFileEntry.getModifiedDate()));
+		Assert.assertEquals(existingDLFileEntry.getClassNameId(),
+			newDLFileEntry.getClassNameId());
+		Assert.assertEquals(existingDLFileEntry.getClassPK(),
+			newDLFileEntry.getClassPK());
 		Assert.assertEquals(existingDLFileEntry.getRepositoryId(),
 			newDLFileEntry.getRepositoryId());
 		Assert.assertEquals(existingDLFileEntry.getFolderId(),
@@ -393,6 +401,10 @@ public class DLFileEntryPersistenceTest {
 		dlFileEntry.setCreateDate(ServiceTestUtil.nextDate());
 
 		dlFileEntry.setModifiedDate(ServiceTestUtil.nextDate());
+
+		dlFileEntry.setClassNameId(ServiceTestUtil.nextLong());
+
+		dlFileEntry.setClassPK(ServiceTestUtil.nextLong());
 
 		dlFileEntry.setRepositoryId(ServiceTestUtil.nextLong());
 

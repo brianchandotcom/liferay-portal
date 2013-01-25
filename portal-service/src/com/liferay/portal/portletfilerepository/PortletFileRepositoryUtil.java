@@ -34,30 +34,35 @@ import java.util.List;
 public class PortletFileRepositoryUtil {
 
 	public static void addPortletFileEntries(
-			long groupId, long userId, String portletId, long folderId,
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId,
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
 		throws PortalException, SystemException {
 
 		getPortletFileRepository().addPortletFileEntries(
-			groupId, userId, portletId, folderId, inputStreamOVPs);
+			groupId, userId, className, classPK, portletId, folderId,
+			inputStreamOVPs);
 	}
 
 	public static FileEntry addPortletFileEntry(
-			long groupId, long userId, String portletId, long folderId,
-			File file, String fileName)
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, File file, String fileName)
 		throws PortalException, SystemException {
 
 		return getPortletFileRepository().addPortletFileEntry(
-			groupId, userId, portletId, folderId, file, fileName);
+			groupId, userId, className, classPK, portletId, folderId, file,
+			fileName);
 	}
 
 	public static FileEntry addPortletFileEntry(
-			long groupId, long userId, String portletId, long folderId,
-			InputStream inputStream, String fileName)
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, InputStream inputStream,
+			String fileName)
 		throws PortalException, SystemException {
 
 		return getPortletFileRepository().addPortletFileEntry(
-			groupId, userId, portletId, folderId, inputStream, fileName);
+			groupId, userId, className, classPK, portletId, folderId,
+			inputStream, fileName);
 	}
 
 	public static void deleteFolder(long folderId)

@@ -20,6 +20,7 @@ import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,6 +31,11 @@ import java.sql.Timestamp;
  * @author Eudaldo Alonso
  */
 public class UpgradeMessageBoardsAttachments extends BaseUpgradeAttachments {
+
+	@Override
+	protected String getClassName() {
+		return MBMessage.class.getName();
+	}
 
 	@Override
 	protected long getClassNameId() {

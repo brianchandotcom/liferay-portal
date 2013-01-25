@@ -56,6 +56,8 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		attributes.put("versionUserName", getVersionUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("folderId", getFolderId());
 		attributes.put("name", getName());
@@ -136,6 +138,18 @@ public class DLFileEntryWrapper implements DLFileEntry,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long classNameId = (Long)attributes.get("classNameId");
+
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
 		}
 
 		Long repositoryId = (Long)attributes.get("repositoryId");
@@ -478,6 +492,55 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	*/
 	public void setModifiedDate(java.util.Date modifiedDate) {
 		_dlFileEntry.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Returns the fully qualified class name of this document library file entry.
+	*
+	* @return the fully qualified class name of this document library file entry
+	*/
+	public java.lang.String getClassName() {
+		return _dlFileEntry.getClassName();
+	}
+
+	public void setClassName(java.lang.String className) {
+		_dlFileEntry.setClassName(className);
+	}
+
+	/**
+	* Returns the class name ID of this document library file entry.
+	*
+	* @return the class name ID of this document library file entry
+	*/
+	public long getClassNameId() {
+		return _dlFileEntry.getClassNameId();
+	}
+
+	/**
+	* Sets the class name ID of this document library file entry.
+	*
+	* @param classNameId the class name ID of this document library file entry
+	*/
+	public void setClassNameId(long classNameId) {
+		_dlFileEntry.setClassNameId(classNameId);
+	}
+
+	/**
+	* Returns the class p k of this document library file entry.
+	*
+	* @return the class p k of this document library file entry
+	*/
+	public long getClassPK() {
+		return _dlFileEntry.getClassPK();
+	}
+
+	/**
+	* Sets the class p k of this document library file entry.
+	*
+	* @param classPK the class p k of this document library file entry
+	*/
+	public void setClassPK(long classPK) {
+		_dlFileEntry.setClassPK(classPK);
 	}
 
 	/**

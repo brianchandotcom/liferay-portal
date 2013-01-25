@@ -50,11 +50,13 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ModelHintsUtil;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -187,6 +189,29 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntry.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
 		dlFileEntry.setSize(size);
 		dlFileEntry.setReadCount(DLFileEntryConstants.DEFAULT_READ_COUNT);
+
+		DLFolder folderRepository = null;
+
+		if (repositoryId != groupId) {
+			Repository repository = RepositoryLocalServiceUtil.getRepository(
+				repositoryId);
+
+			folderRepository = dlFolderLocalService.getFolder(
+				repository.getDlFolderId());
+		}
+
+		if ((folderRepository != null) && folderRepository.isHidden()) {
+			long classNameId = PortalUtil.getClassNameId(
+				(String)serviceContext.getAttribute("className"));
+			long classPK = ParamUtil.getLong(serviceContext, "classPK");
+
+			if (Validator.isNotNull(classNameId) &&
+					Validator.isNotNull(classPK)) {
+
+				dlFileEntry.setClassNameId(classNameId);
+				dlFileEntry.setClassPK(classPK);
+			}
+		}
 
 		dlFileEntryPersistence.update(dlFileEntry);
 

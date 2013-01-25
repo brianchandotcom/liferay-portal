@@ -549,6 +549,8 @@ create table DLFileEntry (
 	versionUserName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
 	repositoryId LONG,
 	folderId LONG,
 	name VARCHAR(255) null,

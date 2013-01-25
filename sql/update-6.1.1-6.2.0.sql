@@ -291,7 +291,14 @@ alter table DDMTemplate add smallImageURL STRING;
 update DDMTemplate set type_ = 'display' where type_ = 'list';
 update DDMTemplate set type_ = 'form' where type_ = 'detail';
 
+alter table DLFileEntry add classNameId LONG;
+alter table DLFileEntry add classPK LONG;
 alter table DLFileEntry add manualCheckInRequired BOOLEAN;
+
+COMMIT_TRANSACTION;
+
+update DLFileEntry set classNameId = 0;
+update DLFileEntry set classPK = 0;
 
 alter table DLFileRank add active_ BOOLEAN;
 

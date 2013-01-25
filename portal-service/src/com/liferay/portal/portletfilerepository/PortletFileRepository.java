@@ -33,18 +33,20 @@ import java.util.List;
 public interface PortletFileRepository {
 
 	public void addPortletFileEntries(
-			long groupId, long userId, String portletId, long folderId,
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId,
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
 		throws PortalException, SystemException;
 
 	public FileEntry addPortletFileEntry(
-			long groupId, long userId, String portletId, long folderId,
-			File file, String fileName)
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, File file, String fileName)
 		throws PortalException, SystemException;
 
 	public FileEntry addPortletFileEntry(
-			long groupId, long userId, String portletId, long folderId,
-			InputStream inputStream, String fileName)
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, InputStream inputStream,
+			String fileName)
 		throws PortalException, SystemException;
 
 	public void deleteFolder(long folderId)

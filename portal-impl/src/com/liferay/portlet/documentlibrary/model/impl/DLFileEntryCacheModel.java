@@ -38,7 +38,7 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -60,6 +60,10 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+		sb.append(", classPK=");
+		sb.append(classPK);
 		sb.append(", repositoryId=");
 		sb.append(repositoryId);
 		sb.append(", folderId=");
@@ -144,6 +148,8 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 			dlFileEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		dlFileEntryImpl.setClassNameId(classNameId);
+		dlFileEntryImpl.setClassPK(classPK);
 		dlFileEntryImpl.setRepositoryId(repositoryId);
 		dlFileEntryImpl.setFolderId(folderId);
 
@@ -222,6 +228,8 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		versionUserName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		classNameId = objectInput.readLong();
+		classPK = objectInput.readLong();
 		repositoryId = objectInput.readLong();
 		folderId = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -273,6 +281,8 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+		objectOutput.writeLong(classNameId);
+		objectOutput.writeLong(classPK);
 		objectOutput.writeLong(repositoryId);
 		objectOutput.writeLong(folderId);
 
@@ -346,6 +356,8 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 	public String versionUserName;
 	public long createDate;
 	public long modifiedDate;
+	public long classNameId;
+	public long classPK;
 	public long repositoryId;
 	public long folderId;
 	public String name;

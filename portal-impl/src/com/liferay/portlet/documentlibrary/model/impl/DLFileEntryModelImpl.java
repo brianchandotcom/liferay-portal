@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -75,6 +76,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			{ "versionUserName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
 			{ "repositoryId", Types.BIGINT },
 			{ "folderId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
@@ -93,7 +96,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			{ "custom2ImageId", Types.BIGINT },
 			{ "manualCheckInRequired", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,name VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,name VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileEntry.folderId ASC, dlFileEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileEntry.folderId ASC, DLFileEntry.name ASC";
@@ -142,6 +145,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		model.setVersionUserName(soapModel.getVersionUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setClassNameId(soapModel.getClassNameId());
+		model.setClassPK(soapModel.getClassPK());
 		model.setRepositoryId(soapModel.getRepositoryId());
 		model.setFolderId(soapModel.getFolderId());
 		model.setName(soapModel.getName());
@@ -227,6 +232,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		attributes.put("versionUserName", getVersionUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("folderId", getFolderId());
 		attributes.put("name", getName());
@@ -308,6 +315,18 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long classNameId = (Long)attributes.get("classNameId");
+
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
 		}
 
 		Long repositoryId = (Long)attributes.get("repositoryId");
@@ -578,6 +597,42 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+	}
+
+	public String getClassName() {
+		if (getClassNameId() <= 0) {
+			return StringPool.BLANK;
+		}
+
+		return PortalUtil.getClassName(getClassNameId());
+	}
+
+	public void setClassName(String className) {
+		long classNameId = 0;
+
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
+		}
+
+		setClassNameId(classNameId);
+	}
+
+	@JSON
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
+	}
+
+	@JSON
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
 	}
 
 	@JSON
@@ -867,6 +922,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryImpl.setVersionUserName(getVersionUserName());
 		dlFileEntryImpl.setCreateDate(getCreateDate());
 		dlFileEntryImpl.setModifiedDate(getModifiedDate());
+		dlFileEntryImpl.setClassNameId(getClassNameId());
+		dlFileEntryImpl.setClassPK(getClassPK());
 		dlFileEntryImpl.setRepositoryId(getRepositoryId());
 		dlFileEntryImpl.setFolderId(getFolderId());
 		dlFileEntryImpl.setName(getName());
@@ -1037,6 +1094,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			dlFileEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		dlFileEntryCacheModel.classNameId = getClassNameId();
+
+		dlFileEntryCacheModel.classPK = getClassPK();
+
 		dlFileEntryCacheModel.repositoryId = getRepositoryId();
 
 		dlFileEntryCacheModel.folderId = getFolderId();
@@ -1118,7 +1179,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1140,6 +1201,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", classNameId=");
+		sb.append(getClassNameId());
+		sb.append(", classPK=");
+		sb.append(getClassPK());
 		sb.append(", repositoryId=");
 		sb.append(getRepositoryId());
 		sb.append(", folderId=");
@@ -1180,7 +1245,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileEntry");
@@ -1225,6 +1290,14 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
+		sb.append(getClassNameId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>classPK</column-name><column-value><![CDATA[");
+		sb.append(getClassPK());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>repositoryId</column-name><column-value><![CDATA[");
@@ -1323,6 +1396,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private String _versionUserName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _classNameId;
+	private long _classPK;
 	private long _repositoryId;
 	private long _folderId;
 	private long _originalFolderId;

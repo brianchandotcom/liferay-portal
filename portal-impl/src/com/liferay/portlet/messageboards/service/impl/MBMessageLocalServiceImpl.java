@@ -324,7 +324,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (!inputStreamOVPs.isEmpty()) {
 			PortletFileRepositoryUtil.addPortletFileEntries(
-				message.getGroupId(), userId, PortletKeys.MESSAGE_BOARDS,
+				message.getGroupId(), userId, MBMessage.class.getName(),
+				message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
 				message.getAttachmentsFolderId(), inputStreamOVPs);
 		}
 
@@ -1435,7 +1436,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 
 			PortletFileRepositoryUtil.addPortletFileEntries(
-				message.getGroupId(), userId, PortletKeys.MESSAGE_BOARDS,
+				message.getGroupId(), userId, MBMessage.class.getName(),
+				message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
 				message.getAttachmentsFolderId(), inputStreamOVPs);
 		}
 		else {

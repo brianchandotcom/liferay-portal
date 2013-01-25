@@ -114,6 +114,8 @@
 
 		<!-- Other fields -->
 
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
 		<column name="repositoryId" type="long" />
 		<column name="folderId" type="long" />
 		<column name="name" type="String" />

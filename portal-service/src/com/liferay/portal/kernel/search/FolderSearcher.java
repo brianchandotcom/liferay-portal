@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.journal.model.JournalFolder;
+
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -22,6 +26,10 @@ import javax.portlet.PortletURL;
  * @author Eduardo Garcia
  */
 public class FolderSearcher extends BaseIndexer {
+
+	public static final String[] CLASS_NAMES = {
+		BookmarksFolder.class.getName(), DLFolder.class.getName(),
+		JournalFolder.class.getName()};
 
 	public static Indexer getInstance() {
 		return new FolderSearcher();
@@ -33,7 +41,7 @@ public class FolderSearcher extends BaseIndexer {
 	}
 
 	public String[] getClassNames() {
-		return null;
+		return CLASS_NAMES;
 	}
 
 	@Override

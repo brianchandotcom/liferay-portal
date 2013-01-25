@@ -68,11 +68,13 @@ public class DoAsURLTag extends TagSupport {
 			}
 
 			if (Validator.isNull(doAsURL)) {
-				doAsURL = _COMPANY_DEFAULT_HOME_URL;
+				doAsURL =
+					themeDisplay.getPathContext() + _COMPANY_DEFAULT_HOME_URL;
 			}
 		}
-
-		doAsURL = themeDisplay.getPathContext() + doAsURL;
+		else {
+			doAsURL = themeDisplay.getPathContext() + doAsURL;
+		}
 
 		if (doAsUserId <= 0) {
 			doAsUserId = company.getDefaultUser().getUserId();

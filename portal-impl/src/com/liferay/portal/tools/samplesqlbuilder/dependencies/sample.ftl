@@ -1,8 +1,14 @@
+<#include "macro.ftl">
+
 <#include "class_names.ftl">
 
 <#include "company.ftl">
 
+<#include "default_users.ftl">
+
 <#include "roles.ftl">
+
+<#include "default_file_type.ftl">
 
 <#include "groups.ftl">
 

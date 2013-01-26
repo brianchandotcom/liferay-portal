@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.velocity.VelocityUtil;
-import com.liferay.util.SimpleCounter;
 
 import java.io.File;
 import java.io.FileReader;
@@ -53,6 +52,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -705,7 +705,7 @@ public abstract class BaseDB implements DB {
 	protected String evaluateVM(String template) throws Exception {
 		Map<String, Object> variables = new HashMap<String, Object>();
 
-		variables.put("counter", new SimpleCounter());
+		variables.put("counter", new AtomicLong(1));
 		variables.put("portalUUIDUtil", PortalUUIDUtil.class);
 
 		ClassLoader classLoader = PACLClassLoaderUtil.getContextClassLoader();

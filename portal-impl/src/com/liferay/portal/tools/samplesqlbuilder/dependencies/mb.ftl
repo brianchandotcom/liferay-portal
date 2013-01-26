@@ -1,53 +1,28 @@
-<#assign totalMBThreadCount = maxMBCategoryCount * maxMBThreadCount>
-<#assign totalMBMessageCount = totalMBThreadCount * maxMBMessageCount>
-
-<#assign categoryCounterOffset = maxGroupCount + ((groupId - 1) * (maxMBCategoryCount + totalMBThreadCount + totalMBMessageCount))>
-
 <#if (maxMBCategoryCount > 0)>
 	<#list 1..maxMBCategoryCount as mbCategoryCount>
-		<#assign categoryId = categoryCounterOffset + mbCategoryCount>
+		<#assign mbCategory = dataFactory.addMBCategory(groupId, mbCategoryCount)>
 
-		<#assign mbCategory = dataFactory.addMBCategory(categoryId, groupId, companyId, firstUserId, "Test Category " + mbCategoryCount, "This is a test category " + mbCategoryCount + ".", maxMBThreadCount, maxMBThreadCount * maxMBMessageCount)>
-
-		${sampleSQLBuilder.insertMBCategory(mbCategory)}
+		<@insertMBCategory _mbCategory = mbCategory/>
 
 		<#if (maxMBThreadCount > 0) && (maxMBMessageCount > 0)>
-			<#assign threadCounterOffset = categoryCounterOffset + maxMBCategoryCount + ((mbCategoryCount - 1) * maxMBThreadCount)>
-
 			<#list 1..maxMBThreadCount as mbThreadCount>
-				<#assign messageCounterOffset = categoryCounterOffset + maxMBCategoryCount + totalMBThreadCount + ((mbCategoryCount - 1) * maxMBThreadCount * maxMBMessageCount) + ((mbThreadCount - 1) * maxMBMessageCount)>
+				<#assign mbRootMessage = dataFactory.addMBMessage(mbCategory, 1)>
 
-				<#assign threadId = threadCounterOffset + mbThreadCount>
-				<#assign rootMessageId = 0>
-				<#assign parentMessageId = 0>
+				<@insertMBMessage _mbMessage = mbRootMessage/>
 
-				<#list 1..maxMBMessageCount as mbMessageCount>
-					<#assign mbMessageCounterIncrement = mbMessageCounter.increment()>
+				<#assign mbThread = dataFactory.addMBThread(mbRootMessage, maxMBMessageCount)>
 
-					<#assign messageId = messageCounterOffset + mbMessageCount>
+				insert into MBThread values (${mbThread.threadId}, ${mbThread.groupId}, ${mbThread.companyId}, ${mbThread.categoryId}, ${mbThread.rootMessageId}, ${mbThread.rootMessageUserId}, ${mbThread.messageCount}, ${mbThread.viewCount}, ${mbThread.lastPostByUserId}, '${mbThread.lastPostDate?datetime}', ${mbThread.priority}, ${mbThread.question?string}, ${mbThread.status}, ${mbThread.statusByUserId}, '${mbThread.statusByUserName}', ${mbThread.statusDate!'null'});
 
-					<#if (mbMessageCount = 1)>
-						<#assign rootMessageId = messageId>
-					</#if>
+				<#if (maxMBMessageCount > 1)>
+					<#list 2..maxMBMessageCount as mbMessageCount>
+						<#assign mbMessage = dataFactory.addMBMessage(mbCategory, mbRootMessage, mbMessageCount)>
 
-					<#assign mbMessage = dataFactory.addMBMessage(messageId, mbCategory.groupId, firstUserId, 0, 0, categoryId, threadId, rootMessageId, parentMessageId, "Test Message " + mbMessageCount, "This is a test message " + mbMessageCount + ".")>
-
-					${sampleSQLBuilder.insertMBMessage(mbMessage)}
-
-					<#if (mbMessageCount_index = 0)>
-						<#assign parentMessageId = mbMessage.messageId>
-					</#if>
-				</#list>
-
-				<#assign mbThread = dataFactory.addMBThread(threadId, mbCategory.groupId, companyId, categoryId, rootMessageId, maxMBCategoryCount, firstUserId)>
-
-				insert into MBThread values (${mbThread.threadId}, ${mbThread.groupId}, ${mbThread.companyId}, ${mbThread.categoryId}, ${mbThread.rootMessageId}, ${mbThread.rootMessageUserId}, ${mbThread.messageCount}, 0, ${mbThread.lastPostByUserId}, CURRENT_TIMESTAMP, 0, FALSE, 0, ${mbThread.lastPostByUserId}, '', CURRENT_TIMESTAMP);
-
-				${writerMessageBoardsCSV.write(categoryId + "," + threadId + "," + rootMessageId + ",")}
-
-				<#if (mbMessageCounter.value < (maxGroupCount * totalMBMessageCount))>
-					${writerMessageBoardsCSV.write("\n")}
+						<@insertMBMessage _mbMessage = mbMessage/>
+					</#list>
 				</#if>
+
+				${writerMessageBoardsCSV.write(mbThread.categoryId + "," + mbThread.threadId + "," + mbThread.rootMessageId + "\n")}
 			</#list>
 		</#if>
 	</#list>

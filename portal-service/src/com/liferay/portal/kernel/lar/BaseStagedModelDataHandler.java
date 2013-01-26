@@ -29,6 +29,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			Element... elements)
 		throws PortletDataException {
 
+		String path = StagedModelPathUtil.getPath(stagedModel);
+
+		if (portletDataContext.isPathProcessed(path)) {
+			return;
+		}
+
 		try {
 			doExportModelData(stagedModel, portletDataContext, elements);
 		}
@@ -55,7 +61,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			T stagedModel, String path, PortletDataContext portletDataContext)
 		throws PortletDataException {
 
-		if (!portletDataContext.isPathNotProcessed(path)) {
+		if (portletDataContext.isPathProcessed(path)) {
 			return;
 		}
 

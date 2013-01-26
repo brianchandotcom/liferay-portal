@@ -251,6 +251,8 @@ public interface PortletDataContext extends Serializable {
 
 	public boolean isPathNotProcessed(String path);
 
+	public boolean isPathProcessed(String path);
+
 	public boolean isPerformDirectBinaryImport();
 
 	public boolean isPrivateLayout();

@@ -14,27 +14,24 @@
 
 package com.liferay.portlet.bookmarks.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryUtil;
 import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderUtil;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -43,8 +40,12 @@ import javax.portlet.PortletPreferences;
  * @author Bruno Farache
  * @author Raymond Augé
  * @author Juan Fernández
+ * @author Mate Thurzo
+ * @author Daniel Kocsis
  */
 public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
+
+	public static final String NAMESPACE = "bookmarks";
 
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
@@ -57,7 +58,7 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getExportMetadataControls() {
 		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
-				_NAMESPACE, "bookmarks", true, _metadataControls)
+				NAMESPACE, "bookmarks", true, _metadataControls)
 		};
 	}
 
@@ -72,7 +73,7 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getImportMetadataControls() {
 		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
-				_NAMESPACE, "bookmarks", true, _metadataControls)
+				NAMESPACE, "bookmarks", true, _metadataControls)
 		};
 	}
 
@@ -129,17 +130,41 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 		List<BookmarksFolder> folders = BookmarksFolderUtil.findByGroupId(
 			portletDataContext.getScopeGroupId());
 
+		StagedModelDataHandler<BookmarksFolder> bookmarksFolderDataHandler =
+			(StagedModelDataHandler<BookmarksFolder>)
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					BookmarksFolder.class.getName());
+
 		for (BookmarksFolder folder : folders) {
-			exportFolder(
-				portletDataContext, foldersElement, entriesElement, folder);
+			if (!portletDataContext.isWithinDateRange(
+					folder.getModifiedDate())) {
+
+				continue;
+			}
+
+			bookmarksFolderDataHandler.exportModelData(
+				folder, portletDataContext, foldersElement, entriesElement);
 		}
 
-		List<BookmarksEntry> entries = BookmarksEntryUtil.findByG_F(
-			portletDataContext.getScopeGroupId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		List<BookmarksEntry> entries =
+			BookmarksEntryLocalServiceUtil.getGroupEntries(
+				portletDataContext.getScopeGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		StagedModelDataHandler<BookmarksEntry> bookmarksEntryDataHandler =
+			(StagedModelDataHandler<BookmarksEntry>)
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					BookmarksEntry.class.getName());
 
 		for (BookmarksEntry entry : entries) {
-			exportEntry(portletDataContext, null, entriesElement, entry);
+			if (!portletDataContext.isWithinDateRange(
+					entry.getModifiedDate())) {
+
+				continue;
+			}
+
+			bookmarksEntryDataHandler.exportModelData(
+				entry, portletDataContext, foldersElement, entriesElement);
 		}
 
 		return document.formattedString();
@@ -162,295 +187,44 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element foldersElement = rootElement.element("folders");
 
+		StagedModelDataHandler<BookmarksFolder> bookmarksFolderDataHandler =
+			(StagedModelDataHandler<BookmarksFolder>)
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					BookmarksFolder.class.getName());
+
 		for (Element folderElement : foldersElement.elements("folder")) {
-			String path = folderElement.attributeValue("path");
-
-			if (!portletDataContext.isPathNotProcessed(path)) {
-				continue;
-			}
-
-			BookmarksFolder folder =
-				(BookmarksFolder)portletDataContext.getZipEntryAsObject(path);
-
-			importFolder(portletDataContext, path, folder);
+			bookmarksFolderDataHandler.importModelData(
+				folderElement, portletDataContext);
 		}
 
 		Element entriesElement = rootElement.element("entries");
 
+		StagedModelDataHandler<BookmarksEntry> bookmarksEntryDataHandler =
+			(StagedModelDataHandler<BookmarksEntry>)
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					BookmarksEntry.class.getName());
+
 		for (Element entryElement : entriesElement.elements("entry")) {
-			String path = entryElement.attributeValue("path");
-
-			if (!portletDataContext.isPathNotProcessed(path)) {
-				continue;
-			}
-
-			BookmarksEntry entry =
-				(BookmarksEntry)portletDataContext.getZipEntryAsObject(path);
-
-			importEntry(portletDataContext, entryElement, entry);
+			bookmarksEntryDataHandler.importModelData(
+				entryElement, portletDataContext);
 		}
 
 		return null;
 	}
 
-	protected void exportEntry(
-			PortletDataContext portletDataContext, Element foldersElement,
-			Element entriesElement, BookmarksEntry entry)
-		throws Exception {
-
-		if (!portletDataContext.isWithinDateRange(entry.getModifiedDate())) {
-			return;
-		}
-
-		if (foldersElement != null) {
-			exportParentFolder(
-				portletDataContext, foldersElement, entry.getFolderId());
-		}
-
-		String path = getEntryPath(portletDataContext, entry);
-
-		if (portletDataContext.isPathNotProcessed(path)) {
-			Element entryElement = entriesElement.addElement("entry");
-
-			portletDataContext.addClassedModel(
-				entryElement, path, entry, _NAMESPACE);
-		}
-	}
-
-	protected void exportFolder(
-			PortletDataContext portletDataContext, Element foldersElement,
-			Element entriesElement, BookmarksFolder folder)
-		throws Exception {
-
-		if (portletDataContext.isWithinDateRange(folder.getModifiedDate())) {
-			exportParentFolder(
-				portletDataContext, foldersElement, folder.getParentFolderId());
-
-			String path = getFolderPath(portletDataContext, folder);
-
-			if (portletDataContext.isPathNotProcessed(path)) {
-				Element folderElement = foldersElement.addElement("folder");
-
-				portletDataContext.addClassedModel(
-					folderElement, path, folder, _NAMESPACE);
-			}
-		}
-
-		List<BookmarksEntry> entries = BookmarksEntryUtil.findByG_F(
-			folder.getGroupId(), folder.getFolderId());
-
-		for (BookmarksEntry entry : entries) {
-			exportEntry(
-				portletDataContext, foldersElement, entriesElement, entry);
-		}
-	}
-
-	protected void exportParentFolder(
-			PortletDataContext portletDataContext, Element foldersElement,
-			long folderId)
-		throws Exception {
-
-		if (folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return;
-		}
-
-		BookmarksFolder folder = BookmarksFolderUtil.findByPrimaryKey(folderId);
-
-		exportParentFolder(
-			portletDataContext, foldersElement, folder.getParentFolderId());
-
-		String path = getFolderPath(portletDataContext, folder);
-
-		if (portletDataContext.isPathNotProcessed(path)) {
-			Element folderElement = foldersElement.addElement("folder");
-
-			portletDataContext.addClassedModel(
-				folderElement, path, folder, _NAMESPACE);
-		}
-	}
-
-	protected String getEntryPath(
-		PortletDataContext portletDataContext, BookmarksEntry entry) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(portletDataContext.getPortletPath(PortletKeys.BOOKMARKS));
-		sb.append("/entries/");
-		sb.append(entry.getEntryId());
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
-	protected String getFolderPath(
-		PortletDataContext portletDataContext, BookmarksFolder folder) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(portletDataContext.getPortletPath(PortletKeys.BOOKMARKS));
-		sb.append("/folders/");
-		sb.append(folder.getFolderId());
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
-	protected String getImportFolderPath(
-		PortletDataContext portletDataContext, long folderId) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(
-			portletDataContext.getSourcePortletPath(PortletKeys.BOOKMARKS));
-		sb.append("/folders/");
-		sb.append(folderId);
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
-	protected void importEntry(
-			PortletDataContext portletDataContext, Element entryElement,
-			BookmarksEntry entry)
-		throws Exception {
-
-		long userId = portletDataContext.getUserId(entry.getUserUuid());
-
-		Map<Long, Long> folderIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				BookmarksFolder.class);
-
-		long folderId = MapUtil.getLong(
-			folderIds, entry.getFolderId(), entry.getFolderId());
-
-		if ((folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			(folderId == entry.getFolderId())) {
-
-			String path = getImportFolderPath(portletDataContext, folderId);
-
-			BookmarksFolder folder =
-				(BookmarksFolder)portletDataContext.getZipEntryAsObject(path);
-
-			importFolder(portletDataContext, path, folder);
-
-			folderId = MapUtil.getLong(
-				folderIds, entry.getFolderId(), entry.getFolderId());
-		}
-
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			entryElement, entry, _NAMESPACE);
-
-		BookmarksEntry importedEntry = null;
-
-		if (portletDataContext.isDataStrategyMirror()) {
-			BookmarksEntry existingEntry = BookmarksEntryUtil.fetchByUUID_G(
-				entry.getUuid(), portletDataContext.getScopeGroupId());
-
-			if (existingEntry == null) {
-				serviceContext.setUuid(entry.getUuid());
-
-				importedEntry = BookmarksEntryLocalServiceUtil.addEntry(
-					userId, portletDataContext.getScopeGroupId(), folderId,
-					entry.getName(), entry.getUrl(), entry.getDescription(),
-					serviceContext);
-			}
-			else {
-				importedEntry = BookmarksEntryLocalServiceUtil.updateEntry(
-					userId, existingEntry.getEntryId(),
-					portletDataContext.getScopeGroupId(), folderId,
-					entry.getName(), entry.getUrl(), entry.getDescription(),
-					serviceContext);
-			}
-		}
-		else {
-			importedEntry = BookmarksEntryLocalServiceUtil.addEntry(
-				userId, portletDataContext.getScopeGroupId(), folderId,
-				entry.getName(), entry.getUrl(), entry.getDescription(),
-				serviceContext);
-		}
-
-		portletDataContext.importClassedModel(entry, importedEntry, _NAMESPACE);
-	}
-
-	protected void importFolder(
-			PortletDataContext portletDataContext, String folderPath,
-			BookmarksFolder folder)
-		throws Exception {
-
-		long userId = portletDataContext.getUserId(folder.getUserUuid());
-
-		Map<Long, Long> folderIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				BookmarksFolder.class);
-
-		long parentFolderId = MapUtil.getLong(
-			folderIds, folder.getParentFolderId(), folder.getParentFolderId());
-
-		if ((parentFolderId !=
-				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			(parentFolderId == folder.getParentFolderId())) {
-
-			String path = getImportFolderPath(
-				portletDataContext, parentFolderId);
-
-			BookmarksFolder parentFolder =
-				(BookmarksFolder)portletDataContext.getZipEntryAsObject(path);
-
-			importFolder(portletDataContext, path, parentFolder);
-
-			parentFolderId = MapUtil.getLong(
-				folderIds, folder.getParentFolderId(),
-				folder.getParentFolderId());
-		}
-
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			folderPath, folder, _NAMESPACE);
-
-		BookmarksFolder importedFolder = null;
-
-		if (portletDataContext.isDataStrategyMirror()) {
-			BookmarksFolder existingFolder = BookmarksFolderUtil.fetchByUUID_G(
-				folder.getUuid(), portletDataContext.getScopeGroupId());
-
-			if (existingFolder == null) {
-				serviceContext.setUuid(folder.getUuid());
-
-				importedFolder = BookmarksFolderLocalServiceUtil.addFolder(
-					userId, parentFolderId, folder.getName(),
-					folder.getDescription(), serviceContext);
-			}
-			else {
-				importedFolder = BookmarksFolderLocalServiceUtil.updateFolder(
-					existingFolder.getFolderId(), parentFolderId,
-					folder.getName(), folder.getDescription(), false,
-					serviceContext);
-			}
-		}
-		else {
-			importedFolder = BookmarksFolderLocalServiceUtil.addFolder(
-				userId, parentFolderId, folder.getName(),
-				folder.getDescription(), serviceContext);
-		}
-
-		portletDataContext.importClassedModel(
-			folder, importedFolder, _NAMESPACE);
-	}
-
 	private static final boolean _ALWAYS_EXPORTABLE = true;
-
-	private static final String _NAMESPACE = "bookmarks";
 
 	private static final boolean _PUBLISH_TO_LIVE_BY_DEFAULT = true;
 
 	private static PortletDataHandlerBoolean _foldersAndEntries =
 		new PortletDataHandlerBoolean(
-			_NAMESPACE, "folders-and-entries", true, true);
+			NAMESPACE, "folders-and-entries", true, true);
 
 	private static PortletDataHandlerControl[] _metadataControls =
 		new PortletDataHandlerControl[] {
-			new PortletDataHandlerBoolean(_NAMESPACE, "categories"),
-			new PortletDataHandlerBoolean(_NAMESPACE, "ratings"),
-			new PortletDataHandlerBoolean(_NAMESPACE, "tags")
+			new PortletDataHandlerBoolean(NAMESPACE, "categories"),
+			new PortletDataHandlerBoolean(NAMESPACE, "ratings"),
+			new PortletDataHandlerBoolean(NAMESPACE, "tags")
 		};
 
 }

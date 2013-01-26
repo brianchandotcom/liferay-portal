@@ -86,7 +86,7 @@ public class EditSubscriptionAction extends PortletAction {
 		AssetPublisherUtil.subscribe(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 			portletPreferences.getPortletPreferencesId(),
-			liferayPortletConfig.getPortletId(),
+			themeDisplay.getPlid(), liferayPortletConfig.getPortletId(),
 			themeDisplay.getPermissionChecker());
 	}
 
@@ -107,7 +107,7 @@ public class EditSubscriptionAction extends PortletAction {
 		AssetPublisherUtil.unsubscribe(
 			themeDisplay.getUserId(),
 			portletPreferences.getPortletPreferencesId(),
-			liferayPortletConfig.getPortletId(),
+			themeDisplay.getPlid(), liferayPortletConfig.getPortletId(),
 			themeDisplay.getPermissionChecker());
 	}
 

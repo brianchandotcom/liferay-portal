@@ -92,7 +92,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 					addScope(actionRequest, preferences);
 				}
 				else if (cmd.equals("add-selection")) {
-					AssetPublisherUtil.addSelection(actionRequest, preferences);
+					AssetPublisherUtil.addSelection(actionRequest, preferences,
+					portletResource);
 				}
 				else if (cmd.equals("move-selection-down")) {
 					moveSelectionDown(actionRequest, preferences);

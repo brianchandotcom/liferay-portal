@@ -25,15 +25,27 @@ public class AddPortletTTTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Test Transaction Page");
-		selenium.clickAt("link=Test Transaction Page",
-			RuntimeVariables.replace("Test Transaction Page"));
+		selenium.clickAt("link=Test Transaction Test Page",
+			RuntimeVariables.replace("Test Transaction Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+		selenium.waitForVisible("//a[@id='_145_addApplication']");
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//li[@title='Test Transaction']/p/a");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
+		selenium.waitForVisible("//input[@id='layout_configuration_content']");
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("t"));
+		selenium.waitForVisible("//li[@title='Test Transaction']/p/a");
 		selenium.clickAt("//li[@title='Test Transaction']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");

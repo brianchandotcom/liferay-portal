@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.testtransaction.transaction.viewtransaction;
 
+import com.liferay.portalweb.plugins.testtransaction.portlet.addportlet.AddPageTTTest;
+import com.liferay.portalweb.plugins.testtransaction.portlet.addportlet.AddPortletTTTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

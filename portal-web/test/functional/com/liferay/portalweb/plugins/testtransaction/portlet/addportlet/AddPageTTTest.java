@@ -25,19 +25,25 @@ public class AddPageTTTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("//nav[@id='navigation']",
-			RuntimeVariables.replace("Navigation"));
-		selenium.waitForElementPresent("//a[@id='addPage']");
-		selenium.clickAt("//a[@id='addPage']",
-			RuntimeVariables.replace("Add Page"));
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+		selenium.waitForVisible("//a[@id='addPage']");
+		assertEquals(RuntimeVariables.replace("Page"),
+			selenium.getText("//a[@id='addPage']"));
+		selenium.clickAt("//a[@id='addPage']", RuntimeVariables.replace("Page"));
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Test Transaction Page"));
+			RuntimeVariables.replace("Test Transaction Test Page"));
 		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("link=Test Transaction Page");
-		selenium.clickAt("link=Test Transaction Page",
-			RuntimeVariables.replace("Test Transaction Page"));
+		selenium.waitForVisible("link=Test Transaction Test Page");
+		selenium.clickAt("link=Test Transaction Test Page",
+			RuntimeVariables.replace("Test Transaction Test Page"));
 		selenium.waitForPageToLoad("30000");
 	}
 }

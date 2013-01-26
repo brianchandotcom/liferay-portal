@@ -27,6 +27,8 @@ import com.thoughtworks.selenium.Selenium;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -952,29 +954,35 @@ public class WebDriverToSeleniumBridge
 
 			optionWebElement = options.get(optionIndex);
 		}
-		else if (optionLocator.startsWith("regexp:")) {
-			String label = optionLocator.substring(10);
-
-			for (WebElement option : options) {
-				String optionText = option.getText();
-
-				if (optionText.contains(label)) {
-					optionWebElement = option;
-
-					break;
-				}
-			}
-		}
 		else if (optionLocator.startsWith("value=")) {
 			String value = optionLocator.substring(6);
 
-			for (WebElement option : options) {
-				String optionValue = option.getAttribute("value");
+			if (value.startsWith("regexp:")) {
+				String regexp = value.substring(7);
 
-				if (optionValue.equals(value)) {
-					optionWebElement = option;
+				Pattern pattern = Pattern.compile(regexp);
 
-					break;
+				for (WebElement option : options) {
+					String optionValue = option.getAttribute("value");
+
+					Matcher matcher = pattern.matcher(optionValue);
+
+					if (matcher.matches()) {
+						optionWebElement = option;
+
+						break;
+					}
+				}
+			}
+			else {
+				for (WebElement option : options) {
+					String optionValue = option.getAttribute("value");
+
+					if (optionValue.equals(value)) {
+						optionWebElement = option;
+
+						break;
+					}
 				}
 			}
 		}

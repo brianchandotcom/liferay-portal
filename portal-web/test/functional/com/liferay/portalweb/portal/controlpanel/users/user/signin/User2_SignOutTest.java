@@ -25,7 +25,6 @@ public class User2_SignOutTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Sign Out");
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//input[@value='Sign In']");

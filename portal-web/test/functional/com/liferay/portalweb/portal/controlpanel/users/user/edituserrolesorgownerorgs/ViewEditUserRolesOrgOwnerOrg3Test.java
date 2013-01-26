@@ -58,7 +58,7 @@ public class ViewEditUserRolesOrgOwnerOrg3Test extends BaseTestCase {
 				}
 
 				selenium.clickAt("//a[.='\u00ab Basic']",
-					RuntimeVariables.replace("\u00ab Basic"));
+					RuntimeVariables.replace("Basic"));
 				selenium.waitForVisible("//input[@name='_125_keywords']");
 
 			case 2:

@@ -16,8 +16,8 @@ package com.liferay.portalweb.portal.controlpanel.users.useradditionalemailaddre
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.useradditionalemailaddress.adduseradditionalemailaddress.AddUserAdditionalEmailAddressTests;
+import com.liferay.portalweb.portal.controlpanel.users.useradditionalemailaddress.adduseradditionalemailaddresses.AddUserAdditionalEmailAddressesTests;
 import com.liferay.portalweb.portal.controlpanel.users.useradditionalemailaddress.adduseradditionalemailaddressinvalid.AddUserAdditionalEmailAddressInvalidTests;
-import com.liferay.portalweb.portal.controlpanel.users.useradditionalemailaddress.adduseradditionalemailaddressmultiple.AddUserAdditionalEmailAddressMultipleTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,8 +31,8 @@ public class UserAdditionalEmailAddressTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddUserAdditionalEmailAddressTests.suite());
+		testSuite.addTest(AddUserAdditionalEmailAddressesTests.suite());
 		testSuite.addTest(AddUserAdditionalEmailAddressInvalidTests.suite());
-		testSuite.addTest(AddUserAdditionalEmailAddressMultipleTests.suite());
 
 		return testSuite;
 	}

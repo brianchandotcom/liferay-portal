@@ -16,7 +16,7 @@ package com.liferay.portalweb.portal.controlpanel.users.userwebsite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.userwebsite.adduserwebsite.AddUserWebsiteTests;
-import com.liferay.portalweb.portal.controlpanel.users.userwebsite.adduserwebsitemultiple.AddUserWebsiteMultipleTests;
+import com.liferay.portalweb.portal.controlpanel.users.userwebsite.adduserwebsites.AddUserWebsitesTests;
 import com.liferay.portalweb.portal.controlpanel.users.userwebsite.adduserwebsiteurlinvalid.AddUserWebsiteUrlInvalidTests;
 
 import junit.framework.Test;
@@ -31,7 +31,7 @@ public class UserWebsiteTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddUserWebsiteTests.suite());
-		testSuite.addTest(AddUserWebsiteMultipleTests.suite());
+		testSuite.addTest(AddUserWebsitesTests.suite());
 		testSuite.addTest(AddUserWebsiteUrlInvalidTests.suite());
 
 		return testSuite;

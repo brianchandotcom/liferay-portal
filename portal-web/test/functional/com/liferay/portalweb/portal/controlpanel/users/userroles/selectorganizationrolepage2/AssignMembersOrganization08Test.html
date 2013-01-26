@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -30,8 +50,8 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=View All</td>
-	<td>View All</td>
+	<td>link=View Organizations</td>
+	<td>View Organizations</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -45,8 +65,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[2]/strong</td>
+	<td>//td[2]/a</td>
 	<td>Organization 08</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -55,17 +80,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
@@ -74,8 +99,8 @@
 	<td>Available</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>storeVisible</td>
+	<td>//a[.='« Basic']</td>
 	<td>basicVisible</td>
 </tr>
 <tr>
@@ -85,7 +110,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=« Basic</td>
+	<td>//a[.='« Basic']</td>
 	<td>Basic</td>
 </tr>
 <tr>
@@ -96,7 +121,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_125_keywords']</td>
-	<td>test01@liferay.com</td>
+	<td>userea@liferay.com</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -106,7 +131,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//tr[3]/td[2]</td>
-	<td>Test</td>
+	<td>userfn userln</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -123,7 +148,6 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

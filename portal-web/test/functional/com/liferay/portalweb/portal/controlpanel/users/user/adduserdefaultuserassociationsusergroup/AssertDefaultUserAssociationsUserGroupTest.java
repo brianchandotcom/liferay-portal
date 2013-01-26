@@ -26,7 +26,14 @@ public class AssertDefaultUserAssociationsUserGroupTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -46,20 +53,20 @@ public class AssertDefaultUserAssociationsUserGroupTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_127_keywords']",
-			RuntimeVariables.replace("selen01"));
+			RuntimeVariables.replace("usersn"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
+		assertEquals(RuntimeVariables.replace("userfn userln"),
 			selenium.getText("//tr[3]/td[2]"));
-		assertEquals(RuntimeVariables.replace("selenium01"),
+		assertEquals(RuntimeVariables.replace("usersn"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertTrue(selenium.isChecked("//input[@name='_127_rowIds']"));
 		selenium.click(RuntimeVariables.replace("link=Current"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
+		assertEquals(RuntimeVariables.replace("userfn userln"),
 			selenium.getText("//tr[3]/td[2]"));
-		assertEquals(RuntimeVariables.replace("selenium01"),
+		assertEquals(RuntimeVariables.replace("usersn"),
 			selenium.getText("//tr[3]/td[3]"));
 	}
 }

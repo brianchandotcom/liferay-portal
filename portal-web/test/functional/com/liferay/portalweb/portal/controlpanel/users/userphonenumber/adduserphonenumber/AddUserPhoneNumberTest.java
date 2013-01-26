@@ -59,6 +59,8 @@ public class AddUserPhoneNumberTest extends BaseTestCase {
 			RuntimeVariables.replace("123"));
 		selenium.select("//select[@id='_125_phoneTypeId0']",
 			RuntimeVariables.replace("label=Business"));
+		selenium.clickAt("//input[@id='_125_phonePrimary0']",
+			RuntimeVariables.replace("Primary Button"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

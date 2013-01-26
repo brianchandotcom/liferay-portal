@@ -30,21 +30,26 @@ public class AdvancedSearchUserMiddleNameTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Control Panel");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Search All Users"),
-					selenium.getText("//a[@id='_125_allUsersLink']"));
-				selenium.clickAt("//a[@id='_125_allUsersLink']",
+				selenium.clickAt("link=Search All Users",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean advanced1Present = selenium.isVisible(
-						"link=Advanced \u00bb");
+						"//a[.='Advanced \u00bb']");
 
 				if (!advanced1Present) {
 					label = 2;
@@ -52,46 +57,45 @@ public class AdvancedSearchUserMiddleNameTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=Advanced \u00bb",
+				selenium.clickAt("//a[.='Advanced \u00bb']",
 					RuntimeVariables.replace("Advanced \u00bb"));
 
 			case 2:
 				selenium.type("//input[@id='_125_middleName']",
-					RuntimeVariables.replace("lenn"));
+					RuntimeVariables.replace("usermn"));
 				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.isTextPresent("selenium01"));
+				assertTrue(selenium.isTextPresent("usersn"));
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Search All Users"),
-					selenium.getText("//a[@id='_125_allUsersLink']"));
-				selenium.clickAt("//a[@id='_125_allUsersLink']",
+				selenium.clickAt("link=Search All Users",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForElementPresent("//a[.='Advanced \u00bb']");
 
-				boolean advanced2Present = selenium.isVisible(
-						"link=Advanced \u00bb");
+				boolean advanced2Visible = selenium.isVisible(
+						"//a[.='Advanced \u00bb']");
 
-				if (!advanced2Present) {
+				if (!advanced2Visible) {
 					label = 3;
 
 					continue;
 				}
 
-				selenium.clickAt("link=Advanced \u00bb",
+				selenium.clickAt("//a[.='Advanced \u00bb']",
 					RuntimeVariables.replace("Advanced \u00bb"));
 
 			case 3:
 				selenium.type("//input[@id='_125_middleName']",
-					RuntimeVariables.replace("lenn1"));
+					RuntimeVariables.replace("usermn1"));
 				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				assertFalse(selenium.isTextPresent("selenium01"));
-				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace("\u00ab Basic"));
+				assertFalse(selenium.isTextPresent("usersn"));
+				selenium.clickAt("//a[.='\u00ab Basic']",
+					RuntimeVariables.replace("Basic"));
 
 			case 100:
 				label = -1;

@@ -54,8 +54,8 @@ public class AddUserPhoneNumber2Test extends BaseTestCase {
 		selenium.clickAt("//a[@id='_125_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
 		selenium.waitForVisible(
-			"//button[contains(@class,'add-row aui-button')]/span");
-		selenium.clickAt("//button[contains(@class,'add-row aui-button')]/span",
+			"//div[10]/fieldset/div[2]/div/span/span/button[1]");
+		selenium.clickAt("//div[10]/fieldset/div[2]/div/span/span/button[1]",
 			RuntimeVariables.replace("Add Row"));
 		selenium.type("//input[@id='_125_phoneNumber2']",
 			RuntimeVariables.replace("123-123-1234"));

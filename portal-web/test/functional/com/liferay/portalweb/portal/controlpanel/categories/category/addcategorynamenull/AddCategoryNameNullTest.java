@@ -53,7 +53,7 @@ public class AddCategoryNameNullTest extends BaseTestCase {
 		selenium.waitForVisible(
 			"//div[@class='lfr-message-response portlet-msg-error']");
 		assertEquals(RuntimeVariables.replace(
-				"One of your fields contains invalid characters."),
+				"Please enter a valid category name."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-error']"));
 	}

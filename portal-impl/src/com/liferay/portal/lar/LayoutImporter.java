@@ -99,6 +99,7 @@ import com.liferay.portal.theme.ThemeLoaderFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandlerImpl;
 import com.liferay.portlet.journal.lar.JournalPortletDataHandlerImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
@@ -922,14 +923,14 @@ public class LayoutImporter {
 		Element structureElement = layoutElement.element("structure");
 
 		if (structureElement != null) {
-			JournalPortletDataHandlerImpl.importStructure(
+			DDMPortletDataHandlerImpl.importStructure(
 				portletDataContext, structureElement);
 		}
 
 		Element templateElement = layoutElement.element("template");
 
 		if (templateElement != null) {
-			JournalPortletDataHandlerImpl.importTemplate(
+			DDMPortletDataHandlerImpl.importTemplate(
 				portletDataContext, templateElement);
 		}
 

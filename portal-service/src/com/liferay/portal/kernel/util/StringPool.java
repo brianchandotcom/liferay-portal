@@ -182,6 +182,8 @@ public class StringPool {
 
 	public static final String TILDE = "~";
 
+	public static final String TRIPLE_PERIOD = "...";
+
 	public static final String TRUE = "true";
 
 	public static final String UNDERLINE = "_";

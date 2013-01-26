@@ -14,12 +14,36 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.util.InitUtil;
+
+import jargs.gnu.CmdLineParser;
+
 /**
  * @author Michael Hashimoto
  */
 public class SeleniumBuilder {
 
 	public static void main(String[] args) throws Exception {
+		InitUtil.initWithSpring();
+
+		new SeleniumBuilder(args);
+	}
+
+	public SeleniumBuilder(String[] args) throws Exception {
+		CmdLineParser cmdLineParser = new CmdLineParser();
+
+		CmdLineParser.Option basedirOption = cmdLineParser.addStringOption(
+			"basedir");
+		CmdLineParser.Option seleniumTypesOption =
+			cmdLineParser.addStringOption("seleniumTypes");
+
+		cmdLineParser.parse(args);
+
+		String basedir = (String)cmdLineParser.getOptionValue(basedirOption);
+		String seleniumTypes = (String)cmdLineParser.getOptionValue(
+			seleniumTypesOption);
+
+		SeleniumBuilderContext context = new SeleniumBuilderContext(basedir);
 	}
 
 }

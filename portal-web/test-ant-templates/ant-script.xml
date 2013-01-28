@@ -335,11 +335,11 @@
 
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
 
-		<ant antfile="build-test-db-upgrade.xml" target="prepare-db-mysql-common">
+		<antcall target="prepare-versioned-mysql">
 			${test.ant.script.file.properties}
-			<property name="skip.prepare-bundle" value="true" />
-			<property name="sql.version" value="6.1.20" />
-		</ant>
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="sql.version" value="6.1.20" />
+		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-versioned-tomcat">
 			${test.ant.script.file.database.collate}

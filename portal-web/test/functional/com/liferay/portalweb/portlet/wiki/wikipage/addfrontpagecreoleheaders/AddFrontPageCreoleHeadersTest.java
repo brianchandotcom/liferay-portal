@@ -35,40 +35,46 @@ public class AddFrontPageCreoleHeadersTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent(
-			"//textarea[@id='_36_editor' and @style='display: none;']");
+		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__36_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
+		selenium.waitForVisible(
+			"//a[@class='cke_button cke_button__source cke_button_on']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
+		selenium.type("//div[@id='cke_1_contents']/textarea",
 			RuntimeVariables.replace(
 				"== Wiki FrontPage Content ==\n=== Wiki FrontPage Content ===\n==== Wiki FrontPage Content ===="));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_36_editor' and @style='display: none;']");
-		assertTrue(selenium.isVisible(
-				"//td[@id='cke_contents__36_editor']/iframe"));
-		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
-		selenium.waitForText("//body",
-			"Wiki FrontPage ContentWiki FrontPage ContentWiki FrontPage Content");
+		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
+		assertTrue(selenium.isPartialText(
+				"//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/h2",
+				"Wiki FrontPage Content"));
+		assertTrue(selenium.isPartialText(
+				"//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/h3",
+				"Wiki FrontPage Content"));
+		assertTrue(selenium.isPartialText(
+				"//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/h4",
+				"Wiki FrontPage Content"));
 		selenium.selectFrame("relative=top");
-		selenium.clickAt("//input[@value='Publish']",
+		selenium.clickAt("//input[@id='_36_publishButton']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content #"),
-			selenium.getText("//div[@class='wiki-body']/h2"));
+			selenium.getText("xPath=(//div[@class='wiki-body'])/h2"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content #"),
-			selenium.getText("//div[@class='wiki-body']/h3"));
+			selenium.getText("xPath=(//div[@class='wiki-body'])/h3"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content #"),
-			selenium.getText("//div[@class='wiki-body']/h4"));
+			selenium.getText("xPath=(//div[@class='wiki-body'])/h4"));
 	}
 }

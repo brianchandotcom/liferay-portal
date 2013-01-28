@@ -32,25 +32,27 @@ public class RenameWikiPageTitleTest extends BaseTestCase {
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
-			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[4]/td[1]/a",
+			selenium.getText("//tr[4]/td[contains(.,'Wiki Page Title')]/a"));
+		selenium.clickAt("//tr[4]/td[contains(.,'Wiki Page Title')]/a",
 			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Wiki Page Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertFalse(selenium.isTextPresent("(Redirected from Wiki Page Test)"));
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText("//div[3]/span[contains(.,'Details')]/a/span"));
+		selenium.clickAt("//div[3]/span[contains(.,'Details')]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Move"),
-			selenium.getText("//tr[9]/td/ul/li[3]/a/span"));
-		selenium.clickAt("//tr[9]/td/ul/li[3]/a/span",
+			selenium.getText("//tr[9]/td/ul/li[contains(.,'Move')]/a/span"));
+		selenium.clickAt("//tr[9]/td/ul/li[contains(.,'Move')]/a/span",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		selenium.type("//input[@id='_36_newTitle']",
@@ -61,6 +63,7 @@ public class RenameWikiPageTitleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Title2"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(

@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[4]/td[contains(.,'Wiki Page1 Title')]/a</td>
 	<td>Wiki Page1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[4]/td[contains(.,'Wiki Page1 Title')]/a</td>
 	<td>Wiki Page1 Title</td>
 </tr>
 <tr>
@@ -40,23 +40,23 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[1]/a/span</td>
+	<td>//div[3]/span[contains(.,'Edit')]/a/span</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[1]/a/span</td>
+	<td>//div[3]/span[contains(.,'Edit')]/a/span</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@id='_36_title']</td>
-	<td>Wiki Page1 Title</td>
+	<td>assertElementPresent</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
+	<td>Text Area</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -70,17 +70,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>//a[@class='cke_button cke_button__source cke_button_on']</td>
 	<td>Source Button On</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td>Wiki Page1 Content<br /><br />[[Wiki Page2 Title]]</td>
 </tr>
 <tr>
@@ -95,23 +95,28 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>Text Area</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//body</td>
-	<td>Wiki Page1 Content <br /> Wiki Page2 Title</td>
+	<td>assertPartialText</td>
+	<td>//body[@class='html-editor portlet portlet-wiki cke_show_borders']/p</td>
+	<td>Wiki Page1 Content</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//body[@class='html-editor portlet portlet-wiki cke_show_borders']/p[2]/a</td>
+	<td>Wiki Page2 Title</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -120,7 +125,7 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Publish']</td>
+	<td>//input[@id='_36_publishButton']</td>
 	<td>Publish</td>
 </tr>
 <tr>
@@ -150,12 +155,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[4]/td[contains(.,'Wiki Page1 Title')]/a</td>
 	<td>Wiki Page1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[4]/td[contains(.,'Wiki Page1 Title')]/a</td>
 	<td>Wiki Page1 Title</td>
 </tr>
 <tr>
@@ -172,6 +177,11 @@
 	<td>clickAtAndWait</td>
 	<td>//div[@class='wiki-body']/p/a</td>
 	<td>Wiki Page2 Title</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>

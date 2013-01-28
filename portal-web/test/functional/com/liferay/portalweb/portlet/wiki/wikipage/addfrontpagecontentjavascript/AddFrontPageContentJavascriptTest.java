@@ -41,15 +41,15 @@ public class AddFrontPageContentJavascriptTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^You may lose some formatting when switching from Creole to HTML. Do you want to continue[\\s\\S]$"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_36_editor' and @style='display: none;']");
+		selenium.waitForElementPresent("//textarea[@id='_36_content']");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[@id='cke_48_label']"));
 		selenium.clickAt("//span[@id='cke_48_label']",
 			RuntimeVariables.replace("Source"));
 		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__36_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
+		selenium.waitForVisible("//td[@id='cke_contents__36_content']/textarea");
+		selenium.type("//td[@id='cke_contents__36_content']/textarea",
 			RuntimeVariables.replace(
 				"<p id=\"demo\">FAIL</p><script type=\"text/javascript\">document.getElementById('demo').innerHTML=\"PASS\";</script>"));
 		selenium.clickAt("//input[@value='Publish']",

@@ -32,8 +32,8 @@ public class RevertEditFrontPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content Edit"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText("//div[3]/span[contains(.,'Details')]/a/span"));
+		selenium.clickAt("//div[3]/span[contains(.,'Details')]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=History", RuntimeVariables.replace("History"));
@@ -49,7 +49,7 @@ public class RevertEditFrontPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("1.3"),
 			selenium.getText("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Reverted to 1.1"),
-			selenium.getText("//tr[3]/td[7]"));
+			selenium.getText("//tr[3]/td[contains(.,'Reverted to 1.1')]"));
 		selenium.open("/web/guest/home/");
 		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",

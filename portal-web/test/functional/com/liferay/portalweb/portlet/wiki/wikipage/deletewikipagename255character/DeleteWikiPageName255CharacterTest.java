@@ -35,22 +35,22 @@ public class DeleteWikiPageName255CharacterTest extends BaseTestCase {
 				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//tr[4]/td[6]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//tr[4]/td[6]/span/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[4]/td[contains(.,'Actions')]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[4]/td[contains(.,'Actions')]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForElementPresent(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
-		assertEquals(RuntimeVariables.replace("Delete"),
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+				"The selected item was moved to the Recycle Bin. Undo"),
+			selenium.getText(
+				"//div[@class='portlet-msg-success taglib-trash-undo']/form"));
 		assertTrue(selenium.isElementNotPresent("//tr[4]/td[1]/a"));
 	}
 }

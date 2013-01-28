@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>Text Area</td>
 </tr>
 <tr>
@@ -64,8 +64,13 @@
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//h1[@class='header-title']</td>
+	<td>//h1[@class='header-title']/span</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>

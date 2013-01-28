@@ -31,10 +31,11 @@ public class DeleteFrontPageCommentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Comment Body"),
 			selenium.getText("//div/div[3]/div/div[1]"));
+		selenium.mouseOver("//div[@id='eonk_ratingThumbContent']/div");
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText("//li[contains(.,'Delete')]/span/a/span"));
-		selenium.click("//li[contains(.,'Delete')]/span/a/span");
-		selenium.waitForConfirmation("Are you sure you want to delete this?");
+		selenium.clickAt("//li[contains(.,'Delete')]/span/a/span",
+			RuntimeVariables.replace("Delete"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
@@ -42,5 +43,7 @@ public class DeleteFrontPageCommentTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
 		assertFalse(selenium.isTextPresent("Wiki Front Page Comment Body"));
+		assertTrue(selenium.getConfirmation()
+						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 	}
 }

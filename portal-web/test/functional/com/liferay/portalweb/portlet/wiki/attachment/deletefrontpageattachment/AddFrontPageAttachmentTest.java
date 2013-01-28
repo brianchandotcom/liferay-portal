@@ -35,16 +35,15 @@ public class AddFrontPageAttachmentTest extends BaseTestCase {
 			RuntimeVariables.replace("0 Attachments"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//div[@class='portlet-msg-info']",
-			"This page does not have any file attachments.");
+			"This page does not have file attachments.");
 		assertEquals(RuntimeVariables.replace(
-				"This page does not have any file attachments."),
+				"This page does not have file attachments."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//input[@value='Add Attachments']",
 			RuntimeVariables.replace("Add Attachments"));
 		selenium.waitForPageToLoad("30000");
 		selenium.selectWindow("null");
 		Thread.sleep(5000);
-		selenium.windowFocus();
 		selenium.waitForVisible("//a[@class='use-fallback using-new-uploader']");
 		selenium.click("//a[@class='use-fallback using-new-uploader']");
 		selenium.waitForVisible("//input[@id='_36_file1']");

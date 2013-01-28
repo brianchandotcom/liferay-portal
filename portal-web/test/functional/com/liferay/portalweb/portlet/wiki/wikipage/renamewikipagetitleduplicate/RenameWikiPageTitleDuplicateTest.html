@@ -39,6 +39,11 @@
 	<td>Wiki Page1 Title</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//h1[@class='header-title']/span</td>
 	<td>Wiki Page1 Title</td>
@@ -55,23 +60,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[3]/span[contains(.,'Details')]/a/span</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[3]/span[contains(.,'Details')]/a/span</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[9]/td/ul/li[3]/a/span</td>
+	<td>//tr[9]/td/ul/li[contains(.,'Move')]/a/span</td>
 	<td>Move</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[9]/td/ul/li[3]/a/span</td>
+	<td>//tr[9]/td/ul/li[contains(.,'Move')]/a/span</td>
 	<td>Move</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -92,6 +102,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>

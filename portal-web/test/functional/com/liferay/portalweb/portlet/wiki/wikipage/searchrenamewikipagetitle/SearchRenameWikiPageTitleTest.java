@@ -35,7 +35,8 @@ public class SearchRenameWikiPageTitleTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki2 Page2 Title2"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText(
+				"//td[contains(.,'Wiki2 Page2 Title2')]/span/a/span"));
 		assertFalse(selenium.isTextPresent("Wiki Page Title"));
 	}
 }

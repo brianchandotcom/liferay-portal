@@ -40,6 +40,7 @@ public class RevertChangeParentFrontPageChildPageToWikiPageTest
 		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -49,15 +50,16 @@ public class RevertChangeParentFrontPageChildPageToWikiPageTest
 				"Wiki Front Page Child Page Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText("//div[3]/span[contains(.,'Details')]/a/span"));
+		selenium.clickAt("//div[3]/span[contains(.,'Details')]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=History", RuntimeVariables.replace("History"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Changed parent from \"FrontPage.\""),
-			selenium.getText("//tr[3]/td[7]"));
+			selenium.getText(
+				"//tr[3]/td[contains(.,'Changed parent from \"FrontPage.\"')]"));
 		assertEquals(RuntimeVariables.replace("Revert"),
 			selenium.getText("//td[8]/span/a/span"));
 		selenium.clickAt("//td[8]/span/a/span",
@@ -67,7 +69,7 @@ public class RevertChangeParentFrontPageChildPageToWikiPageTest
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Reverted to 1.0"),
-			selenium.getText("//tr[3]/td[7]"));
+			selenium.getText("//tr[3]/td[contains(.,'Reverted to 1.0')]"));
 		selenium.open("/web/guest/home/");
 		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
@@ -84,6 +86,7 @@ public class RevertChangeParentFrontPageChildPageToWikiPageTest
 		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page Title"),
 			selenium.getText("//h1[@class='header-title']/span"));

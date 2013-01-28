@@ -43,6 +43,7 @@ public class ViewFrontPageChildPage1ChildPageTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Child Page Title"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Child Page Title"),
 			selenium.getText("//h1[@class='header-title']/span"));

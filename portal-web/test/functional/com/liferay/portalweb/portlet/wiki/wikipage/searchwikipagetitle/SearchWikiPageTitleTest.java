@@ -35,7 +35,7 @@ public class SearchWikiPageTitleTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//td[contains(.,'Wiki Page Title')]/span/a"));
 		selenium.type("//input[@id='_36_keywords']",
 			RuntimeVariables.replace("Wiki1 Page1 Title1"));
 		selenium.clickAt("//input[@value='Search']",

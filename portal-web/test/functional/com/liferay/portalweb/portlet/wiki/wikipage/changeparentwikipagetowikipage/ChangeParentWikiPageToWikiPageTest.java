@@ -36,18 +36,19 @@ public class ChangeParentWikiPageToWikiPageTest extends BaseTestCase {
 		selenium.clickAt("//tr[5]/td[1]/a",
 			RuntimeVariables.replace("Wiki Page2 Title"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Wiki Page2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Wiki Page2 Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText("//div[3]/span[contains(.,'Details')]/a/span"));
+		selenium.clickAt("//div[3]/span[contains(.,'Details')]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Move"),
-			selenium.getText("//tr[9]/td/ul/li[3]/a/span"));
-		selenium.clickAt("//tr[9]/td/ul/li[3]/a/span",
+			selenium.getText("//tr[9]/td/ul/li[contains(.,'Move')]/a/span"));
+		selenium.clickAt("//tr[9]/td/ul/li[contains(.,'Move')]/a/span",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Change Parent",
@@ -78,6 +79,7 @@ public class ChangeParentWikiPageToWikiPageTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
 			RuntimeVariables.replace("Wiki Page2 Title"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Wiki Page2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("\u00ab Back to Wiki Page1 Title"),

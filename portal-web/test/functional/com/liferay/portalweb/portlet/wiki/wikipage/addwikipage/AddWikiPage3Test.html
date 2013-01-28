@@ -40,8 +40,13 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>Text Area</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -55,17 +60,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>//a[@class='cke_button cke_button__source cke_button_on']</td>
 	<td>Source Button On</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td>Wiki Page3 Content</td>
 </tr>
 <tr>
@@ -80,17 +85,17 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>Text Area</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
@@ -105,7 +110,7 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Publish']</td>
+	<td>//input[@id='_36_publishButton']</td>
 	<td>Publish</td>
 </tr>
 <tr>
@@ -134,8 +139,13 @@
 	<td>Wiki Page3 Title</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//h1[@class='header-title']</td>
+	<td>//h1[@class='header-title']/span</td>
 	<td>Wiki Page3 Title</td>
 </tr>
 <tr>

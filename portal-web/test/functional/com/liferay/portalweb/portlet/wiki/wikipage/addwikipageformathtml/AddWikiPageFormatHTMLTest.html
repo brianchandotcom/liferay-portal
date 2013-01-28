@@ -45,8 +45,13 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
+	<td>//textarea[@id='_36_content']</td>
 	<td>Text Area</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -65,12 +70,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>//td[@id='cke_contents__36_content']/textarea</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>//td[@id='cke_contents__36_content']/textarea</td>
 	<td><a herf=http://www.liferay.com>Welcome to LIFERAY</a></td>
 </tr>
 <tr>
@@ -79,28 +84,23 @@
 	<td>Source</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
+	<td>assertElementPresent</td>
+	<td>//textarea[@id='_36_content']</td>
 	<td>Text Area</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>//td[@id='cke_contents__36_content']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__36_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//body</td>
+	<td>assertElementPresent</td>
+	<td>//body[@class='html-editor portlet portlet-wiki cke_show_borders']/p/a</td>
 	<td>Welcome to LIFERAY</td>
 </tr>
 <tr>
@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>xPath=(//tr[4]/td[1]/a)</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
@@ -145,27 +145,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1[@class='header-title']/span</td>
+	<td>xPath=(//h1[@class='header-title']/span)</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/p/a</td>
+	<td>xPath=(//div[@class='wiki-body']/p/a)</td>
 	<td>Welcome to LIFERAY</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[3]/span[contains(.,'Details')]/a/span</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[3]/span[contains(.,'Details')]/a/span</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[2]/td</td>
+	<td>xPath=(//tr[2]/td)</td>
 	<td>HTML</td>
 </tr>
 </tbody></table>

@@ -29,19 +29,18 @@ public class CopyFrontPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText("//div[3]/span[contains(.,'Details')]/a/span"));
+		selenium.clickAt("//div[3]/span[contains(.,'Details')]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Copy"),
-			selenium.getText("//tr[9]/td/ul/li[2]/a/span"));
-		selenium.clickAt("//tr[9]/td/ul/li[2]/a/span",
+			selenium.getText("//tr[9]/td/ul/li[contains(.,'Copy')]/a/span"));
+		selenium.clickAt("//tr[9]/td/ul/li[contains(.,'Copy')]/a/span",
 			RuntimeVariables.replace("Copy"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_36_title']",
 			RuntimeVariables.replace("FrontPage2"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_36_editor' and @style='display: none;']");
+		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
@@ -59,8 +58,9 @@ public class CopyFrontPageTest extends BaseTestCase {
 		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace("FrontPage2"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("FrontPage2"),
-			selenium.getText("//h1[@class='header-title']"));
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}

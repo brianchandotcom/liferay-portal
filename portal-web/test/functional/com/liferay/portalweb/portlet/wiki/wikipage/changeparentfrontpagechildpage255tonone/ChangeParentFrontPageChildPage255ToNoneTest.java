@@ -34,6 +34,7 @@ public class ChangeParentFrontPageChildPage255ToNoneTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace(
 				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -43,13 +44,13 @@ public class ChangeParentFrontPageChildPage255ToNoneTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("\u00ab Back to FrontPage"),
 			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText("//div[3]/span[contains(.,'Details')]/a/span"));
+		selenium.clickAt("//div[3]/span[contains(.,'Details')]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Move"),
-			selenium.getText("//tr[9]/td/ul/li[3]/a/span"));
-		selenium.clickAt("//tr[9]/td/ul/li[3]/a/span",
+			selenium.getText("//tr[9]/td/ul/li[contains(.,'Move')]/a/span"));
+		selenium.clickAt("//tr[9]/td/ul/li[contains(.,'Move')]/a/span",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Change Parent",
@@ -84,6 +85,7 @@ public class ChangeParentFrontPageChildPage255ToNoneTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace(
 				"lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll"),
 			selenium.getText("//h1[@class='header-title']/span"));

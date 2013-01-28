@@ -31,29 +31,31 @@ public class DeleteWikiPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
-			selenium.getText("//tr[5]/td[1]/a"));
-		selenium.clickAt("//tr[5]/td[1]/a",
+			selenium.getText("//tr[5]/td[contains(.,'Wiki Page Title')]/a"));
+		selenium.clickAt("//tr[5]/td[contains(.,'Wiki Page Title')]/a",
 			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
 			RuntimeVariables.replace("Wiki Page ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText("//div[3]/span[contains(.,'Details')]/a/span"));
+		selenium.clickAt("//div[3]/span[contains(.,'Details')]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//td/ul/li[4]/a/span"));
-		selenium.click(RuntimeVariables.replace("//td/ul/li[4]/a/span"));
+			selenium.getText("//td/ul/li[contains(.,'Delete')]/a/span"));
+		selenium.click(RuntimeVariables.replace(
+				"//td/ul/li[contains(.,'Delete')]/a/span"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertFalse(selenium.isTextPresent("Wiki Page Child Page Title"));
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
+		assertTrue(selenium.getConfirmation()
+						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+		selenium.clickAt("//ul[@class='top-links-navigation']/li[3]/span/a/span",
+			RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("Wiki Page Child Page Title"));
 	}

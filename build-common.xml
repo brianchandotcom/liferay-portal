@@ -39,11 +39,16 @@
 
 	<property name="liferay.home" value="${app.server.parent.dir}" />
 
+	<property name="module.framework.base.dir" value="${liferay.home}/data/osgi" />
+	<property name="module.framework.core.dir" value="${module.framework.base.dir}/core" />
+	<property name="module.framework.lib.dir" value="${module.framework.base.dir}/portal" />
+
 	<path id="lib.classpath">
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
 		<fileset dir="${project.dir}/osgi/lib/common/core" includes="*.jar" />
+		<fileset dir="${project.dir}/osgi/lib/common/portal" includes="org.phidias.compile.jar" />
 	</path>
 
 	<path id="project.classpath">
@@ -436,7 +441,15 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<target name="clean-module">
+		<ant dir="${project.dir}/osgi/modules/${module.name}" target="clean" inheritAll="false" />
+	</target>
+
 	<target name="compile">
+	</target>
+
+	<target name="compile-module">
+		<ant dir="${project.dir}/osgi/modules/${module.name}" target="compile" inheritAll="false" />
 	</target>
 
 	<target name="compile-test">
@@ -504,6 +517,10 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</ant>
 	</target>
 
+	<target name="deploy-module">
+		<ant dir="${project.dir}/osgi/modules/${module.name}" target="deploy" inheritAll="false" />
+	</target>
+
 	<target name="format-javadoc">
 		<echo message="Run &quot;ant compile compile-test&quot; before using format-javadoc to generate @Override tags." />
 
@@ -544,6 +561,27 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				</cobertura-instrument>
 			</then>
 		</if>
+	</target>
+
+	<target name="jar-module">
+		<ant dir="${project.dir}/osgi/modules/${module.name}" target="jar" inheritAll="false" />
+	</target>
+
+	<target name="loop-modules">
+		<for param="module.name">
+			<path>
+				<dirset dir="${project.dir}/osgi/modules" includes="*" />
+			</path>
+			<sequential>
+				<antelope:stringutil string="@{module.name}" property="module.name.unix">
+					<antelope:replace regex="\\" replacement="/" />
+				</antelope:stringutil>
+
+				<antelope:grep in="${module.name.unix}" regex="(.*/)(.*)" group="2" property="module.name" />
+
+				<antcall target="${loop.modules.cmd}" />
+			</sequential>
+		</for>
 	</target>
 
 	<target name="print-current-time">

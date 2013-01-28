@@ -1,4 +1,3 @@
-Bundle-SymbolicName: util-java
 Export-Package: \
 	com.liferay.util.*,\
 	org.slf4j.impl.*

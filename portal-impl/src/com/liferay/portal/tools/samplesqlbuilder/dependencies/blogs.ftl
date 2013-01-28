@@ -10,7 +10,7 @@
 		<#assign mbCategoryId = 0>
 		<#assign mbThreadId = counter.get()>
 
-		<#assign mbRootMessage = dataFactory.addMBMessage(counter.get(), mbGroupId, mbUserId, dataFactory.blogsEntryClassName.classNameId, blogsEntry.entryId, mbCategoryId, mbThreadId, 0, 0, stringUtil.valueOf(blogsEntry.entryId), stringUtil.valueOf(blogsEntry.entryId))>
+		<#assign mbRootMessage = dataFactory.addMBMessage(counter.get(), mbGroupId, mbUserId, dataFactory.blogsEntryClassNameId, blogsEntry.entryId, mbCategoryId, mbThreadId, 0, 0, stringUtil.valueOf(blogsEntry.entryId), stringUtil.valueOf(blogsEntry.entryId))>
 
 		${sampleSQLBuilder.insertMBMessage(mbRootMessage)}
 
@@ -20,13 +20,13 @@
 
 		<#if (maxBlogsEntryCommentCount > 0)>
 			<#list 1..maxBlogsEntryCommentCount as blogsEntryCommentCount>
-				<#assign mbMessage = dataFactory.addMBMessage(counter.get(), mbGroupId, mbUserId, dataFactory.blogsEntryClassName.classNameId, blogsEntry.entryId, mbCategoryId, mbThreadId, mbRootMessage.messageId, mbRootMessage.messageId, "N/A", "This is a test comment " + blogsEntryCommentCount + ".")>
+				<#assign mbMessage = dataFactory.addMBMessage(counter.get(), mbGroupId, mbUserId, dataFactory.blogsEntryClassNameId, blogsEntry.entryId, mbCategoryId, mbThreadId, mbRootMessage.messageId, mbRootMessage.messageId, "N/A", "This is a test comment " + blogsEntryCommentCount + ".")>
 
 				${sampleSQLBuilder.insertMBMessage(mbMessage)}
 			</#list>
 		</#if>
 
-		<#assign mbDiscussion = dataFactory.addMBDiscussion(dataFactory.blogsEntryClassName.classNameId, blogsEntry.entryId, mbThreadId)>
+		<#assign mbDiscussion = dataFactory.addMBDiscussion(dataFactory.blogsEntryClassNameId, blogsEntry.entryId, mbThreadId)>
 
 		insert into MBDiscussion values (${mbDiscussion.discussionId}, ${mbDiscussion.classNameId}, ${mbDiscussion.classPK}, ${mbDiscussion.threadId});
 

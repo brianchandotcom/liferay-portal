@@ -14,17 +14,17 @@ insert into JournalArticle values ('${portalUUIDUtil.generate()}', ${journalArti
 
 ${sampleSQLBuilder.insertResourcePermission("com.liferay.portlet.journal.model.JournalArticle", stringUtil.valueOf(journalArticleResource.resourcePrimKey))}
 
-<#assign assetEntry = dataFactory.addAssetEntry(groupId, defaultUserId, dataFactory.journalArticleClassName.classNameId, journalArticleResource.resourcePrimKey, true, "text/html", journalArticleTitle)>
+<#assign assetEntry = dataFactory.addAssetEntry(groupId, defaultUserId, dataFactory.journalArticleClassNameId, journalArticleResource.resourcePrimKey, true, "text/html", journalArticleTitle)>
 
 insert into AssetEntry (entryId, groupId, companyId, userId, createDate, modifiedDate, classNameId, classPK, visible, mimeType, title) values (${counter.get()}, ${assetEntry.groupId}, ${companyId}, ${assetEntry.userId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ${assetEntry.classNameId}, ${assetEntry.classPK}, <#if assetEntry.visible>TRUE<#else>FALSE</#if>, '${assetEntry.mimeType}', '${assetEntry.title}');
 
-<#assign mbDiscussion = dataFactory.addMBDiscussion(dataFactory.journalArticleClassName.classNameId, journalArticleResource.resourcePrimKey, counter.get())>
+<#assign mbDiscussion = dataFactory.addMBDiscussion(dataFactory.journalArticleClassNameId, journalArticleResource.resourcePrimKey, counter.get())>
 
 insert into MBDiscussion values (${mbDiscussion.discussionId}, ${mbDiscussion.classNameId}, ${mbDiscussion.classPK}, ${mbDiscussion.threadId});
 
 <#assign mbMessageId = counter.get()>
 
-<#assign mbMessage = dataFactory.addMBMessage(mbMessageId, groupId, defaultUserId, dataFactory.journalArticleClassName.classNameId, journalArticleResource.resourcePrimKey, -1, counter.get(), mbMessageId, 0, stringUtil.valueOf(journalArticleResource.resourcePrimKey), stringUtil.valueOf(journalArticleResource.resourcePrimKey))>
+<#assign mbMessage = dataFactory.addMBMessage(mbMessageId, groupId, defaultUserId, dataFactory.journalArticleClassNameId, journalArticleResource.resourcePrimKey, -1, counter.get(), mbMessageId, 0, stringUtil.valueOf(journalArticleResource.resourcePrimKey), stringUtil.valueOf(journalArticleResource.resourcePrimKey))>
 
 ${sampleSQLBuilder.insertMBMessage(mbMessage)}
 

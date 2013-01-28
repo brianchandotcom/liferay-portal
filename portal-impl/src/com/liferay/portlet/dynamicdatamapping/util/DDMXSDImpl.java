@@ -66,6 +66,7 @@ import java.io.Writer;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -135,8 +136,8 @@ public class DDMXSDImpl implements DDMXSD {
 			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
 			if ((fieldsDisplayField != null) && fields.contains(name)) {
-				String[] fieldsDisplayValues = StringUtil.split(
-					(String)fieldsDisplayField.getValue());
+				String[] fieldsDisplayValues = getFieldsDisplayValues(
+					fieldsDisplayField);
 
 				Map<String, Object> parentFieldStructure =
 					(Map<String, Object>)freeMarkerContext.get(
@@ -471,12 +472,10 @@ public class DDMXSDImpl implements DDMXSD {
 
 		int total = 0;
 
-		String fieldName = StringUtil.extractFirst(
-			fieldsDisplayValues[offset], DDMImpl.INSTANCE_SEPARATOR);
+		String fieldName = fieldsDisplayValues[offset];
 
 		for (; offset < fieldsDisplayValues.length; offset++) {
-			String fieldNameValue = StringUtil.extractFirst(
-				fieldsDisplayValues[offset], DDMImpl.INSTANCE_SEPARATOR);
+			String fieldNameValue = fieldsDisplayValues[offset];
 
 			if (fieldNameValue.equals(fieldName)) {
 				total++;
@@ -579,6 +578,29 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 
 		return ddmFieldsCounter;
+	}
+
+	protected String[] getFieldsDisplayValues(Field fieldsDisplayField)
+		throws Exception {
+
+		DDMStructure ddmStructure = fieldsDisplayField.getDDMStructure();
+
+		List<String> fieldsDisplayValues = new ArrayList<String>();
+
+		String[] values = StringUtil.split(
+			(String)fieldsDisplayField.getValue());
+
+		for (String value : values) {
+			String fieldName = StringUtil.extractFirst(
+				value, DDMImpl.INSTANCE_SEPARATOR);
+
+			if (ddmStructure.hasField(fieldName)) {
+				fieldsDisplayValues.add(fieldName);
+			}
+		}
+
+		return fieldsDisplayValues.toArray(
+			new String[fieldsDisplayValues.size()]);
 	}
 
 	protected Map<String, Object> getFreeMarkerContext(

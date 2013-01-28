@@ -78,12 +78,13 @@ portletURL.setParameter("target", target);
 
 			groupParams.put("site", Boolean.TRUE);
 
-			int end = searchContainer.getEnd() - additionalSites;
 			int start = searchContainer.getStart();
 
 			if (searchContainer.getStart() > additionalSites) {
 				start = searchContainer.getStart() - additionalSites;
 			}
+
+			int end = searchContainer.getEnd() - additionalSites;
 
 			List<Group> sites = null;
 

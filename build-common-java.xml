@@ -112,7 +112,7 @@
 							exceptions="true"
 							failok="false"
 							inherit="true"
-							output="."
+							output="${jar.file}.jar"
 							sourcepath="."
 						>
 							<bndfiles path="bnd.bnd" />

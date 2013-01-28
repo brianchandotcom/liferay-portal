@@ -608,7 +608,7 @@ public class LayoutImporter {
 
 				Layout sourcePrototypeLayout = LayoutUtil.fetchByUUID_G_P(
 					sourcePrototypeLayoutUuid,
-					layoutSetPrototypeGroup.getGroupId(), privateLayout);
+					layoutSetPrototypeGroup.getGroupId(), true);
 
 				if (sourcePrototypeLayout == null) {
 					LayoutLocalServiceUtil.deleteLayout(

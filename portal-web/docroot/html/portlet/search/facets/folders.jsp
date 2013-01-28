@@ -69,7 +69,7 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 						{
 							clearFields: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName()) %>',
 							fieldValues: '<%= curFolderId %>',
-							text: '<%= UnicodeFormatter.toString(title.getValue()) %>'
+							text: '<%= UnicodeFormatter.toString(HtmlUtil.escape(title.getValue())) %>'
 						}
 					);
 				</aui:script>

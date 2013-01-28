@@ -999,23 +999,21 @@ public class LayoutLocalServiceUtil {
 	}
 
 	public static boolean hasLayoutSetPrototypeLayout(
-		long layoutSetPrototypeId, java.lang.String layoutUuid,
-		boolean privateLayout)
+		long layoutSetPrototypeId, java.lang.String layoutUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .hasLayoutSetPrototypeLayout(layoutSetPrototypeId,
-			layoutUuid, privateLayout);
+				   .hasLayoutSetPrototypeLayout(layoutSetPrototypeId, layoutUuid);
 	}
 
 	public static boolean hasLayoutSetPrototypeLayout(
 		java.lang.String layoutSetPrototypeUuid, long companyId,
-		java.lang.String layoutUuid, boolean privateLayout)
+		java.lang.String layoutUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
-			companyId, layoutUuid, privateLayout);
+			companyId, layoutUuid);
 	}
 
 	/**

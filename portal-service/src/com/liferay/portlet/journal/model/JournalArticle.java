@@ -38,6 +38,9 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel {
 			}
 		};
 
+	public java.lang.String getArticleImage(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+
 	public com.liferay.portlet.journal.model.JournalArticleResource getArticleResource()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

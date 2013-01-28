@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
@@ -55,6 +57,21 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	public JournalArticleImpl() {
+	}
+
+	public String getArticleImage(ThemeDisplay themeDisplay) {
+		if (!isSmallImage()) {
+			return null;
+		}
+
+		if (Validator.isNotNull(getSmallImageURL())) {
+			return getSmallImageURL();
+		}
+
+		return
+			themeDisplay.getPathImage() + "/journal/article?img_id=" +
+				getSmallImageId() + "&t=" +
+					WebServerServletTokenUtil.getToken(getSmallImageId());
 	}
 
 	public JournalArticleResource getArticleResource()

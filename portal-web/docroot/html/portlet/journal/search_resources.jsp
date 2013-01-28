@@ -196,21 +196,49 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 					<c:when test="<%= PropsValues.JOURNAL_ARTICLES_SEARCH_WITH_INDEX %>">
 
 						<%
+						SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+						Indexer indexer = null;
+
+						if (searchTerms.isAdvancedSearch()) {
+							indexer = IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
+
+							searchContext.setAndSearch(searchTerms.isAndOperator());
+							searchContext.setAttribute(Field.CONTENT, searchTerms.getContent());
+							searchContext.setAttribute(Field.DESCRIPTION, searchTerms.getDescription());
+							searchContext.setAttribute(Field.STATUS, searchTerms.getStatusCode());
+							searchContext.setAttribute(Field.TITLE, searchTerms.getTitle());
+							searchContext.setAttribute(Field.TYPE, searchTerms.getType());
+							searchContext.setAttribute("articleId", searchTerms.getArticleId());
+						}
+						else {
+							indexer = JournalSearcher.getInstance();
+
+							if (Validator.isNotNull(keywords)) {
+								searchContext.setAttribute(Field.CONTENT, keywords);
+								searchContext.setAttribute(Field.DESCRIPTION, keywords);
+								searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
+								searchContext.setAttribute(Field.TITLE, keywords);
+								searchContext.setAttribute("articleId", keywords);
+								searchContext.setKeywords(keywords);
+							}
+							else {
+								searchContext.setAndSearch(true);
+							}
+
+							searchContext.setIncludeDiscussions(true);
+						}
+
 						LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
 						params.put("expandoAttributes", searchTerms.getKeywords());
-						params.put("includeDiscussions", searchTerms.getKeywords());
 
-						Sort sort = SortFactoryUtil.getSort(JournalArticle.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
+						searchContext.setAttribute("params", params);
+						searchContext.setEnd(searchContainer.getEnd());
+						searchContext.setFolderIds(searchTerms.getFolderIds());
+						searchContext.setStart(searchContainer.getStart());
 
-						Hits hits = null;
-
-						if (searchTerms.isAdvancedSearch()) {
-							hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getArticleId(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.getContent(), searchTerms.getType(), StringUtil.valueOf(searchTerms.getStatusCode()), searchTerms.getStructureId(), searchTerms.getTemplateId(), params, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
-						}
-						else {
-							hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getKeywords(), params, searchContainer.getStart(), searchContainer.getEnd(), sort);
-						}
+						Hits hits = indexer.search(searchContext);
 
 						total = hits.getLength();
 
@@ -223,9 +251,19 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 						for (int i = 0; i < searchResults.size(); i++) {
 							SearchResult searchResult = searchResults.get(i);
 
-							JournalArticleResource articleResource = JournalArticleResourceLocalServiceUtil.getArticleResource(searchResult.getClassPK());
+							JournalArticle article = null;
+							JournalFolder curFolder = null;
 
-							JournalArticle article = JournalArticleLocalServiceUtil.getArticle(articleResource.getGroupId(), articleResource.getArticleId());
+							String className = searchResult.getClassName();
+
+							if (className.equals(JournalArticle.class.getName())) {
+								JournalArticleResource articleResource = JournalArticleResourceLocalServiceUtil.getArticleResource(searchResult.getClassPK());
+
+								article = JournalArticleLocalServiceUtil.getArticle(articleResource.getGroupId(), articleResource.getArticleId());
+							}
+							else if (className.equals(JournalFolder.class.getName())) {
+								curFolder = JournalFolderLocalServiceUtil.getFolder(searchResult.getClassPK());
+							}
 						%>
 
 							<c:choose>
@@ -254,8 +292,42 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 										rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
 										showCheckbox="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>"
 										status="<%= article.getStatus() %>"
-										thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/default.png" %>'
+										thumbnailSrc='<%= (Validator.isNotNull(article.getArticleImage(themeDisplay))) ? article.getArticleImage(themeDisplay) : themeDisplay.getPathThemeImages() + "/file_system/large/default.png" %>'
 										title="<%= article.getTitle(locale) %>"
+										url="<%= rowURL.toString() %>"
+									/>
+								</c:when>
+
+								<c:when test="<%= curFolder != null %>">
+
+									<%
+									String folderImage = "folder_empty";
+
+									if (JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, curFolder.getFolderId()) > 0) {
+										folderImage = "folder_full_document";
+									}
+
+									PortletURL rowURL = liferayPortletResponse.createRenderURL();
+
+									rowURL.setParameter("struts_action", "/journal/view");
+									rowURL.setParameter("redirect", currentURL);
+									rowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
+									rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+
+									request.setAttribute("view_entries.jsp-folder", curFolder);
+									%>
+
+									<liferay-ui:app-view-search-entry
+										actionJsp="/html/portlet/journal/folder_action.jsp"
+										cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
+										description="<%= curFolder.getDescription() %>"
+										folderName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
+										queryTerms="<%= hits.getQueryTerms() %>"
+										rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
+										rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
+										showCheckbox="<%= JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
+										thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
+										title="<%= curFolder.getName() %>"
 										url="<%= rowURL.toString() %>"
 									/>
 								</c:when>

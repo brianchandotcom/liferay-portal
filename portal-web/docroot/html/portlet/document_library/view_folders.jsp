@@ -375,7 +375,12 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 				<%
 				for (Folder curFolder : folders) {
 					int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, curFolder.getFolderId());
-					int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED);
+
+					String folderImage = "folder_empty";
+
+					if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0) {
+						folderImage = "folder_full_document";
+					}
 
 					request.setAttribute("view_entries.jsp-folder", curFolder);
 					request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
@@ -415,7 +420,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 						dataView="<%= dataView %>"
 						entryTitle="<%= curFolder.getName() %>"
 						expandURL="<%= expandViewURL.toString() %>"
-						iconImage='<%= (foldersCount + fileEntriesCount) > 0 ? "folder_full_document" : "folder_empty" %>'
+						iconImage="<%= folderImage %>"
 						selected="<%= (curFolder.getFolderId() == folderId) %>"
 						showExpand="<%= foldersCount > 0 %>"
 						viewURL="<%= viewURL.toString() %>"

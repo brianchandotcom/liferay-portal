@@ -275,8 +275,11 @@ else {
 
 				<%
 				for (JournalFolder curFolder : folders) {
-					int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId());
-					int articlesCount = JournalArticleServiceUtil.getArticlesCount(scopeGroupId, curFolder.getFolderId());
+					String folderImage = "folder_empty";
+
+					if (JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, curFolder.getFolderId()) > 0) {
+						folderImage = "folder_full_document";
+					}
 
 					request.setAttribute("view_entries.jsp-folder", curFolder);
 					request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
@@ -313,9 +316,9 @@ else {
 						dataView="<%= dataView %>"
 						entryTitle="<%= curFolder.getName() %>"
 						expandURL="<%= expandViewURL.toString() %>"
-						iconImage='<%= (foldersCount + articlesCount) > 0 ? "folder_full_document" : "folder_empty" %>'
+						iconImage="<%= folderImage %>"
 						selected="<%= (curFolder.getFolderId() == folderId) %>"
-						showExpand="<%= foldersCount > 0 %>"
+						showExpand="<%= JournalFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId()) > 0 %>"
 						viewURL="<%= viewURL.toString() %>"
 					/>
 

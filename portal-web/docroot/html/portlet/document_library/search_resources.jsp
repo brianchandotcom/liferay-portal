@@ -257,12 +257,9 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 								status = WorkflowConstants.STATUS_ANY;
 							}
 
-							int foldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
-							int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status);
-
 							String folderImage = "folder_empty";
 
-							if ((foldersCount + fileEntriesCount) > 0) {
+							if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0) {
 								folderImage = "folder_full_document";
 							}
 

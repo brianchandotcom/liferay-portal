@@ -48,6 +48,7 @@
 	.entry-link .entry-thumbnail-image {
 		border-width: 0;
 		text-decoration: none;
+		width: 128px;
 	}
 
 	&.alt {

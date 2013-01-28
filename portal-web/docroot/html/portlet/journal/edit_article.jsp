@@ -196,7 +196,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 					<div class="article-info">
 						<div class="float-container">
 							<c:if test="<%= article.isSmallImage() %>">
-								<img alt="" class="article-image" src="<%= HtmlUtil.escape(_getArticleImage(themeDisplay, article)) %>" width="150" />
+								<img alt="" class="article-image" src="<%= HtmlUtil.escape(article.getArticleImage(themeDisplay)) %>" width="150" />
 							</c:if>
 
 							<c:if test="<%= !article.isNew() %>">
@@ -429,21 +429,6 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 </aui:script>
 
 <%!
-private String _getArticleImage(ThemeDisplay themeDisplay, JournalArticle article) {
-	String imageURL = null;
-
-	if (article.isSmallImage()) {
-		if (Validator.isNotNull(article.getSmallImageURL())) {
-			imageURL = article.getSmallImageURL();
-		}
-		else {
-			imageURL = themeDisplay.getPathImage() + "/journal/article?img_id=" + article.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(article.getSmallImageId());
-		}
-	}
-
-	return imageURL;
-}
-
 private String _getSectionJsp(String name) {
 	return TextFormatter.format(name, TextFormatter.N);
 }

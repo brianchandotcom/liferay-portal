@@ -28,9 +28,9 @@ public class DeleteDMDocumentsDMDActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Display Test Page",
 			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("DM Document1 Title"),
 			selenium.getText("//span[@class='entry-title']"));
-		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"//a[contains(@id,'objectsSearchContainer_1_menuButton')]/span"));
@@ -48,9 +48,9 @@ public class DeleteDMDocumentsDMDActionsTest extends BaseTestCase {
 				"The selected item was moved to the Recycle Bin. Undo"),
 			selenium.getText(
 				"//div[@class='portlet-msg-success taglib-trash-undo']"));
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("DM Document2 Title"),
 			selenium.getText("//span[@class='entry-title']"));
-		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"//a[contains(@id,'objectsSearchContainer_1_menuButton')]/span"));
@@ -68,9 +68,9 @@ public class DeleteDMDocumentsDMDActionsTest extends BaseTestCase {
 				"The selected item was moved to the Recycle Bin. Undo"),
 			selenium.getText(
 				"//div[@class='portlet-msg-success taglib-trash-undo']"));
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("DM Document3 Title"),
 			selenium.getText("//span[@class='entry-title']"));
-		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"//a[contains(@id,'objectsSearchContainer_1_menuButton')]/span"));

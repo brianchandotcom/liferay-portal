@@ -28,6 +28,8 @@ public class AddDMDocument1DMDTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Display Test Page",
 			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible(
+			"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Document')]/a");
 		assertEquals(RuntimeVariables.replace("Add Document"),
 			selenium.getText(
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Document')]/a"));

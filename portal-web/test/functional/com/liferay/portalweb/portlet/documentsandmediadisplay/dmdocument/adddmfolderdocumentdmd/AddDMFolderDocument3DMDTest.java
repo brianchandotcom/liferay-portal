@@ -37,8 +37,11 @@ public class AddDMFolderDocument3DMDTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Add Document"),
 			selenium.getText(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Document')]/a"));
-		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Document')]/a",
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Document')]"));
+		assertEquals(RuntimeVariables.replace("Add Document"),
+			selenium.getText(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Document')]"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Document')]",
 			RuntimeVariables.replace("Add Document"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");

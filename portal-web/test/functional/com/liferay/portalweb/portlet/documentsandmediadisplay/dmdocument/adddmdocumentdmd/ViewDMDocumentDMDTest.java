@@ -94,12 +94,18 @@ public class ViewDMDocumentDMDTest extends BaseTestCase {
 				"Automatically Extracted Metadata"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div/div/span"));
-		assertEquals(RuntimeVariables.replace("Content Encoding ISO-8859-1"),
+		assertEquals(RuntimeVariables.replace("Content Encoding"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[1]"));
-		assertEquals(RuntimeVariables.replace("Content Type text/plain"),
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[1]/label"));
+		assertTrue(selenium.isPartialText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[1]",
+				"ISO-8859-1"));
+		assertEquals(RuntimeVariables.replace("Content Type"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[2]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[2]/label"));
+		assertTrue(selenium.isPartialText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[2]",
+				"text/plain"));
 		assertEquals(RuntimeVariables.replace("Version History"),
 			selenium.getText(
 				"//div[@id='documentLibraryVersionHistoryPanel']/div/div/span"));

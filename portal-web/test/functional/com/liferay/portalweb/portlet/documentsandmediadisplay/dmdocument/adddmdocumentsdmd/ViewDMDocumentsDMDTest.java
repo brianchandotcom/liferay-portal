@@ -62,6 +62,7 @@ public class ViewDMDocumentsDMDTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@class='entry-title'])[1]",
 			RuntimeVariables.replace("DM Document1 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//h1[@class='header-title']/span");
 		assertEquals(RuntimeVariables.replace("DM Document1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("DM Document1 Title"),
@@ -79,6 +80,7 @@ public class ViewDMDocumentsDMDTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@class='entry-title'])[2]",
 			RuntimeVariables.replace("DM Document2 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//h1[@class='header-title']/span");
 		assertEquals(RuntimeVariables.replace("DM Document2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("DM Document2 Title"),
@@ -96,6 +98,7 @@ public class ViewDMDocumentsDMDTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@class='entry-title'])[3]",
 			RuntimeVariables.replace("DM Document3 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//h1[@class='header-title']/span");
 		assertEquals(RuntimeVariables.replace("DM Document3 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("DM Document3 Title"),

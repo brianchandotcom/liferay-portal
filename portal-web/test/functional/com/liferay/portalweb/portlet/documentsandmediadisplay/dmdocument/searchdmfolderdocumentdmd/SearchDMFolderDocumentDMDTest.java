@@ -33,10 +33,10 @@ public class SearchDMFolderDocumentDMDTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
+			selenium.getText("//td[1]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//td[3]/a"));
 		selenium.type("//input[@title='Search Documents']",
 			RuntimeVariables.replace("DM2 Folder2 Document2 Title2"));
 		selenium.clickAt("//input[@value='Search']",

@@ -137,8 +137,6 @@ public class InstallPluginAction extends PortletAction {
 		String deployDir = ParamUtil.getString(actionRequest, "deployDir");
 		String destDir = ParamUtil.getString(actionRequest, "destDir");
 		long interval = ParamUtil.getLong(actionRequest, "interval");
-		int blacklistThreshold = ParamUtil.getInteger(
-			actionRequest, "blacklistThreshold");
 		boolean unpackWar = ParamUtil.getBoolean(actionRequest, "unpackWar");
 		boolean customPortletXml = ParamUtil.getBoolean(
 			actionRequest, "customPortletXml");
@@ -164,9 +162,6 @@ public class InstallPluginAction extends PortletAction {
 		preferences.setValue(PropsKeys.AUTO_DEPLOY_DEST_DIR, destDir);
 		preferences.setValue(
 			PropsKeys.AUTO_DEPLOY_INTERVAL, String.valueOf(interval));
-		preferences.setValue(
-			PropsKeys.AUTO_DEPLOY_BLACKLIST_THRESHOLD,
-			String.valueOf(blacklistThreshold));
 		preferences.setValue(
 			PropsKeys.AUTO_DEPLOY_UNPACK_WAR, String.valueOf(unpackWar));
 		preferences.setValue(
@@ -209,7 +204,7 @@ public class InstallPluginAction extends PortletAction {
 
 			AutoDeployDir autoDeployDir = new AutoDeployDir(
 				"defaultAutoDeployDir", new File(deployDir), new File(destDir),
-				interval, blacklistThreshold, autoDeployListeners);
+				interval, autoDeployListeners);
 
 			AutoDeployUtil.registerDir(autoDeployDir);
 		}

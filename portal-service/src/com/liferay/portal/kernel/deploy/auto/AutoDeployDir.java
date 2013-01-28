@@ -36,20 +36,15 @@ public class AutoDeployDir {
 
 	public AutoDeployDir(
 		String name, File deployDir, File destDir, long interval,
-		int blacklistThreshold, List<AutoDeployListener> autoDeployListeners) {
+		List<AutoDeployListener> autoDeployListeners) {
 
 		_name = name;
 		_deployDir = deployDir;
 		_destDir = destDir;
 		_interval = interval;
-		_blacklistThreshold = blacklistThreshold;
 		_autoDeployListeners = new CopyOnWriteArrayList<AutoDeployListener>(
 			autoDeployListeners);
 		_blacklistFiles = new HashMap<String, Long>();
-	}
-
-	public int getBlacklistThreshold() {
-		return _blacklistThreshold;
 	}
 
 	public File getDeployDir() {
@@ -239,7 +234,6 @@ public class AutoDeployDir {
 	private List<AutoDeployListener> _autoDeployListeners;
 	private AutoDeployScanner _autoDeployScanner;
 	private Map<String, Long> _blacklistFiles;
-	private int _blacklistThreshold;
 	private File _deployDir;
 	private File _destDir;
 	private long _interval;

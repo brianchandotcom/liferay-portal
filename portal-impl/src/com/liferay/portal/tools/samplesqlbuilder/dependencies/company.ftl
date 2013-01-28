@@ -15,7 +15,7 @@ ${sampleSQLBuilder.insertUser(contact, null, null, null, user)}
 <#assign contact = dataFactory.addContact("Test", "Test")>
 <#assign user = dataFactory.addUser(false, "test")>
 
-<#assign userGroup = dataFactory.addGroup(counter.get(), dataFactory.userClassName.classNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
+<#assign userGroup = dataFactory.addGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
 
 ${sampleSQLBuilder.insertGroup(userGroup, [], [])}
 

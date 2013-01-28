@@ -10,7 +10,7 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [], [dataFactory.addLayou
 <#list 1..maxGroupCount as groupCount>
 	<#assign groupId = groupCount>
 
-	<#assign group = dataFactory.addGroup(groupId, dataFactory.groupClassName.classNameId, groupId, "Community " + groupCount, "/community" + groupCount, true)>
+	<#assign group = dataFactory.addGroup(groupId, dataFactory.groupClassNameId, groupId, "Community " + groupCount, "/community" + groupCount, true)>
 
 	<#assign publicLayouts = [
 		dataFactory.addLayout(1, "Welcome", "/welcome", "58,", "47,"),

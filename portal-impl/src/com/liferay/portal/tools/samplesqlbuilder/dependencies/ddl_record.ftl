@@ -12,6 +12,6 @@ insert into DDLRecord values ('${portalUUIDUtil.generate()}', ${ddlRecord.record
 
 insert into DDLRecordVersion values (${ddlRecordVersion.recordVersionId}, ${ddlRecordVersion.groupId}, ${ddlRecordVersion.companyId}, ${ddlRecordVersion.userId}, '', '${createDate}', ${ddmContent.contentId}, ${ddlRecordVersion.recordSetId}, ${ddlRecordVersion.recordId}, '1.0', 0, 0, ${ddlRecordVersion.userId}, '', '${createDate}');
 
-<#assign ddmStorageLink = dataFactory.addDDMStorageLink(dataFactory.DDMContentClassName.classNameId, ddmContent.contentId, ddlRecordSet.DDMStructureId)>
+<#assign ddmStorageLink = dataFactory.addDDMStorageLink(dataFactory.DDMContentClassNameId, ddmContent.contentId, ddlRecordSet.DDMStructureId)>
 
-insert into DDMStorageLink values ('${portalUUIDUtil.generate()}', ${ddmStorageLink.storageLinkId}, ${dataFactory.DDMContentClassName.classNameId}, ${ddmContent.contentId}, ${ddmStorageLink.structureId});
+insert into DDMStorageLink values ('${portalUUIDUtil.generate()}', ${ddmStorageLink.storageLinkId}, ${dataFactory.DDMContentClassNameId}, ${ddmContent.contentId}, ${ddmStorageLink.structureId});

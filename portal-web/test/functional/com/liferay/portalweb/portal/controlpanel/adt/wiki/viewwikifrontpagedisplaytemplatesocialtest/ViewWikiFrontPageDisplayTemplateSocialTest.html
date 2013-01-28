@@ -1,0 +1,73 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewWikiFrontPageDisplayTemplateSocialTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewWikiFrontPageDisplayTemplateSocialTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Wiki Test Page</td>
+	<td>Wiki Test Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='wiki-info']/span</td>
+	<td>Views</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='wiki-info']/span[2]</td>
+	<td>Last Modified</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='wiki-info']/span[3]</td>
+	<td>By Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='widget']/div/a/span</td>
+	<td>twitter</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='pluginConnectButton']/div/div/button</td>
+	<td>facebook</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//span[@id='widget_bounds']/table/tbody/tr/td/div/span</td>
+	<td>google plus</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>//div[@class='page-actions top-actions']/span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>//div[@class='page-actions top-actions']/span[2]/a/span</td>
+	<td>Details</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>//div[@class='page-actions top-actions']/span[3]/a/span</td>
+	<td>Print</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>//div[@class='lfr-panel-title']/span</td>
+	<td>Comments</td>
+</tr>
+</tbody></table>
+</body>
+</html>

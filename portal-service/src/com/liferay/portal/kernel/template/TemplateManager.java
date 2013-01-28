@@ -23,6 +23,8 @@ public interface TemplateManager {
 
 	public static final String VELOCITY = "VELOCITY";
 
+	public static final String XSL = "XSL";
+
 	public void destroy();
 
 	public void destroy(ClassLoader classLoader);

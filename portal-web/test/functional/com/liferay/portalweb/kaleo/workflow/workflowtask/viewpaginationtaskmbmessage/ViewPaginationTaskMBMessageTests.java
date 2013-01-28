@@ -14,7 +14,9 @@
 
 package com.liferay.portalweb.kaleo.workflow.workflowtask.viewpaginationtaskmbmessage;
 
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrydefaultnoworkflow.TearDownWorkflowConfigurationTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.messageboards.TearDownMBCategoryCPTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -51,7 +53,7 @@ public class ViewPaginationTaskMBMessageTests extends BaseTestSuite {
 		testSuite.addTestSuite(ViewPaginationTaskMBMessage20ItemsPerPageTest.class);
 		testSuite.addTestSuite(ViewPaginationTaskMBMessage10ItemsPerPageTest.class);
 		testSuite.addTestSuite(ViewPaginationTaskMBMessage5ItemsPerPageTest.class);
-		testSuite.addTestSuite(TearDownMBCategoryTest.class);
+		testSuite.addTestSuite(TearDownMBCategoryCPTest.class);
 		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
 
 		return testSuite;

@@ -29,14 +29,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewBlogsEntryDisplayTemplateTests extends BaseTestSuite {
+public class ViewBlogsEntryDisplayTemplateRichSummaryTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageAPTest.class);
 		testSuite.addTestSuite(AddPortletAPTest.class);
 		testSuite.addTestSuite(AddNewBlogsEntryAPActionsTest.class);
 		testSuite.addTestSuite(ConfigurePortletAPDisplayTemplateRichSummaryTest.class);
-		testSuite.addTestSuite(ViewBlogsEntryDisplayTemplateTest.class);
+		testSuite.addTestSuite(ViewBlogsEntryDisplayTemplateRichSummaryTest.class);
 		testSuite.addTestSuite(ConfigurePortletAPDisplayTemplateAbstractsTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryCPTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

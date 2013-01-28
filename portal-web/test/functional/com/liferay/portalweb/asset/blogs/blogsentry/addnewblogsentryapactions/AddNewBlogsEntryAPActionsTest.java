@@ -30,8 +30,8 @@ public class AddNewBlogsEntryAPActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add New"),
-			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add New"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blogs Entry')]");

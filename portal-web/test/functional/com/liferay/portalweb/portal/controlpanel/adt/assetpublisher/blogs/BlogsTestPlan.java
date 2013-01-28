@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.adt.assetpublisher.blogs;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.adt.assetpublisher.blogs.viewblogsentrydisplaytemplaterichsummaryap.ViewBlogsEntryDisplayTemplateTests;
+import com.liferay.portalweb.portal.controlpanel.adt.assetpublisher.blogs.viewblogsentrydisplaytemplaterichsummaryap.ViewBlogsEntryDisplayTemplateRichSummaryTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +28,8 @@ public class BlogsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(ViewBlogsEntryDisplayTemplateTests.suite());
+		testSuite.addTest
+			(ViewBlogsEntryDisplayTemplateRichSummaryTests.suite());
 
 		return testSuite;
 	}

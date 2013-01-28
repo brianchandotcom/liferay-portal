@@ -26,25 +26,21 @@ public class ViewPortletAPDisplayTemplateRichSummaryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
-		selenium.waitForVisible("//ul[@role='menu']/li[2]/a");
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText("//ul[@role='menu']/li[2]/a"));
-		selenium.clickAt("//ul[@role='menu']/li[2]/a",
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		Thread.sleep(5000);
 		selenium.waitForElementPresent(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
@@ -55,9 +51,9 @@ public class ViewPortletAPDisplayTemplateRichSummaryTest extends BaseTestCase {
 			RuntimeVariables.replace("Display Settings"));
 		selenium.waitForVisible(
 			"//div[@class='display-template']/span/span/span/select	");
-		assertTrue(selenium.isPartialText(
-				"//div[@class='display-template']/span/span/span/select	",
-				"Rich Summary"));
+		assertEquals("Rich Summary",
+			selenium.getSelectedLabel(
+				"//div[@class='display-template']/span/span/span/select	"));
 		selenium.selectFrame("relative=top");
 	}
 }

@@ -20,21 +20,35 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewBlogsEntryDisplayTemplateTest extends BaseTestCase {
-	public void testViewBlogsEntryDisplayTemplate() throws Exception {
+public class ViewBlogsEntryDisplayTemplateRichSummaryTest extends BaseTestCase {
+	public void testViewBlogsEntryDisplayTemplateRichSummary()
+		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Asset Publisher"),
+			selenium.getText("//span[@class='portlet-title-text']"));
+		assertEquals(RuntimeVariables.replace("Add New"),
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a/span"));
+		assertEquals(RuntimeVariables.replace("Subscribe"),
+			selenium.getText("//div[@class='subscribe-action']/span/a"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+			selenium.getText("//h3[@class='asset-title']/a"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='lfr-meta-actions asset-actions']/span/a"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-twitter']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-facebook']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-plusone']"));
+		assertTrue(selenium.isPartialText("//div[@class='asset-summary']/a",
+				"Read More"));
 		assertTrue(selenium.isElementNotPresent(
 				"//span[@class='taglib-text']/span"));
-		assertTrue(selenium.isVisible("//div[@id='widget']/div/a/span"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='pluginConnectButton']/div/div/button"));
-		assertTrue(selenium.isVisible(
-				"//span[@id='widget_bounds']/table/tbody/tr/td/div/span	"));
-		assertFalse(selenium.isTextPresent("//div[@class='asset-content']/div"));
+		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
 	}
 }

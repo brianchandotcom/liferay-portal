@@ -26,29 +26,27 @@ public class ConfigurePortletAPDisplayTemplateAbstractsTest extends BaseTestCase
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
-		selenium.waitForVisible("//ul[@role='menu']/li[2]/a");
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText("//ul[@role='menu']/li[2]/a"));
-		selenium.clickAt("//ul[@role='menu']/li[2]/a",
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		Thread.sleep(5000);
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible(
 			"//ul[contains(.,'Display Settings')]/li[2]/span/a");
 		selenium.clickAt("//ul[contains(.,'Display Settings')]/li[2]/span/a",
@@ -57,6 +55,7 @@ public class ConfigurePortletAPDisplayTemplateAbstractsTest extends BaseTestCase
 			"//div[@class='display-template']/span/span/span/select	");
 		selenium.select("//div[@class='display-template']/span/span/span/select	",
 			RuntimeVariables.replace("Abstracts"));
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

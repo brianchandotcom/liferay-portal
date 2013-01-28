@@ -34,11 +34,11 @@ public class ADTTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AssetPublisherTestPlan.suite());
-		//testSuite.addTest(BlogsTestPlan.suite());
-		//testSuite.addTest(CategoriesNavigationTestPlan.suite());
-		//testSuite.addTest(SiteMapTestPlan.suite());
-		//testSuite.addTest(TagsNavigationTestPlan.suite());
-		//testSuite.addTest(WikiTestPlan.suite());
+//		testSuite.addTest(BlogsTestPlan.suite());
+//		testSuite.addTest(CategoriesNavigationTestPlan.suite());
+//		testSuite.addTest(SiteMapTestPlan.suite());
+//		testSuite.addTest(TagsNavigationTestPlan.suite());
+//		testSuite.addTest(WikiTestPlan.suite());
 
 		return testSuite;
 	}

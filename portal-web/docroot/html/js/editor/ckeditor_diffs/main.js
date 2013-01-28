@@ -46,7 +46,7 @@ AUI.add(
 							editor.on('blur', instance._onEditorBlur, instance),
 							editor.on('focus', instance._onEditorFocus, instance),
 							editor.on('restoreContent', instance._restoreContent, instance),
-							editor.on('saveContent', instance.save, instance, false)
+							editor.on('saveContent', A.fn(0, 'save', instance))
 						];
 
 						instance.after('destroy', instance._destructor, instance);

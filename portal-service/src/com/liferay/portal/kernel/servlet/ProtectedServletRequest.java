@@ -35,6 +35,13 @@ public class ProtectedServletRequest extends HttpServletRequestWrapper {
 
 		super(request);
 
+		if (request instanceof ProtectedServletRequest) {
+			ProtectedServletRequest parentRequest =
+				(ProtectedServletRequest)request;
+
+			setRequest(parentRequest.getRequest());
+		}
+
 		_remoteUser = remoteUser;
 
 		if (remoteUser != null) {

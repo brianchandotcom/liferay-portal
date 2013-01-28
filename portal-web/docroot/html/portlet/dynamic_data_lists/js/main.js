@@ -52,9 +52,9 @@ AUI.add(
 						var uri = Liferay.Util.addParams(
 							{
 								groupId: themeDisplay.getScopeGroupId(),
-								p_p_id: '15',
+								p_p_id: '166',
 								p_p_state: 'pop_up',
-								struts_action: '/journal/select_document_library'
+								struts_action: '/dynamic_data_mapping/select_document_library'
 							},
 							themeDisplay.getURLControlPanel()
 						);

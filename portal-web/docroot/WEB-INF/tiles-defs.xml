@@ -568,6 +568,10 @@
 		<put name="portlet_content" value="/portlet/dynamic_data_mapping/error.jsp" />
 	</definition>
 
+	<definition name="portlet.dynamic_data_mapping.select_document_library" extends="portlet.dynamic_data_mapping">
+		<put name="portlet_content" value="/portlet/dynamic_data_mapping/select_document_library.jsp" />
+	</definition>
+
 	<definition name="portlet.dynamic_data_mapping.select_structure" extends="portlet.dynamic_data_mapping">
 		<put name="portlet_content" value="/portlet/dynamic_data_mapping/select_structure.jsp" />
 	</definition>
@@ -690,10 +694,6 @@
 
 	<definition name="portlet.journal.raw_article_content" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/raw_article_content.jsp" />
-	</definition>
-
-	<definition name="portlet.journal.select_document_library" extends="portlet.journal">
-		<put name="portlet_content" value="/portlet/journal/select_document_library.jsp" />
 	</definition>
 
 	<definition name="portlet.journal.select_folder" extends="portlet.journal">

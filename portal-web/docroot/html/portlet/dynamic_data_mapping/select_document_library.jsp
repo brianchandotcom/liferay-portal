@@ -54,6 +54,12 @@ if (folder != null) {
 	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 }
 
+List<DLFileEntryType> fileEntryTypes = Collections.emptyList();
+
+if ((folder == null) || folder.isSupportsMetadata()) {
+	fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, true);
+}
+
 int entryStart = ParamUtil.getInteger(request, "entryStart");
 int entryEnd = ParamUtil.getInteger(request, "entryEnd", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 
@@ -61,7 +67,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/journal/select_document_library");
+portletURL.setParameter("struts_action", "/dynamic_data_mapping/select_document_library");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("folderId", String.valueOf(folderId));
 %>
@@ -77,7 +83,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 	%>
 
 	<liferay-ui:search-form
-		page="/html/portlet/journal/file_entry_search.jsp"
+		page="/html/portlet/dynamic_data_mapping/file_entry_search.jsp"
 		searchContainer="<%= fileEntrySearchContainer %>"
 	/>
 
@@ -87,6 +93,59 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 		/>
 
 		<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
+
+		<div class="aui-helper-clearfix">
+			<liferay-ui:icon-menu align="left" cssClass="lfr-document-library-add-menu" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add">
+				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+					<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY %>" var="addFolderURL">
+						<portlet:param name="struts_action" value="/document_library/edit_folder" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+						<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
+					</liferay-portlet:renderURL>
+
+					<liferay-ui:icon image="folder" message='<%= (folder != null) ? "subfolder" : "folder" %>' url="<%= addFolderURL %>" />
+				</c:if>
+
+				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
+					<c:if test="<%= fileEntryTypes.isEmpty() %>">
+						<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY %>" var="editFileEntryURL">
+							<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="backURL" value="<%= currentURL %>" />
+							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+						</liferay-portlet:renderURL>
+
+						<liferay-ui:icon image="copy" message="basic-document" url="<%= editFileEntryURL %>" />
+					</c:if>
+
+					<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
+
+						<%
+						for (DLFileEntryType fileEntryType : fileEntryTypes) {
+						%>
+
+							<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY %>" var="addFileEntryTypeURL">
+								<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+								<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+								<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
+							</liferay-portlet:renderURL>
+
+							<liferay-ui:icon image="copy" message="<%= HtmlUtil.escape(fileEntryType.getName()) %>" url="<%= addFileEntryTypeURL %>" />
+
+						<%
+						}
+						%>
+
+					</c:if>
+				</c:if>
+			</liferay-ui:icon-menu>
+		</div>
 
 		<%
 		List<String> headerNames = new ArrayList<String>();
@@ -114,7 +173,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("struts_action", "/journal/select_document_library");
+			rowURL.setParameter("struts_action", "/dynamic_data_mapping/select_document_library");
 			rowURL.setParameter("groupId", String.valueOf(groupId));
 			rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 
@@ -165,7 +224,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			<%
 			PortletURL backURL = renderResponse.createRenderURL();
 
-			backURL.setParameter("struts_action", "/journal/select_document_library");
+			backURL.setParameter("struts_action", "/dynamic_data_mapping/select_document_library");
 			backURL.setParameter("groupId", String.valueOf(groupId));
 			%>
 
@@ -203,7 +262,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 		List resultRows = searchContainer.getResultRows();
 	%>
 
-		<%@ include file="/html/portlet/journal/select_document_library_search_results.jspf" %>
+		<%@ include file="/html/portlet/dynamic_data_mapping/select_document_library_search_results.jspf" %>
 
 		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 
@@ -212,7 +271,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 	else {
 		PortletURL iteratorURL = renderResponse.createRenderURL();
 
-		iteratorURL.setParameter("struts_action", "/journal/select_document_library");
+		iteratorURL.setParameter("struts_action", "/dynamic_data_mapping/select_document_library");
 		iteratorURL.setParameter("groupId", String.valueOf(groupId));
 		iteratorURL.setParameter("folderId", String.valueOf(folderId));
 
@@ -269,7 +328,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			List resultRows = fileEntrySearchContainer.getResultRows();
 	%>
 
-			<%@ include file="/html/portlet/journal/select_document_library_search_results.jspf" %>
+			<%@ include file="/html/portlet/dynamic_data_mapping/select_document_library_search_results.jspf" %>
 
 	<%
 		}
@@ -287,5 +346,5 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 </aui:form>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.journal.select_document_library_jsp");
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.dynamic_data_mapping.select_document_library_jsp");
 %>

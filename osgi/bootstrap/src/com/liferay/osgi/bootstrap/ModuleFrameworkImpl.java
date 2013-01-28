@@ -782,7 +782,7 @@ public class ModuleFrameworkImpl
 				return;
 			}
 
-			if (_hasLazyActivationPolicy(bundle)) {
+			if (!start && _hasLazyActivationPolicy(bundle)) {
 				lazyActivationBundles.add(bundle);
 
 				return;

@@ -328,6 +328,41 @@
 		</antcall>
 	</target>
 
+	<target name="test-${test.ant.script.command}-tomcat-ee-6.1.20-mysql-firefox">
+		<antcall target="print-scm-revision" />
+
+		<antcall target="clean-up-test-properties" />
+
+		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+
+		<ant antfile="build-test-db-upgrade.xml" target="prepare-db-mysql-common">
+			${test.ant.script.file.properties}
+			<property name="skip.prepare-bundle" value="true" />
+			<property name="sql.version" value="6.1.20" />
+		</ant>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-versioned-tomcat">
+			${test.ant.script.file.database.collate}
+			${test.ant.script.file.evaluate.logs}
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			${test.ant.script.file.selenium.implementation}
+			<property name="file.name" value="$${db-upgrade.6.1.20.file.name}" />
+			<property name="legacy.theme.ids" value="classic,controlpanel" />
+			<property name="lp.plugins.dir" value="$${db-upgrade.6.1.20.plugins.dir}" />
+			<property name="lp.version" value="6.1.20" />
+			<property name="plugins.deployed" value="true" />
+			<property name="skip.rebuild-database" value="true" />
+			<property name="test.name" value="${test.ant.script.suite}" />
+			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="tomcat.folder.dir" value="$${db-upgrade.6.1.20.tomcat.folder.dir}" />
+		</ant>
+	</target>
+
 	<target name="test-${test.ant.script.command}-tomcat-hsql-firefox">
 		<antcall target="print-scm-revision" />
 

@@ -1354,7 +1354,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	public boolean hasLayoutSetPrototypeLayout(
-			long layoutSetPrototypeId, String layoutUuid, boolean privateLayout)
+			long layoutSetPrototypeId, String layoutUuid)
 		throws PortalException, SystemException {
 
 		LayoutSetPrototype layoutSetPrototype =
@@ -1362,12 +1362,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				layoutSetPrototypeId);
 
 		return layoutLocalServiceHelper.hasLayoutSetPrototypeLayout(
-			layoutSetPrototype, layoutUuid, privateLayout);
+			layoutSetPrototype, layoutUuid);
 	}
 
 	public boolean hasLayoutSetPrototypeLayout(
-			String layoutSetPrototypeUuid, long companyId, String layoutUuid,
-			boolean privateLayout)
+			String layoutSetPrototypeUuid, long companyId, String layoutUuid)
 		throws PortalException, SystemException {
 
 		LayoutSetPrototype layoutSetPrototype =
@@ -1376,7 +1375,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					layoutSetPrototypeUuid, companyId);
 
 		return layoutLocalServiceHelper.hasLayoutSetPrototypeLayout(
-			layoutSetPrototype, layoutUuid, privateLayout);
+			layoutSetPrototype, layoutUuid);
 	}
 
 	/**

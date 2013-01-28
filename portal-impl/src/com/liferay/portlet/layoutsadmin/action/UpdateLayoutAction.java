@@ -28,7 +28,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
@@ -62,37 +61,6 @@ public class UpdateLayoutAction extends JSONAction {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		long plid = ParamUtil.getLong(request, "plid");
-
-		long groupId = ParamUtil.getLong(request, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-		long layoutId = ParamUtil.getLong(request, "layoutId");
-		long parentLayoutId = ParamUtil.getLong(request, "parentLayoutId");
-
-		Layout layout = null;
-
-		if (plid > 0) {
-			layout = LayoutLocalServiceUtil.getLayout(plid);
-		}
-		else if (layoutId > 0) {
-			layout = LayoutLocalServiceUtil.getLayout(
-				groupId, privateLayout, layoutId);
-		}
-		else if (parentLayoutId > 0) {
-			layout = LayoutLocalServiceUtil.getLayout(
-				groupId, privateLayout, parentLayoutId);
-		}
-
-		if ((layout != null) &&
-			!LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.UPDATE)) {
-
-			return null;
-		}
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 

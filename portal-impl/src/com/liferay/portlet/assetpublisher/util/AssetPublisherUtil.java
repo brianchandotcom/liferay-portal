@@ -488,44 +488,26 @@ public class AssetPublisherUtil {
 		PortletPreferences portletPreferences, long scopeGroupId,
 		Layout layout) {
 
-		String defaultScopeId = GetterUtil.getString(
-			portletPreferences.getValue("defaultScope", null));
+		String[] scopeIds = portletPreferences.getValues(
+			"scopeIds", new String[] {SCOPE_ID_GROUP_PREFIX + scopeGroupId});
 
-		if (Validator.isNull(defaultScopeId) ||
-			defaultScopeId.equals(StringPool.FALSE)) {
+		long[] groupIds = new long[scopeIds.length];
 
-			String[] scopeIds = portletPreferences.getValues(
-				"scopeIds",
-				new String[] {SCOPE_ID_GROUP_PREFIX + scopeGroupId});
+		int i = 0;
 
-			long[] groupIds = new long[scopeIds.length];
+		for (String scopeId : scopeIds) {
+			try {
+				groupIds[i] = getGroupIdFromScopeId(
+					scopeId, scopeGroupId, layout.isPrivateLayout());
 
-			for (int i = 0; i < scopeIds.length; i++) {
-				try {
-					groupIds[i] = getGroupIdFromScopeId(
-						scopeIds[i], scopeGroupId, layout.isPrivateLayout());
-				}
-				catch (Exception e) {
-					continue;
-				}
+				i++;
 			}
-
-			return groupIds;
+			catch (Exception e) {
+				continue;
+			}
 		}
 
-		if (defaultScopeId.equals(StringPool.TRUE)) {
-			return new long[] {scopeGroupId};
-		}
-
-		try {
-			long groupId = getGroupIdFromScopeId(
-				defaultScopeId, scopeGroupId, layout.isPrivateLayout());
-
-			return new long[] {groupId};
-		}
-		catch (Exception e) {
-			return new long[0];
-		}
+		return groupIds;
 	}
 
 	public static long getRecentFolderId(

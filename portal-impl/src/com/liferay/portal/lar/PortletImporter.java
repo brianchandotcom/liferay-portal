@@ -1824,10 +1824,10 @@ public class PortletImporter {
 
 				updateAssetPublisherClassNameIds(jxPreferences, name);
 			}
-			else if (name.equals("defaultScope") || name.equals("scopeIds")) {
+			else if (name.equals("scopeIds")) {
 				updateAssetPublisherScopeIds(
-					jxPreferences, name, companyGroup.getGroupId(),
-					layout.getPlid());
+					portletDataContext, jxPreferences, name,
+					companyGroup.getGroupId(), layout.getPlid());
 			}
 			else if (name.startsWith("queryName") &&
 					 value.equalsIgnoreCase("assetCategories")) {
@@ -1844,36 +1844,50 @@ public class PortletImporter {
 	}
 
 	protected void updateAssetPublisherScopeIds(
+			PortletDataContext portletDataContext,
 			javax.portlet.PortletPreferences jxPreferences, String key,
 			long groupId, long plid)
 		throws Exception {
 
-		String[] oldValues = jxPreferences.getValues(key, null);
+		String[] oldScopeIds = jxPreferences.getValues(key, null);
 
-		if (oldValues == null) {
+		if (oldScopeIds == null) {
 			return;
 		}
+
+		Map<Long, Layout> newLayoutsMap =
+			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class);
 
 		String groupScopeId =
 			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + groupId;
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		String[] newScopeIds = new String[oldScopeIds.length];
 
-		String layoutScopeId =
-			AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX + layout.getLayoutId();
+		for (int i = 0; i < oldScopeIds.length; i++) {
+			String oldScopeId = oldScopeIds[i];
 
-		String[] newValues = new String[oldValues.length];
+			if (oldScopeId.startsWith(
+					AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX)) {
 
-		for (int i = 0; i < oldValues.length; i++) {
-			String oldValue = oldValues[i];
+				String oldScopeIdSuffix = oldScopeId.substring(
+					AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX.length());
 
-			newValues[i] = StringUtil.replace(
-				oldValue,
-				new String[] {"[$GROUP_SCOPE_ID$]", "[$LAYOUT_SCOPE_ID$]"},
-				new String[] {groupScopeId, layoutScopeId});
+				long oldLayoutId = GetterUtil.getLong(oldScopeIdSuffix);
+
+				Layout newLayout = newLayoutsMap.get(oldLayoutId);
+
+				newScopeIds[i] =
+					AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX +
+						newLayout.getLayoutId();
+			}
+			else {
+				newScopeIds[i] = StringUtil.replace(
+					oldScopeId, "[$GROUP_SCOPE_ID$]", groupScopeId);
+			}
 		}
 
-		jxPreferences.setValues(key, newValues);
+		jxPreferences.setValues(key, newScopeIds);
 	}
 
 	protected void updatePortletPreferences(

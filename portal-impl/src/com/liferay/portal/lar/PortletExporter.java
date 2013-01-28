@@ -1474,6 +1474,40 @@ public class PortletExporter {
 		jxPreferences.setValues(key, newValues);
 	}
 
+	protected void updateAssetPublisherGlobalScopeId(
+			javax.portlet.PortletPreferences jxPreferences, String key,
+			long plid)
+		throws Exception {
+
+		String[] oldScopeIds = jxPreferences.getValues(key, null);
+
+		if (oldScopeIds == null) {
+			return;
+		}
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			layout.getCompanyId());
+
+		Group companyGroup = company.getGroup();
+
+		String groupScopeId =
+			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
+				companyGroup.getGroupId();
+
+		String[] newScopeIds = new String[oldScopeIds.length];
+
+		for (int i = 0; i < oldScopeIds.length; i++) {
+			String oldScopeId = oldScopeIds[i];
+
+			newScopeIds[i] = StringUtil.replace(
+				oldScopeId, groupScopeId, "[$GROUP_SCOPE_ID$]");
+		}
+
+		jxPreferences.setValues(key, newScopeIds);
+	}
+
 	protected String updateAssetPublisherPortletPreferences(
 			String xml, long plid)
 		throws Exception {
@@ -1503,8 +1537,8 @@ public class PortletExporter {
 
 				updateAssetPublisherClassNameIds(jxPreferences, name);
 			}
-			else if (name.equals("defaultScope") || name.equals("scopeIds")) {
-				updateAssetPublisherScopeIds(jxPreferences, name, plid);
+			else if (name.equals("scopeIds")) {
+				updateAssetPublisherGlobalScopeId(jxPreferences, name, plid);
 			}
 			else if (name.startsWith("queryName") &&
 					 value.equalsIgnoreCase("assetCategories")) {
@@ -1518,44 +1552,6 @@ public class PortletExporter {
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
-	}
-
-	protected void updateAssetPublisherScopeIds(
-			javax.portlet.PortletPreferences jxPreferences, String key,
-			long plid)
-		throws Exception {
-
-		String[] oldValues = jxPreferences.getValues(key, null);
-
-		if (oldValues == null) {
-			return;
-		}
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			layout.getCompanyId());
-
-		Group companyGroup = company.getGroup();
-
-		String groupScopeId =
-			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
-				companyGroup.getGroupId();
-
-		String layoutScopeId =
-			AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX + layout.getLayoutId();
-
-		String[] newValues = new String[oldValues.length];
-
-		for (int i = 0; i < oldValues.length; i++) {
-			String oldValue = oldValues[i];
-
-			newValues[i] = StringUtil.replace(
-				oldValue, new String[] {groupScopeId, layoutScopeId},
-				new String[] {"[$GROUP_SCOPE_ID$]", "[$LAYOUT_SCOPE_ID$]"});
-		}
-
-		jxPreferences.setValues(key, newValues);
 	}
 
 	protected void updatePreferencesClassPKs(

@@ -68,13 +68,13 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 	</liferay-util:buffer>
 
 	<liferay-util:buffer var="selectScope">
-		<aui:select label="" name="preferences--defaultScope--" onChange='<%= renderResponse.getNamespace() + "selectScope();" %>'>
+		<aui:select label="" name="preferences--scopeId--" onChange='<%= renderResponse.getNamespace() + "selectScope();" %>'>
 
 			<%
 			long layoutScopeGroupId = 0;
 			%>
 
-			<aui:option label="<%= _getName(themeDisplay, themeDisplay.getScopeGroup()) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getScopeGroupId() == groupIds[0]) %>" value="<%= true %>" />
+			<aui:option label="<%= _getName(themeDisplay, themeDisplay.getScopeGroup()) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getScopeGroupId() == groupIds[0]) %>" value="<%= AssetPublisherUtil.getScopeId(layout.getGroup(), themeDisplay.getScopeGroupId()) %>" />
 
 			<c:if test="<%= layout.hasScopeGroup() %>">
 
@@ -91,7 +91,7 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 
 			<optgroup label="----------"></optgroup>
 
-			<aui:option label='<%= LanguageUtil.get(pageContext,"advanced-selection") + StringPool.TRIPLE_PERIOD %>' selected="<%= (groupIds.length > 1) || ((groupIds.length == 1) && (groupIds[0] != themeDisplay.getScopeGroupId()) && (groupIds[0] != layoutScopeGroupId) && (groupIds[0] != themeDisplay.getCompanyGroupId())) %>" value="<%= false %>" />
+			<aui:option label='<%= LanguageUtil.get(pageContext,"advanced-selection") + StringPool.TRIPLE_PERIOD %>' selected="<%= (groupIds.length > 1) || ((groupIds.length == 1) && (groupIds[0] != themeDisplay.getScopeGroupId()) && (groupIds[0] != layoutScopeGroupId) && (groupIds[0] != themeDisplay.getCompanyGroupId())) %>" value="advanced-options" />
 		</aui:select>
 
 		<%
@@ -262,7 +262,7 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 	function <portlet:namespace />selectScope() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'select-scope';
 
-		if (document.<portlet:namespace />fm.<portlet:namespace />defaultScope.value != 'false') {
+		if (document.<portlet:namespace />fm.<portlet:namespace />scopeId.value != 'advanced-options') {
 			submitForm(document.<portlet:namespace />fm);
 		}
 	}
@@ -297,7 +297,7 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 	);
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType','false','<portlet:namespace />classNamesBoxes');
-	Liferay.Util.toggleSelectBox('<portlet:namespace />defaultScope','false','<portlet:namespace />scopesBoxes');
+	Liferay.Util.toggleSelectBox('<portlet:namespace />scopeId','advanced-options','<portlet:namespace />scopesBoxes');
 
 	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />selectionStyle);
 </aui:script>

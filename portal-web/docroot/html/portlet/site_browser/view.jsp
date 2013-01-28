@@ -121,7 +121,7 @@ portletURL.setParameter("target", target);
 			StringBundler sb = new StringBundler(11);
 
 			sb.append("javascript:Liferay.Util.getOpener().");
-			sb.append(callback);
+			sb.append(Validator.isNotNull(callback) ? callback : "selectGroup");
 			sb.append("('");
 			sb.append(group.getGroupId());
 			sb.append("', '");

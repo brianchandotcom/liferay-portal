@@ -25,8 +25,8 @@ public class Member_AssertActionTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent(
 				"//span[@title='Options']/ul/li/strong/a"));
@@ -46,16 +46,14 @@ public class Member_AssertActionTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Shortcut')]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[1]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[1]",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Subfolder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder - ']",
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("Media Gallery Permissions Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent(
@@ -67,17 +65,18 @@ public class Member_AssertActionTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a"));
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Mine", RuntimeVariables.replace("Mine"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Permissions Image 3 Test Edited"));
+		assertEquals(RuntimeVariables.replace("Permissions Image 3 Test Edited"),
+			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("link=Recent", RuntimeVariables.replace("Recent"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent(
-			"//img[@alt='Permissions Image 2 Test - ']");
-		assertTrue(selenium.isTextPresent("Permissions Image 2 Test"));
-		assertTrue(selenium.isTextPresent("Permissions Image 3 Test Edited"));
+		assertEquals(RuntimeVariables.replace("Permissions Image 2 Test"),
+			selenium.getText("xpath=(//span[@class='image-title'])[1]"));
+		assertEquals(RuntimeVariables.replace("Permissions Image 3 Test Edited"),
+			selenium.getText("xpath=(//span[@class='image-title'])[2]"));
 	}
 }

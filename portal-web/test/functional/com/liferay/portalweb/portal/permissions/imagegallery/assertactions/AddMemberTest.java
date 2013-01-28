@@ -44,14 +44,17 @@ public class AddMemberTest extends BaseTestCase {
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+				assertEquals(RuntimeVariables.replace("Add"),
+					selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Add"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
 				assertEquals(RuntimeVariables.replace("User"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.select("//select[@id='_125_prefixId']",
 					RuntimeVariables.replace("label=Mr."));
@@ -92,11 +95,14 @@ public class AddMemberTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Sign Out");
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
-				selenium.open("/web/guest/home/");
+				selenium.waitForVisible("//input[@value='Sign In']");
+				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
+				selenium.clickAt("link=Welcome",
+					RuntimeVariables.replace("Welcome"));
+				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible("//input[@id='_58_login']");
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("member@liferay.com"));
@@ -172,11 +178,14 @@ public class AddMemberTest extends BaseTestCase {
 
 			case 5:
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Sign Out");
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
-				selenium.open("/web/guest/home/");
+				selenium.waitForVisible("//input[@value='Sign In']");
+				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
+				selenium.clickAt("link=Welcome",
+					RuntimeVariables.replace("Welcome"));
+				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible("//input[@id='_58_login']");
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("test@liferay.com"));

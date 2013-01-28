@@ -23,46 +23,70 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SiteAdmin_RemoveGuestViewImagePermissionsTest extends BaseTestCase {
 	public void testSiteAdmin_RemoveGuestViewImagePermissions()
 		throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Media Gallery Permissions Test Folder 2 Edited"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']",
-			RuntimeVariables.replace(
-				"Media Gallery Permissions Test Folder 2 Edited"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Media Gallery Permissions Test Subfolder 2"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Subfolder 2 - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder 2 - ']",
-			RuntimeVariables.replace(
-				"Media Gallery Permissions Test Subfolder 2"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Permissions Image Test Edited"),
-			selenium.getText("//a[@title='Permissions Image Test Edited - ']"));
-		selenium.clickAt("//a[@title='Permissions Image Test Edited - ']",
-			RuntimeVariables.replace("Permissions Image Test Edited"));
-		selenium.waitForVisible("//img[@title='Permissions']");
-		selenium.clickAt("//img[@title='Permissions']",
-			RuntimeVariables.replace("Permissions"));
-		selenium.waitForVisible("//input[@name='16_ACTION_VIEW']");
-		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.clickAt("//input[@name='16_ACTION_VIEW']",
-			RuntimeVariables.replace("Guest View"));
-		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Media Gallery Test Page",
+					RuntimeVariables.replace("Media Gallery Test Page"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Media Gallery Permissions Test Folder 2 Edited"),
+					selenium.getText("xpath=(//span[@class='image-title'])[2]"));
+				selenium.clickAt("xpath=(//span[@class='image-title'])[2]",
+					RuntimeVariables.replace(
+						"Media Gallery Permissions Test Folder 2 Edited"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Media Gallery Permissions Test Subfolder 2"),
+					selenium.getText("//span[@class='image-title']"));
+				selenium.clickAt("//span[@class='image-title']",
+					RuntimeVariables.replace(
+						"Media Gallery Permissions Test Subfolder 2"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Permissions Image Test Edited"),
+					selenium.getText("//span[@class='image-title']"));
+				selenium.clickAt("//span[@class='image-title']",
+					RuntimeVariables.replace("Permissions Image Test Edited"));
+				Thread.sleep(1000);
+				selenium.waitForVisible("//img[@title='Permissions']");
+				selenium.clickAt("//img[@title='Permissions']",
+					RuntimeVariables.replace("Permissions"));
+				selenium.waitForVisible("//input[@id='guest_ACTION_VIEW']");
+
+				boolean guestViewNotChecked = selenium.isChecked(
+						"//input[@id='guest_ACTION_VIEW']");
+
+				if (!guestViewNotChecked) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='guest_ACTION_VIEW']",
+					RuntimeVariables.replace("Guest View"));
+
+			case 2:
+				assertFalse(selenium.isChecked(
+						"//input[@id='guest_ACTION_VIEW']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='guest_ACTION_VIEW']"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

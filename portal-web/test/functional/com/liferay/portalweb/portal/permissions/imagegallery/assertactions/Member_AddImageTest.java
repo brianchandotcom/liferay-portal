@@ -25,23 +25,22 @@ public class Member_AddImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[1]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[1]",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Subfolder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder - ']",
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("Media Gallery Permissions Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Add Media"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a"));
@@ -61,6 +60,9 @@ public class Member_AddImageTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Permissions Image 3 Test"),
-			selenium.getText("//a[@title='Permissions Image 3 Test - ']"));
+			selenium.getText("//span[@class='image-title']"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

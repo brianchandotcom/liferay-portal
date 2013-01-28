@@ -75,8 +75,8 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='app-view-entry-taglib entry-display-style display-icon selectable selected']</td>
-	<td>Folders Selected</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -109,14 +109,14 @@
 	<td>moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='entries-empty portlet-msg-info']</td>
-	<td>There are no documents or media files in this folder.</td>
-</tr>
-<tr>
 	<td>label</td>
 	<td>DMMediaDeleted</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entries-empty portlet-msg-info']</td>
+	<td>There are no documents or media files in this folder.</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -174,7 +174,7 @@
 	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to empty the Recycle Bin?</td>
 	<td></td>
 </tr>

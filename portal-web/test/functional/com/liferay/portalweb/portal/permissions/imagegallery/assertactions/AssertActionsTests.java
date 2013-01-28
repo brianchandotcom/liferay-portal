@@ -18,6 +18,8 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.mediagallery.portlet.addportletmg.AddPageMGTest;
+import com.liferay.portalweb.portlet.mediagallery.portlet.addportletmg.AddPortletMGTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,8 +30,8 @@ import junit.framework.TestSuite;
 public class AssertActionsTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(AddPortletTest.class);
+		testSuite.addTestSuite(AddPageMGTest.class);
+		testSuite.addTestSuite(AddPortletMGTest.class);
 		testSuite.addTestSuite(ConfigureMediaGalleryTest.class);
 		testSuite.addTestSuite(AddSiteAdminTest.class);
 		testSuite.addTestSuite(AddSiteAdminRoleTest.class);

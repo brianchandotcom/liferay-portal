@@ -25,22 +25,20 @@ public class Member_DeleteImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[1]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[1]",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Permissions Image 3 Test Edited"),
-			selenium.getText("//a[@title='Permissions Image 3 Test Edited - ']"));
-		selenium.clickAt("//a[@title='Permissions Image 3 Test Edited - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[2]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[2]",
 			RuntimeVariables.replace("Permissions Image 3 Test Edited"));
+		Thread.sleep(1000);
 		selenium.waitForVisible("//img[@title='Move to the Recycle Bin']");
 		selenium.click(RuntimeVariables.replace(
 				"//img[@title='Move to the Recycle Bin']"));

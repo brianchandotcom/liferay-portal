@@ -25,14 +25,13 @@ public class SiteAdmin_AddSubfolderTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Subfolder"),
@@ -51,7 +50,6 @@ public class SiteAdmin_AddSubfolderTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Subfolder - ']"));
+			selenium.getText("//span[@class='image-title']"));
 	}
 }

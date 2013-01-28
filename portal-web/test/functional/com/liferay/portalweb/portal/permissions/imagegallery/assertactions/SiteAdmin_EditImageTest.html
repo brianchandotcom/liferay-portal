@@ -15,38 +15,48 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Media Gallery Permissions Test Page</td>
-	<td>Media Gallery Permissions Test Page</td>
+	<td>link=Media Gallery Test Page</td>
+	<td>Media Gallery Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']</td>
+	<td>xpath=(//span[@class='image-title'])[2]</td>
 	<td>Media Gallery Permissions Test Folder 2 Edited</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']</td>
+	<td>xpath=(//span[@class='image-title'])[2]</td>
 	<td>Media Gallery Permissions Test Folder 2 Edited</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@title='Media Gallery Permissions Test Subfolder 2 - ']</td>
+	<td>//span[@class='image-title']</td>
 	<td>Media Gallery Permissions Test Subfolder 2</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[@title='Media Gallery Permissions Test Subfolder 2 - ']</td>
+	<td>//span[@class='image-title']</td>
 	<td>Media Gallery Permissions Test Subfolder 2</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//a[@title='Permissions Image Test - ']</td>
+	<td>//span[@class='image-title']</td>
 	<td>Permissions Image Test</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//a[@title='Permissions Image Test - ']</td>
+	<td>clickAt</td>
+	<td>//span[@class='image-title']</td>
 	<td>Permissions Image Test</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -54,7 +64,7 @@
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//img[@title='Edit']</td>
 	<td>Image Name</td>
 </tr>
@@ -79,6 +89,11 @@
 	<td>Publish</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
@@ -90,27 +105,27 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Media Gallery Permissions Test Page</td>
-	<td>Media Gallery Permissions Test Page</td>
+	<td>link=Media Gallery Test Page</td>
+	<td>Media Gallery Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']</td>
+	<td>xpath=(//span[@class='image-title'])[2]</td>
 	<td>Media Gallery Permissions Test Folder 2 Edited</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']</td>
+	<td>xpath=(//span[@class='image-title'])[2]</td>
 	<td>Media Gallery Permissions Test Folder 2 Edited</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@title='Media Gallery Permissions Test Subfolder 2 - ']</td>
+	<td>//span[@class='image-title']</td>
 	<td>Media Gallery Permissions Test Subfolder 2</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[@title='Media Gallery Permissions Test Subfolder 2 - ']</td>
+	<td>//span[@class='image-title']</td>
 	<td>Media Gallery Permissions Test Subfolder 2</td>
 </tr>
 <tr>

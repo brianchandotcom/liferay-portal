@@ -25,20 +25,20 @@ public class Member_EditImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[1]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[1]",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Permissions Image 3 Test"),
-			selenium.getText("//a[@title='Permissions Image 3 Test - ']"));
-		selenium.clickAt("//a[@title='Permissions Image 3 Test - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[2]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[2]",
 			RuntimeVariables.replace("Permissions Image 3 Test"));
+		Thread.sleep(1000);
 		selenium.waitForVisible("//img[@title='Edit']");
 		selenium.clickAt("//img[@title='Edit']",
 			RuntimeVariables.replace("Edit"));
@@ -50,21 +50,22 @@ public class Member_EditImageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[1]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[1]",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Permissions Image 3 Test Edited"),
-			selenium.getText("//a[@title='Permissions Image 3 Test Edited - ']"));
+			selenium.getText("xpath=(//span[@class='image-title'])[2]"));
 	}
 }

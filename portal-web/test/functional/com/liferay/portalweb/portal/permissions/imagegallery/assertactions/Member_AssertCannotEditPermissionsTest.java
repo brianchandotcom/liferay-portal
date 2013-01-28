@@ -26,15 +26,14 @@ public class Member_AssertCannotEditPermissionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Permissions Image 2 Test"),
-			selenium.getText("//a[@title='Permissions Image 2 Test - ']"));
-		selenium.clickAt("//a[@title='Permissions Image 2 Test - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[2]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[2]",
 			RuntimeVariables.replace("Permissions Image 2 Test"));
+		Thread.sleep(1000);
 		selenium.waitForVisible("//div/div[2]/div[1]");
 		assertTrue(selenium.isElementNotPresent("//img[@title='Permissions']"));
 	}

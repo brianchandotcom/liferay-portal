@@ -25,13 +25,13 @@ public class RemovePortletNWTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Netvibes Widget Test Page");
 		selenium.clickAt("link=Netvibes Widget Test Page",
 			RuntimeVariables.replace("Netvibes Widget Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//img[@alt='Remove']");
 		selenium.waitForConfirmation(
 			"Are you sure you want to remove this component?");
+		selenium.waitForElementNotPresent("//section");
 		assertTrue(selenium.isElementNotPresent("//section"));
 	}
 }

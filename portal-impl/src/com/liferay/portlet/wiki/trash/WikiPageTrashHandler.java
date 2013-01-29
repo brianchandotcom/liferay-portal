@@ -39,6 +39,7 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
+import com.liferay.portlet.wiki.util.WikiPageAttachmentsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -211,22 +212,23 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 		return page.isInTrashContainer();
 	}
-	
+
 	@Override
-	public void restoreRelatedTrashEntry(long classPK)
-			throws PortalException, SystemException {
-		
+	public void restoreRelatedTrashEntry(String className, long classPK)
+		throws PortalException, SystemException {
+
+		if (!className.equals(DLFileEntry.class.getName())) {
+			return;
+		}
+
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			classPK);
-		
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-		
-		WikiPage page = WikiPageLocalServiceUtil.getPage(
-			dlFileEntry.getClassPK());
-		
+
+		WikiPage page = WikiPageAttachmentsUtil.getPage(classPK);
+
 		WikiPageServiceUtil.restorePageAttachmentFromTrash(
 			page.getNodeId(), page.getTitle(), fileEntry.getTitle());
-		
+
 	}
 
 	public void restoreTrashEntries(long[] classPKs)

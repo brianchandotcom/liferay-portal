@@ -595,8 +595,8 @@ public interface TrashHandler {
 	public void moveTrashEntry(
 			long classPK, long containerModelId, ServiceContext serviceContext)
 		throws PortalException, SystemException;
-	
-	public void restoreRelatedTrashEntry(long classPK)
+
+	public void restoreRelatedTrashEntry(String className, long classPK)
 		throws PortalException, SystemException;
 
 	/**

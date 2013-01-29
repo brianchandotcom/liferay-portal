@@ -22,14 +22,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -39,12 +37,10 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.wiki.model.WikiPage;
 
 import javax.portlet.PortletRequest;
 
@@ -221,13 +217,15 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		for (long classPK : classPKs) {
 			DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-			if (dlFileEntry.isInHiddenFolder()) {
-				TrashHandler trashHandler = 
+			if ((dlFileEntry.getClassNameId() > 0) &&
+				(dlFileEntry.getClassPK() > 0)) {
+
+				TrashHandler trashHandler =
 					TrashHandlerRegistryUtil.getTrashHandler(
 						dlFileEntry.getClassName());
-					
-				trashHandler.restoreRelatedTrashEntry(classPK);
-				
+
+				trashHandler.restoreRelatedTrashEntry(getClassName(), classPK);
+
 				continue;
 			}
 

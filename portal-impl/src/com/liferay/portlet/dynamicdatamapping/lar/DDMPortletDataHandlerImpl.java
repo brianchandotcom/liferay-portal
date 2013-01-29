@@ -60,6 +60,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateUtil;
+import com.liferay.portlet.journal.lar.JournalPortletDataHandlerImpl;
 
 import java.io.File;
 
@@ -165,13 +166,22 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element templateElement = templatesElement.addElement("template");
 
-		if (template.isSmallImage() &&
-			Validator.isNull(template.getSmallImageURL())) {
-
+		if (template.isSmallImage()) {
 			Image smallImage = ImageUtil.fetchByPrimaryKey(
 				template.getSmallImageId());
 
-			if (smallImage != null) {
+			if (Validator.isNotNull(template.getSmallImageURL())) {
+				String smallImageURL =
+					DDMPortletDataHandlerImpl.exportReferencedContent(
+						portletDataContext, dlFileEntryTypesElement,
+						dlFoldersElement, dlFileEntriesElement,
+						dlFileRanksElement, dlRepositoriesElement,
+						dlRepositoryEntriesElement, templateElement,
+						template.getSmallImageURL().concat(StringPool.SPACE));
+
+				template.setSmallImageURL(smallImageURL);
+			}
+			else if (smallImage != null) {
 				String smallImagePath = getTemplateSmallImagePath(
 					portletDataContext, template);
 
@@ -316,18 +326,28 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		File smallFile = null;
 
-		String smallImagePath = templateElement.attributeValue(
-			"small-image-path");
+		if (template.isSmallImage()) {
+			String smallImagePath = templateElement.attributeValue(
+				"small-image-path");
 
-		if (template.isSmallImage() && Validator.isNotNull(smallImagePath)) {
-			byte[] bytes = portletDataContext.getZipEntryAsByteArray(
-				smallImagePath);
+			if (Validator.isNotNull(template.getSmallImageURL())) {
+				String smallImageURL =
+					JournalPortletDataHandlerImpl.importReferencedContent(
+						portletDataContext, templateElement,
+						template.getSmallImageURL());
 
-			if (bytes != null) {
-				smallFile = FileUtil.createTempFile(
-					template.getSmallImageType());
+				template.setSmallImageURL(smallImageURL);
+			}
+			else if (Validator.isNotNull(smallImagePath)) {
+				byte[] bytes = portletDataContext.getZipEntryAsByteArray(
+					smallImagePath);
 
-				FileUtil.write(smallFile, bytes);
+				if (bytes != null) {
+					smallFile = FileUtil.createTempFile(
+						template.getSmallImageType());
+
+					FileUtil.write(smallFile, bytes);
+				}
 			}
 		}
 

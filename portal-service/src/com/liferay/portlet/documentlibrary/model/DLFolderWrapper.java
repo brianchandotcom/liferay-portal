@@ -916,6 +916,10 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		return _dlFolder.hasLock();
 	}
 
+	public boolean isInHiddenFolder() {
+		return _dlFolder.isInHiddenFolder();
+	}
+
 	public boolean isInTrashContainer() {
 		return _dlFolder.isInTrashContainer();
 	}

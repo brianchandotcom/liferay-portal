@@ -812,7 +812,9 @@ public class DLAppHelperLocalServiceImpl
 		if (folder instanceof LiferayFolder) {
 			DLFolder dlFolder = (DLFolder)folder.getModel();
 
-			if (dlFolder.isApproved()) {
+			if (dlFolder.isApproved() && !dlFolder.isHidden() &&
+					!dlFolder.isInHiddenFolder()) {
+
 				visible = true;
 			}
 		}

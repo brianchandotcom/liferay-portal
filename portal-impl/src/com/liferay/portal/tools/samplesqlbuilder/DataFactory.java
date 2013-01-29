@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
@@ -56,6 +57,8 @@ import com.liferay.portlet.blogs.model.impl.BlogsEntryImpl;
 import com.liferay.portlet.blogs.model.impl.BlogsStatsUserImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -63,6 +66,7 @@ import com.liferay.portlet.documentlibrary.model.DLSync;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
@@ -133,6 +137,7 @@ public class DataFactory {
 			_initSimpleCounters();
 
 			_initClassNames();
+			_initDLFileEntryType();
 			_initUserNames();
 			_initJournalArticle(maxJournalArticleSize);
 
@@ -762,6 +767,10 @@ public class DataFactory {
 		return _ddmContentClassNameId;
 	}
 
+	public DLFileEntryType getDefaultDLFileEntryType() {
+		return _defaultDLFileEntryType;
+	}
+
 	public User getDefaultUser() {
 		return _defaultUser;
 	}
@@ -924,6 +933,20 @@ public class DataFactory {
 		_defaultUser = new UserImpl();
 
 		_defaultUser.setUserId(_counter.get());
+	}
+
+	private void _initDLFileEntryType() {
+		_defaultDLFileEntryType = new DLFileEntryTypeImpl();
+
+		Date date = new Date();
+
+		_defaultDLFileEntryType.setUuid(PortalUUIDUtil.generate());
+		_defaultDLFileEntryType.setFileEntryTypeId(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+		_defaultDLFileEntryType.setCreateDate(date);
+		_defaultDLFileEntryType.setModifiedDate(date);
+		_defaultDLFileEntryType.setName(
+			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
 	}
 
 	private void _initGuestGroup() {
@@ -1129,6 +1152,9 @@ public class DataFactory {
 	private SimpleCounter _counter;
 	private long _ddlRecordSetClassNameId;
 	private long _ddmContentClassNameId;
+
+	private DLFileEntryType _defaultDLFileEntryType;
+
 	private User _defaultUser;
 	private SimpleCounter _dlDateCounter;
 	private long _dlFileEntryClassNameId;

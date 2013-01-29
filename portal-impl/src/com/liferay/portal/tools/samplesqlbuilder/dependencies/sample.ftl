@@ -4,6 +4,8 @@
 
 <#include "roles.ftl">
 
+<#include "default_file_type.ftl">
+
 <#include "groups.ftl">
 
 <#include "counters.ftl">

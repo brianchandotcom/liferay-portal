@@ -110,11 +110,11 @@
 					function(event) {
 						var data = event.data;
 
-						var htmlData = data.html;
+						var htmlData = data.dataValue;
 
 						htmlData = CKEDITOR.htmlDataProcessor.prototype.toDataFormat(htmlData);
 
-						data.html = htmlData;
+						data.dataValue = htmlData;
 					},
 					editor.element.$
 				);

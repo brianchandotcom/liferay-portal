@@ -35,7 +35,8 @@ public class PortletTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddPortletDuplicateTests.suite());
 		testSuite.addTest(AddPortletWikiTests.suite());
 		testSuite.addTest(AddPortletWikiSiteTests.suite());
-		testSuite.addTest(ConfigurePortletWikiDisplayTemplateSocialTests.suite());
+		testSuite.addTest(
+			ConfigurePortletWikiDisplayTemplateSocialTests.suite());
 		testSuite.addTest(RemovePortletTests.suite());
 
 		return testSuite;

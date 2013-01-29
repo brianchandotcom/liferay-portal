@@ -30,7 +30,6 @@ public class DeleteFrontPageTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Wiki Test Page");
 				selenium.clickAt("link=Wiki Test Page",
 					RuntimeVariables.replace("Wiki Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -39,33 +38,31 @@ public class DeleteFrontPageTest extends BaseTestCase {
 				selenium.clickAt("link=All Pages",
 					RuntimeVariables.replace("All Pages"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("FrontPage"),
-					selenium.getText("//td[1]/a"));
+					selenium.getText("//tr[contains(.,'FrontPage')]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
-				selenium.waitForElementPresent(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.waitForPageToLoad("30000");
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+					RuntimeVariables.replace("Move to the Recycle Bin"));
+				selenium.waitForVisible(
+					"//div[@class='portlet-msg-success taglib-trash-undo']");
 				assertEquals(RuntimeVariables.replace(
 						"The selected item was moved to the Recycle Bin. Undo"),
 					selenium.getText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-				assertTrue(selenium.isElementNotPresent("//td[1]/a"));
+				assertEquals(RuntimeVariables.replace("There are no pages."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+				assertTrue(selenium.isElementNotPresent(
+						"//tr[contains(.,'FrontPage')]/td[1]/a"));
 				selenium.open("/web/guest/home/");
-				selenium.clickAt("link=Wiki Test Page",
-					RuntimeVariables.replace("Wiki Test Page"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(
-						"This page is empty. Edit it to add some text."),
-					selenium.getText("//div[@class='portlet-msg-info']/a"));
 				selenium.clickAt("//div[@id='dockbar']	",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(

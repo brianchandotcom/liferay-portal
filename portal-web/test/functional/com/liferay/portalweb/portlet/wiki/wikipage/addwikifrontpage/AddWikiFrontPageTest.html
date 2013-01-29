@@ -19,6 +19,11 @@
 	<td>Wiki Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='wiki-body']/div/a</td>
 	<td>This page is empty. Edit it to add some text.</td>
@@ -29,19 +34,14 @@
 	<td>This page is empty. Edit it to add some text.</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForElementPresent</td>
-	<td>//span[@class='cke_toolbar']/span[2]/a/span</td>
-	<td></td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/wikilink/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
+	<td>waitForText</td>
+	<td>//span[@class='cke_toolbar']/span[contains(.,'Normal')]/a</td>
+	<td>Normal</td>
 </tr>
 <tr>
 	<td>assertText</td>

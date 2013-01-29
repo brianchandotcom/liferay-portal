@@ -29,22 +29,54 @@ public class ViewWikiFrontPageDisplayTemplateSocialTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("FrontPage"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'FrontPage')]"));
+		assertEquals(RuntimeVariables.replace("Recent Changes"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'Recent Changes')]"));
+		assertEquals(RuntimeVariables.replace("All Pages"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'All Pages')]"));
+		assertEquals(RuntimeVariables.replace("Orphan Pages"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'Orphan Pages')]"));
+		assertEquals(RuntimeVariables.replace("Draft Pages"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'Draft Pages')]"));
+		assertTrue(selenium.isVisible("//input[@title='Search Pages']"));
+		assertTrue(selenium.isVisible("//input[@value='Search']"));
+		assertEquals(RuntimeVariables.replace("FrontPage"),
+			selenium.getText("//h1[@class='header-title']"));
 		assertTrue(selenium.isVisible("//div[@class='wiki-info']/span"));
 		assertTrue(selenium.isVisible("//div[@class='wiki-info']/span[2]"));
 		assertEquals(RuntimeVariables.replace("By Joe Bloggs"),
 			selenium.getText("//div[@class='wiki-info']/span[3]"));
-		assertTrue(selenium.isVisible("//div[@id='widget']/div/a/span"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='pluginConnectButton']/div/div/button"));
-		assertTrue(selenium.isVisible(
-				"//span[@id='widget_bounds']/table/tbody/tr/td/div/span"));
-		assertFalse(selenium.isTextPresent(
-				"//div[@class='page-actions top-actions']/span/a/span"));
-		assertFalse(selenium.isTextPresent(
-				"//div[@class='page-actions top-actions']/span[2]/a/span"));
-		assertFalse(selenium.isTextPresent(
-				"//div[@class='page-actions top-actions']/span[3]/a/span"));
-		assertFalse(selenium.isTextPresent(
-				"//div[@class='lfr-panel-title']/span"));
+		assertTrue(selenium.isVisible("//img[@title='FrontPage']"));
+		assertTrue(selenium.isVisible("//img[@title='Details']"));
+		assertTrue(selenium.isVisible("//img[@title='Print']"));
+		assertTrue(selenium.isVisible("//ul[@class='lfr-component']/li[1]"));
+		assertTrue(selenium.isVisible("//ul[@class='lfr-component']/li[2]"));
+		assertTrue(selenium.isVisible("//ul[@class='lfr-component']/li[3]"));
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
+			selenium.getText("//p[contains(.,'Wiki FrontPage Content')]"));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
+			selenium.getText(
+				"//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]"));
+		assertEquals(RuntimeVariables.replace("0Attachments"),
+			selenium.getText(
+				"//div[@class='article-actions']/span/a[contains(.,'0Attachments')]"));
+		assertTrue(selenium.isPartialText(
+				"//div[contains(@id,'ratingStarContent')]", "Your Rating"));
+		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
+			selenium.getText("//div[contains(@id,'ratingScoreContent')]"));
+		assertTrue(selenium.isPartialText(
+				"//fieldset[@class='aui-fieldset add-comment ']/div",
+				"No comments yet."));
+		assertEquals(RuntimeVariables.replace("Be the first."),
+			selenium.getText(
+				"//fieldset[@class='aui-fieldset add-comment ']/div/a"));
+		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
+			selenium.getText("//span[@class='subscribe-link']/a/span"));
 	}
 }

@@ -1,4 +1,11 @@
 .taglib-form-navigator {
+	&:after {
+		clear: both;
+		content: "";
+		display: block;
+		height: 0;
+	}
+
 	.form-navigator {
 		border: 1px solid transparent;
 		float: right;
@@ -156,6 +163,10 @@
 		font-size: 14px;
 		font-weight: 700;
 	}
+}
+
+.ie6, .ie7 {
+	zoom: 1;
 }
 
 .ie6 .taglib-form-navigator .form-navigator li.selected a:hover {

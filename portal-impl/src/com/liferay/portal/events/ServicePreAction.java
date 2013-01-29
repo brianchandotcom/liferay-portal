@@ -1009,9 +1009,6 @@ public class ServicePreAction extends Action {
 					request, PortletKeys.LAYOUTS_ADMIN, controlPanelPlid,
 					PortletRequest.RENDER_PHASE);
 
-				pageSettingsURL.setControlPanelCategory(
-					_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
-						PortletKeys.LAYOUTS_ADMIN);
 				pageSettingsURL.setDoAsGroupId(scopeGroupId);
 				pageSettingsURL.setParameter(
 					"struts_action", "/layouts_admin/edit_layouts");
@@ -1023,12 +1020,24 @@ public class ServicePreAction extends Action {
 					pageSettingsURL.setParameter("tabs1", "public-pages");
 				}
 
-				pageSettingsURL.setParameter("closeRedirect", currentURL);
 				pageSettingsURL.setParameter(
 					"groupId", String.valueOf(scopeGroupId));
 				pageSettingsURL.setParameter("selPlid", String.valueOf(plid));
 				pageSettingsURL.setPortletMode(PortletMode.VIEW);
-				pageSettingsURL.setWindowState(LiferayWindowState.POP_UP);
+
+				if (PropsValues.DOCKBAR_MANAGE_LINKS_WINDOW_STATE_POPUP) {
+					pageSettingsURL.setControlPanelCategory(
+						_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
+							PortletKeys.LAYOUTS_ADMIN);
+					pageSettingsURL.setParameter("closeRedirect", currentURL);
+					pageSettingsURL.setWindowState(LiferayWindowState.POP_UP);
+				}
+				else {
+					pageSettingsURL.setPlid(plid);
+					pageSettingsURL.setParameter(
+						"redirect", themeDisplay.getURLHome());
+					pageSettingsURL.setWindowState(WindowState.MAXIMIZED);
+				}
 
 				themeDisplay.setURLPageSettings(pageSettingsURL);
 
@@ -1052,9 +1061,6 @@ public class ServicePreAction extends Action {
 							request, PortletKeys.SITE_MEMBERSHIPS_ADMIN,
 							controlPanelPlid, PortletRequest.RENDER_PHASE);
 
-					manageSiteMembershipsURL.setControlPanelCategory(
-						_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
-							PortletKeys.SITE_MEMBERSHIPS_ADMIN);
 					manageSiteMembershipsURL.setDoAsGroupId(scopeGroupId);
 					manageSiteMembershipsURL.setParameter(
 						"struts_action", "/sites_admin/edit_site_assignments");
@@ -1063,8 +1069,23 @@ public class ServicePreAction extends Action {
 					manageSiteMembershipsURL.setParameter(
 						"selPlid", String.valueOf(plid));
 					manageSiteMembershipsURL.setPortletMode(PortletMode.VIEW);
-					manageSiteMembershipsURL.setWindowState(
-						LiferayWindowState.POP_UP);
+
+					if (PropsValues.DOCKBAR_MANAGE_LINKS_WINDOW_STATE_POPUP) {
+						manageSiteMembershipsURL.setControlPanelCategory(
+							_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
+								PortletKeys.SITE_MEMBERSHIPS_ADMIN);
+						manageSiteMembershipsURL.setWindowState(
+							LiferayWindowState.POP_UP);
+					}
+					else {
+						manageSiteMembershipsURL.setPlid(plid);
+						manageSiteMembershipsURL.setParameter(
+							"redirect", themeDisplay.getURLHome());
+						manageSiteMembershipsURL.setParameter(
+							"showBackURL", Boolean.FALSE.toString());
+						manageSiteMembershipsURL.setWindowState(
+							WindowState.MAXIMIZED);
+					}
 
 					themeDisplay.setURLManageSiteMemberships(
 						manageSiteMembershipsURL);
@@ -1100,17 +1121,29 @@ public class ServicePreAction extends Action {
 					request, PortletKeys.SITE_SETTINGS, controlPanelPlid,
 					PortletRequest.RENDER_PHASE);
 
-				siteSettingsURL.setControlPanelCategory(
-					_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
-						PortletKeys.SITE_SETTINGS);
 				siteSettingsURL.setDoAsGroupId(scopeGroupId);
 				siteSettingsURL.setParameter(
 					"struts_action", "/sites_admin/edit_site");
-				siteSettingsURL.setParameter("closeRedirect", currentURL);
 				siteSettingsURL.setParameter(
 					"groupId", String.valueOf(scopeGroupId));
+				siteSettingsURL.setParameter(
+					"showBackURL", Boolean.FALSE.toString());
 				siteSettingsURL.setPortletMode(PortletMode.VIEW);
-				siteSettingsURL.setWindowState(LiferayWindowState.POP_UP);
+
+				if (PropsValues.DOCKBAR_MANAGE_LINKS_WINDOW_STATE_POPUP) {
+					siteSettingsURL.setControlPanelCategory(
+						_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
+							PortletKeys.SITE_SETTINGS);
+					siteSettingsURL.setParameter("closeRedirect", currentURL);
+					siteSettingsURL.setWindowState(LiferayWindowState.POP_UP);
+				}
+				else {
+					siteSettingsURL.setPlid(plid);
+					siteSettingsURL.setParameter(
+						"redirect", themeDisplay.getURLHome());
+					siteSettingsURL.setWindowState(
+						LiferayWindowState.MAXIMIZED);
+				}
 
 				themeDisplay.setURLSiteSettings(siteSettingsURL);
 			}
@@ -1125,9 +1158,6 @@ public class ServicePreAction extends Action {
 					request, PortletKeys.LAYOUTS_ADMIN, controlPanelPlid,
 					PortletRequest.RENDER_PHASE);
 
-				siteMapSettingsURL.setControlPanelCategory(
-					_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
-						PortletKeys.LAYOUTS_ADMIN);
 				siteMapSettingsURL.setDoAsGroupId(scopeGroupId);
 				siteMapSettingsURL.setParameter(
 					"struts_action", "/layouts_admin/edit_layouts");
@@ -1139,11 +1169,26 @@ public class ServicePreAction extends Action {
 					siteMapSettingsURL.setParameter("tabs1", "public-pages");
 				}
 
-				siteMapSettingsURL.setParameter("closeRedirect", currentURL);
 				siteMapSettingsURL.setParameter(
 					"groupId", String.valueOf(scopeGroupId));
 				siteMapSettingsURL.setPortletMode(PortletMode.VIEW);
-				siteMapSettingsURL.setWindowState(LiferayWindowState.POP_UP);
+
+				if (PropsValues.DOCKBAR_MANAGE_LINKS_WINDOW_STATE_POPUP) {
+					siteMapSettingsURL.setControlPanelCategory(
+						_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
+							PortletKeys.LAYOUTS_ADMIN);
+					siteMapSettingsURL.setParameter(
+						"closeRedirect", currentURL);
+					siteMapSettingsURL.setWindowState(
+						LiferayWindowState.POP_UP);
+				}
+				else {
+					siteMapSettingsURL.setPlid(plid);
+					siteMapSettingsURL.setParameter(
+						"redirect", themeDisplay.getURLHome());
+					siteMapSettingsURL.setWindowState(
+						LiferayWindowState.MAXIMIZED);
+				}
 
 				themeDisplay.setURLSiteMapSettings(siteMapSettingsURL);
 			}

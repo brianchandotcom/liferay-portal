@@ -755,26 +755,14 @@ AUI.add(
 						function(event) {
 							event.preventDefault();
 
-							var currentTarget = event.currentTarget;
-
-							var controlPanelCategory = Lang.trim(currentTarget.attr('data-controlPanelCategory'));
-
-							var uri = currentTarget.attr('href');
-							var title = currentTarget.attr('title');
-
-							if (controlPanelCategory) {
-								uri = Liferay.Util.addParams('controlPanelCategory=' + controlPanelCategory, uri) || uri;
-							}
-
 							instance._openWindow(
 								{
 									dialog: {
 										align: Util.Window.ALIGN_CENTER,
 										width: 960
-									},
-									title: title,
-									uri: uri
-								}
+									}
+								},
+								event.currentTarget
 							);
 						},
 						'a.use-dialog'

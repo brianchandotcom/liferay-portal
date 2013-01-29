@@ -104,6 +104,16 @@ public class MBMessagePermission {
 						return false;
 					}
 				}
+
+				if (actionId.equals(ActionKeys.DELETE) ||
+					actionId.equals(ActionKeys.SUBSCRIBE)) {
+
+					if (MBCategoryPermission.contains(
+							permissionChecker, category, actionId)) {
+
+						return true;
+					}
+				}
 			}
 			catch (NoSuchCategoryException nsce) {
 				if (!message.isInTrashThread()) {

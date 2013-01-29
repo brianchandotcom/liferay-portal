@@ -34,6 +34,10 @@ public class ViewCommentAssignedToMyRolesTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("PC Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -44,6 +48,7 @@ public class ViewCommentAssignedToMyRolesTest extends BaseTestCase {
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("link=Pending");
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

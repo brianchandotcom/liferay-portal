@@ -34,6 +34,10 @@ public class ViewCommentAssignedToMeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("PC Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -46,6 +50,9 @@ public class ViewCommentAssignedToMeTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"There are no pending tasks assigned to your roles."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//td[1]/a"));
 		assertTrue(selenium.isPartialText("//td[2]/a", "PC Comment"));
@@ -54,9 +61,6 @@ public class ViewCommentAssignedToMeTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[5]/a"));
-		assertEquals(RuntimeVariables.replace(
-				"There are no pending tasks assigned to your roles."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("There are no completed tasks."),

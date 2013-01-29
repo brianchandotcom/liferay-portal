@@ -14,10 +14,15 @@
 
 package com.liferay.portalweb.kaleo.pagecomments.comment.viewcommentassignedtome;
 
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrydefaultnoworkflow.TearDownWorkflowConfigurationTest;
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configurecommentssingleapprover.ConfigureCommentsSingleApproverTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.pagecomments.comment.addcomment.TearDownPageCommentTest;
+import com.liferay.portalweb.portlet.pagecomments.portlet.addportletpc.AddPagePCTest;
+import com.liferay.portalweb.portlet.pagecomments.portlet.addportletpc.AddPortletPCTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +33,7 @@ import junit.framework.TestSuite;
 public class ViewCommentAssignedToMeTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(ConfigureCommentSingleApproverTest.class);
+		testSuite.addTestSuite(ConfigureCommentsSingleApproverTest.class);
 		testSuite.addTestSuite(AddPagePCTest.class);
 		testSuite.addTestSuite(AddPortletPCTest.class);
 		testSuite.addTestSuite(AddCommentTest.class);

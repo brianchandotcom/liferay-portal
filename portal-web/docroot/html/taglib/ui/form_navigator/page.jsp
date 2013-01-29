@@ -197,14 +197,14 @@ if (Validator.isNotNull(historyKey)) {
 </aui:script>
 
 <aui:script use="aui-base">
-	var portlet = A.one('#p_p_id_<%= portletDisplay.getRootPortletId() %>_');
+	var portlet = A.one('#<portlet:namespace />sectionsContainer');
 
 	portlet.delegate(
 		'click',
-		function() {
+		function(event) {
 			A.fire(
 				'formNavigator:trackChanges',
-				A.one('.selected .modify-link')
+				event.currentTarget
 			);
 		},
 		'.modify-link'

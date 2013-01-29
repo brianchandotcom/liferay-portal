@@ -1,6 +1,4 @@
 .taglib-form-navigator {
-	zoom: 1;
-
 	&:after {
 		clear: both;
 		content: "";
@@ -165,6 +163,10 @@
 		font-size: 14px;
 		font-weight: 700;
 	}
+}
+
+.ie6, .ie7 {
+	zoom: 1;
 }
 
 .ie6 .taglib-form-navigator .form-navigator li.selected a:hover {

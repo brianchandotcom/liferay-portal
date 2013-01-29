@@ -2,6 +2,8 @@
 
 <#include "company.ftl">
 
+<#include "default_users.ftl">
+
 <#include "roles.ftl">
 
 <#include "default_file_type.ftl">

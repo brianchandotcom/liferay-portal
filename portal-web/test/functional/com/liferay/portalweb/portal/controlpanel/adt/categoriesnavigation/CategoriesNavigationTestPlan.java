@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.categoriesnavigation.portlet;
+package com.liferay.portalweb.portal.controlpanel.adt.categoriesnavigation;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletcn.AddPortletCNTests;
-import com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletscn.AddPortletsCNTests;
-import com.liferay.portalweb.portlet.categoriesnavigation.portlet.configureportletcndisplaytemplatemulticolumn.ConfigurePortletCNDisplayTemplateMultiColumnTests;
-import com.liferay.portalweb.portlet.categoriesnavigation.portlet.removeportletcn.RemovePortletCNTests;
+import com.liferay.portalweb.portal.controlpanel.adt.categoriesnavigation.viewportletcndisplaytemplatemulticolumn.ViewPortletCNDisplayTemplateMultiColumnTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,15 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletTestPlan extends BaseTestSuite {
+public class CategoriesNavigationTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletCNTests.suite());
-		testSuite.addTest(AddPortletsCNTests.suite());
-		testSuite.addTest(ConfigurePortletCNDisplayTemplateMultiColumnTests.suite());
-		testSuite.addTest(RemovePortletCNTests.suite());
+		testSuite.addTest(ViewPortletCNDisplayTemplateMultiColumnTests.suite());
 
 		return testSuite;
 	}

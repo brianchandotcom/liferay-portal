@@ -616,10 +616,6 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		WikiPage latestPage = null;
 
-		if (pages.size() == 1) {
-			latestPage = pages.get(0);
-		}
-
 		StringBundler sb = new StringBundler(6);
 
 		for (WikiPage page : pages) {
@@ -642,7 +638,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			}
 
 			if (diff) {
-				if (latestPage != null) {
+				if ((latestPage != null) || (pages.size() == 1)) {
 					sb.append(StringPool.QUESTION);
 					sb.append(PortalUtil.getPortletNamespace(PortletKeys.WIKI));
 					sb.append("version=");
@@ -650,7 +646,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 					String value = null;
 
-					if (pages.size() == 1) {
+					if (latestPage == null) {
 						value = page.getContent();
 					}
 					else {

@@ -16,7 +16,6 @@ package com.liferay.portal.xsl;
 
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateContextType;
-import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.PACLTemplateWrapper;
@@ -94,7 +93,7 @@ public class XSLManager implements TemplateManager {
 		return PACLTemplateWrapper.getTemplate(template);
 	}
 
-	public void init() throws TemplateException {
+	public void init() {
 	}
 
 	public void setTemplateContextHelper(

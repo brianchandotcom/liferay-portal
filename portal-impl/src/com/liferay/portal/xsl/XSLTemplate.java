@@ -94,17 +94,8 @@ public class XSLTemplate implements Template {
 		transformerFactory.setErrorListener(xslErrorListener);
 		transformerFactory.setURIResolver(uriResolver);
 
-		StreamSource xmlSource = null;
-
-		try {
-			xmlSource = new StreamSource(_xslTemplateResource.getXMLReader());
-		}
-		catch (Exception e) {
-			throw new TemplateException(
-				"Unable to read XML for template " +
-					_xslTemplateResource.getTemplateId(),
-				e);
-		}
+		StreamSource xmlSource = new StreamSource(
+			_xslTemplateResource.getXMLReader());
 
 		Transformer transformer = _getTransformer(
 			transformerFactory, _xslTemplateResource);

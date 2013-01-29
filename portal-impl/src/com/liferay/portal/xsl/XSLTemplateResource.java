@@ -98,7 +98,7 @@ public class XSLTemplateResource implements TemplateResource {
 		return _lastModified;
 	}
 
-	public Reader getReader() throws IOException {
+	public Reader getReader() {
 		return new UnsyncStringReader(_script);
 	}
 
@@ -110,7 +110,7 @@ public class XSLTemplateResource implements TemplateResource {
 		return Collections.unmodifiableMap(_tokens);
 	}
 
-	public Reader getXMLReader() throws IOException {
+	public Reader getXMLReader() {
 		return new UnsyncStringReader(_xml);
 	}
 

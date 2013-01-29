@@ -402,6 +402,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="control-panel-adt" />
+			<param name="test.ant.script.selenium.implementation" value="webdriver" />
+			<param name="test.ant.script.suite" value="ControlPanelADTTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="control-panel-blogs" />
 			<param name="test.ant.script.suite" value="ControlPanelBlogsTestSuite" />
 		</antcall>

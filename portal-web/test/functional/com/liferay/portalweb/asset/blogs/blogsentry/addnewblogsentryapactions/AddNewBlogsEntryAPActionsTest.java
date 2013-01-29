@@ -28,10 +28,10 @@ public class AddNewBlogsEntryAPActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Add New"),
-			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add New"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blogs Entry')]");

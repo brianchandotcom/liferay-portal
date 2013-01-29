@@ -27,10 +27,11 @@ public class ViewPortletSMDisplayTemplateMultiColumnLayoutTest
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Site Map Test Page");
 		selenium.clickAt("link=Site Map Test Page",
 			RuntimeVariables.replace("Site Map Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Site Map"),
+			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Welcome"),
 			selenium.getText("xPath=(//div[@class='results-header']/h3/a)[1]"));
 		assertEquals(RuntimeVariables.replace("Site Map Test Page"),

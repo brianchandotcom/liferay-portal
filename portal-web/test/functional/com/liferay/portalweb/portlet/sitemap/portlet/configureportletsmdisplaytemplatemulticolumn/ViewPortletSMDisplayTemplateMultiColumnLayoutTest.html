@@ -20,13 +20,8 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//span[@title='Options']/ul/li/strong/a</td>
-	<td>Options</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -40,23 +35,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//ul[@role='menu']/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[@role='menu']/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//ul[@role='menu']/li[2]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -69,12 +59,17 @@
 	<td>iFrame</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='display-template']</td>
 	<td>Display Template</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
+	<td>assertSelectedLabel</td>
 	<td>//div[@class='display-template']/span/span/span/select</td>
 	<td>Multi Column Layout</td>
 </tr>

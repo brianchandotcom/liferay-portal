@@ -399,18 +399,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		Locale defaultLocale = LocaleUtil.getDefault();
+
 		Map<Locale, String> localeDescriptionsMap =
 			new HashMap<Locale, String>();
 
-		Map<Locale, String> localeNamesMap = new HashMap<Locale, String>();
-
-		Map<Locale, String> localeTitlesMap = new HashMap<Locale, String>();
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
 		localeDescriptionsMap.put(defaultLocale, description);
 
+		Map<Locale, String> localeNamesMap = new HashMap<Locale, String>();
+
 		localeNamesMap.put(defaultLocale, name);
+
+		Map<Locale, String> localeTitlesMap = new HashMap<Locale, String>();
 
 		localeTitlesMap.put(defaultLocale, title);
 

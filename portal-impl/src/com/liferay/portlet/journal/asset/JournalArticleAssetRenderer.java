@@ -58,6 +58,18 @@ public class JournalArticleAssetRenderer
 
 	public static final String TYPE = "journal_article";
 
+	public static long getClassPK(JournalArticle article) {
+		if ((article.isDraft() || article.isPending()) &&
+			(article.getVersion() !=
+				JournalArticleConstants.VERSION_DEFAULT)) {
+
+			return article.getPrimaryKey();
+		}
+		else {
+			return article.getResourcePrimKey();
+		}
+	}
+
 	public JournalArticleAssetRenderer(JournalArticle article) {
 		_article = article;
 	}
@@ -80,15 +92,7 @@ public class JournalArticleAssetRenderer
 	}
 
 	public long getClassPK() {
-		if ((_article.isDraft() || _article.isPending()) &&
-			(_article.getVersion() !=
-				JournalArticleConstants.VERSION_DEFAULT)) {
-
-			return _article.getPrimaryKey();
-		}
-		else {
-			return _article.getResourcePrimKey();
-		}
+		return getClassPK(_article);
 	}
 
 	@Override

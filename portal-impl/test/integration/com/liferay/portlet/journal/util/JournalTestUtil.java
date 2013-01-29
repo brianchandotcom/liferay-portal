@@ -376,6 +376,13 @@ public class JournalTestUtil {
 			"This is a test folder.", serviceContext);
 	}
 
+	public static JournalFolder addFolder(long groupId, String name)
+		throws Exception {
+
+		return addFolder(
+			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
+	}
+
 	public static void addLanguageIdElement(
 		Element element, String languageId, String value) {
 

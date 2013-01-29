@@ -33,6 +33,7 @@ import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.portlet.wiki.util.WikiTestUtil;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -73,17 +74,9 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		title += ServiceTestUtil.randomString(
 			_PAGE_TITLE_MAX_LENGTH - title.length());
 
-		WikiPage page = WikiPageLocalServiceUtil.addPage(
-			TestPropsValues.getUserId(),
-			(Long)parentBaseModel.getPrimaryKeyObj(), title,
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
-			true, serviceContext);
-
-		page = WikiPageLocalServiceUtil.updateStatus(
-			TestPropsValues.getUserId(), page.getResourcePrimKey(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		return page;
+		return WikiTestUtil.addWikiPage(
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			(Long)parentBaseModel.getPrimaryKeyObj(), title, approved);
 	}
 
 	@Override

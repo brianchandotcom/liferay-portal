@@ -12,34 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.wiki.search;
+package com.liferay.portlet.journal.search;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.search.BaseSearchTestCase;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.portlet.wiki.util.WikiTestUtil;
+import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.util.JournalTestUtil;
 
-import java.io.File;
-
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
- * @author Eudaldo Alonso
+ * @author Juan Fernández
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -48,28 +41,11 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class WikiPageSearchTest extends BaseSearchTestCase {
+public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 	@Override
-	protected void addAttachment(ClassedModel classedModel) throws Exception {
-		WikiPage page = (WikiPage)classedModel;
-
-		String fileName = ServiceTestUtil.randomString() + ".txt";
-
-		Class<?> clazz = getClass();
-
-		byte[] bytes = FileUtil.getBytes(
-			clazz.getResourceAsStream("dependencies/OSX_Test.docx"));
-
-		File file = null;
-
-		if ((bytes != null) && (bytes.length > 0)) {
-			file = FileUtil.createTempFile(bytes);
-		}
-
-		WikiPageLocalServiceUtil.addPageAttachment(
-			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle(),
-			fileName, file);
+	public void testSearchAttachments() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override
@@ -78,19 +54,19 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return WikiTestUtil.addWikiPage(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			(Long)parentBaseModel.getPrimaryKeyObj(), keywords, approved);
+		return JournalTestUtil.addArticleWithWorkflow(
+			serviceContext.getScopeGroupId(), keywords, keywords, approved);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return WikiPage.class;
+		return JournalArticle.class;
 	}
 
 	@Override
 	protected Long getBaseModelClassPK(ClassedModel classedModel) {
-		return WikiPageAssetRenderer.getClassPK((WikiPage)classedModel);
+		return JournalArticleAssetRenderer.getClassPK(
+			(JournalArticle)classedModel);
 	}
 
 	@Override
@@ -98,13 +74,7 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		serviceContext = (ServiceContext)serviceContext.clone();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.STATUS_APPROVED);
-
-		return WikiNodeLocalServiceUtil.addNode(
-			TestPropsValues.getUserId(), getSearchKeywords(),
-			getSearchKeywords(), serviceContext);
+		return JournalTestUtil.addFolder(group.getGroupId(), "Test Folder");
 	}
 
 	@Override

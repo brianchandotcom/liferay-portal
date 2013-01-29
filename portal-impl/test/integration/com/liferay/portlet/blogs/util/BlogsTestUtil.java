@@ -14,12 +14,11 @@
 
 package com.liferay.portlet.blogs.util;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -36,12 +35,18 @@ public class BlogsTestUtil {
 			long userId, Group group, boolean approved)
 		throws Exception {
 
+		return addBlogsEntry(userId, group, "Title", approved);
+	}
+
+	public static BlogsEntry addBlogsEntry(
+			long userId, Group group, String title, boolean approved)
+		throws Exception {
+
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		try {
 			WorkflowThreadLocal.setEnabled(true);
 
-			String title = "Title";
 			String description = "Description";
 			String content = "Content";
 			int displayDateMonth = 1;
@@ -63,7 +68,7 @@ public class BlogsTestUtil {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
-			BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 				userId, title, description, content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
@@ -71,17 +76,25 @@ public class BlogsTestUtil {
 				smallImageInputStream, serviceContext);
 
 			if (approved) {
-				BlogsEntryLocalServiceUtil.updateStatus(
-					GetterUtil.getLong(PrincipalThreadLocal.getName()),
-					blogsEntry.getEntryId(), WorkflowConstants.STATUS_APPROVED,
-					serviceContext);
+				entry = BlogsEntryLocalServiceUtil.updateStatus(
+					userId, entry.getEntryId(),
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
 			}
 
-			return blogsEntry;
+			return entry;
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
+	}
+
+	public static BlogsEntry addBlogsEntry(
+			long userId, long groupId, String title, boolean approved)
+		throws Exception {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		return addBlogsEntry(userId, group, title, approved);
 	}
 
 }

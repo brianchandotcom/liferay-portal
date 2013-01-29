@@ -108,6 +108,21 @@ public abstract class DLAppTestUtil {
 
 	public static FileEntry addFileEntry(
 			long groupId, long folderId, String sourceFileName, String title,
+			boolean approved)
+		throws Exception {
+
+		int workflowAction = WorkflowConstants.ACTION_SAVE_DRAFT;
+
+		if (approved) {
+			workflowAction = WorkflowConstants.ACTION_PUBLISH;
+		}
+
+		return addFileEntry(
+			groupId, folderId, sourceFileName, title, null, workflowAction);
+	}
+
+	public static FileEntry addFileEntry(
+			long groupId, long folderId, String sourceFileName, String title,
 			byte[] bytes)
 		throws Exception {
 

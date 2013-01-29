@@ -15,12 +15,12 @@
 package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
@@ -45,11 +45,9 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
-
-import java.io.File;
 
 import java.util.List;
 
@@ -90,26 +88,11 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		title += ServiceTestUtil.randomString(
 			_FILE_ENTRY_TITLE_MAX_LENGTH - title.length());
 
-		String content = "Content: Enterprise. Open Source.";
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			dlFolder.getGroupId(), dlFolder.getFolderId(),
+			ServiceTestUtil.randomString() + ".txt", title, approved);
 
-		File file = FileUtil.createTempFile(content.getBytes());
-
-		serviceContext = (ServiceContext)serviceContext.clone();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		if (approved) {
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-		}
-
-		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
-			ServiceTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			title, StringPool.BLANK, StringPool.BLANK, file, serviceContext);
-
-		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
-
-		return liferayFileEntry.getDLFileEntry();
+		return (DLFileEntry)fileEntry.getModel();
 	}
 
 	protected int getActiveDLFileRanksCount(long groupId, long fileEntryId)
@@ -162,11 +145,11 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		return DLFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
-			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
-			StringPool.BLANK, false, serviceContext);
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH));
+
+		return (DLFolder)folder.getModel();
 	}
 
 	@Override

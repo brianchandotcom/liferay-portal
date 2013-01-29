@@ -234,7 +234,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				portletDataContext.addZipEntry(
 					smallImagePath, smallImage.getTextObj());
 			}
-
 		}
 
 		if (portletDataContext.getBooleanParameter(_NAMESPACE, "images")) {

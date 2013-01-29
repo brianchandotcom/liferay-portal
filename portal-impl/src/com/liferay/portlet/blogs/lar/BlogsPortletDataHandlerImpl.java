@@ -354,7 +354,6 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 		InputStream smallImageInputStream = null;
 
 		try {
-
 			if (entry.isSmallImage()) {
 				String smallImagePath = entryElement.attributeValue(
 					"small-image-path");

@@ -168,7 +168,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		if (template.isSmallImage()) {
 			Image smallImage = ImageUtil.fetchByPrimaryKey(
-					template.getSmallImageId());
+				template.getSmallImageId());
 
 			if (Validator.isNotNull(template.getSmallImageURL())) {
 				String smallImageURL =

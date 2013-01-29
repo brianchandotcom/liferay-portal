@@ -1,28 +1,27 @@
 <#setting number_format = "0">
 
-insert into User_ (uuid_, userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, reminderQueryQuestion, reminderQueryAnswer, screenName, emailAddress, greeting, firstName, lastName, loginDate, lastLoginDate, failedLoginAttempts, agreedToTermsOfUse, status) values ('${portalUUIDUtil.generate()}', ${user.userId}, ${companyId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <#if user.defaultUser>TRUE<#else>FALSE</#if>, ${contact.contactId}, 'test', FALSE, FALSE, 'What is your screen name?', '${user.screenName}', '${user.screenName}', '${user.emailAddress}', 'Welcome ${contact.fullName}!', '${contact.firstName}', '${contact.lastName}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, TRUE, '${user.status}');
-insert into Contact_ values (${contact.contactId}, ${companyId}, ${user.userId}, '${contact.fullName}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ${dataFactory.userClassNameId}, ${user.userId}, ${contact.accountId}, 0, '${user.emailAddress}', '${contact.firstName}', '', '${contact.lastName}', 0, 0, TRUE, '01/01/1970', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+insert into User_ values ('${user.uuid}', ${user.userId}, ${user.companyId}, '${user.createDate?datetime}', '${user.modifiedDate?datetime}', ${user.defaultUser?string}, ${user.contactId}, '${user.password}', ${user.passwordEncrypted?string}, ${user.passwordReset?string}, ${user.passwordModifiedDate!'null'}, '${user.digest}', '${user.reminderQueryQuestion}', '${user.reminderQueryAnswer}', ${user.graceLoginCount}, '${user.screenName}', '${user.emailAddress}', ${user.facebookId}, ${user.ldapServerId}, '${user.openId}', ${user.portraitId}, '${user.languageId}', '${user.timeZoneId}', '${user.greeting}', '${user.comments}', '${user.firstName}', '${user.middleName}', '${user.lastName}', '${user.jobTitle}', '${user.loginDate?datetime}', '${user.loginIP}', '${user.lastLoginDate?datetime}', '${user.lastLoginIP}',  ${user.lastFailedLoginDate!'null'}, ${user.failedLoginAttempts}, ${user.lockout?string}, ${user.lockoutDate!'null'}, ${user.agreedToTermsOfUse?string}, ${user.emailAddressVerified?string}, '${user.status}');
 
-<#if roleIds??>
+<#assign contact = dataFactory.addContact(user)>
+
+insert into Contact_ values (${contact.contactId}, ${contact.companyId}, ${contact.userId}, '${contact.userName}', '${contact.createDate?datetime}', '${contact.modifiedDate?datetime}', ${contact.classNameId}, ${contact.classPK}, ${contact.accountId}, ${contact.parentContactId}, '${contact.emailAddress}', '${contact.firstName}', '${contact.middleName}', '${contact.lastName}', ${contact.prefixId}, ${contact.suffixId}, ${contact.male?string}, ${contact.birthday!'null'}, '${contact.smsSn}', '${contact.aimSn}', '${contact.facebookSn}', '${contact.icqSn}', '${contact.jabberSn}', '${contact.msnSn}', '${contact.mySpaceSn}', '${contact.skypeSn}', '${contact.twitterSn}', '${contact.ymSn}', '${contact.employeeStatusId}', '${contact.employeeNumber}', '${contact.jobTitle}', '${contact.jobClass}', '${contact.hoursOfOperation}');
+
+<#if !user.defaultUser>
 	<#list roleIds as roleId>
 		insert into Users_Roles values (${user.userId}, ${roleId});
 	</#list>
-</#if>
 
-<#if groupIds??>
 	<#list groupIds as groupId>
 		insert into Users_Groups values (${user.userId}, ${groupId});
 	</#list>
-</#if>
 
-<#if organizationIds??>
-	<#list organizationIds as organizationId>
-		insert into Users_Orgs values (${user.userId}, ${organizationId});
-	</#list>
-</#if>
+	<#assign group = dataFactory.addGroup(user)>
 
-<#if userGroupRoles??>
-	<#list userGroupRoles as userGroupRole>
-		insert into UserGroupRole values (${user.userId}, ${userGroupRole.groupId}, ${userGroupRole.roleId});
-	</#list>
+	<#assign publicLayouts = []>
+
+	<#if user.userId != dataFactory.guestUser.userId>
+		<#assign publicLayouts = [dataFactory.addLayout(group.groupId, "home", "", "33,")]>
+	</#if>
+
+	${sampleSQLBuilder.insertGroup(group, publicLayouts)}
 </#if>

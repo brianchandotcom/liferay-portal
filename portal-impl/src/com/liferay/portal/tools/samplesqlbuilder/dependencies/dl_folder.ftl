@@ -1,18 +1,16 @@
 <#setting number_format = "0">
 
-<#assign dlFolderCreateDate = dataFactory.getDateString(dlFolder.createDate)>
+insert into DLFolder values ('${dlFolder.uuid}', ${dlFolder.folderId}, ${dlFolder.groupId}, ${dlFolder.companyId}, ${dlFolder.userId}, '${dlFolder.userName}', '${dlFolder.createDate?datetime}', '${dlFolder.modifiedDate?datetime}', ${dlFolder.repositoryId}, ${dlFolder.mountPoint?string}, ${dlFolder.parentFolderId}, '${dlFolder.name}', '${dlFolder.description}', '${dlFolder.lastPostDate?datetime}', ${dlFolder.defaultFileEntryTypeId}, ${dlFolder.hidden?string}, ${dlFolder.overrideFileEntryTypes?string}, ${dlFolder.status}, ${dlFolder.statusByUserId}, '${dlFolder.statusByUserName}', ${dlFolder.statusDate!'null'});
 
-insert into DLFolder values ('${portalUUIDUtil.generate()}', ${dlFolder.folderId}, ${dlFolder.groupId}, ${dlFolder.companyId}, ${dlFolder.userId}, '', '${dlFolderCreateDate}', '${dlFolderCreateDate}', ${dlFolder.repositoryId}, 0, ${dlFolder.parentFolderId}, '${dlFolder.name}', '${dlFolder.description}', null, 0, FALSE, 0, 0, ${dlFolder.userId}, '', '${dlFolderCreateDate}');
+<#assign dlSync = dataFactory.addDLSync(dlFolder)>
 
-<#assign dlSync = dataFactory.addDLSync(dlFolder.companyId, dlFolder.folderId, dlFolder.repositoryId, dlFolder.parentFolderId, true)>
-
-insert into DLSync values (${dlSync.syncId}, ${dlSync.companyId}, '${dlFolderCreateDate}', '${dlFolderCreateDate}', ${dlSync.fileId}, '${dlSync.fileUuid}', ${dlSync.repositoryId}, ${dlSync.parentFolderId}, '${dlSync.name}', '${dlSync.description}', '${dlSync.event}', '${dlSync.type}', '${dlSync.version}');
+insert into DLSync values (${dlSync.syncId}, ${dlSync.companyId}, '${dlSync.createDate?datetime}', '${dlSync.modifiedDate?datetime}', ${dlSync.fileId}, '${dlSync.fileUuid}', ${dlSync.repositoryId}, ${dlSync.parentFolderId}, '${dlSync.name}', '${dlSync.description}', '${dlSync.event}', '${dlSync.type}', '${dlSync.version}');
 
 <#if (maxDLFileEntryCount > 0)>
 	<#list 1..maxDLFileEntryCount as dlFileEntryCount>
-		<#assign dlFileEntry = dataFactory.addDlFileEntry(dlFolder.groupId, dlFolder.companyId, dlFolder.userId, dlFolder.folderId, "txt", "text/plain", "TestFile" + stringUtil.valueOf(dlFileEntryCount), "TestFile" + dlFileEntryCount + ".txt", "")>
+		<#assign dlFileEntry = dataFactory.addDlFileEntry(dlFolder, dlFileEntryCount)>
 
-		${sampleSQLBuilder.insertDLFileEntry(dlFileEntry, ddmStructure)}
+		${sampleSQLBuilder.insertDLFileEntry(dlFileEntry, ddmStructureId)}
 
 		${writerDocumentLibraryCSV.write(dlFolder.folderId + "," + dlFileEntry.name + "," + dlFileEntry.fileEntryId + "," + dataFactory.getDateLong(dlFileEntry.createDate) + "," + dataFactory.getDateLong(dlFolder.createDate) +"\n")}
 	</#list>

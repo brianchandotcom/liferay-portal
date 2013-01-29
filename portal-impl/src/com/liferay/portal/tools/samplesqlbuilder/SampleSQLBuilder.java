@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Role;
@@ -42,11 +41,9 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.io.File;
@@ -95,7 +92,7 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.max.ddl.record.set.count"));
 		_maxDLFileEntryCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.dl.file.entry.count"));
-		_maxDLFileEntrySize = GetterUtil.getInteger(
+		int maxDLFileEntrySize = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.dl.file.entry.size"));
 		_maxDLFolderCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.dl.folder.count"));
@@ -133,7 +130,7 @@ public class SampleSQLBuilder {
 			_dataFactory = new DataFactory(
 				baseDir, _maxGroupCount, maxJournalArticleSize,
 				_maxUserToGroupCount, _maxMBCategoryCount, _maxMBThreadCount,
-				_maxMBMessageCount);
+				_maxMBMessageCount, maxDLFileEntrySize, _maxBlogsEntryCount);
 
 			_db = DBFactoryUtil.getDB(_dbType);
 
@@ -207,14 +204,14 @@ public class SampleSQLBuilder {
 	}
 
 	public void insertDDLRecord(
-			DDLRecord ddlRecord, DDLRecordSet ddlRecordSet, int ddlRecordCount)
+			DDLRecord ddlRecord, int ddlRecordCount, long ddmStructureId)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
 		put(context, "ddlRecord", ddlRecord);
 		put(context, "ddlRecordCount", ddlRecordCount);
-		put(context, "ddlRecordSet", ddlRecordSet);
+		put(context, "ddmStructureId", ddmStructureId);
 
 		processTemplate(_tplDDLRecord, context);
 	}
@@ -227,51 +224,49 @@ public class SampleSQLBuilder {
 		processTemplate(_tplDLFolders, context);
 	}
 
-	public void insertDLFileEntry(
-			DLFileEntry dlFileEntry, DDMStructure ddmStructure)
+	public void insertDLFileEntry(DLFileEntry dlFileEntry, long ddmStructureId)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
-		put(context, "ddmStructure", ddmStructure);
+		put(context, "ddmStructureId", ddmStructureId);
 		put(context, "dlFileEntry", dlFileEntry);
 
 		processTemplate(_tplDLFileEntry, context);
 	}
 
-	public void insertDLFolder(DLFolder dlFolder, DDMStructure ddmStructure)
+	public void insertDLFolder(DLFolder dlFolder, long ddmStructureId)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
-		put(context, "ddmStructure", ddmStructure);
+		put(context, "ddmStructureId", ddmStructureId);
 		put(context, "dlFolder", dlFolder);
 
 		processTemplate(_tplDLFolder, context);
 	}
 
 	public void insertDLFolders(
-			long parentDLFolderId, int dlFolderDepth, DDMStructure ddmStructure)
+			long groupId, long parentDLFolderId, int dlFolderDepth,
+			long ddmStructureId)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
-		put(context, "ddmStructure", ddmStructure);
+		put(context, "ddmStructureId", ddmStructureId);
 		put(context, "dlFolderDepth", dlFolderDepth);
+		put(context, "groupId", groupId);
 		put(context, "parentDLFolderId", parentDLFolderId);
 
 		processTemplate(_tplDLFolders, context);
 	}
 
-	public void insertGroup(
-			Group group, List<Layout> privateLayouts,
-			List<Layout> publicLayouts)
+	public void insertGroup(Group group, List<Layout> publicLayouts)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
 		put(context, "group", group);
-		put(context, "privateLayouts", privateLayouts);
 		put(context, "publicLayouts", publicLayouts);
 
 		processTemplate(_tplGroup, context);
@@ -304,28 +299,21 @@ public class SampleSQLBuilder {
 		processTemplate(_tplResourcePermission, context);
 	}
 
-	public void insertUser(
-			Contact contact, List<Long> groupIds, List<Long> organizationIds,
-			List<Role> roleIds, User user)
+	public void insertUser(User user, List<Role> roleIds, List<Long> groupIds)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
-		put(context, "contact", contact);
 		put(context, "groupIds", groupIds);
-		put(context, "organizationIds", organizationIds);
 		put(context, "roleIds", roleIds);
 		put(context, "user", user);
 
 		processTemplate(_tplUser, context);
 	}
 
-	public void insertWikiPage(WikiNode wikiNode, WikiPage wikiPage)
-		throws Exception {
-
+	public void insertWikiPage(WikiPage wikiPage) throws Exception {
 		Map<String, Object> context = getContext();
 
-		put(context, "wikiNode", wikiNode);
 		put(context, "wikiPage", wikiPage);
 
 		processTemplate(_tplWikiPage, context);
@@ -478,11 +466,9 @@ public class SampleSQLBuilder {
 		User defaultUser = _dataFactory.getDefaultUser();
 
 		put(context, "companyId", company.getCompanyId());
-		put(context, "counter", _dataFactory.getCounter());
 		put(context, "dataFactory", _dataFactory);
 		put(context, "dateUtil", DateUtil_IW.getInstance());
 		put(context, "defaultUserId", defaultUser.getCompanyId());
-		put(context, "maxDLFileEntrySize", _maxDLFileEntrySize);
 		put(context, "maxBlogsEntryCommentCount", _maxBlogsEntryCommentCount);
 		put(context, "maxBlogsEntryCount", _maxBlogsEntryCount);
 		put(context, "maxDDLRecordCount", _maxDDLRecordCount);
@@ -638,7 +624,6 @@ public class SampleSQLBuilder {
 	private int _maxDDLRecordCount;
 	private int _maxDDLRecordSetCount;
 	private int _maxDLFileEntryCount;
-	private int _maxDLFileEntrySize;
 	private int _maxDLFolderCount;
 	private int _maxDLFolderDepth;
 	private int _maxGroupCount;

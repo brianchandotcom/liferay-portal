@@ -17,6 +17,7 @@ package com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcstructurewebcontentlocalized.AddWCStructureWebContentLocalizedTests;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.AddWCWebContentTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontents.AddWCWebContentsTests;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.editwcwebcontent.EditWCWebContentTests;
 
 import junit.framework.Test;
@@ -32,6 +33,7 @@ public class WCWebContentTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddWCStructureWebContentLocalizedTests.suite());
 		testSuite.addTest(AddWCWebContentTests.suite());
+		testSuite.addTest(AddWCWebContentsTests.suite());
 		testSuite.addTest(EditWCWebContentTests.suite());
 
 		return testSuite;

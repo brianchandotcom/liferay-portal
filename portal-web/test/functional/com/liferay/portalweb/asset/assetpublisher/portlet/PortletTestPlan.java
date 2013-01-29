@@ -62,7 +62,8 @@ public class PortletTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddPortletAPSiteTests.suite());
 		testSuite.addTest(AddPortletMultipleAPTests.suite());
 		testSuite.addTest(ConfigurePortletAPDisplayPageTests.suite());
-		testSuite.addTest(ConfigurePortletAPDisplayTemplateRichSummaryTests.suite());
+		testSuite.addTest(
+			ConfigurePortletAPDisplayTemplateRichSummaryTests.suite());
 		testSuite.addTest(ConfigurePortletAPEnableRatingsTests.suite());
 		testSuite.addTest(ConfigurePortletAPOrderByColumnRatingsTests.suite());
 		testSuite.addTest(ConfigurePortletAPScopeBlogsPageTests.suite());

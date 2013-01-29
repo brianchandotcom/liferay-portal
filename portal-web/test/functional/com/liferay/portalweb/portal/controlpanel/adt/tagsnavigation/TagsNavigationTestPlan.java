@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.tagsnavigation.portlet;
+package com.liferay.portalweb.portal.controlpanel.adt.tagsnavigation;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.tagsnavigation.portlet.addportletstn.AddPortletsTNTests;
-import com.liferay.portalweb.portlet.tagsnavigation.portlet.addportlettn.AddPortletTNTests;
-import com.liferay.portalweb.portlet.tagsnavigation.portlet.configureportlettndisplaytemplatecolorbypopular.ConfigurePortletTNDisplayTemplateColorByPopularTests;
-import com.liferay.portalweb.portlet.tagsnavigation.portlet.removeportlettn.RemovePortletTNTests;
+import com.liferay.portalweb.portal.controlpanel.adt.tagsnavigation.viewportlettndisplaytemplatecolorbypopular.ViewPortletTNDisplayTemplateColorByPopularTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,16 +23,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletTestPlan extends BaseTestSuite {
+public class TagsNavigationTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletTNTests.suite());
-		testSuite.addTest(AddPortletsTNTests.suite());
 		testSuite.addTest(
-			ConfigurePortletTNDisplayTemplateColorByPopularTests.suite());
-		testSuite.addTest(RemovePortletTNTests.suite());
+			ViewPortletTNDisplayTemplateColorByPopularTests.suite());
 
 		return testSuite;
 	}

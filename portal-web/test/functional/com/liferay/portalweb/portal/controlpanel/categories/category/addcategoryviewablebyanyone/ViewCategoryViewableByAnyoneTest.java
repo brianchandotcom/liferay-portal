@@ -39,10 +39,12 @@ public class ViewCategoryViewableByAnyoneTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@id='categoriesTreeContainer']/ul/li/div/div[contains(.,'Category Name')]");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//li/div/div[4]"));
-		selenium.clickAt("//li/div/div[4]",
+			selenium.getText(
+				"//div[@id='categoriesTreeContainer']/ul/li/div/div[contains(.,'Category Name')]"));
+		selenium.clickAt("//div[@id='categoriesTreeContainer']/ul/li/div/div[contains(.,'Category Name')]",
 			RuntimeVariables.replace("Category Name"));
 		selenium.waitForVisible("//div[@class='view-category']/div/h1/span");
 		assertEquals(RuntimeVariables.replace("Category Name"),

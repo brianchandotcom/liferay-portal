@@ -15,9 +15,9 @@
 package com.liferay.portalweb.portal.controlpanel.categories;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-//import com.liferay.portalweb.portal.controlpanel.categories.assettype.AssetTypeTestPlan;
+import com.liferay.portalweb.portal.controlpanel.categories.assettype.AssetTypeTestPlan;
 import com.liferay.portalweb.portal.controlpanel.categories.category.CategoryTestPlan;
-//import com.liferay.portalweb.portal.controlpanel.categories.property.PropertyTestPlan;
+import com.liferay.portalweb.portal.controlpanel.categories.property.PropertyTestPlan;
 import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.VocabularyTestPlan;
 
 import junit.framework.Test;
@@ -31,9 +31,9 @@ public class CategoriesTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		//testSuite.addTest(AssetTypeTestPlan.suite());
+		testSuite.addTest(AssetTypeTestPlan.suite());
 		testSuite.addTest(CategoryTestPlan.suite());
-		//testSuite.addTest(PropertyTestPlan.suite());
+		testSuite.addTest(PropertyTestPlan.suite());
 		testSuite.addTest(VocabularyTestPlan.suite());
 
 		return testSuite;

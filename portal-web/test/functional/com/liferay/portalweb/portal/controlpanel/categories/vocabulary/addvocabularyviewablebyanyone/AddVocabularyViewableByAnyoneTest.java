@@ -39,6 +39,7 @@ public class AddVocabularyViewableByAnyoneTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Add Vocabulary']",
 			RuntimeVariables.replace("Add Vocabulary"));
 		selenium.waitForVisible("//input[@id='_147_title_en_US']");
@@ -46,7 +47,7 @@ public class AddVocabularyViewableByAnyoneTest extends BaseTestCase {
 			RuntimeVariables.replace("Vocabulary Name"));
 		selenium.type("//textarea[@id='_147_description_en_US']",
 			RuntimeVariables.replace("Vocabulary Description"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.select("//select[@id='_147_inputPermissionsViewRole']",
 			RuntimeVariables.replace("Anyone (Guest Role)"));
 		selenium.clickAt("//input[@value='Save']",

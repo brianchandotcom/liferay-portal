@@ -46,6 +46,8 @@ import javax.portlet.PortletPreferences;
  */
 public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 
+	public static final String NAMESPACE = "bookmarks";
+
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
@@ -57,7 +59,7 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getExportMetadataControls() {
 		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
-				_NAMESPACE, "bookmarks", true, _metadataControls)
+				NAMESPACE, "bookmarks", true, _metadataControls)
 		};
 	}
 
@@ -72,7 +74,7 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getImportMetadataControls() {
 		return new PortletDataHandlerControl[] {
 			new PortletDataHandlerBoolean(
-				_NAMESPACE, "bookmarks", true, _metadataControls)
+				NAMESPACE, "bookmarks", true, _metadataControls)
 		};
 	}
 
@@ -213,7 +215,7 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 			Element entryElement = entriesElement.addElement("entry");
 
 			portletDataContext.addClassedModel(
-				entryElement, path, entry, _NAMESPACE);
+				entryElement, path, entry, NAMESPACE);
 		}
 	}
 
@@ -232,7 +234,7 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 				Element folderElement = foldersElement.addElement("folder");
 
 				portletDataContext.addClassedModel(
-					folderElement, path, folder, _NAMESPACE);
+					folderElement, path, folder, NAMESPACE);
 			}
 		}
 
@@ -265,7 +267,7 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 			Element folderElement = foldersElement.addElement("folder");
 
 			portletDataContext.addClassedModel(
-				folderElement, path, folder, _NAMESPACE);
+				folderElement, path, folder, NAMESPACE);
 		}
 	}
 
@@ -338,7 +340,7 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			entryElement, entry, _NAMESPACE);
+			entryElement, entry, NAMESPACE);
 
 		BookmarksEntry importedEntry = null;
 
@@ -369,7 +371,7 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 				serviceContext);
 		}
 
-		portletDataContext.importClassedModel(entry, importedEntry, _NAMESPACE);
+		portletDataContext.importClassedModel(entry, importedEntry, NAMESPACE);
 	}
 
 	protected void importFolder(
@@ -404,7 +406,7 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			folderPath, folder, _NAMESPACE);
+			folderPath, folder, NAMESPACE);
 
 		BookmarksFolder importedFolder = null;
 
@@ -433,24 +435,22 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		portletDataContext.importClassedModel(
-			folder, importedFolder, _NAMESPACE);
+			folder, importedFolder, NAMESPACE);
 	}
 
 	private static final boolean _ALWAYS_EXPORTABLE = true;
-
-	private static final String _NAMESPACE = "bookmarks";
 
 	private static final boolean _PUBLISH_TO_LIVE_BY_DEFAULT = true;
 
 	private static PortletDataHandlerBoolean _foldersAndEntries =
 		new PortletDataHandlerBoolean(
-			_NAMESPACE, "folders-and-entries", true, true);
+			NAMESPACE, "folders-and-entries", true, true);
 
 	private static PortletDataHandlerControl[] _metadataControls =
 		new PortletDataHandlerControl[] {
-			new PortletDataHandlerBoolean(_NAMESPACE, "categories"),
-			new PortletDataHandlerBoolean(_NAMESPACE, "ratings"),
-			new PortletDataHandlerBoolean(_NAMESPACE, "tags")
+			new PortletDataHandlerBoolean(NAMESPACE, "categories"),
+			new PortletDataHandlerBoolean(NAMESPACE, "ratings"),
+			new PortletDataHandlerBoolean(NAMESPACE, "tags")
 		};
 
 }

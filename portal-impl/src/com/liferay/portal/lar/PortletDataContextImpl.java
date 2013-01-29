@@ -1221,7 +1221,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	public boolean isPathNotProcessed(String path) {
-		return !addPrimaryKey(String.class, path);
+		return !isPathProcessed(path);
+	}
+
+	public boolean isPathProcessed(String path) {
+		return addPrimaryKey(String.class, path);
 	}
 
 	public boolean isPerformDirectBinaryImport() {

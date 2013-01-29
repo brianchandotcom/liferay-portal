@@ -1,5 +1,3 @@
-<#setting number_format = "0">
-
 <#assign company = dataFactory.company>
 
 insert into Company values (${company.companyId}, ${company.accountId}, '${company.webId}', '${company.key}', '${company.mx}', '${company.homeURL}', ${company.logoId}, ${company.system?string}, ${company.maxUsers}, ${company.active?string});

@@ -229,6 +229,8 @@ web.server.display.node=true</echo>
 		</antcall>
 
 		<antcall target="stop-selenium" />
+
+		<delete file="app.server.${user.name}.properties" failonerror="false" />
 	</target>
 
 	<target name="run-tomcat">

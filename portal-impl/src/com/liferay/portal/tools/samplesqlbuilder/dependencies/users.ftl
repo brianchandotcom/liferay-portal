@@ -14,7 +14,7 @@
 		<#assign userCounterIncrement = userCounter.increment()>
 
 		<#assign contact = dataFactory.addContact(firstName, lastName)>
-		<#assign user = dataFactory.addUser(false, "test" + userScreenNameIncrementer.get())>
+		<#assign user = dataFactory.addUser(false, "test" + dataFactory.userScreenNameIncrementer.get())>
 
 		<#assign userGroup = dataFactory.addGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
 

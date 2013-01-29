@@ -118,29 +118,28 @@ import java.util.List;
 public class DataFactory {
 
 	public DataFactory(
-		String baseDir, int maxGroupsCount, int maxJournalArticleSize,
-		int maxUserToGroupCount, SimpleCounter counter,
-		SimpleCounter dlDateCounter, SimpleCounter permissionCounter,
-		SimpleCounter resourceCounter, SimpleCounter resourcePermissionCounter,
-		SimpleCounter socialActivityCounter) {
+		String baseDir, int maxGroupCount, int maxJournalArticleSize,
+		int maxUserToGroupCount, int maxMBCategoryCount, int maxMBThreadCount,
+		int maxMBMessageCount) {
 
 		try {
 			_baseDir = baseDir;
-			_maxGroupsCount = maxGroupsCount;
+			_maxGroupCount = maxGroupCount;
 			_maxUserToGroupCount = maxUserToGroupCount;
+			_maxMBCategoryCount = maxMBCategoryCount;
+			_maxMBThreadCount = maxMBThreadCount;
+			_maxMBMessageCount = maxMBMessageCount;
 
-			_counter = counter;
-			_dlDateCounter = dlDateCounter;
-			_resourcePermissionCounter = resourcePermissionCounter;
-			_socialActivityCounter = socialActivityCounter;
+			_initSimpleCounters();
 
-			initClassNames();
-			initCompany();
-			initDefaultUser();
-			initGuestGroup();
-			initJournalArticle(maxJournalArticleSize);
-			initRoles();
-			initUserNames();
+			_initClassNames();
+			_initUserNames();
+			_initJournalArticle(maxJournalArticleSize);
+
+			_initCompany();
+			_initDefaultUser();
+			_initGuestGroup();
+			_initRoles();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -198,6 +197,39 @@ public class DataFactory {
 		contact.setLastName(lastName);
 
 		return contact;
+	}
+
+	public List<Counter> addCounters() {
+		List counters = new ArrayList<CounterModelImpl>();
+
+		// Counter
+
+		CounterModelImpl counter = new CounterModelImpl();
+
+		counter.setName(Counter.class.getName());
+		counter.setCurrentId(_counter.get());
+
+		counters.add(counter);
+
+		// ResourcePermission
+
+		counter = new CounterModelImpl();
+
+		counter.setName(ResourcePermission.class.getName());
+		counter.setCurrentId(_resourcePermissionCounter.get());
+
+		counters.add(counter);
+
+		// SocialActivity
+
+		counter = new CounterModelImpl();
+
+		counter.setName(SocialActivity.class.getName());
+		counter.setCurrentId(_socialActivityCounter.get());
+
+		counters.add(counter);
+
+		return counters;
 	}
 
 	public DDLRecord addDDLRecord(
@@ -650,7 +682,7 @@ public class DataFactory {
 
 		groupIds.add(_guestGroup.getGroupId());
 
-		if ((groupId + _maxUserToGroupCount) > _maxGroupsCount) {
+		if ((groupId + _maxUserToGroupCount) > _maxGroupCount) {
 			groupId = groupId - _maxUserToGroupCount + 1;
 		}
 
@@ -710,8 +742,8 @@ public class DataFactory {
 		return _company;
 	}
 
-	public List<CounterModelImpl> getCounters() {
-		return _counters;
+	public SimpleCounter getCounter() {
+		return _counter;
 	}
 
 	public String getDateLong(Date date) {
@@ -806,11 +838,33 @@ public class DataFactory {
 		return _userRole;
 	}
 
+	public SimpleCounter getUserScreenNameIncrementer() {
+		return _userScreenNameIncrementer;
+	}
+
 	public long getWikiPageClassNameId() {
 		return _wikiPageClassNameId;
 	}
 
-	public void initClassNames() {
+	public IntegerWrapper newInteger() {
+		return new IntegerWrapper();
+	}
+
+	protected Date newCreateDate() {
+		return new Date(_baseCreateTime + (_dlDateCounter.get() * Time.SECOND));
+	}
+
+	protected Role newRole() {
+		Role role = new RoleImpl();
+
+		role.setRoleId(_counter.get());
+		role.setClassNameId(_roleClassNameId);
+		role.setClassPK(role.getRoleId());
+
+		return role;
+	}
+
+	private void _initClassNames() {
 		_classNames = new ArrayList<ClassName>();
 
 		List<String> models = ModelHintsUtil.getModels();
@@ -859,55 +913,20 @@ public class DataFactory {
 		}
 	}
 
-	public void initCompany() {
+	private void _initCompany() {
 		_company = new CompanyImpl();
 
 		_company.setCompanyId(_counter.get());
 		_company.setAccountId(_counter.get());
 	}
 
-	public void initCounters() {
-		if (_counters != null) {
-			return;
-		}
-
-		_counters = new ArrayList<CounterModelImpl>();
-
-		// Counter
-
-		CounterModelImpl counter = new CounterModelImpl();
-
-		counter.setName(Counter.class.getName());
-		counter.setCurrentId(_counter.get());
-
-		_counters.add(counter);
-
-		// ResourcePermission
-
-		counter = new CounterModelImpl();
-
-		counter.setName(ResourcePermission.class.getName());
-		counter.setCurrentId(_resourcePermissionCounter.get());
-
-		_counters.add(counter);
-
-		// SocialActivity
-
-		counter = new CounterModelImpl();
-
-		counter.setName(SocialActivity.class.getName());
-		counter.setCurrentId(_socialActivityCounter.get());
-
-		_counters.add(counter);
-	}
-
-	public void initDefaultUser() {
+	private void _initDefaultUser() {
 		_defaultUser = new UserImpl();
 
 		_defaultUser.setUserId(_counter.get());
 	}
 
-	public void initGuestGroup() {
+	private void _initGuestGroup() {
 		_guestGroup = new GroupImpl();
 
 		_guestGroup.setGroupId(_counter.get());
@@ -918,7 +937,9 @@ public class DataFactory {
 		_guestGroup.setSite(true);
 	}
 
-	public void initJournalArticle(int maxJournalArticleSize) throws Exception {
+	private void _initJournalArticle(int maxJournalArticleSize)
+		throws Exception {
+
 		if (maxJournalArticleSize <= 0) {
 			maxJournalArticleSize = 1;
 		}
@@ -932,7 +953,7 @@ public class DataFactory {
 		_journalArticleContent = new String(chars);
 	}
 
-	public void initRoles() {
+	private void _initRoles() {
 		if (_roles != null) {
 			return;
 		}
@@ -1061,7 +1082,25 @@ public class DataFactory {
 		_userRole = role;
 	}
 
-	public void initUserNames() throws Exception {
+	private void _initSimpleCounters() {
+		int totalMThreadCount = _maxMBCategoryCount * _maxMBThreadCount;
+		int totalMBMessageCount = totalMThreadCount * _maxMBMessageCount;
+
+		int counterOffset =
+			_maxGroupCount +
+			(_maxGroupCount *
+				(_maxMBCategoryCount + totalMThreadCount +
+					totalMBMessageCount)
+			) + 1;
+
+		_counter = new SimpleCounter(counterOffset);
+		_dlDateCounter = new SimpleCounter();
+		_resourcePermissionCounter = new SimpleCounter();
+		_socialActivityCounter = new SimpleCounter();
+		_userScreenNameIncrementer = new SimpleCounter();
+	}
+
+	private void _initUserNames() throws Exception {
 		if (_userNames != null) {
 			return;
 		}
@@ -1081,24 +1120,6 @@ public class DataFactory {
 		_userNames[1] = lastNames;
 	}
 
-	public IntegerWrapper newInteger() {
-		return new IntegerWrapper();
-	}
-
-	protected Date newCreateDate() {
-		return new Date(_baseCreateTime + (_dlDateCounter.get() * Time.SECOND));
-	}
-
-	protected Role newRole() {
-		Role role = new RoleImpl();
-
-		role.setRoleId(_counter.get());
-		role.setClassNameId(_roleClassNameId);
-		role.setClassPK(role.getRoleId());
-
-		return role;
-	}
-
 	private Role _administratorRole;
 	private long _baseCreateTime = System.currentTimeMillis() + Time.YEAR;
 	private String _baseDir;
@@ -1106,7 +1127,6 @@ public class DataFactory {
 	private List<ClassName> _classNames;
 	private Company _company;
 	private SimpleCounter _counter;
-	private List<CounterModelImpl> _counters;
 	private long _ddlRecordSetClassNameId;
 	private long _ddmContentClassNameId;
 	private User _defaultUser;
@@ -1117,7 +1137,10 @@ public class DataFactory {
 	private Role _guestRole;
 	private long _journalArticleClassNameId;
 	private String _journalArticleContent;
-	private int _maxGroupsCount;
+	private int _maxGroupCount;
+	private int _maxMBCategoryCount;
+	private int _maxMBMessageCount;
+	private int _maxMBThreadCount;
 	private int _maxUserToGroupCount;
 	private long _mbMessageClassNameId;
 	private Role _organizationAdministratorRole;
@@ -1136,7 +1159,9 @@ public class DataFactory {
 	private SimpleCounter _socialActivityCounter;
 	private long _userClassNameId;
 	private Object[] _userNames;
+
 	private Role _userRole;
+	private SimpleCounter _userScreenNameIncrementer;
 	private long _wikiPageClassNameId;
 
 }

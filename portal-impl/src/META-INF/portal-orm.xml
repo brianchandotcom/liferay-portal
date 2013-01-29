@@ -239,6 +239,7 @@
 			<basic name="classNameId" />
 			<basic name="classPK" />
 			<basic name="parentGroupId" />
+			<basic name="treePath" />
 			<basic name="liveGroupId" />
 			<basic name="name" />
 			<basic name="description" />

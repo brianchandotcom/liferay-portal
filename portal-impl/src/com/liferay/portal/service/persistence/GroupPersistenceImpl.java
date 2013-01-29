@@ -4870,6 +4870,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		groupImpl.setClassNameId(group.getClassNameId());
 		groupImpl.setClassPK(group.getClassPK());
 		groupImpl.setParentGroupId(group.getParentGroupId());
+		groupImpl.setTreePath(group.getTreePath());
 		groupImpl.setLiveGroupId(group.getLiveGroupId());
 		groupImpl.setName(group.getName());
 		groupImpl.setDescription(group.getDescription());

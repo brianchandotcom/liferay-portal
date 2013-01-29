@@ -964,6 +964,24 @@ public interface GroupLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Rebuilds the group tree.
+	*
+	* <p>
+	* Only call this method if the tree has become stale through operations
+	* other than normal CRUD. Under normal circumstances the tree is
+	* automatically rebuilt whenever necessary.
+	* </p>
+	*
+	* @param companyId the primary key of the group's company
+	* @throws PortalException if an group with the primary key could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns an ordered range of all the company's groups, optionally
 	* including the user's inherited organization groups and user groups.
 	* System and staged groups are not included.

@@ -69,6 +69,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "parentGroupId", Types.BIGINT },
+			{ "treePath", Types.VARCHAR },
 			{ "liveGroupId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
@@ -78,7 +79,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 			{ "site", Types.BOOLEAN },
 			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Group_ (groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,name VARCHAR(150) null,description STRING null,type_ INTEGER,typeSettings STRING null,friendlyURL VARCHAR(100) null,site BOOLEAN,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Group_ (groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,treePath VARCHAR(75) null,liveGroupId LONG,name VARCHAR(150) null,description STRING null,type_ INTEGER,typeSettings STRING null,friendlyURL VARCHAR(100) null,site BOOLEAN,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 	public static final String ORDER_BY_JPQL = " ORDER BY group_.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Group_.name ASC";
@@ -124,6 +125,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
 		model.setParentGroupId(soapModel.getParentGroupId());
+		model.setTreePath(soapModel.getTreePath());
 		model.setLiveGroupId(soapModel.getLiveGroupId());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
@@ -228,6 +230,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("parentGroupId", getParentGroupId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("liveGroupId", getLiveGroupId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
@@ -276,6 +279,12 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		if (parentGroupId != null) {
 			setParentGroupId(parentGroupId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		Long liveGroupId = (Long)attributes.get("liveGroupId");
@@ -454,6 +463,20 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	public long getOriginalParentGroupId() {
 		return _originalParentGroupId;
+	}
+
+	@JSON
+	public String getTreePath() {
+		if (_treePath == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _treePath;
+		}
+	}
+
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
 	}
 
 	@JSON
@@ -661,6 +684,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		groupImpl.setClassNameId(getClassNameId());
 		groupImpl.setClassPK(getClassPK());
 		groupImpl.setParentGroupId(getParentGroupId());
+		groupImpl.setTreePath(getTreePath());
 		groupImpl.setLiveGroupId(getLiveGroupId());
 		groupImpl.setName(getName());
 		groupImpl.setDescription(getDescription());
@@ -776,6 +800,14 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		groupCacheModel.parentGroupId = getParentGroupId();
 
+		groupCacheModel.treePath = getTreePath();
+
+		String treePath = groupCacheModel.treePath;
+
+		if ((treePath != null) && (treePath.length() == 0)) {
+			groupCacheModel.treePath = null;
+		}
+
 		groupCacheModel.liveGroupId = getLiveGroupId();
 
 		groupCacheModel.name = getName();
@@ -821,7 +853,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{groupId=");
 		sb.append(getGroupId());
@@ -835,6 +867,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		sb.append(getClassPK());
 		sb.append(", parentGroupId=");
 		sb.append(getParentGroupId());
+		sb.append(", treePath=");
+		sb.append(getTreePath());
 		sb.append(", liveGroupId=");
 		sb.append(getLiveGroupId());
 		sb.append(", name=");
@@ -857,7 +891,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Group");
@@ -886,6 +920,10 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		sb.append(
 			"<column><column-name>parentGroupId</column-name><column-value><![CDATA[");
 		sb.append(getParentGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>treePath</column-name><column-value><![CDATA[");
+		sb.append(getTreePath());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>liveGroupId</column-name><column-value><![CDATA[");
@@ -942,6 +980,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private long _parentGroupId;
 	private long _originalParentGroupId;
 	private boolean _setOriginalParentGroupId;
+	private String _treePath;
 	private long _liveGroupId;
 	private long _originalLiveGroupId;
 	private boolean _setOriginalLiveGroupId;

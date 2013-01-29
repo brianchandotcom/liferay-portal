@@ -186,6 +186,9 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="parentGroupId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="liveGroupId" type="long" />
 		<field name="name" type="String">
 			<hint name="display-width">150</hint>

@@ -39,6 +39,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ShardLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.impl.GroupLocalServiceImpl;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RobotsUtil;
@@ -62,6 +63,7 @@ public class VerifyGroup extends VerifyProcess {
 		verifyRobots();
 		verifySites();
 		verifyStagedGroups();
+		verifyTree();
 	}
 
 	protected String getRobots(LayoutSet layoutSet) {
@@ -287,6 +289,14 @@ public class VerifyGroup extends VerifyProcess {
 
 				GroupLocalServiceUtil.updateGroup(stagingGroup);
 			}
+		}
+	}
+
+	protected void verifyTree() throws Exception {
+		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+		for (long companyId : companyIds) {
+			GroupLocalServiceUtil.rebuildTree(companyId);
 		}
 	}
 

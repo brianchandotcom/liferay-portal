@@ -329,6 +329,8 @@ COMMIT_TRANSACTION;
 
 update ExpandoRow set modifiedDate = CURRENT_TIMESTAMP;
 
+alter table Group_ add treePath STRING null;
+
 update Group_ set site = FALSE where name = 'Control Panel';
 
 drop table Groups_Permissions;

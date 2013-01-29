@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -89,6 +90,14 @@ import java.util.Map;
 public class GroupImpl extends GroupBaseImpl {
 
 	public GroupImpl() {
+	}
+
+	public String buildTreePath() throws PortalException, SystemException {
+		StringBundler sb = new StringBundler();
+
+		buildTreePath(sb, this);
+
+		return sb.toString();
 	}
 
 	public List<Group> getAncestors() throws PortalException, SystemException {
@@ -641,6 +650,20 @@ public class GroupImpl extends GroupBaseImpl {
 		_typeSettingsProperties = typeSettingsProperties;
 
 		super.setTypeSettings(_typeSettingsProperties.toString());
+	}
+
+	protected void buildTreePath(StringBundler sb, Group group)
+		throws PortalException, SystemException {
+
+		if (group == null) {
+			sb.append(StringPool.SLASH);
+		}
+		else {
+			buildTreePath(sb, group.getParentGroup());
+
+			sb.append(group.getGroupId());
+			sb.append(StringPool.SLASH);
+		}
 	}
 
 	protected long getDefaultPlid(boolean privateLayout) {

@@ -34,7 +34,7 @@ import java.io.ObjectOutput;
 public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{groupId=");
 		sb.append(groupId);
@@ -48,6 +48,8 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 		sb.append(classPK);
 		sb.append(", parentGroupId=");
 		sb.append(parentGroupId);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", liveGroupId=");
 		sb.append(liveGroupId);
 		sb.append(", name=");
@@ -78,6 +80,14 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 		groupImpl.setClassNameId(classNameId);
 		groupImpl.setClassPK(classPK);
 		groupImpl.setParentGroupId(parentGroupId);
+
+		if (treePath == null) {
+			groupImpl.setTreePath(StringPool.BLANK);
+		}
+		else {
+			groupImpl.setTreePath(treePath);
+		}
+
 		groupImpl.setLiveGroupId(liveGroupId);
 
 		if (name == null) {
@@ -125,6 +135,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		parentGroupId = objectInput.readLong();
+		treePath = objectInput.readUTF();
 		liveGroupId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -143,6 +154,14 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
 		objectOutput.writeLong(parentGroupId);
+
+		if (treePath == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(treePath);
+		}
+
 		objectOutput.writeLong(liveGroupId);
 
 		if (name == null) {
@@ -185,6 +204,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 	public long classNameId;
 	public long classPK;
 	public long parentGroupId;
+	public String treePath;
 	public long liveGroupId;
 	public String name;
 	public String description;

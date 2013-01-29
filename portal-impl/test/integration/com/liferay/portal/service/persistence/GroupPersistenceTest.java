@@ -118,6 +118,8 @@ public class GroupPersistenceTest {
 
 		newGroup.setParentGroupId(ServiceTestUtil.nextLong());
 
+		newGroup.setTreePath(ServiceTestUtil.randomString());
+
 		newGroup.setLiveGroupId(ServiceTestUtil.nextLong());
 
 		newGroup.setName(ServiceTestUtil.randomString());
@@ -148,6 +150,7 @@ public class GroupPersistenceTest {
 		Assert.assertEquals(existingGroup.getClassPK(), newGroup.getClassPK());
 		Assert.assertEquals(existingGroup.getParentGroupId(),
 			newGroup.getParentGroupId());
+		Assert.assertEquals(existingGroup.getTreePath(), newGroup.getTreePath());
 		Assert.assertEquals(existingGroup.getLiveGroupId(),
 			newGroup.getLiveGroupId());
 		Assert.assertEquals(existingGroup.getName(), newGroup.getName());
@@ -338,6 +341,8 @@ public class GroupPersistenceTest {
 		group.setClassPK(ServiceTestUtil.nextLong());
 
 		group.setParentGroupId(ServiceTestUtil.nextLong());
+
+		group.setTreePath(ServiceTestUtil.randomString());
 
 		group.setLiveGroupId(ServiceTestUtil.nextLong());
 

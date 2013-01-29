@@ -759,6 +759,7 @@ create table Group_ (
 	classNameId LONG,
 	classPK LONG,
 	parentGroupId LONG,
+	treePath VARCHAR(75) null,
 	liveGroupId LONG,
 	name VARCHAR(150) null,
 	description STRING null,

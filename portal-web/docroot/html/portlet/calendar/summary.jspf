@@ -40,7 +40,7 @@ for (int i = 1; i <= maxDayOfMonth; i++) {
 		<td class="lfr-top" style="padding-right: 10px;" width="1%">
 			<div class="calendar-container float-container">
 				<div class="calendar-day">
-					 <div class="day-text"><%= DateUtil.getDate(Time.getDate(selCal), "EEEE", locale, timeZone) %></div>
+					 <div class="day-text"><%= DateUtil.getDate(selCal.getTime(), "EEEE", locale, timeZone) %></div>
 					 <div class="day-number"><%= selDay %></div>
 				</div>
 

@@ -2940,7 +2940,10 @@ public class StringUtil {
 			}
 		}
 
-		if ((x != 0) || (y != len)) {
+		if (x > y) {
+			return StringPool.BLANK;
+		}
+		else if ((x != 0) || (y != len)) {
 			return s.substring(x, y);
 		}
 		else {

@@ -596,6 +596,9 @@ public interface TrashHandler {
 			long classPK, long containerModelId, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public void restoreRelatedTrashEntry(String className, long classPK)
+		throws PortalException, SystemException;
+
 	/**
 	 * Restores all the model entities with the primary keys.
 	 *

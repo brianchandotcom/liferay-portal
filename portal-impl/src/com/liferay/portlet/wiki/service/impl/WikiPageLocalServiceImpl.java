@@ -16,6 +16,8 @@ package com.liferay.portlet.wiki.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -225,7 +227,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
-		PortletFileRepositoryUtil.addPortletFileEntry(
+		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
 			page.getResourcePrimKey(), PortletKeys.WIKI,
 			page.getAttachmentsFolderId(), file, fileName);
@@ -234,10 +236,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId = page.getUserId();
 		}
 
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
+		extraDataJSONObject.put("title", fileEntry.getTitle());
+
 		socialActivityLocalService.addActivity(
 			userId, page.getGroupId(), WikiPage.class.getName(),
 			page.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_ADD_ATTACHMENT, fileName, 0);
+			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
+			extraDataJSONObject.toString(), 0);
 	}
 
 	public void addPageAttachment(
@@ -247,7 +255,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
-		PortletFileRepositoryUtil.addPortletFileEntry(
+		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
 			page.getResourcePrimKey(), PortletKeys.WIKI,
 			page.getAttachmentsFolderId(), inputStream, fileName);
@@ -256,10 +264,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId = page.getUserId();
 		}
 
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
+		extraDataJSONObject.put("title", fileEntry.getTitle());
+
 		socialActivityLocalService.addActivity(
 			userId, page.getGroupId(), WikiPage.class.getName(),
 			page.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_ADD_ATTACHMENT, fileName, 0);
+			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
+			extraDataJSONObject.toString(), 0);
 	}
 
 	public void addPageAttachments(
@@ -1117,6 +1131,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		PortletFileRepositoryUtil.movePortletFileEntryToTrash(
 			userId, fileEntry.getFileEntryId());
 
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
+		extraDataJSONObject.put("title", TrashUtil.getOriginalTitle(
+			fileEntry.getTitle()));
+
+		socialActivityLocalService.addActivity(
+			userId, page.getGroupId(), WikiPage.class.getName(),
+			page.getResourcePrimKey(),
+			SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH,
+			extraDataJSONObject.toString(), 0);
+
 		return fileEntry.getFileEntryId();
 	}
 
@@ -1185,8 +1211,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			page.getGroupId(), page.getAttachmentsFolderId(), fileName);
 
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
+		extraDataJSONObject.put("title", TrashUtil.getOriginalTitle(
+			fileEntry.getTitle()));
+
 		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
 			userId, fileEntry.getFileEntryId());
+
+		socialActivityLocalService.addActivity(
+			userId, page.getGroupId(), WikiPage.class.getName(),
+			page.getResourcePrimKey(),
+			SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH,
+			extraDataJSONObject.toString(), 0);
 	}
 
 	public void restorePageFromTrash(long userId, WikiPage page)

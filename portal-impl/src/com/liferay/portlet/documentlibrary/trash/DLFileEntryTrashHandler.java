@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -35,7 +37,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
@@ -214,20 +215,21 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		throws PortalException, SystemException {
 
 		for (long classPK : classPKs) {
-			boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+			DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-			try {
-				DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+			if ((dlFileEntry.getClassNameId() > 0) &&
+				(dlFileEntry.getClassPK() > 0)) {
 
-				if (dlFileEntry.isInHiddenFolder()) {
-					DLAppHelperThreadLocal.setEnabled(false);
-				}
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(
+						dlFileEntry.getClassName());
 
-				DLAppServiceUtil.restoreFileEntryFromTrash(classPK);
+				trashHandler.restoreRelatedTrashEntry(getClassName(), classPK);
+
+				continue;
 			}
-			finally {
-				DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-			}
+
+			DLAppServiceUtil.restoreFileEntryFromTrash(classPK);
 		}
 	}
 

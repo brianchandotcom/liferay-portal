@@ -42,7 +42,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -90,15 +90,13 @@ public class ComboServlet extends HttpServlet {
 			return;
 		}
 
-		Set<String> modulePathsSet = new HashSet<String>(modulePaths.length);
+		Set<String> modulePathsSet = new LinkedHashSet<String>(modulePaths.length);
 
 		for (String path : modulePaths) {
 			modulePathsSet.add(path);
 		}
 
 		modulePaths = modulePathsSet.toArray(new String[modulePathsSet.size()]);
-
-		Arrays.sort(modulePaths);
 
 		String modulePathsString = null;
 

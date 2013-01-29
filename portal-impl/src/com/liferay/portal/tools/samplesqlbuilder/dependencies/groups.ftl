@@ -1,6 +1,4 @@
-<#setting number_format = "0">
-
-${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [dataFactory.addLayout(dataFactory.guestGroup.groupId, "welcome", "58,", "47,")])}
+<@insertGroup _group = dataFactory.guestGroup _publicLayouts = [dataFactory.addLayout(dataFactory.guestGroup.groupId, "welcome", "58,", "47,")]/>
 
 <#list dataFactory.groups as group>
 	<#assign groupId = group.groupId>
@@ -21,5 +19,5 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [dataFactory.addLayout(da
 
 	<#include "wiki.ftl">
 
-	${sampleSQLBuilder.insertGroup(group, publicLayouts)}
+	<@insertGroup _group = group _publicLayouts = publicLayouts/>
 </#list>

@@ -1,18 +1,10 @@
-<#assign user = dataFactory.defaultUser>
+<@insertUser _user = dataFactory.defaultUser/>
 
-${sampleSQLBuilder.insertUser(user, [], [])}
+<@insertUser _user = dataFactory.guestUser _roleIds = [dataFactory.administratorRole.roleId] _groupIds = [dataFactory.guestGroup.groupId] />
 
-<#assign user = dataFactory.guestUser>
-<#assign roleIds = [dataFactory.administratorRole.roleId]>
-<#assign groupIds = [dataFactory.guestGroup.groupId]>
-
-${sampleSQLBuilder.insertUser(user, roleIds, groupIds)}
-
-<#assign user = dataFactory.sampleUser>
 <#assign roleIds = [dataFactory.administratorRole.roleId, dataFactory.powerUserRole.roleId, dataFactory.userRole.roleId]>
-<#assign groupIds = 1..maxGroupCount>
 
-${sampleSQLBuilder.insertUser(user, roleIds, groupIds)}
+<@insertUser _user = dataFactory.sampleUser _roleIds = roleIds _groupIds = 1..maxGroupCount />
 
 <#list 1..maxGroupCount as groupId>
 	<#assign userId = dataFactory.sampleUser.userId>

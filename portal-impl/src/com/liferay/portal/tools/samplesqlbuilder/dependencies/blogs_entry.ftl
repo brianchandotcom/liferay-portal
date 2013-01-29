@@ -1,7 +1,0 @@
-<#setting number_format = "0">
-
-insert into BlogsEntry values ('${blogsEntry.uuid}', ${blogsEntry.entryId}, ${blogsEntry.groupId}, ${blogsEntry.companyId}, ${blogsEntry.userId}, '${blogsEntry.userName}', '${blogsEntry.createDate?datetime}', '${blogsEntry.modifiedDate?datetime}', '${blogsEntry.title}', '${blogsEntry.urlTitle}', '${blogsEntry.description}', '${blogsEntry.content}', '${blogsEntry.displayDate?datetime}', ${blogsEntry.allowPingbacks?string}, ${blogsEntry.allowTrackbacks?string}, '${blogsEntry.trackbacks}', ${blogsEntry.smallImage?string}, ${blogsEntry.smallImageId}, '${blogsEntry.smallImageURL}', ${blogsEntry.status}, ${blogsEntry.statusByUserId}, '${blogsEntry.statusByUserName}', ${blogsEntry.statusDate!'null'});
-
-<#assign assetEntry = dataFactory.addAssetEntry(blogsEntry)>
-
-insert into AssetEntry values (${assetEntry.entryId}, ${assetEntry.groupId}, ${assetEntry.companyId}, ${assetEntry.userId}, '${assetEntry.userName}', '${assetEntry.createDate?datetime}', '${assetEntry.modifiedDate?datetime}', ${assetEntry.classNameId}, ${assetEntry.classPK}, '${assetEntry.classUuid}', ${assetEntry.classTypeId}, ${assetEntry.visible?string}, ${assetEntry.startDate!'null'}, ${assetEntry.endDate!'null'}, ${assetEntry.publishDate!'null'}, ${assetEntry.expirationDate!'null'}, '${assetEntry.mimeType}', '${assetEntry.title}', '${assetEntry.description}', '${assetEntry.summary}', '${assetEntry.url}', '${assetEntry.layoutUuid}', ${assetEntry.height}, ${assetEntry.width}, ${assetEntry.priority}, ${assetEntry.viewCount});

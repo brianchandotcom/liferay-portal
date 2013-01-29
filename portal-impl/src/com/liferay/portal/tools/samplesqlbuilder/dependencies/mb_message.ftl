@@ -1,7 +1,0 @@
-<#setting number_format = "0">
-
-insert into MBMessage values ('${mbMessage.uuid}', ${mbMessage.messageId}, ${mbMessage.groupId}, ${mbMessage.companyId}, ${mbMessage.userId}, '${mbMessage.userName}', '${mbMessage.createDate?datetime}', '${mbMessage.modifiedDate?datetime}', ${mbMessage.classNameId}, ${mbMessage.classPK}, ${mbMessage.categoryId}, ${mbMessage.threadId}, ${mbMessage.rootMessageId}, ${mbMessage.parentMessageId}, '${mbMessage.subject}', '${mbMessage.body}', '${mbMessage.format}', ${mbMessage.anonymous?string}, ${mbMessage.priority}, ${mbMessage.allowPingbacks?string}, ${mbMessage.answer?string}, ${mbMessage.status}, ${mbMessage.statusByUserId}, '${mbMessage.statusByUserName}', ${mbMessage.statusDate!'null'});
-
-<#assign assetEntry = dataFactory.addAssetEntry(mbMessage)>
-
-insert into AssetEntry values (${assetEntry.entryId}, ${assetEntry.groupId}, ${assetEntry.companyId}, ${assetEntry.userId}, '${assetEntry.userName}', '${assetEntry.createDate?datetime}', '${assetEntry.modifiedDate?datetime}', ${assetEntry.classNameId}, ${assetEntry.classPK}, '${assetEntry.classUuid}', ${assetEntry.classTypeId}, ${assetEntry.visible?string}, ${assetEntry.startDate!'null'}, ${assetEntry.endDate!'null'}, ${assetEntry.publishDate!'null'}, ${assetEntry.expirationDate!'null'}, '${assetEntry.mimeType}', '${assetEntry.title}', '${assetEntry.description}', '${assetEntry.summary}', '${assetEntry.url}', '${assetEntry.layoutUuid}', ${assetEntry.height}, ${assetEntry.width}, ${assetEntry.priority}, ${assetEntry.viewCount});

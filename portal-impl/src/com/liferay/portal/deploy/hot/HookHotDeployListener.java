@@ -87,6 +87,8 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.membershippolicy.MembershipPolicy;
+import com.liferay.portal.membershippolicy.MembershipPolicyFactory;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Release;
@@ -430,6 +432,10 @@ public class HookHotDeployListener
 
 		if (portalProperties.containsKey(PropsKeys.MAIL_HOOK_IMPL)) {
 			com.liferay.mail.util.HookFactory.setInstance(null);
+		}
+
+		if (portalProperties.containsKey(PropsKeys.SITES_MEMBERSHIP_POLICY)) {
+			MembershipPolicyFactory.setInstance(null);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.PASSWORDS_TOOLKIT)) {
@@ -1814,6 +1820,18 @@ public class HookHotDeployListener
 
 				lockListenerContainer.registerLockListener(lockListener);
 			}
+		}
+
+		if (portalProperties.containsKey(PropsKeys.SITES_MEMBERSHIP_POLICY)) {
+			String membershipPolicyClassName = portalProperties.getProperty(
+				PropsKeys.SITES_MEMBERSHIP_POLICY);
+
+			MembershipPolicy membershipPolicy =
+				(MembershipPolicy)newInstance(
+					portletClassLoader, MembershipPolicy.class,
+					membershipPolicyClassName);
+
+			MembershipPolicyFactory.setInstance(membershipPolicy);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.MAIL_HOOK_IMPL)) {

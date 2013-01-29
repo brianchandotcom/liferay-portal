@@ -71,6 +71,12 @@ public class DDMUtil {
 			ddmStructureId, fieldNamespace, serviceContext);
 	}
 
+	public static String[] getFieldsDisplayValues(Field fieldsDisplayField)
+		throws Exception {
+
+		return getDDM().getFieldsDisplayValues(fieldsDisplayField);
+	}
+
 	public static String getFileUploadPath(BaseModel<?> baseModel) {
 		return getDDM().getFileUploadPath(baseModel);
 	}

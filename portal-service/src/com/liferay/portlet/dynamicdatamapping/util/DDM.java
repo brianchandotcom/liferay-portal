@@ -48,6 +48,9 @@ public interface DDM {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public String[] getFieldsDisplayValues(Field fieldsDisplayField)
+		throws Exception;
+
 	public String getFileUploadPath(BaseModel<?> baseModel);
 
 	public OrderByComparator getStructureOrderByComparator(

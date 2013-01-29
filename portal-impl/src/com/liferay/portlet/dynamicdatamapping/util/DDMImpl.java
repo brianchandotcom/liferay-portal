@@ -161,6 +161,29 @@ public class DDMImpl implements DDM {
 		return getFields(ddmStructureId, 0, fieldNamespace, serviceContext);
 	}
 
+	public String[] getFieldsDisplayValues(Field fieldsDisplayField)
+		throws Exception {
+
+		DDMStructure ddmStructure = fieldsDisplayField.getDDMStructure();
+
+		List<String> fieldsDisplayValues = new ArrayList<String>();
+
+		String[] values = StringUtil.split(
+			(String)fieldsDisplayField.getValue());
+
+		for (String value : values) {
+			String fieldName = StringUtil.extractFirst(
+					value, DDMImpl.INSTANCE_SEPARATOR);
+
+			if (ddmStructure.hasField(fieldName)) {
+				fieldsDisplayValues.add(fieldName);
+			}
+		}
+
+		return fieldsDisplayValues.toArray(
+			new String[fieldsDisplayValues.size()]);
+	}
+
 	public String getFileUploadPath(BaseModel<?> baseModel) {
 		StringBundler sb = new StringBundler(7);
 

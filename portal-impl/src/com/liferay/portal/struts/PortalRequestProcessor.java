@@ -782,10 +782,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 			// Authenticated users should have a reminder query
 
-			if ((user != null) &&
+			if ((user != null) && !user.isDefaultUser() &&
 				(Validator.isNull(user.getReminderQueryQuestion()) ||
-				 Validator.isNull(user.getReminderQueryAnswer())) &&
-				!user.isDefaultUser()) {
+				 Validator.isNull(user.getReminderQueryAnswer()))) {
 
 				if (PropsValues.USERS_REMINDER_QUERIES_ENABLED) {
 					return _PATH_PORTAL_UPDATE_REMINDER_QUERY;

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -49,7 +48,6 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -138,9 +136,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a layout with empty maps for descriptions, keywords, and titles ,
-	 * and a names map containing a mapping for the default locale as its only
-	 * entry.
+	 * Adds a layout with an empty map for keywords and maps for descriptions,
+	 * names and titles. These 3 maps contain mapping for the default locale as
+	 * their only entry.
 	 *
 	 * <p>
 	 * This method handles the creation of the layout including its resources,
@@ -191,17 +189,21 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			boolean hidden, String friendlyURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		Map<Locale, String> localeNamesMap = new HashMap<Locale, String>();
+		PermissionChecker permissionChecker = getPermissionChecker();
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		if (parentLayoutId == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+			GroupPermissionUtil.check(
+				permissionChecker, groupId, ActionKeys.ADD_LAYOUT);
+		}
+		else {
+			LayoutPermissionUtil.check(
+				permissionChecker, groupId, privateLayout, parentLayoutId,
+				ActionKeys.ADD_LAYOUT);
+		}
 
-		localeNamesMap.put(defaultLocale, name);
-
-		return addLayout(
-			groupId, privateLayout, parentLayoutId, localeNamesMap,
-			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-			new HashMap<Locale, String>(), new HashMap<Locale, String>(), type,
-			hidden, friendlyURL, serviceContext);
+		return layoutLocalService.addLayout(
+			getUserId(), groupId, privateLayout, parentLayoutId, name, title,
+			description, type, hidden, friendlyURL, serviceContext);
 	}
 
 	/**

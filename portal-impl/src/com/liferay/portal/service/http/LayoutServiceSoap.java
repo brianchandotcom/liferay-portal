@@ -157,9 +157,9 @@ public class LayoutServiceSoap {
 	}
 
 	/**
-	* Adds a layout with empty maps for descriptions, keywords, and titles ,
-	* and a names map containing a mapping for the default locale as its only
-	* entry.
+	* Adds a layout with an empty map for keywords and maps for descriptions,
+	* names and titles. These 3 maps contain mapping for the default locale as
+	* their only entry.
 	*
 	* <p>
 	* This method handles the creation of the layout including its resources,

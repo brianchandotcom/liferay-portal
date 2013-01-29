@@ -35,6 +35,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFieldsCounter;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.util.PwdGenerator;
 
@@ -57,7 +58,8 @@ public class JournalConverterUtil {
 		Document document = SAXReaderUtil.read(xml);
 
 		Field fieldsDisplay = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME, StringPool.BLANK);
+			ddmStructure.getStructureId(), DDMImpl.FIELDS_DISPLAY_NAME,
+			StringPool.BLANK);
 
 		Fields ddmFields = new Fields();
 
@@ -120,6 +122,12 @@ public class JournalConverterUtil {
 			Fields ddmFields, String defaultLocale)
 		throws Exception {
 
+		String name = dynamicElementElement.attributeValue("name");
+
+		if (!ddmStructure.hasField(name)) {
+			return;
+		}
+
 		Field ddmField = getField(
 			dynamicElementElement, ddmStructure, defaultLocale);
 
@@ -155,19 +163,17 @@ public class JournalConverterUtil {
 			int parentOffset)
 		throws Exception {
 
-		Field fieldsDisplay = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+		Field fieldsDisplayField = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
-		String value = (String)fieldsDisplay.getValue();
-
-		String[] fieldsDisplayValues = StringUtil.split(value);
+		String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
+			fieldsDisplayField);
 
 		int offset = -1;
 
 		int repetitions = 0;
 
 		for (int i = 0; i < fieldsDisplayValues.length; i++) {
-			String fieldDisplayName = StringUtil.extractFirst(
-				fieldsDisplayValues[i], DDMImpl.INSTANCE_SEPARATOR);
+			String fieldDisplayName = fieldsDisplayValues[i];
 
 			if (offset > parentOffset) {
 				break;

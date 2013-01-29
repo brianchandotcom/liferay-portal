@@ -391,7 +391,7 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 					classPK = _ddmStructureIds.get(structureId);
 				}
 
-				long newTemplateId = addDDMTemplate(
+				long ddmTemplateId = addDDMTemplate(
 					uuid_, increment(), groupId, companyId, userId, userName,
 					createDate, modifiedDate, classNameId, classPK, templateId,
 					name, description,
@@ -403,7 +403,7 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 				String newClassName = DDMTemplate.class.getName();
 
 				updateModelPermissions(
-					companyId, oldClassName, newClassName, id_, newTemplateId);
+					companyId, oldClassName, newClassName, id_, ddmTemplateId);
 			}
 		}
 		finally {

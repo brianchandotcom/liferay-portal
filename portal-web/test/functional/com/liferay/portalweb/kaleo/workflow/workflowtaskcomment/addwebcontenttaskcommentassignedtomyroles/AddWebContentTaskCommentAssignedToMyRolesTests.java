@@ -14,7 +14,6 @@
 
 package com.liferay.portalweb.kaleo.workflow.workflowtaskcomment.addwebcontenttaskcommentassignedtomyroles;
 
-import com.liferay.portalweb.kaleo.workflow.workflowtask.approvetaskwebcontentdetails.AddWebContentTest;
 import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrydefaultnoworkflow.TearDownWorkflowConfigurationTest;
 import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configurewebcontentsingleapprover.ConfigureWebContentSingleApproverTest;
 import com.liferay.portalweb.portal.BaseTestSuite;

@@ -14,7 +14,6 @@
 
 package com.liferay.portalweb.kaleo.workflow.workflowtaskcomment.assertnoworkflowaddtaskcommentcompleted;
 
-import com.liferay.portalweb.kaleo.workflow.workflowtask.approvetaskwebcontentdetails.AddWebContentTest;
 import com.liferay.portalweb.kaleo.workflow.workflowtask.approvetaskwebcontentdetails.ApproveTaskWebContentDetailsTest;
 import com.liferay.portalweb.kaleo.workflow.workflowtask.assigntometaskwebcontentdetails.AssignToMeTaskWebContentDetailsTest;
 import com.liferay.portalweb.kaleo.workflow.workflowtaskcomment.addwebcontenttaskcommentcompleted.AddWebContentTaskCommentCompletedTest;

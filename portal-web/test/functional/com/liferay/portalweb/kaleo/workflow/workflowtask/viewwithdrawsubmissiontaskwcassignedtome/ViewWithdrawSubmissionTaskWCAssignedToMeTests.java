@@ -14,7 +14,6 @@
 
 package com.liferay.portalweb.kaleo.workflow.workflowtask.viewwithdrawsubmissiontaskwcassignedtome;
 
-import com.liferay.portalweb.kaleo.workflow.workflowtask.approvetaskwebcontentdetails.AddWebContentTest;
 import com.liferay.portalweb.kaleo.workflow.workflowtask.assigntometaskwebcontentdetails.AssignToMeTaskWebContentDetailsTest;
 import com.liferay.portalweb.kaleo.workflow.workflowtask.withdrawsubmissiontaskwcassignedtomedetails.WithdrawSubmissionTaskWCAssignedToMeDetailsTest;
 import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrydefaultnoworkflow.TearDownWorkflowConfigurationTest;

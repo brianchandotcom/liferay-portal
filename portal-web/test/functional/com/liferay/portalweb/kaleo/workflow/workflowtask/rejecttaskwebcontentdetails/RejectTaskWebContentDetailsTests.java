@@ -14,7 +14,6 @@
 
 package com.liferay.portalweb.kaleo.workflow.workflowtask.rejecttaskwebcontentdetails;
 
-import com.liferay.portalweb.kaleo.workflow.workflowtask.approvetaskwebcontentdetails.AddWebContentTest;
 import com.liferay.portalweb.kaleo.workflow.workflowtask.assigntometaskwebcontentdetails.AssignToMeTaskWebContentDetailsTest;
 import com.liferay.portalweb.kaleo.workflow.workflowtask.rejecttaskwebcontentdetails.RejectTaskWebContentDetailsTest;
 import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrydefaultnoworkflow.TearDownWorkflowConfigurationTest;

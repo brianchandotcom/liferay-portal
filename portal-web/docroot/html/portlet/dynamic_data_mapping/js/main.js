@@ -252,7 +252,6 @@ AUI.add(
 						var instance = this;
 
 						var editingField = instance.editingField;
-
 						var translationManager = instance.translationManager;
 
 						var newVal = event.newVal;
@@ -261,7 +260,7 @@ AUI.add(
 						var readOnlyAttributes = editingField.get('readOnlyAttributes');
 
 						if (newVal === translationManager.get('defaultLocale')) {
-							A.Array.removeItem(readOnlyAttributes, 'name');
+							AArray.removeItem(readOnlyAttributes, 'name');
 						}
 						else {
 							readOnlyAttributes.push('name');

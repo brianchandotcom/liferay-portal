@@ -49,8 +49,13 @@
 	<td>Tags</td>
 </tr>
 <tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Add Tag']</td>
+	<td>Add Tag</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//input[@id='_99_addTagButton']</td>
+	<td>//input[@value='Add Tag']</td>
 	<td>Add Tag</td>
 </tr>
 <tr>
@@ -79,13 +84,8 @@
 	<td>Your request processed successfully.</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[2]/ul/li/div/span/a</td>
-	<td>selenium</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[2]/ul/li/div/span/a</td>
+	<td>//span[@class='tag-item']/a[contains(.,'selenium')]</td>
 	<td>selenium</td>
 </tr>
 </tbody></table>

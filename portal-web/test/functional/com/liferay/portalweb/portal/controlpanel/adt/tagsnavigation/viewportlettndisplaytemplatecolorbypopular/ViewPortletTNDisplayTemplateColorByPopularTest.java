@@ -32,6 +32,7 @@ public class ViewPortletTNDisplayTemplateColorByPopularTest extends BaseTestCase
 		assertEquals(RuntimeVariables.replace("Tags Navigation"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("selenium"),
-			selenium.getText("//a[@style='color: green;']"));
+			selenium.getText(
+				"//div[@class='portlet-body']/ul/li/a[contains(@style,'green')]"));
 	}
 }

@@ -50,12 +50,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@id='_167_manageDDMStructuresLink']</td>
+	<td>//span[@class='lfr-toolbar-button view-structures ']/a</td>
 	<td>Manage Data Definitions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_167_manageDDMStructuresLink']</td>
+	<td>//span[@class='lfr-toolbar-button view-structures ']/a</td>
 	<td>Manage Data Definitions</td>
 </tr>
 <tr>
@@ -69,18 +69,23 @@
 	<td>Data Definitions</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/event-tap/event-tap-min.js')]</td>
+	<td>Event Tap Min</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//span[contains(@class,'add-button')]/a</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[contains(@class,'add-button')]/a</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//span[contains(@class,'add-button')]/a</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -141,7 +146,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[6]/div</td>
-	<td>Integer</td>
+	<td>HTML</td>
 </tr>
 <tr>
 	<td>dragAndDropToObject</td>
@@ -151,7 +156,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[7]/div</td>
-	<td>Number</td>
+	<td>Integer</td>
 </tr>
 <tr>
 	<td>dragAndDropToObject</td>
@@ -161,7 +166,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[8]/div</td>
-	<td>Radio</td>
+	<td>Link to Page</td>
 </tr>
 <tr>
 	<td>dragAndDropToObject</td>
@@ -171,7 +176,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div</td>
-	<td>Select</td>
+	<td>Number</td>
 </tr>
 <tr>
 	<td>dragAndDropToObject</td>
@@ -181,7 +186,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[10]/div</td>
-	<td>Text</td>
+	<td>Radio</td>
 </tr>
 <tr>
 	<td>dragAndDropToObject</td>
@@ -191,11 +196,31 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div</td>
-	<td>Text Box</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>dragAndDropToObject</td>
 	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>dragAndDropToObject</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[13]/div</td>
+	<td>Text Box</td>
+</tr>
+<tr>
+	<td>dragAndDropToObject</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[13]/div</td>
 	<td>//div[@class='aui-tabview-content aui-widget-bd']</td>
 </tr>
 <tr>

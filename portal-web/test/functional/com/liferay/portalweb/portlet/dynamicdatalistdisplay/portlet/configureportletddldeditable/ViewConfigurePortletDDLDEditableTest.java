@@ -31,22 +31,21 @@ public class ViewConfigurePortletDDLDEditableTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("List Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertTrue(selenium.isVisible("//input[contains(@name,'keywords')]"));
+		assertTrue(selenium.isVisible(
+				"//input[contains(@id,'dynamic_data_lists_record_searchkeywords')]"));
 		assertTrue(selenium.isVisible("//input[@value='Search']"));
 		assertEquals(RuntimeVariables.replace("Advanced \u00bb"),
 			selenium.getText("//a[contains(.,'Advanced \u00bb')]"));
 		assertTrue(selenium.isElementNotPresent("//input[@value='Add Record']"));
 		assertEquals(RuntimeVariables.replace("No records were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertEquals(RuntimeVariables.replace("No records were found."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='icon-actions']/span[1]/a/img"));
+				"//div[@class='icon-actions']/span/a/img[@title='Add Form Template']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='icon-actions']/span[2]/a/img"));
+				"//div[@class='icon-actions']/span/a/img[@title='Add Display Template']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='icon-actions']/span[1]/a/img"));
+				"//div[@class='icon-actions']/span/a/img[@title='Select List']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='icon-actions']/span[1]/a/img"));
+				"//div[@class='icon-actions']/span/a/img[@title='Add List']"));
 	}
 }

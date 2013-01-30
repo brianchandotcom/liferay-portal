@@ -28,7 +28,7 @@ public class EditRecordDDLDTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -68,6 +68,8 @@ public class EditRecordDDLDTest extends BaseTestCase {
 		selenium.waitForVisible(
 			"//iframe[contains(@id,'selectDocumentLibrary')]");
 		selenium.selectFrame("//iframe[contains(@id,'selectDocumentLibrary')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/event-tap/event-tap-min.js')]");
 		selenium.waitForVisible(
 			"//tr[contains(.,'Document_2.txt')]/td[5]/input[@value='Choose']");
 		selenium.clickAt("//tr[contains(.,'Document_2.txt')]/td[5]/input[@value='Choose']",
@@ -80,52 +82,54 @@ public class EditRecordDDLDTest extends BaseTestCase {
 			RuntimeVariables.replace("Document_1.txt"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
-				"//div[@class='lfr-ddm-container']/div[6]/div/span/span/label"));
-		selenium.type("//div[@class='lfr-ddm-container']/div[6]/div/span/span/span/input",
-			RuntimeVariables.replace("8910"));
-		assertEquals(RuntimeVariables.replace("Number"),
-			selenium.getText(
 				"//div[@class='lfr-ddm-container']/div[7]/div/span/span/label"));
 		selenium.type("//div[@class='lfr-ddm-container']/div[7]/div/span/span/span/input",
-			RuntimeVariables.replace("111213"));
-		assertEquals(RuntimeVariables.replace("Radio"),
+			RuntimeVariables.replace("8910"));
+		assertEquals(RuntimeVariables.replace("Link to Page"),
 			selenium.getText(
 				"//div[@class='lfr-ddm-container']/div[8]/div/label"));
+		selenium.select("//div[@class='lfr-ddm-container']/div[8]/div/select",
+			RuntimeVariables.replace("index=0"));
+		assertEquals(RuntimeVariables.replace("Number"),
+			selenium.getText(
+				"//div[@class='lfr-ddm-container']/div[9]/div/span/span/label"));
+		selenium.type("//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/input",
+			RuntimeVariables.replace("111213"));
 		assertEquals(RuntimeVariables.replace("option 1"),
 			selenium.getText(
-				"//div[@class='lfr-ddm-container']/div[8]/div/span[1]/span"));
+				"//div[@class='lfr-ddm-container']/div[10]/div/span[1]/span"));
 		assertEquals(RuntimeVariables.replace("option 2"),
 			selenium.getText(
-				"//div[@class='lfr-ddm-container']/div[8]/div/span[2]/span"));
+				"//div[@class='lfr-ddm-container']/div[10]/div/span[2]/span"));
 		assertEquals(RuntimeVariables.replace("option 3"),
 			selenium.getText(
-				"//div[@class='lfr-ddm-container']/div[8]/div/span[3]/span"));
-		selenium.clickAt("//div[@class='lfr-ddm-container']/div[8]/div/span[3]/span/span/input",
+				"//div[@class='lfr-ddm-container']/div[10]/div/span[3]/span"));
+		selenium.clickAt("//div[@class='lfr-ddm-container']/div[10]/div/span[3]/span/span/input",
 			RuntimeVariables.replace("option 3"));
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='lfr-ddm-container']/div[9]/div/span/span/label"));
+				"//div[@class='lfr-ddm-container']/div[11]/div/span/span/label"));
 		assertEquals(RuntimeVariables.replace("option 1"),
 			selenium.getText(
-				"//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/select/option[1]"));
+				"//div[@class='lfr-ddm-container']/div[11]/div/span/span/span/select/option[1]"));
 		assertEquals(RuntimeVariables.replace("option 2"),
 			selenium.getText(
-				"//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/select/option[2]"));
+				"//div[@class='lfr-ddm-container']/div[11]/div/span/span/span/select/option[2]"));
 		assertEquals(RuntimeVariables.replace("option 3"),
 			selenium.getText(
-				"//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/select/option[3]"));
-		selenium.select("//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/select",
+				"//div[@class='lfr-ddm-container']/div[11]/div/span/span/span/select/option[3]"));
+		selenium.select("//div[@class='lfr-ddm-container']/div[11]/div/span/span/span/select",
 			RuntimeVariables.replace("label=option 1"));
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='lfr-ddm-container']/div[10]/div/span/span/label"));
-		selenium.type("//div[@class='lfr-ddm-container']/div[10]/div/span/span/span/input",
+				"//div[@class='lfr-ddm-container']/div[12]/div/span/span/label"));
+		selenium.type("//div[@class='lfr-ddm-container']/div[12]/div/span/span/span/input",
 			RuntimeVariables.replace("Text Field Edited"));
 		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText(
-				"//div[@class='lfr-ddm-container']/div[11]/div/span/span/label"));
-		selenium.type("//div[@class='lfr-ddm-container']/div[11]/div/span/span/span/textarea",
-			RuntimeVariables.replace("Text\nBox\nEdited"));
+				"//div[@class='lfr-ddm-container']/div[13]/div/span/span/label"));
+		selenium.type("//div[@class='lfr-ddm-container']/div[13]/div/span/span/span/textarea",
+			RuntimeVariables.replace("TextBoxEdited"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

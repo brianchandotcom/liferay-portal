@@ -36,10 +36,8 @@ public class AddListDDLDTest extends BaseTestCase {
 		selenium.type("//textarea[@id='_167_description_en_US']",
 			RuntimeVariables.replace("List Description"));
 		selenium.clickAt("link=Select", RuntimeVariables.replace("Select"));
-		selenium.waitForVisible(
-			"//iframe[contains(@src,'_167_selectDDMStructure')]");
-		selenium.selectFrame(
-			"//iframe[contains(@src,'_167_selectDDMStructure')]");
+		selenium.waitForVisible("//iframe[contains(@src,'selectDDMStructure')]");
+		selenium.selectFrame("//iframe[contains(@src,'selectDDMStructure')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//input[@name='_166_keywords']");

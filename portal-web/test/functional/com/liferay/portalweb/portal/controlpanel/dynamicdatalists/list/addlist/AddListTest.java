@@ -40,8 +40,9 @@ public class AddListTest extends BaseTestCase {
 			RuntimeVariables.replace("Dynamic Data Lists"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[contains(@class,'add-button')]/a"));
-		selenium.clickAt("//span[contains(@class,'add-button')]/a",
+			selenium.getText(
+				"//span[@class='lfr-toolbar-button add-button ']/a"));
+		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_167_name_en_US']",
@@ -51,10 +52,17 @@ public class AddListTest extends BaseTestCase {
 		selenium.clickAt("link=Select", RuntimeVariables.replace("Select"));
 		selenium.waitForVisible("//iframe[contains(@src,'dynamicdatalists')]");
 		selenium.selectFrame("//iframe[contains(@src,'dynamicdatalists')]");
-		selenium.waitForVisible("//tr[contains(.,'Data Definition')]/td[3]/a");
-		assertTrue(selenium.isPartialText(
-				"//tr[contains(.,'Data Definition')]/td[3]/a", "Data Definition"));
-		selenium.clickAt("//tr[contains(.,'Data Definition')]/td[3]/a",
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/event-tap/event-tap-min.js')]");
+		selenium.waitForVisible("//input[@name='_166_keywords']");
+		selenium.type("//input[@name='_166_keywords']",
+			RuntimeVariables.replace("Data"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Data Definition"),
+			selenium.getText("//tr[3]/td[3]/a"));
+		selenium.clickAt("//tr[3]/td[3]/a",
 			RuntimeVariables.replace("Data Definition"));
 		selenium.selectFrame("relative=top");
 		selenium.waitForText("//span[@id='_167_ddmStructureNameDisplay']/a",

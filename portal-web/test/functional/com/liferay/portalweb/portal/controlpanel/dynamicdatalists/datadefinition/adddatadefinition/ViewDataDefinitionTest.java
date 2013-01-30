@@ -39,26 +39,34 @@ public class ViewDataDefinitionTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data Lists",
 			RuntimeVariables.replace("Dynamic Data Lists"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//a[@id='_167_manageDDMStructuresLink']");
 		assertEquals(RuntimeVariables.replace("Manage Data Definitions"),
-			selenium.getText("//a[@id='_167_manageDDMStructuresLink']"));
-		selenium.clickAt("//a[@id='_167_manageDDMStructuresLink']",
-			RuntimeVariables.replace("Manage Data Definitions"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
-		Thread.sleep(1000);
-		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
+				"//span[@class='lfr-toolbar-button view-structures ']/a"));
+		selenium.clickAt("//span[@class='lfr-toolbar-button view-structures ']/a",
+			RuntimeVariables.replace("Manage Data Definitions"));
+		selenium.waitForVisible("//iframe[contains(@src,'dynamicdatalists')]");
+		selenium.selectFrame("//iframe[contains(@src,'dynamicdatalists')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/event-tap/event-tap-min.js')]");
+		selenium.waitForVisible("//input[@name='_166_keywords']");
+		selenium.type("//input[@name='_166_keywords']",
+			RuntimeVariables.replace("Data"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Data Definition"),
+			selenium.getText("//tr[3]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Data Definition"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -77,22 +85,22 @@ public class ViewDataDefinitionTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("File Upload"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label"));
-		assertEquals(RuntimeVariables.replace("Integer"),
+		assertEquals(RuntimeVariables.replace("HTML"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label"));
-		assertEquals(RuntimeVariables.replace("Number"),
+		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label"));
-		assertEquals(RuntimeVariables.replace("Radio"),
+		assertEquals(RuntimeVariables.replace("Link to Page"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label"));
-		assertEquals(RuntimeVariables.replace("Select"),
+		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
-		assertEquals(RuntimeVariables.replace("Text"),
+		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label"));
-		assertEquals(RuntimeVariables.replace("Text Box"),
+		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label"));
 		selenium.selectFrame("relative=top");

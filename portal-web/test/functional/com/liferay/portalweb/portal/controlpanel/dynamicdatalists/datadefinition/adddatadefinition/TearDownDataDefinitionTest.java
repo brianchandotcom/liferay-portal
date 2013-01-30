@@ -45,14 +45,16 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 					RuntimeVariables.replace("Dynamic Data Lists"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Manage Data Definitions"),
-					selenium.getText("//a[@id='_167_manageDDMStructuresLink']"));
-				selenium.clickAt("//a[@id='_167_manageDDMStructuresLink']",
+					selenium.getText(
+						"//span[@class='lfr-toolbar-button view-structures ']/a"));
+				selenium.clickAt("//span[@class='lfr-toolbar-button view-structures ']/a",
 					RuntimeVariables.replace("Manage Data Definitions"));
 				selenium.waitForVisible(
 					"//iframe[contains(@src,'dynamicdatalists')]");
 				selenium.selectFrame(
 					"//iframe[contains(@src,'dynamicdatalists')]");
-				Thread.sleep(5000);
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/event-tap/event-tap-min.js')]");
 				selenium.waitForVisible("//input[@name='_166_keywords']");
 				selenium.type("//input[@name='_166_keywords']",
 					RuntimeVariables.replace("Data Definition"));
@@ -61,7 +63,7 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean allRowsCheckbox = selenium.isElementPresent(
-						"//input[@name='_166_allRowIds']");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!allRowsCheckbox) {
 					label = 2;
@@ -77,6 +79,9 @@ public class TearDownDataDefinitionTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
 				selenium.selectFrame("relative=top");

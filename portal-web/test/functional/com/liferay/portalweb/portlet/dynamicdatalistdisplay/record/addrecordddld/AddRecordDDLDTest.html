@@ -19,11 +19,6 @@
 	<td>Dynamic Data List Display Test Page</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Add Record']</td>
-	<td>Add Record</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Record']</td>
 	<td>Add Record</td>
@@ -89,6 +84,21 @@
 	<td>Select Document</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/event-tap/event-tap-min.js')]</td>
+	<td>Event Tap Min</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[3]/td[1]/a</td>
+	<td>Document_1.txt</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a</td>
+	<td>Document_1.txt</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//input[@value='Choose']</td>
 	<td>Choose</td>
@@ -115,93 +125,103 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-ddm-container']/div[6]/div/span/span/label</td>
-	<td>Integer</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//div[@class='lfr-ddm-container']/div[6]/div/span/span/span/input</td>
-	<td>123</td>
+	<td>//div[@class='lfr-ddm-container']/div[6]/div/label</td>
+	<td>HTML</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='lfr-ddm-container']/div[7]/div/span/span/label</td>
-	<td>Number</td>
+	<td>Integer</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//div[@class='lfr-ddm-container']/div[7]/div/span/span/span/input</td>
-	<td>456</td>
+	<td>123</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='lfr-ddm-container']/div[8]/div/label</td>
-	<td>Radio</td>
+	<td>Link to Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-ddm-container']/div[8]/div/span[1]/span</td>
-	<td>option 1</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-ddm-container']/div[8]/div/span[2]/span</td>
-	<td>option 2</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-ddm-container']/div[8]/div/span[3]/span</td>
-	<td>option 3</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[@class='lfr-ddm-container']/div[8]/div/span[2]/span/span/input</td>
-	<td>option 2</td>
+	<td>select</td>
+	<td>//div[@class='lfr-ddm-container']/div[8]/div/select</td>
+	<td>index=1</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='lfr-ddm-container']/div[9]/div/span/span/label</td>
-	<td>Select</td>
+	<td>Number</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/input</td>
+	<td>456</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/select/option[1]</td>
+	<td>//div[@class='lfr-ddm-container']/div[10]/div/span[1]/span</td>
 	<td>option 1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/select/option[2]</td>
+	<td>//div[@class='lfr-ddm-container']/div[10]/div/span[2]/span</td>
 	<td>option 2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/select/option[3]</td>
+	<td>//div[@class='lfr-ddm-container']/div[10]/div/span[3]/span</td>
 	<td>option 3</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>//div[@class='lfr-ddm-container']/div[9]/div/span/span/span/select</td>
-	<td>label=option 3</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-ddm-container']/div[10]/div/span/span/label</td>
-	<td>Text</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//div[@class='lfr-ddm-container']/div[10]/div/span/span/span/input</td>
-	<td>Text Field</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-ddm-container']/div[10]/div/span[2]/span/span/input</td>
+	<td>option 2</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='lfr-ddm-container']/div[11]/div/span/span/label</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-ddm-container']/div[11]/div/span/span/span/select/option[1]</td>
+	<td>option 1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-ddm-container']/div[11]/div/span/span/span/select/option[2]</td>
+	<td>option 2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-ddm-container']/div[11]/div/span/span/span/select/option[3]</td>
+	<td>option 3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//div[@class='lfr-ddm-container']/div[11]/div/span/span/span/select</td>
+	<td>label=option 3</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-ddm-container']/div[12]/div/span/span/label</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@class='lfr-ddm-container']/div[12]/div/span/span/span/input</td>
+	<td>Text Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-ddm-container']/div[13]/div/span/span/label</td>
 	<td>Text Box</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@class='lfr-ddm-container']/div[11]/div/span/span/span/textarea</td>
-	<td>Text<br />Box</td>
+	<td>//div[@class='lfr-ddm-container']/div[13]/div/span/span/span/textarea</td>
+	<td>TextBox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

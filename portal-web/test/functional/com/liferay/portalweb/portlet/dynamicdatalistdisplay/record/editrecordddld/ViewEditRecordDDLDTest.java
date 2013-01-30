@@ -48,30 +48,38 @@ public class ViewEditRecordDDLDTest extends BaseTestCase {
 			selenium.getText("//tr[1]/th[5]"));
 		assertEquals(RuntimeVariables.replace("Document_1.txt"),
 			selenium.getText("//tr[3]/td[5]"));
-		assertEquals(RuntimeVariables.replace("Integer"),
+		assertEquals(RuntimeVariables.replace("HTML"),
 			selenium.getText("//tr[1]/th[6]"));
-		assertEquals(RuntimeVariables.replace("8910"),
+		assertEquals(RuntimeVariables.replace("(Preview)"),
 			selenium.getText("//tr[3]/td[6]"));
-		assertEquals(RuntimeVariables.replace("Number"),
+		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText("//tr[1]/th[7]"));
-		assertEquals(RuntimeVariables.replace("111213"),
+		assertEquals(RuntimeVariables.replace("8910"),
 			selenium.getText("//tr[3]/td[7]"));
-		assertEquals(RuntimeVariables.replace("Radio"),
+		assertEquals(RuntimeVariables.replace("Link to Page"),
 			selenium.getText("//tr[1]/th[8]"));
-		assertEquals(RuntimeVariables.replace("option 3"),
+		assertEquals(RuntimeVariables.replace("Welcome"),
 			selenium.getText("//tr[3]/td[8]"));
-		assertEquals(RuntimeVariables.replace("Select"),
+		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText("//tr[1]/th[9]"));
-		assertEquals(RuntimeVariables.replace("option 1"),
+		assertEquals(RuntimeVariables.replace("111213"),
 			selenium.getText("//tr[3]/td[9]"));
-		assertEquals(RuntimeVariables.replace("Text"),
+		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText("//tr[1]/th[10]"));
-		assertEquals(RuntimeVariables.replace("Text Field Edited"),
+		assertEquals(RuntimeVariables.replace("option 3"),
 			selenium.getText("//tr[3]/td[10]"));
-		assertEquals(RuntimeVariables.replace("Text Box"),
+		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText("//tr[1]/th[11]"));
-		assertEquals(RuntimeVariables.replace("Text Box Edited"),
+		assertEquals(RuntimeVariables.replace("option 1"),
 			selenium.getText("//tr[3]/td[11]"));
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText("//tr[1]/th[12]"));
+		assertEquals(RuntimeVariables.replace("Text Field Edited"),
+			selenium.getText("//tr[3]/td[12]"));
+		assertEquals(RuntimeVariables.replace("Text Box"),
+			selenium.getText("//tr[1]/th[13]"));
+		assertEquals(RuntimeVariables.replace("TextBoxEdited"),
+			selenium.getText("//tr[3]/td[13]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -85,51 +93,53 @@ public class ViewEditRecordDDLDTest extends BaseTestCase {
 			RuntimeVariables.replace("View"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[1]", "Boolean"));
+				"//div[@class='lfr-ddm-container']/div[1]", "Boolean"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[1]", "false"));
+				"//div[@class='lfr-ddm-container']/div[1]", "false"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[2]", "Date"));
+				"//div[@class='lfr-ddm-container']/div[2]", "Date"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[2]", "8/9/10"));
+				"//div[@class='lfr-ddm-container']/div[2]", "8/9/10"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[3]", "Decimal"));
+				"//div[@class='lfr-ddm-container']/div[3]", "Decimal"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[3]", "8.91"));
+				"//div[@class='lfr-ddm-container']/div[3]", "8.91"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[4]",
+				"//div[@class='lfr-ddm-container']/div[4]",
 				"Documents and Media"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[4]", "Document_2.txt"));
+				"//div[@class='lfr-ddm-container']/div[4]", "Document_2.txt"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[5]", "File Upload"));
+				"//div[@class='lfr-ddm-container']/div[5]", "File Upload"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[5]", "Document_1.txt"));
+				"//div[@class='lfr-ddm-container']/div[5]", "Document_1.txt"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[6]", "Integer"));
+				"//div[@class='lfr-ddm-container']/div[6]", "Integer"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[6]", "8910"));
+				"//div[@class='lfr-ddm-container']/div[6]", "8910"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[7]", "Number"));
+				"//div[@class='lfr-ddm-container']/div[7]", "Link to Page"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[7]", "111213"));
+				"//div[@class='lfr-ddm-container']/div[7]", "Welcome"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[8]", "Radio"));
+				"//div[@class='lfr-ddm-container']/div[8]", "Number"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[8]", "option 3"));
+				"//div[@class='lfr-ddm-container']/div[8]", "111213"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[9]", "Select"));
+				"//div[@class='lfr-ddm-container']/div[9]", "Radio"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[9]", "option 1"));
+				"//div[@class='lfr-ddm-container']/div[9]", "option 3"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[10]", "Text"));
+				"//div[@class='lfr-ddm-container']/div[10]", "Select"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[10]",
-				"Text Field Edited"));
+				"//div[@class='lfr-ddm-container']/div[10]", "option 1"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[11]", "Text Box"));
+				"//div[@class='lfr-ddm-container']/div[11]", "Text"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[11]",
-				"Text Box Edited"));
+				"//div[@class='lfr-ddm-container']/div[11]", "Text Field Edited"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-ddm-container']/div[12]", "Text Box"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-ddm-container']/div[12]", "TextBoxEdited"));
 	}
 }

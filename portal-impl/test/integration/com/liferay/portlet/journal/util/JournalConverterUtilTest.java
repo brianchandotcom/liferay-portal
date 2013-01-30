@@ -29,15 +29,19 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.service.BaseDDMServiceTestCase;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
+import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -49,6 +53,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -62,18 +67,24 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
-public class JournalConverterUtilTest {
+public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 	public JournalConverterUtilTest() throws Exception {
-		String xsd = readText("dynamic-data-mapping-structure.xml");
-
-		_ddmStructure = new DDMStructureImpl();
-
-		_ddmStructure.setStructureId(ServiceTestUtil.nextLong());
-		_ddmStructure.setXsd(xsd);
-
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
 		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		group = ServiceTestUtil.addGroup();
+
+		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+
+		String xsd = readText("dynamic-data-mapping-structure.xml");
+
+		_ddmStructure = addStructure(
+			classNameId, null, "Test Structure", xsd,
+			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
 	@Test
@@ -84,8 +95,8 @@ public class JournalConverterUtilTest {
 
 		expectedFields.put(booleanField);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME,
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(),
 			"boolean_INSTANCE_Okhyj6Ni,boolean_INSTANCE_1SYNQuhg");
 
 		expectedFields.put(fieldsDisplayField);
@@ -112,8 +123,8 @@ public class JournalConverterUtilTest {
 
 		expectedFields.put(docLibraryField);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME, "doc_library_INSTANCE_4aGOvP3N");
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "doc_library_INSTANCE_4aGOvP3N");
 
 		expectedFields.put(fieldsDisplayField);
 
@@ -146,8 +157,8 @@ public class JournalConverterUtilTest {
 
 		expectedFields.put(linkToPageField);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME, "link_INSTANCE_MiO7vIJu");
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "link_INSTANCE_MiO7vIJu");
 
 		expectedFields.put(fieldsDisplayField);
 
@@ -168,8 +179,8 @@ public class JournalConverterUtilTest {
 
 		expectedFields.put(multiSelectField);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME, "multi_select_INSTANCE_9X5wVsSv");
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "multi_select_INSTANCE_9X5wVsSv");
 
 		expectedFields.put(fieldsDisplayField);
 
@@ -201,8 +212,8 @@ public class JournalConverterUtilTest {
 
 		expectedFields.put(selectField);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME, "select_INSTANCE_pcm9WPVX");
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "select_INSTANCE_pcm9WPVX");
 
 		expectedFields.put(fieldsDisplayField);
 
@@ -222,8 +233,8 @@ public class JournalConverterUtilTest {
 
 		fields.put(booleanField);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME,
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(),
 			"boolean_INSTANCE_Okhyj6Ni,boolean_INSTANCE_1SYNQuhg");
 
 		fields.put(fieldsDisplayField);
@@ -249,8 +260,8 @@ public class JournalConverterUtilTest {
 
 		fields.put(docLibrary);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME, "doc_library_INSTANCE_4aGOvP3N");
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "doc_library_INSTANCE_4aGOvP3N");
 
 		fields.put(fieldsDisplayField);
 
@@ -283,8 +294,8 @@ public class JournalConverterUtilTest {
 
 		fields.put(linkToPageField);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME, "link_INSTANCE_MiO7vIJu");
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "link_INSTANCE_MiO7vIJu");
 
 		fields.put(fieldsDisplayField);
 
@@ -305,8 +316,8 @@ public class JournalConverterUtilTest {
 
 		fields.put(multiSelectField);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME, "multi_select_INSTANCE_9X5wVsSv");
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "multi_select_INSTANCE_9X5wVsSv");
 
 		fields.put(fieldsDisplayField);
 
@@ -338,8 +349,8 @@ public class JournalConverterUtilTest {
 
 		fields.put(selectField);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME, "select_INSTANCE_pcm9WPVX");
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "select_INSTANCE_pcm9WPVX");
 
 		fields.put(fieldsDisplayField);
 
@@ -358,8 +369,8 @@ public class JournalConverterUtilTest {
 
 		fields.put(textAreaField);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME,
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(),
 			"textArea_INSTANCE_ND057krU,textArea_INSTANCE_HvemvQgl," +
 			"textArea_INSTANCE_enAnbvq6");
 
@@ -381,8 +392,8 @@ public class JournalConverterUtilTest {
 
 		fields.put(textField);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME, "text_INSTANCE_bf4sdx6Q");
+		Field fieldsDisplayField =getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "text_INSTANCE_bf4sdx6Q");
 
 		fields.put(fieldsDisplayField);
 
@@ -401,8 +412,8 @@ public class JournalConverterUtilTest {
 
 		fields.put(textHTMLField);
 
-		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME, "textHTML_INSTANCE_RFnJ1nCn");
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "textHTML_INSTANCE_RFnJ1nCn");
 
 		fields.put(fieldsDisplayField);
 
@@ -437,7 +448,7 @@ public class JournalConverterUtilTest {
 		actualFieldsDisplayFieldValue =
 			actualFieldsDisplayFieldValue.replaceAll(regex, StringPool.BLANK);
 
-		actualFieldsDisplayField.setValue(expectedFieldsDisplayFieldValue);
+		actualFieldsDisplayField.setValue(actualFieldsDisplayFieldValue);
 
 		Assert.assertEquals(expectedFields, actualFields);
 	}
@@ -491,6 +502,16 @@ public class JournalConverterUtilTest {
 		docLibraryField.addValue(_enLocale, sb.toString());
 
 		return docLibraryField;
+	}
+
+	protected Field getFieldsDisplayField(long ddmStructureId, String value) {
+		Field fieldsDisplayField = new Field();
+
+		fieldsDisplayField.setDDMStructureId(ddmStructureId);
+		fieldsDisplayField.setName(DDMImpl.FIELDS_DISPLAY_NAME);
+		fieldsDisplayField.setValue(value);
+
+		return fieldsDisplayField;
 	}
 
 	protected Map<String, Map<Locale, List<String>>> getFieldsMap(String xml)
@@ -601,7 +622,7 @@ public class JournalConverterUtilTest {
 		fields.put(ext);
 
 		Field fieldsDisplayField = new Field(
-			DDMImpl.FIELDS_DISPLAY_NAME,
+			ddmStructureId, DDMImpl.FIELDS_DISPLAY_NAME,
 			"contact_INSTANCE_RF3do1m5,phone_INSTANCE_QK6B0wK9," +
 			"ext_INSTANCE_L67MPqQf,ext_INSTANCE_8uxzZl41," +
 			"ext_INSTANCE_S58K861T,contact_INSTANCE_CUeFxcrA," +

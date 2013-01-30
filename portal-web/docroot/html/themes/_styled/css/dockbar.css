@@ -100,7 +100,7 @@
 			width: 25px;
 		}
 
-		span {
+		span.user-full-name {
 			text-decoration: underline;
 		}
 	}

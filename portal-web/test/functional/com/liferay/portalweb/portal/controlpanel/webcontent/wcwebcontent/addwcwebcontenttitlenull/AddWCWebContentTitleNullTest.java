@@ -25,6 +25,10 @@ public class AddWCWebContentTitleNullTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,34 +39,43 @@ public class AddWCWebContentTitleNullTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//input[@value='Add']",
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]");
+		assertEquals(RuntimeVariables.replace("Basic Web Content"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("New Web Content"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace(""));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
+		selenium.waitForText("//span[@class='cke_toolbar']/span[2]/a/span",
+			"Normal");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea");
-		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
+			"//a[@class='cke_button cke_button__source cke_button_on']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
+		selenium.type("//div[@id='cke_1_contents']/textarea",
 			RuntimeVariables.replace("WC WebContent Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
 		selenium.waitForVisible(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.selectFrame(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
+			"//a[@class='cke_button cke_button__source cke_button_off']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
 		selenium.waitForText("//body", "WC WebContent Content");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",

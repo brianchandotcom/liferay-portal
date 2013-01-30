@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,54 +49,19 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//td[1]/input</td>
-	<td>Check Box</td>
-</tr>
-<tr>
-	<td>storeText</td>
-	<td>//td[2]/a</td>
-	<td>webContentID</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>${webContentID}</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//a[@class='entry-link']/span[contains(.,'WC WebContent Title Edit')]</td>
 	<td>WC WebContent Title Edit</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Approved</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//td[5]/a</td>
-	<td>Modified Date</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//td[6]/a</td>
-	<td>Display Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[7]/a</td>
-	<td>Joe Bloggs</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[8]/span/ul/li/strong/a</td>
-	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[3]/a</td>
+	<td>//a[@class='entry-link']/span[contains(.,'WC WebContent Title Edit')]</td>
 	<td>WC WebContent Title Edit</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -115,12 +90,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
@@ -144,9 +119,9 @@
 	<td>View History</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertVisible</td>
 	<td>//tr[3]/td[2]</td>
-	<td>${webContentID}</td>
+	<td>ID</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -179,9 +154,9 @@
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertVisible</td>
 	<td>//tr[4]/td[2]</td>
-	<td>${webContentID}</td>
+	<td>ID</td>
 </tr>
 <tr>
 	<td>assertText</td>

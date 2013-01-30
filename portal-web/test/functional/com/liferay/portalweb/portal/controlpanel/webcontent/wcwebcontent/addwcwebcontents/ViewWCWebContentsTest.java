@@ -25,6 +25,10 @@ public class ViewWCWebContentsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -36,29 +40,34 @@ public class ViewWCWebContentsTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Title"),
-			selenium.getText("//tr[3]/td[3]/a"));
+			selenium.getText(
+				"//a[@class='entry-link']/span[contains(.,'WC WebContent1 Title')]"));
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
-			selenium.getText("//tr[4]/td[3]/a"));
+			selenium.getText(
+				"//a[@class='entry-link']/span[contains(.,'WC WebContent2 Title')]"));
 		assertEquals(RuntimeVariables.replace("WC WebContent3 Title"),
-			selenium.getText("//tr[5]/td[3]/a"));
-		selenium.clickAt("//tr[3]/td[3]/a",
+			selenium.getText(
+				"//a[@class='entry-link']/span[contains(.,'WC WebContent3 Title')]"));
+		selenium.clickAt("//a[@class='entry-link']/span[contains(.,'WC WebContent1 Title')]",
 			RuntimeVariables.replace("WC WebContent1 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals("WC WebContent1 Title",
 			selenium.getValue("//input[@id='_15_title_en_US']"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
-		selenium.waitForVisible(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.selectFrame(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
 		selenium.waitForText("//body", "WC WebContent1 Content");
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Content"),
 			selenium.getText("//body"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -70,25 +79,28 @@ public class ViewWCWebContentsTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
-			selenium.getText("//tr[4]/td[3]/a"));
-		selenium.clickAt("//tr[4]/td[3]/a",
+			selenium.getText(
+				"//a[@class='entry-link']/span[contains(.,'WC WebContent2 Title')]"));
+		selenium.clickAt("//a[@class='entry-link']/span[contains(.,'WC WebContent2 Title')]",
 			RuntimeVariables.replace("WC WebContent2 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals("WC WebContent2 Title",
 			selenium.getValue("//input[@id='_15_title_en_US']"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
-		selenium.waitForVisible(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.selectFrame(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
 		selenium.waitForText("//body", "WC WebContent2 Content");
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Content"),
 			selenium.getText("//body"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -100,20 +112,19 @@ public class ViewWCWebContentsTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent3 Title"),
-			selenium.getText("//tr[5]/td[3]/a"));
-		selenium.clickAt("//tr[5]/td[3]/a",
+			selenium.getText(
+				"//a[@class='entry-link']/span[contains(.,'WC WebContent3 Title')]"));
+		selenium.clickAt("//a[@class='entry-link']/span[contains(.,'WC WebContent3 Title')]",
 			RuntimeVariables.replace("WC WebContent3 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		assertEquals(RuntimeVariables.replace("WC WebContent3 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals("WC WebContent3 Title",
 			selenium.getValue("//input[@id='_15_title_en_US']"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
-		selenium.waitForVisible(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.selectFrame(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
 		selenium.waitForText("//body", "WC WebContent3 Content");
 		assertEquals(RuntimeVariables.replace("WC WebContent3 Content"),
 			selenium.getText("//body"));

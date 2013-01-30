@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,9 +49,34 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Add']</td>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -49,9 +84,9 @@
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
-	<td>Text Area</td>
+	<td>waitForText</td>
+	<td>//span[@class='cke_toolbar']/span[2]/a/span</td>
+	<td>Normal</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -65,17 +100,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>//a[@class='cke_button cke_button__source cke_button_on']</td>
 	<td>Source Button On</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td>WC WebContent Content</td>
 </tr>
 <tr>
@@ -89,18 +124,18 @@
 	<td>Source</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
-	<td>Text Area</td>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button cke_button__source cke_button_off']</td>
+	<td>Source Button Off</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
@@ -119,14 +154,14 @@
 	<td>Save as Draft</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
-	<td>Text Area</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -150,17 +185,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Chinese (China)')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]</td>
 	<td>Chinese (China)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Chinese (China)')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]</td>
 	<td>Chinese (China)</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Chinese (China)')]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]</td>
 	<td>Chinese (China)</td>
 </tr>
 <tr>
@@ -174,7 +209,12 @@
 	<td>Web Content Translation</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//h1[@class='header-title']/span</td>
 	<td>WC WebContent Title</td>
 </tr>
@@ -184,14 +224,24 @@
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_15_title_zh_CN']</td>
+	<td>Title</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>//input[@id='_15_title_zh_CN']</td>
 	<td>WC WebContent Title 世界您好</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
-	<td>Text Area</td>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -205,17 +255,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>//a[@class='cke_button cke_button__source cke_button_on']</td>
 	<td>Source Button On</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td>WC WebContent Content 世界您好</td>
 </tr>
 <tr>
@@ -229,18 +279,18 @@
 	<td>Source</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
-	<td>Text Area</td>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button cke_button__source cke_button_off']</td>
+	<td>Source Button Off</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
@@ -294,14 +344,14 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>WC WebContent Title</td>
+	<td>assertVisible</td>
+	<td>//a[contains(@title,'WC WebContent Title')]/div/img</td>
+	<td>WC WebContent Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Approved</td>
+	<td>//a[@class='entry-link']/span[contains(.,'WC WebContent Title')]</td>
+	<td>WC WebContent Title</td>
 </tr>
 </tbody></table>
 </body>

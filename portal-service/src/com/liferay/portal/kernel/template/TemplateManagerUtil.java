@@ -53,10 +53,7 @@ public class TemplateManagerUtil {
 	public static Set<String> getSupportedLanguageTypes(
 		String propertyNamePrefix) {
 
-		Map<String, Set<String>> supportedLanguageTypesMap =
-			_getSupportedLanguageTypesMap();
-
-		Set<String> supportedLanguageTypes = supportedLanguageTypesMap.get(
+		Set<String> supportedLanguageTypes = _supportedLanguageTypesMap.get(
 			propertyNamePrefix);
 
 		if (supportedLanguageTypes != null) {
@@ -65,7 +62,7 @@ public class TemplateManagerUtil {
 
 		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
 
-		supportedLanguageTypes = new HashSet<String>(templateManagers.size());
+		supportedLanguageTypes = new HashSet<String>();
 
 		for (String templateManagerName : templateManagers.keySet()) {
 			String content = PropsUtil.get(
@@ -79,7 +76,7 @@ public class TemplateManagerUtil {
 		supportedLanguageTypes = Collections.unmodifiableSet(
 			supportedLanguageTypes);
 
-		supportedLanguageTypesMap.put(
+		_supportedLanguageTypesMap.put(
 			propertyNamePrefix, supportedLanguageTypes);
 
 		return supportedLanguageTypes;
@@ -172,12 +169,6 @@ public class TemplateManagerUtil {
 		for (TemplateManager templateManager : templateManagers) {
 			templateManagersMap.put(templateManager.getName(), templateManager);
 		}
-	}
-
-	private static Map<String, Set<String>> _getSupportedLanguageTypesMap() {
-		PortalRuntimePermission.checkGetBeanProperty(TemplateManagerUtil.class);
-
-		return _supportedLanguageTypesMap;
 	}
 
 	private static TemplateManager _getTemplateManager(

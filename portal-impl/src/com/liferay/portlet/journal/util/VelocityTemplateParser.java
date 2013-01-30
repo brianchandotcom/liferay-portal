@@ -71,7 +71,7 @@ public class VelocityTemplateParser extends BaseTemplateParser {
 	protected String getJournalTemplatesPath() {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(TemplateResource.JOURNAL_SEPARATOR);
+		sb.append(TemplateConstants.JOURNAL_SEPARATOR);
 		sb.append(StringPool.SLASH);
 		sb.append(getCompanyId());
 		sb.append(StringPool.SLASH);

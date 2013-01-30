@@ -158,7 +158,7 @@ public class VelocityPortlet extends GenericPortlet {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(_portletContextName);
-		sb.append(TemplateResource.SERVLET_SEPARATOR);
+		sb.append(TemplateConstants.SERVLET_SEPARATOR);
 		sb.append(StrutsUtil.TEXT_HTML_DIR);
 		sb.append(name);
 

@@ -85,7 +85,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		TemplateResource templateResource = null;
 
 		if (resourceName.startsWith(
-				TemplateResource.TEMPLATE_RESOURCE_UUID_PREFIX)) {
+				TemplateConstants.TEMPLATE_RESOURCE_UUID_PREFIX)) {
 
 			templateResource = TemplateResourceThreadLocal.getTemplateResource(
 				TemplateConstants.LANG_TYPE_VM);
@@ -138,7 +138,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 
 		Template template = new LiferayTemplate(templateResource.getReader());
 
-		template.setEncoding(TemplateResource.DEFAUT_ENCODING);
+		template.setEncoding(TemplateConstants.DEFAUT_ENCODING);
 		template.setName(templateResource.getTemplateId());
 		template.setResourceLoader(new LiferayResourceLoader());
 		template.setRuntimeServices(rsvc);

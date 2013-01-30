@@ -125,7 +125,7 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 		try {
 			Template template = _configuration.getTemplate(
 				getTemplateResourceUUID(templateResource),
-				TemplateResource.DEFAUT_ENCODING);
+				TemplateConstants.DEFAUT_ENCODING);
 
 			template.process(_context, writer);
 		}

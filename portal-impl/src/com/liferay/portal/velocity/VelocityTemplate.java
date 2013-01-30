@@ -110,7 +110,7 @@ public class VelocityTemplate extends AbstractTemplate {
 		try {
 			Template template = _velocityEngine.getTemplate(
 				getTemplateResourceUUID(templateResource),
-				TemplateResource.DEFAUT_ENCODING);
+				TemplateConstants.DEFAUT_ENCODING);
 
 			template.merge(_velocityContext, writer);
 		}

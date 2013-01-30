@@ -115,7 +115,7 @@ public abstract class AbstractTemplate implements Template {
 	protected String getTemplateResourceUUID(
 		TemplateResource templateResource) {
 
-		return TemplateResource.TEMPLATE_RESOURCE_UUID_PREFIX.concat(
+		return TemplateConstants.TEMPLATE_RESOURCE_UUID_PREFIX.concat(
 			StringPool.POUND).concat(templateResource.getTemplateId());
 	}
 

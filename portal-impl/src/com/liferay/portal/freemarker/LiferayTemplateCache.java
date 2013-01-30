@@ -85,7 +85,7 @@ public class LiferayTemplateCache extends TemplateCache {
 		TemplateResource templateResource = null;
 
 		if (templateId.startsWith(
-				TemplateResource.TEMPLATE_RESOURCE_UUID_PREFIX)) {
+				TemplateConstants.TEMPLATE_RESOURCE_UUID_PREFIX)) {
 
 			templateResource = TemplateResourceThreadLocal.getTemplateResource(
 				TemplateConstants.LANG_TYPE_FTL);
@@ -117,7 +117,7 @@ public class LiferayTemplateCache extends TemplateCache {
 
 		Template template = new Template(
 			templateResource.getTemplateId(), templateResource.getReader(),
-			_configuration, TemplateResource.DEFAUT_ENCODING);
+			_configuration, TemplateConstants.DEFAUT_ENCODING);
 
 		if (PropsValues.
 				FREEMARKER_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL != 0) {

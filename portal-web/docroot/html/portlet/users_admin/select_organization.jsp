@@ -76,7 +76,7 @@ if (Validator.isNotNull(target)) {
 			if (OrganizationPermissionUtil.contains(permissionChecker, organization.getOrganizationId(), ActionKeys.ASSIGN_MEMBERS)) {
 				StringBundler sb = new StringBundler(13);
 
-				sb.append("javascript:Liferay.Util.getTop().parent.");
+				sb.append("javascript:Liferay.Util.getOpener().");
 				sb.append(renderResponse.getNamespace());
 				sb.append("selectOrganization('");
 				sb.append(organization.getOrganizationId());

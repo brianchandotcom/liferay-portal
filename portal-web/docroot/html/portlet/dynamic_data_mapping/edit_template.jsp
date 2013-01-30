@@ -44,12 +44,17 @@ String type = BeanParamUtil.getString(template, request, "type", DDMTemplateCons
 String mode = BeanParamUtil.getString(template, request, "mode", DDMTemplateConstants.TEMPLATE_MODE_CREATE);
 String language = BeanParamUtil.getString(template, request, "language", TemplateConstants.LANG_TYPE_VM);
 String script = BeanParamUtil.getString(template, request, "script");
+Set<String> supportedLanguageTypes = TemplateManagerUtil.getTemplateManagerNames();
 
 if (Validator.isNull(script)) {
 	PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
 
 	if (portletDisplayTemplateHandler != null) {
 		script = ContentUtil.get(portletDisplayTemplateHandler.getTemplatesHelpPath(language));
+
+		String propertyNamePrefix = portletDisplayTemplateHandler.getTemplatesHelpKey();
+
+		supportedLanguageTypes = TemplateManagerUtil.getSupportedLanguageTypes(propertyNamePrefix);
 	}
 	else if ((structure != null) && Validator.equals(structure.getClassName(), JournalArticle.class)) {
 		script = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT, new Filter(TemplateConstants.LANG_TYPE_VM)));

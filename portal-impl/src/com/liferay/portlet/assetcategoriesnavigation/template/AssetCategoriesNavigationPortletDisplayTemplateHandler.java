@@ -48,13 +48,13 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 	}
 
 	@Override
-	protected String getTemplatesConfigPath() {
-		return PropsValues.ASSET_CATEGORIES_NAVIGATION_DISPLAY_TEMPLATES_CONFIG;
+	public String getTemplatesHelpKey() {
+		return PropsKeys.ASSET_CATEGORIES_NAVIGATION_DISPLAY_TEMPLATES_HELP;
 	}
 
 	@Override
-	protected String getTemplatesHelpKey() {
-		return PropsKeys.ASSET_CATEGORIES_NAVIGATION_DISPLAY_TEMPLATES_HELP;
+	protected String getTemplatesConfigPath() {
+		return PropsValues.ASSET_CATEGORIES_NAVIGATION_DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

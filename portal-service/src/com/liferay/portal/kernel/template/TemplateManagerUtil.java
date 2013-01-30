@@ -14,9 +14,13 @@
 
 package com.liferay.portal.kernel.template;
 
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,6 +48,41 @@ public class TemplateManagerUtil {
 		for (TemplateManager templateManager : templateManagers.values()) {
 			templateManager.destroy(classLoader);
 		}
+	}
+
+	public static Set<String> getSupportedLanguageTypes(
+		String propertyNamePrefix) {
+
+		Map<String, Set<String>> supportedLanguageTypesMap =
+			_getSupportedLanguageTypesMap();
+
+		Set<String> supportedLanguageTypes = supportedLanguageTypesMap.get(
+			propertyNamePrefix);
+
+		if (supportedLanguageTypes != null) {
+			return supportedLanguageTypes;
+		}
+
+		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
+
+		supportedLanguageTypes = new HashSet<String>(templateManagers.size());
+
+		for (String templateManagerName : templateManagers.keySet()) {
+			String content = PropsUtil.get(
+				propertyNamePrefix, new Filter(templateManagerName));
+
+			if (Validator.isNotNull(content)) {
+				supportedLanguageTypes.add(templateManagerName);
+			}
+		}
+
+		supportedLanguageTypes = Collections.unmodifiableSet(
+			supportedLanguageTypes);
+
+		supportedLanguageTypesMap.put(
+			propertyNamePrefix, supportedLanguageTypes);
+
+		return supportedLanguageTypes;
 	}
 
 	public static Template getTemplate(
@@ -79,9 +118,7 @@ public class TemplateManagerUtil {
 		return templateManagers.get(templateManagerName);
 	}
 
-	public static Set<String> getTemplateManagerNames(
-		String templateManagerName) {
-
+	public static Set<String> getTemplateManagerNames() {
 		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
 
 		return templateManagers.keySet();
@@ -137,6 +174,12 @@ public class TemplateManagerUtil {
 		}
 	}
 
+	private static Map<String, Set<String>> _getSupportedLanguageTypesMap() {
+		PortalRuntimePermission.checkGetBeanProperty(TemplateManagerUtil.class);
+
+		return _supportedLanguageTypesMap;
+	}
+
 	private static TemplateManager _getTemplateManager(
 			String templateManagerName)
 		throws TemplateException {
@@ -160,6 +203,8 @@ public class TemplateManagerUtil {
 		return _templateManagers;
 	}
 
+	private static Map<String, Set<String>> _supportedLanguageTypesMap =
+		new ConcurrentHashMap<String, Set<String>>();
 	private static Map<String, TemplateManager> _templateManagers =
 		new ConcurrentHashMap<String, TemplateManager>();
 

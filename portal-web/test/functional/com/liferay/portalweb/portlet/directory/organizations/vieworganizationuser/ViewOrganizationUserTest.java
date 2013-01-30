@@ -30,6 +30,7 @@ public class ViewOrganizationUserTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				Thread.sleep(1000);
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -55,34 +56,34 @@ public class ViewOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.type("//input[@name='_11_keywords']",
-					RuntimeVariables.replace(""));
 				assertEquals(RuntimeVariables.replace("Test Organization"),
-					selenium.getText("//td[1]/a"));
+					selenium.getText("//td[contains(.,'Test Organization')]/a"));
 				assertEquals(RuntimeVariables.replace(""),
 					selenium.getText("//td[2]/a"));
 				assertEquals(RuntimeVariables.replace("Regular Organization"),
-					selenium.getText("//td[3]/a"));
+					selenium.getText(
+						"//td[contains(.,'Regular Organization')]/a"));
 				assertEquals(RuntimeVariables.replace("Diamond Bar"),
-					selenium.getText("//td[4]/a"));
+					selenium.getText("//td[contains(.,'Diamond Bar')]/a"));
 				assertEquals(RuntimeVariables.replace("California"),
-					selenium.getText("//td[5]/a"));
+					selenium.getText("//td[contains(.,'California')]/a"));
 				assertEquals(RuntimeVariables.replace("United States"),
-					selenium.getText("//td[6]/a"));
+					selenium.getText("//td[contains(.,'United States')]/a"));
 				selenium.clickAt("link=View Users",
 					RuntimeVariables.replace("View Users"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("userfn"),
-					selenium.getText("//td[1]/a"));
+					selenium.getText("//td[contains(.,'userfn')]/a"));
 				assertEquals(RuntimeVariables.replace("userln"),
-					selenium.getText("//td[2]/a"));
+					selenium.getText("//td[contains(.,'userln')]/a"));
+				assertEquals(RuntimeVariables.replace("usersn"),
+					selenium.getText("//td[contains(.,'usersn')]/a"));
 				assertEquals(RuntimeVariables.replace(""),
 					selenium.getText("//td[4]/a"));
-				assertEquals(RuntimeVariables.replace("usersn"),
-					selenium.getText("//td[3]/a"));
 				assertEquals(RuntimeVariables.replace("Test Organization"),
-					selenium.getText("//td[5]/a"));
-				selenium.clickAt("//td[1]/a", RuntimeVariables.replace("userfn"));
+					selenium.getText("//td[contains(.,'Test Organization')]/a"));
+				selenium.clickAt("//td[contains(.,'userfn')]/a",
+					RuntimeVariables.replace("userfn"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("userfn usermn userln"),
 					selenium.getText(

@@ -28,6 +28,7 @@ public class SearchUserGroupQuotesTest extends BaseTestCase {
 		selenium.clickAt("link=Directory Test Page",
 			RuntimeVariables.replace("Directory Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		selenium.clickAt("link=User Groups",
 			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");

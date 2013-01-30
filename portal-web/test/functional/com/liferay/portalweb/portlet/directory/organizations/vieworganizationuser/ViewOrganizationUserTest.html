@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Directory Test Page</td>
 	<td>Directory Test Page</td>
@@ -54,13 +59,8 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@name='_11_keywords']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//td[contains(.,'Test Organization')]/a</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
@@ -70,22 +70,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//td[contains(.,'Regular Organization')]/a</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//td[contains(.,'Diamond Bar')]/a</td>
 	<td>Diamond Bar</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[5]/a</td>
+	<td>//td[contains(.,'California')]/a</td>
 	<td>California</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[6]/a</td>
+	<td>//td[contains(.,'United States')]/a</td>
 	<td>United States</td>
 </tr>
 <tr>
@@ -95,13 +95,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//td[contains(.,'userfn')]/a</td>
 	<td>userfn</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//td[contains(.,'userln')]/a</td>
 	<td>userln</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[contains(.,'usersn')]/a</td>
+	<td>usersn</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -110,17 +115,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>usersn</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[5]/a</td>
+	<td>//td[contains(.,'Test Organization')]/a</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
+	<td>//td[contains(.,'userfn')]/a</td>
 	<td>userfn</td>
 </tr>
 <tr>

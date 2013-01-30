@@ -19,6 +19,11 @@
 	<td>Directory Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=User Groups</td>
 	<td>User Groups</td>
@@ -45,17 +50,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//td[contains(.,'userfn')]/a</td>
 	<td>userfn</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//td[contains(.,'userln')]/a</td>
 	<td>userln</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//td[contains(.,'usersn')]/a</td>
 	<td>usersn</td>
 </tr>
 <tr>
@@ -70,7 +75,7 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
+	<td>//td[contains(.,'userfn')]/a</td>
 	<td>userfn</td>
 </tr>
 <tr>

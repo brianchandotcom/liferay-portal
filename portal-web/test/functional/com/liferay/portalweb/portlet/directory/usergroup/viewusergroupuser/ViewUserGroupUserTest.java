@@ -28,6 +28,7 @@ public class ViewUserGroupUserTest extends BaseTestCase {
 		selenium.clickAt("link=Directory Test Page",
 			RuntimeVariables.replace("Directory Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		selenium.clickAt("link=User Groups",
 			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
@@ -41,14 +42,15 @@ public class ViewUserGroupUserTest extends BaseTestCase {
 			RuntimeVariables.replace("View Users"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("userfn"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//td[contains(.,'userfn')]/a"));
 		assertEquals(RuntimeVariables.replace("userln"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//td[contains(.,'userln')]/a"));
 		assertEquals(RuntimeVariables.replace("usersn"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//td[contains(.,'usersn')]/a"));
 		assertEquals(RuntimeVariables.replace(""), selenium.getText("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace(""), selenium.getText("//td[5]/a"));
-		selenium.clickAt("//td[1]/a", RuntimeVariables.replace("userfn"));
+		selenium.clickAt("//td[contains(.,'userfn')]/a",
+			RuntimeVariables.replace("userfn"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("userfn usermn userln"),
 			selenium.getText("//div[@class='user-information']/div[1]/h2"));

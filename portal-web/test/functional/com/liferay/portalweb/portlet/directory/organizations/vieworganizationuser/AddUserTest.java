@@ -116,6 +116,7 @@ public class AddUserTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
+				Thread.sleep(1000);
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");

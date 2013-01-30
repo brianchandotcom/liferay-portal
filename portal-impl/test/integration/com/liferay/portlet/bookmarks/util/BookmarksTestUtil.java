@@ -44,13 +44,35 @@ public class BookmarksTestUtil {
 			serviceContext);
 	}
 
-	public static BookmarksFolder addFolder() throws Exception {
-		long parentFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+	public static BookmarksEntry addEntry(long groupId) throws Exception {
+		BookmarksFolder folder = addFolder();
 
-		return addFolder(parentFolderId);
+		String name = "Test Entry";
+		String url = "http://www.liferay.com";
+		String description = "This is a test entry.";
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(groupId);
+
+		return BookmarksEntryServiceUtil.addEntry(
+			folder.getGroupId(), folder.getFolderId(), name, url, description,
+			serviceContext);
 	}
 
-	public static BookmarksFolder addFolder(long parentFolderId)
+	public static BookmarksFolder addFolder() throws Exception {
+		return addFolder(TestPropsValues.getGroupId());
+	}
+
+	public static BookmarksFolder addFolder(long groupId) throws Exception {
+		long parentFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		return addFolder(groupId, parentFolderId);
+	}
+
+	public static BookmarksFolder addFolder(long groupId, long parentFolderId)
 		throws Exception {
 
 		String name = "Test Folder";
@@ -60,7 +82,7 @@ public class BookmarksTestUtil {
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
+		serviceContext.setScopeGroupId(groupId);
 
 		return BookmarksFolderServiceUtil.addFolder(
 			parentFolderId, name, description, serviceContext);

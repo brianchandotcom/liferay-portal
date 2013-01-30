@@ -97,6 +97,8 @@ public class DLFolderIndexer extends BaseIndexer {
 		if (status != WorkflowConstants.STATUS_ANY) {
 			contextQuery.addRequiredTerm(Field.STATUS, status);
 		}
+
+		contextQuery.addRequiredTerm(Field.HIDDEN, false);
 	}
 
 	@Override
@@ -124,6 +126,8 @@ public class DLFolderIndexer extends BaseIndexer {
 
 		document.addText(Field.DESCRIPTION, dlFolder.getDescription());
 		document.addKeyword(Field.FOLDER_ID, dlFolder.getParentFolderId());
+		document.addKeyword(
+			Field.HIDDEN, (dlFolder.isHidden() || dlFolder.isInHiddenFolder()));
 		document.addText(Field.TITLE, dlFolder.getName());
 
 		if (!dlFolder.isInTrash() && dlFolder.isInTrashContainer()) {

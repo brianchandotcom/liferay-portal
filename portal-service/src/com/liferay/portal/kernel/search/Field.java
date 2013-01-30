@@ -64,6 +64,8 @@ public class Field implements Serializable {
 
 	public static final String GROUP_ROLE_ID = "groupRoleId";
 
+	public static final String HIDDEN = "hidden";
+
 	public static final String KEYWORD_SEARCH = "keywordSearch";
 
 	public static final String[] KEYWORDS = {

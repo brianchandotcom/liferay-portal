@@ -25,6 +25,8 @@ public interface TemplateConstants {
 
 	public static final String JOURNAL_SEPARATOR = "_JOURNAL_CONTEXT_";
 
+	public static final String LANG_TYPE_CSS = "css";
+
 	public static final String LANG_TYPE_FTL = "ftl";
 
 	public static final String LANG_TYPE_VM = "vm";

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.util;
 
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -34,7 +35,6 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.model.JournalTemplateConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 
@@ -266,7 +266,7 @@ public class JournalTestUtil {
 		throws Exception {
 
 		return addDDMTemplate(
-			ddmStructureId, JournalTemplateConstants.LANG_TYPE_VM,
+			ddmStructureId, TemplateConstants.LANG_TYPE_VM,
 			getSampleTemplateXSL(), LocaleUtil.getDefault());
 	}
 
@@ -275,7 +275,7 @@ public class JournalTestUtil {
 		throws Exception {
 
 		return addDDMTemplate(
-			ddmStructureId, JournalTemplateConstants.LANG_TYPE_VM,
+			ddmStructureId, TemplateConstants.LANG_TYPE_VM,
 			getSampleTemplateXSL(), defaultLocale);
 	}
 
@@ -283,7 +283,7 @@ public class JournalTestUtil {
 		throws Exception {
 
 		return addDDMTemplate(
-			groupId, ddmStructureId, JournalTemplateConstants.LANG_TYPE_VM,
+			groupId, ddmStructureId, TemplateConstants.LANG_TYPE_VM,
 			getSampleTemplateXSL(), LocaleUtil.getDefault());
 	}
 
@@ -292,7 +292,7 @@ public class JournalTestUtil {
 		throws Exception {
 
 		return addDDMTemplate(
-			groupId, ddmStructureId, JournalTemplateConstants.LANG_TYPE_VM,
+			groupId, ddmStructureId, TemplateConstants.LANG_TYPE_VM,
 			getSampleTemplateXSL(), defaultLocale);
 	}
 

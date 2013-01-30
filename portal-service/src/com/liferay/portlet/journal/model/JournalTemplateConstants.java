@@ -22,14 +22,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
  */
 public class JournalTemplateConstants {
 
-	public static final String LANG_TYPE_CSS = "css";
-
-	public static final String LANG_TYPE_FTL = "ftl";
-
-	public static final String LANG_TYPE_VM = "vm";
-
-	public static final String LANG_TYPE_XSL = "xsl";
-
 	public static final String[] LANG_TYPES = PropsUtil.getArray(
 		PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_TYPES);
 

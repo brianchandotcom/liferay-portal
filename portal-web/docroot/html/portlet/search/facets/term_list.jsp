@@ -43,7 +43,7 @@ int maxTerms = dataJSONObject.getInt("maxTerms");
 					Liferay.Search.tokenList.add(
 						{
 							clearFields: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName()) %>',
-							text: '<%= UnicodeFormatter.toString(termCollector.getTerm()) %>'
+							text: '<%= UnicodeFormatter.toString(HtmlUtil.escape(termCollector.getTerm())) %>'
 						}
 					);
 				</aui:script>
@@ -56,7 +56,7 @@ int maxTerms = dataJSONObject.getInt("maxTerms");
 		%>
 
 			<li class="facet-value <%= fieldParam.equals(termCollector.getTerm()) ? "current-term" : StringPool.BLANK %>">
-				<a data-value="<%= termCollector.getTerm() %>" href="javascript:;"><%= termCollector.getTerm() %></a> <span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+				<a data-value="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>" href="javascript:;"><%= HtmlUtil.escape(termCollector.getTerm()) %></a> <span class="frequency">(<%= termCollector.getFrequency() %>)</span>
 			</li>
 
 		<%

@@ -59,24 +59,19 @@
 	<td>label=Normal</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_1_WAR_tasksportlet_neverDueCheckbox'))</td>
-	<td>neverDueChecked</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${neverDueChecked}</td>
-	<td>NeverDueNotChecked</td>
+	<td>assertText</td>
+	<td>//a[@id='toggleDueDate']</td>
+	<td>Add Due Date</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_1_WAR_tasksportlet_neverDueCheckbox']</td>
-	<td>Never Due</td>
+	<td>//a[@id='toggleDueDate']</td>
+	<td>Add Due Date</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>NeverDueNotChecked</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//select[@id='_1_WAR_tasksportlet_dueDateMonth']</td>
+	<td>Month</td>
 </tr>
 <tr>
 	<td>select</td>

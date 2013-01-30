@@ -19,26 +19,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.text.NumberFormat;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class MathUtil {
-
-	public static int base2Log(long x) {
-		return _base2LogValues.get(x);
-	}
-
-	public static long base2Pow(int x) {
-		if (x == 0) {
-			return 1;
-		}
-		else {
-			return 2L << (x - 1);
-		}
-	}
 
 	public static int factorial(int x) {
 		if (x < 0) {
@@ -129,16 +113,5 @@ public class MathUtil {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MathUtil.class);
-
-	private static Map<Long, Integer> _base2LogValues =
-		new HashMap<Long, Integer>();
-
-	static {
-		_base2LogValues.put(0L, Integer.MIN_VALUE);
-
-		for (int i = 0; i < 63; i++) {
-			_base2LogValues.put(base2Pow(i), i);
-		}
-	}
 
 }

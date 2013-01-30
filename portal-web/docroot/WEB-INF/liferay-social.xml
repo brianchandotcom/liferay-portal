@@ -202,7 +202,7 @@
 		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_ADD_ATTACHMENT}</activity-type>
 		<language-key>ADD_ATTACHMENT</language-key>
-		<log-activity>false</log-activity>
+		<log-activity>true</log-activity>
 		<contribution-value>2</contribution-value>
 		<participation-value>2</participation-value>
 		<counter>
@@ -213,6 +213,18 @@
 			<name>user.attachments</name>
 			<owner-type>actor</owner-type>
 		</counter>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH}</activity-type>
+		<language-key>MOVE_ATTACHMENT_TO_TRASH</language-key>
+		<log-activity>true</log-activity>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH}</activity-type>
+		<language-key>RESTORE_ATTACHMENT_FROM_TRASH</language-key>
+		<log-activity>true</log-activity>
 	</activity>
 	<activity>
 		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>

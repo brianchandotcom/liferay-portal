@@ -876,6 +876,11 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		_blogsEntry.persist();
 	}
 
+	public java.lang.String getEntryImageURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		return _blogsEntry.getEntryImageURL(themeDisplay);
+	}
+
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

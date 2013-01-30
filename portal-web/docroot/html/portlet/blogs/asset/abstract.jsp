@@ -23,20 +23,8 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 %>
 
 <c:if test="<%= entry.isSmallImage() %>">
-
-	<%
-	String src = StringPool.BLANK;
-
-	if (Validator.isNotNull(entry.getSmallImageURL())) {
-		src = entry.getSmallImageURL();
-	}
-	else {
-		src = themeDisplay.getPathImage() + "/blogs/article?img_id=" + entry.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(entry.getSmallImageId());
-	}
-	%>
-
 	<div class="asset-small-image">
-		<img alt="" class="asset-small-image" src="<%= HtmlUtil.escape(src) %>" width="150" />
+		<img alt="" class="asset-small-image" src="<%= HtmlUtil.escape(entry.getEntryImageURL(themeDisplay)) %>" width="150" />
 	</div>
 </c:if>
 

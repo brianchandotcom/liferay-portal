@@ -16,8 +16,11 @@ package com.liferay.portlet.blogs.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 import java.util.Date;
 
@@ -28,6 +31,21 @@ import java.util.Date;
 public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 
 	public BlogsEntryImpl() {
+	}
+
+	public String getEntryImageURL(ThemeDisplay themeDisplay) {
+		if (!isSmallImage()) {
+			return null;
+		}
+
+		if (Validator.isNotNull(getSmallImageURL())) {
+			return getSmallImageURL();
+		}
+
+		return
+			themeDisplay.getPathImage() + "/blogs/entry?img_id=" +
+				getSmallImageId() + "&t=" +
+					WebServerServletTokenUtil.getToken(getSmallImageId());
 	}
 
 	public String getSmallImageType() throws PortalException, SystemException {

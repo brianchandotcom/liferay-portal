@@ -38,9 +38,10 @@ public class PortletTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddPortletMultipleTests.suite());
 		testSuite.addTest(AddPortletSMTests.suite());
 		testSuite.addTest(ConfigurePortletRootLayoutTests.suite());
+		testSuite.addTest(
+			ConfigurePortletSMDisplayTemplateMultiColumnLayoutTests.suite());
 		testSuite.addTest(RemovePortletTests.suite());
 		testSuite.addTest(ViewPortletSiteMapTests.suite());
-		testSuite.addTest(ConfigurePortletSMDisplayTemplateMultiColumnLayoutTests.suite());
 
 		return testSuite;
 	}

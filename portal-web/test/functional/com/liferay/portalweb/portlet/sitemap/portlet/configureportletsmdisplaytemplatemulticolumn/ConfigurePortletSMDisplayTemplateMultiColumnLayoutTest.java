@@ -49,16 +49,16 @@ public class ConfigurePortletSMDisplayTemplateMultiColumnLayoutTest
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//div[@class='display-template']");
-		selenium.select("//div[@class='display-template']/span/span/span/select",
+		selenium.select("//select[@id='_86_displayStyle']",
 			RuntimeVariables.replace("Multi Column Layout"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals("Multi Column Layout",
-			selenium.getSelectedLabel("//select[@id='_86_displayStyle']"));
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("Multi Column Layout",
+			selenium.getSelectedLabel("//select[@id='_86_displayStyle']"));
 		selenium.selectFrame("relative=top");
 	}
 }

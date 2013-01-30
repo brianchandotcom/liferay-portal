@@ -331,6 +331,11 @@
 						<bean class="com.liferay.portal.velocity.VelocityTemplateContextHelper" />
 					</property>
 				</bean>
+				<bean class="com.liferay.portal.xsl.XSLManager">
+					<property name="templateContextHelper">
+						<bean class="com.liferay.portal.template.TemplateContextHelper" />
+					</property>
+				</bean>
 			</list>
 		</property>
 	</bean>

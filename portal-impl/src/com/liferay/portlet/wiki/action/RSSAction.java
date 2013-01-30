@@ -61,7 +61,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		sb.append(layoutFullURL);
 		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
 		sb.append("wiki/");
-		sb.append(String.valueOf(nodeId));
+		sb.append(nodeId);
 
 		String feedURL = sb.toString();
 

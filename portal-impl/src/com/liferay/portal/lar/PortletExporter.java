@@ -1542,17 +1542,13 @@ public class PortletExporter {
 			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
 				companyGroup.getGroupId();
 
-		String layoutScopeId =
-			AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX + layout.getLayoutId();
-
 		String[] newValues = new String[oldValues.length];
 
 		for (int i = 0; i < oldValues.length; i++) {
 			String oldValue = oldValues[i];
 
 			newValues[i] = StringUtil.replace(
-				oldValue, new String[] {groupScopeId, layoutScopeId},
-				new String[] {"[$GROUP_SCOPE_ID$]", "[$LAYOUT_SCOPE_ID$]"});
+				oldValue, groupScopeId, "[$GROUP_SCOPE_ID$]");
 		}
 
 		jxPreferences.setValues(key, newValues);

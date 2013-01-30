@@ -737,12 +737,16 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			template.put("languageUtil", LanguageUtil.getLanguage());
 			template.put("locale", locale);
 
-			String sourceContent = WikiUtil.processContent(
-				latestPage.getContent());
-			String targetContent = WikiUtil.processContent(page.getContent());
+			String sourceContent = StringPool.BLANK;
+			String targetContent = StringPool.BLANK;
 
-			sourceContent = HtmlUtil.escape(sourceContent);
-			targetContent = HtmlUtil.escape(targetContent);
+			if (latestPage != null) {
+				sourceContent = WikiUtil.convert(latestPage, null, null, null);
+			}
+
+			if (page != null) {
+				targetContent = WikiUtil.convert(page, null, null, null);
+			}
 
 			List<DiffResult>[] diffResults = DiffUtil.diff(
 				new UnsyncStringReader(sourceContent),

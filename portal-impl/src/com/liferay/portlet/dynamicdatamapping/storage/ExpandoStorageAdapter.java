@@ -52,6 +52,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -226,8 +227,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		return false;
 	}
 
-	private void _checkExpandoColumns(
-			long ddmStructureId, ExpandoTable expandoTable, Fields fields)
+	private void _checkExpandoColumns(ExpandoTable expandoTable, Fields fields)
 		throws PortalException, SystemException {
 
 		for (String name : fields.getNames()) {
@@ -382,7 +382,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 				companyId, classNameId, String.valueOf(ddmStructureId));
 		}
 
-		_checkExpandoColumns(ddmStructureId, expandoTable, fields);
+		_checkExpandoColumns(expandoTable, fields);
 
 		return expandoTable;
 	}
@@ -538,10 +538,23 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 					new HashMap<Locale, String[]>();
 
 				for (Locale locale : field.getAvailableLocales()) {
-					String[] values = ArrayUtil.toStringArray(
-						(Object[])field.getValue(locale));
+					Serializable value = field.getValue(locale);
 
-					stringArrayMap.put(locale, values);
+					if (value instanceof Date[]) {
+						Date[] dates = (Date[])value;
+
+						String[] values = new String[dates.length];
+
+						for (int i = 0; i < dates.length; i++) {
+							values[i] = String.valueOf(dates[i].getTime());
+						}
+
+						stringArrayMap.put(locale, values);
+					}
+					else {
+						stringArrayMap.put(
+							locale, ArrayUtil.toStringArray((Object[])value));
+					}
 				}
 
 				dataMap = stringArrayMap;
@@ -550,9 +563,15 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 				Map<Locale, String> stringMap = new HashMap<Locale, String>();
 
 				for (Locale locale : field.getAvailableLocales()) {
-					String value = String.valueOf(field.getValue(locale));
+					Serializable value = field.getValue(locale);
 
-					stringMap.put(locale, value);
+					if (value instanceof Date) {
+						Date date = (Date)value;
+
+						value = date.getTime();
+					}
+
+					stringMap.put(locale, String.valueOf(value));
 				}
 
 				dataMap = stringMap;

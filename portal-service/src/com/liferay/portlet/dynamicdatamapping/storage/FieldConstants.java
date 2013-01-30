@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -76,30 +75,28 @@ public class FieldConstants {
 		String type, List<Serializable> values) {
 
 		if (type.equals(FieldConstants.BOOLEAN)) {
-			return ArrayUtil.toArray(
-				values.toArray(new Boolean[values.size()]));
+			return values.toArray(new Boolean[values.size()]);
 		}
 		else if (type.equals(FieldConstants.DATE)) {
 			return values.toArray(new Date[values.size()]);
 		}
 		else if (type.equals(FieldConstants.DOUBLE)) {
-			return ArrayUtil.toArray(values.toArray(new Double[values.size()]));
+			return values.toArray(new Double[values.size()]);
 		}
 		else if (type.equals(FieldConstants.FLOAT)) {
-			return ArrayUtil.toArray(values.toArray(new Float[values.size()]));
+			return values.toArray(new Float[values.size()]);
 		}
 		else if (type.equals(FieldConstants.INTEGER)) {
-			return ArrayUtil.toArray(
-				values.toArray(new Integer[values.size()]));
+			return values.toArray(new Integer[values.size()]);
 		}
 		else if (type.equals(FieldConstants.LONG)) {
-			return ArrayUtil.toArray(values.toArray(new Long[values.size()]));
+			return values.toArray(new Long[values.size()]);
 		}
 		else if (type.equals(FieldConstants.NUMBER)) {
 			return values.toArray(new Number[values.size()]);
 		}
 		else if (type.equals(FieldConstants.SHORT)) {
-			return ArrayUtil.toArray(values.toArray(new Short[values.size()]));
+			return values.toArray(new Short[values.size()]);
 		}
 		else {
 			return values.toArray(new String[values.size()]);

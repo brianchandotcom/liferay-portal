@@ -162,15 +162,28 @@ AUI.add(
 				dialog.render();
 			}
 			else {
+				var dialogIframe = dialog.iframe;
+				var dialogIframeNode = dialogIframe.node;
+
 				if (!dialog.get('visible')) {
 					dialog.show();
 
-					dialog.iframe.node.focus();
+					dialogIframeNode.focus();
 
-					dialog.iframe.set('uri', uri);
+					dialogIframe.set('uri', uri);
 				}
 
 				dialog._syncUIPosAlign();
+
+				try {
+					var dialogUtil = dialogIframeNode.get('contentWindow.Liferay.Util');
+
+					if (dialogUtil) {
+						dialogUtil.Window._opener = openingWindow;
+					}
+				}
+				catch (e) {
+				}
 			}
 
 			if (dialog.get('stack')) {

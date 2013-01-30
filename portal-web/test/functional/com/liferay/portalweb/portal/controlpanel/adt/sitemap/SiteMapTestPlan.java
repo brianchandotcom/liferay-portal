@@ -28,7 +28,8 @@ public class SiteMapTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(ViewPortletSMDisplayTemplateMultiColumnLayoutTests.suite());
+		testSuite.addTest(
+			ViewPortletSMDisplayTemplateMultiColumnLayoutTests.suite());
 
 		return testSuite;
 	}

@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -65,32 +67,38 @@ public class DLFileEntryFinderTest {
 	public void setUp() throws Exception {
 		_group = ServiceTestUtil.addGroup();
 
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
 		_folder = DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A", "",
-			ServiceTestUtil.getServiceContext(_group.getGroupId()));
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
+			StringPool.BLANK, serviceContext);
 
 		DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), "Folder B", "",
-			ServiceTestUtil.getServiceContext(_group.getGroupId()));
+			_folder.getFolderId(), "Folder B", StringPool.BLANK,
+			serviceContext);
 
 		Folder folder = DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), "Folder C", "",
-			ServiceTestUtil.getServiceContext(_group.getGroupId()));
+			_folder.getFolderId(), "Folder C", StringPool.BLANK,
+			serviceContext);
 
 		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
 
+		User user = ServiceTestUtil.addUser(
+			ServiceTestUtil.randomString(), _group.getGroupId());
+
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), _folder.getFolderId(), false, "FE1.txt",
-			"FE1.txt");
+			user.getUserId(), _group.getGroupId(), _folder.getFolderId(),
+			ContentTypes.TEXT_PLAIN, "FE1.txt", "FE1.txt", null,
+			WorkflowConstants.ACTION_PUBLISH);
 
 		DLFileEntry dlFileEntry =
 			((LiferayFileEntry)fileEntry).getDLFileEntry();
 
-		dlFileEntry.setUserId(1234);
-		dlFileEntry.setSmallImageId(6789);
+		dlFileEntry.setSmallImageId(_SMALL_IMAGE_ID);
 		dlFileEntry.setExtraSettings("Extra Settings");
 
 		dlFileEntry = DLFileEntryLocalServiceUtil.updateDLFileEntry(
@@ -98,7 +106,6 @@ public class DLFileEntryFinderTest {
 
 		_fileVersion = dlFileEntry.getFileVersion();
 
-		_fileVersion.setUserId(1234);
 		_fileVersion.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(_fileVersion);
@@ -121,16 +128,13 @@ public class DLFileEntryFinderTest {
 
 		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 
-		FinderCacheUtil.clearCache();
-
-		LiferayFileVersion fileVersion =
-			(LiferayFileVersion)fileEntry.getFileVersion();
-
-		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		dlFileVersion.setExtraSettings("Extra Settings");
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+
+		FinderCacheUtil.clearCache();
 
 		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
 	}
@@ -176,7 +180,8 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void testFindByAnyImageId() throws Exception {
-		DLFileEntry dlFileEntry = DLFileEntryFinderUtil.findByAnyImageId(6789);
+		DLFileEntry dlFileEntry = DLFileEntryFinderUtil.findByAnyImageId(
+			_SMALL_IMAGE_ID);
 
 		Assert.assertEquals(dlFileEntry.getTitle(), "FE1.txt");
 	}
@@ -187,35 +192,34 @@ public class DLFileEntryFinderTest {
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 
-		List<DLFileEntry> list = doFindBy_G_U_F_M(
+		List<DLFileEntry> fileEntries = doFindBy_G_U_F_M(
 			false, _TEXT_PLAIN, queryDefinition);
 
-		Assert.assertEquals(list.size(), 1);
+		Assert.assertEquals(fileEntries.size(), 1);
 
-		DLFileEntry dlFileEntry = list.get(0);
+		DLFileEntry dlFileEntry = fileEntries.get(0);
 
 		Assert.assertEquals(dlFileEntry.getTitle(), "FE1.txt");
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
-		list =  doFindBy_G_U_F_M(true, _TEXT_PLAIN, queryDefinition);
+		fileEntries = doFindBy_G_U_F_M(true, _TEXT_PLAIN, queryDefinition);
 
-		Assert.assertEquals(list.size(), 1);
+		Assert.assertEquals(fileEntries.size(), 1);
 
-		dlFileEntry = list.get(0);
+		dlFileEntry = fileEntries.get(0);
 
 		Assert.assertEquals(dlFileEntry.getDescription(), "FE3.txt");
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-		list =  doFindBy_G_U_F_M(true, null, queryDefinition);
+		fileEntries = doFindBy_G_U_F_M(true, null, queryDefinition);
 
-		Assert.assertEquals(list.size(), 1);
+		Assert.assertEquals(fileEntries.size(), 1);
 
-		dlFileEntry = list.get(0);
+		dlFileEntry = fileEntries.get(0);
 
 		Assert.assertEquals(dlFileEntry.getTitle(), "FE2.pdf");
-
 	}
 
 	@Test
@@ -224,11 +228,12 @@ public class DLFileEntryFinderTest {
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(_fileVersion);
 
-		List<DLFileEntry> list = DLFileEntryFinderUtil.findByMisversioned();
+		List<DLFileEntry> fileEntries =
+			DLFileEntryFinderUtil.findByMisversioned();
 
-		Assert.assertEquals(list.size(), 1);
+		Assert.assertEquals(fileEntries.size(), 1);
 
-		DLFileEntry dlFileEntry = list.get(0);
+		DLFileEntry dlFileEntry = fileEntries.get(0);
 
 		Assert.assertEquals(dlFileEntry.getTitle(), "FE1.txt");
 	}
@@ -241,11 +246,11 @@ public class DLFileEntryFinderTest {
 		AssetEntryLocalServiceUtil.fetchEntry(
 			DLFileEntry.class.getName(), _fileVersion.getFileEntryId());
 
-		List<DLFileEntry> list = DLFileEntryFinderUtil.findByNoAssets();
+		List<DLFileEntry> fileEntries = DLFileEntryFinderUtil.findByNoAssets();
 
-		Assert.assertEquals(list.size(), 1);
+		Assert.assertEquals(fileEntries.size(), 1);
 
-		DLFileEntry dlFileEntry = list.get(0);
+		DLFileEntry dlFileEntry = fileEntries.get(0);
 
 		Assert.assertEquals(dlFileEntry.getTitle(), "FE1.txt");
 	}
@@ -297,6 +302,8 @@ public class DLFileEntryFinderTest {
 		return DLFileEntryFinderUtil.findByG_U_F_M(
 			_group.getGroupId(), userId, folderIds, mimeTypes, queryDefinition);
 	}
+
+	private static final long _SMALL_IMAGE_ID = 1234L;
 
 	private static final String _TEXT_PLAIN = ContentTypes.TEXT_PLAIN;
 

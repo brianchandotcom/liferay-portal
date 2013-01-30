@@ -93,6 +93,31 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static FileEntry addFileEntry(
+			long userId, long groupId, long folderId, String mimeType,
+			String sourceFileName, String title, byte[] bytes,
+			int workflowAction)
+		throws Exception {
+
+		String description = StringPool.BLANK;
+		String changeLog = StringPool.BLANK;
+
+		if ((bytes == null) && Validator.isNotNull(sourceFileName)) {
+			bytes = _CONTENT.getBytes();
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setWorkflowAction(workflowAction);
+
+		return DLAppLocalServiceUtil.addFileEntry(
+			userId, groupId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, bytes, serviceContext);
+	}
+
+	public static FileEntry addFileEntry(
 			long groupId, long folderId, String fileName)
 		throws Exception {
 
@@ -159,23 +184,9 @@ public abstract class DLAppTestUtil {
 			String title, byte[] bytes, int workflowAction)
 		throws Exception {
 
-		String description = StringPool.BLANK;
-		String changeLog = StringPool.BLANK;
-
-		if ((bytes == null) && Validator.isNotNull(sourceFileName)) {
-			bytes = _CONTENT.getBytes();
-		}
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setWorkflowAction(workflowAction);
-
-		return DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), groupId, folderId, sourceFileName,
-			mimeType, title, description, changeLog, bytes, serviceContext);
+		return addFileEntry(
+			TestPropsValues.getUserId(), groupId, folderId, mimeType,
+			sourceFileName, title, bytes, workflowAction);
 	}
 
 	public static Folder addFolder(

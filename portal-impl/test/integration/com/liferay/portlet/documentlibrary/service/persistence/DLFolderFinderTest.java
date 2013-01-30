@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -59,20 +61,23 @@ public class DLFolderFinderTest {
 	public void setUp() throws Exception {
 		_group = ServiceTestUtil.addGroup();
 
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
 		_folder = DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A", "",
-			ServiceTestUtil.getServiceContext(_group.getGroupId()));
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
+			StringPool.BLANK, serviceContext);
 
 		DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), "Folder B", "",
-			ServiceTestUtil.getServiceContext(_group.getGroupId()));
+			_folder.getFolderId(), "Folder B", StringPool.BLANK,
+			serviceContext);
 
 		Folder folder = DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), "Folder C", "",
-			ServiceTestUtil.getServiceContext(_group.getGroupId()));
+			_folder.getFolderId(), "Folder C", StringPool.BLANK,
+			serviceContext);
 
 		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
 
@@ -233,33 +238,36 @@ public class DLFolderFinderTest {
 
 	@Test
 	public void testFindF_FE_FS_ByG_F() throws Exception {
-
 		QueryDefinition queryDefinition = new QueryDefinition();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-		List<?> list = DLFolderFinderUtil.filterFindF_FE_FS_ByG_F_M_M(
+		List results = DLFolderFinderUtil.filterFindF_FE_FS_ByG_F_M_M(
 			_group.getGroupId(), _folder.getFolderId(),
 			new String[] {ContentTypes.TEXT_PLAIN}, false, queryDefinition);
 
-		Assert.assertEquals(list.size(), 3);
+		Assert.assertEquals(results.size(), 3);
 
-		for (Object obj : list) {
-			if (obj instanceof DLFolder) {
-				Assert.assertEquals(((DLFolder)obj).getName(), "Folder B");
+		for (Object result : results) {
+			if (result instanceof DLFolder) {
+				DLFolder dlFolder = (DLFolder)result;
+
+				Assert.assertEquals(dlFolder.getName(), "Folder B");
 			}
-			else if (obj instanceof DLFileEntry) {
-				Assert.assertEquals(((DLFileEntry)obj).getTitle(), "FE1.txt");
+			else if (result instanceof DLFileEntry) {
+				DLFileEntry dlFileEntry = (DLFileEntry)result;
+
+				Assert.assertEquals(dlFileEntry.getTitle(), "FE1.txt");
 			}
-			else if (obj instanceof DLFileShortcut) {
+			else if (result instanceof DLFileShortcut) {
+				DLFileShortcut fileShortcut = (DLFileShortcut)result;
+
 				Assert.assertEquals(
-					((DLFileShortcut)obj).getFileShortcutId(),
+					fileShortcut.getFileShortcutId(),
 					_fileShortcut.getFileShortcutId());
 			}
 			else {
-				Assert.fail("Invalid model returned: " + obj.getClass());
-
-				continue;
+				Assert.fail("Invalid model returned: " + result.getClass());
 			}
 		}
 	}

@@ -232,9 +232,9 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 
 							<liferay-ui:app-view-search-entry
 								actionJsp="/html/portlet/document_library/file_entry_action.jsp"
+								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, fileEntry.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 								description="<%= fileEntry.getDescription() %>"
-								folderName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, fileEntry.getFolderId()) %>"
 								locked="<%= fileEntry.isCheckedOut() %>"
 								mbMessages="<%= searchResult.getMBMessages() %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
@@ -276,9 +276,9 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 
 							<liferay-ui:app-view-search-entry
 								actionJsp="/html/portlet/document_library/folder_action.jsp"
+								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 								description="<%= curFolder.getDescription() %>"
-								folderName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
 								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 								rowCheckerName="<%= Folder.class.getSimpleName() %>"

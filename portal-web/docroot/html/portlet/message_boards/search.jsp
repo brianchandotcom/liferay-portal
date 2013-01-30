@@ -55,6 +55,12 @@ String keywords = ParamUtil.getString(request, "keywords");
 		title="search"
 	/>
 
+	<span class="aui-search-bar">
+		<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-messages" type="text" value="<%= keywords %>" />
+
+		<aui:button type="submit" value="search" />
+	</span>
+
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -88,160 +94,39 @@ String keywords = ParamUtil.getString(request, "keywords");
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= MBUtil.getEntries(hits) %>"
+			results="<%= SearchResultUtil.getSearchResults(hits) %>"
 			total="<%= hits.getLength() %>"
 		/>
 
 		<liferay-ui:search-container-row
-			className="Object"
-			modelVar="obj"
+			className="com.liferay.portal.kernel.search.SearchResult"
+			modelVar="searchResult"
 		>
 
-			<c:choose>
-				<c:when test="<%= obj instanceof DLFileEntry %>">
+			<%
+			MBMessage message = MBMessageLocalServiceUtil.getMessage(searchResult.getClassPK());
+			%>
 
-					<%
-					DLFileEntry dlFileEntry = (DLFileEntry)obj;
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="struts_action" value="/message_boards/view_message" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+			</portlet:renderURL>
 
-					MBMessage message = MBMessageAttachmentsUtil.getMessage(dlFileEntry.getFileEntryId());
-
-					MBCategory category = message.getCategory();
-
-					PortletURL categoryURL = renderResponse.createRenderURL();
-
-					categoryURL.setParameter("struts_action", "/message_boards/view");
-					categoryURL.setParameter("redirect", currentURL);
-					categoryURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
-					%>
-
-					<portlet:actionURL var="rowURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-						<portlet:param name="struts_action" value="/message_boards/get_message_attachment" />
-						<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-						<portlet:param name="attachment" value="<%= dlFileEntry.getTitle() %>" />
-					</portlet:actionURL>
-
-					<portlet:renderURL var="messageURL">
-						<portlet:param name="struts_action" value="/message_boards/view_message" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:search-container-column-text
-						name="title"
-					>
-						<liferay-ui:icon
-							image='<%= "../file_system/small/" + DLUtil.getFileIcon(dlFileEntry.getExtension()) %>'
-							label="<%= true %>"
-							message="<%= dlFileEntry.getTitle() %>"
-							url="<%= rowURL %>"
-						/>
-
-						<liferay-util:buffer var="rootEntryIcon">
-							<liferay-ui:icon
-								image="message"
-								label="<%= true %>"
-								message="<%= HtmlUtil.escape(message.getSubject()) %>"
-								url="<%= messageURL %>"
-							/>
-						</liferay-util:buffer>
-
-						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="attachment-found-in-message-x" />)</span>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						name="type"
-						value='<%= LanguageUtil.get(locale, "attachment") %>'
-					/>
-
-					<liferay-ui:search-container-column-text
-						href="<%= categoryURL %>"
-						name="category"
-						value="<%= HtmlUtil.escape(category.getName()) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="thread-posts"
-						value="<%= StringPool.BLANK %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="thread-views"
-						value="<%= StringPool.BLANK %>"
-					/>
-				</c:when>
-				<c:when test="<%= obj instanceof MBMessage %>">
-
-					<%
-					MBMessage message = (MBMessage)obj;
-
-					MBCategory category = message.getCategory();
-
-					PortletURL categoryURL = renderResponse.createRenderURL();
-
-					categoryURL.setParameter("struts_action", "/message_boards/view");
-					categoryURL.setParameter("redirect", currentURL);
-					categoryURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
-
-					// Thread and message
-
-					MBThread thread = message.getThread();
-					%>
-
-					<portlet:renderURL var="rowURL">
-						<portlet:param name="struts_action" value="/message_boards/view_message" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:search-container-column-text
-						name="title"
-					>
-						<liferay-ui:icon
-							image="message"
-							label="<%= true %>"
-							message="<%= HtmlUtil.escape(message.getSubject()) %>"
-							url="<%= rowURL %>"
-						/>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						name="type"
-						value='<%= LanguageUtil.get(locale, "message") %>'
-					/>
-
-					<liferay-ui:search-container-column-text
-						href="<%= categoryURL %>"
-						name="category"
-						value="<%= HtmlUtil.escape(category.getName()) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="thread-posts"
-						value="<%= String.valueOf(thread.getMessageCount()) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="thread-views"
-						value="<%= String.valueOf(thread.getViewCount()) %>"
-					/>
-				</c:when>
-			</c:choose>
-
+			<liferay-ui:app-view-search-entry
+				containerIcon="../common/conversation"
+				containerName="<%= MBUtil.getAbsolutePath(renderRequest, message.getCategoryId()) %>"
+				containerType='<%= LanguageUtil.get(locale, "category") %>'
+				cssClass='<%= MathUtil.isEven(index) ? "search alt" : "search" %>'
+				description="<%= StringPool.BLANK %>"
+				fileEntries="<%= searchResult.getFileEntries() %>"
+				queryTerms="<%= hits.getQueryTerms() %>"
+				title="<%= HtmlUtil.escape(message.getSubject()) %>"
+				url="<%= rowURL %>"
+			/>
 		</liferay-ui:search-container-row>
 
-		<span class="aui-search-bar">
-			<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-messages" type="text" value="<%= keywords %>" />
-
-			<aui:button type="submit" value="search" />
-		</span>
-
-		<br /><br />
-
-		<liferay-ui:search-iterator type="more" />
+		<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="more" />
 	</liferay-ui:search-container>
 
 </aui:form>

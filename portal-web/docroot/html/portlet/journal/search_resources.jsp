@@ -283,9 +283,9 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 
 									<liferay-ui:app-view-search-entry
 										actionJsp="/html/portlet/journal/article_action.jsp"
+										containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, article.getFolderId()) %>"
 										cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 										description="<%= article.getDescription(locale) %>"
-										folderName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, article.getFolderId()) %>"
 										mbMessages="<%= searchResult.getMBMessages() %>"
 										queryTerms="<%= hits.getQueryTerms() %>"
 										rowCheckerId="<%= String.valueOf(article.getArticleId()) %>"
@@ -319,9 +319,9 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 
 									<liferay-ui:app-view-search-entry
 										actionJsp="/html/portlet/journal/folder_action.jsp"
+										containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
 										cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 										description="<%= curFolder.getDescription() %>"
-										folderName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
 										queryTerms="<%= hits.getQueryTerms() %>"
 										rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 										rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
@@ -382,9 +382,9 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 
 									<liferay-ui:app-view-search-entry
 										actionJsp="/html/portlet/journal/article_action.jsp"
+										containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>"
 										cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 										description="<%= curArticle.getDescription(locale) %>"
-										folderName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>"
 										queryTerms="<%= queryTerms %>"
 										rowCheckerId="<%= String.valueOf(curArticle.getArticleId()) %>"
 										rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"

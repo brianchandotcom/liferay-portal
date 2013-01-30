@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.taglib.util.IncludeTag;
@@ -36,6 +37,18 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_actionJsp = actionJsp;
 	}
 
+	public void setContainerIcon(String containerIcon) {
+		_containerIcon = containerIcon;
+	}
+
+	public void setContainerName(String containerName) {
+		_containerName = containerName;
+	}
+
+	public void setContainerType(String containerType) {
+		_containerType = containerType;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}
@@ -44,8 +57,8 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_description = HtmlUtil.unescape(description);
 	}
 
-	public void setFolderName(String folderName) {
-		_folderName = folderName;
+	public void setFileEntries(List<FileEntry> fileEntries) {
+		_fileEntries = fileEntries;
 	}
 
 	public void setLocked(boolean locked) {
@@ -91,9 +104,12 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_actionJsp = null;
+		_containerIcon = null;
+		_containerName = null;
+		_containerType = null;
 		_cssClass = null;
 		_description = null;
-		_folderName = null;
+		_fileEntries = null;
 		_locked = false;
 		_mbMessages = null;
 		_queryTerms = null;
@@ -121,11 +137,17 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:actionJsp", _actionJsp);
 		request.setAttribute(
+			"liferay-ui:app-view-search-entry:containerIcon", _containerIcon);
+		request.setAttribute(
+			"liferay-ui:app-view-search-entry:containerName", _containerName);
+		request.setAttribute(
+			"liferay-ui:app-view-search-entry:containerType", _containerType);
+		request.setAttribute(
 			"liferay-ui:app-view-search-entry:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:description", _description);
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:folderName", _folderName);
+			"liferay-ui:app-view-search-entry:fileEntries", _fileEntries);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:locked", _locked);
 		request.setAttribute(
@@ -152,9 +174,12 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		"/html/taglib/ui/app_view_search_entry/page.jsp";
 
 	private String _actionJsp;
+	private String _containerIcon;
+	private String _containerName;
+	private String _containerType;
 	private String _cssClass;
 	private String _description;
-	private String _folderName;
+	private List<FileEntry> _fileEntries;
 	private boolean _locked;
 	private List<MBMessage> _mbMessages;
 	private String[] _queryTerms;

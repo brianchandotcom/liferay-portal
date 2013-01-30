@@ -35,6 +35,12 @@ String keywords = ParamUtil.getString(request, "keywords");
 		title="search"
 	/>
 
+	<span class="aui-search-bar">
+		<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-entries" type="text" value="<%= keywords %>" />
+
+		<aui:button type="submit" value="search" />
+	</span>
+
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -63,101 +69,38 @@ String keywords = ParamUtil.getString(request, "keywords");
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= BlogsUtil.getEntries(hits) %>"
+			results="<%= SearchResultUtil.getSearchResults(hits) %>"
 			total="<%= hits.getLength() %>"
 		/>
 
 		<liferay-ui:search-container-row
-			className="Object"
-			modelVar="obj"
+			className="com.liferay.portal.kernel.search.SearchResult"
+			modelVar="searchResult"
 		>
 
-			<c:choose>
-				<c:when test="<%= obj instanceof BlogsEntry %>">
+			<%
+			BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(searchResult.getClassPK());
 
-					<%
-					BlogsEntry entry = (BlogsEntry)obj;
+			entry = entry.toEscapedModel();
+			%>
 
-					entry = entry.toEscapedModel();
-					%>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="struts_action" value="/blogs/view_entry" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
+			</portlet:renderURL>
 
-					<portlet:renderURL var="rowURL">
-						<portlet:param name="struts_action" value="/blogs/view_entry" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:search-container-column-text
-						name="title"
-					>
-						<liferay-ui:icon
-							image="../blogs/blogs"
-							label="<%= true %>"
-							message="<%= entry.getTitle() %>"
-							url="<%= rowURL %>"
-						/>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						name="type"
-						value='<%= LanguageUtil.get(locale, "blog") %>'
-					/>
-				</c:when>
-				<c:when test="<%= obj instanceof MBMessage %>">
-
-					<%
-					MBMessage message = (MBMessage)obj;
-
-					BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(message.getClassPK());
-
-					entry = entry.toEscapedModel();
-					%>
-
-					<portlet:renderURL var="rowURL">
-						<portlet:param name="struts_action" value="/blogs/view_entry" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:search-container-column-text
-						name="title"
-					>
-						<liferay-ui:icon
-							image="message"
-							label="<%= true %>"
-							message="<%= StringUtil.shorten(message.getBody()) %>"
-							url="<%= rowURL %>"
-						/>
-
-						<liferay-util:buffer var="rootEntryIcon">
-							<liferay-ui:icon
-								image="../blogs/blogs"
-								label="<%= true %>"
-								message="<%= entry.getTitle() %>"
-								url="<%= rowURL %>"
-							/>
-						</liferay-util:buffer>
-
-						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="comment-found-in-blog-entry-x" />)</span>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						name="type"
-						value='<%= LanguageUtil.get(locale, "comment") %>'
-					/>
-				</c:when>
-			</c:choose>
+			<liferay-ui:app-view-search-entry
+				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
+				description="<%= entry.getDescription() %>"
+				mbMessages="<%= searchResult.getMBMessages() %>"
+				queryTerms="<%= hits.getQueryTerms() %>"
+				title="<%= entry.getTitle() %>"
+				url="<%= rowURL %>"
+			/>
 		</liferay-ui:search-container-row>
 
-		<span class="aui-search-bar">
-			<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-entries" type="text" value="<%= keywords %>" />
-
-			<aui:button type="submit" value="search" />
-		</span>
-
-		<br /><br />
-
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="more" />
 	</liferay-ui:search-container>
 </aui:form>
 

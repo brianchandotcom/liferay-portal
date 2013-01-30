@@ -5,17 +5,16 @@
 	position: relative;
 	text-align: left;
 
-
 	.aui-tabview-list {
 		margin-bottom: 0;
 	}
 
-	.entry-discussion {
+	.entry-discussion, .entry-attachment {
 		border-top: 1px solid #CCC;
 		display: block;
-		margin-bottom: 1em;
-		margin-left: 4em;
+		margin: 0 4em 1em;
 		overflow: hidden;
+		padding-top: 5px;
 
 		a {
 			display: block;
@@ -23,16 +22,16 @@
 			text-decoration: none;
 		}
 
-		.entry-discussion-image {
+		.image {
 			float: left;
 			padding: 5px;
 
-			img.avatar {
-				width: 35px;
+			img.avatar, img.attachment {
+				width: 45px;
 			}
 		}
 
-		.entry-discussion-title {
+		.title {
 			display: block;
 		}
 
@@ -53,6 +52,14 @@
 
 	&.alt {
 		background-color: #EDF0F3;
+	}
+
+	&.search {
+		background-color: #FFF;
+
+		&.alt {
+			background-color: #E2E5E8;
+		}
 	}
 
 	&:after {

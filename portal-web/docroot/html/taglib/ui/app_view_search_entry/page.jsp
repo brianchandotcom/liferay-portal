@@ -18,9 +18,12 @@
 
 <%
 String actionJsp = (String)request.getAttribute("liferay-ui:app-view-search-entry:actionJsp");
-String description = (String)request.getAttribute("liferay-ui:app-view-search-entry:description");
+String containerIcon = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-search-entry:containerIcon"), "folder");
+String containerName = (String)request.getAttribute("liferay-ui:app-view-search-entry:containerName");
+String containerType = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-search-entry:containerType"), LanguageUtil.get(locale, "folder"));
 String cssClass = (String)request.getAttribute("liferay-ui:app-view-search-entry:cssClass");
-String folderName = (String)request.getAttribute("liferay-ui:app-view-search-entry:folderName");
+String description = (String)request.getAttribute("liferay-ui:app-view-search-entry:description");
+List<FileEntry> fileEntries = (List<FileEntry>)request.getAttribute("liferay-ui:app-view-search-entry:fileEntries");
 boolean locked = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-search-entry:locked"));
 List<MBMessage> mbMessages = (List<MBMessage>)request.getAttribute("liferay-ui:app-view-search-entry:mbMessages");
 String[] queryTerms = (String[])request.getAttribute("liferay-ui:app-view-search-entry:queryTerms");
@@ -60,12 +63,12 @@ String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url"
 			</c:if>
 		</span>
 
-		<c:if test="<%= Validator.isNotNull(folderName) %>">
+		<c:if test="<%= Validator.isNotNull(containerName) %>">
 			<span class="entry-folder">
 				<liferay-ui:icon
-					image="folder"
+					image='<%= (Validator.isNotNull(containerIcon)) ? containerIcon : "folder" %>'
 					label="<%= true %>"
-					message='<%= LanguageUtil.format(locale, "found-in-folder-x", folderName) %>'
+					message='<%= LanguageUtil.format(locale, "found-in-x-x", new String[]{containerType, containerName}) %>'
 				/>
 			</span>
 		</c:if>
@@ -74,6 +77,39 @@ String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url"
 			<%= StringUtil.highlight(HtmlUtil.escape(description), queryTerms) %>
 		</span>
 	</a>
+
+	<c:if test="<%= fileEntries != null %>">
+
+
+		<%
+		for (FileEntry fileEntry : fileEntries) {
+		%>
+
+			<div class="entry-attachment">
+				<aui:a class="lfr-discussion-details" href="<%= url %>">
+					<div class="image">
+						<img alt="<%= fileEntry.getTitle() %>" class="attachment" src="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>" />
+					</div>
+
+						<span class="title">
+							<liferay-ui:icon
+								image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
+								label="<%= true %>"
+								message='<%= LanguageUtil.format(locale, "attachment-added-by-x", HtmlUtil.escape(fileEntry.getUserName())) %>'
+							/>
+						</span>
+
+						<span cssClass="body">
+							<%= StringUtil.highlight(fileEntry.getTitle(), queryTerms) %>
+						</span>
+				</aui:a>
+			</div>
+
+		<%
+		}
+		%>
+
+	</c:if>
 
 	<c:if test="<%= mbMessages != null %>">
 
@@ -84,11 +120,11 @@ String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url"
 
 			<div class="entry-discussion">
 				<aui:a class="lfr-discussion-details" href="<%= url %>">
-					<div class="entry-discussion-image">
+					<div class="image">
 						<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
 					</div>
 
-					<span class="entry-discussion-title">
+					<span class="title">
 						<liferay-ui:icon
 							image="message"
 							label="<%= true %>"
@@ -96,7 +132,7 @@ String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url"
 						/>
 					</span>
 
-					<span cssClass="entry-discussion-body">
+					<span cssClass="body">
 						<%= StringUtil.highlight(mbMessage.getSubject(), queryTerms) %>
 					</span>
 				</aui:a>

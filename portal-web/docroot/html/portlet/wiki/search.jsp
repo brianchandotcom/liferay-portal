@@ -55,6 +55,12 @@ portletURL.setParameter("keywords", keywords);
 		title="search"
 	/>
 
+	<span class="aui-search-bar">
+		<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-pages" type="text" value="<%= keywords %>" />
+
+		<aui:button type="submit" value="search" />
+	</span>
+
 	<liferay-ui:search-container
 		emptyResultsMessage='<%= LanguageUtil.format(pageContext, "no-pages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>") %>'
 		iteratorURL="<%= portletURL %>"
@@ -77,191 +83,61 @@ portletURL.setParameter("keywords", keywords);
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= WikiUtil.getEntries(hits) %>"
+			results="<%= SearchResultUtil.getSearchResults(hits) %>"
 			total="<%= hits.getLength() %>"
 		/>
 
 		<liferay-ui:search-container-row
-			className="Object"
-			modelVar="obj"
+			className="com.liferay.portal.kernel.search.SearchResult"
+			modelVar="searchResult"
 		>
 
-			<c:choose>
-				<c:when test="<%= obj instanceof DLFileEntry %>">
+			<%
+			WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(searchResult.getClassPK());
 
-					<%
-					DLFileEntry dlFileEntry = (DLFileEntry)obj;
+			String title = wikiPage.getTitle();
 
-					WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(dlFileEntry.getFileEntryId());
+			if (title.equalsIgnoreCase(keywords)) {
+				createNewPage = false;
+			}
 
-					WikiNode curNode = wikiPage.getNode();
-					%>
+			WikiNode curNode = wikiPage.getNode();
+			%>
 
-					<portlet:actionURL var="rowURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-						<portlet:param name="struts_action" value="/wiki/get_page_attachment" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-						<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-						<portlet:param name="fileName" value="<%= dlFileEntry.getTitle() %>" />
-					</portlet:actionURL>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="struts_action" value="/wiki/view" />
+				<portlet:param name="nodeName" value="<%= curNode.getName() %>" />
+				<portlet:param name="title" value="<%= title %>" />
+			</portlet:renderURL>
 
-					<portlet:renderURL var="wikiPageURL">
-						<portlet:param name="struts_action" value="/wiki/view" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="nodeName" value="<%= curNode.getName() %>" />
-						<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:search-container-column-text
-						name="title"
-					>
-						<liferay-ui:icon
-							image='<%= "../file_system/small/" + DLUtil.getFileIcon(dlFileEntry.getExtension()) %>'
-							label="<%= true %>"
-							message="<%= dlFileEntry.getTitle() %>"
-							url="<%= rowURL %>"
-						/>
-
-						<liferay-util:buffer var="rootEntryIcon">
-							<liferay-ui:icon
-								image="page"
-								label="<%= true %>"
-								message="<%= wikiPage.getTitle() %>"
-								url="<%= wikiPageURL %>"
-							/>
-						</liferay-util:buffer>
-
-						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="attachment-found-in-wiki-page-x" />)</span>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						name="type"
-						value='<%= LanguageUtil.get(locale, "attachment") %>'
-					/>
-
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="wiki"
-						value="<%= curNode.getName() %>"
-					/>
-				</c:when>
-				<c:when test="<%= obj instanceof MBMessage %>">
-
-					<%
-					MBMessage message = (MBMessage)obj;
-
-					WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(message.getClassPK());
-
-					WikiNode curNode = wikiPage.getNode();
-					%>
-
-					<portlet:renderURL var="rowURL">
-						<portlet:param name="struts_action" value="/wiki/view" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="nodeName" value="<%= curNode.getName() %>" />
-						<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:search-container-column-text
-						name="title"
-					>
-						<liferay-ui:icon
-							image="message"
-							label="<%= true %>"
-							message="<%= StringUtil.shorten(message.getBody()) %>"
-							url="<%= rowURL %>"
-						/>
-
-						<liferay-util:buffer var="rootEntryIcon">
-							<liferay-ui:icon
-								image="page"
-								label="<%= true %>"
-								message="<%= wikiPage.getTitle() %>"
-								url="<%= rowURL %>"
-							/>
-						</liferay-util:buffer>
-
-						<span class="search-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="comment-found-in-wiki-page-x" />)</span>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						name="type"
-						value='<%= LanguageUtil.get(locale, "comment") %>'
-					/>
-
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="wiki"
-						value="<%= curNode.getName() %>"
-					/>
-				</c:when>
-				<c:when test="<%= obj instanceof WikiPage %>">
-
-					<%
-					WikiPage wikiPage = (WikiPage)obj;
-
-					String title = wikiPage.getTitle();
-
-					if (title.equalsIgnoreCase(keywords)) {
-						createNewPage = false;
-					}
-
-					WikiNode curNode = wikiPage.getNode();
-					%>
-
-					<portlet:renderURL var="rowURL">
-						<portlet:param name="struts_action" value="/wiki/view" />
-						<portlet:param name="nodeName" value="<%= curNode.getName() %>" />
-						<portlet:param name="title" value="<%= title %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:search-container-column-text
-						name="title"
-					>
-						<liferay-ui:icon
-							image="page"
-							label="<%= true %>"
-							message="<%= title %>"
-							url="<%= rowURL %>"
-						/>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						name="type"
-						value='<%= LanguageUtil.get(locale, "page") %>'
-					/>
-
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="wiki"
-						value="<%= curNode.getName() %>"
-					/>
-				</c:when>
-			</c:choose>
+			<liferay-ui:app-view-search-entry
+				containerIcon="all_pages"
+				containerName="<%= curNode.getName() %>"
+				containerType='<%= LanguageUtil.get(locale, "wiki-node") %>'
+				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
+				description="<%= wikiPage.getSummary() %>"
+				fileEntries="<%= searchResult.getFileEntries() %>"
+				mbMessages="<%= searchResult.getMBMessages() %>"
+				queryTerms="<%= hits.getQueryTerms() %>"
+				title="<%= wikiPage.getTitle() %>"
+				url="<%= rowURL %>"
+			/>
 		</liferay-ui:search-container-row>
 
-		<span class="aui-search-bar">
-			<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-pages" type="text" value="<%= keywords %>" />
-
-			<aui:button type="submit" value="search" />
-		</span>
-
-		<br /><br />
-
-		<c:if test="<%= createNewPage %>">
-			<portlet:actionURL var="addPageURL">
-				<portlet:param name="struts_action" value="/wiki/edit_page" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="nodeId" value="<%= String.valueOf(nodeId) %>" />
-				<portlet:param name="title" value="<%= keywords %>" />
-				<portlet:param name="editTitle" value="1" />
-			</portlet:actionURL>
-
-			<strong><aui:a cssClass="new-page" href="<%= addPageURL.toString() %>" label="create-a-new-page-on-this-topic" /></strong>
-		</c:if>
-
-		<liferay-ui:search-iterator type="more" />
+		<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="more" />
 	</liferay-ui:search-container>
+
+	<c:if test="<%= createNewPage %>">
+		<portlet:actionURL var="addPageURL">
+			<portlet:param name="struts_action" value="/wiki/edit_page" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="nodeId" value="<%= String.valueOf(nodeId) %>" />
+			<portlet:param name="title" value="<%= keywords %>" />
+			<portlet:param name="editTitle" value="1" />
+		</portlet:actionURL>
+
+		<strong><aui:a cssClass="new-page" href="<%= addPageURL.toString() %>" label="create-a-new-page-on-this-topic" /></strong>
+	</c:if>
 </aui:form>
 
 <c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">

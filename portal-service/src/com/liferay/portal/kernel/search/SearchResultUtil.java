@@ -16,8 +16,11 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
@@ -42,17 +45,36 @@ public class SearchResultUtil {
 				String className = entryClassName;
 				long classPK = entryClassPK;
 
+				FileEntry fileEntry = null;
 				MBMessage mbMessage = null;
 
-				if (entryClassName.equals(MBMessage.class.getName())) {
+				if (entryClassName.equals(DLFileEntry.class.getName()) ||
+					entryClassName.equals(MBMessage.class.getName())) {
+
 					classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
 					long classNameId = GetterUtil.getLong(
 						document.get(Field.CLASS_NAME_ID));
 
-					className = PortalUtil.getClassName(classNameId);
+					if ((classPK > 0) && (classNameId > 0)) {
+						className = PortalUtil.getClassName(classNameId);
 
-					mbMessage = MBMessageLocalServiceUtil.getMessage(
-						entryClassPK);
+						if (entryClassName.equals(
+								DLFileEntry.class.getName())) {
+
+							fileEntry = DLAppLocalServiceUtil.getFileEntry(
+								entryClassPK);
+						}
+						else if (entryClassName.equals(
+							MBMessage.class.getName())) {
+
+							mbMessage = MBMessageLocalServiceUtil.getMessage(
+								entryClassPK);
+						}
+					}
+					else {
+						className = entryClassName;
+						classPK = entryClassPK;
+					}
 				}
 
 				SearchResult searchResult = new SearchResult(
@@ -65,6 +87,10 @@ public class SearchResultUtil {
 				}
 				else {
 					searchResult = searchResults.get(index);
+				}
+
+				if (fileEntry != null) {
+					searchResult.addFileEntry(fileEntry);
 				}
 
 				if (mbMessage != null) {

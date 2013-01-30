@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -252,8 +253,7 @@ public class EditTemplateAction extends PortletAction {
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
 		String mode = ParamUtil.getString(uploadPortletRequest, "mode");
 		String language = ParamUtil.getString(
-			uploadPortletRequest, "language",
-			DDMTemplateConstants.LANG_TYPE_VM);
+			uploadPortletRequest, "language", TemplateConstants.LANG_TYPE_VM);
 
 		String script = getScript(uploadPortletRequest);
 		String scriptContent = ParamUtil.getString(

@@ -31,6 +31,8 @@ public interface TemplateConstants {
 
 	public static final String LANG_TYPE_VM = "vm";
 
+	public static final String LANG_TYPE_XSD = "xsd";
+
 	public static final String LANG_TYPE_XSL = "xsl";
 
 	public static final String SERVLET_SEPARATOR = "_SERVLET_CONTEXT_";

@@ -42,7 +42,7 @@ if ((structure == null) && (template != null)) {
 
 String type = BeanParamUtil.getString(template, request, "type", DDMTemplateConstants.TEMPLATE_TYPE_FORM);
 String mode = BeanParamUtil.getString(template, request, "mode", DDMTemplateConstants.TEMPLATE_MODE_CREATE);
-String language = BeanParamUtil.getString(template, request, "language", DDMTemplateConstants.LANG_TYPE_VM);
+String language = BeanParamUtil.getString(template, request, "language", TemplateConstants.LANG_TYPE_VM);
 String script = BeanParamUtil.getString(template, request, "script");
 
 if (Validator.isNull(script)) {
@@ -52,10 +52,10 @@ if (Validator.isNull(script)) {
 		script = ContentUtil.get(portletDisplayTemplateHandler.getTemplatesHelpPath(language));
 	}
 	else if ((structure != null) && Validator.equals(structure.getClassName(), JournalArticle.class)) {
-		script = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT, new Filter(DDMTemplateConstants.LANG_TYPE_VM)));
+		script = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT, new Filter(TemplateConstants.LANG_TYPE_VM)));
 	}
 	else if (!type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
-		script = ContentUtil.get(PropsUtil.get(PropsKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT, new Filter(DDMTemplateConstants.LANG_TYPE_VM)));
+		script = ContentUtil.get(PropsUtil.get(PropsKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT, new Filter(TemplateConstants.LANG_TYPE_VM)));
 	}
 }
 

@@ -15,12 +15,12 @@
 package com.liferay.portlet.dynamicdatamapping.action;
 
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,13 +49,13 @@ public class GetTemplateAction extends Action {
 				templateId);
 
 			String extension = GetterUtil.getString(
-				template.getLanguage(), DDMTemplateConstants.LANG_TYPE_VM);
+				template.getLanguage(), TemplateConstants.LANG_TYPE_VM);
 
 			String script = template.getScript();
 
 			String contentType = null;
 
-			if (extension.equals(DDMTemplateConstants.LANG_TYPE_XSD)) {
+			if (extension.equals(TemplateConstants.LANG_TYPE_XSD)) {
 				contentType = ContentTypes.TEXT_XML_UTF8;
 			}
 			else {

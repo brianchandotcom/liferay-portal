@@ -319,8 +319,8 @@ public class DataFactory {
 		return contact;
 	}
 
-	public List<Counter> addCounters() {
-		List counters = new ArrayList<CounterModelImpl>();
+	public List<CounterModelImpl> addCounters() {
+		List<CounterModelImpl> counters = new ArrayList<CounterModelImpl>();
 
 		// Counter
 
@@ -1488,15 +1488,17 @@ public class DataFactory {
 	}
 
 	protected String[] nextName(long currentIndex) {
-		currentIndex = currentIndex % (_lastNames.size() * _firstNames.size());
+		int firstNamesSize = _firstNames.size();
+		int lastNamesSize = _lastNames.size();
 
-		int indexForFirstName = (int)currentIndex / _lastNames.size();
-		int indexForLastName = (int)currentIndex % _lastNames.size();
+		int firstNameIndex =
+			(int)(currentIndex / lastNamesSize) % firstNamesSize;
+		int lastNameIndex = (int)(currentIndex % lastNamesSize);
 
 		String[] names = new String[2];
 
-		names[0] = _firstNames.get(indexForFirstName);
-		names[1] = _lastNames.get(indexForLastName);
+		names[0] = _firstNames.get(firstNameIndex);
+		names[1] = _lastNames.get(lastNameIndex);
 
 		return names;
 	}
@@ -1629,7 +1631,7 @@ public class DataFactory {
 		}
 	}
 
-	private void _initJournalArticle() throws Exception {
+	private void _initJournalArticle() {
 		int articleSize = _maxJournalArticleSize;
 
 		if (_maxJournalArticleSize <= 0) {
@@ -1742,7 +1744,7 @@ public class DataFactory {
 			new File(_baseDir, _DEPENDENCIES_DIR + "last_names.txt"));
 	}
 
-	private void _initVirtualHost() throws Exception {
+	private void _initVirtualHost() {
 		_virtualHost = new VirtualHostImpl();
 
 		_virtualHost.setVirtualHostId(_counter.get());

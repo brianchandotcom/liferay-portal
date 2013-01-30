@@ -480,6 +480,8 @@ AUI.add(
 					}
 				).render(listItem);
 
+				listItem.one('a').placeAfter(listItem.one('.aui-combobox'));
+
 				if (prototypeTemplate && instance._optionsOpen && !prevVal) {
 					var optionItem = comboBox.icons.item(id + 'Options');
 

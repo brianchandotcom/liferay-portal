@@ -69,6 +69,11 @@
 	<td>SiteAdmin</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>link=Define Permissions</td>
+	<td>Define Permissions</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Define Permissions</td>
 	<td>Define Permissions</td>
@@ -79,53 +84,238 @@
 	<td>label=Media Gallery</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//h3</td>
+	<td>Documents and Media</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//h3</td>
 	<td>Documents and Media</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_DOCUMENT']</td>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT']</td>
+	<td>addDocumentChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${addDocumentChecked}</td>
+	<td>AddDocumentChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT']</td>
 	<td>Media Gallery Add Document</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_DOCUMENT_TYPE']</td>
+	<td>label</td>
+	<td>AddDocumentChecked</td>
+	<td>Media Gallery Add Document</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT']</td>
+	<td>Media Gallery Add Document</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT_TYPE']</td>
+	<td>addDocumentTypeChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${addDocumentTypeChecked}</td>
+	<td>AddDocumentTypeChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT_TYPE']</td>
 	<td>Media Gallery Add Document Type</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_FOLDER']</td>
+	<td>label</td>
+	<td>AddDocumentTypeChecked</td>
+	<td>Media Gallery Add Document Type</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT_TYPE']</td>
+	<td>Media Gallery Add Document Type</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_FOLDER']</td>
+	<td>addFolderChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${addFolderChecked}</td>
+	<td>AddFolderChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_FOLDER']</td>
 	<td>Media Gallery Add Folder</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_REPOSITORY']</td>
+	<td>label</td>
+	<td>AddFolderChecked</td>
+	<td>Media Gallery Add Folder</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_FOLDER']</td>
+	<td>Media Gallery Add Folder</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_REPOSITORY']</td>
+	<td>addRepositoryChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${addRepositoryChecked}</td>
+	<td>AddRepositoryChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_REPOSITORY']</td>
 	<td>Media Gallery Add Repository</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_SHORTCUT']</td>
+	<td>label</td>
+	<td>AddRepositoryChecked</td>
+	<td>Media Gallery Add Repository</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_REPOSITORY']</td>
+	<td>Media Gallery Add Repository</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_SHORTCUT']</td>
+	<td>addShortcutChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${addShortcutChecked}</td>
+	<td>AddShortcutChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_SHORTCUT']</td>
 	<td>Media Gallery Add Shortcut</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryADD_STRUCTURE']</td>
+	<td>label</td>
+	<td>AddShortcutChecked</td>
+	<td>Media Gallery Add Shortcut</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_SHORTCUT']</td>
+	<td>Media Gallery Add Shortcut</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_STRUCTURE']</td>
+	<td>addStructureChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${addStructureChecked}</td>
+	<td>AddStructureChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_STRUCTURE']</td>
 	<td>Media Gallery Add Structure</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryPERMISSIONS']</td>
+	<td>label</td>
+	<td>AddStructureChecked</td>
+	<td>Media Gallery Add Structure</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_STRUCTURE']</td>
+	<td>Media Gallery Add Structure</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryPERMISSIONS']</td>
+	<td>permissionsChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${permissionsChecked}</td>
+	<td>PermissionsChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryPERMISSIONS']</td>
 	<td>Media Gallery Permissions</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryUPDATE']</td>
+	<td>label</td>
+	<td>PermissionsChecked</td>
+	<td>Media Gallery Permissions</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryPERMISSIONS']</td>
+	<td>Media Gallery Permissions</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryUPDATE']</td>
+	<td>updateChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${updateChecked}</td>
+	<td>UpdateChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryUPDATE']</td>
 	<td>Media Gallery Update</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.documentlibraryVIEW']</td>
+	<td>label</td>
+	<td>UpdateChecked</td>
+	<td>Media Gallery Update</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryUPDATE']</td>
+	<td>Media Gallery Update</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryVIEW']</td>
+	<td>viewChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${viewChecked}</td>
+	<td>ViewChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryVIEW']</td>
+	<td>Media Gallery View</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ViewChecked</td>
+	<td>Media Gallery View</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryVIEW']</td>
 	<td>Media Gallery View</td>
 </tr>
 <tr>
@@ -145,47 +335,47 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[3]/td/input</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT']</td>
 	<td>Add Document Checked</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[4]/td/input</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT_TYPE']</td>
 	<td>Add Document Type Checked</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[5]/td/input</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_FOLDER']</td>
 	<td>Add Folder Checked</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[6]/td/input</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_REPOSITORY']</td>
 	<td>Add Repository </td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[7]/td/input</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_SHORTCUT']</td>
 	<td>Add Shortcut Checked</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[8]/td/input</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryADD_STRUCTURE']</td>
 	<td>Add Structure</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[9]/td/input</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryPERMISSIONS']</td>
 	<td>Permissions Checked</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[10]/td/input</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryUPDATE']</td>
 	<td>Update Checked</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[11]/td/input</td>
+	<td>//input[@value='com.liferay.portlet.documentlibraryVIEW']</td>
 	<td>View Checked</td>
 </tr>
 <tr>
@@ -199,22 +389,102 @@
 	<td>Media Gallery</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>storeChecked</td>
+	<td>//input[@value='31ADD_TO_PAGE']</td>
+	<td>addToPage</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${addToPage}</td>
+	<td>AddToPage</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@value='31ADD_TO_PAGE']</td>
 	<td>Media Gallery Add to Page</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>label</td>
+	<td>AddToPage</td>
+	<td>Media Gallery Add to Page</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='31ADD_TO_PAGE']</td>
+	<td>Media Gallery Add to Page</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@value='31CONFIGURATION']</td>
+	<td>configuration</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${configuration}</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@value='31CONFIGURATION']</td>
 	<td>Media Gallery Configuration</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>label</td>
+	<td>Configuration</td>
+	<td>Media Gallery Configuration</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='31CONFIGURATION']</td>
+	<td>Media Gallery Configuration</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@value='31PERMISSIONS']</td>
+	<td>permissionsMediaGallery</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${permissionsMediaGallery}</td>
+	<td>PermissionsMediaGallery</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@value='31PERMISSIONS']</td>
 	<td>Media Gallery Permissions</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>label</td>
+	<td>PermissionsMediaGallery</td>
+	<td>Media Gallery Permissions</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='31PERMISSIONS']</td>
+	<td>Media Gallery Permissions</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@value='31VIEW']</td>
+	<td>viewMediaGallery</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${viewMediaGallery}</td>
+	<td>ViewMediaGallery</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='31VIEW']</td>
+	<td>Media Gallery View</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ViewMediaGallery</td>
+	<td>Media Gallery View</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
 	<td>//input[@value='31VIEW']</td>
 	<td>Media Gallery View</td>
 </tr>
@@ -240,22 +510,22 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[3]/td/input</td>
+	<td>//input[@value='31ADD_TO_PAGE']</td>
 	<td>Add to Page Checked</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[4]/td/input</td>
+	<td>//input[@value='31CONFIGURATION']</td>
 	<td>Configuration Checked</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[5]/td/input</td>
+	<td>//input[@value='31PERMISSIONS']</td>
 	<td>Permissions Checked</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[6]/td/input</td>
+	<td>//input[@value='31VIEW']</td>
 	<td>View Checked</td>
 </tr>
 </tbody></table>

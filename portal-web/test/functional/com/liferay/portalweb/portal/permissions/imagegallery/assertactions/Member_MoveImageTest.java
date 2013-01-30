@@ -25,27 +25,26 @@ public class Member_MoveImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[1]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[1]",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Subfolder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder - ']",
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("Media Gallery Permissions Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Permissions Image 3 Test"),
-			selenium.getText("//a[@title='Permissions Image 3 Test - ']"));
-		selenium.clickAt("//a[@title='Permissions Image 3 Test - ']",
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("Permissions Image 3 Test"));
+		Thread.sleep(1000);
 		selenium.waitForVisible("//img[@title='View']");
 		selenium.click("//img[@title='View']");
 		selenium.waitForVisible("//button[3]");
@@ -60,40 +59,46 @@ public class Member_MoveImageTest extends BaseTestCase {
 		selenium.waitForVisible("link=Home");
 		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//td[1]/a");
+		selenium.waitForVisible(
+			"//td/a[.='Media Gallery Permissions Test Folder'] ");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
+			selenium.getText(
+				"//td/a[.='Media Gallery Permissions Test Folder'] "));
+		selenium.clickAt("//td/a[.='Media Gallery Permissions Test Folder'] ",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li[2]/span/a");
+		selenium.waitForVisible(
+			"//span/a[.='Media Gallery Permissions Test Folder'] ");
 		selenium.click("//input[@value='Choose This Folder']");
 		selenium.selectWindow("null");
+		Thread.sleep(1000);
 		selenium.waitForText("//a[@id='_31_folderName']",
 			"Media Gallery Permissions Test Folder");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
 			selenium.getText("//a[@id='_31_folderName']"));
+		Thread.sleep(1000);
 		selenium.waitForVisible("//input[@value='Move']");
 		selenium.clickAt("//input[@value='Move']",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[1]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[1]",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Permissions Image 3 Test"),
-			selenium.getText("//a[@title='Permissions Image 3 Test - ']"));
+			selenium.getText("xpath=(//span[@class='image-title'])[2]"));
 	}
 }

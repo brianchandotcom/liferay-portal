@@ -23,49 +23,73 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SiteAdmin_RestoreGuestViewPortletTest extends BaseTestCase {
 	public void testSiteAdmin_RestoreGuestViewPortlet()
 		throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
-		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
-			RuntimeVariables.replace("Options"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
-		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a",
-			RuntimeVariables.replace("Configuration"));
-		selenium.waitForVisible(
-			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.selectFrame(
-			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		selenium.waitForVisible(
-			"//ul[contains(@class,'tabview-list')]/li[contains(.,'Permissions')]/span/a");
-		assertEquals(RuntimeVariables.replace("Permissions"),
-			selenium.getText(
-				"//ul[contains(@class,'tabview-list')]/li[contains(.,'Permissions')]/span/a"));
-		selenium.clickAt("//ul[contains(@class,'tabview-list')]/li[contains(.,'Permissions')]/span/a",
-			RuntimeVariables.replace("Permissions"));
-		selenium.waitForVisible("//input[@name='16_ACTION_VIEW']");
-		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.clickAt("//input[@name='16_ACTION_VIEW']",
-			RuntimeVariables.replace("Guest View"));
-		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.selectFrame("relative=top");
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Media Gallery Test Page",
+					RuntimeVariables.replace("Media Gallery Test Page"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+					RuntimeVariables.replace("Options"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+				assertEquals(RuntimeVariables.replace("Configuration"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+					RuntimeVariables.replace("Configuration"));
+				selenium.waitForVisible(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+				selenium.waitForVisible(
+					"//ul[contains(@class,'tabview-list')]/li[contains(.,'Permissions')]/span/a");
+				assertEquals(RuntimeVariables.replace("Permissions"),
+					selenium.getText(
+						"//ul[contains(@class,'tabview-list')]/li[contains(.,'Permissions')]/span/a"));
+				selenium.clickAt("//ul[contains(@class,'tabview-list')]/li[contains(.,'Permissions')]/span/a",
+					RuntimeVariables.replace("Permissions"));
+				selenium.waitForVisible("//input[@id='guest_ACTION_VIEW']");
+
+				boolean guestViewChecked = selenium.isChecked(
+						"//input[@id='guest_ACTION_VIEW']");
+
+				if (guestViewChecked) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='guest_ACTION_VIEW']",
+					RuntimeVariables.replace("Guest View"));
+
+			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[@id='guest_ACTION_VIEW']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='guest_ACTION_VIEW']"));
+				selenium.selectFrame("relative=top");
+				Thread.sleep(1000);
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

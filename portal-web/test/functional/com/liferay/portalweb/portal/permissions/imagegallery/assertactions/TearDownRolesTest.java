@@ -43,9 +43,14 @@ public class TearDownRolesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
 				selenium.waitForPageToLoad("30000");
+				selenium.type("//input[@id='_128_keywords']",
+					RuntimeVariables.replace("siteadmin"));
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
 
 				boolean siteAdminPresent = selenium.isElementPresent(
-						"link=SiteAdmin");
+						"//span[@title='Actions']/ul/li/strong/a");
 
 				if (!siteAdminPresent) {
 					label = 2;
@@ -53,11 +58,6 @@ public class TearDownRolesTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.type("//input[@id='_128_keywords']",
-					RuntimeVariables.replace("siteadmin"));
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace("Search"));
-				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -77,6 +77,8 @@ public class TearDownRolesTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
+				assertEquals(RuntimeVariables.replace("No roles were found."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
@@ -91,8 +93,14 @@ public class TearDownRolesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
 				selenium.waitForPageToLoad("30000");
+				selenium.type("//input[@id='_128_keywords']",
+					RuntimeVariables.replace("member"));
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
 
-				boolean memberPresent = selenium.isElementPresent("link=Member");
+				boolean memberPresent = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a");
 
 				if (!memberPresent) {
 					label = 3;
@@ -100,11 +108,6 @@ public class TearDownRolesTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.type("//input[@id='_128_keywords']",
-					RuntimeVariables.replace("member"));
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace("Search"));
-				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",

@@ -15,28 +15,33 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Media Gallery Permissions Test Page</td>
-	<td>Media Gallery Permissions Test Page</td>
+	<td>link=Media Gallery Test Page</td>
+	<td>Media Gallery Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@title='Media Gallery Permissions Test Folder - ']</td>
+	<td>xpath=(//span[@class='image-title'])[1]</td>
 	<td>Media Gallery Permissions Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[@title='Media Gallery Permissions Test Folder - ']</td>
+	<td>xpath=(//span[@class='image-title'])[1]</td>
 	<td>Media Gallery Permissions Test Folder</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@title='Media Gallery Permissions Test Subfolder - ']</td>
+	<td>//span[@class='image-title']</td>
 	<td>Media Gallery Permissions Test Subfolder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[@title='Media Gallery Permissions Test Subfolder - ']</td>
+	<td>//span[@class='image-title']</td>
 	<td>Media Gallery Permissions Test Subfolder</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -75,8 +80,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@title='Permissions Image 3 Test - ']</td>
+	<td>//span[@class='image-title']</td>
 	<td>Permissions Image 3 Test</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 </tbody></table>
 </body>

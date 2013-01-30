@@ -25,8 +25,8 @@ public class SiteAdmin_AddSecondImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Media"),
 			selenium.getText(
@@ -34,6 +34,7 @@ public class SiteAdmin_AddSecondImageTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a",
 			RuntimeVariables.replace("Add Media"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		selenium.uploadCommonFile("//input[@id='_31_file']",
 			RuntimeVariables.replace("Document_2.jpg"));
 		selenium.type("//input[@id='_31_title']",
@@ -41,12 +42,12 @@ public class SiteAdmin_AddSecondImageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Permissions Image 2 Test"),
-			selenium.getText("//a[@title='Permissions Image 2 Test - ']"));
+			selenium.getText("xpath=(//span[@class='image-title'])[2]"));
+		selenium.open("/web/guest/home/");
 	}
 }

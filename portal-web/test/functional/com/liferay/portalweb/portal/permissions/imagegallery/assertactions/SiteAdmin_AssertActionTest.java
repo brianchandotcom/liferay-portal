@@ -25,10 +25,10 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -67,9 +67,8 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Access from Desktop')]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder 2 Edited"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[2]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[2]",
 			RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder 2 Edited"));
 		selenium.waitForPageToLoad("30000");
@@ -102,9 +101,8 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Access from Desktop')]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder 2"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Subfolder 2 - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder 2 - ']",
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder 2"));
 		selenium.waitForPageToLoad("30000");
@@ -139,8 +137,8 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Access from Desktop')]/a"));
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Mine"),
 			selenium.getText(
@@ -149,8 +147,8 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 			RuntimeVariables.replace("Mine"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Permissions Image Test Edited"),
-			selenium.getText("//a[@title='Permissions Image Test Edited - ']"));
-		Thread.sleep(5000);
+			selenium.getText("//span[@class='image-title']"));
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",

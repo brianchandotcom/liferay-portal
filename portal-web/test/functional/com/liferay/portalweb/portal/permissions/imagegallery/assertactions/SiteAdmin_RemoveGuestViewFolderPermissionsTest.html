@@ -15,17 +15,17 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Media Gallery Permissions Test Page</td>
-	<td>Media Gallery Permissions Test Page</td>
+	<td>link=Media Gallery Test Page</td>
+	<td>Media Gallery Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@title='Media Gallery Permissions Test Folder - ']</td>
+	<td>xpath=(//span[@class='image-title'])[1]</td>
 	<td>Media Gallery Permissions Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[@title='Media Gallery Permissions Test Folder - ']</td>
+	<td>xpath=(//span[@class='image-title'])[1]</td>
 	<td>Media Gallery Permissions Test Folder</td>
 </tr>
 <tr>
@@ -39,18 +39,28 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
-	<td>Guest View</td>
+	<td>storeChecked</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>guestViewNotChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${guestViewNotChecked}</td>
+	<td>GuestViewNotChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
 <tr>
+	<td>label</td>
+	<td>GuestViewNotChecked</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertNotChecked</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
 <tr>
@@ -65,7 +75,7 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
 </tbody></table>

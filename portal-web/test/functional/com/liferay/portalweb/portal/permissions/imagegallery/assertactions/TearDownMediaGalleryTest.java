@@ -61,7 +61,7 @@ public class TearDownMediaGalleryTest extends BaseTestCase {
 				assertTrue(selenium.isChecked(
 						"//input[contains(@id,'allRowIdsCheckbox')]"));
 				selenium.waitForVisible(
-					"//div[@class='app-view-entry-taglib entry-display-style display-icon selectable selected']");
+					"//span[@title='Actions']/ul/li/strong/a/span");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
@@ -78,12 +78,12 @@ public class TearDownMediaGalleryTest extends BaseTestCase {
 				assertTrue(selenium.isPartialText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']",
 						"moved to the Recycle Bin. Undo"));
+
+			case 2:
 				assertEquals(RuntimeVariables.replace(
 						"There are no documents or media files in this folder."),
 					selenium.getText(
 						"//div[@class='entries-empty portlet-msg-info']"));
-
-			case 2:
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
@@ -112,8 +112,8 @@ public class TearDownMediaGalleryTest extends BaseTestCase {
 				selenium.clickAt("//a[@class='trash-empty-link']",
 					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to empty the Recycle Bin?");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

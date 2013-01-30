@@ -25,14 +25,13 @@ public class SiteAdmin_EditFolderTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder 2"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder 2 - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder 2 - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[2]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[2]",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder 2"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Edit"),
@@ -51,12 +50,11 @@ public class SiteAdmin_EditFolderTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder 2 Edited"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']"));
+			selenium.getText("xpath=(//span[@class='image-title'])[2]"));
 	}
 }

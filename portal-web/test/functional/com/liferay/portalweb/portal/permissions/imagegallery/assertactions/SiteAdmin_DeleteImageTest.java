@@ -25,29 +25,28 @@ public class SiteAdmin_DeleteImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder 2 Edited"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']",
+			selenium.getText("xpath=(//span[@class='image-title'])[2]"));
+		selenium.clickAt("xpath=(//span[@class='image-title'])[2]",
 			RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder 2 Edited"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder 2"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Subfolder 2 - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder 2 - ']",
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder 2"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Permissions Image Test Edited"),
-			selenium.getText("//a[@title='Permissions Image Test Edited - ']"));
-		selenium.clickAt("//a[@title='Permissions Image Test Edited - ']",
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("Permissions Image Test Edited"));
+		Thread.sleep(1000);
 		selenium.waitForVisible("//img[@title='Move to the Recycle Bin']");
 		selenium.click(RuntimeVariables.replace(
 				"//img[@title='Move to the Recycle Bin']"));

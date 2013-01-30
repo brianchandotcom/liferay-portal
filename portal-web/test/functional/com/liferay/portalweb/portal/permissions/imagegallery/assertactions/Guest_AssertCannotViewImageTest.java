@@ -25,27 +25,24 @@ public class Guest_AssertCannotViewImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Media Gallery Permissions Test Page",
-			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.clickAt("link=Media Gallery Test Page",
+			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder 2 Edited"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']",
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder 2 Edited"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder 2"),
-			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Subfolder 2 - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder 2 - ']",
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder 2"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementNotPresent(
-				"//a[@title='Permissions Image Test Edited - ']"));
+		assertTrue(selenium.isElementNotPresent("//span[@class='image-title']"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

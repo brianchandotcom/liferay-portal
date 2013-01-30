@@ -19,84 +19,99 @@
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
-	<td>AUI Help Hidden LFR Hudcrumbs</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//span[@title='Options']/ul/li/strong/a</td>
-	<td>Options</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@title='Options']/ul/li/strong/a</td>
-	<td>Options</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@title='Options']/ul/li/strong/a</td>
-	<td>Options</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Configuration</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Configuration</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Configuration</td>
-</tr>
-<tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Asset Publisher - Configuration</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Asset Publisher - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[@title='Select Existing']/ul/li/strong/a/span</td>
-	<td>Select Existing</td>
+	<td>//a[@id='_86_tiym_menuButton']/span</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Select Existing']/ul/li/strong/a/span</td>
-	<td>Select Existing</td>
+	<td>//a[@id='_86_tiym_menuButton']/span</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Select Existing']/ul/li/strong/a/span</td>
-	<td>Select Existing</td>
+	<td>//a[@id='_86_tiym_menuButton']/span</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Web Content')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Web Content')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]</td>
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Web Content')]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]</td>
 	<td>Web Content</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='_86_selectAsset']</td>
+	<td>Select Web Content</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_86_selectAsset']</td>
+	<td>Select Web Content</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/store.js')]</td>
+	<td>Store</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -107,6 +122,26 @@
 	<td>clickAtAndWait</td>
 	<td>//td[1]/a</td>
 	<td>WC Web Content Title</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Asset Publisher - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Asset Publisher - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -115,13 +150,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Web Content</td>
+	<td>//td[@id='_86_ocerSearchContainer_col-title_row-1']</td>
+	<td>WC Web Content Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>WC Web Content Title</td>
+	<td>//td[@id='_86_ocerSearchContainer_col-type_row-1']</td>
+	<td>Web Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

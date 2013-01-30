@@ -29,52 +29,62 @@ public class SelectExistingWCWebContentAPActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent(
-			"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']");
-		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		Thread.sleep(5000);
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
+		selenium.waitForVisible("//a[@id='_86_tiym_menuButton']/span");
+		assertEquals(RuntimeVariables.replace("Select"),
+			selenium.getText("//a[@id='_86_tiym_menuButton']/span"));
+		selenium.clickAt("//a[@id='_86_tiym_menuButton']/span",
+			RuntimeVariables.replace("Select"));
 		selenium.waitForVisible(
-			"//span[@title='Select Existing']/ul/li/strong/a/span");
-		assertEquals(RuntimeVariables.replace("Select Existing"),
-			selenium.getText(
-				"//span[@title='Select Existing']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Select Existing']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Select Existing"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Web Content')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Web Content')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Web Content')]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]",
 			RuntimeVariables.replace("Web Content"));
-		selenium.waitForPageToLoad("30000");
+		selenium.selectFrame("relative=top");
+		selenium.waitForVisible("//iframe[@id='_86_selectAsset']");
+		selenium.selectFrame("//iframe[@id='_86_selectAsset']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/store.js')]");
 		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
 			selenium.getText("//td[1]/a"));
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("WC Web Content Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.selectFrame("relative=top");
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//td[@id='_86_ocerSearchContainer_col-title_row-1']"));
+		assertEquals(RuntimeVariables.replace("Web Content"),
+			selenium.getText(
+				"//td[@id='_86_ocerSearchContainer_col-type_row-1']"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Asset Publisher Test Page",

@@ -23,46 +23,67 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 	public void testConfigurePortletAssetSelectionManual()
 		throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Asset Publisher Test Page",
-			RuntimeVariables.replace("Asset Publisher Test Page"));
-		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
-			RuntimeVariables.replace("Options"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
-		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
-			RuntimeVariables.replace("Configuration"));
-		selenium.waitForElementPresent(
-			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.selectFrame(
-			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		selenium.waitForVisible("//select[@id='_86_selectionStyle']");
-		selenium.select("//select[@id='_86_selectionStyle']",
-			RuntimeVariables.replace("Manual"));
-		selenium.waitForText("//div[@class='lfr-panel-title']/span", "Selection");
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals("Manual",
-			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
-		assertEquals(RuntimeVariables.replace(
-				"You have successfully updated the setup."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Selection"),
-			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[1]/span"));
-		assertEquals(RuntimeVariables.replace("Display Settings"),
-			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[2]/span"));
-		selenium.selectFrame("relative=top");
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Asset Publisher Test Page",
+					RuntimeVariables.replace("Asset Publisher Test Page"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+					RuntimeVariables.replace("Options"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+				assertEquals(RuntimeVariables.replace("Configuration"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+					RuntimeVariables.replace("Configuration"));
+				selenium.waitForVisible(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
+				selenium.waitForVisible(
+					"//input[@id='_86_selectionStyleManual']");
+
+				boolean manualNotChecked = selenium.isChecked(
+						"//input[@id='_86_selectionStyleManual']");
+
+				if (manualNotChecked) {
+					label = 2;
+
+					continue;
+				}
+
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_selectionStyleManual']"));
+				selenium.clickAt("//input[@id='_86_selectionStyleManual']",
+					RuntimeVariables.replace("Manual"));
+				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
+				assertEquals(RuntimeVariables.replace(
+						"You have successfully updated the setup."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+
+			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_selectionStyleManual']"));
+				assertTrue(selenium.isVisible(
+						"//span[@class='aui-legend' and contains(.,'Assets')]"));
+				selenium.selectFrame("relative=top");
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

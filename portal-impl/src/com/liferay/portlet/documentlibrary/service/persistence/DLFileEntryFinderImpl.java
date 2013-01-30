@@ -129,54 +129,22 @@ public class DLFileEntryFinderImpl
 
 		Session session = null;
 
-		String table = DLFileVersionImpl.TABLE_NAME;
-
 		try {
 			session = openSession();
 
-			String sql;
+			String id = null;
 
 			if (userId <= 0) {
-				sql = CustomSQLUtil.get(FIND_BY_G_F, queryDefinition, table);
+				id = FIND_BY_G_F;
 			}
 			else {
-				sql = CustomSQLUtil.get(FIND_BY_G_U_F, queryDefinition, table);
+				id = FIND_BY_G_U_F;
 			}
 
-			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(sql, "[$JOIN$]", StringPool.BLANK);
+			String sql = getFileEntriesSQL(
+				id, groupId, folderIds, mimeTypes, queryDefinition,
+				inlineSQLHelper);
 
-				table = DLFileEntryImpl.TABLE_NAME;
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "[$JOIN$]",
-					CustomSQLUtil.get(
-						DLFolderFinderImpl.JOIN_FE_BY_DL_FILE_VERSION));
-			}
-
-			if (inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DLFileEntry.class.getName(), "DLFileEntry.fileEntryId",
-					groupId);
-			}
-
-			StringBundler sb = new StringBundler();
-
-			if (folderIds.size() > 0) {
-				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(getFolderIds(folderIds, table));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			if ((mimeTypes != null) && (mimeTypes.length > 0)) {
-				sb.append(WHERE_AND);
-				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(getMimeTypes(mimeTypes, table));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			sql = StringUtil.replace(sql, "[$FOLDER_ID$]", sb.toString());
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
@@ -395,54 +363,21 @@ public class DLFileEntryFinderImpl
 
 		Session session = null;
 
-		String table = DLFileVersionImpl.TABLE_NAME;
-
 		try {
 			session = openSession();
 
-			String sql;
+			String id = null;
 
 			if (userId <= 0) {
-				sql = CustomSQLUtil.get(COUNT_BY_G_F, queryDefinition, table);
+				id = COUNT_BY_G_F;
 			}
 			else {
-				sql = CustomSQLUtil.get(COUNT_BY_G_U_F, queryDefinition, table);
+				id = COUNT_BY_G_U_F;
 			}
 
-			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(sql, "[$JOIN$]", StringPool.BLANK);
-
-				table = DLFileEntryImpl.TABLE_NAME;
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "[$JOIN$]",
-					CustomSQLUtil.get(
-						DLFolderFinderImpl.JOIN_FE_BY_DL_FILE_VERSION));
-			}
-
-			if (inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DLFileEntry.class.getName(), "DLFileEntry.fileEntryId",
-					groupId);
-			}
-
-			StringBundler sb = new StringBundler();
-
-			if (folderIds.size() > 0) {
-				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(getFolderIds(folderIds, table));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			if ((mimeTypes != null) && (mimeTypes.length > 0)) {
-				sb.append(WHERE_AND);
-				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(getMimeTypes(mimeTypes, table));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			sql = StringUtil.replace(sql, "[$FOLDER_ID$]", sb.toString());
+			String sql = getFileEntriesSQL(
+				id, groupId, folderIds, mimeTypes, queryDefinition,
+				inlineSQLHelper);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -484,6 +419,50 @@ public class DLFileEntryFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	protected String getFileEntriesSQL(
+		String id, long groupId, List<Long> folderIds, String[] mimeTypes,
+		QueryDefinition queryDefinition, boolean inlineSQLHelper) {
+
+		String table = DLFileVersionImpl.TABLE_NAME;
+
+		String sql = CustomSQLUtil.get(id, queryDefinition, table);
+
+		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
+			sql = StringUtil.replace(sql, "[$JOIN$]", StringPool.BLANK);
+
+			table = DLFileEntryImpl.TABLE_NAME;
+		}
+		else {
+			sql = StringUtil.replace(
+				sql, "[$JOIN$]",
+				CustomSQLUtil.get(
+					DLFolderFinderImpl.JOIN_FE_BY_DL_FILE_VERSION));
+		}
+
+		if (inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) {
+			sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql, DLFileEntry.class.getName(), "DLFileEntry.fileEntryId",
+				groupId);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		if (folderIds.size() > 0) {
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(getFolderIds(folderIds, table));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+			sb.append(WHERE_AND);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(getMimeTypes(mimeTypes, table));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		return StringUtil.replace(sql, "[$FOLDER_ID$]", sb.toString());
 	}
 
 	protected String getFolderIds(List<Long> folderIds, String table) {

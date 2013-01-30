@@ -40,6 +40,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
+import org.jgroups.Channel.State;
 import org.jgroups.JChannel;
 import org.jgroups.View;
 import org.jgroups.util.UUID;
@@ -81,11 +82,11 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 		JChannel jChannel = jChannels.get(0);
 
-		Assert.assertTrue(jChannel.isOpen());
+		Assert.assertTrue(isOpen(jChannel));
 
 		jChannel = jChannels.get(1);
 
-		Assert.assertTrue(jChannel.isOpen());
+		Assert.assertTrue(isOpen(jChannel));
 
 		clusterLinkImpl.destroy();
 
@@ -95,11 +96,11 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 		jChannel = jChannels.get(0);
 
-		Assert.assertFalse(jChannel.isOpen());
+		Assert.assertFalse(isOpen(jChannel));
 
 		jChannel = jChannels.get(1);
 
-		Assert.assertFalse(jChannel.isOpen());
+		Assert.assertFalse(isOpen(jChannel));
 	}
 
 	@AdviseWith(
@@ -633,6 +634,10 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		JChannel jChannel = jChannels.get(index);
 
 		return (TestReceiver)jChannel.getReceiver();
+	}
+
+	protected boolean isOpen(JChannel jChannel) {
+		return !jChannel.getState().equals(State.CLOSED.toString());
 	}
 
 	private class TestReceiver extends BaseReceiver {

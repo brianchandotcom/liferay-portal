@@ -160,27 +160,31 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 	</aui:select>
 
-	<%
-	for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
-		String curLayoutType = PropsValues.LAYOUT_TYPES[i];
+	<div id="<portlet:namespace />layoutTypeForm">
 
-		if (PropsValues.LAYOUT_TYPES[i].equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
-			continue;
+		<%
+		for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
+			String curLayoutType = PropsValues.LAYOUT_TYPES[i];
+
+			if (PropsValues.LAYOUT_TYPES[i].equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+				continue;
+			}
+		%>
+
+			<div class="layout-type-form layout-type-form-<%= curLayoutType %> <%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) ? "" : "aui-helper-hidden" %>">
+
+				<%
+				request.setAttribute(WebKeys.SEL_LAYOUT, selLayout);
+				%>
+
+				<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(curLayoutType) %>" />
+			</div>
+
+		<%
 		}
-	%>
+		%>
 
-		<div class="layout-type-form layout-type-form-<%= curLayoutType %> <%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) ? "" : "aui-helper-hidden" %>">
-
-			<%
-			request.setAttribute(WebKeys.SEL_LAYOUT, selLayout);
-			%>
-
-			<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(curLayoutType) %>" />
-		</div>
-
-	<%
-	}
-	%>
+	</div>
 
 </aui:fieldset>
 
@@ -190,7 +194,9 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	function toggleLayoutTypeFields(type) {
 		var currentType = 'layout-type-form-' + type;
 
-		A.all('.layout-type-form').each(
+		var typeFormContainer = A.one('#<portlet:namespace />layoutTypeForm');
+
+		typeFormContainer.all('.layout-type-form').each(
 			function(item, index, collection) {
 				var visible = item.hasClass(currentType);
 

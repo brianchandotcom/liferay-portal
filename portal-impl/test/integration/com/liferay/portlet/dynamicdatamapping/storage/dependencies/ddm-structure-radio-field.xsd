@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+    <dynamic-element dataType="string" indexType="" name="radio" type="radio">
+        <dynamic-element name="option3899" type="option" value="value 1">
+            <meta-data locale="en_US">
+                <entry name="label"><![CDATA[option 1]]></entry>
+            </meta-data>
+        </dynamic-element>
+        <dynamic-element name="option3900" type="option" value="value 2">
+            <meta-data locale="en_US">
+                <entry name="label"><![CDATA[option 2]]></entry>
+            </meta-data>
+        </dynamic-element>
+        <dynamic-element name="option3901" type="option" value="value 3">
+            <meta-data locale="en_US">
+                <entry name="label"><![CDATA[option 3]]></entry>
+            </meta-data>
+        </dynamic-element>
+        <meta-data locale="en_US">
+            <entry name="label"><![CDATA[Radio Field]]></entry>
+            <entry name="required"><![CDATA[false]]></entry>
+            <entry name="repeatable"><![CDATA[true]]></entry>
+        </meta-data>
+    </dynamic-element>
+</root>

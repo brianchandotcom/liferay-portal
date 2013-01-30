@@ -249,6 +249,9 @@ public interface UserGroupRoleLocalService extends BaseLocalService,
 	public void deleteUserGroupRoles(long[] userIds, long groupId, long roleId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteUserGroupRoles(long[] userIds, long groupId, int type)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteUserGroupRolesByGroupId(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

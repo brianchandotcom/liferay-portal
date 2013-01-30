@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchUserGroupRoleException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
@@ -163,6 +164,27 @@ public class UserGroupRoleLocalServiceImpl
 
 		for (long userId : userIds) {
 			userGroupRolePersistence.removeByU_G(userId, groupId);
+		}
+
+		PermissionCacheUtil.clearCache();
+	}
+
+	public void deleteUserGroupRoles(long[] userIds, long groupId, int type)
+		throws SystemException {
+
+		List<Role> roles = roleLocalService.getRoles(type, StringPool.BLANK);
+
+		for (long userId : userIds) {
+			for (Role role : roles) {
+				UserGroupRolePK pk = new UserGroupRolePK(
+					userId, groupId, role.getRoleId());
+
+				try {
+					userGroupRolePersistence.remove(pk);
+				}
+				catch (NoSuchUserGroupRoleException nsugre) {
+				}
+			}
 		}
 
 		PermissionCacheUtil.clearCache();

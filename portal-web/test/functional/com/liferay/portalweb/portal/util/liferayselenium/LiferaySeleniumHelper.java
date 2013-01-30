@@ -137,7 +137,11 @@ public class LiferaySeleniumHelper {
 	public static void assertNotVisible(
 		LiferaySelenium liferaySelenium, String locator) {
 
-		BaseTestCase.assertFalse(liferaySelenium.isVisible(locator));
+		liferaySelenium.assertElementPresent(locator);
+
+		if (liferaySelenium.isVisible(locator)) {
+			BaseTestCase.fail("Element is visible at " + locator);
+		}
 	}
 
 	public static void assertPartialText(
@@ -195,7 +199,11 @@ public class LiferaySeleniumHelper {
 	public static void assertVisible(
 		LiferaySelenium liferaySelenium, String locator) {
 
-		BaseTestCase.assertTrue(liferaySelenium.isVisible(locator));
+		liferaySelenium.assertElementPresent(locator);
+
+		if (liferaySelenium.isNotVisible(locator)) {
+			BaseTestCase.fail("Element is not visible at " + locator);
+		}
 	}
 
 	public static void downloadTempFile(String value) {
@@ -259,6 +267,12 @@ public class LiferaySeleniumHelper {
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
 		return !liferaySelenium.isText(locator, value);
+	}
+
+	public static boolean isNotVisible(
+		LiferaySelenium liferaySelenium, String locator) {
+
+		return !liferaySelenium.isVisible(locator);
 	}
 
 	public static boolean isText(
@@ -440,12 +454,11 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail(
-					"Timeout: unable to find the locator \"" + locator + "\"");
+				liferaySelenium.assertNotVisible(locator);
 			}
 
 			try {
-				if (!liferaySelenium.isVisible(locator)) {
+				if (liferaySelenium.isNotVisible(locator)) {
 					break;
 				}
 			}
@@ -604,8 +617,7 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail(
-					"Timeout: unable to find the locator \"" + locator + "\"");
+				liferaySelenium.assertVisible(locator);
 			}
 
 			try {

@@ -239,6 +239,10 @@ public abstract class BaseWebDriverImpl
 		return LiferaySeleniumHelper.isNotText(this, locator, value);
 	}
 
+	public boolean isNotVisible(String locator) {
+		return LiferaySeleniumHelper.isNotVisible(this, locator);
+	}
+
 	public boolean isPartialText(String locator, String value) {
 		WebElement webElement = getWebElement(locator, "1");
 

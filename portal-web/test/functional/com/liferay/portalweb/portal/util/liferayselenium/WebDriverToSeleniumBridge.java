@@ -602,7 +602,7 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public boolean isVisible(String locator) {
-		WebElement webElement = getWebElement(locator);
+		WebElement webElement = getWebElement(locator, "1");
 
 		return webElement.isDisplayed();
 	}

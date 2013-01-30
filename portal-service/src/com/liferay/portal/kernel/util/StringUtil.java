@@ -2868,7 +2868,49 @@ public class StringUtil {
 	 *         trailing whitespace removed
 	 */
 	public static String trim(String s) {
-		return trim(s, null);
+		if (s == null) {
+			return null;
+		}
+
+		if (s.length() == 0) {
+			return s;
+		}
+
+		int len = s.length();
+		int x = len;
+
+		for (int i = 0; i < len; i++) {
+			char c = s.charAt(i);
+
+			if (!Character.isWhitespace(c)) {
+				x = i;
+
+				break;
+			}
+		}
+
+		if (x == len) {
+			return StringPool.BLANK;
+		}
+
+		int y = x + 1;
+
+		for (int i = len - 1; i > x; i--) {
+			char c = s.charAt(i);
+
+			if (!Character.isWhitespace(c)) {
+				y = i + 1;
+
+				break;
+			}
+		}
+
+		if ((x == 0) && (y == len)) {
+			return s;
+		}
+		else {
+			return s.substring(x, y);
+		}
 	}
 
 	/**
@@ -2911,43 +2953,48 @@ public class StringUtil {
 			return null;
 		}
 
-		char[] chars = s.toCharArray();
+		if (s.length() == 0) {
+			return s;
+		}
 
-		int len = chars.length;
+		if ((exceptions == null) || (exceptions.length == 0)) {
+			return trim(s);
+		}
 
-		int x = 0;
-		int y = chars.length;
+		int len = s.length();
+		int x = len;
 
 		for (int i = 0; i < len; i++) {
-			char c = chars[i];
+			char c = s.charAt(i);
 
-			if (_isTrimable(c, exceptions)) {
-				x = i + 1;
-			}
-			else {
+			if (!_isTrimable(c, exceptions)) {
+				x = i;
+
 				break;
 			}
 		}
 
-		for (int i = len - 1; i >= 0; i--) {
-			char c = chars[i];
-
-			if (_isTrimable(c, exceptions)) {
-				y = i;
-			}
-			else {
-				break;
-			}
-		}
-
-		if (x > y) {
+		if (x == len) {
 			return StringPool.BLANK;
 		}
-		else if ((x != 0) || (y != len)) {
-			return s.substring(x, y);
+
+		int y = x + 1;
+
+		for (int i = len - 1; i > x; i--) {
+			char c = s.charAt(i);
+
+			if (!_isTrimable(c, exceptions)) {
+				y = i + 1;
+
+				break;
+			}
+		}
+
+		if ((x == 0) && (y == len)) {
+			return s;
 		}
 		else {
-			return s;
+			return s.substring(x, y);
 		}
 	}
 
@@ -2959,7 +3006,36 @@ public class StringUtil {
 	 *         whitespace removed
 	 */
 	public static String trimLeading(String s) {
-		return trimLeading(s, null);
+		if (s == null) {
+			return null;
+		}
+
+		if (s.length() == 0) {
+			return s;
+		}
+
+		int len = s.length();
+		int x = len;
+
+		for (int i = 0; i < len; i++) {
+			char c = s.charAt(i);
+
+			if (!Character.isWhitespace(c)) {
+				x = i;
+
+				break;
+			}
+		}
+
+		if (x == len) {
+			return StringPool.BLANK;
+		}
+		else if (x == 0) {
+			return s;
+		}
+		else {
+			return s.substring(x);
+		}
 	}
 
 	/**
@@ -2991,29 +3067,35 @@ public class StringUtil {
 			return null;
 		}
 
-		char[] chars = s.toCharArray();
+		if (s.length() == 0) {
+			return s;
+		}
 
-		int len = chars.length;
+		if ((exceptions == null) || (exceptions.length == 0)) {
+			return trimLeading(s);
+		}
 
-		int x = 0;
-		int y = chars.length;
+		int len = s.length();
+		int x = len;
 
 		for (int i = 0; i < len; i++) {
-			char c = chars[i];
+			char c = s.charAt(i);
 
-			if (_isTrimable(c, exceptions)) {
-				x = i + 1;
-			}
-			else {
+			if (!_isTrimable(c, exceptions)) {
+				x = i;
+
 				break;
 			}
 		}
 
-		if ((x != 0) || (y != len)) {
-			return s.substring(x, y);
+		if (x == len) {
+			return StringPool.BLANK;
+		}
+		else if (x == 0) {
+			return s;
 		}
 		else {
-			return s;
+			return s.substring(x);
 		}
 	}
 
@@ -3025,7 +3107,36 @@ public class StringUtil {
 	 *         whitespace removed
 	 */
 	public static String trimTrailing(String s) {
-		return trimTrailing(s, null);
+		if (s == null) {
+			return null;
+		}
+
+		if (s.length() == 0) {
+			return s;
+		}
+
+		int len = s.length();
+		int y = 0;
+
+		for (int i = len - 1; i >= 0; i--) {
+			char c = s.charAt(i);
+
+			if (!Character.isWhitespace(c)) {
+				y = i + 1;
+
+				break;
+			}
+		}
+
+		if (y == 0) {
+			return StringPool.BLANK;
+		}
+		else if (y == len) {
+			return s;
+		}
+		else {
+			return s.substring(0, y);
+		}
 	}
 
 	/**
@@ -3057,29 +3168,35 @@ public class StringUtil {
 			return null;
 		}
 
-		char[] chars = s.toCharArray();
+		if (s.length() == 0) {
+			return s;
+		}
 
-		int len = chars.length;
+		if ((exceptions == null) || (exceptions.length == 0)) {
+			return trimTrailing(s);
+		}
 
-		int x = 0;
-		int y = chars.length;
+		int len = s.length();
+		int y = 0;
 
 		for (int i = len - 1; i >= 0; i--) {
-			char c = chars[i];
+			char c = s.charAt(i);
 
-			if (_isTrimable(c, exceptions)) {
-				y = i;
-			}
-			else {
+			if (!_isTrimable(c, exceptions)) {
+				y = i + 1;
+
 				break;
 			}
 		}
 
-		if ((x != 0) || (y != len)) {
-			return s.substring(x, y);
+		if (y == 0) {
+			return StringPool.BLANK;
+		}
+		else if (y == len) {
+			return s;
 		}
 		else {
-			return s;
+			return s.substring(0, y);
 		}
 	}
 
@@ -3223,11 +3340,9 @@ public class StringUtil {
 	 *         to any of the exception characters; <code>true</code> otherwise
 	 */
 	private static boolean _isTrimable(char c, char[] exceptions) {
-		if ((exceptions != null) && (exceptions.length > 0)) {
-			for (char exception : exceptions) {
-				if (c == exception) {
-					return false;
-				}
+		for (char exception : exceptions) {
+			if (c == exception) {
+				return false;
 			}
 		}
 

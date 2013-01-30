@@ -106,10 +106,6 @@ public class DLFileEntryFinderTest {
 
 		_fileVersion = dlFileEntry.getFileVersion();
 
-		_fileVersion.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		DLFileVersionLocalServiceUtil.updateDLFileVersion(_fileVersion);
-
 		DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), _folder.getFolderId(),
 			ContentTypes.APPLICATION_PDF, "FE2.pdf", "FE2.pdf");

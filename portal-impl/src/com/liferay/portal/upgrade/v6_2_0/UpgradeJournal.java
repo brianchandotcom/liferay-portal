@@ -71,7 +71,7 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 			sb.append("modifiedDate, parentStructureId, classNameId, ");
 			sb.append("structureKey, name, description, xsd, storageType, ");
 			sb.append("type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append(")?, ?, ?)");
+			sb.append("?, ?, ?)");
 
 			String sql = sb.toString();
 

@@ -113,6 +113,8 @@ import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.FullNameValidator;
 import com.liferay.portal.security.auth.FullNameValidatorFactory;
+import com.liferay.portal.security.auth.MembershipPolicy;
+import com.liferay.portal.security.auth.MembershipPolicyFactory;
 import com.liferay.portal.security.auth.ScreenNameGenerator;
 import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.security.auth.ScreenNameValidator;
@@ -454,6 +456,10 @@ public class HookHotDeployListener
 			if (sanitizerContainer != null) {
 				sanitizerContainer.unregisterSanitizers();
 			}
+		}
+
+		if (portalProperties.containsKey(PropsKeys.SITES_MEMBERSHIP_POLICY)) {
+			MembershipPolicyFactory.setInstance(null);
 		}
 
 		if (portalProperties.containsKey(
@@ -1871,6 +1877,18 @@ public class HookHotDeployListener
 
 				sanitizerContainer.registerSanitizer(sanitizer);
 			}
+		}
+
+		if (portalProperties.containsKey(PropsKeys.SITES_MEMBERSHIP_POLICY)) {
+			String membershipPolicyClassName = portalProperties.getProperty(
+				PropsKeys.SITES_MEMBERSHIP_POLICY);
+
+			MembershipPolicy membershipPolicy =
+				(MembershipPolicy)newInstance(
+					portletClassLoader, MembershipPolicy.class,
+					membershipPolicyClassName);
+
+			MembershipPolicyFactory.setInstance(membershipPolicy);
 		}
 
 		if (portalProperties.containsKey(

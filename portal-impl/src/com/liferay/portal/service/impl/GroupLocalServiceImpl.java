@@ -69,6 +69,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserPersonalSite;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.security.auth.MembershipPolicy;
+import com.liferay.portal.security.auth.MembershipPolicyFactory;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -464,6 +466,42 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				Company.class.getName(), companyId,
 				GroupConstants.DEFAULT_LIVE_GROUP_ID, GroupConstants.GLOBAL,
 				null, 0, GroupConstants.GLOBAL_FRIENDLY_URL, false, true, null);
+		}
+	}
+
+	public void checkMembershipPolicy(User user)
+		throws PortalException, SystemException {
+
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactory.getInstance();
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("inherit", Boolean.FALSE);
+		groupParams.put("site", Boolean.TRUE);
+		groupParams.put("usersGroups", new Long(user.getUserId()));
+
+		List<Group> userGroups = search(
+			user.getCompanyId(), groupParams, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		for (Group userGroup : userGroups) {
+			if (!membershipPolicy.isMembershipAllowed(userGroup, user)) {
+				unsetUserGroups(
+					user.getUserId(), new long[] {userGroup.getGroupId()});
+			}
+		}
+
+		List<Group> mandatorySites = membershipPolicy.getMandatorySites(user);
+
+		for (Group mandatorySite : mandatorySites) {
+			if (!hasUserGroup(
+					user.getUserId(), mandatorySite.getGroupId(), false)) {
+
+				addUserGroups(
+					user.getUserId(), new long[] {mandatorySite.getGroupId()});
+			}
 		}
 	}
 

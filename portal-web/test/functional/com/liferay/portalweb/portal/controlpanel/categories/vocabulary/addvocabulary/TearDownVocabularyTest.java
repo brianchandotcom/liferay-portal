@@ -72,14 +72,23 @@ public class TearDownVocabularyTest extends BaseTestCase {
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
 					RuntimeVariables.replace("Delete"));
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected vocabularies[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete the selected vocabularies?");
 				selenium.waitForElementNotPresent(
 					"//input[@name='vocabulary-item-check']");
 				assertTrue(selenium.isElementNotPresent(
 						"//input[@name='vocabulary-item-check']"));
 
 			case 2:
+				assertEquals(RuntimeVariables.replace(
+						"There are no vocabularies."),
+					selenium.getText(
+						"xpath=(//div[@class='lfr-message-response portlet-msg-info'])[1]"));
+				assertEquals(RuntimeVariables.replace(
+						"There are no categories."),
+					selenium.getText(
+						"xpath=(//div[@class='lfr-message-response portlet-msg-info'])[2]"));
+
 			case 100:
 				label = -1;
 			}

@@ -72,7 +72,7 @@ public class ViewVocabularyAssetTypeDLDocumentTest extends BaseTestCase {
 				selenium.waitForVisible("//select[@id='_147_classNameId0']");
 
 			case 2:
-				assertEquals("Documents and Media Document",
+				assertEquals("Document",
 					selenium.getSelectedLabel(
 						"//select[@id='_147_classNameId0']"));
 

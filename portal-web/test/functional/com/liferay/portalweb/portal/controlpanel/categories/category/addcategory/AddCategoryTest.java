@@ -39,7 +39,7 @@ public class AddCategoryTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Add Category']",
 			RuntimeVariables.replace("Add Category"));
 		selenium.waitForVisible("//input[@id='_147_title_en_US']");
@@ -47,7 +47,6 @@ public class AddCategoryTest extends BaseTestCase {
 			RuntimeVariables.replace("Category Name"));
 		selenium.type("//textarea[@id='_147_description_en_US']",
 			RuntimeVariables.replace("Category Description"));
-		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible(

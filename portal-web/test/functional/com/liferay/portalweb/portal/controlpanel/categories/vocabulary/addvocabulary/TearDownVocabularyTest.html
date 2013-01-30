@@ -99,7 +99,7 @@
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to delete the selected vocabularies?</td>
 	<td></td>
 </tr>
@@ -117,6 +117,16 @@
 	<td>label</td>
 	<td>VocabularyNotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='lfr-message-response portlet-msg-info'])[1]</td>
+	<td>There are no vocabularies.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='lfr-message-response portlet-msg-info'])[2]</td>
+	<td>There are no categories.</td>
 </tr>
 </tbody></table>
 </body>

@@ -61,6 +61,7 @@ java.lang.String onChange = GetterUtil.getString((java.lang.String)request.getAt
 java.lang.String onClick = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:onClick"));
 java.lang.String placeholder = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:placeholder"));
 java.lang.String prefix = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:prefix"));
+boolean required = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:required")));
 boolean showRequiredLabel = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:showRequiredLabel")), true);
 java.lang.String suffix = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:suffix"));
 java.lang.String title = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:title"));
@@ -97,6 +98,7 @@ _updateOptions(_options, "onChange", onChange);
 _updateOptions(_options, "onClick", onClick);
 _updateOptions(_options, "placeholder", placeholder);
 _updateOptions(_options, "prefix", prefix);
+_updateOptions(_options, "required", required);
 _updateOptions(_options, "showRequiredLabel", showRequiredLabel);
 _updateOptions(_options, "suffix", suffix);
 _updateOptions(_options, "title", title);

@@ -15,8 +15,8 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
-import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
@@ -172,7 +172,7 @@ public class VelocityPortlet extends GenericPortlet {
 
 		TemplateResource templateResource =
 			TemplateResourceLoaderUtil.getTemplateResource(
-				TemplateManager.VELOCITY, templateId);
+				TemplateConstants.LANG_TYPE_VM, templateId);
 
 		if (templateResource == null) {
 			throw new Exception(
@@ -180,7 +180,7 @@ public class VelocityPortlet extends GenericPortlet {
 		}
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateManager.VELOCITY, templateResource,
+			TemplateConstants.LANG_TYPE_VM, templateResource,
 			TemplateContextType.STANDARD);
 
 		prepareTemplate(template, portletRequest, portletResponse);

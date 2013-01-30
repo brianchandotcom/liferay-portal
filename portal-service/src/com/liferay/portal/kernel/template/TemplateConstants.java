@@ -17,23 +17,12 @@ package com.liferay.portal.kernel.template;
 /**
  * @author Tina Tian
  */
-public interface TemplateManager {
+public interface TemplateConstants {
 
-	public void destroy();
+	public static final String LANG_TYPE_FTL = "ftl";
 
-	public void destroy(ClassLoader classLoader);
+	public static final String LANG_TYPE_VM = "vm";
 
-	public String getName();
-
-	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateContextType templateContextType);
-
-	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType);
-
-	public void init() throws TemplateException;
+	public static final String LANG_TYPE_XSL = "xsl";
 
 }

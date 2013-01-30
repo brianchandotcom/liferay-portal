@@ -16,7 +16,7 @@ package com.liferay.portal.velocity;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
-import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -49,7 +49,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		String cacheName = TemplateResource.class.getName();
 
 		cacheName = cacheName.concat(StringPool.POUND).concat(
-			TemplateManager.VELOCITY);
+			TemplateConstants.LANG_TYPE_VM);
 
 		_portalCache = SingleVMPoolUtil.getCache(cacheName);
 	}
@@ -88,11 +88,11 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 				TemplateResource.TEMPLATE_RESOURCE_UUID_PREFIX)) {
 
 			templateResource = TemplateResourceThreadLocal.getTemplateResource(
-				TemplateManager.VELOCITY);
+				TemplateConstants.LANG_TYPE_VM);
 		}
 		else {
 			templateResource = TemplateResourceLoaderUtil.getTemplateResource(
-				TemplateManager.VELOCITY, resourceName);
+				TemplateConstants.LANG_TYPE_VM, resourceName);
 		}
 
 		if (templateResource == null) {

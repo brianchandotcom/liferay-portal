@@ -15,6 +15,7 @@
 package com.liferay.portal.freemarker;
 
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
@@ -61,7 +62,7 @@ public class FreeMarkerManager implements TemplateManager {
 	}
 
 	public String getName() {
-		return FREEMARKER;
+		return TemplateConstants.LANG_TYPE_FTL;
 	}
 
 	public Template getTemplate(

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
@@ -145,7 +145,8 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 			PACLClassLoaderUtil.setContextClassLoader(
 				PACLClassLoaderUtil.getPortalClassLoader());
 
-			TemplateResourceLoaderUtil.clearCache(TemplateManager.VELOCITY);
+			TemplateResourceLoaderUtil.clearCache(
+				TemplateConstants.LANG_TYPE_VM);
 		}
 		finally {
 			PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);

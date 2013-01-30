@@ -271,13 +271,12 @@ public class DDMXMLImpl implements DDMXML {
 
 			for (Serializable value : values) {
 				Element dynamicContentElement =
-						dynamicElementElement.addElement("dynamic-content");
+					dynamicElementElement.addElement("dynamic-content");
 
 				dynamicContentElement.addAttribute(
-						"language-id", LocaleUtil.toLanguageId(locale));
+					"language-id", LocaleUtil.toLanguageId(locale));
 
-				updateField(
-					dynamicContentElement, locale, field.getName(), value);
+				updateField(dynamicContentElement, value);
 			}
 		}
 	}
@@ -329,8 +328,7 @@ public class DDMXMLImpl implements DDMXML {
 	}
 
 	protected void updateField(
-		Element dynamicContentElement, Locale locale, String fieldName,
-		Serializable fieldValue) {
+		Element dynamicContentElement, Serializable fieldValue) {
 
 		dynamicContentElement.clearContent();
 

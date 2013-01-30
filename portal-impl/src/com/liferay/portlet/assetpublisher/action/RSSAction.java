@@ -108,7 +108,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 			syndEntry.setLink(link);
 
-			syndEntry.setPublishedDate(assetEntry.getCreateDate());
+			syndEntry.setPublishedDate(assetEntry.getPublishDate());
 			syndEntry.setTitle(assetEntry.getTitle(languageId, true));
 			syndEntry.setUpdatedDate(assetEntry.getModifiedDate());
 			syndEntry.setUri(syndEntry.getLink());

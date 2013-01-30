@@ -72,19 +72,19 @@ public class AddUserJSONTest extends BaseTestCase {
 		selenium.waitForVisible("//pre[@class='lfr-code-block']");
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "{"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"agreedToTermsOfUse\":false,"));
+				"\"agreedToTermsOfUse\": false,"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"companyId\":1,"));
+				"\"companyId\": 1,"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"facebookId\":0,"));
+				"\"facebookId\": 0,"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"firstName\":\"userfn\","));
+				"\"firstName\": \"userfn\","));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"greeting\":\"Welcome userfn userln!\","));
+				"\"greeting\": \"Welcome userfn userln!\","));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"lastName\":\"userln\","));
+				"\"lastName\": \"userln\","));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"screenName\":\"usersn\","));
+				"\"screenName\": \"usersn\","));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "}"));
 	}
 }

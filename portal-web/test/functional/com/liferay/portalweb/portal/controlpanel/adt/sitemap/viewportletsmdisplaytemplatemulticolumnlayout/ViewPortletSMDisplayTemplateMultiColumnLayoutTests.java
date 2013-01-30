@@ -20,7 +20,6 @@ import com.liferay.portalweb.portlet.sitemap.portlet.addportletsm.AddPageSMTest;
 import com.liferay.portalweb.portlet.sitemap.portlet.addportletsm.AddPortletSMTest;
 import com.liferay.portalweb.portlet.sitemap.portlet.configureportletsmdisplaytemplatemulticolumn.ConfigurePortletSMDisplayTemplateDefaultTest;
 import com.liferay.portalweb.portlet.sitemap.portlet.configureportletsmdisplaytemplatemulticolumn.ConfigurePortletSMDisplayTemplateMultiColumnLayoutTest;
-import com.liferay.portalweb.portlet.sitemap.portlet.removeportlet.RemovePortletSMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -37,7 +36,6 @@ public class ViewPortletSMDisplayTemplateMultiColumnLayoutTests
 		testSuite.addTestSuite(ConfigurePortletSMDisplayTemplateMultiColumnLayoutTest.class);
 		testSuite.addTestSuite(ViewPortletSMDisplayTemplateMultiColumnLayoutTest.class);
 		testSuite.addTestSuite(ConfigurePortletSMDisplayTemplateDefaultTest.class);
-		testSuite.addTestSuite(RemovePortletSMTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

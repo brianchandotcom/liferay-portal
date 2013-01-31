@@ -203,6 +203,10 @@ public abstract class BaseSeleniumImpl
 		return LiferaySeleniumHelper.isNotText(this, locator, value);
 	}
 
+	public boolean isNotVisible(String locator) {
+		return LiferaySeleniumHelper.isNotVisible(this, locator);
+	}
+
 	public boolean isPartialText(String locator, String value) {
 		value = RuntimeVariables.replace(value);
 

@@ -14,32 +14,19 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
-
-import java.util.Collections;
-import java.util.List;
-
 /**
- * @author Sergio González
+ * @author Shuyang Zhou
  */
-public class DefaultMembershipPolicy implements MembershipPolicy {
+public class MembershipPolicyUtil {
 
-	public List<Role> getForbiddenRoles(Group group, User user) {
-		return Collections.emptyList();
+	public static MembershipPolicy getMembershipPolicy() {
+		return _membershipPolicy;
 	}
 
-	public List<Group> getMandatoryGroups(User user) {
-		return Collections.emptyList();
+	public static void setMembershipPolicy(MembershipPolicy membershipPolicy) {
+		_membershipPolicy = membershipPolicy;
 	}
 
-	public List<Role> getMandatoryRoles(Group group, User user) {
-		return Collections.emptyList();
-	}
-
-	public boolean isMembershipAllowed(Group group, User user) {
-		return true;
-	}
+	private static volatile MembershipPolicy _membershipPolicy;
 
 }

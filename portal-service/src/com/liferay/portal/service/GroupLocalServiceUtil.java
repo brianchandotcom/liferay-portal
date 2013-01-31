@@ -369,9 +369,11 @@ public class GroupLocalServiceUtil {
 		getService().checkCompanyGroup(companyId);
 	}
 
-	public static void checkMembershipPolicy(com.liferay.portal.model.User user)
+	public static void checkMembershipPolicy(
+		com.liferay.portal.model.User user,
+		com.liferay.portal.security.auth.MembershipPolicy membershipPolicy)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().checkMembershipPolicy(user);
+		getService().checkMembershipPolicy(user, membershipPolicy);
 	}
 
 	/**

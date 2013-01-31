@@ -32,7 +32,7 @@ public class AddTagTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -44,6 +44,7 @@ public class AddTagTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='_99_name']");
 		selenium.type("//input[@id='_99_name']",
 			RuntimeVariables.replace("selenium"));
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("//div[@id='portletMessages']");

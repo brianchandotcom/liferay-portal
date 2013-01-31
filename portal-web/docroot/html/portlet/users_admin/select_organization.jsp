@@ -143,25 +143,16 @@ if (Validator.isNotNull(target)) {
 </aui:script>
 
 <aui:script use="aui-base">
+	var Util = Liferay.Util;
+
 	A.one('#<portlet:namespace />selectOrganizationFm').delegate(
 		'click',
 		function(event) {
-	    	var node = event.currentTarget;
+	    	var result = Util.getAttributes(event.currentTarget, 'data-');
 
-			var result = {};
+			Util.getOpener().Liferay.fire('<portlet:namespace />selectOrganization', result);
 
-			A.Array.each(
-				A.Node.getDOMNode(node).attributes,
-				function(item, index) {
-					if (item.name.indexOf('data-') == 0) {
-	                    result[item.name.substr('data-'.length)] = item.value;
-					}
-				}
-			);
-
-			Liferay.Util.getOpener().Liferay.fire('<portlet:namespace />selectOrganization', result);
-
-			Liferay.Util.getWindow().close();
+			Util.getWindow().close();
 		},
 		'.selector-button input'
 	);

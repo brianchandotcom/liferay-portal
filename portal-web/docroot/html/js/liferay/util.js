@@ -329,6 +329,30 @@
 			return str.replace(regex, A.bind('_escapeHTML', Util, !!preventDoubleEscape, entities, entitiesValues));
 		},
 
+		getAttributes: function(node, attributeGetter) {
+			var result = {};
+
+			var isGetterString = Lang.isString(attributeGetter);
+
+			if (isGetterString || Lang.isFunction(attributeGetter)) {
+				var action = attributeGetter;
+
+				if (isGetterString) {
+					action = function(item, index) {
+						var attributeName = item.get('nodeName');
+
+						if (attributeName.indexOf(attributeGetter) === 0) {
+							result[attributeName.substr(attributeGetter.length)] = item.get('nodeValue');
+						}
+					};
+				}
+
+				node.get('attributes').each(action);
+			}
+
+			return result;
+		},
+
 		getColumnId: function(str) {
 			var columnId = str.replace(/layout-column_/, '');
 

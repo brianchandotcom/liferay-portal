@@ -14,14 +14,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>clickAtAndWait</td>
 	<td>link=OpenSocial Test Page</td>
 	<td>OpenSocial Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=OpenSocial Test Page</td>
-	<td>OpenSocial Test Page</td>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
@@ -35,6 +55,21 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]</td>
+	<td>AUI Live Search Min</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>Search applications (searches as you type).</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>h</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//li[@title='Hello World!']/p/a</td>
 	<td>Add</td>
 </tr>
@@ -44,9 +79,19 @@
 	<td>Add</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//header/h1/span</td>
-	<td></td>
+	<td>Hello World!</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -54,14 +99,19 @@
 	<td>Hello World!</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//iframe[@class='aui-gadget']</td>
+	<td>Gadget</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//iframe[@class='aui-gadget']</td>
-	<td></td>
+	<td>Gadget</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//body</td>
+	<td>Hello, world!</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -73,7 +123,6 @@
 	<td>relative=top</td>
 	<td>top</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

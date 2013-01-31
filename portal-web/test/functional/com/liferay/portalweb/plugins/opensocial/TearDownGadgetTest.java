@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddGadgetTest extends BaseTestCase {
-	public void testAddGadget() throws Exception {
+public class TearDownGadgetTest extends BaseTestCase {
+	public void testTearDownGadget() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -39,23 +39,24 @@ public class AddGadgetTest extends BaseTestCase {
 		selenium.clickAt("link=OpenSocial Gadget Publisher",
 			RuntimeVariables.replace("OpenSocial Gadget Publisher"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//input[@value='Publish Gadget']");
-		selenium.clickAt("//input[@value='Publish Gadget']",
-			RuntimeVariables.replace("Publish Gadget"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
+			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_1_WAR_opensocialportlet_url']",
-			RuntimeVariables.replace(
-				"http://opensocial-resources.googlecode.com/svn/samples/tutorial/tags/api-0.8/helloworld.xml"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Hello World!"),
-			selenium.getText("//tr[3]/td"));
-		assertEquals(RuntimeVariables.replace(
-				"http://opensocial-resources.googlecode.com/svn/samples/tutorial/tags/api-0.8/helloworld.xml"),
-			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("There are no gadgets."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

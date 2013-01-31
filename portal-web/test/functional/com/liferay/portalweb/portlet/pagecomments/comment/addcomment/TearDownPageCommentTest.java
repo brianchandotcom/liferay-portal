@@ -49,7 +49,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean pageComment2Present = selenium.isElementPresent(
 						"//li[4]/span/a/span");
@@ -66,7 +66,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean pageComment3Present = selenium.isElementPresent(
 						"//li[4]/span/a/span");
@@ -83,7 +83,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean pageComment4Present = selenium.isElementPresent(
 						"//li[4]/span/a/span");
@@ -100,7 +100,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean pageComment5Present = selenium.isElementPresent(
 						"//li[4]/span/a/span");
@@ -117,7 +117,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 			case 2:
 			case 3:

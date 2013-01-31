@@ -28,6 +28,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalTemplate;
+import com.liferay.portlet.journal.util.JournalConverterUtil;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -77,6 +78,9 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 
 			ps = con.prepareStatement(sql);
 
+			String convertedXSD =
+				JournalConverterUtil.journalStructureToDDMStructure(xsd);
+
 			ps.setString(1, uuid_);
 			ps.setLong(2, ddmStructureId);
 			ps.setLong(3, groupId);
@@ -90,7 +94,7 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 			ps.setString(11, ddmStructureKey);
 			ps.setString(12, name);
 			ps.setString(13, description);
-			ps.setString(14, xsd);
+			ps.setString(14, convertedXSD);
 			ps.setString(15, storageType);
 			ps.setInt(16, type);
 

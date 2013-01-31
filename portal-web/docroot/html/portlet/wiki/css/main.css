@@ -251,6 +251,14 @@
 		margin-left: 5px;
 	}
 
+	.page-activities {
+		.activity-summary {
+			color: #999;
+			display: block;
+			margin-left: 3em;
+		}
+	}
+
 	.entry-links h2 {
 		border-width: 0;
 		font-size: 1em;

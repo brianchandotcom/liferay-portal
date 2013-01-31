@@ -15,9 +15,14 @@
 package com.liferay.portalweb.portlet.dynamicdatalistdisplay.record.addrecordddld;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinition.AddDataDefinitionTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.adddatadefinition.TearDownDataDefinitionTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.list.addlist.AddListTest;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.list.addlist.TearDownListTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.dynamicdatalistdisplay.list.addlistddld.AddPageDDLDTest;
-import com.liferay.portalweb.portlet.dynamicdatalistdisplay.list.addlistddld.AddPortletDDLDTest;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.list.selectlistddld.SelectListDDLDTest;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet.addportletddld.AddPageDDLDTest;
+import com.liferay.portalweb.portlet.dynamicdatalistdisplay.portlet.addportletddld.AddPortletDDLDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -35,10 +40,10 @@ public class AddRecordDDLDTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddDMDocumentTest.class);
 		testSuite.addTestSuite(SelectListDDLDTest.class);
 		testSuite.addTestSuite(AddRecordDDLDTest.class);
-		testSuite.addTestSuite(ViewRecordTest.class);
+		testSuite.addTestSuite(ViewRecordDDLDTest.class);
+		testSuite.addTestSuite(TearDownDMDocumentTest.class);
 		testSuite.addTestSuite(TearDownListTest.class);
 		testSuite.addTestSuite(TearDownDataDefinitionTest.class);
-		testSuite.addTestSuite(TearDownDMContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

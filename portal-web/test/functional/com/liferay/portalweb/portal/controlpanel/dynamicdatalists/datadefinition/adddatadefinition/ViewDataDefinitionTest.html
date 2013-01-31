@@ -49,58 +49,73 @@
 	<td>Dynamic Data Lists</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//a[@id='_167_manageDDMStructuresLink']</td>
-	<td>Manage Data Definitions</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//a[@id='_167_manageDDMStructuresLink']</td>
+	<td>//span[@class='lfr-toolbar-button view-structures ']/a</td>
 	<td>Manage Data Definitions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_167_manageDDMStructuresLink']</td>
+	<td>//span[@class='lfr-toolbar-button view-structures ']/a</td>
 	<td>Manage Data Definitions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe</td>
+	<td>//iframe[contains(@src,'dynamicdatalists')]</td>
 	<td>Data Definitions</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
+	<td>//iframe[contains(@src,'dynamicdatalists')]</td>
 	<td>Data Definitions</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/event-tap/event-tap-min.js')]</td>
+	<td>Event Tap Min</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_166_keywords']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_166_keywords']</td>
+	<td>Data</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[3]/td[3]/a</td>
+	<td>Data Definition</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -136,32 +151,32 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label</td>
-	<td>Integer</td>
+	<td>HTML</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label</td>
-	<td>Number</td>
+	<td>Integer</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label</td>
-	<td>Radio</td>
+	<td>Link to Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label</td>
-	<td>Select</td>
+	<td>Number</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label</td>
-	<td>Text</td>
+	<td>Radio</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label</td>
-	<td>Text Box</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

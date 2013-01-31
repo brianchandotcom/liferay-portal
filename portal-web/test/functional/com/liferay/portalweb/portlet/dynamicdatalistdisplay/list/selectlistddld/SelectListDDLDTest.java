@@ -28,24 +28,41 @@ public class SelectListDDLDTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//img[@title='Select List']",
-			RuntimeVariables.replace("Select List"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		Thread.sleep(1000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+			"//script[contains(@src,'liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//input[@name='_86_keywords']");
 		selenium.type("//input[@name='_86_keywords']",
 			RuntimeVariables.replace("List Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=List Name", RuntimeVariables.replace("List Name"));
-		selenium.waitForText("//span[@class='displaying-record-set-id-holder']",
+		assertEquals(RuntimeVariables.replace("List Name"),
+			selenium.getText("//tr[contains(.,'List Name')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'List Name')]/td[2]/a",
+			RuntimeVariables.replace("List Name"));
+		selenium.waitForText("//span[contains(@class,'displaying-record')]",
 			"Displaying List: List Name (Modified)");
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

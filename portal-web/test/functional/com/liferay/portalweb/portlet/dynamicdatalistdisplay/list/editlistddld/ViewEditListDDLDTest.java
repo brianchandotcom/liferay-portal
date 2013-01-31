@@ -28,6 +28,7 @@ public class ViewEditListDDLDTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//h1[@class='header-title']");
 		assertEquals(RuntimeVariables.replace("List Name Edited"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("No records were found."),

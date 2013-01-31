@@ -28,10 +28,13 @@ public class EditListDDLDTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//img[@title='Select List']",
+		Thread.sleep(1000);
+		selenium.clickAt("//div[@class='icon-actions']/span/a/img[@title='Select List']",
 			RuntimeVariables.replace("Select List"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//input[@name='_86_keywords']");
@@ -44,29 +47,33 @@ public class EditListDDLDTest extends BaseTestCase {
 			selenium.getText("//tr[contains(.,'List Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("List Description"),
 			selenium.getText("//tr[contains(.,'List Name')]/td[3]/a"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_167_name_en_US']",
 			RuntimeVariables.replace("List Name Edited"));
 		selenium.type("//textarea[@id='_167_description_en_US']",
 			RuntimeVariables.replace("List Description Edited"));
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Displaying List: List Name Edited"),
-			selenium.getText("//div[@class='portlet-msg-info']/span[2]"));
+		assertEquals(RuntimeVariables.replace("List Name Edited"),
+			selenium.getText("//tr[contains(.,'List Name Edited')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'List Name Edited')]/td[2]/a",
+			RuntimeVariables.replace("List Name Edited"));
+		selenium.waitForText("//div[@class='portlet-msg-info']/span[2]",
+			"Displaying List: List Name Edited (Modified)");
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'List Name Edited')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("List Name Edited"),

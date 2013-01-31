@@ -490,7 +490,6 @@
 				<name>required</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
-				<defaultValue>false</defaultValue>
 			</attribute>
 			<attribute>
 				<name>showRequiredLabel</name>

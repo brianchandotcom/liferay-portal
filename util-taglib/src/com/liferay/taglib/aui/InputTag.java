@@ -51,12 +51,13 @@ public class InputTag extends BaseInputTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		addModelValidators();
+		addModelValidatorTags();
+		addRequiredValidatorTag();
 
 		return super.doStartTag();
 	}
 
-	protected void addModelValidators() {
+	protected void addModelValidatorTags() {
 		Class<?> model = getModel();
 
 		if (model == null) {
@@ -93,6 +94,17 @@ public class InputTag extends BaseInputTag {
 
 			addValidatorTag(validatorName, validatorTag);
 		}
+	}
+
+	protected void addRequiredValidatorTag() {
+		if (!getRequired()) {
+			return;
+		}
+
+		ValidatorTag validatorTag =
+			new ValidatorTagImpl("required", null, null, false);
+
+		addValidatorTag("required", validatorTag);
 	}
 
 	protected void addValidatorTag(
@@ -245,16 +257,14 @@ public class InputTag extends BaseInputTag {
 	}
 
 	protected void setEndAttributes() {
+		if ((_validators == null) || (_validators.get("required") == null)) {
+			return;
+		}
+
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 
-		boolean required = false;
-
-		if ((_validators != null) && (_validators.get("required") != null)) {
-			required = true;
-		}
-
-		setNamespacedAttribute(request, "required", String.valueOf(required));
+		setNamespacedAttribute(request, "required", Boolean.TRUE.toString());
 	}
 
 	protected void updateFormValidators() {

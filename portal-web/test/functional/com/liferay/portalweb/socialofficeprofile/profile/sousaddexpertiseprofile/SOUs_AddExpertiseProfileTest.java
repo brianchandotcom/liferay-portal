@@ -48,6 +48,8 @@ public class SOUs_AddExpertiseProfileTest extends BaseTestCase {
 					RuntimeVariables.replace("Expertise Title"));
 				selenium.select("//select[contains(@id,'_2_projectsEntryStartDateMonth0')]",
 					RuntimeVariables.replace("January"));
+				selenium.select("//select[contains(@id,'_2_projectsEntryStartDateYear0')]",
+					RuntimeVariables.replace("2012"));
 
 				boolean currentExpertiseChecked = selenium.isChecked(
 						"_2_projectsEntryCurrent0Checkbox");

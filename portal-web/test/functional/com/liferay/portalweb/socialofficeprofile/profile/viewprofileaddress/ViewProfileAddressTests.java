@@ -19,6 +19,7 @@ import com.liferay.portalweb.socialoffice.users.user.addsouser.AddSOUserTest;
 import com.liferay.portalweb.socialoffice.users.user.addsouser.TearDownSOUserTest;
 import com.liferay.portalweb.socialoffice.users.user.editsouserpassword.EditSOUserPasswordTest;
 import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.SelectRegularRolesSOUserTest;
+import com.liferay.portalweb.socialofficeprofile.profile.addusersoaddress.AddUserSOAddressTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -729,7 +729,9 @@ serverURL.setParameter("tabs3", tabs3);
 					String taglibShutdown = renderResponse.getNamespace() + "saveServer('shutdown');";
 					%>
 
+					<c:if test="<%= !ShutdownUtil.isInProcess() %>">
 					<aui:button onClick="<%= taglibShutdown %>" value="shutdown" />
+					</c:if>
 
 					<c:if test="<%= ShutdownUtil.isInProcess() %>">
 

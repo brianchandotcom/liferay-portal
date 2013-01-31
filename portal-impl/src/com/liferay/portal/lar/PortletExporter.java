@@ -1547,8 +1547,31 @@ public class PortletExporter {
 		for (int i = 0; i < oldValues.length; i++) {
 			String oldValue = oldValues[i];
 
-			newValues[i] = StringUtil.replace(
-				oldValue, groupScopeId, "[$GROUP_SCOPE_ID$]");
+			if (oldValue.startsWith(AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX)) {
+				newValues[i] = StringUtil.replace(
+					oldValue, groupScopeId, "[$GROUP_SCOPE_ID$]");
+			}
+			else if (oldValue.startsWith(
+				AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX)) {
+
+				// Legacy preferences
+
+				String scopeIdSuffix = oldValue.substring(
+					AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX.length());
+
+				long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
+
+				Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					scopeIdLayoutId);
+
+				newValues[i] =
+					AssetPublisherUtil.SCOPE_ID_LAYOUT_UUID_PREFIX +
+						scopeIdLayout.getUuid();
+			}
+			else {
+				newValues[i] = oldValue;
+			}
 		}
 
 		jxPreferences.setValues(key, newValues);

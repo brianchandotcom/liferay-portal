@@ -96,6 +96,7 @@ viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
 
 				request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
 				request.setAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH, abstractLength);
+				request.setAttribute("asset_publisher.abstracts.jsp-viewURL", viewURL);
 				%>
 
 				<c:choose>

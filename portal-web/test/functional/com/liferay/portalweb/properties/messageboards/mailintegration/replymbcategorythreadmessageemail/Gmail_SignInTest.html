@@ -24,13 +24,23 @@
 	<td>test</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_58_rememberMeCheckbox']</td>
-	<td>Remember Me</td>
+	<td>rememberMeChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${rememberMeChecked}</td>
+	<td>RememberMeChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td>Remember Me</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>RememberMeChecked</td>
 	<td>Remember Me</td>
 </tr>
 <tr>
@@ -43,7 +53,6 @@
 	<td>//input[@value='Sign In']</td>
 	<td>Sign In</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

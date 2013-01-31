@@ -49,6 +49,8 @@ public class AddProjectsProfileTest extends BaseTestCase {
 					RuntimeVariables.replace("Project Title"));
 				selenium.select("//select[contains(@id,'_2_projectsEntryStartDateMonth0')]",
 					RuntimeVariables.replace("January"));
+				selenium.select("//select[contains(@id,'_2_projectsEntryStartDateYear0')]",
+					RuntimeVariables.replace("2012"));
 
 				boolean currentProjectChecked = selenium.isChecked(
 						"_2_projectsEntryCurrent0Checkbox");

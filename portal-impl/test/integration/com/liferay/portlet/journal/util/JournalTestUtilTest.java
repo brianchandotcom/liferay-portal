@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
@@ -36,7 +37,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.model.JournalTemplateConstants;
 
 import java.util.Locale;
 import java.util.Map;
@@ -84,8 +84,7 @@ public class JournalTestUtilTest {
 		DDMStructure ddmStructure = JournalTestUtil.addDDMStructure();
 
 		DDMTemplate ddmTemplate = JournalTestUtil.addDDMTemplate(
-			ddmStructure.getStructureId(),
-			JournalTemplateConstants.LANG_TYPE_VM,
+			ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM,
 			JournalTestUtil.getSampleTemplateXSL());
 
 		Assert.assertNotNull(
@@ -168,8 +167,7 @@ public class JournalTestUtilTest {
 
 		Assert.assertNotNull(
 			JournalTestUtil.addDDMTemplate(
-				ddmStructure.getStructureId(),
-				JournalTemplateConstants.LANG_TYPE_VM,
+				ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM,
 				JournalTestUtil.getSampleTemplateXSL()));
 	}
 
@@ -191,7 +189,7 @@ public class JournalTestUtilTest {
 			String content = JournalUtil.transform(
 				null, getTokens(), Constants.VIEW, "en_US", xml,
 				JournalTestUtil.getSampleTemplateXSL(),
-				JournalTemplateConstants.LANG_TYPE_VM);
+				TemplateConstants.LANG_TYPE_VM);
 
 			Assert.assertEquals("Joe Bloggs", content);
 		}
@@ -235,7 +233,7 @@ public class JournalTestUtilTest {
 			null, getTokens(), Constants.VIEW, "en_US",
 			JournalTestUtil.getSampleStructuredContent(),
 			JournalTestUtil.getSampleTemplateXSL(),
-			JournalTemplateConstants.LANG_TYPE_VM);
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}

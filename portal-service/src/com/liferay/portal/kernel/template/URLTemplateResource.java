@@ -121,7 +121,7 @@ public class URLTemplateResource implements TemplateResource {
 		URLConnection urlConnection = _templateURL.openConnection();
 
 		return new InputStreamReader(
-			urlConnection.getInputStream(), DEFAUT_ENCODING);
+			urlConnection.getInputStream(), TemplateConstants.DEFAUT_ENCODING);
 	}
 
 	public String getTemplateId() {

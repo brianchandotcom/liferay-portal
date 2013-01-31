@@ -15,6 +15,7 @@
 package com.liferay.portal.xsl;
 
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
@@ -44,7 +45,7 @@ public class XSLManager implements TemplateManager {
 	}
 
 	public String getName() {
-		return TemplateManager.XSL;
+		return TemplateConstants.LANG_TYPE_XSL;
 	}
 
 	public Template getTemplate(

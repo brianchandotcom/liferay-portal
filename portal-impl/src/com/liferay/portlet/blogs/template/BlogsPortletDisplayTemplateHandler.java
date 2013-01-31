@@ -48,13 +48,13 @@ public class BlogsPortletDisplayTemplateHandler
 	}
 
 	@Override
-	protected String getTemplatesConfigPath() {
-		return PropsValues.BLOGS_DISPLAY_TEMPLATES_CONFIG;
+	public String getTemplatesHelpKey() {
+		return PropsKeys.BLOGS_DISPLAY_TEMPLATES_HELP;
 	}
 
 	@Override
-	protected String getTemplatesHelpKey() {
-		return PropsKeys.BLOGS_DISPLAY_TEMPLATES_HELP;
+	protected String getTemplatesConfigPath() {
+		return PropsValues.BLOGS_DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

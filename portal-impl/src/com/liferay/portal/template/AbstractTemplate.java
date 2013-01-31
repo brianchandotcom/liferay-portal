@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
-import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -115,7 +115,7 @@ public abstract class AbstractTemplate implements Template {
 	protected String getTemplateResourceUUID(
 		TemplateResource templateResource) {
 
-		return TemplateResource.TEMPLATE_RESOURCE_UUID_PREFIX.concat(
+		return TemplateConstants.TEMPLATE_RESOURCE_UUID_PREFIX.concat(
 			StringPool.POUND).concat(templateResource.getTemplateId());
 	}
 
@@ -132,7 +132,7 @@ public abstract class AbstractTemplate implements Template {
 	private void _cacheTemplateResource(String templateManagerName) {
 		String templateId = templateResource.getTemplateId();
 
-		if (templateManagerName.equals(TemplateManager.VELOCITY) &&
+		if (templateManagerName.equals(TemplateConstants.LANG_TYPE_VM) &&
 			templateId.contains(SandboxHandler.SANDBOX_MARKER)) {
 
 			return;
@@ -164,7 +164,7 @@ public abstract class AbstractTemplate implements Template {
 
 		String errorTemplateId = errorTemplateResource.getTemplateId();
 
-		if (templateManagerName.equals(TemplateManager.VELOCITY) &&
+		if (templateManagerName.equals(TemplateConstants.LANG_TYPE_VM) &&
 			errorTemplateId.contains(SandboxHandler.SANDBOX_MARKER)) {
 
 			return;

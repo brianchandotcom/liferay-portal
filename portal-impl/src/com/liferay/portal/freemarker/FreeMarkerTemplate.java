@@ -15,8 +15,8 @@
 package com.liferay.portal.freemarker;
 
 import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
-import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
@@ -47,7 +47,7 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 
 		super(
 			templateResource, errorTemplateResource, templateContextHelper,
-			TemplateManager.FREEMARKER,
+			TemplateConstants.LANG_TYPE_FTL,
 			PropsValues.FREEMARKER_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
 
 		_context = new HashMap<String, Object>();
@@ -120,18 +120,18 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 		throws Exception {
 
 		TemplateResourceThreadLocal.setTemplateResource(
-			TemplateManager.FREEMARKER, templateResource);
+			TemplateConstants.LANG_TYPE_FTL, templateResource);
 
 		try {
 			Template template = _configuration.getTemplate(
 				getTemplateResourceUUID(templateResource),
-				TemplateResource.DEFAUT_ENCODING);
+				TemplateConstants.DEFAUT_ENCODING);
 
 			template.process(_context, writer);
 		}
 		finally {
 			TemplateResourceThreadLocal.setTemplateResource(
-				TemplateManager.FREEMARKER, null);
+				TemplateConstants.LANG_TYPE_FTL, null);
 		}
 	}
 

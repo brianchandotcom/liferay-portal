@@ -14,23 +14,11 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-
 /**
  * @author Alexander Chow
  * @author Eduardo Lundgren
  */
 public class DDMTemplateConstants {
-
-	public static final String LANG_TYPE_FTL = "ftl";
-
-	public static final String LANG_TYPE_VM = "vm";
-
-	public static final String LANG_TYPE_XSD = "xsd";
-
-	public static final String[] LANG_TYPES = PropsUtil.getArray(
-		PropsKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_TYPES);
 
 	public static final String TEMPLATE_MODE_CREATE = "create";
 

@@ -41,7 +41,7 @@ boolean useRichEditor = editorType.equals("rich");
 			<aui:select cssClass="language-type" inlineField="<%= true %>" label="" name="language" title="language-type">
 
 				<%
-				for (String curLangType : DDMTemplateConstants.LANG_TYPES) {
+				for (String curLangType : supportedLanguageTypes) {
 					StringBundler sb = new StringBundler(6);
 
 					sb.append(LanguageUtil.get(pageContext, curLangType + "[stands-for]"));

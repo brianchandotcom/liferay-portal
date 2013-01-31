@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal;
 
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
@@ -28,7 +29,6 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalTemplateConstants;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
@@ -66,8 +66,7 @@ public class JournalTransformerTest {
 		String xsl = "$name.getData()";
 
 		DDMTemplate ddmTemplate = JournalTestUtil.addDDMTemplate(
-			ddmStructure.getStructureId(),
-			JournalTemplateConstants.LANG_TYPE_VM, xsl);
+			ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM, xsl);
 
 		document = JournalTestUtil.createDocument("en_US", "en_US");
 
@@ -87,7 +86,7 @@ public class JournalTransformerTest {
 
 		String content = JournalUtil.transform(
 			null, tokens, Constants.VIEW, "en_US", xml, xsl,
-			JournalTemplateConstants.LANG_TYPE_VM);
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
@@ -98,7 +97,7 @@ public class JournalTransformerTest {
 
 		content = JournalUtil.transform(
 			null, tokens, Constants.VIEW, "en_US", document.asXML(), xsl,
-			JournalTemplateConstants.LANG_TYPE_VM);
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -113,7 +112,7 @@ public class JournalTransformerTest {
 
 		String content = JournalUtil.transform(
 			null, tokens, Constants.PRINT, "en_US", xml, script,
-			JournalTemplateConstants.LANG_TYPE_FTL);
+			TemplateConstants.LANG_TYPE_FTL);
 
 		Assert.assertEquals("Joe Bloggs - print", content);
 	}
@@ -140,19 +139,19 @@ public class JournalTransformerTest {
 
 		String content = JournalUtil.transform(
 			null, tokens, Constants.VIEW, "en_US", xml, script,
-			JournalTemplateConstants.LANG_TYPE_VM);
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
 		content = JournalUtil.transform(
 			null, tokens, Constants.VIEW, "pt_BR", xml, script,
-			JournalTemplateConstants.LANG_TYPE_VM);
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joao da Silva", content);
 
 		content = JournalUtil.transform(
 			null, tokens, Constants.VIEW, "fr_CA", xml, script,
-			JournalTemplateConstants.LANG_TYPE_VM);
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -167,7 +166,7 @@ public class JournalTransformerTest {
 
 		String content = JournalUtil.transform(
 			null, tokens, Constants.VIEW, "en_US", xml, script,
-			JournalTemplateConstants.LANG_TYPE_VM);
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals(
 			"Hello Joe Bloggs, Welcome to production.sample.com.", content);
@@ -183,7 +182,7 @@ public class JournalTransformerTest {
 
 		String content = JournalUtil.transform(
 			null, tokens, Constants.VIEW, "en_US", xml, script,
-			JournalTemplateConstants.LANG_TYPE_VM);
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals(
 			String.valueOf(TestPropsValues.getCompanyId()), content);
@@ -192,7 +191,7 @@ public class JournalTransformerTest {
 
 		content = JournalUtil.transform(
 			null, tokens, Constants.VIEW, "en_US", xml, script,
-			JournalTemplateConstants.LANG_TYPE_VM);
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals(
 			String.valueOf(TestPropsValues.getCompanyId()), content);
@@ -210,7 +209,7 @@ public class JournalTransformerTest {
 
 		String content = JournalUtil.transform(
 			null, tokens, Constants.VIEW, "en_US", xml, script,
-			JournalTemplateConstants.LANG_TYPE_VM);
+			TemplateConstants.LANG_TYPE_VM);
 
 		StringBundler sb = new StringBundler(6);
 
@@ -234,7 +233,7 @@ public class JournalTransformerTest {
 
 		String content = JournalUtil.transform(
 			null, tokens, Constants.VIEW, "en_US", xml, script,
-			JournalTemplateConstants.LANG_TYPE_VM);
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}

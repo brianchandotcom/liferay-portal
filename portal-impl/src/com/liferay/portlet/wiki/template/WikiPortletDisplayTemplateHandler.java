@@ -48,13 +48,13 @@ public class WikiPortletDisplayTemplateHandler
 	}
 
 	@Override
-	protected String getTemplatesConfigPath() {
-		return PropsValues.WIKI_DISPLAY_TEMPLATES_CONFIG;
+	public String getTemplatesHelpKey() {
+		return PropsKeys.WIKI_DISPLAY_TEMPLATES_HELP;
 	}
 
 	@Override
-	protected String getTemplatesHelpKey() {
-		return PropsKeys.WIKI_DISPLAY_TEMPLATES_HELP;
+	protected String getTemplatesConfigPath() {
+		return PropsValues.WIKI_DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

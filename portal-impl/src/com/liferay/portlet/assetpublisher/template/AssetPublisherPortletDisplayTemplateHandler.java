@@ -48,13 +48,13 @@ public class AssetPublisherPortletDisplayTemplateHandler
 	}
 
 	@Override
-	protected String getTemplatesConfigPath() {
-		return PropsValues.ASSET_PUBLISHER_DISPLAY_TEMPLATES_CONFIG;
+	public String getTemplatesHelpKey() {
+		return PropsKeys.ASSET_PUBLISHER_DISPLAY_TEMPLATES_HELP;
 	}
 
 	@Override
-	protected String getTemplatesHelpKey() {
-		return PropsKeys.ASSET_PUBLISHER_DISPLAY_TEMPLATES_HELP;
+	protected String getTemplatesConfigPath() {
+		return PropsValues.ASSET_PUBLISHER_DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.GenericServletWrapper;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,7 +31,6 @@ import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.dynamicdatalists.util.DDLTransformer;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;
@@ -221,10 +221,10 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		String language = ddmTemplate.getLanguage();
 
-		if (language.equals(DDMTemplateConstants.LANG_TYPE_FTL)) {
+		if (language.equals(TemplateConstants.LANG_TYPE_FTL)) {
 			_addTaglibSupportFTL(contextObjects, pageContext);
 		}
-		else if (language.equals(DDMTemplateConstants.LANG_TYPE_VM)) {
+		else if (language.equals(TemplateConstants.LANG_TYPE_VM)) {
 			_addTaglibSupportVM(contextObjects, pageContext);
 		}
 

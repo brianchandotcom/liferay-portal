@@ -17,8 +17,8 @@ package com.liferay.portlet.journal.util;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
-import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
@@ -71,7 +71,7 @@ public class VelocityTemplateParser extends BaseTemplateParser {
 	protected String getJournalTemplatesPath() {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(TemplateResource.JOURNAL_SEPARATOR);
+		sb.append(TemplateConstants.JOURNAL_SEPARATOR);
 		sb.append(StringPool.SLASH);
 		sb.append(getCompanyId());
 		sb.append(StringPool.SLASH);
@@ -86,7 +86,7 @@ public class VelocityTemplateParser extends BaseTemplateParser {
 			getTemplateId(), getScript());
 
 		return TemplateManagerUtil.getTemplate(
-			TemplateManager.VELOCITY, templateResource,
+			TemplateConstants.LANG_TYPE_VM, templateResource,
 			getErrorTemplateResource(), TemplateContextType.RESTRICTED);
 	}
 

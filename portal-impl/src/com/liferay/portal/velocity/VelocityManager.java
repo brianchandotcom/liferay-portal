@@ -15,6 +15,7 @@
 package com.liferay.portal.velocity;
 
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
@@ -57,7 +58,7 @@ public class VelocityManager implements TemplateManager {
 	}
 
 	public String getName() {
-		return VELOCITY;
+		return TemplateConstants.LANG_TYPE_VM;
 	}
 
 	public Template getTemplate(

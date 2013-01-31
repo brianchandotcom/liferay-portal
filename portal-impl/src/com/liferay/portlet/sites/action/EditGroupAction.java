@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -546,6 +547,12 @@ public class EditGroupAction extends PortletAction {
 		typeSettingsProperties.setProperty(
 			"contentSharingWithChildrenEnabled",
 			String.valueOf(contentSharingWithChildrenEnabled));
+
+		UnicodeProperties formTypeSettingsProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "TypeSettingsProperties--");
+
+		typeSettingsProperties.putAll(formTypeSettingsProperties);
 
 		// Virtual hosts
 

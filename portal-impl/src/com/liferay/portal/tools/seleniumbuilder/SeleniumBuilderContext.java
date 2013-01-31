@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.kernel.xml.Element;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -95,6 +97,10 @@ public class SeleniumBuilderContext {
 
 	public Set<String> getTestSuiteFileNames() {
 		return _testSuiteFileNames;
+	}
+
+	private Element _getRootElement(String fileName) throws Exception {
+		return _seleniumBuilderFileUtil.getRootElement(fileName);
 	}
 
 	private String _normalizeFileName(String fileName) {

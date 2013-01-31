@@ -37,11 +37,12 @@ public class ConfigureCommentsSingleApproverTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Workflow Configuration",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion",
 			RuntimeVariables.replace("label=Single Approver (Version 1)"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

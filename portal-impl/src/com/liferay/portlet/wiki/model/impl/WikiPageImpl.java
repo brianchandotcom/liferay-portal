@@ -20,15 +20,17 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
-import com.liferay.portlet.wiki.util.WikiPageAttachmentsUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,8 +74,19 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 			return _attachmentsFolderId;
 		}
 
-		_attachmentsFolderId = WikiPageAttachmentsUtil.getFolderId(
-			getGroupId(), getUserId(), getNodeId(), getResourcePrimKey());
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		long repositoryId = PortletFileRepositoryUtil.getPortletRepository(
+			getGroupId(), PortletKeys.WIKI, serviceContext);
+
+		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+			getUserId(), repositoryId, getNodeAttachmentsFolderId(),
+			String.valueOf(getResourcePrimKey()), serviceContext);
+
+		_attachmentsFolderId = folder.getFolderId();
 
 		return _attachmentsFolderId;
 	}
@@ -122,6 +135,12 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 
 			return new WikiNodeImpl();
 		}
+	}
+
+	public long getNodeAttachmentsFolderId()
+		throws PortalException, SystemException {
+
+		return getNode().getAttachmentsFolderId();
 	}
 
 	public WikiPage getParentPage() {

@@ -896,6 +896,12 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.getAttachmentsFolderId();
 	}
 
+	public long getNodeAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPage.getNodeAttachmentsFolderId();
+	}
+
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getChildPages() {
 		return _wikiPage.getChildPages();
 	}

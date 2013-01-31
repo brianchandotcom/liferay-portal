@@ -694,6 +694,12 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 		_wikiNode.persist();
 	}
 
+	public long getAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiNode.getAttachmentsFolderId();
+	}
+
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

@@ -99,6 +99,12 @@ public class PortletFileRepositoryUtil {
 			groupId, folderId, fileName);
 	}
 
+	public static void deleteRepository(long groupId, String portletId)
+		throws PortalException, SystemException {
+
+		getPortletFileRepository().deleteRepository(groupId, portletId);
+	}
+
 	public static List<FileEntry> getPortletFileEntries(
 			long groupId, long folderId)
 		throws SystemException {

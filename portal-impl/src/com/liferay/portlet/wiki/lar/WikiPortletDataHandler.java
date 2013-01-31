@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -487,6 +488,9 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 			WikiNodeLocalServiceUtil.deleteNodes(
 				portletDataContext.getScopeGroupId());
+
+			PortletFileRepositoryUtil.deleteRepository(
+				portletDataContext.getScopeGroupId(), PortletKeys.WIKI);
 		}
 
 		return null;

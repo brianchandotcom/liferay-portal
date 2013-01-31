@@ -18,6 +18,11 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
@@ -30,6 +35,31 @@ import java.util.List;
 public class WikiNodeImpl extends WikiNodeBaseImpl {
 
 	public WikiNodeImpl() {
+	}
+
+	public long getAttachmentsFolderId()
+		throws PortalException, SystemException {
+
+		if (_attachmentsFolderId > 0) {
+			return _attachmentsFolderId;
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		long repositoryId = PortletFileRepositoryUtil.getPortletRepository(
+			getGroupId(), PortletKeys.WIKI, serviceContext);
+
+		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+			getUserId(), repositoryId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(getNodeId()), serviceContext);
+
+		_attachmentsFolderId = folder.getFolderId();
+
+		return _attachmentsFolderId;
 	}
 
 	public List<FileEntry> getDeletedAttachmentsFiles()
@@ -46,5 +76,7 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 
 		return fileEntries;
 	}
+
+	private long _attachmentsFolderId;
 
 }

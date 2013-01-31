@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -195,6 +196,10 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		resourceLocalService.deleteResource(
 			node.getCompanyId(), WikiNode.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, node.getNodeId());
+
+		// Attachments
+
+		PortletFileRepositoryUtil.deleteFolder(node.getAttachmentsFolderId());
 
 		// Subscriptions
 

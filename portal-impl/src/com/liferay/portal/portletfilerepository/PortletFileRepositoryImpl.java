@@ -220,6 +220,18 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		deletePortletFileEntry(fileEntry.getFileEntryId());
 	}
 
+	public void deleteRepository(long groupId, String portletId)
+		throws PortalException, SystemException {
+
+		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+			groupId, portletId);
+
+		if (repository != null) {
+			RepositoryLocalServiceUtil.deleteRepository(
+				repository.getRepositoryId());
+		}
+	}
+
 	public List<FileEntry> getPortletFileEntries(long groupId, long folderId)
 		throws SystemException {
 

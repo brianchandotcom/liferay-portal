@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Directory Test Page</td>
 	<td>Directory Test Page</td>
@@ -60,162 +55,167 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//tr[3]/td[contains(.,'Test Child')])/a</td>
-	<td>Test Child</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[1]/a</td>
+	<td>Test Suborganization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//tr[3]/td[contains(.,'Test Organization')])/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[2]/a</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//tr[3]/td[contains(.,'Regular Organization')])/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[3]/a</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//tr[3]/td[contains(.,'Cerritos')])/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[4]/a</td>
 	<td>Cerritos</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//tr[3]/td[contains(.,'Florida')])/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[5]/a</td>
 	<td>Florida</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//tr[3]/td[contains(.,'United States')])/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[6]/a</td>
 	<td>United States</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//tr[4]/td[contains(.,'Test Organization')])/a</td>
+	<td>//tr[contains(.,'Diamond Bar')]/td[1]/a</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//tr[4]/td[2])/a</td>
+	<td>//tr[contains(.,'Diamond Bar')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//tr[4]/td[contains(.,'Regular Organization')])/a</td>
+	<td>//tr[contains(.,'Diamond Bar')]/td[3]/a</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//tr[4]/td[contains(.,'Diamond Bar')])/a</td>
+	<td>//tr[contains(.,'Diamond Bar')]/td[4]/a</td>
 	<td>Diamond Bar</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//tr[4]/td[contains(.,'California')])/a</td>
+	<td>//tr[contains(.,'Diamond Bar')]/td[5]/a</td>
 	<td>California</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//tr[4]/td[contains(.,'United States')])/a</td>
+	<td>//tr[contains(.,'Diamond Bar')]/td[6]/a</td>
 	<td>United States</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>xPath=(//tr[4]/td[contains(.,'Actions')])/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View Suborganizations')]</td>
 	<td>View Suborganizations</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View Suborganizations')]</td>
 	<td>View Suborganizations</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View Suborganizations')]</td>
 	<td>View Suborganizations</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//td[contains(.,'Test Child')])/a</td>
-	<td>Test Child</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[1]/a</td>
+	<td>Test Suborganization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//td[contains(.,'Test Organization')])/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[2]/a</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//td[contains(.,'Regular Organization')])/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[3]/a</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//td[contains(.,'Cerritos')])/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[4]/a</td>
 	<td>Cerritos</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//td[contains(.,'Florida')])/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[5]/a</td>
 	<td>Florida</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//td[contains(.,'United States')])/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[6]/a</td>
 	<td>United States</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>xPath=(//td[contains(.,'Test Child')])/a</td>
-	<td>Test Child</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[1]/a</td>
+	<td>Test Suborganization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='organization-information'])/div[1]/h2</td>
-	<td>Test Child</td>
+	<td>//div[@class='section entity-details']/h2[contains(.,'Test Suborganization')]</td>
+	<td>Test Suborganization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//dl[@class='property-list'])/dt[1]</td>
+	<td>//dl[@class='property-list']/dt[contains(.,'Type')]</td>
 	<td>Type</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//dl[@class='property-list'])/dd[1]</td>
+	<td>//dl[@class='property-list']/dd[contains(.,'Regular Organization')]</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//dl[@class='property-list'])/dt[2]</td>
+	<td>//dl[@class='property-list']/dt[contains(.,'Parent Organization')]</td>
 	<td>Parent Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//dl[@class='property-list'])/dd[2]</td>
+	<td>//dl[@class='property-list']/dd[contains(.,'Test Organization')]</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//li[@class='primary'])/em</td>
+	<td>//li[@class='primary']/em</td>
 	<td>Billing</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>xPath=(//li[@class='primary'])</td>
+	<td>//li[@class='primary']</td>
 	<td>11111 Main Street USA</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>xPath=(//li[@class='primary'])</td>
+	<td>//li[@class='primary']</td>
 	<td>90210, Cerritos</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>xPath=(//li[@class='primary'])</td>
+	<td>//li[@class='primary']</td>
 	<td>(Mailing)</td>
 </tr>
 </tbody></table>

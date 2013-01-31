@@ -25,7 +25,6 @@ public class AddPageDirectoryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		Thread.sleep(1000);
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 		selenium.waitForElementPresent(

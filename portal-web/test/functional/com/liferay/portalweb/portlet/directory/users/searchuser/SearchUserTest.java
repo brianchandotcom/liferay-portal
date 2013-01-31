@@ -30,7 +30,6 @@ public class SearchUserTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				Thread.sleep(1000);
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -58,7 +57,7 @@ public class SearchUserTest extends BaseTestCase {
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace(""));
 				assertEquals(RuntimeVariables.replace("userfn"),
-					selenium.getText("//tr[3]/td[1]/a"));
+					selenium.getText("//tr[contains(.,'userfn')]/td[1]/a"));
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("userfn1"));
 				selenium.clickAt("//input[@value='Search']",

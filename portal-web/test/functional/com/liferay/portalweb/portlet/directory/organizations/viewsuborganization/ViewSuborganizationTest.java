@@ -30,7 +30,6 @@ public class ViewSuborganizationTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				Thread.sleep(1000);
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -56,93 +55,93 @@ public class ViewSuborganizationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Test Child"),
+				assertEquals(RuntimeVariables.replace("Test Suborganization"),
 					selenium.getText(
-						"xPath=(//tr[3]/td[contains(.,'Test Child')])/a"));
+						"//tr[contains(.,'Test Suborganization')]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Test Organization"),
 					selenium.getText(
-						"xPath=(//tr[3]/td[contains(.,'Test Organization')])/a"));
+						"//tr[contains(.,'Test Suborganization')]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace("Regular Organization"),
 					selenium.getText(
-						"xPath=(//tr[3]/td[contains(.,'Regular Organization')])/a"));
+						"//tr[contains(.,'Test Suborganization')]/td[3]/a"));
 				assertEquals(RuntimeVariables.replace("Cerritos"),
 					selenium.getText(
-						"xPath=(//tr[3]/td[contains(.,'Cerritos')])/a"));
+						"//tr[contains(.,'Test Suborganization')]/td[4]/a"));
 				assertEquals(RuntimeVariables.replace("Florida"),
 					selenium.getText(
-						"xPath=(//tr[3]/td[contains(.,'Florida')])/a"));
+						"//tr[contains(.,'Test Suborganization')]/td[5]/a"));
 				assertEquals(RuntimeVariables.replace("United States"),
 					selenium.getText(
-						"xPath=(//tr[3]/td[contains(.,'United States')])/a"));
+						"//tr[contains(.,'Test Suborganization')]/td[6]/a"));
 				assertEquals(RuntimeVariables.replace("Test Organization"),
-					selenium.getText(
-						"xPath=(//tr[4]/td[contains(.,'Test Organization')])/a"));
+					selenium.getText("//tr[contains(.,'Diamond Bar')]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace(""),
-					selenium.getText("xPath=(//tr[4]/td[2])/a"));
+					selenium.getText("//tr[contains(.,'Diamond Bar')]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace("Regular Organization"),
-					selenium.getText(
-						"xPath=(//tr[4]/td[contains(.,'Regular Organization')])/a"));
+					selenium.getText("//tr[contains(.,'Diamond Bar')]/td[3]/a"));
 				assertEquals(RuntimeVariables.replace("Diamond Bar"),
-					selenium.getText(
-						"xPath=(//tr[4]/td[contains(.,'Diamond Bar')])/a"));
+					selenium.getText("//tr[contains(.,'Diamond Bar')]/td[4]/a"));
 				assertEquals(RuntimeVariables.replace("California"),
-					selenium.getText(
-						"xPath=(//tr[4]/td[contains(.,'California')])/a"));
+					selenium.getText("//tr[contains(.,'Diamond Bar')]/td[5]/a"));
 				assertEquals(RuntimeVariables.replace("United States"),
+					selenium.getText("//tr[contains(.,'Diamond Bar')]/td[6]/a"));
+				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"xPath=(//tr[4]/td[contains(.,'United States')])/a"));
-				selenium.clickAt("xPath=(//tr[4]/td[contains(.,'Actions')])/span/ul/li/strong/a",
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View Suborganizations')]");
 				assertEquals(RuntimeVariables.replace("View Suborganizations"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View Suborganizations')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View Suborganizations')]"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Test Child"),
-					selenium.getText("xPath=(//td[contains(.,'Test Child')])/a"));
+				assertEquals(RuntimeVariables.replace("Test Suborganization"),
+					selenium.getText(
+						"//tr[contains(.,'Test Suborganization')]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Test Organization"),
 					selenium.getText(
-						"xPath=(//td[contains(.,'Test Organization')])/a"));
+						"//tr[contains(.,'Test Suborganization')]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace("Regular Organization"),
 					selenium.getText(
-						"xPath=(//td[contains(.,'Regular Organization')])/a"));
+						"//tr[contains(.,'Test Suborganization')]/td[3]/a"));
 				assertEquals(RuntimeVariables.replace("Cerritos"),
-					selenium.getText("xPath=(//td[contains(.,'Cerritos')])/a"));
+					selenium.getText(
+						"//tr[contains(.,'Test Suborganization')]/td[4]/a"));
 				assertEquals(RuntimeVariables.replace("Florida"),
-					selenium.getText("xPath=(//td[contains(.,'Florida')])/a"));
+					selenium.getText(
+						"//tr[contains(.,'Test Suborganization')]/td[5]/a"));
 				assertEquals(RuntimeVariables.replace("United States"),
 					selenium.getText(
-						"xPath=(//td[contains(.,'United States')])/a"));
-				selenium.clickAt("xPath=(//td[contains(.,'Test Child')])/a",
-					RuntimeVariables.replace("Test Child"));
+						"//tr[contains(.,'Test Suborganization')]/td[6]/a"));
+				selenium.clickAt("//tr[contains(.,'Test Suborganization')]/td[1]/a",
+					RuntimeVariables.replace("Test Suborganization"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Test Child"),
+				assertEquals(RuntimeVariables.replace("Test Suborganization"),
 					selenium.getText(
-						"xPath=(//div[@class='organization-information'])/div[1]/h2"));
+						"//div[@class='section entity-details']/h2[contains(.,'Test Suborganization')]"));
 				assertEquals(RuntimeVariables.replace("Type"),
 					selenium.getText(
-						"xPath=(//dl[@class='property-list'])/dt[1]"));
+						"//dl[@class='property-list']/dt[contains(.,'Type')]"));
 				assertEquals(RuntimeVariables.replace("Regular Organization"),
 					selenium.getText(
-						"xPath=(//dl[@class='property-list'])/dd[1]"));
+						"//dl[@class='property-list']/dd[contains(.,'Regular Organization')]"));
 				assertEquals(RuntimeVariables.replace("Parent Organization"),
 					selenium.getText(
-						"xPath=(//dl[@class='property-list'])/dt[2]"));
+						"//dl[@class='property-list']/dt[contains(.,'Parent Organization')]"));
 				assertEquals(RuntimeVariables.replace("Test Organization"),
 					selenium.getText(
-						"xPath=(//dl[@class='property-list'])/dd[2]"));
+						"//dl[@class='property-list']/dd[contains(.,'Test Organization')]"));
 				assertEquals(RuntimeVariables.replace("Billing"),
-					selenium.getText("xPath=(//li[@class='primary'])/em"));
-				assertTrue(selenium.isPartialText(
-						"xPath=(//li[@class='primary'])",
+					selenium.getText("//li[@class='primary']/em"));
+				assertTrue(selenium.isPartialText("//li[@class='primary']",
 						"11111 Main Street USA"));
-				assertTrue(selenium.isPartialText(
-						"xPath=(//li[@class='primary'])", "90210, Cerritos"));
-				assertTrue(selenium.isPartialText(
-						"xPath=(//li[@class='primary'])", "(Mailing)"));
+				assertTrue(selenium.isPartialText("//li[@class='primary']",
+						"90210, Cerritos"));
+				assertTrue(selenium.isPartialText("//li[@class='primary']",
+						"(Mailing)"));
 
 			case 100:
 				label = -1;

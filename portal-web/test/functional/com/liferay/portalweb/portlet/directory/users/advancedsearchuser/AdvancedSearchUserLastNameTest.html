@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Directory Test Page</td>
 	<td>Directory Test Page</td>
@@ -69,8 +64,13 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>//input[@id='_11_lastName']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]/a</td>
+	<td>//tr[contains(.,'userfn')]/td[1]/a</td>
 	<td>userfn</td>
 </tr>
 <tr>

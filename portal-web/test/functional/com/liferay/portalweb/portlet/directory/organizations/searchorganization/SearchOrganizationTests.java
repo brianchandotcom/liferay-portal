@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.directory.organizations.searchorganization;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownOrganizationTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.directory.portlet.addportletdirectory.AddPageDirectoryTest;
 import com.liferay.portalweb.portlet.directory.portlet.addportletdirectory.AddPortletDirectoryTest;

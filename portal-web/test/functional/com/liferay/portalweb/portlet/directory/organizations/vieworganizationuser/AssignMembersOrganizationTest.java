@@ -30,7 +30,6 @@ public class AssignMembersOrganizationTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				Thread.sleep(1000);
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(
@@ -115,7 +114,8 @@ public class AssignMembersOrganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Current"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("userfn usermn userln"),
-					selenium.getText("//tr[3]/td[2]"));
+					selenium.getText(
+						"//tr[contains(.,'userfn usermn userln')]/td[2]"));
 
 			case 100:
 				label = -1;

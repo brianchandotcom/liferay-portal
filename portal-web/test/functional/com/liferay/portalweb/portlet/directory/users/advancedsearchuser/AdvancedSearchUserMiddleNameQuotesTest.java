@@ -31,7 +31,6 @@ public class AdvancedSearchUserMiddleNameQuotesTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				Thread.sleep(1000);
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -59,8 +58,10 @@ public class AdvancedSearchUserMiddleNameQuotesTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"xPath=(//input[@value='Search'])[2]"));
 				selenium.waitForPageToLoad("30000");
+				selenium.type("//input[@id='_11_middleName']",
+					RuntimeVariables.replace(""));
 				assertEquals(RuntimeVariables.replace("userfn"),
-					selenium.getText("//tr[3]/td[1]/a"));
+					selenium.getText("//tr[contains(.,'userfn')]/td[1]/a"));
 				selenium.type("//input[@id='_11_middleName']",
 					RuntimeVariables.replace("\"usermn1\""));
 				selenium.click(RuntimeVariables.replace(

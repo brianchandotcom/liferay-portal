@@ -28,28 +28,29 @@ public class ViewUserGroupUserTest extends BaseTestCase {
 		selenium.clickAt("link=Directory Test Page",
 			RuntimeVariables.replace("Directory Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
 		selenium.clickAt("link=User Groups",
 			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("User Group Name"),
-			selenium.getText("//tr[3]/td[1]"));
+			selenium.getText("//tr[contains(.,'User Group Name')]/td[1]"));
 		assertEquals(RuntimeVariables.replace("User Group Description"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText("//tr[contains(.,'User Group Name')]/td[2]"));
 		assertEquals(RuntimeVariables.replace("View Users"),
 			selenium.getText("//a[contains(@id,'_1_menu_view-users')]/span"));
 		selenium.clickAt("//a[contains(@id,'_1_menu_view-users')]/span",
 			RuntimeVariables.replace("View Users"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("userfn"),
-			selenium.getText("//td[contains(.,'userfn')]/a"));
+			selenium.getText("//tr[contains(.,'userfn')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("userln"),
-			selenium.getText("//td[contains(.,'userln')]/a"));
+			selenium.getText("//tr[contains(.,'userfn')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("usersn"),
-			selenium.getText("//td[contains(.,'usersn')]/a"));
-		assertEquals(RuntimeVariables.replace(""), selenium.getText("//td[4]/a"));
-		assertEquals(RuntimeVariables.replace(""), selenium.getText("//td[5]/a"));
-		selenium.clickAt("//td[contains(.,'userfn')]/a",
+			selenium.getText("//tr[contains(.,'userfn')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace(""),
+			selenium.getText("//tr[contains(.,'userfn')]/td[4]/a"));
+		assertEquals(RuntimeVariables.replace(""),
+			selenium.getText("//tr[contains(.,'userfn')]/td[5]/a"));
+		selenium.clickAt("//tr[contains(.,'userfn')]/td[1]/a",
 			RuntimeVariables.replace("userfn"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("userfn usermn userln"),

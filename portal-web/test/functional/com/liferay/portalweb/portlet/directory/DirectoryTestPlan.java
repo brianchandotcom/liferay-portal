@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.directory;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.directory.organizations.OrganizationsTestPlan;
+import com.liferay.portalweb.portlet.directory.portlet.PortletTestPlan;
 import com.liferay.portalweb.portlet.directory.usergroup.UserGroupTestPlan;
 import com.liferay.portalweb.portlet.directory.users.UsersTestPlan;
 
@@ -31,6 +32,7 @@ public class DirectoryTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(OrganizationsTestPlan.suite());
+		testSuite.addTest(PortletTestPlan.suite());
 		testSuite.addTest(UserGroupTestPlan.suite());
 		testSuite.addTest(UsersTestPlan.suite());
 

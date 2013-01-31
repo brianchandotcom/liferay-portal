@@ -755,6 +755,8 @@ public interface PropsKeys {
 
 	public static final String DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP = "dockbar.administrative.links.show.in.pop.up";
 
+	public static final String DOCKBAR_SHOW_SITE_CONTENT_CONTROL = "dockbar.show.site.content.control";
+
 	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_FREEMARKER = "dynamic.data.lists.error.template.freemarker";
 
 	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_VELOCITY = "dynamic.data.lists.error.template.velocity";

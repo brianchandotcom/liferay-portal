@@ -875,7 +875,7 @@ public class ServicePreAction extends Action {
 
 		long controlPanelPlid = 0;
 
-		if (signedIn) {
+		if (signedIn && PropsValues.DOCKBAR_SHOW_SITE_CONTENT_CONTROL) {
 			controlPanelPlid = PortalUtil.getControlPanelPlid(companyId);
 
 			List<Portlet> siteContentPortlets =

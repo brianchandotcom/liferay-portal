@@ -44,10 +44,10 @@ public class ActionUtil {
 
 		if (entryId > 0) {
 			entry = BookmarksEntryServiceUtil.getEntry(entryId);
-		}
 
-		if (entry.isInTrash() || entry.isInTrashContainer()) {
-			throw new NoSuchEntryException();
+			if (entry.isInTrash() || entry.isInTrashContainer()) {
+				throw new NoSuchEntryException();
+			}
 		}
 
 		request.setAttribute(WebKeys.BOOKMARKS_ENTRY, entry);

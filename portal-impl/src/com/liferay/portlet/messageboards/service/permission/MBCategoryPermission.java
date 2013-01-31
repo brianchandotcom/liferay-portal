@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -108,70 +109,74 @@ public class MBCategoryPermission {
 
 		long categoryId = category.getCategoryId();
 
-		if (actionId.equals(ActionKeys.VIEW)) {
-			while (categoryId !=
-					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+			MBCategory originalCategory = category;
 
-				try {
+			try {
+				while (categoryId !=
+						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+
 					category = MBCategoryLocalServiceUtil.getCategory(
 						categoryId);
 
-					categoryId = category.getParentCategoryId();
-
 					if (!permissionChecker.hasOwnerPermission(
 							category.getCompanyId(), MBCategory.class.getName(),
-							category.getCategoryId(), category.getUserId(),
-							actionId) &&
+							categoryId, category.getUserId(),
+							ActionKeys.VIEW) &&
 						!permissionChecker.hasPermission(
 							category.getGroupId(), MBCategory.class.getName(),
-							category.getCategoryId(), actionId)) {
+							categoryId, ActionKeys.VIEW)) {
 
 						return false;
 					}
 
-					if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-						break;
-					}
+					categoryId = category.getParentCategoryId();
 				}
-				catch (NoSuchCategoryException nsce) {
-					if (!category.isInTrash()) {
-						throw nsce;
-					}
+			}
+			catch (NoSuchCategoryException nsce) {
+				if (!category.isInTrash()) {
+					throw nsce;
 				}
 			}
 
-			return true;
-		}
-		else {
-			while (categoryId !=
-					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-
-				category = MBCategoryLocalServiceUtil.getCategory(categoryId);
-
-				categoryId = category.getParentCategoryId();
-
-				if (permissionChecker.hasOwnerPermission(
-						category.getCompanyId(), MBCategory.class.getName(),
-						category.getCategoryId(), category.getUserId(),
-						actionId)) {
-
-					return true;
-				}
-
-				if (permissionChecker.hasPermission(
-						category.getGroupId(), MBCategory.class.getName(),
-						category.getCategoryId(), actionId)) {
-
-					return true;
-				}
-
-				if (actionId.equals(ActionKeys.VIEW)) {
-					break;
-				}
+			if (Validator.equals(actionId, ActionKeys.VIEW)) {
+				return true;
 			}
 
-			return false;
+			categoryId = originalCategory.getCategoryId();
 		}
+
+		if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE ||
+			!Validator.equals(actionId, ActionKeys.VIEW)) {
+
+			try {
+				while (categoryId !=
+						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+
+					category = MBCategoryLocalServiceUtil.getCategory(
+							categoryId);
+
+					if (permissionChecker.hasOwnerPermission(
+							category.getCompanyId(), MBCategory.class.getName(),
+							categoryId, category.getUserId(), actionId) ||
+						permissionChecker.hasPermission(
+							category.getGroupId(), MBCategory.class.getName(),
+							categoryId, actionId)) {
+
+						return true;
+					}
+
+					categoryId = category.getParentCategoryId();
+				}
+			}
+			catch (NoSuchCategoryException nsce) {
+				if (!category.isInTrash()) {
+					throw nsce;
+				}
+			}
+		}
+
+		return false;
 	}
 
 }

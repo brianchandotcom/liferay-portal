@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -82,64 +83,70 @@ public class DLFolderPermission {
 
 		long folderId = dlFolder.getFolderId();
 
-		if (actionId.equals(ActionKeys.VIEW)) {
-			while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				try {
-					dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+			DLFolder originalFolder = dlFolder;
 
-					folderId = dlFolder.getParentFolderId();
+			try {
+				while (folderId !=
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+					dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
 
 					if (!permissionChecker.hasOwnerPermission(
 							dlFolder.getCompanyId(), DLFolder.class.getName(),
-							dlFolder.getFolderId(), dlFolder.getUserId(),
-							actionId) &&
+							folderId, dlFolder.getUserId(), ActionKeys.VIEW) &&
 						!permissionChecker.hasPermission(
 							dlFolder.getGroupId(), DLFolder.class.getName(),
-							dlFolder.getFolderId(), actionId)) {
+							folderId, ActionKeys.VIEW)) {
 
 						return false;
 					}
 
-					if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-						break;
-					}
+					folderId = dlFolder.getParentFolderId();
 				}
-				catch (NoSuchFolderException nsfe) {
-					if (dlFolder.isInTrash()) {
-						break;
-					}
-
+			}
+			catch (NoSuchFolderException nsfe) {
+				if (!dlFolder.isInTrash()) {
 					throw nsfe;
 				}
-
 			}
 
-			return true;
-		}
-		else {
-			while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
-
-				folderId = dlFolder.getParentFolderId();
-
-				if (permissionChecker.hasOwnerPermission(
-						dlFolder.getCompanyId(), DLFolder.class.getName(),
-						dlFolder.getFolderId(), dlFolder.getUserId(),
-						actionId)) {
-
-					return true;
-				}
-
-				if (permissionChecker.hasPermission(
-						dlFolder.getGroupId(), DLFolder.class.getName(),
-						dlFolder.getFolderId(), actionId)) {
-
-					return true;
-				}
+			if (Validator.equals(actionId, ActionKeys.VIEW)) {
+				return true;
 			}
 
-			return false;
+			folderId = originalFolder.getFolderId();
 		}
+
+		if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE ||
+			!Validator.equals(actionId, ActionKeys.VIEW)) {
+			try {
+				while (folderId !=
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+					dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+
+					if (permissionChecker.hasOwnerPermission(
+							dlFolder.getCompanyId(), DLFolder.class.getName(),
+							folderId, dlFolder.getUserId(), actionId) ||
+						permissionChecker.hasPermission(
+							dlFolder.getGroupId(), DLFolder.class.getName(),
+							folderId, actionId)) {
+
+						return true;
+					}
+
+					folderId = dlFolder.getParentFolderId();
+				}
+			}
+			catch (NoSuchFolderException nsfe) {
+				if (!dlFolder.isInTrash()) {
+					throw nsfe;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean contains(
@@ -159,9 +166,9 @@ public class DLFolderPermission {
 			// Prevent the propagation of checks for actions that are not
 			// supported at the application resource level. See LPS-24245.
 
-			if (actionId.equals(ActionKeys.ACCESS) ||
-				actionId.equals(ActionKeys.ADD_SUBFOLDER) ||
-				actionId.equals(ActionKeys.DELETE)) {
+			if (Validator.equals(actionId, ActionKeys.ACCESS) ||
+				Validator.equals(actionId, ActionKeys.ADD_SUBFOLDER) ||
+				Validator.equals(actionId, ActionKeys.DELETE)) {
 
 				return false;
 			}

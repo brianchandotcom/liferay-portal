@@ -70,22 +70,22 @@ public class ViewDMFolderDocumentSiteTest extends BaseTestCase {
 			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace("Download"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[1]/span[2]"));
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Download')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[2]/span[2]"));
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Checkout')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[3]/span[2]"));
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Edit')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[4]/span[2]"));
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Move')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[5]/span[2]"));
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Permissions')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[6]/span[2]"));
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Delete')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//span[@class='document-title']"));
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
@@ -123,45 +123,5 @@ public class ViewDMFolderDocumentSiteTest extends BaseTestCase {
 			selenium.getText("//span[@class='download-document']/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Get URL or WebDAV URL."),
 			selenium.getText("//span[@class='webdav-url']"));
-		assertEquals(RuntimeVariables.replace(
-				"Automatically Extracted Metadata"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div/div/span"));
-		assertEquals(RuntimeVariables.replace("Content Type application/msword"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[1]"));
-		assertEquals(RuntimeVariables.replace("Last Author Liferay"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[2]"));
-		assertEquals(RuntimeVariables.replace(
-				"Application Name Microsoft Office Word"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[3]"));
-		assertEquals(RuntimeVariables.replace("# of Characters 170"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[4]"));
-		assertEquals(RuntimeVariables.replace(
-				"Last Saved Fri Aug 10 18:39:00 GMT 2012"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[5]"));
-		assertEquals(RuntimeVariables.replace("# of Pages 1"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[6]"));
-		assertEquals(RuntimeVariables.replace("Revision Number 2"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[7]"));
-		assertEquals(RuntimeVariables.replace("# of Words 50"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[8]"));
-		assertEquals(RuntimeVariables.replace("Template Normal.dotm"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[9]"));
-		assertEquals(RuntimeVariables.replace("Author Liferay"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[10]"));
-		assertEquals(RuntimeVariables.replace(
-				"Creation Date Fri Aug 10 18:39:00 GMT 2012"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[11]"));
 	}
 }

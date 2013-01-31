@@ -67,8 +67,9 @@ public class ViewImportDMSiteLARTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DM Folder2 Image Title"),
 			selenium.getText("//span[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
-			selenium.getText("//button[5]"));
-		selenium.clickAt("//button[5]", RuntimeVariables.replace("Permissions"));
+			selenium.getText("//button[contains(.,'Permissions')]"));
+		selenium.clickAt("//button[contains(.,'Permissions')]",
+			RuntimeVariables.replace("Permissions"));
 		selenium.waitForVisible("//iframe[@id='_20_permissions']");
 		selenium.selectFrame("//iframe[@id='_20_permissions']");
 		selenium.waitForVisible("//input[@id='guest_ACTION_VIEW']");

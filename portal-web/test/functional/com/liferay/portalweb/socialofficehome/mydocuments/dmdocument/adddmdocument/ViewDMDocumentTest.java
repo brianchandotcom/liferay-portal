@@ -100,45 +100,5 @@ public class ViewDMDocumentTest extends BaseTestCase {
 			selenium.getText("//span[@class='download-document']/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Get URL or WebDAV URL."),
 			selenium.getText("//span[@class='webdav-url']"));
-		assertEquals(RuntimeVariables.replace(
-				"Automatically Extracted Metadata"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div/div/span"));
-		assertEquals(RuntimeVariables.replace("Content Type application/msword"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[1]"));
-		assertEquals(RuntimeVariables.replace("Last Author Liferay"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[2]"));
-		assertEquals(RuntimeVariables.replace(
-				"Application Name Microsoft Office Word"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[3]"));
-		assertEquals(RuntimeVariables.replace("# of Characters 170"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[4]"));
-		assertEquals(RuntimeVariables.replace(
-				"Last Saved Fri Aug 10 18:39:00 GMT 2012"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[5]"));
-		assertEquals(RuntimeVariables.replace("# of Pages 1"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[6]"));
-		assertEquals(RuntimeVariables.replace("Revision Number 2"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[7]"));
-		assertEquals(RuntimeVariables.replace("# of Words 50"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[8]"));
-		assertEquals(RuntimeVariables.replace("Template Normal.dotm"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[9]"));
-		assertEquals(RuntimeVariables.replace("Author Liferay"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[10]"));
-		assertEquals(RuntimeVariables.replace(
-				"Creation Date Fri Aug 10 18:39:00 GMT 2012"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[11]"));
 	}
 }

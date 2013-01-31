@@ -59,22 +59,22 @@ public class ViewDMDocumentSiteTest extends BaseTestCase {
 			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace("Download"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[1]/span[2]"));
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Download')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[2]/span[2]"));
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Checkout')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[3]/span[2]"));
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Edit')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[4]/span[2]"));
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Move')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[5]/span[2]"));
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Permissions')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[6]/span[2]"));
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Delete')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
 			selenium.getText("//span[@class='document-title']"));
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));

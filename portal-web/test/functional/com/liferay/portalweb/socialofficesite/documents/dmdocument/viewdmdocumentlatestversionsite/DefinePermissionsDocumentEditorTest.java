@@ -103,7 +103,7 @@ public class DefinePermissionsDocumentEditorTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText(
 				"//td[contains(@id,'SearchContainer_col-resource_row-4')]"));
-		assertEquals(RuntimeVariables.replace("Permissions"),
+		assertEquals(RuntimeVariables.replace("Override Checkout"),
 			selenium.getText(
 				"//td[contains(@id,'SearchContainer_col-action_row-4')]"));
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
@@ -112,7 +112,7 @@ public class DefinePermissionsDocumentEditorTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText(
 				"//td[contains(@id,'SearchContainer_col-resource_row-5')]"));
-		assertEquals(RuntimeVariables.replace("Update"),
+		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
 				"//td[contains(@id,'SearchContainer_col-action_row-5')]"));
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
@@ -121,7 +121,7 @@ public class DefinePermissionsDocumentEditorTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText(
 				"//td[contains(@id,'SearchContainer_col-resource_row-6')]"));
-		assertEquals(RuntimeVariables.replace("Update Discussion"),
+		assertEquals(RuntimeVariables.replace("Update"),
 			selenium.getText(
 				"//td[contains(@id,'SearchContainer_col-action_row-6')]"));
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
@@ -130,8 +130,17 @@ public class DefinePermissionsDocumentEditorTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText(
 				"//td[contains(@id,'SearchContainer_col-resource_row-7')]"));
-		assertEquals(RuntimeVariables.replace("View"),
+		assertEquals(RuntimeVariables.replace("Update Discussion"),
 			selenium.getText(
 				"//td[contains(@id,'SearchContainer_col-action_row-7')]"));
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
+			selenium.getText(
+				"//td[contains(@id,'SearchContainer_col-resource-set_row-8')]"));
+		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
+			selenium.getText(
+				"//td[contains(@id,'SearchContainer_col-resource_row-8')]"));
+		assertEquals(RuntimeVariables.replace("View"),
+			selenium.getText(
+				"//td[contains(@id,'SearchContainer_col-action_row-8')]"));
 	}
 }

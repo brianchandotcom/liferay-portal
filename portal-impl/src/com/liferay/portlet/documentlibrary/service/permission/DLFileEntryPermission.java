@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -96,14 +97,16 @@ public class DLFileEntryPermission {
 			}
 		}
 
-		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-			if (dlFileEntry.getFolderId() !=
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		long folderId = dlFileEntry.getFolderId();
 
-				try {
-					DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
-						dlFileEntry.getFolderId());
+		if (folderId !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
+			try {
+				DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
+					folderId);
+
+				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 					if (!DLFolderPermission.contains(
 							permissionChecker, dlFolder, ActionKeys.ACCESS) &&
 						!DLFolderPermission.contains(
@@ -112,10 +115,23 @@ public class DLFileEntryPermission {
 						return false;
 					}
 				}
-				catch (NoSuchFolderException nsfe) {
-					if (!latestDLFileVersion.isInTrash()) {
-						throw nsfe;
+
+				if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE ||
+					((!Validator.equals(actionId, ActionKeys.VIEW) ||
+					!Validator.equals(actionId, ActionKeys.ACCESS)) &&
+					!Validator.equals(
+						actionId, ActionKeys.OVERRIDE_CHECKOUT))) {
+
+					if (DLFolderPermission.contains(
+							permissionChecker, dlFolder, actionId)) {
+
+						return true;
 					}
+				}
+			}
+			catch (NoSuchFolderException nsfe) {
+				if (!latestDLFileVersion.isInTrash()) {
+					throw nsfe;
 				}
 			}
 		}

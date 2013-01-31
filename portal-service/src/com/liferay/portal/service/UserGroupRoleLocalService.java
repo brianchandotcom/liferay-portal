@@ -234,7 +234,8 @@ public interface UserGroupRoleLocalService extends BaseLocalService,
 	public void addUserGroupRoles(long[] userIds, long groupId, long roleId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void checkMembershipPolicy(com.liferay.portal.model.User user)
+	public void checkMembershipPolicy(com.liferay.portal.model.User user,
+		com.liferay.portal.security.auth.MembershipPolicy membershipPolicy)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds)

@@ -48,7 +48,7 @@ public class ConfigurePortletTNDisplayTemplateCloudTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//div[@class='display-template']");
-		selenium.select("//div[@class='display-template']/span/span/span/select",
+		selenium.select("//select[@id='_86_displayStyle']",
 			RuntimeVariables.replace("Cloud"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -56,6 +56,8 @@ public class ConfigurePortletTNDisplayTemplateCloudTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("Cloud",
+			selenium.getSelectedLabel("//select[@id='_86_displayStyle']"));
 		selenium.selectFrame("relative=top");
 	}
 }

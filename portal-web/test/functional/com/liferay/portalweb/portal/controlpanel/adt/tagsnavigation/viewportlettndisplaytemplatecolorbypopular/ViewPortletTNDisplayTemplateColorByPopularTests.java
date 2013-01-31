@@ -22,7 +22,6 @@ import com.liferay.portalweb.portlet.tagsnavigation.portlet.addportlettn.AddPage
 import com.liferay.portalweb.portlet.tagsnavigation.portlet.addportlettn.AddPortletTNTest;
 import com.liferay.portalweb.portlet.tagsnavigation.portlet.configureportlettndisplaytemplatecolorbypopular.ConfigurePortletTNDisplayTemplateCloudTest;
 import com.liferay.portalweb.portlet.tagsnavigation.portlet.configureportlettndisplaytemplatecolorbypopular.ConfigurePortletTNDisplayTemplateColorByPopularTest;
-import com.liferay.portalweb.portlet.tagsnavigation.portlet.removeportlettn.RemovePortletTNTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -40,7 +39,6 @@ public class ViewPortletTNDisplayTemplateColorByPopularTests
 		testSuite.addTestSuite(ConfigurePortletTNDisplayTemplateColorByPopularTest.class);
 		testSuite.addTestSuite(ViewPortletTNDisplayTemplateColorByPopularTest.class);
 		testSuite.addTestSuite(ConfigurePortletTNDisplayTemplateCloudTest.class);
-		testSuite.addTestSuite(RemovePortletTNTest.class);
 		testSuite.addTestSuite(TearDownTagTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

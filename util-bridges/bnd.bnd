@@ -1,4 +1,3 @@
-Bundle-SymbolicName: util-bridges
 Export-Package: com.liferay.util.bridges.*
 Import-Package: *;resolution:=optional
 Include-Resource: classes

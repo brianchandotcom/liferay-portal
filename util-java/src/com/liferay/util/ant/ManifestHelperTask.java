@@ -107,6 +107,7 @@ public class ManifestHelperTask extends Task {
 			analyzer.setProperties(file);
 		}
 		else {
+			analyzer.setProperty(Constants.EXPORT_PACKAGE, "*");
 			analyzer.setProperty(
 				Constants.IMPORT_PACKAGE, "*;resolution:=optional");
 		}

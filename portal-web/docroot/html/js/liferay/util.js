@@ -1550,6 +1550,19 @@
 
 	Liferay.provide(
 		Util,
+		'selectEntity',
+		function(config, callback) {
+			this.openWindow(config);
+
+			var eventName = config.eventName || config.id;
+
+			Liferay.on(eventName, callback);
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		Util,
 		'selectFolder',
 		function(folderData, folderHref, namespace) {
 			A.byIdNS(namespace, folderData['idString']).val(folderData['idValue']);

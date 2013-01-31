@@ -69,33 +69,7 @@ if (Validator.isNotNull(target)) {
 			keyProperty="organizationId"
 			modelVar="organization"
 		>
-
-			<%
-			String rowHREF = null;
-
-			if (OrganizationPermissionUtil.contains(permissionChecker, organization.getOrganizationId(), ActionKeys.ASSIGN_MEMBERS)) {
-				StringBundler sb = new StringBundler(13);
-
-				sb.append("javascript:Liferay.Util.getOpener().");
-				sb.append(renderResponse.getNamespace());
-				sb.append("selectOrganization('");
-				sb.append(organization.getOrganizationId());
-				sb.append("', '");
-				sb.append(organization.getGroup().getGroupId());
-				sb.append("', '");
-				sb.append(UnicodeFormatter.toString(organization.getName()));
-				sb.append("', '");
-				sb.append(UnicodeLanguageUtil.get(pageContext, organization.getType()));
-				sb.append("', '");
-				sb.append(target);
-				sb.append("');Liferay.Util.getWindow().close();");
-
-				rowHREF = sb.toString();
-			}
-			%>
-
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="name"
 				orderable="<%= true %>"
 				property="name"
@@ -103,7 +77,6 @@ if (Validator.isNotNull(target)) {
 
 			<liferay-ui:search-container-column-text
 				buffer="buffer"
-				href="<%= rowHREF %>"
 				name="parent-organization"
 			>
 
@@ -126,29 +99,39 @@ if (Validator.isNotNull(target)) {
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="type"
 				orderable="<%= true %>"
 				value="<%= LanguageUtil.get(pageContext, organization.getType()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="city"
 				property="address.city"
 			/>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="region"
 				property="address.region.name"
 			/>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="country"
 				property="address.country.name"
 			/>
+
+			<liferay-ui:search-container-column-text>
+
+				<%
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				data.put("organizationId", organization.getOrganizationId());
+				data.put("groupId", organization.getGroupId());
+				data.put("name", HtmlUtil.escape(organization.getName()));
+				data.put("type", organization.getType());
+				%>
+
+				<aui:button cssClass="selector-button" value="choose" data="<%= data %>" />
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />
@@ -157,4 +140,29 @@ if (Validator.isNotNull(target)) {
 
 <aui:script>
 	Liferay.Util.focusFormField(document.<portlet:namespace />selectOrganizationFm.<portlet:namespace />name);
+</aui:script>
+
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />selectOrganizationFm').delegate(
+		'click',
+		function(event) {
+	    	var node = event.currentTarget;
+
+			var result = {};
+
+			A.Array.each(
+				A.Node.getDOMNode(node).attributes,
+				function(item, index) {
+					if (item.name.indexOf('data-') == 0) {
+	                    result[item.name.substr('data-'.length)] = item.value;
+					}
+				}
+			);
+
+			Liferay.Util.getOpener().Liferay.fire('<portlet:namespace />selectOrganization', result);
+
+			Liferay.Util.getWindow().close();
+		},
+		'.selector-button input'
+	);
 </aui:script>

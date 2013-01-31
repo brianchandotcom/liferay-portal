@@ -1729,6 +1729,10 @@
 		<put name="portlet_content" value="/portlet/wiki/view_orphan_pages.jsp" />
 	</definition>
 
+	<definition name="portlet.wiki.view_page_activities" extends="portlet.wiki">
+		<put name="portlet_content" value="/portlet/wiki/view_page_activities.jsp" />
+	</definition>
+
 	<definition name="portlet.wiki.view_page_attachments" extends="portlet.wiki">
 		<put name="portlet_content" value="/portlet/wiki/view_page_attachments.jsp" />
 	</definition>

@@ -61,6 +61,8 @@ import com.liferay.portal.model.PortletURLListener;
 import com.liferay.portal.model.User;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.security.auth.MembershipPolicy;
+import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
@@ -547,8 +549,14 @@ public class MainServlet extends ActionServlet {
 	}
 
 	protected void checkMembershipPolicy(User user) throws SystemException {
-		GroupLocalServiceUtil.checkMembershipPolicy(user);
-		UserGroupRoleLocalServiceUtil.checkMembershipPolicy(user);
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyUtil.getMembershipPolicy();
+
+		if (membershipPolicy != null) {
+			GroupLocalServiceUtil.checkMembershipPolicy(user, membershipPolicy);
+			UserGroupRoleLocalServiceUtil.checkMembershipPolicy(
+				user, membershipPolicy);
+		}
 	}
 
 	protected void checkPortletRequestProcessor(HttpServletRequest request)

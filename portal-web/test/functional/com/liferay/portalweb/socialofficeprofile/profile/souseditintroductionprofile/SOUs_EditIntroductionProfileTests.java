@@ -23,6 +23,8 @@ import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignOutSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
+import com.liferay.portalweb.socialofficeprofile.profile.sousaddadditionalemailaddressprofile.SOUs_AddAdditionalEmailAddressProfileTest;
+import com.liferay.portalweb.socialofficeprofile.profile.sousaddintroductionprofile.SOUs_AddIntroductionProfileTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

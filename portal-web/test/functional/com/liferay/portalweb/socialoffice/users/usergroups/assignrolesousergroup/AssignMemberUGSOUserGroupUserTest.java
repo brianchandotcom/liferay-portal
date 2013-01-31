@@ -61,9 +61,9 @@ public class AssignMemberUGSOUserGroupUserTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a",
 			RuntimeVariables.replace("Assign Members"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div/h1/span");
+		selenium.waitForVisible("//h1[@class='header-title']");
 		assertEquals(RuntimeVariables.replace("UG UserGroup Name"),
-			selenium.getText("//div/h1/span"));
+			selenium.getText("//h1[@class='header-title']"));
 		selenium.clickAt("link=Available", RuntimeVariables.replace("Available"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(

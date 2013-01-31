@@ -66,6 +66,8 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 					"January");
 				selenium.select("//select[contains(@id,'_125_projectsEntryStartDateMonth0')]",
 					RuntimeVariables.replace("January"));
+				selenium.select("//select[contains(@id,'_125_projectsEntryStartDateYear0')]",
+					RuntimeVariables.replace("2012"));
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_125_projectsEntryCurrent0Checkbox']"));
 

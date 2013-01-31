@@ -90,13 +90,7 @@ if (choiceName > 0) {
 
 		<aui:field-wrapper label="expiration-date">
 
-			<%
-			String taglibNeverExpireOnClick = renderResponse.getNamespace() + "disableInputDate('expirationDate', this.checked);";
-			%>
-
-			<aui:input name="neverExpire" onClick="<%= taglibNeverExpireOnClick %>" type="checkbox" value="<%= neverExpire %>" />
-
-			<aui:input disabled="<%= neverExpire %>" label="" name="expirationDate" />
+			<aui:input checkBox="true" disabled="<%= neverExpire %>" name="expirationDate" />
 		</aui:field-wrapper>
 
 		<aui:field-wrapper label="choices">
@@ -177,28 +171,6 @@ if (choiceName > 0) {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (question == null) ? Constants.ADD : Constants.UPDATE %>";
 		submitForm(document.<portlet:namespace />fm);
 	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />disableInputDate',
-		function(date, checked) {
-			var A = AUI();
-
-			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"].disabled = checked;
-			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Day"].disabled = checked;
-			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Year"].disabled = checked;
-			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Hour"].disabled = checked;
-			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Minute"].disabled = checked;
-			document.<portlet:namespace />fm["<portlet:namespace />" + date + "AmPm"].disabled = checked;
-
-			var calendarWidget = A.Widget.getByNode(document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"]);
-
-			if (calendarWidget) {
-				calendarWidget.set('disabled', checked);
-			}
-		},
-		['aui-base']
-	);
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />title);

@@ -45,6 +45,10 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _changesContext;
 	}
 
+	public boolean getCheckBox() {
+		return _checkBox;
+	}
+
 	public boolean getChecked() {
 		return _checked;
 	}
@@ -193,6 +197,12 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_changesContext = changesContext;
 
 		setScopedAttribute("changesContext", changesContext);
+	}
+
+	public void setCheckBox(boolean checkBox) {
+		_checkBox = checkBox;
+
+		setScopedAttribute("checkBox", checkBox);
 	}
 
 	public void setChecked(boolean checked) {
@@ -398,6 +408,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_autoSize = false;
 		_bean = null;
 		_changesContext = false;
+		_checkBox = false;
 		_checked = false;
 		_classPK = 0;
 		_cssClass = null;
@@ -443,6 +454,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "autoSize", _autoSize);
 		setNamespacedAttribute(request, "bean", _bean);
 		setNamespacedAttribute(request, "changesContext", _changesContext);
+		setNamespacedAttribute(request, "checkBox", _checkBox);
 		setNamespacedAttribute(request, "checked", _checked);
 		setNamespacedAttribute(request, "classPK", _classPK);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
@@ -486,6 +498,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _autoSize = false;
 	private java.lang.Object _bean = null;
 	private boolean _changesContext = false;
+	private boolean _checkBox = false;
 	private boolean _checked = false;
 	private long _classPK = 0;
 	private java.lang.String _cssClass = null;

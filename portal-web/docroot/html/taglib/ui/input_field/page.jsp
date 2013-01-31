@@ -18,6 +18,7 @@
 
 <%
 boolean autoSize = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:autoSize"));
+boolean checkBox = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:input-field:checkBox"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:cssClass"));
 String formName = (String)request.getAttribute("liferay-ui:input-field:formName");
 String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-field:defaultLanguageId");
@@ -291,20 +292,60 @@ if (hints != null) {
 					yearValue="<%= year %>"
 				/>
 
-				<c:if test="<%= showTime %>">
-					<liferay-ui:input-time
-						amPmParam='<%= fieldParam + "AmPm" %>'
-						amPmValue="<%= amPm %>"
-						cssClass="<%= cssClass %>"
-						disabled="<%= disabled %>"
-						hourParam='<%= fieldParam + "Hour" %>'
-						hourValue="<%= hour %>"
-						minuteInterval="<%= 1 %>"
-						minuteParam='<%= fieldParam + "Minute" %>'
-						minuteValue="<%= minute %>"
-					/>
-				</c:if>
-			</div>
+			<c:if test="<%= showTime %>">
+				<liferay-ui:input-time
+					amPmParam='<%= fieldParam + "AmPm" %>'
+					amPmValue="<%= amPm %>"
+					cssClass="<%= cssClass %>"
+					disabled="<%= disabled %>"
+					hourParam='<%= fieldParam + "Hour" %>'
+					hourValue="<%= hour %>"
+					minuteInterval="<%= 1 %>"
+					minuteParam='<%= fieldParam + "Minute" %>'
+					minuteValue="<%= minute %>"
+				/>
+			</c:if>
+
+			<c:if test="<%= checkBox %>">
+
+				<%
+				String checkboxName ="";
+
+				if ((fieldParam.equals("expirationDate")) || (fieldParam.equals("endDate"))) {
+					checkboxName = "neverExpire";
+				}
+				else if (fieldParam.equals("reviewDate")) {
+					checkboxName = "neverReview";
+				}
+				%>
+
+				<aui:input id="<%= formName + fieldParam %>" name="<%= checkboxName %>" type="checkbox" value="<%= disabled %>" />
+
+				<aui:script use="aui-base">
+					var checkbox = A.one('#<portlet:namespace /><%= formName + fieldParam %>Checkbox');
+
+					checkbox.once(
+						'mouseover',
+						function() {
+							Liferay.component('<portlet:namespace /><%= fieldParam %>datePicker');
+						}
+					);
+
+					checkbox.on(
+						'click',
+						function(event) {
+							var checked = document.getElementById('<portlet:namespace /><%= formName + fieldParam %>Checkbox').checked;
+
+							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Month"].disabled = checked;
+							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Day"].disabled = checked;
+							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Year"].disabled = checked;
+							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Hour"].disabled = checked;
+							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Minute"].disabled = checked;
+							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>AmPm"].disabled = checked;
+						}
+					);
+				</aui:script>
+			</c:if>
 		</c:when>
 		<c:when test='<%= type.equals("double") || type.equals("int") || type.equals("long") || type.equals("String") %>'>
 

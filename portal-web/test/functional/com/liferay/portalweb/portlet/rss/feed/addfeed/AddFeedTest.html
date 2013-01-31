@@ -14,37 +14,27 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=RSS Test Page</td>
-	<td>RSS Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=RSS Test Page</td>
 	<td>RSS Test Page</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//strong/a</td>
-	<td>Options</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
 	<td>Configuration</td>
 </tr>
@@ -54,9 +44,29 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
 	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>RSS - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>RSS - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'http://localhost:8080/html/themes/classic/js/main.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -76,7 +86,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_86_url3']</td>
-	<td>http://feeds.digg.com/digg/popular.rss</td>
+	<td>http://digg.com/rss/topstories.xml</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -99,24 +109,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=RSS Test Page</td>
-	<td>RSS Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=RSS Test Page</td>
 	<td>RSS Test Page</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@href='http://feeds.digg.com']</td>
-	<td>Stories(Opens New Window)</td>
+	<td>//a[@href='http://digg.com/rss/topstories.xml']</td>
+	<td>Digg Top Stories(Opens New Window)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@href='http://feeds.digg.com']</td>
-	<td>Stories(Opens New Window)</td>
+	<td>//a[@href='http://digg.com/rss/topstories.xml']</td>
+	<td>Digg Top Stories(Opens New Window)</td>
 </tr>
 </tbody></table>
 </body>

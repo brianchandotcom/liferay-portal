@@ -20,6 +20,7 @@ import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwe
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.rss.portlet.addportletrss.AddPageRSSTest;
 import com.liferay.portalweb.portlet.rss.portlet.addportletrss.AddPortletRSSTest;
+import com.liferay.portalweb.portlet.rss.webcontent.removewcwebcontentfooterrss.SelectWCWebContentFooterRSSTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

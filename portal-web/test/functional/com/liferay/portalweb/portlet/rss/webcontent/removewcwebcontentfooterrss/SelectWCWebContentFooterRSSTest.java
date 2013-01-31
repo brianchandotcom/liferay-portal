@@ -25,29 +25,39 @@ public class SelectWCWebContentFooterRSSTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=RSS Test Page");
 		selenium.clickAt("link=RSS Test Page",
 			RuntimeVariables.replace("RSS Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'http://localhost:8080/html/themes/classic/js/main.js')]");
 		selenium.waitForVisible("xPath=(//input[@id='_86_selectButton'])[2]");
-		Thread.sleep(5000);
 		selenium.clickAt("xPath=(//input[@id='_86_selectButton'])[2]",
 			RuntimeVariables.replace("Select"));
+		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//td[2]/a");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("WC WebContent Title"));
+		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
@@ -55,15 +65,14 @@ public class SelectWCWebContentFooterRSSTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Footer Web Content WC WebContent Title"),
 			selenium.getText("//div[2]/div[2]/fieldset/div/div[2]/div"));
-		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=RSS Test Page");
 		selenium.clickAt("link=RSS Test Page",
 			RuntimeVariables.replace("RSS Test Page"));
 		selenium.waitForPageToLoad("30000");

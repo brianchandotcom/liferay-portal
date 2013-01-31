@@ -14,28 +14,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=RSS Test Page</td>
-	<td>RSS Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=RSS Test Page</td>
 	<td>RSS Test Page</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
@@ -49,9 +44,29 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
 	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>RSS - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>RSS - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'http://localhost:8080/html/themes/classic/js/main.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -59,12 +74,7 @@
 	<td>Select</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>xPath=(//input[@id='_86_selectButton'])[2]</td>
 	<td>Select</td>
 </tr>
@@ -79,7 +89,7 @@
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//td[2]/a</td>
 	<td>WC WebContent Title</td>
 </tr>
@@ -99,11 +109,6 @@
 	<td>Footer Web Content WC WebContent Title</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
@@ -114,14 +119,14 @@
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=RSS Test Page</td>
-	<td>RSS Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

@@ -1385,6 +1385,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>checkBox</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>checked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

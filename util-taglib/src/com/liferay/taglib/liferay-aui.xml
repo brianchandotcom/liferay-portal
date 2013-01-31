@@ -428,6 +428,11 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<name>checkBox</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
 				<name>checked</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

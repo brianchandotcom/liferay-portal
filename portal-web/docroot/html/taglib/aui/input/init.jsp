@@ -35,6 +35,7 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 boolean autoSize = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:autoSize")));
 java.lang.Object bean = (java.lang.Object)request.getAttribute("aui:input:bean");
 boolean changesContext = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:changesContext")));
+boolean checkBox = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:checkBox")));
 boolean checked = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:checked")));
 long classPK = GetterUtil.getLong(String.valueOf(request.getAttribute("aui:input:classPK")));
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:cssClass"));
@@ -72,6 +73,7 @@ java.lang.Object value = (java.lang.Object)request.getAttribute("aui:input:value
 _updateOptions(_options, "autoSize", autoSize);
 _updateOptions(_options, "bean", bean);
 _updateOptions(_options, "changesContext", changesContext);
+_updateOptions(_options, "checkBox", checkBox);
 _updateOptions(_options, "checked", checked);
 _updateOptions(_options, "classPK", classPK);
 _updateOptions(_options, "cssClass", cssClass);

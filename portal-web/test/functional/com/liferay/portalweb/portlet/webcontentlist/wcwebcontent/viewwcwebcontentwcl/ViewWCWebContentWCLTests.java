@@ -20,7 +20,7 @@ import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwe
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPageWCLTest;
 import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPortletWCLTest;
-import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletdisplayguestwcl.ConfigurePortletDisplayGuestWCLTest;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletwcldisplayguest.ConfigurePortletWCLDisplayGuestTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -34,7 +34,7 @@ public class ViewWCWebContentWCLTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageWCLTest.class);
 		testSuite.addTestSuite(AddPortletWCLTest.class);
 		testSuite.addTestSuite(AddWCWebContentTest.class);
-		testSuite.addTestSuite(ConfigurePortletDisplayGuestWCLTest.class);
+		testSuite.addTestSuite(ConfigurePortletWCLDisplayGuestTest.class);
 		testSuite.addTestSuite(ViewWCWebContentWCLTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

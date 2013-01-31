@@ -15,6 +15,10 @@
 package com.liferay.portalweb.socialofficehome.upcomingtasks.task.viewtaskstaskassignedtomemultipleut;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtome.TearDownTasksTaskTest;
+import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtomemultiple.AddTasksTask1AssignedToMeTest;
+import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtomemultiple.AddTasksTask2AssignedToMeTest;
+import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtomemultiple.AddTasksTask3AssignedToMeTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

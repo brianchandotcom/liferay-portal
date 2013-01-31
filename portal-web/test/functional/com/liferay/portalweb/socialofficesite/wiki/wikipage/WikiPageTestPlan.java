@@ -15,6 +15,14 @@
 package com.liferay.portalweb.socialofficesite.wiki.wikipage;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialofficesite.wiki.wikipage.addsaveasdraftwikifrontpagesite.AddSaveAsDraftWikiFrontPageSiteTests;
+import com.liferay.portalweb.socialofficesite.wiki.wikipage.addwikifrontpageattachmentsite.AddWikiFrontPageAttachmentSiteTests;
+import com.liferay.portalweb.socialofficesite.wiki.wikipage.addwikifrontpagechildpagesite.AddWikiFrontPageChildPageSiteTests;
+import com.liferay.portalweb.socialofficesite.wiki.wikipage.addwikifrontpagecommentsite.AddWikiFrontPageCommentSiteTests;
+import com.liferay.portalweb.socialofficesite.wiki.wikipage.addwikifrontpagesite.AddWikiFrontPageSiteTests;
+import com.liferay.portalweb.socialofficesite.wiki.wikipage.editpermissionsfrontpagechildpageguestnoview.EditPermissionsFrontPageChildPageGuestNoViewTests;
+import com.liferay.portalweb.socialofficesite.wiki.wikipage.ratewikifrontpagesite.RateWikiFrontPageSiteTests;
+import com.liferay.portalweb.socialofficesite.wiki.wikipage.saveasdraftwikifrontpagesite.SaveAsDraftWikiFrontPageSiteTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,6 +34,15 @@ public class WikiPageTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+
+		testSuite.addTest(AddSaveAsDraftWikiFrontPageSiteTests.suite());
+		testSuite.addTest(AddWikiFrontPageAttachmentSiteTests.suite());
+		testSuite.addTest(AddWikiFrontPageChildPageSiteTests.suite());
+		testSuite.addTest(AddWikiFrontPageCommentSiteTests.suite());
+		testSuite.addTest(AddWikiFrontPageSiteTests.suite());
+		testSuite.addTest(EditPermissionsFrontPageChildPageGuestNoViewTests.suite());
+		testSuite.addTest(RateWikiFrontPageSiteTests.suite());
+		testSuite.addTest(SaveAsDraftWikiFrontPageSiteTests.suite());
 
 		return testSuite;
 	}

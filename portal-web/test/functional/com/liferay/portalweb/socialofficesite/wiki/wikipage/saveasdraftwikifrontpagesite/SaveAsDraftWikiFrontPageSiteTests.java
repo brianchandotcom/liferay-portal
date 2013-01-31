@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficesite.wiki;
+package com.liferay.portalweb.socialofficesite.wiki.wikipage.saveasdraftwikifrontpagesite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficesite.wiki.wikilar.WikiLARTestPlan;
-import com.liferay.portalweb.socialofficesite.wiki.wikipage.WikiPageTestPlan;
+import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.AddSitesSiteTest;
+import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.TearDownSOSitesTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,15 +24,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiTestPlan extends BaseTestSuite {
-
+public class SaveAsDraftWikiFrontPageSiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(WikiLARTestPlan.suite());
-		testSuite.addTest(WikiPageTestPlan.suite());
+		testSuite.addTestSuite(AddSitesSiteTest.class);
+		testSuite.addTestSuite(SaveAsDraftWikiFrontPageSiteTest.class);
+		testSuite.addTestSuite(TearDownSOSitesTest.class);
 
 		return testSuite;
 	}
-
 }

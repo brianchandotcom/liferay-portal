@@ -154,7 +154,7 @@ public class MBCategoryPermission {
 						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
 					category = MBCategoryLocalServiceUtil.getCategory(
-							categoryId);
+						categoryId);
 
 					if (permissionChecker.hasOwnerPermission(
 							category.getCompanyId(), MBCategory.class.getName(),

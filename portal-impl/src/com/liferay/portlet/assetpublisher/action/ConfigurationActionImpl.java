@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -41,6 +43,7 @@ import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -186,7 +189,22 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		long groupId = AssetPublisherUtil.getGroupIdFromScopeId(
 			scopeId, themeDisplay.getScopeGroupId(), layout.isPrivateLayout());
 
-		if (groupId != themeDisplay.getCompanyGroupId()) {
+		if (scopeId.startsWith(
+				AssetPublisherUtil.SCOPE_ID_PARENT_GROUP_PREFIX)) {
+
+			Group scopeGroup = themeDisplay.getScopeGroup();
+
+			if (!scopeGroup.hasAncestor(groupId)) {
+				throw new PrincipalException();
+			}
+
+			if (!SitesUtil.isContentSharingWithChildrenEnabled(scopeGroup)) {
+				GroupPermissionUtil.check(
+					themeDisplay.getPermissionChecker(), groupId,
+					ActionKeys.UPDATE);
+			}
+		}
+		else if (groupId != themeDisplay.getCompanyGroupId()) {
 			GroupPermissionUtil.check(
 				themeDisplay.getPermissionChecker(), groupId,
 				ActionKeys.UPDATE);

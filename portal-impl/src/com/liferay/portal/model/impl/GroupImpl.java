@@ -101,9 +101,16 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	public List<Group> getAncestors() throws PortalException, SystemException {
-		List<Group> groups = new ArrayList<Group>();
+		Group group = null;
 
-		Group group = this;
+		if (isStagingGroup()) {
+			group = getLiveGroup();
+		}
+		else {
+			group = this;
+		}
+
+		List<Group> groups = new ArrayList<Group>();
 
 		while (!group.isRoot()) {
 			group = group.getParentGroup();
@@ -364,6 +371,27 @@ public class GroupImpl extends GroupBaseImpl {
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
 
 		return typeSettingsProperties.getProperty(key);
+	}
+
+	public boolean hasAncestor(long groupId) {
+		Group group = null;
+
+		if (isStagingGroup()) {
+			group = getLiveGroup();
+		}
+		else {
+			group = this;
+		}
+
+		String treePath = group.getTreePath();
+
+		if ((groupId != group.getGroupId()) &&
+			treePath.contains(StringPool.SLASH + groupId + StringPool.SLASH)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean hasPrivateLayouts() {

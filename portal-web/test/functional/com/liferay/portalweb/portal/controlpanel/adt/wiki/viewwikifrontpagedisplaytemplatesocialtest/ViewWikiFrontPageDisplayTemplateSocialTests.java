@@ -20,7 +20,6 @@ import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPageWikiTest
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPortletWikiTest;
 import com.liferay.portalweb.portlet.wiki.portlet.configureportletwikidisplaytemplatesocial.ConfigurePortletWikiDisplayTemplateDefaultTest;
 import com.liferay.portalweb.portlet.wiki.portlet.configureportletwikidisplaytemplatesocial.ConfigurePortletWikiDisplayTemplateSocialTest;
-import com.liferay.portalweb.portlet.wiki.portlet.removeportlet.RemovePortletWikiTest;
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikifrontpage.AddWikiFrontPageTest;
 import com.liferay.portalweb.portlet.wiki.wikipage.deletefrontpage.DeleteFrontPageTest;
 
@@ -40,7 +39,6 @@ public class ViewWikiFrontPageDisplayTemplateSocialTests extends BaseTestSuite {
 		testSuite.addTestSuite(ViewWikiFrontPageDisplayTemplateSocialTest.class);
 		testSuite.addTestSuite(ConfigurePortletWikiDisplayTemplateDefaultTest.class);
 		testSuite.addTestSuite(DeleteFrontPageTest.class);
-		testSuite.addTestSuite(RemovePortletWikiTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

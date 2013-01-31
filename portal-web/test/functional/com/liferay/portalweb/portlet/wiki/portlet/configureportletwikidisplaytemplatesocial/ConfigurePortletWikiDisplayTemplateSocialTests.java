@@ -18,7 +18,6 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPageWikiTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPortletWikiTest;
-import com.liferay.portalweb.portlet.wiki.portlet.removeportlet.RemovePortletWikiTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -33,9 +32,7 @@ public class ConfigurePortletWikiDisplayTemplateSocialTests
 		testSuite.addTestSuite(AddPageWikiTest.class);
 		testSuite.addTestSuite(AddPortletWikiTest.class);
 		testSuite.addTestSuite(ConfigurePortletWikiDisplayTemplateSocialTest.class);
-		testSuite.addTestSuite(ViewPortletWikiDisplayTemplateSocialTest.class);
 		testSuite.addTestSuite(ConfigurePortletWikiDisplayTemplateDefaultTest.class);
-		testSuite.addTestSuite(RemovePortletWikiTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

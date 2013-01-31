@@ -60,7 +60,7 @@ public class ImportDMVersioningSiteLARTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='_88_importFileName']");
 		selenium.uploadFile("//input[@id='_88_importFileName']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\socialofficesite\\documents\\dependencies\\SO_Site_Documents_Versioning-Selenium.lar"));
+				"L:\\portal\\build\\portal-web\\test\\functional\\com\\liferay\\portalweb\\socialofficesite\\documents\\dependencies\\SO_Site_Documents_Versioning-Selenium.lar"));
 		selenium.check("//input[@id='_88_PORTLET_DATACheckbox']");
 		assertTrue(selenium.isChecked("//input[@id='_88_PORTLET_DATACheckbox']"));
 		selenium.check("//input[@id='_88_DELETE_PORTLET_DATACheckbox']");

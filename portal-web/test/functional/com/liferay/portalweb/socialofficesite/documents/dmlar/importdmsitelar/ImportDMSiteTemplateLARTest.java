@@ -60,7 +60,7 @@ public class ImportDMSiteTemplateLARTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='_149_importFileName']");
 		selenium.uploadFile("//input[@id='_149_importFileName']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\socialofficesite\\documents\\dependencies\\SO_Site_Template_Documents-Selenium.lar"));
+				"L:\\portal\\build\\portal-web\\test\\functional\\com\\liferay\\portalweb\\socialofficesite\\documents\\dependencies\\SO_Site_Template_Documents-Selenium.lar"));
 		selenium.check("//input[@id='_149_PORTLET_DATACheckbox']");
 		assertTrue(selenium.isChecked(
 				"//input[@id='_149_PORTLET_DATACheckbox']"));

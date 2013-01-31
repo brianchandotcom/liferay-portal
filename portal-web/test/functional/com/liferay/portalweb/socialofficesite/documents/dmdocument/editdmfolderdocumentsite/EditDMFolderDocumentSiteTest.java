@@ -60,8 +60,9 @@ public class EditDMFolderDocumentSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//span[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//button[3]"));
-		selenium.clickAt("//button[3]", RuntimeVariables.replace("Edit"));
+			selenium.getText("//button[contains(.,'Edit')]"));
+		selenium.clickAt("//button[contains(.,'Edit')]",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DM Folder Document Title Edit"));

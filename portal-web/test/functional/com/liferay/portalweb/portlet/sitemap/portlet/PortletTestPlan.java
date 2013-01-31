@@ -19,6 +19,7 @@ import com.liferay.portalweb.portlet.sitemap.portlet.addportletchildpage.AddPort
 import com.liferay.portalweb.portlet.sitemap.portlet.addportletmultiple.AddPortletMultipleTests;
 import com.liferay.portalweb.portlet.sitemap.portlet.addportletsm.AddPortletSMTests;
 import com.liferay.portalweb.portlet.sitemap.portlet.configureportletrootlayout.ConfigurePortletRootLayoutTests;
+import com.liferay.portalweb.portlet.sitemap.portlet.configureportletsmdisplaytemplatemulticolumn.ConfigurePortletSMDisplayTemplateMultiColumnLayoutTests;
 import com.liferay.portalweb.portlet.sitemap.portlet.removeportlet.RemovePortletTests;
 import com.liferay.portalweb.portlet.sitemap.portlet.viewportletsitemap.ViewPortletSiteMapTests;
 
@@ -37,6 +38,8 @@ public class PortletTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddPortletMultipleTests.suite());
 		testSuite.addTest(AddPortletSMTests.suite());
 		testSuite.addTest(ConfigurePortletRootLayoutTests.suite());
+		testSuite.addTest(
+			ConfigurePortletSMDisplayTemplateMultiColumnLayoutTests.suite());
 		testSuite.addTest(RemovePortletTests.suite());
 		testSuite.addTest(ViewPortletSiteMapTests.suite());
 

@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.adt;
+package com.liferay.portalweb.portlet.sitemap.portlet.configureportletsmdisplaytemplatemulticolumn;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.adt.assetpublisher.AssetPublisherTestPlan;
-import com.liferay.portalweb.portal.controlpanel.adt.sitemap.SiteMapTestPlan;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.sitemap.portlet.addportletsm.AddPageSMTest;
+import com.liferay.portalweb.portlet.sitemap.portlet.addportletsm.AddPortletSMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,15 +25,16 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ADTTestPlan extends BaseTestSuite {
-
+public class ConfigurePortletSMDisplayTemplateMultiColumnLayoutTests
+	extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AssetPublisherTestPlan.suite());
-		testSuite.addTest(SiteMapTestPlan.suite());
+		testSuite.addTestSuite(AddPageSMTest.class);
+		testSuite.addTestSuite(AddPortletSMTest.class);
+		testSuite.addTestSuite(ConfigurePortletSMDisplayTemplateMultiColumnLayoutTest.class);
+		testSuite.addTestSuite(ConfigurePortletSMDisplayTemplateDefaultTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

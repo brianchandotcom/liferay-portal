@@ -14,45 +14,48 @@
 
 package com.liferay.portal.kernel.templateparser;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class BaseTransformerListener implements TransformerListener {
+public class BaseTransformerListener implements TransformerListener {
 
-	public String getLanguageId() {
-		return _languageId;
+	public String onOutput(
+		String output, String languageId, Map<String, String> tokens) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("onOutput");
+		}
+
+		return output;
 	}
 
-	public Map<String, String> getTokens() {
-		return _tokens;
+	public String onScript(
+		String script, String xml, String languageId,
+		Map<String, String> tokens) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("onScript");
+		}
+
+		return script;
 	}
 
-	public boolean isTemplateDriven() {
-		return _templateDriven;
+	public String onXml(
+		String xml, String languageId, Map<String, String> tokens) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("onXml");
+		}
+
+		return xml;
 	}
 
-	public abstract String onOutput(String s);
-
-	public abstract String onScript(String s);
-
-	public abstract String onXml(String s);
-
-	public void setLanguageId(String languageId) {
-		_languageId = languageId;
-	}
-
-	public void setTemplateDriven(boolean templateDriven) {
-		_templateDriven = templateDriven;
-	}
-
-	public void setTokens(Map<String, String> tokens) {
-		_tokens = tokens;
-	}
-
-	private String _languageId;
-	private boolean _templateDriven;
-	private Map<String, String> _tokens;
+	private static Log _log = LogFactoryUtil.getLog(
+		BaseTransformerListener.class);
 
 }

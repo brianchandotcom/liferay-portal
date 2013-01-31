@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Raymond Augé
@@ -33,37 +34,29 @@ import java.util.List;
 public class LocaleTransformerListener extends BaseTransformerListener {
 
 	@Override
-	public String onOutput(String s) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("onOutput");
-		}
+	public String onScript(
+		String script, String xml, String languageId,
+		Map<String, String> tokens) {
 
-		return s;
-	}
-
-	@Override
-	public String onScript(String s) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("onScript");
 		}
 
-		s = StringUtil.replace(s, "@language_id@", _requestedLocale);
-
-		return s;
+		return StringUtil.replace(script, "@language_id@", languageId);
 	}
 
 	@Override
-	public String onXml(String s) {
+	public String onXml(
+		String xml, String languageId, Map<String, String> tokens) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("onXml");
 		}
 
-		s = replace(s);
-
-		return s;
+		return replace(xml, languageId);
 	}
 
-	protected void replace(Element root) {
+	protected void replace(Element root, String languageId) {
 		List<Element> elements = root.elements();
 
 		int listIndex = elements.size() - 1;
@@ -71,26 +64,24 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 		while (listIndex >= 0) {
 			Element element = elements.get(listIndex);
 
-			String languageId = element.attributeValue(
-				"language-id", getLanguageId());
+			String tempLanguageId = element.attributeValue(
+				"language-id", languageId);
 
-			if (!languageId.equalsIgnoreCase(getLanguageId())) {
+			if (!tempLanguageId.equalsIgnoreCase(languageId)) {
 				root.remove(element);
 			}
 			else {
-				replace(element);
+				replace(element, languageId);
 			}
 
 			listIndex--;
 		}
 	}
 
-	protected String replace(String xml) {
+	protected String replace(String xml, String languageId) {
 		if (xml == null) {
 			return xml;
 		}
-
-		_requestedLocale = getLanguageId();
 
 		try {
 			Document document = SAXReaderUtil.read(xml);
@@ -110,7 +101,7 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			boolean supportedLocale = false;
 
 			for (String availableLocale : availableLocales) {
-				if (availableLocale.equalsIgnoreCase(getLanguageId())) {
+				if (availableLocale.equalsIgnoreCase(languageId)) {
 					supportedLocale = true;
 
 					break;
@@ -118,10 +109,11 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			}
 
 			if (!supportedLocale) {
-				setLanguageId(defaultLocale);
+				replace(rootElement, defaultLocale);
 			}
-
-			replace(rootElement);
+			else {
+				replace(rootElement, languageId);
+			}
 
 			xml = DDMXMLUtil.formatXML(document);
 		}

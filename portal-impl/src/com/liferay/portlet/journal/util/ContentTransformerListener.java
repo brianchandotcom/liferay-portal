@@ -35,38 +35,31 @@ import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Tina Tian
  */
 public class ContentTransformerListener extends BaseTransformerListener {
 
 	@Override
-	public String onOutput(String s) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("onOutput");
-		}
+	public String onScript(
+		String script, String xml, String languageId,
+		Map<String, String> tokens) {
 
-		return s;
-	}
-
-	@Override
-	public String onScript(String s) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("onScript");
 		}
 
-		s = injectEditInPlace(_xml, s);
-
-		return s;
+		return injectEditInPlace(xml, script);
 	}
 
 	@Override
-	public String onXml(String s) {
+	public String onXml(
+		String xml, String languageId, Map<String, String> tokens) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("onXml");
 		}
 
-		_xml = replace(s);
-
-		return _xml;
+		return replace(xml, tokens);
 	}
 
 	protected String getDynamicContent(String xml, String elementName) {
@@ -126,8 +119,8 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		return script;
 	}
 
-	protected void replace(Element root) throws Exception {
-		Map<String, String> tokens = getTokens();
+	protected void replace(Element root, Map<String, String> tokens)
+		throws Exception {
 
 		long groupId = GetterUtil.getLong(tokens.get("group_id"));
 
@@ -174,7 +167,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 				}
 			}
 
-			replace(el);
+			replace(el, tokens);
 		}
 	}
 
@@ -184,13 +177,13 @@ public class ContentTransformerListener extends BaseTransformerListener {
 	 *
 	 * @return the processed string
 	 */
-	protected String replace(String xml) {
+	protected String replace(String xml, Map<String, String> tokens) {
 		try {
 			Document document = SAXReaderUtil.read(xml);
 
 			Element rootElement = document.getRootElement();
 
-			replace(rootElement);
+			replace(rootElement, tokens);
 
 			xml = DDMXMLUtil.formatXML(document);
 		}
@@ -216,7 +209,5 @@ public class ContentTransformerListener extends BaseTransformerListener {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTransformerListener.class);
-
-	private String _xml;
 
 }

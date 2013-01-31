@@ -961,10 +961,6 @@ public class JournalUtil {
 				try {
 					listener = (TransformerListener)Class.forName(
 						listeners[i]).newInstance();
-
-					listener.setTemplateDriven(true);
-					listener.setLanguageId(languageId);
-					listener.setTokens(tokens);
 				}
 				catch (Exception e) {
 					_log.error(e, e);
@@ -973,7 +969,8 @@ public class JournalUtil {
 				// Modify transform script
 
 				if (listener != null) {
-					script = listener.onScript(script);
+					script = listener.onScript(
+						script, null, languageId, tokens);
 				}
 			}
 		}

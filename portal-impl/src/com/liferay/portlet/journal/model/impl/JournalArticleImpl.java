@@ -50,10 +50,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 		LocaleTransformerListener listener = new LocaleTransformerListener();
 
-		listener.setTemplateDriven(templateDriven);
-		listener.setLanguageId(languageId);
-
-		return listener.onXml(content);
+		return listener.onXml(content, languageId, null);
 	}
 
 	public JournalArticleImpl() {

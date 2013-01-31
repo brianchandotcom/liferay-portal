@@ -29,11 +29,16 @@ public class ViewPortletCNDisplayTemplateMultiColumnTest extends BaseTestCase {
 		selenium.clickAt("link=Categories Navigation Test Page",
 			RuntimeVariables.replace("Categories Navigation Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Categories Navigation"),
+			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Topic"),
-			selenium.getText("xPath=(//div[@class='results-header']/h3)[1]"));
+			selenium.getText(
+				"xPath=(//div[@class='results-header']/h3[contains(.,'Topic')])[1]"));
+		assertEquals(RuntimeVariables.replace("Topic"),
+			selenium.getText(
+				"xPath=(//div[@class='results-header']/h3[contains(.,'Topic')])[2]"));
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//ul[@class='categories']"));
-		assertEquals(RuntimeVariables.replace("Topic"),
-			selenium.getText("xPath=(//div[@class='results-header']/h3)[2]"));
+			selenium.getText(
+				"//ul[@class='categories']/li[contains(.,'Category Name')]"));
 	}
 }

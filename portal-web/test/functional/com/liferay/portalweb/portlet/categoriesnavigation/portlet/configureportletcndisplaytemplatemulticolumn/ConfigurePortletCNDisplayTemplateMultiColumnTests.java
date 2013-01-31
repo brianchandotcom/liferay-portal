@@ -20,7 +20,6 @@ import com.liferay.portalweb.portal.controlpanel.categories.category.deletecateg
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletcn.AddPageCNTest;
 import com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletcn.AddPortletCNTest;
-import com.liferay.portalweb.portlet.categoriesnavigation.portlet.removeportletcn.RemovePortletCNTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -36,9 +35,7 @@ public class ConfigurePortletCNDisplayTemplateMultiColumnTests
 		testSuite.addTestSuite(AddPortletCNTest.class);
 		testSuite.addTestSuite(AddCategoryTest.class);
 		testSuite.addTestSuite(ConfigurePortletCNDisplayTemplateMultiColumnTest.class);
-		testSuite.addTestSuite(ViewPortletCNDisplayTemplateMultiColumnTest.class);
 		testSuite.addTestSuite(ConfigurePortletCNDisplayTemplateDefaultTest.class);
-		testSuite.addTestSuite(RemovePortletCNTest.class);
 		testSuite.addTestSuite(DeleteCategoryActionsTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

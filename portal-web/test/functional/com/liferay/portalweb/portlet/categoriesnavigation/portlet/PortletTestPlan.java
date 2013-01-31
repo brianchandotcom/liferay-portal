@@ -33,7 +33,8 @@ public class PortletTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddPortletCNTests.suite());
 		testSuite.addTest(AddPortletsCNTests.suite());
-		testSuite.addTest(ConfigurePortletCNDisplayTemplateMultiColumnTests.suite());
+		testSuite.addTest(
+			ConfigurePortletCNDisplayTemplateMultiColumnTests.suite());
 		testSuite.addTest(RemovePortletCNTests.suite());
 
 		return testSuite;

@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//span[@title='Options']/ul/li/strong/a</td>
-	<td>Options</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
@@ -49,19 +44,19 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Categories Navigation - Configuration</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Categories Navigation - Configuration</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -75,13 +70,8 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>//div[@class='display-template']/span/span/span/select</td>
+	<td>//select[@id='_86_displayStyle']</td>
 	<td>Default</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -92,6 +82,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_86_displayStyle']</td>
+	<td>Default</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

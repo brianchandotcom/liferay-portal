@@ -22,7 +22,6 @@ import com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletcn.A
 import com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletcn.AddPortletCNTest;
 import com.liferay.portalweb.portlet.categoriesnavigation.portlet.configureportletcndisplaytemplatemulticolumn.ConfigurePortletCNDisplayTemplateDefaultTest;
 import com.liferay.portalweb.portlet.categoriesnavigation.portlet.configureportletcndisplaytemplatemulticolumn.ConfigurePortletCNDisplayTemplateMultiColumnTest;
-import com.liferay.portalweb.portlet.categoriesnavigation.portlet.removeportletcn.RemovePortletCNTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -40,7 +39,6 @@ public class ViewPortletCNDisplayTemplateMultiColumnTests extends BaseTestSuite 
 		testSuite.addTestSuite(ViewPortletCNDisplayTemplateMultiColumnTest.class);
 		testSuite.addTestSuite(ConfigurePortletCNDisplayTemplateDefaultTest.class);
 		testSuite.addTestSuite(DeleteCategoryActionsTest.class);
-		testSuite.addTestSuite(RemovePortletCNTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

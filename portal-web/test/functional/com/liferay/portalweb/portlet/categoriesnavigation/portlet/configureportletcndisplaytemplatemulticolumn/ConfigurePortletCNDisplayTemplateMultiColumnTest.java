@@ -31,7 +31,6 @@ public class ConfigurePortletCNDisplayTemplateMultiColumnTest
 			RuntimeVariables.replace("Categories Navigation Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
-		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -41,8 +40,8 @@ public class ConfigurePortletCNDisplayTemplateMultiColumnTest
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
 		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
@@ -50,15 +49,16 @@ public class ConfigurePortletCNDisplayTemplateMultiColumnTest
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//div[@class='display-template']");
-		selenium.select("//div[@class='display-template']/span/span/span/select",
+		selenium.select("//select[@id='_86_displayStyle']",
 			RuntimeVariables.replace("Multi Column Layout"));
-		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("Multi Column Layout",
+			selenium.getSelectedLabel("//select[@id='_86_displayStyle']"));
 		selenium.selectFrame("relative=top");
 	}
 }

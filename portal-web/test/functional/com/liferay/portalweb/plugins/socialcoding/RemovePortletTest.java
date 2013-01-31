@@ -25,7 +25,6 @@ public class RemovePortletTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Social Coding Test Page");
 		selenium.click(RuntimeVariables.replace("link=Social Coding Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//img[@alt='Remove']");

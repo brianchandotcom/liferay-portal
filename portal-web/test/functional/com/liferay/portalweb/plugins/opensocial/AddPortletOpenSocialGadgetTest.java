@@ -50,11 +50,12 @@ public class AddPortletOpenSocialGadgetTest extends BaseTestCase {
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));
-		selenium.waitForElementPresent("//header/h1/span");
+		selenium.waitForVisible("//header/h1/span");
 		assertEquals(RuntimeVariables.replace("Hello World!"),
 			selenium.getText("//header/h1/span"));
-		Thread.sleep(5000);
+		selenium.waitForVisible("//iframe[@class='aui-gadget']");
 		selenium.selectFrame("//iframe[@class='aui-gadget']");
+		selenium.waitForVisible("//body");
 		assertEquals(RuntimeVariables.replace("Hello, world!"),
 			selenium.getText("//body"));
 		selenium.selectFrame("relative=top");

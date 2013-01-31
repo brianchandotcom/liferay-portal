@@ -19,18 +19,19 @@
 <%
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-textarea:cssClass"));
 String param = (String)request.getAttribute("liferay-ui:input-textarea:param");
+String paramId = (String)request.getAttribute("liferay-ui:input-textarea:paramId");
 String defaultValue = (String)request.getAttribute("liferay-ui:input-textarea:defaultValue");
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-textarea:disabled"));
 
 String value = ParamUtil.getString(request, param, defaultValue);
 %>
 
-<textarea class="lfr-textarea <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= param %>" name="<%= namespace %><%= param %>" wrap="soft" onKeyDown="Liferay.Util.disableEsc();"><%= value %></textarea>
+<textarea class="lfr-textarea <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= paramId %>" name="<%= namespace %><%= param %>" wrap="soft" onKeyDown="Liferay.Util.disableEsc();"><%= value %></textarea>
 
 <aui:script use="aui-char-counter">
 	new A.CharCounter(
 		{
-			input: '#<%= namespace %><%= param %>',
+			input: '#<%= namespace %><%= paramId %>',
 			maxLength: <%= ModelHintsConstants.TEXTAREA_MAX_LENGTH %>
 		}
 	);

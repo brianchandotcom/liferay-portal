@@ -14,7 +14,7 @@
  */
 --%>
 
-<select <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= yearParam %>" name="<%= yearParam %>">
+<select <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= yearParamId %>" name="<%= yearParam %>">
 	<c:if test="<%= yearNullable %>">
 		<option value=""></option>
 	</c:if>

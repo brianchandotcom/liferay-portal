@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -141,6 +142,9 @@ public class InputDateTag extends IncludeTag {
 			"liferay-ui:input-date:dayNullable", String.valueOf(_dayNullable));
 		request.setAttribute("liferay-ui:input-date:dayParam", _dayParam);
 		request.setAttribute(
+			"liferay-ui:input-date:dayParamId",
+			FriendlyURLNormalizerUtil.normalize(_dayParam));
+		request.setAttribute(
 			"liferay-ui:input-date:dayValue", String.valueOf(_dayValue));
 		request.setAttribute(
 			"liferay-ui:input-date:disabled", String.valueOf(_disabled));
@@ -163,12 +167,18 @@ public class InputDateTag extends IncludeTag {
 			String.valueOf(_monthNullable));
 		request.setAttribute("liferay-ui:input-date:monthParam", _monthParam);
 		request.setAttribute(
+			"liferay-ui:input-date:monthParamId",
+			FriendlyURLNormalizerUtil.normalize(_monthParam));
+		request.setAttribute(
 			"liferay-ui:input-date:monthValue", String.valueOf(_monthValue));
 		request.setAttribute("liferay-ui:input-date:name", _name);
 		request.setAttribute(
 			"liferay-ui:input-date:yearNullable",
 			String.valueOf(_yearNullable));
 		request.setAttribute("liferay-ui:input-date:yearParam", _yearParam);
+		request.setAttribute(
+			"liferay-ui:input-date:yearParamId",
+			FriendlyURLNormalizerUtil.normalize(_yearParam));
 		request.setAttribute(
 			"liferay-ui:input-date:yearRangeEnd",
 			String.valueOf(_yearRangeEnd));

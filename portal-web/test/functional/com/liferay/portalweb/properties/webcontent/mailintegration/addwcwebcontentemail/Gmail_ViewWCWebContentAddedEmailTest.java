@@ -135,13 +135,13 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 				assertTrue(selenium.isPartialText("//h1/span[1]",
 						"Web Content: Article Added"));
 				assertTrue(selenium.isPartialText(
-						"//p[contains(.,'Web Content Name')]",
+						"//p[contains(.,'WC WebContent Title')]",
 						"Dear userfn userln,"));
 				assertTrue(selenium.isPartialText(
-						"//p[contains(.,'Web Content Name')]", "version 1.0"));
+						"//p[contains(.,'WC WebContent Title')]", "version 1.0"));
 				assertTrue(selenium.isPartialText(
-						"//p[contains(.,'Web Content Name')]",
-						"Web Content Name was added."));
+						"//p[contains(.,'WC WebContent Title')]",
+						"WC WebContent Title was added."));
 				Thread.sleep(5000);
 
 				boolean SignedIn2 = selenium.isElementPresent("link=Sign out");
@@ -152,13 +152,20 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace(
+						"liferay.qa.testing.trunk@gmail.com"),
+					selenium.getText(
+						"//span[contains(.,'liferay.qa.testing.trunk@gmail.com')]"));
+				selenium.clickAt("//span[contains(.,'liferay.qa.testing.trunk@gmail.com')]",
+					RuntimeVariables.replace(
+						"liferay.qa.testing.trunk@gmail.com"));
 				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//td/a"));
-				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
+					selenium.getText("//td/a[contains(.,'Sign out')]"));
+				selenium.clickAt("//td/a[contains(.,'Sign out')]",
+					RuntimeVariables.replace("Sign out"));
 
 			case 7:
-				Thread.sleep(5000);
-				Thread.sleep(5000);
+				Thread.sleep(10000);
 				selenium.close();
 				selenium.selectWindow("null");
 

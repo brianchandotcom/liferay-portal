@@ -15,10 +15,12 @@
 package com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.AddMembersSiteUserTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -33,7 +35,7 @@ public class AddWCWebContentEmailTests extends BaseTestSuite {
 		testSuite.addTestSuite(EditPortalInstanceMailDomainTest.class);
 		testSuite.addTestSuite(AddUserGmailTest.class);
 		testSuite.addTestSuite(AddSiteTest.class);
-		testSuite.addTestSuite(AssignMembersSiteUserTest.class);
+		testSuite.addTestSuite(AddMembersSiteUserTest.class);
 		testSuite.addTestSuite(ConfigureWCPortletEmailFromGmailServerCPTest.class);
 		testSuite.addTestSuite(ConfigureWCPortletWebContentAddedEmailCPTest.class);
 		testSuite.addTestSuite(AddRoleWebContentEditorCPTest.class);
@@ -48,10 +50,10 @@ public class AddWCWebContentEmailTests extends BaseTestSuite {
 		testSuite.addTestSuite(Gmail_ViewWCWebContentAddedEmailTest.class);
 		testSuite.addTestSuite(TearDownRoleWebContentEditorTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentCPTest.class);
+		testSuite.addTestSuite(TearDownEmailConfigurationTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownServerTest.class);
-		testSuite.addTestSuite(TearDownEmailConfigurationTest.class);
 
 		return testSuite;
 	}

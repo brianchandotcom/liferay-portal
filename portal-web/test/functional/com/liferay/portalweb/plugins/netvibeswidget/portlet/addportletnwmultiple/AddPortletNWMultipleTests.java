@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.plugins.netvibeswidget.portlet.addportletnwmultiple;
 
+import com.liferay.portalweb.plugins.netvibeswidget.portlet.addportletnw.AddPageNWTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

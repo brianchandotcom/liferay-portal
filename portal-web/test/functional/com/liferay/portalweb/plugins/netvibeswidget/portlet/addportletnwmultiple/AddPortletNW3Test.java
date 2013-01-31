@@ -25,20 +25,32 @@ public class AddPortletNW3Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Netvibes Widget Test Page");
-		selenium.click(RuntimeVariables.replace(
-				"link=Netvibes Widget Test Page"));
+		selenium.clickAt("link=Netvibes Widget Test Page",
+			RuntimeVariables.replace("Netvibes Widget Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+		selenium.waitForVisible("//a[@id='_145_addApplication']");
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//li[@title='Netvibes Widget']/p/a");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
+		selenium.waitForVisible("//input[@id='layout_configuration_content']");
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("n"));
+		selenium.waitForVisible("//li[@title='Netvibes Widget']/p/a");
 		selenium.clickAt("//li[@title='Netvibes Widget']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//section");
-		assertTrue(selenium.isVisible("//section"));
-		assertTrue(selenium.isVisible("//div[2]/div/section"));
-		assertTrue(selenium.isVisible("//div[3]/div/section"));
+		selenium.waitForVisible("//div/div[1]/section");
+		assertTrue(selenium.isVisible("//div/div[1]/section"));
+		assertTrue(selenium.isVisible("//div/div[2]/section"));
+		assertTrue(selenium.isVisible("//div/div[3]/section"));
 	}
 }

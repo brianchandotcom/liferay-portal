@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.netvibeswidget.portlet.removeportletnw;
 
+import com.liferay.portalweb.plugins.netvibeswidget.portlet.addportletnw.AddPageNWTest;
+import com.liferay.portalweb.plugins.netvibeswidget.portlet.addportletnw.AddPortletNWTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

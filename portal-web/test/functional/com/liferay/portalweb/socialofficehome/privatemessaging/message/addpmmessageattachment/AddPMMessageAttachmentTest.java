@@ -67,7 +67,7 @@ public class AddPMMessageAttachmentTest extends BaseTestCase {
 				"//input[@id='_1_WAR_privatemessagingportlet_msgFile1']"));
 		selenium.uploadFile("//input[@id='_1_WAR_privatemessagingportlet_msgFile1']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\socialofficehome\\privatemessaging\\message\\addpmmessageattachment\\dependencies\\PM_Attachment.jpg"));
+				"L:\\portal\\build\\portal-web\\test\\functional\\com\\liferay\\portalweb\\socialofficehome\\privatemessaging\\message\\addpmmessageattachment\\dependencies\\PM_Attachment.jpg"));
 		selenium.clickAt("//input[@value='Send']",
 			RuntimeVariables.replace("Send"));
 		selenium.waitForVisible("//div[@class='portlet-msg-success']");

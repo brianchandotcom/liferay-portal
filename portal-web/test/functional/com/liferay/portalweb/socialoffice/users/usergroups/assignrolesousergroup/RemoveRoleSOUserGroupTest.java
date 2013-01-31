@@ -62,13 +62,14 @@ public class RemoveRoleSOUserGroupTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a",
 			RuntimeVariables.replace("Assign Members"));
-		selenium.waitForVisible("//div[2]/h1/span");
+		selenium.waitForVisible("//h1[@class='header-title']");
 		assertEquals(RuntimeVariables.replace("Social Office User"),
-			selenium.getText("//div[2]/h1/span"));
-		selenium.waitForVisible("//form/ul/li[4]/span/a");
+			selenium.getText("//h1[@class='header-title']"));
+		selenium.waitForVisible(
+			"//form/ul/li[contains(.,'User Groups')]/span/a");
 		assertEquals(RuntimeVariables.replace("User Groups"),
-			selenium.getText("//form/ul/li[4]/span/a"));
-		selenium.clickAt("//form/ul/li[4]/span/a",
+			selenium.getText("//form/ul/li[contains(.,'User Groups')]/span/a"));
+		selenium.clickAt("//form/ul/li[contains(.,'User Groups')]/span/a",
 			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Available", RuntimeVariables.replace("Available"));

@@ -215,7 +215,6 @@ public interface SocialActivityModel extends AttachedModel,
 	 *
 	 * @return the extra data of this social activity
 	 */
-	@AutoEscape
 	public String getExtraData();
 
 	/**

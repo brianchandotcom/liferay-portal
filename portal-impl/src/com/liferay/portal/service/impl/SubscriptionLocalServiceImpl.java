@@ -34,12 +34,40 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * The subscription local service is a framework responsible for accessing,
+ * creating, and deleting notification subscriptions to entities. It handles
+ * subscriptions to entities found in many different places in the portal,
+ * including message boards, blogs, and documents and media.
+ *
  * @author Charles May
  * @author Zsolt Berentey
  */
 public class SubscriptionLocalServiceImpl
 	extends SubscriptionLocalServiceBaseImpl {
 
+	/**
+	 * Subscribes the user to the entity, notifying him the instant the entity
+	 * is created, deleted, or modified.
+	 *
+	 * <p>
+	 * If there is no asset entry with the class name and class PK a new asset
+	 * entry is created.
+	 * </p>
+	 *
+	 * <p>
+	 * A social activity for the subscription is created using the asset entry
+	 * associated with the class name and class PK, or the newly created asset
+	 * entry.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  groupId the primary key of the entity's group
+	 * @param  className the entity's class name
+	 * @param  classPK the primary key of the entity's instance
+	 * @return the subscription
+	 * @throws PortalException if a matching user or group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public Subscription addSubscription(
 			long userId, long groupId, String className, long classPK)
 		throws PortalException, SystemException {
@@ -49,6 +77,29 @@ public class SubscriptionLocalServiceImpl
 			SubscriptionConstants.FREQUENCY_INSTANT);
 	}
 
+	/**
+	 * Subscribes the user to the entity, notifying him at the given frequency.
+	 *
+	 * <p>
+	 * If there is no asset entry with the class name and class PK a new asset
+	 * entry is created.
+	 * </p>
+	 *
+	 * <p>
+	 * A social activity for the subscription is created using the asset entry
+	 * associated with the class name and class PK, or the newly created asset
+	 * entry.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  groupId the primary key of the entity's group
+	 * @param  className the entity's class name
+	 * @param  classPK the primary key of the entity's instance
+	 * @param  frequency the frequency for notifications
+	 * @return the subscription
+	 * @throws PortalException if a matching user or group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public Subscription addSubscription(
 			long userId, long groupId, String className, long classPK,
 			String frequency)
@@ -123,6 +174,15 @@ public class SubscriptionLocalServiceImpl
 		return subscription;
 	}
 
+	/**
+	 * Deletes the subscription with the primary key. A social activity with the
+	 * unsubscribe action is created.
+	 *
+	 * @param  subscriptionId the primary key of the subscription
+	 * @return the subscription that was removed
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public Subscription deleteSubscription(long subscriptionId)
 		throws PortalException, SystemException {
@@ -133,6 +193,17 @@ public class SubscriptionLocalServiceImpl
 		return deleteSubscription(subscription);
 	}
 
+	/**
+	 * Deletes the user's subscription to the entity. A social activity with the
+	 * unsubscribe action is created.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  className the entity's class name
+	 * @param  classPK the primary key of the entity's instance
+	 * @throws PortalException if a matching user or subscription could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteSubscription(long userId, String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -145,6 +216,15 @@ public class SubscriptionLocalServiceImpl
 		deleteSubscription(subscription);
 	}
 
+	/**
+	 * Deletes the subscription. A social activity with the unsubscribe action
+	 * is created.
+	 *
+	 * @param  subscription the subscription
+	 * @return the subscription that was removed
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public Subscription deleteSubscription(Subscription subscription)
 		throws PortalException, SystemException {
@@ -171,6 +251,13 @@ public class SubscriptionLocalServiceImpl
 		return subscription;
 	}
 
+	/**
+	 * Deletes all the subscriptions of the user.
+	 *
+	 * @param  userId the primary key of the user
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteSubscriptions(long userId)
 		throws PortalException, SystemException {
 
@@ -182,6 +269,15 @@ public class SubscriptionLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Deletes all the subscriptions to the entity.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  className the entity's class name
+	 * @param  classPK the primary key of the entity's instance
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteSubscriptions(
 			long companyId, String className, long classPK)
 		throws PortalException, SystemException {
@@ -196,6 +292,17 @@ public class SubscriptionLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns the subscription of the user to the entity.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  userId the primary key of the user
+	 * @param  className the entity's class name
+	 * @param  classPK the primary key of the entity's instance
+	 * @return the subscription of the user to the entity
+	 * @throws PortalException if a matching subscription could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public Subscription getSubscription(
 			long companyId, long userId, String className, long classPK)
 		throws PortalException, SystemException {
@@ -206,6 +313,16 @@ public class SubscriptionLocalServiceImpl
 			companyId, userId, classNameId, classPK);
 	}
 
+	/**
+	 * Returns all the subscriptions of the user to the entities.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  userId the primary key of the user
+	 * @param  className the entity's class name
+	 * @param  classPKs the primary key of the entities
+	 * @return the subscriptions of the user to the entities
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Subscription> getSubscriptions(
 			long companyId, long userId, String className, long[] classPKs)
 		throws SystemException {
@@ -216,6 +333,15 @@ public class SubscriptionLocalServiceImpl
 			companyId, userId, classNameId, classPKs);
 	}
 
+	/**
+	 * Returns all the subscriptions to the entity.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  className the entity's class name
+	 * @param  classPK the primary key of the entity's instance
+	 * @return the subscriptions to the entity
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Subscription> getSubscriptions(
 			long companyId, String className, long classPK)
 		throws SystemException {
@@ -226,6 +352,16 @@ public class SubscriptionLocalServiceImpl
 			companyId, classNameId, classPK);
 	}
 
+	/**
+	 * Returns an ordered range of all the subscriptions of the user.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  start the lower bound of the range of results
+	 * @param  end the upper bound of the range of results (not inclusive)
+	 * @param
+	 * @return the range of subscriptions of the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Subscription> getUserSubscriptions(
 			long userId, int start, int end,
 			OrderByComparator orderByComparator)
@@ -235,6 +371,15 @@ public class SubscriptionLocalServiceImpl
 			userId, start, end, orderByComparator);
 	}
 
+	/**
+	 * Returns all the subscriptions of the user to the entities with the class
+	 * name.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  className the entity's class name
+	 * @return the subscriptions of the user to the entities with the class name
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Subscription> getUserSubscriptions(
 			long userId, String className)
 		throws SystemException {
@@ -244,10 +389,28 @@ public class SubscriptionLocalServiceImpl
 		return subscriptionPersistence.findByU_C(userId, classNameId);
 	}
 
+	/**
+	 * Returns the number of subscriptions of the user.
+	 *
+	 * @param  userId the primary key of the user
+	 * @return the number of subscriptions of the user
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getUserSubscriptionsCount(long userId) throws SystemException {
 		return subscriptionPersistence.countByUserId(userId);
 	}
 
+	/**
+	 * Returns <code>true</code> if the user is subscribed to the entity.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  userId the primary key of the user
+	 * @param  className the entity's class name
+	 * @param  classPK the primary key of the entity's instance
+	 * @return <code>true</code> if the user is subscribed to the entity;
+	 *         <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean isSubscribed(
 			long companyId, long userId, String className, long classPK)
 		throws SystemException {
@@ -265,6 +428,18 @@ public class SubscriptionLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns <code>true</code> if the user is subscribed to any of the
+	 * entities.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  userId the primary key of the user
+	 * @param  className the entity's class name
+	 * @param  classPKs the primary key of the entities
+	 * @return <code>true</code> if the user is subscribed to any of the
+	 *         entities; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean isSubscribed(
 			long companyId, long userId, String className, long[] classPKs)
 		throws SystemException {

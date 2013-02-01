@@ -28,6 +28,7 @@ public class RateCommentTest extends BaseTestCase {
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		selenium.waitForText("//div[@class='aui-rating-label-element']",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),

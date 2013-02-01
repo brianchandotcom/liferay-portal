@@ -108,7 +108,7 @@ public class DLFileEntryPermission {
 
 				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 					if (!DLFolderPermission.contains(
-							permissionChecker, dlFolder, ActionKeys.ACCESS) &&
+							permissionChecker, dlFolder, ActionKeys.ACCESS) ||
 						!DLFolderPermission.contains(
 							permissionChecker, dlFolder, ActionKeys.VIEW)) {
 

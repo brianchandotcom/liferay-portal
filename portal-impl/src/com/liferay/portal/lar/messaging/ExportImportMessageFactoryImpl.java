@@ -24,8 +24,13 @@ import com.liferay.portal.model.StagedModel;
 import java.util.Date;
 
 /**
+ * Implementing class for the export import message factory.
+ *
  * @author Daniel Kocsis
  * @author Mate Thurzo
+ * @see    com.liferay.portal.kernel.lar.messaging.ExportImportMessage
+ * @see    com.liferay.portal.kernel.lar.messaging.ExportImportMessageFactoryUtil
+ * @since  6.2
  */
 public class ExportImportMessageFactoryImpl
 	implements ExportImportMessageFactory {

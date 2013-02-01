@@ -17,8 +17,14 @@ package com.liferay.portal.kernel.lar.messaging;
 import com.liferay.portal.model.StagedModel;
 
 /**
+ * The interface for the factory to produce export and import status messages.
+ *
  * @author Daniel Kocsis
  * @author Mate Thurzo
+ * @see    ExportImportMessage
+ * @see    ExportImportMessageLevel
+ * @see    ExportImportMessageFactoryUtil
+ * @since  6.2
  */
 public interface ExportImportMessageFactory {
 

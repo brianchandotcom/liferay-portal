@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
 
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,34 +29,26 @@ import java.util.regex.Pattern;
 public class RegexTransformerListener extends BaseTransformerListener {
 
 	@Override
-	public String onOutput(String s) {
+	public String onOutput(
+		String output, String languageId, Map<String, String> tokens) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("onOutput");
 		}
 
-		s = replace(s);
-
-		return s;
+		return replace(output);
 	}
 
 	@Override
-	public String onScript(String s) {
+	public String onScript(
+		String script, String xml, String languageId,
+		Map<String, String> tokens) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("onScript");
 		}
 
-		s = replace(s);
-
-		return s;
-	}
-
-	@Override
-	public String onXml(String s) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("onXml");
-		}
-
-		return s;
+		return replace(script);
 	}
 
 	protected String replace(String s) {

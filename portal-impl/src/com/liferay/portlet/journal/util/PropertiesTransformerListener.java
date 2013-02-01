@@ -33,34 +33,26 @@ import java.util.Properties;
 public class PropertiesTransformerListener extends BaseTransformerListener {
 
 	@Override
-	public String onOutput(String s) {
+	public String onOutput(
+		String output, String languageId, Map<String, String> tokens) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("onOutput");
 		}
 
-		s = replace(s);
-
-		return s;
+		return replace(output, languageId, tokens);
 	}
 
 	@Override
-	public String onScript(String s) {
+	public String onScript(
+		String script, String xml, String languageId,
+		Map<String, String> tokens) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("onScript");
 		}
 
-		s = replace(s);
-
-		return s;
-	}
-
-	@Override
-	public String onXml(String s) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("onXml");
-		}
-
-		return s;
+		return replace(script, languageId, tokens);
 	}
 
 	/**
@@ -69,8 +61,8 @@ public class PropertiesTransformerListener extends BaseTransformerListener {
 	 *
 	 * @return the processed string
 	 */
-	protected String replace(String s) {
-		Map<String, String> tokens = getTokens();
+	protected String replace(
+		String s, String languageId, Map<String, String> tokens) {
 
 		String templateId = tokens.get("template_id");
 
@@ -95,7 +87,7 @@ public class PropertiesTransformerListener extends BaseTransformerListener {
 			long groupId = GetterUtil.getLong(tokens.get("group_id"));
 
 			String script = JournalUtil.getTemplateScript(
-				groupId, _GLOBAL_PROPERTIES, newTokens, getLanguageId());
+				groupId, _GLOBAL_PROPERTIES, newTokens, languageId);
 
 			PropertiesUtil.load(properties, script);
 		}

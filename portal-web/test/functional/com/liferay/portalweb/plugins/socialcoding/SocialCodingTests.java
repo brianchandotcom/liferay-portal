@@ -15,6 +15,7 @@
 package com.liferay.portalweb.plugins.socialcoding;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,7 +31,7 @@ public class SocialCodingTests extends BaseTestSuite {
 		testSuite.addTestSuite(RemovePortletTest.class);
 		testSuite.addTestSuite(AddSVNPortletTest.class);
 		testSuite.addTestSuite(RemovePortletTest.class);
-		testSuite.addTestSuite(DeletePageTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

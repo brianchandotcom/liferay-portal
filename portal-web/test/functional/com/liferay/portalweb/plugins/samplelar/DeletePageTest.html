@@ -19,17 +19,42 @@
 	<td>Dockbar</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>assertText</td>
+	<td>//li[@id='_145_manageContent']/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_manageContent']/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//li[contains(@class,'manage-page')]/a</td>
-	<td>Manage Pages</td>
+	<td>Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class,'manage-page')]/a</td>
+	<td>Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//li[contains(@class,'manage-page')]/a</td>
-	<td>Manage Pages</td>
+	<td>Page</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='manageContentDialog']</td>
+	<td>Manage Page</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='manageContentDialog']</td>
+	<td>Mange Page</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//a[@class='layout-tree']</td>
 	<td>Public Pages</td>
 </tr>
@@ -44,8 +69,8 @@
 	<td>WelcomePresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>assertVisible</td>
+	<td>xPath=(//div[@id='_88_layoutsTreeOutput'])/ul/li/div/div[1]</td>
 	<td>Drop Down Arrow</td>
 </tr>
 <tr>
@@ -55,7 +80,7 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>//a[contains(text(),'Welcome')]</td>
 	<td>Welcome</td>
 </tr>
 <tr>
@@ -80,22 +105,22 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//button[3]</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//button[3]</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//button[3]</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -104,13 +129,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='manageContentDialog']</td>
+	<td>Manage Page</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='manageContentDialog']</td>
+	<td>Mange Page</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='layout-tree']</td>
+	<td>Public Pages</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xPath=(//div[@id='_88_layoutsTreeOutput'])/ul/li/div/div[1]</td>
 	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>//a[contains(text(),'Welcome')]</td>
 	<td>Welcome</td>
 </tr>
 <tr>
@@ -135,22 +185,22 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//button[3]</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//button[3]</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//button[3]</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -159,13 +209,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>assertVisible</td>
 	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
 	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>//a[contains(text(),'Welcome')]</td>
 	<td>Welcome</td>
 </tr>
 <tr>
@@ -190,22 +240,22 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//button[3]</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//button[3]</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//button[3]</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -214,13 +264,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>assertVisible</td>
 	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
 	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>//a[contains(text(),'Welcome')]</td>
 	<td>Welcome</td>
 </tr>
 <tr>
@@ -245,22 +295,22 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//button[3]</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//button[3]</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//button[3]</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -269,13 +319,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>assertVisible</td>
 	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
 	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>//a[contains(text(),'Welcome')]</td>
 	<td>Welcome</td>
 </tr>
 <tr>
@@ -300,22 +350,22 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//button[3]</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//button[3]</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//button[3]</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-header-row title']/div/div[2]/span/button/span[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -348,7 +398,31 @@
 	<td>Page5NotPresent</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog.</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>link=Sample LAR Test Page</td>
+	<td>Sample LAR Test Page</td>
+</tr>
 </tbody></table>
 </body>
 </html>

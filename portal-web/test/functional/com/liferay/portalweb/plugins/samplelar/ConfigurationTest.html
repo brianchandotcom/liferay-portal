@@ -14,14 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>clickAtAndWait</td>
 	<td>link=Sample LAR Test Page</td>
 	<td>Sample LAR Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Sample LAR Test Page</td>
-	<td>Sample LAR Test Page</td>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
@@ -29,24 +29,34 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Export / Import</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
 	<td>Export / Import</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Export / Import</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
+	<td>Export / Import</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
 	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>//input[@id='_86_exportFileName']</td>
-	<td></td>
+	<td>Export the selected data to the given LAR file name. </td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
@@ -54,21 +64,20 @@
 	<td>Export</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>link=Import</td>
 	<td>Import</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>//input[@id='_86_importFileName']</td>
-	<td></td>
+	<td>Import a LAR file to overwrite the selected data.</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>//input[@value='Import']</td>
-	<td></td>
+	<td>Import</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

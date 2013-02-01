@@ -28,15 +28,15 @@ public class SelectBirthdayTest extends BaseTestCase {
 		selenium.clickAt("link=Joe Bloggs",
 			RuntimeVariables.replace("Joe Bloggs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//select[@id='_2_birthdayMonth']",
+		selenium.clickAt("//select[@id='_2_birthdaymonth']",
 			RuntimeVariables.replace("March"));
-		selenium.select("//select[@id='_2_birthdayMonth']",
+		selenium.select("//select[@id='_2_birthdaymonth']",
 			RuntimeVariables.replace("March"));
-		selenium.waitForSelectedLabel("//select[@id='_2_birthdayMonth']",
+		selenium.waitForSelectedLabel("//select[@id='_2_birthdaymonth']",
 			"March");
-		selenium.select("//select[@id='_2_birthdayYear']",
+		selenium.select("//select[@id='_2_birthdayyear']",
 			RuntimeVariables.replace("1986"));
-		selenium.waitForSelectedLabel("//select[@id='_2_birthdayYear']", "1986");
+		selenium.waitForSelectedLabel("//select[@id='_2_birthdayyear']", "1986");
 		selenium.waitForVisible("//button[@id='buttonTest']");
 		selenium.clickAt("//button[@id='buttonTest']",
 			RuntimeVariables.replace("Date Picker"));
@@ -56,20 +56,20 @@ public class SelectBirthdayTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("May 1986"),
 			selenium.getText("//div[contains(@class,'calendar-header')]/div"));
 		selenium.waitForVisible(
-			"//table[@aria-label='May 1986']/tbody/tr[5]/td[9]");
+			"//table[@aria-label='May 1986']/tbody/tr[5]/td[contains(.,'31')]");
 		assertEquals(RuntimeVariables.replace("31"),
 			selenium.getText(
-				"//table[@aria-label='May 1986']/tbody/tr[5]/td[9]"));
-		selenium.clickAt("//table[@aria-label='May 1986']/tbody/tr[5]/td[9]",
+				"//table[@aria-label='May 1986']/tbody/tr[5]/td[contains(.,'31')]"));
+		selenium.clickAt("//table[@aria-label='May 1986']/tbody/tr[5]/td[contains(.,'31')]",
 			RuntimeVariables.replace("31"));
-		selenium.waitForNotVisible(
-			"//div[contains(@class,'calendar-header')]/div");
+		selenium.waitForElementPresent(
+			"//div[contains(@class,'aui-date-picker-hidden')]");
 		assertEquals("May",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayMonth']"));
+			selenium.getSelectedLabel("//select[@id='_2_birthdaymonth']"));
 		assertEquals("31",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayDay']"));
+			selenium.getSelectedLabel("//select[@id='_2_birthdayday']"));
 		assertEquals("1986",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayYear']"));
+			selenium.getSelectedLabel("//select[@id='_2_birthdayyear']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -77,16 +77,10 @@ public class SelectBirthdayTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("May",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayMonth']"));
+			selenium.getSelectedLabel("//select[@id='_2_birthdaymonth']"));
 		assertEquals("31",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayDay']"));
+			selenium.getSelectedLabel("//select[@id='_2_birthdayday']"));
 		assertEquals("1986",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayYear']"));
-		assertEquals("May",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayMonth']"));
-		assertEquals("31",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayDay']"));
-		assertEquals("1986",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayYear']"));
+			selenium.getSelectedLabel("//select[@id='_2_birthdayyear']"));
 	}
 }

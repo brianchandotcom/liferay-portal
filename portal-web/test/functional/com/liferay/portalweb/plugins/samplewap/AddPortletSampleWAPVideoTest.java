@@ -47,9 +47,9 @@ public class AddPortletSampleWAPVideoTest extends BaseTestCase {
 		selenium.waitForElementPresent("//li[@title='Sample WAP Video']/p/a");
 		selenium.clickAt("//li[@title='Sample WAP Video']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//section");
-		assertTrue(selenium.isVisible("//section"));
-		selenium.waitForVisible("//div/div[2]/section");
-		assertTrue(selenium.isVisible("//div/div[2]/section"));
+		selenium.waitForVisible("//div[1]/section");
+		assertTrue(selenium.isVisible("//div[1]/section"));
+		selenium.waitForVisible("//div[2]/section");
+		assertTrue(selenium.isVisible("//div[2]/section"));
 	}
 }

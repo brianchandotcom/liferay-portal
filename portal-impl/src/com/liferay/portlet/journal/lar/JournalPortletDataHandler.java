@@ -603,10 +603,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				"small-image-path");
 
 			if (Validator.isNotNull(article.getSmallImageURL())) {
-				String smallImageURL =
-					JournalPortletDataHandler.importReferencedContent(
-						portletDataContext, articleElement,
-						article.getSmallImageURL());
+				String smallImageURL = importReferencedContent(
+					portletDataContext, articleElement,
+					article.getSmallImageURL());
 
 				article.setSmallImageURL(smallImageURL);
 			}

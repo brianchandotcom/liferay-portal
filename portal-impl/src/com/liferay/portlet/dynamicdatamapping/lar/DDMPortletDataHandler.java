@@ -172,13 +172,12 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 				template.getSmallImageId());
 
 			if (Validator.isNotNull(template.getSmallImageURL())) {
-				String smallImageURL =
-					DDMPortletDataHandler.exportReferencedContent(
-						portletDataContext, dlFileEntryTypesElement,
-						dlFoldersElement, dlFileEntriesElement,
-						dlFileRanksElement, dlRepositoriesElement,
-						dlRepositoryEntriesElement, templateElement,
-						template.getSmallImageURL().concat(StringPool.SPACE));
+				String smallImageURL = exportReferencedContent(
+					portletDataContext, dlFileEntryTypesElement,
+					dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
+					dlRepositoriesElement, dlRepositoryEntriesElement,
+					templateElement,
+					template.getSmallImageURL().concat(StringPool.SPACE));
 
 				template.setSmallImageURL(smallImageURL);
 			}

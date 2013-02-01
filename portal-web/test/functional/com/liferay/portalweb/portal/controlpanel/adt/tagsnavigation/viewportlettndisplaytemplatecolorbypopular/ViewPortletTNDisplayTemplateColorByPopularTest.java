@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.wiki.portlet.removeportlet;
+package com.liferay.portalweb.portal.controlpanel.adt.tagsnavigation.viewportlettndisplaytemplatecolorbypopular;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,18 +20,19 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RemovePortletWikiTest extends BaseTestCase {
-	public void testRemovePortletWiki() throws Exception {
+public class ViewPortletTNDisplayTemplateColorByPopularTest extends BaseTestCase {
+	public void testViewPortletTNDisplayTemplateColorByPopular()
+		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Wiki Test Page",
-			RuntimeVariables.replace("Wiki Test Page"));
+		selenium.clickAt("link=Tags Navigation Test Page",
+			RuntimeVariables.replace("Tags Navigation Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.click("//img[@alt='Remove']");
-		selenium.waitForConfirmation(
-			"Are you sure you want to remove this component?");
-		selenium.waitForElementNotPresent("//section");
-		assertTrue(selenium.isElementNotPresent("//section"));
+		assertEquals(RuntimeVariables.replace("Tags Navigation"),
+			selenium.getText("//span[@class='portlet-title-text']"));
+		assertEquals(RuntimeVariables.replace("selenium"),
+			selenium.getText(
+				"//div[@class='portlet-body']/ul/li/a[contains(@style,'green')]"));
 	}
 }

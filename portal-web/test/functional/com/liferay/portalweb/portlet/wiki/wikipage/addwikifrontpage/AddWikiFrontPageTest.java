@@ -36,25 +36,26 @@ public class AddWikiFrontPageTest extends BaseTestCase {
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
-			"//textarea[@id='_36_editor' and @style='display: none;']");
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/wikilink/plugin.js')]");
+		selenium.waitForText("//span[@class='cke_toolbar']/span[contains(.,'Normal')]/a",
+			"Normal");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__36_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
+		selenium.waitForVisible(
+			"//a[@class='cke_button cke_button__source cke_button_on']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
+		selenium.type("//div[@id='cke_1_contents']/textarea",
 			RuntimeVariables.replace("Wiki FrontPage Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_36_editor' and @style='display: none;']");
-		assertTrue(selenium.isVisible(
-				"//td[@id='cke_contents__36_editor']/iframe"));
-		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
-		selenium.waitForText("//body", "Wiki FrontPage Content");
+		selenium.waitForVisible(
+			"//a[@class='cke_button cke_button__source cke_button_off']");
+		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));

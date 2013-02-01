@@ -49,11 +49,6 @@
 	<td>Categories</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>//input[@value='Add Category']</td>
 	<td>Add Category</td>
@@ -90,12 +85,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//li/div/div[4]</td>
+	<td>//div[@class='vocabulary-categories']/div/ul/li[contains(.,'Category Name')]</td>
 	<td>Category Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li/div/div[4]</td>
+	<td>//div[@class='vocabulary-categories']/div/ul/li[contains(.,'Category Name')]</td>
 	<td>Category Name</td>
 </tr>
 </tbody></table>

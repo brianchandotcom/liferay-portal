@@ -16,7 +16,10 @@ package com.liferay.portalweb.portal.controlpanel.adt;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.adt.assetpublisher.AssetPublisherTestPlan;
+import com.liferay.portalweb.portal.controlpanel.adt.categoriesnavigation.CategoriesNavigationTestPlan;
 import com.liferay.portalweb.portal.controlpanel.adt.sitemap.SiteMapTestPlan;
+import com.liferay.portalweb.portal.controlpanel.adt.tagsnavigation.TagsNavigationTestPlan;
+import com.liferay.portalweb.portal.controlpanel.adt.wiki.WikiTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,7 +33,10 @@ public class ADTTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AssetPublisherTestPlan.suite());
+		testSuite.addTest(CategoriesNavigationTestPlan.suite());
 		testSuite.addTest(SiteMapTestPlan.suite());
+		testSuite.addTest(TagsNavigationTestPlan.suite());
+		testSuite.addTest(WikiTestPlan.suite());
 
 		return testSuite;
 	}

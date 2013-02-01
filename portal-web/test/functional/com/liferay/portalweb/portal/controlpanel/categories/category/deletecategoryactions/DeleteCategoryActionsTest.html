@@ -50,23 +50,33 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='aui-tree-node-checkbox-container']</td>
-	<td>Entry Check Box</td>
+	<td>//input[@name='_147_checkAllCategoriesCheckbox']</td>
+	<td>Categories Checkbox</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>//div[contains(@class,'aui-tree-node-checked')]/div[@class='aui-tree-node-checkbox-container']</td>
-	<td>Entry Check Box Checked</td>
+	<td>storeChecked</td>
+	<td>//input[@name='_147_checkAllCategoriesCheckbox']</td>
+	<td>categoriesCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${categoriesCheckbox}</td>
+	<td>CategoriesCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='aui-tree-node-checkbox-container']</td>
-	<td>Entry Check Box</td>
+	<td>//input[@name='_147_checkAllCategoriesCheckbox']</td>
+	<td>Categories Checkbox</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//div[contains(@class,'aui-tree-node-checked')]/div[@class='aui-tree-node-checkbox-container']</td>
-	<td>Entry Check Box Checked</td>
+	<td>label</td>
+	<td>CategoriesCheckbox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_147_checkAllCategoriesCheckbox']</td>
+	<td>Categories Checkbox</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -80,21 +90,21 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to delete the selected categories?</td>
 	<td></td>
 </tr>
@@ -107,11 +117,6 @@
 	<td>assertText</td>
 	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
 	<td>Your request processed successfully.</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-message-response portlet-msg-info']</td>
-	<td>There are no categories.</td>
 </tr>
 <tr>
 	<td>assertText</td>

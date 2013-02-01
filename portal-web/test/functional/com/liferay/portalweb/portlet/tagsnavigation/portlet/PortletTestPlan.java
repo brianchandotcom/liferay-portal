@@ -17,6 +17,7 @@ package com.liferay.portalweb.portlet.tagsnavigation.portlet;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.tagsnavigation.portlet.addportletstn.AddPortletsTNTests;
 import com.liferay.portalweb.portlet.tagsnavigation.portlet.addportlettn.AddPortletTNTests;
+import com.liferay.portalweb.portlet.tagsnavigation.portlet.configureportlettndisplaytemplatecolorbypopular.ConfigurePortletTNDisplayTemplateColorByPopularTests;
 import com.liferay.portalweb.portlet.tagsnavigation.portlet.removeportlettn.RemovePortletTNTests;
 
 import junit.framework.Test;
@@ -32,6 +33,8 @@ public class PortletTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddPortletTNTests.suite());
 		testSuite.addTest(AddPortletsTNTests.suite());
+		testSuite.addTest(
+			ConfigurePortletTNDisplayTemplateColorByPopularTests.suite());
 		testSuite.addTest(RemovePortletTNTests.suite());
 
 		return testSuite;

@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.categoriesnavigation.portlet;
+package com.liferay.portalweb.portlet.wiki.portlet.configureportletwikidisplaytemplatesocial;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletcn.AddPortletCNTests;
-import com.liferay.portalweb.portlet.categoriesnavigation.portlet.addportletscn.AddPortletsCNTests;
-import com.liferay.portalweb.portlet.categoriesnavigation.portlet.configureportletcndisplaytemplatemulticolumn.ConfigurePortletCNDisplayTemplateMultiColumnTests;
-import com.liferay.portalweb.portlet.categoriesnavigation.portlet.removeportletcn.RemovePortletCNTests;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPageWikiTest;
+import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPortletWikiTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,18 +25,16 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletTestPlan extends BaseTestSuite {
-
+public class ConfigurePortletWikiDisplayTemplateSocialTests
+	extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AddPortletCNTests.suite());
-		testSuite.addTest(AddPortletsCNTests.suite());
-		testSuite.addTest(
-			ConfigurePortletCNDisplayTemplateMultiColumnTests.suite());
-		testSuite.addTest(RemovePortletCNTests.suite());
+		testSuite.addTestSuite(AddPageWikiTest.class);
+		testSuite.addTestSuite(AddPortletWikiTest.class);
+		testSuite.addTestSuite(ConfigurePortletWikiDisplayTemplateSocialTest.class);
+		testSuite.addTestSuite(ConfigurePortletWikiDisplayTemplateDefaultTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

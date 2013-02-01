@@ -15,7 +15,13 @@
 package com.liferay.portal.kernel.lar.messaging;
 
 /**
+ * Enumeration for the different levels used by the export and import status
+ * messages
+ *
  * @author Mate Thurzo
+ * @see    ExportImportMessage
+ * @see    ExportImportMessageFactoryUtil
+ * @since  6.2
  */
 public enum ExportImportMessageLevel {
 

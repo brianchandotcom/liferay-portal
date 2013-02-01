@@ -75,6 +75,44 @@ public class BookmarksFolderServiceTest {
 	}
 
 	@Test
+	public void testCountRangeSearch() throws Exception {
+		BookmarksEntry entry = BookmarksTestUtil.addEntry(_group.getGroupId());
+		BookmarksTestUtil.addEntry(_group.getGroupId());
+		BookmarksTestUtil.addEntry(_group.getGroupId());
+		BookmarksTestUtil.addEntry(_group.getGroupId());
+
+		long companyId = _group.getCompanyId();
+		long groupId = _group.getGroupId();
+		long folderId = entry.getFolderId();
+		String keywords = "test";
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setFolderIds(new long[] {folderId});
+		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setKeywords(keywords);
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
+
+		searchContext.setEnd(3);
+		searchContext.setFolderIds((long[])null);
+		searchContext.setStart(1);
+
+		Hits hits = indexer.search(searchContext);
+
+		Assert.assertEquals(4, hits.getLength());
+		Assert.assertEquals(2, hits.getDocs().length);
+	}
+
+	@Test
 	public void testDeleteFolder() throws Exception {
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
 			_group.getGroupId());
@@ -178,20 +216,6 @@ public class BookmarksFolderServiceTest {
 		Query query = hits.getQuery();
 
 		Assert.assertEquals(query.toString(), 0, hits.getLength());
-
-		BookmarksTestUtil.addEntry(_group.getGroupId());
-		BookmarksTestUtil.addEntry(_group.getGroupId());
-		BookmarksTestUtil.addEntry(_group.getGroupId());
-		BookmarksTestUtil.addEntry(_group.getGroupId());
-
-		searchContext.setEnd(3);
-		searchContext.setFolderIds((long[])null);
-		searchContext.setStart(1);
-
-		hits = indexer.search(searchContext);
-
-		Assert.assertEquals(4, hits.getLength());
-		Assert.assertEquals(2, hits.getDocs().length);
 	}
 
 	private Group _group;

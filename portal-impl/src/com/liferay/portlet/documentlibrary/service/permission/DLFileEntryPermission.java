@@ -96,31 +96,27 @@ public class DLFileEntryPermission {
 			}
 		}
 
-		long folderId = dlFileEntry.getFolderId();
-
-		if (folderId !=
+		if (dlFileEntry.getFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			try {
 				DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
-					folderId);
+					dlFileEntry.getFolderId());
 
-				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-					if (!DLFolderPermission.contains(
-							permissionChecker, dlFolder, ActionKeys.ACCESS) ||
-						!DLFolderPermission.contains(
-							permissionChecker, dlFolder, ActionKeys.VIEW)) {
+				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
+					(!DLFolderPermission.contains(
+						permissionChecker, dlFolder, ActionKeys.ACCESS) ||
+					 !DLFolderPermission.contains(
+						permissionChecker, dlFolder, ActionKeys.VIEW))) {
 
-						return false;
-					}
+					return false;
 				}
 
-				if (!actionId.equals(ActionKeys.OVERRIDE_CHECKOUT)) {
-					if (DLFolderPermission.contains(
-							permissionChecker, dlFolder, actionId)) {
+				if (!actionId.equals(ActionKeys.OVERRIDE_CHECKOUT) &&
+					DLFolderPermission.contains(
+						permissionChecker, dlFolder, actionId)) {
 
-						return true;
-					}
+					return true;
 				}
 			}
 			catch (NoSuchFolderException nsfe) {

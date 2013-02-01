@@ -170,11 +170,10 @@ public class WikiPagePermission {
 
 		while (page != null) {
 			if (page.isPending()) {
-				Boolean hasPermission =
-					WorkflowPermissionUtil.hasPermission(
-						permissionChecker, page.getGroupId(),
-						WikiPage.class.getName(), page.getResourcePrimKey(),
-						actionId);
+				Boolean hasPermission = WorkflowPermissionUtil.hasPermission(
+					permissionChecker, page.getGroupId(),
+					WikiPage.class.getName(), page.getResourcePrimKey(),
+					actionId);
 
 				if ((hasPermission != null) && hasPermission.booleanValue()) {
 					return true;

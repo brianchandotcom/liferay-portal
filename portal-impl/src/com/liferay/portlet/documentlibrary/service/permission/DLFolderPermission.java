@@ -83,12 +83,10 @@ public class DLFolderPermission {
 		long folderId = dlFolder.getFolderId();
 
 		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-			DLFolder originalFolder = dlFolder;
+			long originalFolderId = folderId;
 
 			try {
-				while (folderId !=
-						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
+				while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 					dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
 
 					if (!permissionChecker.hasOwnerPermission(
@@ -114,7 +112,7 @@ public class DLFolderPermission {
 				return true;
 			}
 
-			folderId = originalFolder.getFolderId();
+			folderId = originalFolderId;
 		}
 
 		try {

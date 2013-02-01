@@ -109,11 +109,11 @@ public class MBCategoryPermission {
 		long categoryId = category.getCategoryId();
 
 		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-			MBCategory originalCategory = category;
+			long originalCategoryId = categoryId;
 
 			try {
 				while (categoryId !=
-						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+							MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
 					category = MBCategoryLocalServiceUtil.getCategory(
 						categoryId);
@@ -142,7 +142,7 @@ public class MBCategoryPermission {
 				return true;
 			}
 
-			categoryId = originalCategory.getCategoryId();
+			categoryId = originalCategoryId;
 		}
 
 		try {

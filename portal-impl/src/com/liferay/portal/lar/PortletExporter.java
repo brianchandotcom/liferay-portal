@@ -1552,7 +1552,7 @@ public class PortletExporter {
 					oldValue, groupScopeId, "[$GROUP_SCOPE_ID$]");
 			}
 			else if (oldValue.startsWith(
-				AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX)) {
+						AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX)) {
 
 				// Legacy preferences
 

@@ -36,7 +36,6 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 
 import java.io.File;
 
@@ -66,13 +65,13 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-
 		_group = ServiceTestUtil.addGroup();
 
 		_layout = ServiceTestUtil.addLayout(
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
-		// Deletion of the layout to ensure scenario where layoutIds don't match
+		// Deletion of the layout to ensure scenario where layoutIds do not
+		// match
 
 		LayoutLocalServiceUtil.deleteLayout(
 			_layout, true, new ServiceContext());
@@ -212,7 +211,8 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		preferences.put(
 			"defaultScope", new String[] {Boolean.FALSE.toString()});
 		preferences.put(
-			"scopeIds", new String[] {
+			"scopeIds",
+			new String[] {
 				"Layout_" + _layout.getLayoutId(),
 				"Layout_" + secondLayout.getLayoutId()});
 

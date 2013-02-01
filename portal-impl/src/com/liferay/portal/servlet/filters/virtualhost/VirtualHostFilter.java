@@ -29,6 +29,7 @@ import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.servlet.I18nServlet;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -81,6 +82,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 		friendlyURL = friendlyURL.toLowerCase();
 
 		if (PortalInstances.isVirtualHostsIgnorePath(friendlyURL) ||
+			friendlyURL.startsWith(Portal.PATH_MODULE) ||
 			friendlyURL.startsWith(_PRIVATE_GROUP_SERVLET_MAPPING_SLASH) ||
 			friendlyURL.startsWith(_PRIVATE_USER_SERVLET_MAPPING_SLASH) ||
 			friendlyURL.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING_SLASH)) {

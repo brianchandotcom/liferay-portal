@@ -76,6 +76,8 @@ public interface Portal {
 
 	public static final String PATH_MAIN = "/c";
 
+	public static final String PATH_MODULE = "/o/";
+
 	public static final String PATH_PORTAL_LAYOUT = "/portal/layout";
 
 	public static final String PORTAL_REALM = "PortalRealm";

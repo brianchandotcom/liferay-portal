@@ -219,11 +219,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	public boolean isText(String locator, String value) {
-		return LiferaySeleniumHelper.isText(this, locator, value);
+		return value.equals(getText(locator));
 	}
 
 	public boolean isValue(String locator, String value) {
-		return LiferaySeleniumHelper.isValue(this, locator, value);
+		return value.equals(getValue(locator));
 	}
 
 	public void keyDownAndWait(String locator, String keySequence) {

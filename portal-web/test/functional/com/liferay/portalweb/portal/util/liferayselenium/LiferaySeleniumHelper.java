@@ -295,22 +295,6 @@ public class LiferaySeleniumHelper {
 		return !liferaySelenium.isVisible(locator);
 	}
 
-	public static boolean isText(
-		LiferaySelenium liferaySelenium, String locator, String value) {
-
-		liferaySelenium.setTimeoutImplicit("1");
-
-		return value.equals(liferaySelenium.getText(locator));
-	}
-
-	public static boolean isValue(
-		LiferaySelenium liferaySelenium, String locator, String value) {
-
-		liferaySelenium.setTimeoutImplicit("1");
-
-		return value.equals(liferaySelenium.getValue(locator));
-	}
-
 	public static void pause(String waitTime) throws Exception {
 		Thread.sleep(GetterUtil.getInteger(waitTime));
 	}

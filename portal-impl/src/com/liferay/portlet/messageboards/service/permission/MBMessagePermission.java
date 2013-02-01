@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -106,14 +105,10 @@ public class MBMessagePermission {
 					}
 				}
 
-				if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE ||
-					!Validator.equals(actionId, ActionKeys.VIEW)) {
+				if (MBCategoryPermission.contains(
+						permissionChecker, category, actionId)) {
 
-					if (MBCategoryPermission.contains(
-							permissionChecker, category, actionId)) {
-
-						return true;
-					}
+					return true;
 				}
 			}
 			catch (NoSuchCategoryException nsce) {

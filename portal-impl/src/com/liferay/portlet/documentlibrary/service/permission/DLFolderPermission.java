@@ -118,31 +118,26 @@ public class DLFolderPermission {
 			folderId = originalFolder.getFolderId();
 		}
 
-		if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE ||
-			!Validator.equals(actionId, ActionKeys.VIEW)) {
-			try {
-				while (folderId !=
-						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		try {
+			while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
 
-					dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+				if (permissionChecker.hasOwnerPermission(
+						dlFolder.getCompanyId(), DLFolder.class.getName(),
+						folderId, dlFolder.getUserId(), actionId) ||
+					permissionChecker.hasPermission(
+						dlFolder.getGroupId(), DLFolder.class.getName(),
+						folderId, actionId)) {
 
-					if (permissionChecker.hasOwnerPermission(
-							dlFolder.getCompanyId(), DLFolder.class.getName(),
-							folderId, dlFolder.getUserId(), actionId) ||
-						permissionChecker.hasPermission(
-							dlFolder.getGroupId(), DLFolder.class.getName(),
-							folderId, actionId)) {
-
-						return true;
-					}
-
-					folderId = dlFolder.getParentFolderId();
+					return true;
 				}
+
+				folderId = dlFolder.getParentFolderId();
 			}
-			catch (NoSuchFolderException nsfe) {
-				if (!dlFolder.isInTrash()) {
-					throw nsfe;
-				}
+		}
+		catch (NoSuchFolderException nsfe) {
+			if (!dlFolder.isInTrash()) {
+				throw nsfe;
 			}
 		}
 

@@ -116,12 +116,7 @@ public class DLFileEntryPermission {
 					}
 				}
 
-				if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE ||
-					!(Validator.equals(actionId, ActionKeys.VIEW) ||
-					  Validator.equals(actionId, ActionKeys.ACCESS) ||
-					  Validator.equals(
-						actionId, ActionKeys.OVERRIDE_CHECKOUT))) {
-
+				if (!Validator.equals(actionId, ActionKeys.OVERRIDE_CHECKOUT)) {
 					if (DLFolderPermission.contains(
 							permissionChecker, dlFolder, actionId)) {
 

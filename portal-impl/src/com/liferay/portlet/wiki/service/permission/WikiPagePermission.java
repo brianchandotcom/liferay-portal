@@ -185,48 +185,41 @@ public class WikiPagePermission {
 			page = originalPage;
 		}
 
-		if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE ||
-			!Validator.equals(actionId, ActionKeys.VIEW)) {
+		if (WikiNodePermission.contains(permissionChecker, node, actionId)) {
+				return true;
+		}
 
-			if (WikiNodePermission.contains(
-					permissionChecker, node, actionId)) {
+		while (page != null) {
+			if (page.isPending()) {
+				Boolean hasPermission =
+					WorkflowPermissionUtil.hasPermission(
+						permissionChecker, page.getGroupId(),
+						WikiPage.class.getName(), page.getResourcePrimKey(),
+						actionId);
+
+				if (hasPermission != null) {
+					return hasPermission.booleanValue();
+				}
+			}
+
+			if (page.isDraft() &&
+				Validator.equals(actionId, ActionKeys.DELETE) &&
+				(page.getStatusByUserId() == permissionChecker.getUserId())) {
 
 				return true;
 			}
 
-			while (page != null) {
-				if (page.isPending()) {
-					Boolean hasPermission =
-						WorkflowPermissionUtil.hasPermission(
-							permissionChecker, page.getGroupId(),
-							WikiPage.class.getName(), page.getResourcePrimKey(),
-							actionId);
+			if (permissionChecker.hasOwnerPermission(
+					page.getCompanyId(), WikiPage.class.getName(),
+					page.getPageId(), page.getUserId(), actionId) ||
+				permissionChecker.hasPermission(
+					page.getGroupId(), WikiPage.class.getName(),
+					page.getPageId(), actionId)) {
 
-					if (hasPermission != null) {
-						return hasPermission.booleanValue();
-					}
-				}
-
-				if (page.isDraft() &&
-					Validator.equals(actionId, ActionKeys.DELETE) &&
-					(page.getStatusByUserId() ==
-						permissionChecker.getUserId())) {
-
-					return true;
-				}
-
-				if (permissionChecker.hasOwnerPermission(
-						page.getCompanyId(), WikiPage.class.getName(),
-						page.getPageId(), page.getUserId(), actionId) ||
-					permissionChecker.hasPermission(
-						page.getGroupId(), WikiPage.class.getName(),
-						page.getPageId(), actionId)) {
-
-					return true;
-				}
-
-				page = page.getParentPage();
+				return true;
 			}
+
+			page = page.getParentPage();
 		}
 
 		return false;

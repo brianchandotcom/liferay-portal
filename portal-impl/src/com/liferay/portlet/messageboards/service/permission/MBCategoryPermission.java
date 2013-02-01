@@ -146,33 +146,28 @@ public class MBCategoryPermission {
 			categoryId = originalCategory.getCategoryId();
 		}
 
-		if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE ||
-			!Validator.equals(actionId, ActionKeys.VIEW)) {
-
-			try {
-				while (categoryId !=
+		try {
+			while (categoryId !=
 						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-					category = MBCategoryLocalServiceUtil.getCategory(
-						categoryId);
+				category = MBCategoryLocalServiceUtil.getCategory(categoryId);
 
-					if (permissionChecker.hasOwnerPermission(
-							category.getCompanyId(), MBCategory.class.getName(),
-							categoryId, category.getUserId(), actionId) ||
-						permissionChecker.hasPermission(
-							category.getGroupId(), MBCategory.class.getName(),
-							categoryId, actionId)) {
+				if (permissionChecker.hasOwnerPermission(
+						category.getCompanyId(), MBCategory.class.getName(),
+						categoryId, category.getUserId(), actionId) ||
+					permissionChecker.hasPermission(
+						category.getGroupId(), MBCategory.class.getName(),
+						categoryId, actionId)) {
 
-						return true;
-					}
-
-					categoryId = category.getParentCategoryId();
+					return true;
 				}
+
+				categoryId = category.getParentCategoryId();
 			}
-			catch (NoSuchCategoryException nsce) {
-				if (!category.isInTrash()) {
-					throw nsce;
-				}
+		}
+		catch (NoSuchCategoryException nsce) {
+			if (!category.isInTrash()) {
+				throw nsce;
 			}
 		}
 

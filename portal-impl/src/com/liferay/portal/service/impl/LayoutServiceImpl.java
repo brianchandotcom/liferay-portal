@@ -136,6 +136,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
+	 * Adds a layout with maps for names, titles, and descriptions, which only
+	 * contain mapping to their default locale, and an empty map for keywords.
+	 *
 	 * <p>
 	 * This method handles the creation of the layout including its resources,
 	 * metadata, and internal data structures. It is not necessary to make

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -116,7 +115,7 @@ public class DLFileEntryPermission {
 					}
 				}
 
-				if (!Validator.equals(actionId, ActionKeys.OVERRIDE_CHECKOUT)) {
+				if (!actionId.equals(ActionKeys.OVERRIDE_CHECKOUT)) {
 					if (DLFolderPermission.contains(
 							permissionChecker, dlFolder, actionId)) {
 

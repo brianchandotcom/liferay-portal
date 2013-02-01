@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -111,7 +110,7 @@ public class DLFolderPermission {
 				}
 			}
 
-			if (Validator.equals(actionId, ActionKeys.VIEW)) {
+			if (actionId.equals(ActionKeys.VIEW)) {
 				return true;
 			}
 
@@ -161,9 +160,9 @@ public class DLFolderPermission {
 			// Prevent the propagation of checks for actions that are not
 			// supported at the application resource level. See LPS-24245.
 
-			if (Validator.equals(actionId, ActionKeys.ACCESS) ||
-				Validator.equals(actionId, ActionKeys.ADD_SUBFOLDER) ||
-				Validator.equals(actionId, ActionKeys.DELETE)) {
+			if (actionId.equals(ActionKeys.ACCESS) ||
+				actionId.equals(ActionKeys.ADD_SUBFOLDER) ||
+				actionId.equals(ActionKeys.DELETE)) {
 
 				return false;
 			}

@@ -16,7 +16,6 @@ package com.liferay.portlet.wiki.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -157,8 +156,7 @@ public class WikiPagePermission {
 					}
 				}
 
-				if (page.isDraft() &&
-					Validator.equals(actionId, ActionKeys.DELETE) &&
+				if (page.isDraft() && actionId.equals(ActionKeys.DELETE) &&
 					(page.getStatusByUserId() ==
 						permissionChecker.getUserId())) {
 
@@ -178,7 +176,7 @@ public class WikiPagePermission {
 				page = page.getParentPage();
 			}
 
-			if (Validator.equals(actionId, ActionKeys.VIEW)) {
+			if (actionId.equals(ActionKeys.VIEW)) {
 				return true;
 			}
 
@@ -202,8 +200,7 @@ public class WikiPagePermission {
 				}
 			}
 
-			if (page.isDraft() &&
-				Validator.equals(actionId, ActionKeys.DELETE) &&
+			if (page.isDraft() && actionId.equals(ActionKeys.DELETE) &&
 				(page.getStatusByUserId() == permissionChecker.getUserId())) {
 
 				return true;

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -86,19 +85,8 @@ public class BookmarksFolderServiceTest {
 		long folderId = entry.getFolderId();
 		String keywords = "test";
 
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setCompanyId(companyId);
-		searchContext.setFolderIds(new long[] {folderId});
-		searchContext.setGroupIds(new long[] {groupId});
-		searchContext.setKeywords(keywords);
-
-		QueryConfig queryConfig = new QueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
+		SearchContext searchContext = BookmarksTestUtil.getSearchContext(
+			companyId, groupId, folderId, keywords);
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
 
@@ -137,25 +125,41 @@ public class BookmarksFolderServiceTest {
 		long folderId = entry.getFolderId();
 		String keywords = "test";
 
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setCompanyId(companyId);
-		searchContext.setFolderIds(new long[] {folderId});
-		searchContext.setGroupIds(new long[] {groupId});
-		searchContext.setKeywords(keywords);
-
-		QueryConfig queryConfig = new QueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
+		SearchContext searchContext = BookmarksTestUtil.getSearchContext(
+			companyId, groupId, folderId, keywords);
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
 
 		Hits hits = indexer.search(searchContext);
 
 		Assert.assertEquals(1, hits.getLength());
+	}
+
+	@Test
+	public void testSearchAndDeleteFolderAndSearch() throws Exception {
+		BookmarksEntry entry = BookmarksTestUtil.addEntry(_group.getGroupId());
+
+		long companyId = entry.getCompanyId();
+		long groupId = entry.getFolder().getGroupId();
+		long folderId = entry.getFolderId();
+		String keywords = "test";
+
+		SearchContext searchContext = BookmarksTestUtil.getSearchContext(
+			companyId, groupId, folderId, keywords);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
+
+		Hits hits = indexer.search(searchContext);
+
+		Assert.assertEquals(1, hits.getLength());
+
+		BookmarksFolderLocalServiceUtil.deleteFolder(folderId);
+
+		hits = indexer.search(searchContext);
+
+		Query query = hits.getQuery();
+
+		Assert.assertEquals(query.toString(), 0, hits.getLength());
 	}
 
 	@Test
@@ -167,19 +171,8 @@ public class BookmarksFolderServiceTest {
 		long folderId = entry.getFolderId();
 		String keywords = "test";
 
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setCompanyId(companyId);
-		searchContext.setFolderIds(new long[] {folderId});
-		searchContext.setGroupIds(new long[] {groupId});
-		searchContext.setKeywords(keywords);
-
-		QueryConfig queryConfig = new QueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
+		SearchContext searchContext = BookmarksTestUtil.getSearchContext(
+			companyId, groupId, folderId, keywords);
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
 
@@ -208,44 +201,6 @@ public class BookmarksFolderServiceTest {
 				entry.getEntryId(),
 				GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK)));
 		}
-	}
-
-	@Test
-	public void testSearchAndDeleteFolderAndSearch() throws Exception {
-		BookmarksEntry entry = BookmarksTestUtil.addEntry(_group.getGroupId());
-
-		long companyId = entry.getCompanyId();
-		long groupId = entry.getFolder().getGroupId();
-		long folderId = entry.getFolderId();
-		String keywords = "test";
-
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setCompanyId(companyId);
-		searchContext.setFolderIds(new long[] {folderId});
-		searchContext.setGroupIds(new long[] {groupId});
-		searchContext.setKeywords(keywords);
-
-		QueryConfig queryConfig = new QueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
-
-		Hits hits = indexer.search(searchContext);
-
-		Assert.assertEquals(1, hits.getLength());
-
-		BookmarksFolderLocalServiceUtil.deleteFolder(folderId);
-
-		hits = indexer.search(searchContext);
-
-		Query query = hits.getQuery();
-
-		Assert.assertEquals(query.toString(), 0, hits.getLength());
 	}
 
 	private Group _group;

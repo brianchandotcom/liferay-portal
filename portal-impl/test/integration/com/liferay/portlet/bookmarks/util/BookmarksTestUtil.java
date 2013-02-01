@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.bookmarks.util;
 
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
@@ -73,6 +75,34 @@ public class BookmarksTestUtil {
 
 		return BookmarksFolderServiceUtil.addFolder(
 			parentFolderId, name, description, serviceContext);
+	}
+
+	public static SearchContext getSearchContext(
+		long companyId, long groupId, long folderId, String keywords) {
+
+		return getSearchContext(
+			companyId, groupId, folderId, keywords, false, false);
+	}
+
+	public static SearchContext getSearchContext(
+		long companyId, long groupId, long folderId, String keywords,
+		boolean highlight, boolean score) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setFolderIds(new long[] {folderId});
+		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setKeywords(keywords);
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(highlight);
+		queryConfig.setScoreEnabled(score);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		return searchContext;
 	}
 
 }

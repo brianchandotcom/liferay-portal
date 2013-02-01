@@ -23,48 +23,85 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewTaskWebContentAssignedToUserTest extends BaseTestCase {
 	public void testViewTaskWebContentAssignedToUser()
 		throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=My Submissions",
-			RuntimeVariables.replace("My Submissions"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Single Approver"),
-			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[6]/a"));
-		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("Web Content Name"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Single Approver: Web Content Name"),
-			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("Withdraw Submission"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[1]/a"));
-		assertEquals(RuntimeVariables.replace(
-				"Task initially assigned to the Administrator role."),
-			selenium.getText("//div[@class='task-activity task-type-1']/div[2]"));
-		assertEquals(RuntimeVariables.replace("Assigned initial task."),
-			selenium.getText("//div[@class='task-activity task-type-1']/div[3]"));
-		assertEquals(RuntimeVariables.replace(
-				"Joe Bloggs assigned the task to userfn userln."),
-			selenium.getText(
-				"//div[@class='task-activity task-type-1'][2]/div[2]"));
-		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText("//fieldset/div/a"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=My Submissions",
+					RuntimeVariables.replace("My Submissions"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Pending",
+					RuntimeVariables.replace("Pending"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Single Approver"),
+					selenium.getText("//td[1]/a"));
+				assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+					selenium.getText("//td[2]/a"));
+				assertEquals(RuntimeVariables.replace("Web Content"),
+					selenium.getText("//td[3]/a"));
+				assertEquals(RuntimeVariables.replace("Review"),
+					selenium.getText("//td[4]/a"));
+				assertTrue(selenium.isElementPresent("//td[5]/a"));
+				assertEquals(RuntimeVariables.replace("Never"),
+					selenium.getText("//td[6]/a"));
+				selenium.clickAt("//td[2]/a",
+					RuntimeVariables.replace("WC WebContent Title"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Single Approver: WC WebContent Title"),
+					selenium.getText("//h1[@class='header-title']/span"));
+				assertEquals(RuntimeVariables.replace("Withdraw Submission"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[1]/a"));
+
+				boolean activitiesExpanded = selenium.isVisible(
+						"//div[@class='task-activity task-type-1'][2]/div[2]");
+
+				if (activitiesExpanded) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//div[@class='lfr-panel-container task-panel-container']/div[2]/div[1]/a",
+					RuntimeVariables.replace("Expand"));
+				selenium.waitForVisible(
+					"//div[@class='task-activity task-type-1']/div[2]");
+
+			case 2:
+				assertEquals(RuntimeVariables.replace(
+						"Task initially assigned to the Administrator role."),
+					selenium.getText(
+						"//div[@class='task-activity task-type-1']/div[2]"));
+				assertEquals(RuntimeVariables.replace("Assigned initial task."),
+					selenium.getText(
+						"//div[@class='task-activity task-type-1']/div[3]"));
+				assertEquals(RuntimeVariables.replace(
+						"Joe Bloggs assigned the task to userfn userln."),
+					selenium.getText(
+						"//div[@class='task-activity task-type-1'][2]/div[2]"));
+				assertEquals(RuntimeVariables.replace("Be the first."),
+					selenium.getText(
+						"//fieldset[@class='aui-fieldset add-comment ']/div/a[contains(.,'Be the first.')]"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

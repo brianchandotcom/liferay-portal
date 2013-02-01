@@ -48,8 +48,9 @@ public class DeleteWebContentCompletedEditedListTest extends BaseTestCase {
 				assertTrue(selenium.isVisible(
 						"//div[@class='entry-thumbnail']/img"));
 				assertEquals(RuntimeVariables.replace(
-						"Web Content Name Edited (Pending)"),
-					selenium.getText("//a[@class='entry-link']/span"));
+						"WC WebContent Title Edited (Pending)"),
+					selenium.getText(
+						"//a[@class='entry-link']/span[@class='entry-title']"));
 
 				boolean webContentPresent = selenium.isElementPresent(
 						"//div[@class='entry-thumbnail']");

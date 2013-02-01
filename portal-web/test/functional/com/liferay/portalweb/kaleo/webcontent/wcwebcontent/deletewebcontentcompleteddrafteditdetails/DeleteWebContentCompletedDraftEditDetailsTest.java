@@ -40,10 +40,12 @@ public class DeleteWebContentCompletedDraftEditDetailsTest extends BaseTestCase 
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Name Edited (Draft)"),
-			selenium.getText("//a[@class='entry-link']/span"));
+		assertEquals(RuntimeVariables.replace(
+				"WC WebContent Title Edited (Draft)"),
+			selenium.getText(
+				"//a[@class='entry-link']/span[@class='entry-title']"));
 		selenium.clickAt("//div[@class='entry-thumbnail']",
-			RuntimeVariables.replace("Web Content Name Edited (Draft)"));
+			RuntimeVariables.replace("WC WebContent Title Edited (Draft)"));
 		Thread.sleep(5000);
 		assertTrue(selenium.isElementPresent(
 				"//input[@value='Submit for Publication']"));

@@ -41,14 +41,12 @@ public class DeleteWebContentCompletedEditedDetailsTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"Web Content Name Edited (Pending)"),
-			selenium.getText("//a[@class='entry-link']/span"));
+				"WC WebContent Title Edited (Pending)"),
+			selenium.getText(
+				"//a[@class='entry-link']/span[@class='entry-title']"));
 		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
-		assertEquals(RuntimeVariables.replace(
-				"Web Content Name Edited (Pending)"),
-			selenium.getText("//a[@class='entry-link']/span"));
-		selenium.clickAt("//div[@class='entry-thumbnail']",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//div[@class='entry-thumbnail']/img",
+			RuntimeVariables.replace("WC WebContent Title Thumbnail"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"There is a publication workflow in process. Some actions may be disabled depending on the status and your role through this process."),
@@ -60,11 +58,13 @@ public class DeleteWebContentCompletedEditedDetailsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@id='_15_articleToolbar']/span/button[2]"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
-		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
-			selenium.getText("//a[@class='entry-link']/span"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edited"),
+			selenium.getText(
+				"//a[@class='entry-link']/span[@class='entry-title']"));
 	}
 }

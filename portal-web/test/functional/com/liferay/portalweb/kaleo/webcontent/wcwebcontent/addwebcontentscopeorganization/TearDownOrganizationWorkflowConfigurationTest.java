@@ -55,9 +55,12 @@ public class TearDownOrganizationWorkflowConfigurationTest extends BaseTestCase 
 				"//span[@title='Organization Name']/ul/li/strong/a/span"));
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(10000);
 		selenium.clickAt("link=Default Configuration",
 			RuntimeVariables.replace("Default Configuration"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible(
+			"//select[@id='_151_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']");
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']",
 			RuntimeVariables.replace("No Workflow"));
 		selenium.select("//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']",
@@ -77,6 +80,8 @@ public class TearDownOrganizationWorkflowConfigurationTest extends BaseTestCase 
 		selenium.clickAt("link=Workflow Configuration",
 			RuntimeVariables.replace("Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible(
+			"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']");
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']",
 			RuntimeVariables.replace("Default: No Workflow"));
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']",

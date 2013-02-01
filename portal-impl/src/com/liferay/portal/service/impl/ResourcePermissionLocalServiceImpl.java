@@ -1343,7 +1343,6 @@ public class ResourcePermissionLocalServiceImpl
 			".findMissingResourcePermissions";
 
 	private static final String _UPDATE_ACTION_IDS =
-		ResourcePermissionLocalServiceImpl.class.getName() +
-			".updateActionIds";
+		ResourcePermissionLocalServiceImpl.class.getName() + ".updateActionIds";
 
 }

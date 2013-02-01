@@ -213,6 +213,11 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
+		<servlet-name>Module Framework Servlet</servlet-name>
+		<servlet-class>com.liferay.portal.module.framework.ModuleFrameworkServletAdapter</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
 		<servlet-name>Netvibes Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.NetvibesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
@@ -324,6 +329,10 @@
 	<servlet-mapping>
 		<servlet-name>Main Servlet</servlet-name>
 		<url-pattern>/c/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Module Framework Servlet</servlet-name>
+		<url-pattern>/o/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Combo Servlet</servlet-name>

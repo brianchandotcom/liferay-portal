@@ -19,6 +19,7 @@ import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlo
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogsduplicate.AddPortletBlogsDuplicateTests;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogsorganization.AddPortletBlogsOrganizationTests;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogssite.AddPortletBlogsSiteTests;
+import com.liferay.portalweb.portlet.blogs.portlet.configureportletblogsdisplaytemplatebasic.ConfigurePortletBlogsDisplayTemplateBasicTests;
 import com.liferay.portalweb.portlet.blogs.portlet.configureportletblogsscopecurrentpage.ConfigurePortletBlogsScopeCurrentPageTests;
 import com.liferay.portalweb.portlet.blogs.portlet.configureportletdisplaystyleabstract.ConfigurePortletDisplayStyleAbstractTests;
 import com.liferay.portalweb.portlet.blogs.portlet.configureportletdisplaystylefullcontent.ConfigurePortletDisplayStyleFullContentTests;
@@ -40,11 +41,15 @@ public class PortletTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddPortletBlogsDuplicateTests.suite());
 		testSuite.addTest(AddPortletBlogsOrganizationTests.suite());
 		testSuite.addTest(AddPortletBlogsSiteTests.suite());
-		testSuite.addTest(ConfigurePortletBlogsScopeCurrentPageTests.suite());
+		testSuite.addTest(
+			ConfigurePortletBlogsDisplayTemplateBasicTests.suite());
+		testSuite.addTest(
+			ConfigurePortletBlogsScopeCurrentPageTests.suite());
 		testSuite.addTest(ConfigurePortletDisplayStyleAbstractTests.suite());
-		testSuite.addTest(ConfigurePortletDisplayStyleFullContentTests.suite());
+		testSuite.addTest(
+			ConfigurePortletDisplayStyleFullContentTests.suite());
 		testSuite.addTest(ConfigurePortletDisplayStyleTitleTests.suite());
-		testSuite.addTest(ConfigurePortletRemoveAllPermissionTests.suite());
+		//testSuite.addTest(ConfigurePortletRemoveAllPermissionTests.suite());
 
 		return testSuite;
 	}

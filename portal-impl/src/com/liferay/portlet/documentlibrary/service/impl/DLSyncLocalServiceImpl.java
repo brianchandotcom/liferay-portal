@@ -74,6 +74,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		dlSync.setEvent(DLSyncConstants.EVENT_ADD);
 		dlSync.setType(type);
 		dlSync.setName(name);
+		dlSync.setUpdateId(now.getTime());
 		dlSync.setVersion(version);
 
 		dlSyncPersistence.update(dlSync);
@@ -103,6 +104,8 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 			return null;
 		}
 
+		Date now = new Date();
+
 		DLSync dlSync = null;
 
 		if (event == DLSyncConstants.EVENT_DELETE) {
@@ -116,11 +119,12 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 			dlSync = dlSyncPersistence.findByFileId(fileId);
 		}
 
-		dlSync.setModifiedDate(new Date());
+		dlSync.setModifiedDate(now);
 		dlSync.setParentFolderId(parentFolderId);
 		dlSync.setName(name);
 		dlSync.setDescription(description);
 		dlSync.setEvent(event);
+		dlSync.setUpdateId(now.getTime());
 		dlSync.setVersion(version);
 
 		dlSyncPersistence.update(dlSync);

@@ -25,9 +25,10 @@ import java.util.List;
 @JSON
 public class DLSyncUpdate {
 
-	public DLSyncUpdate(List<DLSync> dlSyncs, Date lastAccessDate) {
+	public DLSyncUpdate(List<DLSync> dlSyncs, long updateId) {
 		_dlSyncs = dlSyncs;
-		_lastAccessDate = lastAccessDate;
+		_lastAccessDate = new Date(updateId);
+		_updateId = updateId;
 	}
 
 	@JSON
@@ -39,7 +40,12 @@ public class DLSyncUpdate {
 		return _lastAccessDate;
 	}
 
+	public long getUpdateId() {
+		return _updateId;
+	}
+
 	private List<DLSync> _dlSyncs;
 	private Date _lastAccessDate = new Date();
+	private long _updateId;
 
 }

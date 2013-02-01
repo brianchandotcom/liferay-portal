@@ -65,7 +65,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         the UUID, creation date, modification date, guest permissions,
 	 *         and group permissions for the template.
 	 * @return the template
-	 * @throws PortalException if a user did not have permission to add the
+	 * @throws PortalException if the user did not have permission to add the
 	 *         template or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -92,7 +92,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a template.
+	 * Adds a template with additional parameters.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the entity's instance the template
@@ -121,7 +121,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         the UUID, creation date, modification date, guest permissions,
 	 *         and group permissions for the template.
 	 * @return the template
-	 * @throws PortalException if a user did not have permission to add the
+	 * @throws PortalException if the user did not have permission to add the
 	 *         template or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -162,7 +162,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         the UUID, creation date, modification date, guest permissions,
 	 *         and group permissions for the template.
 	 * @return the new template
-	 * @throws PortalException if a user did not have permission to add the
+	 * @throws PortalException if the user did not have permission to add the
 	 *         template or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -217,7 +217,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         the UUID, creation date, modification date, guest permissions,
 	 *         and group permissions for the template.
 	 * @return the new template
-	 * @throws PortalException if a user did not have permission to add the
+	 * @throws PortalException if the user did not have permission to add the
 	 *         template or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -244,7 +244,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * Deletes the template and its resources.
 	 *
 	 * @param  templateId the primary key of the template to be deleted
-	 * @throws PortalException if a user did not have permission to delete the
+	 * @throws PortalException if the user did not have permission to delete the
 	 *         template or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -285,7 +285,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *
 	 * @param  templateId the primary key of the template
 	 * @return the template with the ID
-	 * @throws PortalException if a user did not have permission to view the
+	 * @throws PortalException if the user did not have permission to view the
 	 *         template or if a matching template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -775,7 +775,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date.
 	 * @return the updated template
-	 * @throws PortalException if a user did not have permission to update the
+	 * @throws PortalException if the user did not have permission to update the
 	 *         template or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */

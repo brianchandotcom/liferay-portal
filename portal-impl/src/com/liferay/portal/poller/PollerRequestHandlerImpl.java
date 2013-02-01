@@ -81,7 +81,13 @@ public class PollerRequestHandlerImpl
 		PollerHeader pollerHeader = parsePollerRequestHeader(
 			pollerRequestChunks);
 
-		if (pollerHeader == null) {
+		if (!validatePollerHeader(pollerHeader)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Invalid poller header for request: " +
+						pollerRequestString);
+			}
+
 			return null;
 		}
 
@@ -416,6 +422,20 @@ public class PollerRequestHandlerImpl
 
 		return (Map<String, Object>[])JSONFactoryUtil.deserialize(
 			fixedPollerRequestString);
+	}
+
+	protected boolean validatePollerHeader(PollerHeader pollerHeader) {
+		if (pollerHeader == null) {
+			return false;
+		}
+
+		Map<String, Boolean> portletIdsMap = pollerHeader.getPortletIdsMap();
+
+		if ((portletIdsMap == null) || portletIdsMap.isEmpty()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _ESCAPED_CLOSE_CURLY_BRACE =

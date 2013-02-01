@@ -86,7 +86,7 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("WC WebContent Comment"),
 					selenium.getText("//div[@class='lfr-discussion-message']"));
 				assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-					selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
+					selenium.getText("//div[@class='aui-rating-label-element']"));
 				assertTrue(selenium.isVisible(
 						"//div[contains(@id, 'ratingThumbContent')]/a[contains(@class,'rating-thumb-up')]"));
 				assertTrue(selenium.isVisible(

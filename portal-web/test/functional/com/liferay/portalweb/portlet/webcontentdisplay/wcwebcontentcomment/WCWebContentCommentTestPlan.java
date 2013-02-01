@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentdisplay.comment;
+package com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontentcomment;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.webcontentdisplay.comment.addwcwebcontentcommentwcd.AddWCWebContentCommentWCDTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.comment.deletewcwebcontentcommentwcd.DeleteWCWebContentCommentWCDTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.comment.editwcwebcontentcommentwcd.EditWCWebContentCommentWCDTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontentcomment.addwcwebcontentcommentwcd.AddWCWebContentCommentWCDTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontentcomment.deletewcwebcontentcommentwcd.DeleteWCWebContentCommentWCDTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontentcomment.editwcwebcontentcommentwcd.EditWCWebContentCommentWCDTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontentcomment.ratewcwebcontentcommentwcd.RateWCWebContentCommentWCDTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,7 +26,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CommentTestPlan extends BaseTestSuite {
+public class WCWebContentCommentTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
@@ -33,6 +34,7 @@ public class CommentTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddWCWebContentCommentWCDTests.suite());
 		testSuite.addTest(DeleteWCWebContentCommentWCDTests.suite());
 		testSuite.addTest(EditWCWebContentCommentWCDTests.suite());
+		testSuite.addTest(RateWCWebContentCommentWCDTests.suite());
 
 		return testSuite;
 	}

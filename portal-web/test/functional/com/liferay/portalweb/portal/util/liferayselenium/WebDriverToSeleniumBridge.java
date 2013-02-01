@@ -933,7 +933,7 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void runScript(String script) {
-		throw new UnsupportedOperationException();
+		getEval(script);
 	}
 
 	public void select(String selectLocator, String optionLocator) {

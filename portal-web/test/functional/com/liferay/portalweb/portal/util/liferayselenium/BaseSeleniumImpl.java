@@ -298,6 +298,10 @@ public abstract class BaseSeleniumImpl
 	public void setTimeoutImplicit(String timeout) {
 	}
 
+	public void typeIframe(String locator, String value) {
+		LiferaySeleniumHelper.typeIframe(this, locator, value);
+	}
+
 	@Override
 	public void typeKeys(String locator, String value) {
 		sendKeys(locator, value);

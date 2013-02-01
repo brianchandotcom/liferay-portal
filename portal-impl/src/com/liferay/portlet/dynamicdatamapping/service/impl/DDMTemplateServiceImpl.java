@@ -33,42 +33,40 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The DDM Template local service is responsible for accessing, creating,
- * modifying and deleting templates.
- *
- * For more information on ddm structures, see
- * {@link
- * com.liferay.portlet.dynamicdatamapping.service.impl.DDMTemplateLocalServiceImpl}.
+ * The Dynamic Data Mapping (DDM) Template local service is responsible for
+ * accessing, creating, modifying, and deleting templates.
  *
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  * @author Marcellus Tavares
+ * @see    com.liferay.portlet.dynamicdatamapping.service.impl.DDMTemplateLocalServiceImpl
  */
 public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 	/**
-	 * Adds a template
+	 * Adds a template.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  classNameId the primary key of the entity's class this template
+	 * @param  classNameId the primary key of the entity's instance the template
 	 *         is related to
-	 * @param  classPK the primary key of entity the template is related to
+	 * @param  classPK the primary key of the template's related entity
 	 * @param  nameMap the template's locales and localized names
 	 * @param  descriptionMap the template's locales and localized descriptions
-	 * @param  type the template's type. For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  mode the template's mode. For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  language the template's script language. For more information see
-	 *         {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  type the template's type. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  mode the template's mode. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  language the template's script language. For more information,
+	 *         see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  script the template's script
-	 * @param  serviceContext the service context to be applied. Must have the
-	 *         ddmResource attribute to check permissions. Can set the UUID,
-	 *         creation date, modification date, guest permissions and group
-	 *         permissions for the template.
+	 * @param  serviceContext the template's service context. Must have the
+	 *         <code>ddmResource</code> attribute to check permissions. Can set
+	 *         the UUID, creation date, modification date, guest permissions,
+	 *         and group permissions for the template.
 	 * @return the template
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a user did not have permission to add the
+	 *         template or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMTemplate addTemplate(
@@ -94,23 +92,23 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a template
+	 * Adds a template.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  classNameId the primary key of the entity's class this template
+	 * @param  classNameId the primary key of the entity's instance the template
 	 *         is related to
-	 * @param  classPK the primary key of entity the template is related to
-	 * @param  templateKey unique string identifying the template (optionally
-	 *         <code>null</code>)
+	 * @param  classPK the primary key of the template's related entity
+	 * @param  templateKey the unique string identifying the template
+	 *         (optionally <code>null</code>)
 	 * @param  nameMap the template's locales and localized names
 	 * @param  descriptionMap the template's locales and localized descriptions
-	 * @param  type the template's type. For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  mode the template's mode. For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  language the template's script language. For more information see
-	 *         {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  type the template's type. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  mode the template's mode. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  language the template's script language. For more information,
+	 *         see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  script the template's script
 	 * @param  cacheable whether the template is cacheable
 	 * @param  smallImage whether the template has a small image
@@ -118,12 +116,13 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         <code>null</code>)
 	 * @param  smallImageFile the template's small image file (optionally
 	 *         <code>null</code>)
-	 * @param  serviceContext the service context to be applied. Must have the
-	 *         ddmResource attribute to check permissions. Can set the UUID,
-	 *         creation date, modification date, guest permissions and group
-	 *         permissions for the template.
+	 * @param  serviceContext the template's service context. Must have the
+	 *         <code>ddmResource</code> attribute to check permissions. Can set
+	 *         the UUID, creation date, modification date, guest permissions,
+	 *         and group permissions for the template.
 	 * @return the template
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a user did not have permission to add the
+	 *         template or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMTemplate addTemplate(
@@ -150,19 +149,21 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Copies a template: creates a new template extracting all the values from
-	 * the original one. Supports defining the new name and description.
+	 * Copies the template, creating a new template with all the values
+	 * extracted from the original one. This method supports defining a new name
+	 * and description.
 	 *
 	 * @param  templateId the primary key of the template to be copied
 	 * @param  nameMap the new template's locales and localized names
 	 * @param  descriptionMap the new template's locales and localized
 	 *         descriptions
 	 * @param  serviceContext the service context to be applied. Must have the
-	 *         ddmResource attribute to check permissions. Can set the UUID,
-	 *         creation date, modification date, guest permissions and group
-	 *         permissions for the template.
-	 * @return the template
-	 * @throws PortalException if a portal exception occurred
+	 *         <code>ddmResource</code> attribute to check permissions. Can set
+	 *         the UUID, creation date, modification date, guest permissions,
+	 *         and group permissions for the template.
+	 * @return the new template
+	 * @throws PortalException if a user did not have permission to add the
+	 *         template or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMTemplate copyTemplate(
@@ -201,24 +202,23 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Copies a list of templates with matching class Name IDs, class PKs and
-	 * type. It creates new templates extracting all the values from the
-	 * original ones and updating their class PKs to new class PK.
+	 * Copies all the templates matching the class name ID, class PK, and type.
+	 * This method creates new templates, extracting all the values from the old
+	 * ones and updating their class PKs.
 	 *
-	 * @param  classNameId the primary key of the entity's class the template is
-	 *         related to
-	 * @param  classPK the primary key of entity the original template is
-	 *         related to
-	 * @param  newClassPK the primary key of entity the new templates will be
-	 *         related to
-	 * @param  type the template's type. For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  classNameId the primary key of the entity's instance the template
+	 *         is related to
+	 * @param  classPK the primary key of the original template's related entity
+	 * @param  newClassPK the primary key of the new template's related entity
+	 * @param  type the template's type. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  serviceContext the service context to be applied. Must have the
-	 *         ddmResource attribute to check permissions. Can set the UUID,
-	 *         creation date, modification date, guest permissions and group
-	 *         permissions for the template.
-	 * @return the template
-	 * @throws PortalException if a portal exception occurred
+	 *         <code>ddmResource</code> attribute to check permissions. Can set
+	 *         the UUID, creation date, modification date, guest permissions,
+	 *         and group permissions for the template.
+	 * @return the new template
+	 * @throws PortalException if a user did not have permission to add the
+	 *         template or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DDMTemplate> copyTemplates(
@@ -241,10 +241,11 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Deletes a template and its resources.
+	 * Deletes the template and its resources.
 	 *
-	 * @param  templateId the primary key of the template that will be deleted
-	 * @throws PortalException if a portal exception occurred
+	 * @param  templateId the primary key of the template to be deleted
+	 * @throws PortalException if a user did not have permission to delete the
+	 *         template or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void deleteTemplate(long templateId)
@@ -257,13 +258,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the template with the matching templateKey that belongs to the
-	 * group.
+	 * Returns the template matching the group and template key.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  templateKey unique string identifying the template
-	 * @return the template with the templateKey, or <code>null</code> if a
-	 *         matching template could not be found
+	 * @param  templateKey the unique string identifying the template
+	 * @return the matching template, or <code>null</code> if a matching
+	 *         template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMTemplate fetchTemplate(long groupId, String templateKey)
@@ -281,11 +281,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns a template that has a matching primary key
+	 * Returns the template with the ID.
 	 *
 	 * @param  templateId the primary key of the template
-	 * @return the matching template
-	 * @throws PortalException if the template was not found
+	 * @return the template with the ID
+	 * @throws PortalException if a user did not have permission to view the
+	 *         template or if a matching template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMTemplate getTemplate(long templateId)
@@ -298,12 +299,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns a template that has a matching template key in a given group
+	 * Returns the template matching the group and template key.
 	 *
-	 * @param  groupId the primary key of the template's group
-	 * @param  templateKey unique string identifying the template
+	 * @param  groupId the primary key of the group
+	 * @param  templateKey the unique string identifying the template
 	 * @return the matching template
-	 * @throws PortalException if the template was not found
+	 * @throws PortalException if a matching template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMTemplate getTemplate(long groupId, String templateKey)
@@ -319,19 +320,21 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns a template that has a matching template key in a given group and
-	 * optionally in the global scope.
+	 * Returns the template matching the group and template key, optionally in
+	 * the global scope.
 	 *
-	 * This method first searches in the give group and in case the template is
-	 * not found and includeGlobalTemplates is set to <code>true</code>, then
-	 * searches the global group.
+	 * <p>
+	 * This method first searches in the group. If the template is still not
+	 * found and <code>includeGlobalTemplates</code> is set to
+	 * <code>true</code>, this method searches the global group.
+	 * </p>
 	 *
-	 * @param  groupId the primary key of the template's group
-	 * @param  templateKey unique string identifying the template
+	 * @param  groupId the primary key of the group
+	 * @param  templateKey the unique string identifying the template
 	 * @param  includeGlobalTemplates whether to include the global scope in the
 	 *         search
 	 * @return the matching template
-	 * @throws PortalException if the template was not found
+	 * @throws PortalException if a matching template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMTemplate getTemplate(
@@ -348,13 +351,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns a list of templates that has a matching classNameId in a given
-	 * group
+	 * Returns all the templates matching the group and class name ID.
 	 *
-	 * @param  groupId the primary key of the template's group
-	 * @param  classNameId the primary key of the entity's class this template
-	 *         is related to
-	 * @return a list of matching templates
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the entity's instance the template
+	 *         are related to
+	 * @return the matching templates
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DDMTemplate> getTemplates(long groupId, long classNameId)
@@ -364,14 +366,14 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns a list of templates that has a matching classNameId and classPK
-	 * in a given group
+	 * Returns all the templates matching the group, class name ID, and class
+	 * PK.
 	 *
-	 * @param  groupId the primary key of the template's group
-	 * @param  classNameId the primary key of the entity's class this template
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the entity's instance the template
 	 *         is related to
-	 * @param  classPK the primary key of entity the templates are related to
-	 * @return a list of matching templates
+	 * @param  classPK the primary key of the template's related entity
+	 * @return the matching templates
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DDMTemplate> getTemplates(
@@ -383,17 +385,17 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns a list of templates that has a matching classNameId, classPK,
-	 * type and mode
+	 * Returns all the templates matching the class name ID, class PK, type, and
+	 * mode.
 	 *
-	 * @param  classNameId the primary key of the entity's class this template
+	 * @param  classNameId the primary key of the entity's instance the template
 	 *         is related to
-	 * @param  classPK the primary key of entity the templates are related to
-	 * @param  type the template's type. For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  mode the template's mode. For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @return a list of matching templates
+	 * @param  classPK the primary key of the template's related entity
+	 * @param  type the template's type. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  mode the template's mode. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @return the matching templates
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DDMTemplate> getTemplates(
@@ -414,9 +416,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns an ordered range of all the templates belonging to the company
-	 * and group that matches the classNameId, classPk type, mode and include
-	 * the keywords on its names or descriptions
+	 * Returns an ordered range of all the templates matching the group, class
+	 * name ID, class PK, type, and mode, and matching the keywords in the
+	 * template names and descriptions.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -428,25 +430,25 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * result set.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the templates company
+	 * @param  companyId the primary key of the template's company
 	 * @param  groupId the primary keys of the group
-	 * @param  classNameId the primary key of the entity's class the templates
-	 *         are related to
-	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  classNameId the primary key of the entity's instance the
+	 *         templates are related to
+	 * @param  classPK the primary key of the template's related entity
 	 * @param  keywords the keywords (space separated), which may occur in the
-	 *         template's name, or description (optionally <code>null</code>)
-	 * @param  type the template's type (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 *         template's name or description (optionally <code>null</code>)
+	 * @param  type the template's type (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  mode the template's mode (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  start the lower bound of the range of templates
-	 * @param  end the upper bound of the range of templates (not inclusive)
-	 * @param  orderByComparator the comparator to order the results by
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  start the lower bound of the range of templates to return
+	 * @param  end the upper bound of the range of templates to return (not
+	 *         inclusive)
+	 * @param  orderByComparator the comparator to order the templates
 	 *         (optionally <code>null</code>)
-	 * @return the matching templates ordered by comparator
-	 *         <code>orderByComparator</code>
+	 * @return the matching templates ordered by the comparator
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DDMTemplate> search(
@@ -461,8 +463,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns an ordered range of all the templates belonging to the company
-	 * and group that matches the classNameId, classPk, type, mode and language
+	 * Returns an ordered range of all the templates matching the group, class
+	 * name ID, class PK, name keyword, description keyword, type, mode, and
+	 * language.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -474,31 +477,31 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * result set.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the templates company
+	 * @param  companyId the primary key of the template's company
 	 * @param  groupId the primary keys of the group
-	 * @param  classNameId the primary key of the entity's class the templates
-	 *         are related to
-	 * @param  classPK the primary key of entity the templates are related to
-	 * @param  name the template's name (optionally <code>null</code>)
-	 * @param  description the template's description (optionally
+	 * @param  classNameId the primary key of the entity's instance the
+	 *         templates are related to
+	 * @param  classPK the primary key of the template's related entity
+	 * @param  name the name keywords (optionally <code>null</code>)
+	 * @param  description the description keywords (optionally
 	 *         <code>null</code>)
-	 * @param  type the template's type (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  mode the template's mode (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  type the template's type (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  mode the template's mode (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  language the template's script language (optionally
-	 *         <code>null</code>) For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 *         <code>null</code>). For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field.
-	 * @param  start the lower bound of the range of templates
-	 * @param  end the upper bound of the range of templates (not inclusive)
-	 * @param  orderByComparator the comparator to order the results by
+	 * @param  start the lower bound of the range of templates to return
+	 * @param  end the upper bound of the range of templates to return (not
+	 *         inclusive)
+	 * @param  orderByComparator the comparator to order the templates
 	 *         (optionally <code>null</code>)
-	 * @return the matching templates ordered by comparator
-	 *         <code>orderByComparator</code>
+	 * @return the matching templates ordered by the comparator
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DDMTemplate> search(
@@ -514,9 +517,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns an ordered range of all the templates belonging to the company
-	 * that matches the groupIds, classNameIds, classPk, type, mode and include
-	 * the keywords on its names or descriptions
+	 * Returns an ordered range of all the templates matching the group IDs,
+	 * class name IDs, class PK, type, and mode, and matching the keywords in
+	 * the template names and descriptions.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -528,25 +531,25 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * result set.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the templates company
+	 * @param  companyId the primary key of the template's company
 	 * @param  groupIds the primary keys of the groups
-	 * @param  classNameIds the primary keys of the entity's class the templates
-	 *         are related to
-	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  classNameIds the primary keys of the entity's instances the
+	 *         templates are related to
+	 * @param  classPK the primary key of the template's related entity
 	 * @param  keywords the keywords (space separated), which may occur in the
-	 *         template's name, or description (optionally <code>null</code>)
-	 * @param  type the template's type (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  mode the template's mode (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  start the lower bound of the range of templates
-	 * @param  end the upper bound of the range of templates (not inclusive)
-	 * @param  orderByComparator the comparator to order the results by
+	 *         template's name or description (optionally <code>null</code>)
+	 * @param  type the template's type (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  mode the template's mode (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  start the lower bound of the range of templates to return
+	 * @param  end the upper bound of the range of templates to return (not
+	 *         inclusive)
+	 * @param  orderByComparator the comparator to order the templates
 	 *         (optionally <code>null</code>)
-	 * @return the matching templates ordered by comparator
-	 *         <code>orderByComparator</code>
+	 * @return the matching templates ordered by the comparator
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DDMTemplate> search(
@@ -561,9 +564,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns an ordered range of all the templates belonging to the company
-	 * that matches the groupIds, classNameIds, classPk, name, description,
-	 * type, mode and language
+	 * Returns an ordered range of all the templates matching the group IDs,
+	 * class name IDs, class PK, name keyword, description keyword, type, mode,
+	 * and language.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -575,31 +578,31 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * result set.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the templates company
+	 * @param  companyId the primary key of the template's company
 	 * @param  groupIds the primary keys of the groups
-	 * @param  classNameIds the primary keys of the entity's class the templates
-	 *         are related to
-	 * @param  classPK the primary key of entity the templates are related to
-	 * @param  name the template's name (optionally <code>null</code>)
-	 * @param  description the template's description (optionally
+	 * @param  classNameIds the primary keys of the entity's instances the
+	 *         templates are related to
+	 * @param  classPK the primary key of the template's related entity
+	 * @param  name the name keywords (optionally <code>null</code>)
+	 * @param  description the description keywords (optionally
 	 *         <code>null</code>)
-	 * @param  type the template's type (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  mode the template's mode (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  type the template's type (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  mode the template's mode (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  language the template's script language (optionally
-	 *         <code>null</code>) For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 *         <code>null</code>). For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field.
-	 * @param  start the lower bound of the range of templates
-	 * @param  end the upper bound of the range of templates (not inclusive)
-	 * @param  orderByComparator the comparator to order the results by
+	 * @param  start the lower bound of the range of templates to return
+	 * @param  end the upper bound of the range of templates to return (not
+	 *         inclusive)
+	 * @param  orderByComparator the comparator to order the templates
 	 *         (optionally <code>null</code>)
-	 * @return the matching templates ordered by comparator
-	 *         <code>orderByComparator</code>
+	 * @return the matching templates ordered by the comparator
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<DDMTemplate> search(
@@ -615,23 +618,23 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of templates belonging to the company and group that
-	 * matches the classNameId, classPk, type, mode and include the keywords on
-	 * its names or descriptions
+	 * Returns the number of templates matching the group, class name ID, class
+	 * PK, type, and mode, and matching the keywords in the template names and
+	 * descriptions.
 	 *
 	 * @param  companyId the primary key of the template's company
 	 * @param  groupId the primary keys of the group
-	 * @param  classNameId the primary key of the entity's class the templates
-	 *         are related to
-	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  classNameId the primary key of the entity's instance the
+	 *         templates are related to
+	 * @param  classPK the primary key of the template's related entity
 	 * @param  keywords the keywords (space separated), which may occur in the
-	 *         template's name, or description (optionally <code>null</code>)
-	 * @param  type the template's type (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  mode the template's mode (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 *         template's name or description (optionally <code>null</code>)
+	 * @param  type the template's type (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  mode the template's mode (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @return the number of matching templates
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -645,27 +648,26 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of templates belonging to the company and group that
-	 * matches the classNameId, classPk, name, description, type, mode and
-	 * language
+	 * Returns the number of templates matching the group, class name ID, class
+	 * PK, name keyword, description keyword, type, mode, and language.
 	 *
-	 * @param  companyId the primary key of the templates company
+	 * @param  companyId the primary key of the template's company
 	 * @param  groupId the primary keys of the group
-	 * @param  classNameId the primary key of the entity's class the templates
-	 *         are related to
-	 * @param  classPK the primary key of entity the templates are related to
-	 * @param  name the template's name (optionally <code>null</code>)
-	 * @param  description the template's description (optionally
+	 * @param  classNameId the primary key of the entity's instance the
+	 *         templates are related to
+	 * @param  classPK the primary key of the template's related entity
+	 * @param  name the name keywords (optionally <code>null</code>)
+	 * @param  description the description keywords (optionally
 	 *         <code>null</code>)
-	 * @param  type the template's type (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  mode the template's mode (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  type the template's type (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  mode the template's mode (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  language the template's script language (optionally
-	 *         <code>null</code>) For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 *         <code>null</code>). For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field.
 	 * @return the number of matching templates
@@ -683,23 +685,23 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of templates belonging to the company that matches the
-	 * groupIds, classNameIds, classPk, type, mode and include the keywords on
-	 * its names or descriptions
+	 * Returns the number of templates matching the group IDs, class name IDs,
+	 * class PK, type, and mode, and matching the keywords in the template names
+	 * and descriptions.
 	 *
-	 * @param  companyId the primary key of the templates company
+	 * @param  companyId the primary key of the template's company
 	 * @param  groupIds the primary keys of the groups
-	 * @param  classNameIds the primary keys of the entity's class the templates
-	 *         are related to
-	 * @param  classPK the primary key of entity the templates are related to
+	 * @param  classNameIds the primary keys of the entity's instances the
+	 *         templates are related to
+	 * @param  classPK the primary key of the template's related entity
 	 * @param  keywords the keywords (space separated), which may occur in the
-	 *         template's name, or description (optionally <code>null</code>)
-	 * @param  type the template's type (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  mode the template's mode (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 *         template's name or description (optionally <code>null</code>)
+	 * @param  type the template's type (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  mode the template's mode (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @return the number of matching templates
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -713,27 +715,26 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of templates belonging to the company that matches the
-	 * groupIds, classNameIds, classPks, name, description, type, mode and
-	 * language
+	 * Returns the number of templates matching the group IDs, class name IDs,
+	 * class PK, name keyword, description keyword, type, mode, and language.
 	 *
-	 * @param  companyId the primary key of the templates company
+	 * @param  companyId the primary key of the template's company
 	 * @param  groupIds the primary keys of the groups
-	 * @param  classNameIds the primary keys of the entity's class the templates
-	 *         are related to
-	 * @param  classPK the primary key of entity the templates are related to
-	 * @param  name the template's name (optionally <code>null</code>)
-	 * @param  description the template's description (optionally
+	 * @param  classNameIds the primary keys of the entity's instances the
+	 *         templates are related to
+	 * @param  classPK the primary key of the template's related entity
+	 * @param  name the name keywords (optionally <code>null</code>)
+	 * @param  description the description keywords (optionally
 	 *         <code>null</code>)
-	 * @param  type the template's type (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  mode the template's mode (optionally <code>null</code>) For more
-	 *         information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  type the template's type (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  mode the template's mode (optionally <code>null</code>). For more
+	 *         information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  language the template's script language (optionally
-	 *         <code>null</code>) For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 *         <code>null</code>). For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field.
 	 * @return the number of matching templates
@@ -751,19 +752,19 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the template matching the templateId
+	 * Updates the template matching the ID.
 	 *
 	 * @param  templateId the primary key of the template
 	 * @param  nameMap the template's new locales and localized names
 	 * @param  descriptionMap the template's new locales and localized
 	 *         description
-	 * @param  type the template's type. For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  mode the template's mode. For more information see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
-	 * @param  language the template's script language. For more information see
-	 *         {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}
+	 * @param  type the template's type. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  mode the template's mode. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  language the template's script language. For more information,
+	 *         see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @param  script the template's script
 	 * @param  cacheable whether the template is cacheable
 	 * @param  smallImage whether the template has a small image
@@ -772,9 +773,10 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  smallImageFile the template's small image file (optionally
 	 *         <code>null</code>)
 	 * @param  serviceContext the service context to be applied. Can set the
-	 *         modification date
+	 *         modification date.
 	 * @return the updated template
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a user did not have permission to update the
+	 *         template or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMTemplate updateTemplate(

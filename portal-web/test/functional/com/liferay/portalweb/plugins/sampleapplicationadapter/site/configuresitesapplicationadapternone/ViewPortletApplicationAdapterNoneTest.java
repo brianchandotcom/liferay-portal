@@ -25,22 +25,22 @@ public class ViewPortletApplicationAdapterNoneTest extends BaseTestCase {
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/community-name/public-page");
-		selenium.waitForVisible("link=Public Page");
+		selenium.open("/web/site-name/public-page");
 		selenium.clickAt("link=Public Page",
 			RuntimeVariables.replace("Public Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));
-		assertEquals(RuntimeVariables.replace("Liferay"),
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//span[@title='Go to Site Name']"));
+		assertEquals(RuntimeVariables.replace("Navigation"),
+			selenium.getText("//span[@class='portlet-title-text']"));
+		assertEquals(RuntimeVariables.replace("Site Name"),
 			selenium.getText(
-				"//div[@class='portlet-body']/div/ul[contains(@class,'breadcrumbs-horizontal')]/li[1]/span/a"));
-		assertEquals(RuntimeVariables.replace("Community Name"),
-			selenium.getText(
-				"//div[@class='portlet-body']/div/ul[contains(@class,'breadcrumbs-horizontal')]/li[2]/span/a"));
+				"//div[@class='portlet-body']/div/ul/li/span/a[contains(.,'Site Name')]"));
 		assertEquals(RuntimeVariables.replace("Public Page"),
 			selenium.getText(
-				"//div[@class='portlet-body']/div/ul[contains(@class,'breadcrumbs-horizontal')]/li[3]/span/a"));
+				"//div[@class='portlet-body']/div/ul/li/span/a[contains(.,'Public Page')]"));
 		assertFalse(selenium.isTextPresent(
 				"This was modified by the Sample Application Adapter."));
 	}

@@ -81,7 +81,6 @@ import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
 import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
-import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -472,21 +471,9 @@ public class EditLayoutsAction extends PortletAction {
 					permissionChecker, layout, ActionKeys.UPDATE);
 			}
 
-			if (group.isSite()) {
+			if (group.isSite() || group.isCompany()) {
 				boolean publishToLive = GroupPermissionUtil.contains(
 					permissionChecker, group.getGroupId(),
-					ActionKeys.PUBLISH_STAGING);
-
-				if (!hasUpdateLayoutPermission && !publishToLive) {
-					throw new PrincipalException();
-				}
-				else {
-					return;
-				}
-			}
-			else if (group.isOrganization()) {
-				boolean publishToLive = OrganizationPermissionUtil.contains(
-					permissionChecker, group.getOrganizationId(),
 					ActionKeys.PUBLISH_STAGING);
 
 				if (!hasUpdateLayoutPermission && !publishToLive) {

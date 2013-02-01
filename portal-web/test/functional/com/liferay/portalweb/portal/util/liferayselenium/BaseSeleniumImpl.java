@@ -203,6 +203,10 @@ public abstract class BaseSeleniumImpl
 		return LiferaySeleniumHelper.isNotText(this, locator, value);
 	}
 
+	public boolean isNotValue(String locator, String value) {
+		return LiferaySeleniumHelper.isNotValue(this, locator, value);
+	}
+
 	public boolean isNotVisible(String locator) {
 		return LiferaySeleniumHelper.isNotVisible(this, locator);
 	}
@@ -216,6 +220,10 @@ public abstract class BaseSeleniumImpl
 
 	public boolean isText(String locator, String value) {
 		return LiferaySeleniumHelper.isText(this, locator, value);
+	}
+
+	public boolean isValue(String locator, String value) {
+		return LiferaySeleniumHelper.isValue(this, locator, value);
 	}
 
 	public void keyDownAndWait(String locator, String keySequence) {

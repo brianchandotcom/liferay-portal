@@ -256,11 +256,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public boolean isText(String locator, String value) {
-		return LiferaySeleniumHelper.isText(this, locator, value);
+		return value.equals(getText(locator, "1"));
 	}
 
 	public boolean isValue(String locator, String value) {
-		return LiferaySeleniumHelper.isValue(this, locator, value);
+		return value.equals(getValue(locator, "1"));
 	}
 
 	public void keyDownAndWait(String locator, String keySequence) {

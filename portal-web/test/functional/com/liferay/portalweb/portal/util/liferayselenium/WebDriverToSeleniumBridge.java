@@ -503,7 +503,11 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getText(String locator) {
-		WebElement webElement = getWebElement(locator);
+		return getText(locator, null);
+	}
+
+	public String getText(String locator, String timeout) {
+		WebElement webElement = getWebElement(locator, timeout);
 
 		String text = webElement.getText();
 
@@ -518,7 +522,11 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getValue(String locator) {
-		WebElement webElement = getWebElement(locator);
+		return getValue(locator, null);
+	}
+
+	public String getValue(String locator, String timeout) {
+		WebElement webElement = getWebElement(locator, timeout);
 
 		return webElement.getAttribute("value");
 	}

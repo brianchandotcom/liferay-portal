@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portlet.directory.organizations.viewsuborganization;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownOrganizationTest;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownSubOrganizationTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.directory.portlet.addportletdirectory.AddPageDirectoryTest;
 import com.liferay.portalweb.portlet.directory.portlet.addportletdirectory.AddPortletDirectoryTest;
@@ -33,6 +35,7 @@ public class ViewSuborganizationTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddOrganizationTest.class);
 		testSuite.addTestSuite(AddSuborganizationTest.class);
 		testSuite.addTestSuite(ViewSuborganizationTest.class);
+		testSuite.addTestSuite(TearDownSubOrganizationTest.class);
 		testSuite.addTestSuite(TearDownOrganizationTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

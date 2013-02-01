@@ -61,7 +61,7 @@ public class AdvancedSearchUserLastNameQuotesTest extends BaseTestCase {
 				selenium.type("//input[@id='_11_lastName']",
 					RuntimeVariables.replace(""));
 				assertEquals(RuntimeVariables.replace("userfn"),
-					selenium.getText("//tr[3]/td[1]/a"));
+					selenium.getText("//tr[contains(.,'userfn')]/td[1]/a"));
 				selenium.type("//input[@id='_11_lastName']",
 					RuntimeVariables.replace("\"userln1\""));
 				selenium.click(RuntimeVariables.replace(

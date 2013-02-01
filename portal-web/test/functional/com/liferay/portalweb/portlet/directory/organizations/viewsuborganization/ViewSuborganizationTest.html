@@ -55,142 +55,147 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]/a</td>
-	<td>Test Child</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[1]/a</td>
+	<td>Test Suborganization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[2]/a</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[3]/a</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[4]/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[4]/a</td>
 	<td>Cerritos</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[5]/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[5]/a</td>
 	<td>Florida</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[6]/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[6]/a</td>
 	<td>United States</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Diamond Bar')]/td[1]/a</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[2]/a</td>
+	<td>//tr[contains(.,'Diamond Bar')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[3]/a</td>
+	<td>//tr[contains(.,'Diamond Bar')]/td[3]/a</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[4]/a</td>
+	<td>//tr[contains(.,'Diamond Bar')]/td[4]/a</td>
 	<td>Diamond Bar</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[5]/a</td>
+	<td>//tr[contains(.,'Diamond Bar')]/td[5]/a</td>
 	<td>California</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[6]/a</td>
+	<td>//tr[contains(.,'Diamond Bar')]/td[6]/a</td>
 	<td>United States</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//tr[4]/td[7]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View Suborganizations')]</td>
 	<td>View Suborganizations</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View Suborganizations')]</td>
 	<td>View Suborganizations</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View Suborganizations')]</td>
 	<td>View Suborganizations</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Test Child</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[1]/a</td>
+	<td>Test Suborganization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[2]/a</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[3]/a</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[4]/a</td>
 	<td>Cerritos</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[5]/a</td>
 	<td>Florida</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[6]/a</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[6]/a</td>
 	<td>United States</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
-	<td>Test Child</td>
+	<td>//tr[contains(.,'Test Suborganization')]/td[1]/a</td>
+	<td>Test Suborganization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='organization-information']/div[1]/h2</td>
-	<td>Test Child</td>
+	<td>//div[@class='section entity-details']/h2[contains(.,'Test Suborganization')]</td>
+	<td>Test Suborganization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//dl[@class='property-list']/dt[1]</td>
+	<td>//dl[@class='property-list']/dt[contains(.,'Type')]</td>
 	<td>Type</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//dl[@class='property-list']/dd[1]</td>
+	<td>//dl[@class='property-list']/dd[contains(.,'Regular Organization')]</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//dl[@class='property-list']/dt[2]</td>
+	<td>//dl[@class='property-list']/dt[contains(.,'Parent Organization')]</td>
 	<td>Parent Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//dl[@class='property-list']/dd[2]</td>
+	<td>//dl[@class='property-list']/dd[contains(.,'Test Organization')]</td>
 	<td>Test Organization</td>
 </tr>
 <tr>

@@ -119,8 +119,8 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 
 				boolean userGroup2Present = selenium.isElementPresent(
 						"//input[@name='_127_rowIds']");
@@ -193,8 +193,8 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 
 				boolean userGroup3Present = selenium.isElementPresent(
 						"//input[@name='_127_rowIds']");
@@ -267,8 +267,8 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 
 				boolean userGroup4Present = selenium.isElementPresent(
 						"//input[@name='_127_rowIds']");
@@ -341,8 +341,8 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 
 				boolean userGroup5Present = selenium.isElementPresent(
 						"//input[@name='_127_rowIds']");
@@ -415,8 +415,8 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 
 			case 12:
 			case 13:

@@ -39,12 +39,17 @@ public class AddUserGroupTest extends BaseTestCase {
 		selenium.clickAt("link=User Groups",
 			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
-		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText(
+				"//span[@class='lfr-toolbar-button add-button ']/a"));
+		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
+			RuntimeVariables.replace("Add"));
+		selenium.waitForVisible("//input[@id='_127_name']");
 		selenium.type("//input[@id='_127_name']",
 			RuntimeVariables.replace("User Group Name"));
 		selenium.type("//textarea[@id='_127_description']",
 			RuntimeVariables.replace("User Group Description"));
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -52,8 +57,8 @@ public class AddUserGroupTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("User Group Name"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'User Group Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("User Group Description"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[contains(.,'User Group Name')]/td[3]/a"));
 	}
 }

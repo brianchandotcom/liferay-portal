@@ -39,14 +39,17 @@ public class AddOrganizationTest extends BaseTestCase {
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]");
 		assertEquals(RuntimeVariables.replace("Regular Organization"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
-			RuntimeVariables.replace("Regular Organization"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_125_name']",
 			RuntimeVariables.replace("Test Organization"));
@@ -56,6 +59,10 @@ public class AddOrganizationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Test Organization"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertTrue(selenium.isPartialText("//a[@id='_125_addressesLink']",
+				"Addresses"));
 		selenium.clickAt("//a[@id='_125_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
 		selenium.waitForVisible("//input[contains(@id,'addressStreet1')]");

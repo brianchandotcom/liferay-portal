@@ -49,23 +49,28 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>link=Add</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
@@ -82,6 +87,16 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Test Organization</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_addressesLink']</td>
+	<td>Addresses</td>
 </tr>
 <tr>
 	<td>clickAt</td>

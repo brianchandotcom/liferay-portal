@@ -44,14 +44,17 @@ public class AddUserTest extends BaseTestCase {
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+				assertEquals(RuntimeVariables.replace("Add"),
+					selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Add"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
 				assertEquals(RuntimeVariables.replace("User"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
-					RuntimeVariables.replace("User"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.select("//select[@id='_125_prefixId']",
 					RuntimeVariables.replace("Mr."));
@@ -102,8 +105,10 @@ public class AddUserTest extends BaseTestCase {
 						"//select[@id='_125_birthdayYear']"));
 				assertEquals("Male",
 					selenium.getSelectedLabel("//select[@id='_125_male']"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_passwordLink']", "Password"));
 				selenium.clickAt("//a[@id='_125_passwordLink']",
-					RuntimeVariables.replace("Password Link"));
+					RuntimeVariables.replace("Password"));
 				selenium.waitForVisible("//input[@id='_125_password1']");
 				selenium.type("//input[@id='_125_password1']",
 					RuntimeVariables.replace("password"));
@@ -115,63 +120,38 @@ public class AddUserTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				selenium.open("/web/guest/home/");
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
-				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("//input[@id='_58_login']");
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("userea@liferay.com"));
 				selenium.type("//input[@id='_58_password']",
 					RuntimeVariables.replace("password"));
 
-				boolean rememberMeCheckboxChecked1 = selenium.isChecked(
+				boolean rememberMe1NotChecked = selenium.isChecked(
 						"//input[@id='_58_rememberMeCheckbox']");
 
-				if (rememberMeCheckboxChecked1) {
+				if (rememberMe1NotChecked) {
 					label = 2;
 
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@id='_58_rememberMeCheckbox']"));
 				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 					RuntimeVariables.replace("Remember Me"));
-
-			case 2:
 				assertTrue(selenium.isChecked(
 						"//input[@id='_58_rememberMeCheckbox']"));
+
+			case 2:
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-
-				boolean iAgreeVisible1 = selenium.isVisible(
-						"//input[@value='I Agree']");
-
-				if (!iAgreeVisible1) {
-					label = 3;
-
-					continue;
-				}
-
 				selenium.clickAt("//input[@value='I Agree']",
 					RuntimeVariables.replace("I Agree"));
 				selenium.waitForPageToLoad("30000");
-
-			case 3:
-
-				boolean newPasswordVisible1 = selenium.isVisible(
-						"//input[@id='password1']");
-
-				if (!newPasswordVisible1) {
-					label = 4;
-
-					continue;
-				}
-
+				assertEquals(RuntimeVariables.replace(
+						"Please set a new password."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
 				selenium.type("//input[@id='password1']",
 					RuntimeVariables.replace("test"));
 				selenium.type("//input[@id='password2']",
@@ -179,56 +159,37 @@ public class AddUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-
-			case 4:
-
-				boolean passwordReminderVisible1 = selenium.isVisible(
-						"//input[@id='reminderQueryAnswer']");
-
-				if (!passwordReminderVisible1) {
-					label = 5;
-
-					continue;
-				}
-
 				assertEquals(RuntimeVariables.replace(
 						"Please choose a reminder query."),
-					selenium.getText("//form/div[1]"));
+					selenium.getText("//div[@class='portlet-msg-info']"));
 				selenium.type("//input[@id='reminderQueryAnswer']",
 					RuntimeVariables.replace("test"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-
-			case 5:
-				selenium.open("/web/guest/home/");
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
-				selenium.open("/web/guest/home/");
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("test@liferay.com"));
 				selenium.type("//input[@id='_58_password']",
 					RuntimeVariables.replace("test"));
 
-				boolean rememberMeCheckboxChecked2 = selenium.isChecked(
+				boolean rememberMe2NotChecked = selenium.isChecked(
 						"//input[@id='_58_rememberMeCheckbox']");
 
-				if (rememberMeCheckboxChecked2) {
-					label = 6;
+				if (rememberMe2NotChecked) {
+					label = 3;
 
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@id='_58_rememberMeCheckbox']"));
 				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 					RuntimeVariables.replace("Remember Me"));
-
-			case 6:
 				assertTrue(selenium.isChecked(
 						"//input[@id='_58_rememberMeCheckbox']"));
+
+			case 3:
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");

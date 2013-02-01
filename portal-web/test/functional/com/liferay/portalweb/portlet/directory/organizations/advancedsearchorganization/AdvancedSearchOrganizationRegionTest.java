@@ -73,7 +73,9 @@ public class AdvancedSearchOrganizationRegionTest extends BaseTestCase {
 					"United States");
 				selenium.select("//select[@id='_11_countryId']",
 					RuntimeVariables.replace(""));
-				assertTrue(selenium.isVisible("link=Test Organization"));
+				assertEquals(RuntimeVariables.replace("Test Organization"),
+					selenium.getText(
+						"//tr[contains(.,'Test Organization')]/td[1]/a"));
 				selenium.waitForPartialText("//select[@id='_11_countryId']",
 					"United States");
 				selenium.select("//select[@id='_11_countryId']",

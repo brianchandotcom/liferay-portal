@@ -55,14 +55,14 @@ public class SearchUserQuotesTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("userfn"),
-					selenium.getText("//tr[3]/td[1]/a"));
+					selenium.getText("//tr[contains(.,'userfn')]/td[1]/a"));
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("\"userfn\""));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("userfn"),
-					selenium.getText("//tr[3]/td[1]/a"));
+					selenium.getText("//tr[contains(.,'userfn')]/td[1]/a"));
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("\"userfn1\""));
 				selenium.clickAt("//input[@value='Search']",

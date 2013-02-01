@@ -60,7 +60,9 @@ public class AdvancedSearchOrganizationTypeTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.select("//select[@id='_11_type']",
 					RuntimeVariables.replace(""));
-				assertTrue(selenium.isElementPresent("link=Test Organization"));
+				assertEquals(RuntimeVariables.replace("Test Organization"),
+					selenium.getText(
+						"//tr[contains(.,'Test Organization')]/td[1]/a"));
 				selenium.select("//select[@id='_11_type']",
 					RuntimeVariables.replace("Location"));
 				selenium.clickAt("xPath=(//input[@value='Search'])[2]",

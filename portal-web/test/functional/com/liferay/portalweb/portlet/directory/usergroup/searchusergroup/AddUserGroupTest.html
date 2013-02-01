@@ -49,9 +49,19 @@
 	<td>User Groups</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Add</td>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
 	<td>Add</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_127_name']</td>
+	<td>Name (Required)</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -62,6 +72,11 @@
 	<td>type</td>
 	<td>//textarea[@id='_127_description']</td>
 	<td>User Group Description</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -75,15 +90,14 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'User Group Name')]/td[2]/a</td>
 	<td>User Group Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'User Group Name')]/td[3]/a</td>
 	<td>User Group Description</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

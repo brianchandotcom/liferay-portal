@@ -56,15 +56,17 @@ public class AdvancedSearchOrganizationZipQuotesTest extends BaseTestCase {
 					RuntimeVariables.replace("Any"));
 				selenium.type("//input[@id='_11_zip']",
 					RuntimeVariables.replace("\"11111\""));
-				selenium.clickAt("//div[2]/span[2]/span/input",
+				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_11_zip']",
 					RuntimeVariables.replace(""));
-				assertTrue(selenium.isElementPresent("link=Test Organization"));
+				assertEquals(RuntimeVariables.replace("Test Organization"),
+					selenium.getText(
+						"//tr[contains(.,'Test Organization')]/td[1]/a"));
 				selenium.type("//input[@id='_11_zip']",
 					RuntimeVariables.replace("\"111111\""));
-				selenium.clickAt("//div[2]/span[2]/span/input",
+				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_11_zip']",

@@ -110,18 +110,18 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Test Organization')]/td[1]/a</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Test Organization')]/td[1]/a</td>
 	<td>Test Organization</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_name']</td>
-	<td>Test Child</td>
+	<td>Test Suborganization</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -134,7 +134,12 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Test Suborganization</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
 	<td>//a[@id='_125_addressesLink']</td>
 	<td>Addresses</td>
 </tr>

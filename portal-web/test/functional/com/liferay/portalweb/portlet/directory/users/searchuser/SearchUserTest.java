@@ -57,7 +57,7 @@ public class SearchUserTest extends BaseTestCase {
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace(""));
 				assertEquals(RuntimeVariables.replace("userfn"),
-					selenium.getText("//tr[3]/td[1]/a"));
+					selenium.getText("//tr[contains(.,'userfn')]/td[1]/a"));
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("userfn1"));
 				selenium.clickAt("//input[@value='Search']",

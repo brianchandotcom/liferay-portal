@@ -58,7 +58,8 @@ public class SearchOrganizationTest extends BaseTestCase {
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace(""));
 				assertEquals(RuntimeVariables.replace("Test Organization"),
-					selenium.getText("//tr[3]/td[1]/a"));
+					selenium.getText(
+						"//tr[contains(.,'Test Organization')]/td[1]/a"));
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("Test1 Organization1"));
 				selenium.clickAt("//input[@value='Search']",

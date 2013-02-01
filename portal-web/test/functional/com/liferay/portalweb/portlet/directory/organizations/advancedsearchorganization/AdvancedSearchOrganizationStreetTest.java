@@ -61,7 +61,9 @@ public class AdvancedSearchOrganizationStreetTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_11_street']",
 					RuntimeVariables.replace(""));
-				assertTrue(selenium.isElementPresent("link=Test Organization"));
+				assertEquals(RuntimeVariables.replace("Test Organization"),
+					selenium.getText(
+						"//tr[contains(.,'Test Organization')]/td[1]/a"));
 				selenium.type("//input[@id='_11_street']",
 					RuntimeVariables.replace("123456 Test1 Street1"));
 				selenium.clickAt("xPath=(//input[@value='Search'])[2]",

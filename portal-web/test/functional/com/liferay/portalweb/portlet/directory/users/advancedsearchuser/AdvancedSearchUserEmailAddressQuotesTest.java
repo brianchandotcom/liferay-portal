@@ -61,7 +61,7 @@ public class AdvancedSearchUserEmailAddressQuotesTest extends BaseTestCase {
 				selenium.type("//input[@id='_11_emailAddress']",
 					RuntimeVariables.replace(""));
 				assertEquals(RuntimeVariables.replace("userfn"),
-					selenium.getText("//tr[3]/td[1]/a"));
+					selenium.getText("//tr[contains(.,'userfn')]/td[1]/a"));
 				selenium.type("//input[@id='_11_emailAddress']",
 					RuntimeVariables.replace("\"userea1@liferay.com\""));
 				selenium.click(RuntimeVariables.replace(

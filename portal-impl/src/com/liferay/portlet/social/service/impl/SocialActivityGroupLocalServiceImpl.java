@@ -26,24 +26,12 @@ import java.util.List;
 /**
  * The implementation of the social activity group local service.
  *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portlet.social.service.SocialActivityGroupLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.social.service.base.SocialActivityGroupLocalServiceBaseImpl
  * @see com.liferay.portlet.social.service.SocialActivityGroupLocalServiceUtil
  */
 public class SocialActivityGroupLocalServiceImpl
 	extends SocialActivityGroupLocalServiceBaseImpl {
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.portlet.social.service.SocialActivityGroupLocalServiceUtil} to access the social activity group local service.
-	 */
 
 	public void addActivityGroup(
 			long userId, long groupId, String className, long classPK, int type,
@@ -70,8 +58,6 @@ public class SocialActivityGroupLocalServiceImpl
 
 		socialActivityGroupLocalService.addSocialActivityGroup(activityGroup);
 
-		// Mapping
-
 		socialActivityPersistence.addSocialActivityGroup(
 			activity.getActivityId(), activityGroup);
 	}
@@ -84,8 +70,6 @@ public class SocialActivityGroupLocalServiceImpl
 
 		socialActivityGroupLocalService.updateSocialActivityGroup(
 			activityGroup);
-
-		// Mapping
 
 		socialActivityPersistence.addSocialActivityGroup(
 			activity.getActivityId(), activityGroup);

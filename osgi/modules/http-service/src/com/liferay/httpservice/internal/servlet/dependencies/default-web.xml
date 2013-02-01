@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app
+	metadata-complete="true"
+	version="2.6"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_6.xsd"
+>
+
+	<!-- ==================================================================== -->
+	<!-- Removes static references to beans from javax.el.BeanELResolver to   -->
+	<!-- ensure webapp classloader can be released on undeploy                -->
+	<!-- ==================================================================== -->
+	<listener>
+		<listener-class>org.eclipse.jetty.servlet.listener.ELContextCleaner</listener-class>
+	</listener>
+
+	<!-- ==================================================================== -->
+	<!-- Removes static cache of Methods from java.beans.Introspector to      -->
+	<!-- ensure webapp classloader can be released on undeploy                -->
+	<!-- ==================================================================== -->
+	<listener>
+		<listener-class>org.eclipse.jetty.servlet.listener.IntrospectorCleaner</listener-class>
+	</listener>
+
+	<!-- ==================================================================== -->
+	<!-- The default servlet.                                                 -->
+	<!-- This servlet, normally mapped to /, provides the handling for static -->
+	<!-- content.                                                             -->
+	<!-- ==================================================================== -->
+	<servlet>
+		<servlet-name>default</servlet-name>
+		<servlet-class>com.liferay.httpservice.servlet.ResourceServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+
+	<!-- The JSP page compiler and execution servlet, which is the mechanism  -->
+	<!-- used by the application server to support JSP pages.  Traditionally, -->
+	<!-- this servlet is mapped to the URL pattern "*.jsp".                   -->
+	<!-- This servlet supports the following initialization parameters        -->
+	<!-- (default values have been placed in square brackets):                -->
+	<!--                                                                      -->
+	<!--   checkInterval       If development is false and checkInterval is   -->
+	<!--                       greater than zero, background compilations are -->
+	<!--                       enabled. checkInterval is the time in seconds  -->
+	<!--                       between checks to see if a JSP page needs to   -->
+	<!--                       be recompiled. [0]                             -->
+	<!--                                                                      -->
+	<!--   modificationTestInterval                                           -->
+	<!--                       Causes a JSP (and its dependent files) to not  -->
+	<!--                       be checked for modification during the         -->
+	<!--                       specified time interval (in seconds) from the  -->
+	<!--                       last time the JSP was checked for              -->
+	<!--                       modification. A value of 0 will cause the JSP  -->
+	<!--                       to be checked on every access.                 -->
+	<!--                       Used in development mode only. [0]             -->
+	<!--                                                                      -->
+	<!--   compiler            Which compiler Ant should use to compile JSP   -->
+	<!--                       pages.  See the Ant documentation for more     -->
+	<!--                       information. [javac]                           -->
+	<!--                                                                      -->
+	<!--   classdebuginfo      Should the class file be compiled with         -->
+	<!--                       debugging information?  [true]                 -->
+	<!--                                                                      -->
+	<!--   classpath           What class path should I use while compiling   -->
+	<!--                       generated servlets?  [Created dynamically      -->
+	<!--                       based on the current web application]          -->
+	<!--                       [Ignored in Glassfish]                         -->
+	<!--                                                                      -->
+	<!--   development         Is Jasper used in development mode? If true,   -->
+	<!--                       the frequency at which JSPs are checked for    -->
+	<!--                       modification may be specified via the          -->
+	<!--                       modificationTestInterval parameter. [true]     -->
+	<!--                                                                      -->
+	<!--   enablePooling       Determines whether tag handler pooling is      -->
+	<!--                       enabled  [true]                                -->
+	<!--                                                                      -->
+	<!--   fork                Tell Ant to fork compiles of JSP pages so that -->
+	<!--                       JSP pages are compiled in their own JVM        -->
+	<!--                       (separate from the JVM that the application    -->
+	<!--                       server is running in). [true]                  -->
+	<!--                                                                      -->
+	<!--   ieClassId           The class-id value to be sent to Internet      -->
+	<!--                       Explorer when using <jsp:plugin> tags.         -->
+	<!--                       [clsid:8AD9C840-044E-11D1-B3E9-00805F499D93]   -->
+	<!--                                                                      -->
+	<!--   javaEncoding        Java file encoding to use for generating java  -->
+	<!--                       source files. [UTF8]                           -->
+	<!--                                                                      -->
+	<!--   keepgenerated       Should we keep the generated Java source code  -->
+	<!--                       for each page instead of deleting it?          -->
+	<!--                       [true with JDK 5 and before, or for jspc]      -->
+	<!--                       [false otherwise]                              -->
+	<!--                                                                      -->
+	<!--   saveBytecode        Should the generated byte code be saved to     -->
+	<!--                       .class files?  This option is meaningful only  -->
+	<!--                       when Java compiler API, JSR199 (available with -->
+	<!--                       JDK 6) is used for javac compilations.         -->
+	<!--                       [false] [true for jspc]                        -->
+	<!--                                                                      -->
+	<!--   mappedfile          Should we generate static content with one     -->
+	<!--                       print statement per input line, to ease        -->
+	<!--                       debugging?  [true]                             -->
+	<!--                                                                      -->
+	<!--   trimSpaces          Should white spaces in template text between   -->
+	<!--                       actions or directives be trimmed?  [false]     -->
+	<!--                                                                      -->
+	<!--   suppressSmap        Should the generation of SMAP info for JSR45   -->
+	<!--                       debugging be suppressed?  [false]              -->
+	<!--                                                                      -->
+	<!--   dumpSmap            Should the SMAP info for JSR45 debugging be    -->
+	<!--                       dumped to a file? [false]                      -->
+	<!--                       False if suppressSmap is true                  -->
+	<!--                                                                      -->
+	<!--   genStrAsCharArray   Should text strings be generated as char       -->
+	<!--                       arrays, to improve performance in some cases?  -->
+	<!--                       [false]                                        -->
+	<!--                                                                      -->
+	<!--   genStrAsByteArray   Should text strings be generated as bytes      -->
+	<!--                       (encoded with the page encoding), if the page  -->
+	<!--                       is not buffered?                               -->
+	<!--                       [true]                                         -->
+	<!--                                                                      -->
+	<!--   defaultBufferNone   Should the default for the buffer attribute of -->
+	<!--                       the page directive be "none"?  [false]         -->
+	<!--                                                                      -->
+	<!--   errorOnUseBeanInvalidClassAttribute                                -->
+	<!--                       Should Jasper issue an error when the value of -->
+	<!--                       the class attribute in an useBean action is    -->
+	<!--                       not a valid bean class?  [false]               -->
+	<!--                                                                      -->
+	<!--   scratchdir          What scratch directory should we use when      -->
+	<!--                       compiling JSP pages?  [default work directory  -->
+	<!--                       for the current web application]               -->
+	<!--                                                                      -->
+	<!--   xpoweredBy          Determines whether X-Powered-By response       -->
+	<!--                       header is added by generated servlet  [true]   -->
+	<!--                                                                      -->
+	<!--   usePrecompiled      If true, it is assumed that JSPs have been     -->
+	<!--                       precompiled, and their corresponding servlet   -->
+	<!--                       classes have been bundled in the web           -->
+	<!--                       application's WEB-INF/lib or WEB-INF/classes,  -->
+	<!--                       so that when a JSP is accessed, it is not      -->
+	<!--                       compiled, and instead, its precompiled servlet -->
+	<!--                       class is used. [false]                         -->
+	<!--                                                                      -->
+	<!--   use-precompiled     Same as usePrecompiled. If both are specified, -->
+	<!--                       usePrecompiled takes precedence                -->
+	<!--                                                                      -->
+	<!--   initialCapacity     Initial capacity of HashMap mapping JSPs to    -->
+	<!--                       their corresponding servlets [32]              -->
+	<!--                                                                      -->
+	<!--   initial-capacity    Same as initialCapacity. If both are specified,-->
+	<!--                       initialCapacity takes precedence               -->
+	<!--                                                                      -->
+	<!--   httpMethods         Comma separated list of HTTP methods supported -->
+	<!--                       by the JspServlet. Wildcard ("*") denotes      -->
+	<!--                       "ALL METHODS". [ALL METHODS]                   -->
+	<!--                                                                      -->
+	<!--   reload-interval     Specifies the frequency (in seconds) at which  -->
+	<!--                       JSP files are checked for modifications.       -->
+	<!--                       Setting this value to 0 checks JSPs for        -->
+	<!--                       modifications on every request. Setting this   -->
+	<!--                       value to -1 disables checks for JSP            -->
+	<!--                       modifications and JSP recompilation.           -->
+	<!--                                                                      -->
+	<!--   compilerSourceVM    Provides source compatibility with the         -->
+	<!--                       specified JDK release (same as -source         -->
+	<!--                       javac command-line switch)                     -->
+	<!--                                                                      -->
+	<!--   compilerTargetVM    Generates class files for specified VM version -->
+	<!--                       (same as -target javac command-line switch)    -->
+	<!--                                                                      -->
+	<!--   system-jar-includes Specify a list (of jars, or fragments of jar   -->
+	<!--                       paths) that is used to determine if a system   -->
+	<!--                       jar (obtained from the system classloader)     -->
+	<!--                       should be included in the javac classpath      -->
+	<!--                       [Include all system jars]                      -->
+
+	<servlet>
+		<servlet-name>jsp</servlet-name>
+		<servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
+		<init-param>
+			<param-name>compilerClassName</param-name>
+			<param-value>com.liferay.jsp.compiler.JspCompiler</param-value>
+		</init-param>
+		<init-param>
+			<param-name>keepgenerated</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>logVerbosityLevel</param-name>
+			<param-value>DEBUG</param-value>
+		</init-param>
+		<init-param>
+			<param-name>httpMethods</param-name>
+			<param-value>GET,POST,HEAD</param-value>
+		</init-param>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>jsp</servlet-name>
+		<url-pattern>*.jsp</url-pattern>
+		<url-pattern>*.jspf</url-pattern>
+	</servlet-mapping>
+
+</web-app>

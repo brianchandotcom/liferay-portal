@@ -34,7 +34,7 @@ public class ConfigurePortletRootLayoutTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-body']/ul/li/a)[2]"));
 		assertEquals(RuntimeVariables.replace("Site Map Test Child Page"),
 			selenium.getText("//div[@class='portlet-body']/ul/li/ul/li/a"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -46,13 +46,15 @@ public class ConfigurePortletRootLayoutTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//select[@id='_86_rootLayoutUuid']");
 		selenium.select("//select[@id='_86_rootLayoutUuid']",
-			RuntimeVariables.replace("regexp:-\\sSite Map Test Page"));
+			RuntimeVariables.replace("index=2"));
 		selenium.select("//select[@id='_86_displayDepth']",
 			RuntimeVariables.replace("1"));
 		selenium.clickAt("//input[@value='Save']",
@@ -61,8 +63,6 @@ public class ConfigurePortletRootLayoutTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("regexp:-\\sSite Map Test Page",
-			selenium.getSelectedLabel("//select[@id='_86_rootLayoutUuid']"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Site Map Test Page",

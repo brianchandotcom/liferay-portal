@@ -53,13 +53,13 @@ public class FileUploadFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(Field field, Locale locale, int valueIndex) {
-		String value = String.valueOf(field.getValue(locale, valueIndex));
+		Serializable value = field.getValue(locale, valueIndex);
 
 		if (Validator.isNull(value)) {
 			return StringPool.BLANK;
 		}
 
-		return handleJSON(value);
+		return handleJSON(String.valueOf(value));
 	}
 
 	protected String handleJSON(String json) {

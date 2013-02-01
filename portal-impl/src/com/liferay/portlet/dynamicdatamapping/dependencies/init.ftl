@@ -64,7 +64,7 @@
 	<#assign valueIndex = getterUtil.getInteger(fieldStructure.valueIndex)>
 
 	<#assign fieldValue = field.getRenderedValue(requestedLocale, valueIndex)>
-	<#assign fieldRawValue = field.getValue(requestedLocale, valueIndex)>
+	<#assign fieldRawValue = field.getValue(requestedLocale, valueIndex)!>
 </#if>
 
 <#-- Label -->

@@ -65,7 +65,7 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 	protected String doRender(Field field, Locale locale, int valueIndex)
 		throws Exception {
 
-		String value = String.valueOf(field.getValue(locale, valueIndex));
+		Serializable value = field.getValue(locale, valueIndex);
 
 		if (Validator.isNull(value)) {
 			return StringPool.BLANK;
@@ -76,10 +76,10 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 		if (fieldType.equals(DDMImpl.TYPE_RADIO) ||
 			fieldType.equals(DDMImpl.TYPE_SELECT)) {
 
-			return handleJSON(field, value, locale);
+			return handleJSON(field, String.valueOf(value), locale);
 		}
 
-		return value;
+		return String.valueOf(value);
 	}
 
 	protected String getFieldType(Field field) throws Exception {

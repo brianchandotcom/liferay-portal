@@ -936,7 +936,7 @@
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByOrganization">
 		<![CDATA[
 			SELECT
-				DISTINCT Groups_Roles.roleId
+				Groups_Roles.roleId
 			FROM
 				Groups_Roles
 			INNER JOIN
@@ -953,7 +953,7 @@
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByOrganizationSite">
 		<![CDATA[
 			SELECT
-				DISTINCT Groups_Roles.roleId
+				Groups_Roles.roleId
 			FROM
 				Groups_Roles
 			INNER JOIN
@@ -970,7 +970,7 @@
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.countBySite">
 		<![CDATA[
 			SELECT
-				DISTINCT Groups_Roles.roleId
+				Groups_Roles.roleId
 			FROM
 				Groups_Roles
 			INNER JOIN
@@ -984,7 +984,7 @@
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByUser">
 		<![CDATA[
 			SELECT
-				DISTINCT Users_Roles.roleId
+				Users_Roles.roleId
 			FROM
 				Users_Roles
 			WHERE
@@ -995,7 +995,7 @@
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByUserGroup">
 		<![CDATA[
 			SELECT
-				DISTINCT Groups_Roles.roleId
+				Groups_Roles.roleId
 			FROM
 				Groups_Roles
 			INNER JOIN
@@ -1012,7 +1012,7 @@
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.countByUserGroupSite">
 		<![CDATA[
 			SELECT
-				DISTINCT Groups_Roles.roleId
+				Groups_Roles.roleId
 			FROM
 				Groups_Roles
 			INNER JOIN

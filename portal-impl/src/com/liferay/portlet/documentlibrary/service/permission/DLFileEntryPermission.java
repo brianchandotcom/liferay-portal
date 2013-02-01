@@ -103,13 +103,20 @@ public class DLFileEntryPermission {
 				DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
 					dlFileEntry.getFolderId());
 
-				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
-					(!DLFolderPermission.contains(
-						permissionChecker, dlFolder, ActionKeys.ACCESS) ||
-					 !DLFolderPermission.contains(
-						permissionChecker, dlFolder, ActionKeys.VIEW))) {
+				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+					if (!DLFolderPermission.contains(
+							permissionChecker, dlFolder, ActionKeys.ACCESS) ||
+						!DLFolderPermission.contains(
+							permissionChecker, dlFolder, ActionKeys.VIEW)) {
 
-					return false;
+						return false;
+					}
+
+					if (actionId.equals(ActionKeys.ACCESS) ||
+						actionId.equals(ActionKeys.VIEW)) {
+
+						return true;
+					}
 				}
 
 				if (!actionId.equals(ActionKeys.OVERRIDE_CHECKOUT) &&

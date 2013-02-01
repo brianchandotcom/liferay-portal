@@ -473,7 +473,7 @@ body.portlet {
 .visible.portlet-options .lfr-trigger strong a {
 }
 
-/*------ Breadcrumbs taglib ------*/
+/* ---------- Breadcrumbs taglib ---------- */
 
 .breadcrumbs {
 	&:after, &:before {

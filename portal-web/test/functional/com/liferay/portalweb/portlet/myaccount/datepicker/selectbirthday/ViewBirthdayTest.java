@@ -52,11 +52,11 @@ public class ViewBirthdayTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Change"),
 			selenium.getText("//span[@class='edit-logo-link']/a/span"));
 		assertEquals("May",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayMonth']"));
+			selenium.getSelectedLabel("//select[@id='_2_birthdaymonth']"));
 		assertEquals("31",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayDay']"));
+			selenium.getSelectedLabel("//select[@id='_2_birthdayday']"));
 		assertEquals("1986",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayYear']"));
+			selenium.getSelectedLabel("//select[@id='_2_birthdayyear']"));
 		assertTrue(selenium.isVisible("//button[@id='buttonTest']"));
 		assertEquals("Male",
 			selenium.getSelectedLabel("//select[@id='_2_male']"));

@@ -28,13 +28,13 @@ public class TearDownBirthdayTest extends BaseTestCase {
 		selenium.clickAt("link=Joe Bloggs",
 			RuntimeVariables.replace("Joe Bloggs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//select[@id='_2_birthdayMonth']",
+		selenium.clickAt("//select[@id='_2_birthdaymonth']",
 			RuntimeVariables.replace("January"));
-		selenium.select("//select[@id='_2_birthdayMonth']",
+		selenium.select("//select[@id='_2_birthdaymonth']",
 			RuntimeVariables.replace("January"));
-		selenium.select("//select[@id='_2_birthdayDay']",
+		selenium.select("//select[@id='_2_birthdayday']",
 			RuntimeVariables.replace("1"));
-		selenium.select("//select[@id='_2_birthdayYear']",
+		selenium.select("//select[@id='_2_birthdayyear']",
 			RuntimeVariables.replace("1970"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -43,10 +43,10 @@ public class TearDownBirthdayTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("January",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayMonth']"));
+			selenium.getSelectedLabel("//select[@id='_2_birthdaymonth']"));
 		assertEquals("1",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayDay']"));
+			selenium.getSelectedLabel("//select[@id='_2_birthdayday']"));
 		assertEquals("1970",
-			selenium.getSelectedLabel("//select[@id='_2_birthdayYear']"));
+			selenium.getSelectedLabel("//select[@id='_2_birthdayyear']"));
 	}
 }

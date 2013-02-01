@@ -24,7 +24,6 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.auth.MembershipPolicy;
-import com.liferay.portal.security.auth.MembershipPolicyFactory;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.UserGroupRoleLocalServiceBaseImpl;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
@@ -80,9 +79,13 @@ public class UserGroupRoleLocalServiceImpl
 		PermissionCacheUtil.clearCache();
 	}
 
-	public void checkMembershipPolicy(User user) throws SystemException {
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactory.getInstance();
+	public void checkMembershipPolicy(
+			User user, MembershipPolicy membershipPolicy)
+		throws SystemException {
+
+		if (membershipPolicy == null) {
+			throw new NullPointerException("Missing MembershipPolicy");
+		}
 
 		LinkedHashMap<String, Object> groupParams =
 			new LinkedHashMap<String, Object>();

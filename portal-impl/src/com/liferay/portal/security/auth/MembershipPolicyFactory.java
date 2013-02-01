@@ -17,16 +17,37 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Sergio González
+ * @author Shuyang Zhou
  */
 public class MembershipPolicyFactory {
 
 	public static MembershipPolicy getInstance() {
-		if (_membershipPolicy == null) {
+		return _membershipPolicy;
+	}
+
+	public static void setInstance(MembershipPolicy membershipPolicy) {
+		if (membershipPolicy == null) {
+
+			// On reset, fallback to portal default.
+
+			MembershipPolicyFactory membershipPolicyFactory =
+				new MembershipPolicyFactory();
+
+			membershipPolicyFactory.afterPropertiesSet();
+		}
+		else {
+			_membershipPolicy = membershipPolicy;
+		}
+	}
+
+	public void afterPropertiesSet() {
+		if (Validator.isNotNull(PropsValues.USERS_MEMBERSHIP_POLICY)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Instantiate " + PropsValues.USERS_MEMBERSHIP_POLICY);
@@ -44,25 +65,11 @@ public class MembershipPolicyFactory {
 				_log.error(e, e);
 			}
 		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Return " + _membershipPolicy.getClass().getName());
-		}
-
-		return _membershipPolicy;
-	}
-
-	public static void setInstance(MembershipPolicy membershipPolicy) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + membershipPolicy.getClass().getName());
-		}
-
-		_membershipPolicy = membershipPolicy;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		MembershipPolicyFactory.class);
 
-	private static MembershipPolicy _membershipPolicy;
+	private static volatile MembershipPolicy _membershipPolicy;
 
 }

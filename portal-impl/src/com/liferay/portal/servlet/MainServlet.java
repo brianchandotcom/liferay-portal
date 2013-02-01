@@ -73,7 +73,6 @@ import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
-import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
@@ -546,11 +545,6 @@ public class MainServlet extends ActionServlet {
 		super.service(request, response);
 	}
 
-	protected void checkMembershipPolicy(User user) throws SystemException {
-		GroupLocalServiceUtil.checkMembershipPolicy(user);
-		UserGroupRoleLocalServiceUtil.checkMembershipPolicy(user);
-	}
-
 	protected void checkPortletRequestProcessor(HttpServletRequest request)
 		throws ServletException {
 
@@ -1018,8 +1012,6 @@ public class MainServlet extends ActionServlet {
 		EventsProcessorUtil.process(
 			PropsKeys.LOGIN_EVENTS_POST, PropsValues.LOGIN_EVENTS_POST, request,
 			response);
-
-		checkMembershipPolicy(user);
 
 		return userId;
 	}

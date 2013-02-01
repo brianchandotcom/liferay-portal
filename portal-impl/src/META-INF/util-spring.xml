@@ -566,6 +566,7 @@
 			<bean class="com.liferay.portal.security.auth.AuthTokenImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.security.auth.MembershipPolicyFactory" class="com.liferay.portal.security.auth.MembershipPolicyFactory" />
 	<bean id="com.liferay.portal.security.permission.InlineSQLHelperUtil" class="com.liferay.portal.security.permission.InlineSQLHelperUtil">
 		<property name="inlineSQLHelper">
 			<bean class="com.liferay.portal.security.permission.InlineSQLHelperImpl" />

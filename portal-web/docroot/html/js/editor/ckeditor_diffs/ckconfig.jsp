@@ -112,6 +112,10 @@ CKEDITOR.config.toolbar_liferay = [
 	['Find', 'Replace', 'SpellChecker', 'Scayt'],
 	['SelectAll', 'RemoveFormat'],
 	['Subscript', 'Superscript']
+
+	<c:if test="<%= !inlineEdit %>">
+		,['Source']
+	</c:if>
 ];
 
 CKEDITOR.config.toolbar_liferayArticle = [

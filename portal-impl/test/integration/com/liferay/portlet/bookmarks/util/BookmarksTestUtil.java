@@ -28,24 +28,11 @@ import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 public class BookmarksTestUtil {
 
 	public static BookmarksEntry addEntry() throws Exception {
-		BookmarksFolder folder = addFolder();
-
-		String name = "Test Entry";
-		String url = "http://www.liferay.com";
-		String description = "This is a test entry.";
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		return BookmarksEntryServiceUtil.addEntry(
-			folder.getGroupId(), folder.getFolderId(), name, url, description,
-			serviceContext);
+		return addEntry(TestPropsValues.getGroupId());
 	}
 
 	public static BookmarksEntry addEntry(long groupId) throws Exception {
-		BookmarksFolder folder = addFolder();
+		BookmarksFolder folder = addFolder(groupId);
 
 		String name = "Test Entry";
 		String url = "http://www.liferay.com";

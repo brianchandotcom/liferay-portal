@@ -111,6 +111,8 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 PortletPreferences preferences = liferayPortletRequest.getPreferences();
 
+String portletResource = ParamUtil.getString(request, "portletResource");
+
 String[] displayViews = StringUtil.split(PrefsParamUtil.getString(preferences, liferayPortletRequest, "displayViews", StringUtil.merge(PropsValues.JOURNAL_DISPLAY_VIEWS)));
 
 String ddmResource = portletConfig.getInitParameter("ddm-resource");

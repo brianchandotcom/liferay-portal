@@ -103,7 +103,7 @@ public class FileImplExtractTest {
 	public void testRtf() {
 		String text = extractText("test.rtf");
 
-		Assert.assertEquals("Extract  test.", text);
+		Assert.assertEquals("Extract test.", text);
 	}
 
 	@Test

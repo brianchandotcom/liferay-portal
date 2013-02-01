@@ -22,6 +22,9 @@ import aQute.lib.osgi.Verifier;
 import aQute.libg.header.OSGiHeader;
 import aQute.libg.version.Version;
 
+import com.liferay.osgi.bootstrap.constants.ModuleFrameworkBundleConstants;
+import com.liferay.osgi.bootstrap.constants.ModuleFrameworkFelixFileInstallConstants;
+import com.liferay.osgi.bootstrap.constants.ModuleFrameworkHttpServiceConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -97,7 +100,9 @@ import org.springframework.context.ApplicationContext;
  * @author Miguel Pastor
  */
 public class ModuleFrameworkImpl
-	implements ModuleFramework, ModuleFrameworkConstants {
+	implements ModuleFramework, ModuleFrameworkBundleConstants,
+				ModuleFrameworkFelixFileInstallConstants,
+					ModuleFrameworkHttpServiceConstants {
 
 	public Object addBundle(String location) throws PortalException {
 		return addBundle(location, null);
@@ -475,14 +480,14 @@ public class ModuleFrameworkImpl
 		properties.put(Constants.BUNDLE_NAME, ReleaseInfo.getName());
 		properties.put(Constants.BUNDLE_VENDOR, ReleaseInfo.getVendor());
 		properties.put(Constants.BUNDLE_VERSION, ReleaseInfo.getVersion());
-		properties.put(FELIX_FILEINSTALL_DIR, _getFelixFileInstallDir());
+		properties.put(FELIX_FILEINSTALL_KEY_DIR, _getFelixFileInstallDir());
 		properties.put(
-			FELIX_FILEINSTALL_LOG_LEVEL, _getFelixFileInstallLogLevel());
+			FELIX_FILEINSTALL_KEY_LOG_LEVEL, _getFelixFileInstallLogLevel());
 		properties.put(
-			FELIX_FILEINSTALL_POLL,
+			FELIX_FILEINSTALL_KEY_POLL,
 			String.valueOf(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL));
 		properties.put(
-			FELIX_FILEINSTALL_TMPDIR, System.getProperty("java.io.tmpdir"));
+			FELIX_FILEINSTALL_KEY_TMPDIR, System.getProperty("java.io.tmpdir"));
 		properties.put(
 			Constants.FRAMEWORK_BEGINNING_STARTLEVEL,
 			String.valueOf(PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
@@ -667,7 +672,7 @@ public class ModuleFrameworkImpl
 		Enumeration<URL> enu = Collections.enumeration(Collections.emptyList());
 
 		try {
-			enu = classLoader.getResources(MANIFEST_PATH);
+			enu = classLoader.getResources(BUNDLE_MANIFEST_FILE_PATH);
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
@@ -958,10 +963,10 @@ public class ModuleFrameworkImpl
 
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 
-		properties.put(SERVICE_PROPERTY_KEY_BEAN_ID, beanName);
-		properties.put(SERVICE_PROPERTY_KEY_ORIGINAL_BEAN, Boolean.TRUE);
+		properties.put(HTTP_SERVICE_KEY_BEAN_ID, beanName);
+		properties.put(HTTP_SERVICE_KEY_ORIGINAL_BEAN, Boolean.TRUE);
 		properties.put(
-			SERVICE_PROPERTY_KEY_SERVICE_VENDOR, ReleaseInfo.getVendor());
+			HTTP_SERVICE_KEY_SERVICE_VENDOR, ReleaseInfo.getVendor());
 
 		bundleContext.registerService(
 			names.toArray(new String[names.size()]), bean, properties);
@@ -973,10 +978,10 @@ public class ModuleFrameworkImpl
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 
 		properties.put(
-			SERVICE_PROPERTY_KEY_BEAN_ID, ServletContext.class.getName());
-		properties.put(SERVICE_PROPERTY_KEY_ORIGINAL_BEAN, Boolean.TRUE);
+			HTTP_SERVICE_KEY_BEAN_ID, ServletContext.class.getName());
+		properties.put(HTTP_SERVICE_KEY_ORIGINAL_BEAN, Boolean.TRUE);
 		properties.put(
-			SERVICE_PROPERTY_KEY_SERVICE_VENDOR, ReleaseInfo.getVendor());
+				HTTP_SERVICE_KEY_SERVICE_VENDOR, ReleaseInfo.getVendor());
 
 		bundleContext.registerService(
 			new String[] {ServletContext.class.getName()}, servletContext,

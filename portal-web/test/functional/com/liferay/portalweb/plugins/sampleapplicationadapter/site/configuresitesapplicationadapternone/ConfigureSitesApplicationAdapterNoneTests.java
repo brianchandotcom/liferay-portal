@@ -15,6 +15,9 @@
 package com.liferay.portalweb.plugins.sampleapplicationadapter.site.configuresitesapplicationadapternone;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.sitepage.addsitepublicpage.AddSitesPublicPageTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
@@ -26,13 +29,13 @@ import junit.framework.TestSuite;
 public class ConfigureSitesApplicationAdapterNoneTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddSitesTest.class);
+		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(ConfigureSitesApplicationAdapterNoneTest.class);
 		testSuite.addTestSuite(AddSitesPublicPageTest.class);
 		testSuite.addTestSuite(AddSitesPublicPagePortletNavigationTest.class);
 		testSuite.addTestSuite(ViewPortletApplicationAdapterNoneTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
-		testSuite.addTestSuite(TearDownSitesTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

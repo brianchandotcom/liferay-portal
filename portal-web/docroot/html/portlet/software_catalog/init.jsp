@@ -23,7 +23,6 @@ page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.search.SearchContext" %><%@
 page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
 page import="com.liferay.portal.plugin.PluginPackageUtil" %><%@
-page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portlet.softwarecatalog.DuplicateProductEntryModuleIdException" %><%@
 page import="com.liferay.portlet.softwarecatalog.DuplicateProductVersionDirectDownloadURLException" %><%@
 page import="com.liferay.portlet.softwarecatalog.FrameworkVersionNameException" %><%@

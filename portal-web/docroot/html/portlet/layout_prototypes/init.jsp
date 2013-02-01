@@ -18,7 +18,6 @@
 
 <%@ page import="com.liferay.portal.NoSuchLayoutPrototypeException" %><%@
 page import="com.liferay.portal.RequiredLayoutPrototypeException" %><%@
-page import="com.liferay.portal.service.LayoutPrototypeLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>
+page import="com.liferay.portal.service.LayoutPrototypeLocalServiceUtil" %>
 
 <%@ include file="/html/portlet/layout_prototypes/init-ext.jsp" %>

@@ -37,7 +37,6 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 
 boolean hasLayoutCustomizePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE);
 boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
-boolean hasControlPanelPermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.ACCESS_IN_CONTROL_PANEL);
 %>
 
 <div class="dockbar" data-namespace="<portlet:namespace />" id="dockbar">
@@ -313,26 +312,26 @@ boolean hasControlPanelPermission = LayoutPermissionUtil.contains(permissionChec
 				myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", controlPanelCategory);
 				%>
 
-		<c:choose>
-			<c:when test="<%= hasControlPanelPermission %>">
-				<aui:a cssClass='<%= "user-portrait" + useDialog %>' href="<%= myAccountURL %>" title="manage-my-account">
+				<liferay-util:buffer var="userName">
 					<img alt="<liferay-ui:message key="manage-my-account" />" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
 
 					<span class="user-full-name">
 						<%= HtmlUtil.escape(user.getFullName()) %>
 					</span>
-				</aui:a>
-			</c:when>
-			<c:otherwise>
-				<span class="user-portrait">
-					<img alt="<liferay-ui:message key="user-portrait" />" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
+				</liferay-util:buffer>
 
-					<span title="<liferay-ui:message key="account-name" />">
-						<%= HtmlUtil.escape(user.getFullName()) %>
-					</span>
-				</span>
-			</c:otherwise>
-		</c:choose>
+				<c:choose>
+					<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.VIEW_CONTROL_PANEL) %>">
+						<aui:a cssClass='<%= "user-portrait" + useDialog %>' href="<%= myAccountURL %>" title="manage-my-account">
+							<%= userName %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+						<span class="user-portrait">
+							<%= userName %>
+						</span>
+					</c:otherwise>
+				</c:choose>
 
 				<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">
 					<span class="sign-out">(<aui:a href="<%= themeDisplay.getURLSignOut() %>" label="sign-out" />)</span>

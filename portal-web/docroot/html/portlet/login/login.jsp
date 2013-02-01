@@ -15,9 +15,6 @@
 --%>
 
 <%@ include file="/html/portlet/login/init.jsp" %>
-<%
-boolean hasControlPanelPermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.ACCESS_IN_CONTROL_PANEL);
-%>
 
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
@@ -25,7 +22,7 @@ boolean hasControlPanelPermission = LayoutPermissionUtil.contains(permissionChec
 		<%
 		String signedInAs = HtmlUtil.escape(user.getFullName());
 
-		if (themeDisplay.isShowMyAccountIcon() && hasControlPanelPermission) {
+		if (themeDisplay.isShowMyAccountIcon() && PortalPermissionUtil.contains(permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
 			signedInAs = "<a href=\"" + HtmlUtil.escape(themeDisplay.getURLMyAccount().toString()) + "\">" + signedInAs + "</a>";
 		}
 		%>

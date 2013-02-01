@@ -37,7 +37,7 @@ import java.util.Date;
 public class DLSyncCacheModel implements CacheModel<DLSync>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{syncId=");
 		sb.append(syncId);
@@ -63,6 +63,8 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Externalizable {
 		sb.append(event);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", updateId=");
+		sb.append(updateId);
 		sb.append(", version=");
 		sb.append(version);
 		sb.append("}");
@@ -130,6 +132,8 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Externalizable {
 			dlSyncImpl.setType(type);
 		}
 
+		dlSyncImpl.setUpdateId(updateId);
+
 		if (version == null) {
 			dlSyncImpl.setVersion(StringPool.BLANK);
 		}
@@ -155,6 +159,7 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Externalizable {
 		description = objectInput.readUTF();
 		event = objectInput.readUTF();
 		type = objectInput.readUTF();
+		updateId = objectInput.readLong();
 		version = objectInput.readUTF();
 	}
 
@@ -204,6 +209,8 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Externalizable {
 			objectOutput.writeUTF(type);
 		}
 
+		objectOutput.writeLong(updateId);
+
 		if (version == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -224,5 +231,6 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Externalizable {
 	public String description;
 	public String event;
 	public String type;
+	public long updateId;
 	public String version;
 }

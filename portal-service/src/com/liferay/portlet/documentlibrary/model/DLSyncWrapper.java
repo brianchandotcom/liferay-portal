@@ -57,6 +57,7 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 		attributes.put("description", getDescription());
 		attributes.put("event", getEvent());
 		attributes.put("type", getType());
+		attributes.put("updateId", getUpdateId());
 		attributes.put("version", getVersion());
 
 		return attributes;
@@ -133,6 +134,12 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Long updateId = (Long)attributes.get("updateId");
+
+		if (updateId != null) {
+			setUpdateId(updateId);
 		}
 
 		String version = (String)attributes.get("version");
@@ -374,6 +381,24 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 	*/
 	public void setType(java.lang.String type) {
 		_dlSync.setType(type);
+	}
+
+	/**
+	* Returns the update ID of this d l sync.
+	*
+	* @return the update ID of this d l sync
+	*/
+	public long getUpdateId() {
+		return _dlSync.getUpdateId();
+	}
+
+	/**
+	* Sets the update ID of this d l sync.
+	*
+	* @param updateId the update ID of this d l sync
+	*/
+	public void setUpdateId(long updateId) {
+		_dlSync.setUpdateId(updateId);
 	}
 
 	/**

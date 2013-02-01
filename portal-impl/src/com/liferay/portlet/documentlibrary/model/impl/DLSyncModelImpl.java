@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -76,12 +75,13 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 			{ "description", Types.VARCHAR },
 			{ "event", Types.VARCHAR },
 			{ "type_", Types.VARCHAR },
+			{ "updateId", Types.BIGINT },
 			{ "version", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLSync (syncId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,fileId LONG,fileUuid VARCHAR(75) null,repositoryId LONG,parentFolderId LONG,name VARCHAR(255) null,description STRING null,event VARCHAR(75) null,type_ VARCHAR(75) null,version VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table DLSync (syncId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,fileId LONG,fileUuid VARCHAR(75) null,repositoryId LONG,parentFolderId LONG,name VARCHAR(255) null,description STRING null,event VARCHAR(75) null,type_ VARCHAR(75) null,updateId LONG,version VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table DLSync";
-	public static final String ORDER_BY_JPQL = " ORDER BY dlSync.companyId ASC, dlSync.repositoryId ASC, dlSync.modifiedDate ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY DLSync.companyId ASC, DLSync.repositoryId ASC, DLSync.modifiedDate ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY dlSync.companyId ASC, dlSync.repositoryId ASC, dlSync.updateId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY DLSync.companyId ASC, DLSync.repositoryId ASC, DLSync.updateId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -96,8 +96,8 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long FILEID_COLUMN_BITMASK = 2L;
-	public static long MODIFIEDDATE_COLUMN_BITMASK = 4L;
-	public static long REPOSITORYID_COLUMN_BITMASK = 8L;
+	public static long REPOSITORYID_COLUMN_BITMASK = 4L;
+	public static long UPDATEID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -124,6 +124,7 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		model.setDescription(soapModel.getDescription());
 		model.setEvent(soapModel.getEvent());
 		model.setType(soapModel.getType());
+		model.setUpdateId(soapModel.getUpdateId());
 		model.setVersion(soapModel.getVersion());
 
 		return model;
@@ -195,6 +196,7 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		attributes.put("description", getDescription());
 		attributes.put("event", getEvent());
 		attributes.put("type", getType());
+		attributes.put("updateId", getUpdateId());
 		attributes.put("version", getVersion());
 
 		return attributes;
@@ -274,6 +276,12 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 			setType(type);
 		}
 
+		Long updateId = (Long)attributes.get("updateId");
+
+		if (updateId != null) {
+			setUpdateId(updateId);
+		}
+
 		String version = (String)attributes.get("version");
 
 		if (version != null) {
@@ -326,17 +334,7 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setModifiedDate(Date modifiedDate) {
-		_columnBitmask = -1L;
-
-		if (_originalModifiedDate == null) {
-			_originalModifiedDate = _modifiedDate;
-		}
-
 		_modifiedDate = modifiedDate;
-	}
-
-	public Date getOriginalModifiedDate() {
-		return _originalModifiedDate;
 	}
 
 	@JSON
@@ -461,6 +459,27 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	@JSON
+	public long getUpdateId() {
+		return _updateId;
+	}
+
+	public void setUpdateId(long updateId) {
+		_columnBitmask = -1L;
+
+		if (!_setOriginalUpdateId) {
+			_setOriginalUpdateId = true;
+
+			_originalUpdateId = _updateId;
+		}
+
+		_updateId = updateId;
+	}
+
+	public long getOriginalUpdateId() {
+		return _originalUpdateId;
+	}
+
+	@JSON
 	public String getVersion() {
 		if (_version == null) {
 			return StringPool.BLANK;
@@ -517,6 +536,7 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		dlSyncImpl.setDescription(getDescription());
 		dlSyncImpl.setEvent(getEvent());
 		dlSyncImpl.setType(getType());
+		dlSyncImpl.setUpdateId(getUpdateId());
 		dlSyncImpl.setVersion(getVersion());
 
 		dlSyncImpl.resetOriginalValues();
@@ -555,7 +575,15 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 			return value;
 		}
 
-		value = DateUtil.compareTo(getModifiedDate(), dlSync.getModifiedDate());
+		if (getUpdateId() < dlSync.getUpdateId()) {
+			value = -1;
+		}
+		else if (getUpdateId() > dlSync.getUpdateId()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
 
 		if (value != 0) {
 			return value;
@@ -602,8 +630,6 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 
 		dlSyncModelImpl._setOriginalCompanyId = false;
 
-		dlSyncModelImpl._originalModifiedDate = dlSyncModelImpl._modifiedDate;
-
 		dlSyncModelImpl._originalFileId = dlSyncModelImpl._fileId;
 
 		dlSyncModelImpl._setOriginalFileId = false;
@@ -611,6 +637,10 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		dlSyncModelImpl._originalRepositoryId = dlSyncModelImpl._repositoryId;
 
 		dlSyncModelImpl._setOriginalRepositoryId = false;
+
+		dlSyncModelImpl._originalUpdateId = dlSyncModelImpl._updateId;
+
+		dlSyncModelImpl._setOriginalUpdateId = false;
 
 		dlSyncModelImpl._columnBitmask = 0;
 	}
@@ -687,6 +717,8 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 			dlSyncCacheModel.type = null;
 		}
 
+		dlSyncCacheModel.updateId = getUpdateId();
+
 		dlSyncCacheModel.version = getVersion();
 
 		String version = dlSyncCacheModel.version;
@@ -700,7 +732,7 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{syncId=");
 		sb.append(getSyncId());
@@ -726,6 +758,8 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		sb.append(getEvent());
 		sb.append(", type=");
 		sb.append(getType());
+		sb.append(", updateId=");
+		sb.append(getUpdateId());
 		sb.append(", version=");
 		sb.append(getVersion());
 		sb.append("}");
@@ -734,7 +768,7 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLSync");
@@ -789,6 +823,10 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>updateId</column-name><column-value><![CDATA[");
+		sb.append(getUpdateId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>version</column-name><column-value><![CDATA[");
 		sb.append(getVersion());
 		sb.append("]]></column-value></column>");
@@ -806,7 +844,6 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private Date _originalModifiedDate;
 	private long _fileId;
 	private long _originalFileId;
 	private boolean _setOriginalFileId;
@@ -819,6 +856,9 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	private String _description;
 	private String _event;
 	private String _type;
+	private long _updateId;
+	private long _originalUpdateId;
+	private boolean _setOriginalUpdateId;
 	private String _version;
 	private long _columnBitmask;
 	private DLSync _escapedModel;

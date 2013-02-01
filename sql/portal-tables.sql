@@ -699,6 +699,7 @@ create table DLSync (
 	description STRING null,
 	event VARCHAR(75) null,
 	type_ VARCHAR(75) null,
+	updateId LONG,
 	version VARCHAR(75) null
 );
 

@@ -131,6 +131,8 @@ public class DLSyncPersistenceTest {
 
 		newDLSync.setType(ServiceTestUtil.randomString());
 
+		newDLSync.setUpdateId(ServiceTestUtil.nextLong());
+
 		newDLSync.setVersion(ServiceTestUtil.randomString());
 
 		_persistence.update(newDLSync);
@@ -158,6 +160,8 @@ public class DLSyncPersistenceTest {
 			newDLSync.getDescription());
 		Assert.assertEquals(existingDLSync.getEvent(), newDLSync.getEvent());
 		Assert.assertEquals(existingDLSync.getType(), newDLSync.getType());
+		Assert.assertEquals(existingDLSync.getUpdateId(),
+			newDLSync.getUpdateId());
 		Assert.assertEquals(existingDLSync.getVersion(), newDLSync.getVersion());
 	}
 
@@ -315,6 +319,8 @@ public class DLSyncPersistenceTest {
 		dlSync.setEvent(ServiceTestUtil.randomString());
 
 		dlSync.setType(ServiceTestUtil.randomString());
+
+		dlSync.setUpdateId(ServiceTestUtil.nextLong());
 
 		dlSync.setVersion(ServiceTestUtil.randomString());
 

@@ -40,7 +40,7 @@ public class ApproveWebContentActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//tr[contains(.,'Review')]/td/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
@@ -80,7 +80,7 @@ public class ApproveWebContentActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//tr[contains(.,'Review')]/td/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));

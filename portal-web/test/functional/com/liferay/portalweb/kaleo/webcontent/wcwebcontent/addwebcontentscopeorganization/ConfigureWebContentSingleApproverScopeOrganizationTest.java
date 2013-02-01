@@ -57,6 +57,8 @@ public class ConfigureWebContentSingleApproverScopeOrganizationTest
 		selenium.clickAt("link=Workflow Configuration",
 			RuntimeVariables.replace("Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible(
+			"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']");
 		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']",
 			RuntimeVariables.replace("Single Approver (Version 1)"));
 		selenium.clickAt("//input[@value='Save']",

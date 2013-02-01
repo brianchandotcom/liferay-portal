@@ -43,7 +43,7 @@ public class ViewWebContentAssignedToMeEditTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//tr[contains(.,'Review')]/td/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edited"),
 			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
@@ -64,7 +64,7 @@ public class ViewWebContentAssignedToMeEditTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//tr[contains(.,'Single Approver')]/td/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edited"),
 			selenium.getText("//tr[contains(.,'Single Approver')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[contains(.,'Single Approver')]/td[3]/a"));
@@ -87,8 +87,9 @@ public class ViewWebContentAssignedToMeEditTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace(
-				"Web Content Name Edited (Pending)"),
-			selenium.getText("//a[@class='entry-link']/span"));
+				"WC WebContent Title Edited (Pending)"),
+			selenium.getText(
+				"//a[@class='entry-link']/span[@class='entry-title']"));
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Submissions",
@@ -98,7 +99,7 @@ public class ViewWebContentAssignedToMeEditTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//tr[contains(.,'Single Approver')]/td/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edited"),
 			selenium.getText("//tr[contains(.,'Single Approver')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//tr[contains(.,'Single Approver')]/td[3]/a"));

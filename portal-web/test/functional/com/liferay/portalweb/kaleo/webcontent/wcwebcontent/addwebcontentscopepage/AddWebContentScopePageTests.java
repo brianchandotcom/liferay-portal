@@ -14,9 +14,11 @@
 
 package com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentscopepage;
 
-import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontent.TearDownWebContentTest;
 import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentnoworkflowscopepage.ConfigurePortletScopePageTest;
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrydefaultnoworkflow.TearDownWorkflowConfigurationTest;
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configurewebcontentsingleapprover.ConfigureWebContentSingleApproverTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
@@ -35,7 +37,7 @@ public class AddWebContentScopePageTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddWebContentScopePageTest.class);
 		testSuite.addTestSuite(ViewWebContentAssignedToMyRolesScopePageTest.class);
 		testSuite.addTestSuite(TearDownWebContentScopePageTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

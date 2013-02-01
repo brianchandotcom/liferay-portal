@@ -18,12 +18,12 @@ import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontent.AddWebC
 import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentdraft.AddWebContentDraftTests;
 import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentnoworkflow.AddWebContentNoWorkflowTests;
 import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentnoworkflowscopepage.AddWebContentNoWorkflowScopePageTests;
-import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentscopecommunity.AddWebContentScopeCommunityTests;
 import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentscopeglobal.AddWebContentScopeGlobalTests;
 import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentscopeguest.AddWebContentScopeGuestTests;
 import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentscopemycommunity.AddWebContentScopeMyCommunityTests;
 import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentscopeorganization.AddWebContentScopeOrganizationTests;
 import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentscopepage.AddWebContentScopePageTests;
+import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontentscopesite.AddWebContentScopeSiteTests;
 import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.deletewebcontentassignedtomeactions.DeleteWebContentAssignedToMeActionsTests;
 import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.deletewebcontentassignedtomyrolesactions.DeleteWebContentAssignedToMyRolesActionsTests;
 import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.deletewebcontentcompletedactions.DeleteWebContentCompletedActionsTests;
@@ -51,12 +51,12 @@ public class WCWebContentTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddWebContentDraftTests.suite());
 		testSuite.addTest(AddWebContentNoWorkflowTests.suite());
 		testSuite.addTest(AddWebContentNoWorkflowScopePageTests.suite());
-		testSuite.addTest(AddWebContentScopeCommunityTests.suite());
 		testSuite.addTest(AddWebContentScopeGlobalTests.suite());
 		testSuite.addTest(AddWebContentScopeGuestTests.suite());
 		testSuite.addTest(AddWebContentScopeMyCommunityTests.suite());
 		testSuite.addTest(AddWebContentScopeOrganizationTests.suite());
 		testSuite.addTest(AddWebContentScopePageTests.suite());
+		testSuite.addTest(AddWebContentScopeSiteTests.suite());
 		testSuite.addTest(DeleteWebContentAssignedToMeActionsTests.suite());
 		testSuite.addTest(
 			DeleteWebContentAssignedToMyRolesActionsTests.suite());

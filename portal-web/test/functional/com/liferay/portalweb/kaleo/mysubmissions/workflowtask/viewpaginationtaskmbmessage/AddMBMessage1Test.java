@@ -48,26 +48,27 @@ public class AddMBMessage1Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Post New Thread']",
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/styles.js')]");
 		selenium.type("//input[@id='_162_subject']",
 			RuntimeVariables.replace("MB Category Thread1 Message Subject"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_162_editor' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__162_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__162_editor']/textarea",
+		selenium.waitForVisible(
+			"//a[@class='cke_button cke_button__source cke_button_on']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
+		selenium.type("//div[@id='cke_1_contents']/textarea",
 			RuntimeVariables.replace("MB Category Thread1 Message Body"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_162_editor' and @style='display: none;']");
-		selenium.waitForVisible("//td[@id='cke_contents__162_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__162_editor']/iframe");
+		selenium.waitForVisible(
+			"//a[@class='cke_button cke_button__source cke_button_off']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
 		selenium.waitForText("//body", "MB Category Thread1 Message Body");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Submit for Publication']",
@@ -92,6 +93,7 @@ public class AddMBMessage1Test extends BaseTestCase {
 			selenium.getText("link=Pending"));
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//td[1]/a");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace(

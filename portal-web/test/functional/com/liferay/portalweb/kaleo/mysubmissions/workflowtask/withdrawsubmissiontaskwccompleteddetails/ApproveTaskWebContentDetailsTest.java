@@ -52,7 +52,7 @@ public class ApproveTaskWebContentDetailsTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Single Approver"),
 					selenium.getText("//td[1]/a"));
-				assertEquals(RuntimeVariables.replace("Web Content Name"),
+				assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 					selenium.getText("//td[2]/a"));
 				assertEquals(RuntimeVariables.replace("Web Content"),
 					selenium.getText("//td[3]/a"));
@@ -62,7 +62,7 @@ public class ApproveTaskWebContentDetailsTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Never"),
 					selenium.getText("//td[6]/a"));
 				selenium.clickAt("//td[2]/a",
-					RuntimeVariables.replace("Web Content Name"));
+					RuntimeVariables.replace("WC WebContent Title"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Review"),
 					selenium.getText("//tr[3]/td[1]"));
@@ -84,8 +84,9 @@ public class ApproveTaskWebContentDetailsTest extends BaseTestCase {
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]"));
 				selenium.click(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]");
-				selenium.waitForVisible("//span[@class='aui-buttonitem-label']");
-				selenium.clickAt("//span[@class='aui-buttonitem-label']",
+				selenium.waitForVisible(
+					"//span[@class='aui-toolbar-content']/button[contains(.,'OK')]");
+				selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'OK')]",
 					RuntimeVariables.replace("OK"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//div[@class='portlet-msg-success']",

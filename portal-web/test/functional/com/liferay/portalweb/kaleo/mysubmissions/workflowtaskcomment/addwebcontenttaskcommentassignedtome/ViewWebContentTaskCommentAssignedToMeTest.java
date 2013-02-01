@@ -44,7 +44,7 @@ public class ViewWebContentTaskCommentAssignedToMeTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//td[3]/a"));
@@ -55,7 +55,7 @@ public class ViewWebContentTaskCommentAssignedToMeTest extends BaseTestCase {
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("Web Content Name"));
+			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Workflow Task Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
@@ -80,7 +80,7 @@ public class ViewWebContentTaskCommentAssignedToMeTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//td[3]/a"));
@@ -90,7 +90,7 @@ public class ViewWebContentTaskCommentAssignedToMeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[6]/a"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("Web Content Name"));
+			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Workflow Task Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
@@ -117,7 +117,7 @@ public class ViewWebContentTaskCommentAssignedToMeTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//td[3]/a"));

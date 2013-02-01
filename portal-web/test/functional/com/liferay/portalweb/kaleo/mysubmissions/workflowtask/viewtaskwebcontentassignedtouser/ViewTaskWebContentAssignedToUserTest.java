@@ -50,7 +50,7 @@ public class ViewTaskWebContentAssignedToUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Single Approver"),
 					selenium.getText("//td[1]/a"));
-				assertEquals(RuntimeVariables.replace("Web Content Name"),
+				assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 					selenium.getText("//td[2]/a"));
 				assertEquals(RuntimeVariables.replace("Web Content"),
 					selenium.getText("//td[3]/a"));
@@ -60,10 +60,10 @@ public class ViewTaskWebContentAssignedToUserTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Never"),
 					selenium.getText("//td[6]/a"));
 				selenium.clickAt("//td[2]/a",
-					RuntimeVariables.replace("Web Content Name"));
+					RuntimeVariables.replace("WC WebContent Title"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
-						"Single Approver: Web Content Name"),
+						"Single Approver: WC WebContent Title"),
 					selenium.getText("//h1[@class='header-title']/span"));
 				assertEquals(RuntimeVariables.replace("Withdraw Submission"),
 					selenium.getText(
@@ -96,7 +96,8 @@ public class ViewTaskWebContentAssignedToUserTest extends BaseTestCase {
 					selenium.getText(
 						"//div[@class='task-activity task-type-1'][2]/div[2]"));
 				assertEquals(RuntimeVariables.replace("Be the first."),
-					selenium.getText("//a[contains(text(),'Be the first.')]"));
+					selenium.getText(
+						"//fieldset[@class='aui-fieldset add-comment ']/div/a[contains(.,'Be the first.')]"));
 
 			case 100:
 				label = -1;

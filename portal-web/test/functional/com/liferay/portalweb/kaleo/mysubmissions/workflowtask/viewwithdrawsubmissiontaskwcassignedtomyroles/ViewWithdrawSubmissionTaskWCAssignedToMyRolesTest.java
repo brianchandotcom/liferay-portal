@@ -94,7 +94,7 @@ public class ViewWithdrawSubmissionTaskWCAssignedToMyRolesTest
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
-		assertEquals(RuntimeVariables.replace("Web Content Name (Draft)"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title (Draft)"),
 			selenium.getText("//a[@class='entry-link']/span"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",

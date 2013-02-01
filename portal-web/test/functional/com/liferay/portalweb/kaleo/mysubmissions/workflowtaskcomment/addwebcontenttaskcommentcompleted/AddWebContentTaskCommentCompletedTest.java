@@ -44,7 +44,7 @@ public class AddWebContentTaskCommentCompletedTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//td[3]/a"));
@@ -53,7 +53,7 @@ public class AddWebContentTaskCommentCompletedTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("//td[5]/a"));
 		assertTrue(selenium.isElementPresent("//td[6]/a"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("Web Content Name"));
+			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Be the first.",
 			RuntimeVariables.replace("Be the first."));

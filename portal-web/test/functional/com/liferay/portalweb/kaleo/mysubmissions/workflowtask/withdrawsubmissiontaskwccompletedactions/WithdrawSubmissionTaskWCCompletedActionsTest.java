@@ -44,7 +44,7 @@ public class WithdrawSubmissionTaskWCCompletedActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//td[3]/a"));

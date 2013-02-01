@@ -14,6 +14,9 @@
 
 package com.liferay.portalweb.kaleo.mysubmissions.workflowtask.viewtaskwebcontentassignedtouser;
 
+import com.liferay.portalweb.kaleo.webcontent.wcwebcontent.addwebcontent.AddWebContentTest;
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrydefaultnoworkflow.TearDownWorkflowConfigurationTest;
+import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configurewebcontentsingleapprover.ConfigureWebContentSingleApproverTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;

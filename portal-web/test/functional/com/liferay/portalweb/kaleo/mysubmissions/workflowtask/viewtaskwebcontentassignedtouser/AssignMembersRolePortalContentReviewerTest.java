@@ -68,7 +68,7 @@ public class AssignMembersRolePortalContentReviewerTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isChecked("//input[@name='_128_rowIds']"));
 		selenium.clickAt("//input[@name='_128_rowIds']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Check All Box"));
 		assertTrue(selenium.isChecked("//input[@name='_128_rowIds']"));
 		selenium.clickAt("//input[@value='Update Associations']",
 			RuntimeVariables.replace("Update Associations"));

@@ -45,7 +45,7 @@ public class WithdrawSubmissionTaskWCAssignedToMyRolesActionsTest
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//td[3]/a"));
@@ -66,6 +66,6 @@ public class WithdrawSubmissionTaskWCAssignedToMyRolesActionsTest
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending publications requested by me."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isTextPresent("Web Content Name"));
+		assertFalse(selenium.isTextPresent("WC WebContent Title"));
 	}
 }

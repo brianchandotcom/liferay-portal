@@ -130,8 +130,14 @@ public class LiferaySeleniumHelper {
 	public static void assertNotValue(
 		LiferaySelenium liferaySelenium, String locator, String pattern) {
 
-		BaseTestCase.assertNotEquals(
-			pattern, liferaySelenium.getValue(locator));
+		liferaySelenium.assertElementPresent(locator);
+
+		if (liferaySelenium.isValue(locator, pattern)) {
+			String value = liferaySelenium.getValue(locator);
+
+			BaseTestCase.fail(
+				"Pattern " + pattern + " matches " + value + " at " + locator);
+		}
 	}
 
 	public static void assertNotVisible(
@@ -193,7 +199,15 @@ public class LiferaySeleniumHelper {
 	public static void assertValue(
 		LiferaySelenium liferaySelenium, String locator, String pattern) {
 
-		BaseTestCase.assertEquals(pattern, liferaySelenium.getValue(locator));
+		liferaySelenium.assertElementPresent(locator);
+
+		if (liferaySelenium.isNotValue(locator, pattern)) {
+			String value = liferaySelenium.getValue(locator);
+
+			BaseTestCase.fail(
+				"Pattern " + pattern + " does not match " + value + " at " +
+					locator);
+		}
 	}
 
 	public static void assertVisible(
@@ -269,6 +283,12 @@ public class LiferaySeleniumHelper {
 		return !liferaySelenium.isText(locator, value);
 	}
 
+	public static boolean isNotValue(
+		LiferaySelenium liferaySelenium, String locator, String value) {
+
+		return !liferaySelenium.isValue(locator, value);
+	}
+
 	public static boolean isNotVisible(
 		LiferaySelenium liferaySelenium, String locator) {
 
@@ -281,6 +301,14 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.setTimeoutImplicit("1");
 
 		return value.equals(liferaySelenium.getText(locator));
+	}
+
+	public static boolean isValue(
+		LiferaySelenium liferaySelenium, String locator, String value) {
+
+		liferaySelenium.setTimeoutImplicit("1");
+
+		return value.equals(liferaySelenium.getValue(locator));
 	}
 
 	public static void pause(String waitTime) throws Exception {
@@ -443,11 +471,11 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail("Timeout");
+				liferaySelenium.assertNotValue(locator, value);
 			}
 
 			try {
-				if (!value.equals(liferaySelenium.getValue(locator))) {
+				if (liferaySelenium.isNotValue(locator, value)) {
 					break;
 				}
 			}
@@ -605,12 +633,11 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail("Timeout");
+				liferaySelenium.assertValue(locator, value);
 			}
 
 			try {
-				if (value.equals(liferaySelenium.getValue(locator))) {
-
+				if (liferaySelenium.isValue(locator, value)) {
 					break;
 				}
 			}

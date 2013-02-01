@@ -99,11 +99,15 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isNotText(String locator, String value);
 
+	public boolean isNotValue(String locator, String value);
+
 	public boolean isNotVisible(String locator);
 
 	public boolean isPartialText(String locator, String value);
 
 	public boolean isText(String locator, String value);
+
+	public boolean isValue(String locator, String value);
 
 	public void keyDownAndWait(String locator, String keySequence);
 

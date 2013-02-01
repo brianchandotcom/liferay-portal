@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
+import com.liferay.portalweb.portal.util.browsercommands.BrowserCommands;
 
 import com.thoughtworks.selenium.CommandProcessor;
 import com.thoughtworks.selenium.Selenium;
@@ -145,7 +146,7 @@ public abstract class BaseSeleniumImpl
 	}
 
 	public void downloadTempFile(String value) {
-		LiferaySeleniumHelper.downloadTempFile(value);
+		BrowserCommands.downloadTempFile(value);
 	}
 
 	public void echo(String message) {
@@ -284,7 +285,7 @@ public abstract class BaseSeleniumImpl
 	}
 
 	public void setBrowserOption() {
-		LiferaySeleniumHelper.setBrowserOption();
+		BrowserCommands.setBrowserOption();
 	}
 
 	public void setDefaultTimeout() {

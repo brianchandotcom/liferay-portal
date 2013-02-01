@@ -216,6 +216,7 @@ if (translating) {
 			classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 			classPK="<%= ddmStructure.getStructureId() %>"
 			fields="<%= fields %>"
+			repeatable="<%= translating ? false : true %>"
 			requestedLocale="<%= LocaleUtil.fromLanguageId(languageId) %>"
 		/>
 

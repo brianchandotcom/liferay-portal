@@ -20,19 +20,18 @@
 	<c:if test="<%= Validator.isNotNull(xsd) %>">
 		<%= DDMXSDUtil.getHTML(pageContext, xsd, fields, fieldsNamespace, readOnly, requestedLocale) %>
 
-		<c:if test="<%= repeatable %>">
-			<aui:input name="<%= fieldsDisplayInputName %>" type="hidden" />
+		<aui:input name="<%= fieldsDisplayInputName %>" type="hidden" />
 
-			<aui:script use="liferay-ddm-repeatable-fields">
-				new Liferay.DDM.RepeatableFields(
-					{
-						classNameId: <%= classNameId %>,
-						classPK: <%= classPK %>,
-						container: '#<%= randomNamespace %>',
-						fieldsDisplayInput: '#<portlet:namespace /><%= fieldsDisplayInputName %>',
-						portletNamespace: '<portlet:namespace />'
-					}
-				);
-			</aui:script>
-		</c:if>
+		<aui:script use="liferay-ddm-repeatable-fields">
+			new Liferay.DDM.RepeatableFields(
+				{
+					classNameId: <%= classNameId %>,
+					classPK: <%= classPK %>,
+					container: '#<%= randomNamespace %>',
+					fieldsDisplayInput: '#<portlet:namespace /><%= fieldsDisplayInputName %>',
+					portletNamespace: '<portlet:namespace />',
+					repeatable: '<%= repeatable %>'
+				}
+			);
+		</aui:script>
 	</c:if>

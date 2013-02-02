@@ -762,6 +762,18 @@ create unique index IX_1B7E3B67 on SocialActivityCounter (groupId, classNameId, 
 create unique index IX_374B35AE on SocialActivityCounter (groupId, classNameId, classPK, name, ownerType, startPeriod);
 create index IX_926CDD04 on SocialActivityCounter (groupId, classNameId, classPK, ownerType);
 
+create index IX_FEDB9EC5 on SocialActivityGroup (classNameId);
+create index IX_D23302BE on SocialActivityGroup (classNameId, classPK);
+create index IX_6E259B5F on SocialActivityGroup (companyId);
+create index IX_ACCB6DA1 on SocialActivityGroup (groupId);
+create index IX_A12520F0 on SocialActivityGroup (groupId, userId, classNameId, classPK);
+create index IX_D9255AE5 on SocialActivityGroup (groupId, userId, classNameId, classPK, type_);
+create index IX_8CDA9622 on SocialActivityGroup (groupId, userId, classNameId, type_);
+create index IX_84E8E463 on SocialActivityGroup (userId);
+
+create index IX_F7398DAC on SocialActivityGroups_SocialActivities (activityGroupId);
+create index IX_7250148D on SocialActivityGroups_SocialActivities (activityId);
+
 create index IX_B15863FA on SocialActivityLimit (classNameId, classPK);
 create unique index IX_F1C1A617 on SocialActivityLimit (groupId, userId, classNameId, classPK, activityType, activityCounterName);
 create index IX_6F9EDE9F on SocialActivityLimit (userId);

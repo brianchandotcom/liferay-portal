@@ -14,13 +14,20 @@
 
 package com.liferay.portlet.social.service.persistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
+import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.RowMapper;
+import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
+import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -28,6 +35,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,6 +54,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The persistence implementation for the social activity service.
@@ -5081,6 +5090,16 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		throws SystemException {
 		socialActivity = toUnwrappedModel(socialActivity);
 
+		try {
+			clearSocialActivityGroups.clear(socialActivity.getPrimaryKey());
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME);
+		}
+
 		Session session = null;
 
 		try {
@@ -5617,6 +5636,516 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	}
 
 	/**
+	 * Returns all the social activity groups associated with the social activity.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @return the social activity groups associated with the social activity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<com.liferay.portlet.social.model.SocialActivityGroup> getSocialActivityGroups(
+		long pk) throws SystemException {
+		return getSocialActivityGroups(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the social activity groups associated with the social activity.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param start the lower bound of the range of social activities
+	 * @param end the upper bound of the range of social activities (not inclusive)
+	 * @return the range of social activity groups associated with the social activity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<com.liferay.portlet.social.model.SocialActivityGroup> getSocialActivityGroups(
+		long pk, int start, int end) throws SystemException {
+		return getSocialActivityGroups(pk, start, end, null);
+	}
+
+	public static final FinderPath FINDER_PATH_GET_SOCIALACTIVITYGROUPS = new FinderPath(com.liferay.portlet.social.model.impl.SocialActivityGroupModelImpl.ENTITY_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES,
+			com.liferay.portlet.social.model.impl.SocialActivityGroupImpl.class,
+			SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME,
+			"getSocialActivityGroups",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+	static {
+		FINDER_PATH_GET_SOCIALACTIVITYGROUPS.setCacheKeyGeneratorCacheName(null);
+	}
+
+	/**
+	 * Returns an ordered range of all the social activity groups associated with the social activity.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param start the lower bound of the range of social activities
+	 * @param end the upper bound of the range of social activities (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of social activity groups associated with the social activity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<com.liferay.portlet.social.model.SocialActivityGroup> getSocialActivityGroups(
+		long pk, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderArgs = new Object[] { pk };
+		}
+		else {
+			finderArgs = new Object[] { pk, start, end, orderByComparator };
+		}
+
+		List<com.liferay.portlet.social.model.SocialActivityGroup> list = (List<com.liferay.portlet.social.model.SocialActivityGroup>)FinderCacheUtil.getResult(FINDER_PATH_GET_SOCIALACTIVITYGROUPS,
+				finderArgs, this);
+
+		if (list == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sql = _SQL_GETSOCIALACTIVITYGROUPS.concat(ORDER_BY_CLAUSE)
+													  .concat(orderByComparator.getOrderBy());
+				}
+				else {
+					sql = _SQL_GETSOCIALACTIVITYGROUPS;
+
+					if (pagination) {
+						sql = sql.concat(com.liferay.portlet.social.model.impl.SocialActivityGroupModelImpl.ORDER_BY_SQL);
+					}
+				}
+
+				SQLQuery q = session.createSQLQuery(sql);
+
+				q.addEntity("SocialActivityGroup",
+					com.liferay.portlet.social.model.impl.SocialActivityGroupImpl.class);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(pk);
+
+				if (!pagination) {
+					list = (List<com.liferay.portlet.social.model.SocialActivityGroup>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<com.liferay.portlet.social.model.SocialActivityGroup>(list);
+				}
+				else {
+					list = (List<com.liferay.portlet.social.model.SocialActivityGroup>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				socialActivityGroupPersistence.cacheResult(list);
+
+				FinderCacheUtil.putResult(FINDER_PATH_GET_SOCIALACTIVITYGROUPS,
+					finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_GET_SOCIALACTIVITYGROUPS,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	public static final FinderPath FINDER_PATH_GET_SOCIALACTIVITYGROUPS_SIZE = new FinderPath(com.liferay.portlet.social.model.impl.SocialActivityGroupModelImpl.ENTITY_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES,
+			Long.class,
+			SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME,
+			"getSocialActivityGroupsSize", new String[] { Long.class.getName() });
+
+	static {
+		FINDER_PATH_GET_SOCIALACTIVITYGROUPS_SIZE.setCacheKeyGeneratorCacheName(null);
+	}
+
+	/**
+	 * Returns the number of social activity groups associated with the social activity.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @return the number of social activity groups associated with the social activity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getSocialActivityGroupsSize(long pk) throws SystemException {
+		Object[] finderArgs = new Object[] { pk };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_SOCIALACTIVITYGROUPS_SIZE,
+				finderArgs, this);
+
+		if (count == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				SQLQuery q = session.createSQLQuery(_SQL_GETSOCIALACTIVITYGROUPSSIZE);
+
+				q.addScalar(COUNT_COLUMN_NAME,
+					com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(pk);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(FINDER_PATH_GET_SOCIALACTIVITYGROUPS_SIZE,
+					finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_GET_SOCIALACTIVITYGROUPS_SIZE,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	public static final FinderPath FINDER_PATH_CONTAINS_SOCIALACTIVITYGROUP = new FinderPath(com.liferay.portlet.social.model.impl.SocialActivityGroupModelImpl.ENTITY_CACHE_ENABLED,
+			SocialActivityModelImpl.FINDER_CACHE_ENABLED_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES,
+			Boolean.class,
+			SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME,
+			"containsSocialActivityGroup",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns <code>true</code> if the social activity group is associated with the social activity.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param socialActivityGroupPK the primary key of the social activity group
+	 * @return <code>true</code> if the social activity group is associated with the social activity; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean containsSocialActivityGroup(long pk,
+		long socialActivityGroupPK) throws SystemException {
+		Object[] finderArgs = new Object[] { pk, socialActivityGroupPK };
+
+		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_SOCIALACTIVITYGROUP,
+				finderArgs, this);
+
+		if (value == null) {
+			try {
+				value = Boolean.valueOf(containsSocialActivityGroup.contains(
+							pk, socialActivityGroupPK));
+
+				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_SOCIALACTIVITYGROUP,
+					finderArgs, value);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_CONTAINS_SOCIALACTIVITYGROUP,
+					finderArgs);
+
+				throw processException(e);
+			}
+		}
+
+		return value.booleanValue();
+	}
+
+	/**
+	 * Returns <code>true</code> if the social activity has any social activity groups associated with it.
+	 *
+	 * @param pk the primary key of the social activity to check for associations with social activity groups
+	 * @return <code>true</code> if the social activity has any social activity groups associated with it; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean containsSocialActivityGroups(long pk)
+		throws SystemException {
+		if (getSocialActivityGroupsSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Adds an association between the social activity and the social activity group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param socialActivityGroupPK the primary key of the social activity group
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addSocialActivityGroup(long pk, long socialActivityGroupPK)
+		throws SystemException {
+		try {
+			addSocialActivityGroup.add(pk, socialActivityGroupPK);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME);
+		}
+	}
+
+	/**
+	 * Adds an association between the social activity and the social activity group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param socialActivityGroup the social activity group
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addSocialActivityGroup(long pk,
+		com.liferay.portlet.social.model.SocialActivityGroup socialActivityGroup)
+		throws SystemException {
+		try {
+			addSocialActivityGroup.add(pk, socialActivityGroup.getPrimaryKey());
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME);
+		}
+	}
+
+	/**
+	 * Adds an association between the social activity and the social activity groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param socialActivityGroupPKs the primary keys of the social activity groups
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addSocialActivityGroups(long pk, long[] socialActivityGroupPKs)
+		throws SystemException {
+		try {
+			for (long socialActivityGroupPK : socialActivityGroupPKs) {
+				addSocialActivityGroup.add(pk, socialActivityGroupPK);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME);
+		}
+	}
+
+	/**
+	 * Adds an association between the social activity and the social activity groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param socialActivityGroups the social activity groups
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addSocialActivityGroups(long pk,
+		List<com.liferay.portlet.social.model.SocialActivityGroup> socialActivityGroups)
+		throws SystemException {
+		try {
+			for (com.liferay.portlet.social.model.SocialActivityGroup socialActivityGroup : socialActivityGroups) {
+				addSocialActivityGroup.add(pk,
+					socialActivityGroup.getPrimaryKey());
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME);
+		}
+	}
+
+	/**
+	 * Clears all associations between the social activity and its social activity groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the social activity to clear the associated social activity groups from
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void clearSocialActivityGroups(long pk) throws SystemException {
+		try {
+			clearSocialActivityGroups.clear(pk);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME);
+		}
+	}
+
+	/**
+	 * Removes the association between the social activity and the social activity group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param socialActivityGroupPK the primary key of the social activity group
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeSocialActivityGroup(long pk, long socialActivityGroupPK)
+		throws SystemException {
+		try {
+			removeSocialActivityGroup.remove(pk, socialActivityGroupPK);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME);
+		}
+	}
+
+	/**
+	 * Removes the association between the social activity and the social activity group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param socialActivityGroup the social activity group
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeSocialActivityGroup(long pk,
+		com.liferay.portlet.social.model.SocialActivityGroup socialActivityGroup)
+		throws SystemException {
+		try {
+			removeSocialActivityGroup.remove(pk,
+				socialActivityGroup.getPrimaryKey());
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME);
+		}
+	}
+
+	/**
+	 * Removes the association between the social activity and the social activity groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param socialActivityGroupPKs the primary keys of the social activity groups
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeSocialActivityGroups(long pk,
+		long[] socialActivityGroupPKs) throws SystemException {
+		try {
+			for (long socialActivityGroupPK : socialActivityGroupPKs) {
+				removeSocialActivityGroup.remove(pk, socialActivityGroupPK);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME);
+		}
+	}
+
+	/**
+	 * Removes the association between the social activity and the social activity groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param socialActivityGroups the social activity groups
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeSocialActivityGroups(long pk,
+		List<com.liferay.portlet.social.model.SocialActivityGroup> socialActivityGroups)
+		throws SystemException {
+		try {
+			for (com.liferay.portlet.social.model.SocialActivityGroup socialActivityGroup : socialActivityGroups) {
+				removeSocialActivityGroup.remove(pk,
+					socialActivityGroup.getPrimaryKey());
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME);
+		}
+	}
+
+	/**
+	 * Sets the social activity groups associated with the social activity, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param socialActivityGroupPKs the primary keys of the social activity groups to be associated with the social activity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setSocialActivityGroups(long pk, long[] socialActivityGroupPKs)
+		throws SystemException {
+		try {
+			Set<Long> socialActivityGroupPKSet = SetUtil.fromArray(socialActivityGroupPKs);
+
+			List<com.liferay.portlet.social.model.SocialActivityGroup> socialActivityGroups =
+				getSocialActivityGroups(pk);
+
+			for (com.liferay.portlet.social.model.SocialActivityGroup socialActivityGroup : socialActivityGroups) {
+				if (!socialActivityGroupPKSet.remove(
+							socialActivityGroup.getPrimaryKey())) {
+					removeSocialActivityGroup.remove(pk,
+						socialActivityGroup.getPrimaryKey());
+				}
+			}
+
+			for (Long socialActivityGroupPK : socialActivityGroupPKSet) {
+				addSocialActivityGroup.add(pk, socialActivityGroupPK);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME);
+		}
+	}
+
+	/**
+	 * Sets the social activity groups associated with the social activity, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the social activity
+	 * @param socialActivityGroups the social activity groups to be associated with the social activity
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setSocialActivityGroups(long pk,
+		List<com.liferay.portlet.social.model.SocialActivityGroup> socialActivityGroups)
+		throws SystemException {
+		try {
+			long[] socialActivityGroupPKs = new long[socialActivityGroups.size()];
+
+			for (int i = 0; i < socialActivityGroups.size(); i++) {
+				com.liferay.portlet.social.model.SocialActivityGroup socialActivityGroup =
+					socialActivityGroups.get(i);
+
+				socialActivityGroupPKs[i] = socialActivityGroup.getPrimaryKey();
+			}
+
+			setSocialActivityGroups(pk, socialActivityGroupPKs);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(SocialActivityModelImpl.MAPPING_TABLE_SOCIALACTIVITYGROUPS_SOCIALACTIVITIES_NAME);
+		}
+	}
+
+	/**
 	 * Initializes the social activity persistence.
 	 */
 	public void afterPropertiesSet() {
@@ -5639,6 +6168,12 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				_log.error(e);
 			}
 		}
+
+		containsSocialActivityGroup = new ContainsSocialActivityGroup();
+
+		addSocialActivityGroup = new AddSocialActivityGroup();
+		clearSocialActivityGroups = new ClearSocialActivityGroups();
+		removeSocialActivityGroup = new RemoveSocialActivityGroup();
 	}
 
 	public void destroy() {
@@ -5648,10 +6183,190 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = SocialActivityGroupPersistence.class)
+	protected SocialActivityGroupPersistence socialActivityGroupPersistence;
+	protected ContainsSocialActivityGroup containsSocialActivityGroup;
+	protected AddSocialActivityGroup addSocialActivityGroup;
+	protected ClearSocialActivityGroups clearSocialActivityGroups;
+	protected RemoveSocialActivityGroup removeSocialActivityGroup;
+
+	protected class ContainsSocialActivityGroup {
+		protected ContainsSocialActivityGroup() {
+			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
+					_SQL_CONTAINSSOCIALACTIVITYGROUP,
+					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
+					RowMapper.COUNT);
+		}
+
+		protected boolean contains(long activityId, long activityGroupId) {
+			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
+						new Long(activityId), new Long(activityGroupId)
+					});
+
+			if (results.size() > 0) {
+				Integer count = results.get(0);
+
+				if (count.intValue() > 0) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		private MappingSqlQuery<Integer> _mappingSqlQuery;
+	}
+
+	protected class AddSocialActivityGroup {
+		protected AddSocialActivityGroup() {
+			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
+					"INSERT INTO SocialActivityGroups_SocialActivities (activityId, activityGroupId) VALUES (?, ?)",
+					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
+		}
+
+		protected void add(long activityId, long activityGroupId)
+			throws SystemException {
+			if (!containsSocialActivityGroup.contains(activityId,
+						activityGroupId)) {
+				ModelListener<com.liferay.portlet.social.model.SocialActivityGroup>[] socialActivityGroupListeners =
+					socialActivityGroupPersistence.getListeners();
+
+				for (ModelListener<SocialActivity> listener : listeners) {
+					listener.onBeforeAddAssociation(activityId,
+						com.liferay.portlet.social.model.SocialActivityGroup.class.getName(),
+						activityGroupId);
+				}
+
+				for (ModelListener<com.liferay.portlet.social.model.SocialActivityGroup> listener : socialActivityGroupListeners) {
+					listener.onBeforeAddAssociation(activityGroupId,
+						SocialActivity.class.getName(), activityId);
+				}
+
+				_sqlUpdate.update(new Object[] {
+						new Long(activityId), new Long(activityGroupId)
+					});
+
+				for (ModelListener<SocialActivity> listener : listeners) {
+					listener.onAfterAddAssociation(activityId,
+						com.liferay.portlet.social.model.SocialActivityGroup.class.getName(),
+						activityGroupId);
+				}
+
+				for (ModelListener<com.liferay.portlet.social.model.SocialActivityGroup> listener : socialActivityGroupListeners) {
+					listener.onAfterAddAssociation(activityGroupId,
+						SocialActivity.class.getName(), activityId);
+				}
+			}
+		}
+
+		private SqlUpdate _sqlUpdate;
+	}
+
+	protected class ClearSocialActivityGroups {
+		protected ClearSocialActivityGroups() {
+			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
+					"DELETE FROM SocialActivityGroups_SocialActivities WHERE activityId = ?",
+					new int[] { java.sql.Types.BIGINT });
+		}
+
+		protected void clear(long activityId) throws SystemException {
+			ModelListener<com.liferay.portlet.social.model.SocialActivityGroup>[] socialActivityGroupListeners =
+				socialActivityGroupPersistence.getListeners();
+
+			List<com.liferay.portlet.social.model.SocialActivityGroup> socialActivityGroups =
+				null;
+
+			if ((listeners.length > 0) ||
+					(socialActivityGroupListeners.length > 0)) {
+				socialActivityGroups = getSocialActivityGroups(activityId);
+
+				for (com.liferay.portlet.social.model.SocialActivityGroup socialActivityGroup : socialActivityGroups) {
+					for (ModelListener<SocialActivity> listener : listeners) {
+						listener.onBeforeRemoveAssociation(activityId,
+							com.liferay.portlet.social.model.SocialActivityGroup.class.getName(),
+							socialActivityGroup.getPrimaryKey());
+					}
+
+					for (ModelListener<com.liferay.portlet.social.model.SocialActivityGroup> listener : socialActivityGroupListeners) {
+						listener.onBeforeRemoveAssociation(socialActivityGroup.getPrimaryKey(),
+							SocialActivity.class.getName(), activityId);
+					}
+				}
+			}
+
+			_sqlUpdate.update(new Object[] { new Long(activityId) });
+
+			if ((listeners.length > 0) ||
+					(socialActivityGroupListeners.length > 0)) {
+				for (com.liferay.portlet.social.model.SocialActivityGroup socialActivityGroup : socialActivityGroups) {
+					for (ModelListener<SocialActivity> listener : listeners) {
+						listener.onAfterRemoveAssociation(activityId,
+							com.liferay.portlet.social.model.SocialActivityGroup.class.getName(),
+							socialActivityGroup.getPrimaryKey());
+					}
+
+					for (ModelListener<com.liferay.portlet.social.model.SocialActivityGroup> listener : socialActivityGroupListeners) {
+						listener.onAfterRemoveAssociation(socialActivityGroup.getPrimaryKey(),
+							SocialActivity.class.getName(), activityId);
+					}
+				}
+			}
+		}
+
+		private SqlUpdate _sqlUpdate;
+	}
+
+	protected class RemoveSocialActivityGroup {
+		protected RemoveSocialActivityGroup() {
+			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
+					"DELETE FROM SocialActivityGroups_SocialActivities WHERE activityId = ? AND activityGroupId = ?",
+					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
+		}
+
+		protected void remove(long activityId, long activityGroupId)
+			throws SystemException {
+			if (containsSocialActivityGroup.contains(activityId, activityGroupId)) {
+				ModelListener<com.liferay.portlet.social.model.SocialActivityGroup>[] socialActivityGroupListeners =
+					socialActivityGroupPersistence.getListeners();
+
+				for (ModelListener<SocialActivity> listener : listeners) {
+					listener.onBeforeRemoveAssociation(activityId,
+						com.liferay.portlet.social.model.SocialActivityGroup.class.getName(),
+						activityGroupId);
+				}
+
+				for (ModelListener<com.liferay.portlet.social.model.SocialActivityGroup> listener : socialActivityGroupListeners) {
+					listener.onBeforeRemoveAssociation(activityGroupId,
+						SocialActivity.class.getName(), activityId);
+				}
+
+				_sqlUpdate.update(new Object[] {
+						new Long(activityId), new Long(activityGroupId)
+					});
+
+				for (ModelListener<SocialActivity> listener : listeners) {
+					listener.onAfterRemoveAssociation(activityId,
+						com.liferay.portlet.social.model.SocialActivityGroup.class.getName(),
+						activityGroupId);
+				}
+
+				for (ModelListener<com.liferay.portlet.social.model.SocialActivityGroup> listener : socialActivityGroupListeners) {
+					listener.onAfterRemoveAssociation(activityGroupId,
+						SocialActivity.class.getName(), activityId);
+				}
+			}
+		}
+
+		private SqlUpdate _sqlUpdate;
+	}
+
 	private static final String _SQL_SELECT_SOCIALACTIVITY = "SELECT socialActivity FROM SocialActivity socialActivity";
 	private static final String _SQL_SELECT_SOCIALACTIVITY_WHERE = "SELECT socialActivity FROM SocialActivity socialActivity WHERE ";
 	private static final String _SQL_COUNT_SOCIALACTIVITY = "SELECT COUNT(socialActivity) FROM SocialActivity socialActivity";
 	private static final String _SQL_COUNT_SOCIALACTIVITY_WHERE = "SELECT COUNT(socialActivity) FROM SocialActivity socialActivity WHERE ";
+	private static final String _SQL_GETSOCIALACTIVITYGROUPS = "SELECT {SocialActivityGroup.*} FROM SocialActivityGroup INNER JOIN SocialActivityGroups_SocialActivities ON (SocialActivityGroups_SocialActivities.activityGroupId = SocialActivityGroup.activityGroupId) WHERE (SocialActivityGroups_SocialActivities.activityId = ?)";
+	private static final String _SQL_GETSOCIALACTIVITYGROUPSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM SocialActivityGroups_SocialActivities WHERE activityId = ?";
+	private static final String _SQL_CONTAINSSOCIALACTIVITYGROUP = "SELECT COUNT(*) AS COUNT_VALUE FROM SocialActivityGroups_SocialActivities WHERE activityId = ? AND activityGroupId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialActivity.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SocialActivity exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialActivity exists with the key {";

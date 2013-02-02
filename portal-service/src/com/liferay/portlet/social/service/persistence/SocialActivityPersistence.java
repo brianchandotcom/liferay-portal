@@ -1510,4 +1510,197 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the social activity groups associated with the social activity.
+	*
+	* @param pk the primary key of the social activity
+	* @return the social activity groups associated with the social activity
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityGroup> getSocialActivityGroups(
+		long pk) throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the social activity groups associated with the social activity.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the social activity
+	* @param start the lower bound of the range of social activities
+	* @param end the upper bound of the range of social activities (not inclusive)
+	* @return the range of social activity groups associated with the social activity
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityGroup> getSocialActivityGroups(
+		long pk, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the social activity groups associated with the social activity.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the social activity
+	* @param start the lower bound of the range of social activities
+	* @param end the upper bound of the range of social activities (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of social activity groups associated with the social activity
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityGroup> getSocialActivityGroups(
+		long pk, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of social activity groups associated with the social activity.
+	*
+	* @param pk the primary key of the social activity
+	* @return the number of social activity groups associated with the social activity
+	* @throws SystemException if a system exception occurred
+	*/
+	public int getSocialActivityGroupsSize(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns <code>true</code> if the social activity group is associated with the social activity.
+	*
+	* @param pk the primary key of the social activity
+	* @param socialActivityGroupPK the primary key of the social activity group
+	* @return <code>true</code> if the social activity group is associated with the social activity; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean containsSocialActivityGroup(long pk,
+		long socialActivityGroupPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns <code>true</code> if the social activity has any social activity groups associated with it.
+	*
+	* @param pk the primary key of the social activity to check for associations with social activity groups
+	* @return <code>true</code> if the social activity has any social activity groups associated with it; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean containsSocialActivityGroups(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds an association between the social activity and the social activity group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the social activity
+	* @param socialActivityGroupPK the primary key of the social activity group
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addSocialActivityGroup(long pk, long socialActivityGroupPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds an association between the social activity and the social activity group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the social activity
+	* @param socialActivityGroup the social activity group
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addSocialActivityGroup(long pk,
+		com.liferay.portlet.social.model.SocialActivityGroup socialActivityGroup)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds an association between the social activity and the social activity groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the social activity
+	* @param socialActivityGroupPKs the primary keys of the social activity groups
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addSocialActivityGroups(long pk, long[] socialActivityGroupPKs)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds an association between the social activity and the social activity groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the social activity
+	* @param socialActivityGroups the social activity groups
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addSocialActivityGroups(long pk,
+		java.util.List<com.liferay.portlet.social.model.SocialActivityGroup> socialActivityGroups)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Clears all associations between the social activity and its social activity groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the social activity to clear the associated social activity groups from
+	* @throws SystemException if a system exception occurred
+	*/
+	public void clearSocialActivityGroups(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the association between the social activity and the social activity group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the social activity
+	* @param socialActivityGroupPK the primary key of the social activity group
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeSocialActivityGroup(long pk, long socialActivityGroupPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the association between the social activity and the social activity group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the social activity
+	* @param socialActivityGroup the social activity group
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeSocialActivityGroup(long pk,
+		com.liferay.portlet.social.model.SocialActivityGroup socialActivityGroup)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the association between the social activity and the social activity groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the social activity
+	* @param socialActivityGroupPKs the primary keys of the social activity groups
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeSocialActivityGroups(long pk,
+		long[] socialActivityGroupPKs)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the association between the social activity and the social activity groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the social activity
+	* @param socialActivityGroups the social activity groups
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeSocialActivityGroups(long pk,
+		java.util.List<com.liferay.portlet.social.model.SocialActivityGroup> socialActivityGroups)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Sets the social activity groups associated with the social activity, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the social activity
+	* @param socialActivityGroupPKs the primary keys of the social activity groups to be associated with the social activity
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setSocialActivityGroups(long pk, long[] socialActivityGroupPKs)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Sets the social activity groups associated with the social activity, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the social activity
+	* @param socialActivityGroups the social activity groups to be associated with the social activity
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setSocialActivityGroups(long pk,
+		java.util.List<com.liferay.portlet.social.model.SocialActivityGroup> socialActivityGroups)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

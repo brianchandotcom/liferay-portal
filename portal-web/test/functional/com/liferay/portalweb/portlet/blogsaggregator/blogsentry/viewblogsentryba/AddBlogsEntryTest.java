@@ -38,31 +38,12 @@ public class AddBlogsEntryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_33_title']",
 					RuntimeVariables.replace("Blogs Entry Title"));
-				selenium.waitForElementPresent(
-					"//textarea[@id='_33_editor' and @style='display: none;']");
-				selenium.waitForVisible("//span[.='Source']");
-				assertEquals(RuntimeVariables.replace("Source"),
-					selenium.getText("//span[.='Source']"));
-				selenium.clickAt("//span[.='Source']",
-					RuntimeVariables.replace("Source"));
 				selenium.waitForVisible(
-					"//a[@class='cke_button_source cke_on']");
+					"//a[contains(@class,'cke_button_disabled')]");
 				selenium.waitForVisible(
-					"//td[@id='cke_contents__33_editor']/textarea");
-				selenium.type("//td[@id='cke_contents__33_editor']/textarea",
+					"//iframe[contains(@title,'Rich Text Editor')]");
+				selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 					RuntimeVariables.replace("Blogs Entry Content"));
-				assertEquals(RuntimeVariables.replace("Source"),
-					selenium.getText("//span[.='Source']"));
-				selenium.clickAt("//span[.='Source']",
-					RuntimeVariables.replace("Source"));
-				selenium.waitForElementPresent(
-					"//textarea[@id='_33_editor' and @style='display: none;']");
-				selenium.waitForVisible(
-					"//td[@id='cke_contents__33_editor']/iframe");
-				selenium.selectFrame(
-					"//td[@id='cke_contents__33_editor']/iframe");
-				selenium.waitForText("//body", "Blogs Entry Content");
-				selenium.selectFrame("relative=top");
 
 				boolean blogsEntryDescription = selenium.isVisible(
 						"//textarea[@id='_33_description']");
@@ -89,7 +70,7 @@ public class AddBlogsEntryTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 					selenium.getText("//div[@class='entry-title']/h2/a"));
 				assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-					selenium.getText("//div[@class='entry-body']/p"));
+					selenium.getText("//div[@class='entry-body']/div/p"));
 
 			case 100:
 				label = -1;

@@ -28,14 +28,16 @@ public class AddBlogsEntry2CommentTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//input[@id='_33_keywords']");
 		selenium.type("//input[@id='_33_keywords']",
 			RuntimeVariables.replace("Entry2"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//span[@class='entry-title']");
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a",
+			selenium.getText("//span[@class='entry-title']"));
+		selenium.clickAt("//span[@class='entry-title']",
 			RuntimeVariables.replace("Blogs Entry2 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Be the first."),

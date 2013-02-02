@@ -76,6 +76,6 @@ public class AddBlogsEntry3CPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
+			selenium.getText("//div[@class='entry-body']/div/p"));
 	}
 }

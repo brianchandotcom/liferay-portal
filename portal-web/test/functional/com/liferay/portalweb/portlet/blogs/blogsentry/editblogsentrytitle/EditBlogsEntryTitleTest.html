@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-body']/p</td>
+	<td>//div[@class='entry-body']/div/p</td>
 	<td>Blogs Entry Content</td>
 </tr>
 <tr>
@@ -44,9 +44,9 @@
 	<td>Blogs Entry Title Edit</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
+	<td>waitForVisible</td>
+	<td>//a[contains(@class,'cke_button_disabled')]</td>
+	<td>Cut Button Disabled</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-body']/p</td>
+	<td>//div[@class='entry-body']/div/p</td>
 	<td>Blogs Entry Content</td>
 </tr>
 </tbody></table>

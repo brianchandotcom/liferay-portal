@@ -33,7 +33,7 @@ public class ImportLARTest extends BaseTestCase {
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -51,7 +51,7 @@ public class ImportLARTest extends BaseTestCase {
 				selenium.waitForVisible("//input[@id='_86_importFileName']");
 				selenium.uploadFile("//input[@id='_86_importFileName']",
 					RuntimeVariables.replace(
-						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\blogs\\dependencies\\Selenium-Blogs.portlet.lar"));
+						"L:\\portal\\build\\portal-web\\test\\functional\\com\\liferay\\portalweb\\portlet\\blogs\\dependencies\\Selenium-Blogs.portlet.lar"));
 
 				boolean deleteBeforeImportNotChecked = selenium.isChecked(
 						"//input[@id='_86_DELETE_PORTLET_DATACheckbox']");

@@ -16,10 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.search.Document" %><%@
-page import="com.liferay.portal.kernel.search.Hits" %><%@
+<%@ page import="com.liferay.portal.kernel.search.Hits" %><%@
 page import="com.liferay.portal.kernel.search.Indexer" %><%@
-page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.search.SearchContext" %><%@
 page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
@@ -38,6 +36,7 @@ page import="com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUt
 page import="com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil" %><%@
 page import="com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission" %><%@
 page import="com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission" %><%@
+page import="com.liferay.portlet.bookmarks.util.BookmarksSearcher" %><%@
 page import="com.liferay.portlet.bookmarks.util.BookmarksUtil" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %>
 

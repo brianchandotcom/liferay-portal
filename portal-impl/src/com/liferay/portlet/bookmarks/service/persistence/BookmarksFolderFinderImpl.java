@@ -126,7 +126,7 @@ public class BookmarksFolderFinderImpl
 			}
 
 			sb.append(sql);
-			sb.append(" UNION ALL ");
+			sb.append(") UNION ALL (");
 
 			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
 				sql = CustomSQLUtil.get(COUNT_E_BY_G_F);

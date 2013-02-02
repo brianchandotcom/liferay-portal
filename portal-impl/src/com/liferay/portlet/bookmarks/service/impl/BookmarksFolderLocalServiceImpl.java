@@ -254,7 +254,7 @@ public class BookmarksFolderLocalServiceImpl
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
 		return bookmarksFolderFinder.countF_E_ByG_F(
-				groupId, folderId, queryDefinition);
+			groupId, folderId, queryDefinition);
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)
@@ -268,7 +268,7 @@ public class BookmarksFolderLocalServiceImpl
 		throws SystemException {
 
 		return bookmarksFolderPersistence.countByG_P_S(
-				groupId, parentFolderId, status);
+			groupId, parentFolderId, status);
 	}
 
 	public void getSubfolderIds(

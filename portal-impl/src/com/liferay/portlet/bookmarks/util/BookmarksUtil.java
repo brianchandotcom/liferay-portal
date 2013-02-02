@@ -16,7 +16,12 @@ package com.liferay.portlet.bookmarks.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -36,6 +41,7 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.comparator.EntryCreateDateComparator;
 import com.liferay.portlet.bookmarks.util.comparator.EntryModifiedDateComparator;
@@ -45,6 +51,7 @@ import com.liferay.portlet.bookmarks.util.comparator.EntryURLComparator;
 import com.liferay.portlet.bookmarks.util.comparator.EntryVisitsComparator;
 import com.liferay.util.ContentUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -340,6 +347,43 @@ public class BookmarksUtil {
 			preferences, companyId, PropsValues.BOOKMARKS_EMAIL_FROM_NAME);
 	}
 
+	public static List<Object> getEntries(Hits hits) {
+		List<Object> entries = new ArrayList<Object>();
+
+		for (Document document : hits.getDocs()) {
+			String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			try {
+				Object obj = null;
+
+				if (entryClassName.equals(BookmarksEntry.class.getName())) {
+					obj = BookmarksEntryLocalServiceUtil.getEntry(entryClassPK);
+				}
+				else if (entryClassName.equals(
+							BookmarksFolder.class.getName())) {
+
+					obj = BookmarksFolderLocalServiceUtil.getFolder(
+						entryClassPK);
+				}
+
+				entries.add(obj);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Bookmarks search index is stale and contains entry " +
+							entryClassPK);
+				}
+
+				continue;
+			}
+		}
+
+		return entries;
+	}
+
 	public static OrderByComparator getEntryOrderByComparator(
 		String orderByCol, String orderByType) {
 
@@ -372,5 +416,7 @@ public class BookmarksUtil {
 
 		return orderByComparator;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(BookmarksUtil.class);
 
 }

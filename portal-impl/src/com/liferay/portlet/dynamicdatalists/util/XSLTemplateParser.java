@@ -15,18 +15,17 @@
 package com.liferay.portlet.dynamicdatalists.util;
 
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.ContentUtil;
 
 /**
  * @author Marcellus Tavares
+ * @author Tina Tian
  */
 public class XSLTemplateParser extends
 	com.liferay.portlet.journal.util.XSLTemplateParser {
 
 	@Override
-	protected String getErrorTemplateContent() {
-		return ContentUtil.get(
-			PropsValues.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_XSL);
+	protected String getErrorTemplateId() {
+		return PropsValues.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_XSL;
 	}
 
 }

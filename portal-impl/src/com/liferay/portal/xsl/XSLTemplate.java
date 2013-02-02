@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.template.TemplateContextHelper;
-import com.liferay.portlet.journal.util.XSLErrorListener;
 
 import java.io.Writer;
 

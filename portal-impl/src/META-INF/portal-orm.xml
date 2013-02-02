@@ -2088,6 +2088,7 @@
 			<basic name="type">
 				<column name="TYPE_" />
 			</basic>
+			<basic name="updateId" />
 			<basic name="version" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />

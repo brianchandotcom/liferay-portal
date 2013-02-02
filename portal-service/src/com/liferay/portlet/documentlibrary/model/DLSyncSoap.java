@@ -43,6 +43,7 @@ public class DLSyncSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setEvent(model.getEvent());
 		soapModel.setType(model.getType());
+		soapModel.setUpdateId(model.getUpdateId());
 		soapModel.setVersion(model.getVersion());
 
 		return soapModel;
@@ -192,6 +193,14 @@ public class DLSyncSoap implements Serializable {
 		_type = type;
 	}
 
+	public long getUpdateId() {
+		return _updateId;
+	}
+
+	public void setUpdateId(long updateId) {
+		_updateId = updateId;
+	}
+
 	public String getVersion() {
 		return _version;
 	}
@@ -212,5 +221,6 @@ public class DLSyncSoap implements Serializable {
 	private String _description;
 	private String _event;
 	private String _type;
+	private long _updateId;
 	private String _version;
 }

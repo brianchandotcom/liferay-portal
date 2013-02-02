@@ -423,7 +423,7 @@
 					(DLFileEntry.fileEntryId = DLFileVersion.fileEntryId)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLSyncFinder.findByC_M_R_T">
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLSyncFinder.findByC_R_T_U">
 		<![CDATA[
 			SELECT
 				{DLSync.*}
@@ -431,9 +431,9 @@
 				DLSync
 			WHERE
 				(DLSync.companyId = ?) AND
-				(DLSync.modifiedDate >= ?) AND
 				(DLSync.repositoryId = ?) AND
-				(DLSync.type_ = ?)
+				(DLSync.type_ = ?) AND
+				(DLSync.updateId > ?)
 		]]>
 	</sql>
 </custom-sql>

@@ -38,7 +38,6 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,21 +46,21 @@ import java.util.List;
 public class DLSyncServiceImpl extends DLSyncServiceBaseImpl {
 
 	public DLSyncUpdate getDLSyncUpdate(
-			long companyId, long repositoryId, Date lastAccessDate)
+			long companyId, long repositoryId, long lastAccessDate)
 		throws PortalException, SystemException {
 
 		repositoryService.checkRepository(repositoryId);
 
-		Date now = new Date();
+		List<DLSync> dlSyncs = dlSyncFinder.filterFindByC_R_U(
+			companyId, repositoryId, lastAccessDate);
 
-		List<DLSync> dlSyncs = null;
-
-		if (lastAccessDate != null) {
-			dlSyncs = dlSyncFinder.filterFindByC_M_R(
-				companyId, lastAccessDate, repositoryId);
+		for (DLSync dlSync : dlSyncs) {
+			if (dlSync.getUpdateId() > lastAccessDate) {
+				lastAccessDate = dlSync.getUpdateId();
+			}
 		}
 
-		DLSyncUpdate dlSyncUpdate = new DLSyncUpdate(dlSyncs, now);
+		DLSyncUpdate dlSyncUpdate = new DLSyncUpdate(dlSyncs, lastAccessDate);
 
 		return dlSyncUpdate;
 	}

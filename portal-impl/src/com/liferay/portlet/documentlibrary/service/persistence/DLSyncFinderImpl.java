@@ -28,7 +28,6 @@ import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLSyncImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,11 +36,11 @@ import java.util.List;
 public class DLSyncFinderImpl
 	extends BasePersistenceImpl<DLSync> implements DLSyncFinder {
 
-	public static final String FIND_BY_C_M_R_T =
-		DLSyncFinder.class.getName() + ".findByC_M_R_T";
+	public static final String FIND_BY_C_R_T_U =
+		DLSyncFinder.class.getName() + ".findByC_R_T_U";
 
-	public List<DLSync> filterFindByC_M_R(
-			long companyId, Date modifiedDate, long repositoryId)
+	public List<DLSync> filterFindByC_R_U(
+			long companyId, long repositoryId, long updateId)
 		throws SystemException {
 
 		Session session = null;
@@ -49,7 +48,7 @@ public class DLSyncFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_C_M_R_T);
+			String sql = CustomSQLUtil.get(FIND_BY_C_R_T_U);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
 				sql, DLFolder.class.getName(), "DLSync.fileId", null,
@@ -60,7 +59,7 @@ public class DLSyncFinderImpl
 			sb.append(sql);
 			sb.append(" UNION ALL ");
 
-			sql = CustomSQLUtil.get(FIND_BY_C_M_R_T);
+			sql = CustomSQLUtil.get(FIND_BY_C_R_T_U);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
 				sql, DLFileEntry.class.getName(), "DLSync.fileId", null,
@@ -77,13 +76,13 @@ public class DLSyncFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
-			qPos.add(modifiedDate);
 			qPos.add(repositoryId);
 			qPos.add(DLSyncConstants.TYPE_FOLDER);
+			qPos.add(updateId);
 			qPos.add(companyId);
-			qPos.add(modifiedDate);
 			qPos.add(repositoryId);
 			qPos.add(DLSyncConstants.TYPE_FILE);
+			qPos.add(updateId);
 
 			return q.list();
 		}

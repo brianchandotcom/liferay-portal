@@ -323,6 +323,8 @@ update DLFolder set statusByUserId = userId;
 update DLFolder set statusByUserName = userName;
 update DLFolder set statusDate = modifiedDate;
 
+alter table DLSync add updateId LONG;
+
 alter table ExpandoRow add modifiedDate DATE null;
 
 COMMIT_TRANSACTION;

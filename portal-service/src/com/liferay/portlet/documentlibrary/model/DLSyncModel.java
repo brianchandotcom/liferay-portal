@@ -233,6 +233,20 @@ public interface DLSyncModel extends BaseModel<DLSync> {
 	public void setType(String type);
 
 	/**
+	 * Returns the update ID of this d l sync.
+	 *
+	 * @return the update ID of this d l sync
+	 */
+	public long getUpdateId();
+
+	/**
+	 * Sets the update ID of this d l sync.
+	 *
+	 * @param updateId the update ID of this d l sync
+	 */
+	public void setUpdateId(long updateId);
+
+	/**
 	 * Returns the version of this d l sync.
 	 *
 	 * @return the version of this d l sync

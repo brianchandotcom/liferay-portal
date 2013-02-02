@@ -588,6 +588,7 @@
 		<column name="description" type="String" />
 		<column name="event" type="String" />
 		<column name="type" type="String" />
+		<column name="updateId" type="long" />
 		<column name="version" type="String" />
 
 		<!-- Order -->
@@ -595,7 +596,7 @@
 		<order by="asc">
 			<order-column name="companyId" />
 			<order-column name="repositoryId" />
-			<order-column name="modifiedDate" />
+			<order-column name="updateId" />
 		</order>
 
 		<!-- Finder methods -->
@@ -603,10 +604,10 @@
 		<finder name="FileId" return-type="DLSync" unique="true">
 			<finder-column name="fileId" />
 		</finder>
-		<finder name="C_M_R" return-type="Collection">
+		<finder name="C_R_U" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="modifiedDate" comparator="&gt;=" />
 			<finder-column name="repositoryId" />
+			<finder-column name="updateId" comparator="&gt;" />
 		</finder>
 
 		<!-- References -->

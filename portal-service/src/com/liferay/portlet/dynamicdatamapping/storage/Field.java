@@ -194,6 +194,10 @@ public class Field implements Serializable {
 	public Serializable getValue(Locale locale, int index) {
 		List<Serializable> values = _getValues(locale);
 
+		if (index >= values.size()) {
+			return null;
+		}
+
 		return values.get(index);
 	}
 

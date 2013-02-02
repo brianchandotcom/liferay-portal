@@ -93,7 +93,7 @@ public class AnnouncementsEntryPermission {
 		throws PortalException, SystemException {
 
 		if (actionId.equals(ActionKeys.ADD_ENTRY) &&
-			layout instanceof VirtualLayout) {
+			(layout instanceof VirtualLayout)) {
 
 			return false;
 		}

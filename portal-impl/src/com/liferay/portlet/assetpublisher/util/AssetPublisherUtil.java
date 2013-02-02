@@ -82,12 +82,15 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Raymond Augé
+ * @author Julio Camarero
  */
 public class AssetPublisherUtil {
 
 	public static final String SCOPE_ID_GROUP_PREFIX = "Group_";
 
 	public static final String SCOPE_ID_LAYOUT_PREFIX = "Layout_";
+
+	public static final String SCOPE_ID_LAYOUT_UUID_PREFIX = "LayoutUuid_";
 
 	public static void addAndStoreSelection(
 			PortletRequest portletRequest, String className, long classPK,
@@ -540,7 +543,22 @@ public class AssetPublisherUtil {
 
 			return GetterUtil.getLong(scopeIdSuffix);
 		}
+		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_UUID_PREFIX)) {
+			String layoutUuid = scopeId.substring(
+				SCOPE_ID_LAYOUT_UUID_PREFIX.length());
+
+			Layout scopeIdLayout =
+				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+					layoutUuid, scopeGroupId, privateLayout);
+
+			Group scopeIdGroup = scopeIdLayout.getScopeGroup();
+
+			return scopeIdGroup.getGroupId();
+		}
 		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_PREFIX)) {
+
+			// Legacy preferences
+
 			String scopeIdSuffix = scopeId.substring(
 				SCOPE_ID_LAYOUT_PREFIX.length());
 
@@ -574,10 +592,14 @@ public class AssetPublisherUtil {
 
 			long[] groupIds = new long[scopeIds.length];
 
-			for (int i = 0; i < scopeIds.length; i++) {
+			int i = 0;
+
+			for (String scopeId : scopeIds) {
 				try {
 					groupIds[i] = getGroupIdFromScopeId(
-						scopeIds[i], scopeGroupId, layout.isPrivateLayout());
+						scopeId, scopeGroupId, layout.isPrivateLayout());
+
+					i++;
 				}
 				catch (Exception e) {
 					continue;
@@ -625,8 +647,8 @@ public class AssetPublisherUtil {
 				group.getClassPK());
 
 			key =
-				AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX +
-					layout.getLayoutId();
+				AssetPublisherUtil.SCOPE_ID_LAYOUT_UUID_PREFIX +
+					layout.getUuid();
 		}
 		else if (group.isLayoutPrototype() ||
 				(group.getGroupId() == scopeGroupId)) {

@@ -1857,20 +1857,13 @@ public class PortletImporter {
 		String groupScopeId =
 			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + groupId;
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-		String layoutScopeId =
-			AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX + layout.getLayoutId();
-
 		String[] newValues = new String[oldValues.length];
 
 		for (int i = 0; i < oldValues.length; i++) {
 			String oldValue = oldValues[i];
 
 			newValues[i] = StringUtil.replace(
-				oldValue,
-				new String[] {"[$GROUP_SCOPE_ID$]", "[$LAYOUT_SCOPE_ID$]"},
-				new String[] {groupScopeId, layoutScopeId});
+				oldValue, "[$GROUP_SCOPE_ID$]", groupScopeId);
 		}
 
 		jxPreferences.setValues(key, newValues);

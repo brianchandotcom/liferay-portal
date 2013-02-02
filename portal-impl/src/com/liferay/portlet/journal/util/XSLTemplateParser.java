@@ -109,7 +109,7 @@ public class XSLTemplateParser extends VelocityTemplateParser {
 
 			_transformerFactory.setErrorListener(_getXSLErrorListener());
 			_transformerFactory.setURIResolver(
-				new URIResolver(getTokens(), getLanguageId()));
+				new JournalXSLURIResolver(getTokens(), getLanguageId()));
 		}
 
 		return _transformerFactory;

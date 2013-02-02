@@ -17,16 +17,12 @@ package com.liferay.portal.xsl;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Reader;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * @author Tina Tian
@@ -41,19 +37,13 @@ public class XSLTemplateResource implements TemplateResource {
 	}
 
 	public XSLTemplateResource(
-		String templateId, String script, Map<String, String> tokens,
-		String languageId, String xml) {
-
+		String templateId, String xsl, String xml, XSLURIResolver uriResolver) {
 		if (Validator.isNull(templateId)) {
 			throw new IllegalArgumentException("Template ID is null");
 		}
 
-		if (Validator.isNull(script)) {
-			throw new IllegalArgumentException("Script is null");
-		}
-
-		if (tokens == null) {
-			throw new IllegalArgumentException("Tokens map is null");
+		if (Validator.isNull(xsl)) {
+			throw new IllegalArgumentException("XSL is null");
 		}
 
 		if (Validator.isNull(xml)) {
@@ -61,10 +51,9 @@ public class XSLTemplateResource implements TemplateResource {
 		}
 
 		_templateId = templateId;
-		_script = script;
-		_tokens = tokens;
-		_languageId = languageId;
+		_xsl = xsl;
 		_xml = xml;
+		_uriResolver = uriResolver;
 	}
 
 	@Override
@@ -80,9 +69,9 @@ public class XSLTemplateResource implements TemplateResource {
 		XSLTemplateResource xslTemplateResource = (XSLTemplateResource)obj;
 
 		if (_templateId.equals(xslTemplateResource._templateId) &&
-			_script.equals(xslTemplateResource._script) &&
+			_xsl.equals(xslTemplateResource._xsl) &&
 			_xml.equals(xslTemplateResource._xml) &&
-			_tokens.equals(xslTemplateResource._tokens)) {
+			Validator.equals(_uriResolver, xslTemplateResource._uriResolver)) {
 
 			return true;
 		}
@@ -90,24 +79,20 @@ public class XSLTemplateResource implements TemplateResource {
 		return false;
 	}
 
-	public String getLanguageId() {
-		return _languageId;
-	}
-
 	public long getLastModified() {
 		return _lastModified;
 	}
 
 	public Reader getReader() {
-		return new UnsyncStringReader(_script);
+		return new UnsyncStringReader(_xsl);
 	}
 
 	public String getTemplateId() {
 		return _templateId;
 	}
 
-	public Map<String, String> getTokens() {
-		return Collections.unmodifiableMap(_tokens);
+	public XSLURIResolver getURIResolver() {
+		return _uriResolver;
 	}
 
 	public Reader getXMLReader() {
@@ -118,9 +103,9 @@ public class XSLTemplateResource implements TemplateResource {
 	public int hashCode() {
 		int hashCode = HashUtil.hash(0, _templateId);
 
-		hashCode = HashUtil.hash(hashCode, _script);
+		hashCode = HashUtil.hash(hashCode, _xsl);
 		hashCode = HashUtil.hash(hashCode, _xml);
-		hashCode = HashUtil.hash(hashCode, _tokens);
+		hashCode = HashUtil.hash(hashCode, _uriResolver);
 
 		return hashCode;
 	}
@@ -130,38 +115,39 @@ public class XSLTemplateResource implements TemplateResource {
 
 		_templateId = objectInput.readUTF();
 		_lastModified = objectInput.readLong();
-		_script = objectInput.readUTF();
-		_languageId = objectInput.readUTF();
-
-		if (_languageId.equals(StringPool.BLANK)) {
-			_languageId = null;
-		}
-
-		_tokens = (Map<String, String>)objectInput.readObject();
+		_xsl = objectInput.readUTF();
 		_xml = objectInput.readUTF();
+
+		Object object = objectInput.readObject();
+
+		if (object instanceof XSLURIResolver) {
+			_uriResolver = (XSLURIResolver)object;
+		}
 	}
 
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeUTF(_templateId);
 		objectOutput.writeLong(_lastModified);
-		objectOutput.writeUTF(_script);
+		objectOutput.writeUTF(_xsl);
+		objectOutput.writeUTF(_xml);
 
-		if (_languageId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+		if (_uriResolver != null) {
+			objectOutput.writeObject(_uriResolver);
 		}
 		else {
-			objectOutput.writeUTF(_languageId);
+			objectOutput.writeObject(_DUMMY_OBJECT);
 		}
-
-		objectOutput.writeObject(_tokens);
-		objectOutput.writeUTF(_xml);
 	}
 
-	private String _languageId;
+	private static final Object _DUMMY_OBJECT = new Object();
+
 	private long _lastModified = System.currentTimeMillis();
-	private String _script;
+
 	private String _templateId;
-	private Map<String, String> _tokens;
+
+	private XSLURIResolver _uriResolver;
+
 	private String _xml;
+	private String _xsl;
 
 }

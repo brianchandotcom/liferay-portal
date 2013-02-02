@@ -14,11 +14,16 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -26,13 +31,18 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import javax.portlet.PortletURL;
 
 /**
  * @author Eudaldo Alonso
  */
 public class SearchResultUtil {
 
-	public static List<SearchResult> getSearchResults(Hits hits) {
+	public static List<SearchResult> getSearchResults(
+			Hits hits, Locale locale, PortletURL portletURL) {
+
 		List<SearchResult> searchResults = new ArrayList<SearchResult>();
 
 		for (Document document : hits.getDocs()) {
@@ -96,6 +106,21 @@ public class SearchResultUtil {
 				if (mbMessage != null) {
 					searchResult.addMBMessage(mbMessage);
 				}
+
+				if ((mbMessage == null) && (fileEntry == null)) {
+					Summary summary = getSummary(
+						document, className, classPK, locale, portletURL);
+
+					searchResult.setSummary(summary);
+				}
+				else {
+					if (searchResult.getSummary() == null) {
+						Summary summary = getAssetSummary(
+							className, classPK, locale, portletURL);
+
+						searchResult.setSummary(summary);
+					}
+				}
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -107,6 +132,52 @@ public class SearchResultUtil {
 		}
 
 		return searchResults;
+	}
+
+	protected static Summary getAssetSummary(
+			String className, long classPK, Locale locale,
+			PortletURL portletURL)
+		throws PortalException, SystemException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+			classPK);
+
+		if (assetRenderer == null) {
+			return null;
+		}
+
+		Summary summary = new Summary(
+			assetRenderer.getTitle(locale),
+			assetRenderer.getSearchSummary(locale), portletURL);
+
+		summary.setMaxContentLength(200);
+		summary.setPortletURL(portletURL);
+
+		return summary;
+	}
+
+	protected static Summary getSummary(
+			Document document, String className, long classPK, Locale locale,
+			PortletURL portletURL)
+		throws PortalException, SystemException {
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(className);
+
+		if (indexer != null) {
+			String snippet = document.get(Field.SNIPPET);
+
+			return indexer.getSummary(document, locale, snippet, portletURL);
+		}
+
+		return getAssetSummary(className, classPK, locale, portletURL);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SearchResultUtil.class);

@@ -236,6 +236,12 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 						searchContext.setAttribute("params", params);
 						searchContext.setEnd(searchContainer.getEnd());
 						searchContext.setFolderIds(searchTerms.getFolderIds());
+
+						QueryConfig queryConfig = new QueryConfig();
+
+						queryConfig.setHighlightEnabled(true);
+
+						searchContext.setQueryConfig(queryConfig);
 						searchContext.setStart(searchContainer.getStart());
 
 						Hits hits = indexer.search(searchContext);
@@ -244,12 +250,16 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 
 						request.setAttribute("view.jsp-total", String.valueOf(total));
 
-						List<SearchResult> searchResults = SearchResultUtil.getSearchResults(hits);
+						PortletURL hitURL = liferayPortletResponse.createRenderURL();
+
+						List<SearchResult> searchResults = SearchResultUtil.getSearchResults(hits, locale, hitURL);
 
 						emptySearchResults = searchResults.isEmpty();
 
 						for (int i = 0; i < searchResults.size(); i++) {
 							SearchResult searchResult = searchResults.get(i);
+
+							Summary summary = searchResult.getSummary();
 
 							JournalArticle article = null;
 							JournalFolder curFolder = null;
@@ -285,7 +295,7 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 										actionJsp="/html/portlet/journal/article_action.jsp"
 										containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, article.getFolderId()) %>"
 										cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-										description="<%= article.getDescription(locale) %>"
+										description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : article.getDescription(locale) %>"
 										mbMessages="<%= searchResult.getMBMessages() %>"
 										queryTerms="<%= hits.getQueryTerms() %>"
 										rowCheckerId="<%= String.valueOf(article.getArticleId()) %>"
@@ -293,7 +303,7 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 										showCheckbox="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>"
 										status="<%= article.getStatus() %>"
 										thumbnailSrc='<%= Validator.isNotNull(article.getArticleImageURL(themeDisplay)) ? article.getArticleImageURL(themeDisplay) : themeDisplay.getPathThemeImages() + "/file_system/large/default.png" %>'
-										title="<%= article.getTitle(locale) %>"
+										title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : article.getTitle(locale) %>"
 										url="<%= rowURL.toString() %>"
 									/>
 								</c:when>
@@ -321,13 +331,13 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 										actionJsp="/html/portlet/journal/folder_action.jsp"
 										containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
 										cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-										description="<%= curFolder.getDescription() %>"
+										description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : curFolder.getDescription() %>"
 										queryTerms="<%= hits.getQueryTerms() %>"
 										rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 										rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
 										showCheckbox="<%= JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
 										thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
-										title="<%= curFolder.getName() %>"
+										title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : curFolder.getName() %>"
 										url="<%= rowURL.toString() %>"
 									/>
 								</c:when>

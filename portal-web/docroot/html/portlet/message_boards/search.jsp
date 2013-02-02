@@ -88,13 +88,21 @@ String keywords = ParamUtil.getString(request, "keywords");
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setIncludeAttachments(true);
 		searchContext.setKeywords(keywords);
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(true);
+
+		searchContext.setQueryConfig(queryConfig);
 		searchContext.setStart(searchContainer.getStart());
 
 		Hits hits = indexer.search(searchContext);
+
+		PortletURL hitURL = renderResponse.createRenderURL();
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= SearchResultUtil.getSearchResults(hits) %>"
+			results="<%= SearchResultUtil.getSearchResults(hits, locale, hitURL) %>"
 			total="<%= hits.getLength() %>"
 		/>
 
@@ -105,6 +113,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 			<%
 			MBMessage message = MBMessageLocalServiceUtil.getMessage(searchResult.getClassPK());
+
+			Summary summary = searchResult.getSummary();
 			%>
 
 			<portlet:renderURL var="rowURL">
@@ -118,10 +128,10 @@ String keywords = ParamUtil.getString(request, "keywords");
 				containerName="<%= MBUtil.getAbsolutePath(renderRequest, message.getCategoryId()) %>"
 				containerType='<%= LanguageUtil.get(locale, "category") %>'
 				cssClass='<%= MathUtil.isEven(index) ? "search alt" : "search" %>'
-				description="<%= StringPool.BLANK %>"
+				description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : StringPool.BLANK %>"
 				fileEntries="<%= searchResult.getFileEntries() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
-				title="<%= HtmlUtil.escape(message.getSubject()) %>"
+				title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : HtmlUtil.escape(message.getSubject()) %>"
 				url="<%= rowURL %>"
 			/>
 		</liferay-ui:search-container-row>

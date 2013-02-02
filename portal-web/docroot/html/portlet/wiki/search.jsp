@@ -77,13 +77,24 @@ portletURL.setParameter("keywords", keywords);
 		searchContext.setIncludeDiscussions(true);
 		searchContext.setKeywords(keywords);
 		searchContext.setNodeIds(nodeIds);
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(true);
+
+		searchContext.setQueryConfig(queryConfig);
 		searchContext.setStart(searchContainer.getStart());
 
 		Hits hits = indexer.search(searchContext);
+
+		PortletURL hitURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter("struts_action", "/wiki/view");
+		portletURL.setParameter("redirect", currentURL);
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= SearchResultUtil.getSearchResults(hits) %>"
+			results="<%= SearchResultUtil.getSearchResults(hits, locale, hitURL) %>"
 			total="<%= hits.getLength() %>"
 		/>
 
@@ -102,6 +113,8 @@ portletURL.setParameter("keywords", keywords);
 			}
 
 			WikiNode curNode = wikiPage.getNode();
+
+			Summary summary = searchResult.getSummary();
 			%>
 
 			<portlet:renderURL var="rowURL">
@@ -115,11 +128,11 @@ portletURL.setParameter("keywords", keywords);
 				containerName="<%= curNode.getName() %>"
 				containerType='<%= LanguageUtil.get(locale, "wiki-node") %>'
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-				description="<%= wikiPage.getSummary() %>"
+				description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : wikiPage.getSummary() %>"
 				fileEntries="<%= searchResult.getFileEntries() %>"
 				mbMessages="<%= searchResult.getMBMessages() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
-				title="<%= wikiPage.getTitle() %>"
+				title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : wikiPage.getTitle() %>"
 				url="<%= rowURL %>"
 			/>
 		</liferay-ui:search-container-row>

@@ -76,6 +76,10 @@ public class SearchResult {
 		return _mbMessages;
 	}
 
+	public Summary getSummary() {
+		return _summary;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -88,9 +92,14 @@ public class SearchResult {
 		_mbMessages = mbMessages;
 	}
 
+	public void setSummary(Summary summary) {
+		_summary = summary;
+	}
+
 	private String _className;
 	private long _classPK;
 	private List<FileEntry> _fileEntries = new ArrayList<FileEntry>();
 	private List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
+	private Summary _summary;
 
 }

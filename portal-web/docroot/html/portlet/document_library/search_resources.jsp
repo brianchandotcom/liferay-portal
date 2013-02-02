@@ -185,6 +185,12 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 				searchContext.setFolderIds(folderIdsArray);
 				searchContext.setIncludeDiscussions(true);
 				searchContext.setKeywords(keywords);
+
+				QueryConfig queryConfig = new QueryConfig();
+
+				queryConfig.setHighlightEnabled(true);
+
+				searchContext.setQueryConfig(queryConfig);
 				searchContext.setStart(entryStart);
 
 				Hits hits = DLAppServiceUtil.search(searchRepositoryId, searchContext);
@@ -193,10 +199,14 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 
 				request.setAttribute("view.jsp-total", String.valueOf(total));
 
-				List<SearchResult> searchResults = SearchResultUtil.getSearchResults(hits);
+				PortletURL hitURL = liferayPortletResponse.createRenderURL();
+
+				List<SearchResult> searchResults = SearchResultUtil.getSearchResults(hits, locale, hitURL);
 
 				for (int i = 0; i < searchResults.size(); i++) {
 					SearchResult searchResult = searchResults.get(i);
+
+					Summary summary = searchResult.getSummary();
 
 					FileEntry fileEntry = null;
 					Folder curFolder = null;
@@ -234,7 +244,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 								actionJsp="/html/portlet/document_library/file_entry_action.jsp"
 								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, fileEntry.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-								description="<%= fileEntry.getDescription() %>"
+								description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : fileEntry.getDescription() %>"
 								locked="<%= fileEntry.isCheckedOut() %>"
 								mbMessages="<%= searchResult.getMBMessages() %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
@@ -243,7 +253,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 								showCheckbox="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>"
 								status="<%= latestFileVersion.getStatus() %>"
 								thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>"
-								title="<%= fileEntry.getTitle() %>"
+								title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : fileEntry.getTitle() %>"
 								url="<%= tempRowURL.toString() %>"
 							/>
 						</c:when>
@@ -278,13 +288,13 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 								actionJsp="/html/portlet/document_library/folder_action.jsp"
 								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-								description="<%= curFolder.getDescription() %>"
+								description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : curFolder.getDescription() %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
 								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 								rowCheckerName="<%= Folder.class.getSimpleName() %>"
 								showCheckbox="<%= DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
 								thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
-								title="<%= curFolder.getName() %>"
+								title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : curFolder.getName() %>"
 								url="<%= tempRowURL.toString() %>"
 							/>
 						</c:when>

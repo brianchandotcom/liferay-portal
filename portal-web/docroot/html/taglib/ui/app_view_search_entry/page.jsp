@@ -149,6 +149,8 @@ String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url"
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(actionJsp) %>">
-		<liferay-util:include page="<%= actionJsp %>" />
+		<liferay-util:include page="<%= actionJsp %>">
+			<liferay-util:param name="showMinimalActionButtons" value="<%= String.valueOf(Boolean.TRUE) %>" />
+		</liferay-util:include>
 	</c:if>
 </div>

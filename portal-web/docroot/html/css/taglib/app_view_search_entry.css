@@ -12,7 +12,8 @@
 	.entry-discussion, .entry-attachment {
 		border-top: 1px solid #CCC;
 		display: block;
-		margin: 0 4em 1em;
+		margin: 0.5em 4em;
+		margin: 0.5em 4em;
 		overflow: hidden;
 		padding-top: 5px;
 

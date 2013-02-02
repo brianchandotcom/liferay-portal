@@ -63,13 +63,24 @@ String keywords = ParamUtil.getString(request, "keywords");
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setIncludeDiscussions(true);
 		searchContext.setKeywords(keywords);
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(true);
+
+		searchContext.setQueryConfig(queryConfig);
 		searchContext.setStart(searchContainer.getStart());
 
 		Hits hits = indexer.search(searchContext);
+
+		PortletURL hitURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter("struts_action", "/blogs/view_entry");
+		portletURL.setParameter("redirect", currentURL);
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= SearchResultUtil.getSearchResults(hits) %>"
+			results="<%= SearchResultUtil.getSearchResults(hits, locale, hitURL) %>"
 			total="<%= hits.getLength() %>"
 		/>
 
@@ -82,6 +93,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 			BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(searchResult.getClassPK());
 
 			entry = entry.toEscapedModel();
+
+			Summary summary = searchResult.getSummary();
 			%>
 
 			<portlet:renderURL var="rowURL">
@@ -92,10 +105,11 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 			<liferay-ui:app-view-search-entry
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-				description="<%= entry.getDescription() %>"
+				description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : entry.getDescription() %>"
 				mbMessages="<%= searchResult.getMBMessages() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
-				title="<%= entry.getTitle() %>"
+				thumbnailSrc="<%= Validator.isNotNull(entry.getEntryImageURL(themeDisplay)) ? entry.getEntryImageURL(themeDisplay) : StringPool.BLANK %>"
+				title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : entry.getTitle() %>"
 				url="<%= rowURL %>"
 			/>
 		</liferay-ui:search-container-row>

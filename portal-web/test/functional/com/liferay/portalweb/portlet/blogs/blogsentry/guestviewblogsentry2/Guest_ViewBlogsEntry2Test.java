@@ -32,7 +32,7 @@ public class Guest_ViewBlogsEntry2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
+			selenium.getText("//div[@class='entry-body']/div/p"));
 		assertFalse(selenium.isTextPresent("Blogs Entry1 Title"));
 		assertFalse(selenium.isTextPresent("Blogs Entry1 Content"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),

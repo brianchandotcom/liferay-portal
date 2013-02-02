@@ -33,6 +33,8 @@ public class AddBlogsEntryComment1Test extends BaseTestCase {
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible(
+			"//fieldset[contains(@class,'add-comment')]/div/a");
 		assertEquals(RuntimeVariables.replace("Be the first."),
 			selenium.getText("//fieldset[contains(@class,'add-comment')]/div/a"));
 		selenium.clickAt("//fieldset[contains(@class,'add-comment')]/div/a",

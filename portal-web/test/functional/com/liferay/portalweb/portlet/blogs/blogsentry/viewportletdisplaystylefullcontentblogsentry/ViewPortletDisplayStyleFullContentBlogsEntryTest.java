@@ -33,7 +33,7 @@ public class ViewPortletDisplayStyleFullContentBlogsEntryTest
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
+			selenium.getText("//div[@class='entry-body']/div/p"));
 		assertFalse(selenium.isTextPresent(
 				"Read More About Blogs Entry Title \u00bb"));
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
@@ -42,6 +42,6 @@ public class ViewPortletDisplayStyleFullContentBlogsEntryTest
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
+			selenium.getText("//div[@class='entry-body']/div/p"));
 	}
 }

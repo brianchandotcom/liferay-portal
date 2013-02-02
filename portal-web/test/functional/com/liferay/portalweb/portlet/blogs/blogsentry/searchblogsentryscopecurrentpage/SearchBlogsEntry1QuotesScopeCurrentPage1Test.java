@@ -34,21 +34,11 @@ public class SearchBlogsEntry1QuotesScopeCurrentPage1Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("#"),
-			selenium.getText(
-				"//tr[@class='portlet-section-header results-header']/th[1]"));
-		assertEquals(RuntimeVariables.replace("Entry"),
-			selenium.getText(
-				"//tr[@class='portlet-section-header results-header']/th[2]"));
-		assertEquals(RuntimeVariables.replace("1."),
-			selenium.getText(
-				"//tr[@class='portlet-section-body results-row last']/td[1]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
-			selenium.getText(
-				"//tr[@class='portlet-section-body results-row last']/td[2]"));
-		assertEquals(RuntimeVariables.replace("Showing 1 result."),
+			selenium.getText("//span[@class='entry-title']"));
+		assertEquals(RuntimeVariables.replace("Showing 1 - 1."),
 			selenium.getText("//div[@class='search-results']"));
-		selenium.clickAt("//tr[@class='portlet-section-body results-row last']/td[2]/a",
+		selenium.clickAt("//span[@class='entry-title']",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page1)"),

@@ -14,14 +14,14 @@
 
 package com.liferay.portal.xsl;
 
-import java.io.Externalizable;
+import java.io.Serializable;
 
 import javax.xml.transform.URIResolver;
 
 /**
  * @author Tina Tian
  */
-public interface XSLURIResolver extends URIResolver, Externalizable {
+public interface XSLURIResolver extends Serializable, URIResolver {
 
 	public String getLanguageId();
 

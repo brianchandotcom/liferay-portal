@@ -79,14 +79,13 @@ public class XSLTemplate implements Template {
 	public boolean processTemplate(Writer writer) throws TemplateException {
 		XSLURIResolver uriResolver = _xslTemplateResource.getURIResolver();
 
-		Locale locale = null;
+		String languageId = null;
 
-		if (uriResolver == null) {
-			locale = LocaleUtil.fromLanguageId(null);
+		if (uriResolver != null) {
+			languageId = uriResolver.getLanguageId();
 		}
-		else {
-			locale = LocaleUtil.fromLanguageId(uriResolver.getLanguageId());
-		}
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 		XSLErrorListener xslErrorListener = new XSLErrorListener(locale);
 

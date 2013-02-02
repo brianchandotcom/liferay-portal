@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.xsl.XSLURIResolver;
 
+import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
@@ -36,7 +37,7 @@ import javax.xml.transform.stream.StreamSource;
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalXSLURIResolver implements XSLURIResolver {
+public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 
 	public JournalXSLURIResolver(
 		Map<String, String> tokens, String languageId) {

@@ -117,12 +117,7 @@ public class XSLTemplateResource implements TemplateResource {
 		_lastModified = objectInput.readLong();
 		_xsl = objectInput.readUTF();
 		_xml = objectInput.readUTF();
-
-		Object object = objectInput.readObject();
-
-		if (object instanceof XSLURIResolver) {
-			_uriResolver = (XSLURIResolver)object;
-		}
+		_uriResolver = (XSLURIResolver)objectInput.readObject();
 	}
 
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
@@ -130,16 +125,8 @@ public class XSLTemplateResource implements TemplateResource {
 		objectOutput.writeLong(_lastModified);
 		objectOutput.writeUTF(_xsl);
 		objectOutput.writeUTF(_xml);
-
-		if (_uriResolver != null) {
-			objectOutput.writeObject(_uriResolver);
-		}
-		else {
-			objectOutput.writeObject(_DUMMY_OBJECT);
-		}
+		objectOutput.writeObject(_uriResolver);
 	}
-
-	private static final Object _DUMMY_OBJECT = new Object();
 
 	private long _lastModified = System.currentTimeMillis();
 

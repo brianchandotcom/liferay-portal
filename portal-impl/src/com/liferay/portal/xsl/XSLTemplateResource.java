@@ -79,10 +79,10 @@ public class XSLTemplateResource implements TemplateResource {
 
 		XSLTemplateResource xslTemplateResource = (XSLTemplateResource)obj;
 
-		if (Validator.equals(_templateId, xslTemplateResource._templateId) &&
-			Validator.equals(_script, xslTemplateResource._script) &&
-			Validator.equals(_xml, xslTemplateResource._xml) &&
-			Validator.equals(_tokens, xslTemplateResource._tokens)) {
+		if (_templateId.equals(xslTemplateResource._templateId) &&
+			_script.equals(xslTemplateResource._script) &&
+			_xml.equals(xslTemplateResource._xml) &&
+			_tokens.equals(xslTemplateResource._tokens)) {
 
 			return true;
 		}

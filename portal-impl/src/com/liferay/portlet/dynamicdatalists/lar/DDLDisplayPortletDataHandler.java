@@ -35,7 +35,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Michael C. Han
  */
-public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
+public class DDLDisplayPortletDataHandler extends DDLPortletDataHandlerImpl {
 
 	public DDLDisplayPortletDataHandler() {
 		setDataPortletPreferences(
@@ -89,7 +89,10 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
 			recordSetId);
 
-		_ddlPortletDataHandler.exportRecordSet(
+		DDLPortletDataHandler ddlPortletDataHandler =
+			DDLPortletDataHandlerUtil.getDDLPortletDataHandler();
+
+		ddlPortletDataHandler.exportRecordSet(
 			portletDataContext, rootElement, recordSet);
 
 		return document.formattedString();
@@ -117,7 +120,10 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 		Element recordSetElement = rootElement.element("record-set");
 
 		if (recordSetElement != null) {
-			_ddlPortletDataHandler.importRecordSet(
+			DDLPortletDataHandler ddlPortletDataHandler =
+				DDLPortletDataHandlerUtil.getDDLPortletDataHandler();
+
+			ddlPortletDataHandler.importRecordSet(
 				portletDataContext, recordSetElement);
 		}
 
@@ -157,8 +163,5 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DDLDisplayPortletDataHandler.class);
-
-	private DDLPortletDataHandler _ddlPortletDataHandler =
-		new DDLPortletDataHandler();
 
 }

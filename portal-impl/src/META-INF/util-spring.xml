@@ -774,6 +774,11 @@
 			</map>
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandlerUtil" class="com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandlerUtil">
+		<property name="DDLPortletDataHandler">
+			<bean class="com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandlerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLUtil" class="com.liferay.portlet.dynamicdatalists.util.DDLUtil">
 		<property name="DDL">
 			<bean class="com.liferay.portlet.dynamicdatalists.util.DDLImpl" />

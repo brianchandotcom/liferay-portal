@@ -24,18 +24,18 @@ import com.liferay.portal.service.PersistedModelLocalService;
 
 /**
  * The interface for the d d m structure local service.
- *
+ * <p/>
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
+ * @generated
  * @see DDMStructureLocalServiceUtil
  * @see com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureLocalServiceBaseImpl
  * @see com.liferay.portlet.dynamicdatamapping.service.impl.DDMStructureLocalServiceImpl
- * @generated
  */
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+@Transactional(isolation = Isolation.PORTAL, rollbackFor = {
 	PortalException.class, SystemException.class})
 public interface DDMStructureLocalService extends BaseLocalService,
 	PersistedModelLocalService {
@@ -46,45 +46,45 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* Adds the d d m structure to the database. Also notifies the appropriate model listeners.
-	*
-	* @param ddmStructure the d d m structure
-	* @return the d d m structure that was added
-	* @throws SystemException if a system exception occurred
-	*/
+	 * Adds the d d m structure to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param ddmStructure the d d m structure
+	 * @return the d d m structure that was added
+	 * @throws SystemException if a system exception occurred
+	 */
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure addDDMStructure(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Creates a new d d m structure with the primary key. Does not add the d d m structure to the database.
-	*
-	* @param structureId the primary key for the new d d m structure
-	* @return the new d d m structure
-	*/
+	 * Creates a new d d m structure with the primary key. Does not add the d d m structure to the database.
+	 *
+	 * @param structureId the primary key for the new d d m structure
+	 * @return the new d d m structure
+	 */
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure createDDMStructure(
 		long structureId);
 
 	/**
-	* Deletes the d d m structure with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param structureId the primary key of the d d m structure
-	* @return the d d m structure that was removed
-	* @throws PortalException if a d d m structure with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
+	 * Deletes the d d m structure with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param structureId the primary key of the d d m structure
+	 * @return the d d m structure that was removed
+	 * @throws PortalException if a d d m structure with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure deleteDDMStructure(
 		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Deletes the d d m structure from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ddmStructure the d d m structure
-	* @return the d d m structure that was removed
-	* @throws SystemException if a system exception occurred
-	*/
+	 * Deletes the d d m structure from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param ddmStructure the d d m structure
+	 * @return the d d m structure that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure deleteDDMStructure(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -92,49 +92,49 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	* @throws SystemException if a system exception occurred
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 * <p/>
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start        the lower bound of the range of model instances
+	 * @param end          the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 * <p/>
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery      the dynamic query
+	 * @param start             the lower bound of the range of model instances
+	 * @param end               the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
@@ -143,12 +143,12 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
+	 * Returns the number of rows that match the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows that match the dynamic query
+	 * @throws SystemException if a system exception occurred
+	 */
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -159,90 +159,90 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the d d m structure with the primary key.
-	*
-	* @param structureId the primary key of the d d m structure
-	* @return the d d m structure
-	* @throws PortalException if a d d m structure with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
+	 * Returns the d d m structure with the primary key.
+	 *
+	 * @param structureId the primary key of the d d m structure
+	 * @return the d d m structure
+	 * @throws PortalException if a d d m structure with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure(
 		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the d d m structure with the UUID in the group.
-	*
-	* @param uuid the UUID of d d m structure
-	* @param groupId the group id of the d d m structure
-	* @return the d d m structure
-	* @throws PortalException if a d d m structure with the UUID in the group could not be found
-	* @throws SystemException if a system exception occurred
-	*/
+	 * Returns the d d m structure with the UUID in the group.
+	 *
+	 * @param uuid    the UUID of d d m structure
+	 * @param groupId the group id of the d d m structure
+	 * @return the d d m structure
+	 * @throws PortalException if a d d m structure with the UUID in the group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructureByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the d d m structures.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of d d m structures
-	* @param end the upper bound of the range of d d m structures (not inclusive)
-	* @return the range of d d m structures
-	* @throws SystemException if a system exception occurred
-	*/
+	 * Returns a range of all the d d m structures.
+	 * <p/>
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of d d m structures
+	 * @param end   the upper bound of the range of d d m structures (not inclusive)
+	 * @return the range of d d m structures
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of d d m structures.
-	*
-	* @return the number of d d m structures
-	* @throws SystemException if a system exception occurred
-	*/
+	 * Returns the number of d d m structures.
+	 *
+	 * @return the number of d d m structures
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDMStructuresCount()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the d d m structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ddmStructure the d d m structure
-	* @return the d d m structure that was updated
-	* @throws SystemException if a system exception occurred
-	*/
+	 * Updates the d d m structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param ddmStructure the d d m structure
+	 * @return the d d m structure that was updated
+	 * @throws SystemException if a system exception occurred
+	 */
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateDDMStructure(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
+	 * Returns the Spring bean ID for this bean.
+	 *
+	 * @return the Spring bean ID for this bean
+	 */
 	public java.lang.String getBeanIdentifier();
 
 	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
+	 * Sets the Spring bean ID for this bean.
+	 *
+	 * @param beanIdentifier the Spring bean ID for this bean
+	 */
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
@@ -253,7 +253,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		java.lang.String xsd, java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		long userId, long groupId, long classNameId,
@@ -262,7 +262,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		java.lang.String xsd,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		long userId, long groupId, java.lang.String parentStructureKey,
@@ -272,19 +272,19 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		java.lang.String xsd, java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	public void addStructureResources(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	public void addStructureResources(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure copyStructure(
 		long userId, long structureId,
@@ -292,30 +292,30 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure copyStructure(
 		long userId, long structureId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteStructure(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteStructure(long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteStructure(long groupId, java.lang.String structureKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteStructures(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchStructure(
@@ -332,7 +332,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		long groupId, java.lang.String structureKey,
 		boolean includeGlobalStructures)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchStructure(
@@ -340,16 +340,16 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getClassStructures(long, long)}
-	*/
+	 * @deprecated {@link #getClassStructures(long, long)}
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getClassStructures(long, long, int, int)}
-	*/
+	 * @deprecated {@link #getClassStructures(long, long, int, int)}
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId, int start, int end)
@@ -372,8 +372,8 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getClassStructures(long, long, OrderByComparator)}
-	*/
+	 * @deprecated {@link #getClassStructures(long, long, OrderByComparator)}
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId,
@@ -389,39 +389,39 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure(
 		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure(
 		long groupId, java.lang.String structureKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure(
 		long groupId, java.lang.String structureKey,
 		boolean includeGlobalStructures)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getStructures}
-	*/
+	 * @deprecated {@link #getStructures}
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getStructures(long)}
-	*/
+	 * @deprecated {@link #getStructures(long)}
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getStructures(long, int, int)}
-	*/
+	 * @deprecated {@link #getStructures(long, int, int)}
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
 		long groupId, int start, int end)
@@ -492,12 +492,14 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
+	public int searchCount(
+		long companyId, long[] groupIds,
 		long[] classNameIds, java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
+	public int searchCount(
+		long companyId, long[] groupIds,
 		long[] classNameIds, java.lang.String name,
 		java.lang.String description, java.lang.String storageType, int type,
 		boolean andOperator)
@@ -510,7 +512,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		java.lang.String xsd,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
 		long groupId, long parentStructureId, java.lang.String structureKey,
@@ -519,5 +521,19 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		java.lang.String xsd,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructureXsd(
+		long structureId, java.lang.String xsd,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+		com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateXSDFieldMetadataEntryValue(
+		long structureId,
+		java.lang.String fieldName, java.lang.String metadataEntryName,
+		java.lang.String metadataEntryValue, java.util.Locale locale,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+		com.liferay.portal.kernel.exception.SystemException;
 }

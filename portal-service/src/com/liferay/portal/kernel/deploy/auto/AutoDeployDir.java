@@ -193,9 +193,10 @@ public class AutoDeployDir {
 	protected void scanDirectory() {
 		File[] files = _deployDir.listFiles();
 
-		for (Iterator<String> it = _blacklistFiles.keySet().iterator();
-			it.hasNext();) {
-			String blacklistedFileName = it.next();
+		Iterator<String> itr = _blacklistFiles.keySet().iterator();
+
+		while (itr.hasNext()) {
+			String blacklistedFileName = itr.next();
 
 			boolean blacklistedFileExists = false;
 
@@ -212,7 +213,7 @@ public class AutoDeployDir {
 							" because it was deleted.");
 				}
 
-				it.remove();
+				itr.remove();
 			}
 		}
 

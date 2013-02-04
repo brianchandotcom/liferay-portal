@@ -23,37 +23,11 @@ import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Sergio González
+ * @author Shuyang Zhou
  */
 public class MembershipPolicyFactory {
 
 	public static MembershipPolicy getInstance() {
-		if (_originalMembershipPolicy == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Instantiate " + PropsValues.USERS_MEMBERSHIP_POLICY);
-			}
-
-			ClassLoader classLoader =
-				PACLClassLoaderUtil.getPortalClassLoader();
-
-			try {
-				_originalMembershipPolicy =
-					(MembershipPolicy)InstanceFactory.newInstance(
-						classLoader, PropsValues.USERS_MEMBERSHIP_POLICY);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		if (_membershipPolicy == null) {
-			_membershipPolicy = _originalMembershipPolicy;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Return " + ClassUtil.getClassName(_membershipPolicy));
-		}
-
 		return _membershipPolicy;
 	}
 
@@ -63,17 +37,40 @@ public class MembershipPolicyFactory {
 		}
 
 		if (membershipPolicy == null) {
-			_membershipPolicy = _originalMembershipPolicy;
+			membershipPolicy = _createMembershipPolicy();
 		}
-		else {
-			_membershipPolicy = membershipPolicy;
+
+		_membershipPolicy = membershipPolicy;
+	}
+
+	public void afterPropertiesSet() {
+		_membershipPolicy = _createMembershipPolicy();
+	}
+
+	private static MembershipPolicy _createMembershipPolicy() {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Instantiate " + PropsValues.USERS_MEMBERSHIP_POLICY);
 		}
+
+		MembershipPolicy membershipPolicy = null;
+
+		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+
+		try {
+			membershipPolicy =
+				(MembershipPolicy)InstanceFactory.newInstance(
+					classLoader, PropsValues.USERS_MEMBERSHIP_POLICY);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return membershipPolicy;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		MembershipPolicyFactory.class);
 
-	private static MembershipPolicy _membershipPolicy;
-	private static MembershipPolicy _originalMembershipPolicy;
+	private static volatile MembershipPolicy _membershipPolicy;
 
 }

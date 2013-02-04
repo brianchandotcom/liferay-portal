@@ -50,22 +50,6 @@
 
 	</aui:select>
 
-	<aui:select name="blacklistThreshold">
-
-		<%
-		int blacklistThreshold = PrefsPropsUtil.getInteger(PropsKeys.AUTO_DEPLOY_BLACKLIST_THRESHOLD, PropsValues.AUTO_DEPLOY_BLACKLIST_THRESHOLD);
-
-		for (int i = 5; i <= 20; i = i + 5) {
-		%>
-
-			<aui:option label="<%= i %>" selected="<%= blacklistThreshold == i %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-
 	<c:if test="<%= !ServerDetector.isGlassfish() && !ServerDetector.isWebLogic() %>">
 		<aui:input name="unpackWar" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_UNPACK_WAR, PropsValues.AUTO_DEPLOY_UNPACK_WAR) %>" />
 	</c:if>

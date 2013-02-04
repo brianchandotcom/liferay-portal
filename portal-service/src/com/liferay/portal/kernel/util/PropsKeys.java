@@ -193,8 +193,6 @@ public interface PropsKeys {
 
 	public static final String AUTH_VERIFIER_PIPELINE = "auth.verifier.pipeline";
 
-	public static final String AUTO_DEPLOY_BLACKLIST_THRESHOLD = "auto.deploy.blacklist.threshold";
-
 	public static final String AUTO_DEPLOY_COPY_COMMONS_LOGGING = "auto.deploy.copy.commons.logging";
 
 	public static final String AUTO_DEPLOY_COPY_LOG4J = "auto.deploy.copy.log4j";

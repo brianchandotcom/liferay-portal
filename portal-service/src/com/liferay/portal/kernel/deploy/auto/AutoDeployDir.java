@@ -17,15 +17,13 @@ package com.liferay.portal.kernel.deploy.auto;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.IntegerWrapper;
 
 import java.io.File;
 
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -38,21 +36,15 @@ public class AutoDeployDir {
 
 	public AutoDeployDir(
 		String name, File deployDir, File destDir, long interval,
-		int blacklistThreshold, List<AutoDeployListener> autoDeployListeners) {
+		List<AutoDeployListener> autoDeployListeners) {
 
 		_name = name;
 		_deployDir = deployDir;
 		_destDir = destDir;
 		_interval = interval;
-		_blacklistThreshold = blacklistThreshold;
 		_autoDeployListeners = new CopyOnWriteArrayList<AutoDeployListener>(
 			autoDeployListeners);
-		_inProcessFiles = new HashMap<String, IntegerWrapper>();
-		_blacklistFiles = new HashSet<String>();
-	}
-
-	public int getBlacklistThreshold() {
-		return _blacklistThreshold;
+		_blacklistFiles = new HashMap<String, Long>();
 	}
 
 	public File getDeployDir() {
@@ -155,34 +147,22 @@ public class AutoDeployDir {
 			return;
 		}
 
-		if (_blacklistFiles.contains(fileName)) {
+		long lastModified = file.lastModified();
+
+		if (_blacklistFiles.containsKey(fileName) &&
+			(_blacklistFiles.get(fileName) == lastModified)) {
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Skip processing of " + fileName + " because it is " +
-						"blacklisted. You must restart the server to remove " +
-							"the file from the blacklist.");
+						"blacklisted.");
 			}
 
 			return;
 		}
 
-		IntegerWrapper attempt = _inProcessFiles.get(fileName);
-
-		if (attempt == null) {
-			attempt = new IntegerWrapper(1);
-
-			_inProcessFiles.put(fileName, attempt);
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Processing " + fileName);
-			}
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Processing " + fileName + ". This is attempt " +
-						attempt.getValue() + ".");
-			}
+		if (_log.isInfoEnabled()) {
+			_log.info("Processing " + fileName);
 		}
 
 		try {
@@ -194,35 +174,48 @@ public class AutoDeployDir {
 			}
 
 			if (file.delete()) {
-				_inProcessFiles.remove(fileName);
+				return;
 			}
-			else {
-				_log.error("Auto deploy failed to remove " + fileName);
 
-				if (_log.isInfoEnabled()) {
-					_log.info("Add " + fileName + " to the blacklist");
-				}
-
-				_blacklistFiles.add(fileName);
-			}
+			_log.error("Auto deploy failed to remove " + fileName);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-
-			attempt.increment();
-
-			if (attempt.getValue() >= _blacklistThreshold) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Add " + fileName + " to the blacklist");
-				}
-
-				_blacklistFiles.add(fileName);
-			}
 		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Add " + fileName + " to the blacklist");
+		}
+
+		_blacklistFiles.put(fileName, lastModified);
 	}
 
 	protected void scanDirectory() {
 		File[] files = _deployDir.listFiles();
+
+		Iterator<String> itr = _blacklistFiles.keySet().iterator();
+
+		while (itr.hasNext()) {
+			String blacklistedFileName = itr.next();
+
+			boolean blacklistedFileExists = false;
+
+			for (File file : files) {
+				if (blacklistedFileName.equalsIgnoreCase(file.getName())) {
+					blacklistedFileExists = true;
+				}
+			}
+
+			if (!blacklistedFileExists) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Remove blacklisted file " + blacklistedFileName +
+							" because it was deleted.");
+				}
+
+				itr.remove();
+			}
+		}
 
 		for (File file : files) {
 			String fileName = file.getName().toLowerCase();
@@ -241,11 +234,9 @@ public class AutoDeployDir {
 
 	private List<AutoDeployListener> _autoDeployListeners;
 	private AutoDeployScanner _autoDeployScanner;
-	private Set<String> _blacklistFiles;
-	private int _blacklistThreshold;
+	private Map<String, Long> _blacklistFiles;
 	private File _deployDir;
 	private File _destDir;
-	private Map<String, IntegerWrapper> _inProcessFiles;
 	private long _interval;
 	private String _name;
 

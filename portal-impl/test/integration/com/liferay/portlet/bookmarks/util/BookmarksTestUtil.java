@@ -16,6 +16,8 @@ package com.liferay.portlet.bookmarks.util;
 
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
@@ -29,26 +31,51 @@ import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
  */
 public class BookmarksTestUtil {
 
-	public static BookmarksEntry addEntry() throws Exception {
-		return addEntry(TestPropsValues.getGroupId());
+	public static BookmarksEntry addEntry(boolean approved) throws Exception {
+		return addEntry(TestPropsValues.getGroupId(), approved);
 	}
 
-	public static BookmarksEntry addEntry(long groupId) throws Exception {
-		BookmarksFolder folder = addFolder(groupId);
+	public static BookmarksEntry addEntry(long groupId, boolean approved)
+		throws Exception {
 
-		String name = "Test Entry";
-		String url = "http://www.liferay.com";
-		String description = "This is a test entry.";
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
-		ServiceContext serviceContext = new ServiceContext();
+		try {
+			WorkflowThreadLocal.setEnabled(true);
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(groupId);
+			BookmarksFolder folder = addFolder(groupId);
 
-		return BookmarksEntryServiceUtil.addEntry(
-			folder.getGroupId(), folder.getFolderId(), name, url, description,
-			serviceContext);
+			String name = "Test Entry";
+			String url = "http://www.liferay.com";
+			String description = "This is a test entry.";
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setScopeGroupId(groupId);
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			BookmarksEntry entry = BookmarksEntryServiceUtil.addEntry(
+				groupId, folder.getFolderId(), name, url, description,
+				serviceContext);
+
+			if (approved) {
+				entry.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+				entry = BookmarksEntryServiceUtil.updateEntry(
+					entry.getEntryId(), groupId, entry.getFolderId(),
+					entry.getName(), entry.getUrl(), entry.getUrl(),
+					serviceContext);
+			}
+
+			return entry;
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
 	}
 
 	public static BookmarksFolder addFolder() throws Exception {

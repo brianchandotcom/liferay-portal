@@ -16,6 +16,7 @@ package com.liferay.portalweb.demo.sitemanagement.brazilianworldcup;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
+import com.liferay.portalweb.portal.util.browsercommands.BrowserCommands;
 
 /**
  * @author Brian Wing Shun Chan
@@ -68,6 +69,6 @@ public class ExportLARPublicPagesSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
 		Thread.sleep(5000);
-		selenium.downloadTempFile("World_Cup_Public_Pages.lar");
+		BrowserCommands.downloadTempFile("World_Cup_Public_Pages.lar");
 	}
 }

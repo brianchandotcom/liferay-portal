@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.MembershipPolicy;
+import com.liferay.portal.security.auth.MembershipPolicyFactory;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -45,8 +47,15 @@ public class MembershipPolicyAction extends Action {
 	}
 
 	protected void checkMembershipPolicy(User user) throws SystemException {
-		GroupLocalServiceUtil.checkMembershipPolicy(user);
-		UserGroupRoleLocalServiceUtil.checkMembershipPolicy(user);
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactory.getInstance();
+
+		// Pre-filtering to prevent unnecessary service layer entering.
+
+		if (membershipPolicy.isApplicableUser(user)) {
+			GroupLocalServiceUtil.checkMembershipPolicy(user);
+			UserGroupRoleLocalServiceUtil.checkMembershipPolicy(user);
+		}
 	}
 
 }

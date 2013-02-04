@@ -47,9 +47,9 @@ public class TearDownConfigurePortletDisplayDaysTest extends BaseTestCase {
 			"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
 		selenium.selectFrame(
 			"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
-		selenium.waitForVisible("//label[@for='maxDaysDisplayed']");
+		selenium.waitForVisible("//label[contains(@for,'maxDaysDisplayed')]");
 		assertEquals(RuntimeVariables.replace("How many days to display?"),
-			selenium.getText("//label[@for='maxDaysDisplayed']"));
+			selenium.getText("//label[contains(@for,'maxDaysDisplayed')]"));
 		selenium.select("//select[@id='_86_maxDaysDisplayed']",
 			RuntimeVariables.replace("1"));
 		selenium.clickAt("//input[@value='Save']",

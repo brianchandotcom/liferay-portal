@@ -220,33 +220,6 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
-	public static void downloadTempFile(String value) {
-		if (!_BROWSER_TYPE.equals("*chrome") &&
-			!_BROWSER_TYPE.equals("*firefox") &&
-			!_BROWSER_TYPE.equals("*iehta") &&
-			!_BROWSER_TYPE.equals("*iexplore")) {
-
-			return;
-		}
-
-		try {
-			Thread.sleep(5000);
-
-			Runtime runtime = Runtime.getRuntime();
-
-			String command = RuntimeVariables.replace(
-				TestPropsValues.SELENIUM_BROWSER_COMMANDS_DIR +
-					TestPropsValues.SELENIUM_DOWNLOAD_FILE);
-
-			runtime.exec(command);
-
-			Thread.sleep(30000);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public static void echo(String message) {
 		System.out.println(message);
 	}
@@ -297,32 +270,6 @@ public class LiferaySeleniumHelper {
 
 	public static void pause(String waitTime) throws Exception {
 		Thread.sleep(GetterUtil.getInteger(waitTime));
-	}
-
-	public static void setBrowserOption() {
-		if (!_BROWSER_TYPE.equals("*chrome") &&
-			!_BROWSER_TYPE.equals("*firefox")) {
-
-			return;
-		}
-
-		try {
-			Runtime runtime = Runtime.getRuntime();
-
-			String[] commands = {
-				RuntimeVariables.replace(
-					TestPropsValues.SELENIUM_BROWSER_COMMANDS_DIR +
-						TestPropsValues.SELENIUM_SET_BROWSER_OPTION),
-					TestPropsValues.OUTPUT_DIR
-			};
-
-			runtime.exec(commands);
-
-			Thread.sleep(10000);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public static void typeFrame(
@@ -652,7 +599,5 @@ public class LiferaySeleniumHelper {
 			Thread.sleep(1000);
 		}
 	}
-
-	private static final String _BROWSER_TYPE = TestPropsValues.BROWSER_TYPE;
 
 }

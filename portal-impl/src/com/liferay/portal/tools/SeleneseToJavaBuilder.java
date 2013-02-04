@@ -466,6 +466,9 @@ public class SeleneseToJavaBuilder {
 		sb.append(
 			"import com.liferay.portalweb.portal.util.RuntimeVariables;\n");
 
+		sb.append("import com.liferay.portalweb.portal.util.browsercommands.");
+		sb.append("BrowserCommands;\n");
+
 		sb.append("public class ");
 		sb.append(testName);
 		sb.append(" extends BaseTestCase {");
@@ -877,7 +880,6 @@ public class SeleneseToJavaBuilder {
 			}
 			else if (param1.equals("check") || param1.equals("click") ||
 					 param1.equals("doubleClick") ||
-					 param1.equals("downloadTempFile") ||
 					 param1.equals("mouseDown") || param1.equals("mouseMove") ||
 					 param1.equals("mouseOver") || param1.equals("mouseUp") ||
 					 param1.equals("open") || param1.equals("selectFrame") ||
@@ -940,7 +942,6 @@ public class SeleneseToJavaBuilder {
 			}
 			else if (param1.equals("close") || param1.equals("goBack") ||
 					 param1.equals("refresh") ||
-					 param1.equals("setBrowserOption") ||
 					 param1.equals("setDefaultTimeout") ||
 					 param1.equals("setDefaultTimeoutImplicit") ||
 					 param1.equals("windowFocus") ||
@@ -949,6 +950,27 @@ public class SeleneseToJavaBuilder {
 				sb.append("selenium.");
 				sb.append(param1);
 				sb.append("();");
+			}
+			else if (param1.equals("downloadTempFile")) {
+				sb.append("BrowserCommands.");
+				sb.append(param1);
+				sb.append("(");
+
+				if (param2.startsWith("${")) {
+					sb.append("RuntimeVariables.getValue(\"");
+
+					String text = param2.substring(2, param2.length() - 1);
+
+					sb.append(text);
+					sb.append("\")");
+				}
+				else {
+					sb.append("\"");
+					sb.append(param2);
+					sb.append("\"");
+				}
+
+				sb.append(");");
 			}
 			else if (param1.equals("dragAndDropToObject")) {
 				sb.append("selenium.");
@@ -1027,6 +1049,11 @@ public class SeleneseToJavaBuilder {
 				}
 
 				sb.append(";");
+			}
+			else if (param1.equals("setBrowserOption")) {
+				sb.append("BrowserCommands.");
+				sb.append(param1);
+				sb.append("();");
 			}
 			else if (param1.equals("storeAttribute")) {
 				sb.append("String ");

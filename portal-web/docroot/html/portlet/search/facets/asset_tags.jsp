@@ -40,6 +40,11 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 		int minCount = 1;
 
 		if (showAssetCount && displayStyle.equals("cloud")) {
+
+			// The cloud style may not list tags in the order of frequency,
+			// so keep looking through the results until we reach maxTerms or
+			// we run out of terms.
+
 			for (int i = 0, j = 0; i < termCollectors.size(); i++, j++) {
 				if (j >= maxTerms) {
 					break;
@@ -51,6 +56,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 				if (frequencyThreshold > frequency) {
 					j--;
+
 					continue;
 				}
 

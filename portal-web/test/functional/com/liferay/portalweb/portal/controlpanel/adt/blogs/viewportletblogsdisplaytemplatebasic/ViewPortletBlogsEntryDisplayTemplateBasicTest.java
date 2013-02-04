@@ -31,19 +31,37 @@ public class ViewPortletBlogsEntryDisplayTemplateBasicTest extends BaseTestCase 
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[@class='entry-title']"));
+		assertTrue(selenium.isVisible("//input[@title='Search Entries']"));
+		assertTrue(selenium.isVisible("//input[@value='Search']"));
+		assertTrue(selenium.isVisible("//input[@value='Add Blog Entry']"));
+		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		assertEquals(RuntimeVariables.replace("By Joe Bloggs"),
+			selenium.getText("//div[@class='entry-author']"));
 		assertTrue(selenium.isVisible("//div[@class='entry-body']/a"));
+		assertTrue(selenium.isVisible("//span[@class='entry-date']"));
+		assertEquals(RuntimeVariables.replace("Flag"),
+			selenium.getText("//div[@title='Flag']"));
+		assertEquals(RuntimeVariables.replace("RSS"),
+			selenium.getText("//span[@class='taglib-rss']/a/span"));
+		assertEquals(RuntimeVariables.replace("Subscribe"),
+			selenium.getText("//span[contains(.,'Subscribe')]"));
+		assertEquals(RuntimeVariables.replace("Showing 1 result."),
+			selenium.getText("//div[@class='search-results']"));
 		assertTrue(selenium.isElementNotPresent(
-				"//table[@class='lfr-table']/tbody/tr/td/span/a"));
+				"//table[@class='lfr-table']/tbody/tr[contains(.,'Edit')]/td[1]/span/a"));
 		assertTrue(selenium.isElementNotPresent(
-				"//table[@class='lfr-table']/tbody/tr/td[2]/span/a"));
+				"//table[@class='lfr-table']/tbody/tr[contains(.,'Permissions')]/td[2]/span/a"));
 		assertTrue(selenium.isElementNotPresent(
-				"//table[@class='lfr-table']/tbody/tr/td[3]/span/a"));
+				"//table[@class='lfr-table']/tbody/tr[contains(.,'Move to the Recycle Bin')]/td[3]/span/a"));
 		assertTrue(selenium.isElementNotPresent("//span[@class='comments']"));
-		assertTrue(selenium.isElementNotPresent("//div[@id='widget']/div/a"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='pluginConnectButton']/div"));
+				"//li[@class='taglib-social-bookmark-twitter']"));
 		assertTrue(selenium.isElementNotPresent(
-				"//span[@id='widget_bounds']/table/tbody/tr/td/div/span"));
+				"//li[@class='taglib-social-bookmark-facebook']"));
+		assertTrue(selenium.isElementNotPresent(
+				"//li[@class='taglib-social-bookmark-plusone']"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@id='zyfa_ratingStarContent']"));
 		assertTrue(selenium.isElementNotPresent(

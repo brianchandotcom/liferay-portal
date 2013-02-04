@@ -49,7 +49,7 @@ public class PortletTestPlan extends BaseTestSuite {
 		testSuite.addTest(
 			ConfigurePortletDisplayStyleFullContentTests.suite());
 		testSuite.addTest(ConfigurePortletDisplayStyleTitleTests.suite());
-		//testSuite.addTest(ConfigurePortletRemoveAllPermissionTests.suite());
+		testSuite.addTest(ConfigurePortletRemoveAllPermissionTests.suite());
 
 		return testSuite;
 	}

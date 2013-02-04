@@ -38,7 +38,11 @@ public class AddBlogsEntryCPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText(
+				"//span[@class='lfr-toolbar-button add-button ']/a"));
+		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_161_title']",
 			RuntimeVariables.replace("Blogs Entry Title"));

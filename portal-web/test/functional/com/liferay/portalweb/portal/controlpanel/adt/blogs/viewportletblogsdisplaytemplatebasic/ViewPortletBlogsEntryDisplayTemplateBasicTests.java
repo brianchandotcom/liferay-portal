@@ -16,8 +16,8 @@ package com.liferay.portalweb.portal.controlpanel.adt.blogs.viewportletblogsdisp
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.addblogsentrycp.AddBlogsEntryCPTest;
+import com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.addblogsentrycp.TearDownBlogsEntryCPTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.configureportletblogsdisplaytemplatebasic.ConfigurePortletBlogsDisplayTemplateBasicTest;
@@ -39,7 +39,7 @@ public class ViewPortletBlogsEntryDisplayTemplateBasicTests
 		testSuite.addTestSuite(ConfigurePortletBlogsDisplayTemplateBasicTest.class);
 		testSuite.addTestSuite(ViewPortletBlogsEntryDisplayTemplateBasicTest.class);
 		testSuite.addTestSuite(ConfigurePortletBlogsDisplayTemplateFullContentTest.class);
-		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
+		testSuite.addTestSuite(TearDownBlogsEntryCPTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

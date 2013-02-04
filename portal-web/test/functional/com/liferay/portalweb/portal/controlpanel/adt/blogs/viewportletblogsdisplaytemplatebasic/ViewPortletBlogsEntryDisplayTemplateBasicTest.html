@@ -25,22 +25,77 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
+	<td>//input[@title='Search Entries']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Search']</td>
+	<td>Search Button</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Add Blog Entry']</td>
+	<td>Add Blog Entry Button</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Permissions']</td>
+	<td>Permissions Button</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-author']</td>
+	<td>By Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
 	<td>//div[@class='entry-body']/a</td>
 	<td>Blogs Entry Content Read More</td>
 </tr>
 <tr>
+	<td>assertVisible</td>
+	<td>//span[@class='entry-date']</td>
+	<td>Entry Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@title='Flag']</td>
+	<td>Flag</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='taglib-rss']/a/span</td>
+	<td>RSS</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[contains(.,'Subscribe')]</td>
+	<td>Subscribe</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 result.</td>
+</tr>
+<tr>
 	<td>assertElementNotPresent</td>
-	<td>//table[@class='lfr-table']/tbody/tr/td/span/a</td>
+	<td>//table[@class='lfr-table']/tbody/tr[contains(.,'Edit')]/td[1]/span/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//table[@class='lfr-table']/tbody/tr/td[2]/span/a</td>
+	<td>//table[@class='lfr-table']/tbody/tr[contains(.,'Permissions')]/td[2]/span/a</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//table[@class='lfr-table']/tbody/tr/td[3]/span/a</td>
+	<td>//table[@class='lfr-table']/tbody/tr[contains(.,'Move to the Recycle Bin')]/td[3]/span/a</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
@@ -50,17 +105,17 @@
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[@id='widget']/div/a</td>
+	<td>//li[@class='taglib-social-bookmark-twitter']</td>
 	<td>Twitter</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[@class='pluginConnectButton']/div</td>
+	<td>//li[@class='taglib-social-bookmark-facebook']</td>
 	<td>Facebook</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//span[@id='widget_bounds']/table/tbody/tr/td/div/span</td>
+	<td>//li[@class='taglib-social-bookmark-plusone']</td>
 	<td>Google Plus</td>
 </tr>
 <tr>

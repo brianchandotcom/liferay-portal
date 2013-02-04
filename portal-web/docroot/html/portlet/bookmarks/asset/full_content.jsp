@@ -20,7 +20,7 @@
 BookmarksEntry entry = (BookmarksEntry)request.getAttribute(WebKeys.BOOKMARKS_ENTRY);
 %>
 
-<aui:a href='<%= themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId() %>' target="_blank"><%= entry.getName() %> (<%= entry.getUrl() %>)</aui:a>
+<aui:a href='<%= themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId() + (portletName.equals(PortletKeys.TRASH) ? "&status=" + WorkflowConstants.STATUS_IN_TRASH : StringPool.BLANK) %>' target="_blank"><%= entry.getName() %> (<%= entry.getUrl() %>)</aui:a>
 
 <p class="asset-description"><%= entry.getDescription() %></p>
 

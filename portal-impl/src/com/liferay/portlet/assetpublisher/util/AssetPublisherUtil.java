@@ -92,6 +92,8 @@ public class AssetPublisherUtil {
 
 	public static final String SCOPE_ID_LAYOUT_UUID_PREFIX = "LayoutUuid_";
 
+	public static final String SCOPE_ID_PARENT_GROUP_PREFIX = "Parent_Group_";
+
 	public static void addAndStoreSelection(
 			PortletRequest portletRequest, String className, long classPK,
 			int assetEntryOrder)
@@ -571,6 +573,16 @@ public class AssetPublisherUtil {
 
 			return scopeIdGroup.getGroupId();
 		}
+		else if (scopeId.startsWith(SCOPE_ID_PARENT_GROUP_PREFIX)) {
+			String scopeIdSuffix = scopeId.substring(
+				SCOPE_ID_PARENT_GROUP_PREFIX.length());
+
+			if (scopeIdSuffix.equals(GroupConstants.DEFAULT)) {
+				return scopeGroupId;
+			}
+
+			return GetterUtil.getLong(scopeIdSuffix);
+		}
 		else {
 			throw new IllegalArgumentException("Invalid scope ID " + scopeId);
 		}
@@ -658,7 +670,18 @@ public class AssetPublisherUtil {
 					GroupConstants.DEFAULT;
 		}
 		else {
-			key = AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + group.getGroupId();
+			Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
+			if (scopeGroup.hasAncestor(group.getGroupId())) {
+				key =
+					AssetPublisherUtil.SCOPE_ID_PARENT_GROUP_PREFIX +
+						group.getGroupId();
+			}
+			else {
+				key =
+					AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
+					group.getGroupId();
+			}
 		}
 
 		return key;

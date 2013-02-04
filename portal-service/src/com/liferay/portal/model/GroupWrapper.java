@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -681,6 +683,10 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
 		return _group.getTypeSettingsProperty(key);
+	}
+
+	public boolean hasAncestor(long groupId) {
+		return _group.hasAncestor(groupId);
 	}
 
 	public boolean hasPrivateLayouts() {

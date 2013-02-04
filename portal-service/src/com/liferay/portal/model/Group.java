@@ -97,6 +97,8 @@ public interface Group extends GroupModel, PersistedModel {
 
 	public java.lang.String getTypeSettingsProperty(java.lang.String key);
 
+	public boolean hasAncestor(long groupId);
+
 	public boolean hasPrivateLayouts();
 
 	public boolean hasPublicLayouts();

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -658,6 +659,40 @@ public class SitesUtil {
 		LayoutServiceUtil.importLayouts(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(), parameterMap,
 			inputStream);
+	}
+
+	public static boolean isContentSharingWithChildrenEnabled(Group group)
+		throws PortalException, SystemException {
+
+		UnicodeProperties typeSettingsProperties =
+			group.getParentLiveGroupTypeSettingsProperties();
+
+		int companyContentSharingEnabled = PrefsPropsUtil.getInteger(
+			group.getCompanyId(),
+			PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
+
+		if (companyContentSharingEnabled ==
+				SitesUtil.CONTENT_SHARING_WITH_CHILDREN_DISABLED) {
+
+			return false;
+		}
+
+		int groupContentSharingEnabled = GetterUtil.getInteger(
+			typeSettingsProperties.getProperty(
+				"contentSharingWithChildrenEnabled"),
+				SitesUtil.CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE);
+
+		if ((groupContentSharingEnabled ==
+				SitesUtil.CONTENT_SHARING_WITH_CHILDREN_ENABLED) ||
+			((companyContentSharingEnabled ==
+				SitesUtil.CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT) &&
+			 (groupContentSharingEnabled ==
+				SitesUtil.CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isLayoutDeleteable(Layout layout) {

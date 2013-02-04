@@ -620,6 +620,60 @@ public class UserServiceSoap {
 		}
 	}
 
+	/**
+	* Filters the list of userIds that are to be unset from a group to prevent
+	* unsetting any group Owner or group Administrator, unless the operation is
+	* being done by a group Owner
+	*
+	* @param groupId the primary key of the group
+	* @param userIds the primary keys of the users
+	* @return a filtered list of primary keys of the users
+	* @throws PortalException if the operation is not being performed by a
+	registered user
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] filterUnsetGroupUserIds(long groupId, long[] userIds)
+		throws RemoteException {
+		try {
+			long[] returnValue = UserServiceUtil.filterUnsetGroupUserIds(groupId,
+					userIds);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Filters the list of userIds that are to be unset from a Organization to
+	* prevent unsetting any Organization Owner or Organization Administrator,
+	* unless the operation is being done by an Organization Owner.
+	*
+	* @param groupId the primary key of the Organization group
+	* @param userIds the primary keys of the users
+	* @return a filtered list of primary keys of the users
+	* @throws PortalException if the operation is not being performed by a
+	registered user
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] filterUnsetOrganizationUserIds(long groupId,
+		long[] userIds) throws RemoteException {
+		try {
+			long[] returnValue = UserServiceUtil.filterUnsetOrganizationUserIds(groupId,
+					userIds);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.model.UserSoap[] getCompanyUsers(
 		long companyId, int start, int end) throws RemoteException {
 		try {
@@ -971,6 +1025,61 @@ public class UserServiceSoap {
 		try {
 			boolean returnValue = UserServiceUtil.hasRoleUser(companyId, name,
 					userId, inherited);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns <code>true</code> if the user can be unset from the passed group.
+	* This method prevents unsetting any Site Owner or Site Administrator,
+	* unless the operation is being done by a group Owner.
+	*
+	* @param groupId the primary key of the group
+	* @param userId the primary key of the user
+	* @return <code>true</code> if the user can be unset from the passed group.
+	* @throws PortalException if the operation is not being performed by a
+	registered user
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean isUnsetGroupUserAllowed(long groupId, long userId)
+		throws RemoteException {
+		try {
+			boolean returnValue = UserServiceUtil.isUnsetGroupUserAllowed(groupId,
+					userId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns <code>true</code> if the user can be unset from the passed group.
+	* This method prevents unsetting any Organization Owner or
+	* Organization Administrator, unless the operation is being done by a
+	* Organization Owner.
+	*
+	* @param groupId the primary key of the Organization group
+	* @param userId the primary key of the user
+	* @return <code>true</code> if the user can be unset from the passed group.
+	* @throws PortalException if the operation is not being performed by a
+	registered user
+	* @throws SystemException if a system exception occurred
+	*/
+	public static boolean isUnsetOrganizationUserAllowed(long groupId,
+		long userId) throws RemoteException {
+		try {
+			boolean returnValue = UserServiceUtil.isUnsetOrganizationUserAllowed(groupId,
+					userId);
 
 			return returnValue;
 		}

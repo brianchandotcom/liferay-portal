@@ -495,6 +495,42 @@ public class UserServiceWrapper implements UserService,
 		_userService.deleteUser(userId);
 	}
 
+	/**
+	* Filters the list of userIds that are to be unset from a group to prevent
+	* unsetting any group Owner or group Administrator, unless the operation is
+	* being done by a group Owner
+	*
+	* @param groupId the primary key of the group
+	* @param userIds the primary keys of the users
+	* @return a filtered list of primary keys of the users
+	* @throws PortalException if the operation is not being performed by a
+	registered user
+	* @throws SystemException if a system exception occurred
+	*/
+	public long[] filterUnsetGroupUserIds(long groupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.filterUnsetGroupUserIds(groupId, userIds);
+	}
+
+	/**
+	* Filters the list of userIds that are to be unset from a Organization to
+	* prevent unsetting any Organization Owner or Organization Administrator,
+	* unless the operation is being done by an Organization Owner.
+	*
+	* @param groupId the primary key of the Organization group
+	* @param userIds the primary keys of the users
+	* @return a filtered list of primary keys of the users
+	* @throws PortalException if the operation is not being performed by a
+	registered user
+	* @throws SystemException if a system exception occurred
+	*/
+	public long[] filterUnsetOrganizationUserIds(long groupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.filterUnsetOrganizationUserIds(groupId, userIds);
+	}
+
 	public java.util.List<com.liferay.portal.model.User> getCompanyUsers(
 		long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -729,6 +765,43 @@ public class UserServiceWrapper implements UserService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.hasRoleUser(companyId, name, userId, inherited);
+	}
+
+	/**
+	* Returns <code>true</code> if the user can be unset from the passed group.
+	* This method prevents unsetting any Site Owner or Site Administrator,
+	* unless the operation is being done by a group Owner.
+	*
+	* @param groupId the primary key of the group
+	* @param userId the primary key of the user
+	* @return <code>true</code> if the user can be unset from the passed group.
+	* @throws PortalException if the operation is not being performed by a
+	registered user
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean isUnsetGroupUserAllowed(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.isUnsetGroupUserAllowed(groupId, userId);
+	}
+
+	/**
+	* Returns <code>true</code> if the user can be unset from the passed group.
+	* This method prevents unsetting any Organization Owner or
+	* Organization Administrator, unless the operation is being done by a
+	* Organization Owner.
+	*
+	* @param groupId the primary key of the Organization group
+	* @param userId the primary key of the user
+	* @return <code>true</code> if the user can be unset from the passed group.
+	* @throws PortalException if the operation is not being performed by a
+	registered user
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean isUnsetOrganizationUserAllowed(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.isUnsetOrganizationUserAllowed(groupId, userId);
 	}
 
 	/**

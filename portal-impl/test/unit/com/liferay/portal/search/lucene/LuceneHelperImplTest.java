@@ -809,6 +809,10 @@ public class LuceneHelperImplTest {
 			return null;
 		}
 
+		public SpellCheckerIndexAccessor getSpellCheckerIndexAccessor() {
+			return null;
+		}
+
 		public void loadIndex(InputStream inputStream) throws IOException {
 			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();

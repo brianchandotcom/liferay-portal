@@ -362,6 +362,12 @@ public class LuceneHelperUtil {
 			formatter);
 	}
 
+	public static SpellCheckerIndexAccessor getSpellCheckerIndexAccessor()
+		throws IOException {
+
+		return getLuceneHelper().getSpellCheckerIndexAccessor();
+	}
+
 	public static Version getVersion() {
 		return getLuceneHelper().getVersion();
 	}

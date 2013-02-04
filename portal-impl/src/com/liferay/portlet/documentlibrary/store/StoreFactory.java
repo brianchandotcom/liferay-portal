@@ -136,10 +136,9 @@ public class StoreFactory {
 				MethodInterceptor tempFileMethodInterceptor =
 					new TempFileMethodInterceptor();
 
-				List<MethodInterceptor> methodInterceptors =
-					Arrays.asList(
-						transactionAdviceMethodInterceptor,
-						tempFileMethodInterceptor);
+				List<MethodInterceptor> methodInterceptors = Arrays.asList(
+					transactionAdviceMethodInterceptor,
+					tempFileMethodInterceptor);
 
 				store = (Store)ProxyUtil.newProxyInstance(
 					classLoader, new Class<?>[] {Store.class},

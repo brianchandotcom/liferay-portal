@@ -366,9 +366,8 @@ public class ActionUtil {
 
 		getStructure(request);
 
-		DDMStructure ddmStructure =
-			(DDMStructure)portletRequest.getAttribute(
-				WebKeys.JOURNAL_STRUCTURE);
+		DDMStructure ddmStructure = (DDMStructure)portletRequest.getAttribute(
+			WebKeys.JOURNAL_STRUCTURE);
 
 		JournalUtil.addRecentDDMStructure(portletRequest, ddmStructure);
 	}

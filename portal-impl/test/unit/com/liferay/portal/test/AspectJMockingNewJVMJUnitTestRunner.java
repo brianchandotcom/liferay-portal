@@ -149,9 +149,8 @@ public class AspectJMockingNewJVMJUnitTestRunner extends NewJVMJUnitTestRunner {
 				WeavingClassLoader weavingClassLoader = new WeavingClassLoader(
 					urls, aspectClasses, _dumpDir);
 
-				Object originalProcessCallable =
-					SerializableUtil.deserialize(
-						_encodedProcessCallable, weavingClassLoader);
+				Object originalProcessCallable = SerializableUtil.deserialize(
+					_encodedProcessCallable, weavingClassLoader);
 
 				currentThread.setContextClassLoader(weavingClassLoader);
 

@@ -131,9 +131,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 		String keyword = _getFriendlyURLKeyword(friendlyURL);
 
 		if (Validator.isNotNull(keyword)) {
-			LayoutFriendlyURLException lfurle =
-				new LayoutFriendlyURLException(
-					LayoutFriendlyURLException.KEYWORD_CONFLICT);
+			LayoutFriendlyURLException lfurle = new LayoutFriendlyURLException(
+				LayoutFriendlyURLException.KEYWORD_CONFLICT);
 
 			lfurle.setKeywordConflict(keyword);
 

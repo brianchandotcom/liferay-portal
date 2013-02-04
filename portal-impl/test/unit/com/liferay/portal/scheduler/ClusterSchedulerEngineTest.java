@@ -440,9 +440,8 @@ public class ClusterSchedulerEngineTest {
 
 		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 
-		List<SchedulerResponse> schedulerResponses =
-			_getMemoryClusteredJobs(
-				_clusterSchedulerEngine, _MEMORY_CLUSTER_TEST_GROUP_NAME);
+		List<SchedulerResponse> schedulerResponses = _getMemoryClusteredJobs(
+			_clusterSchedulerEngine, _MEMORY_CLUSTER_TEST_GROUP_NAME);
 
 		for (SchedulerResponse curSchedulerResponse : schedulerResponses) {
 			_assertTriggerState(curSchedulerResponse, TriggerState.NORMAL);

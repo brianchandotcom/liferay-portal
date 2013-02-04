@@ -1971,10 +1971,9 @@ public class DLFileEntryLocalServiceImpl
 				Date latestModifiedDate = null;
 
 				try {
-					ExpandoRow latestExpandoRow =
-						expandoRowLocalService.getRow(
-							expandoTable.getTableId(),
-							latestDLFileVersion.getPrimaryKey());
+					ExpandoRow latestExpandoRow = expandoRowLocalService.getRow(
+						expandoTable.getTableId(),
+						latestDLFileVersion.getPrimaryKey());
 
 					latestModifiedDate = latestExpandoRow.getModifiedDate();
 				}

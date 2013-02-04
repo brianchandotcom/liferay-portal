@@ -34,9 +34,8 @@ public abstract class RenameUpgradePortletPreferences
 			String portletId, String xml)
 		throws Exception {
 
-		PortletPreferences preferences =
-			PortletPreferencesFactoryUtil.fromXML(
-				companyId, ownerId, ownerType, plid, portletId, xml);
+		PortletPreferences preferences = PortletPreferencesFactoryUtil.fromXML(
+			companyId, ownerId, ownerType, plid, portletId, xml);
 
 		Map<String, String[]> preferencesMap = preferences.getMap();
 

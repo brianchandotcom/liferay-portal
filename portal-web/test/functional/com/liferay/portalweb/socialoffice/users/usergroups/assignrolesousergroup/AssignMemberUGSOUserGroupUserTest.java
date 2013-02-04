@@ -49,6 +49,7 @@ public class AssignMemberUGSOUserGroupUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("UG UserGroup Name"),
 			selenium.getText(
 				"//td[@id='_127_userGroupsSearchContainer_col-name_row-1']/a"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",

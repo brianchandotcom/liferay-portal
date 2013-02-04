@@ -44,13 +44,12 @@ public class ViewSiteRoleTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Siterole Name"),
-			selenium.getText("//tr[contains(.,'Roles Siterole Name')]/td/a"));
+			selenium.getText("//tr[contains(.,'Roles Siterole Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Site"),
 			selenium.getText("//tr[contains(.,'Roles Siterole Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText(
-				"//span[@title='Actions']/ul[@id='_128_ocerSearchContainer_1_menu']/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul[@id='_128_ocerSearchContainer_1_menu']/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
@@ -62,7 +61,8 @@ public class ViewSiteRoleTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Siterole Name"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertTrue(selenium.isPartialText("//a[@id='_128_TabsBack']", "Back"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+			selenium.getText("//a[@id='_128_TabsBack']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[contains(.,'Edit')]/ul[@class='aui-tabview-list']/li[1]/span/a"));

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserServiceUtil;
 
 import javax.portlet.RenderResponse;
 
@@ -57,6 +58,24 @@ public class UserGroupChecker extends RowChecker {
 
 			return false;
 		}
+	}
+
+	@Override
+	public boolean isDisabled(Object obj) {
+		User user = (User)obj;
+
+		try {
+			if (!UserServiceUtil.isUnsetGroupUserAllowed(
+					_group.getGroupId(), user.getUserId())) {
+
+				return true;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return false;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(UserGroupChecker.class);

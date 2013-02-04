@@ -1990,8 +1990,8 @@ public class JournalArticleLocalServiceImpl
 			attributes.put(Field.TYPE, type);
 			attributes.put("articleId", articleId);
 			attributes.put("params", params);
-			attributes.put("structureId", structureId);
-			attributes.put("templateId", templateId);
+			attributes.put("ddmStructureKey", structureId);
+			attributes.put("ddmTemplateKey", templateId);
 
 			searchContext.setAttributes(attributes);
 

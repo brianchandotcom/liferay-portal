@@ -667,7 +667,7 @@ public class ModuleFrameworkImpl
 		Enumeration<URL> enu = Collections.enumeration(Collections.emptyList());
 
 		try {
-			enu = classLoader.getResources(MANIFEST_PATH);
+			enu = classLoader.getResources(EXTENDER_KEY_MANIFEST_PATH);
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
@@ -958,10 +958,10 @@ public class ModuleFrameworkImpl
 
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 
-		properties.put(SERVICE_PROPERTY_KEY_BEAN_ID, beanName);
-		properties.put(SERVICE_PROPERTY_KEY_ORIGINAL_BEAN, Boolean.TRUE);
+		properties.put(HTTP_SERVICE_KEY_BEAN_ID, beanName);
+		properties.put(HTTP_SERVICE_KEY_ORIGINAL_BEAN, Boolean.TRUE);
 		properties.put(
-			SERVICE_PROPERTY_KEY_SERVICE_VENDOR, ReleaseInfo.getVendor());
+			HTTP_SERVICE_KEY_SERVICE_VENDOR, ReleaseInfo.getVendor());
 
 		bundleContext.registerService(
 			names.toArray(new String[names.size()]), bean, properties);
@@ -973,10 +973,10 @@ public class ModuleFrameworkImpl
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 
 		properties.put(
-			SERVICE_PROPERTY_KEY_BEAN_ID, ServletContext.class.getName());
-		properties.put(SERVICE_PROPERTY_KEY_ORIGINAL_BEAN, Boolean.TRUE);
+			HTTP_SERVICE_KEY_BEAN_ID, ServletContext.class.getName());
+		properties.put(HTTP_SERVICE_KEY_ORIGINAL_BEAN, Boolean.TRUE);
 		properties.put(
-			SERVICE_PROPERTY_KEY_SERVICE_VENDOR, ReleaseInfo.getVendor());
+				HTTP_SERVICE_KEY_SERVICE_VENDOR, ReleaseInfo.getVendor());
 
 		bundleContext.registerService(
 			new String[] {ServletContext.class.getName()}, servletContext,

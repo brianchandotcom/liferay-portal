@@ -22,9 +22,15 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>osgi\modules\log-bridge</label>
+                    <label>osgi\modules\http-service\src</label>
                     <type>java</type>
-                    <location>osgi/modules/log-bridge</location>
+                    <location>osgi/modules/http-service/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>osgi\modules\log-bridge\src</label>
+                    <type>java</type>
+                    <location>osgi/modules/log-bridge/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -146,7 +152,11 @@
                         <location>osgi/bootstrap/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>osgi\modules\log-bridge</label>
+                        <label>osgi\modules\http-service\src</label>
+                        <location>osgi/modules/http-service/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>osgi\modules\log-bridge\src</label>
                         <location>osgi/modules/log-bridge/src</location>
                     </source-folder>
                     <source-folder style="packages">

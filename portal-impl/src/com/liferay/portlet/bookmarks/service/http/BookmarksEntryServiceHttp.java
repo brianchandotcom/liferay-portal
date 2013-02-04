@@ -527,12 +527,49 @@ public class BookmarksEntryServiceHttp {
 	}
 
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry openEntry(
-		HttpPrincipal httpPrincipal, long entryId)
+		HttpPrincipal httpPrincipal,
+		com.liferay.portlet.bookmarks.model.BookmarksEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"openEntry", _openEntryParameterTypes14);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, entry);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.bookmarks.model.BookmarksEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portlet.bookmarks.model.BookmarksEntry openEntry(
+		HttpPrincipal httpPrincipal, long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
+					"openEntry", _openEntryParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -569,7 +606,7 @@ public class BookmarksEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"restoreEntryFromTrash",
-					_restoreEntryFromTrashParameterTypes15);
+					_restoreEntryFromTrashParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -600,7 +637,7 @@ public class BookmarksEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
-					"subscribeEntry", _subscribeEntryParameterTypes16);
+					"subscribeEntry", _subscribeEntryParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -632,7 +669,7 @@ public class BookmarksEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
-					"unsubscribeEntry", _unsubscribeEntryParameterTypes17);
+					"unsubscribeEntry", _unsubscribeEntryParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -667,7 +704,7 @@ public class BookmarksEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
-					"updateEntry", _updateEntryParameterTypes18);
+					"updateEntry", _updateEntryParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
 					groupId, folderId, name, url, description, serviceContext);
@@ -745,18 +782,21 @@ public class BookmarksEntryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _openEntryParameterTypes14 = new Class[] {
+			com.liferay.portlet.bookmarks.model.BookmarksEntry.class
+		};
+	private static final Class<?>[] _openEntryParameterTypes15 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _restoreEntryFromTrashParameterTypes15 = new Class[] {
+	private static final Class<?>[] _restoreEntryFromTrashParameterTypes16 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _subscribeEntryParameterTypes16 = new Class[] {
+	private static final Class<?>[] _subscribeEntryParameterTypes17 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _unsubscribeEntryParameterTypes17 = new Class[] {
+	private static final Class<?>[] _unsubscribeEntryParameterTypes18 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateEntryParameterTypes18 = new Class[] {
+	private static final Class<?>[] _updateEntryParameterTypes19 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class

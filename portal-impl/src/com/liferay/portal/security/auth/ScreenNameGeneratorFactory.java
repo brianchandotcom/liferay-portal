@@ -17,7 +17,6 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -27,7 +26,7 @@ import com.liferay.portal.util.PropsValues;
 public class ScreenNameGeneratorFactory {
 
 	public static ScreenNameGenerator getInstance() {
-		if (_originalScreenNameGenerator == null) {
+		if (_screenNameGenerator == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Instantiate " + PropsValues.USERS_SCREEN_NAME_GENERATOR);
@@ -37,17 +36,13 @@ public class ScreenNameGeneratorFactory {
 				PACLClassLoaderUtil.getPortalClassLoader();
 
 			try {
-				_originalScreenNameGenerator =
-					(ScreenNameGenerator)InstanceFactory.newInstance(
-						classLoader, PropsValues.USERS_SCREEN_NAME_GENERATOR);
+				_screenNameGenerator =
+					(ScreenNameGenerator)classLoader.loadClass(
+						PropsValues.USERS_SCREEN_NAME_GENERATOR).newInstance();
 			}
 			catch (Exception e) {
 				_log.error(e, e);
 			}
-		}
-
-		if (_screenNameGenerator == null) {
-			_screenNameGenerator = _originalScreenNameGenerator;
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -63,18 +58,12 @@ public class ScreenNameGeneratorFactory {
 			_log.debug("Set " + ClassUtil.getClassName(screenNameGenerator));
 		}
 
-		if (screenNameGenerator == null) {
-			_screenNameGenerator = _originalScreenNameGenerator;
-		}
-		else {
-			_screenNameGenerator = screenNameGenerator;
-		}
+		_screenNameGenerator = screenNameGenerator;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ScreenNameGeneratorFactory.class);
 
-	private static ScreenNameGenerator _originalScreenNameGenerator;
 	private static ScreenNameGenerator _screenNameGenerator;
 
 }

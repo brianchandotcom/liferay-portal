@@ -27,7 +27,7 @@ import com.liferay.portal.util.PropsValues;
 public class FullNameValidatorFactory {
 
 	public static FullNameValidator getInstance() {
-		if (_originalFullNameValidator == null) {
+		if (_fullNameValidator == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Instantiate " + PropsValues.USERS_FULL_NAME_VALIDATOR);
@@ -37,17 +37,13 @@ public class FullNameValidatorFactory {
 				PACLClassLoaderUtil.getPortalClassLoader();
 
 			try {
-				_originalFullNameValidator =
+				_fullNameValidator =
 					(FullNameValidator)InstanceFactory.newInstance(
 						classLoader, PropsValues.USERS_FULL_NAME_VALIDATOR);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
 			}
-		}
-
-		if (_fullNameValidator == null) {
-			_fullNameValidator = _originalFullNameValidator;
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -62,18 +58,12 @@ public class FullNameValidatorFactory {
 			_log.debug("Set " + ClassUtil.getClassName(fullNameValidator));
 		}
 
-		if (fullNameValidator == null) {
-			_fullNameValidator = _originalFullNameValidator;
-		}
-		else {
-			_fullNameValidator = fullNameValidator;
-		}
+		_fullNameValidator = fullNameValidator;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		FullNameValidatorFactory.class);
 
 	private static FullNameValidator _fullNameValidator;
-	private static FullNameValidator _originalFullNameValidator;
 
 }

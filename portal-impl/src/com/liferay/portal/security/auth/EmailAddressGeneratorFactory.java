@@ -27,7 +27,7 @@ import com.liferay.portal.util.PropsValues;
 public class EmailAddressGeneratorFactory {
 
 	public static EmailAddressGenerator getInstance() {
-		if (_originalEmailAddressGenerator == null) {
+		if (_emailAddressGenerator == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Instantiate " + PropsValues.USERS_EMAIL_ADDRESS_GENERATOR);
@@ -37,17 +37,13 @@ public class EmailAddressGeneratorFactory {
 				PACLClassLoaderUtil.getPortalClassLoader();
 
 			try {
-				_originalEmailAddressGenerator =
+				_emailAddressGenerator =
 					(EmailAddressGenerator)InstanceFactory.newInstance(
 						classLoader, PropsValues.USERS_EMAIL_ADDRESS_GENERATOR);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
 			}
-		}
-
-		if (_emailAddressGenerator == null) {
-			_emailAddressGenerator = _originalEmailAddressGenerator;
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -65,18 +61,12 @@ public class EmailAddressGeneratorFactory {
 			_log.debug("Set " + ClassUtil.getClassName(emailAddressGenerator));
 		}
 
-		if (emailAddressGenerator == null) {
-			_emailAddressGenerator = _originalEmailAddressGenerator;
-		}
-		else {
-			_emailAddressGenerator = emailAddressGenerator;
-		}
+		_emailAddressGenerator = emailAddressGenerator;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		EmailAddressGeneratorFactory.class);
 
 	private static EmailAddressGenerator _emailAddressGenerator;
-	private static EmailAddressGenerator _originalEmailAddressGenerator;
 
 }

@@ -27,7 +27,7 @@ import com.liferay.portal.util.PropsValues;
 public class FullNameGeneratorFactory {
 
 	public static FullNameGenerator getInstance() {
-		if (_originalFullNameGenerator == null) {
+		if (_fullNameGenerator == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Instantiate " + PropsValues.USERS_FULL_NAME_GENERATOR);
@@ -37,17 +37,13 @@ public class FullNameGeneratorFactory {
 				PACLClassLoaderUtil.getPortalClassLoader();
 
 			try {
-				_originalFullNameGenerator =
+				_fullNameGenerator =
 					(FullNameGenerator)InstanceFactory.newInstance(
 						classLoader, PropsValues.USERS_FULL_NAME_GENERATOR);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
 			}
-		}
-
-		if (_fullNameGenerator == null) {
-			_fullNameGenerator = _originalFullNameGenerator;
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -62,18 +58,12 @@ public class FullNameGeneratorFactory {
 			_log.debug("Set " + ClassUtil.getClassName(fullNameValidator));
 		}
 
-		if (fullNameValidator == null) {
-			_fullNameGenerator = _originalFullNameGenerator;
-		}
-		else {
-			_fullNameGenerator = fullNameValidator;
-		}
+		_fullNameGenerator = fullNameValidator;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		FullNameValidatorFactory.class);
 
 	private static FullNameGenerator _fullNameGenerator;
-	private static FullNameGenerator _originalFullNameGenerator;
 
 }

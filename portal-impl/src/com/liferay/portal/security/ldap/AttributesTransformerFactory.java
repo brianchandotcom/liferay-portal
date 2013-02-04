@@ -17,7 +17,6 @@ package com.liferay.portal.security.ldap;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -27,7 +26,7 @@ import com.liferay.portal.util.PropsValues;
 public class AttributesTransformerFactory {
 
 	public static AttributesTransformer getInstance() {
-		if (_originalAttributesTransformer == null) {
+		if (_attributesTransformer == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Instantiate " + PropsValues.LDAP_ATTRS_TRANSFORMER_IMPL);
@@ -37,17 +36,13 @@ public class AttributesTransformerFactory {
 				PACLClassLoaderUtil.getPortalClassLoader();
 
 			try {
-				_originalAttributesTransformer =
-					(AttributesTransformer)InstanceFactory.newInstance(
-						classLoader, PropsValues.LDAP_ATTRS_TRANSFORMER_IMPL);
+				_attributesTransformer =
+					(AttributesTransformer)classLoader.loadClass(
+						PropsValues.LDAP_ATTRS_TRANSFORMER_IMPL).newInstance();
 			}
 			catch (Exception e) {
 				_log.error(e, e);
 			}
-		}
-
-		if (_attributesTransformer == null) {
-			_attributesTransformer = _originalAttributesTransformer;
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -64,18 +59,12 @@ public class AttributesTransformerFactory {
 			_log.debug("Set " + ClassUtil.getClassName(attributesTransformer));
 		}
 
-		if (attributesTransformer == null) {
-			_attributesTransformer = _originalAttributesTransformer;
-		}
-		else {
-			_attributesTransformer = attributesTransformer;
-		}
+		_attributesTransformer = attributesTransformer;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		AttributesTransformerFactory.class);
 
 	private static AttributesTransformer _attributesTransformer;
-	private static AttributesTransformer _originalAttributesTransformer;
 
 }

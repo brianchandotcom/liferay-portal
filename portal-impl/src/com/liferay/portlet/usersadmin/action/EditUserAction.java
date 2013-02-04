@@ -27,6 +27,7 @@ import com.liferay.portal.DuplicateUserEmailAddressException;
 import com.liferay.portal.DuplicateUserScreenNameException;
 import com.liferay.portal.EmailAddressException;
 import com.liferay.portal.GroupFriendlyURLException;
+import com.liferay.portal.GroupMembershipException;
 import com.liferay.portal.NoSuchCountryException;
 import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.NoSuchRegionException;
@@ -248,6 +249,7 @@ public class EditUserAction extends PortletAction {
 					 e instanceof DuplicateUserScreenNameException ||
 					 e instanceof EmailAddressException ||
 					 e instanceof GroupFriendlyURLException ||
+					 e instanceof GroupMembershipException ||
 					 e instanceof NoSuchCountryException ||
 					 e instanceof NoSuchListTypeException ||
 					 e instanceof NoSuchRegionException ||

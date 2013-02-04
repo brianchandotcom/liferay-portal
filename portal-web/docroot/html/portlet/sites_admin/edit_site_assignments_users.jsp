@@ -53,6 +53,38 @@ UserSearch userSearch = new UserSearch(renderRequest, viewUsersURL);
 userSearch.setEmptyResultsMessage(emptyResultsMessage);
 %>
 
+<liferay-ui:error exception="<%= GroupMembershipException.class %>">
+
+	<%
+	GroupMembershipException gme = (GroupMembershipException)errorException;
+
+	List<Group> groups = gme.getGroups();
+
+	List<User> users = gme.getUsers();
+	%>
+
+	<c:choose>
+		<c:when test="<%= users.size() == 1 %>">
+			<c:if test="<%= gme.getType() == GroupMembershipException.MEMBERSHIP_MANDATORY %>">
+				<liferay-ui:message arguments="<%= new Object[] {users.get(0).getFullName(), groups.get(0).getDescriptiveName(locale)} %>" key="x-is-not-allowed-to-leave-x" />
+			</c:if>
+
+			<c:if test="<%= gme.getType() == GroupMembershipException.MEMBERSHIP_NOT_ALLOWED %>">
+				<liferay-ui:message arguments="<%= new Object[] {users.get(0).getFullName(), groups.get(0).getDescriptiveName(locale)} %>" key="x-is-not-allowed-to-join-x" />
+			</c:if>
+		</c:when>
+		<c:otherwise>
+			<c:if test="<%= gme.getType() == GroupMembershipException.MEMBERSHIP_MANDATORY %>">
+				<liferay-ui:message arguments='<%= new Object[] {groups.get(0).getDescriptiveName(locale), ListUtil.toString(users, "fullName", StringPool.COMMA_AND_SPACE)} %>' key="the-following-users-are-not-allowed-to-leave-site-x-x" />
+			</c:if>
+
+			<c:if test="<%= gme.getType() == GroupMembershipException.MEMBERSHIP_NOT_ALLOWED %>">
+				<liferay-ui:message arguments='<%= new Object[] {groups.get(0).getDescriptiveName(locale), ListUtil.toString(users, "fullName", StringPool.COMMA_AND_SPACE)} %>' key="the-following-users-are-not-allowed-to-join-site-x-x" />
+			</c:if>
+		</c:otherwise>
+	</c:choose>
+</liferay-ui:error>
+
 <aui:input name="tabs1" type="hidden" value="users" />
 <aui:input name="addUserIds" type="hidden" />
 <aui:input name="removeUserIds" type="hidden" />

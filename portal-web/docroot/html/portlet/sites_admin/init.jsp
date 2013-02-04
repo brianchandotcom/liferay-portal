@@ -19,6 +19,7 @@
 <%@ page import="com.liferay.portal.DuplicateGroupException" %><%@
 page import="com.liferay.portal.DuplicateTeamException" %><%@
 page import="com.liferay.portal.GroupFriendlyURLException" %><%@
+page import="com.liferay.portal.GroupMembershipException" %><%@
 page import="com.liferay.portal.GroupNameException" %><%@
 page import="com.liferay.portal.LayoutSetVirtualHostException" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
@@ -35,6 +36,8 @@ page import="com.liferay.portal.kernel.lar.PortletDataHandler" %><%@
 page import="com.liferay.portal.kernel.staging.StagingConstants" %><%@
 page import="com.liferay.portal.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.portal.liveusers.LiveUsers" %><%@
+page import="com.liferay.portal.security.auth.MembershipPolicy" %><%@
+page import="com.liferay.portal.security.auth.MembershipPolicyFactory" %><%@
 page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.TeamPermissionUtil" %><%@
 page import="com.liferay.portal.util.CustomJspRegistryUtil" %><%@

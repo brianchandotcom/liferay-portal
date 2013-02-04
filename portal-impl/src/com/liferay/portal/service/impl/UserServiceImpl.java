@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.GroupMembershipException;
 import com.liferay.portal.RequiredUserException;
 import com.liferay.portal.ReservedUserEmailAddressException;
 import com.liferay.portal.UserEmailAddressException;
@@ -23,7 +24,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Address;
@@ -40,6 +43,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
+import com.liferay.portal.security.auth.MembershipPolicy;
+import com.liferay.portal.security.auth.MembershipPolicyFactory;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -58,6 +63,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -119,6 +125,32 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			if (!hasPermission) {
 				throw new PrincipalException();
 			}
+		}
+
+		// Membership policy
+
+		List<User> users = new ArrayList<User>();
+
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactory.getInstance();
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		for (long userId : userIds) {
+			User user = userPersistence.findByPrimaryKey(userId);
+
+			if (!membershipPolicy.isMembershipAllowed(group, user)) {
+				users.add(user);
+			}
+		}
+
+		if (!users.isEmpty()) {
+			List<Group> groups = new ArrayList<Group>();
+
+			groups.add(group);
+
+			throw new GroupMembershipException(
+				GroupMembershipException.MEMBERSHIP_NOT_ALLOWED, groups, users);
 		}
 
 		userLocalService.addGroupUsers(groupId, userIds);
@@ -1053,6 +1085,37 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
+		// Membership policy
+
+		List<User> users = new ArrayList<User>();
+
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactory.getInstance();
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		for (long userId : userIds) {
+			User user = userPersistence.findByPrimaryKey(userId);
+
+			List<Group> mandatoryGroups = membershipPolicy.getMandatoryGroups(
+				user);
+
+			if (Validator.isNotNull(mandatoryGroups) &&
+				mandatoryGroups.contains(group)) {
+
+				users.add(user);
+			}
+		}
+
+		if (!users.isEmpty()) {
+			List<Group> groups = new ArrayList<Group>();
+
+			groups.add(group);
+
+			throw new GroupMembershipException(
+				GroupMembershipException.MEMBERSHIP_MANDATORY, groups, users);
+		}
+
 		userLocalService.unsetGroupUsers(groupId, userIds, serviceContext);
 	}
 
@@ -1744,11 +1807,18 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactory.getInstance();
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
 		if (userId != CompanyConstants.SYSTEM) {
 
 			// Add back any groups that the administrator does not have the
-			// rights to remove and check that he has the permission to add
-			// a new group
+			// rights to remove or that have a mandatory membership
+
+			List<Group> mandatoryGroups = membershipPolicy.getMandatoryGroups(
+				user);
 
 			List<Group> oldGroups = groupLocalService.getUserGroups(userId);
 
@@ -1758,9 +1828,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				Group group = oldGroups.get(i);
 
 				if (!ArrayUtil.contains(groupIds, group.getGroupId()) &&
-					!GroupPermissionUtil.contains(
-						permissionChecker, group.getGroupId(),
-						ActionKeys.ASSIGN_MEMBERS)) {
+					(!GroupPermissionUtil.contains(
+							permissionChecker, group.getGroupId(),
+							ActionKeys.ASSIGN_MEMBERS) ||
+						mandatoryGroups.contains(group))) {
 
 					groupIds = ArrayUtil.append(groupIds, group.getGroupId());
 				}
@@ -1769,13 +1840,30 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
+		// Check that the administrator has the permission to add a new group
+		// and that the group membership is allowed
+
+		List<Group> groups = new ArrayList<Group>();
+
 		for (long groupId : groupIds) {
 			if ((oldGroupIds == null) ||
 				!ArrayUtil.contains(oldGroupIds, groupId)) {
 
+				Group group = groupPersistence.findByPrimaryKey(groupId);
+
 				GroupPermissionUtil.check(
-					permissionChecker, groupId, ActionKeys.ASSIGN_MEMBERS);
+					permissionChecker, group, ActionKeys.ASSIGN_MEMBERS);
+
+				if (!membershipPolicy.isMembershipAllowed(group, user)) {
+					groups.add(group);
+				}
 			}
+		}
+
+		if (!groups.isEmpty()) {
+			throw new GroupMembershipException(
+				GroupMembershipException.MEMBERSHIP_NOT_ALLOWED, groups,
+				ListUtil.toList(new User[] {user}));
 		}
 
 		return groupIds;

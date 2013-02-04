@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -132,6 +133,18 @@ public class SitesUtil {
 
 	public static final int CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT =
 		2;
+
+	public static final Accessor<Group, String> GROUP_DESCRIPTIVE_NAME =
+		new Accessor<Group, String>() {
+			public String get(Group group) {
+				try {
+					return group.getDescriptiveName();
+				}
+				catch (Exception e) {
+					return group.getName();
+				}
+			}
+		};
 
 	public static final String LAST_MERGE_TIME = "last-merge-time";
 

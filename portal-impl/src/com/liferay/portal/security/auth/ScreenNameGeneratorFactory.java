@@ -17,39 +17,17 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class ScreenNameGeneratorFactory {
 
 	public static ScreenNameGenerator getInstance() {
-		if (_screenNameGenerator == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Instantiate " + PropsValues.USERS_SCREEN_NAME_GENERATOR);
-			}
-
-			ClassLoader classLoader =
-				PACLClassLoaderUtil.getPortalClassLoader();
-
-			try {
-				_screenNameGenerator =
-					(ScreenNameGenerator)classLoader.loadClass(
-						PropsValues.USERS_SCREEN_NAME_GENERATOR).newInstance();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Return " + ClassUtil.getClassName(_screenNameGenerator));
-		}
-
 		return _screenNameGenerator;
 	}
 
@@ -58,12 +36,42 @@ public class ScreenNameGeneratorFactory {
 			_log.debug("Set " + ClassUtil.getClassName(screenNameGenerator));
 		}
 
+		if (screenNameGenerator == null) {
+			screenNameGenerator = _createScreenNameGenerator();
+		}
+
 		_screenNameGenerator = screenNameGenerator;
+	}
+
+	public void afterPropertiesSet() {
+		_screenNameGenerator = _createScreenNameGenerator();
+	}
+
+	private static ScreenNameGenerator _createScreenNameGenerator() {
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Instantiate " + PropsValues.USERS_SCREEN_NAME_GENERATOR);
+		}
+
+		ScreenNameGenerator screenNameGenerator = null;
+
+		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+
+		try {
+			screenNameGenerator =
+				(ScreenNameGenerator)InstanceFactory.newInstance(
+					classLoader, PropsValues.USERS_SCREEN_NAME_GENERATOR);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return screenNameGenerator;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ScreenNameGeneratorFactory.class);
 
-	private static ScreenNameGenerator _screenNameGenerator;
+	private static volatile ScreenNameGenerator _screenNameGenerator;
 
 }

@@ -23,33 +23,11 @@ import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Sergio González
+ * @author Shuyang Zhou
  */
 public class MembershipPolicyFactory {
 
 	public static MembershipPolicy getInstance() {
-		if (_membershipPolicy == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Instantiate " + PropsValues.USERS_MEMBERSHIP_POLICY);
-			}
-
-			ClassLoader classLoader =
-				PACLClassLoaderUtil.getPortalClassLoader();
-
-			try {
-				_membershipPolicy =
-					(MembershipPolicy)InstanceFactory.newInstance(
-						classLoader, PropsValues.USERS_MEMBERSHIP_POLICY);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Return " + ClassUtil.getClassName(_membershipPolicy));
-		}
-
 		return _membershipPolicy;
 	}
 
@@ -58,12 +36,41 @@ public class MembershipPolicyFactory {
 			_log.debug("Set " + ClassUtil.getClassName(membershipPolicy));
 		}
 
+		if (membershipPolicy == null) {
+			membershipPolicy = _createMembershipPolicy();
+		}
+
 		_membershipPolicy = membershipPolicy;
+	}
+
+	public void afterPropertiesSet() {
+		_membershipPolicy = _createMembershipPolicy();
+	}
+
+	private static MembershipPolicy _createMembershipPolicy() {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Instantiate " + PropsValues.USERS_MEMBERSHIP_POLICY);
+		}
+
+		MembershipPolicy membershipPolicy = null;
+
+		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+
+		try {
+			membershipPolicy =
+				(MembershipPolicy)InstanceFactory.newInstance(
+					classLoader, PropsValues.USERS_MEMBERSHIP_POLICY);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return membershipPolicy;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		MembershipPolicyFactory.class);
 
-	private static MembershipPolicy _membershipPolicy;
+	private static volatile MembershipPolicy _membershipPolicy;
 
 }

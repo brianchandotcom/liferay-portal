@@ -23,34 +23,11 @@ import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Amos Fong
+ * @author Shuyang Zhou
  */
 public class EmailAddressGeneratorFactory {
 
 	public static EmailAddressGenerator getInstance() {
-		if (_emailAddressGenerator == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Instantiate " + PropsValues.USERS_EMAIL_ADDRESS_GENERATOR);
-			}
-
-			ClassLoader classLoader =
-				PACLClassLoaderUtil.getPortalClassLoader();
-
-			try {
-				_emailAddressGenerator =
-					(EmailAddressGenerator)InstanceFactory.newInstance(
-						classLoader, PropsValues.USERS_EMAIL_ADDRESS_GENERATOR);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Return " + ClassUtil.getClassName(_emailAddressGenerator));
-		}
-
 		return _emailAddressGenerator;
 	}
 
@@ -61,12 +38,42 @@ public class EmailAddressGeneratorFactory {
 			_log.debug("Set " + ClassUtil.getClassName(emailAddressGenerator));
 		}
 
+		if (emailAddressGenerator == null) {
+			emailAddressGenerator = _createEmailAddressGenerator();
+		}
+
 		_emailAddressGenerator = emailAddressGenerator;
+	}
+
+	public void afterPropertiesSet() {
+		_emailAddressGenerator = _createEmailAddressGenerator();
+	}
+
+	private static EmailAddressGenerator _createEmailAddressGenerator() {
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Instantiate " + PropsValues.USERS_EMAIL_ADDRESS_GENERATOR);
+		}
+
+		EmailAddressGenerator emailAddressGenerator = null;
+
+		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+
+		try {
+			emailAddressGenerator =
+				(EmailAddressGenerator)InstanceFactory.newInstance(
+					classLoader, PropsValues.USERS_EMAIL_ADDRESS_GENERATOR);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return emailAddressGenerator;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		EmailAddressGeneratorFactory.class);
 
-	private static EmailAddressGenerator _emailAddressGenerator;
+	private static volatile EmailAddressGenerator _emailAddressGenerator;
 
 }

@@ -17,36 +17,17 @@ package com.liferay.mail.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class HookFactory {
 
 	public static Hook getInstance() {
-		if (_hook == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Instantiate " + PropsValues.MAIL_HOOK_IMPL);
-			}
-
-			ClassLoader classLoader =
-				PACLClassLoaderUtil.getPortalClassLoader();
-
-			try {
-				_hook = (Hook)classLoader.loadClass(
-					PropsValues.MAIL_HOOK_IMPL).newInstance();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Return " + _hook.getClass().getName());
-		}
-
 		return _hook;
 	}
 
@@ -55,11 +36,39 @@ public class HookFactory {
 			_log.debug("Set " + ClassUtil.getClassName(hook));
 		}
 
+		if (hook == null) {
+			hook = _createHook();
+		}
+
 		_hook = hook;
+	}
+
+	public void afterPropertiesSet() {
+		_hook = _createHook();
+	}
+
+	private static Hook _createHook() {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Instantiate " + PropsValues.MAIL_HOOK_IMPL);
+		}
+
+		Hook hook = null;
+
+		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+
+		try {
+			hook = (Hook)InstanceFactory.newInstance(
+				classLoader, PropsValues.MAIL_HOOK_IMPL);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return hook;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(HookFactory.class);
 
-	private static Hook _hook;
+	private static volatile Hook _hook;
 
 }

@@ -17,39 +17,17 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class ScreenNameValidatorFactory {
 
 	public static ScreenNameValidator getInstance() {
-		if (_screenNameValidator == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Instantiate " + PropsValues.USERS_SCREEN_NAME_VALIDATOR);
-			}
-
-			ClassLoader classLoader =
-				PACLClassLoaderUtil.getPortalClassLoader();
-
-			try {
-				_screenNameValidator =
-					(ScreenNameValidator)classLoader.loadClass(
-						PropsValues.USERS_SCREEN_NAME_VALIDATOR).newInstance();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Return " + ClassUtil.getClassName(_screenNameValidator));
-		}
-
 		return _screenNameValidator;
 	}
 
@@ -58,12 +36,42 @@ public class ScreenNameValidatorFactory {
 			_log.debug("Set " + ClassUtil.getClassName(screenNameValidator));
 		}
 
+		if (screenNameValidator == null) {
+			screenNameValidator = _createScreenNameValidator();
+		}
+
 		_screenNameValidator = screenNameValidator;
+	}
+
+	public void afterPropertiesSet() {
+		_screenNameValidator = _createScreenNameValidator();
+	}
+
+	private static ScreenNameValidator _createScreenNameValidator() {
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Instantiate " + PropsValues.USERS_SCREEN_NAME_VALIDATOR);
+		}
+
+		ScreenNameValidator screenNameValidator = null;
+
+		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+
+		try {
+			screenNameValidator =
+				(ScreenNameValidator)InstanceFactory.newInstance(
+					classLoader, PropsValues.USERS_SCREEN_NAME_VALIDATOR);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return screenNameValidator;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ScreenNameValidatorFactory.class);
 
-	private static ScreenNameValidator _screenNameValidator;
+	private static volatile ScreenNameValidator _screenNameValidator;
 
 }

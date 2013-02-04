@@ -17,38 +17,17 @@ package com.liferay.portal.security.ldap;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class AttributesTransformerFactory {
 
 	public static AttributesTransformer getInstance() {
-		if (_attributesTransformer == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Instantiate " + PropsValues.LDAP_ATTRS_TRANSFORMER_IMPL);
-			}
-
-			ClassLoader classLoader =
-				PACLClassLoaderUtil.getPortalClassLoader();
-
-			try {
-				_attributesTransformer =
-					(AttributesTransformer)classLoader.loadClass(
-						PropsValues.LDAP_ATTRS_TRANSFORMER_IMPL).newInstance();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Return " + _attributesTransformer.getClass().getName());
-		}
-
 		return _attributesTransformer;
 	}
 
@@ -59,12 +38,42 @@ public class AttributesTransformerFactory {
 			_log.debug("Set " + ClassUtil.getClassName(attributesTransformer));
 		}
 
+		if (attributesTransformer == null) {
+			attributesTransformer = _createAttributesTransformer();
+		}
+
 		_attributesTransformer = attributesTransformer;
+	}
+
+	public void afterPropertiesSet() {
+		_attributesTransformer = _createAttributesTransformer();
+	}
+
+	private static AttributesTransformer _createAttributesTransformer() {
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Instantiate " + PropsValues.LDAP_ATTRS_TRANSFORMER_IMPL);
+		}
+
+		AttributesTransformer attributesTransformer = null;
+
+		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+
+		try {
+			attributesTransformer =
+				(AttributesTransformer)InstanceFactory.newInstance(
+					classLoader, PropsValues.LDAP_ATTRS_TRANSFORMER_IMPL);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return attributesTransformer;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		AttributesTransformerFactory.class);
 
-	private static AttributesTransformer _attributesTransformer;
+	private static volatile AttributesTransformer _attributesTransformer;
 
 }

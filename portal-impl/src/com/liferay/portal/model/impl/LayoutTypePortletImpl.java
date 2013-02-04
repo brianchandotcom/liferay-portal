@@ -968,9 +968,6 @@ public class LayoutTypePortletImpl
 			oldLayoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
 		}
 
-		setTypeSettingsProperty(
-			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, newLayoutTemplateId);
-
 		String themeId = getThemeId();
 
 		LayoutTemplate oldLayoutTemplate =
@@ -978,12 +975,29 @@ public class LayoutTypePortletImpl
 				oldLayoutTemplateId, false, themeId);
 
 		if (oldLayoutTemplate == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to find layout template " + oldLayoutTemplateId);
+			}
+
 			return;
 		}
 
 		LayoutTemplate newLayoutTemplate =
 			LayoutTemplateLocalServiceUtil.getLayoutTemplate(
 				newLayoutTemplateId, false, themeId);
+
+		if (newLayoutTemplate == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to find layout template " + newLayoutTemplateId);
+			}
+
+			return;
+		}
+
+		setTypeSettingsProperty(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, newLayoutTemplateId);
 
 		List<String> oldColumns = oldLayoutTemplate.getColumns();
 		List<String> newColumns = newLayoutTemplate.getColumns();

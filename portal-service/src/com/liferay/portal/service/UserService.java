@@ -460,38 +460,6 @@ public interface UserService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	/**
-	* Filters the list of userIds that are to be unset from a group to prevent
-	* unsetting any group Owner or group Administrator, unless the operation is
-	* being done by a group Owner
-	*
-	* @param groupId the primary key of the group
-	* @param userIds the primary keys of the users
-	* @return a filtered list of primary keys of the users
-	* @throws PortalException if the operation is not being performed by a
-	registered user
-	* @throws SystemException if a system exception occurred
-	*/
-	public long[] filterUnsetGroupUserIds(long groupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Filters the list of userIds that are to be unset from a Organization to
-	* prevent unsetting any Organization Owner or Organization Administrator,
-	* unless the operation is being done by an Organization Owner.
-	*
-	* @param groupId the primary key of the Organization group
-	* @param userIds the primary keys of the users
-	* @return a filtered list of primary keys of the users
-	* @throws PortalException if the operation is not being performed by a
-	registered user
-	* @throws SystemException if a system exception occurred
-	*/
-	public long[] filterUnsetOrganizationUserIds(long groupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.User> getCompanyUsers(
 		long companyId, int start, int end)
@@ -709,41 +677,6 @@ public interface UserService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasRoleUser(long companyId, java.lang.String name,
 		long userId, boolean inherited)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns <code>true</code> if the user can be unset from the passed group.
-	* This method prevents unsetting any Site Owner or Site Administrator,
-	* unless the operation is being done by a group Owner.
-	*
-	* @param groupId the primary key of the group
-	* @param userId the primary key of the user
-	* @return <code>true</code> if the user can be unset from the passed group.
-	* @throws PortalException if the operation is not being performed by a
-	registered user
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isUnsetGroupUserAllowed(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns <code>true</code> if the user can be unset from the passed group.
-	* This method prevents unsetting any Organization Owner or
-	* Organization Administrator, unless the operation is being done by a
-	* Organization Owner.
-	*
-	* @param groupId the primary key of the Organization group
-	* @param userId the primary key of the user
-	* @return <code>true</code> if the user can be unset from the passed group.
-	* @throws PortalException if the operation is not being performed by a
-	registered user
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isUnsetOrganizationUserAllowed(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

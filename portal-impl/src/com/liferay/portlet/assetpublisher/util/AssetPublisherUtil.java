@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -98,6 +99,13 @@ public class AssetPublisherUtil {
 	public static final String SCOPE_ID_LAYOUT_UUID_PREFIX = "LayoutUuid_";
 
 	public static final String SCOPE_ID_PARENT_GROUP_PREFIX = "ParentGroup_";
+
+	public static final Accessor<AssetEntry, String> TITLE_ACCESSOR =
+		new Accessor<AssetEntry, String>() {
+			public String get(AssetEntry assetEntry) {
+				return assetEntry.getTitle(LocaleUtil.getDefault());
+			}
+		};
 
 	public static void addAndStoreSelection(
 			PortletRequest portletRequest, String className, long classPK,
@@ -892,7 +900,7 @@ public class AssetPublisherUtil {
 		subscriptionSender.setContextAttributes(
 			"[$ASSET_ENTRIES$]",
 			ListUtil.toString(
-				assetEntries, "title", StringPool.COMMA_AND_SPACE));
+				assetEntries, TITLE_ACCESSOR, StringPool.COMMA_AND_SPACE));
 		subscriptionSender.setContextUserPrefix("ASSET_PUBLISHER");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);

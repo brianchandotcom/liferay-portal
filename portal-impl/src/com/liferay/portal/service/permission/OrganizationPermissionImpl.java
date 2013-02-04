@@ -19,10 +19,14 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
 /**
  * @author Charles May
@@ -114,6 +118,34 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 		}
 
 		return false;
+	}
+
+	public boolean hasUnsetOrganizationUserPermission(
+			PermissionChecker permissionChecker, long groupId, long userId)
+		throws PortalException, SystemException {
+
+		Role adminRole = RoleLocalServiceUtil.getRole(
+			permissionChecker.getCompanyId(),
+			RoleConstants.ORGANIZATION_ADMINISTRATOR);
+		Role ownerRole = RoleLocalServiceUtil.getRole(
+			permissionChecker.getCompanyId(), RoleConstants.ORGANIZATION_OWNER);
+
+		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+				permissionChecker.getUserId(), groupId,
+				ownerRole.getRoleId())) {
+
+			return true;
+		}
+
+		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+				userId, groupId, ownerRole.getRoleId()) ||
+			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+				userId, groupId, adminRole.getRoleId())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	protected boolean contains(

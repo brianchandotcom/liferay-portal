@@ -74,6 +74,14 @@ public class GroupPermissionUtil {
 		return _groupPermission;
 	}
 
+	public static boolean hasUnsetGroupUserPermission(
+			PermissionChecker permissionChecker, long groupId, long userId)
+		throws PortalException, SystemException {
+
+		return getGroupPermission().hasUnsetGroupUserPermission(
+			permissionChecker, groupId, userId);
+	}
+
 	public void setGroupPermission(GroupPermission groupPermission) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

@@ -76,6 +76,14 @@ public interface UsersAdmin {
 	public List<Role> filterRoles(
 		PermissionChecker permissionChecker, List<Role> roles);
 
+	public long[] filterUnsetGroupUserIds(
+			PermissionChecker permissionChecker, long groupId, long[] userIds)
+		throws PortalException, SystemException;
+
+	public long[] filterUnsetOrganizationUserIds(
+			PermissionChecker permissionChecker, long groupId, long[] userIds)
+		throws PortalException, SystemException;
+
 	public List<UserGroupRole> filterUserGroupRoles(
 			PermissionChecker permissionChecker,
 			List<UserGroupRole> userGroupRoles)

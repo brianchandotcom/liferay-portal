@@ -1018,6 +1018,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
+			userIds = UsersAdminUtil.filterUnsetGroupUserIds(
+				getPermissionChecker(), groupId, userIds);
+
+			if (userIds.length == 0) {
+				return;
+			}
+
 			GroupPermissionUtil.check(
 				getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
 		}
@@ -1067,6 +1074,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 */
 	public void unsetOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException, SystemException {
+
+		Group group = groupLocalService.getOrganizationGroup(
+			getUser().getCompanyId(), organizationId);
+
+		userIds = UsersAdminUtil.filterUnsetOrganizationUserIds(
+			getPermissionChecker(), group.getGroupId(), userIds);
+
+		if (userIds.length == 0) {
+			return;
+		}
 
 		OrganizationPermissionUtil.check(
 			getPermissionChecker(), organizationId, ActionKeys.ASSIGN_MEMBERS);

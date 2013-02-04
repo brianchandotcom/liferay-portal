@@ -159,7 +159,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 
 	@Override
 	public String getVirtualHostname() {
-		if (Validator.isNotNull(_virtualHostname)) {
+		if (_virtualHostname != null) {
 			return _virtualHostname;
 		}
 

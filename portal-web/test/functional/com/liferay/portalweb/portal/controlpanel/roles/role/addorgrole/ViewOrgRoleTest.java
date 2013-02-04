@@ -44,11 +44,9 @@ public class ViewOrgRoleTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Orgrole Name"),
-			selenium.getText(
-				"//td[@id='_128_ocerSearchContainer_col-name_row-1']"));
+			selenium.getText("//tr[contains(.,'Roles Orgrole Name')]/td/a"));
 		assertEquals(RuntimeVariables.replace("Organization"),
-			selenium.getText(
-				"//td[@id='_128_ocerSearchContainer_col-type_row-1']"));
+			selenium.getText("//tr[contains(.,'Roles Orgrole Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"//span[@title='Actions']/ul[@id='_128_ocerSearchContainer_1_menu']/li/strong/a/span"));
@@ -64,8 +62,7 @@ public class ViewOrgRoleTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Orgrole Name"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertEquals(RuntimeVariables.replace("\u00ab Back"),
-			selenium.getText("//a[@id='_128_TabsBack']"));
+		assertTrue(selenium.isPartialText("//a[@id='_128_TabsBack']", "Back"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[contains(.,'Edit')]/ul[@class='aui-tabview-list']/li[1]/span/a"));
@@ -73,18 +70,19 @@ public class ViewOrgRoleTest extends BaseTestCase {
 			selenium.getText(
 				"//div[contains(.,'Define Permissions')]/ul[@class='aui-tabview-list']/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("Type"),
-			selenium.getText("//div/label"));
-		assertTrue(selenium.isPartialText("//fieldset/div/div/div",
-				"Organization"));
+			selenium.getText("//div[contains(.,'Type')]/label"));
+		assertTrue(selenium.isPartialText(
+				"//fieldset[contains(.,'Organization')]/div/div", "Organization"));
 		assertEquals(RuntimeVariables.replace("New Name (Required)"),
-			selenium.getText("//span/label"));
+			selenium.getText(
+				"//span[contains(.,'New Name (Required)')]/span/label"));
 		assertEquals("Roles Orgrole Name",
 			selenium.getValue("//input[@id='_128_name']"));
 		assertEquals(RuntimeVariables.replace("Title"),
-			selenium.getText("//span[2]/span/label"));
+			selenium.getText("//span[contains(.,'Title')]/span/label"));
 		assertEquals("", selenium.getValue("//input[@id='_128_title_en_US']"));
 		assertEquals(RuntimeVariables.replace("Description"),
-			selenium.getText("//span[3]/span/label"));
+			selenium.getText("//span[contains(.,'Description')]/span/label"));
 		assertEquals("",
 			selenium.getValue("//textarea[@id='_128_description_en_US']"));
 		assertTrue(selenium.isVisible("//input[@value='Save']"));

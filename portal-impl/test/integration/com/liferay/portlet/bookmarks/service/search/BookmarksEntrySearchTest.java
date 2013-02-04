@@ -57,11 +57,11 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, boolean approved, String keywords,
-			ServiceContext serviceContext)
+		BaseModel<?> parentBaseModel, boolean approved, String keywords,
+		ServiceContext serviceContext)
 		throws Exception {
 
-		BookmarksFolder folder = (BookmarksFolder)parentBaseModel;
+		BookmarksFolder folder = (BookmarksFolder) parentBaseModel;
 
 		return BookmarksTestUtil.addEntry(
 			group.getGroupId(), folder.getFolderId(), true);

@@ -32,9 +32,7 @@ import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
  */
 public class BookmarksTestUtil {
 
-	public static BookmarksEntry addEntry(boolean approved)
-		throws Exception {
-
+	public static BookmarksEntry addEntry(boolean approved) throws Exception {
 		return addEntry(
 			TestPropsValues.getGroupId(),
 			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, approved);
@@ -49,7 +47,7 @@ public class BookmarksTestUtil {
 	}
 
 	public static BookmarksEntry addEntry(
-			long groupId, long folderId, boolean approved)
+		long groupId, long folderId, boolean approved)
 		throws Exception {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -129,8 +127,8 @@ public class BookmarksTestUtil {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setFolderIds(new long[] {folderId});
-		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setFolderIds(new long[]{folderId});
+		searchContext.setGroupIds(new long[]{groupId});
 		searchContext.setKeywords(keywords);
 
 		QueryConfig queryConfig = new QueryConfig();

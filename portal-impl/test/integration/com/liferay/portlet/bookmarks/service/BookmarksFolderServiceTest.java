@@ -95,7 +95,7 @@ public class BookmarksFolderServiceTest {
 		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
 
 		searchContext.setEnd(3);
-		searchContext.setFolderIds((long[])null);
+		searchContext.setFolderIds((long[]) null);
 		searchContext.setStart(1);
 
 		Hits hits = indexer.search(searchContext);
@@ -128,13 +128,9 @@ public class BookmarksFolderServiceTest {
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
 			_group.getGroupId(), folder.getFolderId(), true);
 
-		long companyId = entry.getCompanyId();
-		long groupId = entry.getFolder().getGroupId();
-		long folderId = entry.getFolderId();
-		String keywords = "test";
-
 		SearchContext searchContext = BookmarksTestUtil.getSearchContext(
-			companyId, groupId, folderId, keywords);
+			entry.getCompanyId(), entry.getGroupId(), entry.getFolderId(),
+			"test");
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
 
@@ -196,7 +192,7 @@ public class BookmarksFolderServiceTest {
 
 		Assert.assertEquals(1, hits.getLength());
 
-		List<Document> results =  hits.toList();
+		List<Document> results = hits.toList();
 
 		for (Document doc : results) {
 			Assert.assertEquals(

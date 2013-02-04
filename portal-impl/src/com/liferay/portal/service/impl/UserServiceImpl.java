@@ -36,7 +36,6 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
@@ -634,64 +633,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.deleteUser(userId);
 	}
 
-	/**
-	 * Filters the list of userIds that are to be unset from a group to prevent
-	 * unsetting any group Owner or group Administrator, unless the operation is
-	 * being done by a group Owner
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  userIds the primary keys of the users
-	 *
-	 * @return a filtered list of primary keys of the users
-	 *
-	 * @throws PortalException if the operation is not being performed by a
-	 *         registered user
-	 * @throws SystemException if a system exception occurred
-	 */
-	public long[] filterUnsetGroupUserIds(long groupId, long[] userIds)
-		throws PortalException, SystemException {
-
-		long[] filteredUserIds = userIds;
-
-		for (int i = 0; i < userIds.length; i++) {
-			if (!isUnsetGroupUserAllowed(groupId, userIds[i])) {
-
-				filteredUserIds = ArrayUtil.remove(filteredUserIds, userIds[i]);
-			}
-		}
-
-		return filteredUserIds;
-	}
-
-	/**
-	 * Filters the list of userIds that are to be unset from a Organization to
-	 * prevent unsetting any Organization Owner or Organization Administrator,
-	 * unless the operation is being done by an Organization Owner.
-	 *
-	 * @param  groupId the primary key of the Organization group
-	 * @param  userIds the primary keys of the users
-	 *
-	 * @return a filtered list of primary keys of the users
-	 *
-	 * @throws PortalException if the operation is not being performed by a
-	 *         registered user
-	 * @throws SystemException if a system exception occurred
-	 */
-	public long[] filterUnsetOrganizationUserIds(long groupId, long[] userIds)
-		throws PortalException, SystemException {
-
-		long[] filteredUserIds = userIds;
-
-		for (int i = 0; i < userIds.length; i++) {
-			if (!isUnsetOrganizationUserAllowed(groupId, userIds[i])) {
-
-				filteredUserIds = ArrayUtil.remove(filteredUserIds, userIds[i]);
-			}
-		}
-
-		return filteredUserIds;
-	}
-
 	public List<User> getCompanyUsers(long companyId, int start, int end)
 		throws PortalException, SystemException {
 
@@ -1007,88 +948,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user can be unset from the passed group.
-	 * This method prevents unsetting any Site Owner or Site Administrator,
-	 * unless the operation is being done by a group Owner.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  userId the primary key of the user
-	 *
-	 * @return <code>true</code> if the user can be unset from the passed group.
-	 *
-	 * @throws PortalException if the operation is not being performed by a
-	 *         registered user
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean isUnsetGroupUserAllowed(long groupId, long userId)
-		throws PortalException, SystemException {
-
-		Role adminRole = roleLocalService.getRole(
-			getUser().getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
-		Role ownerRole = roleLocalService.getRole(
-			getUser().getCompanyId(), RoleConstants.SITE_OWNER);
-		Role organizationOwnerRole = roleLocalService.getRole(
-			getUser().getCompanyId(), RoleConstants.ORGANIZATION_OWNER);
-
-		if (userGroupRoleLocalService.hasUserGroupRole(
-				getUserId(), groupId, ownerRole.getRoleId()) ||
-			userGroupRoleLocalService.hasUserGroupRole(
-				getUserId(), groupId, organizationOwnerRole.getRoleId())) {
-
-			return true;
-		}
-
-		if (userGroupRoleLocalService.hasUserGroupRole(
-				userId, groupId, ownerRole.getRoleId()) ||
-		    userGroupRoleLocalService.hasUserGroupRole(
-			    userId, groupId, adminRole.getRoleId())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Returns <code>true</code> if the user can be unset from the passed group.
-	 * This method prevents unsetting any Organization Owner or
-	 * Organization Administrator, unless the operation is being done by a
-	 * Organization Owner.
-	 *
-	 * @param  groupId the primary key of the Organization group
-	 * @param  userId the primary key of the user
-	 *
-	 * @return <code>true</code> if the user can be unset from the passed group.
-	 *
-	 * @throws PortalException if the operation is not being performed by a
-	 *         registered user
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean isUnsetOrganizationUserAllowed(long groupId, long userId)
-		throws PortalException, SystemException {
-
-		Role adminRole = roleLocalService.getRole(
-			getUser().getCompanyId(), RoleConstants.ORGANIZATION_ADMINISTRATOR);
-		Role ownerRole = roleLocalService.getRole(
-			getUser().getCompanyId(), RoleConstants.ORGANIZATION_OWNER);
-
-		if (userGroupRoleLocalService.hasUserGroupRole(
-				getUserId(), groupId, ownerRole.getRoleId())) {
-			return true;
-		}
-
-		if (userGroupRoleLocalService.hasUserGroupRole(
-				userId, groupId, ownerRole.getRoleId()) ||
-		    userGroupRoleLocalService.hasUserGroupRole(
-			    userId, groupId, adminRole.getRoleId())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
 	 * Sets the users in the role, removing and adding users to the role as
 	 * necessary.
 	 *
@@ -1159,7 +1018,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			userIds = filterUnsetGroupUserIds(groupId, userIds);
+			userIds = UsersAdminUtil.filterUnsetGroupUserIds(
+				getPermissionChecker(), groupId, userIds);
 
 			if (userIds.length == 0) {
 				return;
@@ -1218,7 +1078,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		Group group = groupLocalService.getOrganizationGroup(
 			getUser().getCompanyId(), organizationId);
 
-		userIds = filterUnsetOrganizationUserIds(group.getGroupId(), userIds);
+		userIds = UsersAdminUtil.filterUnsetOrganizationUserIds(
+			getPermissionChecker(), group.getGroupId(), userIds);
 
 		if (userIds.length == 0) {
 			return;

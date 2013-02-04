@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.service.base.UserGroupRoleServiceBaseImpl;
+import com.liferay.portal.service.permission.GroupPermissionUtil;
+import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -58,19 +61,24 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 			Role role = roleLocalService.getRole(roleId);
 
-			if (role.getName().equals(RoleConstants.SITE_ADMINISTRATOR) ||
-			    role.getName().equals(RoleConstants.SITE_OWNER)) {
+			String roleName = role.getName();
 
-				if (!userService.isUnsetGroupUserAllowed(groupId, userId)) {
+			if (roleName.equals(RoleConstants.SITE_ADMINISTRATOR) ||
+				roleName.equals(RoleConstants.SITE_OWNER)) {
+
+				if (!GroupPermissionUtil.hasUnsetGroupUserPermission(
+						getPermissionChecker(), groupId, userId)) {
+
 					filteredRoles = ArrayUtil.remove(filteredRoles, roleId);
 				}
 			}
-			else if (role.getName().equals(
-				RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
-			         role.getName().equals(RoleConstants.ORGANIZATION_OWNER)) {
+			else if (roleName.equals(
+						RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
+					 roleName.equals(RoleConstants.ORGANIZATION_OWNER)) {
 
-				if (!userService.isUnsetOrganizationUserAllowed(
-						groupId, userId)) {
+				if (!OrganizationPermissionUtil.
+						hasUnsetOrganizationUserPermission(
+							getPermissionChecker(), groupId, userId)) {
 
 					filteredRoles = ArrayUtil.remove(filteredRoles, roleId);
 				}
@@ -96,14 +104,15 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		if (role.getName().equals(RoleConstants.SITE_ADMINISTRATOR) ||
 			role.getName().equals(RoleConstants.SITE_OWNER)) {
 
-			userIds = userService.filterUnsetGroupUserIds(groupId, userIds);
+			userIds = UsersAdminUtil.filterUnsetGroupUserIds(
+				getPermissionChecker(), groupId, userIds);
 		}
 		else if (role.getName().equals(
 					RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
-		         role.getName().equals(RoleConstants.ORGANIZATION_OWNER)) {
+				 role.getName().equals(RoleConstants.ORGANIZATION_OWNER)) {
 
-			userIds = userService.filterUnsetOrganizationUserIds(
-				groupId, userIds);
+			userIds = UsersAdminUtil.filterUnsetOrganizationUserIds(
+				getPermissionChecker(), groupId, userIds);
 		}
 
 		if (userIds.length == 0) {

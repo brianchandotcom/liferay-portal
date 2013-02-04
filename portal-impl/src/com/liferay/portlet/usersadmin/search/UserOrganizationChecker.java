@@ -23,7 +23,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -67,11 +67,12 @@ public class UserOrganizationChecker extends RowChecker {
 		User user = (User)obj;
 
 		try {
-			if (UserServiceUtil.isUnsetOrganizationUserAllowed(
-					_organization.getGroupId(), user.getUserId())) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
 
-				PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker();
+			if (OrganizationPermissionUtil.hasUnsetOrganizationUserPermission(
+					permissionChecker, _organization.getGroupId(),
+					user.getUserId())) {
 
 				return !UserPermissionUtil.contains(
 					permissionChecker, user.getUserId(), ActionKeys.UPDATE);

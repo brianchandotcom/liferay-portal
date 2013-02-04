@@ -80,7 +80,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 
 		</liferay-ui:search-container-column-text>
 
-		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && UserServiceUtil.isUnsetOrganizationUserAllowed(organization.getGroup().getGroupId(), selUser.getUserId()) %>">
+		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && OrganizationPermissionUtil.hasUnsetOrganizationUserPermission(permissionChecker, organization.getGroup().getGroupId(), selUser.getUserId()) %>">
 			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= organization.getOrganizationId() %>" href="javascript:;"><%= removeOrganizationIcon %></a>
 			</liferay-ui:search-container-column-text>

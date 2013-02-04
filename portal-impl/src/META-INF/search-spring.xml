@@ -96,8 +96,20 @@
 
 	<!-- Lucene search engine -->
 
-	<bean id="com.liferay.portal.search.lucene.LuceneIndexSearcher" class="com.liferay.portal.search.lucene.LuceneIndexSearcher" />
-	<bean id="com.liferay.portal.search.lucene.LuceneIndexWriter" class="com.liferay.portal.search.lucene.LuceneIndexWriter" />
+	<bean id="com.liferay.portal.search.lucene.LuceneIndexSearcher" class="com.liferay.portal.search.lucene.LuceneIndexSearcher">
+		<property name="querySuggester">
+			<bean class="com.liferay.portal.search.lucene.LuceneQuerySuggester">
+				<property name="version" ref="org.apache.lucene.util.Version" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.search.lucene.LuceneIndexWriter" class="com.liferay.portal.search.lucene.LuceneIndexWriter">
+		<property name="spellCheckIndexWriter">
+			<bean class="com.liferay.portal.search.lucene.LuceneSpellCheckIndexWriter">
+				<property name="luceneHelper" ref="com.liferay.portal.search.lucene.LuceneHelperImpl" />
+			</bean>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.search.lucene.LuceneSearchEngineImpl" class="com.liferay.portal.kernel.search.BaseSearchEngine">
 		<property name="booleanClauseFactory" >
 			<bean class="com.liferay.portal.search.generic.BooleanClauseFactoryImpl" />
@@ -122,8 +134,19 @@
 		</property>
 		<property name="vendor" value="Lucene" />
 	</bean>
+	<bean name="com.liferay.portal.search.lucene.spellcheck.LuceneSpellCheckerIndexAccessorImpl" class="com.liferay.portal.search.lucene.spellcheck.LuceneSpellCheckerIndexAccessorImpl">
+		<property name="resourceLoader">
+			<bean class="com.liferay.portal.kernel.resource.ContextClassLoaderResourceLoader" />
+		</property>
+		<property name="spellCheckerFactory">
+			<bean class="com.liferay.portal.search.lucene.spellcheck.LiferaySpellCheckerFactoryImpl">
+				<property name="version" ref="org.apache.lucene.util.Version" />
+			</bean>
+		</property>
+	 </bean>
 	<bean id="com.liferay.portal.search.lucene.LuceneHelperImpl" class="com.liferay.portal.search.lucene.LuceneHelperImpl">
 		<property name="analyzer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzer" />
+        <property name="spellCheckerIndexAccessor" ref="com.liferay.portal.search.lucene.spellcheck.LuceneSpellCheckerIndexAccessorImpl" />
 		<property name="version" ref="org.apache.lucene.util.Version" />
 	</bean>
 	<bean id="com.liferay.portal.search.lucene.LuceneHelperUtil" class="com.liferay.portal.search.lucene.LuceneHelperUtil">

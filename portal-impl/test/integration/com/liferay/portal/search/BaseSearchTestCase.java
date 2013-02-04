@@ -152,7 +152,8 @@ public abstract class BaseSearchTestCase {
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+		SearchContext searchContext = ServiceTestUtil.getSearchContext(
+			group.getGroupId());
 
 		searchContext.setIncludeAttachments(true);
 
@@ -184,7 +185,8 @@ public abstract class BaseSearchTestCase {
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+		SearchContext searchContext = ServiceTestUtil.getSearchContext(
+			group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
@@ -220,7 +222,8 @@ public abstract class BaseSearchTestCase {
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+		SearchContext searchContext = ServiceTestUtil.getSearchContext(
+			group.getGroupId());
 
 		searchContext.setKeywords(getSearchKeywords());
 
@@ -244,7 +247,8 @@ public abstract class BaseSearchTestCase {
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+		SearchContext searchContext = ServiceTestUtil.getSearchContext(
+			group.getGroupId());
 
 		searchContext.setIncludeDiscussions(true);
 

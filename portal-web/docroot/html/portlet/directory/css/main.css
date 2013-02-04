@@ -1,9 +1,9 @@
 .portlet-directory {
 	.details {
-		overflow: hidden;
+		overflow:hidden;
 
 		.avatar {
-			float: left;
+			float:left;
 			width: 100px;
 		}
 
@@ -16,11 +16,11 @@
 		}
 
 		dt, dd {
-			clear: both;
+			clear:both;
 		}
 
 		dt {
-			font-weight: bold;
+			font-weight:bold;
 			line-height: 1.1;
 			margin-bottom: 0;
 		}
@@ -34,7 +34,7 @@
 		td {
 			background-color: #EFEFEF;
 			padding: 5px;
-			text-align: center;
+			text-align:center;
 
 			&.no-color {
 				background-color: #FFF;
@@ -43,7 +43,7 @@
 
 		th {
 			background-color: #999;
-			color: white;
+			color:white;
 			padding: 1px 5px 1px 5px;
 		}
 	}
@@ -51,7 +51,7 @@
 	.primary {
 		background: #EEE url(@theme_image_path@/common/check.png) no-repeat 3px 50%;
 		color: #020509;
-		font-weight: bold;
+		font-weight:bold;
 		margin-bottom: 10px;
 		padding: 5px;
 		padding-left: 10px;
@@ -59,14 +59,14 @@
 
 	dl.property-list {
 		margin-top: 0;
-		overflow: hidden;
+		overflow:hidden;
 		padding: 0;
 
 		dd {
 			padding-left: 5px;
 
 			img {
-				vertical-align: middle;
+				vertical-align:middle;
 			}
 		}
 
@@ -75,20 +75,20 @@
 		}
 
 		dt, dd {
-			float: left;
+			float:left;
 			line-height: 1.5;
 			margin: 0;
 		}
 
 		dt {
-			clear: left;
-			font-weight: bold;
+			clear:left;
+			font-weight:bold;
 			min-width: 5em;
 		}
 	}
 
 	.section {
-		float: left;
+		float:left;
 		margin-left: 10px;
 		width: 47%;
 
@@ -101,7 +101,7 @@
 		}
 
 		li {
-			list-style: none;
+			list-style:none;
 			margin: 0;
 			padding-left: 25px;
 		}
@@ -113,8 +113,8 @@
 
 	.entity-addresses {
 		.mailing-name {
-			display: block;
-			font-style: italic;
+			display:block;
+			font-style:italic;
 		}
 
 		h3 {
@@ -131,7 +131,7 @@
 	}
 
 	.entity-details {
-		clear: both;
+		clear:both;
 	}
 
 	.entity-email-addresses h3 {
@@ -139,7 +139,7 @@
 	}
 
 	.user-information, .organization-information {
-		overflow: hidden;
+		overflow:hidden;
 	}
 
 	.entity-instant-messenger h3 {
@@ -165,7 +165,8 @@
 	.entity-services h3 {
 		background-image: url(@theme_image_path@/common/services.png);
 	}
-}
+
+	}
 
 .ie6 {
 	.portlet-directory {
@@ -179,4 +180,5 @@
 			height: 1%;
 		}
 	}
-}
+
+	}

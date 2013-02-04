@@ -92,11 +92,32 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 
 	<liferay-ui:search-container-results>
 		<c:choose>
-			<c:when test="<%= PropsValues.USERS_INDEXER_ENABLED && PropsValues.USERS_SEARCH_WITH_INDEX %>">
-				<%@ include file="/html/portlet/users_admin/user_search_results_index.jspf" %>
+			<c:when test="<%= portletName.equals(PortletKeys.FRIENDS_DIRECTORY) %>">
+
+				<%
+				if (searchTerms.isAdvancedSearch()) {
+					results = UserLocalServiceUtil.getSocialUsers(themeDisplay.getUserId(), SocialRelationConstants.TYPE_BI_FRIEND, searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					total = UserLocalServiceUtil.getSocialUsersCount(themeDisplay.getUserId(), SocialRelationConstants.TYPE_BI_FRIEND, searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.isAndOperator());
+				}
+				else {
+					results = UserLocalServiceUtil.getSocialUsers(themeDisplay.getUserId(), SocialRelationConstants.TYPE_BI_FRIEND, searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					total = UserLocalServiceUtil.getSocialUsersCount(themeDisplay.getUserId(), SocialRelationConstants.TYPE_BI_FRIEND, searchTerms.getKeywords());
+				}
+
+				pageContext.setAttribute("results", results);
+				pageContext.setAttribute("total", total);
+				%>
+
 			</c:when>
 			<c:otherwise>
-				<%@ include file="/html/portlet/users_admin/user_search_results_database.jspf" %>
+				<c:choose>
+					<c:when test="<%= PropsValues.USERS_INDEXER_ENABLED && PropsValues.USERS_SEARCH_WITH_INDEX %>">
+						<%@ include file="/html/portlet/users_admin/user_search_results_index.jspf" %>
+					</c:when>
+					<c:otherwise>
+						<%@ include file="/html/portlet/users_admin/user_search_results_database.jspf" %>
+					</c:otherwise>
+				</c:choose>
 			</c:otherwise>
 		</c:choose>
 	</liferay-ui:search-container-results>

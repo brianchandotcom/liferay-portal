@@ -1341,6 +1341,28 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		return _userLocalService.getSocialUsers(userId, start, end, obc);
 	}
 
+	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
+		long userId, int type, java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getSocialUsers(userId, type, keywords, start,
+			end, obc);
+	}
+
+	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
+		long userId, int type, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String screenName, java.lang.String emailAddress,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getSocialUsers(userId, type, firstName,
+			middleName, lastName, screenName, emailAddress, andSearch, start,
+			end, obc);
+	}
+
 	/**
 	* Returns an ordered range of all the users with a mutual social relation
 	* of the type with both of the given users.
@@ -1443,6 +1465,23 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userLocalService.getSocialUsersCount(userId, type);
+	}
+
+	public int getSocialUsersCount(long userId, int type,
+		java.lang.String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getSocialUsersCount(userId, type, keywords);
+	}
+
+	public int getSocialUsersCount(long userId, int type,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, java.lang.String screenName,
+		java.lang.String emailAddress, boolean andSearch)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getSocialUsersCount(userId, type, firstName,
+			middleName, lastName, screenName, emailAddress, andSearch);
 	}
 
 	/**

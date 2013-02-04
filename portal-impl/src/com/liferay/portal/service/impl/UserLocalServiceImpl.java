@@ -2369,6 +2369,107 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns an ordered range of all the users with a social relation with the
+	 * user who match the keywords.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  type the type of social relation. The possible types can be found
+	 *         in {@link
+	 *         com.liferay.portlet.social.model.SocialRelationConstants}.
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         user's first name, middle name, last name, screen name, or email
+	 *         address
+	 * @param  start the lower bound of the range of users
+	 * @param  end the upper bound of the range of users (not inclusive)
+	 * @param  obc the comparator to order the users by (optionally
+	 *         <code>null</code>)
+	 * @return the ordered range of users with a social relation with the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<User> getSocialUsers(
+			long userId, int type, String keywords, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("socialRelationType", new Long[] {userId, new Long(type)});
+
+		return search(
+			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
+			params, start, end, obc);
+	}
+
+	/**
+	 * Returns an ordered range of all the users with a social relation with the
+	 * user with the status, and whose first name, middle name, last name,
+	 * screen name, and email address match the keywords specified for them
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  type the type of social relation. The possible types can be found
+	 *         in {@link
+	 *         com.liferay.portlet.social.model.SocialRelationConstants}.
+	 * @param  firstName the first name keywords (space separated)
+	 * @param  middleName the middle name keywords
+	 * @param  lastName the last name keywords
+	 * @param  screenName the screen name keywords
+	 * @param  emailAddress the email address keywords
+	 * @param  andSearch whether every field must match its keywords, or just
+	 *         one field. For example, &quot;users with the first name 'bob' and
+	 *         last name 'smith'&quot; vs &quot;users with the first name 'bob'
+	 *         or the last name 'smith'&quot;.
+	 * @param  start the lower bound of the range of users
+	 * @param  end the upper bound of the range of users (not inclusive)
+	 * @param  obc the comparator to order the users by (optionally
+	 *         <code>null</code>)
+	 * @return the ordered range of users with a social relation with the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<User> getSocialUsers(
+			long userId, int type, String firstName, String middleName,
+			String lastName, String screenName, String emailAddress,
+			boolean andSearch, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("socialRelationType", new Long[] {userId, new Long(type)});
+
+		return search(
+			user.getCompanyId(), firstName, middleName, lastName, screenName,
+			emailAddress, WorkflowConstants.STATUS_APPROVED, params, andSearch,
+			start, end, obc);
+	}
+
+	/**
 	 * Returns an ordered range of all the users with a mutual social relation
 	 * of the type with both of the given users.
 	 *
@@ -2506,6 +2607,78 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return searchCount(
 			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
 			params);
+	}
+
+	/**
+	 * Returns the number of users with a social relation of the type with the
+	 * user who match the keywords.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  type the type of social relation. The possible types can be found
+	 *         in {@link
+	 *         com.liferay.portlet.social.model.SocialRelationConstants}.
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         user's first name, middle name, last name, screen name, or email
+	 *         address
+	 * @return the number of users with a social relation of the type with the
+	 *         user
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getSocialUsersCount(long userId, int type, String keywords)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("socialRelationType", new Long[] {userId, new Long(type)});
+
+		return searchCount(
+			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
+			params);
+	}
+
+	/**
+	 * Returns the number of users with a social relation of the type with the
+	 * user with the status, and whose first name, middle name, last name,
+	 * screen name, and email address match the keywords specified for them.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  type the type of social relation. The possible types can be found
+	 *         in {@link
+	 *         com.liferay.portlet.social.model.SocialRelationConstants}.
+	 * @param  firstName the first name keywords (space separated)
+	 * @param  middleName the middle name keywords
+	 * @param  lastName the last name keywords
+	 * @param  screenName the screen name keywords
+	 * @param  emailAddress the email address keywords
+	 * @param  andSearch whether every field must match its keywords, or just
+	 *         one field. For example, &quot;users with the first name 'bob' and
+	 *         last name 'smith'&quot; vs &quot;users with the first name 'bob'
+	 *         or the last name 'smith'&quot;.
+	 * @return the number of users with a social relation of the type with the
+	 *         user
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getSocialUsersCount(
+			long userId, int type, String firstName, String middleName,
+			String lastName, String screenName, String emailAddress,
+			boolean andSearch)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("socialRelationType", new Long[] {userId, new Long(type)});
+
+		return searchCount(
+			user.getCompanyId(), firstName, middleName, lastName, screenName,
+			emailAddress, WorkflowConstants.STATUS_APPROVED, params, andSearch);
 	}
 
 	/**

@@ -1772,9 +1772,8 @@ public class JournalArticleLocalServiceImpl
 			long userId, long groupId, String articleId)
 		throws PortalException, SystemException {
 
-		List<JournalArticle> articles =
-			journalArticlePersistence.findByG_A(
-				groupId, articleId, 0, 1, new ArticleVersionComparator());
+		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
+			groupId, articleId, 0, 1, new ArticleVersionComparator());
 
 		if (!articles.isEmpty()) {
 			return moveArticleToTrash(userId, articles.get(0));

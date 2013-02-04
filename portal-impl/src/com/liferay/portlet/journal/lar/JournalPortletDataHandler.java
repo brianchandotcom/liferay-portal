@@ -193,9 +193,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (Validator.isNotNull(article.getTemplateId())) {
-			DDMTemplate ddmTemplate =
-				DDMTemplateLocalServiceUtil.getTemplate(
-					article.getGroupId(), article.getTemplateId(), true);
+			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+				article.getGroupId(), article.getTemplateId(), true);
 
 			articleElement.addAttribute(
 				"ddm-template-uuid", ddmTemplate.getUuid());
@@ -503,9 +502,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			String ddmStructureUuid = articleElement.attributeValue(
 				"ddm-structure-uuid");
 
-			DDMStructure existingDDMStructure =
-				DDMStructureUtil.fetchByUUID_G(
-					ddmStructureUuid, portletDataContext.getScopeGroupId());
+			DDMStructure existingDDMStructure = DDMStructureUtil.fetchByUUID_G(
+				ddmStructureUuid, portletDataContext.getScopeGroupId());
 
 			if (existingDDMStructure == null) {
 				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
@@ -553,9 +551,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			String ddmTemplateUuid = articleElement.attributeValue(
 				"ddm-template-uuid");
 
-			DDMTemplate existingDDMTemplate =
-				DDMTemplateUtil.fetchByUUID_G(
-					ddmTemplateUuid, portletDataContext.getScopeGroupId());
+			DDMTemplate existingDDMTemplate = DDMTemplateUtil.fetchByUUID_G(
+				ddmTemplateUuid, portletDataContext.getScopeGroupId());
 
 			if (existingDDMTemplate == null) {
 				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(

@@ -51,10 +51,9 @@ public class ResourceBlockLocalServiceTest {
 	public void setUp() throws Exception {
 		Connection connection = DataAccess.getConnection();
 
-		PreparedStatement preparedStatement =
-			connection.prepareStatement(
-				"DELETE FROM ResourceBlock WHERE companyId = ? AND groupId " +
-					"= ? AND name = ?");
+		PreparedStatement preparedStatement = connection.prepareStatement(
+			"DELETE FROM ResourceBlock WHERE companyId = ? AND groupId " +
+				"= ? AND name = ?");
 
 		preparedStatement.setLong(1, _COMPANY_ID);
 		preparedStatement.setLong(2, _GROUP_ID);
@@ -192,9 +191,8 @@ public class ResourceBlockLocalServiceTest {
 
 		Connection connection = DataAccess.getConnection();
 
-		PreparedStatement preparedStatement =
-			connection.prepareStatement(
-				"SELECT * FROM ResourceBlock WHERE resourceBlockId = ?");
+		PreparedStatement preparedStatement = connection.prepareStatement(
+			"SELECT * FROM ResourceBlock WHERE resourceBlockId = ?");
 
 		preparedStatement.setLong(1, resourceBlockId);
 
@@ -211,10 +209,9 @@ public class ResourceBlockLocalServiceTest {
 
 		Connection connection = DataAccess.getConnection();
 
-		PreparedStatement preparedStatement =
-			connection.prepareStatement(
-				"SELECT * FROM ResourceBlock WHERE companyId = ? AND groupId " +
-					"= ? AND name = ?");
+		PreparedStatement preparedStatement = connection.prepareStatement(
+			"SELECT * FROM ResourceBlock WHERE companyId = ? AND groupId " +
+				"= ? AND name = ?");
 
 		preparedStatement.setLong(1, companyId);
 		preparedStatement.setLong(2, groupId);
@@ -233,10 +230,9 @@ public class ResourceBlockLocalServiceTest {
 
 		Connection connection = DataAccess.getConnection();
 
-		PreparedStatement preparedStatement =
-			connection.prepareStatement(
-				"SELECT referenceCount FROM ResourceBlock WHERE " +
-					"resourceBlockId = " + resourceBlockId);
+		PreparedStatement preparedStatement = connection.prepareStatement(
+			"SELECT referenceCount FROM ResourceBlock WHERE " +
+				"resourceBlockId = " + resourceBlockId);
 
 		ResultSet resultSet = preparedStatement.executeQuery();
 

@@ -115,10 +115,9 @@ public class LocalizationImplUnitTest extends PowerMockito {
 		Locale[] contentAvailableLocales = getContentAvailableLocales(
 			"es_ES,en_US,de_DE");
 
-		Locale defaultImportLocale =
-			LocalizationUtil.getDefaultImportLocale(
-				"com.liferay.portal.className", 0L, contentDefaultLocale,
-				contentAvailableLocales);
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+			"com.liferay.portal.className", 0L, contentDefaultLocale,
+			contentAvailableLocales);
 
 		if (expectedResult) {
 			Assert.assertTrue(

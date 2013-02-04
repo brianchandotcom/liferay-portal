@@ -61,9 +61,8 @@ public class MBCategoryLocalServiceTest {
 
 	@Test
 	public void testGetParentDiscussionCategory() throws Exception {
-		MBCategory discussionCategory =
-			MBCategoryLocalServiceUtil.getCategory(
-				MBCategoryConstants.DISCUSSION_CATEGORY_ID);
+		MBCategory discussionCategory = MBCategoryLocalServiceUtil.getCategory(
+			MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 
 		Assert.assertNotNull(discussionCategory);
 		Assert.assertNull(discussionCategory.getParentCategory());

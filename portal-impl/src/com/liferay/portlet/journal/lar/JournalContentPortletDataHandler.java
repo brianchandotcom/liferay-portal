@@ -207,9 +207,8 @@ public class JournalContentPortletDataHandler
 			Validator.isNotNull(preferenceTemplateId) &&
 			!defaultTemplateId.equals(preferenceTemplateId)) {
 
-			DDMTemplate ddmTemplate =
-				DDMTemplateLocalServiceUtil.getTemplate(
-					article.getGroupId(), preferenceTemplateId, true);
+			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+				article.getGroupId(), preferenceTemplateId, true);
 
 			String ddmTemplatePath =
 				JournalPortletDataHandler.getDDMTemplatePath(

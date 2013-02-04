@@ -852,9 +852,8 @@ public class LuceneHelperImplTest {
 
 				_serverSocket.close();
 
-				UnsyncBufferedReader reader =
-					new UnsyncBufferedReader(
-						new InputStreamReader(socket.getInputStream()));
+				UnsyncBufferedReader reader = new UnsyncBufferedReader(
+					new InputStreamReader(socket.getInputStream()));
 
 				String request = reader.readLine();
 

@@ -157,9 +157,8 @@ public class JournalContentPortletLayoutListener
 
 		if (article == null) {
 			try {
-				article =
-					JournalArticleLocalServiceUtil.getDisplayArticle(
-						group.getGroupId(), articleId);
+				article = JournalArticleLocalServiceUtil.getDisplayArticle(
+					group.getGroupId(), articleId);
 			}
 			catch (NoSuchArticleException nsae) {
 				return new String[0];

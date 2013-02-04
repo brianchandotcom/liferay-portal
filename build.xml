@@ -18,6 +18,7 @@
 
 		<ant dir="util-bridges" target="clean" inheritAll="false" />
 		<ant dir="util-java" target="clean" inheritAll="false" />
+		<ant dir="util-slf4j" target="clean" inheritAll="false" />
 		<ant dir="util-taglib" target="clean" inheritAll="false" />
 
 		<ant dir="portal-impl" target="clean" inheritAll="false" />
@@ -142,6 +143,7 @@
 
 		<ant dir="util-bridges" target="compile" inheritAll="false" />
 		<ant dir="util-java" target="compile" inheritAll="false" />
+		<ant dir="util-slf4j" target="compile" inheritAll="false" />
 		<ant dir="util-taglib" target="compile" inheritAll="false" />
 
 		<ant dir="portal-impl" target="compile" inheritAll="false" />
@@ -185,6 +187,7 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 
 		<ant dir="util-bridges" target="deploy" inheritAll="false" />
 		<ant dir="util-java" target="deploy" inheritAll="false" />
+		<ant dir="util-slf4j" target="deploy" inheritAll="false" />
 		<ant dir="util-taglib" target="deploy" inheritAll="false" />
 
 		<ant dir="portal-impl" target="deploy" inheritAll="false" />
@@ -578,6 +581,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 		<ant dir="util-bridges" target="jar" inheritAll="false" />
 		<ant dir="util-java" target="jar" inheritAll="false" />
+		<ant dir="util-slf4j" target="jar" inheritAll="false" />
 		<ant dir="util-taglib" target="jar" inheritAll="false" />
 
 		<ant dir="portal-impl" target="jar" inheritAll="false" />
@@ -625,6 +629,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			<packageset dir="portal-service/src" />
 			<packageset dir="util-bridges/src" />
 			<packageset dir="util-java/src" />
+			<packageset dir="util-slf4j/src" />
 
 			<tag name="generated" description="" />
 		</javadoc>
@@ -663,6 +668,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			<packageset dir="portal-service/src" />
 			<packageset dir="util-bridges/src" />
 			<packageset dir="util-java/src" />
+			<packageset dir="util-slf4j/src" />
 			<packageset dir="util-taglib/src" />
 
 			<tag name="generated" description="ServiceBuilder generated this class. Modifications in this class will be overwritten the next time it is generated." />

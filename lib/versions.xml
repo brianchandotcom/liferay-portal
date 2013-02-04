@@ -2117,7 +2117,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/jcl-over-slf4j.jar</file-name>
-		<version>1.6.4</version>
+		<version>1.7.2</version>
 		<project-name>SLF4J</project-name>
 		<project-url>http://www.slf4j.org</project-url>
 		<project-description>SLF4J</project-description>
@@ -3026,7 +3026,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/slf4j-api.jar</file-name>
-		<version>1.6.4</version>
+		<version>1.7.2</version>
 		<project-name>SLF4J</project-name>
 		<project-url>http://www.slf4j.org</project-url>
 		<licenses>

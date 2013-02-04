@@ -48,20 +48,20 @@ public class LiferayLoggerAdapter
 		}
 	}
 
-	public void debug(String format, Object argument1, Object argument2) {
+	public void debug(String format, Object... arguments) {
 		if (isDebugEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.format(
-				format, argument1, argument2);
+			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
+				format, arguments);
 
 			_log.debug(
 				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
-	public void debug(String format, Object[] arguments) {
+	public void debug(String format, Object argument1, Object argument2) {
 		if (isDebugEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
-				format, arguments);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, argument1, argument2);
 
 			_log.debug(
 				formattingTuple.getMessage(), formattingTuple.getThrowable());
@@ -86,20 +86,20 @@ public class LiferayLoggerAdapter
 		}
 	}
 
-	public void error(String format, Object argument1, Object argument2) {
+	public void error(String format, Object... arguments) {
 		if (isErrorEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.format(
-				format, argument1, argument2);
+			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
+				format, arguments);
 
 			_log.error(
 				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
-	public void error(String format, Object[] arguments) {
+	public void error(String format, Object argument1, Object argument2) {
 		if (isErrorEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
-				format, arguments);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, argument1, argument2);
 
 			_log.error(
 				formattingTuple.getMessage(), formattingTuple.getThrowable());
@@ -124,20 +124,20 @@ public class LiferayLoggerAdapter
 		}
 	}
 
-	public void info(String format, Object argument1, Object argument2) {
+	public void info(String format, Object... arguments) {
 		if (isInfoEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.format(
-				format, argument1, argument2);
+			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
+				format, arguments);
 
 			_log.info(
 				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
-	public void info(String format, Object[] arguments) {
+	public void info(String format, Object argument1, Object argument2) {
 		if (isInfoEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
-				format, arguments);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, argument1, argument2);
 
 			_log.info(
 				formattingTuple.getMessage(), formattingTuple.getThrowable());
@@ -220,20 +220,20 @@ public class LiferayLoggerAdapter
 		}
 	}
 
-	public void trace(String format, Object argument1, Object argument2) {
+	public void trace(String format, Object... arguments) {
 		if (isTraceEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.format(
-				format, argument1, argument2);
+			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
+				format, arguments);
 
 			_log.trace(
 				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
-	public void trace(String format, Object[] arguments) {
+	public void trace(String format, Object argument1, Object argument2) {
 		if (isTraceEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
-				format, arguments);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, argument1, argument2);
 
 			_log.trace(
 				formattingTuple.getMessage(), formattingTuple.getThrowable());
@@ -258,20 +258,20 @@ public class LiferayLoggerAdapter
 		}
 	}
 
-	public void warn(String format, Object argument1, Object argument2) {
+	public void warn(String format, Object... arguments) {
 		if (isWarnEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.format(
-				format, argument1, argument2);
+			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
+				format, arguments);
 
 			_log.warn(
 				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
-	public void warn(String format, Object[] arguments) {
+	public void warn(String format, Object argument1, Object argument2) {
 		if (isWarnEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
-				format, arguments);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, argument1, argument2);
 
 			_log.warn(
 				formattingTuple.getMessage(), formattingTuple.getThrowable());

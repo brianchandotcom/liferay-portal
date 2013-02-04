@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.TestPropsValues;
-import com.liferay.portalweb.portal.util.browsercommands.BrowserCommands;
 
 import java.util.Calendar;
 
@@ -145,10 +144,6 @@ public abstract class BaseWebDriverImpl
 
 	public void copyValue(String locator) {
 		_clipBoard = super.getValue(locator);
-	}
-
-	public void downloadTempFile(String value) {
-		BrowserCommands.downloadTempFile(value);
 	}
 
 	public void echo(String message) {
@@ -302,10 +297,6 @@ public abstract class BaseWebDriverImpl
 
 	public void sendKeys(String locator, String value) {
 		typeKeys(locator, value);
-	}
-
-	public void setBrowserOption() {
-		BrowserCommands.setBrowserOption();
 	}
 
 	public void setDefaultTimeout() {

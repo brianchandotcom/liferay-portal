@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 
 	public static final String BROWSER_COMMANDS_DIR = TestPropsUtil.get(
-		"selenium.browser.commands.dir");
+		"browser.commands.dir");
 
 	public static final String BROWSER_TYPE = TestPropsUtil.get("browser.type");
 
@@ -32,9 +32,6 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 
 	public static final String CLUSTER_NODE_2 = TestPropsUtil.get(
 		"cluster.node2");
-
-	public static final String DOWNLOAD_FILE = TestPropsUtil.get(
-		"selenium.download.file.executable");
 
 	public static final String OUTPUT_DIR = TestPropsUtil.get("output.dir");
 
@@ -57,9 +54,6 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 
 	public static final int SELENIUM_PORT = GetterUtil.getInteger(
 		TestPropsUtil.get("selenium.port"));
-
-	public static final String SET_BROWSER_OPTION = TestPropsUtil.get(
-		"selenium.set.browser.option.executable");
 
 	public static final boolean TEST_DATABASE_MINIMAL = GetterUtil.getBoolean(
 		TestPropsUtil.get("test.database.minimal"));

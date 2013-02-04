@@ -600,6 +600,4 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
-	private static final String _BROWSER_TYPE = TestPropsValues.BROWSER_TYPE;
-
 }

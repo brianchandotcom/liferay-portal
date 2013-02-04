@@ -465,8 +465,9 @@ public class SeleneseToJavaBuilder {
 		sb.append("import com.liferay.portalweb.portal.BaseTestCase;\n");
 		sb.append(
 			"import com.liferay.portalweb.portal.util.RuntimeVariables;\n");
-		sb.append("import com.liferay.portalweb.portal.");
-		sb.append("util.browsercommands.BrowserCommands;\n");
+
+		sb.append("import com.liferay.portalweb.portal.util.browsercommands.");
+		sb.append("BrowserCommands;\n");
 
 		sb.append("public class ");
 		sb.append(testName);
@@ -586,13 +587,13 @@ public class SeleneseToJavaBuilder {
 			String param2 = fixParam(params[1]);
 			String param3 = fixParam(params[2]);
 
-			if (param1.equals("addSelection") ||
-				param1.equals("clickAt") ||
+			if (param1.equals("addSelection") || param1.equals("clickAt") ||
 				param1.equals("doubleClickAt") || param1.equals("keyDown") ||
 				param1.equals("keyPress") || param1.equals("keyUp") ||
 				param1.equals("mouseMoveAt") || param1.equals("openWindow") ||
 				param1.equals("select") || param1.equals("sendKeys") ||
-				param1.equals("type") || param1.equals("typeKeys") ||
+				param1.equals("type") || param1.equals("typeFrame") ||
+				param1.equals("typeKeys") ||
 				param1.equals("uploadCommonFile") ||
 				param1.equals("uploadFile") ||
 				param1.equals("uploadTempFile") ||
@@ -877,12 +878,6 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append("\"), \"\");");
 			}
-			else if (param1.equals("setBrowserOption")) {
-
-				sb.append("BrowserCommands.");
-				sb.append(param1);
-				sb.append("();");
-			}
 			else if (param1.equals("check") || param1.equals("click") ||
 					 param1.equals("doubleClick") ||
 					 param1.equals("mouseDown") || param1.equals("mouseMove") ||
@@ -957,7 +952,6 @@ public class SeleneseToJavaBuilder {
 				sb.append("();");
 			}
 			else if (param1.equals("downloadTempFile")) {
-
 				sb.append("BrowserCommands.");
 				sb.append(param1);
 				sb.append("(");
@@ -1055,6 +1049,11 @@ public class SeleneseToJavaBuilder {
 				}
 
 				sb.append(";");
+			}
+			else if (param1.equals("setBrowserOption")) {
+				sb.append("BrowserCommands.");
+				sb.append(param1);
+				sb.append("();");
 			}
 			else if (param1.equals("storeAttribute")) {
 				sb.append("String ");

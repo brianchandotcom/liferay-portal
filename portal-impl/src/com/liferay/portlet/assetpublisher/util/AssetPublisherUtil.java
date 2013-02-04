@@ -106,8 +106,8 @@ public class AssetPublisherUtil {
 		};
 
 	public static void addAndStoreSelection(
-			PortletRequest portletRequest, String className, long classPK,
-			int assetEntryOrder)
+		PortletRequest portletRequest, String className, long classPK,
+		int assetEntryOrder)
 		throws Exception {
 
 		String referringPortletResource = ParamUtil.getString(
@@ -117,7 +117,7 @@ public class AssetPublisherUtil {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay) portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(
@@ -152,8 +152,8 @@ public class AssetPublisherUtil {
 	}
 
 	public static void addSelection(
-			PortletRequest portletRequest,
-			PortletPreferences portletPreferences, String portletId)
+		PortletRequest portletRequest,
+		PortletPreferences portletPreferences, String portletId)
 		throws Exception {
 
 		long assetEntryId = ParamUtil.getLong(portletRequest, "assetEntryId");
@@ -168,9 +168,9 @@ public class AssetPublisherUtil {
 	}
 
 	public static void addSelection(
-			PortletRequest portletRequest,
-			PortletPreferences portletPreferences, String portletId,
-			long assetEntryId, int assetEntryOrder, String assetEntryType)
+		PortletRequest portletRequest,
+		PortletPreferences portletPreferences, String portletId,
+		long assetEntryId, int assetEntryOrder, String assetEntryType)
 		throws Exception {
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
@@ -194,7 +194,7 @@ public class AssetPublisherUtil {
 			portletPreferences.setValues("assetEntryXml", assetEntryXmls);
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay) portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long plid = themeDisplay.getRefererPlid();
@@ -206,20 +206,18 @@ public class AssetPublisherUtil {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			AssetEntry.class.getName(), portletRequest);
 
-		PortletPreferences preferences =
-			ServiceContextUtil.getPortletPreferences(serviceContext);
-
 		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
 
 		assetEntries.add(assetEntry);
 
 		AssetPublisherUtil.notifySubscribers(
-			plid, portletId, assetEntries, preferences);
+			plid, portletId, assetEntries,
+			ServiceContextUtil.getPortletPreferences(serviceContext));
 	}
 
 	public static void addUserAttributes(
-			User user, String[] customUserAttributeNames,
-			AssetEntryQuery assetEntryQuery)
+		User user, String[] customUserAttributeNames,
+		AssetEntryQuery assetEntryQuery)
 		throws Exception {
 
 		if ((user == null) || (customUserAttributeNames.length == 0)) {
@@ -273,7 +271,7 @@ public class AssetPublisherUtil {
 				getPortletPreferencesByLikePortletId(sb.toString());
 
 		for (com.liferay.portal.model.PortletPreferences curPreferences :
-				preferencesList) {
+			preferencesList) {
 
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 				curPreferences.getPlid());
@@ -304,10 +302,8 @@ public class AssetPublisherUtil {
 			for (int i = 0; i < assetEntries.size(); i++) {
 				AssetEntry assetEntry = assetEntries.get(i);
 
-				long assetEntryId = assetEntry.getEntryId();
-
 				if (!ArrayUtil.contains(
-						lastNotifiedAssetEntryIds, assetEntryId)) {
+					lastNotifiedAssetEntryIds, assetEntry.getEntryId())) {
 
 					newAssetEntries.add(assetEntry);
 				}
@@ -332,12 +328,12 @@ public class AssetPublisherUtil {
 	}
 
 	public static List<AssetEntry> getAssetEntries(
-			PortletPreferences preferences, Layout layout, long scopeGroupId,
-			boolean checkPermission)
+		PortletPreferences preferences, Layout layout, long scopeGroupId,
+		boolean checkPermission)
 		throws Exception {
 
 		AssetEntryQuery assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
-			preferences, new long[] {scopeGroupId});
+			preferences, new long[]{scopeGroupId});
 
 		boolean anyAssetType = GetterUtil.getBoolean(
 			preferences.getValue("anyAssetType", null), true);
@@ -420,7 +416,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static AssetEntryQuery getAssetEntryQuery(
-			PortletPreferences portletPreferences, long[] scopeGroupIds)
+		PortletPreferences portletPreferences, long[] scopeGroupIds)
 		throws Exception {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
@@ -522,7 +518,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static String[] getAssetTagNames(
-			PortletPreferences portletPreferences, long scopeGroupId)
+		PortletPreferences portletPreferences, long scopeGroupId)
 		throws Exception {
 
 		String[] allAssetTagNames = new String[0];
@@ -582,7 +578,7 @@ public class AssetPublisherUtil {
 			portletPreferences.getValue("anyAssetType", null));
 
 		if (defaultClassNameId > 0) {
-			return new long[] {defaultClassNameId};
+			return new long[]{defaultClassNameId};
 		}
 
 		long[] classNameIds = GetterUtil.getLongValues(
@@ -612,7 +608,7 @@ public class AssetPublisherUtil {
 			portletPreferences.getValue("anyClassType" + className, null));
 
 		if (defaultClassTypeId > 0) {
-			return new Long[] {defaultClassTypeId};
+			return new Long[]{defaultClassTypeId};
 		}
 
 		Long[] classTypeIds = ArrayUtil.toArray(
@@ -690,7 +686,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static String getEmailFromAddress(
-			PortletPreferences preferences, long companyId)
+		PortletPreferences preferences, long companyId)
 		throws SystemException {
 
 		return PortalUtil.getEmailFromAddress(
@@ -699,7 +695,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static String getEmailFromName(
-			PortletPreferences preferences, long companyId)
+		PortletPreferences preferences, long companyId)
 		throws SystemException {
 
 		return PortalUtil.getEmailFromName(
@@ -708,7 +704,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static long getGroupIdFromScopeId(
-			String scopeId, long scopeGroupId, boolean privateLayout)
+		String scopeId, long scopeGroupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
 		if (scopeId.startsWith(SCOPE_ID_GROUP_PREFIX)) {
@@ -766,7 +762,7 @@ public class AssetPublisherUtil {
 
 			String[] scopeIds = portletPreferences.getValues(
 				"scopeIds",
-				new String[] {SCOPE_ID_GROUP_PREFIX + scopeGroupId});
+				new String[]{SCOPE_ID_GROUP_PREFIX + scopeGroupId});
 
 			long[] groupIds = new long[scopeIds.length];
 
@@ -788,14 +784,14 @@ public class AssetPublisherUtil {
 		}
 
 		if (defaultScopeId.equals(StringPool.TRUE)) {
-			return new long[] {scopeGroupId};
+			return new long[]{scopeGroupId};
 		}
 
 		try {
 			long groupId = getGroupIdFromScopeId(
 				defaultScopeId, scopeGroupId, layout.isPrivateLayout());
 
-			return new long[] {groupId};
+			return new long[]{groupId};
 		}
 		catch (Exception e) {
 			return new long[0];
@@ -829,7 +825,7 @@ public class AssetPublisherUtil {
 					layout.getUuid();
 		}
 		else if (group.isLayoutPrototype() ||
-				(group.getGroupId() == scopeGroupId)) {
+			(group.getGroupId() == scopeGroupId)) {
 
 			key =
 				AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
@@ -843,7 +839,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static boolean isSubscribed(
-			long companyId, long userId, long plid, String portletId)
+		long companyId, long userId, long plid, String portletId)
 		throws PortalException, SystemException {
 
 		return SubscriptionLocalServiceUtil.isSubscribed(
@@ -853,8 +849,8 @@ public class AssetPublisherUtil {
 	}
 
 	public static void notifySubscribers(
-			long plid, String portletId, List<AssetEntry> assetEntries,
-			PortletPreferences preferences)
+		long plid, String portletId, List<AssetEntry> assetEntries,
+		PortletPreferences preferences)
 		throws PortalException, SystemException {
 
 		if (!getEmailAssetEntryAddedEnabled(preferences) ||
@@ -899,7 +895,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static void removeAndStoreSelection(
-			List<String> assetEntryUuids, PortletPreferences portletPreferences)
+		List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {
 
 		if (assetEntryUuids.size() == 0) {
@@ -943,8 +939,8 @@ public class AssetPublisherUtil {
 	}
 
 	public static void subscribe(
-			PermissionChecker permissionChecker, long groupId, long plid,
-			String portletId)
+		PermissionChecker permissionChecker, long groupId, long plid,
+		String portletId)
 		throws PortalException, SystemException {
 
 		PortletPermissionUtil.check(
@@ -957,7 +953,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static void unsubscribe(
-			PermissionChecker permissionChecker, long plid, String portletId)
+		PermissionChecker permissionChecker, long plid, String portletId)
 		throws PortalException, SystemException {
 
 		PortletPermissionUtil.check(
@@ -1018,7 +1014,7 @@ public class AssetPublisherUtil {
 			portletRequest);
 		HttpSession session = request.getSession();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay) portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		String key =
@@ -1026,7 +1022,7 @@ public class AssetPublisherUtil {
 				themeDisplay.getScopeGroupId();
 
 		Map<String, Long> recentFolderIds =
-			(Map<String, Long>)session.getAttribute(key);
+			(Map<String, Long>) session.getAttribute(key);
 
 		if (recentFolderIds == null) {
 			recentFolderIds = new HashMap<String, Long>();

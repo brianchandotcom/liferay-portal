@@ -56,7 +56,7 @@ public class OpenEntryAction extends Action {
 				}
 			}
 
-			entry = BookmarksEntryServiceUtil.openEntry(entryId);
+			entry = BookmarksEntryServiceUtil.openEntry(entry);
 
 			request.setAttribute(WebKeys.FORWARD_URL, entry.getUrl());
 

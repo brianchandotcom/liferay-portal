@@ -28,22 +28,34 @@ import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Manuel de la Peña
  */
 public class BookmarksTestUtil {
 
-	public static BookmarksEntry addEntry(boolean approved) throws Exception {
-		return addEntry(TestPropsValues.getGroupId(), approved);
+	public static BookmarksEntry addEntry(boolean approved)
+		throws Exception {
+
+		return addEntry(
+			TestPropsValues.getGroupId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, approved);
 	}
 
 	public static BookmarksEntry addEntry(long groupId, boolean approved)
+		throws Exception {
+
+		return addEntry(
+			groupId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			approved);
+	}
+
+	public static BookmarksEntry addEntry(
+			long groupId, long folderId, boolean approved)
 		throws Exception {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		try {
 			WorkflowThreadLocal.setEnabled(true);
-
-			BookmarksFolder folder = addFolder(groupId);
 
 			String name = "Test Entry";
 			String url = "http://www.liferay.com";
@@ -59,8 +71,7 @@ public class BookmarksTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			BookmarksEntry entry = BookmarksEntryServiceUtil.addEntry(
-				groupId, folder.getFolderId(), name, url, description,
-				serviceContext);
+				groupId, folderId, name, url, description, serviceContext);
 
 			if (approved) {
 				entry.setStatus(WorkflowConstants.STATUS_APPROVED);

@@ -122,8 +122,11 @@ public class BookmarksFolderServiceTest {
 
 	@Test
 	public void testSearch() throws Exception {
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId());
+
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			_group.getGroupId(), true);
+			_group.getGroupId(), folder.getFolderId(), true);
 
 		long companyId = entry.getCompanyId();
 		long groupId = entry.getFolder().getGroupId();
@@ -142,8 +145,11 @@ public class BookmarksFolderServiceTest {
 
 	@Test
 	public void testSearchAndDeleteFolderAndSearch() throws Exception {
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId());
+
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			_group.getGroupId(), true);
+			_group.getGroupId(), folder.getFolderId(), true);
 
 		long companyId = entry.getCompanyId();
 		long groupId = entry.getFolder().getGroupId();
@@ -170,8 +176,11 @@ public class BookmarksFolderServiceTest {
 
 	@Test
 	public void testSearchAndVerifyDocs() throws Exception {
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId());
+
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			_group.getGroupId(), true);
+			_group.getGroupId(), folder.getFolderId(), true);
 
 		long companyId = entry.getCompanyId();
 		long groupId = entry.getFolder().getGroupId();

@@ -28,6 +28,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -65,6 +66,15 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 	@Before
 	public void setUp() throws Exception {
 		_group = ServiceTestUtil.addGroup();
+
+		_layout = ServiceTestUtil.addLayout(
+			_group.getGroupId(), ServiceTestUtil.randomString());
+
+		// Deletion of the layout to ensure scenario where layoutIds do not
+		// match after export/import
+
+		LayoutLocalServiceUtil.deleteLayout(
+			_layout, true, new ServiceContext());
 
 		_layout = ServiceTestUtil.addLayout(
 			_group.getGroupId(), ServiceTestUtil.randomString());

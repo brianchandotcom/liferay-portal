@@ -25,10 +25,11 @@ public class Guest_ViewEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace("Blogs Permissions Page"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("//div[@class='entry-title']/h2/a"));
+		assertEquals(RuntimeVariables.replace("Permissions Blogs Test Entry"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Permissions Blogs Test Entry"));
 		selenium.waitForPageToLoad("30000");

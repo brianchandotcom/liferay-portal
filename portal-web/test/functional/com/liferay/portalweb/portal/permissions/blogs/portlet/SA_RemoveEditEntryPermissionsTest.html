@@ -15,13 +15,28 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
+	<td>link=Blogs Test Page</td>
+	<td>Blogs Test Page</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Blogs Entry Title Edited</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Blogs Entry Title Edited</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@class='taglib-text' and contains(.,'Permissions')]</td>
+	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>

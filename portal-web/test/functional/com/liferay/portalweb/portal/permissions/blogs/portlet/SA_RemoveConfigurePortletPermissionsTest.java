@@ -31,8 +31,8 @@ public class SA_RemoveConfigurePortletPermissionsTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.clickAt("link=Blogs Permissions Page",
-					RuntimeVariables.replace("Blogs Permissions Page"));
+				selenium.clickAt("link=Blogs Test Page",
+					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
 				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace("Options"),
@@ -72,6 +72,7 @@ public class SA_RemoveConfigurePortletPermissionsTest extends BaseTestCase {
 			case 2:
 				assertFalse(selenium.isChecked(
 						"//input[@id='portlet_ACTION_CONFIGURATION']"));
+				Thread.sleep(1000);
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");

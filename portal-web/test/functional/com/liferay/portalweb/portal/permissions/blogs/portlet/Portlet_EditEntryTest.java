@@ -25,51 +25,36 @@ public class Portlet_EditEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace("Blogs Permissions Page"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='entry-title']/h2/a");
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title Temporary"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry Title Temporary"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("link=Edit");
 		selenium.clickAt("link=Edit", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title Edited"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_33_editor' and @style='display: none;']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__33_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__33_editor']/textarea",
+		selenium.waitForVisible("//a[contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Blogs Entry Content Edited"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_33_editor' and @style='display: none;']");
-		selenium.waitForVisible("//td[@id='cke_contents__33_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
-		selenium.waitForText("//body", "Blogs Entry Content Edited");
-		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//div[@class='portlet-msg-success']",
-			"Your request completed successfully.");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.waitForText("//h1[@class='header-title']/span",
-			"Blogs Entry Title Edited");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title Edited"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		selenium.waitForText("//div[@class='entry-body']/p",
-			"Blogs Entry Content Edited");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content Edited"),
-			selenium.getText("//div[@class='entry-body']/p"));
+			selenium.getText("//div[@class='entry-body']/div/p"));
 	}
 }

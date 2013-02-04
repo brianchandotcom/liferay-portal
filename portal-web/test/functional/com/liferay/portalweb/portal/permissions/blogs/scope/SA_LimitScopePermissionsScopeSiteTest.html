@@ -89,11 +89,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>null</td>
-	<td>3000</td>
-</tr>
-<tr>
 	<td>selectWindow</td>
 	<td>title=Roles</td>
 	<td></td>
@@ -106,7 +101,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_128_keywords']</td>
-	<td>Scope</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -114,9 +109,14 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]/a</td>
+	<td>Site Name</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>link=Scope Site</td>
-	<td>Scope Site</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]/a</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -131,17 +131,22 @@
 <tr>
 	<td>waitForText</td>
 	<td>//span[@class='lfr-token-text']</td>
-	<td>Scope Site</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='lfr-token-text']</td>
-	<td>Scope Site</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>The role permissions were updated.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -171,7 +176,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//tr[4]/td[3]</td>
-	<td>Scope Site</td>
+	<td>Site Name</td>
 </tr>
 </tbody></table>
 </body>

@@ -30,8 +30,8 @@ public class SA_AllowViewPortletPermissionsTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.clickAt("link=Blogs Permissions Page",
-					RuntimeVariables.replace("Blogs Permissions Page"));
+				selenium.clickAt("link=Blogs Test Page",
+					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
 				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace("Options"),
@@ -55,6 +55,7 @@ public class SA_AllowViewPortletPermissionsTest extends BaseTestCase {
 				selenium.clickAt("link=Permissions",
 					RuntimeVariables.replace("Permissions"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible("//input[@id='guest_ACTION_VIEW']");
 
 				boolean guestViewChecked = selenium.isChecked(
 						"//input[@id='guest_ACTION_VIEW']");
@@ -71,6 +72,7 @@ public class SA_AllowViewPortletPermissionsTest extends BaseTestCase {
 			case 2:
 				assertTrue(selenium.isChecked(
 						"//input[@id='guest_ACTION_VIEW']"));
+				Thread.sleep(1000);
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");

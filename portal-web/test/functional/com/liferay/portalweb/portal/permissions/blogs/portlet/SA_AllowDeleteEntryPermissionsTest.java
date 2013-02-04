@@ -30,12 +30,18 @@ public class SA_AllowDeleteEntryPermissionsTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.clickAt("link=Blogs Permissions Page",
-					RuntimeVariables.replace("Blogs Permissions Page"));
+				selenium.clickAt("link=Blogs Test Page",
+					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible("//div[@class='entry-title']/h2/a");
+				assertEquals(RuntimeVariables.replace(
+						"Blogs Entry Title Edited"),
+					selenium.getText("//div[@class='entry-title']/h2/a"));
 				selenium.clickAt("//div[@class='entry-title']/h2/a",
 					RuntimeVariables.replace("Blogs Entry Title Edited"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible(
+					"//span[@class='taglib-text' and contains(.,'Permissions')]");
 				assertEquals(RuntimeVariables.replace("Permissions"),
 					selenium.getText(
 						"//span[@class='taglib-text' and contains(.,'Permissions')]"));

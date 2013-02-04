@@ -44,11 +44,6 @@
 	<td>Control Panel</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Sites</td>
-	<td>Sites</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Sites</td>
 	<td>Sites</td>
@@ -56,7 +51,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_134_keywords']</td>
-	<td>Scope Site</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -75,17 +70,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
@@ -100,17 +95,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
@@ -125,7 +120,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=« Basic</td>
+	<td>//a[.='« Basic']</td>
 	<td>« Basic</td>
 </tr>
 <tr>

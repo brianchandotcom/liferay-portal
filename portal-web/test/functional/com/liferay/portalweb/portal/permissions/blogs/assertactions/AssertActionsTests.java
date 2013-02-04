@@ -19,6 +19,8 @@ import com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.addblogsentryc
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,6 +31,8 @@ import junit.framework.TestSuite;
 public class AssertActionsTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+		testSuite.addTestSuite(AddPageBlogsTest.class);
+		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(SA_AddBATest.class);
 		testSuite.addTestSuite(SA_AddBARoleTest.class);
 		testSuite.addTestSuite(SA_DefineBARoleTest.class);
@@ -36,8 +40,6 @@ public class AssertActionsTests extends BaseTestSuite {
 		testSuite.addTestSuite(SA_AddMemberRoleTest.class);
 		testSuite.addTestSuite(SA_DefineMemberRoleTest.class);
 		testSuite.addTestSuite(SA_AssignUserRolesTest.class);
-		testSuite.addTestSuite(SA_AddPageTest.class);
-		testSuite.addTestSuite(SA_AddPortletTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(LoginUsersTest.class);
 		testSuite.addTestSuite(BA_LoginTest.class);

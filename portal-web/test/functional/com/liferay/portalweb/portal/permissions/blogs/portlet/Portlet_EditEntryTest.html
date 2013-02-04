@@ -15,8 +15,18 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
+	<td>link=Blogs Test Page</td>
+	<td>Blogs Test Page</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Blogs Entry Title Edited</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Blogs Entry Title Temporary</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -24,9 +34,19 @@
 	<td>Blogs Entry Title Temporary</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>link=Edit</td>
+	<td>Edit</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Edit</td>
 	<td>Edit</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -34,69 +54,19 @@
 	<td>Blogs Entry Title Edited</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
-	<td>Source Button On</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__33_editor']/textarea</td>
+	<td>//a[contains(@class,'cke_button_disabled')]</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//td[@id='cke_contents__33_editor']/textarea</td>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>Rich Text Editor</td>
+</tr>
+<tr>
+	<td>typeFrame</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>Blogs Entry Content Edited</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__33_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__33_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//body</td>
-	<td>Blogs Entry Content Edited</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -104,7 +74,7 @@
 	<td>Publish</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
@@ -114,23 +84,13 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//h1[@class='header-title']/span</td>
-	<td>Blogs Entry Title Edited</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//h1[@class='header-title']/span</td>
 	<td>Blogs Entry Title Edited</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@class='entry-body']/p</td>
-	<td>Blogs Entry Content Edited</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-body']/p</td>
+	<td>//div[@class='entry-body']/div/p</td>
 	<td>Blogs Entry Content Edited</td>
 </tr>
 </tbody></table>

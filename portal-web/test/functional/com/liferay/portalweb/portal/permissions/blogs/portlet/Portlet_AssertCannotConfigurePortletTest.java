@@ -26,10 +26,10 @@ public class Portlet_AssertCannotConfigurePortletTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Permissions Page");
-		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace("Blogs Permissions Page"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertTrue(selenium.isElementNotPresent(
 				"//span[@title='Options']/ul/li/strong/a"));
 		assertFalse(selenium.isTextPresent("Options"));

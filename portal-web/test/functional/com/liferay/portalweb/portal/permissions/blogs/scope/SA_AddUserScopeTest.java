@@ -39,14 +39,17 @@ public class SA_AddUserScopeTest extends BaseTestCase {
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
 		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_125_prefixId']",
 			RuntimeVariables.replace("label=Mr."));
@@ -60,11 +63,11 @@ public class SA_AddUserScopeTest extends BaseTestCase {
 			RuntimeVariables.replace("Liferay"));
 		selenium.select("//select[@id='_125_suffixId']",
 			RuntimeVariables.replace("label=IV"));
-		selenium.select("//select[@id='_125_birthdayMonth']",
+		selenium.select("//select[@name='_125_birthdayMonth']",
 			RuntimeVariables.replace("label=May"));
-		selenium.select("//select[@id='_125_birthdayDay']",
+		selenium.select("//select[@name='_125_birthdayDay']",
 			RuntimeVariables.replace("label=31"));
-		selenium.select("//select[@id='_125_birthdayYear']",
+		selenium.select("//select[@name='_125_birthdayYear']",
 			RuntimeVariables.replace("label=1986"));
 		selenium.select("//select[@id='_125_male']",
 			RuntimeVariables.replace("label=Male"));

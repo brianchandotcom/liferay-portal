@@ -31,15 +31,14 @@ public class SA_RegInlineBlogsConfigurationNotCheckedTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.clickAt("link=Blogs Permissions Page",
-					RuntimeVariables.replace("Blogs Permissions Page"));
+				selenium.clickAt("link=Blogs Test Page",
+					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
-				Thread.sleep(5000);
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'configuration')]");
 				assertEquals(RuntimeVariables.replace("Configuration"),
@@ -54,10 +53,11 @@ public class SA_RegInlineBlogsConfigurationNotCheckedTest extends BaseTestCase {
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 				selenium.waitForVisible("link=Permissions");
-				assertTrue(selenium.isVisible("link=Permissions"));
 				selenium.clickAt("link=Permissions",
 					RuntimeVariables.replace("Permissions"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible(
+					"//input[@id='portlet_ACTION_CONFIGURATION']");
 
 				boolean portletConfigurationChecked = selenium.isChecked(
 						"//input[@id='portlet_ACTION_CONFIGURATION']");
@@ -74,6 +74,7 @@ public class SA_RegInlineBlogsConfigurationNotCheckedTest extends BaseTestCase {
 			case 2:
 				assertFalse(selenium.isChecked(
 						"//input[@id='portlet_ACTION_CONFIGURATION']"));
+				Thread.sleep(1000);
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");

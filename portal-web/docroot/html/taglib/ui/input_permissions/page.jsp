@@ -96,11 +96,14 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 							<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.ORGANIZATION_USER) %>">
 								<liferay-ui:message key="organization-members" />
 							</c:when>
+							<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.POWER_USER) %>">
+								<liferay-ui:message key="power-users" />
+							</c:when>
 							<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.SITE_MEMBER) %>">
 								<liferay-ui:message key="site-members" />
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:message key="power-users" />
+								<liferay-ui:message key="user" />
 							</c:otherwise>
 						</c:choose>
 					</option>

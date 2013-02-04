@@ -12,20 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.util;
+package com.liferay.portal.xsl;
 
-import com.liferay.portal.util.PropsValues;
+import java.io.Serializable;
+
+import javax.xml.transform.URIResolver;
 
 /**
- * @author Marcellus Tavares
  * @author Tina Tian
  */
-public class XSLTemplateParser extends
-	com.liferay.portlet.journal.util.XSLTemplateParser {
+public interface XSLURIResolver extends Serializable, URIResolver {
 
-	@Override
-	protected String getErrorTemplateId() {
-		return PropsValues.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE_XSL;
-	}
+	public String getLanguageId();
 
 }

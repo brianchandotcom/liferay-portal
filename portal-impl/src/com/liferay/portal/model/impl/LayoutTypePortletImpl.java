@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -977,15 +976,8 @@ public class LayoutTypePortletImpl
 
 		if (oldLayoutTemplate == null) {
 			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append("Layout template ");
-				sb.append(newLayoutTemplateId);
-				sb.append(" cannot be set because current template ");
-				sb.append(oldLayoutTemplateId);
-				sb.append(" does not exist");
-
-				_log.warn(sb.toString());
+				_log.warn(
+					"Unable to find layout template " + oldLayoutTemplateId);
 			}
 
 			return;
@@ -998,8 +990,7 @@ public class LayoutTypePortletImpl
 		if (newLayoutTemplate == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Layout template " + newLayoutTemplateId +
-						" cannot be set because it does not exist");
+					"Unable to find layout template " + newLayoutTemplateId);
 			}
 
 			return;

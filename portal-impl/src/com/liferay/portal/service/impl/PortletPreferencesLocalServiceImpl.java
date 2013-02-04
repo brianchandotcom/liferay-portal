@@ -171,6 +171,13 @@ public class PortletPreferencesLocalServiceImpl
 		return portletPreferencesPersistence.findByP_P(plid, portletId);
 	}
 
+	public List<PortletPreferences> getPortletPreferencesByLikePortletId(
+			String portletId)
+		throws PortalException, SystemException {
+
+		return portletPreferencesPersistence.findByLikePortletId(portletId);
+	}
+
 	public List<PortletPreferences> getPortletPreferencesByPlid(long plid)
 		throws SystemException {
 

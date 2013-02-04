@@ -1391,6 +1391,9 @@
 		<finder name="PortletId" return-type="Collection">
 			<finder-column name="portletId" />
 		</finder>
+		<finder name="LikePortletId" return-type="Collection" >
+			<finder-column name="portletId" comparator="LIKE" />
+		</finder>
 		<finder name="P_P" return-type="Collection">
 			<finder-column name="plid" />
 			<finder-column name="portletId" />

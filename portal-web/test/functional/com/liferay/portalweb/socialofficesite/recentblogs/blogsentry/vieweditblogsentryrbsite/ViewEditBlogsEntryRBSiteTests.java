@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficesite.blogs;
+package com.liferay.portalweb.socialofficesite.recentblogs.blogsentry.vieweditblogsentryrbsite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficesite.blogs.blogsentry.BlogsEntryTestPlan;
-import com.liferay.portalweb.socialofficesite.blogs.blogslar.BlogsLARTestPlan;
+import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.AddSitesSiteTest;
+import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.TearDownSOSitesTest;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.addblogsentrysite.AddBlogsEntrySiteTest;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.editblogsentrysite.EditBlogsEntrySiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,15 +26,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsTestPlan extends BaseTestSuite {
-
+public class ViewEditBlogsEntryRBSiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(BlogsEntryTestPlan.suite());
-		testSuite.addTest(BlogsLARTestPlan.suite());
+		testSuite.addTestSuite(AddSitesSiteTest.class);
+		testSuite.addTestSuite(AddBlogsEntrySiteTest.class);
+		testSuite.addTestSuite(EditBlogsEntrySiteTest.class);
+		testSuite.addTestSuite(ViewEditBlogsEntryRBSiteTest.class);
+		testSuite.addTestSuite(TearDownSOSitesTest.class);
 
 		return testSuite;
 	}
-
 }

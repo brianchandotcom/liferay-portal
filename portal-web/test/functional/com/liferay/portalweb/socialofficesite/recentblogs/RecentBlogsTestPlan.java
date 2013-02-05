@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficesite.blogs;
+package com.liferay.portalweb.socialofficesite.recentblogs;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficesite.blogs.blogsentry.BlogsEntryTestPlan;
-import com.liferay.portalweb.socialofficesite.blogs.blogslar.BlogsLARTestPlan;
+import com.liferay.portalweb.socialofficesite.recentblogs.blogsentry.BlogsEntryTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,13 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsTestPlan extends BaseTestSuite {
+public class RecentBlogsTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(BlogsEntryTestPlan.suite());
-		testSuite.addTest(BlogsLARTestPlan.suite());
 
 		return testSuite;
 	}

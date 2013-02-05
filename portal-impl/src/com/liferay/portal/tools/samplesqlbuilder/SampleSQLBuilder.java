@@ -131,27 +131,10 @@ public class SampleSQLBuilder {
 			_outputMerge = GetterUtil.getBoolean(
 				arguments.get("sample.sql.output.merge"));
 
-			int totalMThreadCount = _maxMBCategoryCount * _maxMBThreadCount;
-			int totalMBMessageCount = totalMThreadCount * _maxMBMessageCount;
-
-			int counterOffset =
-				_maxGroupCount +
-				(_maxGroupCount *
-					(_maxMBCategoryCount + totalMThreadCount +
-						totalMBMessageCount)
-				) + 1;
-
-			_counter = new SimpleCounter(counterOffset);
-			_dlDateCounter = new SimpleCounter();
-			_resourcePermissionCounter = new SimpleCounter();
-			_socialActivityCounter = new SimpleCounter();
-
-			_userScreenNameIncrementer = new SimpleCounter();
-
 			_dataFactory = new DataFactory(
 				baseDir, _maxGroupCount, maxJournalArticleSize,
-				_maxUserToGroupCount, _counter, _dlDateCounter,
-				_resourcePermissionCounter, _socialActivityCounter);
+				_maxUserToGroupCount, _maxMBCategoryCount, _maxMBThreadCount,
+				_maxMBMessageCount);
 
 			_db = DBFactoryUtil.getDB(_dbType);
 
@@ -496,9 +479,12 @@ public class SampleSQLBuilder {
 
 		Company company = _dataFactory.getCompany();
 		User defaultUser = _dataFactory.getDefaultUser();
+		SimpleCounter counter = _dataFactory.getCounter();
+		SimpleCounter userScreenNameIncrementer =
+			_dataFactory.getUserScreenNameIncrementer();
 
 		put(context, "companyId", company.getCompanyId());
-		put(context, "counter", _counter);
+		put(context, "counter", counter);
 		put(context, "dataFactory", _dataFactory);
 		put(context, "dateUtil", DateUtil_IW.getInstance());
 		put(context, "defaultUserId", defaultUser.getCompanyId());
@@ -523,7 +509,7 @@ public class SampleSQLBuilder {
 		put(context, "portalUUIDUtil", SequentialUUID.getSequentialUUID());
 		put(context, "sampleSQLBuilder", this);
 		put(context, "stringUtil", StringUtil_IW.getInstance());
-		put(context, "userScreenNameIncrementer", _userScreenNameIncrementer);
+		put(context, "userScreenNameIncrementer", userScreenNameIncrementer);
 		put(context, "writerBlogsCSV", _writerBlogsCSV);
 		put(context, "writerCompanyCSV", _writerCompanyCSV);
 		put(context, "writerDocumentLibraryCSV", _writerDocumentLibraryCSV);
@@ -648,11 +634,9 @@ public class SampleSQLBuilder {
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
 
-	private SimpleCounter _counter;
 	private DataFactory _dataFactory;
 	private DB _db;
 	private String _dbType;
-	private SimpleCounter _dlDateCounter;
 	private Map<String, StringBundler> _insertSQLs =
 		new ConcurrentHashMap<String, StringBundler>();
 	private Map<String, Writer> _insertSQLWriters =
@@ -679,8 +663,6 @@ public class SampleSQLBuilder {
 	private List<String> _otherSQLs = new ArrayList<String>();
 	private String _outputDir;
 	private boolean _outputMerge;
-	private SimpleCounter _resourcePermissionCounter;
-	private SimpleCounter _socialActivityCounter;
 	private File _tempDir;
 	private String _tplBlogsEntry = _TPL_ROOT + "blogs_entry.ftl";
 	private String _tplDDLRecord = _TPL_ROOT + "ddl_record.ftl";
@@ -695,7 +677,6 @@ public class SampleSQLBuilder {
 	private String _tplSample = _TPL_ROOT + "sample.ftl";
 	private String _tplUser = _TPL_ROOT + "user.ftl";
 	private String _tplWikiPage = _TPL_ROOT + "wiki_page.ftl";
-	private SimpleCounter _userScreenNameIncrementer;
 	private Writer _writerBlogsCSV;
 	private Writer _writerCompanyCSV;
 	private Writer _writerDocumentLibraryCSV;

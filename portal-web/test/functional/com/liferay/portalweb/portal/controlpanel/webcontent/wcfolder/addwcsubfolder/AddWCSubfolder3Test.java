@@ -39,12 +39,13 @@ public class AddWCSubfolder3Test extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("WC Folder"),
-			selenium.getText("//div/a[contains(.,'WC Folder')]/span"));
-		selenium.clickAt("//div/a[contains(.,'WC Folder')]/span",
-			RuntimeVariables.replace("WC Folder"));
+		assertEquals(RuntimeVariables.replace("WC Folder Name"),
+			selenium.getText(
+				"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
+		selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']",
+			RuntimeVariables.replace("WC Folder Name"));
+		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
-		selenium.waitForVisible("//span[@title='Add']/ul/li/strong/a");
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
@@ -58,18 +59,20 @@ public class AddWCSubfolder3Test extends BaseTestCase {
 			RuntimeVariables.replace("Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_name']",
-			RuntimeVariables.replace("WC Subfolder3"));
+			RuntimeVariables.replace("WC Subfolder3 Name"));
 		selenium.type("//textarea[@id='_15_description']",
 			RuntimeVariables.replace("WC Subfolder3 Description"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isVisible(
-				"//div/a[contains(.,'WC Subfolder3')]/div/img"));
-		assertEquals(RuntimeVariables.replace("WC Subfolder3"),
-			selenium.getText("//div/a[contains(.,'WC Subfolder3')]/span"));
+				"//div[@data-title='WC Subfolder3 Name']/a/div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("WC Subfolder3 Name"),
+			selenium.getText(
+				"//div[@data-title='WC Subfolder3 Name']/a/span[@class='entry-title']"));
 	}
 }

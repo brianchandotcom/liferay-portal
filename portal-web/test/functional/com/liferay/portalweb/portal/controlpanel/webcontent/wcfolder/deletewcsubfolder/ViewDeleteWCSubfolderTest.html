@@ -50,13 +50,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[contains(.,'WC Folder')]/span</td>
-	<td>WC Folder</td>
+	<td>//div[@data-title='WC Folder Name']/a/span[@class='entry-title']</td>
+	<td>WC Folder Name</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div/a[contains(.,'WC Folder')]/span</td>
-	<td>WC Folder</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@data-title='WC Folder Name']/a/span[@class='entry-title']</td>
+	<td>WC Folder Name</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -65,77 +65,92 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='body-row']/div/div/ul/li[1]/a[2]</td>
-	<td>Up</td>
+	<td>//h1[@class='portlet-title']</td>
+	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='body-row']/div/div/ul/li[2]/a</td>
-	<td>WC Folder</td>
+	<td>//div[@class='parent-title']/span</td>
+	<td>Home</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[@class='toolbar']/span[1]/span/span/input[2]</td>
+	<td>//li[@class='app-view-navigation-entry folder selected']/a[contains(.,'WC Folder Name')]</td>
+	<td>WC Folder Name Selected Overlay</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-list-view-content folder-display')]/ul/li/a[contains(.,'WC Folder Name')]</td>
+	<td>WC Folder Name</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@id='_15_allRowIdsCheckbox']</td>
 	<td>All Rows Checkbox</td>
 </tr>
 <tr>
 	<td>assertNotVisible</td>
-	<td>//div[@class='toolbar']/span[2]/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='toolbar']/span[3]/span/span/ul/li/strong/a</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='toolbar']/span[5]/span/ul/li/strong/a</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
 	<td>Manage</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[@class='display-style']/span/span/button[1]</td>
+	<td>//button[@title='Icon View']</td>
 	<td>Icon View</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[@class='display-style']/span/span/button[2]</td>
+	<td>//button[@title='Descriptive View']</td>
 	<td>Descriptive View</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[@class='display-style']/span/span/button[3]</td>
+	<td>//button[@title='List View']</td>
 	<td>List View</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[contains(@class,'search-button-container')]/form/div/div/div[1]/div/span/span/span/input</td>
+	<td>//input[@id='_15_keywords']</td>
 	<td>Search Field</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//div[contains(@class,'search-button-container')]/form/div/div/div[2]/div/span/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[contains(@class,'search-button-container')]/form/div/div/div[3]/div/span/span/input</td>
+	<td>//input[@id='_15_showAdvancedSearch']</td>
 	<td>Advanced Search</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_15_breadcrumbContainer']/ul/li/span/a</td>
+	<td>//div[@class='journal-breadcrumb']/ul/li[@class='first']/span/a</td>
 	<td>Home</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='journal-breadcrumb']/ul/li[@class='last']/span/a</td>
+	<td>WC Folder Name</td>
+</tr>
+<tr>
 	<td>assertElementNotPresent</td>
-	<td>//div/a[contains(.,'WC Subfolder')]/div/img</td>
-	<td>WC Subfolder Thumbnail</td>
+	<td>//div[@data-title='WC Folder Name']/a/span[@class='entry-title']</td>
+	<td>WC Subfolder Name</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>WC Subfolder</td>
+	<td>WC Subfolder Name</td>
 	<td></td>
 </tr>
 <tr>
@@ -147,6 +162,11 @@
 	<td>assertText</td>
 	<td>//div[contains(@class,'article-entries-paginator')]/a[2]</td>
 	<td><</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'article-entries-paginator')]/span[1]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>

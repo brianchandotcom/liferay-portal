@@ -40,21 +40,26 @@ public class MoveWCSubfolderToFolder2Test extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible(
-				"//div/a[contains(.,'WC Folder1')]/div/img"));
-		assertEquals(RuntimeVariables.replace("WC Folder1"),
-			selenium.getText("//div/a[contains(.,'WC Folder1')]/span"));
+				"//div[@data-title='WC Folder1 Name']/a/div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("WC Folder1 Name"),
+			selenium.getText(
+				"//div[@data-title='WC Folder1 Name']/a/span[@class='entry-title']"));
 		assertTrue(selenium.isVisible(
-				"//div/a[contains(.,'WC Folder2')]/div/img"));
-		assertEquals(RuntimeVariables.replace("WC Folder2"),
-			selenium.getText("//div/a[contains(.,'WC Folder2')]/span"));
-		selenium.clickAt("//div/a[contains(.,'WC Folder1')]/span",
-			RuntimeVariables.replace("WC Folder1"));
+				"//div[@data-title='WC Folder2 Name']/a/div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("WC Folder2 Name"),
+			selenium.getText(
+				"//div[@data-title='WC Folder2 Name']/a/span[@class='entry-title']"));
+		selenium.clickAt("//div[@data-title='WC Folder1 Name']/a/span[@class='entry-title']",
+			RuntimeVariables.replace("WC Folder1 Name"));
+		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
-		selenium.waitForVisible("//div/a[contains(.,'WC Subfolder')]/div/img");
-		assertEquals(RuntimeVariables.replace("WC Subfolder"),
-			selenium.getText("//div/a[contains(.,'WC Subfolder')]/span"));
-		selenium.clickAt("//div[@data-title='WC Subfolder']/span[2]/span/ul/li/strong/a",
-			RuntimeVariables.replace("Folder Options"));
+		assertTrue(selenium.isVisible(
+				"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("WC Subfolder Name"),
+			selenium.getText(
+				"//div[@data-title='WC Subfolder Name']/a/span[@class='entry-title']"));
+		selenium.clickAt("//div[@data-title='WC Subfolder Name']/span[@class='entry-action overlay']/span/ul/li/strong/a",
+			RuntimeVariables.replace("WC Subfolder Name Action Overlay"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]");
 		assertEquals(RuntimeVariables.replace("Move"),
@@ -63,10 +68,11 @@ public class MoveWCSubfolderToFolder2Test extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Move WC Subfolder Name"),
+			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Parent Folder"),
-			selenium.getText(
-				"//form[contains(@action,'move_folder')]/fieldset/div/div/div/label"));
-		assertEquals(RuntimeVariables.replace("WC Folder1"),
+			selenium.getText("//div/label"));
+		assertEquals(RuntimeVariables.replace("WC Folder1 Name"),
 			selenium.getText("//a[@id='_15_parentFolderName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
@@ -74,31 +80,40 @@ public class MoveWCSubfolderToFolder2Test extends BaseTestCase {
 		selenium.selectWindow("title=Web Content");
 		selenium.waitForVisible(
 			"//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Home')]");
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText(
+				"//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Home')]"));
 		selenium.clickAt("//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Home')]",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("WC Folder2 Name"),
+			selenium.getText("//tr[contains(.,'WC Folder2 Name')]/td[1]/a"));
 		selenium.click(
-			"//tr[contains(.,'WC Folder2')]/td[4]/input[@value='Choose']");
+			"//tr[contains(.,'WC Folder2 Name')]/td[4]/input[@value='Choose']");
 		selenium.selectWindow("null");
 		Thread.sleep(1000);
 		selenium.waitForVisible("//a[@id='_15_parentFolderName']");
-		assertEquals(RuntimeVariables.replace("WC Folder2"),
+		assertEquals(RuntimeVariables.replace("WC Folder2 Name"),
 			selenium.getText("//a[@id='_15_parentFolderName']"));
 		selenium.clickAt("//input[@value='Move']",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("No Web Content was found."),
-			selenium.getText("//div[contains(@class,'portlet-msg-info')]"));
-		assertEquals(RuntimeVariables.replace("WC Folder2"),
-			selenium.getText("//div[@class='body-row']/div/div/ul/li[3]/a[2]"));
-		selenium.clickAt("//div[@class='body-row']/div/div/ul/li[3]/a[2]",
-			RuntimeVariables.replace("WC Folder2"));
+			selenium.getText("//div[@class='entries-empty portlet-msg-info']"));
+		assertEquals(RuntimeVariables.replace("WC Folder2 Name"),
+			selenium.getText(
+				"//div[contains(@class,'lfr-list-view-content folder-display')]/ul/li/a[contains(.,'WC Folder2 Name')]"));
+		selenium.clickAt("//div[contains(@class,'lfr-list-view-content folder-display')]/ul/li/a[contains(.,'WC Folder2 Name')]",
+			RuntimeVariables.replace("WC Folder2 Name"));
 		Thread.sleep(1000);
-		selenium.waitForVisible("//div/a[contains(.,'WC Subfolder')]/div/img");
-		assertEquals(RuntimeVariables.replace("WC Subfolder"),
-			selenium.getText("//div/a[contains(.,'WC Subfolder')]/span"));
+		assertTrue(selenium.isVisible(
+				"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("WC Subfolder Name"),
+			selenium.getText(
+				"//div[@data-title='WC Subfolder Name']/a/span[@class='entry-title']"));
 	}
 }

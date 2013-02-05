@@ -39,50 +39,53 @@ public class ViewDeleteWCSubfolderTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("WC Folder"),
-			selenium.getText("//div/a[contains(.,'WC Folder')]/span"));
-		selenium.clickAt("//div/a[contains(.,'WC Folder')]/span",
-			RuntimeVariables.replace("WC Folder"));
+		assertEquals(RuntimeVariables.replace("WC Folder Name"),
+			selenium.getText(
+				"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
+		selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']",
+			RuntimeVariables.replace("WC Folder Name"));
+		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
-		assertEquals(RuntimeVariables.replace("Up"),
-			selenium.getText("//div[@class='body-row']/div/div/ul/li[1]/a[2]"));
-		assertEquals(RuntimeVariables.replace("WC Folder"),
-			selenium.getText("//div[@class='body-row']/div/div/ul/li[2]/a"));
+		assertEquals(RuntimeVariables.replace("Web Content"),
+			selenium.getText("//h1[@class='portlet-title']"));
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText("//div[@class='parent-title']/span"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='toolbar']/span[1]/span/span/input[2]"));
+				"//li[@class='app-view-navigation-entry folder selected']/a[contains(.,'WC Folder Name')]"));
+		assertEquals(RuntimeVariables.replace("WC Folder Name"),
+			selenium.getText(
+				"//div[contains(@class,'lfr-list-view-content folder-display')]/ul/li/a[contains(.,'WC Folder Name')]"));
+		assertTrue(selenium.isVisible("//input[@id='_15_allRowIdsCheckbox']"));
 		assertFalse(selenium.isVisible(
-				"//div[@class='toolbar']/span[2]/ul/li/strong/a"));
+				"//span[@title='Actions']/ul/li/strong/a"));
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText(
-				"//div[@class='toolbar']/span[3]/span/span/ul/li/strong/a"));
+			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		assertEquals(RuntimeVariables.replace("Manage"),
-			selenium.getText(
-				"//div[@class='toolbar']/span[5]/span/ul/li/strong/a"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='display-style']/span/span/button[1]"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='display-style']/span/span/button[2]"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='display-style']/span/span/button[3]"));
-		assertTrue(selenium.isVisible(
-				"//div[contains(@class,'search-button-container')]/form/div/div/div[1]/div/span/span/span/input"));
-		assertEquals("Search",
-			selenium.getValue(
-				"//div[contains(@class,'search-button-container')]/form/div/div/div[2]/div/span/span/input"));
-		assertTrue(selenium.isVisible(
-				"//div[contains(@class,'search-button-container')]/form/div/div/div[3]/div/span/span/input"));
+			selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
+		assertTrue(selenium.isVisible("//button[@title='Icon View']"));
+		assertTrue(selenium.isVisible("//button[@title='Descriptive View']"));
+		assertTrue(selenium.isVisible("//button[@title='List View']"));
+		assertTrue(selenium.isVisible("//input[@id='_15_keywords']"));
+		assertEquals("Search", selenium.getValue("//input[@value='Search']"));
+		assertTrue(selenium.isVisible("//input[@id='_15_showAdvancedSearch']"));
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText(
-				"//div[@id='_15_breadcrumbContainer']/ul/li/span/a"));
+				"//div[@class='journal-breadcrumb']/ul/li[@class='first']/span/a"));
+		assertEquals(RuntimeVariables.replace("WC Folder Name"),
+			selenium.getText(
+				"//div[@class='journal-breadcrumb']/ul/li[@class='last']/span/a"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div/a[contains(.,'WC Subfolder')]/div/img"));
-		assertFalse(selenium.isTextPresent("WC Subfolder"));
+				"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
+		assertFalse(selenium.isTextPresent("WC Subfolder Name"));
 		assertEquals(RuntimeVariables.replace("<<"),
 			selenium.getText(
 				"//div[contains(@class,'article-entries-paginator')]/a[1]"));
 		assertEquals(RuntimeVariables.replace("<"),
 			selenium.getText(
 				"//div[contains(@class,'article-entries-paginator')]/a[2]"));
+		assertEquals(RuntimeVariables.replace(""),
+			selenium.getText(
+				"//div[contains(@class,'article-entries-paginator')]/span[1]"));
 		assertEquals(RuntimeVariables.replace(">"),
 			selenium.getText(
 				"//div[contains(@class,'article-entries-paginator')]/a[3]"));

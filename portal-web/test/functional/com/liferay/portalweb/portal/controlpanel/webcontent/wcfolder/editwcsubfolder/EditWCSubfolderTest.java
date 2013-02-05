@@ -39,16 +39,20 @@ public class EditWCSubfolderTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("WC Folder"),
-			selenium.getText("//div/a[contains(.,'WC Folder')]/span"));
-		selenium.clickAt("//div/a[contains(.,'WC Folder')]/span",
-			RuntimeVariables.replace("WC Folder"));
+		assertEquals(RuntimeVariables.replace("WC Folder Name"),
+			selenium.getText(
+				"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
+		selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']",
+			RuntimeVariables.replace("WC Folder Name"));
+		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
-		selenium.waitForVisible("//div/a[contains(.,'WC Subfolder')]/div/img");
-		assertEquals(RuntimeVariables.replace("WC Subfolder"),
-			selenium.getText("//div/a[contains(.,'WC Subfolder')]/span"));
-		selenium.clickAt("//div[@data-title='WC Subfolder']/span[2]/span/ul/li/strong/a",
-			RuntimeVariables.replace("Folder Options"));
+		assertTrue(selenium.isVisible(
+				"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("WC Subfolder Name"),
+			selenium.getText(
+				"//div[@data-title='WC Subfolder Name']/a/span[@class='entry-title']"));
+		selenium.clickAt("//div[@data-title='WC Subfolder Name']/span[@class='entry-action overlay']/span/ul/li/strong/a",
+			RuntimeVariables.replace("WC Subfolder Name Action Overlay"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
@@ -58,18 +62,20 @@ public class EditWCSubfolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_name']",
-			RuntimeVariables.replace("WC Subfolder Edited"));
+			RuntimeVariables.replace("WC Subfolder Name Edited"));
 		selenium.type("//textarea[@id='_15_description']",
 			RuntimeVariables.replace("WC Subfolder Description Edited"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isVisible(
-				"//div/a[contains(.,'WC Subfolder Edited')]/div/img"));
-		assertEquals(RuntimeVariables.replace("WC Subfolder Edited"),
-			selenium.getText("//div/a[contains(.,'WC Subfolder Edited')]/span"));
+				"//div[@data-title='WC Subfolder Name Edited']/a/div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("WC Subfolder Name Edited"),
+			selenium.getText(
+				"//div[@data-title='WC Subfolder Name Edited']/a/span[@class='entry-title']"));
 	}
 }

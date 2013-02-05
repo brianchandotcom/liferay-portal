@@ -50,28 +50,28 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div/a[contains(.,'WC Folder1')]/div/img</td>
-	<td>WC Folder1 Thumbnail</td>
+	<td>//div[@data-title='WC Folder1 Name']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC Folder1 Name Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[contains(.,'WC Folder1')]/span</td>
-	<td>WC Folder1</td>
+	<td>//div[@data-title='WC Folder1 Name']/a/span[@class='entry-title']</td>
+	<td>WC Folder1 Name</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div/a[contains(.,'WC Folder2')]/div/img</td>
-	<td>WC Folder2 Thumbnail</td>
+	<td>//div[@data-title='WC Folder2 Name']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC Folder2 Name Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[contains(.,'WC Folder2')]/span</td>
-	<td>WC Folder2</td>
+	<td>//div[@data-title='WC Folder2 Name']/a/span[@class='entry-title']</td>
+	<td>WC Folder2 Name</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div/a[contains(.,'WC Folder1')]/span</td>
-	<td>WC Folder1</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@data-title='WC Folder1 Name']/a/span[@class='entry-title']</td>
+	<td>WC Folder1 Name</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -79,19 +79,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div/a[contains(.,'WC Subfolder')]/div/img</td>
-	<td>WC Subfolder Thumbnail</td>
+	<td>assertVisible</td>
+	<td>//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC Subfolder Name Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[contains(.,'WC Subfolder')]/span</td>
-	<td>WC Subfolder</td>
+	<td>//div[@data-title='WC Subfolder Name']/a/span[@class='entry-title']</td>
+	<td>WC Subfolder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@data-title='WC Subfolder']/span[2]/span/ul/li/strong/a</td>
-	<td>Folder Options</td>
+	<td>//div[@data-title='WC Subfolder Name']/span[@class='entry-action overlay']/span/ul/li/strong/a</td>
+	<td>WC Subfolder Name Action Overlay</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -110,13 +110,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form[contains(@action,'move_folder')]/fieldset/div/div/div/label</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Move WC Subfolder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/label</td>
 	<td>Parent Folder</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//a[@id='_15_parentFolderName']</td>
-	<td>WC Folder1</td>
+	<td>WC Folder1 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -139,13 +144,23 @@
 	<td>Home</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Home')]</td>
+	<td>Home</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li/span/a[contains(.,'Home')]</td>
 	<td>Home</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Folder2 Name')]/td[1]/a</td>
+	<td>WC Folder2 Name</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>//tr[contains(.,'WC Folder2')]/td[4]/input[@value='Choose']</td>
+	<td>//tr[contains(.,'WC Folder2 Name')]/td[4]/input[@value='Choose']</td>
 	<td>Choose</td>
 </tr>
 <tr>
@@ -161,17 +176,22 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//a[@id='_15_parentFolderName']</td>
-	<td>WC Folder2</td>
+	<td>WC Folder2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//a[@id='_15_parentFolderName']</td>
-	<td>WC Folder2</td>
+	<td>WC Folder2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Move']</td>
 	<td>Move</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -180,18 +200,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[contains(@class,'portlet-msg-info')]</td>
+	<td>//div[@class='entries-empty portlet-msg-info']</td>
 	<td>No Web Content was found.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='body-row']/div/div/ul/li[3]/a[2]</td>
-	<td>WC Folder2</td>
+	<td>//div[contains(@class,'lfr-list-view-content folder-display')]/ul/li/a[contains(.,'WC Folder2 Name')]</td>
+	<td>WC Folder2 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='body-row']/div/div/ul/li[3]/a[2]</td>
-	<td>WC Folder2</td>
+	<td>//div[contains(@class,'lfr-list-view-content folder-display')]/ul/li/a[contains(.,'WC Folder2 Name')]</td>
+	<td>WC Folder2 Name</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -199,14 +219,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div/a[contains(.,'WC Subfolder')]/div/img</td>
-	<td>WC Subfolder Thumbnail</td>
+	<td>assertVisible</td>
+	<td>//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC Subfolder Name Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[contains(.,'WC Subfolder')]/span</td>
-	<td>WC Subfolder</td>
+	<td>//div[@data-title='WC Subfolder Name']/a/span[@class='entry-title']</td>
+	<td>WC Subfolder Name</td>
 </tr>
 </tbody></table>
 </body>

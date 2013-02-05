@@ -52,18 +52,20 @@ public class AddWCFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_name']",
-			RuntimeVariables.replace("WC Folder"));
+			RuntimeVariables.replace("WC Folder Name"));
 		selenium.type("//textarea[@id='_15_description']",
 			RuntimeVariables.replace("WC Folder Description"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isVisible(
-				"//div/a[contains(.,'WC Folder')]/div/img"));
-		assertEquals(RuntimeVariables.replace("WC Folder"),
-			selenium.getText("//div/a[contains(.,'WC Folder')]/span"));
+				"//div[@data-title='WC Folder Name']/a/div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("WC Folder Name"),
+			selenium.getText(
+				"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
 	}
 }

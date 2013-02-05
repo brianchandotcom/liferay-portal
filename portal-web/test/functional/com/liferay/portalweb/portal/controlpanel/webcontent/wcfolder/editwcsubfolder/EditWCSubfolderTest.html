@@ -50,13 +50,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[contains(.,'WC Folder')]/span</td>
-	<td>WC Folder</td>
+	<td>//div[@data-title='WC Folder Name']/a/span[@class='entry-title']</td>
+	<td>WC Folder Name</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div/a[contains(.,'WC Folder')]/span</td>
-	<td>WC Folder</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@data-title='WC Folder Name']/a/span[@class='entry-title']</td>
+	<td>WC Folder Name</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -64,19 +64,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div/a[contains(.,'WC Subfolder')]/div/img</td>
-	<td>WC Subfolder Thumbnail</td>
+	<td>assertVisible</td>
+	<td>//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC Subfolder Name Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[contains(.,'WC Subfolder')]/span</td>
-	<td>WC Subfolder</td>
+	<td>//div[@data-title='WC Subfolder Name']/a/span[@class='entry-title']</td>
+	<td>WC Subfolder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@data-title='WC Subfolder']/span[2]/span/ul/li/strong/a</td>
-	<td>Folder Options</td>
+	<td>//div[@data-title='WC Subfolder Name']/span[@class='entry-action overlay']/span/ul/li/strong/a</td>
+	<td>WC Subfolder Name Action Overlay</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -96,7 +96,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_name']</td>
-	<td>WC Subfolder Edited</td>
+	<td>WC Subfolder Name Edited</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -109,19 +109,24 @@
 	<td>Save</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div/a[contains(.,'WC Subfolder Edited')]/div/img</td>
-	<td>WC Subfolder Edited Thumbnail</td>
+	<td>//div[@data-title='WC Subfolder Name Edited']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC Subfolder Name Edited Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[contains(.,'WC Subfolder Edited')]/span</td>
-	<td>WC Subfolder Edited</td>
+	<td>//div[@data-title='WC Subfolder Name Edited']/a/span[@class='entry-title']</td>
+	<td>WC Subfolder Name Edited</td>
 </tr>
 </tbody></table>
 </body>

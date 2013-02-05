@@ -50,23 +50,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[contains(.,'WC Folder')]/span</td>
-	<td>WC Folder</td>
+	<td>//div[@data-title='WC Folder Name']/a/span[@class='entry-title']</td>
+	<td>WC Folder Name</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div/a[contains(.,'WC Folder')]/span</td>
-	<td>WC Folder</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@data-title='WC Folder Name']/a/span[@class='entry-title']</td>
+	<td>WC Folder Name</td>
 </tr>
 <tr>
 	<td>pause</td>
 	<td>1000</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//span[@title='Add']/ul/li/strong/a</td>
-	<td>Add</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -96,7 +91,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_name']</td>
-	<td>WC Subfolder3</td>
+	<td>WC Subfolder3 Name</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -109,19 +104,24 @@
 	<td>Save</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div/a[contains(.,'WC Subfolder3')]/div/img</td>
-	<td>WC Subfolder3 Thumbnail</td>
+	<td>//div[@data-title='WC Subfolder3 Name']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC Subfolder3 Name Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[contains(.,'WC Subfolder3')]/span</td>
-	<td>WC Subfolder3</td>
+	<td>//div[@data-title='WC Subfolder3 Name']/a/span[@class='entry-title']</td>
+	<td>WC Subfolder3 Name</td>
 </tr>
 </tbody></table>
 </body>

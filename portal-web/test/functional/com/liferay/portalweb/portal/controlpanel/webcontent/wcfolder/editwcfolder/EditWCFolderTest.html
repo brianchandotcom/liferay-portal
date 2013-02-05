@@ -50,18 +50,18 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div/a[contains(.,'WC Folder')]/div/img</td>
-	<td>WC Folder Thumbnail</td>
+	<td>//div[@data-title='WC Folder Name']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC Folder Name Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[contains(.,'WC Folder')]/span</td>
-	<td>WC Folder</td>
+	<td>//div[@data-title='WC Folder Name']/a/span[@class='entry-title']</td>
+	<td>WC Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@data-title='WC Folder']/span[2]/span/ul/li/strong/a</td>
-	<td>Folder Options</td>
+	<td>//div[@data-title='WC Folder Name']/span[@class='entry-action overlay']/span/ul/li/strong/a</td>
+	<td>WC Folder Name Action Overlay</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -81,7 +81,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_name']</td>
-	<td>WC Folder Edited</td>
+	<td>WC Folder Name Edited</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -94,19 +94,24 @@
 	<td>Save</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div/a[contains(.,'WC Folder Edited')]/div/img</td>
-	<td>WC Folder Edited Thumbnail</td>
+	<td>//div[@data-title='WC Folder Name Edited']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC Folder Name Edited Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[contains(.,'WC Folder Edited')]/span</td>
-	<td>WC Folder Edited</td>
+	<td>//div[@data-title='WC Folder Name Edited']/a/span[@class='entry-title']</td>
+	<td>WC Folder Name Edited</td>
 </tr>
 </tbody></table>
 </body>

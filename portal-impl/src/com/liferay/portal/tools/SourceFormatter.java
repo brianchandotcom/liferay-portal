@@ -3366,6 +3366,14 @@ public class SourceFormatter {
 				}
 
 				if (pos == -1) {
+					pos = tempLine.indexOf("||");
+				}
+
+				if (pos == -1) {
+					pos = tempLine.indexOf("&&");
+				}
+
+				if (pos == -1) {
 					break;
 				}
 
@@ -3404,10 +3412,9 @@ public class SourceFormatter {
 
 						String linePart = line.substring(0, x + 1);
 
-						if (linePart.contains(StringPool.SPACE) ||
-							(linePart.startsWith(StringPool.OPEN_PARENTHESIS) &&
-							 !linePart.contains(
-								 StringPool.CLOSE_PARENTHESIS))) {
+						if (linePart.startsWith(StringPool.OPEN_PARENTHESIS) &&
+							!linePart.contains(
+								 StringPool.CLOSE_PARENTHESIS)) {
 
 							return null;
 						}

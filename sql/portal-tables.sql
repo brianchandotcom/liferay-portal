@@ -1925,6 +1925,24 @@ create table SocialActivityCounter (
 	active_ BOOLEAN
 );
 
+create table SocialActivityGroup (
+	activityGroupId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate LONG,
+	modifiedDate LONG,
+	classNameId LONG,
+	classPK LONG,
+	type_ INTEGER
+);
+
+create table SocialActivityGroups_SocialActivities (
+	activityGroupId LONG not null,
+	activityId LONG not null,
+	primary key (activityGroupId, activityId)
+);
+
 create table SocialActivityLimit (
 	activityLimitId LONG not null primary key,
 	groupId LONG,

@@ -64,21 +64,24 @@ public class BookmarksFolderServiceTest {
 
 	@Test
 	public void testAddFolder() throws Exception {
-		BookmarksTestUtil.addFolder(_group.getGroupId());
+		BookmarksTestUtil.addFolder(
+			_group.getGroupId(), ServiceTestUtil.randomString());
 	}
 
 	@Test
 	public void testAddSubfolder() throws Exception {
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			_group.getGroupId());
+			_group.getGroupId(), ServiceTestUtil.randomString());
 
-		BookmarksTestUtil.addFolder(_group.getGroupId(), folder.getFolderId());
+		BookmarksTestUtil.addFolder(
+			_group.getGroupId(), folder.getFolderId(),
+			ServiceTestUtil.randomString());
 	}
 
 	@Test
 	public void testDeleteFolder() throws Exception {
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			_group.getGroupId());
+			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		BookmarksFolderServiceUtil.deleteFolder(folder.getFolderId());
 	}
@@ -86,7 +89,7 @@ public class BookmarksFolderServiceTest {
 	@Test
 	public void testGetFolder() throws Exception {
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			_group.getGroupId());
+			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		BookmarksFolderServiceUtil.getFolder(folder.getFolderId());
 	}
@@ -94,7 +97,7 @@ public class BookmarksFolderServiceTest {
 	@Test
 	public void testSearch() throws Exception {
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			_group.getGroupId());
+			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
 			_group.getGroupId(), folder.getFolderId(), true);
@@ -113,7 +116,7 @@ public class BookmarksFolderServiceTest {
 	@Test
 	public void testSearchAndDeleteFolderAndSearch() throws Exception {
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			_group.getGroupId());
+			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
 			_group.getGroupId(), folder.getFolderId(), true);
@@ -144,7 +147,7 @@ public class BookmarksFolderServiceTest {
 	@Test
 	public void testSearchAndVerifyDocs() throws Exception {
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			_group.getGroupId());
+			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
 			_group.getGroupId(), folder.getFolderId(), true);

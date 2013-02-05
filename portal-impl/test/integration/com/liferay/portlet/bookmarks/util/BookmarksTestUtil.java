@@ -87,20 +87,10 @@ public class BookmarksTestUtil {
 		}
 	}
 
-	public static BookmarksFolder addFolder() throws Exception {
-		return addFolder(TestPropsValues.getGroupId());
-	}
-
-	public static BookmarksFolder addFolder(long groupId) throws Exception {
-		long parentFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-		return addFolder(groupId, parentFolderId);
-	}
-
-	public static BookmarksFolder addFolder(long groupId, long parentFolderId)
+	public static BookmarksFolder addFolder(
+			long groupId, long parentFolderId, String name)
 		throws Exception {
 
-		String name = "Test Folder";
 		String description = "This is a test folder.";
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -111,6 +101,18 @@ public class BookmarksTestUtil {
 
 		return BookmarksFolderServiceUtil.addFolder(
 			parentFolderId, name, description, serviceContext);
+	}
+
+	public static BookmarksFolder addFolder(long groupId, String name)
+		throws Exception {
+
+		long parentFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		return addFolder(groupId, parentFolderId, name);
+	}
+
+	public static BookmarksFolder addFolder(String name) throws Exception {
+		return addFolder(TestPropsValues.getGroupId(), name);
 	}
 
 	public static SearchContext getSearchContext(

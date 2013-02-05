@@ -53,7 +53,6 @@ page import="com.liferay.portal.UserScreenNameException" %><%@
 page import="com.liferay.portal.UserSmsException" %><%@
 page import="com.liferay.portal.WebsiteURLException" %><%@
 page import="com.liferay.portal.service.permission.OrganizationPermissionUtil" %><%@
-page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.UserPermissionUtil" %><%@
 page import="com.liferay.portlet.announcements.model.AnnouncementsDelivery" %><%@
 page import="com.liferay.portlet.announcements.model.AnnouncementsEntryConstants" %><%@

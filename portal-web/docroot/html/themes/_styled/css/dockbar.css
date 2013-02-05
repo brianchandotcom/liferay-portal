@@ -36,7 +36,7 @@
 		visibility: hidden;
 	}
 
-	a {
+	a, span.user-portrait {
 		color: #2C2F34;
 		font-weight: bold;
 		text-shadow: 1px 1px #FFF;
@@ -89,20 +89,20 @@
 		background-image: url(../images/dockbar/places.png);
 	}
 
-	.user-portrait {
+	a.user-portrait {
 		&, &:hover span {
 			text-decoration: none;
-		}
-
-		img {
-			text-decoration: none;
-			vertical-align: middle;
-			width: 25px;
 		}
 
 		span {
 			text-decoration: underline;
 		}
+	}
+
+	.user-portrait img {
+		text-decoration: none;
+		vertical-align: middle;
+		width: 25px;
 	}
 
 	.impersonating-user {

@@ -14,7 +14,6 @@
 
 package com.liferay.portalweb.portal.util.browsercommands;
 
-import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
 /**
@@ -36,9 +35,7 @@ public class BrowserCommands {
 
 			Runtime runtime = Runtime.getRuntime();
 
-			String command = RuntimeVariables.replace(
-				TestPropsValues.BROWSER_COMMANDS_DIR +
-					TestPropsValues.DOWNLOAD_FILE);
+			String command = _BROWSER_COMMANDS_DIR + "download_file.exe";
 
 			runtime.exec(command);
 
@@ -60,10 +57,7 @@ public class BrowserCommands {
 			Runtime runtime = Runtime.getRuntime();
 
 			String[] commands = {
-				RuntimeVariables.replace(
-					TestPropsValues.BROWSER_COMMANDS_DIR +
-						TestPropsValues.SET_BROWSER_OPTION),
-					TestPropsValues.OUTPUT_DIR
+				_BROWSER_COMMANDS_DIR + "set_browser_option.exe", _OUTPUT_DIR
 			};
 
 			runtime.exec(commands);
@@ -75,6 +69,9 @@ public class BrowserCommands {
 		}
 	}
 
+	private static final String _BROWSER_COMMANDS_DIR =
+		TestPropsValues.BROWSER_COMMANDS_DIR;
 	private static final String _BROWSER_TYPE = TestPropsValues.BROWSER_TYPE;
+	private static final String _OUTPUT_DIR = TestPropsValues.OUTPUT_DIR;
 
 }

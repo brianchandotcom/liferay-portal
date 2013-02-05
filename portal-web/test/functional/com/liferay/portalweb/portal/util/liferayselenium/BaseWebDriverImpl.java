@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.TestPropsValues;
-import com.liferay.portalweb.portal.util.browsercommands.BrowserCommands;
 
 import java.util.Calendar;
 

@@ -465,8 +465,8 @@ public class SeleneseToJavaBuilder {
 		sb.append("import com.liferay.portalweb.portal.BaseTestCase;\n");
 		sb.append(
 			"import com.liferay.portalweb.portal.util.RuntimeVariables;\n");
-		sb.append("import com.liferay.portalweb.portal.");
-		sb.append("util.browsercommands.BrowserCommands;\n");
+		sb.append("import com.liferay.portalweb.portal.util.browsercommands.");
+		sb.append("BrowserCommands;\n");
 
 		sb.append("public class ");
 		sb.append(testName);
@@ -879,7 +879,7 @@ public class SeleneseToJavaBuilder {
 			}
 			else if (param1.equals("check") || param1.equals("click") ||
 					 param1.equals("doubleClick") ||
-					 param1.equals("downloadTempFile") || 
+					 param1.equals("downloadTempFile") ||
 					 param1.equals("mouseDown") || param1.equals("mouseMove") ||
 					 param1.equals("mouseOver") || param1.equals("mouseUp") ||
 					 param1.equals("open") || param1.equals("selectFrame") ||
@@ -902,6 +902,7 @@ public class SeleneseToJavaBuilder {
 				else {
 					sb.append("selenium.");
 				}
+
 				sb.append(param1);
 				sb.append("(");
 

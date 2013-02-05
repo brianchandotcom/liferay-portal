@@ -46,11 +46,11 @@ public class DataSourceFactoryUtil {
 
 	public static DataSource initDataSource(
 			String driverClassName, String url, String userName,
-			String password)
+			String password, String jndiName)
 		throws Exception {
 
 		return getDataSourceFactory().initDataSource(
-			driverClassName, url, userName, password);
+			driverClassName, url, userName, password, jndiName);
 	}
 
 	public static void setDataSourceFactory(

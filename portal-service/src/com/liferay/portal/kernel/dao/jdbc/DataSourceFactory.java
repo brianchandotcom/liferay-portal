@@ -29,7 +29,7 @@ public interface DataSourceFactory {
 
 	public DataSource initDataSource(
 			String driverClassName, String url, String userName,
-			String password)
+			String password, String jndiName)
 		throws Exception;
 
 }

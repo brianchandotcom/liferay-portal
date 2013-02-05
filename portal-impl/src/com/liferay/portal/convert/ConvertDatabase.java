@@ -204,9 +204,10 @@ public class ConvertDatabase extends ConvertProcess {
 		String url = values[1];
 		String userName = values[2];
 		String password = values[3];
+		String jndiName = StringPool.BLANK;
 
 		return DataSourceFactoryUtil.initDataSource(
-			driverClassName, url, userName, password);
+			driverClassName, url, userName, password, jndiName);
 	}
 
 	protected Class<?> getImplClass(String implClassName) throws Exception {

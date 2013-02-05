@@ -157,7 +157,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	public DataSource initDataSource(
 			String driverClassName, String url, String userName,
-			String password)
+			String password, String jndiName)
 		throws Exception {
 
 		Properties properties = new Properties();
@@ -166,6 +166,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		properties.setProperty("url", url);
 		properties.setProperty("username", userName);
 		properties.setProperty("password", password);
+		properties.setProperty("jndi.name", jndiName);
 
 		return initDataSource(properties);
 	}

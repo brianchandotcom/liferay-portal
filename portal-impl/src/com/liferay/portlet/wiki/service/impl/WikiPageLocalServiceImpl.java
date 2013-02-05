@@ -1585,9 +1585,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 					activity = WikiActivityKeys.UPDATE_PAGE;
 				}
 
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				extraDataJSONObject.put("version", page.getVersion());
+
 				socialActivityLocalService.addActivity(
 					userId, page.getGroupId(), WikiPage.class.getName(),
-					page.getResourcePrimKey(), activity, StringPool.BLANK, 0);
+					page.getResourcePrimKey(), activity,
+					extraDataJSONObject.toString(), 0);
 			}
 
 			// Subscriptions

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
@@ -215,7 +214,6 @@ public interface SocialActivityModel extends AttachedModel,
 	 *
 	 * @return the extra data of this social activity
 	 */
-	@AutoEscape
 	public String getExtraData();
 
 	/**

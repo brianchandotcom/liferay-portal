@@ -14,10 +14,11 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Element;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.tools.ant.DirectoryScanner;
@@ -29,6 +30,8 @@ public class SeleniumBuilderContext {
 
 	public SeleniumBuilderContext(String baseDir) throws Exception {
 		_baseDir = baseDir;
+
+		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(_baseDir);
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -48,6 +51,8 @@ public class SeleniumBuilderContext {
 
 			if (fileName.endsWith(".action")) {
 				_actionFileNames.add(fileName);
+
+				_actionRootElementMap.put(fileName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".function")) {
 				_functionFileNames.add(fileName);
@@ -74,6 +79,10 @@ public class SeleniumBuilderContext {
 		return _actionFileNames;
 	}
 
+	public Map<String, Element> getActionRootElementMap() {
+		return _actionRootElementMap;
+	}
+
 	public String getBaseDir() {
 		return _baseDir;
 	}
@@ -98,16 +107,22 @@ public class SeleniumBuilderContext {
 		return _testSuiteFileNames;
 	}
 
+	private Element _getRootElement(String fileName) throws Exception {
+		return _seleniumBuilderFileUtil.getRootElement(fileName);
+	}
+
 	private String _normalizeFileName(String fileName) {
-		return StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+		return _seleniumBuilderFileUtil.normalizeFileName(fileName);
 	}
 
 	private Set<String> _actionFileNames = new HashSet<String>();
+	private Map<String, Element> _actionRootElementMap =
+		new HashMap<String, Element>();
 	private String _baseDir;
 	private Set<String> _functionFileNames = new HashSet<String>();
 	private Set<String> _macroFileNames = new HashSet<String>();
 	private Set<String> _pathFileNames = new HashSet<String>();
+	private SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
 	private Set<String> _testCaseFileNames = new HashSet<String>();
 	private Set<String> _testSuiteFileNames = new HashSet<String>();
 

@@ -79,106 +79,65 @@ public class SampleSQLBuilder {
 
 		InitUtil.initWithSpring();
 
-		String baseDir = arguments.get("sample.sql.base.dir");
-		String dbType = arguments.get("sample.sql.db.type");
-		int maxBlogsEntryCommentCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.blogs.entry.comment.count"));
-		int maxBlogsEntryCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.blogs.entry.count"));
-		int maxDDLRecordCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.ddl.record.count"));
-		int maxDDLRecordSetCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.ddl.record.set.count"));
-		int maxDLFileEntryCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.dl.file.entry.count"));
-		int maxDLFileEntrySize = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.dl.file.entry.size"));
-		int maxDLFolderCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.dl.folder.count"));
-		int maxDLFolderDepth = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.dl.folder.depth"));
-		int maxGroupCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.group.count"));
-		int maxJournalArticleCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.journal.article.count"));
-		int maxJournalArticleSize = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.journal.article.size"));
-		int maxMBCategoryCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.mb.category.count"));
-		int maxMBMessageCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.mb.message.count"));
-		int maxMBThreadCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.mb.thread.count"));
-		int maxUserCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.user.count"));
-		int maxUserToGroupCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.user.to.group.count"));
-		int maxWikiNodeCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.wiki.node.count"));
-		int maxWikiPageCommentCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.wiki.page.comment.count"));
-		int maxWikiPageCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.wiki.page.count"));
-		int optimizeBufferSize = GetterUtil.getInteger(
-			arguments.get("sample.sql.optimize.buffer.size"));
-		String outputDir = arguments.get("sample.sql.output.dir");
-		boolean outputMerge = GetterUtil.getBoolean(
-			arguments.get("sample.sql.output.merge"));
-
-		new SampleSQLBuilder(
-			arguments, baseDir, dbType, maxBlogsEntryCommentCount,
-			maxBlogsEntryCount, maxDDLRecordCount, maxDDLRecordSetCount,
-			maxDLFileEntryCount, maxDLFileEntrySize, maxDLFolderCount,
-			maxDLFolderDepth, maxGroupCount, maxJournalArticleCount,
-			maxJournalArticleSize, maxMBCategoryCount, maxMBMessageCount,
-			maxMBThreadCount, maxUserCount, maxUserToGroupCount,
-			maxWikiNodeCount, maxWikiPageCommentCount, maxWikiPageCount,
-			optimizeBufferSize, outputDir, outputMerge);
+		new SampleSQLBuilder(arguments);
 	}
 
-	public SampleSQLBuilder(
-		Map<String, String> arguments, String baseDir, String dbType,
-		int maxBlogsEntryCommentCount, int maxBlogsEntryCount,
-		int maxDDLRecordCount, int maxDDLRecordSetCount,
-		int maxDLFileEntryCount, int maxDLFileEntrySize, int maxDLFolderCount,
-		int maxDLFolderDepth, int maxGroupCount, int maxJournalArticleCount,
-		int maxJournalArticleSize, int maxMBCategoryCount,
-		int maxMBMessageCount, int maxMBThreadCount, int maxUserCount,
-		int maxUserToGroupCount, int maxWikiNodeCount,
-		int maxWikiPageCommentCount, int maxWikiPageCount,
-		int optimizeBufferSize, String outputDir, boolean outputMerge) {
+	public SampleSQLBuilder(Map<String, String> arguments) {
 
 		try {
-			_dbType = dbType;
-			_maxBlogsEntryCommentCount = maxBlogsEntryCommentCount;
-			_maxBlogsEntryCount = maxBlogsEntryCount;
-			_maxDDLRecordCount = maxDDLRecordCount;
-			_maxDDLRecordSetCount = maxDDLRecordSetCount;
-			_maxDLFileEntryCount = maxDLFileEntryCount;
-			_maxDLFileEntrySize = maxDLFileEntrySize;
-			_maxDLFolderCount = maxDLFolderCount;
-			_maxDLFolderDepth = maxDLFolderDepth;
-			_maxGroupCount = maxGroupCount;
-			_maxJournalArticleCount = maxJournalArticleCount;
-			_maxMBCategoryCount = maxMBCategoryCount;
-			_maxMBMessageCount = maxMBMessageCount;
-			_maxMBThreadCount = maxMBThreadCount;
-			_maxUserCount = maxUserCount;
-			_maxUserToGroupCount = maxUserToGroupCount;
-			_maxWikiNodeCount = maxWikiNodeCount;
-			_maxWikiPageCommentCount = maxWikiPageCommentCount;
-			_maxWikiPageCount = maxWikiPageCount;
-			_optimizeBufferSize = optimizeBufferSize;
-			_outputDir = outputDir;
-			_outputMerge = outputMerge;
+			String baseDir = arguments.get("sample.sql.base.dir");
+			_dbType = arguments.get("sample.sql.db.type");
+			_maxBlogsEntryCommentCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.blogs.entry.comment.count"));
+			_maxBlogsEntryCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.blogs.entry.count"));
+			_maxDDLRecordCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.ddl.record.count"));
+			_maxDDLRecordSetCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.ddl.record.set.count"));
+			_maxDLFileEntryCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.dl.file.entry.count"));
+			_maxDLFileEntrySize = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.dl.file.entry.size"));
+			_maxDLFolderCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.dl.folder.count"));
+			_maxDLFolderDepth = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.dl.folder.depth"));
+			_maxGroupCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.group.count"));
+			_maxJournalArticleCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.journal.article.count"));
+			int maxJournalArticleSize = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.journal.article.size"));
+			_maxMBCategoryCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.mb.category.count"));
+			_maxMBMessageCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.mb.message.count"));
+			_maxMBThreadCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.mb.thread.count"));
+			_maxUserCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.user.count"));
+			_maxUserToGroupCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.user.to.group.count"));
+			_maxWikiNodeCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.wiki.node.count"));
+			_maxWikiPageCommentCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.wiki.page.comment.count"));
+			_maxWikiPageCount = GetterUtil.getInteger(
+				arguments.get("sample.sql.max.wiki.page.count"));
+			_optimizeBufferSize = GetterUtil.getInteger(
+				arguments.get("sample.sql.optimize.buffer.size"));
+			_outputDir = arguments.get("sample.sql.output.dir");
+			_outputMerge = GetterUtil.getBoolean(
+				arguments.get("sample.sql.output.merge"));
 
-			int totalMThreadCount = maxMBCategoryCount * maxMBThreadCount;
-			int totalMBMessageCount = totalMThreadCount * maxMBMessageCount;
+			int totalMThreadCount = _maxMBCategoryCount * _maxMBThreadCount;
+			int totalMBMessageCount = totalMThreadCount * _maxMBMessageCount;
 
 			int counterOffset =
 				_maxGroupCount +
 				(_maxGroupCount *
-					(maxMBCategoryCount + totalMThreadCount +
+					(_maxMBCategoryCount + totalMThreadCount +
 						totalMBMessageCount)
 				) + 1;
 

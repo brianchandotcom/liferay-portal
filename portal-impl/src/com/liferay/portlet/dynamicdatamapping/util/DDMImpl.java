@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CompanyConstants;
@@ -501,7 +502,7 @@ public class DDMImpl implements DDM {
 				}
 			}
 
-			if ((fieldValue == null) ||
+			if (Validator.isNull(fieldValue) ||
 				fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
 
 				return null;

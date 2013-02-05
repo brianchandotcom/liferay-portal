@@ -47,15 +47,15 @@
 				</liferay-ui:icon-menu>
 
 				<aui:button-row cssClass="tags-admin-actions">
-					<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_TAG) %>">
+					<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG) %>">
 						<aui:button cssClass="add-tag-button" name="addTagButton" value="add-tag" />
 					</c:if>
 
-					<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.PERMISSIONS) %>">
+					<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) %>">
 						<liferay-security:permissionsURL
 							modelResource="com.liferay.portlet.asset"
 							modelResourceDescription="<%= themeDisplay.getScopeGroupName() %>"
-							resourcePrimKey="<%= String.valueOf(themeDisplay.getParentGroupId()) %>"
+							resourcePrimKey="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>"
 							var="permissionsURL"
 							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 						/>

@@ -30,7 +30,7 @@ String layoutBreadcrumb = StringPool.BLANK;
 
 if (Validator.isNotNull(layoutUuid)) {
 	try {
-		selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getParentGroupId(), false);
+		selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), false);
 
 		layoutBreadcrumb = _getLayoutBreadcrumb(selLayout, locale);
 	}
@@ -39,7 +39,7 @@ if (Validator.isNotNull(layoutUuid)) {
 
 	if (selLayout == null) {
 		try {
-			selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getParentGroupId(), true);
+			selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), true);
 
 			layoutBreadcrumb = _getLayoutBreadcrumb(selLayout, locale);
 		}
@@ -48,7 +48,7 @@ if (Validator.isNotNull(layoutUuid)) {
 	}
 }
 
-Group parentGroup = themeDisplay.getParentGroup();
+Group parentGroup = themeDisplay.getSiteGroup();
 %>
 
 <liferay-ui:error-marker key="errorSection" value="display-page" />
@@ -117,7 +117,7 @@ Group parentGroup = themeDisplay.getParentGroup();
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="treeUrlPublicPages">
 				<portlet:param name="struts_action" value="/journal/select_display_page" />
 				<portlet:param name="cmd" value="<%= ActionKeys.VIEW_TREE %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
 
 				<c:if test="<%= selLayout != null && !selLayout.isPrivateLayout() %>">
 					<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
@@ -134,7 +134,7 @@ Group parentGroup = themeDisplay.getParentGroup();
 				<portlet:param name="struts_action" value="/journal/select_display_page" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= ActionKeys.VIEW_TREE %>" />
 				<portlet:param name="tabs1" value="private-pages" />
-				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
 
 				<c:if test="<%= selLayout != null && selLayout.isPrivateLayout() %>">
 					<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />

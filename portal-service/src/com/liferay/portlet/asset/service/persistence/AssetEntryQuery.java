@@ -134,7 +134,7 @@ public class AssetEntryQuery {
 
 		if (Validator.isNotNull(tagName)) {
 			_allTagIds = AssetTagLocalServiceUtil.getTagIds(
-				themeDisplay.getParentGroupId(), new String[] {tagName});
+				themeDisplay.getSiteGroupId(), new String[] {tagName});
 
 			_allTagIdsArray = new long[][] {_allTagIds};
 		}

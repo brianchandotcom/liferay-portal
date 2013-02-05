@@ -168,10 +168,13 @@
 					return "<%= themeDisplay.getScopeGroupId() %>";
 				},
 				getScopeGroupIdOrLiveGroupId: function() {
-					return "<%= themeDisplay.getScopeGroupIdOrLiveGroupId() %>";
+					return "<%= themeDisplay.getSiteGroupIdOrLiveGroupId() %>";
+				},
+				getSiteGroupId: function() {
+					return "<%= themeDisplay.getSiteGroupId() %>";
 				},
 				getParentGroupId: function() {
-					return "<%= themeDisplay.getParentGroupId() %>";
+					return "<%= themeDisplay.getSiteGroupId() %>";
 				},
 				isImpersonated: function() {
 					return <%= themeDisplay.isImpersonated() %>;

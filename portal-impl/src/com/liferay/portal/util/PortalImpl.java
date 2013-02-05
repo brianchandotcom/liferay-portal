@@ -2857,22 +2857,13 @@ public class PortalImpl implements Portal {
 		return originalRequest;
 	}
 
+	/**
+	 * @deprecated As of 6.2 renamed to #getSiteGroupId(groupId)
+	 */
 	public long getParentGroupId(long groupId)
 		throws PortalException, SystemException {
 
-		if (groupId <= 0) {
-			return 0;
-		}
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		long parentGroupId = groupId;
-
-		if (group.isLayout()) {
-			parentGroupId = group.getParentGroupId();
-		}
-
-		return parentGroupId;
+		return getSiteGroupId(groupId);
 	}
 
 	public String getPathContext() {
@@ -3884,6 +3875,24 @@ public class PortalImpl implements Portal {
 		throws PortalException, SystemException {
 
 		return getSiteAndCompanyGroupIds(themeDisplay.getScopeGroupId());
+	}
+
+	public long getSiteGroupId(long groupId)
+		throws PortalException, SystemException {
+
+		if (groupId <= 0) {
+			return 0;
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		long siteGroupId = groupId;
+
+		if (group.isLayout()) {
+			siteGroupId = group.getParentGroupId();
+		}
+
+		return siteGroupId;
 	}
 
 	public String getSiteLoginURL(ThemeDisplay themeDisplay)

@@ -170,7 +170,7 @@ public class InputPermissionsParamsTagUtil {
 
 		if (groupDefaultActions.contains(ActionKeys.VIEW)) {
 			Group parentGroup = GroupLocalServiceUtil.getGroup(
-				themeDisplay.getParentGroupId());
+				themeDisplay.getSiteGroupId());
 
 			Role defaultGroupRole = RoleLocalServiceUtil.getDefaultGroupRole(
 				parentGroup.getGroupId());

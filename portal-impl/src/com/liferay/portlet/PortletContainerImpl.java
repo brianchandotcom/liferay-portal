@@ -330,8 +330,10 @@ public class PortletContainerImpl implements PortletContainer {
 
 		long scopeGroupId = PortalUtil.getScopeGroupId(
 			request, portlet.getPortletId());
+		long siteGroupId = PortalUtil.getSiteGroupId(scopeGroupId);
 
 		themeDisplay.setScopeGroupId(scopeGroupId);
+		themeDisplay.setSiteGroupId(siteGroupId);
 
 		if (user != null) {
 			HttpSession session = request.getSession();

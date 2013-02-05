@@ -1274,7 +1274,7 @@ public abstract class BaseIndexer implements Indexer {
 			groupedModel = (GroupedModel)baseModel;
 
 			document.addKeyword(
-				Field.GROUP_ID, getParentGroupId(groupedModel.getGroupId()));
+				Field.GROUP_ID, getSiteGroupId(groupedModel.getGroupId()));
 			document.addKeyword(
 				Field.SCOPE_GROUP_ID, groupedModel.getGroupId());
 		}
@@ -1318,23 +1318,30 @@ public abstract class BaseIndexer implements Indexer {
 		return countryNames;
 	}
 
+	/**
+	 * @deprecated As of 6.2 renamed to {@link #getSiteGroupId(long)}
+	 */
 	protected long getParentGroupId(long groupId) {
-		long parentGroupId = groupId;
+		return getSiteGroupId(groupId);
+	}
+
+	protected abstract String getPortletId(SearchContext searchContext);
+
+	protected long getSiteGroupId(long groupId) {
+		long siteGroupId = groupId;
 
 		try {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 			if (group.isLayout()) {
-				parentGroupId = group.getParentGroupId();
+				siteGroupId = group.getParentGroupId();
 			}
 		}
 		catch (Exception e) {
 		}
 
-		return parentGroupId;
+		return siteGroupId;
 	}
-
-	protected abstract String getPortletId(SearchContext searchContext);
 
 	protected Locale getSnippetLocale(Document document, Locale locale) {
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;

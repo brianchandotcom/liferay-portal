@@ -15,7 +15,7 @@
 --%>
 
 <%
-long groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+long groupId = themeDisplay.getSiteGroupIdOrLiveGroupId();
 
 List<WorkflowHandler> workflowHandlers = null;
 

@@ -585,7 +585,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		// Tags
 
 		if (tagNames != null) {
-			long parentGroupId = PortalUtil.getParentGroupId(groupId);
+			long siteGroupId = PortalUtil.getSiteGroupId(groupId);
 
 			List<AssetTag> tags = new ArrayList<AssetTag>(tagNames.length);
 
@@ -593,14 +593,14 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				AssetTag tag = null;
 
 				try {
-					tag = assetTagLocalService.getTag(parentGroupId, tagName);
+					tag = assetTagLocalService.getTag(siteGroupId, tagName);
 				}
 				catch (NoSuchTagException nste) {
 					ServiceContext serviceContext = new ServiceContext();
 
 					serviceContext.setAddGroupPermissions(true);
 					serviceContext.setAddGuestPermissions(true);
-					serviceContext.setScopeGroupId(parentGroupId);
+					serviceContext.setScopeGroupId(siteGroupId);
 
 					tag = assetTagLocalService.addTag(
 						user.getUserId(), tagName,

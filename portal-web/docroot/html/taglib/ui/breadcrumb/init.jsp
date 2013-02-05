@@ -199,9 +199,9 @@ private void _buildPortletBreadcrumb(HttpServletRequest request, boolean showCur
 		String breadcrumbURL = breadcrumbEntry.getURL();
 
 		if (!showCurrentGroup) {
-			String parentGroupName = themeDisplay.getParentGroupName();
+			String siteGroupName = themeDisplay.getSiteGroupName();
 
-			if (parentGroupName.equals(breadcrumbTitle)) {
+			if (siteGroupName.equals(breadcrumbTitle)) {
 				continue;
 			}
 		}

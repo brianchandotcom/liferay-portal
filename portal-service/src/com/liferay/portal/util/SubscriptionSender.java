@@ -316,7 +316,7 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	/**
-	 * @see com.liferay.portal.kernel.search.BaseIndexer#getParentGroupId(long)
+	 * @see com.liferay.portal.kernel.search.BaseIndexer#getSiteGroupId(long)
 	 */
 	public void setScopeGroupId(long scopeGroupId) {
 		try {

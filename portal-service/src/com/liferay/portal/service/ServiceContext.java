@@ -126,12 +126,12 @@ public class ServiceContext implements Cloneable, Serializable {
 	public void deriveDefaultPermissions(long repositoryId, String modelName)
 		throws PortalException, SystemException {
 
-		long parentGroupId = PortalUtil.getParentGroupId(repositoryId);
+		long siteGroupId = PortalUtil.getSiteGroupId(repositoryId);
 
-		Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
+		Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
 
 		Role defaultGroupRole = RoleLocalServiceUtil.getDefaultGroupRole(
-			parentGroupId);
+			siteGroupId);
 
 		List<String> groupPermissions = new ArrayList<String>();
 		List<String> guestPermissions = new ArrayList<String>();
@@ -153,7 +153,7 @@ public class ServiceContext implements Cloneable, Serializable {
 				if (roleName.equals(RoleConstants.GUEST) &&
 					!guestUnsupportedActions.contains(action) &&
 					guestDefaultActions.contains(action) &&
-					parentGroup.hasPublicLayouts()) {
+					siteGroup.hasPublicLayouts()) {
 
 					guestPermissions.add(action);
 				}

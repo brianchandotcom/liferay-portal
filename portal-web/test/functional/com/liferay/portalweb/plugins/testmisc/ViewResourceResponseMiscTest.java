@@ -16,6 +16,7 @@ package com.liferay.portalweb.plugins.testmisc;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
+import com.liferay.portalweb.portal.util.browsercommands.BrowserCommands;
 
 /**
  * @author Brian Wing Shun Chan
@@ -37,7 +38,7 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 			selenium.getText("//p[4]/a[2]"));
 		selenium.clickAt("//p[4]/a[2]",
 			RuntimeVariables.replace("Download File"));
-		selenium.downloadTempFile("logo(3).png");
+		BrowserCommands.downloadTempFile("logo(3).png");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));

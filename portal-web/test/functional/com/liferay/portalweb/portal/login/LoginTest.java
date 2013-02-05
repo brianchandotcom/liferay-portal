@@ -16,6 +16,7 @@ package com.liferay.portalweb.portal.login;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
+import com.liferay.portalweb.portal.util.browsercommands.BrowserCommands;
 
 /**
  * @author Brian Wing Shun Chan
@@ -46,6 +47,6 @@ public class LoginTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@value='Save']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.setBrowserOption();
+		BrowserCommands.setBrowserOption();
 	}
 }

@@ -925,6 +925,15 @@
 		<struts-path>asset_publisher</struts-path>
 		<configuration-action-class>com.liferay.portlet.assetpublisher.action.ConfigurationActionImpl</configuration-action-class>
 		<indexer-class>com.liferay.portlet.assetpublisher.util.AssetIndexer</indexer-class>
+		<scheduler-entry>
+			<scheduler-event-listener-class>com.liferay.portlet.assetpublisher.messaging.AssetPublisherNotificationListener</scheduler-event-listener-class>
+			<trigger>
+				<simple>
+					<property-key>asset.publisher.notification.interval</property-key>
+					<time-unit>hour</time-unit>
+				</simple>
+			</trigger>
+		</scheduler-entry>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>asset_publisher</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/assetpublisher/asset-publisher-friendly-url-routes.xml</friendly-url-routes>

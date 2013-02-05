@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
@@ -92,10 +91,10 @@ public class AnnouncementsEntryPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
-		if (actionId.equals(ActionKeys.ADD_ENTRY) &&
-			(layout instanceof VirtualLayout)) {
+		if (layout instanceof VirtualLayout) {
+			VirtualLayout virtualLayout = (VirtualLayout)layout;
 
-			return false;
+			layout = virtualLayout.getSourceLayout();
 		}
 
 		if (permissionChecker.isGroupAdmin(layout.getGroupId()) ||

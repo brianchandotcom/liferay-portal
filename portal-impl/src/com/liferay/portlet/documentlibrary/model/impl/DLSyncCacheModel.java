@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 /**
  * The cache model class for representing DLSync in entity cache.
  *
@@ -75,21 +73,8 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Externalizable {
 
 		dlSyncImpl.setSyncId(syncId);
 		dlSyncImpl.setCompanyId(companyId);
-
-		if (createDate == Long.MIN_VALUE) {
-			dlSyncImpl.setCreateDate(null);
-		}
-		else {
-			dlSyncImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			dlSyncImpl.setModifiedDate(null);
-		}
-		else {
-			dlSyncImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
+		dlSyncImpl.setCreateDate(createDate);
+		dlSyncImpl.setModifiedDate(modifiedDate);
 		dlSyncImpl.setFileId(fileId);
 
 		if (fileUuid == null) {

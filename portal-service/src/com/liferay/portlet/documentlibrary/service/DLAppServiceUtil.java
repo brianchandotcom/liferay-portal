@@ -2046,12 +2046,32 @@ public class DLAppServiceUtil {
 		return getService().search(repositoryId, searchContext, query);
 	}
 
+	/**
+	* Subscribe the user to changes in documents of the file entry type. This
+	* method is only supported by the Liferay repository.
+	*
+	* @param groupId the primary key of the file entry type's group
+	* @param fileEntryTypeId the primary key of the file entry type
+	* @throws PortalException if the user or group could not be found, or if
+	subscribing was not permissible
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void subscribeFileEntryType(long groupId, long fileEntryTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().subscribeFileEntryType(groupId, fileEntryTypeId);
 	}
 
+	/**
+	* Subscribe the user to document changes in the folder. This method is only
+	* supported by the Liferay repository.
+	*
+	* @param groupId the primary key of the folder's group
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the user or group could not be found, or if
+	subscribing was not permissible
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void subscribeFolder(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -2111,6 +2131,16 @@ public class DLAppServiceUtil {
 		getService().unlockFolder(repositoryId, parentFolderId, name, lockUuid);
 	}
 
+	/**
+	* Unsubscribe the user from changes in documents of the file entry type.
+	* This method is only supported by the Liferay repository.
+	*
+	* @param groupId the primary key of the file entry type's group
+	* @param fileEntryTypeId the primary key of the file entry type
+	* @throws PortalException if the user or group could not be found, or if
+	unsubscribing was not permissible
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void unsubscribeFileEntryType(long groupId,
 		long fileEntryTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -2118,6 +2148,16 @@ public class DLAppServiceUtil {
 		getService().unsubscribeFileEntryType(groupId, fileEntryTypeId);
 	}
 
+	/**
+	* Unsubscribe the user from document changes in the folder. This method is
+	* only supported by the Liferay repository.
+	*
+	* @param groupId the primary key of the folder's group
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the user or group could not be found, or if
+	unsubscribing was not permissible
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void unsubscribeFolder(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

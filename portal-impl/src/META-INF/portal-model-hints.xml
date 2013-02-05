@@ -1473,8 +1473,8 @@
 	<model name="com.liferay.portlet.documentlibrary.model.DLSync">
 		<field name="syncId" type="long" />
 		<field name="companyId" type="long" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
+		<field name="createDate" type="long" />
+		<field name="modifiedDate" type="long" />
 		<field name="fileId" type="long" />
 		<field name="fileUuid" type="String" />
 		<field name="repositoryId" type="long" />

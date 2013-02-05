@@ -65,7 +65,7 @@ import java.rmi.RemoteException;
  */
 public class DLSyncServiceSoap {
 	public static com.liferay.portlet.documentlibrary.model.DLSyncUpdate getDLSyncUpdate(
-		long companyId, long repositoryId, java.util.Date lastAccessDate)
+		long companyId, long repositoryId, long lastAccessDate)
 		throws RemoteException {
 		try {
 			com.liferay.portlet.documentlibrary.model.DLSyncUpdate returnValue = DLSyncServiceUtil.getDLSyncUpdate(companyId,

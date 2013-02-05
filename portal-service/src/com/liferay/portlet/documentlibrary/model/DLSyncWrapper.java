@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.model;
 
 import com.liferay.portal.model.ModelWrapper;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,13 +74,13 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 			setCompanyId(companyId);
 		}
 
-		Date createDate = (Date)attributes.get("createDate");
+		Long createDate = (Long)attributes.get("createDate");
 
 		if (createDate != null) {
 			setCreateDate(createDate);
 		}
 
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
+		Long modifiedDate = (Long)attributes.get("modifiedDate");
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
@@ -201,7 +200,7 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 	*
 	* @return the create date of this d l sync
 	*/
-	public java.util.Date getCreateDate() {
+	public long getCreateDate() {
 		return _dlSync.getCreateDate();
 	}
 
@@ -210,7 +209,7 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 	*
 	* @param createDate the create date of this d l sync
 	*/
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(long createDate) {
 		_dlSync.setCreateDate(createDate);
 	}
 
@@ -219,7 +218,7 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 	*
 	* @return the modified date of this d l sync
 	*/
-	public java.util.Date getModifiedDate() {
+	public long getModifiedDate() {
 		return _dlSync.getModifiedDate();
 	}
 
@@ -228,7 +227,7 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 	*
 	* @param modifiedDate the modified date of this d l sync
 	*/
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(long modifiedDate) {
 		_dlSync.setModifiedDate(modifiedDate);
 	}
 

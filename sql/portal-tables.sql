@@ -689,8 +689,8 @@ create table DLFolder (
 create table DLSync (
 	syncId LONG not null primary key,
 	companyId LONG,
-	createDate DATE null,
-	modifiedDate DATE null,
+	createDate LONG,
+	modifiedDate LONG,
 	fileId LONG,
 	fileUuid VARCHAR(75) null,
 	repositoryId LONG,

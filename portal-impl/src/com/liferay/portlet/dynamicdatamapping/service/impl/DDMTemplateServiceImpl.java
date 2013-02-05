@@ -264,6 +264,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  templateKey the unique string identifying the template
 	 * @return the matching template, or <code>null</code> if a matching
 	 *         template could not be found
+	 * @throws PortalException if the user did not have permission to delete the
+	 *         template
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMTemplate fetchTemplate(long groupId, String templateKey)
@@ -388,12 +390,11 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * Returns all the templates matching the class name ID, class PK, type, and
 	 * mode.
 	 *
+	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the entity's instance the template
 	 *         is related to
 	 * @param  classPK the primary key of the template's related entity
 	 * @param  type the template's type. For more information, see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
-	 * @param  mode the template's mode. For more information, see {@link
 	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	 * @return the matching templates
 	 * @throws SystemException if a system exception occurred
@@ -431,7 +432,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the template's company
-	 * @param  groupId the primary keys of the group
+	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the entity's instance the
 	 *         templates are related to
 	 * @param  classPK the primary key of the template's related entity
@@ -478,7 +479,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the template's company
-	 * @param  groupId the primary keys of the group
+	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the entity's instance the
 	 *         templates are related to
 	 * @param  classPK the primary key of the template's related entity
@@ -623,7 +624,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * descriptions.
 	 *
 	 * @param  companyId the primary key of the template's company
-	 * @param  groupId the primary keys of the group
+	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the entity's instance the
 	 *         templates are related to
 	 * @param  classPK the primary key of the template's related entity
@@ -652,7 +653,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * PK, name keyword, description keyword, type, mode, and language.
 	 *
 	 * @param  companyId the primary key of the template's company
-	 * @param  groupId the primary keys of the group
+	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the entity's instance the
 	 *         templates are related to
 	 * @param  classPK the primary key of the template's related entity

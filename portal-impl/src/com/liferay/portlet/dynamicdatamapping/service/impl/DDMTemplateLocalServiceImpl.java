@@ -622,8 +622,10 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	/**
-	 * Returns all the templates matching the class name ID, class PK, and type.
+	 * Returns all the templates matching the group, class name ID, class PK,
+	 * and type.
 	 *
+	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the entity's instance the template
 	 *         is related to
 	 * @param  classPK the primary key of the template's related entity
@@ -641,9 +643,10 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	/**
-	 * Returns all the templates matching the class name ID, class PK, type, and
-	 * mode.
+	 * Returns all the templates matching the group, class name ID, class PK,
+	 * type, and mode.
 	 *
+	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the entity's instance the template
 	 *         is related to
 	 * @param  classPK the primary key of the template's related entity

@@ -879,7 +879,7 @@ public class JavadocFormatter {
 
 		String comment = rootElement.elementText("comment");
 
-		if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
+		if (Validator.isNotNull(comment)) {
 			sb.append(_wrapText(comment, indent + " * "));
 		}
 
@@ -1062,7 +1062,7 @@ public class JavadocFormatter {
 
 		String comment = fieldElement.elementText("comment");
 
-		if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
+		if (Validator.isNotNull(comment)) {
 			sb.append(_wrapText(comment, indent + " * "));
 		}
 
@@ -1119,7 +1119,7 @@ public class JavadocFormatter {
 
 		String comment = methodElement.elementText("comment");
 
-		if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
+		if (Validator.isNotNull(comment)) {
 			sb.append(_wrapText(comment, indent + " * "));
 		}
 

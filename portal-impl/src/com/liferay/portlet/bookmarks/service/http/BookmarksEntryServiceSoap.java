@@ -276,6 +276,22 @@ public class BookmarksEntryServiceSoap {
 	}
 
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntrySoap openEntry(
+		com.liferay.portlet.bookmarks.model.BookmarksEntrySoap entry)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.bookmarks.model.BookmarksEntry returnValue = BookmarksEntryServiceUtil.openEntry(com.liferay.portlet.bookmarks.model.impl.BookmarksEntryModelImpl.toModel(
+						entry));
+
+			return com.liferay.portlet.bookmarks.model.BookmarksEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.bookmarks.model.BookmarksEntrySoap openEntry(
 		long entryId) throws RemoteException {
 		try {
 			com.liferay.portlet.bookmarks.model.BookmarksEntry returnValue = BookmarksEntryServiceUtil.openEntry(entryId);

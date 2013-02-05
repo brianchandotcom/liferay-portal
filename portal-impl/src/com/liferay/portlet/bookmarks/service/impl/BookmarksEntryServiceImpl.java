@@ -171,6 +171,15 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 		bookmarksEntryLocalService.moveEntryToTrash(getUserId(), entryId);
 	}
 
+	public BookmarksEntry openEntry(BookmarksEntry entry)
+		throws PortalException, SystemException {
+
+		BookmarksEntryPermission.check(
+			getPermissionChecker(), entry, ActionKeys.VIEW);
+
+		return bookmarksEntryLocalService.openEntry(getGuestOrUserId(), entry);
+	}
+
 	public BookmarksEntry openEntry(long entryId)
 		throws PortalException, SystemException {
 

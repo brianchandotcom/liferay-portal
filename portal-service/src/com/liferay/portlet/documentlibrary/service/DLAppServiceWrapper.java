@@ -851,14 +851,6 @@ public class DLAppServiceWrapper implements DLAppService,
 		return _dlAppService.getFileEntry(groupId, folderId, title);
 	}
 
-	public long[] getFileEntryByShortcutId(long[] fileEntryIds,
-		long[] fileShortcutIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlAppService.getFileEntryByShortcutId(fileEntryIds,
-			fileShortcutIds);
-	}
-
 	/**
 	* Returns the file entry with the UUID and group.
 	*

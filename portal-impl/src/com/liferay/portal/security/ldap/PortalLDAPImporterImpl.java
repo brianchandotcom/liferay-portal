@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -860,19 +861,20 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 		addUserGroupsNotAddedByLDAPImport(user.getUserId(), newUserGroupIds);
 
-		for (long newUserGroupId : newUserGroupIds) {
-			UserLocalServiceUtil.addUserGroupUsers(
-				newUserGroupId, new long[] {user.getUserId()});
-		}
+		Set<Long> oldUserGroupIds = new LinkedHashSet<Long>();
 
-		List<UserGroup> userUserGroups =
+		List<UserGroup> oldUserGroups =
 			UserGroupLocalServiceUtil.getUserUserGroups(user.getUserId());
 
-		for (UserGroup userGroup : userUserGroups) {
-			if (!newUserGroupIds.contains(userGroup.getUserGroupId())) {
-				UserLocalServiceUtil.deleteUserGroupUser(
-					userGroup.getUserGroupId(), user.getUserId());
-			}
+		for (UserGroup oldUserGroup : oldUserGroups) {
+			oldUserGroupIds.add(oldUserGroup.getUserGroupId());
+		}
+
+		if (!oldUserGroupIds.equals(newUserGroupIds)) {
+			long[] userGroupIds = ArrayUtil.toLongArray(newUserGroupIds);
+
+			UserGroupLocalServiceUtil.setUserUserGroups(
+				user.getUserId(), userGroupIds);
 		}
 	}
 

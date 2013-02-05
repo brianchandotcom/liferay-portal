@@ -92,116 +92,70 @@ public class ATag extends BaseATag {
 		if (Validator.isNotNull(href)) {
 			jspWriter.write("<a ");
 
-			if (Validator.isNotNull(cssClass)) {
-				jspWriter.write("class=\"");
-				jspWriter.write(cssClass);
-				jspWriter.write("\" ");
-			}
-
 			jspWriter.write("href=\"");
 			jspWriter.write(HtmlUtil.escape(href));
 			jspWriter.write("\" ");
-
-			if (Validator.isNotNull(id)) {
-				jspWriter.write("id=\"");
-				jspWriter.write(namespace);
-				jspWriter.write(id);
-				jspWriter.write("\" ");
-			}
-
-			if (Validator.isNotNull(lang)) {
-				jspWriter.write("lang=\"");
-				jspWriter.write(lang);
-				jspWriter.write("\" ");
-			}
-
-			if (Validator.isNotNull(onClick)) {
-				jspWriter.write("onClick=\"");
-				jspWriter.write(onClick);
-				jspWriter.write("\" ");
-			}
 
 			if (Validator.isNotNull(target)) {
 				jspWriter.write("target=\"");
 				jspWriter.write(target);
 				jspWriter.write("\" ");
 			}
-
-			if (Validator.isNotNull(title) || isOpensNewWindow()) {
-				jspWriter.write("title=\"");
-
-				if (Validator.isNotNull(title)) {
-					jspWriter.write(LanguageUtil.get(pageContext, title));
-				}
-
-				if (isOpensNewWindow()) {
-					jspWriter.write(
-						LanguageUtil.get(pageContext, "opens-new-window"));
-				}
-
-				jspWriter.write("\" ");
-			}
-
-			if (data != null) {
-				jspWriter.write(AUIUtil.buildData(data));
-			}
-
-			_writeDynamicAttributes(jspWriter);
-
-			jspWriter.write(">");
-
-			if (Validator.isNotNull(label)) {
-				jspWriter.write(LanguageUtil.get(pageContext, label));
-			}
 		}
 		else {
 			jspWriter.write("<span ");
+		}
 
-			if (Validator.isNotNull(cssClass)) {
-				jspWriter.write("class=\"");
-				jspWriter.write(cssClass);
-				jspWriter.write("\" ");
+		if (Validator.isNotNull(cssClass)) {
+			jspWriter.write("class=\"");
+			jspWriter.write(cssClass);
+			jspWriter.write("\" ");
+		}
+
+		if (Validator.isNotNull(id)) {
+			jspWriter.write("id=\"");
+			jspWriter.write(namespace);
+			jspWriter.write(id);
+			jspWriter.write("\" ");
+		}
+
+		if (Validator.isNotNull(lang)) {
+			jspWriter.write("lang=\"");
+			jspWriter.write(lang);
+			jspWriter.write("\" ");
+		}
+
+		if (Validator.isNotNull(onClick)) {
+			jspWriter.write("onClick=\"");
+			jspWriter.write(onClick);
+			jspWriter.write("\" ");
+		}
+
+		if (Validator.isNotNull(title) || isOpensNewWindow()) {
+			jspWriter.write("title=\"");
+
+			if (Validator.isNotNull(title)) {
+				jspWriter.write(LanguageUtil.get(pageContext, title));
 			}
 
-			if (Validator.isNotNull(id)) {
-				jspWriter.write("id=\"");
-				jspWriter.write(namespace);
-				jspWriter.write(id);
-				jspWriter.write("\" ");
+			if (isOpensNewWindow()) {
+				jspWriter.write(
+					LanguageUtil.get(pageContext, "opens-new-window"));
 			}
 
-			if (Validator.isNotNull(lang)) {
-				jspWriter.write("lang=\"");
-				jspWriter.write(lang);
-				jspWriter.write("\" ");
-			}
+			jspWriter.write("\" ");
+		}
 
-			if (Validator.isNotNull(title) || isOpensNewWindow()) {
-				jspWriter.write("title=\"");
+		if (data != null) {
+			jspWriter.write(AUIUtil.buildData(data));
+		}
 
-				if (Validator.isNotNull(title)) {
-					jspWriter.write(LanguageUtil.get(pageContext, title));
-				}
+		_writeDynamicAttributes(jspWriter);
 
-				if (isOpensNewWindow()) {
-					jspWriter.write(
-						LanguageUtil.get(pageContext, "opens-new-window"));
-				}
+		jspWriter.write(">");
 
-				jspWriter.write("\" ");
-			}
-
-			if (data != null) {
-				jspWriter.write(AUIUtil.buildData(data));
-			}
-
-			_writeDynamicAttributes(jspWriter);
-
-			jspWriter.write(">");
-
-			if (Validator.isNotNull(label)) {
-				jspWriter.write(LanguageUtil.get(pageContext, label));
-			}
+		if (Validator.isNotNull(label)) {
+			jspWriter.write(LanguageUtil.get(pageContext, label));
 		}
 
 		return EVAL_BODY_INCLUDE;

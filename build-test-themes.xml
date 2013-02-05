@@ -4,7 +4,9 @@
 	<import file="build-test.xml" />
 
 	<target name="run-themes-jboss-mysql">
-		<antcall target="prepare-mysql" />
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
+		</antcall>
 
 		<exec dir="${lp.plugins.dir}" executable="cmd.exe">
 			<arg line="/c svn --username ${svn.username} --password ${svn.password} update" />
@@ -17,7 +19,9 @@
 	</target>
 
 	<target name="run-themes-tomcat-mysql">
-		<antcall target="prepare-mysql" />
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
+		</antcall>
 
 		<exec dir="${lp.plugins.dir}" executable="cmd.exe">
 			<arg line="/c svn --username ${svn.username} --password ${svn.password} update" />

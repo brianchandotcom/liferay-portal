@@ -17,7 +17,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -41,7 +42,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -66,7 +68,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -90,7 +93,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -115,7 +119,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -139,7 +144,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -164,7 +170,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -188,7 +195,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -213,7 +221,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -237,7 +246,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -269,7 +279,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-db2">
+		<antcall target="prepare-common">
+			<param name="db.type" value="db2" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -304,7 +315,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-db2">
+		<antcall target="prepare-common">
+			<param name="db.type" value="db2" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -368,7 +380,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-hsql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="hsql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -392,7 +405,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-hsql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="hsql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -417,7 +431,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -441,7 +456,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -466,7 +482,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -491,7 +508,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -516,7 +534,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -542,7 +561,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -575,7 +595,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-oracle-10">
+		<antcall target="prepare-common">
+			<param name="db.type" value="oracle-10" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -610,7 +631,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-oracle-10">
+		<antcall target="prepare-common">
+			<param name="db.type" value="oracle-10" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -646,7 +668,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-oracle-11">
+		<antcall target="prepare-common">
+			<param name="db.type" value="oracle-11" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -681,7 +704,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-oracle-11">
+		<antcall target="prepare-common">
+			<param name="db.type" value="oracle-11" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -717,7 +741,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-postgresql-8.4">
+		<antcall target="prepare-common">
+			<param name="db.type" value="postgresql-8.4" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -752,7 +777,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-postgresql-8.4">
+		<antcall target="prepare-common">
+			<param name="db.type" value="postgresql-8.4" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -788,7 +814,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-postgresql-9.0">
+		<antcall target="prepare-common">
+			<param name="db.type" value="postgresql-9.0" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -823,7 +850,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-postgresql-9.0">
+		<antcall target="prepare-common">
+			<param name="db.type" value="postgresql-9.0" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -859,7 +887,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-sql-server-2005">
+		<antcall target="prepare-common">
+			<param name="db.type" value="sql-server-2005" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -894,7 +923,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-sql-server-2005">
+		<antcall target="prepare-common">
+			<param name="db.type" value="sql-server-2005" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -930,7 +960,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-sql-server-2008">
+		<antcall target="prepare-common">
+			<param name="db.type" value="sql-server-2008" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -965,7 +996,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-sql-server-2008">
+		<antcall target="prepare-common">
+			<param name="db.type" value="sql-server-2008" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -1001,7 +1033,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-sybase">
+		<antcall target="prepare-common">
+			<param name="db.type" value="sybase" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -1036,7 +1069,8 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-sybase">
+		<antcall target="prepare-common">
+			<param name="db.type" value="sybase" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -1065,7 +1099,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -1089,7 +1124,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -1114,7 +1150,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 			<param name="vm.vmdk.suffix" value="websphere-6.1.0.27" />
 		</antcall>
@@ -1139,7 +1176,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 			<param name="vm.vmdk.suffix" value="websphere-6.1.0.27" />
 		</antcall>
@@ -1164,7 +1202,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -1188,7 +1227,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 			<param name="vm.vmdk.suffix" value="websphere-8.0.0.0" />
 		</antcall>
@@ -1213,7 +1253,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -1238,7 +1279,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 			<param name="vm.vmdk.suffix" value="websphere-8.0.0.0" />
 		</antcall>

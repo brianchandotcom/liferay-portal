@@ -8,7 +8,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			<param name="custom.properties" value="counter.increment=5" />
 		</antcall>
 

@@ -8,7 +8,9 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql" />
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
+		</antcall>
 
 		<antcall target="run-cluster-tomcat">
 			<param name="test.ant.script.suite.1" value="${test.ant.script.suite.1}" />

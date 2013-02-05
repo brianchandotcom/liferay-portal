@@ -8,7 +8,9 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql" />
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
+		</antcall>
 
 		<antcall target="run-ldap-tomcat">
 			<param name="test.name" value="${test.ant.script.suite}" />

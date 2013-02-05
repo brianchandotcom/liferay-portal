@@ -30,7 +30,9 @@
 
 		<antcall target="clean-up-plugins" />
 
-		<antcall target="prepare-mysql" />
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
+		</antcall>
 
 		<antcall target="rebuild-database">
 			<param name="test.database.minimal" value="true" />
@@ -46,7 +48,9 @@
 
 		<antcall target="clean-up-plugins" />
 
-		<antcall target="prepare-${db.type}" />
+		<antcall target="prepare-common">
+			<param name="db.type" value="${db.type}" />
+		</antcall>
 
 		<antcall target="prepare-database-jars" />
 

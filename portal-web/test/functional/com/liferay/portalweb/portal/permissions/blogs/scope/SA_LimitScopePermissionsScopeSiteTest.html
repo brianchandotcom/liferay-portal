@@ -14,6 +14,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
@@ -60,7 +80,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Limit Scope</td>
+	<td>//tr[4]/td[4]/span/a/span</td>
 	<td>Limit Scope</td>
 </tr>
 <tr>
@@ -69,24 +89,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>null</td>
-	<td>30000</td>
-</tr>
-<tr>
 	<td>selectWindow</td>
 	<td>title=Roles</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='_128_name']</td>
+	<td>//input[@name='_128_keywords']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_128_name']</td>
-	<td>Scope Site</td>
+	<td>//input[@name='_128_keywords']</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -94,9 +109,14 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]/a</td>
+	<td>Site Name</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>link=Scope Site</td>
-	<td>Scope Site</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]/a</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -110,18 +130,23 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span</td>
-	<td>Scope Site</td>
+	<td>//span[@class='lfr-token-text']</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span</td>
-	<td>Scope Site</td>
+	<td>//span[@class='lfr-token-text']</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>The role permissions were updated.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -140,18 +165,18 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//td/input</td>
+	<td>//tr[4]/td/input</td>
 	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
+	<td>//tr[4]/td[2]</td>
 	<td>Add Entry</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]</td>
-	<td>Scope Site</td>
+	<td>//tr[4]/td[3]</td>
+	<td>Site Name</td>
 </tr>
 </tbody></table>
 </body>

@@ -30,17 +30,20 @@ public class Portlet_AssertCannotAddCommentTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Blogs Permissions Page");
-				selenium.clickAt("link=Blogs Permissions Page",
-					RuntimeVariables.replace("Blogs Permissions Page"));
+				selenium.clickAt("link=Blogs Test Page",
+					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible("//div[@class='entry-title']/h2/a");
+				assertEquals(RuntimeVariables.replace(
+						"Blogs Entry Title Temporary"),
+					selenium.getText("//div[@class='entry-title']/h2/a"));
 				selenium.clickAt("//div[@class='entry-title']/h2/a",
 					RuntimeVariables.replace("Blogs Entry Title Temporary"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForText("//div[@class='lfr-panel-title']/span",
-					"Comments");
+				selenium.waitForVisible("//div[@class='lfr-panel-title']/span");
 				assertEquals(RuntimeVariables.replace("Comments"),
 					selenium.getText("//div[@class='lfr-panel-title']/span"));
+				Thread.sleep(1000);
 
 				boolean blogCommentsExpanded = selenium.isVisible(
 						"//input[@class='form-text lfr-input-resource ']");
@@ -51,8 +54,9 @@ public class Portlet_AssertCannotAddCommentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//div[@class='lfr-panel-title']/span[contains(text(),'Comments')]",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//div[@class='lfr-panel-title']/span[contains(.,'Comments')]",
+					RuntimeVariables.replace("Comments"));
+				Thread.sleep(1000);
 
 			case 2:
 				assertTrue(selenium.isElementNotPresent("link=Add Comment"));

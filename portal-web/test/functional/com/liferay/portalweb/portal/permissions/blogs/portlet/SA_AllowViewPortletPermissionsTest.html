@@ -14,18 +14,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
+	<td>link=Blogs Test Page</td>
+	<td>Blogs Test Page</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -37,11 +32,6 @@
 	<td>clickAt</td>
 	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -60,38 +50,63 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Permissions</td>
-	<td>Permissions</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Permissions</td>
-	<td>Permissions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//iframe[@id='_33_configurationIframeDialog']</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
 	<td>iframe - Blogs - Configuration</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[@id='_33_configurationIframeDialog']</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
 	<td>iframe - Blogs - Configuration</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Permissions</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Permissions</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>storeChecked</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>guestViewChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${guestViewChecked}</td>
+	<td>GuestViewChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>GuestViewChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

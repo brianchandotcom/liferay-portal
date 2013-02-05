@@ -25,18 +25,17 @@ public class BA_AssertActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Blogs Permissions Page");
-		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace("Blogs Permissions Page"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
 				"//li[@class='portlet-configuration portlet-configuration-icon']/a"));
 		assertTrue(selenium.isVisible("//input[@value='Add Blog Entry']"));
 		assertTrue(selenium.isVisible("link=Edit"));
 		assertTrue(selenium.isVisible("link=Permissions"));
-		assertTrue(selenium.isVisible("link=Delete"));
+		assertTrue(selenium.isVisible("link=Move to the Recycle Bin"));
 		assertEquals(RuntimeVariables.replace("RSS"),
-			selenium.getText("//div[4]/span/a/span[1]"));
+			selenium.getText("//div[4]/span/a/span"));
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Permissions Blogs Test Entry"));
 		selenium.waitForPageToLoad("30000");
@@ -44,7 +43,7 @@ public class BA_AssertActionsTest extends BaseTestCase {
 			selenium.getText("//td[1]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText("//td[2]/span/a/span"));
-		assertEquals(RuntimeVariables.replace("Delete"),
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText("//td[3]/span/a/span"));
 	}
 }

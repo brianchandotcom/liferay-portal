@@ -14,18 +14,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
+	<td>link=Blogs Test Page</td>
+	<td>Blogs Test Page</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -37,11 +32,6 @@
 	<td>clickAt</td>
 	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -69,9 +59,64 @@
 	<td>iframe - Blogs - Configuration</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Permissions</td>
+	<td>Permissions</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Permissions</td>
 	<td>Permissions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='portlet_ACTION_CONFIGURATION']</td>
+	<td>Portlet Configuration</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='portlet_ACTION_CONFIGURATION']</td>
+	<td>portletConfigurationChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${portletConfigurationChecked}</td>
+	<td>PortletConfigurationNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='portlet_ACTION_CONFIGURATION']</td>
+	<td>Portlet Configuration</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>PortletConfigurationNotChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='portlet_ACTION_CONFIGURATION']</td>
+	<td>Portlet Configuration</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>

@@ -25,21 +25,21 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Blogs Permissions Page");
-		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace("Blogs Permissions Page"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("//input[@value='Search']"));
-		assertTrue(selenium.isElementPresent(
-				"link=Permissions Blogs Test Entry"));
+		assertTrue(selenium.isElementPresent("//div[@class='entry-title']/h2/a"));
 		assertTrue(selenium.isElementNotPresent("link=Edit"));
 		assertTrue(selenium.isElementNotPresent("link=Permissions"));
 		assertTrue(selenium.isElementNotPresent("link=Delete"));
 		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Add Blog Entry']"));
-		selenium.clickAt("link=Permissions Blogs Test Entry",
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Permissions Blogs Test Entry"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible(
+			"//fieldset[contains(@class,'add-comment')]/div/span/a");
 		assertEquals(RuntimeVariables.replace("Add Comment"),
 			selenium.getText(
 				"//fieldset[contains(@class,'add-comment')]/div/span/a"));
@@ -52,8 +52,8 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("link=Sign in to vote."));
 		selenium.clickAt("//input[@value='Reply as...']",
 			RuntimeVariables.replace("Reply as..."));
-		selenium.waitForVisible("//iframe[@id='_33_']");
-		selenium.selectFrame("//iframe[@id='_33_']");
+		selenium.waitForVisible("//iframe[@id='_33_signInDialog']");
+		selenium.selectFrame("//iframe[@id='_33_signInDialog']");
 		selenium.waitForVisible("//label[@for='_164_login']");
 		assertEquals(RuntimeVariables.replace("Email Address"),
 			selenium.getText("//label[@for='_164_login']"));
@@ -66,7 +66,7 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 			selenium.getText("//label[@for='_164_rememberMeCheckbox']"));
 		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 		selenium.selectFrame("relative=top");
-		selenium.clickAt("//button[@id='closethick']",
+		selenium.clickAt("//button[@title='Close dialog']",
 			RuntimeVariables.replace(""));
 	}
 }

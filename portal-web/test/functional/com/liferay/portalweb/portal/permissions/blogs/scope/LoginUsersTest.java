@@ -25,10 +25,9 @@ public class LoginUsersTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Welcome");
 		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent("//input[@id='_58_login']");
+		selenium.waitForVisible("//input[@id='_58_login']");
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("scope@liferay.com"));
 		selenium.type("//input[@id='_58_password']",
@@ -51,8 +50,8 @@ public class LoginUsersTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForTextPresent("You are signed in as Scope Liferay.");
 		assertTrue(selenium.isTextPresent("You are signed in as Scope Liferay."));
+		selenium.waitForTextPresent("You are signed in as Scope Liferay.");
 		selenium.waitForVisible("link=Sign Out");
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 		selenium.waitForPageToLoad("30000");

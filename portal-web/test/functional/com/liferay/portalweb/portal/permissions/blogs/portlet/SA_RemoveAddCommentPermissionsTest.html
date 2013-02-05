@@ -14,14 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
+	<td>clickAtAndWait</td>
+	<td>link=Blogs Test Page</td>
+	<td>Blogs Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Blogs Entry Title Temporary</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Blogs Entry Title Temporary</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -29,29 +34,89 @@
 	<td>Blogs Entry Title Temporary</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Permissions</td>
+	<td>waitForVisible</td>
+	<td>//span[@class='taglib-text' and contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
+	<td>assertText</td>
+	<td>//span[@class='taglib-text' and contains(.,'Permissions')]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='taglib-text' and contains(.,'Permissions')]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
+	<td>guestAddDiscussionChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${guestAddDiscussionChecked}</td>
+	<td>GuestAddDiscussionNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
 	<td>Guest Add Discussion</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
-	<td>Guest Add Discussion</td>
+	<td>label</td>
+	<td>GuestAddDiscussionNotChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
 	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
 	<td>Guest Add Discussion</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='portlet_ACTION_ADD_DISCUSSION']</td>
+	<td>portletAddDiscussionChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${portletAddDiscussionChecked}</td>
+	<td>PortletAddDiscussionNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='portlet_ACTION_ADD_DISCUSSION']</td>
+	<td>Portlet Add Discussion</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>PortletAddDiscussionNotChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
 	<td>//input[@id='portlet_ACTION_ADD_DISCUSSION']</td>
 	<td>Portlet Add Discussion</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='power-user_ACTION_ADD_DISCUSSION']</td>
+	<td>powerUserAddDiscussionChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${powerUserAddDiscussionChecked}</td>
+	<td>PowerUserAddDiscussionNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='power-user_ACTION_ADD_DISCUSSION']</td>
+	<td>Power User Add Discussion</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>PowerUserAddDiscussionNotChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>

@@ -26,6 +26,13 @@ public class SA_LimitScopePermissionsScopeSiteTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
@@ -47,29 +54,29 @@ public class SA_LimitScopePermissionsScopeSiteTest extends BaseTestCase {
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("label=Blogs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Limit Scope",
+		selenium.clickAt("//tr[4]/td[4]/span/a/span",
 			RuntimeVariables.replace("Limit Scope"));
 		Thread.sleep(5000);
-		selenium.waitForPopUp("null", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("title=Roles");
-		selenium.waitForVisible("//input[@id='_128_name']");
-		selenium.type("//input[@id='_128_name']",
-			RuntimeVariables.replace("Scope Site"));
+		selenium.waitForVisible("//input[@name='_128_keywords']");
+		selenium.type("//input[@name='_128_keywords']",
+			RuntimeVariables.replace("Site Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Scope Site",
-			RuntimeVariables.replace("Scope Site"));
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//tr[contains(.,'Site Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Site Name')]/td[1]/a",
+			RuntimeVariables.replace("Site Name"));
 		Thread.sleep(5000);
 		selenium.selectWindow("null");
-		selenium.waitForText("//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span",
-			"Scope Site");
-		assertEquals(RuntimeVariables.replace("Scope Site"),
-			selenium.getText(
-				"//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span"));
+		selenium.waitForText("//span[@class='lfr-token-text']", "Site Name");
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//span[@class='lfr-token-text']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -77,10 +84,10 @@ public class SA_LimitScopePermissionsScopeSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("label=Blogs"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs"), selenium.getText("//h3"));
-		assertTrue(selenium.isChecked("//td/input"));
+		assertTrue(selenium.isChecked("//tr[4]/td/input"));
 		assertEquals(RuntimeVariables.replace("Add Entry"),
-			selenium.getText("//tr[3]/td[2]"));
-		assertEquals(RuntimeVariables.replace("Scope Site"),
-			selenium.getText("//tr[3]/td[3]"));
+			selenium.getText("//tr[4]/td[2]"));
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//tr[4]/td[3]"));
 	}
 }

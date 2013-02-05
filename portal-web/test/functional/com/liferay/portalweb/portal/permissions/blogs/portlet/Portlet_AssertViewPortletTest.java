@@ -25,14 +25,14 @@ public class Portlet_AssertViewPortletTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Permissions Page");
-		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace("Blogs Permissions Page"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertFalse(selenium.isTextPresent(
 				"You do not have the roles required to access this portlet."));
 		assertEquals(RuntimeVariables.replace("RSS"),
-			selenium.getText("//span/a/span[1]"));
+			selenium.getText("//span[@class='taglib-text']"));
 		assertEquals(RuntimeVariables.replace("Showing 0 results."),
 			selenium.getText("//div[@class='search-results']"));
 	}

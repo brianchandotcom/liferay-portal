@@ -25,18 +25,24 @@ public class Portlet_DeleteCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Blogs Permissions Page");
-		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace("Blogs Permissions Page"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='entry-title']/h2/a");
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title Temporary"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry Title Temporary"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li[@class='lfr-discussion-delete']/span/a");
+		selenium.mouseOver("//li[@class='lfr-discussion-delete']/span/a/span");
+		selenium.waitForVisible(
+			"//li[@class='lfr-discussion-delete']/span/a/span");
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//li[@class='lfr-discussion-delete']/span/a"));
-		selenium.click("//li[@class='lfr-discussion-delete']/span/a");
-		selenium.waitForConfirmation("Are you sure you want to delete this?");
+			selenium.getText("//li[@class='lfr-discussion-delete']/span/a/span"));
+		selenium.clickAt("//li[@class='lfr-discussion-delete']/span/a/span",
+			RuntimeVariables.replace("Delete"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		selenium.waitForVisible(
 			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(

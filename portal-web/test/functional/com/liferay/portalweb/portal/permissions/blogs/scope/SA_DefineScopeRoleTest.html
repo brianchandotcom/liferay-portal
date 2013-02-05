@@ -14,6 +14,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
@@ -59,9 +79,29 @@
 	<td>label=Blogs</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>storeChecked</td>
 	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
-	<td>Add Entry</td>
+	<td>blogsAddEntryChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${blogsAddEntryChecked}</td>
+	<td>BlogsAddEntryChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
+	<td>Blogs Add Entry</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>BlogsAddEntryChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
+	<td>Blogs Add Entry</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -73,7 +113,16 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>The role permissions were updated.</td>
 </tr>
-
+<tr>
+	<td>selectAndWait</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>label=Blogs</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
+	<td>Blogs Add Entry</td>
+</tr>
 </tbody></table>
 </body>
 </html>

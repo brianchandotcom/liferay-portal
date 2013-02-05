@@ -14,14 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
+	<td>clickAtAndWait</td>
+	<td>link=Blogs Test Page</td>
+	<td>Blogs Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Blogs Permissions Page</td>
-	<td>Blogs Permissions Page</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 0 results.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 0 results.</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
@@ -37,11 +42,6 @@
 	<td>assertElementNotPresent</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='search-results']</td>
-	<td>Showing 0 results.</td>
 </tr>
 </tbody></table>
 </body>

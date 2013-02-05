@@ -22,39 +22,96 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SA_RemoveAddCommentPermissionsTest extends BaseTestCase {
 	public void testSA_RemoveAddCommentPermissions() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Blogs Permissions Page");
-		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace("Blogs Permissions Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[@class='entry-title']/h2/a",
-			RuntimeVariables.replace("Blogs Entry Title Temporary"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Permissions",
-			RuntimeVariables.replace("Permissions"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isChecked(
-				"//input[@id='guest_ACTION_ADD_DISCUSSION']"));
-		selenium.uncheck("//input[@id='guest_ACTION_ADD_DISCUSSION']");
-		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_ADD_DISCUSSION']"));
-		assertFalse(selenium.isChecked(
-				"//input[@id='portlet_ACTION_ADD_DISCUSSION']"));
-		assertFalse(selenium.isChecked(
-				"//input[@id='power-user_ACTION_ADD_DISCUSSION']"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_ADD_DISCUSSION']"));
-		assertFalse(selenium.isChecked(
-				"//input[@id='portlet_ACTION_ADD_DISCUSSION']"));
-		assertFalse(selenium.isChecked(
-				"//input[@id='power-user_ACTION_ADD_DISCUSSION']"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Blogs Test Page",
+					RuntimeVariables.replace("Blogs Test Page"));
+				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible("//div[@class='entry-title']/h2/a");
+				assertEquals(RuntimeVariables.replace(
+						"Blogs Entry Title Temporary"),
+					selenium.getText("//div[@class='entry-title']/h2/a"));
+				selenium.clickAt("//div[@class='entry-title']/h2/a",
+					RuntimeVariables.replace("Blogs Entry Title Temporary"));
+				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible(
+					"//span[@class='taglib-text' and contains(.,'Permissions')]");
+				assertEquals(RuntimeVariables.replace("Permissions"),
+					selenium.getText(
+						"//span[@class='taglib-text' and contains(.,'Permissions')]"));
+				selenium.clickAt("//span[@class='taglib-text' and contains(.,'Permissions')]",
+					RuntimeVariables.replace("Permissions"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean guestAddDiscussionChecked = selenium.isChecked(
+						"//input[@id='guest_ACTION_ADD_DISCUSSION']");
+
+				if (!guestAddDiscussionChecked) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='guest_ACTION_ADD_DISCUSSION']",
+					RuntimeVariables.replace("Guest Add Discussion"));
+
+			case 2:
+				assertFalse(selenium.isChecked(
+						"//input[@id='guest_ACTION_ADD_DISCUSSION']"));
+
+				boolean portletAddDiscussionChecked = selenium.isChecked(
+						"//input[@id='portlet_ACTION_ADD_DISCUSSION']");
+
+				if (!portletAddDiscussionChecked) {
+					label = 3;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='portlet_ACTION_ADD_DISCUSSION']",
+					RuntimeVariables.replace("Portlet Add Discussion"));
+
+			case 3:
+				assertFalse(selenium.isChecked(
+						"//input[@id='portlet_ACTION_ADD_DISCUSSION']"));
+
+				boolean powerUserAddDiscussionChecked = selenium.isChecked(
+						"//input[@id='power-user_ACTION_ADD_DISCUSSION']");
+
+				if (!powerUserAddDiscussionChecked) {
+					label = 4;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='power-user_ACTION_ADD_DISCUSSION']",
+					RuntimeVariables.replace("Power User Add Discussion"));
+
+			case 4:
+				assertFalse(selenium.isChecked(
+						"//input[@id='power-user_ACTION_ADD_DISCUSSION']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='guest_ACTION_ADD_DISCUSSION']"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='portlet_ACTION_ADD_DISCUSSION']"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='power-user_ACTION_ADD_DISCUSSION']"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

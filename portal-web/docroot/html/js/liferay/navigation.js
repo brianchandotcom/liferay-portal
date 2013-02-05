@@ -464,6 +464,7 @@ AUI.add(
 								instance.fire('startEditing');
 							}
 						},
+						boundingBox: A.Node.create('<div />').prependTo(listItem),
 						field: {
 							value: prevVal
 						},
@@ -478,7 +479,7 @@ AUI.add(
 							}
 						}
 					}
-				).render(listItem);
+				).render();
 
 				if (prototypeTemplate && instance._optionsOpen && !prevVal) {
 					var optionItem = comboBox.icons.item(id + 'Options');

@@ -23,6 +23,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.NoSuchPageResourceException;
+import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
@@ -131,48 +132,74 @@ public class WikiPagePermission {
 			}
 		}
 
-		if (page.isPending()) {
-			Boolean hasPermission = WorkflowPermissionUtil.hasPermission(
-				permissionChecker, page.getGroupId(), WikiPage.class.getName(),
-				page.getResourcePrimKey(), actionId);
-
-			if (hasPermission != null) {
-				return hasPermission.booleanValue();
-			}
-		}
-
-		if (page.isDraft() && actionId.equals(ActionKeys.DELETE) &&
-			(page.getStatusByUserId() == permissionChecker.getUserId())) {
-
-			return true;
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				page.getCompanyId(), WikiPage.class.getName(),
-				page.getResourcePrimKey(), page.getUserId(), actionId)) {
-
-			return true;
-		}
+		WikiNode node = page.getNode();
 
 		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+			WikiPage originalPage = page;
+
 			if (!WikiNodePermission.contains(
-					permissionChecker, page.getNode(), ActionKeys.VIEW)) {
+					permissionChecker, node, ActionKeys.VIEW)) {
 
 				return false;
 			}
 
-			WikiPage parentPage = page.getParentPage();
+			while (page != null) {
+				if (!permissionChecker.hasOwnerPermission(
+						page.getCompanyId(), WikiPage.class.getName(),
+						page.getPageId(), page.getUserId(), ActionKeys.VIEW) &&
+					!permissionChecker.hasPermission(
+						page.getGroupId(), WikiPage.class.getName(),
+						page.getPageId(), ActionKeys.VIEW)) {
 
-			if ((parentPage != null) &&
-				!contains(permissionChecker, parentPage, ActionKeys.VIEW)) {
+					return false;
+				}
 
-				return false;
+				page = page.getParentPage();
 			}
+
+			if (actionId.equals(ActionKeys.VIEW)) {
+				return true;
+			}
+
+			page = originalPage;
 		}
 
-		return permissionChecker.hasPermission(
-			page.getGroupId(), WikiPage.class.getName(),
-			page.getResourcePrimKey(), actionId);
+		if (WikiNodePermission.contains(permissionChecker, node, actionId)) {
+			return true;
+		}
+
+		while (page != null) {
+			if (page.isPending()) {
+				Boolean hasPermission = WorkflowPermissionUtil.hasPermission(
+					permissionChecker, page.getGroupId(),
+					WikiPage.class.getName(), page.getResourcePrimKey(),
+					actionId);
+
+				if ((hasPermission != null) && hasPermission.booleanValue()) {
+					return true;
+				}
+			}
+
+			if (page.isDraft() && actionId.equals(ActionKeys.DELETE) &&
+				(page.getStatusByUserId() == permissionChecker.getUserId())) {
+
+				return true;
+			}
+
+			if (permissionChecker.hasOwnerPermission(
+					page.getCompanyId(), WikiPage.class.getName(),
+					page.getPageId(), page.getUserId(), actionId) ||
+				permissionChecker.hasPermission(
+					page.getGroupId(), WikiPage.class.getName(),
+					page.getPageId(), actionId)) {
+
+				return true;
+			}
+
+			page = page.getParentPage();
+		}
+
+		return false;
 	}
 
 }

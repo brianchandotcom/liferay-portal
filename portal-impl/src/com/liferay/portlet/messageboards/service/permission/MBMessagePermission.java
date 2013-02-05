@@ -103,6 +103,16 @@ public class MBMessagePermission {
 
 						return false;
 					}
+
+					if (actionId.equals(ActionKeys.VIEW)) {
+						return true;
+					}
+				}
+
+				if (MBCategoryPermission.contains(
+						permissionChecker, category, actionId)) {
+
+					return true;
 				}
 			}
 			catch (NoSuchCategoryException nsce) {

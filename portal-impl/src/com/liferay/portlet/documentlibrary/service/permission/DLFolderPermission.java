@@ -82,64 +82,63 @@ public class DLFolderPermission {
 
 		long folderId = dlFolder.getFolderId();
 
-		if (actionId.equals(ActionKeys.VIEW)) {
-			while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				try {
-					dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+			long originalFolderId = folderId;
 
-					folderId = dlFolder.getParentFolderId();
+			try {
+				while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+					dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
 
 					if (!permissionChecker.hasOwnerPermission(
 							dlFolder.getCompanyId(), DLFolder.class.getName(),
-							dlFolder.getFolderId(), dlFolder.getUserId(),
-							actionId) &&
+							folderId, dlFolder.getUserId(), ActionKeys.VIEW) &&
 						!permissionChecker.hasPermission(
 							dlFolder.getGroupId(), DLFolder.class.getName(),
-							dlFolder.getFolderId(), actionId)) {
+							folderId, ActionKeys.VIEW)) {
 
 						return false;
 					}
 
-					if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-						break;
-					}
+					folderId = dlFolder.getParentFolderId();
 				}
-				catch (NoSuchFolderException nsfe) {
-					if (dlFolder.isInTrash()) {
-						break;
-					}
-
+			}
+			catch (NoSuchFolderException nsfe) {
+				if (!dlFolder.isInTrash()) {
 					throw nsfe;
 				}
-
 			}
 
-			return true;
+			if (actionId.equals(ActionKeys.VIEW)) {
+				return true;
+			}
+
+			folderId = originalFolderId;
 		}
-		else {
+
+		try {
 			while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
 
-				folderId = dlFolder.getParentFolderId();
-
 				if (permissionChecker.hasOwnerPermission(
 						dlFolder.getCompanyId(), DLFolder.class.getName(),
-						dlFolder.getFolderId(), dlFolder.getUserId(),
-						actionId)) {
-
-					return true;
-				}
-
-				if (permissionChecker.hasPermission(
+						folderId, dlFolder.getUserId(), actionId) ||
+					permissionChecker.hasPermission(
 						dlFolder.getGroupId(), DLFolder.class.getName(),
-						dlFolder.getFolderId(), actionId)) {
+						folderId, actionId)) {
 
 					return true;
 				}
-			}
 
-			return false;
+				folderId = dlFolder.getParentFolderId();
+			}
 		}
+		catch (NoSuchFolderException nsfe) {
+			if (!dlFolder.isInTrash()) {
+				throw nsfe;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean contains(

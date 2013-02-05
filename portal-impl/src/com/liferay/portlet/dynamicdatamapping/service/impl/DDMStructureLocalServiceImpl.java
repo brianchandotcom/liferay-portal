@@ -64,6 +64,25 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * The Dynamic Data Mapping (DDM) Structure local service is responsible for accessing, creating,
+ * modifying, and deleting structures.
+ *
+ * <p>
+ * DDM structures (structures) are used in Liferay to store structured content
+ * like document types, dynamic data definitions, or web contents.
+ * </p>
+ *
+ * <p>
+ * Structures support inheritance via parent structures. They also support
+ * multi-language names and descriptions.
+ * </p>
+ *
+ * <p>
+ * Structures can be related to many models in Liferay, such as those for web
+ * contents, dynamic data lists, and documents. This relationship can be
+ * established via the model's class name ID.
+ * </p>
+ *
  * @author Brian Wing Shun Chan
  * @author Bruno Basto
  * @author Marcellus Tavares
@@ -71,6 +90,34 @@ import java.util.Set;
 public class DDMStructureLocalServiceImpl
 	extends DDMStructureLocalServiceBaseImpl {
 
+	/**
+	 * Adds a structure referencing its parent structure.
+	 *
+	 * @param  userId the primary key of the structure's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  parentStructureId the primary key of the parent structure
+	 *         (optionally {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants#DEFAULT_PARENT_STRUCTURE_ID})
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  structureKey the unique string identifying the structure
+	 *         (optionally <code>null</code>)
+	 * @param  nameMap the structure's locales and localized names
+	 * @param  descriptionMap the structure's locales and localized descriptions
+	 * @param  xsd the structure's XML schema definition
+	 * @param  storageType the structure's storage type. It can be "xml" or
+	 *         "expando". For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	 * @param  type the structure's type. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	 * @param  serviceContext the structure's service context. Can set the UUID,
+	 *         creation date, modification date, guest permissions, and group
+	 *         permissions for the structure.
+	 * @return the structure
+	 * @throws PortalException if a user with the primary key could not be found, if the
+	 *         XSD was not well-formed, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure addStructure(
 			long userId, long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
@@ -140,6 +187,26 @@ public class DDMStructureLocalServiceImpl
 		return structure;
 	}
 
+	/**
+	 * Adds a structure referencing a default parent structure, using the portal
+	 * property <code>dynamic.data.lists.storage.type</code> storage type and
+	 * default structure type.
+	 *
+	 * @param  userId the primary key of the structure's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  nameMap the structure's locales and localized names
+	 * @param  descriptionMap the structure's locales and localized descriptions
+	 * @param  xsd the structure's XML schema definition
+	 * @param  serviceContext the structure's service context. Can set the UUID,
+	 *         creation date, modification date, guest permissions, and group
+	 *         permissions for the structure.
+	 * @return the structure
+	 * @throws PortalException if a user with the primary key could not be found, if the XSD
+	 *         was not well-formed, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure addStructure(
 			long userId, long groupId, long classNameId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -153,6 +220,34 @@ public class DDMStructureLocalServiceImpl
 			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 	}
 
+	/**
+	 * Adds a structure referencing a default parent structure if the parent
+	 * structure is not found.
+	 *
+	 * @param  userId the primary key of the structure's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  parentStructureKey the unique string identifying the parent
+	 *         structure (optionally <code>null</code>)
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  structureKey the unique string identifying the structure
+	 *         (optionally <code>null</code>)
+	 * @param  nameMap the structure's locales and localized names
+	 * @param  descriptionMap the structure's locales and localized descriptions
+	 * @param  xsd the structure's XML schema definition
+	 * @param  storageType the structure's storage type. It can be "xml" or
+	 *         "expando". For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	 * @param  type the structure's type. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	 * @param  serviceContext the structure's service context. Can set the UUID,
+	 *         creation date, modification date, guest permissions and group
+	 *         permissions for the structure.
+	 * @return the structure
+	 * @throws PortalException if a user with the primary key could not be found, if the
+	 *         XSD was not well-formed, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure addStructure(
 			long userId, long groupId, String parentStructureKey,
 			long classNameId, String structureKey, Map<Locale, String> nameMap,
@@ -175,6 +270,15 @@ public class DDMStructureLocalServiceImpl
 			nameMap, descriptionMap, xsd, storageType, type, serviceContext);
 	}
 
+	/**
+	 * Adds the resources to the structure.
+	 *
+	 * @param  structure the structure to add resources to
+	 * @param  addGroupPermissions whether to add group permissions
+	 * @param  addGuestPermissions whether to add guest permissions
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addStructureResources(
 			DDMStructure structure, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -187,6 +291,15 @@ public class DDMStructureLocalServiceImpl
 			addGuestPermissions);
 	}
 
+	/**
+	 * Adds the model resources with the permissions to the structure.
+	 *
+	 * @param  structure the structure to add resources to
+	 * @param  groupPermissions the group permissions to be added
+	 * @param  guestPermissions the guest permissions to be added
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addStructureResources(
 			DDMStructure structure, String[] groupPermissions,
 			String[] guestPermissions)
@@ -198,6 +311,23 @@ public class DDMStructureLocalServiceImpl
 			structure.getStructureId(), groupPermissions, guestPermissions);
 	}
 
+	/**
+	 * Copies a structure, creating a new structure with all the values
+	 * extracted from the original one. The new structure supports a new name
+	 * and description.
+	 *
+	 * @param  userId the primary key of the structure's creator/owner
+	 * @param  structureId the primary key of the structure to be copied
+	 * @param  nameMap the new structure's locales and localized names
+	 * @param  descriptionMap the new structure's locales and localized
+	 *         descriptions
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         UUID, creation date, modification date, guest permissions, and
+	 *         group permissions for the structure.
+	 * @return the new structure
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure copyStructure(
 			long userId, long structureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
@@ -227,6 +357,18 @@ public class DDMStructureLocalServiceImpl
 			structure.getStorageType(), structure.getType(), serviceContext);
 	}
 
+	/**
+	 * Deletes the structure and its resources.
+	 *
+	 * <p>
+	 * Before deleting the structure, this method verifies whether the structure
+	 * is required by another entity. If it is needed, an exception is thrown.
+	 * </p>
+	 *
+	 * @param  structure the structure to be deleted
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteStructure(DDMStructure structure)
 		throws PortalException, SystemException {
 
@@ -258,6 +400,18 @@ public class DDMStructureLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL, structure.getStructureId());
 	}
 
+	/**
+	 * Deletes the structure and its resources.
+	 *
+	 * <p>
+	 * Before deleting the structure, the system verifies whether the structure
+	 * is required by another entity. If it is needed, an exception is thrown.
+	 * </p>
+	 *
+	 * @param  structureId the primary key of the structure to be deleted
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteStructure(long structureId)
 		throws PortalException, SystemException {
 
@@ -267,6 +421,19 @@ public class DDMStructureLocalServiceImpl
 		deleteStructure(structure);
 	}
 
+	/**
+	 * Deletes the matching structure and its resources.
+	 *
+	 * <p>
+	 * Before deleting the structure, the system verifies whether the structure
+	 * is required by another entity. If it is needed, an exception is thrown.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  structureKey the unique string identifying the structure
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteStructure(long groupId, String structureKey)
 		throws PortalException, SystemException {
 
@@ -278,6 +445,19 @@ public class DDMStructureLocalServiceImpl
 		deleteStructure(structure);
 	}
 
+	/**
+	 * Deletes all the structures of the group.
+	 *
+	 * <p>
+	 * Before deleting the structures, the system verifies whether each
+	 * structure is required by another entity. If any of the structures are
+	 * needed, an exception is thrown.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteStructures(long groupId)
 		throws PortalException, SystemException {
 
@@ -289,12 +469,29 @@ public class DDMStructureLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns the structure with the ID.
+	 *
+	 * @param  structureId the primary key of the structure
+	 * @return the structure with the structure ID, or <code>null</code> if a
+	 *         matching structure could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure fetchStructure(long structureId)
 		throws SystemException {
 
 		return ddmStructurePersistence.fetchByPrimaryKey(structureId);
 	}
 
+	/**
+	 * Returns the structure matching the structure key and group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  structureKey the unique string identifying the structure
+	 * @return the matching structure, or <code>null</code> if a matching
+	 *         structure could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure fetchStructure(long groupId, String structureKey)
 		throws SystemException {
 
@@ -303,6 +500,25 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.fetchByG_S(groupId, structureKey);
 	}
 
+	/**
+	 * Returns the structure matching the structure key and group, optionally in
+	 * the global scope.
+	 *
+	 * <p>
+	 * This method first searches in the group. If the structure is still not
+	 * found and <code>includeGlobalStructures</code> is set to
+	 * <code>true</code>, this method searches the global group.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  structureKey the unique string identifying the structure
+	 * @param  includeGlobalStructures whether to include the global scope in
+	 *         the search
+	 * @return the matching structure, or <code>null</code> if a matching
+	 *         structure could not be found
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure fetchStructure(
 			long groupId, String structureKey, boolean includeGlobalStructures)
 		throws PortalException, SystemException {
@@ -325,6 +541,15 @@ public class DDMStructureLocalServiceImpl
 			companyGroup.getGroupId(), structureKey);
 	}
 
+	/**
+	 * Returns the structure matching the UUID and group.
+	 *
+	 * @param  uuid the structure's UUID
+	 * @param  groupId the primary key of the structure's group
+	 * @return the matching structure, or <code>null</code> if a matching
+	 *         structure could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure fetchStructure(String uuid, long groupId)
 		throws SystemException {
 
@@ -351,6 +576,15 @@ public class DDMStructureLocalServiceImpl
 			classNameId, start, end);
 	}
 
+	/**
+	 * Returns all the structures matching the class name ID.
+	 *
+	 * @param  companyId the primary key of the structure's company
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @return the structures matching the class name ID
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> getClassStructures(
 			long companyId, long classNameId)
 		throws SystemException {
@@ -358,6 +592,28 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.findByC_C(companyId, classNameId);
 	}
 
+	/**
+	 * Returns a range of all the structures matching the class name ID.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the structure's company
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  start the lower bound of the range of structures to return
+	 * @param  end the upper bound of the range of structures to return (not
+	 *         inclusive)
+	 * @return the range of matching structures
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> getClassStructures(
 			long companyId, long classNameId, int start, int end)
 		throws SystemException {
@@ -366,6 +622,18 @@ public class DDMStructureLocalServiceImpl
 			companyId, classNameId, start, end);
 	}
 
+	/**
+	 * Returns all the structures matching the class name ID ordered by the
+	 * comparator.
+	 *
+	 * @param  companyId the primary key of the structure's company
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  orderByComparator the comparator to order the structures
+	 *         (optionally <code>null</code>)
+	 * @return the matching structures ordered by the comparator
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> getClassStructures(
 			long companyId, long classNameId,
 			OrderByComparator orderByComparator)
@@ -388,6 +656,14 @@ public class DDMStructureLocalServiceImpl
 			orderByComparator);
 	}
 
+	/**
+	 * Returns all the structures for the document library file entry type.
+	 *
+	 * @param  dlFileEntryTypeId the primary key of the document library file
+	 *         entry type
+	 * @return the structures for the document library file entry type
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> getDLFileEntryTypeStructures(
 			long dlFileEntryTypeId)
 		throws SystemException {
@@ -395,12 +671,29 @@ public class DDMStructureLocalServiceImpl
 		return dlFileEntryTypePersistence.getDDMStructures(dlFileEntryTypeId);
 	}
 
+	/**
+	 * Returns the structure with the ID.
+	 *
+	 * @param  structureId the primary key of the structure
+	 * @return the structure with the ID
+	 * @throws PortalException if a structure with the ID could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure getStructure(long structureId)
 		throws PortalException, SystemException {
 
 		return ddmStructurePersistence.findByPrimaryKey(structureId);
 	}
 
+	/**
+	 * Returns the structure matching the structure key and group.
+	 *
+	 * @param  groupId the primary key of the structure's group
+	 * @param  structureKey the unique string identifying the structure
+	 * @return the matching structure
+	 * @throws PortalException if a matching structure could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure getStructure(long groupId, String structureKey)
 		throws PortalException, SystemException {
 
@@ -409,6 +702,24 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.findByG_S(groupId, structureKey);
 	}
 
+	/**
+	 * Returns the structure matching the structure key and group, optionally in
+	 * the global scope.
+	 *
+	 * <p>
+	 * This method first searches in the group. If the structure is still not
+	 * found and <code>includeGlobalStructures</code> is set to
+	 * <code>true</code>, this method searches the global group.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the structure's group
+	 * @param  structureKey the unique string identifying the structure
+	 * @param  includeGlobalStructures whether to include the global scope in
+	 *         the search
+	 * @return the matching structure
+	 * @throws PortalException if a matching structure could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure getStructure(
 			long groupId, String structureKey, boolean includeGlobalStructures)
 		throws PortalException, SystemException {
@@ -463,28 +774,95 @@ public class DDMStructureLocalServiceImpl
 		return getStructures(groupId, start, end);
 	}
 
+	/**
+	 * Returns all the structures present in the system.
+	 *
+	 * @return the structures present in the system
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> getStructures() throws SystemException {
 		return ddmStructurePersistence.findAll();
 	}
 
+	/**
+	 * Returns all the structures present in the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the structures present in the group
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> getStructures(long groupId)
 		throws SystemException {
 
 		return ddmStructurePersistence.findByGroupId(groupId);
 	}
 
+	/**
+	 * Returns a range of all the structures belonging to the group.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  start the lower bound of the range of structures to return
+	 * @param  end the upper bound of the range of structures to return (not
+	 *         inclusive)
+	 * @return the range of matching structures, or <code>null</code> if no
+	 *         matches could be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> getStructures(long groupId, int start, int end)
 		throws SystemException {
 
 		return ddmStructurePersistence.findByGroupId(groupId, start, end);
 	}
 
+	/**
+	 * Returns all the structures matching class name ID and group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @return the matching structures
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> getStructures(long groupId, long classNameId)
 		throws SystemException {
 
 		return ddmStructurePersistence.findByG_C(groupId, classNameId);
 	}
 
+	/**
+	 * Returns a range of all the structures that match the class name ID and
+	 * group.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  start the lower bound of the range of structures to return
+	 * @param  end the upper bound of the range of structures to return (not
+	 *         inclusive)
+	 * @return the matching structures, or <code>null</code> if no matching
+	 *         structures could be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> getStructures(
 			long groupId, long classNameId, int start, int end)
 		throws SystemException {
@@ -493,6 +871,31 @@ public class DDMStructureLocalServiceImpl
 			groupId, classNameId, start, end);
 	}
 
+	/**
+	 * Returns an ordered range of all the structures matching the class name ID
+	 * and group.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  start the lower bound of the range of structures to return
+	 * @param  end the upper bound of the range of structures to return (not
+	 *         inclusive)
+	 * @param  orderByComparator the comparator to order the structures
+	 *         (optionally <code>null</code>)
+	 * @return the range of matching structures ordered by the comparator
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> getStructures(
 			long groupId, long classNameId, int start, int end,
 			OrderByComparator orderByComparator)
@@ -509,22 +912,74 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.findByG_N_D(groupId, name, description);
 	}
 
+	/**
+	 * Returns all the structures belonging to the groups.
+	 *
+	 * @param  groupIds the primary keys of the groups
+	 * @return the structures belonging to the groups
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> getStructures(long[] groupIds)
 		throws SystemException {
 
 		return ddmStructurePersistence.findByGroupId(groupIds);
 	}
 
+	/**
+	 * Returns the number of structures belonging to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the number of structures belonging to the group
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getStructuresCount(long groupId) throws SystemException {
 		return ddmStructurePersistence.countByGroupId(groupId);
 	}
 
+	/**
+	 * Returns the number of structures matching the class name ID and group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @return the number of matching structures
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getStructuresCount(long groupId, long classNameId)
 		throws SystemException {
 
 		return ddmStructurePersistence.countByG_C(groupId, classNameId);
 	}
 
+	/**
+	 * Returns an ordered range of all the structures matching the groups and
+	 * class name IDs, and matching the keywords in the structure names and
+	 * descriptions.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the structure's company
+	 * @param  groupIds the primary keys of the groups
+	 * @param  classNameIds the primary keys of the class names of the models
+	 *         the structures are related to
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         structure's name or description (optionally <code>null</code>)
+	 * @param  start the lower bound of the range of structures to return
+	 * @param  end the upper bound of the range of structures to return (not
+	 *         inclusive)
+	 * @param  orderByComparator the comparator to order the structures
+	 *         (optionally <code>null</code>)
+	 * @return the range of matching structures ordered by the comparator
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> search(
 			long companyId, long[] groupIds, long[] classNameIds,
 			String keywords, int start, int end,
@@ -536,6 +991,41 @@ public class DDMStructureLocalServiceImpl
 			orderByComparator);
 	}
 
+	/**
+	 * Returns an ordered range of all the structures matching the groups, class
+	 * name IDs, name keyword, description keyword, storage type, and type.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the structure's company
+	 * @param  groupIds the primary keys of the groups
+	 * @param  classNameIds the primary keys of the class names of the models
+	 *         the structures are related to
+	 * @param  name the name keywords
+	 * @param  description the description keywords
+	 * @param  storageType the structure's storage type. It can be "xml" or
+	 *         "expando". For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	 * @param  type the structure's type. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
+	 * @param  start the lower bound of the range of structures to return
+	 * @param  end the upper bound of the range of structures to return (not
+	 *         inclusive)
+	 * @param  orderByComparator the comparator to order the structures
+	 *         (optionally <code>null</code>)
+	 * @return the range of matching structures ordered by the comparator
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<DDMStructure> search(
 			long companyId, long[] groupIds, long[] classNameIds, String name,
 			String description, String storageType, int type,
@@ -548,6 +1038,19 @@ public class DDMStructureLocalServiceImpl
 			type, andOperator, start, end, orderByComparator);
 	}
 
+	/**
+	 * Returns the number of structures matching the groups and class name IDs,
+	 * and matching the keywords in the structure names and descriptions.
+	 *
+	 * @param  companyId the primary key of the structure's company
+	 * @param  groupIds the primary keys of the groups
+	 * @param  classNameIds the primary keys of the class names of the models
+	 *         the structures are related to
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         structure's name or description (optionally <code>null</code>)
+	 * @return the number of matching structures
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int searchCount(
 			long companyId, long[] groupIds, long[] classNameIds,
 			String keywords)
@@ -557,6 +1060,26 @@ public class DDMStructureLocalServiceImpl
 			companyId, groupIds, classNameIds, keywords);
 	}
 
+	/**
+	 * Returns the number of structures matching the groups, class name IDs,
+	 * name keyword, description keyword, storage type, and type
+	 *
+	 * @param  companyId the primary key of the structure's company
+	 * @param  groupIds the primary keys of the groups
+	 * @param  classNameIds the primary keys of the class names of the models
+	 *         the structure's are related to
+	 * @param  name the name keywords
+	 * @param  description the description keywords
+	 * @param  storageType the structure's storage type. It can be "xml" or
+	 *         "expando". For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	 * @param  type the structure's type. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
+	 * @return the number of matching structures
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int searchCount(
 			long companyId, long[] groupIds, long[] classNameIds, String name,
 			String description, String storageType, int type,
@@ -568,6 +1091,22 @@ public class DDMStructureLocalServiceImpl
 			type, andOperator);
 	}
 
+	/**
+	 * Updates the structure replacing its old parent structure, name map,
+	 * description map, and XSD with new ones.
+	 *
+	 * @param  structureId the primary key of the structure
+	 * @param  parentStructureId the primary key of the new parent structure
+	 * @param  nameMap the structure's new locales and localized names
+	 * @param  descriptionMap the structure's new locales and localized
+	 *         description
+	 * @param  xsd the structure's new XML schema definition
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date.
+	 * @return the updated structure
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure updateStructure(
 			long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -582,6 +1121,23 @@ public class DDMStructureLocalServiceImpl
 			structure);
 	}
 
+	/**
+	 * Updates the structure matching the structure key and group, replacing its
+	 * old parent structure, name map, description map, and XSD with new ones.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  parentStructureId the primary key of the new parent structure
+	 * @param  structureKey unique string identifying the structure
+	 * @param  nameMap the structure's new locales and localized names
+	 * @param  descriptionMap the structure's new locales and localized
+	 *         descriptions
+	 * @param  xsd the structure's new XML schema definition
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date
+	 * @return the updated structure
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure updateStructure(
 			long groupId, long parentStructureId, String structureKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,

@@ -48,11 +48,11 @@ public class AddPortletXSLC3Test extends BaseTestCase {
 		selenium.waitForVisible("//li[@title='XSL Content']/p/a");
 		selenium.clickAt("//li[@title='XSL Content']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//section");
-		assertTrue(selenium.isVisible("//section"));
-		selenium.waitForVisible("//div[2]/div/section");
-		assertTrue(selenium.isVisible("//div[2]/div/section"));
-		selenium.waitForVisible("//div[3]/div/section");
-		assertTrue(selenium.isVisible("//div[3]/div/section"));
+		selenium.waitForVisible("//div[1]/section");
+		assertTrue(selenium.isVisible("//div[1]/section"));
+		selenium.waitForVisible("//div[2]/section");
+		assertTrue(selenium.isVisible("//div[2]/section"));
+		selenium.waitForVisible("//div[3]/section");
+		assertTrue(selenium.isVisible("//div[3]/section"));
 	}
 }

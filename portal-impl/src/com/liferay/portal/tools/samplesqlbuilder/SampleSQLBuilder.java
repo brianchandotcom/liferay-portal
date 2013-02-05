@@ -143,8 +143,6 @@ public class SampleSQLBuilder {
 
 			_counter = new SimpleCounter(counterOffset);
 			_dlDateCounter = new SimpleCounter();
-			_permissionCounter = new SimpleCounter();
-			_resourceCounter = new SimpleCounter();
 			_resourcePermissionCounter = new SimpleCounter();
 			_socialActivityCounter = new SimpleCounter();
 
@@ -153,7 +151,6 @@ public class SampleSQLBuilder {
 			_dataFactory = new DataFactory(
 				baseDir, _maxGroupCount, maxJournalArticleSize,
 				_maxUserToGroupCount, _counter, _dlDateCounter,
-				_permissionCounter, _resourceCounter,
 				_resourcePermissionCounter, _socialActivityCounter);
 
 			_db = DBFactoryUtil.getDB(_dbType);
@@ -682,8 +679,6 @@ public class SampleSQLBuilder {
 	private List<String> _otherSQLs = new ArrayList<String>();
 	private String _outputDir;
 	private boolean _outputMerge;
-	private SimpleCounter _permissionCounter;
-	private SimpleCounter _resourceCounter;
 	private SimpleCounter _resourcePermissionCounter;
 	private SimpleCounter _socialActivityCounter;
 	private File _tempDir;

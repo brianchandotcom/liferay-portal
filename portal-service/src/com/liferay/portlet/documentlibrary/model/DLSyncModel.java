@@ -23,8 +23,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
-import java.util.Date;
-
 /**
  * The base model interface for the DLSync service. Represents a row in the &quot;DLSync&quot; database table, with each column mapped to a property of this class.
  *
@@ -92,28 +90,28 @@ public interface DLSyncModel extends BaseModel<DLSync> {
 	 *
 	 * @return the create date of this d l sync
 	 */
-	public Date getCreateDate();
+	public long getCreateDate();
 
 	/**
 	 * Sets the create date of this d l sync.
 	 *
 	 * @param createDate the create date of this d l sync
 	 */
-	public void setCreateDate(Date createDate);
+	public void setCreateDate(long createDate);
 
 	/**
 	 * Returns the modified date of this d l sync.
 	 *
 	 * @return the modified date of this d l sync
 	 */
-	public Date getModifiedDate();
+	public long getModifiedDate();
 
 	/**
 	 * Sets the modified date of this d l sync.
 	 *
 	 * @param modifiedDate the modified date of this d l sync
 	 */
-	public void setModifiedDate(Date modifiedDate);
+	public void setModifiedDate(long modifiedDate);
 
 	/**
 	 * Returns the file ID of this d l sync.

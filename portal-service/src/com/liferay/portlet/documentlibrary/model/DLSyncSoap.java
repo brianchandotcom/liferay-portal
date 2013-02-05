@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -112,19 +111,19 @@ public class DLSyncSoap implements Serializable {
 		_companyId = companyId;
 	}
 
-	public Date getCreateDate() {
+	public long getCreateDate() {
 		return _createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(long createDate) {
 		_createDate = createDate;
 	}
 
-	public Date getModifiedDate() {
+	public long getModifiedDate() {
 		return _modifiedDate;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(long modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 
@@ -202,8 +201,8 @@ public class DLSyncSoap implements Serializable {
 
 	private long _syncId;
 	private long _companyId;
-	private Date _createDate;
-	private Date _modifiedDate;
+	private long _createDate;
+	private long _modifiedDate;
 	private long _fileId;
 	private String _fileUuid;
 	private long _repositoryId;

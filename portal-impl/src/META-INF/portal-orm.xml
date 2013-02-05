@@ -2072,12 +2072,8 @@
 		<attributes>
 			<id name="syncId" />
 			<basic name="companyId" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
+			<basic name="createDate" />
+			<basic name="modifiedDate" />
 			<basic name="fileId" />
 			<basic name="fileUuid" />
 			<basic name="repositoryId" />

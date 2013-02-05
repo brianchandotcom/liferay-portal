@@ -56,7 +56,7 @@ import com.liferay.portlet.documentlibrary.service.DLSyncServiceUtil;
 public class DLSyncServiceHttp {
 	public static com.liferay.portlet.documentlibrary.model.DLSyncUpdate getDLSyncUpdate(
 		HttpPrincipal httpPrincipal, long companyId, long repositoryId,
-		java.util.Date lastAccessDate)
+		long lastAccessDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -176,7 +176,7 @@ public class DLSyncServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(DLSyncServiceHttp.class);
 	private static final Class<?>[] _getDLSyncUpdateParameterTypes0 = new Class[] {
-			long.class, long.class, java.util.Date.class
+			long.class, long.class, long.class
 		};
 	private static final Class<?>[] _getFileDeltaAsStreamParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class

@@ -19,6 +19,6 @@ package com.liferay.portlet.documentlibrary.service.persistence;
  */
 public interface DLSyncFinder {
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSync> filterFindByC_M_R(
-		long companyId, java.util.Date modifiedDate, long repositoryId)
+		long companyId, long modifiedDate, long repositoryId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

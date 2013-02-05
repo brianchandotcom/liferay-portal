@@ -576,6 +576,16 @@ public class DLAppLocalServiceUtil {
 		getService().restoreFileEntryFromTrash(userId, fileEntryId);
 	}
 
+	/**
+	* Subscribe the user to changes in documents of the file entry type. This
+	* method is only supported by the Liferay repository.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the file entry type's group
+	* @param fileEntryTypeId the primary key of the file entry type
+	* @throws PortalException if the user or group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void subscribeFileEntryType(long userId, long groupId,
 		long fileEntryTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -583,12 +593,32 @@ public class DLAppLocalServiceUtil {
 		getService().subscribeFileEntryType(userId, groupId, fileEntryTypeId);
 	}
 
+	/**
+	* Subscribe the user to document changes in the folder. This method is only
+	* supported by the Liferay repository.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the folder's group
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the user or group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void subscribeFolder(long userId, long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().subscribeFolder(userId, groupId, folderId);
 	}
 
+	/**
+	* Unsubscribe the user from changes in documents of the file entry type.
+	* This method is only supported by the Liferay repository.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the file entry type's group
+	* @param fileEntryTypeId the primary key of the file entry type
+	* @throws PortalException if the user or group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void unsubscribeFileEntryType(long userId, long groupId,
 		long fileEntryTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -596,6 +626,16 @@ public class DLAppLocalServiceUtil {
 		getService().unsubscribeFileEntryType(userId, groupId, fileEntryTypeId);
 	}
 
+	/**
+	* Unsubscribe the user from document changes in the folder. This method is
+	* only supported by the Liferay repository.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the folder's group
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the user or group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void unsubscribeFolder(long userId, long groupId,
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,

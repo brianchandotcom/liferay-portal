@@ -45,23 +45,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
-	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -75,18 +70,18 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'http://localhost:8080/html/themes/classic/js/main.js')]</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
 	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>xPath=(//input[@id='_86_removeButton'])[2]</td>
-	<td>Remove</td>
+	<td>Remove Footer Web Content</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>xPath=(//input[@id='_86_removeButton'])[2]</td>
-	<td>Remove</td>
+	<td>Remove Footer Web Content</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -99,7 +94,17 @@
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>assertTextNotPresent</td>
+	<td>WC WebContent Title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>

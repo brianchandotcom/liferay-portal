@@ -35,23 +35,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
-	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -65,17 +60,17 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'http://localhost:8080/html/themes/classic/js/main.js')]</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
 	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[2]/span/span/button[1]</td>
+	<td>//button[contains(@class,'add-row')]/span</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[2]/span/span/button[1]</td>
+	<td>//button[contains(@class,'add-row')]/span</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -102,6 +97,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
 </tr>
 <tr>
 	<td>open</td>

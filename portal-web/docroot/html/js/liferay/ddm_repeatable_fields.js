@@ -30,6 +30,8 @@ AUI.add(
 					},
 
 					repeatable: {
+						validator: Lang.isBoolean,
+						value: false
 					}
 				},
 

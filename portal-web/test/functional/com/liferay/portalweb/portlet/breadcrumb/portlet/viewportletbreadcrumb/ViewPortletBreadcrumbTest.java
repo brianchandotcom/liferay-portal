@@ -30,15 +30,13 @@ public class ViewPortletBreadcrumbTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
 			selenium.getText(
-				"//nav[@id='breadcrumbs']/ul/li[@class='last']/span/a"));
+				"//nav[@id='breadcrumbs']/ul/li[@class='only']/span/a"));
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText(
 				"//div[@class='portlet-body']/ul/li[@class='first']/span/a"));
 		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
 			selenium.getText(
 				"//div[@class='portlet-body']/ul/li[@class='last']/span/a"));
-		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='portlet-body']/ul/li[3]"));
 		selenium.mouseOver("link=Breadcrumb Test Page");
 		selenium.waitForVisible("link=Child Test Page");
 		selenium.clickAt("link=Child Test Page",

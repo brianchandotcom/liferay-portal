@@ -79,15 +79,39 @@ public class JSONServiceAction extends JSONAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		String className = ParamUtil.getString(request, "serviceClassName");
-		String methodName = ParamUtil.getString(request, "serviceMethodName");
+		boolean contentTypeJson = isContentTypeJson(request);
 
-		String[] serviceParameters = getStringArrayFromJSON(
-			request, "serviceParameters");
-		String[] serviceParameterTypes = getStringArrayFromJSON(
-			request, "serviceParameterTypes");
+		String className = null;
+		String methodName = null;
+		String[] serviceParameters = null;
+		String[] serviceParameterTypes = null;
 
-		if (!isValidRequest(request)) {
+		if (contentTypeJson) {
+			JSONObject jsonData = getJSONData(request);
+
+			className = jsonData.getString("serviceClassName");
+			methodName = jsonData.getString("serviceMethodName");
+
+			JSONArray jsonArray = jsonData.getJSONArray("serviceParameters");
+
+			serviceParameters = getStringArrayFromJSONArray(jsonArray);
+
+			jsonArray = jsonData.getJSONArray("serviceParameterTypes");
+
+			serviceParameterTypes = getStringArrayFromJSONArray(jsonArray);
+		}
+		else {
+			className = ParamUtil.getString(request, "serviceClassName");
+			methodName = ParamUtil.getString(request, "serviceMethodName");
+
+			serviceParameters = getStringArrayFromJSON(
+				request, "serviceParameters");
+
+			serviceParameterTypes = getStringArrayFromJSON(
+				request, "serviceParameterTypes");
+		}
+
+		if (!isValidRequest(request, contentTypeJson)) {
 			return null;
 		}
 
@@ -107,7 +131,7 @@ public class JSONServiceAction extends JSONAction {
 			for (int i = 0; i < serviceParameters.length; i++) {
 				args[i] = getArgValue(
 					request, clazz, methodName, serviceParameters[i],
-					parameterTypes[i]);
+					parameterTypes[i], contentTypeJson);
 			}
 
 			try {
@@ -143,13 +167,26 @@ public class JSONServiceAction extends JSONAction {
 
 	protected Object getArgValue(
 			HttpServletRequest request, Class<?> clazz, String methodName,
-			String parameter, Type parameterType)
+			String parameter, Type parameterType, boolean contentTypeJson)
 		throws Exception {
 
 		String typeNameOrClassDescriptor = getTypeNameOrClassDescriptor(
 			parameterType);
 
-		String value = ParamUtil.getString(request, parameter);
+		JSONObject jsonData = null;
+
+		if (contentTypeJson) {
+			jsonData = getJSONData(request);
+		}
+
+		String value = null;
+
+		if (contentTypeJson) {
+			value = jsonData.getString(parameter);
+		}
+		else {
+			value = ParamUtil.getString(request, parameter);
+		}
 
 		if (Validator.isNull(value) &&
 			!typeNameOrClassDescriptor.equals("[Ljava.lang.String;")) {
@@ -159,30 +196,63 @@ public class JSONServiceAction extends JSONAction {
 		else if (typeNameOrClassDescriptor.equals("boolean") ||
 				 typeNameOrClassDescriptor.equals(Boolean.class.getName())) {
 
-			return Boolean.valueOf(ParamUtil.getBoolean(request, parameter));
+			if (contentTypeJson) {
+				return Boolean.valueOf(jsonData.getBoolean(parameter));
+			}
+			else {
+				return Boolean.valueOf(
+					ParamUtil.getBoolean(request, parameter));
+			}
 		}
 		else if (typeNameOrClassDescriptor.equals("double") ||
 				 typeNameOrClassDescriptor.equals(Double.class.getName())) {
 
-			return new Double(ParamUtil.getDouble(request, parameter));
+			if (contentTypeJson) {
+				return new Double(jsonData.getDouble(parameter));
+			}
+			else {
+				return new Double(ParamUtil.getDouble(request, parameter));
+			}
+
 		}
 		else if (typeNameOrClassDescriptor.equals("int") ||
 				 typeNameOrClassDescriptor.equals(Integer.class.getName())) {
 
-			return new Integer(ParamUtil.getInteger(request, parameter));
+			if (contentTypeJson) {
+				return new Integer(jsonData.getInt(parameter));
+			}
+			else {
+				return new Integer(ParamUtil.getInteger(request, parameter));
+			}
 		}
 		else if (typeNameOrClassDescriptor.equals("long") ||
 				 typeNameOrClassDescriptor.equals(Long.class.getName())) {
 
-			return new Long(ParamUtil.getLong(request, parameter));
+			if (contentTypeJson) {
+				return new Long(jsonData.getLong(parameter));
+			}
+			else {
+				return new Long(ParamUtil.getLong(request, parameter));
+			}
 		}
 		else if (typeNameOrClassDescriptor.equals("short") ||
 				 typeNameOrClassDescriptor.equals(Short.class.getName())) {
 
-			return new Short(ParamUtil.getShort(request, parameter));
+			if (contentTypeJson) {
+				return new Short(
+					GetterUtil.getShort(jsonData.getString(parameter)));
+			}
+			else {
+				return new Short(ParamUtil.getShort(request, parameter));
+			}
 		}
 		else if (typeNameOrClassDescriptor.equals(Date.class.getName())) {
-			return new Date(ParamUtil.getLong(request, parameter));
+			if (contentTypeJson) {
+				return new Date(jsonData.getLong(parameter));
+			}
+			else {
+				return new Date(ParamUtil.getLong(request, parameter));
+			}
 		}
 		else if (typeNameOrClassDescriptor.equals(
 					ServiceContext.class.getName())) {
@@ -197,28 +267,154 @@ public class JSONServiceAction extends JSONAction {
 			return value;
 		}
 		else if (typeNameOrClassDescriptor.equals("[Z")) {
-			return ParamUtil.getBooleanValues(request, parameter);
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				if (jsonArray != null) {
+					boolean[] values = new boolean[jsonArray.length()];
+
+					for (int i = 0; i <jsonArray.length(); i++) {
+						values[i] = jsonArray.getBoolean(i);
+					}
+
+					return values;
+				}
+				else {
+					return new boolean[0];
+				}
+			}
+			else {
+				return ParamUtil.getBooleanValues(request, parameter);
+			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[D")) {
-			return ParamUtil.getDoubleValues(request, parameter);
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				if (jsonArray != null) {
+					double[] values = new double[jsonArray.length()];
+
+					for (int i = 0; i <jsonArray.length(); i++) {
+						values[i] = jsonArray.getDouble(i);
+					}
+
+					return values;
+				}
+				else {
+					return new double[0];
+				}
+			}
+			else {
+				return ParamUtil.getDoubleValues(request, parameter);
+			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[F")) {
-			return ParamUtil.getFloatValues(request, parameter);
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				if (jsonArray != null) {
+					float[] values = new float[jsonArray.length()];
+
+					for (int i = 0; i <jsonArray.length(); i++) {
+						values[i] = GetterUtil.getFloat(jsonArray.getString(i));
+					}
+
+					return values;
+				}
+				else {
+					return new float[0];
+				}
+			}
+			else {
+				return ParamUtil.getFloatValues(request, parameter);
+			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[I")) {
-			return ParamUtil.getIntegerValues(request, parameter);
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				if (jsonArray != null) {
+					int[] values = new int[jsonArray.length()];
+
+					for (int i = 0; i <jsonArray.length(); i++) {
+						values[i] = jsonArray.getInt(i);
+					}
+
+					return values;
+				}
+				else {
+					return new int[0];
+				}
+			}
+			else {
+				return ParamUtil.getIntegerValues(request, parameter);
+			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[J")) {
-			return ParamUtil.getLongValues(request, parameter);
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				if (jsonArray != null) {
+					long[] values = new long[jsonArray.length()];
+
+					for (int i = 0; i <jsonArray.length(); i++) {
+						values[i] = jsonArray.getLong(i);
+					}
+
+					return values;
+				}
+				else {
+					return new long[0];
+				}
+			}
+			else {
+				return ParamUtil.getLongValues(request, parameter);
+			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[S")) {
-			return ParamUtil.getShortValues(request, parameter);
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				if (jsonArray != null) {
+					short[] values = new short[jsonArray.length()];
+
+					for (int i = 0; i <jsonArray.length(); i++) {
+						values[i] = GetterUtil.getShort(jsonArray.getString(i));
+					}
+
+					return values;
+				}
+				else {
+					return new short[0];
+				}
+			}
+			else {
+				return ParamUtil.getShortValues(request, parameter);
+			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[Ljava.lang.String;")) {
-			return ParamUtil.getParameterValues(request, parameter);
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				String[] values = getStringArrayFromJSONArray(jsonArray);
+
+				return values;
+			}
+			else {
+				return ParamUtil.getParameterValues(request, parameter);
+			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[[Z")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = null;
+
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				values = getStringArrayFromJSONArray(jsonArray);
+			}
+			else {
+				values = request.getParameterValues(parameter);
+			}
 
 			if ((values != null) && (values.length > 0)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -241,7 +437,16 @@ public class JSONServiceAction extends JSONAction {
 			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[[D")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = null;
+
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				values = getStringArrayFromJSONArray(jsonArray);
+			}
+			else {
+				values = request.getParameterValues(parameter);
+			}
 
 			if ((values != null) && (values.length > 0)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -264,7 +469,16 @@ public class JSONServiceAction extends JSONAction {
 			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[[F")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = null;
+
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				values = getStringArrayFromJSONArray(jsonArray);
+			}
+			else {
+				values = request.getParameterValues(parameter);
+			}
 
 			if ((values != null) && (values.length > 0)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -287,7 +501,16 @@ public class JSONServiceAction extends JSONAction {
 			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[[I")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = null;
+
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				values = getStringArrayFromJSONArray(jsonArray);
+			}
+			else {
+				values = request.getParameterValues(parameter);
+			}
 
 			if ((values != null) && (values.length > 0)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -309,7 +532,16 @@ public class JSONServiceAction extends JSONAction {
 			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[[J")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = null;
+
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				values = getStringArrayFromJSONArray(jsonArray);
+			}
+			else {
+				values = request.getParameterValues(parameter);
+			}
 
 			if ((values != null) && (values.length > 0)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -331,7 +563,16 @@ public class JSONServiceAction extends JSONAction {
 			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[[S")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = null;
+
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				values = getStringArrayFromJSONArray(jsonArray);
+			}
+			else {
+				values = request.getParameterValues(parameter);
+			}
 
 			if ((values != null) && (values.length > 0)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -354,7 +595,16 @@ public class JSONServiceAction extends JSONAction {
 			}
 		}
 		else if (typeNameOrClassDescriptor.equals("[[Ljava.lang.String")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = null;
+
+			if (contentTypeJson) {
+				JSONArray jsonArray = jsonData.getJSONArray(parameter);
+
+				values = getStringArrayFromJSONArray(jsonArray);
+			}
+			else {
+				values = request.getParameterValues(parameter);
+			}
 
 			if ((values != null) && (values.length > 0)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -523,6 +773,21 @@ public class JSONServiceAction extends JSONAction {
 		return ArrayUtil.toStringArray(jsonArray);
 	}
 
+	protected String[] getStringArrayFromJSONArray(JSONArray jsonArray) {
+		if (jsonArray != null) {
+			String[] values = new String[jsonArray.length()];
+
+			for (int i = 0; i <jsonArray.length(); i++) {
+				values[i] = jsonArray.getString(i);
+			}
+
+			return values;
+		}
+		else {
+			return new String[0];
+		}
+	}
+
 	protected String getTypeNameOrClassDescriptor(Type type) {
 		String typeName = type.toString();
 
@@ -578,8 +843,18 @@ public class JSONServiceAction extends JSONAction {
 		throw new IllegalArgumentException(type.toString() + " is invalid");
 	}
 
-	protected boolean isValidRequest(HttpServletRequest request) {
-		String className = ParamUtil.getString(request, "serviceClassName");
+	protected boolean isValidRequest(
+			HttpServletRequest request, boolean contentTypeJson) {
+		String className = null;
+
+		if (contentTypeJson) {
+			JSONObject jsonData = getJSONData(request);
+
+			className = jsonData.getString("serviceClassName");
+		}
+		else {
+			className = ParamUtil.getString(request, "serviceClassName");
+		}
 
 		if (className.contains(".service.") &&
 			className.endsWith("ServiceUtil") &&

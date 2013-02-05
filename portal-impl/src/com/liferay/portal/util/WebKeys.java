@@ -204,6 +204,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String JOURNAL_TEMPLATE_ID = "JOURNAL_TEMPLATE_ID";
 
+	public static final String JSON_SERVICE_DATA = "JSON_SERVICE_DATA";
+
 	public static final String LAYOUT_ASSET_ENTRY = "LIFERAY_SHARED_LAYOUT_ASSET_ENTRY";
 
 	public static final String LAYOUT_CONTENT = "LAYOUT_CONTENT";

@@ -15,7 +15,10 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -24,6 +27,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ac.AccessControlUtil;
@@ -36,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.OutputStream;
+import java.io.Reader;
 
 import java.util.Set;
 
@@ -62,12 +67,26 @@ public abstract class JSONAction extends Action {
 			HttpServletResponse response)
 		throws Exception {
 
+		String callback = null;
+		String instance = null;
+		boolean refresh = false;
+
+		if (isContentTypeJson(request)) {
+			JSONObject jsonData = getJSONData(request);
+
+			callback = jsonData.getString("callback");
+			instance = jsonData.getString("instance");
+			refresh = jsonData.getBoolean("refresh");
+		}
+		else {
+			callback = ParamUtil.getString(request, "callback");
+			instance = ParamUtil.getString(request, "instance");
+			refresh = ParamUtil.getBoolean(request, "refresh");
+		}
+
 		if (rerouteExecute(request, response)) {
 			return null;
 		}
-
-		String callback = ParamUtil.getString(request, "callback");
-		String instance = ParamUtil.getString(request, "inst");
 
 		String json = null;
 
@@ -99,8 +118,6 @@ public abstract class JSONAction extends Action {
 
 			return null;
 		}
-
-		boolean refresh = ParamUtil.getBoolean(request, "refresh");
 
 		if (refresh) {
 			return mapping.findForward(ActionConstants.COMMON_REFERER);
@@ -166,8 +183,64 @@ public abstract class JSONAction extends Action {
 		}
 	}
 
+	protected JSONObject getJSONData(HttpServletRequest request) {
+		JSONObject jsonData = (JSONObject)request.getAttribute(
+			WebKeys.JSON_SERVICE_DATA);
+
+		if (jsonData != null) {
+			return jsonData;
+		}
+
+		if (isContentTypeJson(request)) {
+			try {
+				Reader reader = request.getReader();
+
+				UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(reader);
+
+				StringBundler sb = new StringBundler();
+				String line = null;
+
+				while ((line = unsyncBufferedReader.readLine()) != null) {
+					sb.append(line);
+				}
+
+				unsyncBufferedReader.close();
+
+				jsonData = JSONFactoryUtil.createJSONObject(sb.toString());
+			}
+			catch (JSONException e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+
+				jsonData = JSONFactoryUtil.createJSONObject();
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				jsonData = JSONFactoryUtil.createJSONObject();
+			}
+
+			request.setAttribute(WebKeys.JSON_SERVICE_DATA, jsonData);
+		}
+
+		return jsonData;
+	}
+
 	protected String getReroutePath() {
 		return null;
+	}
+
+	protected boolean isContentTypeJson(HttpServletRequest request) {
+		String contentType = request.getHeader(HttpHeaders.CONTENT_TYPE);
+
+		if ((contentType != null) &&
+			contentType.startsWith(ContentTypes.APPLICATION_JSON)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean rerouteExecute(
@@ -180,8 +253,18 @@ public abstract class JSONAction extends Action {
 			return false;
 		}
 
-		String requestServletContextName = ParamUtil.getString(
-			request, "servletContextName");
+		String requestServletContextName = null;
+
+		if (isContentTypeJson(request)) {
+			JSONObject jsonData = getJSONData(request);
+
+			requestServletContextName = jsonData.getString(
+				"servletContextName");
+		}
+		else {
+			requestServletContextName = ParamUtil.getString(
+				request, "servletContextName");
+		}
 
 		if (Validator.isNull(requestServletContextName)) {
 			return false;

@@ -37,6 +37,8 @@ public class ViewPortletBreadcrumbTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
 			selenium.getText(
 				"//div[@class='portlet-body']/ul/li[@class='last']/span/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='portlet-body']/ul/li[3]"));
 		selenium.mouseOver("link=Breadcrumb Test Page");
 		selenium.waitForVisible("link=Child Test Page");
 		selenium.clickAt("link=Child Test Page",

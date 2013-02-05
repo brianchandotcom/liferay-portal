@@ -217,13 +217,11 @@ public class DLFileEntryLocalServiceImpl
 
 		// File version
 
-		DLFileVersion dlFileVersion = addFileVersion(
+		addFileVersion(
 			user, dlFileEntry, serviceContext.getModifiedDate(now), extension,
 			mimeType, title, description, null, StringPool.BLANK,
 			fileEntryTypeId, fieldsMap, DLFileEntryConstants.VERSION_DEFAULT,
 			size, WorkflowConstants.STATUS_DRAFT, serviceContext);
-
-		dlFileEntry.setFileVersion(dlFileVersion);
 
 		// Folder
 
@@ -1041,12 +1039,7 @@ public class DLFileEntryLocalServiceImpl
 	public DLFileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
-		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
-			fileEntryId);
-
-		setFileVersion(dlFileEntry);
-
-		return dlFileEntry;
+		return dlFileEntryPersistence.findByPrimaryKey(fileEntryId);
 	}
 
 	public DLFileEntry getFileEntry(long groupId, long folderId, String title)
@@ -1056,8 +1049,6 @@ public class DLFileEntryLocalServiceImpl
 			groupId, folderId, title);
 
 		if (dlFileEntry != null) {
-			setFileVersion(dlFileEntry);
-
 			return dlFileEntry;
 		}
 
@@ -1092,23 +1083,13 @@ public class DLFileEntryLocalServiceImpl
 			long groupId, long folderId, String name)
 		throws PortalException, SystemException {
 
-		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByG_F_N(
-			groupId, folderId, name);
-
-		setFileVersion(dlFileEntry);
-
-		return dlFileEntry;
+		return dlFileEntryPersistence.findByG_F_N(groupId, folderId, name);
 	}
 
 	public DLFileEntry getFileEntryByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException, SystemException {
 
-		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByUUID_G(
-			uuid, groupId);
-
-		setFileVersion(dlFileEntry);
-
-		return dlFileEntry;
+		return dlFileEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	public List<DLFileEntry> getGroupFileEntries(
@@ -2177,20 +2158,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		unlockFileEntry(dlFileEntry.getFileEntryId());
-	}
-
-	protected void setFileVersion(DLFileEntry dlFileEntry)
-		throws PortalException, SystemException {
-
-		try {
-			DLFileVersion dlFileVersion =
-				dlFileVersionLocalService.getFileVersion(
-					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
-
-			dlFileEntry.setFileVersion(dlFileVersion);
-		}
-		catch (NoSuchFileVersionException nsfve) {
-		}
 	}
 
 	protected void startWorkflowInstance(

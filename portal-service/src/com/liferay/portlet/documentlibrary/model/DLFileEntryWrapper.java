@@ -1034,11 +1034,6 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		_dlFileEntry.setExtraSettingsProperties(extraSettingsProperties);
 	}
 
-	public void setFileVersion(
-		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion) {
-		_dlFileEntry.setFileVersion(dlFileVersion);
-	}
-
 	/**
 	 * @deprecated Renamed to {@link #getWrappedModel}
 	 */

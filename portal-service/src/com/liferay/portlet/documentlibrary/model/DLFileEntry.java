@@ -94,7 +94,4 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel {
 
 	public void setExtraSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties extraSettingsProperties);
-
-	public void setFileVersion(
-		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion);
 }

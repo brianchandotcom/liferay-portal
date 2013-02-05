@@ -125,20 +125,29 @@ public class DDMImpl implements DDM {
 				continue;
 			}
 
+			Field field = new Field();
+
+			field.setDDMStructureId(ddmStructureId);
+			field.setName(fieldName);
+
 			String languageId = GetterUtil.getString(
 				serviceContext.getAttribute("languageId"),
 				serviceContext.getLanguageId());
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			Field field = new Field(
-				ddmStructureId, fieldName, fieldValues, locale);
-
 			String defaultLanguageId = GetterUtil.getString(
 				serviceContext.getAttribute("defaultLanguageId"));
 
 			Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
 
+			if (ddmStructure.isFieldPrivate(fieldName)) {
+				locale = LocaleUtil.getDefault();
+
+				defaultLocale = LocaleUtil.getDefault();
+			}
+
+			field.setValues(locale, fieldValues);
 			field.setDefaultLocale(defaultLocale);
 
 			fields.put(field);

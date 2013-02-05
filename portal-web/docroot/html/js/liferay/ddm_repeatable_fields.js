@@ -27,6 +27,11 @@ AUI.add(
 					},
 
 					portletNamespace: {
+					},
+
+					repeatable: {
+						validator: Lang.isBoolean,
+						value: false
 					}
 				},
 
@@ -167,7 +172,7 @@ AUI.add(
 					renderRepeatableUI: function(fieldNode) {
 						var instance = this;
 
-						if (fieldNode.getData('repeatable') === 'true') {
+						if ((instance.get('repeatable') === 'true') && (fieldNode.getData('repeatable') === 'true')) {
 							if (!fieldNode.getData('rendered-toolbar')) {
 								var fieldName = fieldNode.getData('fieldName');
 

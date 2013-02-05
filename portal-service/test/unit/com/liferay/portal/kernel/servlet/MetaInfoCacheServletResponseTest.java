@@ -508,8 +508,8 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		// Send error
 
-		fromMetaInfoCacheServletResponse =
-			new MetaInfoCacheServletResponse(stubHttpServletResponse);
+		fromMetaInfoCacheServletResponse = new MetaInfoCacheServletResponse(
+			stubHttpServletResponse);
 
 		fromMetaInfoCacheServletResponse.sendError(400, "Bad Page");
 
@@ -529,8 +529,8 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		// Normal
 
-		fromMetaInfoCacheServletResponse =
-			new MetaInfoCacheServletResponse(stubHttpServletResponse);
+		fromMetaInfoCacheServletResponse = new MetaInfoCacheServletResponse(
+			stubHttpServletResponse);
 
 		fromMetaInfoCacheServletResponse.setContentLength(2048);
 		fromMetaInfoCacheServletResponse.setContentType(
@@ -564,8 +564,8 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		// Finish response after commit
 
-		fromMetaInfoCacheServletResponse =
-			new MetaInfoCacheServletResponse(stubHttpServletResponse);
+		fromMetaInfoCacheServletResponse = new MetaInfoCacheServletResponse(
+			stubHttpServletResponse);
 
 		fromMetaInfoCacheServletResponse.sendRedirect("testURL");
 

@@ -90,8 +90,8 @@ public class WeavingClassLoader extends URLClassLoader {
 
 				dumpDir.mkdirs();
 
-				FileOutputStream fileOutputStream =
-					new FileOutputStream(dumpFile);
+				FileOutputStream fileOutputStream = new FileOutputStream(
+					dumpFile);
 
 				fileOutputStream.write(data);
 

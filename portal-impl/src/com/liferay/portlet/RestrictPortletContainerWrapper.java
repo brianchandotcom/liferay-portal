@@ -114,8 +114,8 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 			}
 		}
 		else {
-			restrictPortletServletRequest =
-				new RestrictPortletServletRequest(request);
+			restrictPortletServletRequest = new RestrictPortletServletRequest(
+				request);
 		}
 
 		try {

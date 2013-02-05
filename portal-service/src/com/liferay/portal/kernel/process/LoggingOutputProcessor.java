@@ -46,8 +46,8 @@ public class LoggingOutputProcessor implements OutputProcessor<Void, Void> {
 	private void _processOut(boolean stdErr, InputStream inputStream)
 		throws ProcessException {
 
-		UnsyncBufferedReader unsyncBufferedReader =
-			new UnsyncBufferedReader(new InputStreamReader(inputStream));
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(inputStream));
 
 		String line = null;
 

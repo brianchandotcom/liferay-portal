@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1058,6 +1059,34 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				throw nsfee;
 			}
 		}
+	}
+
+	/**
+	 * Returns the file entry associated with the shortcut.
+	 *
+	 * @param  fileEntryIds the array of file entry ids
+	 * @param  fileShortcutIds the file entry ids of the shortcuts
+	 * @return the array of file entry ids
+	 * @throws PortalException if the shortcut could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public long[] getFileEntryByShortcutId(
+			long[] fileEntryIds, long[] fileShortcutIds)
+		throws PortalException, SystemException {
+
+		for (long fileShortcutId : fileShortcutIds) {
+			if (fileShortcutId == 0) {
+				continue;
+			}
+
+			DLFileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+
+			long toFileEntryId = fileShortcut.getToFileEntryId();
+
+			fileEntryIds = ArrayUtil.append(fileEntryIds, toFileEntryId);
+		}
+
+		return fileEntryIds;
 	}
 
 	/**

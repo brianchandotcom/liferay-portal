@@ -193,6 +193,14 @@ public class EditEntryAction extends PortletAction {
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
+		long[] fileShortcutIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
+
+		if (Validator.isNotNull(fileShortcutIds)) {
+			fileEntryIds = DLAppServiceUtil.getFileEntryByShortcutId(
+				fileEntryIds, fileShortcutIds);
+		}
+
 		for (long fileEntryId : fileEntryIds) {
 			DLAppServiceUtil.cancelCheckOut(fileEntryId);
 		}
@@ -203,6 +211,14 @@ public class EditEntryAction extends PortletAction {
 
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
+
+		long[] fileShortcutIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
+
+		if (Validator.isNotNull(fileShortcutIds)) {
+			fileEntryIds = DLAppServiceUtil.getFileEntryByShortcutId(
+				fileEntryIds, fileShortcutIds);
+		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
@@ -218,6 +234,14 @@ public class EditEntryAction extends PortletAction {
 
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
+
+		long[] fileShortcutIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
+
+		if (Validator.isNotNull(fileShortcutIds)) {
+			fileEntryIds = DLAppServiceUtil.getFileEntryByShortcutId(
+				fileEntryIds, fileShortcutIds);
+		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);

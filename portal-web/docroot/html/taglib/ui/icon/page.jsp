@@ -18,12 +18,13 @@
 
 <%
 String cssClassHtml = StringPool.BLANK;
+boolean srcIsNotNull = Validator.isNotNull(src);
 
 if (Validator.isNotNull(cssClass)) {
 	cssClassHtml = "class=\"".concat(cssClass).concat("\"");
 }
 
-if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImage) {
+if (srcIsNotNull && themeDisplay.isThemeImagesFastLoad() && !auiImage) {
 	SpriteImage spriteImage = null;
 	String spriteFileName = null;
 	String spriteFileURL = null;
@@ -119,6 +120,7 @@ if (auiImage) {
 	imgClass = imgClass.concat(" aui-icon-").concat(image.substring(_AUI_PATH.length()));
 }
 
+boolean scrHoverIsNotNull =  Validator.isNotNull(srcHover);
 boolean urlIsNotNull = Validator.isNotNull(url);
 
 boolean forcePost = method.equals("post") && (url.startsWith(Http.HTTP_WITH_SLASH) || url.startsWith(Http.HTTPS_WITH_SLASH));
@@ -127,11 +129,10 @@ if (Validator.isNull(data)) {
 	data = new HashMap<String, Object>();
 }
 
-
-if (Validator.isNotNull(srcHover) || forcePost) {
+if (scrHoverIsNotNull || forcePost) {
 	data.put("force-post", forcePost);
 
-	if (Validator.isNotNull(srcHover)) {
+	if (scrHoverIsNotNull) {
 		data.put("src", src);
 		data.put("src-hover", srcHover);
 	}
@@ -139,7 +140,7 @@ if (Validator.isNotNull(srcHover) || forcePost) {
 %>
 
 <liferay-util:buffer var="linkContent">
-	<c:if test="<%= Validator.isNotNull(src) %>">
+	<c:if test="<%= srcIsNotNull %>">
 		<c:choose>
 			<c:when test="<%= urlIsNotNull %>">
 				<img class="<%= imgClass %>" src="<%= src %>" <%= details %> />
@@ -210,7 +211,7 @@ if (Validator.isNotNull(srcHover) || forcePost) {
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= Validator.isNotNull(srcHover) || forcePost %>">
+<c:if test="<%= scrHoverIsNotNull || forcePost %>">
 	<aui:script use="liferay-icon">
 		Liferay.Icon.register('<portlet:namespace /><%= id %>');
 	</aui:script>

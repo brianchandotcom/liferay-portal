@@ -41,7 +41,7 @@ AUI.add(
 				if (buffer.length) {
 					var nodeList = A.all(buffer);
 
-					buffer = [];
+					buffer.length = 0;
 
 					var elements = nodeList._nodes;
 

@@ -89,6 +89,10 @@ public class SeleniumBuilderContext {
 		return _actionFileNames;
 	}
 
+	public Element getActionRootElement(String fileName) {
+		return _actionRootElements.get(fileName);
+	}
+
 	public Map<String, Element> getActionRootElements() {
 		return _actionRootElements;
 	}
@@ -101,12 +105,20 @@ public class SeleniumBuilderContext {
 		return _functionFileNames;
 	}
 
+	public Element getFunctionRootElement(String fileName) {
+		return _functionRootElements.get(fileName);
+	}
+
 	public Map<String, Element> getFunctionRootElements() {
 		return _functionRootElements;
 	}
 
 	public Set<String> getMacroFileNames() {
 		return _macroFileNames;
+	}
+
+	public Element getMacroRootElement(String fileName) {
+		return _macroRootElements.get(fileName);
 	}
 
 	public Map<String, Element> getMacroRootElements() {
@@ -117,6 +129,10 @@ public class SeleniumBuilderContext {
 		return _pathFileNames;
 	}
 
+	public Element getPathRootElement(String fileName) {
+		return _pathRootElements.get(fileName);
+	}
+
 	public Map<String, Element> getPathRootElements() {
 		return _pathRootElements;
 	}
@@ -125,12 +141,20 @@ public class SeleniumBuilderContext {
 		return _testCaseFileNames;
 	}
 
+	public Element getTestCaseRootElement(String fileName) {
+		return _testCaseRootElements.get(fileName);
+	}
+
 	public Map<String, Element> getTestCaseRootElements() {
 		return _testCaseRootElements;
 	}
 
 	public Set<String> getTestSuiteFileNames() {
 		return _testSuiteFileNames;
+	}
+
+	public Element getTestSuiteRootElement(String fileName) {
+		return _testSuiteRootElements.get(fileName);
 	}
 
 	public Map<String, Element> getTestSuiteRootElements() {

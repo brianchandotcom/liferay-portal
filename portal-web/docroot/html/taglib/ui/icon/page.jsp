@@ -18,12 +18,13 @@
 
 <%
 String cssClassHtml = StringPool.BLANK;
+boolean srcIsNotNull = Validator.isNotNull(src);
 
 if (Validator.isNotNull(cssClass)) {
 	cssClassHtml = "class=\"".concat(cssClass).concat("\"");
 }
 
-if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImage) {
+if (srcIsNotNull && themeDisplay.isThemeImagesFastLoad() && !auiImage) {
 	SpriteImage spriteImage = null;
 	String spriteFileName = null;
 	String spriteFileURL = null;
@@ -119,11 +120,27 @@ if (auiImage) {
 	imgClass = imgClass.concat(" aui-icon-").concat(image.substring(_AUI_PATH.length()));
 }
 
+boolean scrHoverIsNotNull =  Validator.isNotNull(srcHover);
 boolean urlIsNotNull = Validator.isNotNull(url);
+
+boolean forcePost = method.equals("post") && (url.startsWith(Http.HTTP_WITH_SLASH) || url.startsWith(Http.HTTPS_WITH_SLASH));
+
+if (Validator.isNull(data)) {
+	data = new HashMap<String, Object>();
+}
+
+if (scrHoverIsNotNull || forcePost) {
+	data.put("force-post", forcePost);
+
+	if (scrHoverIsNotNull) {
+		data.put("src", src);
+		data.put("src-hover", srcHover);
+	}
+}
 %>
 
 <liferay-util:buffer var="linkContent">
-	<c:if test="<%= Validator.isNotNull(src) %>">
+	<c:if test="<%= srcIsNotNull %>">
 		<c:choose>
 			<c:when test="<%= urlIsNotNull %>">
 				<img class="<%= imgClass %>" src="<%= src %>" <%= details %> />
@@ -194,22 +211,8 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 	</c:otherwise>
 </c:choose>
 
-<%
-boolean forcePost = method.equals("post") && (url.startsWith(Http.HTTP_WITH_SLASH) || url.startsWith(Http.HTTPS_WITH_SLASH));
-%>
-
-<c:if test="<%= Validator.isNotNull(srcHover) || forcePost %>">
+<c:if test="<%= scrHoverIsNotNull || forcePost %>">
 	<aui:script use="liferay-icon">
-		Liferay.Icon.register(
-			{
-				forcePost: <%= forcePost %>,
-				id: '<portlet:namespace /><%= id %>'
-
-				<c:if test="<%= Validator.isNotNull(srcHover) %>">
-					, src: '<%= src %>',
-					srcHover: '<%= srcHover %>'
-				</c:if>
-			}
-		);
+		Liferay.Icon.register('<portlet:namespace /><%= id %>');
 	</aui:script>
 </c:if>

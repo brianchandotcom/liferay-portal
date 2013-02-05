@@ -724,7 +724,6 @@ serverURL.setParameter("tabs3", tabs3);
 				</aui:fieldset>
 
 				<aui:button-row>
-
 					<c:choose>
 						<c:when test='<%= ShutdownUtil.isInProcess() %>'>
 							<%
@@ -741,7 +740,6 @@ serverURL.setParameter("tabs3", tabs3);
 							<aui:button onClick="<%= taglibShutdown %>" value="shutdown" />
 						</c:otherwise>
 					</c:choose>
-
 				</aui:button-row>
 			</c:when>
 			<c:otherwise>

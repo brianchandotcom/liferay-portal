@@ -1795,6 +1795,22 @@ public class SourceFormatter {
 					fileName, "line break: " + fileName + " " + lineCount);
 			}
 
+			if (trimmedLine.endsWith(StringPool.PLUS) &&
+				!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS)) {
+
+				String strippedQuotesLine = _stripQuotes(trimmedLine);
+
+				int closeParenthesisCount = StringUtil.count(
+					strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
+				int openParenthesisCount = StringUtil.count(
+					strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
+
+				if (openParenthesisCount > closeParenthesisCount) {
+					_sourceFormatterHelper.printError(
+						fileName, "line break: " + fileName + " " + lineCount);
+				}
+			}
+
 			if (line.contains(StringPool.COMMA) &&
 				!line.contains(StringPool.CLOSE_PARENTHESIS) &&
 				!line.contains(StringPool.GREATER_THAN) &&

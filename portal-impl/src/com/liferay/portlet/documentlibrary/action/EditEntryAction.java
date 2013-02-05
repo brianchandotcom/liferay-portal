@@ -42,6 +42,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.util.HashMap;
@@ -193,15 +194,19 @@ public class EditEntryAction extends PortletAction {
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
-		long[] fileShortcutIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
-
-		if (Validator.isNotNull(fileShortcutIds)) {
-			fileEntryIds = DLAppServiceUtil.getFileEntryByShortcutId(
-				fileEntryIds, fileShortcutIds);
+		for (long fileEntryId : fileEntryIds) {
+			DLAppServiceUtil.cancelCheckOut(fileEntryId);
 		}
 
-		for (long fileEntryId : fileEntryIds) {
+		long[] fileShortcutIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
+
+		for (long fileShortcutId : fileShortcutIds) {
+			DLFileShortcut dlFileShortcut =
+				DLAppLocalServiceUtil.getFileShortcut(fileShortcutId);
+
+			long fileEntryId = dlFileShortcut.getToFileEntryId();
+
 			DLAppServiceUtil.cancelCheckOut(fileEntryId);
 		}
 	}
@@ -212,18 +217,23 @@ public class EditEntryAction extends PortletAction {
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
-		long[] fileShortcutIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
-
-		if (Validator.isNotNull(fileShortcutIds)) {
-			fileEntryIds = DLAppServiceUtil.getFileEntryByShortcutId(
-				fileEntryIds, fileShortcutIds);
-		}
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		for (long fileEntryId : fileEntryIds) {
+			DLAppServiceUtil.checkInFileEntry(
+				fileEntryId, false, StringPool.BLANK, serviceContext);
+		}
+
+		long[] fileShortcutIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
+
+		for (long fileShortcutId : fileShortcutIds) {
+			DLFileShortcut dlFileShortcut =
+				DLAppLocalServiceUtil.getFileShortcut(fileShortcutId);
+
+			long fileEntryId = dlFileShortcut.getToFileEntryId();
+
 			DLAppServiceUtil.checkInFileEntry(
 				fileEntryId, false, StringPool.BLANK, serviceContext);
 		}
@@ -235,18 +245,22 @@ public class EditEntryAction extends PortletAction {
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 
-		long[] fileShortcutIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
-
-		if (Validator.isNotNull(fileShortcutIds)) {
-			fileEntryIds = DLAppServiceUtil.getFileEntryByShortcutId(
-				fileEntryIds, fileShortcutIds);
-		}
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		for (long fileEntryId : fileEntryIds) {
+			DLAppServiceUtil.checkOutFileEntry(fileEntryId, serviceContext);
+		}
+
+		long[] fileShortcutIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
+
+		for (long fileShortcutId : fileShortcutIds) {
+			DLFileShortcut dlFileShortcut =
+				DLAppLocalServiceUtil.getFileShortcut(fileShortcutId);
+
+			long fileEntryId = dlFileShortcut.getToFileEntryId();
+
 			DLAppServiceUtil.checkOutFileEntry(fileEntryId, serviceContext);
 		}
 	}

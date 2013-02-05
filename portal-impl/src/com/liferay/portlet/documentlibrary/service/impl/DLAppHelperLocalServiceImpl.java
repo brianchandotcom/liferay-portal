@@ -131,10 +131,6 @@ public class DLAppHelperLocalServiceImpl
 					userId, DLFileEntryConstants.getClassName(),
 					dlFileVersion.getFileVersionId(), dlFileVersion,
 					serviceContext, workflowContext);
-
-				DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-				dlFileEntry.setFileVersion(null);
 			}
 		}
 		finally {

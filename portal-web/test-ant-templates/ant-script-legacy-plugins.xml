@@ -8,7 +8,8 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<antcall target="prepare-mysql">
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 

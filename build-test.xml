@@ -2590,6 +2590,8 @@
 	</target>
 
 	<target name="prepare-common">
+		<echo file="test.${user.name}.properties">db.type=${db.type}</echo>
+
 		<antcall target="prepare-portal-properties" inheritAll="false" />
 
 		<antcall target="prepare-portal-ext-properties" inheritAll="false" />
@@ -2633,36 +2635,6 @@
 				<delete file="app.server.${user.name}.properties" />
 			</then>
 		</if>
-	</target>
-
-	<target name="prepare-db2">
-		<echo file="test.${user.name}.properties">db.type=db2</echo>
-
-		<antcall target="prepare-common" />
-	</target>
-
-	<target name="prepare-hsql">
-		<echo file="test.${user.name}.properties">db.type=hsql</echo>
-
-		<antcall target="prepare-common" />
-	</target>
-
-	<target name="prepare-mysql">
-		<echo file="test.${user.name}.properties">db.type=mysql</echo>
-
-		<antcall target="prepare-common" />
-	</target>
-
-	<target name="prepare-oracle-10">
-		<echo file="test.${user.name}.properties">db.type=oracle-10</echo>
-
-		<antcall target="prepare-common" />
-	</target>
-
-	<target name="prepare-oracle-11">
-		<echo file="test.${user.name}.properties">db.type=oracle-11</echo>
-
-		<antcall target="prepare-common" />
 	</target>
 
 	<target name="prepare-portal-ext-properties">
@@ -3048,18 +3020,6 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 		</if>
 	</target>
 
-	<target name="prepare-postgresql-8.4">
-		<echo file="test.${user.name}.properties">db.type=postgresql-8.4</echo>
-
-		<antcall target="prepare-common" />
-	</target>
-
-	<target name="prepare-postgresql-9.0">
-		<echo file="test.${user.name}.properties">db.type=postgresql-9.0</echo>
-
-		<antcall target="prepare-common" />
-	</target>
-
 	<target name="prepare-root-xml">
 		<echo file="${app.server.tomcat.dir}/conf/Catalina/localhost/ROOT.xml"><![CDATA[<Context path="" crossContext="true">
 
@@ -3180,24 +3140,6 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 				/>
 			</then>
 		</if>
-	</target>
-
-	<target name="prepare-sql-server-2005">
-		<echo file="test.${user.name}.properties">db.type=sql-server-2005</echo>
-
-		<antcall target="prepare-common" />
-	</target>
-
-	<target name="prepare-sql-server-2008">
-		<echo file="test.${user.name}.properties">db.type=sql-server-2008</echo>
-
-		<antcall target="prepare-common" />
-	</target>
-
-	<target name="prepare-sybase">
-		<echo file="test.${user.name}.properties">db.type=sybase</echo>
-
-		<antcall target="prepare-common" />
 	</target>
 
 	<target name="prepare-test-properties">
@@ -4312,7 +4254,9 @@ which can be downloaded from this website: http://code.google.com/p/chromedriver
 
 		<antcall target="clean-up-plugins" />
 
-		<antcall target="prepare-mysql" />
+		<antcall target="prepare-common">
+			<param name="db.type" value="mysql" />
+		</antcall>
 
 		<antcall target="rebuild-database" inheritAll="false">
 			<param name="test.database.minimal" value="true" />

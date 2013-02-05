@@ -171,14 +171,15 @@ public class SassToCssBuilder {
 	}
 
 	private String[] _getFileURLsToParse(
-		String CSSFilesDirName, String[] CSSFileNames) throws Exception {
+			String cssFilesDirName, String[] cssFileNames)
+		throws Exception {
 
 		List<String> modifiedFileURLs = new ArrayList<String>();
 		List<String> unModifiedFileURLs = new ArrayList<String>();
 
-		for (String fileName : CSSFileNames) {
+		for (String fileName : cssFileNames) {
 			String fileURL = StringUtil.replace(
-				CSSFilesDirName + StringPool.SLASH + fileName,
+				cssFilesDirName + StringPool.SLASH + fileName,
 				StringPool.BACK_SLASH, StringPool.SLASH);
 
 			long lastModifiedFile = (new File(fileURL)).lastModified();
@@ -226,9 +227,11 @@ public class SassToCssBuilder {
 		if ((indirectlyModifiedFiles.size() > 0) &&
 			(unmodifiedFileURLs.size() > 0)) {
 
-			indirectlyModifiedFiles.addAll(
+			List<String> indirectlyModifiedFileURLs =
 				_getIndirectlyModifiedFileURLs(
-					indirectlyModifiedFiles, unmodifiedFileURLs));
+					indirectlyModifiedFiles, unmodifiedFileURLs);
+
+			indirectlyModifiedFiles.addAll(indirectlyModifiedFileURLs);
 		}
 
 		return indirectlyModifiedFiles;

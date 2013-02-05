@@ -126,8 +126,8 @@ public class ModelHintsImpl implements ModelHints {
 	}
 
 	public Map<String, String> getHints(String model, String field) {
-		Map<String, Object> fields =
-			(Map<String, Object>)_modelFields.get(model);
+		Map<String, Object> fields = (Map<String, Object>)_modelFields.get(
+			model);
 
 		if (fields == null) {
 			return null;

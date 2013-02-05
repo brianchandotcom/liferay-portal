@@ -185,8 +185,8 @@ public class MediaWikiEngine implements WikiEngine {
 		// Post parse
 
 		if (attachmentURLPrefix != null) {
-			DirectURLMatcher attachmentURLMatcher =
-				new DirectURLMatcher(page, attachmentURLPrefix);
+			DirectURLMatcher attachmentURLMatcher = new DirectURLMatcher(
+				page, attachmentURLPrefix);
 
 			content = attachmentURLMatcher.replaceMatches(content);
 

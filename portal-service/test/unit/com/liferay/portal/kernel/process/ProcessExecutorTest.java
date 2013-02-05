@@ -761,8 +761,8 @@ public class ProcessExecutorTest {
 		logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			ProcessExecutor.class.getName(), Level.FINE);
 
-		leadingLogProcessCallable =
-			new LeadingLogProcessCallable(leadingLog, bodyLog);
+		leadingLogProcessCallable = new LeadingLogProcessCallable(
+			leadingLog, bodyLog);
 
 		arguments = _createArguments();
 
@@ -805,8 +805,8 @@ public class ProcessExecutorTest {
 		logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			ProcessExecutor.class.getName(), Level.SEVERE);
 
-		leadingLogProcessCallable =
-			new LeadingLogProcessCallable(leadingLog, bodyLog);
+		leadingLogProcessCallable = new LeadingLogProcessCallable(
+			leadingLog, bodyLog);
 
 		arguments = _createArguments();
 

@@ -77,8 +77,8 @@ public class MessageSenderJob implements Job {
 
 		message.put(SchedulerEngine.DESTINATION_NAME, destinationName);
 
-		Map<String, Object> jobStateMap =
-			(Map<String, Object>)jobDataMap.get(SchedulerEngine.JOB_STATE);
+		Map<String, Object> jobStateMap = (Map<String, Object>)jobDataMap.get(
+			SchedulerEngine.JOB_STATE);
 
 		JobState jobState = JobStateSerializeUtil.deserialize(jobStateMap);
 

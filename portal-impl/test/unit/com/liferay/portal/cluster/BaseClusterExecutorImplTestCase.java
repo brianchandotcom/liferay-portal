@@ -530,8 +530,8 @@ public abstract class BaseClusterExecutorImplTestCase
 			}
 		}
 
-		private ThreadPoolExecutor _threadPoolExecutor =
-			new ThreadPoolExecutor(10, 10);
+		private ThreadPoolExecutor _threadPoolExecutor = new ThreadPoolExecutor(
+			10, 10);
 
 	}
 

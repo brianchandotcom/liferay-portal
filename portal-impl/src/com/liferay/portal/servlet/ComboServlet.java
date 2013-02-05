@@ -90,8 +90,8 @@ public class ComboServlet extends HttpServlet {
 			return;
 		}
 
-		Set<String> modulePathsSet =
-			new LinkedHashSet<String>(modulePaths.length);
+		Set<String> modulePathsSet = new LinkedHashSet<String>(
+			modulePaths.length);
 
 		for (String path : modulePaths) {
 			modulePathsSet.add(path);

@@ -352,8 +352,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			statement.setMethod(assignment.substring(x + 1).trim());
 		}
 
-		HashMap<String, Object> parameterMap =
-			new HashMap<String, Object>(statementBody.size());
+		HashMap<String, Object> parameterMap = new HashMap<String, Object>(
+			statementBody.size());
 
 		statement.setParameterMap(parameterMap);
 

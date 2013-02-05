@@ -52,8 +52,8 @@ public class TemplateResourceExternalizationTest {
 		StringTemplateResource stringTemplateResource =
 			new StringTemplateResource("testId", "testContent");
 
-		CacheTemplateResource cacheTemplateResource =
-			new CacheTemplateResource(stringTemplateResource);
+		CacheTemplateResource cacheTemplateResource = new CacheTemplateResource(
+			stringTemplateResource);
 
 		// writeExternal
 

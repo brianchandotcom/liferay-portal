@@ -264,8 +264,8 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 				return (Serializable)Collections.emptyList();
 			}
 
-			ArrayList<Serializable> cachedList =
-				new ArrayList<Serializable>(list.size());
+			ArrayList<Serializable> cachedList = new ArrayList<Serializable>(
+				list.size());
 
 			for (Serializable curResult : list) {
 				Serializable primaryKey = _resultToPrimaryKey(curResult);

@@ -64,9 +64,9 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		DLSync dlSync = dlSyncPersistence.create(syncId);
 
 		dlSync.setCompanyId(companyId);
-		dlSync.setCreateDate(now);
+		dlSync.setCreateDate(now.getTime());
 		dlSync.setDescription(description);
-		dlSync.setModifiedDate(now);
+		dlSync.setModifiedDate(now.getTime());
 		dlSync.setFileId(fileId);
 		dlSync.setFileUuid(fileUuid);
 		dlSync.setRepositoryId(repositoryId);
@@ -116,7 +116,9 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 			dlSync = dlSyncPersistence.findByFileId(fileId);
 		}
 
-		dlSync.setModifiedDate(new Date());
+		Date now = new Date();
+
+		dlSync.setModifiedDate(now.getTime());
 		dlSync.setParentFolderId(parentFolderId);
 		dlSync.setName(name);
 		dlSync.setDescription(description);

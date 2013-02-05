@@ -575,8 +575,8 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
+		<column name="createDate" type="long" />
+		<column name="modifiedDate" type="long" />
 
 		<!-- Other fields -->
 
@@ -605,7 +605,7 @@
 		</finder>
 		<finder name="C_M_R" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="modifiedDate" comparator="&gt;=" />
+			<finder-column name="modifiedDate" comparator="&gt;" />
 			<finder-column name="repositoryId" />
 		</finder>
 

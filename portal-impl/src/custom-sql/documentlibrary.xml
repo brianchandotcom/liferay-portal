@@ -431,7 +431,7 @@
 				DLSync
 			WHERE
 				(DLSync.companyId = ?) AND
-				(DLSync.modifiedDate >= ?) AND
+				(DLSync.modifiedDate > ?) AND
 				(DLSync.repositoryId = ?) AND
 				(DLSync.type_ = ?)
 		]]>

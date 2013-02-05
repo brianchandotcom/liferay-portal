@@ -20,6 +20,7 @@
 boolean includeCompany = ParamUtil.getBoolean(request, "includeCompany");
 boolean includeUserPersonalSite = ParamUtil.getBoolean(request, "includeUserPersonalSite");
 String target = ParamUtil.getString(request, "target");
+long userId = ParamUtil.getLong(request, "userId");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -27,6 +28,7 @@ portletURL.setParameter("struts_action", "/sites_admin/select_site");
 portletURL.setParameter("includeCompany", String.valueOf(includeCompany));
 portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
 portletURL.setParameter("target", target);
+portletURL.setParameter("userId", String.valueOf(userId));
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -117,19 +119,27 @@ portletURL.setParameter("target", target);
 		>
 
 			<%
-			StringBundler sb = new StringBundler(9);
+			User selUser = UserLocalServiceUtil.getUser(userId);
 
-			sb.append("javascript:opener.");
-			sb.append(renderResponse.getNamespace());
-			sb.append("selectGroup('");
-			sb.append(group.getGroupId());
-			sb.append("', '");
-			sb.append(UnicodeFormatter.toString(group.getDescriptiveName(locale)));
-			sb.append("', '");
-			sb.append(target);
-			sb.append("'); window.close();");
+			MembershipPolicy membershipPolicy = MembershipPolicyFactory.getInstance();
 
-			String rowHREF = sb.toString();
+			String rowHREF = null;
+
+			if (membershipPolicy.isMembershipAllowed(group, selUser)) {
+				StringBundler sb = new StringBundler(9);
+
+				sb.append("javascript:opener.");
+				sb.append(renderResponse.getNamespace());
+				sb.append("selectGroup('");
+				sb.append(group.getGroupId());
+				sb.append("', '");
+				sb.append(UnicodeFormatter.toString(group.getDescriptiveName(locale)));
+				sb.append("', '");
+				sb.append(target);
+				sb.append("'); window.close();");
+
+				rowHREF = sb.toString();
+			}
 			%>
 
 			<liferay-ui:search-container-column-text

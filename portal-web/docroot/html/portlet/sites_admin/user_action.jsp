@@ -25,6 +25,10 @@ Group group = (Group)row.getParameter("group");
 
 boolean organizationUser = GetterUtil.getBoolean(row.getParameter("organizationUser"));
 boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"));
+
+MembershipPolicy membershipPolicy = MembershipPolicyFactory.getInstance();
+
+Set<Group> mandatoryGroups = membershipPolicy.getMandatoryGroups(user2);
 %>
 
 <liferay-ui:icon-menu showWhenSingleIcon="<%= true %>">
@@ -43,7 +47,7 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 			url="<%= assignURL %>"
 		/>
 
-		<c:if test="<%= !(organizationUser || userGroupUser) %>">
+		<c:if test="<%= !(organizationUser || userGroupUser) && !mandatoryGroups.contains(group) %>">
 			<portlet:actionURL var="removeURL">
 				<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
 				<portlet:param name="<%= Constants.CMD %>" value="group_users" />

@@ -12,11 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.templateparser;
+package com.liferay.portal.templateparser;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.templateparser.TemplateContext;
+import com.liferay.portal.kernel.templateparser.TemplateNode;
+import com.liferay.portal.kernel.templateparser.TemplateParser;
+import com.liferay.portal.kernel.templateparser.TransformException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -30,8 +38,13 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.taglib.util.VelocityTaglib;
+import com.liferay.util.PwdGenerator;
 
 import java.io.IOException;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -193,12 +206,42 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		return UnknownDevice.getInstance();
 	}
 
+	protected abstract String getErrorTemplateId();
+
+	protected TemplateResource getErrorTemplateResource() {
+		try {
+			Class<?> clazz = getClass();
+
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			URL url = classLoader.getResource(getErrorTemplateId());
+
+			return new URLTemplateResource(getErrorTemplateId(), url);
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
 	protected long getGroupId() {
 		if (_themeDisplay != null) {
 			return _themeDisplay.getScopeGroupId();
 		}
 
 		return GetterUtil.getLong(_tokens.get("group_id"));
+	}
+
+	protected String getJournalTemplatesPath() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(TemplateConstants.JOURNAL_SEPARATOR);
+		sb.append(StringPool.SLASH);
+		sb.append(getCompanyId());
+		sb.append(StringPool.SLASH);
+		sb.append(getGroupId());
+
+		return sb.toString();
 	}
 
 	protected abstract TemplateContext getTemplateContext() throws Exception;
@@ -234,8 +277,73 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		return sb.toString();
 	}
 
-	protected abstract List<TemplateNode> getTemplateNodes(Element element)
-		throws Exception;
+	protected List<TemplateNode> getTemplateNodes(Element element)
+		throws Exception {
+
+		List<TemplateNode> templateNodes = new ArrayList<TemplateNode>();
+
+		Map<String, TemplateNode> prototypeTemplateNodes =
+			new HashMap<String, TemplateNode>();
+
+		List<Element> dynamicElementElements = element.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			Element dynamicContentElement = dynamicElementElement.element(
+				"dynamic-content");
+
+			String data = StringPool.BLANK;
+
+			if (dynamicContentElement != null) {
+				data = dynamicContentElement.getText();
+			}
+
+			String name = dynamicElementElement.attributeValue(
+				"name", StringPool.BLANK);
+
+			if (name.length() == 0) {
+				throw new TransformException(
+					"Element missing \"name\" attribute");
+			}
+
+			String type = dynamicElementElement.attributeValue(
+				"type", StringPool.BLANK);
+
+			TemplateNode templateNode = new TemplateNode(
+				getThemeDisplay(), name, stripCDATA(data), type);
+
+			if (dynamicElementElement.element("dynamic-element") != null) {
+				templateNode.appendChildren(
+					getTemplateNodes(dynamicElementElement));
+			}
+			else if ((dynamicContentElement != null) &&
+					 (dynamicContentElement.element("option") != null)) {
+
+				List<Element> optionElements = dynamicContentElement.elements(
+					"option");
+
+				for (Element optionElement : optionElements) {
+					templateNode.appendOption(
+						stripCDATA(optionElement.getText()));
+				}
+			}
+
+			TemplateNode prototypeTemplateNode = prototypeTemplateNodes.get(
+				name);
+
+			if (prototypeTemplateNode == null) {
+				prototypeTemplateNode = templateNode;
+
+				prototypeTemplateNodes.put(name, prototypeTemplateNode);
+
+				templateNodes.add(templateNode);
+			}
+
+			prototypeTemplateNode.appendSibling(templateNode);
+		}
+
+		return templateNodes;
+	}
 
 	protected Map<String, Object> insertRequestVariables(Element element) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -284,10 +392,22 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		return map;
 	}
 
-	protected abstract boolean mergeTemplate(
+	protected boolean mergeTemplate(
 			TemplateContext templateContext,
 			UnsyncStringWriter unsyncStringWriter)
-		throws Exception;
+		throws Exception {
+
+		Template template = (Template)templateContext;
+
+		VelocityTaglib velocityTaglib = (VelocityTaglib)template.get(
+			PortletDisplayTemplateConstants.TAGLIB_LIFERAY);
+
+		if (velocityTaglib != null) {
+			velocityTaglib.setTemplateContext(templateContext);
+		}
+
+		return template.processTemplate(unsyncStringWriter);
+	}
 
 	protected void populateTemplateContext(TemplateContext templateContext)
 		throws Exception {
@@ -304,6 +424,26 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		templateContext.put(
 			"permissionChecker", PermissionThreadLocal.getPermissionChecker());
 		templateContext.put("viewMode", _viewMode);
+
+		templateContext.put("journalTemplatesPath", getJournalTemplatesPath());
+
+		String randomNamespace =
+			PwdGenerator.getPassword(PwdGenerator.KEY3, 4) +
+				StringPool.UNDERLINE;
+
+		templateContext.put("randomNamespace", randomNamespace);
+	}
+
+	protected String stripCDATA(String s) {
+		if (s.startsWith(StringPool.CDATA_OPEN) &&
+			s.endsWith(StringPool.CDATA_CLOSE)) {
+
+			s = s.substring(
+				StringPool.CDATA_OPEN.length(),
+				s.length() - StringPool.CDATA_CLOSE.length());
+		}
+
+		return s;
 	}
 
 	private Map<String, Object> _contextObjects = new HashMap<String, Object>();

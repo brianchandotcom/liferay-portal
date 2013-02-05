@@ -147,10 +147,6 @@ public abstract class BaseWebDriverImpl
 		_clipBoard = super.getValue(locator);
 	}
 
-	public void downloadTempFile(String value) {
-		BrowserCommands.downloadTempFile(value);
-	}
-
 	public void echo(String message) {
 		LiferaySeleniumHelper.echo(message);
 	}
@@ -302,10 +298,6 @@ public abstract class BaseWebDriverImpl
 
 	public void sendKeys(String locator, String value) {
 		typeKeys(locator, value);
-	}
-
-	public void setBrowserOption() {
-		BrowserCommands.setBrowserOption();
 	}
 
 	public void setDefaultTimeout() {

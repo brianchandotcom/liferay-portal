@@ -586,13 +586,13 @@ public class SeleneseToJavaBuilder {
 			String param2 = fixParam(params[1]);
 			String param3 = fixParam(params[2]);
 
-			if (param1.equals("addSelection") ||
-				param1.equals("clickAt") ||
+			if (param1.equals("addSelection") || param1.equals("clickAt") ||
 				param1.equals("doubleClickAt") || param1.equals("keyDown") ||
 				param1.equals("keyPress") || param1.equals("keyUp") ||
 				param1.equals("mouseMoveAt") || param1.equals("openWindow") ||
 				param1.equals("select") || param1.equals("sendKeys") ||
-				param1.equals("type") || param1.equals("typeKeys") ||
+				param1.equals("type") || param1.equals("typeFrame") ||
+				param1.equals("typeKeys") ||
 				param1.equals("uploadCommonFile") ||
 				param1.equals("uploadFile") ||
 				param1.equals("uploadTempFile") ||
@@ -877,14 +877,9 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append("\"), \"\");");
 			}
-			else if (param1.equals("setBrowserOption")) {
-
-				sb.append("BrowserCommands.");
-				sb.append(param1);
-				sb.append("();");
-			}
 			else if (param1.equals("check") || param1.equals("click") ||
 					 param1.equals("doubleClick") ||
+					 param1.equals("downloadTempFile") || 
 					 param1.equals("mouseDown") || param1.equals("mouseMove") ||
 					 param1.equals("mouseOver") || param1.equals("mouseUp") ||
 					 param1.equals("open") || param1.equals("selectFrame") ||
@@ -901,7 +896,12 @@ public class SeleneseToJavaBuilder {
 					 param1.equals("waitForTextPresent") ||
 					 param1.equals("waitForVisible")) {
 
-				sb.append("selenium.");
+				if (param1.equals("downloadTempFile")) {
+					sb.append("BrowserCommands.");
+				}
+				else {
+					sb.append("selenium.");
+				}
 				sb.append(param1);
 				sb.append("(");
 
@@ -947,36 +947,21 @@ public class SeleneseToJavaBuilder {
 			}
 			else if (param1.equals("close") || param1.equals("goBack") ||
 					 param1.equals("refresh") ||
+					 param1.equals("setBrowserOption") ||
 					 param1.equals("setDefaultTimeout") ||
 					 param1.equals("setDefaultTimeoutImplicit") ||
 					 param1.equals("windowFocus") ||
 					 param1.equals("windowMaximize")) {
 
-				sb.append("selenium.");
-				sb.append(param1);
-				sb.append("();");
-			}
-			else if (param1.equals("downloadTempFile")) {
-
-				sb.append("BrowserCommands.");
-				sb.append(param1);
-				sb.append("(");
-
-				if (param2.startsWith("${")) {
-					sb.append("RuntimeVariables.getValue(\"");
-
-					String text = param2.substring(2, param2.length() - 1);
-
-					sb.append(text);
-					sb.append("\")");
+				if (param1.equals("setBrowserOption")) {
+					sb.append("BrowserCommands.");
 				}
 				else {
-					sb.append("\"");
-					sb.append(param2);
-					sb.append("\"");
+					sb.append("selenium.");
 				}
 
-				sb.append(");");
+				sb.append(param1);
+				sb.append("();");
 			}
 			else if (param1.equals("dragAndDropToObject")) {
 				sb.append("selenium.");

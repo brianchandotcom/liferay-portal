@@ -786,6 +786,12 @@ public interface DLAppService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getFileEntryByShortcutId(long[] fileEntryIds,
+		long[] fileShortcutIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the file entry with the UUID and group.
 	*

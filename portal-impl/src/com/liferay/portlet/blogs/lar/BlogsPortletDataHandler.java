@@ -70,7 +70,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 					new PortletDataHandlerBoolean(NAMESPACE, "tags")
 				}));
 		setImportMetadataControls(
-			getExportControls()[0],
+			getExportMetadataControls()[0],
 			new PortletDataHandlerBoolean(NAMESPACE, "wordpress"));
 		setPublishToLiveByDefault(PropsValues.BLOGS_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}

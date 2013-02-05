@@ -653,8 +653,22 @@ public class ResourcePermissionLocalServiceImpl
 			String actionId)
 		throws PortalException, SystemException {
 
-		return hasResourcePermission(
-			companyId, name, scope, primKey, new long[] {roleId}, actionId);
+		ResourcePermission resourcePermission =
+			resourcePermissionPersistence.fetchByC_N_S_P_R(
+				companyId, name, scope, primKey, roleId);
+
+		if (resourcePermission == null) {
+			return false;
+		}
+
+		ResourceAction resourceAction =
+			resourceActionLocalService.getResourceAction(name, actionId);
+
+		if (hasActionId(resourcePermission, resourceAction)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

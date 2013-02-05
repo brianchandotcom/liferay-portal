@@ -291,8 +291,8 @@ public class DumpIndexDeletionPolicyTest {
 			long targetLength = targetDirectory.fileLength(fileName);
 
 			if (sourceLength != targetLength) {
-				Assert.fail(fileName +
-					" has different source and target lengths");
+				Assert.fail(
+					fileName + " has different source and target lengths");
 			}
 
 			_assertContent(

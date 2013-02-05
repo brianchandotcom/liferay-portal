@@ -92,14 +92,16 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 				if (fileArray[i].isDirectory()) {
 					copyDirectory(
 						fileArray[i],
-						new File(destination.getPath() + File.separator +
-							fileArray[i].getName()));
+						new File(
+							destination.getPath() + File.separator +
+								fileArray[i].getName()));
 				}
 				else {
 					copyFile(
 						fileArray[i],
-						new File(destination.getPath() + File.separator +
-							fileArray[i].getName()));
+						new File(
+							destination.getPath() + File.separator +
+								fileArray[i].getName()));
 				}
 			}
 		}

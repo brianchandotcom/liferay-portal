@@ -63,7 +63,7 @@ public class PrincipalThreadLocal {
 	private static ThreadLocal<String> _name = new AutoResetThreadLocal<String>(
 		PrincipalThreadLocal.class + "._name");
 	private static ThreadLocal<String> _password =
-		new AutoResetThreadLocal<String>(PrincipalThreadLocal.class +
-			"._password");
+		new AutoResetThreadLocal<String>(
+			PrincipalThreadLocal.class + "._password");
 
 }

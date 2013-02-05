@@ -202,12 +202,10 @@ public class EditEntryAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
 
 		for (long fileShortcutId : fileShortcutIds) {
-			DLFileShortcut dlFileShortcut =
-				DLAppLocalServiceUtil.getFileShortcut(fileShortcutId);
+			DLFileShortcut fileShortcut = DLAppLocalServiceUtil.getFileShortcut(
+				fileShortcutId);
 
-			long fileEntryId = dlFileShortcut.getToFileEntryId();
-
-			DLAppServiceUtil.cancelCheckOut(fileEntryId);
+			DLAppServiceUtil.cancelCheckOut(fileShortcut.getToFileEntryId());
 		}
 	}
 
@@ -229,13 +227,12 @@ public class EditEntryAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
 
 		for (long fileShortcutId : fileShortcutIds) {
-			DLFileShortcut dlFileShortcut =
-				DLAppLocalServiceUtil.getFileShortcut(fileShortcutId);
-
-			long fileEntryId = dlFileShortcut.getToFileEntryId();
+			DLFileShortcut fileShortcut = DLAppLocalServiceUtil.getFileShortcut(
+				fileShortcutId);
 
 			DLAppServiceUtil.checkInFileEntry(
-				fileEntryId, false, StringPool.BLANK, serviceContext);
+				fileShortcut.getToFileEntryId(), false, StringPool.BLANK,
+				serviceContext);
 		}
 	}
 
@@ -256,12 +253,11 @@ public class EditEntryAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
 
 		for (long fileShortcutId : fileShortcutIds) {
-			DLFileShortcut dlFileShortcut =
-				DLAppLocalServiceUtil.getFileShortcut(fileShortcutId);
+			DLFileShortcut fileShortcut = DLAppLocalServiceUtil.getFileShortcut(
+				fileShortcutId);
 
-			long fileEntryId = dlFileShortcut.getToFileEntryId();
-
-			DLAppServiceUtil.checkOutFileEntry(fileEntryId, serviceContext);
+			DLAppServiceUtil.checkOutFileEntry(
+				fileShortcut.getToFileEntryId(), serviceContext);
 		}
 	}
 

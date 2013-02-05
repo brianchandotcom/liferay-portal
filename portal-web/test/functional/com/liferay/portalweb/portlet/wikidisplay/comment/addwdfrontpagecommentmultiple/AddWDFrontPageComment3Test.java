@@ -30,8 +30,8 @@ public class AddWDFrontPageComment3Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Comment"),
 			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/span/a/span"));
-		selenium.clickAt("//fieldset[@class='aui-fieldset add-comment ']/div/span/a/span",
+				"//fieldset[contains(@class,'add-comment')]/div/span/a/span"));
+		selenium.clickAt("//fieldset[contains(@class,'add-comment')]/div/span/a/span",
 			RuntimeVariables.replace("Add Comment"));
 		selenium.waitForVisible("//textarea");
 		selenium.type("//textarea",

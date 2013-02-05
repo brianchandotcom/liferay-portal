@@ -19,6 +19,11 @@ e<html>
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
+	<td>Details</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
@@ -80,7 +85,7 @@ e<html>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//input[@value='Compare Versions']</td>
+	<td>//div[@class='aui-button-holder ']/span/span/input</td>
 	<td>Compare Versions</td>
 </tr>
 <tr>
@@ -130,22 +135,22 @@ e<html>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>//tr[3]/td[contains(.,'FrontPage')]/a</td>
 	<td>FrontPage</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]/a</td>
+	<td>//tr[3]/td[contains(.,'Approved')]/a</td>
 	<td>Approved</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[4]/a</td>
+	<td>//tr[3]/td[contains(.,'1.2 (Minor Edit)')]/a</td>
 	<td>1.2 (Minor Edit)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[5]/a</td>
+	<td>//tr[3]/td[contains(.,'Joe Bloggs')]/a</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
@@ -170,22 +175,22 @@ e<html>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[2]/a</td>
+	<td>//tr[4]/td[contains(.,'FrontPage')]/a</td>
 	<td>FrontPage</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[3]/a</td>
+	<td>//tr[4]/td[contains(.,'Approved')]/a</td>
 	<td>Approved</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[4]/a</td>
+	<td>//tr[4]/td[contains(.,'1.1')]/a</td>
 	<td>1.1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[5]/a</td>
+	<td>//tr[4]/td[contains(.,'Joe Bloggs')]/a</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
@@ -205,7 +210,7 @@ e<html>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[8]/span/a/span</td>
+	<td>//tr[4]/td[contains(.,'Revert')]/span/a/span</td>
 	<td>Revert</td>
 </tr>
 <tr>
@@ -215,17 +220,17 @@ e<html>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[5]/td[2]/a</td>
+	<td>//tr[5]/td[contains(.,'FrontPage')]/a</td>
 	<td>FrontPage</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[5]/td[3]/a</td>
+	<td>//tr[5]/td[contains(.,'Approved')]/a</td>
 	<td>Approved</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[5]/td[4]/a</td>
+	<td>//tr[5]/td[contains(.,'1.0 (Minor Edit)')]/a</td>
 	<td>1.0 (Minor Edit)</td>
 </tr>
 <tr>
@@ -250,7 +255,7 @@ e<html>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[5]/td[8]/span/a/span</td>
+	<td>//tr[5]/td[contains(.,'Revert')]/span/a/span</td>
 	<td>Revert</td>
 </tr>
 </tbody></table>

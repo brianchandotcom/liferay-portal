@@ -25,6 +25,7 @@ public class EditWikiFrontPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -36,28 +37,28 @@ public class EditWikiFrontPageTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//td[@class='cke_top']");
-		selenium.waitForElementPresent(
-			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
+		Thread.sleep(1000);
+		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForText("//span[@class='cke_toolbar']/span[contains(.,'Format')]/a",
+			"Format");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible(
-			"//td[contains(@id,'cke_contents__54')]/textarea");
-		selenium.type("//td[contains(@id,'cke_contents__54')]/textarea",
+			"//a[@class='cke_button cke_button__source cke_button_on']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
+		selenium.type("//div[@id='cke_1_contents']/textarea",
 			RuntimeVariables.replace("Wiki FrontPage Content Edit"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
-		assertTrue(selenium.isVisible(
-				"//td[contains(@id,'cke_contents__54')]/iframe"));
-		selenium.selectFrame("//td[contains(@id,'cke_contents__54')]/iframe");
-		selenium.waitForText("//body", "Wiki FrontPage Content Edit");
+		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForText("//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p",
+			"Wiki FrontPage Content Edit");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -70,15 +71,16 @@ public class EditWikiFrontPageTest extends BaseTestCase {
 		assertNotEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText(
-				"//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]"));
+		selenium.waitForElementPresent(
+			"//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]");
 		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent("link=History");
 		selenium.clickAt("link=History", RuntimeVariables.replace("History"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("1.2"),

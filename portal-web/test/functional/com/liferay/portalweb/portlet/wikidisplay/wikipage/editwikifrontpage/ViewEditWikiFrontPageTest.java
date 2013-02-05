@@ -25,9 +25,12 @@ public class ViewEditWikiFrontPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//ul[@class='top-links-navigation']/li/span[contains(.,'FrontPage')]",
+			"FrontPage");
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText(
 				"//ul[@class='top-links-navigation']/li/span[contains(.,'FrontPage')]"));

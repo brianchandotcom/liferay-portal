@@ -28,6 +28,8 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//div[@class='wiki-body']/p",
+			"Wiki FrontPage Content");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Edit"),
@@ -36,28 +38,26 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//td[@class='cke_top']");
-		selenium.waitForElementPresent(
-			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
+		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible(
-			"//td[contains(@id,'cke_contents__54')]/textarea");
-		selenium.type("//td[contains(@id,'cke_contents__54')]/textarea",
+			"//a[@class='cke_button cke_button__source cke_button_on']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
+		selenium.type("//div[@id='cke_1_contents']/textarea",
 			RuntimeVariables.replace("Wiki FrontPage Content Edit"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
-		assertTrue(selenium.isVisible(
-				"//td[contains(@id,'cke_contents__54')]/iframe"));
-		selenium.selectFrame("//td[contains(@id,'cke_contents__54')]/iframe");
-		selenium.waitForText("//body", "Wiki FrontPage Content Edit");
+		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForText("//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p",
+			"Wiki FrontPage Content Edit");
 		selenium.selectFrame("relative=top");
 		assertFalse(selenium.isChecked(
 				"//input[contains(@id,'_minorEditCheckbox')]"));

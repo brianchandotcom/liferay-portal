@@ -26,14 +26,16 @@ public class ChangeParentWDFrontPageChildPageToNoneTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
-			selenium.getText("//div[@class='child-pages']/ul/li/a"));
+		selenium.waitForElementPresent("//div[@class='child-pages']/ul/li/a");
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//h1[@class='header-title']/span",
+			"Wiki FrontPage ChildPage Title");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("\u00ab Back to FrontPage"),
@@ -71,9 +73,11 @@ public class ChangeParentWDFrontPageChildPageToNoneTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("Children Pages"));
 		assertFalse(selenium.isTextPresent("Wiki FrontPage ChildPage Title"));
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent("link=All Pages");
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),

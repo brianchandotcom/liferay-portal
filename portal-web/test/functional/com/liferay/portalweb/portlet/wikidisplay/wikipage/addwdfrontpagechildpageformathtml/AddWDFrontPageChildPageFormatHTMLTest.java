@@ -35,36 +35,35 @@ public class AddWDFrontPageChildPageFormatHTMLTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.type("//input[contains(@id,'_title')]",
+			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
+		assertTrue(selenium.isVisible("//select"));
 		selenium.select("//select", RuntimeVariables.replace("HTML"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^You may lose some formatting when switching from Creole to HTML. Do you want to continue[\\s\\S]$"));
 		assertEquals("HTML", selenium.getSelectedLabel("//select"));
-		selenium.type("//input[contains(@id,'_title')]",
-			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
-		selenium.waitForVisible("//td[@class='cke_top']");
-		selenium.waitForElementPresent(
-			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
+		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForText("//span[@class='cke_toolbar']/span[contains(.,'Normal')]/a",
+			"Normal");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible(
-			"//td[contains(@id,'cke_contents__54')]/textarea");
-		selenium.type("//td[contains(@id,'cke_contents__54')]/textarea",
+			"//a[@class='cke_button cke_button__source cke_button_on']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
+		selenium.type("//div[@id='cke_1_contents']/textarea",
 			RuntimeVariables.replace(
 				"<a herf=http://www.liferay.com>Welcome to LIFERAY</a>"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
-		assertTrue(selenium.isVisible(
-				"//td[contains(@id,'cke_contents__54')]/iframe"));
-		selenium.selectFrame("//td[contains(@id,'cke_contents__54')]/iframe");
-		selenium.waitForText("//body", "Welcome to LIFERAY");
+		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
+		selenium.waitForText("//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p",
+			"Welcome to LIFERAY");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));

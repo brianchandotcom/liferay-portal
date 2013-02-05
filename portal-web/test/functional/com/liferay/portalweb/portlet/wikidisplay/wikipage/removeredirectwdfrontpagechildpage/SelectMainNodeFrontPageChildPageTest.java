@@ -26,12 +26,12 @@ public class SelectMainNodeFrontPageChildPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.waitForText("//span[@title='Options']/ul/li/strong/a",
+			"Options");
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
@@ -64,9 +64,12 @@ public class SelectMainNodeFrontPageChildPageTest extends BaseTestCase {
 			selenium.getSelectedLabel("//select[@id='_86_title']"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//h1[@class='header-title']/span",
+			"Wiki FrontPage ChildPage Title Rename");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki FrontPage ChildPage Title Rename"),
 			selenium.getText("//h1[@class='header-title']/span"));

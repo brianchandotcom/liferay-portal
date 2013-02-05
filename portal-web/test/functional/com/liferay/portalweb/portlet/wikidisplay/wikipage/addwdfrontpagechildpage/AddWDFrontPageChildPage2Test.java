@@ -25,9 +25,12 @@ public class AddWDFrontPageChildPage2Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]",
+			"Add Child Page");
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText(
 				"//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]"));
@@ -36,27 +39,27 @@ public class AddWDFrontPageChildPage2Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[contains(@id,'_title')]",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"));
-		selenium.waitForVisible("//td[@class='cke_top']");
-		selenium.waitForElementPresent(
-			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
+		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForText("//a[@title='Paragraph Format']/span", "Normal");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible(
-			"//td[contains(@id,'cke_contents__54')]/textarea");
-		selenium.type("//td[contains(@id,'cke_contents__54')]/textarea",
+			"//a[@class='cke_button cke_button__source cke_button_on']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
+		selenium.type("//div[@id='cke_1_contents']/textarea",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage2 Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_off']");
-		assertTrue(selenium.isVisible(
-				"//td[contains(@id,'cke_contents__54')]/iframe"));
-		selenium.selectFrame("//td[contains(@id,'cke_contents__54')]/iframe");
-		selenium.waitForText("//body", "Wiki FrontPage ChildPage2 Content");
+		selenium.waitForVisible(
+			"//a[@class='cke_button cke_button__source cke_button_off']");
+		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForText("//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p",
+			"Wiki FrontPage ChildPage2 Content");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -70,6 +73,8 @@ public class AddWDFrontPageChildPage2Test extends BaseTestCase {
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage2 Title')]",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//h1[@class='header-title']/span",
+			"Wiki FrontPage ChildPage2 Title");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(

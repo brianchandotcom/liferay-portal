@@ -25,9 +25,12 @@ public class RevertEditWikiFrontPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//div[@class='wiki-body']/p",
+			"Wiki FrontPage Content Edit");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content Edit"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
@@ -36,21 +39,23 @@ public class RevertEditWikiFrontPageTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent("link=History");
 		selenium.clickAt("link=History", RuntimeVariables.replace("History"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("1.3"));
 		assertEquals(RuntimeVariables.replace("1.2"),
-			selenium.getText("//tr[3]/td[4]/a"));
+			selenium.getText("//tr[3]/td[contains(.,'1.2')]/a"));
 		assertEquals(RuntimeVariables.replace("Revert"),
-			selenium.getText("//tr[4]/td[8]/span/a/span"));
-		selenium.clickAt("//tr[4]/td[8]/span/a/span",
+			selenium.getText("//tr[4]/td[contains(.,'Revert')]/span/a/span"));
+		selenium.clickAt("//tr[4]/td[contains(.,'Revert')]/span/a/span",
 			RuntimeVariables.replace("Revert"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("1.3"),
-			selenium.getText("//tr[3]/td[4]/a"));
+			selenium.getText("//tr[3]/td[contains(.,'1.3')]/a"));
 		assertEquals(RuntimeVariables.replace("Reverted to 1.1"),
-			selenium.getText("//tr[3]/td[7]"));
+			selenium.getText("//tr[3]/td[contains(.,'Reverted to 1.1')]"));
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");

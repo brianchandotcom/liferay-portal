@@ -28,7 +28,7 @@ public class SelectWikiNode2Test extends BaseTestCase {
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -59,6 +59,7 @@ public class SelectWikiNode2Test extends BaseTestCase {
 			selenium.getSelectedLabel("//select[@id='_86_title']"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		Thread.sleep(1000);
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");

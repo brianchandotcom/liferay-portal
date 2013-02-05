@@ -29,6 +29,16 @@
 	<td>Add Child Page</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>//input[contains(@id,'_title')]</td>
+	<td>Wiki FrontPage ChildPage Title</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//select</td>
+	<td>HTML</td>
+</tr>
+<tr>
 	<td>selectAndWait</td>
 	<td>//select</td>
 	<td>HTML</td>
@@ -44,19 +54,14 @@
 	<td>HTML</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[contains(@id,'_title')]</td>
-	<td>Wiki FrontPage ChildPage Title</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[@class='cke_top']</td>
-	<td>CKE Toolbar</td>
-</tr>
-<tr>
 	<td>waitForElementPresent</td>
-	<td>//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>Text Area</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='cke_toolbar']/span[contains(.,'Normal')]/a</td>
+	<td>Normal</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -70,17 +75,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>//a[@class='cke_button cke_button__source cke_button_on']</td>
 	<td>Source Button On</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[contains(@id,'cke_contents__54')]/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//td[contains(@id,'cke_contents__54')]/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td><a herf=http://www.liferay.com>Welcome to LIFERAY</a></td>
 </tr>
 <tr>
@@ -95,22 +100,17 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>Text Area</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[contains(@id,'cke_contents__54')]/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//td[contains(@id,'cke_contents__54')]/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//body</td>
+	<td>//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p</td>
 	<td>Welcome to LIFERAY</td>
 </tr>
 <tr>

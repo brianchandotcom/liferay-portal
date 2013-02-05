@@ -25,15 +25,18 @@ public class SelectMainNodeTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
+		selenium.waitForElementPresent(
+			"//span[@title='Options']/ul/li/strong/a");
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
-		selenium.waitForVisible(
+		selenium.waitForElementPresent(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
@@ -59,9 +62,12 @@ public class SelectMainNodeTest extends BaseTestCase {
 			selenium.getSelectedLabel("//select[@id='_86_title']"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//div[@class='wiki-body']/p",
+			"Wiki FrontPage Content");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}

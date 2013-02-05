@@ -37,27 +37,28 @@ public class AddWDFrontPageChildPageNameDuplicateTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[contains(@id,'_title')]",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
-		selenium.waitForVisible("//td[@class='cke_top']");
-		selenium.waitForElementPresent(
-			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
+		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForText("//span[@class='cke_toolbar']/span[contains(.,'Normal')]/a",
+			"Normal");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible(
-			"//td[contains(@id,'cke_contents__54')]/textarea");
-		selenium.type("//td[contains(@id,'cke_contents__54')]/textarea",
+			"//a[@class='cke_button cke_button__source cke_button_on']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
+		selenium.type("//div[@id='cke_1_contents']/textarea",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_off']");
-		assertTrue(selenium.isVisible(
-				"//td[contains(@id,'cke_contents__54')]/iframe"));
-		selenium.selectFrame("//td[contains(@id,'cke_contents__54')]/iframe");
-		selenium.waitForText("//body", "Wiki FrontPage ChildPage Content");
+		selenium.waitForVisible(
+			"//a[@class='cke_button cke_button__source cke_button_off']");
+		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForText("//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p",
+			"Wiki FrontPage ChildPage Content");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -72,6 +73,7 @@ public class AddWDFrontPageChildPageNameDuplicateTest extends BaseTestCase {
 				"This page does not exist yet. Use the form below to create it."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");

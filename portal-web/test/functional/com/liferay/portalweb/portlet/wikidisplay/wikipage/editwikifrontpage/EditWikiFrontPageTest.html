@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>link=Wiki Display Test Page</td>
+	<td>Wiki Display Test Page</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
@@ -34,14 +39,19 @@
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//td[@class='cke_top']</td>
-	<td>CKE Toolbar</td>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>Text Area</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='cke_toolbar']/span[contains(.,'Format')]/a</td>
+	<td>Format</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -55,17 +65,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>//a[@class='cke_button cke_button__source cke_button_on']</td>
 	<td>Source Button On</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[contains(@id,'cke_contents__54')]/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//td[contains(@id,'cke_contents__54')]/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td>Wiki FrontPage Content Edit</td>
 </tr>
 <tr>
@@ -80,22 +90,22 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>Text Area</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[contains(@id,'cke_contents__54')]/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//td[contains(@id,'cke_contents__54')]/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//body</td>
+	<td>//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p</td>
 	<td>Wiki FrontPage Content Edit</td>
 </tr>
 <tr>
@@ -129,12 +139,17 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>link=Wiki Display Test Page</td>
+	<td>Wiki Display Test Page</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForElementPresent</td>
 	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
@@ -142,6 +157,11 @@
 	<td>clickAtAndWait</td>
 	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=History</td>
+	<td>History</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

@@ -50,9 +50,9 @@ public class AddPortletWD3Test extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Display"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));
-		selenium.waitForVisible("//div[2]/div/section");
-		assertTrue(selenium.isVisible("//div[2]/div/section"));
-		selenium.waitForVisible("//div[3]/div/section");
-		assertTrue(selenium.isVisible("//div[3]/div/section"));
+		selenium.waitForVisible("//div[2]/section");
+		assertTrue(selenium.isVisible("//div[2]/section"));
+		selenium.waitForVisible("//div[3]/section");
+		assertTrue(selenium.isVisible("//div[3]/section"));
 	}
 }

@@ -35,7 +35,8 @@ public class DeleteWDFrontPageCommentTest extends BaseTestCase {
 				"//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')]"));
 		selenium.clickAt("//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')]",
 			RuntimeVariables.replace("Delete"));
-		selenium.waitForConfirmation("Are you sure you want to delete this?");
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		selenium.waitForVisible(
 			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(

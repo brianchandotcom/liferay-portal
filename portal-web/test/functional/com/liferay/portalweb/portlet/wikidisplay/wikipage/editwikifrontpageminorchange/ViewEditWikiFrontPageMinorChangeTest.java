@@ -29,6 +29,8 @@ public class ViewEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent(
+			"//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]");
 		assertEquals(RuntimeVariables.replace("Details"),
 			selenium.getText(
 				"//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]"));
@@ -59,7 +61,8 @@ public class ViewEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("\u00ab Back"),
 			selenium.getText("//span[@class='header-back-to']/a"));
-		assertTrue(selenium.isVisible("//input[@value='Compare Versions']"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-button-holder ']/span/span/input"));
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']/th[1]"));
@@ -86,13 +89,13 @@ public class ViewEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 				"//tr[@class='portlet-section-header results-header']/th[8]"));
 		assertTrue(selenium.isVisible("//tr[3]/td[1]/input"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
-			selenium.getText("//tr[3]/td[2]/a"));
+			selenium.getText("//tr[3]/td[contains(.,'FrontPage')]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[3]/td[3]/a"));
+			selenium.getText("//tr[3]/td[contains(.,'Approved')]/a"));
 		assertEquals(RuntimeVariables.replace("1.2 (Minor Edit)"),
-			selenium.getText("//tr[3]/td[4]/a"));
+			selenium.getText("//tr[3]/td[contains(.,'1.2 (Minor Edit)')]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//tr[3]/td[5]/a"));
+			selenium.getText("//tr[3]/td[contains(.,'Joe Bloggs')]/a"));
 		assertTrue(selenium.isVisible("//tr[3]/td[6]/a"));
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText("//tr[3]/td[7]"));
@@ -100,26 +103,26 @@ public class ViewEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[8]"));
 		assertTrue(selenium.isVisible("//tr[4]/td[1]/input"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
-			selenium.getText("//tr[4]/td[2]/a"));
+			selenium.getText("//tr[4]/td[contains(.,'FrontPage')]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[4]/td[3]/a"));
+			selenium.getText("//tr[4]/td[contains(.,'Approved')]/a"));
 		assertEquals(RuntimeVariables.replace("1.1"),
-			selenium.getText("//tr[4]/td[4]/a"));
+			selenium.getText("//tr[4]/td[contains(.,'1.1')]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//tr[4]/td[5]/a"));
+			selenium.getText("//tr[4]/td[contains(.,'Joe Bloggs')]/a"));
 		assertTrue(selenium.isVisible("//tr[4]/td[6]/a"));
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText("//tr[4]/td[7]"));
 		assertTrue(selenium.isVisible("//tr[4]/td[8]/span/a/img"));
 		assertEquals(RuntimeVariables.replace("Revert"),
-			selenium.getText("//tr[4]/td[8]/span/a/span"));
+			selenium.getText("//tr[4]/td[contains(.,'Revert')]/span/a/span"));
 		assertTrue(selenium.isVisible("//tr[5]/td[1]/input"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
-			selenium.getText("//tr[5]/td[2]/a"));
+			selenium.getText("//tr[5]/td[contains(.,'FrontPage')]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[5]/td[3]/a"));
+			selenium.getText("//tr[5]/td[contains(.,'Approved')]/a"));
 		assertEquals(RuntimeVariables.replace("1.0 (Minor Edit)"),
-			selenium.getText("//tr[5]/td[4]/a"));
+			selenium.getText("//tr[5]/td[contains(.,'1.0 (Minor Edit)')]/a"));
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText("//tr[5]/td[5]"));
 		assertTrue(selenium.isVisible("//tr[5]/td[6]/a"));
@@ -127,6 +130,6 @@ public class ViewEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 			selenium.getText("//tr[5]/td[7]"));
 		assertTrue(selenium.isVisible("//tr[5]/td[8]/span/a/img"));
 		assertEquals(RuntimeVariables.replace("Revert"),
-			selenium.getText("//tr[5]/td[8]/span/a/span"));
+			selenium.getText("//tr[5]/td[contains(.,'Revert')]/span/a/span"));
 	}
 }

@@ -25,14 +25,15 @@ public class CompareVersionEditWikiFrontPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.click(RuntimeVariables.replace("link=Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText(
-				"//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]"));
+		selenium.waitForElementPresent(
+			"//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]");
 		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent("link=History");
 		selenium.clickAt("link=History", RuntimeVariables.replace("History"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("1.2"),

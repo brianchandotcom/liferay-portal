@@ -132,11 +132,11 @@ if (organizationId > 0) {
 				function(event){
 					document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = event.organizationId;
 
-					var nameEl = document.getElementById("<portlet:namespace />organizationName");
+					var nameEl = document.getElementById('<portlet:namespace />organizationName');
 
-					nameEl.innerHTML = event.name + "&nbsp;";
+					nameEl.innerHTML = event.name + '&nbsp;';
 
-					document.getElementById("<portlet:namespace />removeOrganizationButton").disabled = false;
+					document.getElementById('<portlet:namespace />removeOrganizationButton').disabled = false;
 				}
 			);
 		}

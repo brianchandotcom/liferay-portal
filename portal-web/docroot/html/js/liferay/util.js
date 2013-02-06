@@ -329,25 +329,47 @@
 			return str.replace(regex, A.bind('_escapeHTML', Util, !!preventDoubleEscape, entities, entitiesValues));
 		},
 
-		getAttributes: function(node, attributeGetter) {
-			var result = {};
+		getAttributes: function(el, attributeGetter) {
+			var instance = this;
 
-			var isGetterString = Lang.isString(attributeGetter);
+			var result = null;
 
-			if (isGetterString || Lang.isFunction(attributeGetter)) {
-				var action = attributeGetter;
-
-				if (isGetterString) {
-					action = function(item, index) {
-						var attributeName = item.get('nodeName');
-
-						if (attributeName.indexOf(attributeGetter) === 0) {
-							result[attributeName.substr(attributeGetter.length)] = item.get('nodeValue');
-						}
-					};
+			if (el) {
+				if (Lang.isFunction(el.getDOM)) {
+					el = el.getDOM();
 				}
 
-				node.get('attributes').each(action);
+				result = {};
+
+				var isGetterString = Lang.isString(attributeGetter);
+				var isGetterFn = Lang.isFunction(attributeGetter);
+
+				var attrs = el.attributes;
+				var length = attrs.length;
+
+				while (length--) {
+					var attr = attrs[length];
+					var name = attr.nodeName;
+					var value = attr.nodeValue;
+
+					if (isGetterString) {
+						if (name.indexOf(attributeGetter) === 0) {
+							name = name.substr(attributeGetter.length);
+						}
+						else {
+							continue;
+						}
+					}
+					else if (isGetterFn) {
+						value = attributeGetter(value, name, attrs);
+
+						if (value === false) {
+							continue;
+						}
+					}
+
+					result[name] = value;
+				}
 			}
 
 			return result;

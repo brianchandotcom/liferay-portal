@@ -148,7 +148,7 @@ if (Validator.isNotNull(target)) {
 	A.one('#<portlet:namespace />selectOrganizationFm').delegate(
 		'click',
 		function(event) {
-	    	var result = Util.getAttributes(event.currentTarget, 'data-');
+			var result = Util.getAttributes(event.currentTarget, 'data-');
 
 			Util.getOpener().Liferay.fire('<portlet:namespace />selectOrganization', result);
 

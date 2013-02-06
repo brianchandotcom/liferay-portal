@@ -18,10 +18,12 @@
 
 <%
 String target = ParamUtil.getString(request, "target");
+String callback = ParamUtil.getString(request, "callback", "selectOrganization");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/users_admin/select_organization");
+portletURL.setParameter("callback", callback);
 
 if (Validator.isNotNull(target)) {
 	portletURL.setParameter("target", target);
@@ -74,11 +76,12 @@ if (Validator.isNotNull(target)) {
 			String rowHREF = null;
 
 			if (OrganizationPermissionUtil.contains(permissionChecker, organization.getOrganizationId(), ActionKeys.ASSIGN_MEMBERS)) {
-				StringBundler sb = new StringBundler(13);
+				StringBundler sb = new StringBundler(14);
 
 				sb.append("javascript:Liferay.Util.getOpener().");
 				sb.append(renderResponse.getNamespace());
-				sb.append("selectOrganization('");
+				sb.append(callback);
+				sb.append("('");
 				sb.append(organization.getOrganizationId());
 				sb.append("', '");
 				sb.append(organization.getGroup().getGroupId());

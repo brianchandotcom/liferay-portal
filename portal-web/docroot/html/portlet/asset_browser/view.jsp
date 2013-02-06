@@ -97,7 +97,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
 
 			if (assetEntry.getEntryId() != refererAssetEntryId) {
-				StringBundler sb = new StringBundler(11);
+				StringBundler sb = new StringBundler(13);
 
 				sb.append("javascript:Liferay.Util.getOpener().");
 				sb.append(callback);

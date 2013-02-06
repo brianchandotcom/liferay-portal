@@ -18,10 +18,12 @@
 
 <%
 int step = ParamUtil.getInteger(request, "step");
+String callback = ParamUtil.getString(request, "callback", "selectRole");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/roles_admin/select_organization_role");
+portletURL.setParameter("callback", callback);
 
 User selUser = null;
 long uniqueOrganizationId = 0;
@@ -247,11 +249,12 @@ if (step == 1) {
 					<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
 
 					<%
-					StringBundler sb = new StringBundler(13);
+					StringBundler sb = new StringBundler(14);
 
 					sb.append("javascript:opener.");
 					sb.append(renderResponse.getNamespace());
-					sb.append("selectRole('");
+					sb.append(callback);
+					sb.append("('");
 					sb.append(role.getRoleId());
 					sb.append("', '");
 					sb.append(UnicodeFormatter.toString(role.getTitle(locale)));

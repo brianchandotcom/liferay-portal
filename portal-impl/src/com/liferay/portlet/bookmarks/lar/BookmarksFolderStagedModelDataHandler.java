@@ -114,7 +114,7 @@ public class BookmarksFolderStagedModelDataHandler
 			}
 			else {
 				importedFolder = BookmarksFolderLocalServiceUtil.updateFolder(
-					existingFolder.getFolderId(), parentFolderId,
+					userId, existingFolder.getFolderId(), parentFolderId,
 					folder.getName(), folder.getDescription(), false,
 					serviceContext);
 			}

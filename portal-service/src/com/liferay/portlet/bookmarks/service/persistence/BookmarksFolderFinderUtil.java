@@ -42,6 +42,11 @@ public class BookmarksFolderFinderUtil {
 				   .filterFindBF_E_ByG_F(groupId, folderId, queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> findByNoAssets()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByNoAssets();
+	}
+
 	public static java.util.List<java.lang.Object> findF_E_ByG_F(long groupId,
 		long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)

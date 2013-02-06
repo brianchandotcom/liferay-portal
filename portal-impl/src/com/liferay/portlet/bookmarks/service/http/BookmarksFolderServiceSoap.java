@@ -185,6 +185,36 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
+	public static int getFoldersAndArticlesCount(long groupId, long folderId)
+		throws RemoteException {
+		try {
+			int returnValue = BookmarksFolderServiceUtil.getFoldersAndArticlesCount(groupId,
+					folderId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getFoldersAndEntriesCount(long groupId, long folderId,
+		int status) throws RemoteException {
+		try {
+			int returnValue = BookmarksFolderServiceUtil.getFoldersAndEntriesCount(groupId,
+					folderId, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getFoldersCount(long groupId, long parentFolderId)
 		throws RemoteException {
 		try {

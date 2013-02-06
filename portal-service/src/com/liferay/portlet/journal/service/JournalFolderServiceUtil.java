@@ -117,6 +117,11 @@ public class JournalFolderServiceUtil {
 		return getService().getFoldersAndArticlesCount(groupId, folderId);
 	}
 
+	public static int getFoldersAndArticlesCount(long groupId, long folderId,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFoldersAndArticlesCount(groupId, folderId, status);
+	}
+
 	public static int getFoldersCount(long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getFoldersCount(groupId, parentFolderId);

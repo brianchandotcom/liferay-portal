@@ -47,6 +47,23 @@
 				(BookmarksFolder.status = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.findByNoAssets">
+		<![CDATA[
+			SELECT
+				{BookmarksFolder.*}
+			FROM
+				BookmarksFolder
+			WHERE
+				(folderId NOT IN (
+					SELECT
+						classPK
+					FROM
+						AssetEntry
+					WHERE
+						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.BOOKMARKS.MODEL.BOOKMARKSFOLDER$]
+				))
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.findE_ByG_F">
 		<![CDATA[
 			SELECT

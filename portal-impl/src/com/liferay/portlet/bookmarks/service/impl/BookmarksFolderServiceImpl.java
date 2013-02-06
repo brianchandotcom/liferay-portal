@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.bookmarks.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -114,6 +115,51 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			return bookmarksFolderPersistence.filterFindByG_P_S(
 				groupId, parentFolderId, status, start, end);
 		}
+	}
+
+	public int getFoldersAndArticlesCount(long groupId, long folderId)
+		throws SystemException {
+
+		return getFoldersAndEntriesCount(
+			groupId, folderId, WorkflowConstants.STATUS_ANY);
+	}
+
+	public List<Object> getFoldersAndEntries(long groupId, long folderId)
+		throws SystemException {
+
+		return getFoldersAndEntries(
+			groupId, folderId, WorkflowConstants.STATUS_ANY);
+	}
+
+	public List<Object> getFoldersAndEntries(
+			long groupId, long folderId, int status)
+		throws SystemException {
+
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return bookmarksFolderFinder.filterFindBF_E_ByG_F(
+			groupId, folderId, queryDefinition);
+	}
+
+	public List<Object> getFoldersAndEntries(
+			long groupId, long folderId, int status, int start, int end)
+		throws SystemException {
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, null);
+
+		return bookmarksFolderFinder.filterFindBF_E_ByG_F(
+			groupId, folderId, queryDefinition);
+	}
+
+	public int getFoldersAndEntriesCount(
+			long groupId, long folderId, int status)
+		throws SystemException {
+
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return bookmarksFolderFinder.filterCountF_E_ByG_F(
+			groupId, folderId, queryDefinition);
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)
@@ -235,8 +281,8 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		return bookmarksFolderLocalService.updateFolder(
-			folderId, parentFolderId, name, description, mergeWithParentFolder,
-			serviceContext);
+			getUserId(), folderId, parentFolderId, name, description,
+			mergeWithParentFolder, serviceContext);
 	}
 
 }

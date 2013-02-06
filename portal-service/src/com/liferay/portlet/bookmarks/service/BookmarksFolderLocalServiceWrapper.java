@@ -397,6 +397,11 @@ public class BookmarksFolderLocalServiceWrapper
 			parentFolderId, status);
 	}
 
+	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> getNoAssetFolders()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolderLocalService.getNoAssetFolders();
+	}
+
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -443,13 +448,23 @@ public class BookmarksFolderLocalServiceWrapper
 		_bookmarksFolderLocalService.unsubscribeFolder(userId, groupId, folderId);
 	}
 
+	public void updateAsset(long userId,
+		com.liferay.portlet.bookmarks.model.BookmarksFolder folder,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksFolderLocalService.updateAsset(userId, folder,
+			assetCategoryIds, assetTagNames, assetLinkEntryIds);
+	}
+
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
+		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _bookmarksFolderLocalService.updateFolder(folderId,
+		return _bookmarksFolderLocalService.updateFolder(userId, folderId,
 			parentFolderId, name, description, mergeWithParentFolder,
 			serviceContext);
 	}

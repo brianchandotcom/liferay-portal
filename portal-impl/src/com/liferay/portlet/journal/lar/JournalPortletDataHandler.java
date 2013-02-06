@@ -1429,7 +1429,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			}
 			else {
 				importedFolder = JournalFolderLocalServiceUtil.updateFolder(
-					existingFolder.getFolderId(), parentFolderId,
+					userId, existingFolder.getFolderId(), parentFolderId,
 					folder.getName(), folder.getDescription(), false,
 					serviceContext);
 			}

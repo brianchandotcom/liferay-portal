@@ -109,6 +109,35 @@ public class BookmarksFolderServiceUtil {
 				   .getFolders(groupId, parentFolderId, status, start, end);
 	}
 
+	public static int getFoldersAndArticlesCount(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFoldersAndArticlesCount(groupId, folderId);
+	}
+
+	public static java.util.List<java.lang.Object> getFoldersAndEntries(
+		long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFoldersAndEntries(groupId, folderId);
+	}
+
+	public static java.util.List<java.lang.Object> getFoldersAndEntries(
+		long groupId, long folderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFoldersAndEntries(groupId, folderId, status);
+	}
+
+	public static java.util.List<java.lang.Object> getFoldersAndEntries(
+		long groupId, long folderId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersAndEntries(groupId, folderId, status, start, end);
+	}
+
+	public static int getFoldersAndEntriesCount(long groupId, long folderId,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFoldersAndEntriesCount(groupId, folderId, status);
+	}
+
 	public static int getFoldersCount(long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getFoldersCount(groupId, parentFolderId);

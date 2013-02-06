@@ -366,6 +366,11 @@ public class JournalFolderLocalServiceWrapper
 			parentFolderId);
 	}
 
+	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getNoAssetFolders()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.getNoAssetFolders();
+	}
+
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -381,13 +386,23 @@ public class JournalFolderLocalServiceWrapper
 			serviceContext);
 	}
 
+	public void updateAsset(long userId,
+		com.liferay.portlet.journal.model.JournalFolder folder,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.updateAsset(userId, folder,
+			assetCategoryIds, assetTagNames, assetLinkEntryIds);
+	}
+
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
+		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _journalFolderLocalService.updateFolder(folderId,
+		return _journalFolderLocalService.updateFolder(userId, folderId,
 			parentFolderId, name, description, mergeWithParentFolder,
 			serviceContext);
 	}

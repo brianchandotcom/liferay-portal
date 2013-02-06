@@ -145,16 +145,6 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected boolean isAssetableModel() {
-		return false;
-	}
-
-	@Override
-	protected boolean isIndexableBaseModel() {
-		return false;
-	}
-
-	@Override
 	protected boolean isInTrashContainer(ClassedModel classedModel)
 		throws Exception {
 

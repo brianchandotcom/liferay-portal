@@ -21,11 +21,14 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.bookmarks.FolderNameException;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
@@ -80,6 +83,13 @@ public class BookmarksFolderLocalServiceImpl
 
 		resourceLocalService.addModelResources(folder, serviceContext);
 
+		// Asset
+
+		updateAsset(
+			userId, folder, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
 		return folder;
 	}
 
@@ -115,6 +125,11 @@ public class BookmarksFolderLocalServiceImpl
 
 		resourceLocalService.deleteResource(
 			folder, ResourceConstants.SCOPE_INDIVIDUAL);
+
+		// Asset
+
+		assetEntryLocalService.deleteEntry(
+			BookmarksFolder.class.getName(), folder.getFolderId());
 
 		// Entries
 
@@ -271,6 +286,10 @@ public class BookmarksFolderLocalServiceImpl
 			groupId, parentFolderId, status);
 	}
 
+	public List<BookmarksFolder> getNoAssetFolders() throws SystemException {
+		return bookmarksFolderFinder.findByNoAssets();
+	}
+
 	public void getSubfolderIds(
 			List<Long> folderIds, long groupId, long folderId)
 		throws SystemException {
@@ -354,10 +373,29 @@ public class BookmarksFolderLocalServiceImpl
 			userId, BookmarksFolder.class.getName(), folderId);
 	}
 
+	public void updateAsset(
+			long userId, BookmarksFolder folder, long[] assetCategoryIds,
+			String[] assetTagNames, long[] assetLinkEntryIds)
+		throws PortalException, SystemException {
+
+		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
+			userId, folder.getGroupId(), folder.getCreateDate(),
+			folder.getModifiedDate(), BookmarksFolder.class.getName(),
+			folder.getFolderId(), folder.getUuid(), 0, assetCategoryIds,
+			assetTagNames, true, null, null, null, ContentTypes.TEXT_PLAIN,
+			folder.getName(), folder.getDescription(), null, null, null, 0, 0,
+			null, false);
+
+		assetLinkLocalService.updateLinks(
+			userId, assetEntry.getEntryId(), assetLinkEntryIds,
+			AssetLinkConstants.TYPE_RELATED);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksFolder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			boolean mergeWithParentFolder, ServiceContext serviceContext)
+			long userId, long folderId, long parentFolderId, String name,
+			String description, boolean mergeWithParentFolder,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Merge folders
@@ -385,6 +423,13 @@ public class BookmarksFolderLocalServiceImpl
 
 		bookmarksFolderPersistence.update(folder);
 
+		// Asset
+
+		updateAsset(
+			userId, folder, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
 		return folder;
 	}
 
@@ -402,6 +447,17 @@ public class BookmarksFolderLocalServiceImpl
 		folder.setStatusDate(new Date());
 
 		bookmarksFolderPersistence.update(folder);
+
+		// Asset
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			assetEntryLocalService.updateVisible(
+				BookmarksFolder.class.getName(), folder.getFolderId(), true);
+		}
+		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			assetEntryLocalService.updateVisible(
+				BookmarksFolder.class.getName(), folder.getFolderId(), false);
+		}
 
 		// Folders and entries
 

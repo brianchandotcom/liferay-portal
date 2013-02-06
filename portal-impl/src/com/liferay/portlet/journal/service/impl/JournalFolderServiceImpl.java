@@ -130,9 +130,16 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	public int getFoldersAndArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
+		return getFoldersAndArticlesCount(
+			groupId, folderId, WorkflowConstants.STATUS_ANY);
+	}
+
+	public int getFoldersAndArticlesCount(
+			long groupId, long folderId, int status)
+		throws SystemException {
+
 		return journalFolderFinder.filterCountF_A_ByG_F(
-			groupId, folderId,
-			new QueryDefinition(WorkflowConstants.STATUS_ANY));
+			groupId, folderId, new QueryDefinition(status));
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)
@@ -192,8 +199,8 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		return journalFolderLocalService.updateFolder(
-			folderId, parentFolderId, name, description, mergeWithParentFolder,
-			serviceContext);
+			getUserId(), folderId, parentFolderId, name, description,
+			mergeWithParentFolder, serviceContext);
 	}
 
 }

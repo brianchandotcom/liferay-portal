@@ -12,22 +12,18 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.asset;
+package com.liferay.portlet.journal.asset;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 
 import java.util.Locale;
 
@@ -40,25 +36,18 @@ import javax.portlet.WindowState;
 /**
  * @author Alexander Chow
  */
-public class DLFolderAssetRenderer
-	extends BaseAssetRenderer implements TrashRenderer {
+public class JournalFolderAssetRenderer extends BaseAssetRenderer {
 
-	public static final String TYPE = "folder";
-
-	public DLFolderAssetRenderer(Folder folder) {
+	public JournalFolderAssetRenderer(JournalFolder folder) {
 		_folder = folder;
 	}
 
 	public String getAssetRendererFactoryClassName() {
-		return DLFolderAssetRendererFactory.CLASS_NAME;
-	}
-
-	public String getClassName() {
-		return DLFolder.class.getName();
+		return JournalFolderAssetRendererFactory.CLASS_NAME;
 	}
 
 	public long getClassPK() {
-		return _folder.getPrimaryKey();
+		return _folder.getFolderId();
 	}
 
 	public long getGroupId() {
@@ -68,9 +57,9 @@ public class DLFolderAssetRenderer
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		try {
-			if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
-					_folder.getRepositoryId(), _folder.getFolderId(),
-					WorkflowConstants.STATUS_APPROVED, true) > 0) {
+			if (JournalFolderServiceUtil.getFoldersAndArticlesCount(
+					_folder.getGroupId(), _folder.getFolderId(),
+					WorkflowConstants.STATUS_APPROVED) > 0) {
 
 				return themeDisplay.getPathThemeImages() +
 					"/common/folder_full_document.png";
@@ -82,22 +71,12 @@ public class DLFolderAssetRenderer
 		return themeDisplay.getPathThemeImages() + "/common/folder_empty.png";
 	}
 
-	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
-
-		return assetRendererFactory.getPortletId();
-	}
-
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_folder.getDescription());
 	}
 
 	public String getTitle(Locale locale) {
-		return TrashUtil.getOriginalTitle(_folder.getName());
-	}
-
-	public String getType() {
-		return TYPE;
+		return _folder.getName();
 	}
 
 	@Override
@@ -107,11 +86,10 @@ public class DLFolderAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest),
-			PortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
+			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
+			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"struts_action", "/document_library/edit_folder");
+		portletURL.setParameter("struts_action", "/journal/edit_folder");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 
@@ -125,9 +103,9 @@ public class DLFolderAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			PortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
+			PortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter("struts_action", "/journal/view");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);
@@ -142,8 +120,8 @@ public class DLFolderAssetRenderer
 		String noSuchEntryRedirect) {
 
 		return getURLViewInContext(
-			liferayPortletRequest, noSuchEntryRedirect,
-			"/document_library/find_folder", "folderId", _folder.getFolderId());
+			liferayPortletRequest, noSuchEntryRedirect, "/journal/find_folder",
+			"folderId", _folder.getFolderId());
 	}
 
 	public long getUserId() {
@@ -163,20 +141,16 @@ public class DLFolderAssetRenderer
 			String template)
 		throws Exception {
 
-		if (template.equals(TEMPLATE_ABSTRACT) ||
-			template.equals(TEMPLATE_FULL_CONTENT)) {
+		if (template.equals(TEMPLATE_FULL_CONTENT)) {
+			renderRequest.setAttribute(WebKeys.JOURNAL_FOLDER, _folder);
 
-			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FOLDER, _folder);
-
-			return "/html/portlet/document_library/asset/folder_" + template +
-				".jsp";
+			return "/html/portlet/journal/asset/folder_" + template + ".jsp";
 		}
 		else {
 			return null;
 		}
 	}
 
-	private Folder _folder;
+	private JournalFolder _folder;
 
 }

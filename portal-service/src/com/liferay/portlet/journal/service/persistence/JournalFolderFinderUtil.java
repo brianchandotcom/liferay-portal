@@ -41,6 +41,11 @@ public class JournalFolderFinderUtil {
 		return getFinder().filterFindF_AByG_F(groupId, folderId, queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByNoAssets()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByNoAssets();
+	}
+
 	public static java.util.List<java.lang.Object> findF_AByG_F(long groupId,
 		long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)

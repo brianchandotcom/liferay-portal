@@ -291,6 +291,23 @@
 				JournalArticle.folderId, JournalArticle.articleId
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findByNoAssets">
+		<![CDATA[
+			SELECT
+				{JournalFolder.*}
+			FROM
+				JournalFolder
+			WHERE
+				(folderId NOT IN (
+					SELECT
+						classPK
+					FROM
+						AssetEntry
+					WHERE
+						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.JOURNAL.MODEL.JOURNALFOLDER$]
+				))
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findF_ByG_F">
 		<![CDATA[
 			SELECT

@@ -21,12 +21,15 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.journal.DuplicateFolderNameException;
 import com.liferay.portlet.journal.FolderNameException;
@@ -79,6 +82,13 @@ public class JournalFolderLocalServiceImpl
 		// Resources
 
 		resourceLocalService.addModelResources(folder, serviceContext);
+
+		// Asset
+
+		updateAsset(
+			userId, folder, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		return folder;
 	}
@@ -232,6 +242,10 @@ public class JournalFolderLocalServiceImpl
 		return journalFolderPersistence.countByG_P(groupId, parentFolderId);
 	}
 
+	public List<JournalFolder> getNoAssetFolders() throws SystemException {
+		return journalFolderFinder.findByNoAssets();
+	}
+
 	public void getSubfolderIds(
 			List<Long> folderIds, long groupId, long folderId)
 		throws SystemException {
@@ -270,10 +284,29 @@ public class JournalFolderLocalServiceImpl
 		return folder;
 	}
 
+	public void updateAsset(
+			long userId, JournalFolder folder, long[] assetCategoryIds,
+			String[] assetTagNames, long[] assetLinkEntryIds)
+		throws PortalException, SystemException {
+
+		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
+			userId, folder.getGroupId(), folder.getCreateDate(),
+			folder.getModifiedDate(), JournalFolder.class.getName(),
+			folder.getFolderId(), folder.getUuid(), 0, assetCategoryIds,
+			assetTagNames, true, null, null, null, ContentTypes.TEXT_PLAIN,
+			folder.getName(), folder.getDescription(), null, null, null, 0, 0,
+			null, false);
+
+		assetLinkLocalService.updateLinks(
+			userId, assetEntry.getEntryId(), assetLinkEntryIds,
+			AssetLinkConstants.TYPE_RELATED);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalFolder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			boolean mergeWithParentFolder, ServiceContext serviceContext)
+			long userId, long folderId, long parentFolderId, String name,
+			String description, boolean mergeWithParentFolder,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Merge folders
@@ -300,6 +333,13 @@ public class JournalFolderLocalServiceImpl
 		folder.setExpandoBridgeAttributes(serviceContext);
 
 		journalFolderPersistence.update(folder);
+
+		// Asset
+
+		updateAsset(
+			userId, folder, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		return folder;
 	}

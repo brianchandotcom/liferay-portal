@@ -28,6 +28,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.impl.JournalFolderImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -45,6 +46,9 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 	public static final String COUNT_F_BY_G_F =
 		JournalFolderFinder.class.getName() + ".countF_ByG_F";
+
+	public static final String FIND_BY_NO_ASSETS =
+		JournalFolderFinder.class.getName() + ".findByNoAssets";
 
 	public static final String FIND_A_BY_G_F =
 		JournalFolderFinder.class.getName() + ".findA_ByG_F";
@@ -71,6 +75,28 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		throws SystemException {
 
 		return doFindF_AByG_F(groupId, folderId, queryDefinition, true);
+	}
+
+	public List<JournalFolder> findByNoAssets() throws SystemException {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("JournalFolder", JournalFolderImpl.class);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	public List<Object> findF_AByG_F(

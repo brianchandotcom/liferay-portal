@@ -175,7 +175,8 @@ public class DLFolderIndexer extends BaseIndexer {
 		portletURL.setParameter("struts_action", "/document_library/view");
 		portletURL.setParameter("folderId", folderId);
 
-		Summary summary = createSummary(document, Field.TITLE, Field.CONTENT);
+		Summary summary = createSummary(
+			document, Field.TITLE, Field.DESCRIPTION);
 
 		summary.setMaxContentLength(200);
 		summary.setPortletURL(portletURL);

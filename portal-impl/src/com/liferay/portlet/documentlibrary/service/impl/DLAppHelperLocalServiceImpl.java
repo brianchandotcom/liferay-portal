@@ -324,6 +324,11 @@ public class DLAppHelperLocalServiceImpl
 				DLSyncConstants.EVENT_DELETE, "-1");
 		}
 
+		// Asset
+
+		assetEntryLocalService.deleteEntry(
+			DLFolderConstants.getClassName(), folder.getFolderId());
+
 		// Trash
 
 		if (folder.getModel() instanceof DLFolder) {

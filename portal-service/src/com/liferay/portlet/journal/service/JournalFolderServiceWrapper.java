@@ -113,6 +113,12 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 			folderId);
 	}
 
+	public int getFoldersAndArticlesCount(long groupId, long folderId,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.getFoldersAndArticlesCount(groupId,
+			folderId, status);
+	}
+
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolderService.getFoldersCount(groupId, parentFolderId);

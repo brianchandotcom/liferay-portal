@@ -44,7 +44,7 @@ import javax.portlet.PortletURL;
 public class BookmarksEntryAssetRendererFactory
 	extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME =BookmarksEntry.class.getName();
+	public static final String CLASS_NAME = BookmarksEntry.class.getName();
 
 	public static final String TYPE = "bookmark";
 

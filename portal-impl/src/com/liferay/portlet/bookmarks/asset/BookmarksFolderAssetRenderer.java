@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.asset;
+package com.liferay.portlet.bookmarks.asset;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -25,8 +24,8 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Locale;
@@ -38,27 +37,28 @@ import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
 /**
+ * @author Eudaldo Alonso
  * @author Alexander Chow
  */
-public class DLFolderAssetRenderer
+public class BookmarksFolderAssetRenderer
 	extends BaseAssetRenderer implements TrashRenderer {
 
-	public static final String TYPE = "folder";
+	public static final String TYPE = "bookmarks_folder";
 
-	public DLFolderAssetRenderer(Folder folder) {
+	public BookmarksFolderAssetRenderer(BookmarksFolder folder) {
 		_folder = folder;
 	}
 
 	public String getAssetRendererFactoryClassName() {
-		return DLFolderAssetRendererFactory.CLASS_NAME;
+		return BookmarksFolderAssetRendererFactory.CLASS_NAME;
 	}
 
 	public String getClassName() {
-		return DLFolder.class.getName();
+		return BookmarksFolder.class.getName();
 	}
 
 	public long getClassPK() {
-		return _folder.getPrimaryKey();
+		return _folder.getFolderId();
 	}
 
 	public long getGroupId() {
@@ -68,9 +68,9 @@ public class DLFolderAssetRenderer
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		try {
-			if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
-					_folder.getRepositoryId(), _folder.getFolderId(),
-					WorkflowConstants.STATUS_APPROVED, true) > 0) {
+			if (BookmarksFolderServiceUtil.getFoldersAndEntriesCount(
+					_folder.getGroupId(), _folder.getFolderId(),
+					WorkflowConstants.STATUS_APPROVED) > 0) {
 
 				return themeDisplay.getPathThemeImages() +
 					"/common/folder_full_document.png";
@@ -107,11 +107,10 @@ public class DLFolderAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest),
-			PortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
+			getControlPanelPlid(liferayPortletRequest), PortletKeys.BOOKMARKS,
+			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"struts_action", "/document_library/edit_folder");
+		portletURL.setParameter("struts_action", "/bookmarks/edit_folder");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 
@@ -125,9 +124,9 @@ public class DLFolderAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			PortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
+			PortletKeys.BOOKMARKS, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter("struts_action", "/bookmarks/view");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);
@@ -143,7 +142,7 @@ public class DLFolderAssetRenderer
 
 		return getURLViewInContext(
 			liferayPortletRequest, noSuchEntryRedirect,
-			"/document_library/find_folder", "folderId", _folder.getFolderId());
+			"/bookmarks/find_folder", "folderId", _folder.getFolderId());
 	}
 
 	public long getUserId() {
@@ -163,20 +162,16 @@ public class DLFolderAssetRenderer
 			String template)
 		throws Exception {
 
-		if (template.equals(TEMPLATE_ABSTRACT) ||
-			template.equals(TEMPLATE_FULL_CONTENT)) {
+		if (template.equals(TEMPLATE_FULL_CONTENT)) {
+			renderRequest.setAttribute(WebKeys.BOOKMARKS_FOLDER, _folder);
 
-			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FOLDER, _folder);
-
-			return "/html/portlet/document_library/asset/folder_" + template +
-				".jsp";
+			return "/html/portlet/bookmarks/asset/folder_" + template + ".jsp";
 		}
 		else {
 			return null;
 		}
 	}
 
-	private Folder _folder;
+	private BookmarksFolder _folder;
 
 }

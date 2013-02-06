@@ -338,6 +338,22 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
+	* Removes the user from any forbidden organizations and adds the user to all
+	* mandatory organizations, if the user does not belong to them.
+	*
+	* @param user the user
+	* @throws PortalException if the user cannot be added or removed from any
+	organizations.
+	* @throws SystemException if a system exception occurred
+	* @see com.liferay.portal.events.MembershipPolicyAction
+	*/
+	public void checkMembershipPolicy(com.liferay.portal.model.User user)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_organizationLocalService.checkMembershipPolicy(user);
+	}
+
+	/**
 	* Deletes the logo of the organization.
 	*
 	* @param organizationId the primary key of the organization

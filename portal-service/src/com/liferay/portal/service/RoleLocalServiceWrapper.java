@@ -357,6 +357,22 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	/**
+	* Removes any forbidden roles from the user and adds all mandatory roles to
+	* the user, if the user does not have the role.
+	*
+	* @param user the user
+	* @throws PortalException if the any roles cannot be added or removed from
+	the user.
+	* @throws SystemException if a system exception occurred
+	* @see com.liferay.portal.events.MembershipPolicyAction
+	*/
+	public void checkMembershipPolicy(com.liferay.portal.model.User user)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_roleLocalService.checkMembershipPolicy(user);
+	}
+
+	/**
 	* Checks to ensure that the system roles map has appropriate default roles
 	* in each company.
 	*

@@ -213,8 +213,8 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 				(alphanumericMinLength + passwordPolicy.getMinSymbols())) {
 
 			int count =
-				passwordMinLength - (alphanumericMinLength +
-					passwordPolicy.getMinSymbols());
+				passwordMinLength -
+					(alphanumericMinLength + passwordPolicy.getMinSymbols());
 
 			sb.append(PwdGenerator.getSecurePassword(_completeCharset, count));
 		}

@@ -79,7 +79,16 @@ portletURL.setParameter("target", target);
 				additionalSites++;
 			}
 
-			if (filterManageableGroups) {
+			if (type.equals("childSites")) {
+				Group parentGroup = GroupLocalServiceUtil.getGroup(groupId);
+
+				List<Group> parentGroups = new ArrayList<Group>();
+
+				parentGroups.add(parentGroup);
+
+				groupParams.put("groupsTree", parentGroups);
+			}
+			else if (filterManageableGroups) {
 				groupParams.put("usersGroups", user.getUserId());
 			}
 

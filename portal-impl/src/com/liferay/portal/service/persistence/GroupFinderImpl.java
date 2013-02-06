@@ -1335,7 +1335,26 @@ public class GroupFinderImpl
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
 
-			if (key.equals("types")) {
+			if (key.equals("groupsTree")) {
+				List<Group> groupsTree = (List<Group>)entry.getValue();
+
+				int size = groupsTree.size();
+
+				if (!groupsTree.isEmpty()) {
+					sb.append("(");
+
+					for (int i = 0; i < size; i++) {
+						sb.append("(Group_.treePath LIKE ?) ");
+
+						if ((i + 1) < size) {
+							sb.append("OR ");
+						}
+					}
+
+					sb.append(") AND ");
+				}
+			}
+			else if (key.equals("types")) {
 				List<Integer> types = (List<Integer>)entry.getValue();
 
 				if (!types.isEmpty()) {
@@ -1437,6 +1456,24 @@ public class GroupFinderImpl
 				Boolean value = (Boolean)entry.getValue();
 
 				qPos.add(value);
+			}
+
+			if (key.equals("groupsTree")) {
+				List<Group> groupsTree = (List<Group>)entry.getValue();
+
+				if (!groupsTree.isEmpty()) {
+					for (Group group : groupsTree) {
+						StringBundler sb = new StringBundler(5);
+
+						sb.append(StringPool.PERCENT);
+						sb.append(StringPool.SLASH);
+						sb.append(group.getGroupId());
+						sb.append(StringPool.SLASH);
+						sb.append(StringPool.PERCENT);
+
+						qPos.add(sb.toString());
+					}
+				}
 			}
 			else if (key.equals("pageCount")) {
 			}

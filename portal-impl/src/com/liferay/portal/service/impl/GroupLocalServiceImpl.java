@@ -1044,7 +1044,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the sites that are children of the parent group.
+	 * Returns all the groups that are direct children of the parent group.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  parentGroupId the primary key of the parent group
@@ -1084,6 +1084,26 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return groups;
+	}
+
+	/**
+	 * Returns the number of groups that are direct children of the parent
+	 * group.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  parentGroupId the primary key of the parent group
+	 * @param  site whether the group is to be associated with a main site
+	 * @return the number of matching groups
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getGroupsCount(long companyId, long parentGroupId, boolean site)
+		throws SystemException {
+
+		if (parentGroupId == GroupConstants.ANY_PARENT_GROUP_ID) {
+			return groupPersistence.countByC_S(companyId, site);
+		}
+
+		return groupPersistence.countByC_P_S(companyId, parentGroupId, site);
 	}
 
 	/**

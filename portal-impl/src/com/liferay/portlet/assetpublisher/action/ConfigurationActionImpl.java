@@ -32,6 +32,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -187,18 +188,27 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		Layout layout = themeDisplay.getLayout();
 
 		long groupId = AssetPublisherUtil.getGroupIdFromScopeId(
-			scopeId, themeDisplay.getScopeGroupId(), layout.isPrivateLayout());
+			scopeId, themeDisplay.getSiteGroupId(), layout.isPrivateLayout());
 
 		if (scopeId.startsWith(
+				AssetPublisherUtil.SCOPE_ID_CHILD_GROUP_PREFIX)) {
+
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			if (!group.hasAncestor(themeDisplay.getScopeGroupId())) {
+				throw new PrincipalException();
+			}
+		}
+		else if (scopeId.startsWith(
 				AssetPublisherUtil.SCOPE_ID_PARENT_GROUP_PREFIX)) {
 
-			Group scopeGroup = themeDisplay.getScopeGroup();
+			Group siteGroup = themeDisplay.getSiteGroup();
 
-			if (!scopeGroup.hasAncestor(groupId)) {
+			if (!siteGroup.hasAncestor(groupId)) {
 				throw new PrincipalException();
 			}
 
-			if (!SitesUtil.isContentSharingWithChildrenEnabled(scopeGroup)) {
+			if (!SitesUtil.isContentSharingWithChildrenEnabled(siteGroup)) {
 				GroupPermissionUtil.check(
 					themeDisplay.getPermissionChecker(), groupId,
 					ActionKeys.UPDATE);
@@ -242,7 +252,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				className);
 
 		long[] groupIds = {
-			themeDisplay.getCompanyGroupId(), themeDisplay.getScopeGroupId()
+			themeDisplay.getCompanyGroupId(), themeDisplay.getSiteGroupId()
 		};
 
 		if (assetRendererFactory.getClassTypes(
@@ -471,7 +481,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			WebKeys.THEME_DISPLAY);
 
 		long userId = themeDisplay.getUserId();
-		long groupId = themeDisplay.getScopeGroupId();
+		long groupId = themeDisplay.getSiteGroupId();
 
 		int[] queryRulesIndexes = StringUtil.split(
 			ParamUtil.getString(actionRequest, "queryLogicIndexes"), 0);

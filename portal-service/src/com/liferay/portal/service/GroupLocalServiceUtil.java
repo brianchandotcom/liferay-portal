@@ -550,6 +550,12 @@ public class GroupLocalServiceUtil {
 		return getService().getGroups(groupIds);
 	}
 
+	public static int getGroupsCount(long companyId, long parentGroupId,
+		boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupsCount(companyId, parentGroupId, site);
+	}
+
 	/**
 	* Returns the group associated with the layout.
 	*

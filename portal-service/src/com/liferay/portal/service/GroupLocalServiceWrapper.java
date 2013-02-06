@@ -540,6 +540,11 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getGroups(groupIds);
 	}
 
+	public int getGroupsCount(long companyId, long parentGroupId, boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.getGroupsCount(companyId, parentGroupId, site);
+	}
+
 	/**
 	* Returns the group associated with the layout.
 	*

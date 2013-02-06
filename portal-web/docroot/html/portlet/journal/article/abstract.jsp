@@ -54,12 +54,102 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 	<aui:input label="summary" languageId="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" name="description" />
 
 	<c:if test="<%= Validator.isNull(toLanguageId) %>">
-		<aui:input label="use-small-image" name="smallImage" />
-
-		<aui:input label="small-image-url" name="smallImageURL" />
-
-		<span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span>
-
-		<aui:input cssClass="lfr-input-text-container" label="small-image" name="smallFile" type="file" />
+		<div id="<portlet:namespace />smallImageContainer">
+			<div class="lfr-journal-small-image-header">
+				<aui:input label="use-small-image" name="smallImage" />
+			</div>
+			<div class="lfr-journal-small-image-content aui-toggler-content-collapsed">
+				<table>
+					<tr>
+						<th>
+							<c:if test="<%= smallImage && (article != null) %>">
+								<img alt="<liferay-ui:message key="preview" />" class="lfr-journal-small-image-preview" src="<%= Validator.isNotNull(article.getSmallImageURL()) ? article.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + article.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(article.getSmallImageId()) %>" />
+							</c:if>
+						</th>
+						<td>
+							<table>
+								<tr>
+									<th>
+										<aui:input inputCssClass="lfr-journal-small-image-type" label="small-image-url" name="type" type="radio" />
+									</th>
+									<td>
+										<aui:input inputCssClass="lfr-journal-small-image-value" label="" name="smallImageURL" />
+									</td>
+								</tr>
+								<tr>
+									<th>
+										<aui:input inputCssClass="lfr-journal-small-image-type" label="small-image" name="type" type="radio" />
+									</th>
+									<td>
+										<aui:input inputCssClass="lfr-journal-small-image-value" label="" name="smallFile" type="file" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</c:if>
 </aui:fieldset>
+
+<aui:script use="aui-toggler">
+	var container = A.one('#<portlet:namespace />smallImageContainer');
+
+	var types = container.all('.lfr-journal-small-image-type');
+	var values = container.all('.lfr-journal-small-image-value');
+
+	var selectSmallImageType = function(index) {
+		types.set('checked', false);
+
+		types.item(index).set('checked', true);
+
+		values.set('disabled', true);
+
+		values.item(index).set('disabled', false);
+	};
+
+	container.delegate(
+		'change',
+		function(event) {
+			var index = types.indexOf(event.currentTarget);
+
+			selectSmallImageType(index);
+		},
+		'.lfr-journal-small-image-type'
+	);
+
+	new A.Toggler(
+		{
+			animated: true,
+			content: '#<portlet:namespace />smallImageContainer .lfr-journal-small-image-content',
+			expanded: <%= smallImage %>,
+			header: '#<portlet:namespace />smallImageContainer .lfr-journal-small-image-header',
+			on: {
+				animatingChange: function(event) {
+					var instance = this;
+
+					var expanded = !instance.get('expanded');
+
+					A.one('#<portlet:namespace />smallImage').set('value', expanded);
+					A.one('#<portlet:namespace />smallImageCheckbox').set('checked', expanded);
+
+					if (expanded) {
+						types.each(
+							function (item, index, collection) {
+								if (item.get('checked')) {
+									values.item(index).set('disabled', false);
+								}
+							}
+						);
+					}
+					else {
+						values.set('disabled', true);
+					}
+				}
+			}
+		}
+	);
+
+	selectSmallImageType('<%= (article != null) && Validator.isNotNull(article.getSmallImageURL()) ? 0 : 1 %>');
+</aui:script>

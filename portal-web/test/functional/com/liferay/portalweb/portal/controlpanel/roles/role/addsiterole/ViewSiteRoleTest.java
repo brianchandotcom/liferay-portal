@@ -44,15 +44,12 @@ public class ViewSiteRoleTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Siterole Name"),
-			selenium.getText(
-				"//td[@id='_128_ocerSearchContainer_col-name_row-1']"));
+			selenium.getText("//tr[contains(.,'Roles Siterole Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Site"),
-			selenium.getText(
-				"//td[@id='_128_ocerSearchContainer_col-type_row-1']"));
+			selenium.getText("//tr[contains(.,'Roles Siterole Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText(
-				"//span[@title='Actions']/ul[@id='_128_ocerSearchContainer_1_menu']/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul[@id='_128_ocerSearchContainer_1_menu']/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
@@ -73,17 +70,18 @@ public class ViewSiteRoleTest extends BaseTestCase {
 			selenium.getText(
 				"//div[contains(.,'Define Permissions')]/ul[@class='aui-tabview-list']/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("Type"),
-			selenium.getText("//div/label"));
-		assertTrue(selenium.isPartialText("//fieldset/div/div/div", "Site"));
+			selenium.getText("//div[contains(.,'Type')]/label"));
+		assertTrue(selenium.isPartialText(
+				"//fieldset[contains(.,'Site')]/div/div", "Site"));
 		assertEquals(RuntimeVariables.replace("New Name (Required)"),
-			selenium.getText("//span/label"));
+			selenium.getText("//span[contains(.,'New Name (Required)')]/label"));
 		assertEquals("Roles Siterole Name",
 			selenium.getValue("//input[@id='_128_name']"));
 		assertEquals(RuntimeVariables.replace("Title"),
-			selenium.getText("//span[2]/span/label"));
+			selenium.getText("//span[contains(.,'Title')]/label"));
 		assertEquals("", selenium.getValue("//input[@id='_128_title_en_US']"));
 		assertEquals(RuntimeVariables.replace("Description"),
-			selenium.getText("//span[3]/span/label"));
+			selenium.getText("//span[contains(.,'Description')]/label"));
 		assertTrue(selenium.isVisible("//input[@value='Save']"));
 		assertTrue(selenium.isVisible("//input[@value='Cancel']"));
 	}

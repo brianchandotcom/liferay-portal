@@ -307,7 +307,7 @@ public class ConfigurationImpl
 				Configuration configuration = itr.next();
 
 				if (!(configuration instanceof MapConfiguration)) {
-					return;
+					break;
 				}
 
 				MapConfiguration mapConfiguration =

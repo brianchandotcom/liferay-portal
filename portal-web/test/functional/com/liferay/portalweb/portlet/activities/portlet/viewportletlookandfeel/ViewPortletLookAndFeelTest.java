@@ -28,6 +28,7 @@ public class ViewPortletLookAndFeelTest extends BaseTestCase {
 		selenium.clickAt("link=Activities Test Page",
 			RuntimeVariables.replace("Activities Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//strong/a");
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -51,8 +52,8 @@ public class ViewPortletLookAndFeelTest extends BaseTestCase {
 				"//input[@id='_113_use-custom-titleCheckbox']"));
 		assertEquals("Current Page",
 			selenium.getSelectedLabel("//select[@id='_113_lfr-point-links']"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_113_show-bordersCheckbox']"));
+		selenium.select("//select[@id='_113_show-borders']",
+			RuntimeVariables.replace("Yes"));
 		selenium.clickAt("link=Text Styles",
 			RuntimeVariables.replace("Text Styles"));
 		selenium.waitForVisible("//select[@id='_113_lfr-font-family']");
@@ -134,7 +135,7 @@ public class ViewPortletLookAndFeelTest extends BaseTestCase {
 			RuntimeVariables.replace("Advanced Styling"));
 		selenium.waitForVisible("//p[@id='lfr-portlet-info']");
 		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",
-				"Your current portlet information is as follows::\nPortlet ID: #portlet_116\nPortlet Classes: .portlet"));
+				"Your current portlet information is as follows:"));
 		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",
 				"Portlet ID: #portlet_116"));
 		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",

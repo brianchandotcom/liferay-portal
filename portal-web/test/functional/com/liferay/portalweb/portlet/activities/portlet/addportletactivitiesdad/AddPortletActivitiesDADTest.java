@@ -46,7 +46,13 @@ public class AddPortletActivitiesDADTest extends BaseTestCase {
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("ac"));
 		selenium.waitForVisible("//li[@title='Activities']/p");
-		selenium.dragAndDropToObject("//li[@title='Activities']/p",
+		selenium.clickAt("//li[@title='Activities']/p",
+			RuntimeVariables.replace("Activities"));
+		Thread.sleep(5000);
+		selenium.mouseDown("//li[@title='Activities']/p");
+		selenium.waitForVisible("//div[@class='yui3-dd-shim']");
+		Thread.sleep(5000);
+		selenium.dragAndDropToObject("//div[@class='yui3-dd-shim']",
 			"//div[@id='column-1']");
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

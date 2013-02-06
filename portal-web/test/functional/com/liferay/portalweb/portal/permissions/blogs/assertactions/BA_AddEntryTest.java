@@ -35,7 +35,8 @@ public class BA_AddEntryTest extends BaseTestCase {
 			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Permissions Blogs Test Entry"));
-		selenium.waitForVisible("//a[contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("This is a permissions blogs test entry"));

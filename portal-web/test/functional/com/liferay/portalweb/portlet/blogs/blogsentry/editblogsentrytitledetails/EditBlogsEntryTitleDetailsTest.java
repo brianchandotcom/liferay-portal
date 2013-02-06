@@ -45,7 +45,8 @@ public class EditBlogsEntryTitleDetailsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title Edit"));
-		selenium.waitForVisible("//a[contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

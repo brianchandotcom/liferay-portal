@@ -34,7 +34,8 @@ public class AddBlogsEntryTitle150CharactersTest extends BaseTestCase {
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace(
 				"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15"));
-		selenium.waitForVisible("//a[contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Blogs Entry Content"));

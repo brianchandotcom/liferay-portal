@@ -47,7 +47,8 @@ public class AddNewBlogsEntryAPActionsTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='_33_title']");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title"));
-		selenium.waitForVisible("//a[contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Blogs Entry Content"));

@@ -18,7 +18,9 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.AddMembersSiteUserTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserGmailTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordGmailTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
@@ -37,6 +39,7 @@ public class ReplyMBCategoryThreadMessageEmailTests extends BaseTestSuite {
 		testSuite.addTestSuite(ConfigureServerAdministrationMailTest.class);
 		testSuite.addTestSuite(EditPortalInstanceMailDomainTest.class);
 		testSuite.addTestSuite(AddUserGmailTest.class);
+		testSuite.addTestSuite(EditUserPasswordGmailTest.class);
 		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(AddMembersSiteUserTest.class);
 		testSuite.addTestSuite(AddPageMBSiteTest.class);
@@ -56,6 +59,7 @@ public class ReplyMBCategoryThreadMessageEmailTests extends BaseTestSuite {
 		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownServerTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(Gmail_TearDownEmailTest.class);
 
 		return testSuite;
 	}

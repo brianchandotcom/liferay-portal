@@ -123,7 +123,6 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				selenium.clickAt("//td[4]/div/img",
 					RuntimeVariables.replace("Reply"));
 				Thread.sleep(5000);
-				selenium.selectFrame("//iframe[@id='canvas_frame']");
 				selenium.selectFrame("//iframe[@class='Am Al editable']");
 				selenium.type("//body",
 					RuntimeVariables.replace("MB Message Email Reply"));

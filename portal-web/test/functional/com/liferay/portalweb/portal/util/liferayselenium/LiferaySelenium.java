@@ -71,8 +71,6 @@ public interface LiferaySelenium extends Selenium {
 
 	public void copyValue(String locator);
 
-	public void downloadTempFile(String value);
-
 	public void echo(String message);
 
 	public String getCurrentDay();
@@ -126,8 +124,6 @@ public interface LiferaySelenium extends Selenium {
 	public void selectAndWait(String selectLocator, String optionLocator);
 
 	public void sendKeys(String locator, String value);
-
-	public void setBrowserOption();
 
 	public void setDefaultTimeout();
 

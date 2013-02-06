@@ -15,6 +15,7 @@
 package com.liferay.portalweb.demo.media.dmlardocumenttypemusic;
 
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.BrowserCommands;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
@@ -67,7 +68,7 @@ public class ExportLARSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("DocumentsAndMedia_DEMO.lar"));
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
-		selenium.downloadTempFile("DocumentsAndMedia_DEMO.lar");
+		BrowserCommands.downloadTempFile("DocumentsAndMedia_DEMO.lar");
 		Thread.sleep(5000);
 		selenium.selectFrame("relative=top");
 	}

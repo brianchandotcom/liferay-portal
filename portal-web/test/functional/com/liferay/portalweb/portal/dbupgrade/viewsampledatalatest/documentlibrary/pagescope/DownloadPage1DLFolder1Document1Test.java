@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.documentlibrary.pagescope;
 
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.BrowserCommands;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
@@ -51,7 +52,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-		selenium.downloadTempFile("DL_Folder1_Document1_Title.doc");
+		BrowserCommands.downloadTempFile("DL_Folder1_Document1_Title.doc");
 		Thread.sleep(5000);
 		selenium.open("/web/document-library-page-scope-community/");
 		selenium.waitForVisible("link=DL Page1 Name");

@@ -179,14 +179,9 @@
 	<td>Recycle Bin</td>
 </tr>
 <tr>
-	<td>storeElementPresent</td>
-	<td>//a[@class='trash-empty-link']</td>
-	<td>recycleBinNotEmpty</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${recycleBinNotEmpty}</td>
-	<td>RecycleBinEmpty</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Folder Name')]/td[1]/span/a/span</td>
+	<td>WC Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -207,11 +202,6 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>RecycleBinEmpty</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>

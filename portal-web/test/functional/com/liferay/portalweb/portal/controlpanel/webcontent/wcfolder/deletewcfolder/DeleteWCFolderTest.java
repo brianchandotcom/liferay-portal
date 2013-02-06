@@ -105,16 +105,9 @@ public class DeleteWCFolderTest extends BaseTestCase {
 				selenium.clickAt("link=Recycle Bin",
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-
-				boolean recycleBinNotEmpty = selenium.isElementPresent(
-						"//a[@class='trash-empty-link']");
-
-				if (!recycleBinNotEmpty) {
-					label = 3;
-
-					continue;
-				}
-
+				assertEquals(RuntimeVariables.replace("WC Folder Name"),
+					selenium.getText(
+						"//tr[contains(.,'WC Folder Name')]/td[1]/span/a/span"));
 				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
 					selenium.getText("//a[@class='trash-empty-link']"));
 				selenium.clickAt("//a[@class='trash-empty-link']",
@@ -125,8 +118,6 @@ public class DeleteWCFolderTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-
-			case 3:
 				assertEquals(RuntimeVariables.replace(
 						"The Recycle Bin is empty."),
 					selenium.getText("//div[@class='portlet-msg-info']"));

@@ -21,13 +21,26 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
  */
 public class MergeLayoutPrototypesThreadLocal {
 
+	public static boolean isCompleted() {
+		return _completed.get();
+	}
+
 	public static boolean isInProgress() {
 		return _inProgress.get();
 	}
 
 	public static void setInProgress(boolean inProgress) {
+		if (_inProgress.get() && !inProgress) {
+			_completed.set(true);
+		}
+
 		_inProgress.set(inProgress);
+
 	}
+
+	private static ThreadLocal<Boolean> _completed =
+		new AutoResetThreadLocal<Boolean>(
+			MergeLayoutPrototypesThreadLocal.class + "._completed", false);
 
 	private static ThreadLocal<Boolean> _inProgress =
 		new AutoResetThreadLocal<Boolean>(

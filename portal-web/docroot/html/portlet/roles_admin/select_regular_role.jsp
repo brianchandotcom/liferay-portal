@@ -17,9 +17,12 @@
 <%@ include file="/html/portlet/roles_admin/init.jsp" %>
 
 <%
+String callback = ParamUtil.getString(request, "callback", "selectRole");
+	
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/roles_admin/select_regular_role");
+portletURL.setParameter("callback", callback);
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -70,11 +73,12 @@ portletURL.setParameter("struts_action", "/roles_admin/select_regular_role");
 			<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
 
 			<%
-			StringBundler sb = new StringBundler(7);
+			StringBundler sb = new StringBundler(8);
 
 			sb.append("javascript:opener.");
 			sb.append(renderResponse.getNamespace());
-			sb.append("selectRole('");
+			sb.append(callback);
+			sb.append("('");
 			sb.append(role.getRoleId());
 			sb.append("', '");
 			sb.append(UnicodeFormatter.toString(role.getTitle(locale)));

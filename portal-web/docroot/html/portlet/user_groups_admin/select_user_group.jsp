@@ -18,10 +18,12 @@
 
 <%
 String target = ParamUtil.getString(request, "target");
+String callback = ParamUtil.getString(request, "callback", "selectUserGroup");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/user_groups_admin/select_user_group");
+portletURL.setParameter("callback", callback);
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -70,11 +72,12 @@ portletURL.setParameter("struts_action", "/user_groups_admin/select_user_group")
 		>
 
 			<%
-			StringBundler sb = new StringBundler(9);
+			StringBundler sb = new StringBundler(10);
 
 			sb.append("javascript:opener.");
 			sb.append(renderResponse.getNamespace());
-			sb.append("selectUserGroup('");
+			sb.append(callback);
+			sb.append("('");
 			sb.append(userGroup.getUserGroupId());
 			sb.append("', '");
 			sb.append(UnicodeFormatter.toString(userGroup.getName()));

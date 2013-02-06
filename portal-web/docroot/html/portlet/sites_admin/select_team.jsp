@@ -18,6 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+String callback = ParamUtil.getString(request, "callback", "selectTeam");
 
 long groupId = ParamUtil.getLong(request, "groupId");
 %>
@@ -29,6 +30,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/sites_admin/select_team" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="callback" value="<%= callback %>" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
@@ -69,11 +71,12 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 		ResultRow row = new ResultRow(team, team.getTeamId(), i);
 
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(14);
 
 		sb.append("javascript:opener.");
 		sb.append(renderResponse.getNamespace());
-		sb.append("selectTeam('");
+		sb.append(callback);
+		sb.append("('");
 		sb.append(team.getTeamId());
 		sb.append("', '");
 		sb.append(UnicodeFormatter.toString(team.getName()));

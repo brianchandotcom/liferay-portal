@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki.attachments;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -98,6 +99,8 @@ public class WikiAttachmentsTrashTest {
 
 		Class<?> clazz = getClass();
 
+		String fileName = ServiceTestUtil.randomString() + ".docx";
+
 		byte[] fileBytes = FileUtil.getBytes(
 			clazz.getResourceAsStream("dependencies/OSX_Test.docx"));
 
@@ -107,11 +110,11 @@ public class WikiAttachmentsTrashTest {
 			file = FileUtil.createTempFile(fileBytes);
 		}
 
-		String fileName = ServiceTestUtil.randomString() + ".txt";
+		String mimeType = MimeTypesUtil.getContentTypeFromExtension("docx");
 
 		WikiPageLocalServiceUtil.addPageAttachment(
 			TestPropsValues.getUserId(), _node.getNodeId(), _page.getTitle(),
-			fileName, file);
+			fileName, file, mimeType);
 
 		Assert.assertEquals(
 			initialNotInTrashCount + 1, _page.getAttachmentsFileEntriesCount());

@@ -176,6 +176,14 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		return ContentTypes.APPLICATION_OCTET_STREAM;
 	}
 
+	public String getContentTypeFromExtension(String extension) {
+		if (Validator.isNull(extension)) {
+			return ContentTypes.APPLICATION_OCTET_STREAM;
+		}
+
+		return getContentType("A.".concat(extension));
+	}
+
 	public Set<String> getExtensions(String contentType) {
 		Set<String> extensions = _extensionsMap.get(contentType);
 

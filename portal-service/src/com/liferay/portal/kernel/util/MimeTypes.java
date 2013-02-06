@@ -33,6 +33,8 @@ public interface MimeTypes {
 
 	public String getContentType(String fileName);
 
+	public String getContentTypeFromExtension(String extension);
+
 	public Set<String> getExtensions(String contentType);
 
 	public boolean isWebImage(String mimeType);

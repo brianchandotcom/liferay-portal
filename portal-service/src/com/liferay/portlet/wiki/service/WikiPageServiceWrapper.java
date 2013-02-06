@@ -71,17 +71,20 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	}
 
 	public void addPageAttachment(long nodeId, java.lang.String title,
-		java.lang.String fileName, java.io.File file)
+		java.lang.String fileName, java.io.File file, java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_wikiPageService.addPageAttachment(nodeId, title, fileName, file);
+		_wikiPageService.addPageAttachment(nodeId, title, fileName, file,
+			mimeType);
 	}
 
 	public void addPageAttachment(long nodeId, java.lang.String title,
-		java.lang.String fileName, java.io.InputStream inputStream)
+		java.lang.String fileName, java.io.InputStream inputStream,
+		java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_wikiPageService.addPageAttachment(nodeId, title, fileName, inputStream);
+		_wikiPageService.addPageAttachment(nodeId, title, fileName,
+			inputStream, mimeType);
 	}
 
 	public void addPageAttachments(long nodeId, java.lang.String title,
@@ -91,13 +94,13 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		_wikiPageService.addPageAttachments(nodeId, title, inputStreamOVPs);
 	}
 
-	public java.lang.String addTempPageAttachment(long nodeId,
-		java.lang.String fileName, java.lang.String tempFolderName,
-		java.io.InputStream inputStream)
+	public void addTempPageAttachment(long nodeId, java.lang.String fileName,
+		java.lang.String tempFolderName, java.io.InputStream inputStream,
+		java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _wikiPageService.addTempPageAttachment(nodeId, fileName,
-			tempFolderName, inputStream);
+		_wikiPageService.addTempPageAttachment(nodeId, fileName,
+			tempFolderName, inputStream, mimeType);
 	}
 
 	public void changeParent(long nodeId, java.lang.String title,

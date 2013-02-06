@@ -77,12 +77,13 @@ public interface WikiPageService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void addPageAttachment(long nodeId, java.lang.String title,
-		java.lang.String fileName, java.io.File file)
+		java.lang.String fileName, java.io.File file, java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void addPageAttachment(long nodeId, java.lang.String title,
-		java.lang.String fileName, java.io.InputStream inputStream)
+		java.lang.String fileName, java.io.InputStream inputStream,
+		java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -91,9 +92,9 @@ public interface WikiPageService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public java.lang.String addTempPageAttachment(long nodeId,
-		java.lang.String fileName, java.lang.String tempFolderName,
-		java.io.InputStream inputStream)
+	public void addTempPageAttachment(long nodeId, java.lang.String fileName,
+		java.lang.String tempFolderName, java.io.InputStream inputStream,
+		java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

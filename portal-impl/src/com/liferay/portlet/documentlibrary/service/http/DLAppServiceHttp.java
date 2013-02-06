@@ -259,19 +259,18 @@ public class DLAppServiceHttp {
 		}
 	}
 
-	public static java.lang.String addTempFileEntry(
+	public static com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
 		HttpPrincipal httpPrincipal, long groupId, long folderId,
 		java.lang.String fileName, java.lang.String tempFolderName,
-		java.io.File file)
+		java.io.File file, java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException,
-			java.io.IOException {
+			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"addTempFileEntry", _addTempFileEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					folderId, fileName, tempFolderName, file);
+					folderId, fileName, tempFolderName, file, mimeType);
 
 			Object returnObj = null;
 
@@ -287,14 +286,10 @@ public class DLAppServiceHttp {
 					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
-				if (e instanceof java.io.IOException) {
-					throw (java.io.IOException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (com.liferay.portal.kernel.repository.model.FileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -303,10 +298,10 @@ public class DLAppServiceHttp {
 		}
 	}
 
-	public static java.lang.String addTempFileEntry(
+	public static com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
 		HttpPrincipal httpPrincipal, long groupId, long folderId,
 		java.lang.String fileName, java.lang.String tempFolderName,
-		java.io.InputStream inputStream)
+		java.io.InputStream inputStream, java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -314,7 +309,7 @@ public class DLAppServiceHttp {
 					"addTempFileEntry", _addTempFileEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					folderId, fileName, tempFolderName, inputStream);
+					folderId, fileName, tempFolderName, inputStream, mimeType);
 
 			Object returnObj = null;
 
@@ -333,7 +328,7 @@ public class DLAppServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.lang.String)returnObj;
+			return (com.liferay.portal.kernel.repository.model.FileEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -4129,11 +4124,12 @@ public class DLAppServiceHttp {
 		};
 	private static final Class<?>[] _addTempFileEntryParameterTypes5 = new Class[] {
 			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.io.File.class
+			java.lang.String.class, java.io.File.class, java.lang.String.class
 		};
 	private static final Class<?>[] _addTempFileEntryParameterTypes6 = new Class[] {
 			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.io.InputStream.class
+			java.lang.String.class, java.io.InputStream.class,
+			java.lang.String.class
 		};
 	private static final Class<?>[] _cancelCheckOutParameterTypes7 = new Class[] {
 			long.class

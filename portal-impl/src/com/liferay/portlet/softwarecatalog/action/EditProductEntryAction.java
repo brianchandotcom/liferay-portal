@@ -162,9 +162,9 @@ public class EditProductEntryAction extends PortletAction {
 		for (String name :
 				getSortedParameterNames(uploadPortletRequest, imagePrefix)) {
 
-			String mimeType = uploadPortletRequest.getContentType(name);
+			String contentType = uploadPortletRequest.getContentType(name);
 
-			if (!MimeTypesUtil.isWebImage(mimeType)) {
+			if (!MimeTypesUtil.isWebImage(contentType)) {
 				throw new ProductEntryScreenshotsException();
 			}
 

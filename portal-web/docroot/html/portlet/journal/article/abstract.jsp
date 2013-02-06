@@ -59,35 +59,26 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 				<aui:input label="use-small-image" name="smallImage" />
 			</div>
 			<div class="lfr-journal-small-image-content aui-toggler-content-collapsed">
-				<table>
-					<tr>
-						<th>
-							<c:if test="<%= smallImage && (article != null) %>">
-								<img alt="<liferay-ui:message key="preview" />" class="lfr-journal-small-image-preview" src="<%= Validator.isNotNull(article.getSmallImageURL()) ? article.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + article.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(article.getSmallImageId()) %>" />
-							</c:if>
-						</th>
-						<td>
-							<table>
-								<tr>
-									<th>
-										<aui:input inputCssClass="lfr-journal-small-image-type" label="small-image-url" name="type" type="radio" />
-									</th>
-									<td>
-										<aui:input inputCssClass="lfr-journal-small-image-value" label="" name="smallImageURL" />
-									</td>
-								</tr>
-								<tr>
-									<th>
-										<aui:input inputCssClass="lfr-journal-small-image-type" label="small-image" name="type" type="radio" />
-									</th>
-									<td>
-										<aui:input inputCssClass="lfr-journal-small-image-value" label="" name="smallFile" type="file" />
-									</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-				</table>
+				<aui:layout>
+					<c:if test="<%= smallImage && (article != null) %>">
+						<aui:column>
+							<img alt="<liferay-ui:message key="preview" />" class="lfr-journal-small-image-preview" src="<%= Validator.isNotNull(article.getSmallImageURL()) ? article.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + article.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(article.getSmallImageId()) %>" />
+						</aui:column>
+					</c:if>
+
+					<aui:column>
+						<aui:fieldset>
+							<aui:input inlineField="<%= true %>" inputCssClass="lfr-journal-small-image-type" label="small-image-url" name="type" type="radio" />
+
+							<aui:input inlineField="<%= true %>" inputCssClass="lfr-journal-small-image-value" label="" name="smallImageURL" />
+						</aui:fieldset>
+						<aui:fieldset>
+							<aui:input inlineField="<%= true %>" inputCssClass="lfr-journal-small-image-type" label="small-image" name="type" type="radio" />
+
+							<aui:input inlineField="<%= true %>" inputCssClass="lfr-journal-small-image-value" label="" name="smallFile" type="file" />
+						</aui:fieldset>
+					</aui:column>
+				</aui:layout>
 			</div>
 		</div>
 	</c:if>

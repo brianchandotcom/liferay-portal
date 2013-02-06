@@ -2025,6 +2025,32 @@
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
 	</portlet>
+	<portlet>
+		<portlet-name>186</portlet-name>
+		<icon>/html/icons/directory.png</icon>
+		<parent-struts-path>directory</parent-struts-path>
+		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<preferences-owned-by-group>true</preferences-owned-by-group>
+		<use-default-template>false</use-default-template>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<render-weight>50</render-weight>
+		<header-portlet-css>/html/portlet/directory/css/main.css</header-portlet-css>
+		<css-class-wrapper>portlet-directory</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>187</portlet-name>
+		<icon>/html/icons/directory.png</icon>
+		<parent-struts-path>directory</parent-struts-path>
+		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<preferences-owned-by-group>true</preferences-owned-by-group>
+		<use-default-template>false</use-default-template>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<render-weight>50</render-weight>
+		<header-portlet-css>/html/portlet/directory/css/main.css</header-portlet-css>
+		<css-class-wrapper>portlet-directory</css-class-wrapper>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

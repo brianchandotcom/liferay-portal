@@ -39,11 +39,15 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	if (parentOrganizationId <= 0) {
 		parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 	}
+
+	if (portletName.equals(PortletKeys.SITE_MEMBERS_DIRECTORY)) {
+		organizationParams.put("organizationsGroups", new Long(themeDisplay.getScopeGroupId()));
+	}
 	%>
 
 	<liferay-ui:search-container-results>
 		<c:choose>
-			<c:when test="<%= PropsValues.ORGANIZATIONS_INDEXER_ENABLED && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
+			<c:when test="<%= portletName.equals(PortletKeys.DIRECTORY) && PropsValues.ORGANIZATIONS_INDEXER_ENABLED && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
 				<%@ include file="/html/portlet/users_admin/organization_search_results_index.jspf" %>
 			</c:when>
 			<c:otherwise>

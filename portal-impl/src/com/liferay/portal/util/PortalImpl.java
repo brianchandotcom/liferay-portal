@@ -112,6 +112,8 @@ import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.security.auth.FullNameGenerator;
+import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -2101,6 +2103,15 @@ public class PortalImpl implements Portal {
 		}
 
 		return sb.toString();
+	}
+
+	public String getFullName(
+		String firstName, String middleName, String lastName) {
+
+		FullNameGenerator fullNameGenerator =
+			FullNameGeneratorFactory.getInstance();
+
+		return fullNameGenerator.getFullName(firstName, middleName, lastName);
 	}
 
 	public String getGlobalLibDir() {

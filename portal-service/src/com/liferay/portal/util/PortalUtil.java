@@ -524,6 +524,12 @@ public class PortalUtil {
 		return getPortal().getFirstPageLayoutTypes(pageContext);
 	}
 
+	public static String getFullName(
+		String firstName, String middleName, String lastName) {
+
+		return getPortal().getFullName(firstName, middleName, lastName);
+	}
+
 	public static String getGlobalLibDir() {
 		return getPortal().getGlobalLibDir();
 	}

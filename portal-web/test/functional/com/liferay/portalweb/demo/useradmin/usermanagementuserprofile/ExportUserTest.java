@@ -16,6 +16,7 @@ package com.liferay.portalweb.demo.useradmin.usermanagementuserprofile;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
+import com.liferay.portalweb.portal.util.browsercommands.BrowserCommands;
 
 /**
  * @author Brian Wing Shun Chan
@@ -37,6 +38,6 @@ public class ExportUserTest extends BaseTestCase {
 				"//span[@class='lfr-toolbar-button export-button']/a"));
 		selenium.clickAt("//span[@class='lfr-toolbar-button export-button']/a",
 			RuntimeVariables.replace("Export All Users"));
-		selenium.downloadTempFile("users.csv");
+		BrowserCommands.downloadTempFile("users.csv");
 	}
 }

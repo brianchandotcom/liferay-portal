@@ -465,6 +465,8 @@ public class SeleneseToJavaBuilder {
 		sb.append("import com.liferay.portalweb.portal.BaseTestCase;\n");
 		sb.append(
 			"import com.liferay.portalweb.portal.util.RuntimeVariables;\n");
+		sb.append("import com.liferay.portalweb.portal.util.browsercommands.");
+		sb.append("BrowserCommands;\n");
 
 		sb.append("public class ");
 		sb.append(testName);
@@ -894,7 +896,13 @@ public class SeleneseToJavaBuilder {
 					 param1.equals("waitForTextPresent") ||
 					 param1.equals("waitForVisible")) {
 
-				sb.append("selenium.");
+				if (param1.equals("downloadTempFile")) {
+					sb.append("BrowserCommands.");
+				}
+				else {
+					sb.append("selenium.");
+				}
+
 				sb.append(param1);
 				sb.append("(");
 
@@ -946,7 +954,13 @@ public class SeleneseToJavaBuilder {
 					 param1.equals("windowFocus") ||
 					 param1.equals("windowMaximize")) {
 
-				sb.append("selenium.");
+				if (param1.equals("setBrowserOption")) {
+					sb.append("BrowserCommands.");
+				}
+				else {
+					sb.append("selenium.");
+				}
+
 				sb.append(param1);
 				sb.append("();");
 			}

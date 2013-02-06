@@ -16,6 +16,7 @@ package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
+import com.liferay.portalweb.portal.util.browsercommands.BrowserCommands;
 
 /**
  * @author Brian Wing Shun Chan
@@ -64,6 +65,6 @@ public class ExportLARCPDefaultDLPageScopeTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
-		selenium.downloadTempFile("DL_Page_Scope.Default.CP.lar");
+		BrowserCommands.downloadTempFile("DL_Page_Scope.Default.CP.lar");
 	}
 }

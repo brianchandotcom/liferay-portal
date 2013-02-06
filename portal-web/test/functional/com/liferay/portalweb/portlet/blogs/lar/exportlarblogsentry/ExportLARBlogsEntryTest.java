@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.blogs.lar.exportlarblogsentry;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
+import com.liferay.portalweb.portal.util.browsercommands.BrowserCommands;
 
 /**
  * @author Brian Wing Shun Chan
@@ -70,6 +71,6 @@ public class ExportLARBlogsEntryTest extends BaseTestCase {
 		assertTrue(selenium.isChecked("//input[@id='_86_CATEGORIESCheckbox']"));
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
-		selenium.downloadTempFile("Blogs_Entry.Portlet.lar");
+		BrowserCommands.downloadTempFile("Blogs_Entry.Portlet.lar");
 	}
 }

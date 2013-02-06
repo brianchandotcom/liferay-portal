@@ -16,6 +16,7 @@ package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecaselarc
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
+import com.liferay.portalweb.portal.util.browsercommands.BrowserCommands;
 
 /**
  * @author Brian Wing Shun Chan
@@ -69,6 +70,6 @@ public class ExportLARCPWikiUseCaseTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
 		Thread.sleep(5000);
-		selenium.downloadTempFile("Wiki_Use_Case.CP.lar");
+		BrowserCommands.downloadTempFile("Wiki_Use_Case.CP.lar");
 	}
 }

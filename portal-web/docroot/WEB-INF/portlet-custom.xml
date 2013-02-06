@@ -121,7 +121,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>11</portlet-name>
-		<display-name>Directory</display-name>
+		<display-name>Portal Directory</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>

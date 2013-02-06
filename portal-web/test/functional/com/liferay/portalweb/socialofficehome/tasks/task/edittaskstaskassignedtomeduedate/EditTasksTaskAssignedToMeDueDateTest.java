@@ -55,12 +55,12 @@ public class EditTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Edit']",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForVisible(
-			"//select[@id='_1_WAR_tasksportlet_dueDateMonth']");
-		selenium.select("//select[@id='_1_WAR_tasksportlet_dueDateMonth']",
+			"//select[@id='_1_WAR_tasksportlet_duedatemonth']");
+		selenium.select("//select[@id='_1_WAR_tasksportlet_duedatemonth']",
 			RuntimeVariables.replace("label=April"));
-		selenium.select("//select[@id='_1_WAR_tasksportlet_dueDateDay']",
+		selenium.select("//select[@id='_1_WAR_tasksportlet_duedateday']",
 			RuntimeVariables.replace("label=17"));
-		selenium.select("//select[@id='_1_WAR_tasksportlet_dueDateYear']",
+		selenium.select("//select[@id='_1_WAR_tasksportlet_duedateyear']",
 			RuntimeVariables.replace("label=2017"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

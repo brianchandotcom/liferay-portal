@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurationTest extends BaseTestCase {
-	public void testConfiguration() throws Exception {
+public class ViewPortletSLOptionsTest extends BaseTestCase {
+	public void testViewPortletSLOptions() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -43,13 +43,11 @@ public class ConfigurationTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]",
 			RuntimeVariables.replace("Export / Import"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent(
-				"//input[@id='_86_exportFileName']"));
-		assertTrue(selenium.isElementPresent("//input[@value='Export']"));
+		assertTrue(selenium.isVisible("//input[@id='_86_exportFileName']"));
+		assertTrue(selenium.isVisible("//input[@value='Export']"));
 		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent(
-				"//input[@id='_86_importFileName']"));
-		assertTrue(selenium.isElementPresent("//input[@value='Import']"));
+		assertTrue(selenium.isVisible("//input[@id='_86_importFileName']"));
+		assertTrue(selenium.isVisible("//input[@value='Import']"));
 	}
 }

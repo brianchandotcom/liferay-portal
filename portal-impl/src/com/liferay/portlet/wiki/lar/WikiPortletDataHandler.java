@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -239,6 +240,17 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				String binPath = attachmentElement.attributeValue("bin-path");
 
 				InputStream inputStream = null;
+				String mimeType = null;
+
+				try {
+					inputStream = portletDataContext.getZipEntryAsInputStream(
+						binPath);
+
+					mimeType = MimeTypesUtil.getContentType(inputStream, name);
+				}
+				finally {
+					StreamUtil.cleanUp(inputStream);
+				}
 
 				try {
 					inputStream = portletDataContext.getZipEntryAsInputStream(
@@ -246,7 +258,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 					WikiPageLocalServiceUtil.addPageAttachment(
 						userId, importedPage.getNodeId(),
-						importedPage.getTitle(), name, inputStream, null);
+						importedPage.getTitle(), name, inputStream, mimeType);
 				}
 				finally {
 					StreamUtil.cleanUp(inputStream);

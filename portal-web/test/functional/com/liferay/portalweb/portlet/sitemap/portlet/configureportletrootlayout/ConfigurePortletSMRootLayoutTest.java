@@ -54,7 +54,7 @@ public class ConfigurePortletSMRootLayoutTest extends BaseTestCase {
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//select[@id='_86_rootLayoutUuid']");
 		selenium.select("//select[@id='_86_rootLayoutUuid']",
-			RuntimeVariables.replace("index=2"));
+			RuntimeVariables.replace("regexp:-\\sSite Map Test Page"));
 		selenium.select("//select[@id='_86_displayDepth']",
 			RuntimeVariables.replace("1"));
 		selenium.clickAt("//input[@value='Save']",

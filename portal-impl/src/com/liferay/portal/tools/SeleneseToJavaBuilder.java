@@ -229,13 +229,20 @@ public class SeleneseToJavaBuilder {
 				continue;
 			}
 
-			if (testCaseName.contains("../portalweb/")) {
-				continue;
-			}
-
 			int z = fileName.lastIndexOf(StringPool.SLASH);
 
 			String importClassName = fileName.substring(0, z);
+
+			if (!FileUtil.exists(
+					_basedir + "/" + importClassName + "/" + testCaseName)) {
+
+				throw new IllegalArgumentException(
+					fileName + " has improper relative path");
+			}
+
+			if (testCaseName.contains("../portalweb/")) {
+				continue;
+			}
 
 			int count = StringUtil.count(testCaseName, "..");
 

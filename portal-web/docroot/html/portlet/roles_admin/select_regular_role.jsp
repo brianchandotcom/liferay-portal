@@ -18,7 +18,7 @@
 
 <%
 String callback = ParamUtil.getString(request, "callback", "selectRole");
-	
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/roles_admin/select_regular_role");

@@ -25,6 +25,7 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil
 import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetUtil;
 import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 import java.util.List;
 import java.util.Map;
@@ -48,11 +49,29 @@ public class DDLRecordSetStagedModelDataHandler
 
 		Element recordSetsElement = elements[0];
 
-		Element recordSetElement = recordSetsElement.addElement("recordSet");
+		Element recordSetElement = recordSetsElement.addElement("record-set");
 
 		portletDataContext.addClassedModel(
 			recordSetElement, StagedModelPathUtil.getPath(recordSet), recordSet,
 			DDLPortletDataHandler.NAMESPACE);
+
+		Element ddmStructuresElement = recordSetElement.addElement(
+			"ddm-structures");
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+		DDMPortletDataHandler.exportStructure(
+			portletDataContext, ddmStructuresElement, ddmStructure);
+
+		Element ddmTemplatesElement = recordSetElement.addElement(
+			"ddm-templates");
+
+		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
+
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			DDMPortletDataHandler.exportTemplate(
+				portletDataContext, ddmTemplatesElement, ddmTemplate);
+		}
 	}
 
 	@Override
